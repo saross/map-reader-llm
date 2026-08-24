@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-19T02:02:01Z",
+  "generated_at": "2026-08-24T08:26:30Z",
   "generator_version": "0.7.1",
   "runs": [
     {
@@ -1063,7 +1063,7 @@
         "H13"
       ],
       "purpose": "Post-hoc (E41-class) 2x2 crossing tile size (512/384 px) with tile overlap (12.5/50 %), proposer stage only, ten passes per cell, one configuration throughout. Tests whether the 384 px sweet spot reproduces under a single footprint, and whether extra passes substitute for extra overlap.",
-      "run_type": "consensus",
+      "run_type": "mixed",
       "tile_size_px": null,
       "corpus": "4-map-gs",
       "gt_reference": "curator",
@@ -1084,7 +1084,7 @@
           "results/run-facts.json",
           "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
         ],
-        "last_extracted_at": "2026-08-19T02:02:01Z",
+        "last_extracted_at": "2026-08-24T08:26:30Z",
         "extractor_version": "0.7.1"
       }
     },

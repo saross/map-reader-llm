@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-23T12:27:31Z",
+  "generated_at": "2026-08-24T08:26:30Z",
   "generator_version": "0.7.1",
   "conditions": [
     {
@@ -81121,6 +81121,238 @@
           "results/grid-2026-08-18/conditions/g384_ov192/eval/evaluation.json"
         ],
         "last_extracted_at": "2026-08-20T05:34:47Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "grid-2026-08-18::g512-ov064-k10-verified-p0.15-k5",
+      "run_id": "grid-2026-08-18",
+      "label": "g512-ov064-k10-verified-p0.15-k5",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "brief-text",
+      "n_passes": 10,
+      "vote_threshold": 5,
+      "prob_threshold": 0.15,
+      "verifier_config": {
+        "variant": "adversarial-text",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": null,
+      "metrics": {
+        "per_buffer": {
+          "20": {
+            "f1": 0.8311,
+            "precision": 0.8799,
+            "recall": 0.7874,
+            "ci": {
+              "low": 0.7938,
+              "high": 0.8624,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.7937,
+          "sensitivity": 0.7956,
+          "specificity": 0.9771,
+          "tp": 179,
+          "tn": 256,
+          "fp": 6,
+          "fn": 46
+        }
+      },
+      "n_detections": 383,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/grid-2026-08-18/conditions-verified/g512_ov064/eval/evaluation.json"
+        ],
+        "last_extracted_at": "2026-08-24T08:26:30Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "grid-2026-08-18::g512-ov256-k10-verified-p0.15-k9",
+      "run_id": "grid-2026-08-18",
+      "label": "g512-ov256-k10-verified-p0.15-k9",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "brief-text",
+      "n_passes": 10,
+      "vote_threshold": 9,
+      "prob_threshold": 0.15,
+      "verifier_config": {
+        "variant": "adversarial-text",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": null,
+      "metrics": {
+        "per_buffer": {
+          "20": {
+            "f1": 0.8815,
+            "precision": 0.9346,
+            "recall": 0.8341,
+            "ci": {
+              "low": 0.8518,
+              "high": 0.9073,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.8011,
+          "sensitivity": 0.8044,
+          "specificity": 0.9771,
+          "tp": 181,
+          "tn": 256,
+          "fp": 6,
+          "fn": 44
+        }
+      },
+      "n_detections": 382,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/grid-2026-08-18/conditions-verified/g512_ov256/eval/evaluation.json"
+        ],
+        "last_extracted_at": "2026-08-24T08:26:30Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "grid-2026-08-18::g384-ov048-k10-verified-p0.20-k7",
+      "run_id": "grid-2026-08-18",
+      "label": "g384-ov048-k10-verified-p0.20-k7",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "brief-text",
+      "n_passes": 10,
+      "vote_threshold": 7,
+      "prob_threshold": 0.2,
+      "verifier_config": {
+        "variant": "adversarial-text",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": null,
+      "metrics": {
+        "per_buffer": {
+          "20": {
+            "f1": 0.8677,
+            "precision": 0.9525,
+            "recall": 0.7967,
+            "ci": {
+              "low": 0.8335,
+              "high": 0.8957,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.7751,
+          "sensitivity": 0.7733,
+          "specificity": 0.9771,
+          "tp": 174,
+          "tn": 256,
+          "fp": 6,
+          "fn": 51
+        }
+      },
+      "n_detections": 358,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/grid-2026-08-18/conditions-verified/g384_ov048/eval/evaluation.json"
+        ],
+        "last_extracted_at": "2026-08-24T08:26:30Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10",
+      "run_id": "grid-2026-08-18",
+      "label": "g384-ov192-k10-verified-p0.15-k10",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "brief-text",
+      "n_passes": 10,
+      "vote_threshold": 10,
+      "prob_threshold": 0.15,
+      "verifier_config": {
+        "variant": "adversarial-text",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": null,
+      "metrics": {
+        "per_buffer": {
+          "20": {
+            "f1": 0.8961,
+            "precision": 0.9275,
+            "recall": 0.8668,
+            "ci": {
+              "low": 0.8657,
+              "high": 0.9198,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.7965,
+          "sensitivity": 0.8311,
+          "specificity": 0.9542,
+          "tp": 187,
+          "tn": 250,
+          "fp": 12,
+          "fn": 38
+        }
+      },
+      "n_detections": 400,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/grid-2026-08-18/conditions-verified/g384_ov192/eval/evaluation.json"
+        ],
+        "last_extracted_at": "2026-08-24T08:26:30Z",
         "extractor_version": "0.7.1"
       }
     },

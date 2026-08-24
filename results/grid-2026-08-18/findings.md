@@ -1,7 +1,8 @@
 # Tile size × overlap: a clean 2×2 at the proposer stage
 
-> **Last revised**: 2026-08-19 (bootstrap standardised to B = 10,000 per the
-> PI ruling in erratum E82; four cells registered as conditions, closing D16).
+> **Last revised**: 2026-08-24 (the verifier stage RAN — PI-approved $6.33
+> spend, 9,133/9,133 candidates, zero failures; the post-verifier board
+> reverses the tile-size ranking and confirms the overlap reversal survives).
 > See [§ Changelog](#changelog) for revision history.
 
 **What this is.** A post-hoc (E41-class) 2 × 2 crossing tile size
@@ -13,10 +14,11 @@ thinking, T = 0.7 — so the only things that vary are the two geometry
 factors. Scoring cost **$0**: every number below comes from the
 committed detections.
 
-**What this is not.** A registered hypothesis, and not a
-proposer-verifier result. This is the **consensus-only** board. The
-verifier stage is costed at the end and *not* run; it needs its own
-spend gate.
+**What this is not.** A registered hypothesis. §§ 2–10 are the
+**consensus-only** board, written when the verifier stage was costed
+but not yet run. The verifier stage has since RUN (PI-approved
+2026-08-24, $6.33 costed / $6.27 expected billed) and its board is
+[§ The verifier stage, run](#the-verifier-stage-run-2026-08-24).
 
 ## The headline, in one line
 
@@ -26,6 +28,14 @@ in the grid — while tile size never reverses.** 512 px beats 384 px
 everywhere; 50 % overlap loses badly at K = 1 and wins decisively once
 the cross-tile corroboration filter that overlap itself creates is
 switched on.
+
+**Post-verifier addendum (2026-08-24): tile size DOES reverse once the
+precision stage runs.** Under the full proposer-verifier pipeline
+384 px beats 512 px at both overlaps (significantly at 12.5 %), the
+overlap reversal survives at both tile sizes, and the best cell is
+384 px / 50 % at **F1 0.8961**. The consensus-only tile-size claim
+above is a truncated-pipeline artefact; see
+[§ The verifier stage, run](#the-verifier-stage-run-2026-08-24).
 
 ## The 2 × 2
 
@@ -275,7 +285,7 @@ dollar at a quality no 12.5 % cell reaches at any K in this grid.**
    session (`6b1cb87af`, `6fa658877`, `4c44e3fd6`, `9ecd47b94`).
    Flagged for that module's owner.
 
-## What the verifier stage would cost (costed, not run)
+## What the verifier stage would cost (costed 2026-08-18; run 2026-08-24 — see [§ The verifier stage, run](#the-verifier-stage-run-2026-08-24))
 
 A verifier pass scores one crop per surviving proposer candidate, so
 adding it to any operating point costs that point's candidate count ×
@@ -304,30 +314,128 @@ the study's actual pipeline. A cheaper first step is the two 50 % cells'
 unions alone (**$4.09**), since those are the two candidates for a
 production tiling.
 
+## The verifier stage, run (2026-08-24)
+
+The PI approved the costed stage on 2026-08-24 under an
+exact-reproduction stop rule. `materialise_grid_unions.py` rebuilt the
+four K = 10 unions through the sweep's own loader and clusterer, gated
+on the documented counts (1,402 / 2,585 / 1,827 / 3,319 — all exact);
+the adversarial text verifier (`verify_adversarial-text`,
+gemini-3-flash-preview, T = 0.0, MINIMAL, n = 1 — the study's
+carry-forward verifier) scored all **9,133 candidates with zero
+failures** (committed at `8eda1e3a3`). Thresholding and scoring cost
+$0: `scripts/grid_verifier_analysis.py` re-joins the committed
+probabilities to the committed unions (join gates: contiguous
+candidate keys, carrier-tile reassignment, and re-scoring each
+unthresholded union to reproduce the committed sweep row), sweeps
+every achievable (prob_t, k) operating point per cell (580 rows,
+`verifier_sweep.csv`), and scores with the same machinery, footprint,
+and B = 10,000 paired tile bootstrap as the consensus board.
+
+**The post-verifier board** (best F1@20 m per cell; CI95 BCa at
+B = 10,000 from each cell's registered evaluation):
+
+| Rank | Cell | prob_t | k | n | Precision | Recall | **F1** | CI95 | Tile MCC |
+|---:|---|---:|---:|---:|---:|---:|---:|---|---:|
+| 1 | 384 px / 50 % | ≥ 0.15 | ≥ 10 | 400 | 0.9275 | 0.8668 | **0.8961** | [0.8657, 0.9198] | 0.7965 |
+| 2 | 512 px / 50 % | ≥ 0.15 | ≥ 9 | 382 | 0.9346 | 0.8341 | **0.8815** | [0.8518, 0.9073] | 0.8011 |
+| 3 | 384 px / 12.5 % | ≥ 0.20 | ≥ 7 | 358 | 0.9525 | 0.7967 | **0.8677** | [0.8335, 0.8957] | 0.7751 |
+| 4 | 512 px / 12.5 % | ≥ 0.15 | ≥ 5 | 383 | 0.8799 | 0.7874 | **0.8311** | [0.7938, 0.8624] | 0.7937 |
+
+The verifier lifts every cell's best F1 by +0.130 to +0.220 over the
+consensus-only board, and the gain is largest exactly where
+consensus-only was worst (the two 384 px cells: +0.220 and +0.176).
+
+**Question 1 — the tile-size ranking does NOT survive: it reverses.**
+Paired tile bootstrap at the best post-verifier operating points,
+B = 10,000, seed 42:
+
+| Contrast | ΔF1 | CI95 | p | Excludes 0 |
+|---|---:|---|---:|---|
+| Tile size at 12.5 % (384 − 512) | **+0.0366** | [+0.0026, +0.0717] | 0.0340 | **yes** |
+| Tile size at 50 % (384 − 512) | +0.0147 | [−0.0093, +0.0393] | 0.2308 | no |
+| Overlap at 512 px (12.5 % − 50 %) | −0.0504 | [−0.0781, −0.0224] | 0.0004 | yes |
+| Overlap at 384 px (12.5 % − 50 %) | −0.0285 | [−0.0530, −0.0045] | 0.0208 | yes |
+| Interaction | −0.0220 | [−0.0581, +0.0141] | 0.2336 | no |
+
+The consensus-only board had 384 − 512 at **−0.0824** (12.5 %) and
+**−0.0972** (50 %), both excluding zero; post-verifier the sign flips
+at both overlaps and the 12.5 % contrast excludes zero on the other
+side. The mechanism is the one § Unresolved anticipated: 384 px lost
+to 512 px almost entirely on precision, which the verifier recovers,
+while its higher union-recall ceilings (0.8925 / 0.9509 vs
+0.8715 / 0.9416) are the resource the verifier cannot create. This
+**dissolves Surprise 1** — the "512 px challenge" to the study's
+384 px preference was an artefact of the truncated (verifier-less)
+pipeline — and repeats the Era-1 pattern in which the verifier rescued
+256 px (Obs 352): the verifier moves the optimum towards smaller,
+recall-richer tilings.
+
+**Question 2 — the overlap reversal survives.** 50 % overlap wins at
+both tile sizes under the full pipeline (−0.0504 at 512 px,
+p = 0.0004; −0.0285 at 384 px, p = 0.0208). The margin roughly halves
+against the consensus-only board (+0.0759 → +0.0504 at 512 px;
++0.0730 → +0.0285 at 384 px), which is the partial-redundancy outcome
+§ Unresolved predicted: the corroboration filter and the verifier
+overlap in function but are not interchangeable, and what remains of
+the 50 % advantage tracks its recall-ceiling edge.
+
+**Consensus and verifier are complements, not substitutes.** Every
+cell's best operating point retains a vote threshold (k ≥ 5 to
+k ≥ 10) on top of the probability threshold. The pure-verifier board
+(k = 1, best prob_t — the verifier as the *only* precision stage)
+tops out at 0.8153 (384 px / 12.5 %, prob_t ≥ 0.2) and trails the
+stacked optimum in every cell, by 0.052 to 0.203. Handing the
+verifier the raw union and letting thresholds on votes and
+probability act jointly is what buys the board above.
+
+**Tile MCC saturation dissolves.** The consensus-only board's 384 px
+MCC pathology (specificity saturated at 0.17) disappears once the
+verifier strips false positives: all four cells sit at MCC
+0.775–0.801, and the F1 ranking and MCC ranking broadly agree.
+
+**Billing.** The four verifier `run.meta.json` cost blocks sum to
+$12.5428 list; Gemini real-time flex bills at half list, so the
+expected billed figure is **$6.2714** ($0.000687/call), against the
+costed $6.33 ($0.000693/call) — a −$0.06 variance. The PI's
+billing-console glance should expect ≈ $6.27.
+
+**Registered conditions.** Each cell's best operating point is
+materialised and scored at B = 10,000 (BCa) under a reproduction gate
+(all four within 5 × 10⁻⁵ of the sweep):
+`results/grid-2026-08-18/conditions-verified/<cell>/`, summarised in
+`grid_verified_conditions.json`, registered as the four
+`*-k10-verified-p*` conditions and the analysis row
+`grid-postverifier-2026-08-18`.
+
+**Scope caveats carried forward.** Four map sheets, one proposer
+configuration, one model, T = 0.7, one verifier configuration at
+n = 1; E41-class post-hoc throughout. The best-F1 operating points are
+selected on the same ground truth they are scored on (as on the
+consensus board); the paired contrasts are the significance
+instrument, and single-cell CIs are reported for the register only.
+
 ## What remains unresolved without the verifier stage
 
-- **Whether the tile-size ranking survives a verifier.** The verifier's
-  job is precision, and 384 px loses to 512 px almost entirely on
-  precision (0.3615 vs 0.4719 at 12.5 %; 0.2308 vs 0.3157 at 50 %) at
-  equal or better recall. If the verifier removes false positives
-  efficiently, the 384 px cells' higher recall ceilings — 0.8925 and
-  0.9509 union recall against 0.8715 and 0.9416 — could flip the
-  ranking, because recall lost at the proposer stage is unrecoverable
-  while precision lost is not. This grid cannot settle it.
-- **Whether the overlap reversal survives a verifier.** The
-  corroboration filter and the verifier are both precision stages and
-  may be largely redundant. If they are, 50 % overlap's advantage
-  shrinks towards its recall-ceiling advantage (+0.0701 union recall at
-  512 px, K = 10), which is real but smaller than the +0.0759 F1 gap
-  seen under consensus alone.
+*Two of the five questions this section originally posed were settled
+by the verifier stage above (2026-08-24); the original wording is
+preserved in the [changelog](#changelog) entry.*
+
+- ~~Whether the tile-size ranking survives a verifier~~ — **settled:
+  it reverses.** See [§ The verifier stage, run](#the-verifier-stage-run-2026-08-24).
+- ~~Whether the overlap reversal survives a verifier~~ — **settled: it
+  survives**, at roughly half the consensus-only margin.
 - **Whether the consensus optimum is interior at 384 px.** Ten passes
-  still peak at k = 10 for both 384 px cells. Either the optimum lies
-  beyond K = 10 or the F1 surface is flat near it; the grid cannot tell
-  these apart.
+  still peak at k = 10 for both 384 px cells — post-verifier as well
+  (384 px / 50 % best sits at k ≥ 10; 512 px / 50 % moves interior to
+  k ≥ 9). Either the optimum lies beyond K = 10 or the F1 surface is
+  flat near it; the grid cannot tell these apart.
 - **The single-pass tile-size result versus the Era-2 384 px corpus.**
   Reconciling them needs either the 512 px geometry run at Era-2's
   T = 1.0, or the Era-2 conditions re-scored on this footprint — a
-  scoring job, not an API job, but out of scope here.
+  scoring job, not an API job, but out of scope here. The
+  post-verifier reversal reduces the urgency: under the full pipeline
+  the grid now *agrees* with the Era-2 384 px preference.
 - **Generalisation.** Four map sheets, one configuration, one model, one
   temperature.
 
@@ -405,18 +513,29 @@ pooled point estimate, and recovery of a constructed interaction).
 
 ## Artefacts
 
-- `grid_analysis.json` — every number above, machine-readable; the
-  source for this document.
+- `grid_analysis.json` — every consensus-board number, machine-readable;
+  the source for §§ 2–10 of this document.
 - `sweep.csv` — the full K × corroboration × consensus sweep (228 rows).
 - `per_tile_counts.json` — run-averaged per-tile TP/FP/FN on the carrier
   grid (the bootstrap input).
+- `verifier_analysis.json` — every post-verifier number, machine-readable;
+  the source for § The verifier stage, run.
+- `verifier_sweep.csv` — the full prob_t × k post-verifier sweep
+  (580 rows).
+- `conditions-verified/<cell>/` — the four materialised best-operating-
+  point verified sets with their B = 10,000 BCa evaluations, summarised
+  in `conditions-verified/grid_verified_conditions.json`.
 - `outputs/grid-2026-08-18/scoring/` — deduplicated per-pass detection
   sets in both scopes, the five bounds files, and `prepare_summary.json`
   (footprint audit plus per-pass dedup statistics).
-- Register row: **queued, not yet written.**
-  `results/analyses-manifest.json` was being edited by a concurrent
-  session, so the row for this analysis (classification POST-HOC,
-  E41-class) is left for the session owner to land.
+- `outputs/grid-2026-08-18/verifier/<cell>/` — the four K = 10 union
+  candidate sets (`union_k10.geojson`, per-candidate `vote_count`) and
+  the committed verifier outputs (`verify/probabilities.json`,
+  `verify/run.meta.json`).
+- Register rows: consensus analysis `grid-tilesize-overlap-2026-08-18`
+  (landed 2026-08-19, D16 closed) and post-verifier analysis
+  `grid-postverifier-2026-08-18` (landed 2026-08-24) in
+  `results/analyses-manifest.json`.
 
 ## See also
 
@@ -428,13 +547,16 @@ pooled point estimate, and recovery of a constructed interaction).
 - **Preceding experiment(s)**: `planning/h13-arms-bc-plan-2026-08-17.md`
   — the phase gate and the $0 scoring-chain pattern this analysis
   follows.
-- **Follow-up experiment(s)**: none run. The proposer-verifier
-  comparison is costed above and needs a spend gate; the
-  384-px-versus-512-px reconciliation needs either a T = 1.0 512 px run
-  or an Era-2 re-scoring.
+- **Follow-up experiment(s)**: the proposer-verifier stage, run
+  2026-08-24 (recall-levers programme Phase 1;
+  [§ The verifier stage, run](#the-verifier-stage-run-2026-08-24)).
+  The 384-px-versus-512-px reconciliation at T = 1.0 remains open but
+  de-urgented: the full pipeline already agrees with the Era-2 384 px
+  preference.
 - **Run output directory**: `outputs/grid-2026-08-18/` — the 40
-  committed passes, six recovery passes, two smoke tests, and the
-  derived scoring sets under `scoring/`.
+  committed passes, six recovery passes, two smoke tests, the derived
+  scoring sets under `scoring/`, and the verifier inputs and outputs
+  under `verifier/`.
 - **Working-notes Observations**: none yet; candidates raised at session
   close (the resolver defect, the specificity-saturation reading of tile
   MCC, and overlap as within-pass consensus).
@@ -446,6 +568,48 @@ pooled point estimate, and recovery of a constructed interaction).
   E82 — bootstrap iteration count standardised at 10,000.
 
 ## Changelog
+
+### 2026-08-24 — The verifier stage runs; tile size reverses, overlap survives
+
+**Trigger**: the PI approved the costed verifier stage on 2026-08-24
+($6.33, the four K = 10 unions). `materialise_grid_unions.py` reproduced
+the documented union counts exactly; the carry-forward adversarial text
+verifier scored 9,133/9,133 candidates with zero failures (`8eda1e3a3`);
+`scripts/grid_verifier_analysis.py` thresholded and scored the verified
+sets for $0 (S142, sapphire).
+
+**Both open questions settled** (new section: § The verifier stage, run):
+
+| Claim | Consensus-only (was) | Post-verifier (now) |
+|---|---|---|
+| Tile size at 12.5 % (384 − 512) | −0.0824 [−0.1243, −0.0429] | **+0.0366 [+0.0026, +0.0717], p = 0.034 — REVERSED** |
+| Tile size at 50 % (384 − 512) | −0.0972 [−0.1196, −0.0753] | +0.0147 [−0.0093, +0.0393], p = 0.231 — sign reversed, unresolved |
+| Overlap at 512 px (12.5 % − 50 %) | best-point gap +0.0759 (50 % wins) | −0.0504 [−0.0781, −0.0224], p = 0.0004 — 50 % still wins |
+| Overlap at 384 px (12.5 % − 50 %) | best-point gap +0.0730 (50 % wins) | −0.0285 [−0.0530, −0.0045], p = 0.021 — 50 % still wins |
+| Best cell | 512 px / 50 % F1 0.7518 | **384 px / 50 % F1 0.8961 [0.8657, 0.9198]** |
+
+Surprise 1 (the 512 px challenge to the 384 px preference) is dissolved
+as a truncated-pipeline artefact. Headline and § Unresolved edited in
+place; the superseded § Unresolved wording for the two settled bullets
+is preserved here: they asked whether the tile-size ranking and the
+overlap reversal would survive a verifier, flagged the 384 px recall
+ceilings (0.8925 / 0.9509 vs 0.8715 / 0.9416) as the possible flip
+mechanism (confirmed), and predicted the 50 % advantage would shrink
+towards its recall-ceiling edge under filter-verifier redundancy
+(confirmed: the margin roughly halves).
+
+**What did NOT change**: every consensus-only number (§§ 2–10), both
+single-pass main effects, the unresolved interaction, the audited
+proposer spend, and the two remaining § Unresolved bullets
+(the k = 10 grid-edge question and generalisation).
+
+**Billing reconciliation**: metas $12.5428 list → $6.2714 expected flex
+billed vs $6.33 costed (−$0.06); PI console glance pending.
+
+**Registration**: four `*-k10-verified-p*` conditions (B = 10,000 BCa,
+reproduction gate ≤ 5 × 10⁻⁵) + analysis row
+`grid-postverifier-2026-08-18`. Commits `8f4ecdd82` (scoring chain),
+`8d4ab3fd8` (results), plus this document refresh.
 
 ### 2026-08-19 — B = 10,000 standardisation and condition registration
 

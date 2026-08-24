@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-08-23T12:27:31Z · 338 row(s) · schema v1.0.
+> Generated 2026-08-24T08:26:30Z · 342 row(s) · schema v1.0.
 >
-> **Coverage**: 338 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 342 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -343,6 +343,10 @@
 | grid-2026-08-18::g512-ov256-k10-c2-k8 | consensus | consensus | 8 | 10 | 0.7518 | 0.5897 | 426 |
 | grid-2026-08-18::g384-ov048-k10-c1-k10 | consensus | consensus | 10 | 10 | 0.6475 | 0.3137 | 582 |
 | grid-2026-08-18::g384-ov192-k10-c2-k10 | consensus | consensus | 10 | 10 | 0.7205 | 0.4909 | 488 |
+| grid-2026-08-18::g512-ov064-k10-verified-p0.15-k5 | proposer-verifier | verified | 5 | 10 | 0.8311 | 0.7937 | 383 |
+| grid-2026-08-18::g512-ov256-k10-verified-p0.15-k9 | proposer-verifier | verified | 9 | 10 | 0.8815 | 0.8011 | 382 |
+| grid-2026-08-18::g384-ov048-k10-verified-p0.20-k7 | proposer-verifier | verified | 7 | 10 | 0.8677 | 0.7751 | 358 |
+| grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10 | proposer-verifier | verified | 10 | 10 | 0.8961 | 0.7965 | 400 |
 | h13::arm-a-overlap-12-5 | single-pass | none | — | 3 | 0.558 | 0.1058 | — |
 | h13::arm-b-overlap-25 | single-pass | none | — | 3 | 0.5198 | 0.2579 | — |
 | h13::arm-c-overlap-50 | single-pass | none | — | 3 | 0.4024 | 0.0593 | — |
