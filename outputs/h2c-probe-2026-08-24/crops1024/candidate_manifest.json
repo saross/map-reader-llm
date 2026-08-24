@@ -1,0 +1,136 @@
+{
+  "version": "2.0",
+  "source_geojson": "outputs/h2c-probe-2026-08-24/probe_candidates.geojson",
+  "rasters_dir": "inputs/rasters",
+  "tiles_dir": "/home/shawn/Code/map-reader-llm/inputs/tiles",
+  "padding": 512,
+  "crop_dimensions": "1024x1024",
+  "total_detections": 10,
+  "successful_extractions": 10,
+  "failed_extractions": 0,
+  "raster_crops": 10,
+  "tile_fallback_crops": 0,
+  "missing_sources": [],
+  "candidates": [
+    {
+      "candidate_id": 0,
+      "crop_file": "crops/candidate_00000.png",
+      "source_tile": "K-35-052-4_32635_x1680_y672.png",
+      "centroid_x": 406435.5369777008,
+      "centroid_y": 4701710.97349843,
+      "cropped_from": "raster",
+      "properties": {
+        "vote_count": 6,
+        "source_tile": "K-35-052-4_32635_x1680_y672.png"
+      }
+    },
+    {
+      "candidate_id": 1,
+      "crop_file": "crops/candidate_00001.png",
+      "source_tile": "K-35-052-4_32635_x0_y3360.png",
+      "centroid_x": 398035.9824598672,
+      "centroid_y": 4688317.792116019,
+      "cropped_from": "raster",
+      "properties": {
+        "vote_count": 6,
+        "source_tile": "K-35-052-4_32635_x0_y3360.png"
+      }
+    },
+    {
+      "candidate_id": 2,
+      "crop_file": "crops/candidate_00002.png",
+      "source_tile": "K-35-052-4_32635_x1344_y3360.png",
+      "centroid_x": 404981.6181500446,
+      "centroid_y": 4688905.4948178055,
+      "cropped_from": "raster",
+      "properties": {
+        "vote_count": 10,
+        "source_tile": "K-35-052-4_32635_x1344_y3360.png"
+      }
+    },
+    {
+      "candidate_id": 3,
+      "crop_file": "crops/candidate_00003.png",
+      "source_tile": "K-35-053-3_Elenovo_x0_y1344.png",
+      "centroid_x": 418944.7673794454,
+      "centroid_y": 4697870.10385998,
+      "cropped_from": "raster",
+      "properties": {
+        "vote_count": 10,
+        "source_tile": "K-35-053-3_Elenovo_x0_y1344.png"
+      }
+    },
+    {
+      "candidate_id": 4,
+      "crop_file": "crops/candidate_00004.png",
+      "source_tile": "K-35-053-3_Elenovo_x0_y2352.png",
+      "centroid_x": 419133.2658934336,
+      "centroid_y": 4692912.6177949,
+      "cropped_from": "raster",
+      "properties": {
+        "vote_count": 10,
+        "source_tile": "K-35-053-3_Elenovo_x0_y2352.png"
+      }
+    },
+    {
+      "candidate_id": 5,
+      "crop_file": "crops/candidate_00005.png",
+      "source_tile": "K-35-053-3_Elenovo_x0_y3360.png",
+      "centroid_x": 418426.22256358364,
+      "centroid_y": 4688276.164634173,
+      "cropped_from": "raster",
+      "properties": {
+        "vote_count": 10,
+        "source_tile": "K-35-053-3_Elenovo_x0_y3360.png"
+      }
+    },
+    {
+      "candidate_id": 6,
+      "crop_file": "crops/candidate_00006.png",
+      "source_tile": "K-35-062-2_Rakovski_x0_y0.png",
+      "centroid_x": 314513.8154927521,
+      "centroid_y": 4688054.13114209,
+      "cropped_from": "raster",
+      "properties": {
+        "vote_count": 10,
+        "source_tile": "K-35-062-2_Rakovski_x0_y0.png"
+      }
+    },
+    {
+      "candidate_id": 7,
+      "crop_file": "crops/candidate_00007.png",
+      "source_tile": "K-35-062-2_Rakovski_x0_y2688.png",
+      "centroid_x": 315014.9136723225,
+      "centroid_y": 4674748.023525996,
+      "cropped_from": "raster",
+      "properties": {
+        "vote_count": 10,
+        "source_tile": "K-35-062-2_Rakovski_x0_y2688.png"
+      }
+    },
+    {
+      "candidate_id": 8,
+      "crop_file": "crops/candidate_00008.png",
+      "source_tile": "K-35-062-2_Rakovski_x0_y2688.png",
+      "centroid_x": 315323.89770306076,
+      "centroid_y": 4674319.661988313,
+      "cropped_from": "raster",
+      "properties": {
+        "vote_count": 10,
+        "source_tile": "K-35-062-2_Rakovski_x0_y2688.png"
+      }
+    },
+    {
+      "candidate_id": 9,
+      "crop_file": "crops/candidate_00009.png",
+      "source_tile": "K-35-078-1_Lesovo_x0_y0.png",
+      "centroid_x": 458793.4908720179,
+      "centroid_y": 4648105.096865493,
+      "cropped_from": "raster",
+      "properties": {
+        "vote_count": 9,
+        "source_tile": "K-35-078-1_Lesovo_x0_y0.png"
+      }
+    }
+  ]
+}

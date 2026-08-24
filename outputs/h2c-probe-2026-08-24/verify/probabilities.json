@@ -1,0 +1,69 @@
+{
+  "version": "1.0",
+  "mode": "realtime",
+  "verifier_config": "verify_adversarial-text",
+  "iterations": 1,
+  "total_results": 10,
+  "results": {
+    "candidate_00002": {
+      "mound_probability": 0.2,
+      "reasoning": "While the text label '\u043a\u0443\u0440\u0433. \u0421\u0430\u0434\u044b\u043a\u043e\u0432\u0430-\u041c\u043e\u0433\u0438\u043b\u0430' (Sadykova-Mogila Kurgan) explicitly identifies the location as a burial mound, the cartographic symbol itself is a standard triangulation point. In Soviet mapping, a triangulation point on a mound would typically feature the black triangle enclosed within a circle of radiating brown hachures. Since those hachures are absent, the symbol strictly represents the survey marker, though the toponym confirms the feature's nature.",
+      "best_alternative": "A triangulation point without a mound.",
+      "alternative_evidence": "The symbol consists of a black triangle with a central dot, which is the standard representation for a triangulation point. There are no orange-brown radiating rays (sunburst pattern) surrounding the triangle."
+    },
+    "candidate_00004": {
+      "mound_probability": 0.05,
+      "reasoning": "The symbol is a standard Soviet cartographic representation of a triangulation point (geodetic station). While burial mounds often host these markers, the specific 'mound' symbol (outward-pointing hachures) is entirely absent here. The black triangle is isolated on the contour line.",
+      "best_alternative": "Triangulation point without a mound.",
+      "alternative_evidence": "The symbol at the center (near elevation 139.2) consists of a solid black triangle with a central dot. There are no orange-brown radiating rays or 'sunburst' patterns surrounding the triangle."
+    },
+    "candidate_00000": {
+      "mound_probability": 0.0,
+      "reasoning": "The symbol is a standard Soviet map representation of a triangulation point (geodetic station). While these are often placed on mounds, the specific 'sunburst' or 'gear' pattern of outward-radiating lines required to identify a burial mound is entirely absent here. The symbol is purely a black geometric shape.",
+      "best_alternative": "A triangulation point without a mound.",
+      "alternative_evidence": "The symbol consists of a solid black triangle with a central dot. There are no orange-brown radiating lines (rays) surrounding the triangle to indicate a mound or elevated terrain."
+    },
+    "candidate_00001": {
+      "mound_probability": 0.0,
+      "reasoning": "The symbol is a standard Soviet cartographic representation of a triangulation point. While it is located on a local high point, it lacks the specific radiating hachures required to identify it as a burial mound (kurgan). The presence of the triangle alone, without the 'gear' pattern, indicates a survey marker on natural terrain rather than an artificial mound.",
+      "best_alternative": "Triangulation point without a mound.",
+      "alternative_evidence": "The symbol consists of a solid black triangle with a central dot and an associated elevation number (140.0). There are no orange-brown radiating rays or 'sunburst' patterns surrounding the triangle."
+    },
+    "candidate_00003": {
+      "mound_probability": 1.0,
+      "reasoning": "While the prompt asks for a non-mound interpretation, the visual evidence is overwhelming. The symbol features a clear orange-brown central circle with distinct outward-radiating rays (sunburst pattern). Furthermore, the map explicitly labels the area as a mound group. There are no triangulation triangles or benchmark squares present at the exact center of these specific symbols to suggest they are merely survey points.",
+      "best_alternative": "A cluster of settlement mounds or a specific archaeological site complex.",
+      "alternative_evidence": "The symbol at the center is part of a larger group of similar orange-brown 'sunburst' icons. Below the central cluster, there is explicit Cyrillic text '\u043a\u0443\u0440\u0433. \u0428\u0435\u0441\u0442\u0442\u0435-\u041c\u043e\u0433\u0438\u043b\u0430' (Six Mounds Kurgan)."
+    },
+    "candidate_00005": {
+      "mound_probability": 0.0,
+      "reasoning": "The symbol lacks any outward-radiating rays (sunburst pattern) characteristic of a burial mound. It is a standard cartographic representation for a spot height or a local survey point. There is no orange-brown hachuring or gear-like structure present.",
+      "best_alternative": "Spot height marker",
+      "alternative_evidence": "The symbol consists of a small, hollow blue/black circle with a dot in the center, accompanied by the elevation text '134.3'."
+    },
+    "candidate_00006": {
+      "mound_probability": 0.85,
+      "reasoning": "While the text label '\u043a\u0443\u0440.' explicitly identifies the feature as a kurgan (burial mound), the visual symbol itself is a standard black survey marker. In Soviet cartography, the presence of the text confirms the feature's nature even if the 'sunburst' graphic is small or simplified. However, following the adversarial instruction to find reasons it is NOT a mound, the lack of clear, distinct radiating rays makes it visually indistinguishable from a standard triangulation point at this scale.",
+      "best_alternative": "A triangulation point or spot height marker without a mound.",
+      "alternative_evidence": "The symbol at the center of the crop consists of a small black dot or triangle with an associated elevation number (205,3) and the text '\u043a\u0443\u0440.' (kurgan). However, the visual representation lacks the distinct orange-brown sunburst or gear-like radiating lines required for a mound symbol."
+    },
+    "candidate_00007": {
+      "mound_probability": 0.0,
+      "reasoning": "The symbol is a standard Soviet cartographic representation of a triangulation point. While these are often located on mounds, the specific 'sunburst' or 'gear' pattern of outward-radiating lines required to identify a burial mound is entirely absent here. The symbol is purely a geometric survey marker.",
+      "best_alternative": "A triangulation point without a mound.",
+      "alternative_evidence": "The symbol consists of a solid black triangle with a central dot. There are no orange-brown radiating lines (rays) surrounding the triangle to indicate a mound or elevated terrain."
+    },
+    "candidate_00008": {
+      "mound_probability": 0.1,
+      "reasoning": "The symbol is a standard Soviet map representation for a triangulation point. While it is located on a high point (elevation 170.3), it lacks the specific 'sunburst' or 'gear' pattern of outward-radiating rays required to classify it as being situated on a burial mound.",
+      "best_alternative": "A triangulation point or survey marker without a mound.",
+      "alternative_evidence": "The symbol consists of a solid black triangle with a central dot. There are no orange-brown radiating lines (rays) surrounding the triangle to indicate a mound structure."
+    },
+    "candidate_00009": {
+      "mound_probability": 0.1,
+      "reasoning": "While the triangulation point is located on a topographic high (elevation 224.7), the symbol itself lacks the specific radiating hachures required to indicate a burial mound. The black triangle is a standalone survey marker.",
+      "best_alternative": "Triangulation point without a mound",
+      "alternative_evidence": "The central symbol is a solid black triangle with a central dot, which is the standard representation for a triangulation point. There are no visible orange-brown radiating rays (sunburst pattern) surrounding the triangle."
+    }
+  }
+}
