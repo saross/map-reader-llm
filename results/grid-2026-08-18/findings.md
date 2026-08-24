@@ -1,9 +1,11 @@
 # Tile size × overlap: a clean 2×2 at the proposer stage
 
-> **Last revised**: 2026-08-24 (the verifier stage RAN — PI-approved $6.33
-> spend, 9,133/9,133 candidates, zero failures; the post-verifier board
-> reverses the tile-size ranking and confirms the overlap reversal survives).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-24, twice (the verifier stage RAN — PI-approved
+> $6.33 spend, 9,133/9,133 candidates, zero failures; the post-verifier board
+> reverses the tile-size ranking and confirms the overlap reversal survives —
+> then same-day audit corrections restated the reversal against the
+> like-for-like K = 10 consensus baseline and repaired a stale B = 1,000
+> table). See [§ Changelog](#changelog) for revision history.
 
 **What this is.** A post-hoc (E41-class) 2 × 2 crossing tile size
 (384 px, 512 px) with tile overlap (12.5 %, 50 %), n = 10 proposer
@@ -72,11 +74,11 @@ places, every CI width moves by under 5 %, and no verdict changes.
 
 | Contrast | ΔF1 | CI95 | p | Excludes 0 |
 |---|---:|---|---:|---|
-| Overlap at 512 px (12.5 % − 50 %) | +0.1200 | [+0.0854, +0.1526] | 0.0010 (floor) | yes |
-| Overlap at 384 px (12.5 % − 50 %) | +0.1348 | [+0.1058, +0.1649] | 0.0010 (floor) | yes |
-| Tile size at 12.5 % (384 − 512) | −0.0824 | [−0.1240, −0.0452] | 0.0010 (floor) | yes |
-| Tile size at 50 % (384 − 512) | −0.0972 | [−0.1205, −0.0740] | 0.0010 (floor) | yes |
-| **Interaction** (overlap effect at 512 − at 384) | −0.0148 | [−0.0550, +0.0269] | 0.4880 | **no** |
+| Overlap at 512 px (12.5 % − 50 %) | +0.1200 | [+0.0872, +0.1531] | 0.0001 (floor) | yes |
+| Overlap at 384 px (12.5 % − 50 %) | +0.1348 | [+0.1058, +0.1636] | 0.0001 (floor) | yes |
+| Tile size at 12.5 % (384 − 512) | −0.0824 | [−0.1243, −0.0429] | 0.0001 (floor) | yes |
+| Tile size at 50 % (384 − 512) | −0.0972 | [−0.1196, −0.0753] | 0.0001 (floor) | yes |
+| **Interaction** (overlap effect at 512 − at 384) | −0.0148 | [−0.0552, +0.0268] | 0.4902 | **no** |
 
 **Both main effects are unambiguous; the interaction is not resolved.**
 On single-pass F1 the two factors are additive to within the
@@ -347,38 +349,52 @@ consensus-only board, and the gain is largest exactly where
 consensus-only was worst (the two 384 px cells: +0.220 and +0.176).
 
 **Question 1 — the tile-size ranking does NOT survive: it reverses.**
-Paired tile bootstrap at the best post-verifier operating points,
-B = 10,000, seed 42:
+Paired tile bootstrap, B = 10,000, seed 42. The pre-verifier arm here
+is the **like-for-like baseline**: the registered K = 10 best
+consensus-only operating points scored as single sets on the same
+instrument — *not* the single-pass contrasts of § 3, which
+run-average ten passes and hold a different estimand (each row's
+baseline reproduction is gated at 5 × 10⁻⁴ against the committed
+board).
 
-| Contrast | ΔF1 | CI95 | p | Excludes 0 |
-|---|---:|---|---:|---|
-| Tile size at 12.5 % (384 − 512) | **+0.0366** | [+0.0026, +0.0717] | 0.0340 | **yes** |
-| Tile size at 50 % (384 − 512) | +0.0147 | [−0.0093, +0.0393] | 0.2308 | no |
-| Overlap at 512 px (12.5 % − 50 %) | −0.0504 | [−0.0781, −0.0224] | 0.0004 | yes |
-| Overlap at 384 px (12.5 % − 50 %) | −0.0285 | [−0.0530, −0.0045] | 0.0208 | yes |
-| Interaction | −0.0220 | [−0.0581, +0.0141] | 0.2336 | no |
+| Contrast | K10 consensus baseline | Post-verifier | Post excludes 0 |
+|---|---|---|---|
+| Tile size at 12.5 % (384 − 512) | −0.0284 [−0.0813, +0.0233], p = 0.281 | **+0.0366 [+0.0026, +0.0717], p = 0.034** | **yes** |
+| Tile size at 50 % (384 − 512) | −0.0312 [−0.0695, +0.0052], p = 0.089 | +0.0147 [−0.0093, +0.0393], p = 0.231 | no |
+| Overlap at 512 px (12.5 % − 50 %) | −0.0758 [−0.1204, −0.0310], p = 0.0004 | −0.0504 [−0.0781, −0.0224], p = 0.0004 | yes |
+| Overlap at 384 px (12.5 % − 50 %) | −0.0730 [−0.1185, −0.0284], p = 0.0026 | −0.0285 [−0.0530, −0.0045], p = 0.0208 | yes |
+| Interaction (post-verifier) | — | −0.0220 [−0.0581, +0.0141], p = 0.234 | no |
 
-The consensus-only board had 384 − 512 at **−0.0824** (12.5 %) and
-**−0.0972** (50 %), both excluding zero; post-verifier the sign flips
-at both overlaps and the 12.5 % contrast excludes zero on the other
-side. The mechanism is the one § Unresolved anticipated: 384 px lost
-to 512 px almost entirely on precision, which the verifier recovers,
-while its higher union-recall ceilings (0.8925 / 0.9509 vs
-0.8715 / 0.9416) are the resource the verifier cannot create. This
-**dissolves Surprise 1** — the "512 px challenge" to the study's
-384 px preference was an artefact of the truncated (verifier-less)
-pipeline — and repeats the Era-1 pattern in which the verifier rescued
-256 px (Obs 352): the verifier moves the optimum towards smaller,
-recall-richer tilings.
+Read precisely, the reversal is: **a non-significant 512 px lead at
+the aggregated consensus stage (−0.028 / −0.031, both CIs spanning
+zero) becomes a significant 384 px lead at 12.5 % overlap once the
+verifier runs, and a sign-reversed but unresolved +0.015 at 50 %.**
+The single-pass contrasts (−0.0824 / −0.0972, both excluding zero,
+§ 3) are where 512 px's advantage is strong — but they measure mean
+single-pass performance, and aggregation alone already erodes that
+advantage to non-significance before the verifier flips the sign. The
+mechanism is the one § Unresolved anticipated: 384 px lost to 512 px
+almost entirely on precision, which the verifier recovers, while its
+higher union-recall ceilings (0.8925 / 0.9509 vs 0.8715 / 0.9416) are
+the resource the verifier cannot create. This **dissolves
+Surprise 1** — the "512 px challenge" to the study's 384 px preference
+was an artefact of the truncated (verifier-less) pipeline — and
+repeats the Era-1 pattern in which the verifier rescued 256 px
+(Obs 352): the verifier moves the optimum towards smaller,
+recall-richer tilings. One honest caveat: each arm's operating point
+is F1-selected on the same 487 tiles it is scored on, and the
+post-verifier sweep offers ~4–5× the selection space of the consensus
+sweep; the contrasts condition on that selection.
 
 **Question 2 — the overlap reversal survives.** 50 % overlap wins at
 both tile sizes under the full pipeline (−0.0504 at 512 px,
-p = 0.0004; −0.0285 at 384 px, p = 0.0208). The margin roughly halves
-against the consensus-only board (+0.0759 → +0.0504 at 512 px;
-+0.0730 → +0.0285 at 384 px), which is the partial-redundancy outcome
-§ Unresolved predicted: the corroboration filter and the verifier
-overlap in function but are not interchangeable, and what remains of
-the 50 % advantage tracks its recall-ceiling edge.
+p = 0.0004; −0.0285 at 384 px, p = 0.0208), and it already won at the
+K = 10 consensus baseline (−0.0758, p = 0.0004; −0.0730, p = 0.0026 —
+table above). The margin roughly halves once the verifier runs, which
+is the partial-redundancy outcome § Unresolved predicted: the
+corroboration filter and the verifier overlap in function but are not
+interchangeable, and what remains of the 50 % advantage tracks its
+recall-ceiling edge.
 
 **Consensus and verifier are complements, not substitutes.** Every
 cell's best operating point retains a vote threshold (k ≥ 5 to
@@ -570,6 +586,53 @@ pooled point estimate, and recovery of a constructed interaction).
   E82 — bootstrap iteration count standardised at 10,000.
 
 ## Changelog
+
+### 2026-08-24 (later) — Audit corrections: the like-for-like baseline and a stale table
+
+**Trigger**: the same-day two-lens audit of the scoring chain
+(commits `57b7ad7ad` code, `0a6bde47f` rerun). Two corrections, one
+addition; no post-verifier number changed.
+
+1. **The pre/post framing was not like for like** (audit C1). The
+   earlier entry below — and the section text as first published —
+   benchmarked the post-verifier tile-size contrasts against the
+   single-pass −0.0824 / −0.0972 (both significant), while
+   benchmarking overlap against the K = 10 board. The proper
+   pre-verifier arm for a single aggregated operating point is the
+   registered K = 10 best consensus-only set on the same instrument,
+   now computed and published
+   (`verifier_analysis.json.bootstrap_contrasts_consensus_k10_baseline`):
+
+   | Contrast | Single-pass (was cited) | K10 baseline (now cited) | Post-verifier |
+   |---|---|---|---|
+   | Tile size @ 12.5 % | −0.0824, sig | −0.0284, p = 0.281, NOT sig | +0.0366, p = 0.034, sig |
+   | Tile size @ 50 % | −0.0972, sig | −0.0312, p = 0.089, NOT sig | +0.0147, p = 0.231, ns |
+
+   The sign flip stands; the claim's stated strength does not:
+   aggregation alone had already eroded 512 px's single-pass advantage
+   to non-significance, and the verifier flips the sign from there.
+   § Question 1 is restated accordingly, with a selection-space caveat
+   added.
+2. **The § 3 contrasts table carried B = 1,000 CIs under its
+   B = 10,000 heading** (audit X2) — a leftover from the 2026-08-19
+   re-run that updated the changelog but not the body table. Now the
+   `grid_analysis.json` B = 10,000 values (deltas identical; CI edges
+   move at the third decimal; p floors 0.0010 → 0.0001).
+3. **Chain hardening** (same commits): billing counters, failure and
+   retry counts now derived from the run metas (121 transient retries
+   surfaced, items_failed 0 confirmed at source); the c = 1 union
+   restriction declared on every verified board row; `K` added to the
+   comparator board; `candidate_id` provenance added to the
+   materialised conditions; the reproduction gate now refuses to write
+   any summary artefact on failure. The four candidate manifests — the
+   probability↔feature join witnesses — were committed and the join
+   verified at source over all 9,133 candidates (ids contiguous in
+   feature order; centroids agree to ≤ 0.069 m against 5.6–8.0 m
+   minimum spacing).
+
+**What did NOT change**: every board value, every post-verifier
+contrast, both headline answers, the billing totals, and the
+registered conditions (re-scored identically at B = 10,000).
 
 ### 2026-08-24 — The verifier stage runs; tile size reverses, overlap survives
 
