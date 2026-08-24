@@ -150,3 +150,19 @@ for the GPT-4 semantic-labelling claim. The conflation hypothesis this
 report floated ("suggests the old report took the precision figure and
 labelled it F1") is falsified at source. The ArrowFormer macro-F1 0.930
 loose end remains the only unresolved quantitative item in this report.
+
+## ArrowFormer full-text resolution (2026-08-24)
+
+The PI supplied the SPIE PDF (`10.1117/12.3096237`; Proc. SPIE 14114,
+141141C) and the last unresolved quantitative item CLOSES — with the
+same lesson class as the O'Hara/GMFS resolutions, this time
+PROTOCOL-relative: the paper carries TWO Macro F1 figures on CeyMo.
+**91.66 %** is scored with the CeyMo benchmark's own script and is the
+figure that outperforms the prior SOTA (Swin APT, 90.18 %); **92.96 %**
+(the abstract's headline, ≈ the 0.930 this report carried) adds a
+non-maximum-suppression post-processing pass (IoU 0.3) evaluated on the
+authors' own outputs (§ 4.6, Table 3). Title, four authors (Țarcă,
+Comănac, Coroamă, Măcinic), and the "DEViT is the model, ArrowFormer
+the paper" correction all confirm at source. **Citation guidance**:
+under benchmark-standard scoring, cite 0.917; name the NMS variant if
+citing 0.930. No quantitative loose ends remain in this report.
