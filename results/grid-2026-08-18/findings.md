@@ -424,6 +424,32 @@ materialised and scored at B = 10,000 (BCa) under a reproduction gate
 `*-k10-verified-p*` conditions and the analysis row
 `grid-postverifier-2026-08-18`.
 
+**The incumbents, like for like (stride-programme Phase A,
+2026-08-24).** The study's leading verified cells, clipped to this
+common footprint under own-scope reproduction gates (all four
+reproduce their registered F1@20 m exactly; each loses 5 detections
+to the clip; `incumbents_common_footprint.json`, script
+`grid_incumbent_rescore.py`):
+
+| Set | F1@20 m | F1@30 m | Δ vs 384/50 @20 m (paired, B = 10,000) |
+|---|---:|---:|---|
+| **384 px / 50 % verified (this grid)** | **0.8961** | **0.9034** | — |
+| opmax (16-of-30 HIGH + n = 5 T0.3 verifier) | 0.8842 | 0.9031 | +0.0120 [−0.0135, +0.0371], p = 0.350 |
+| registered headline (16-of-30 HIGH + n = 1 verifier) | 0.8838 | 0.8958 | +0.0123 [−0.0117, +0.0358], p = 0.312 |
+| min11 (min-6of10 + verifier) | 0.8719 | 0.8892 | +0.0242 [−0.0035, +0.0519], p = 0.080 |
+| min6 (min-true-3of5 + verifier) | 0.8623 | 0.8743 | **+0.0339 [+0.0065, +0.0623], p = 0.015** |
+
+On one evaluation, the grid's stride-192 cell is the point-estimate
+leader at both buffers and statistically clears min6, but its edge
+over opmax, the headline, and min11 is within noise: it **joins the
+leading shelf as a tie at roughly a fifth of the incumbents' cost**
+(~$10.7 vs the ~$50-class 30-pass HIGH pipelines), rather than
+dethroning them. Configuration confound noted: the grid cell differs
+from the incumbents in geometry AND proposer (MINIMAL T = 0.7
+brief-text vs HIGH-thinking consensus), so this board motivates the
+stride programme (`planning/stride-programme-2026-08-24.md`) rather
+than settling attribution.
+
 **Scope caveats carried forward.** Four map sheets, one proposer
 configuration, one model, T = 0.7, one verifier configuration at
 n = 1; E41-class post-hoc throughout. The best-F1 operating points are
@@ -586,6 +612,18 @@ pooled point estimate, and recovery of a constructed interaction).
   E82 — bootstrap iteration count standardised at 10,000.
 
 ## Changelog
+
+### 2026-08-24 (later still) — Stride-programme Phase A: the incumbents join the board
+
+**Trigger**: the PI directed the overlap/stride programme
+(`planning/stride-programme-2026-08-24.md`); its $0 Phase A clips the
+incumbent verified sets to this document's common footprint under
+own-scope reproduction gates (all four exact). New § "The incumbents,
+like for like" in the verifier-stage section. Headline: 384/50
+verified leads at both buffers but ties opmax/headline/min11
+statistically and beats min6 (p = 0.015) — a plateau of tied leaders
+with the new geometry at ~1/5 the incumbents' cost. Nothing else in
+this document changed.
 
 ### 2026-08-24 (later) — Audit corrections: the like-for-like baseline and a stale table
 

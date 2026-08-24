@@ -39,7 +39,20 @@ a plateau with a reasonable number of tied leaders; then a 55-map
 proposal goes to the PI, authorised **only if** the programme is
 pushing towards new F1 highs.
 
-## Phase A — make the incumbent bar exact ($0, no gate needed)
+## Phase A — make the incumbent bar exact ($0, no gate needed) — EXECUTED 2026-08-24
+
+**EXECUTED same day** (`scripts/grid_incumbent_rescore.py`;
+`results/grid-2026-08-18/incumbents_common_footprint.json`; all four
+own-scope gates reproduce registered F1@20 m). Verdict: like for
+like, **384/50 verified leads at both buffers (0.8961 / 0.9034) but
+within noise of opmax (+0.0120, p = 0.35), the headline (+0.0123,
+p = 0.31), and min11 (+0.0242, p = 0.080); it significantly beats
+min6 (+0.0339, p = 0.015)**. The GS state at the top is therefore
+already the PI's "plateau of tied leaders" — {384/50, opmax,
+headline, (min11)} — with the new geometry matching the ~$50-class
+pipelines at ~$10.7. **The new-high bar for Phases B/C is
+F1@20 m ≈ 0.90 on the common footprint** (clear 0.8961's CI, or
+break the shelf's ties). Original plan text below.
 
 Re-score the incumbent leaders on the grid's common footprint so the
 "dethrone" comparison is on ONE evaluation: opmax, the registered
