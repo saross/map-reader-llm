@@ -48,12 +48,14 @@ project state.
 > session-count refresh marked [PENDING] in place. Discussion prose
 > stays deferred until earlier sections are written (PI ruling); the
 > natural next write-up step is the PI's voice pass over M.8–M.12 and
-> the two pending items. **New candidate for a verdict** (add to the
-> § 3 pile): the O'Hara 98.2/90.8 finding as a distortion-not-
-> fabrication instance — both figures real, split by CLASS PERSPECTIVE
-> on one confusion matrix; neither chatbot report nor the verifier's
-> two-stage hypothesis nor the web summaries' "validation-phase" gloss
-> had the mechanism until the full text was read. Housekeeping riders:
+> the two pending items. **RESOLVED 2026-08-24 (PI-directed, morning
+> session)**: the O'Hara/GMFS implications are folded into **Seed 8's
+> S140 rider** (corrected area cluster 0.84–0.91, the explicit
+> area→point ladder, GMFS novelty qualifiers, the metric-hygiene
+> inoculation; D.1 move 3 carries the pointer) and registered as
+> **Obs 428** (difficulty gradient) and **Obs 429** (class-/
+> stage-relative headline metrics — the former verdict-pile
+> candidate, now written). Housekeeping riders:
 > three stale self-matching monitor loops from OTHER projects still
 > spin on sapphire (inscriptions ×1 ~65 d; grid_analysis ×2 ~4 d) —
 > kill or keep is Shawn's call; all three machines pip-synced and at
