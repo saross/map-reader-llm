@@ -28694,3 +28694,183 @@ auditing — the same author-blindness result on the code side);
 designer had just written, in prose both humans had confirmed);
 **Obs 352** (the Era-1 verifier rescuing 256 px — the mechanism behind
 the reversal, unaffected by this correction).
+
+## Observation 435: Stride is not the lever — the nine-cell geometry board lands on a plateau, and what the overnight programme bought was cost, not F1 (Session 142 overnight, 2026-08-25)
+
+The stride programme (`planning/stride-programme-2026-08-24.md`) ran
+Phases B and C(part) overnight under the PI's recorded 2026-08-25
+approval trail: five new proposer-verifier geometry cells on the
+Gold-Standard 4-map corpus, all in-family with the grid
+(`detect_brief-text`, gemini-3-flash-preview, MINIMAL, T = 0.7, K = 10
+passes, real-time flex), each K = 10 union verified by the study's
+carry-forward adversarial text verifier (T = 0.0, MINIMAL, n = 1) and
+scored on the grid's common footprint (487 clipped carrier tiles, 428
+references) at 20 m with 30 m alongside. Execution was clean end to
+end: **66,080 proposer + 16,966 verifier calls**, all 50 passes at
+exact manifest coverage against the committed manifests (four one-tile
+recovery fragments — `g384_ov240` run 1, `g512_ov176` run 5,
+`g512_ov320` runs 6 and 10), **16,966 / 16,966** candidates verified
+with **zero failures**, every join gate clean, and ≈ **$51.5 flex**
+all-in (proposers $79.88 list → $39.94 flex; verifiers $23.20 →
+$11.60) inside the ~$63 approved envelope and inside every per-stage
+ceiling (Phase B proposers approved at 41,250 calls / ~$25.6; Phase C
+restricted by the PI to the stride-144 cell at ≤ $17, 24,830 calls;
+verifier ceilings $15.6 and $7.4, measured $8.03 and $3.57).
+
+**The finding — the nine-cell verified board** (best F1@20 m operating
+point per cell, prob_t × k sweep on the common footprint; the four
+unmarked cells are the grid's, re-used unchanged):
+
+| Rank | Cell (JSON key) | Tile px | Overlap | Stride | **F1@20 m** | F1@30 m | P | R | MCC |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | **384 / 33.3 % — new** (`g384_ov128`) | 384 | 33.3 % | 256 | **0.8982** | 0.9031 | 0.9457 | 0.8551 | 0.8022 |
+| 2 | 384 / 50 % (`g384_ov192`) | 384 | 50 % | 192 | **0.8961** | 0.9034 | 0.9275 | 0.8668 | 0.7965 |
+| 3 | 384 / 62.5 % — new, Phase C (`g384_ov240`) | 384 | 62.5 % | 144 | 0.8860 | 0.8907 | 0.8913 | 0.8808 | 0.7910 |
+| 4 | 512 / 50 % (`g512_ov256`) | 512 | 50 % | 256 | 0.8815 | 0.8938 | 0.9346 | 0.8341 | 0.8011 |
+| 5 | 512 / 62.5 % — new (`g512_ov320`) | 512 | 62.5 % | 192 | 0.8800 | 0.8970 | 0.9144 | 0.8481 | 0.8023 |
+| 6 | 256 / 25 % — new (`g256_ov064`) | 256 | 25 % | 192 | 0.8795 | 0.8936 | 0.8806 | 0.8785 | 0.7959 |
+| 7 | 384 / 12.5 % (`g384_ov048`) | 384 | 12.5 % | 336 | 0.8677 | 0.8728 | 0.9525 | 0.7967 | 0.7751 |
+| 8 | 512 / 34.4 % — new (`g512_ov176`) | 512 | 34.4 % | 336 | 0.8655 | 0.8802 | 0.9077 | 0.8271 | 0.7964 |
+| 9 | 512 / 12.5 % (`g512_ov064`) | 512 | 12.5 % | 448 | 0.8311 | 0.8557 | 0.8799 | 0.7874 | 0.7937 |
+
+**Stride is NOT the sole lever — the pure-stride reading dies.** The
+stride ladder the programme card read off the Obs 433 post-verifier
+board (192 → 0.8961, 256 → 0.8815, 336 → 0.8677, 448 → 0.8311, monotone
+in stride) was an artefact of one-cell-per-stride: in the 2 × 2 grid no
+two cells share a stride, so stride density and tile size at fixed
+stride are confounded by construction. Broken apart, tile size keeps its
+role (paired tile bootstrap, B = 10,000, seed 42):
+
+| Iso-stride contrast | Stride | ΔF1@20 m | CI95 | p | Excludes 0 |
+|---|---:|---:|---|---:|---|
+| 512 / 62.5 % − 384 / 50 % | 192 | −0.0161 | [−0.0377, +0.0044] | 0.127 | no |
+| 256 / 25 % − 384 / 50 % | 192 | −0.0166 | [−0.0404, +0.0069] | 0.167 | no |
+| 256 / 25 % − 512 / 62.5 % | 192 | −0.0005 | [−0.0253, +0.0247] | 0.978 | no |
+| 384 / 33.3 % − 512 / 50 % | 256 | +0.0167 | [−0.0057, +0.0406] | 0.151 | no |
+| 512 / 34.4 % − 384 / 12.5 % | 336 | −0.0022 | [−0.0295, +0.0256] | 0.885 | no |
+
+No single iso-stride contrast is significant, but the direction is
+consistent: **at fixed stride, 384 px is at or above every alternative at
+every stride tested, and never below.** The study's long-standing 384 px
+preference survives its sharpest test yet, on the one design that could
+have unconfounded it.
+
+**The optimum is interior, and the stop rule fired.** Descending the
+384 px ladder: 0.8677 (stride 336) → **0.8982** (256) → 0.8961 (192) →
+0.8860 (144). The climb from 336 to 256 is **significant** (+0.0305
+[+0.0052, +0.0564], p = 0.0202); the top is flat (256 vs 192: +0.0020,
+p = 0.862); and the Phase C rung falls away (144 vs 256: −0.0121, p =
+0.297; 144 vs 192: −0.0101, p = 0.360). Density keeps buying union
+recall the whole way down — across the five new cells the K = 10 union
+recall climbs 0.9206 (494 tiles/pass) → 0.9533 (2,483 tiles/pass) while
+union precision collapses 0.199 → 0.078 — but past stride 256 the
+verifier can no longer convert the extra ceiling into F1.
+
+**The exit criterion resolves to PLATEAU, NOT WINNER.** Against the
+PI's bar (Phase A's like-for-like incumbent re-score), the best new cell
+is a dead statistical tie with the grid winner (384/33.3 − 384/50:
++0.0020 [−0.0214, +0.0256], p = 0.862), and at 30 m the top of the board
+is indistinguishable to the third decimal — 0.9031 (384/33.3), 0.9034
+(384/50), 0.9031 (Phase A's opmax incumbent on the same footprint). One
+new cell lands significantly *below* the bar (512/34.4: −0.0306
+[−0.0568, −0.0043], p = 0.0206). **No new F1 high exists on the GS
+corpus from geometry**: the leading shelf stays at ~0.896–0.898 @20 m /
+~0.903 @30 m. Under the PI's decision rule of 2026-08-24 — a 55-map
+proposal is authorised *only if* the programme is pushing towards new F1
+highs — the 55-map condition is **NOT met**, and Phase C's remaining
+cell plus Phases 2/3 of the original card are closed by this outcome.
+
+**What the programme did buy: the cost frontier.** The new
+leader-by-a-hair runs at **820 tiles per pass** against the grid
+winner's **1,398** — the same performance at ~**59 %** of the calls.
+All-in on this footprint (K = 10 proposer + union verifier, flex):
+≈ **$6.6** for 384/33.3, ≈ $10.7 for 384/50, and ~$50-class for the
+HIGH-thinking incumbents that share the shelf at 30 m. 384/33.3 is the
+cheapest known member of the leading shelf by a wide margin, so any
+future 55-map case is a **cost case, not an F1 case**, and this is its
+configuration — a differently-motivated gate from the one the programme
+was chartered under.
+
+**The commissioned recommendation: do not run 256 / 50 % (stride 128).**
+Three independent reasons, per `findings.md` § Recommendation: the stop
+rule has already fired one rung up (stride 144 sits −0.0121 below the
+peak on the *strongest* tile size, so stride 128 descends further on a
+falling surface); the tile size is the wrong one (at stride 192, 256 px
+trails 384 px by −0.0166 and merely ties 512 px); and nothing the cell
+could show would change a decision (a ~$25 run whose optimistic outcome
+is "joins the plateau from below" moves neither the paper's geometry
+claim nor the deployment configuration). The PI's overnight restriction
+to the stride-144 cell alone is vindicated by the outcome: the
+unapproved cell was the one with no decision value.
+
+**Why this matters.** Geometry as a source of F1 on this corpus is now
+exhausted, and the paper can say so from a nine-cell board on one
+evaluation rather than from a four-cell grid: the tile-size question is
+settled in 384 px's favour at fixed stride, the overlap/stride question
+resolves to an interior plateau at strides 192–256, and the remaining
+headroom must come from somewhere other than tiling. It also completes
+the division of labour the recall-levers programme proposed — geometry
+buys the recall ceiling, the verifier buys precision (Obs 433) — by
+showing where that trade saturates: past stride 256 at 384 px, extra
+union recall arrives too dilute to survive verification. And it converts
+Obs 417's stride-as-cost-variable claim from a pricing note into the
+programme's only surviving deliverable.
+
+**Caveats.** Four map sheets, one proposer configuration, one model,
+T = 0.7, one verifier configuration at n = 1 — the scope limits of the
+grid board carry unchanged. Best-F1 operating points are F1-selected on
+the same tiles they are scored on, so the paired contrasts (B = 10,000,
+seed 42) are the inferential instrument and the point estimates are
+register furniture; the "384 px is at or above every alternative" claim
+is a **consistent direction across five contrasts, none individually
+significant**, not a proven ordering. The 30 m plateau reads three
+values that are indistinguishable to the third decimal, which is a
+statement about a tie, not about equivalence established at a stated
+margin. The 256 px cell inherits the Era-1 "verifier rescues 256 px"
+prior (Obs 352) but does not reproduce it at this scope: at stride 192,
+256 px ties 512 px (−0.0005, p = 0.978) and trails 384 px, so the Era-1
+rescue does not extend to making 256 px competitive here. Register rows
+for the five new conditions were still queued at the time of writing
+(`findings.md` § Artefacts; `results/analyses-manifest.json` carries no
+stride rows yet) — a reader checking the register before that lands
+should not read the absence as a gate failure.
+
+Sources: `results/stride-2026-08-25/findings.md` (board, the three
+questions, cost frontier, the 256/50 recommendation, method and gates;
+original publication 2026-08-25);
+`results/stride-2026-08-25/stride_verifier_analysis.json`
+(`generated_at_utc` 2026-08-24T21:26:10Z — boards, union scores, the
+eleven paired contrasts, verifier billing per cell);
+`results/stride-2026-08-25/stride_verifier_sweep.csv` (750-row
+prob_t × k sweep); `results/stride-2026-08-25/conditions-verified/<cell>/`
+(five D16-pattern materialisations with `eval/`);
+`outputs/stride-phaseb-2026-08-25/` and
+`outputs/stride-phasec-2026-08-25/` (50 passes + 4 recovery fragments,
+prepared dedup passes, unions, crops manifests, verifier outputs);
+`inputs/stride-phaseb-2026-08-25/` (committed tile manifests — 494 /
+820 / 1,403 / 1,408 / 2,483 tiles per pass, plus the four one-tile
+recovery manifests); `planning/stride-programme-2026-08-24.md`
+(design, exit criterion, PI approval trail, and the 2026-08-25 changelog
+entry recording the plateau outcome);
+`results/grid-2026-08-18/incumbents_common_footprint.json` (Phase A, the
+incumbent bar this board is measured against). Commits `8083fce0a` and
+`b29deaad6` (tile manifests), `368f0df68` and `52762ca30` (Phase B
+driver and the v2 `--tile-size` fix), `e1c3e8381` and `ad8ce112c`
+(proposer data), `0746a911c` and `8bb876f8c` (dedup + unions),
+`9d93a02b2` (verifier outputs), `b6702ef26` and `74f3070c6` (scoring
+chain and board), `21b37bf8a` (findings), `568212606` (card update),
+`69bdc18b3` (register-ready evaluations). Related: **Obs 433** (the grid
+post-verifier board — its cells and contrasts stand unchanged and supply
+four of the nine rows here; what this Obs supersedes is the *stride
+ladder* read off that board, which cannot survive the iso-stride
+decomposition); **Obs 434** (the baseline-comparability rider — its
+discipline is applied throughout here: every claim rests on a
+like-for-like paired contrast at a single aggregated operating point,
+never on a run-averaged comparator); **Obs 352** (the Era-1 adversarial
+verifier rescuing 256 px — treated as hypothesis rather than
+expectation by the card, and not reproduced at this scope);
+**Obs 417** (stride as the cost variable — vindicated as the *cost*
+story, which is now the programme's whole surviving yield, rather than
+the quality story the ladder briefly suggested); **Obs 179** (the
+original 384 px preference, which the iso-stride design tests directly
+and leaves standing).
