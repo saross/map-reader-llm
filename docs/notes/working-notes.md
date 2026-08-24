@@ -28436,3 +28436,141 @@ replacement of the sequential rule this coverage check now validates);
 re-implementation gate is an instance of); **Obs 431** (the same
 S138-handoff-held-over provenance and the same measurement-beats-audit-
 after lesson, applied to input vintage rather than inferential coverage).
+
+## Observation 433: The grid's tile-size ranking reverses under the verifier while the overlap reversal survives — and consensus and verifier are complements (Session 142, 2026-08-24)
+
+Phase 1 of the recall-levers programme, executed. The PI approved the
+costed verifier stage on 2026-08-24 under an exact-reproduction stop
+rule; the study's carry-forward adversarial text verifier
+(`verify_adversarial-text`, gemini-3-flash-preview, T = 0.0, MINIMAL,
+n = 1) scored **9,133 / 9,133** union candidates with **zero failures**
+(data commit `8eda1e3a3`). Thresholding and scoring then cost **$0**:
+`scripts/grid_verifier_analysis.py` re-joined the committed
+probabilities to the committed K = 10 unions and swept every achievable
+(prob_t, k) operating point on the grid's own common 487-tile footprint
+at 20 m (580 rows), run on sapphire.
+
+**The finding — the post-verifier board** (best F1@20 m per cell; CI95
+BCa at B = 10,000 from each cell's registered evaluation):
+
+| Rank | Cell | prob_t | k | n | P | R | **F1** | CI95 | Tile MCC |
+|---:|---|---:|---:|---:|---:|---:|---:|---|---:|
+| 1 | 384 px / 50 % | ≥ 0.15 | ≥ 10 | 400 | 0.9275 | 0.8668 | **0.8961** | [0.8657, 0.9198] | 0.7965 |
+| 2 | 512 px / 50 % | ≥ 0.15 | ≥ 9 | 382 | 0.9346 | 0.8341 | **0.8815** | [0.8518, 0.9073] | 0.8011 |
+| 3 | 384 px / 12.5 % | ≥ 0.20 | ≥ 7 | 358 | 0.9525 | 0.7967 | **0.8677** | [0.8335, 0.8957] | 0.7751 |
+| 4 | 512 px / 12.5 % | ≥ 0.15 | ≥ 5 | 383 | 0.8799 | 0.7874 | **0.8311** | [0.7938, 0.8624] | 0.7937 |
+
+The verifier lifts every cell's best F1 by **+0.130 to +0.220** over the
+consensus-only board, and the gain is largest exactly where
+consensus-only was worst — the two 384 px cells, at +0.220 and +0.176.
+The consensus-only board's 384 px tile-MCC pathology (specificity
+saturated at 0.17) dissolves with it: all four cells now sit at MCC
+0.775–0.801, and the F1 and MCC rankings broadly agree.
+
+**Tile size REVERSES.** Paired tile bootstrap at the best post-verifier
+operating points, B = 10,000, seed 42:
+
+| Contrast | ΔF1 | CI95 | p | Excludes 0 |
+|---|---:|---|---:|---|
+| Tile size at 12.5 % (384 − 512) | **+0.0366** | [+0.0026, +0.0717] | 0.0340 | **yes** |
+| Tile size at 50 % (384 − 512) | +0.0147 | [−0.0093, +0.0393] | 0.2308 | no |
+| Overlap at 512 px (12.5 % − 50 %) | −0.0504 | [−0.0781, −0.0224] | 0.0004 | yes |
+| Overlap at 384 px (12.5 % − 50 %) | −0.0285 | [−0.0530, −0.0045] | 0.0208 | yes |
+| Interaction | −0.0220 | [−0.0581, +0.0141] | 0.2336 | no |
+
+The consensus-only board had 384 − 512 at **−0.0824** [−0.1243, −0.0429]
+(12.5 %) and **−0.0972** [−0.1196, −0.0753] (50 %), both excluding zero.
+Post-verifier the sign flips at both overlaps, and the 12.5 % contrast
+excludes zero on the *opposite* side; the 50 % contrast reverses sign but
+does not clear zero, and stays unresolved. This **dissolves the grid's
+Surprise 1** — the "512 px challenge" to the study's 384 px preference
+was an artefact of the truncated, verifier-less pipeline. The mechanism
+is the one the findings doc's § Unresolved nominated in advance: 384 px
+lost to 512 px almost entirely on *precision*, which the verifier
+recovers, while the 384 px cells' higher union-recall ceilings
+(0.8925 / 0.9509 against 0.8715 / 0.9416) are the resource a verifier
+cannot create.
+
+**Overlap SURVIVES, at roughly half the margin.** 50 % overlap wins at
+both tile sizes under the full pipeline (−0.0504, p = 0.0004 at 512 px;
+−0.0285, p = 0.0208 at 384 px), but the best-point margin roughly halves
+against consensus-only (+0.0759 → 0.0504 at 512 px; +0.0730 → 0.0285 at
+384 px). That is the partial-redundancy outcome § Unresolved predicted:
+the within-pass corroboration filter and the verifier overlap in
+function without being interchangeable, and what survives of the 50 %
+advantage tracks its recall-ceiling edge rather than its precision edge.
+
+**Consensus and verifier are complements, not substitutes.** Every
+cell's best operating point retains a vote threshold (k ≥ 5 to k ≥ 10)
+*on top of* the probability threshold. The pure-verifier board — k = 1,
+best prob_t, the verifier as the only precision stage — tops out at
+**0.8153** (384 px / 12.5 %, prob_t ≥ 0.2) and trails the stacked
+optimum in every cell, by 0.052 to 0.203. Handing the verifier the raw
+union and letting votes and probability threshold jointly is what buys
+the board above.
+
+**Why this matters.** This is the recall-levers programme's Phase 1
+result, and it reconciles the grid with the rest of the study: under the
+full pipeline the grid now *agrees* with the Era-2 384 px preference
+(Obs 179) instead of challenging it, which removes the main reason to
+re-run the 512 px geometry at Era-2's T = 1.0. It also repeats, at a new
+tile-size pair, the Era-1 pattern in which the verifier rescued 256 px
+(Obs 352): a downstream precision stage moves the optimum towards
+smaller, recall-richer tilings. The design principle this sharpens for
+the paper is that geometry should be spent on recall and precision
+bought downstream — a proposer board read without its verifier can rank
+geometries backwards, because it scores a resource (recall ceiling) as
+though it were the deliverable (F1).
+
+**Method and gates.** E41-class post-hoc throughout.
+`materialise_grid_unions.py` rebuilt the four K = 10 unions through the
+sweep's own loader and clusterer, gated on the documented counts
+(1,402 / 2,585 / 1,827 / 3,319 — all exact); the join gate requires
+contiguous candidate keys, carrier-tile reassignment, and each
+unthresholded union to reproduce its committed sweep precision, recall,
+and F1 to within **1e-6** (`grid_verifier_analysis.py:236-245`); the four
+registered conditions reproduce their swept F1 to within **5 × 10⁻⁵** at
+B = 10,000 BCa. Billing reconciles: the four verifier `run.meta.json`
+cost blocks sum to **$12.5428 list**, and Gemini real-time flex bills at
+half list, so the expected billed figure is **$6.2714** ($0.000687/call)
+against the costed $6.33 ($0.000693/call) — a −$0.06 variance.
+
+**Caveats.** Four map sheets, one proposer configuration, one model,
+T = 0.7, one verifier configuration at n = 1 — the same scope limits the
+consensus board carried, plus a second single-configuration stage. The
+best-F1 operating points are selected on the same ground truth they are
+scored on, so the paired contrasts are the significance instrument and
+the single-cell CIs are register furniture, not inference. Both 384 px
+cells still peak at the grid edge k = 10, so whether the consensus
+optimum is interior at 384 px remains open — the grid cannot separate
+"optimum beyond K = 10" from "flat F1 surface". And the 50 % tile-size
+contrast reversed sign without clearing zero: the reversal is
+established at 12.5 % overlap, and merely not contradicted at 50 %.
+
+Sources: `results/grid-2026-08-18/verifier_analysis.json` (board,
+contrasts, gates, billing; `generated_at_utc`
+2026-08-24T08:21:53Z); `results/grid-2026-08-18/findings.md`
+§ "The verifier stage, run (2026-08-24)" and its 2026-08-24 changelog
+entry; `results/grid-2026-08-18/verifier_sweep.csv` (580 rows);
+`results/grid-2026-08-18/conditions-verified/<cell>/`;
+`scripts/grid_verifier_analysis.py`; register row
+`grid-postverifier-2026-08-18` and the four `*-k10-verified-p*`
+conditions in `results/analyses-manifest.json`;
+`planning/recall-levers-programme-2026-08-19.md` § "Phase 1 — verifier
+on the existing grid … EXECUTED 2026-08-24"; commits `8eda1e3a3`
+(verifier data), `8f4ecdd82` (scoring chain), `8d4ab3fd8` (results), and
+`72307cdc9` (register + findings addendum). Related: **Obs 416** (the
+consensus-only grid and H13 boards, whose explicit caveat was that the
+whole finding is conditional on "no precision stage downstream … until
+Phase 1 lands" — this Obs is that landing, and it confirms Obs 416's
+corroboration-and-verifier complementarity conjecture while overturning
+its "tile size never reverses" reading); **Obs 352** (the adversarial
+verifier rescuing 256 px in Era 1 — the same mechanism at a different
+tile-size pair); **Obs 179** (the original 384 px preference, which the
+full pipeline now restores); **Obs 359** (the diversity dividend not
+surviving the verifier, and pool recall ceiling as the binding
+constraint — the same ceiling logic, here favouring the smaller tile);
+**Obs 355** (the 1-of-5 union as the worst verifier input — the
+volume-versus-discrimination reason a vote threshold still helps at
+k ≥ 5); **Obs 417** (stride as the cost variable — the price side of the
+geometry choice this Obs re-ranks on quality).
