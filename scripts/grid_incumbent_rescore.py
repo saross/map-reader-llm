@@ -56,7 +56,8 @@ import numpy as np
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.grid_analysis import CRS, as_gdf, score  # noqa: E402
+from scripts.grid_analysis import CRS, as_gdf, paired_bootstrap, score  # noqa: E402
+from scripts.grid_verifier_analysis import per_tile_counts  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -87,6 +88,16 @@ INCUMBENTS: dict[str, tuple[str, float]] = {
 }
 
 GATE_TOL = 5e-4
+
+#: The grid's best verified cell, the comparison target for the paired
+#: contrasts (registered condition g384-ov192-k10-verified-p0.15-k10).
+GRID_WINNER = (
+    PROJECT_ROOT
+    / "results/grid-2026-08-18/conditions-verified/g384_ov192/detections.geojson")
+
+#: Decision 10 instrument at the E82 count.
+BOOTSTRAP = 10_000
+SEED = 42
 
 
 class ReproductionError(RuntimeError):
@@ -166,6 +177,8 @@ def main() -> int:
                 len(own_bounds), len(common_bounds))
 
     rows = []
+    grid_winner = gpd.read_file(GRID_WINNER)
+    pt_winner = per_tile_counts(grid_winner, common_bounds, gdf_ref)
     for condition_id, (rel_path, anchor) in INCUMBENTS.items():
         row = rescore_incumbent(
             condition_id, PROJECT_ROOT / rel_path, anchor,
@@ -174,6 +187,21 @@ def main() -> int:
             "%-55s own-scope gate OK (%.4f, clip dropped %d of %d)",
             condition_id.split("::")[1], row["own_scope_reproduced_f1_at_20m"],
             row["n_dropped_by_clip"], row["n_detections_own_scope"])
+
+        # Paired contrast vs the grid winner: both are single sets on the
+        # same carrier, so the Decision 10 instrument applies directly.
+        inc = gpd.read_file(PROJECT_ROOT / row["detections"]).to_crs(CRS)
+        centroids = np.asarray([[g.x, g.y] for g in inc.geometry], dtype=float)
+        pt_inc = per_tile_counts(as_gdf(centroids, common_bounds),
+                                 common_bounds, gdf_ref)
+        contrast = paired_bootstrap(pt_winner, pt_inc, BOOTSTRAP, seed=SEED)
+        row["paired_contrast_vs_grid_winner_20m"] = contrast
+        logger.info(
+            "%-55s vs 384/50: dF1=%+.4f CI95 [%+.4f, %+.4f] p=%.4f %s",
+            condition_id.split("::")[1], contrast["delta"],
+            contrast["ci_lower"], contrast["ci_upper"],
+            contrast["p_two_sided"],
+            "EXCLUDES 0" if contrast["excludes_zero"] else "includes 0")
         rows.append(row)
 
     OUT_PATH.write_text(json.dumps({
