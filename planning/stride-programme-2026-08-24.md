@@ -70,22 +70,29 @@ the grid (detect_brief-text, MINIMAL, T = 0.7, K = 10, adversarial
 text verifier n = 1 over the K = 10 union, common-footprint scoring,
 B = 10,000):
 
-| New cell | Stride | Iso-stride partner(s) already run | Est. tiles/pass | Est. K = 10 proposer flex | Est. verifier flex |
+| New cell | Stride | Iso-stride partner(s) already run | Tiles/pass (EXACT) | K = 10 proposer flex | Est. verifier flex |
 |---|---:|---|---:|---:|---:|
-| 512 px / 62.5 % | 192 | 384/50 (0.8961) | ~1,490 | ~$9.0 | ~$2.5 |
-| 256 px / 25 % | 192 | 384/50, 512/62.5 | ~1,490 | ~$9.0 | ~$3.5 |
-| 384 px / 33.3 % | 256 | 512/50 (0.8815) | ~840 | ~$5.1 | ~$1.5 |
-| 512 px / 34.4 % | 336 | 384/12.5 (0.8677) | ~490 | ~$3.0 | ~$1.0 |
+| 512 px / 62.5 % | 192 | 384/50 (0.8961) | **1,408** | ~$9.05 | ~$2.3 |
+| 256 px / 25 % | 192 | 384/50, 512/62.5 | **1,403** | ~$8.4 | ~$2.6 |
+| 384 px / 33.3 % | 256 | 512/50 (0.8815) | **820** | ~$4.9 | ~$1.7 |
+| 512 px / 34.4 % | 336 | 384/12.5 (0.8677) | **494** | ~$3.2 | ~$1.2 |
 
-Tile counts from the grid-verified invariant tiles × stride² ≈ 55 M
-(edge effects ±5 %); proposer $/call from the grid's audited flex
-range $0.000597–0.000643; verifier estimated from the grid's measured
-union-size-to-cost ratios (256 px unions run larger). **Phase B
-aggregate: ~26,000 proposer calls + ~12,000 verifier calls ≈ $34–38
-flex**, a few hours wall-clock at grid-run concurrency. Settles: at
-fixed stride, does tile size matter at all post-verifier — i.e. is
-stride the real lever? The stride-192 trio is the headline cell of the
-design (three tile sizes, one stride).
+Tile counts are EXACT (2026-08-25): the four tilings were generated
+and their footprint-majority manifests committed
+(`inputs/stride-phaseb-2026-08-25/`, Era-2 384 px bounds, the grid's
+rule; the tiles × stride² invariant reproduces the grid counts to
+±1 %). Proposer $/call from the grid's audited flex range
+$0.000597–0.000643 (256 px unmeasured for this config — the $8.4 uses
+$0.0006 and is the softest number in the table); verifier estimated
+from the grid's measured union-per-tile ratios at $0.000687/call
+(±30 %). **Phase B aggregate, corrected from the original estimate:
+41,250 proposer calls + ~11,000 verifier calls ≈ $33–37 flex
+(~$67–74 list on the metas)**, an evening of wall-clock at grid-run
+concurrency. (The original text's "~26,000 proposer calls" was an
+arithmetic slip — the dollar estimate was nonetheless right.)
+Settles: at fixed stride, does tile size matter at all post-verifier —
+i.e. is stride the real lever? The stride-192 trio is the headline
+cell of the design (three tile sizes, one stride).
 
 ## Phase C — extend the ladder to the plateau (gated API)
 
