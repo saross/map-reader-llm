@@ -3430,6 +3430,17 @@ or formally close H6 as not-executed is scheduled for the S134
 unexecuted-set adjudication
 (`planning/s134-d17-reconciliation-block-2026-08-17.md`).
 
+**RULING (PI, 2026-08-24): disclose-only — H6 is formally CLOSED as
+not-executed; the ~US$48 re-run will not be run.** Rationale: the
+scientific question the transfer test would have asked is answered by
+the post-hoc analyses — the S135 verification round falsified the
+confound premise (the full Pro 2×2 exists; temperature is the driver,
+thinking null; A-06/A-07), and A-09 closed the cost-effectiveness
+gate against Pro on the Flash frontier — so the spend would buy a
+cell no claim needs. The `not-executed` register row, this erratum,
+and the outcome table's disclosed exclusion from the m = 7 family
+BH-FDR remain the record.
+
 ---
 
 ### E75: H13 (overlap/stride) — registered in-scope exploratory contrast silently dropped; arms B and C never executed
