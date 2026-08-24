@@ -557,9 +557,11 @@ pooled point estimate, and recovery of a constructed interaction).
   committed passes, six recovery passes, two smoke tests, the derived
   scoring sets under `scoring/`, and the verifier inputs and outputs
   under `verifier/`.
-- **Working-notes Observations**: none yet; candidates raised at session
-  close (the resolver defect, the specificity-saturation reading of tile
-  MCC, and overlap as within-pass consensus).
+- **Working-notes Observations**: **Obs 433** (the post-verifier
+  tile-size reversal and overlap survival, 2026-08-24). Consensus-board
+  candidates raised at S136 close (the resolver defect, the
+  specificity-saturation reading of tile MCC, and overlap as
+  within-pass consensus).
 - **Decisions / Errata**: E41 — post-hoc analysis classification.
   E72 — the partial-coverage guard the recovery merge exists to satisfy.
   E80 — missing within-pass deduplication in the scoring path.
