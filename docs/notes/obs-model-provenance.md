@@ -1,13 +1,16 @@
 ---
 priority: 3
 scope: always
-title: "Observation Model Provenance (DRAFT)"
+title: "Observation Model Provenance"
 audience: "researchers and future instances"
 ---
 
 # Observation Register — Model Provenance Record
 
-> **⚠ DRAFT — attribution boundaries pending PI confirmation against release dates.**
+> **Last revised**: 2026-08-24 — **SETTLED**. Boundaries archive-resolved,
+> census closed (HIGH 380 · MEDIUM 48 · LOW 0), release dates sourced and
+> PI-confirmed, § 6 conflicts adjudicated. This document is citable
+> provenance.
 >
 > **Correction (2026-08-22)**: this draft's "12-week transcript hole
 > (2026-05-13 → 08-06)" and "no corroborating API model id for Opus
@@ -30,17 +33,23 @@ audience: "researchers and future instances"
 > passed — § 4.1), the PI adopted the corrected 4.6→4.7 boundary at
 > Obs 258 (§ 6.6). The census stands at **HIGH 380 · MEDIUM 48 ·
 > LOW 0**; the era table, § 3, and § 4 carry the re-graded values.
-> The document remains DRAFT only for the § 3
-> `[PI to confirm: release date]` markers.
-> Every switch boundary below is *derived from repository evidence only* (session transcripts,
-> explicit prose statements, and git trailers). No model release date has been asserted from an
-> instance's own background knowledge, because several of these releases post-date model training
-> cutoffs and an invented date would seed exactly the class of confabulation this project has spent
-> months clearing. Each boundary therefore carries a `[PI to confirm: release date]` marker. Do not
-> cite this document as settled provenance until those markers are resolved.
+> **Settlement (2026-08-24)**: the six § 3 release-date markers were
+> resolved with public release dates fetched from sourced announcements
+> and PI-confirmed in one pass; § 6.1's three "first Fable session"
+> claims were adjudicated (S111–112 is the first). Method discipline,
+> preserved for the record: every boundary was derived from repository
+> and archive evidence only, and no release date was ever asserted from
+> an instance's own background knowledge — dates entered only from
+> fetched, cited sources, because several releases post-date model
+> training cutoffs and an invented date would seed exactly the class of
+> confabulation this project has spent months clearing.
 
 **Created**: 2026-08-21. **Covers**: Observations 1–425 (428 headings) in
 [`docs/notes/working-notes.md`](working-notes.md), as at commit `52df62c7d`.
+**Post-exercise rider (2026-08-24)**: Obs 426–429 postdate the attribution
+exercise — all four from Session 140 (2026-08-22 → 24), session model
+`claude-fable-5` (the session's own identity; its transcript archives at
+session end), writing agent Sonnet 5 via `obs-writer` for all four.
 
 ---
 
@@ -104,18 +113,19 @@ read as *stints*, not a one-way switch.
 
 ## 3. Inferred switch boundaries — for PI confirmation
 
-The following are **first-appearance dates in this repository**, not release dates. The PI switched
-to each new model close to its release, so these should be within a day or so of the true release —
-but that inference is his to confirm, and the record must not manufacture the dates.
+First-appearance dates in this repository, now paired with **public release dates fetched from
+sourced announcements and PI-confirmed on 2026-08-24**. The close-adoption inference held: every
+repo first appearance trails its public release by one to three days, except the deliberate
+Phase-2 platform reset that adopted Opus 4.5 four weeks after release.
 
 | Transition | Last evidence of old model | First evidence of new model | Boundary sharpness |
 |---|---|---|---|
-| → **Opus 4.5** | — | transcript 2025-12-22; trailer 2025-12-23 15:35 (`156a9f3e0`) | Coincides with the "Phase 2 reset" from Antigravity to Claude Code. `[PI to confirm: release date]` |
-| Opus 4.5 → **Opus 4.6** | trailer 2026-02-05; transcript 2026-02-06 (part-day) | transcript + trailer 2026-02-06 | Same-day handover, sharp. `[PI to confirm: release date]` |
-| Opus 4.6 → **Opus 4.7** | archived session `b089991e`, `claude-opus-4-6` throughout its 2026-04-16T05:56 → 04-18T14:04 UTC span | archived transcript `claude-opus-4-7` from 2026-04-18T**00:17** UTC (10:17 AEST) | **ARCHIVE-RESOLVED to the minute** and PI-adopted 2026-08-24 (§ 6.6): the trailer flip at 04-17 20:20 AEST (`09fe46a7f`) preceded the model switch and is the record's outlier. Boundary Obs 258. `[PI to confirm: release date]` |
-| Opus 4.7 → **Opus 4.8** | archived `claude-opus-4-7` sessions to 2026-05-29 | archived `claude-opus-4-8` from the 05-29 transition day; trailer `Claude Opus 4.8 (1M context)` 2026-05-29 **22:49** (`3a17575fd`) | Transcript-corroborated (the 2026-08-23 re-grade resolved § 6.3's "trailer-only" premise). `[PI to confirm: release date]` |
-| Opus 4.8 → **Fable 5** | archived `claude-opus-4-8` to 2026-06-09 | archived `claude-fable-5` on the 06-10 transition day; trailer `Claude Fable 5` 2026-06-10 | Sharp, transcript-corroborated (the "store gap" was the wrong-store artefact). `[PI to confirm: release date]` |
-| → **Opus 5** | — | archived `claude-opus-5` transcript 2026-07-27; trailer `Claude Opus 5 (1M context)` same day; `session-reflection.md:9113–9114` | Opus 5 **post-dates** Fable 5 in this project by ~7 weeks. `[PI to confirm: release date]` |
+| → **Opus 4.5** | — | transcript 2025-12-22; trailer 2025-12-23 15:35 (`156a9f3e0`) | Coincides with the "Phase 2 reset" from Antigravity to Claude Code. **Released 2025-11-24** (hidekazu-konishi.com Anthropic model release timeline, fetched 2026-08-24); adoption ~4 weeks later was the deliberate platform reset, not release-chasing. `[PI-confirmed 2026-08-24]` |
+| Opus 4.5 → **Opus 4.6** | trailer 2026-02-05; transcript 2026-02-06 (part-day) | transcript + trailer 2026-02-06 | Same-day handover, sharp. **Released 2026-02-05** (hidekazu-konishi.com Anthropic model release timeline, fetched 2026-08-24; corroborated by the February 2026 system card) — repo adoption next day. `[PI-confirmed 2026-08-24]` |
+| Opus 4.6 → **Opus 4.7** | archived session `b089991e`, `claude-opus-4-6` throughout its 2026-04-16T05:56 → 04-18T14:04 UTC span | archived transcript `claude-opus-4-7` from 2026-04-18T**00:17** UTC (10:17 AEST) | **ARCHIVE-RESOLVED to the minute** and PI-adopted 2026-08-24 (§ 6.6): the trailer flip at 04-17 20:20 AEST (`09fe46a7f`) preceded the model switch and is the record's outlier. Boundary Obs 258. **Released 2026-04-16** (hidekazu-konishi.com Anthropic model release timeline, fetched 2026-08-24) — which explains the trailer outlier: the CLI's naming updated during S70 on the 17th, two days before the session actually switched. `[PI-confirmed 2026-08-24]` |
+| Opus 4.7 → **Opus 4.8** | archived `claude-opus-4-7` sessions to 2026-05-29 | archived `claude-opus-4-8` from the 05-29 transition day; trailer `Claude Opus 4.8 (1M context)` 2026-05-29 **22:49** (`3a17575fd`) | Transcript-corroborated (the 2026-08-23 re-grade resolved § 6.3's "trailer-only" premise). **Released 2026-05-28** (hidekazu-konishi.com Anthropic model release timeline, fetched 2026-08-24) — repo adoption next day. `[PI-confirmed 2026-08-24]` |
+| Opus 4.8 → **Fable 5** | archived `claude-opus-4-8` to 2026-06-09 | archived `claude-fable-5` on the 06-10 transition day; trailer `Claude Fable 5` 2026-06-10 | Sharp, transcript-corroborated (the "store gap" was the wrong-store artefact). **Released 2026-06-09** (anthropic.com/news/claude-fable-5-mythos-5, fetched 2026-08-24) — repo adoption next day. `[PI-confirmed 2026-08-24]` |
+| → **Opus 5** | — | archived `claude-opus-5` transcript 2026-07-27; trailer `Claude Opus 5 (1M context)` same day; `session-reflection.md:9113–9114` | Opus 5 **post-dates** Fable 5 in this project by ~7 weeks. **Released 2026-07-24** (hidekazu-konishi.com Anthropic model release timeline, fetched 2026-08-24) — first repo use 07-27, the post-travel return. `[PI-confirmed 2026-08-24]` |
 
 A ~5-week near-hiatus separates 2026-06-24 from 2026-07-26 (one commit, 2026-07-15). Whether a model
 switch happened inside that window is unknowable from repo evidence.
@@ -317,6 +327,15 @@ The repository asserts, in five places, that three *different* sessions were the
   local context rather than checked at source. That is the same failure shape the register itself
   documents at Obs 423 and Obs 424.
 
+**ADJUDICATED (PI, 2026-08-24).** **S111–112 (2026-06-10/11) is the first Fable session**: the
+archive's first `claude-fable-5` transcript lands on 2026-06-10 (the 4.8→Fable transition day in
+§ 4.1's day-map), agreeing with the first trailer and the era table, one day after Fable 5's public
+release (2026-06-09, anthropic.com). The S119 claim is read as scoped by its own qualifier — the
+first Fable session *of the cross-model verification programme* — and the S138 claim is CORRECTED,
+with the hypothesised mechanism (local-context reconstruction, the Obs 423/424 failure shape)
+standing as the explanation. Per the append-only rule the correction lives in the closing register
+entry minted at settlement (§ 7 step 6), not in edits to the three original statements.
+
 ### 6.2 Fourteen Observations carry a stale `Opus 4.7` trailer
 
 The brief named two corrupt commits. There are **thirteen**, spanning two separate windows; twelve
@@ -429,20 +448,25 @@ archive-confirmed Opus 4.6.
 
 ## 7. How to finalise
 
-1. **PI confirms the switch boundaries** in [§ 3](#3-inferred-switch-boundaries--for-pi-confirmation)
-   against actual release dates, resolving each `[PI to confirm: release date]` marker. Where a
-   release date and the repo's first-appearance date differ by more than a day or two, the era
-   boundary should move to whichever the PI judges correct, and the reason should be noted inline.
-2. **PI adjudicates the three "first Fable session" claims** ([§ 6.1](#61-three-mutually-exclusive-first-fable-session-claims)).
-   Because the register and the reflections set are append-only, the correction belongs in a
-   *new* rider entry — not an edit to the three original statements.
-3. **PI rules on "Opus 4.8"** ([§ 6.3](#63-opus-48-has-no-corroborating-api-model-id)) — as of
-   2026-08-23 only the release-date half remains; the model id is archive-corroborated.
-4. **PI rules on the corrected 4.6→4.7 boundary** ([§ 6.6](#66-the-4647-era-boundary-is-nine-observations-early)):
-   adopting Obs 258 re-attributes Obs 249–257 to Opus 4.6 at transcript-grade confidence and
-   closes the census at HIGH 380 · MEDIUM 48 · LOW 0 ([§ 4.1](#41-archive-based-re-grading-2026-08-23-session-140)).
-5. **Drop the DRAFT banner** and replace it with a `**Last revised**` line once 1–4 are settled.
-6. **Optionally mint a closing Observation** recording the attribution exercise itself — the
+**All settlement steps executed 2026-08-24** (steps 1–5 done in one PI
+pass; step 6 minted the same day; step 7 remains the standing forward
+suggestion):
+
+1. ✅ **Switch boundaries confirmed against release dates** — every § 3
+   marker resolved with sourced public dates; no era boundary needed to
+   move (each repo first appearance trails its release by 1–3 days, and
+   the one apparent exception — the 04-17 trailer flip — is explained by
+   the 04-16 release preceding the 04-18 session switch).
+2. ✅ **The three "first Fable session" claims adjudicated** (§ 6.1:
+   S111–112 first; correction carried in the closing register entry per
+   the append-only rule).
+3. ✅ **"Opus 4.8" fully resolved** (§ 6.3: model id archive-corroborated
+   2026-08-23; release date 2026-05-28 confirmed 2026-08-24).
+4. ✅ **The corrected 4.6→4.7 boundary ADOPTED at Obs 258** (§ 6.6, after
+   the five-ground completeness re-verification of § 4.1).
+5. ✅ **DRAFT banner dropped** — the header now carries the settled
+   `**Last revised**` line.
+6. ✅ **Closing Observation minted** recording the attribution exercise — the
    findings worth carrying are that a nine-month register spans seven authoring configurations
    including a non-Claude one; that commit trailers were the sole evidence for 47 % of entries and
    are demonstrably corrupt in 12 of the 215 Obs-introducing commits (5.6 %); and that the specified
