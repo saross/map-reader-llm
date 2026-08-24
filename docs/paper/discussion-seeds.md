@@ -1,8 +1,9 @@
 # Discussion — seed paragraphs
 
-> **Last revised**: 2026-08-21 (Seeds 8–11 added — the PI's five
-> headline outcomes foregrounded — and Seed 7 augmented with the
-> lit-scout novelty finding and the PI's response).
+> **Last revised**: 2026-08-24 (Seed 8 S140 rider: the O'Hara/GMFS
+> full-text corrections — target-class area cluster 0.84–0.91, the
+> area→point difficulty gradient as an explicit ladder, GMFS novelty
+> qualifiers, and the metric-hygiene inoculation).
 > See [§ Changelog](#changelog) for revision history.
 
 **Status**: seed paragraphs only — draft prose for the Discussion
@@ -441,6 +442,47 @@ generalist route: VLM capability improves with each model
 generation at no cost to this workflow, while a bespoke pipeline
 improves only with new bespoke work.
 
+**S140 rider (2026-08-23): full-text corrections and the grain
+gradient.** Two full-text resolutions from PI-supplied PDFs (dated
+addenda in the three `lit-scout-*-2026-08-21.md` reports) sharpen
+the positioning in the paper's favour and add a discipline. (i) The
+area-segmentation contrast cluster's honest range is **target-class
+F1 ≈ 0.84–0.91**, not 0.84–0.98: O'Hara et al.'s headline 98.2 % is
+the majority-class (dryland) F1 — provable from their own Table 2,
+whose recall (99.2 %) equals the dryland producer accuracy — while
+the wetland-class F1 from the same confusion matrix is **0.908**
+(P 95.5 × R 86.6), a flattery-by-imbalance their Discussion itself
+concedes. Cite 0.908 (cluster: Kramm 0.84, Ståhl & Weimann 0.886,
+Maxwell Dice 0.902, O'Hara 0.908; Heitzler & Hurni report IoU/AP,
+not F1). Consequence: the deployment corrected-F1 cells (0.80–0.85
+at k3) sit at the FOOT of the area cluster while performing the
+harder task grain, rather than eighteen points below its apparent
+top. (ii) The **difficulty gradient is the argument, not just a
+caveat**: area/texture segmentation on historical maps ≈ 0.84–0.91 →
+best fully supervised point detection 0.82/0.89 (DIGMAPPER) →
+points-competition median 0.35, with Goldman et al.'s same-protocol
+contrast (points 0.35 vs polygons 0.77 under identical scoring)
+isolating task grain from map difficulty — D.1's positioning move
+should present this ladder explicitly rather than only disclaiming
+comparability. (iii) **GMFS (Zhang & Zhang 2024) bounds the novelty
+language**: few-shot foundation-model extraction from clean raster
+technical documents exists (five visual reference samples prompt
+SAM's localisation; GPT-4 only classifies the resulting masks —
+segmentation F1 ≈ 0.87 five-shot, classification 0.86), so the
+strand claims must always carry their qualifiers — instance-level
+POINT detection, DEGRADED HISTORICAL maps, across the MAP FACE,
+with the TEXT-ONLY variant as the distinctive result — and never
+drift toward an unqualified "first few-shot foundation-model symbol
+extraction". (iv) **Metric-hygiene inoculation**: adjacent-
+literature headlines are not always the target-class metric
+(O'Hara) nor the same pipeline stage (GMFS's 0.86 classification vs
+0.87 segmentation); every figure involved is real — the hazard is
+knowing what each measures (the Obs 424 distortion-not-fabrication
+pattern at the level of published papers, not pipelines). One
+Discussion sentence citing the O'Hara 98.2/90.8 pair both
+inoculates the comparison set and justifies this study's MCC,
+class-explicit, and stage-explicit reporting discipline.
+
 ## Seed 9 (S139 addendum). What a high-performing extraction run looks like
 
 PI-directed (2026-08-21): assemble the configuration profile of the
@@ -608,6 +650,23 @@ comparison economics are retrospective, and the complementarity
 claim rests on the workflow analysis, not a head-to-head trial.
 
 ## Changelog
+
+### 2026-08-24 — Seed 8 S140 rider: O'Hara/GMFS full-text corrections
+
+PI-directed after the full-text reads closed both lit loose ends
+(mechanisms in the lit-scout addenda, 2026-08-23). Four moves added as
+a rider, none altering the existing parity prose: (i) the area-cluster
+range corrected to target-class F1 0.84–0.91 (O'Hara cited at the
+wetland-class 0.908, not the majority-class 98.2 headline) — the
+deployment cells now sit at the cluster's foot while doing the harder
+grain; (ii) the area→point difficulty gradient promoted from caveat to
+explicit ladder (with Goldman's same-protocol 0.35-vs-0.77 isolation
+of task grain); (iii) GMFS as the bound on novelty language (SAM
+localises, GPT-4 classifies — qualifiers mandatory); (iv) the
+metric-hygiene inoculation sentence (headline ≠ target-class metric ≠
+same stage; the Obs 424 pattern at published-paper level). Companion
+Observations: the difficulty-gradient and class-perspective entries
+(register, same session).
 
 ### 2026-08-21 (evening) — Seeds 8 and 9 consolidated against the verified lit passes
 

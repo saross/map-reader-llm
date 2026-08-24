@@ -252,7 +252,12 @@ references must be verified when D.2 drafts, not assumed here.*
      remote-sensing mound-detection pipelines land, and in what
      protocol sense are the numbers comparable? Positioning
      (CNN/segmentation map extraction, RS mound detection,
-     VLM-based detection) lives here per DD11.
+     VLM-based detection) lives here per DD11. *S140 rider (Seed 8):
+     present the area→point difficulty gradient as an explicit
+     ladder (target-class area cluster 0.84–0.91 with O'Hara at the
+     corrected 0.908; Goldman's same-protocol grain isolation), plus
+     the GMFS novelty qualifiers and the O'Hara 98.2/90.8
+     metric-hygiene sentence.*
   4. **The honesty moves**: engineering moved up a level (workflow,
      not training — bridge to D.3); DD3's case-scoped verb
      discipline; the trajectory rider (generalist capability
