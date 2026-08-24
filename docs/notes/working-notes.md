@@ -27992,3 +27992,95 @@ the area cluster it is contrasted against is now correctly bounded);
 **Obs 427** (the four deployment corrected-F1 cells, 0.7400–0.8393
 across k3/k4, that this Obs places on the ladder's harder rung).
 
+## Observation 429: Published headline metrics are class- and stage-relative — the O'Hara 98.2/90.8 and GMFS 0.86/0.87 resolutions (Session 141, 2026-08-24)
+
+Two literature loose ends left PARTIAL/unresolved since S139 — the
+O'Hara 98.2 %↔90.8 % relationship (Obs 424's rider) and the GMFS
+0.86-vs-0.87 F1 loose end — both closed this session on PI-supplied
+full texts, and both close the same way: the disputed figure was a
+**real number attached to the wrong identity**, not an invented or
+conflated one. This is the Obs 424 distortion-not-fabrication pattern
+operating one level up — at a published paper's own headline-vs-body
+figures, rather than at a chatbot report's citation of a paper. Obs
+428 already used the O'Hara resolution to correct a comparator table;
+this Obs registers the mechanism itself and its generalisation to
+citation practice.
+
+| Paper | Prior best-guess reading | At-source resolution |
+|---|---|---|
+| O'Hara et al. (2024), `10.1016/j.ecolind.2023.111363` | Two evaluation stages (verifier's hypothesis, S139 PARTIAL); a "validation-phase" gloss (third-party web summaries) | A **class** split on one confusion matrix: 98.2 % is the dryland (majority) F1, 90.8 % is the wetland F1 |
+| GMFS — Zhang & Zhang (2024), `10.1016/j.iintel.2024.100137` | Precision/F1 conflation (verifier's hypothesis, S139 "unresolved pending full text") | A **pipeline-stage** split: 0.86 is the GPT-4 classification F1, 0.87 is the SAM segmentation F1 |
+
+**O'Hara, in detail.** The abstract, Table 2, and Discussion headline
+F1 = 98.2 %; Results § 3.1 prose separately reports 90.8 %. Both come
+from the same confusion matrix (Table 1, N = 567 assessment points),
+and the class assignment is provable from the paper's own numbers, not
+asserted: Table 2's recall (99.2 %) equals Table 1's **dryland**
+producer accuracy, and precision 97.3 % × recall 99.2 % → F1 98.2 —
+the majority-class figure. The wetland-class F1, from the same matrix,
+is precision 95.5 % (user accuracy) × recall 86.6 % (producer
+accuracy) → F1 90.83, i.e., 0.908. The paper concedes the imbalance
+flattery in its own Discussion — "Both overall accuracy and F1 scores
+are susceptible to class imbalance which did occur in this accuracy
+assessment dataset" — and offers balanced accuracy 92.9 % as its own
+correction. Neither prior account had this mechanism: the lit-scout
+verifier's "most probable reading" was two evaluation stages; the
+third-party web summaries glossed 90.8 as a "validation-phase" figure.
+Both are superseded by the at-source read.
+
+**GMFS, in detail.** The old chatbot report's F1 = 0.86 is genuine —
+§ 4.4 (Table 10) states "an average precision of 0.83 and recall of
+0.91, resulting in an average F1 score of 0.86 for both rooms and
+doors," the GPT-4 **classification** stage. The rival 0.87 — a
+ScienceDirect search rendering's "precision of 0.86 and recall of
+0.87 → F1 0.87" — is the **segmentation**-stage F1 (Tables 2–3, the
+best five-reference-sample configuration). The verifier's own
+conflation hypothesis ("suggests the old report took the precision
+figure and labelled it F1") is falsified at source: both figures are
+real, for different stages of the same pipeline. Citation guidance:
+name the stage — segmentation F1 ≈ 0.87 for the mask-extraction claim,
+classification F1 = 0.86 for the GPT-4 semantic-labelling claim.
+
+**The generalisable lesson, in two halves.** For *reading* the
+literature: a headline metric is not interpretable without its class
+convention and pipeline stage attached; a comparator table that
+records only "F1 = X" for each cited study aggregates incommensurable
+quantities unless every cell also records which class and which stage
+X measures. For *writing* this paper: the episode is direct
+justification for the project's own standing reporting discipline —
+tile-level MCC alongside F1 as an imbalance-robust check (Obs 201,
+Obs 246), class-explicit confusion matrices, and stage-explicit
+figures wherever a pipeline has more than one — and it supplies a
+one-sentence inoculation for the Discussion, with the O'Hara 98.2/90.8
+pair as the worked example. `docs/paper/discussion-seeds.md`'s Seed 8
+S140 rider (2026-08-24) carries this positioning use.
+
+**Process note.** Neither CrossRef/DOI metadata verification (every
+field passed for both papers), nor abstract reading, nor
+search-engine renderings resolved either loose end — only the full
+text did, and in both cases the resolution **contradicted** the best
+pre-full-text hypothesis (two stages for O'Hara; a conflation for
+GMFS). The generalisation: cheap metadata verification bounds
+existence and attribution errors (Obs 424's Guard A catches those at
+zero cost); figure-identity errors of this kind — a real number
+correctly transcribed but wrongly identified — need the paper itself.
+
+**Caveats.** Two instances, both surfaced only because this project's
+verification pipeline flagged them PARTIAL/unresolved rather than
+accepting a plausible reading; this is not a claim about base rates of
+class- or stage-conflation in the wider literature, only that the
+discipline that caught these two would likely catch more if applied
+elsewhere.
+
+Sources: `docs/methodology/research/lit-scout-oldreport-resolve-2026-08-21.md`
+§ "Full-text resolution addendum (2026-08-23)"; `lit-scout-adjacent-cluster-2026-08-21.md`
+§ "Full-text resolution addendum (2026-08-23)"; `docs/paper/discussion-seeds.md`
+Seed 8 S140 rider (2026-08-24). Related: **Obs 424** (the
+distortion-not-fabrication pattern this Obs finds one level up, at
+published-paper metric selection rather than chatbot citation); **Obs
+428** (the difficulty-gradient entry whose corrected area-cluster top
+rung depends on the O'Hara resolution registered here); **Obs 201**
+and **Obs 246** (the tile-level MCC-alongside-F1 discipline this
+episode vindicates as a general hygiene practice, not just a
+project-specific choice).
+
