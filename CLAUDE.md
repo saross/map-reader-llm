@@ -2,13 +2,15 @@
 
 Claude Code entry point. It carries only Claude-specific mechanisms.
 
-**Read `docs/agent-guidance.md` first** — it holds this project's shared
-policy (context, directory map, conventions, research-finding calibration,
-document revision policy, compute location, quota notes) and applies to
-every agent working here. Global instructions from `~/.claude/CLAUDE.md`
-also apply.
+This project's shared policy — context, directory map, conventions,
+research-finding calibration, document revision policy, compute location,
+quota notes — lives in a harness-neutral file that every agent working here
+follows, and is imported here so it loads at session start:
 
-Project policy changes go in `docs/agent-guidance.md`, not in this file.
+@docs/agent-guidance.md
+
+Project policy changes go in that file, not in this one. Global instructions
+from `~/.claude/CLAUDE.md` also apply.
 
 ## Claude-specific mechanisms
 
