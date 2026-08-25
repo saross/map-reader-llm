@@ -1,10 +1,9 @@
 # Discussion — seed paragraphs
 
-> **Last revised**: 2026-08-24 (Seed 8 S140 rider: the O'Hara/GMFS
-> full-text corrections — target-class area cluster 0.84–0.91, the
-> area→point difficulty gradient as an explicit ladder, GMFS novelty
-> qualifiers, and the metric-hygiene inoculation).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-25 (Seed 12: the stride programme's
+> efficiency-frontier framing plus the PI's three directed threads —
+> the P/R dial, interior-optima-with-flat-tops, MCC as a
+> through-thread). See [§ Changelog](#changelog) for revision history.
 
 **Status**: seed paragraphs only — draft prose for the Discussion
 section, capturing the three argument lines that fell out of Session
@@ -649,7 +648,63 @@ Boundary: no prospective hybrid deployment ran in this study — the
 comparison economics are retrospective, and the complementarity
 claim rests on the workflow analysis, not a head-to-head trial.
 
+## Seed 12 (S142 addendum). The efficiency breakthrough and three PI-directed threads
+
+**Source**: the stride programme
+(`results/stride-2026-08-25/findings.md`; Obs 435) and the PI's
+2026-08-25 morning direction. Four connected moves for the
+Discussion:
+
+1. **The frontier claim is a Pareto claim, not an absolute one.** The
+   stride programme found no new F1 high — and that is the finding:
+   three architecture-independent routes converge at ~0.90 F1@20 m on
+   the GS corpus (the model ceiling), while the efficient frontier
+   moved by roughly an order of magnitude in cost (384/33.3 at ~$6.6
+   all-in matching the ~$50-class HIGH-thinking pipelines;
+   strictly dominating min11). The PI's own retrospective rule-critique
+   belongs in the prose: decision rules near a ceiling should be
+   written against the Pareto frontier, not the absolute one — the
+   study's cost meta-rule already embodied this and the stride
+   programme vindicates it. [Numbers to refresh from the K = 5
+   ladder if it lands on the frontier.]
+
+2. **The precision/recall dial** (PI: "emphasise this 'dial' in the
+   paper"). At equal F1 the plateau members differ materially in P/R
+   composition (384/33.3 P 0.946/R 0.855; 384/62.5 P 0.891/R 0.881),
+   and the same trade recurs across several near-frontier
+   configurations. Deployment choice inside a statistical tie is a
+   field-priority choice — survey archaeology may price a missed
+   mound differently from a false alarm — so the paper should present
+   the plateau as a settable dial, not a single winner.
+
+3. **The shape of performance: interior optima with flat tops** (PI:
+   "a major part of the 'shape' of performance"). The stride surface
+   (significant climb 336→256, flat 256–192, fall-off at 144) repeats
+   a pattern already seen on tile size and pass count: parameters
+   near the frontier have interior optima with broad plateaus, and
+   the mechanism at the deep end is candidate-quality saturation —
+   ever-denser looks feed the verifier proportionally more junk than
+   mounds (union precision 0.078 at stride 144), and the verifier's
+   false-positive pass-through bounds what depth can buy.
+
+4. **MCC as a through-thread** (PI direction). Tile-MCC is uniform
+   (~0.79–0.80) across the entire plateau while F1 composition
+   varies: spatial discrimination saturated long ago and the
+   remaining engineering is count calibration. Give MCC a continuous
+   presence — methods (why it is reported), results (the boards),
+   discussion (what its uniformity says about where the model's
+   understanding stops).
+
 ## Changelog
+
+### 2026-08-25 — Seed 12: the stride programme's Discussion moves
+
+Added from the S142 overnight programme and the PI's morning
+direction (P/R dial emphasis; the shape-of-performance pattern; MCC
+as a thread through methods/results/discussion; the Pareto
+rule-critique in the PI's own framing). Anchors:
+`results/stride-2026-08-25/`, Obs 435. K = 5 ladder numbers flagged
+in place for refresh once the free derivation lands.
 
 ### 2026-08-24 — Seed 8 S140 rider: O'Hara/GMFS full-text corrections
 
