@@ -182,6 +182,13 @@ Examples:
         default=TILES_DIR,
         help=f"Output directory for tiles (default: {TILES_DIR})",
     )
+    parser.add_argument(
+        "--rasters-dir",
+        type=Path,
+        default=RASTERS_DIR,
+        help=f"Directory of source GeoTIFFs (default: {RASTERS_DIR}; pass "
+             "inputs/rasters/Russian1981_32635 for the 55-map corpus)",
+    )
 
     args = parser.parse_args()
 
@@ -199,10 +206,10 @@ Examples:
     print(f"Tile size: {tile_size}×{tile_size}, overlap: {overlap}, stride: {stride}")
     print(f"Output directory: {output_dir}")
 
-    tif_files = list(RASTERS_DIR.glob("*.tif"))
+    tif_files = list(args.rasters_dir.glob("*.tif"))
 
     if not tif_files:
-        print(f"No .tif files found in {RASTERS_DIR}")
+        print(f"No .tif files found in {args.rasters_dir}")
         return
 
     for tif_path in tif_files:
