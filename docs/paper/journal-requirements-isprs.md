@@ -82,25 +82,38 @@ PDFs from institutional repositories.
   Jan 2026); licences CC BY or CC BY-NC-ND; subscription route free
   with a 24-month green embargo.
 
-### ⚠ Four items to re-check on the live guide (2024-vintage source)
+### Four re-check items — ALL VERIFIED by the PI on the live guide (2026-08-25)
 
-1. Current AI-declaration section title ("writing process" vs
-   "manuscript preparation process" — Elsevier's live template uses
-   the latter).
-2. Whether a data-availability statement is now mandatory.
-3. Whether highlights became required.
-4. Any preprint restriction (society-owned-title carve-out flagged in
-   Elsevier's live sharing policy).
+1. **AI declaration title (current)**: "Declaration of generative AI
+   and AI-assisted technologies in the **manuscript preparation
+   process**" — the live-policy wording, superseding the 2024
+   "writing process" title. Additional live-guide specifics: "**If
+   you have nothing to disclose, you do not need to add a
+   statement**"; basic grammar/spelling/reference tools exempt;
+   disability-related assistive technology exempt; authors
+   accountable for verifying AI output (including that "AI-generated
+   references can be incorrect or fabricated") and for IP/privacy
+   terms of any tool used. The journal also bars editors and
+   reviewers from uploading unpublished manuscripts into generative
+   AI tools.
+2. **Data statement**: still "we **encourage** you" — NOT mandatory.
+   We supply one anyway (differentiator, § 3).
+3. **Highlights**: no requirement found anywhere on the live pages —
+   likely surfaced only inside the submission system at final files.
+4. **Preprints**: standard Elsevier wording, no society carve-out —
+   preprints citable (marked as such, DOI given); formal publication
+   preferred once it exists.
 
-### ⚠ CAUL/APC — PI action required
+### CAUL/APC — CONFIRMED (PI, 2026-08-25)
 
-CAUL–Elsevier 2026 agreement: uncapped hybrid coverage, acceptance
-from 1/1/2026, **Macquarie listed** as participating; page/colour fees
-excluded; non-covered articles get 15 % APC discount. **NOT verified:
-that ISPRS JPRS is on the eligible-title list** — society-owned titles
-are the classic exception class. Confirm against CAUL's 2026 title
-list or MQ Library before relying on the waiver; exposure otherwise is
-USD 3,800 (or the subscription route + 24-month embargo).
+**ISPRS JPRS is on the CAUL 2026 title list** (Elsevier, Hybrid,
+Macquarie University selected — verified by the PI on the CAUL
+LibGuide title list). The APC waiver applies. One operational
+requirement from the CAUL page, in red: **authors must use their
+institutional email address** at submission for the agreement to be
+recognised — submit with the Macquarie address, not a personal one.
+Page/colour fees remain excluded from the agreement (we use
+online-only colour, which is free anyway).
 
 ## 2. Observed practice (17 Versions of Record, 2024–2026 + Wu 2023)
 
