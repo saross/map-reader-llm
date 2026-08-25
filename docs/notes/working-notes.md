@@ -28874,3 +28874,197 @@ story, which is now the programme's whole surviving yield, rather than
 the quality story the ladder briefly suggested); **Obs 179** (the
 original 384 px preference, which the iso-stride design tests directly
 and leaves standing).
+
+## Observation 436: Two candidate successor papers — the faster-to-frontier path and the precision/recall dial — with the ceiling attribution corrected for the record (Session 142, 2026-08-25)
+
+**Epistemic status — read this first.** This is an **ideas-registry**
+entry, not a results entry. It is minted at the PI's explicit direction
+on 2026-08-25 — *"ideas for future papers like this should be recorded,
+maybe as an observation here plus an inbox row"* — and its purpose is to
+stop two live research instincts from evaporating between sessions.
+Sections 1 and 2 are **candidate directions: PI-endorsed for recording,
+not commitments.** Nothing in them is scoped, costed, approved, or on
+any current plan, and none of it bears on the present paper's claims.
+Section 3 is different in kind: it is **settled**, a correction to the
+record that the two ideas rest on. Every number quoted throughout is
+re-verified against its source in this session; the *directions* carry
+no evidentiary weight at all.
+
+### 1. The faster-to-frontier paper
+
+**The observation the idea starts from.** The register opens on
+2025-12-15 (Obs 430 § 2 era table), and the PI's framing this morning
+was: *"In a future paper, the challenge will be how to get there
+faster; it's taken 8 months of fairly steady work to get here."*
+"Here" is two anchored numbers — the Gemini 3 Flash ceiling on the
+Gold-Standard 4-map instrument at **~0.89–0.90 F1@20 m** (§ 3 below),
+and the 55-map out-of-sample deployment at **0.848 corrected-F1@50 m**
+for the canonical-GT joint oracle (T0.3 × 3-of-5) against the
+carry-forward's 0.815 (`results/deployment-oracle-2026-06-06/`
+`deployment-oracle-findings.md` § 4b; the naive-fixed-union figures for
+the same pair are 0.830 and 0.799).
+
+**The contrast that makes it a paper.** The overnight stride programme
+(Obs 435) put **nine geometries** on one verified board for **≈ $51.5
+flex in a single night** — 66,080 proposer plus 16,966 verifier calls,
+zero verifier failures. It could do that **only because the harness
+already existed**: the carry-forward adversarial text verifier, the
+common-footprint scoring chain, the gate discipline, the paired-bootstrap
+inferential instrument, and the GT-free selection protocol of Obs 368
+(leave-one-family-out consensus, rho = +0.88, picks a true Tier-1
+winner without reference labels). Eight months bought the *apparatus*;
+the apparatus then bought nine cells overnight.
+
+**Candidate thesis.** The reusable fast path for a successor study — a
+new region, a new map series, or a new model — is **geometry sweep +
+MINIMAL thinking + carry-forward verifier + GT-free selection, run as a
+single sweep**: days and tens of dollars, not months. The paper would
+be a methods contribution about transfer of *method* rather than
+transfer of *model*, and the honest version of it has to report what
+the eight months were actually spent on, since that is the cost the
+fast path is claiming to have amortised rather than eliminated.
+
+### 2. The precision/recall dial paper (PI instinct, 2026-08-25)
+
+**The observation the idea starts from.** Near the frontier the plateau
+members are not interchangeable: at statistically indistinguishable F1
+they sit at visibly different points on the precision/recall trade-off
+(`results/stride-2026-08-25/stride_verifier_analysis.json`, best
+operating point per cell on the common footprint):
+
+| Cell | Stride | F1@20 m | Precision | Recall |
+|---|---:|---:|---:|---:|
+| 384 / 33.3 % (`g384_ov128`) | 256 | 0.8982 | **0.9457** | 0.8551 |
+| 384 / 62.5 % (`g384_ov240`) | 144 | 0.8860 | 0.8913 | **0.8808** |
+
+A **+0.054 precision** swing against a **−0.026 recall** swing, for
+about a hundredth of F1. The dial exists and the study has been reading
+only its resultant.
+
+**Investigation (a) — push each end to its extreme.** Drive precision
+and recall independently as far as the pipeline will go. In the PI's
+words: *"that wouldn't be useful, but I have a feeling it would tell us
+something about the dataset and/or the extraction pipeline."* The value
+is diagnostic, not operational — the shape of the failure at each
+extreme characterises what the corpus and the pipeline are actually
+made of.
+
+**Investigation (b) — analyse the ends jointly.** Collect several
+high-precision and several high-recall configurations and ask the
+question that the marginal metrics cannot answer: **do the high-P and
+the high-R configurations err on the *same* mounds, or different
+ones?** If the miss sets are largely disjoint, complementarity is real
+and fusion is a live route past a ceiling that single-configuration
+optimisation has exhausted (Obs 435). If they coincide, the misses are
+a property of the corpus, and the ceiling is where it looks.
+
+**The instrument is already built.** Obs 361's double-miss machinery —
+`scripts/measure_miss_correlation_gs.py`, producing the 2 × 2 with
+observed-versus-independence rates and a Fisher test — was written to
+compare *student* and *system* miss processes, but the design is
+agnostic about which two processes it compares. Pointing it at two
+system configurations instead is a substitution of inputs, not new
+tooling.
+
+### 3. Ceiling attribution — corrected for the record
+
+**The GS curator ground truth is treated as complete and error-free in
+this study.** That is the PI's position, confirmed on 2026-08-25.
+Obs 361's **+2.4–2.7 % recall-inflation band applies to the 55-map
+student-derived GT**, not to GS metrics: the GS sheets supply the 2 × 2
+that *measures* the double-miss rate (435 in-bounds curator mounds, 4
+both-missed at both 20 m and 30 m), and that measurement is then
+*transferred* to the 55-map corpus using the 9.1 % whole-sheet student
+miss rate and the 17.3 % oracle system miss rate at 50 m
+(working-notes lines 19937–19954). The GS sheets are the measuring
+instrument, not the subject. **The assistant briefly mis-attributed the
+band to GS on 2026-08-25 and was corrected against the source** —
+recorded here because the mis-attribution, left standing, would have
+converted a genuine model ceiling into an apparent annotation artefact.
+
+**Consequence: the GS ~0.90 ceiling is a genuine MODEL ceiling.** Three
+architecture-independent routes converge on it:
+
+| Route | Configuration | F1@20 m |
+|---|---|---:|
+| 30-pass HIGH consensus + n = 1 carry-forward verifier (registered headline) | 16-of-30, prob\_t 0.2, n = 412 | 0.8902 |
+| n = 5 consensus verifier over the same pool (operational maximum) | 16-of-30 + N = 5 MINIMAL T = 0.3 | 0.8951 |
+| Cheap MINIMAL geometry + carry-forward verifier, K = 10 | 384 px / 33.3 %, stride 256 | 0.8982 |
+
+The first is the **global** optimum of its pool — no hidden operating
+point across all k-of-30 × prob\_t exceeds it. The second sits +0.0049
+above the headline at **p = 0.363**, which the register already rules a
+numerical high rather than a lift (0.890 stays the practical ceiling).
+The third sits +0.0020 above the grid winner at **p = 0.862**, a dead
+tie — reached with **no HIGH thinking at all** and at **≈ $6.6** flex
+against the ~$50-class HIGH incumbents that share the shelf at 30 m.
+Three different architectures, two orders of thinking budget, and an
+order of magnitude of cost, all stopping in the same place.
+
+**How the ceiling composes.** At the leading cell the K = 10 union
+carries a **recall ceiling of 0.9229** (2,387 candidates at union
+precision 0.1655), and verification converts it to **P 0.9457 / R
+0.8551 → F1 0.8982**. Across the five new stride cells the union recall
+ceiling spans **0.9206 → 0.9533** while union precision collapses
+0.1989 → 0.0777, and past stride 256 the verifier cannot convert the
+extra ceiling into F1 (Obs 435). So the ceiling is jointly set by what
+the proposer can put in the union and what the verifier can keep from
+it — and both ends are now measured. **The 55-map ceiling is a
+different object**: model ceiling *plus* characterised GT ambiguity,
+which is exactly what the +2.4–2.7 % band prices.
+
+**Why this matters.** Section 3 settles the attribution question that
+both candidate papers presuppose — if the GS ceiling were an artefact
+of imperfect GS labels, "get to the frontier faster" would be aiming at
+a moving target and "push the dial to its extremes" would be measuring
+annotation noise. It is not, so both ideas are aimed at something real.
+Sections 1 and 2 exist so that the register, which is very good at
+recording what was *done*, also holds what was *seen but not pursued* —
+the PI's instinct that the plateau's internal structure is informative,
+and the recognition that eight months of apparatus-building is itself a
+result the successor study should not have to repeat.
+
+**Caveats.** The two directions are recorded, not evaluated: no power
+analysis, no cost estimate, no feasibility check, and no claim that
+either would survive contact with data. Idea 2 rests on a **single
+pair** of plateau cells at a **single** operating point each, both
+F1-selected on the tiles they are scored on; the P/R spread could
+narrow or invert under a different selection rule, and the two cells
+are not the extremes the investigation would actually need. The
+complementarity hypothesis in 2(b) is a hypothesis — the Obs 361 GS
+2 × 2 found only **4** double-miss events and could not distinguish
+mild super-independence from independence (Fisher p ≈ 0.3), so a
+configuration-versus-configuration application would likely face the
+same small-count limitation and should be powered before it is run.
+Idea 1's "days not months" is an *aspiration* extrapolated from one
+overnight programme on an established corpus with a working harness; a
+genuinely new region would re-incur the ground-truth and
+tile-manifest work that the stride programme inherited for free. The
+"8 months" is the PI's own framing of steady work; the register's own
+span from 2025-12-15 to today reads as nine calendar months in Obs 430,
+which counts authoring eras rather than effort.
+
+Sources: `results/deployment-oracle-2026-06-06/deployment-oracle-findings.md`
+(§ 4b canonical joint oracle 0.848 vs carry-forward 0.815, both
+p < 0.001; § 4 naive-union 0.830 vs 0.799; last revised 2026-06-08);
+`results/stride-2026-08-25/stride_verifier_analysis.json`
+(`generated_at_utc` 2026-08-24T21:26:10Z — `boards` for the two-cell
+P/R contrast, `union_scores` for the 0.9206–0.9533 union-recall span
+and the 0.1989 → 0.0777 union-precision collapse);
+`results/stride-2026-08-25/findings.md` (≈ $51.5 flex against the ~$63
+approved envelope); `scripts/measure_miss_correlation_gs.py` and
+`results/working-precision/gs-miss-correlation.json` (the double-miss
+instrument proposed for re-use in 2(b)); this file's Obs 361 (the
+2.4–2.7 % band and its transfer inputs) and Obs 430 § 2 (the
+2025-12-15 register start). No new API spend, no new analysis, and no
+new artefacts were produced for this entry. Related: **Obs 435** (the
+nine-cell stride plateau — supplies the P/R pair of § 2, the union-recall
+span and cost frontier of § 3, and the exhaustion-of-geometry result
+that makes complementarity the interesting next lever rather than more
+tiling); **Obs 361** (GT epistemics — the source of the +2.4–2.7 %
+band whose correct scope § 3 restates, and of the miss-correlation
+instrument § 2(b) proposes to repoint); **Obs 368** (GT-free selection
+at rho = +0.88 — the component that makes § 1's single-sweep fast path
+plausible without reference labels); **Obs 430** (the nine-month,
+seven-configuration provenance settlement, which fixes the register's
+2025-12-15 start date against which § 1's "8 months" is read).
