@@ -695,7 +695,31 @@ Discussion:
    discussion (what its uniformity says about where the model's
    understanding stops).
 
+### Seed 12 rider (2026-08-25, later): the simulated-workflow framing
+
+PI-endorsed for the prose ("they are good"). The 55-map portfolio
+(`planning/55map-portfolio-2026-08-25.md` §§ 3–3b) runs the STRICT
+form of "test on a small verified sample, then generalise": the
+carried operating points are the practitioner's one-shot, the sweep
+prices what freezing them cost, and the S104 loop is replicated with
+registered drift-direction predictions. Two scope sharpenings for the
+Discussion: (i) this is the friendly, in-distribution version of the
+workflow (same series/region/era); the harder new-tradition case is
+where GT-free selection (Obs 368) replaces the verified sample —
+small-sample calibration + measured transfer penalty + GT-free
+selection is the complete practitioner recipe and the Obs 436
+successor-paper spine; (ii) the verified-sample-size question is now
+empirical: GS is 4 sheets against the S113 power-law's ~10–20
+representative sheets, and the portfolio's transfer results measure
+what 4 sheets buy.
+
 ## Changelog
+
+### 2026-08-25 (later) — Seed 12 rider: simulated-workflow framing
+
+The two PI-endorsed sharpenings recorded alongside the portfolio
+registration; anchors planning/55map-portfolio-2026-08-25.md,
+Obs 368/436.
 
 ### 2026-08-25 — Seed 12: the stride programme's Discussion moves
 
