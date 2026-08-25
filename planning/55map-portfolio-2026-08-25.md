@@ -43,8 +43,9 @@ production 8,541-tile / stride-336 corpus (verified 2026-08-25:
 filter). New tilings `tiles_384_ov128_55maps` and
 `tiles_384_ov192_55maps`, cut 2026-08-25.
 
-- Run A tiles/pass: **[EXACT COUNT PENDING TILING]** (est. ~14,700)
-- Run B tiles/pass: **[EXACT COUNT PENDING TILING]** (est. ~26,200)
+- Run A tiles/pass: **14,160** (manifest committed, no duplicate
+  names, dims verified, dry-run PASSED with tile-size inference)
+- Run B tiles/pass: **24,561** (ditto)
 
 ## 3. The measurement contract (declared before launch)
 
@@ -102,11 +103,17 @@ stays null (E81).
 
 | Stage | Run A (stride 256) | Run B (stride 192) |
 |---|---:|---:|
-| Proposer, K = 10, flex | ~$80 | ~$143 |
-| Verifier (K = 10 union), flex | ~$30 | ~$43 |
-| **All-in (est.)** | **~$110** | **~$186** |
+| Proposer calls, K = 10 | 141,600 | 245,610 |
+| Proposer flex (audited $0.000546/tile) | **$77.31** | **$134.10** |
+| Verifier est. (GS densities; upper bound) | ~$28.3 (~41,200 calls) | ~$40.0 (~58,200 calls) |
+| **All-in (est.)** | **~$106** | **~$174** |
 
-Portfolio total **≈ $300 flex ± 25 %** (~$600 list on the metas).
+Portfolio total **≈ $280 flex** (~$560 list on the metas): proposers
+$211.42 EXACT-count-priced; verifier ~$68 estimated (launches at
+MEASURED union sizes under a **2× ceiling = $137**). Wall-clock:
+387,210 proposer calls ≈ 20–30 h at WORKERS=20 (the overnight runs
+sustained ~3.7 calls/s at 12 workers with zero 429s and large TPM
+headroom); the driver is idempotent and resumable across nights.
 Anchors: the audited $0.000546/tile MIN-thinking 55-map rate
 (token-load audit 2026-06-12) scaled by stride²; verifier at the
 measured $0.000687/call with union sizes scaled from GS candidate
