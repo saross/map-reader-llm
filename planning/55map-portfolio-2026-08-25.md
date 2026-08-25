@@ -138,7 +138,7 @@ sign-off on this card with the exact counts filled in.
 ## 6. Sign-off
 
 - [x] Exact tile counts filled in (§ 2, § 4) — 2026-08-25
-- [ ] `/audit-config`: READY
+- [x] `/audit-config`: READY — 2026-08-25 (config + verifier config byte-identical since fe623a555; manifests = trees, no duplicates; dims verified; both dry-runs PASSED with tile-size inference; only geometry varies vs the GS runs; T=0.7 override explicit; output root clean)
 - [ ] **PI sign-off** — model gemini-3-flash-preview, real-time flex,
   call counts and costs as finalised in § 4, the § 3 contract as the
   binding analysis plan
