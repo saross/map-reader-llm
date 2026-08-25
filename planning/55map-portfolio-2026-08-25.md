@@ -79,6 +79,46 @@ committed now, not tuned there):**
 3. The N-ladder cost curve → the deployment Pareto board, folding in
    the existing 55-map cells.
 
+**What this simulates** (PI framing, 2026-08-25): the strict form of
+the practitioner workflow "test on a small verified sample, then
+generalise". The carried operating points are the workflow's honest
+one-shot output; the secondary sweep prices what freezing them cost
+(the carried-vs-oracle gap), replicating the S104 measurement of the
+same loop. Two scope sharpenings, recorded for the prose: (i) this is
+the FRIENDLY version of the workflow — same map series, region, and
+era; sheet-level, in-distribution generalisation; a new cartographic
+tradition is the harder case, where the GT-free selection protocol
+(Obs 368, ρ = +0.88) replaces the verified sample, and small-sample
+calibration + measured transfer penalty + GT-free selection is the
+complete practitioner recipe (the Obs 436 successor-paper spine);
+(ii) the verified-sample SIZE question is now empirical — GS is 4
+sheets, the S113 calibration power-law work suggested ~10–20
+representative sheets, and these transfer results add a measured
+point on what 4 sheets buy.
+
+### 3b. Registered predictions (committed before launch; this commit is the registration)
+
+Falsifiable expectations, PI-adopted 2026-08-25. Terminology:
+N = pass count, k = consensus vote threshold; operating points are
+(prob_t, k) pairs — both dials are free in the sweep, everything else
+is pinned by protocol (§ 3).
+
+| # | Bet | Prediction | Grounding |
+|---|---|---|---|
+| P1 | Run A, N = 10 optimum | (0.15, k = 8); any drift is DOWNWARD in k (6–7), never up | GS optimum + the S104 drift direction |
+| P2 | Run A, N = 5 optimum | (0.15, k = 4) | exact GS ladder |
+| P3 | Run B, N = 10 optimum | (0.15, k = 10, the grid edge); most likely to break downward (8–9) | GS + edge effect |
+| P4 | Run B, N = 5 optimum | (0.15, k = 5) | inherited GS ladder |
+| P5 | Headlines | corrected-F1@50 m in 0.80–0.85; neither run significantly below the carried incumbent 0.8152 | incumbent transfer deltas |
+| P6 | A vs B | statistical tie — the plateau transfers | GS board |
+| P7 | Saturation | N = 5 within noise of N = 10, both runs | GS ladders |
+| P8 | prob_t | 0.15 everywhere — the verifier dial transfers even where k does not | every GS best point |
+
+Pre-named informative failures: k drifting UPWARD anywhere;
+A ≠ B; any headline below 0.80. Outcomes are assessed bet-by-bet in
+the findings document and carried as `predicted_outcome` in the
+register rows.
+
 **Comparisons and instruments**: against the existing 55-map board
 (carry-forward 0.8152, oracle 0.8476, image, min variants — committed
 anchors, not re-run) and between Runs A/B, using the established
@@ -139,9 +179,10 @@ sign-off on this card with the exact counts filled in.
 
 - [x] Exact tile counts filled in (§ 2, § 4) — 2026-08-25
 - [x] `/audit-config`: READY — 2026-08-25 (config + verifier config byte-identical since fe623a555; manifests = trees, no duplicates; dims verified; both dry-runs PASSED with tile-size inference; only geometry varies vs the GS runs; T=0.7 override explicit; output root clean)
-- [ ] **PI sign-off** — model gemini-3-flash-preview, real-time flex,
-  call counts and costs as finalised in § 4, the § 3 contract as the
-  binding analysis plan
+- [x] **PI sign-off** — 2026-08-25, "great, please proceed with the
+  runs": model gemini-3-flash-preview, real-time flex, § 4 counts and
+  costs, the § 3 contract and § 3b predictions as the binding analysis
+  plan
 
 ## Changelog
 
