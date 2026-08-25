@@ -1,9 +1,9 @@
 # Discussion — seed paragraphs
 
-> **Last revised**: 2026-08-25 (Seed 12: the stride programme's
-> efficiency-frontier framing plus the PI's three directed threads —
-> the P/R dial, interior-optima-with-flat-tops, MCC as a
-> through-thread). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-25, twice (Seed 12 and its rider: the
+> efficiency-frontier framing, the PI's three directed threads, and
+> the simulated-workflow sharpenings). See [§ Changelog](#changelog)
+> for revision history.
 
 **Status**: seed paragraphs only — draft prose for the Discussion
 section, capturing the three argument lines that fell out of Session
