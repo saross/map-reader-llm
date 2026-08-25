@@ -1,7 +1,8 @@
 # The stride programme: nine geometries, one verdict
 
-> **Last revised**: 2026-08-25 (original publication — the overnight
-> Phase B + C(part) execution and scoring). See
+> **Last revised**: 2026-08-25, twice (original publication, then the
+> plateau follow-ups: corrected 13-cell board, k-curves, the free
+> N-ladder, and the EXACT re-verification of the winner's ladder). See
 > [§ Changelog](#changelog) for revision history.
 
 **What this is.** The execution of
@@ -131,6 +132,39 @@ MCC stays null (E81; none occurred at any best point).
   Decision 10.
 
 ## Changelog
+
+### 2026-08-25 (later) — Plateau follow-ups and the exact winner ladder
+
+**Trigger**: the PI's morning commission (pairwise plateau
+characterisation, k-curves, x-of-5/N-ladder) and the approved ~$3.4
+exact re-verification. Artefacts: `plateau_analyses.json` (board,
+curves, ladder, and the `winner_ladder_exact` section).
+
+- **13-cell tiered board** (verbatim board instrument, after a BH
+  wiring fix caught by cross-instrument contradiction — commit
+  `fe3bbe5bd`): **6/78 pairs significant, all involving 512/12.5 %**;
+  Tier 1 holds the other twelve cells including all four incumbents.
+- **k-curves**: the winner's top is flat (k 6–9 within 0.005);
+  the k = 10-edge cells are sharp at the edge.
+- **Exact winner ladder** (384/33.3; 4,958/4,958 verified, zero
+  failures, $3.407 flex measured vs $3.41 priced):
+
+  | N | F1@20 m (exact) | F1@30 m | P | R | All-in flex |
+  |---:|---:|---:|---:|---:|---:|
+  | 1 | 0.8677 | 0.8820 | 0.8856 | 0.8505 | $1.38 |
+  | 3 | **0.8911** | 0.8960 | 0.9474 | 0.8411 | **$2.64** |
+  | 5 | 0.8856 | 0.8929 | 0.9239 | 0.8505 | $3.81 |
+  | 10 | 0.8982 | 0.9031 | 0.9457 | 0.8551 | $6.56 |
+
+  Inheritance estimates were accurate to ±0.008; the N = 3/N = 5
+  ordering swaps within that tolerance (a noise-level, not
+  substantive, inversion — CI half-widths ≈ ±0.025). The efficiency
+  reading: **N = 3 reaches 0.8911 for $2.64 — within 0.007 of the
+  full K = 10 winner at 40 % of its cost, ~19× cheaper than the
+  $50-class incumbents.** N ∈ {3, 5, 10} are one statistical point.
+
+**What did NOT change**: the nine-cell board, the programme verdict
+(plateau, no new high), and the 256/50 recommendation.
 
 ### 2026-08-25 — Original publication
 
