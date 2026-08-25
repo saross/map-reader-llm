@@ -167,8 +167,13 @@ def board_and_tiers(
             n_permutations=N_PERMUTATIONS, seed=SEED)
         raw[(a, b)] = res
     pvals = [raw[p]["p_value"] for p in pairs]
-    rejected = apply_bh_correction(pvals, q=FDR_Q)
-    significant = {frozenset(p): bool(r) for p, r in zip(pairs, rejected)}
+    # apply_bh_correction returns ADJUSTED p-values; significance is the
+    # comparison against q (the canonical callers' contract — boolifying
+    # the floats marks every pair significant, the bug the first run of
+    # this script shipped and the paired-bootstrap cross-check caught).
+    adjusted = apply_bh_correction(pvals, q=FDR_Q)
+    significant = {frozenset(p): (adj <= FDR_Q)
+                   for p, adj in zip(pairs, adjusted)}
     tiers = greedy_clique_tiers(ordered, significant)
     n_sig = sum(significant.values())
     logger.info("board: %d/%d pairs significant after BH -> %d tiers; "
