@@ -99,7 +99,7 @@ stays null (E81).
    configuration should a practitioner run? (The synthesis — the
    paper's deployment recommendation.)
 
-## 4. Cost (to be finalised with exact tile counts)
+## 4. Cost (final — exact proposer counts)
 
 | Stage | Run A (stride 256) | Run B (stride 192) |
 |---|---:|---:|
@@ -110,7 +110,7 @@ stays null (E81).
 
 Portfolio total **≈ $280 flex** (~$560 list on the metas): proposers
 $211.42 EXACT-count-priced; verifier ~$68 estimated (launches at
-MEASURED union sizes under a **2× ceiling = $137**). Wall-clock:
+MEASURED union sizes under a 2× ceiling of $137). Wall-clock:
 387,210 proposer calls ≈ 20–30 h at WORKERS=20 (the overnight runs
 sustained ~3.7 calls/s at 12 workers with zero 429s and large TPM
 headroom); the driver is idempotent and resumable across nights.
@@ -137,7 +137,7 @@ sign-off on this card with the exact counts filled in.
 
 ## 6. Sign-off
 
-- [ ] Exact tile counts filled in (§ 2, § 4)
+- [x] Exact tile counts filled in (§ 2, § 4) — 2026-08-25
 - [ ] `/audit-config`: READY
 - [ ] **PI sign-off** — model gemini-3-flash-preview, real-time flex,
   call counts and costs as finalised in § 4, the § 3 contract as the
