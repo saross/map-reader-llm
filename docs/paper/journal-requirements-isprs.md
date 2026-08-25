@@ -4,9 +4,19 @@
 > 17-paper corpus survey, two verified agent reports). See
 > [§ Changelog](#changelog) for revision history.
 
-**Decision context**: the PI selected this journal on 2026-08-25 and
-will publish open access, expecting the CAUL–Elsevier read-and-publish
-agreement (Macquarie, honorary affiliation) to waive the APC.
+**Decision context — VENUE LOCKED (PI, 2026-08-25)**: ISPRS JPRS,
+gold OA under the confirmed CAUL–Elsevier agreement (Macquarie
+institutional email at submission). **Length target: a tight ~8,500
+words plus supplements.** Framing decision (PI, verbatim in
+substance): the archaeological meaning of the symbols is not load-
+bearing — the problem "reduces to 'here is one symbol family on a map
+with dozens of different kinds of symbols on it; find all members of
+this family but nothing else'" — i.e. sell the general small-object
+detection problem on degraded scanned cartography, with burial mounds
+as the demanding instance and the archaeological payoff stated, not
+assumed. The companion collaboration-analysis paper (M.12's planned
+separate contribution) is deliberately routed to an
+archaeology-facing venue (JAS or Archaeological Prospection).
 
 **Provenance**: two agent extractions, both provenance-labelled.
 *Policy* comes from a 2024-04-18 archived capture of the official
@@ -154,13 +164,34 @@ Methods-reporting provisions.
 
 ## 3. What this means for our preparation
 
-**Targets** (practice-calibrated, none policy-capped): ~14–16 pages /
-~8,500–10,000 words; abstract ~240 words, unstructured; 6 keywords
-(US spelling); ~9–12 colour figures (online-only colour); ~6 tables;
-~65–80 references with DOIs; CRediT + competing-interest always; **a
-data AND code availability statement — only 3/16 papers have one, so
-ours reads as a differentiator, and it is where the OSF/Zenodo/repo
-apparatus naturally lands.**
+**Targets** (locked 2026-08-25): **~8,500 words body** (tight; the
+venue median), ~14 pages; abstract ~240 words, unstructured; 6
+keywords (US spelling); ~9–12 colour figures (online-only colour);
+~6 tables; ~65–80 references with DOIs; CRediT + competing-interest
+always; **a data AND code availability statement — only 3/16 papers
+have one, so ours reads as a differentiator, and it is where the
+OSF/Zenodo/repo apparatus naturally lands.**
+
+**Working word budget** (drafting guide, not a straitjacket; sums to
+~8,500 with ~300 slack):
+
+| Section | Budget | Carries |
+|---|---:|---|
+| 1. Introduction | 1,100 | The symbol-family framing; contributions list |
+| 2. Related work | 900 | VLM-EO cluster; historical-map extraction (Wu); area-vs-point ladder (Seed 8) |
+| 3. Corpus and ground truth | 800 | Maps, tilings, curator + canonical GT, GT epistemics in brief |
+| 4. Methods | 2,000 | Pipeline, configs, verifier, aggregation, AI-as-instrument reporting (policy-mandated detail), instruments |
+| 5. Results | 2,200 | Boards, geometry/Pareto, transfer (the portfolio), calibrated to the register |
+| 6. Discussion | 1,300 | Seeds 1–3, 8, 12: plateau/ceiling, P/R dial, workflow protocol, GT-free |
+| 7. Conclusions | 300 | |
+| Declarations + statements | ~200 | AI declaration, CRediT, data/code availability, competing interests |
+
+**Supplements manifest** (where the depth lives, referenced not
+squeezed): extended methods and configuration inventory; the full
+trade-space tables and sweeps (register-derived); errata log +
+register description (M.x apparatus); GT construction detail;
+the collaboration process summary (pointer to the companion paper);
+transcript/repo access statement.
 
 **Structure mapping**: our outline translates cleanly — Introduction;
 Related work (VLM remote sensing + historical-map extraction + the
