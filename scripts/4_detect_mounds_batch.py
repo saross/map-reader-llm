@@ -682,6 +682,44 @@ def process_single_tile(
         metadata_tracker.log_failure(tile_filename, str(e), category="processing")
         return None
 
+def infer_tile_size(sample_tile, cli_value=None):
+    """Resolve the effective tile size from a tile's measured dimensions.
+
+    The tile's actual pixel dimensions are authoritative (S142 stride-run
+    incident, 2026-08-25: a CLI/default value that disagrees with the tiles
+    silently corrupts normalised→pixel coordinate conversion by 300–500 m,
+    which is why the old contract — default 512, error on mismatch — kept
+    relocating the trap to whoever forgot the flag). An explicit
+    ``--tile-size`` now acts only as an assertion: it errors on disagreement
+    rather than being trusted.
+
+    Args:
+        sample_tile (Path): A tile image to measure.
+        cli_value (int, optional): The operator's ``--tile-size``, if given.
+
+    Returns:
+        int: The measured tile edge in pixels.
+
+    Raises:
+        ValueError: If the tile is non-square, or an explicit ``cli_value``
+            contradicts the measured dimensions.
+    """
+    with PILImage.open(sample_tile) as img:
+        width, height = img.size
+    if width != height:
+        raise ValueError(
+            f"Non-square tile {sample_tile.name}: {width}×{height}. "
+            "Mixed or rectangular tilings are not supported."
+        )
+    if cli_value is not None and cli_value != width:
+        raise ValueError(
+            f"--tile-size {cli_value} contradicts the measured {width}px "
+            f"({sample_tile.name}). The tiles are authoritative — drop the "
+            "flag, or point --tiles-dir at the intended tiling."
+        )
+    return width
+
+
 def detect_mounds_versioned(
     config_path,
     manifest_path=None,
@@ -1090,21 +1128,28 @@ def detect_mounds_versioned(
         print(f"Applying --limit: {limit}")
         tiles_to_process = tiles_to_process[:limit]
 
-    # ── Tile-size validation ────────────────────────────────────
-    # Verify that the first tile's actual dimensions match the configured
-    # tile_size. A mismatch silently corrupts coordinate conversion
-    # (e.g., using 512 on 384px tiles produces 300–500m offsets).
+    # ── Tile-size inference ─────────────────────────────────────
+    # The tiles' measured dimensions are authoritative; an explicit
+    # --tile-size is only an assertion (see infer_tile_size). First and
+    # last tiles are both measured so a mixed tree cannot slip through
+    # on a lucky sample.
     if tiles_to_process:
-        _sample = PILImage.open(tiles_to_process[0])
-        _actual_w, _actual_h = _sample.size
-        _sample.close()
-        if _actual_w != effective_tile_size or _actual_h != effective_tile_size:
+        try:
+            measured = infer_tile_size(tiles_to_process[0], tile_size)
+            measured_last = infer_tile_size(tiles_to_process[-1], tile_size)
+        except ValueError as exc:
+            print(f"\nERROR: {exc}")
+            return None
+        if measured != measured_last:
             print(
-                f"\nERROR: Tile dimensions ({_actual_w}×{_actual_h}) do not "
-                f"match tile_size ({effective_tile_size}). "
-                f"Pass --tile-size {_actual_w} to fix coordinate conversion."
+                f"\nERROR: Mixed tile sizes in one run "
+                f"({measured}px and {measured_last}px). Not supported."
             )
             return None
+        if measured != effective_tile_size:
+            print(f"Tile size: {measured} (measured from tiles; "
+                  f"config default was {effective_tile_size})")
+        effective_tile_size = measured
 
     print(f"Processing {len(tiles_to_process)} new tiles...")
 
@@ -1378,10 +1423,26 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
     )
     try:
         with open(manifest_path) as f:
-            json.load(f)  # Validate manifest is readable
+            _manifest_tiles = json.load(f)  # Validate manifest is readable
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error reading manifest {manifest_path}: {e}")
         return None
+
+    # Tile-size inference for the batch path: measure a sample manifest tile
+    # (the tiles are authoritative; --tile-size is an assertion only).
+    if isinstance(_manifest_tiles, list) and _manifest_tiles:
+        _sample_name = _manifest_tiles[0]
+        _sample_hits = list(effective_tiles_dir.glob(f"*/{_sample_name}"))
+        if not _sample_hits:
+            print(f"Error: manifest tile {_sample_name} not found under "
+                  f"{effective_tiles_dir}")
+            return None
+        try:
+            effective_tile_size = infer_tile_size(
+                _sample_hits[0], args.tile_size)
+        except ValueError as exc:
+            print(f"ERROR: {exc}")
+            return None
 
     # Load system instruction
     instruction_file = config_json.get(

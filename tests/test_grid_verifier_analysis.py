@@ -345,3 +345,35 @@ def test_main_smoke_wires_gates_boards_baseline_and_billing(tmp_path, monkeypatc
     assert payload["verifier"]["failures"] == 0
     assert payload["verifier"]["retries_transient"] == 4
     assert (out_dir / "verifier_sweep.csv").exists()
+
+
+@pytest.mark.tier1
+def test_infer_tile_size_measured_is_authoritative(tmp_path):
+    """The tiles' measured dimensions win; --tile-size only asserts.
+
+    S142 stride-run incident (2026-08-25): a trusted-but-wrong tile_size
+    corrupts coordinate conversion by 300-500 m. The contract is now:
+    infer from the tile, error on explicit contradiction, error on
+    non-square.
+    """
+    import importlib.util
+
+    from PIL import Image
+
+    spec = importlib.util.spec_from_file_location(
+        "detect_mounds_batch",
+        Path(__file__).resolve().parent.parent / "scripts/4_detect_mounds_batch.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    infer_tile_size = mod.infer_tile_size
+
+    tile = tmp_path / "m1_x0_y0.png"
+    Image.new("L", (384, 384)).save(tile)
+    assert infer_tile_size(tile) == 384
+    assert infer_tile_size(tile, 384) == 384
+    with pytest.raises(ValueError, match="contradicts the measured 384"):
+        infer_tile_size(tile, 512)
+    rect = tmp_path / "m1_x0_y1.png"
+    Image.new("L", (384, 256)).save(rect)
+    with pytest.raises(ValueError, match="Non-square"):
+        infer_tile_size(rect)
