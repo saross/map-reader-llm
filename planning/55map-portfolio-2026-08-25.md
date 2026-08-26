@@ -167,14 +167,13 @@ ceiling of **2× the estimate above** (the established pattern).
 
 The PI authorised the full post-proposer chain to run overnight
 without intervention (recoveries → unions → verifier → scoring →
-bets assessment) and set the verifier ceiling at **$50 flex total**
-("you can even add an additional $10 to the verifier ceiling (to
-$50)") — note this responds to the assistant's "~$40" shorthand;
-the card's own two-run upper-bound estimate was ~$68, so the
-operative overnight rule is: measured total ≤ $50 → launch both
-verifiers; otherwise launch Run A's (cheaper) within the ceiling and
-hold Run B's for morning approval at measured prices. The $137
-2× ceiling is superseded downward by the PI's explicit number.
+bets assessment). Verifier ceiling: the PI initially said "$50"
+responding to the assistant's "~$40" shorthand, then corrected
+same-evening: **$10 on top of the card's ~$68 upper-bound estimate,
+i.e. a $78 flex total ceiling**. Operative overnight rule: measured
+total ≤ $78 → launch both verifiers; above it (not expected — $68
+was the upper bound), hold for morning. Supersedes the $137 2×
+ceiling downward.
 
 ## 5. Execution plan
 
