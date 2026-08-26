@@ -96,22 +96,14 @@ def main() -> int:
                     f"pinned ({len(missing)} missing, {len(extra)} extra). "
                     f"Missing: {sorted(missing)[:5]}")
             deduped = deduplicate_within_pass(raw, distance_thresh=DEDUP_METRES)
-            pass_dicts = []
-            for f in deduped:
-                if f["geometry"]["type"] != "Point":
-                    raise CoverageError(
-                        f"{cell}/{run}: non-Point deduped geometry "
-                        f"({f['geometry']['type']}) — the dedup contract "
-                        "carries cluster centroids as points")
-                pass_dicts.append({
-                    "centroid": tuple(f["geometry"]["coordinates"]),
-                    "label": f["properties"].get("label", "mound"),
-                    "source_tiles": (f["properties"].get("origin_tiles")
-                                     or f["properties"].get("source_tile")
-                                     or "").split(";"),
-                    "cluster_size": int(f["properties"].get("cluster_size", 1)),
-                })
-            deduped_passes.append(pass_dicts)
+            # deduplicate_within_pass already returns the cluster dicts the
+            # cross-pass clusterer consumes: centroid, label, source_tiles,
+            # cluster_size (verified against a live pass, 2026-08-26).
+            if deduped and "centroid" not in deduped[0]:
+                raise CoverageError(
+                    f"{cell}/{run}: unexpected dedup item shape "
+                    f"{sorted(deduped[0])}")
+            deduped_passes.append(deduped)
             logger.info("%s %s: tiles %d, raw %d -> dedup %d",
                         cell, run, len(processed), len(raw), len(deduped))
 
