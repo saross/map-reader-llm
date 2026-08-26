@@ -163,6 +163,19 @@ the tile counts; the verifier stage is priced at MEASURED union sizes
 after the proposers finish and launches only within a pre-approved
 ceiling of **2× the estimate above** (the established pattern).
 
+## 4b. Overnight authorisation amendment (PI, 2026-08-26 evening)
+
+The PI authorised the full post-proposer chain to run overnight
+without intervention (recoveries → unions → verifier → scoring →
+bets assessment) and set the verifier ceiling at **$50 flex total**
+("you can even add an additional $10 to the verifier ceiling (to
+$50)") — note this responds to the assistant's "~$40" shorthand;
+the card's own two-run upper-bound estimate was ~$68, so the
+operative overnight rule is: measured total ≤ $50 → launch both
+verifiers; otherwise launch Run A's (cheaper) within the ceiling and
+hold Run B's for morning approval at measured prices. The $137
+2× ceiling is superseded downward by the PI's explicit number.
+
 ## 5. Execution plan
 
 The overnight-driver pattern, hardened by the S142 incidents:
