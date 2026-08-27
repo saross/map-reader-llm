@@ -70,8 +70,10 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 from scripts.build_55map_leaderboard import (  # noqa: E402
     BOUNDS,
-    CELLS as BOARD_CELLS,
     standardised_gt,
+)
+from scripts.score_55maps_standardised_reference import (  # noqa: E402
+    CELLS as BOARD_CELLS,
 )
 from scripts.lib_advanced_metrics import (  # noqa: E402
     assign_source_tiles,
