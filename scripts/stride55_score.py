@@ -84,6 +84,20 @@ def materialise_primary(cell: str, spec: dict) -> Path:
     if set(results) != expected_keys:
         raise RuntimeError(f"{cell}: probability keys not the contiguous range")
 
+    # source_tile must name tiles of the STANDARD 55-map evaluation grid
+    # (the bounds the engine's tile classification and tile-bootstrap CIs
+    # join against); our runs' own tilings share map-name prefixes but not
+    # tile names. E79 nearest-centroid assignment against the standard
+    # bounds fixes both the MCC block and the CIs — the per-map Hungarian
+    # F1 is unaffected either way (prefix-scoped).
+    import geopandas as gpd
+    import numpy as np
+    from scipy.spatial import cKDTree
+    bounds = gpd.read_file(BOUNDS)
+    centroids = np.c_[bounds.geometry.centroid.x, bounds.geometry.centroid.y]
+    tree = cKDTree(centroids)
+    names = bounds["tile_name"].tolist()
+
     kept = []
     for cand in cands:
         cid = cand["candidate_id"]
@@ -92,13 +106,14 @@ def materialise_primary(cell: str, spec: dict) -> Path:
         if prob is None:
             raise RuntimeError(f"{cell}: null probability for candidate {cid}")
         if vote >= spec["min_votes"] and float(prob) >= spec["prob_t"]:
+            _, i = tree.query([cand["centroid_x"], cand["centroid_y"]], k=1)
             kept.append({
                 "type": "Feature",
                 "geometry": {"type": "Point",
                              "coordinates": [cand["centroid_x"], cand["centroid_y"]]},
                 "properties": {"candidate_id": cid, "vote_count": vote,
                                "mound_probability": float(prob),
-                               "source_tile": cand.get("source_tile"),
+                               "source_tile": names[int(i)],
                                "label": "mound"},
             })
     dest = OUT_BASE / cell / "primary" / "verified_detections.geojson"
