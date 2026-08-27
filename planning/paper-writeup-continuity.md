@@ -28,8 +28,12 @@ project state.
 > `35ed545ef` (sweep) `996937e1a` (ladder) `dcc639b2a` (findings)
 > `49aab2d1d` (Obs). Codex mail ×3 read+receipted (Phase 2 workstream;
 > gpt-hub `b49713d` re-review queued on Shawn's host-context push).
-> **Remaining queue is interactive**: register rows; skeleton D-1..D-5
-> then drafting; PI standing list unchanged (D24 BRIEF, user-obs
+> **Remaining queue is interactive**: (NEW, PI-queued 2026-08-27)
+> standardised-GT re-score of the six A/B cells + the FINAL 16-cell
+> 55-map board — card `planning/55map-final-board-2026-08-27.md`
+> PREPARED, awaiting sign-off (membership and home decided
+> interactively; board is FINAL, no more 55-map runs); register rows;
+> skeleton D-1..D-5 then drafting; PI standing list unchanged (D24 BRIEF, user-obs
 > verdicts 3× S140 + 3× S142, Gould → D.9, Obs 433–437 review, billing
 > glance ~$338; archive-drift gate: 1 raw session awaiting
 > bulk-archive.py).
