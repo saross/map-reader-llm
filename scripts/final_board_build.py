@@ -222,7 +222,10 @@ def main() -> int:
     for label, committed_eval in COINCIDENT.items():
         new = eval50(OUT / "cells" / label / "evaluation.json")
         old = eval50(PROJECT_ROOT / committed_eval)
-        if abs(new["f1_50"] - old["f1_50"]) > 1e-9:
+        # The current evaluate_detections stores f1 rounded to 4 d.p.;
+        # the 2026-08-14 committed evaluations stored full precision.
+        # Half a 4-d.p. ulp is therefore identity at stored precision.
+        if abs(new["f1_50"] - old["f1_50"]) > 5e-5:
             raise RuntimeError(
                 f"coincidence gate FAILED {label}: {new['f1_50']} vs "
                 f"{old['f1_50']}")
