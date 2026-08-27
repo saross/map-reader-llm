@@ -937,4 +937,3 @@ catch an error yourself this session. Candidate: this
 stop-and-show-before-resolving cadence is the right default for
 result-bearing work — worth confirming you want it even when it slows
 a headline you are waiting on.
-
