@@ -113,6 +113,23 @@ def materialise_primary(cell: str, spec: dict) -> Path:
     return dest
 
 
+def ensure_empty_yesterday() -> Path:
+    """Header-only review CSV so only the canonical set feeds the phantoms.
+
+    Mirrors `score_55maps_extended_gt_canonical.ensure_empty_yesterday`:
+    the engine requires both review CSVs in legacy ring-gated mode, and the
+    canonical review passes as today with an empty yesterday (yesterday=0,
+    today=773 — the §4b configuration).
+    """
+    import csv
+    OUT_BASE.mkdir(parents=True, exist_ok=True)
+    path = OUT_BASE / "empty-yesterday-review.csv"
+    with path.open("w", newline="") as fh:
+        csv.writer(fh).writerow(
+            ["candidate_id", "human_label", "buffer_metres", "x", "y", "map_name"])
+    return path
+
+
 def score(cell: str, detections: Path) -> None:
     """Score one verified set on the canonical-GT Track-2 configuration."""
     out_dir = OUT_BASE / cell / "primary" / "eval"
@@ -122,6 +139,7 @@ def score(cell: str, detections: Path) -> None:
         "--verified-detections", str(detections),
         "--student-gt", str(STUDENT_GT),
         "--bounds", str(BOUNDS),
+        "--review-yesterday", str(ensure_empty_yesterday()),
         "--review-today", str(CANONICAL_REVIEW),
         "--output-dir", str(out_dir),
         "--buffers", "20", "30", "50",
