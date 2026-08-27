@@ -47,7 +47,6 @@ from pathlib import Path
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-from scipy.spatial import cKDTree
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -97,12 +96,16 @@ def load_candidates(cell: str, spec: dict,
         raise RuntimeError(f"{cell}: count gate failed")
     if set(results) != {f"candidate_{i:05d}" for i in range(spec["union_n"])}:
         raise RuntimeError(f"{cell}: key gate failed")
-    centroids = np.c_[bounds.geometry.centroid.x, bounds.geometry.centroid.y]
-    tree = cKDTree(centroids)
-    names = bounds["tile_name"].tolist()
+    from scripts.stride55_score import (
+        assign_standard_tile,
+        build_map_constrained_index,
+    )
+    index = build_map_constrained_index()
     xs = [c["centroid_x"] for c in cands]
     ys = [c["centroid_y"] for c in cands]
-    _, idx = tree.query(np.c_[xs, ys], k=1)
+    tiles = [assign_standard_tile(index, c["source_tile"],
+                                  c["centroid_x"], c["centroid_y"])
+             for c in cands]
     gdf = gpd.GeoDataFrame(
         {
             "candidate_id": [c["candidate_id"] for c in cands],
@@ -111,7 +114,7 @@ def load_candidates(cell: str, spec: dict,
             "mound_probability": [
                 float(results[f"candidate_{c['candidate_id']:05d}"]
                       ["mound_probability"]) for c in cands],
-            "source_tile": [names[int(i)] for i in idx],
+            "source_tile": tiles,
         },
         geometry=gpd.points_from_xy(xs, ys), crs=DEFAULT_CRS)
     return gdf

@@ -51,9 +51,39 @@ CANONICAL_REVIEW = (
 #: The pre-registered primary operating points (card § 3, committed
 #: 2026-08-25 before launch).
 RUNS = {
-    "g384_ov128_55map": {"union_n": 38713, "prob_t": 0.15, "min_votes": 8},
-    "g384_ov192_55map": {"union_n": 57482, "prob_t": 0.15, "min_votes": 10},
+    "g384_ov128_55map": {"union_n": 38713, "prob_t": 0.15, "min_votes": 8,
+                         "expect_f1_50": 0.8325895173845355},
+    "g384_ov192_55map": {"union_n": 57482, "prob_t": 0.15, "min_votes": 10,
+                         "expect_f1_50": 0.8422141748577341},
 }
+
+
+def build_map_constrained_index() -> dict:
+    """Per-map KD-trees over the standard evaluation grid's tile centroids."""
+    import geopandas as gpd
+    import numpy as np
+    from scipy.spatial import cKDTree
+
+    from scripts.lib_advanced_metrics import get_map_name
+    bounds = gpd.read_file(BOUNDS)
+    index: dict = {}
+    for name, geom in zip(bounds["tile_name"], bounds.geometry, strict=True):
+        index.setdefault(get_map_name(name), {"names": [], "xy": []})
+        m = index[get_map_name(name)]
+        m["names"].append(name)
+        m["xy"].append((geom.centroid.x, geom.centroid.y))
+    for m in index.values():
+        m["tree"] = cKDTree(np.asarray(m["xy"]))
+    return index
+
+
+def assign_standard_tile(index: dict, origin_tile: str,
+                         x: float, y: float) -> str:
+    """Nearest standard tile WITHIN the origin raster's map (E79-in-map)."""
+    from scripts.lib_advanced_metrics import get_map_name
+    m = index[get_map_name(origin_tile)]
+    _, i = m["tree"].query([x, y], k=1)
+    return m["names"][int(i)]
 
 
 def materialise_primary(cell: str, spec: dict) -> Path:
@@ -85,18 +115,15 @@ def materialise_primary(cell: str, spec: dict) -> Path:
         raise RuntimeError(f"{cell}: probability keys not the contiguous range")
 
     # source_tile must name tiles of the STANDARD 55-map evaluation grid
-    # (the bounds the engine's tile classification and tile-bootstrap CIs
-    # join against); our runs' own tilings share map-name prefixes but not
-    # tile names. E79 nearest-centroid assignment against the standard
-    # bounds fixes both the MCC block and the CIs — the per-map Hungarian
-    # F1 is unaffected either way (prefix-scoped).
-    import geopandas as gpd
-    import numpy as np
-    from scipy.spatial import cKDTree
-    bounds = gpd.read_file(BOUNDS)
-    centroids = np.c_[bounds.geometry.centroid.x, bounds.geometry.centroid.y]
-    tree = cKDTree(centroids)
-    names = bounds["tile_name"].tolist()
+    # (the engine's tile classification and tile-bootstrap CIs join on
+    # them), but map ATTRIBUTION must stay the origin raster's map — the
+    # protocol the incumbents' runs used for Hungarian scoping. The sheet
+    # rasters overlap, so an UNCONSTRAINED nearest-centroid assignment
+    # flips 10.1 % of candidates to the adjacent sheet (measured
+    # 2026-08-27) and moves corrected-F1 by ~0.04 — an artefact, caught by
+    # the first/second-pass divergence. Assignment is therefore
+    # constrained to the origin map's own standard tiles.
+    tile_index = build_map_constrained_index()
 
     kept = []
     for cand in cands:
@@ -106,14 +133,16 @@ def materialise_primary(cell: str, spec: dict) -> Path:
         if prob is None:
             raise RuntimeError(f"{cell}: null probability for candidate {cid}")
         if vote >= spec["min_votes"] and float(prob) >= spec["prob_t"]:
-            _, i = tree.query([cand["centroid_x"], cand["centroid_y"]], k=1)
+            tile = assign_standard_tile(
+                tile_index, cand["source_tile"],
+                cand["centroid_x"], cand["centroid_y"])
             kept.append({
                 "type": "Feature",
                 "geometry": {"type": "Point",
                              "coordinates": [cand["centroid_x"], cand["centroid_y"]]},
                 "properties": {"candidate_id": cid, "vote_count": vote,
                                "mound_probability": float(prob),
-                               "source_tile": names[int(i)],
+                               "source_tile": tile,
                                "label": "mound"},
             })
     dest = OUT_BASE / cell / "primary" / "verified_detections.geojson"
@@ -178,12 +207,26 @@ def score(cell: str, detections: Path) -> None:
 
 
 def main() -> int:
+    import csv as csvmod
     for required in (STUDENT_GT, BOUNDS, CANONICAL_REVIEW):
         if not required.exists():
             raise FileNotFoundError(required)
     for cell, spec in RUNS.items():
         det = materialise_primary(cell, spec)
         score(cell, det)
+        # Attribution-invariance gate: map-constrained standard-tile
+        # assignment must leave the per-map Hungarian F1 identical to the
+        # origin-attribution run (2026-08-27 first pass). A mismatch means
+        # attribution drifted — the 10.1 % border-flip artefact class.
+        with (OUT_BASE / cell / "primary" / "eval" /
+              "corrected-f1.csv").open() as fh:
+            f1_50 = next(float(r["F1"]) for r in csvmod.DictReader(fh)
+                         if int(r["R_m"]) == 50)
+        if abs(f1_50 - spec["expect_f1_50"]) > 1e-6:
+            raise RuntimeError(
+                f"{cell}: attribution-invariance gate FAILED — F1@50 "
+                f"{f1_50:.10f} vs expected {spec['expect_f1_50']:.10f}")
+        logger.info("%s: attribution-invariance gate OK (%.6f)", cell, f1_50)
     logger.info("primary scoring complete -> %s", OUT_BASE.relative_to(PROJECT_ROOT))
     return 0
 
