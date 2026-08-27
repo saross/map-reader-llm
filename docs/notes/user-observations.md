@@ -906,3 +906,35 @@ architecture: granularity must buy protection proportional to its
 management burden. Candidate: the same lens you apply to statistical
 and spend decisions governs infrastructure design, and proposals
 should arrive pre-weighed against it.
+
+## Pending review — Session 142 candidates (2026-08-27, drafted at handoff)
+
+Drafted at close; accept / edit / discard / replace. Unanswered
+candidates hold over — silence never discards. (The three S140
+candidates above also still await verdicts.)
+
+**S142-C1 (in-the-moment reaction, relayed per the exception rule).**
+At close: "It's been a real pleasure working through this with you,
+validating the entire pipeline. I've got a lot more confidence than I
+did a few days ago." Candidate: the confidence came less from the
+results than from watching the gates catch things — the audit
+corrections, the invariance divergence, the ceiling discipline — i.e.
+the *visible error-correction* was the product, not just the numbers.
+
+**S142-C2 — pre-registered bets made overnight results decision-ready.**
+The P1–P8 slate meant every overnight result arrived pre-framed as
+pass/fail against your own predictions rather than as numbers needing
+interpretation. Candidate: registering expectations before autonomous
+runs is worth the ceremony precisely when you will be absent for the
+results — it converts my report from "here is data" into "here is the
+verdict on your bets".
+
+**S142-C3 — error disclosure as stop-and-show, not fix-and-mention.**
+Three times (the like-for-like framing, the BH boolification, the
+0.83→0.79 rescore divergence) I stopped, showed the discrepancy, and
+withheld both numbers until the cause was proven. You never had to
+catch an error yourself this session. Candidate: this
+stop-and-show-before-resolving cadence is the right default for
+result-bearing work — worth confirming you want it even when it slows
+a headline you are waiting on.
+
