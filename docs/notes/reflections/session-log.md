@@ -8953,3 +8953,68 @@ briefs). ~60 commits `142f2c5c9` → session close, all pushed.
   amd-tower carried later doc commits.
 - The H6 ~$48 re-run was DECLINED (disclose-only) with A-06/A-07/A-09
   as the stated substitute evidence — a deliberate spend-scope trade.
+
+## Session 142 — 2026-08-24/27 (map-reader-llm)
+
+One continuous four-day conversation. Total new API spend ≈ **$338
+flex**, every stage inside a pre-approved gate.
+
+**Grid post-verifier (commissioned queue, $0 scoring over $6.27
+committed data).** Both open questions settled: tile-size ranking
+REVERSES under the verifier; overlap reversal survives at half
+margin; best cell 384/50 0.8961. Registered (4 conditions + analysis
+row + Obs 433). Two-lens `/audit` then corrected the pre/post framing
+to the like-for-like K=10 baseline (ns −0.028/−0.031; Obs 434 rider),
+fixed a BH-boolification bug in my board wiring, and drove the
+join-witness manifests into the tree, verified over all 9,133
+candidates. M.11 § 4.3 phase table regenerated from the register
+(five disagreements flagged); H2-C full-run card written (recommend
+run only for scope upgrade).
+
+**Stride programme (PI-directed same day; ~$55 flex).** Phase A ($0):
+incumbents re-scored on the common footprint — 384/50 leads but ties
+opmax/headline (p=0.35/0.31), beats min6 (p=0.015). Phases B+C(part)
+overnight: five new geometry cells (iso-stride trio at 192; pairs at
+256/336; the PI-restricted stride-144 rung), all coverage gates
+exact, 16,966/16,966 verified. Verdict: **plateau, not winner** —
+384 px at-or-above at every stride; interior optimum strides 192–256
+(336→256 climb p=0.020; 144 falls off — stop rule fired); 13-cell
+board 6/78 significant, all involving 512/12.5. Exact winner ladder
+($3.4): N=3 0.8911/$2.64 ≈ the K=10 winner at 40 % cost. 256/50
+recommended NOT run; accepted. Obs 435/436; Seed 12 + rider; runner
+tile-size inference fix; tiler --rasters-dir.
+
+**55-map portfolio (~$277 flex: proposers $210.53, verifiers
+$66.09 ≤ the corrected $78 ceiling).** Registered-by-commit
+measurement contract + predictions P1–P8 before launch. Runs A
+(384/33.3, 14,160×10) and B (384/50, 24,561×10): 108 recovery slots
+all cleared to full coverage; unions 38,713 + 57,482; verification
+survived a ~6 h flex 503 storm (2,250 retries, zero failures).
+**Primary results at the pre-registered carried points: A
+corrected-F1@50 = 0.8326, B = 0.8422 — both above the carried
+incumbent 0.8152; B within 0.005 of the old oracle 0.8476. P5 PASS.**
+The E79 tile-reassignment artefact (10.1 % cross-sheet flips on
+overlapping rasters) was caught by first/second-pass divergence and
+fixed with map-constrained assignment + a 1e-6 invariance gate
+(Run A reproduced exactly; Run B gate in flight at session close).
+Sweep/oracle/paired-A-vs-B script written, gated, queued.
+
+**Paper.** Venue LOCKED: ISPRS JPRS, gold OA under CAUL (title-list
+verified by PI; institutional email required), tight 8,500 words +
+supplements. Two agent surveys (policy + 17-VoR practice) →
+`journal-requirements-isprs.md`; manuscript skeleton with five open
+decisions (D-1..D-5); the symbol-family framing adopted.
+
+### Contextual assumptions
+
+- Run B's attribution-invariance gate and the entire secondary
+  contract (sweeps, oracles, paired tests, N-ladders, P1–P8
+  scorecard, findings doc, register rows for stride + 55-map runs)
+  were IN FLIGHT/QUEUED when the PI called the reflection — the next
+  session's first act is harvesting them.
+- The orchestration incidents (compound-chain silent failures, stale
+  monitor reads, pgrep self-matches) cost hours but zero data and
+  zero unauthorised spend; every scientific artefact passed its gates.
+- The standing PI queue (D24 brief, user-obs verdicts, Gould → D.9,
+  Obs 433–436 review) remained open throughout.
+

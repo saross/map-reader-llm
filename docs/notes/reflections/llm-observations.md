@@ -7677,3 +7677,46 @@ framing) for $0.0137. The pattern across the session: the cheap
 measured probe repeatedly displaced the expensive registered run, and
 the gates' role was less to stop bad spends than to make tiny ones
 authoritative.
+
+## Session 142 — 2026-08-24/27 (parse-failure tiles are stochastic and content-tilted, not deterministic; three architecture-independent routes converge on one ceiling; the model's discrimination is uniform where its calibration varies; a flex 503 storm is survivable with retry discipline and honest ceilings)
+
+**Model parse failures are content-tilted coin flips, never absolutes.**
+Across ~453k detection calls, a handful of tiles repeatedly produced
+unparseable JSON — one failed 3/10 passes, another 2/10, and every
+single one eventually parsed on resampling at T = 0.7 (108 recovery
+slots, all cleared; the "stubborn" grid-era tile likewise cleared on
+its third fresh sample). The correct model is a per-tile
+parse-failure *probability* elevated by whatever that map content
+does to the output distribution — not a deterministic bad tile. The
+operational consequence: recovery-by-resampling is always worth
+attempting before any exclusion is documented, and exclusion lists
+based on one or two failures overfit noise.
+
+**The ceiling has three independent witnesses.** The GS ~0.90 shelf is
+now reached by a 30-pass HIGH-thinking consensus + verifier, an n = 5
+verifier operating maximum, and a cheap MINIMAL-thinking geometry
+stack — three architectures sharing almost no tuned parameters,
+landing within noise of one number against an error-free reference.
+Convergence-from-independence is the strongest ceiling evidence this
+study has produced; a fourth route (the 55-map primaries at their own
+shelf, 0.83–0.84 against the ambiguity-characterised GT) repeated the
+pattern at deployment scale the same week.
+
+**Discrimination saturates before calibration.** Tile-MCC sat at
+0.78–0.80 across the entire nine-cell verified board while F1
+composition (P/R balance) swung freely with geometry — the model's
+*where are the mounds* signal stopped improving long before its *how
+many at this spot* signal was fully calibrated. This is a reusable
+diagnostic ordering: when MCC is flat across a design's cells, the
+remaining engineering is calibration, and further capability spend is
+wasted.
+
+**Flex displacement is a storm, not a wall.** A ~6-hour 503/reset
+storm mid-verification slowed one stage to single requests per minute;
+1,748 + 502 transient retries later, both stages closed with zero
+failed items and zero overspend. Two disciplines made that boring
+rather than catastrophic: retry budgets deep enough to outlast the
+storm, and spend ceilings agreed *before* the degradation so no
+mid-storm judgement call (switch to standard tier at 2× price?) was
+ever needed — the authorised answer already existed and was "no".
+

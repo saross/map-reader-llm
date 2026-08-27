@@ -7600,3 +7600,93 @@ Before registering a defect against "the writer" (or any multi-path
 component), name the code path the evidence actually exercised. A
 defect row that misstates mechanism propagates: mine reached the E82
 execution note before both were corrected.
+
+## 2026-08-27 (Session 142, map-reader-llm): The rescore that moved a number that could not move
+
+**Session:** feb7338e-afae-48ff-a91b-4ffe081499a8
+**Instance:** primary
+
+### Surprising fact
+
+Re-scoring the 55-map primary evaluations after a tile-name fix —
+a change I had explicitly reasoned "cannot affect F1, which is
+per-map Hungarian and prefix-scoped" — moved corrected-F1@50 m from
+0.8326 to 0.7882 (Run A) and 0.8422 to 0.8000 (Run B). A ~0.04 shift
+from a change argued to be metric-invisible.
+
+### Probe
+
+The only path from tile names to F1 is map attribution (detections
+are scoped per map by source-tile prefix before matching). Measured
+directly: under the unconstrained nearest-centroid reassignment,
+3,897 of 38,713 candidates (10.1 %) acquired a *different map* than
+their origin raster — the 55 sheet rasters overlap at their edges, so
+the standard grid's tiles from adjacent maps interleave there, and
+"nearest tile centroid" freely crosses sheet boundaries. A
+cross-border detection cannot match a reference scoped to the
+neighbouring sheet: each flip mints an FP + FN pair.
+
+### Belief revision
+
+Two revisions. Narrow: "E79 nearest-centroid assignment" is only
+protocol-equivalent within a *non-overlapping* carrier; on
+overlapping rasters it must be constrained to the origin map, and the
+fix (per-map KD-trees) restored 0.8325895… to the sixth decimal —
+now enforced by a permanent attribution-invariance gate. Broad, and
+the part worth carrying: my invariance *argument* was correct about
+the mechanism it considered (Hungarian, prefix-scoping) and wrong
+because it never enumerated what else the changed column feeds. The
+divergence itself was the detector — had the first pass not existed,
+the artefact numbers carried no visible defect at all. Re-scoring the
+same data twice by different routes is not redundancy; on this
+evidence it is the cheapest confabulation detector the pipeline owns.
+
+### What would change this belief
+
+A demonstration that origin-raster attribution itself misassigns
+mounds in overlap zones (e.g. a mound genuinely on sheet X detected
+only in sheet Y's raster margin) at a rate material to F1 — that
+would make *neither* attribution canonical and force an explicit
+overlap-zone protocol instead.
+
+## 2026-08-25 (Session 142, map-reader-llm): The clean ladder that dissolved when the confound was decomposed
+
+**Session:** feb7338e-afae-48ff-a91b-4ffe081499a8
+**Instance:** primary
+
+### Surprising fact
+
+The grid's post-verifier board formed a perfectly monotone "stride
+ladder" (F1 0.8961 → 0.8815 → 0.8677 → 0.8311 as stride rose
+192 → 448, union recall monotone alongside) — a clean, mechanistic,
+publishable-looking law: look density is the lever.
+
+### Probe
+
+The PI-commissioned iso-stride decomposition: three tile sizes at
+one stride (192), plus matched pairs at 256 and 336 — five new cells,
+one night, ~$52. If stride were the lever, tile size at fixed stride
+should not matter.
+
+### Belief revision
+
+The ladder was an artefact of one-cell-per-stride sampling: at fixed
+stride, 384 px sat at or above every alternative (never significantly,
+but four-for-four in direction), and the true surface is an interior
+plateau at 384 px over strides 192–256 with a *significant* climb
+from 336 (+0.0305, p = 0.020) and a fall-off at 144. Monotone
+patterns over a design where each x-value has exactly one occupant
+are hypotheses about a confound, not findings — the study had already
+learned this once (Obs 351's architecture-dependent tile-size
+optimum) and the stride reading nearly re-committed the same class of
+error one level up. The decomposition also delivered the practical
+prize the ladder would have hidden: the cheapest plateau member sits
+at stride 256, not at the densest geometry.
+
+### Implications for practice
+
+Before publishing any monotone single-occupant pattern, ask what a
+two-occupant column would cost. Here it cost ~$30 and one night, and
+it reversed the headline's mechanism while improving its deployment
+advice.
+

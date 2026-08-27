@@ -1854,3 +1854,50 @@ invocation, including one-offs; give any throwaway derivation whose
 output feeds a ruling a thirty-second synthetic test; and treat "this
 is just intermediate" as the cue for MORE mechanical checking, not
 less.
+
+## claude-obs 77 — 2026-08-27 (Session 142): he corrects the anchor, not just the number
+
+**Pattern.** Twice this session Shawn's response to a numeric
+misunderstanding was to repair its provenance rather than restate a
+figure. The verifier ceiling: told his "$50" responded to my "~$40"
+shorthand against a true $68 bound, he did not split the difference —
+he re-derived ("I meant *add* $10 to your projected upper bound, so
+*$78*"), relocating the authorisation onto the correct base. The
+Phase C rung: his "why 62.5 % not 75 %?" was an anchor-check on my
+design logic before approving, and "it's a log-spaced rung" settled it
+instantly once the derivation was visible.
+
+**Lesson.** His approvals bind to derivations, not to figures. A
+number I present is only as authorised as the visible reasoning under
+it — and when I compress (my "~$40"), the compression becomes the
+thing he authorises against, importing my rounding error into his
+control limit.
+
+**How to apply.** In any spend or control-limit exchange, present the
+derived bound and its basis, never a conversational rounding of it;
+when he sets a limit from something I said, check which of my numbers
+he anchored on before treating the limit as operative.
+
+## claude-obs 78 — 2026-08-27 (Session 142): self-critique — my science had gates, my plumbing had optimism
+
+**Pattern.** Every scientific artefact this session crossed a gate
+(count parity, invariance, replication, coverage) and every one of
+the session's five real saves came from a gate or a cross-check. My
+orchestration layer, by contrast, ran on hope: compound ssh chains
+whose middle links failed silently, monitors reading stale logs,
+three pgrep self-matches, a pull that refused against staged files
+while everything after its `&&` quietly never ran. Zero data was
+lost — because the *scientific* gates caught what the plumbing let
+through — but hours were.
+
+**Lesson.** Gate discipline is not a property of the analysis; it is
+a property of every layer that can silently diverge from believed
+state. Cross-machine orchestration diverges more easily than scoring
+code does.
+
+**How to apply.** One state-changing action per remote command;
+verify observed state (not exit codes) after each; never launch a
+monitor against a log that an in-flight process may still replace;
+and treat any compound `a && b && c` over ssh as a smell to refactor
+before running, not after debugging.
+

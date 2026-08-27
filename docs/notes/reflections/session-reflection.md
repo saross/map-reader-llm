@@ -10676,3 +10676,76 @@ collaboration rules Shawn confirmed mid-walk (cards-with-guardrail,
 the 70 % context flag, hold-and-report, claim-voice division,
 interleaved rulings, generalised absence-claim pre-caveats) are in one
 sense just documentation of how this session already worked.
+
+## Session 142 — 2026-08-24/27 — the session that ran the study's whole method end to end, twice
+
+*(map-reader-llm; one continuous conversation spanning four days: the
+grid post-verifier scoring and its audit, the stride programme
+overnight, and the 55-map portfolio from registration to first
+transfer results. Primary instance throughout — no compaction.)*
+
+Rotation guard honoured: the prompts below avoid the previous two
+entries' selections.
+
+### Prompt: What would you do differently if you replayed this session?
+
+Two things, one mechanical and one epistemic. Mechanically: I spent
+real time fighting my own orchestration — compound ssh chains whose
+middle links failed silently (a `git pull` refusing against staged
+files while the `&&` chain silently dropped everything after it),
+monitors that re-read stale logs and cried wolf, and `pgrep`
+self-matches three separate times. The replay lesson is not "be more
+careful"; it is that cross-machine orchestration wants the same gate
+discipline as the science — one action per command, verify state
+after each, never trust an exit code that summarises five steps. The
+science had that discipline; the plumbing did not, and the plumbing
+is where the hours leaked.
+
+Epistemically: I would have run the like-for-like baseline *before*
+publishing the tile-size reversal, not after the audit demanded it.
+The reversal claim survived, but its first framing juxtaposed a
+single aggregated operating point against run-averaged single-pass
+contrasts — different estimands — and it took a fresh-context Lens A
+agent to see it. Same pattern hours later: the unconstrained E79
+reassignment silently flipped 10.1 % of candidates across overlapping
+sheet borders, and only the first/second-pass divergence caught it.
+Both times the check that saved us was an *invariance expectation* —
+"this number should not have moved". The replay rule: when a scoring
+chain is re-run for any reason, diff the invariants first, interpret
+second.
+
+### Prompt: What felt uncertain or unresolved at the end?
+
+The Run B attribution gate was still in flight when Shawn called the
+reflection — the corrected chain had already reproduced Run A's
+0.832590 exactly, so the uncertainty is small, but the session ends
+with its final number technically unconfirmed, plus the entire
+secondary contract (sweep, oracles, paired A-vs-B, N-ladders, the
+P1–P8 scorecard) queued behind it. More interesting is a quieter
+unresolved thing: the primary results (A 0.8326, B 0.8422, both above
+the carried incumbent, B within 0.005 of the old oracle) are *better
+than the registered prediction band expected them to be relative to
+the incumbent*. P5 predicted "not significantly below 0.8152"; both
+landed clearly above. Nobody has yet asked why the new geometry
+transfers *better* than the geometry the incumbent was calibrated
+with — whether that is stride-256's recall economy interacting with
+the 50 m radius, or something about the corpus. That question is
+sitting in plain sight for the scorecard session.
+
+### Prompt: What decision or trade-off made today will look arbitrary without this session's context?
+
+The $78 verifier ceiling. The record will show a ceiling of
+"estimate + $10" adopted mid-evening after a $50 figure was stated
+and withdrawn — without this session's context, that sequence reads
+as haggling. What actually happened is a compressed negotiation about
+delegation under sleep: Shawn wanted the overnight chain unblocked,
+anchored on my "~$40" shorthand, and corrected within minutes when I
+surfaced that his number responded to a compression of mine ($68 was
+the real upper bound). The measured stage came in at $66.09 — under
+the true bound, over his first number. The durable lesson encoded in
+that exchange: when the PI sets a control limit from a figure I
+summarised, the limit inherits the summary's error, and surfacing the
+provenance of the anchor is part of taking the authorisation
+honestly. The card's § 4b records the correction trail for exactly
+this reason.
+
