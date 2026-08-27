@@ -98,6 +98,7 @@ def materialise_primary(cell: str, spec: dict) -> Path:
                              "coordinates": [cand["centroid_x"], cand["centroid_y"]]},
                 "properties": {"candidate_id": cid, "vote_count": vote,
                                "mound_probability": float(prob),
+                               "source_tile": cand.get("source_tile"),
                                "label": "mound"},
             })
     dest = OUT_BASE / cell / "primary" / "verified_detections.geojson"
