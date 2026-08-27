@@ -1,0 +1,192 @@
+{
+  "buffer_m": 50,
+  "inherit_tol_m": 10.0,
+  "runs": {
+    "g384_ov128_55map": {
+      "prop10_flex_usd": 77.31,
+      "N": {
+        "1": {
+          "union_n": 18631,
+          "unmatched": 469,
+          "match_dist_p50_m": 2.6909921060454867,
+          "match_dist_p95_m": 8.673491832448825,
+          "oracle": {
+            "cell": "g384_ov128_55map",
+            "N": 1,
+            "prob_t": 0.2,
+            "min_votes": 1,
+            "n_detections": 4879,
+            "tp": 4109,
+            "fp": 770,
+            "fn": 1051,
+            "precision": 0.8421807747489239,
+            "recall": 0.7963178294573643,
+            "corrected_f1": 0.8186074310190257
+          },
+          "est_all_in_flex_usd": 20.53
+        },
+        "3": {
+          "union_n": 26245,
+          "unmatched": 210,
+          "match_dist_p50_m": 1.4928984972460104,
+          "match_dist_p95_m": 6.672375320896578,
+          "oracle": {
+            "cell": "g384_ov128_55map",
+            "N": 3,
+            "prob_t": 0.2,
+            "min_votes": 2,
+            "n_detections": 4796,
+            "tp": 4119,
+            "fp": 677,
+            "fn": 1041,
+            "precision": 0.8588407005838199,
+            "recall": 0.7982558139534883,
+            "corrected_f1": 0.8274407392527119
+          },
+          "est_all_in_flex_usd": 41.22
+        },
+        "5": {
+          "union_n": 30713,
+          "unmatched": 97,
+          "match_dist_p50_m": 0.8667060977183003,
+          "match_dist_p95_m": 5.359102534733179,
+          "oracle": {
+            "cell": "g384_ov128_55map",
+            "N": 5,
+            "prob_t": 0.15,
+            "min_votes": 4,
+            "n_detections": 4597,
+            "tp": 4060,
+            "fp": 537,
+            "fn": 1100,
+            "precision": 0.8831846856645639,
+            "recall": 0.7868217054263565,
+            "corrected_f1": 0.8322230193707082
+          },
+          "est_all_in_flex_usd": 59.75,
+          "carried": {
+            "cell": "g384_ov128_55map",
+            "N": 5,
+            "prob_t": 0.15,
+            "min_votes": 4,
+            "n_detections": 4597,
+            "tp": 4060,
+            "fp": 537,
+            "fn": 1100,
+            "precision": 0.8831846856645639,
+            "recall": 0.7868217054263565,
+            "corrected_f1": 0.8322230193707082
+          }
+        }
+      },
+      "p7_saturation": {
+        "carried_N5_vs_N10": {
+          "delta_f1": -0.00036649801382726555,
+          "p_two_sided": 0.8239,
+          "n_permutations": 10000,
+          "seed": 42
+        },
+        "oracle_N5_vs_N10": {
+          "delta_f1": -0.0039847569329961585,
+          "p_two_sided": 0.0131,
+          "n_permutations": 10000,
+          "seed": 42
+        },
+        "convention": "delta = N5 - N10, corrected-F1@50m"
+      }
+    },
+    "g384_ov192_55map": {
+      "prop10_flex_usd": 134.1,
+      "N": {
+        "1": {
+          "union_n": 25586,
+          "unmatched": 663,
+          "match_dist_p50_m": 2.5230672603394697,
+          "match_dist_p95_m": 8.686741306137204,
+          "oracle": {
+            "cell": "g384_ov192_55map",
+            "N": 1,
+            "prob_t": 0.2,
+            "min_votes": 1,
+            "n_detections": 5655,
+            "tp": 4328,
+            "fp": 1327,
+            "fn": 832,
+            "precision": 0.765340406719717,
+            "recall": 0.8387596899224806,
+            "corrected_f1": 0.8003698566805363
+          },
+          "est_all_in_flex_usd": 30.99
+        },
+        "3": {
+          "union_n": 36757,
+          "unmatched": 285,
+          "match_dist_p50_m": 1.4016895792230801,
+          "match_dist_p95_m": 6.795769895644735,
+          "oracle": {
+            "cell": "g384_ov192_55map",
+            "N": 3,
+            "prob_t": 0.2,
+            "min_votes": 3,
+            "n_detections": 4772,
+            "tp": 4196,
+            "fp": 576,
+            "fn": 964,
+            "precision": 0.8792958927074602,
+            "recall": 0.8131782945736434,
+            "corrected_f1": 0.8449456302859444
+          },
+          "est_all_in_flex_usd": 65.48
+        },
+        "5": {
+          "union_n": 43909,
+          "unmatched": 119,
+          "match_dist_p50_m": 0.7891293097339789,
+          "match_dist_p95_m": 5.5256191227280365,
+          "oracle": {
+            "cell": "g384_ov192_55map",
+            "N": 5,
+            "prob_t": 0.2,
+            "min_votes": 5,
+            "n_detections": 4566,
+            "tp": 4109,
+            "fp": 457,
+            "fn": 1051,
+            "precision": 0.8999123959702147,
+            "recall": 0.7963178294573643,
+            "corrected_f1": 0.8449516759202139
+          },
+          "est_all_in_flex_usd": 97.22,
+          "carried": {
+            "cell": "g384_ov192_55map",
+            "N": 5,
+            "prob_t": 0.15,
+            "min_votes": 5,
+            "n_detections": 4736,
+            "tp": 4175,
+            "fp": 561,
+            "fn": 985,
+            "precision": 0.8815456081081081,
+            "recall": 0.8091085271317829,
+            "corrected_f1": 0.8437752627324171
+          }
+        }
+      },
+      "p7_saturation": {
+        "carried_N5_vs_N10": {
+          "delta_f1": 0.0015610878746830092,
+          "p_two_sided": 0.3243,
+          "n_permutations": 10000,
+          "seed": 42
+        },
+        "oracle_N5_vs_N10": {
+          "delta_f1": -0.005339170084480482,
+          "p_two_sided": 0.0003,
+          "n_permutations": 10000,
+          "seed": 42
+        },
+        "convention": "delta = N5 - N10, corrected-F1@50m"
+      }
+    }
+  }
+}
