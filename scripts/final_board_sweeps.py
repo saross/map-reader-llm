@@ -146,6 +146,12 @@ def load_manifest_probs(cdir: Path, vdir: Path) -> gpd.GeoDataFrame:
             "mound_probability": [
                 float(probs[prob_key(c["candidate_id"])]["mound_probability"])
                 for c in cands],
+            # The ORIGIN tile, not a spatial re-join: per-map matching in
+            # the committed chain uses origin attribution, and ~6 % of
+            # border detections land spatially inside the neighbouring
+            # map's bounds (S143 diagnosis — a spatial re-join cost
+            # −0.05 F1 by breaking those pairs into FP+FN).
+            "source_tile": [c["source_tile"] for c in cands],
         },
         geometry=gpd.points_from_xy([c["centroid_x"] for c in cands],
                                     [c["centroid_y"] for c in cands]),
@@ -230,13 +236,16 @@ def main() -> int:
     checks = [(c["label"], PROJECT_ROOT / c["det"], committed[c["label"]])
               for c in BOARD_CELLS if c["label"] in committed]
     checks.append(("IM-k4", IMK4_DET, IMK4_F1_50))
+    committed_counts: dict[str, tuple[int, int, int]] = {}
     for label, det_path, f1_committed in checks:
         det = gpd.read_file(det_path).to_crs("EPSG:32635")
         det = assign_source_tiles(det, bounds)
         tm = compute_per_tile_tp_fp_fn(det, ref, bounds,
                                        buffer_metres=BUFFER_M)
-        f1 = micro_f1(int(tm["tp"].sum()), int(tm["fp"].sum()),
+        tp, fp, fn = (int(tm["tp"].sum()), int(tm["fp"].sum()),
                       int(tm["fn"].sum()))
+        committed_counts[label] = (tp, fp, fn)
+        f1 = micro_f1(tp, fp, fn)
         if abs(f1 - f1_committed) > MECHANISM_BOUND:
             raise RuntimeError(
                 f"G4 FAILED {label}: micro {f1:.6f} vs committed "
@@ -258,6 +267,50 @@ def main() -> int:
                 f"identity gate FAILED {name}: {n} at ({pt}, k{pk}) vs "
                 f"committed {expected}")
         logger.info("identity OK %-6s (%.2f, k%d) -> %d", name, pt, pk, n)
+
+    # Mechanism-equality gates (S143 lesson — counts alone missed a
+    # −0.05 map-attribution defect): each incumbent family's
+    # reconstruction at its committed point must reproduce the committed
+    # file's EXACT integer (TP, FP, FN) triple.
+    for name, committed_label in (("TH7", "TH7-k3"), ("T03", "T03-k3"),
+                                  ("TM", "TM-k3"), ("IM", "IM-k3"),
+                                  ("UPL", "TM-n10-k5")):
+        (pt, pk), _ = IDENTITY[name]
+        g = families[name]["gdf"]
+        sub = g[(g["mound_probability"] >= pt) & (g["vote_count"] >= pk)]
+        tm = compute_per_tile_tp_fp_fn(sub, ref, bounds,
+                                       buffer_metres=BUFFER_M)
+        triple = (int(tm["tp"].sum()), int(tm["fp"].sum()),
+                  int(tm["fn"].sum()))
+        if triple != committed_counts[committed_label]:
+            raise RuntimeError(
+                f"mechanism gate FAILED {name}: {triple} vs committed "
+                f"{committed_label} {committed_counts[committed_label]}")
+        logger.info("mechanism OK %-6s == %s %s", name, committed_label,
+                    triple)
+
+    # Geometry-identity gates for the A/B carried cells vs the committed
+    # S142 primary detection sets (0.01 m = 4326 round-trip tolerance).
+    from scipy.spatial import cKDTree
+    for name, committed_det in (
+            ("A-N10", "results/stride55-2026-08-27/g384_ov128_55map/"
+                      "primary/verified_detections.geojson"),
+            ("B-N10", "results/stride55-2026-08-27/g384_ov192_55map/"
+                      "primary/verified_detections.geojson")):
+        (pt, pk), _ = IDENTITY[name]
+        g = families[name]["gdf"]
+        sub = g[(g["mound_probability"] >= pt) & (g["vote_count"] >= pk)]
+        com = gpd.read_file(PROJECT_ROOT / committed_det).to_crs("EPSG:32635")
+        if len(sub) != len(com):
+            raise RuntimeError(
+                f"geometry gate FAILED {name}: {len(sub)} vs {len(com)}")
+        d, _i = cKDTree(np.c_[sub.geometry.x, sub.geometry.y]).query(
+            np.c_[com.geometry.x, com.geometry.y], k=1)
+        if d.max() > 0.01:
+            raise RuntimeError(
+                f"geometry gate FAILED {name}: max NN {d.max():.4f} m")
+        logger.info("geometry OK %-6s n=%d max NN %.4f m", name, len(sub),
+                    d.max())
 
     # Sweeps (parallel over points; family frames shared via initargs).
     tasks = []
