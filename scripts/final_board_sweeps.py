@@ -76,10 +76,10 @@ from scripts.score_55maps_standardised_reference import (  # noqa: E402
     CELLS as BOARD_CELLS,
 )
 from scripts.lib_advanced_metrics import (  # noqa: E402
-    assign_source_tiles,
     compute_per_tile_tp_fp_fn,
-    micro_f1,
 )
+from scripts.n1_baseline_leaderboard_tiering import micro_f1  # noqa: E402
+from scripts.pairwise_permutation_test import assign_source_tiles  # noqa: E402
 from scripts.stride55_ladder import (  # noqa: E402
     INHERIT_TOL_M,
     cluster_first_n,
