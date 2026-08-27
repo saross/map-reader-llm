@@ -29068,3 +29068,224 @@ at rho = +0.88 — the component that makes § 1's single-sweep fast path
 plausible without reference labels); **Obs 430** (the nine-month,
 seven-configuration provenance settlement, which fixes the register's
 2025-12-15 start date against which § 1's "8 months" is read).
+
+## Observation 437: The 55-map portfolio transfers almost losslessly — the P5 overshoot is the transfer tax collapsing, not the geometry finding more mounds (Session 143, 2026-08-27)
+
+The two geometries the stride programme left standing (Obs 435) were
+carried to the full 55-sheet corpus under a measurement contract and
+eight registered predictions committed before launch
+(`planning/55map-portfolio-2026-08-25.md` § 3b). Both runs use
+`detect_brief-text`, gemini-3-flash-preview, **MINIMAL** thinking,
+T = 0.7, K = 10 real-time flex passes, each K = 10 union verified by
+the carry-forward adversarial text verifier (T = 0.0, MINIMAL, n = 1;
+96,195 / 96,195 candidates verified). Everything below is corrected-F1
+at 50 m against the canonical adjudicated extended Ground Truth (GT)
+— 4,746 student plus 414 reviewer-promoted phantoms, one duplicate
+dropped, **5,160 references** — with tile-level Matthews Correlation
+Coefficient (MCC) alongside. Session 143 spent **$0 of API budget**:
+this is a secondary analysis of committed Session 142 data.
+
+**The finding — the carried points, their oracles, and the transfer
+tax.** The carried points were declared before launch and evaluated
+once, whatever the sweep later showed:
+
+| Run | Geometry (stride) | Carried point | Carried F1@50 m | Oracle | Oracle point | **Transfer tax** |
+|---|---|---|---:|---:|---|---:|
+| A | 384 px / 33.3 % (256) | prob ≥ 0.15, k ≥ 8 of 10 | **0.8326** | 0.8362 | (0.15, k7) | **+0.0036** |
+| B | 384 px / 50 % (192) | prob ≥ 0.15, k ≥ 10 of 10 | **0.8422** | 0.8503 | (0.20, k9) | **+0.0081** |
+| Incumbent (S104, for scale) | text-HIGH T0.7 × 4-of-5 | — | 0.8152 | 0.8476 | (T0.3 × 3-of-5) | **+0.0324** |
+
+A carries P 0.896 / R 0.777 / MCC 0.693; B carries P 0.903 / R 0.789 /
+MCC 0.698. Both MINIMAL-thinking runs land **above the carried
+HIGH-thinking incumbent**, and B's one-config oracle (0.8503) exceeds
+the old **two-axis** deployment oracle (0.8476) that was also free to
+optimise over temperature — B's sweep optimises only (prob_t, k)
+inside a single frozen configuration.
+
+**The P5 overshoot, decomposed — and it is exactly additive.** The
+question left open at S142 close was why a geometry that was
+*plateau-not-winner* on the Gold Standard (GS) should transfer
+**better** than the incumbent it was benchmarked against:
+
+```text
+B carried − incumbent carried   = 0.8422 − 0.8152 = +0.0270
+  incumbent's transfer tax      = +0.0324   (it paid; B did not)
+  oracle-to-oracle geometry gap = +0.0027   (0.8503 − 0.8476)
+  B's own transfer tax          = −0.0081   (B paid)
+                                  --------
+                                  +0.0270  ✓
+```
+
+**The overshoot is the transfer tax collapsing, not the geometry
+finding substantially more mounds.** The geometry contributes +0.0027
+at oracle — against an old oracle with an extra free axis. Twelve
+times that much comes from a tax the incumbent paid and the new runs
+did not. In practitioner terms: "calibrate on four sheets, then
+deploy" cost the K = 5 incumbent 0.032; the same workflow at K = 10
+with overlap geometry cost 0.004–0.008.
+
+**Why the tax collapsed** — four mechanisms, all read off the sweep
+surfaces rather than asserted:
+
+1. **The k-lattice is finer at K = 10.** A one-step k error near the
+   top costs A **−0.0036** (k7 → k8) and B **−0.0072** (k9 → k10); the
+   same single step at the incumbent's K = 5 cost **+0.027** (4-of-5 →
+   3-of-5). Vote *resolution*, not better guessing, is what shrank the
+   price of a mis-carried threshold.
+2. **The top is flat.** A's k5–k8 and B's k8–k10 each lie within 0.008
+   of their run's oracle.
+3. **The verifier dial transfers exactly.** prob 0.15 is A's argmax and
+   sits 0.0009 under B's 0.20 argmax; 0.10 collapses the board
+   (−0.12) and ≥ 0.25 decays slowly. The GS-chosen threshold was never
+   the risk.
+4. **The portfolio froze the configuration axis by design** (one
+   carrier config per run), so the incumbent's temperature loss
+   (+0.021 marginal) had no analogue to pay.
+
+The first three are portable properties of the *instrument*; the
+fourth is a property of the *design*. Only the first three would
+survive into a study that let configuration vary.
+
+**P6 — the pre-named informative failure, and it is Obs 362's
+mechanism.** The card predicted A ≈ B, reading a tie off the GS board.
+Per-map paired sign-swap permutation (55 sheets, 10,000 draws, seed
+42, delta = A − B) says otherwise:
+
+| Comparison | ΔF1 | p (two-sided) |
+|---|---:|---:|
+| At the carried primaries | −0.0096 | 0.0147 |
+| At the oracles | −0.0141 | 0.0001 |
+
+Both survive Benjamini–Hochberg at q = 0.05 across the declared
+six-test family (ranks 1 and 4 of 6). **Overlap/stride does matter at
+deployment**, and the GS board could not have known: a GS tie is
+bounded ignorance at ±0.03 resolution, and a real ~0.010 effect sat
+comfortably inside that bound. This is the Obs 362 mechanism
+recurring on a new axis — a tie is a statement about the instrument,
+not about the world.
+
+**P7 — saturation holds where it is deployed, but not at the
+oracles.** First-N rungs with verifier probabilities inherited from
+the committed K = 10 verification (delta = N5 − N10):
+
+| Run | At the carried (deployed) points | At the oracles |
+|---|---|---|
+| A | −0.0004, p = 0.82 — tie | −0.0040, p = 0.0131 — BH-significant |
+| B | **+0.0016**, p = 0.32 — tie (N5 carried **above** N10 carried) | −0.0053, p = 0.0003 — BH-significant |
+
+At the points anyone would actually deploy, **half the passes cost
+nothing**: B's N = 5 carried point (0.8438) scores nominally above its
+own N = 10 carried point (0.8422). At the oracles a small real residue
+(−0.004 to −0.005) survives, so pass-count saturation is real but
+**not complete** — and the difference between those two readings is
+entirely whether the calibration is honestly carried or chosen post
+hoc.
+
+**The practitioner consequence.** Deployment recommendation: **run B's
+geometry (384 px / 50 % overlap) at N = 5 with the GS-carried
+calibration** — an honestly-carried **0.8438 at ≈ $97 flex for 55
+sheets**, above every other carried point on the board, including its
+own N = 10 (0.8422 at $173.59) and the HIGH-thinking incumbent
+(0.8152 at ≈ $207.4). The incumbent's HIGH thinking bought nothing
+here: both new runs are MINIMAL and carried above it, on the strength
+of geometry, K = 10, and the verifier. Budget floor: A at N = 3–5
+($41.22–$59.75) holds 0.827–0.832.
+
+**Scorecard.** P1 PASS (drift downward, inside the named window); P2
+**PASS exact** — A's N = 5 rung optimum *is* the GS-carried
+(0.15, k4); P3 PASS on k; P4 PASS on k (k5 exact; prob_t argmax 0.20,
+with 0.15 at −0.0012); P5 PASS with the overshoot decomposed above;
+**P6 FAIL** — the card's own pre-named informative failure; P7 PASS at
+the deployed points; P8 fail-by-the-letter, pass-in-substance (B's
+argmax is 0.20, beating 0.15 by 0.0009 — an order below every other
+effect in the family). Two of the three pre-named informative failures
+did not occur: no upward k drift, no headline below 0.80.
+
+**Why this matters.** The register has carried a "deployment penalty"
+story since Obs 358, where the 55-map drop was diagnosed as *entirely*
+a vote-threshold transfer failure. This Obs shows that penalty is not
+a property of deployment — it is a property of a **coarse vote
+lattice**. Move from K = 5 to K = 10 and the same calibrate-then-deploy
+workflow loses 0.004–0.008 instead of 0.032. That reframes pass count
+(Obs 364) as buying two distinct things that saturate at different
+rates: detection quality, which is done by N = 5, and *calibration
+robustness*, which keeps paying to N = 10 by making each vote step
+cheaper to get wrong. It also supplies the successor-paper spine of
+Obs 436 with its first deployment-scale evidence that a GS-selected
+configuration can transfer near-losslessly — the precondition for
+Obs 367's deploy-and-evaluate route and Obs 368's GT-free selection to
+be worth building on. And it closes the S142 open question with an
+exact arithmetic identity rather than a narrative.
+
+**Caveats.** The oracles are F1-selected on the same references they
+are scored against, so they are ceilings and register furniture; every
+inferential claim here rests on the paired permutations, and the
+*carried* points are the only honestly-transferred numbers. One
+model, one proposer configuration, one verifier configuration at
+n = 1, T = 0.7, two geometries — the portfolio froze the configuration
+axis deliberately, so nothing here speaks to configuration transfer,
+and mechanism (4) above is a design artefact that would not survive a
+study that varied it. The N < 10 rungs are **simulated** from audited
+per-call rates (the passes were physically run inside the K = 10
+campaign, not re-run), and their verifier probabilities are
+*inherited* by nearest-match (p95 match distance 5.4–8.7 m against a
+10 m radius; 0.3–2.6 % of clusters per rung unmatched, excluded from
+scoring but included in cost) — so the ladder is a faithful
+re-partition, not an independent replication. N = 3 rungs are
+oracle-only: no carried point was ever registered there, so their
+apparent strength (B's N = 3 oracle 0.8449 already equals its N = 5)
+is not a like-for-like comparator against carried numbers — the Obs
+434 discipline applies. All costs are flex-tier estimates, not
+billing-console figures. P8's verdict rests on a 0.0009 gap, which is
+below the resolution at which any of these instruments should be read
+as ordering anything.
+
+Sources: `results/stride55-2026-08-27/findings.md` (full write-up —
+headlines, sweep and taxes, A-vs-B, ladder, P1–P8 scorecard, the
+P5-overshoot decomposition, deployment Pareto, method and gates;
+original publication 2026-08-27);
+`results/stride55-2026-08-27/sweep_oracle.json` (verified 2026-08-27:
+A primary `corrected_f1` 0.8325895 at (0.15, k8), A oracle 0.8362078
+at (0.15, k7); B primary 0.8422142 at (0.15, k10), B oracle 0.8502908
+at (0.20, k9); `paired_A_vs_B` −0.009625 p = 0.0147 at primaries,
+−0.014083 p = 0.0001 at oracles, 10,000 permutations, seed 42);
+`results/stride55-2026-08-27/ladder.json` (verified 2026-08-27: rung
+unions, oracles, and `est_all_in_flex_usd` per rung; `p7_saturation`
+A carried −0.000366 p = 0.8239 / oracle −0.003985 p = 0.0131, B
+carried +0.001561 p = 0.3243 / oracle −0.005339 p = 0.0003);
+`results/stride55-2026-08-27/<cell>/sweep_50m.csv` (the two 200-point
+surfaces) and `<cell>/ladder_sweep_50m.csv` (360 further rung points);
+`scripts/stride55_sweep_oracle.py` and `scripts/stride55_ladder.py`;
+`planning/55map-portfolio-2026-08-25.md` § 3b (the eight registered
+predictions, committed before launch). **Replication gates**: the
+sweep and the ladder each reproduced the committed S142 primary
+evaluations to **1e-6** before anything was written, and the ladder
+additionally rebuilt the committed K = 10 unions **exactly** (count
+and votes identical; centroid drift ≤ 0.069 m, which is the committed
+manifest's 4326 round-trip storage precision). Commits `35ed545ef`
+(sweep, oracles, paired A-vs-B), `996937e1a` (N-ladder), `dcc639b2a`
+(findings). Related: **Obs 435** (the nine-cell stride plateau that
+selected these two geometries — its GS-level verdict of
+"plateau-not-winner" is not overturned, but its cost case is now
+joined by a deployment case, and its A/B tie is the tie P6 broke);
+**Obs 436** (the successor-paper registry — § 1's fast path and § 3's
+ceiling attribution both presuppose the near-lossless transfer
+demonstrated here); **Obs 362** (the GS min ≈ high tie reversing at
+deployment — the same bounded-ignorance mechanism, ±0.03 GS
+resolution hiding a ~0.010 real effect, now recurring on the
+overlap axis); **Obs 358** (the 55-map leaderboard diagnosing the
+deployment penalty as *entirely* a vote-threshold transfer failure,
+and the source of the 0.8152 carried incumbent and 0.8476 two-axis
+oracle used as scale here — this Obs qualifies that diagnosis by
+showing the failure is a K = 5 lattice artefact, not a deployment
+constant); **Obs 364** (pass count as a priced cost/quality trade —
+extended here by separating detection quality, saturated at N = 5,
+from calibration robustness, which keeps paying to N = 10);
+**Obs 367** (deploy-and-evaluate beats curated-GT expansion for
+breaking calibration ties — this run is that design executed, and P6
+is a tie it broke); **Obs 368** (GT-free selection at rho = +0.88 —
+the component that would let the fast path pick these operating
+points without reference labels); **Obs 434** (the
+baseline-comparability discipline, applied here in keeping carried
+and oracle numbers strictly separate and in refusing to read the
+oracle-only N = 3 rungs against carried points).
