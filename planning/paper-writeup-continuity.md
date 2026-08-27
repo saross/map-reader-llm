@@ -8,6 +8,32 @@ project state.
 
 ---
 
+## 🔍 S143 PROGRESS NOTE (2026-08-27, autonomous — Claude queue items 1–2 COMPLETE)
+
+> **The sweep-oracle + N-ladder secondary analysis LANDED, $0 API, every
+> gate passed** (sweep and ladder each reproduce the committed primaries
+> to 1e-6; ladder rebuilds the K=10 unions exactly). Headlines: transfer
+> taxes +0.0036 (A) / +0.0081 (B) vs the incumbent's +0.0324 — the tax
+> COLLAPSED; B oracle 0.8503 > old oracle 0.8476; **P6 FAILED
+> informatively** (B beats A, p=0.0147/0.0001, BH-robust — the Obs 362
+> bounded-ignorance mechanism); P2 landed EXACT; P7 saturation free at
+> the deployed points (B N=5 carried 0.8438 > its N=10 carried 0.8422,
+> ns). **P5 overshoot ANSWERED** by exact decomposition (+0.0270 =
+> incumbent tax +0.0324 + geometry +0.0027 − B tax 0.0081): the
+> overshoot is the tax collapsing (finer K=10 vote lattice, flat top,
+> exactly-transferring prob_t, frozen config axis), not more mounds
+> found. Practitioner recommendation: B geometry at N=5 carried —
+> 0.8438 at ~$97/55 sheets. Full write-up
+> `results/stride55-2026-08-27/findings.md`; **Obs 437**; commits
+> `35ed545ef` (sweep) `996937e1a` (ladder) `dcc639b2a` (findings)
+> `49aab2d1d` (Obs). Codex mail ×3 read+receipted (Phase 2 workstream;
+> gpt-hub `b49713d` re-review queued on Shawn's host-context push).
+> **Remaining queue is interactive**: register rows; skeleton D-1..D-5
+> then drafting; PI standing list unchanged (D24 BRIEF, user-obs
+> verdicts 3× S140 + 3× S142, Gould → D.9, Obs 433–437 review, billing
+> glance ~$338; archive-drift gate: 1 raw session awaiting
+> bulk-archive.py).
+
 ## 🔍 STATE AFTER S142 (2026-08-24→27, one conversation — updates everything below)
 
 > **THE PIPELINE VALIDATED END TO END, TWICE.** PI at close: "a lot
