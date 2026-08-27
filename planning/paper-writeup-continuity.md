@@ -8,6 +8,53 @@ project state.
 
 ---
 
+## 🔍 STATE AFTER S142 (2026-08-24→27, one conversation — updates everything below)
+
+> **THE PIPELINE VALIDATED END TO END, TWICE.** PI at close: "a lot
+> more confidence than I did a few days ago". Total S142 spend ≈ $338
+> flex, every stage gated. Both machines synced `6ad5ac565`, tree clean.
+>
+> **LANDED (all committed+pushed):** (1) **Grid post-verifier** — tile-size
+> ranking REVERSES / overlap survives; audited (like-for-like K10 baseline
+> correction; join witnesses verified 9,133/9,133); registered
+> `grid-postverifier-2026-08-18`; Obs 433+434. (2) **Stride programme** —
+> plateau-not-winner; 384px at-or-above at every stride; interior optimum
+> strides 192–256; exact winner ladder (N=3 0.8911/$2.64); 13-cell board
+> 6/78 sig; 256/50 NOT run (stop rule); Obs 435/436; findings
+> `results/stride-2026-08-25/findings.md`. (3) **55-map portfolio** —
+> registered-by-commit contract + predictions P1–P8
+> (`planning/55map-portfolio-2026-08-25.md` §3b); Runs A/B complete, full
+> coverage, 96,195/96,195 verified through a 6h flex 503 storm;
+> **PRIMARIES at the carried points: A 0.8326 / B 0.8422 corrected-F1@50
+> vs canonical GT — both ABOVE carried incumbent 0.8152; B within 0.005
+> of the old oracle 0.8476; P5 PASS** (`results/stride55-2026-08-27/`,
+> invariance gates exact after the 10.1% attribution-artefact fix — see
+> the S142 abductive entries). (4) **Venue LOCKED**: ISPRS JPRS, CAUL
+> waiver verified (institutional email!), 8,500 words + supplements;
+> `docs/paper/journal-requirements-isprs.md` + `manuscript-skeleton-isprs.md`
+> (decisions D-1..D-5 OPEN); Seed 12 + rider. (5) Runner tile-size
+> inference; tiler --rasters-dir; H2-C card; M.11 phase table.
+>
+> **NEXT SESSION, in order:** (1) run
+> `scripts/stride55_sweep_oracle.py` on sapphire (committed, gated —
+> answers the PI's oracle + paired-A-vs-B questions; then N-ladders +
+> P1–P8 scorecard + findings doc). (2) OPEN QUESTION flagged in
+> reflection: why does the new geometry transfer BETTER than the
+> incumbent it was benchmarked against (P5 overshoot)? (3) Register rows
+> for the stride + 55-map runs (held for interactive session — registry
+> is hand-verified). (4) Skeleton decisions D-1..D-5, then drafting
+> against the 8,500 budget. (5) Draft Obs for the transfer result
+> (obs-writer; candidate text in user-observations pending section
+> context). **PI standing queue unchanged:** D24 brief (STANDING —
+> remind at close), S140 user-obs verdicts ×3 + S142 candidates,
+> Gould → D.9, Obs 433–436 review, billing glance (~$338 expected).
+>
+> **Riders:** sapphire untracked regenerables (96k crop PNGs, 6 tile
+> trees) await a cleanup decision; `stride55_prepare_and_union.py` logs a
+> stale "$50 ceiling" string (card §4b governs — cosmetic); the
+> superseded first-pass primary evals live only in git history (the
+> defect cycle is documented in the 2026-08-27 abductive entry).
+
 ## 🔍 STATE AFTER THE 2026-08-24 DECISION WALK (updates the beacon below)
 
 > **The walk cleared Groups A/B/D/E/F**; C (Gould → D.9) remains. Landed:
