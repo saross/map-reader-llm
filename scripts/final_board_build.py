@@ -112,6 +112,63 @@ COINCIDENT = {
                   "evaluation.json",
 }
 
+# Run cost, est. all-in flex, FULL basis (proposer x N/10 + full-union
+# verification for A/B, from the stride55 findings Pareto; audited
+# whole-run spend for the incumbents, token-load audit § 6; uplift at
+# full-cost basis 10 x $4.66 + $11.27). Both of a run's cells (carried
+# and oracle) share the run's cost — the operating point is free.
+FAMILY_COST = {
+    "A-N1": 20.53, "A-N3": 41.22, "A-N5": 59.75, "A-N10": 103.91,
+    "B-N1": 30.99, "B-N3": 65.48, "B-N5": 97.22, "B-N10": 173.59,
+    "TM": 23.4, "TH7": 207.4, "T03": 261.0, "IM": 195.4, "UPL": 57.87,
+}
+
+
+def family_of(label: str) -> str:
+    """Cost family for a board cell label."""
+    for fam in sorted(FAMILY_COST, key=len, reverse=True):
+        if label == fam or label.startswith(fam + "-"):
+            return fam
+    raise KeyError(label)
+
+
+def compact_letters(ordered_labels: list[str],
+                    significant: dict) -> dict[str, str]:
+    """Compact letter display from the BH-adjusted pairwise matrix.
+
+    Cells sharing a letter are NOT significantly different: letters are
+    the maximal cliques of the non-significance graph (Bron–Kerbosch;
+    21 nodes), lettered in order of their best-ranked member.
+    """
+    adj = {a: set() for a in ordered_labels}
+    for i, a in enumerate(ordered_labels):
+        for b in ordered_labels[i + 1:]:
+            if not significant[frozenset({a, b})]:
+                adj[a].add(b)
+                adj[b].add(a)
+    cliques: list[set] = []
+
+    def bk(r: set, p: set, x: set) -> None:
+        if not p and not x:
+            cliques.append(r)
+            return
+        for v in sorted(p):
+            bk(r | {v}, p & adj[v], x & adj[v])
+            p = p - {v}
+            x = x | {v}
+
+    bk(set(), set(ordered_labels), set())
+    rank = {lab: i for i, lab in enumerate(ordered_labels)}
+    cliques.sort(key=lambda c: (min(rank[m] for m in c),
+                                -len(c)))
+    letters: dict[str, list[str]] = {lab: [] for lab in ordered_labels}
+    for i, clique in enumerate(cliques):
+        letter = chr(ord("a") + i) if i < 26 else f"z{i - 25}"
+        for m in clique:
+            letters[m].append(letter)
+    return {lab: "".join(sorted(v)) for lab, v in letters.items()}
+
+
 # Paper-table rows: run -> (carried cell, oracle cell); None = no cell.
 PAPER_ROWS = [
     ("B, N = 10 (384/50 %)", "B-N10-carried", "B-N10-oracle"),
@@ -176,6 +233,65 @@ def round_robin(cells: list[dict]) -> tuple[list[dict], dict, list[list[str]]]:
     ordered = sorted(cells, key=lambda c: c["f1_50"], reverse=True)
     tiers = greedy_clique_tiers([c["label"] for c in ordered], significant)
     return pairs, significant, tiers
+
+
+def render_figure(ordered: list[dict], tier_of: dict, sig: dict,
+                  cld: dict[str, str], out_png: Path) -> None:
+    """Two-panel significance figure: F1 dot-and-CI plot with tier bands
+    and compact letters; BH-significance matrix, both rank-ordered."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    labels = [c["label"] for c in ordered]
+    n = len(labels)
+    ys = list(range(n - 1, -1, -1))  # rank 1 at the top
+    fig, (ax1, ax2) = plt.subplots(
+        1, 2, figsize=(13.5, 8.5), gridspec_kw={"width_ratios": [1.35, 1]})
+
+    for c, y in zip(ordered, ys):
+        if tier_of[c["label"]] % 2 == 0:
+            ax1.axhspan(y - 0.5, y + 0.5, color="0.92", zorder=0)
+        colour = "#1a6faf" if c["basis"] == "carried" else "#c25e00"
+        marker = "o" if c["basis"] == "carried" else "s"
+        ax1.plot([c["ci"][0], c["ci"][1]], [y, y], color=colour, lw=1.4,
+                 zorder=2)
+        ax1.plot(c["f1_50"], y, marker, color=colour, ms=6, zorder=3)
+        ax1.text(1.001, y, f"T{tier_of[c['label']]}  {cld[c['label']]}",
+                 transform=ax1.get_yaxis_transform(), fontsize=8,
+                 va="center", family="monospace")
+    ax1.set_yticks(ys, labels, fontsize=9)
+    ax1.set_xlabel("corrected-F1 @ 50 m (95 % BCa CI)")
+    ax1.set_title("Cells sharing a letter are statistically\n"
+                  "indistinguishable (BH q = 0.05)", fontsize=10)
+    ax1.grid(axis="x", color="0.85", lw=0.6, zorder=0)
+    from matplotlib.lines import Line2D
+    ax1.legend(handles=[
+        Line2D([], [], marker="o", color="#1a6faf", ls="", label="carried"),
+        Line2D([], [], marker="s", color="#c25e00", ls="", label="oracle")],
+        loc="lower right", fontsize=9)
+
+    mat = np.zeros((n, n))
+    for i, a in enumerate(labels):
+        for j, b in enumerate(labels):
+            if i != j:
+                mat[i, j] = 1.0 if sig[frozenset({a, b})] else 0.0
+    ax2.imshow(mat, cmap="Greys", vmin=0, vmax=1.4, aspect="equal")
+    ax2.set_xticks(range(n), labels, rotation=90, fontsize=7)
+    ax2.set_yticks(range(n), labels, fontsize=7)
+    ax2.set_title("Pairwise significance matrix\n(dark = significantly "
+                  "different)", fontsize=10)
+    for t in sorted(set(tier_of.values())):
+        idx = [i for i, lab in enumerate(labels) if tier_of[lab] == t]
+        lo, hi = min(idx) - 0.5, max(idx) + 0.5
+        ax2.add_patch(plt.Rectangle((lo, lo), hi - lo, hi - lo, fill=False,
+                                    edgecolor="#1a6faf", lw=1.2))
+    fig.suptitle("The final 55-map board: statistical groups @ 50 m "
+                 "(round-robin tile-swap, 10k, BH q = 0.05)", fontsize=12)
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
+    fig.savefig(out_png, dpi=150)
+    plt.close(fig)
+    logger.info("figure -> %s", out_png.relative_to(PROJECT_ROOT))
 
 
 def main() -> int:
@@ -262,18 +378,21 @@ def main() -> int:
     logger.info("assembled %d cells", len(cells))
 
     # ---- The 21-cell board. ----
-    pairs, _sig, tiers = round_robin(cells)
+    pairs, sig, tiers = round_robin(cells)
     tier_of = {n: t for t, members in enumerate(tiers, 1) for n in members}
     n_sig = sum(1 for p in pairs if p["significant"])
     logger.info("%d/%d pairs significant -> %d tiers", n_sig, len(pairs),
                 len(tiers))
     ordered = sorted(cells, key=lambda c: c["f1_50"], reverse=True)
+    cld = compact_letters([c["label"] for c in ordered], sig)
     for i, c in enumerate(ordered, 1):
-        logger.info("%2d. %-14s T%d %-8s F1@50 %.4f  MCC %s  %s", i,
-                    c["label"], tier_of[c["label"]], c["basis"],
-                    c["f1_50"],
+        logger.info("%2d. %-14s T%d %-6s %-8s F1@50 %.4f  MCC %s  %s", i,
+                    c["label"], tier_of[c["label"]], cld[c["label"]],
+                    c["basis"], c["f1_50"],
                     f"{c['mcc']:.3f}" if c["mcc"] is not None else "—",
                     c["point"])
+    render_figure(ordered, tier_of, sig, cld,
+                  OUT / "significance-groups.png")
 
     payload = {
         "buffer_m": BUFFER_M, "reference": "standardised",
@@ -281,8 +400,11 @@ def main() -> int:
                        f"({N_PERMS}, seed {SEED}) + BH q=0.05 + "
                        "greedy-clique tiers (the GS chain)"),
         "tiers": tiers,
-        "cells": [{k: v for k, v in c.items()
-                   if k not in ("tp", "fp", "fn")} for c in ordered],
+        "cells": [{**{k: v for k, v in c.items()
+                      if k not in ("tp", "fp", "fn")},
+                   "group": cld[c["label"]],
+                   "cost_usd": FAMILY_COST[family_of(c["label"])]}
+                  for c in ordered],
         "pairwise": pairs,
     }
     (OUT / "final_board_50m.json").write_text(
@@ -298,18 +420,31 @@ def main() -> int:
         "> Instrument: " + payload["instrument"] + ".",
         f"> {n_sig}/{len(pairs)} pairs significant.",
         "",
-        "| rank | cell | basis | tier | point | F1@50 | 95% CI | P@50 "
-        "| R@50 | tile-MCC | n |",
-        "|---:|---|---|---:|---|---:|---|---:|---:|---:|---:|",
+        "| rank | cell | basis | tier | group | cost | point | F1@50 "
+        "| 95% CI | P@50 | R@50 | tile-MCC | n |",
+        "|---:|---|---|---:|---|---:|---|---:|---|---:|---:|---:|---:|",
     ]
     for i, c in enumerate(ordered, 1):
         mcc = f"{c['mcc']:.3f}" if c["mcc"] is not None else "—"
+        cost = FAMILY_COST[family_of(c["label"])]
         lines.append(
             f"| {i} | {c['label']} | {c['basis']} | "
-            f"{tier_of[c['label']]} | {c['point']} | {c['f1_50']:.4f} | "
+            f"{tier_of[c['label']]} | {cld[c['label']]} | ${cost:.0f} | "
+            f"{c['point']} | {c['f1_50']:.4f} | "
             f"[{c['ci'][0]:.4f}, {c['ci'][1]:.4f}] | "
             f"{c['precision_50']:.4f} | {c['recall_50']:.4f} | {mcc} | "
             f"{c['n_detections']} |")
+    lines += [
+        "",
+        "**Reading the groups**: `tier` is the greedy-clique tier (disjoint",
+        "bands); `group` is the compact letter display — cells sharing ANY",
+        "letter are statistically indistinguishable under the BH-adjusted",
+        "pairwise tests, so letters show the overlaps the disjoint tiers",
+        "cannot. `cost` is the run's audited all-in flex spend (full",
+        "basis); a run's carried and oracle cells share it. See",
+        "`significance-groups.png` for the dot-and-CI plot and the full",
+        "pairwise significance matrix.",
+    ]
     lines += [
         "",
         "## Runs: as run versus theoretical maximum",
@@ -331,6 +466,56 @@ def main() -> int:
         opoint = by_label[oracle]["point"] if oracle else "—"
         lines.append(f"| {row_name} | {fmt(carried)} | {fmt(oracle)} | "
                      f"{opoint} |")
+    # ---- Cost-efficiency table: one row per run, deployment basis. ----
+    eff_rows = []
+    for row_name, carried, oracle in PAPER_ROWS:
+        lbl = carried or oracle
+        c = by_label[lbl]
+        cost = FAMILY_COST[family_of(lbl)]
+        tp = round(c["precision_50"] * c["n_detections"])
+        eff_rows.append({
+            "name": row_name, "label": lbl,
+            "basis": c["basis"], "cost": cost, "f1": c["f1_50"],
+            "tier": tier_of[lbl], "tp": tp,
+            "usd_per_mound": cost / tp})
+    eff_rows.sort(key=lambda r: r["cost"])
+    best_so_far = 0.0
+    for r in eff_rows:
+        r["frontier"] = r["f1"] > best_so_far
+        if r["frontier"]:
+            best_so_far = r["f1"]
+    prev = None
+    for r in eff_rows:
+        if r["frontier"]:
+            if prev is not None:
+                d_f1 = (r["f1"] - prev["f1"]) * 100
+                r["marginal"] = (r["cost"] - prev["cost"]) / d_f1
+            prev = r
+    lines += [
+        "",
+        "## Cost efficiency: what a dollar buys",
+        "",
+        "One row per run at its DEPLOYMENT basis (carried where one",
+        "exists, otherwise the rung oracle, marked). `$/mound` is the",
+        "run's full flex cost per true-positive mound at 50 m — the",
+        "project's established per-mound economics. `marginal $/+0.01 F1`",
+        "prices each step UP the cost-sorted Pareto frontier (— =",
+        "dominated: a cheaper run scores higher). Plain F1-per-dollar is",
+        "deliberately omitted — it is maximised by the cheapest run",
+        "almost regardless of quality.",
+        "",
+        "| run | basis | cost | F1@50 (tier) | TP mounds | $/mound | "
+        "frontier | marginal $/+0.01 F1 |",
+        "|---|---|---:|---|---:|---:|---|---:|",
+    ]
+    for r in eff_rows:
+        marg = (f"${r['marginal']:.2f}" if r.get("marginal") is not None
+                and r["frontier"] and "marginal" in r else "—")
+        lines.append(
+            f"| {r['name']} | {r['basis']} | ${r['cost']:.0f} | "
+            f"{r['f1']:.4f} (T{r['tier']}) | {r['tp']:,} | "
+            f"${r['usd_per_mound']:.4f} | "
+            f"{'YES' if r['frontier'] else '—'} | {marg} |")
     lines += [
         "",
         "## Provenance and gates",
@@ -354,6 +539,14 @@ def main() -> int:
         "  point was ever registered there).",
         "",
         "## Changelog",
+        "",
+        "### 2026-08-27 (later) — Groups, costs, and efficiency",
+        "",
+        "PI request (interactive): compact-letter-display `group` column",
+        "and the two-panel significance figure",
+        "(`significance-groups.png`); run-cost column; the",
+        "cost-efficiency section ($/mound + marginal frontier pricing).",
+        "Board membership, tiers, and all cell values unchanged.",
         "",
         "### 2026-08-27 — Original publication",
         "",
