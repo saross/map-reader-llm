@@ -1,6 +1,7 @@
 # The 55-map portfolio at deployment: the transfer tax collapses
 
-> **Last revised**: 2026-08-27 (original publication). See
+> **Last revised**: 2026-08-27 (later: A-vs-B at the N = 5 carried
+> points, lean deployment costs, uplift basis correction). See
 > [§ Changelog](#changelog) for revision history.
 
 **Classification**: post-hoc, E41-class deployment extension (card:
@@ -80,11 +81,20 @@ failures (A ≠ B). It is also exactly the Obs 362 mechanism: a GS tie
 is bounded ignorance at ±0.03 resolution, and a real ~0.01 effect sat
 inside the bound.
 
-**Benjamini–Hochberg across the declared six-test family** (q = 0.05:
-the two A-vs-B tests plus the four P7 saturation tests): both A-vs-B
-results survive (ranks 1 and 4 of 6), as do both oracle-saturation
-tests; the two carried-point saturation ties stay non-significant.
-P6's failure is BH-robust.
+**Added post-hoc at PI request (2026-08-27), clearly labelled as
+outside the card's declared family**: paired A-vs-B at the **N = 5
+carried points** — the rung the deployment recommendation lives on
+(A 0.8322 at ~$60 vs B 0.8438 at ~$97). ΔF1 = −0.0116, p = 0.0042
+(same instrument; gates reproduced both committed carried F1s to 1e-6
+first). **B is significantly better at the recommendation rung too** —
+the extra ~$37 buys a real ~0.012, at every rung tested.
+
+**Benjamini–Hochberg across the test family** (q = 0.05; the declared
+six tests plus the PI-requested seventh): all five non-tie results
+survive — A-vs-B at oracles (p = 0.0001), B oracle-saturation
+(0.0003), A-vs-B at N = 5 carried (0.0042), A oracle-saturation
+(0.0131), A-vs-B at primaries (0.0147); the two carried-point
+saturation ties stay non-significant. P6's failure is BH-robust.
 
 ## The N-ladder (P2 / P4 / P7)
 
@@ -189,30 +199,48 @@ its two-axis oracle) on the strength of geometry + K = 10 + verifier.
 
 ## Deployment Pareto and recommendation
 
-Est. all-in flex cost for the full 55-sheet corpus (proposer × N/10 +
-full-union verification; incumbent costs from the S113 token-load
-audit):
+Two cost bases, both flex, full 55-sheet corpus. **Full** = proposer ×
+N/10 + verification of the entire vote ≥ 1 union (what this analysis
+paid: it buys the sweep, the oracle, and the ladder inheritance).
+**Lean deploy** = proposer × N/10 + verification of only the carried
+vote-shell (vote ≥ k at the row's operating point) — what a
+practitioner deploying the carried point actually needs. Incumbent
+costs from the S113 token-load audit; incumbent lean adds the ~$2
+S104-campaign shell share to the proposer cost (approximate — their
+as-billed verifier lines vary in scope).
 
-| Configuration | Cost | corrected-F1@50 | Basis |
-|---|---:|---:|---|
-| A, N = 1 | $20.53 | 0.8186 | rung oracle |
-| A, N = 3 | $41.22 | 0.8274 | rung oracle |
-| min11-uplift incumbent (10-pass) | ~$58 | 0.8290 | committed cell |
-| A, N = 5 | $59.75 | 0.8322 | carried (= rung oracle) |
-| B, N = 3 | $65.48 | 0.8449 | rung oracle |
-| B, N = 5 | $97.22 | **0.8438 carried** / 0.8450 oracle | carried |
-| B, N = 10 | $173.59 | 0.8422 carried / **0.8503 oracle** | carried / oracle |
-| A, N = 10 | $103.91 | 0.8326 carried / 0.8362 oracle | dominated by B N = 3 |
-| TH7-k4 incumbent (HIGH, K = 5) | ~$207.4 | 0.8152 carried | dominated by everything from A N = 3 up |
+| Configuration | Full cost | Lean deploy | corrected-F1@50 | Basis |
+|---|---:|---:|---:|---|
+| A, N = 1 | $20.53 | $20.53 (shell = union at k1) | 0.8186 | rung oracle |
+| text-min incumbent (K = 5) | ~$23.4 | ~$25 | 0.783 carried / 0.8127 post-hoc k3 | as-billed is proposer-only |
+| B, N = 1 | $30.99 | $30.99 | 0.8004 | rung oracle; dominated by A N = 1 |
+| A, N = 3 | $41.22 | $34.74 | 0.8274 | rung oracle |
+| min11-uplift incumbent (10-pass min, std grid) | ~$58 | ~$47 + k5-shell (count not on disk; as-run band $11.27) | 0.8290 | **post-hoc best** (0.15, 5-of-10) — corrected from "committed cell" |
+| A, N = 5 | $59.75 | $48.18 | 0.8322 | carried (= rung oracle) |
+| B, N = 3 | $65.48 | $51.71 | 0.8449 | rung oracle |
+| B, N = 5 | $97.22 | $77.28 | **0.8438 carried** / 0.8450 oracle | carried |
+| B, N = 10 | $173.59 | $143.17 | 0.8422 carried / **0.8503 oracle** | carried / oracle |
+| A, N = 10 | $103.91 | $86.18 | 0.8326 carried / 0.8362 oracle | dominated by B N = 3 |
+| image incumbent (HIGH, K = 5) | ~$195.4 | ~$197 | 0.799 carried / 0.801 post-hoc k3 | dominated |
+| TH7-k4 incumbent (HIGH, K = 5) | ~$207.4 | ~$203 | 0.8152 carried / 0.8425 post-hoc k3 | dominated from A N = 3 up |
+| T03 incumbent (HIGH T0.3, K = 5) | ~$261.0 | ~$256 | 0.836 carried / 0.8476 post-hoc k3 (the old oracle) | dominated |
+
+A matched-config aside the table makes visible: min11-uplift, A, and B
+are all MINIMAL-text T = 0.7 at 10 passes with the same verifier —
+the only axis moving is overlap. Post-hoc best against overlap:
+**0.8290 (12.5 % / stride 336) → 0.8362 (33.3 %) → 0.8503 (50 %)** —
+a clean monotone overlap gradient with everything else frozen.
 
 **Practitioner recommendation (pre-declared question 4): Run B's
 geometry (384 px / 50 % overlap) at N = 5 with the GS-carried
-calibration (0.15, k5)** — an honestly-carried 0.8438 at ~$97 for 55
-sheets, above every other carried point on the board including its own
-N = 10 (0.8422, $174) and the HIGH-thinking incumbent (0.8152, ~$207).
-Budget floor: A at N = 3–5 ($41–60) holds 0.827–0.832. Peak: B at
-N = 10 only if the last ~0.005 matters and post-hoc calibration is
-acceptable (its 0.8503 is an oracle).
+calibration (0.15, k5)** — an honestly-carried 0.8438 at ~$97 full /
+**~$77 lean** for 55 sheets, above every other carried point on the
+board including its own N = 10 (0.8422, $174/$143) and the
+HIGH-thinking incumbent (0.8152, ~$207) — and the A-vs-B margin at
+this rung is statistically real (−0.0116, p = 0.0042). Budget floor:
+A at N = 3–5 ($35–48 lean) holds 0.827–0.832. Peak: B at N = 10 only
+if the last ~0.005 matters and post-hoc calibration is acceptable
+(its 0.8503 is an oracle).
 
 Caveats: N < 10 costs are simulated from the audited per-call rates
 (the passes were physically run inside the K = 10 campaign); N = 3
@@ -262,6 +290,25 @@ costs are flex-tier estimates, not billing-console figures.
   that selected these two geometries.
 
 ## Changelog
+
+### 2026-08-27 (later) — A5-vs-B5, lean costs, uplift basis correction
+
+Trigger: PI review session (interactive). (1) **A-vs-B at the N = 5
+carried points** added at PI request, labelled post-hoc to the card's
+declared family: ΔF1 −0.0116, p = 0.0042 (`a5_vs_b5.json`; gates
+reproduced both committed carried F1s to 1e-6). BH re-run over the
+seven-test family — all five non-tie results survive; conclusions
+unchanged, strengthened at the recommendation rung. (2) **Lean-deploy
+cost column** added to the Pareto (carried-shell verification only):
+e.g. B N = 5 $97.22 → **$77.28**; A N = 5 $59.75 → $48.18; the
+recommendation's prices updated. (3) **Correction**: min11-uplift's
+0.8290 basis was listed as "committed cell"; its condition entry
+(`run-conditions.json`) records it as the **best deployment operating
+point (0.15, 5-of-10) — post-hoc**. Moved to the post-hoc column.
+(4) The matched-config overlap gradient noted (uplift 0.8290 → A
+0.8362 → B 0.8503, post-hoc, MINIMAL/K = 10/verifier frozen).
+What did NOT change: headlines, scorecard verdicts, transfer taxes,
+the P5 decomposition. Commit: this one.
 
 ### 2026-08-27 — Original publication
 
