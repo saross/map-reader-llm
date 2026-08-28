@@ -39,8 +39,7 @@ project state.
 > (_quarto.yml, section stubs, bib wiring, render smoke), then
 > drafting against 8,500 words (journal-requirements-isprs.md is the
 > contract; observed-practice medians: abstract 237, figs 9, refs 63).
-> **PI standing list**: D24 BRIEF (STANDING); user-obs verdicts
-> (3× S140 + 3× S142); Gould → D.9; Obs 433–440 review; billing
+> **PI standing list**: D24 BRIEF (STANDING); Gould → D.9; Obs 433–440 review; billing
 > glance (~$338 S142 + ~$92 S143 image/H7 ≈ $430 expected).
 > Riders: sapphire regenerable tile trees await cleanup; HIGH-image
 > estimator over-records ~3.3× in metas (audited basis in card).
