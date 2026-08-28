@@ -29289,3 +29289,538 @@ points without reference labels); **Obs 434** (the
 baseline-comparability discipline, applied here in keeping carried
 and oracle numbers strictly separate and in refusing to read the
 oracle-only N = 3 rungs against carried points).
+
+## Observation 438: The final 55-map board — Run B owns the top two tiers, and the emergent N = 3 rung is the cost frontier's bargain step (Session 143, 2026-08-28)
+
+The 55-map programme closes on a single board that puts every
+deployment cell the study has produced onto one reference, one
+instrument, and one buffer:
+`results/55map-final-board-2026-08-27/final-board-50m.md`. **23 cells,
+253 pairs, 209 of them significant, nine greedy-clique tiers**, with a
+compact-letter-display column so the overlaps the disjoint tiers hide
+stay visible — cells sharing any letter are statistically
+indistinguishable. Instrument: round-robin tile-swap micro-F1
+permutation (10,000 draws, seed 42) over 8,541 tiles with
+Benjamini–Hochberg (BH) at q = 0.05, the Gold Standard (GS) chain
+unchanged. Reference: ruling-21 **standardised** (4,731 student plus
+279 extension). Gates: G4 scorer ×9 exact, identity ×9 exact,
+mechanism ×5 exact, A/B geometry 0.0000 m, and a G3 board-regression
+gate reproducing the committed 8-cell standardised board exactly
+(F1, all 28 pairwise p-values, tiers).
+
+**Run B owns the top.** The 384 px / 50 % geometry takes Tier 1 alone
+and fills Tier 2 entirely:
+
+| Cell | Basis | Tier (letters) | Point | F1@50 m | 95 % CI |
+|---|---|---|---|---:|---|
+| B-N10-oracle | oracle | **1 (a)** | (0.20, k9) | **0.8558** | [0.8475, 0.8636] |
+| B-N5-oracle | oracle | 2 (bc) | (0.20, k5) | 0.8515 | [0.8430, 0.8595] |
+| B-N3-oracle | oracle | 2 (c) | (0.20, k3) | 0.8505 | [0.8423, 0.8584] |
+| B-N5-carried | carried | 2 (bc) | (0.15, k5) | 0.8502 | [0.8416, 0.8582] |
+| B-N10-carried | carried | 2 (bcd) | (0.15, k10) | 0.8498 | [0.8411, 0.8581] |
+| B-N3-carried | carried (post-hoc) | 3 (bde) | (0.15, k3) | 0.8476 | [0.8395, 0.8555] |
+| A-N10-oracle | oracle | 3 (de) | (0.15, k7) | 0.8420 | [0.8331, 0.8503] |
+
+**The emergent N = 3 rung — a labelled post-hoc nomination, not a
+registered claim.** The 55-map card carried operating points only at
+N = 5 and N = 10, so no N = 3 point was ever nominated before launch.
+What made the rung worth evaluating is that the *configuration* was
+already determined: the committed GS stride ladder
+(`results/stride-2026-08-25/plateau_analyses.json`, `first_n_ladder`,
+built before the 55-map launch) had selected **(0.15, k3-of-3) for
+both geometries** at N = 3 — verified at source, `g384_ov128` and
+`g384_ov192` alike. The two `carried (post-hoc)` cells simply evaluate
+that pre-existing GS selection at deployment, on the same derivation
+discipline as the registered P2/P4 points, one rung further down. The
+GS selection is pre-launch and committed; the **decision to evaluate
+it is post-hoc** (2026-08-28, PI-directed), and the board labels the
+cells accordingly. Instructive, not confirmatory.
+
+**The asymmetry it exposes: B saturates at N = 3, A does not saturate
+until N = 5.** At the carried points, under the board's own BH-adjusted
+pairwise tests:
+
+| Contrast | ΔF1 | BH-adjusted p | Verdict |
+|---|---:|---:|---|
+| B-N5-carried − B-N3-carried | +0.0026 | 0.113 | tie |
+| B-N10-carried − B-N3-carried | +0.0022 | 0.334 | tie |
+| B-N3-carried − B-N1-oracle | +0.0463 | < 0.001 | B-N3 above |
+| A-N5-carried − A-N3-carried | +0.0075 | < 0.001 | **A-N3 below** |
+
+B's third pass is where its ensemble is finished; A's is not, and A
+needs five before it stops improving significantly. That is a property
+of the *geometry*, measured at the points a practitioner would deploy.
+
+**The cost consequence — the honest carried frontier.** Pricing each
+step up the cost-sorted Pareto frontier (audited all-in flex, `$` per
++0.01 F1 for the step *into* each row):
+
+| Step | Cost | F1@50 m | Marginal $ / +0.01 F1 |
+|---|---:|---:|---:|
+| A-N3 (carried, post-hoc) | $41 | 0.8308 | $26.87 |
+| A-N5 (carried) | $60 | 0.8383 | $24.71 |
+| **B-N3 (carried, post-hoc)** | **$65** | **0.8476** | **$6.16** |
+| B-N5 (carried) | $97 | 0.8502 | $122.08 |
+| B-N10-oracle (T1 ceiling) | $174 | 0.8558 | — (ceiling row) |
+
+**The $5 step from A-N5 to B-N3 buys +0.0093 F1 — significant
+(BH p = 0.026) and an order of magnitude cheaper per unit than
+anything else on the frontier.** The next step up, into B-N5, costs
+$122 per +0.01. So the board's practical reading is: spend the
+overlap, not the passes. B-N3 also carries the frontier's largest true
+positive count (4,230 mounds at $0.0155 each) on a recall-leaning
+operating point (P 0.8509 / R 0.8443) rather than the
+precision-leaning profile of B-N5 (P 0.8748 / R 0.8269).
+
+**Could N = 3 have been specified in advance?** Partly, and the two
+geometries answer differently. For B the deployment argmax is
+(0.20, k3) against the GS-selected (0.15, k3): **the vote threshold
+transfers exactly**, the probability dial is one lattice step off, and
+the whole cost of having carried the GS point rather than the oracle
+is 0.0029. For A the deployment argmax is (0.20, k2) against the same
+GS-selected (0.15, k3) — one step off on *both* axes, at a cost of
+0.0018. The determinability claim therefore holds cleanly for B only;
+A's k does not transfer at this rung, though the penalty for the miss
+is smaller.
+
+**An interpretive hypothesis, flagged as NOT established.** The
+saturation asymmetry has an obvious candidate explanation in per-pass
+look multiplicity: at 384 px with stride 192, every location falls
+inside ≈ 4 tiles per pass; at stride 256 it falls inside ≈ 2.25. B
+would then reach a given number of independent looks in fewer passes.
+The board does not settle this, and one number cuts against a pure
+counting story: **at roughly matched look budgets B is still ahead** —
+B-N3 (≈ 12 looks per location) beats A-N5 (≈ 11.25) by +0.0093,
+BH p = 0.026. If look count were the whole mechanism the two should
+tie. Overlap plausibly adds *framing* diversity — the same mound seen
+at different offsets within the tile — beyond raw look count. Stated
+here as a hypothesis for a successor study to test, not as a finding.
+
+**Why this matters.** Obs 437 left the deployment recommendation at
+B's geometry, N = 5, carried. This board revises the recommendation one
+rung down: **B at N = 3, carried, at $65** is statistically
+indistinguishable from B at N = 5 and N = 10 while costing a third of
+the latter, and the money saved does not buy back anything measurable.
+It also gives the paper its cheapest true statement about pass count —
+saturation is geometry-dependent, so "how many passes?" has no answer
+that is not conditioned on tiling. And it supplies the frontier
+arithmetic a practitioner section needs: the whole usable range of the
+instrument spans $41 to $174 and 0.83 to 0.86, with one genuinely
+cheap step inside it.
+
+**Caveats.** The N = 3 cells are **post-hoc nominations**; the honest
+route to promoting the rung is a registered replication that nominates
+N = 3 in a future deployment card before launch, and the board says so
+in its own § Post-hoc section. Oracles are argmaxes taken on the same
+references they are scored against — ceilings and register furniture,
+never carried numbers. **The board's F1 values are not comparable to
+Obs 437's**: this board scores against the ruling-21 *standardised*
+reference (4,731 + 279), while Obs 437 scored against the canonical
+adjudicated extended ground truth (5,160 references) — B-N10-carried
+reads 0.8498 here and 0.8422 there, and that difference is the
+reference, not the data. The N < 10 rungs are simulated re-partitions
+of the physically-run K = 10 campaign with inherited verifier
+probabilities, not independent replications (the Obs 437 caveat carries
+over unchanged). Oracle argmaxes were re-derived on the standardised
+reference and 11 of 13 equal the previously selected points, with T03
+and TM nudging prob 0.15 → 0.20 by +0.0013 / +0.0001. All costs are
+audited flex-tier figures, not billing-console truth.
+
+Sources: `results/55map-final-board-2026-08-27/final-board-50m.md`
+(the 23-cell board, run-level carried-vs-oracle table, cost-efficiency
+table, the § Post-hoc statement of emergent status, provenance and
+gates, and the 2026-08-28 changelog entry recording the PI direction;
+verified 2026-08-28);
+`results/55map-final-board-2026-08-27/final_board_50m.json` (verified
+2026-08-28: 253 pairwise records, 209 `significant: true`, 23 cells,
+nine tier groups, instrument string "round-robin tile-swap micro-F1
+permutation (10000, seed 42) + BH q=0.05 + greedy-clique tiers",
+`n_tiles` 8,541 throughout; the four contrasts tabulated above read
+from the `pairwise` array);
+`results/55map-final-board-2026-08-27/cells_manifest.json` (per-cell
+detection provenance and `committed_eval` flags);
+`results/stride-2026-08-25/plateau_analyses.json` (verified
+2026-08-28: `first_n_ladder.g384_ov128.N.3.best` and
+`first_n_ladder.g384_ov192.N.3.best` both `prob_t` 0.15,
+`min_votes` 3 — the pre-launch GS selection the post-hoc cells
+evaluate); the sweep surfaces `sweep_A-N3.csv`, `sweep_B-N3.csv` and
+siblings in the same directory. Related: **Obs 437** (the transfer-tax
+collapse — its carried/oracle discipline and its simulated-rung
+caveats are inherited wholesale here, and its N = 5 deployment
+recommendation is what this board revises; note the different
+reference); **Obs 435** (the nine-cell stride plateau that selected
+geometries A and B, whose "plateau-not-winner" GS verdict is
+untouched — the N = 3 finding is about cost, not about stride finding
+more mounds); **Obs 436** (the successor-paper registry — the
+framing-diversity hypothesis above is a candidate question for its
+faster-to-frontier path); **Obs 434** (the baseline-comparability
+discipline, applied here in keeping carried and oracle cells labelled
+and in refusing to read the post-hoc N = 3 cells as registered
+results); **Obs 364** (pass count as a priced cost/quality trade — this
+board sharpens it by making the saturation point geometry-dependent).
+
+## Observation 439: Image on the leading geometry — text wins localisation while matching on tile-level detection, and HIGH thinking buys the verifier nothing (Session 143, 2026-08-28)
+
+Two questions the study had never answered on its *leading*
+configuration — does modality still matter once the geometry is
+good, and does thinking level still matter once a verifier is
+present — were closed in one campaign on 2026-08-28. Both cells are
+byte-matched to the committed text-B anchor
+(`results/grid-2026-08-18/conditions-verified/g384_ov192`, F1@20 m
+**0.8961**) except the declared bundle: **image-MINIMAL** runs
+`detect_brief-text-image`, the 17-example twin of the leading text
+config, at K = 10, T = 0.7 with explicit context caching;
+**image-HIGH** is identical plus one command-line flag,
+`--thinking-level high`. Predictions IP1–IP5 were committed before the
+MINIMAL launch and HP1–HP5 before the HIGH launch, in
+`planning/image-b-gs-2026-08-28.md` §§ 3 and 5a. Gates included an
+**anchor gate** — the committed text-B detection set re-scored through
+the new analysis path reproduces its registered 0.8961 exactly.
+
+| Cell | Verified best @20 m | Point | P | R | tile-MCC | Union | All-in flex |
+|---|---:|---|---:|---:|---:|---:|---:|
+| text-B (committed anchor) | **0.8961** | — | 0.9275 | 0.8668 | 0.7965 | 3,319 | — |
+| image-MINIMAL | 0.8412 | (0.15, k9) | 0.8741 | 0.8107 | **0.7985** | 4,065 | ~$25 |
+| image-HIGH | 0.8333 | (0.20, k8) | 0.8625 | 0.8061 | 0.7993 | 9,189 | ~$65 |
+
+**(a) Modality — the deficit is localisation, not detection.** Text
+beats image by **+0.0549 F1 at 20 m, p = 0.0010** (paired tile-swap
+permutation, 10,000 draws, 487 tiles on the common footprint), and the
+gap then narrows monotonically with the matching buffer: **0.0549 →
+0.0379 → 0.0282 → 0.0258** at 20 / 30 / 50 / 75 m. Meanwhile
+tile-level Matthews Correlation Coefficient (MCC) reaches **parity —
+image 0.7985 against text 0.7965**, nominally higher. An instrument
+that finds the right tiles but places the point less precisely is
+exactly what those two facts describe together: image is not failing
+to *see* mounds, it is failing to *put them where they are*. IP1–IP4
+all confirmed (including IP4's prediction that the verifier dial lands
+at prob 0.15, which it did). This reproduces the study's historical
+image profile — MCC-strong, localisation-weak — on the new geometry,
+at MINIMAL thinking, with everything else matched.
+
+Image also needs the ensemble far more than text does: its N = 1 rung
+collapses to **0.6974** where text's committed GS N = 1 ladder point
+reads **0.8594**, consensus rescues it by ≈ +0.14, and its best
+operating point sits at near-unanimity (k9 of 10) rather than in the
+permissive-to-mid band text prefers.
+
+**IP5 is genuinely indeterminate, and the study can now say so
+precisely.** The prediction was that image saturates more slowly than
+text. Observed: N3 − N10 = **−0.0159, p = 0.069**; N5 − N10 = −0.0030,
+p = 0.745. The first is suggestive and the second is a flat tie. The
+sensitivity appendix built the same day
+(`results/sensitivity-mde-2026-08-28/`) prices what that means: the
+verified-set GS instrument has a permutation null SD of **0.0087**,
+giving a minimum detectable effect of **0.017 at 50 % power and 0.024
+at 80 %**. A −0.016 effect sits *inside* that indeterminate zone by
+construction. IP5 is therefore recorded as not confirmed at GS power —
+neither supported nor refuted — which is a better outcome than a
+p-value read as a verdict.
+
+**(b) Thinking — the first matched MINIMAL-vs-HIGH image pair the
+study has ever run**, one CLI flag apart. HIGH bought an enormous
+proposer-side expansion and none of it survived:
+
+| Bet | Observed | Verdict |
+|---|---|---|
+| HP1: HIGH ≈ MINIMAL at verified best | 0.8333 vs 0.8412; ΔF1 −0.0079, p = 0.62 | confirmed — HIGH nominally **worse** |
+| HP2: union ≥ +20 % | 4,065 → 9,189 (**+126 %**), singletons 1,938 → 6,751 | confirmed |
+| HP3: MCC within ±0.02 | +0.0008 | confirmed |
+| HP4: lattice point | (0.20, k8) | confirmed |
+| HP5: proposer cost 3.0–3.5× | **2.91×** ($59.07 vs $20.30 audited) | narrow miss, just under |
+
+**The union more than doubles, the growth is almost entirely
+singletons, and the verified best moves by −0.008 (n.s.).** The
+carry-forward verifier absorbs the thinking dividend completely. Image
+HIGH also saturates fully by N = 5 (N5 − N10 = −0.0002, p = 0.97). The
+pre-named informative failure — HIGH beating MINIMAL by more than
+0.03 — did not occur.
+
+**Why this matters.** Two paper claims come out of this, both now
+resting on matched pairs rather than on cross-campaign comparison.
+First: **text is stronger than image for mound localisation under the
+leading configuration** (+0.055 at 20 m, p = 0.001, everything else
+byte-matched) **while image matches text on tile-level
+discrimination** — a sharper and more useful statement than "text
+wins", because it tells a practitioner which sub-task the modality
+choice actually governs. Second: **under a proposer–verifier
+architecture, MINIMAL thinking suffices in both modalities**; the ~3×
+thinking premium buys pre-verifier diversity the verifier discards.
+That second claim was previously a text-track, single-modality result;
+it is now demonstrated on both tracks, which is what lets it be
+written as an architectural property rather than a quirk of one
+configuration. The campaign also gives the project its first
+sensitivity-anchored *negative* result: IP5 is reported as
+indeterminate with the MDE quoted beside it.
+
+**Caveats.** Four GS sheets, one model, one proposer configuration,
+one verifier configuration at n = 1 — the resolution ceiling is real
+and the appendix quantifies it (MDE₈₀ = 0.024 on this instrument,
+versus 0.013 at 55-map deployment scale), so nothing here transfers to
+deployment scale without being re-run there. The image deficit is
+measured at the *verified best* of each cell, so it compares two
+optimised operating points, not two fixed ones. HP5's costs are
+audited flex-rate figures; the § 5a interim "~$37" estimate for HIGH
+was an under-estimate corrected to ~$65 in the card after the pricing
+probe's five tiles proved unrepresentative of corpus thinking volume,
+and the billing console remains ground truth. Coverage required
+single-tile recoveries (6 MINIMAL, 5 HIGH) before the E72 coverage
+gate read exact. One documentation defect to note for anyone citing
+the appendix: `sensitivity-mde.md`'s third MDE row prints **340** tiles
+where its own `sensitivity.json` — and every underlying permutation
+record — carries **487**; the null SD, MDE, and every inferential
+number in this entry come from the JSON and the analysis artefacts,
+which agree at 487.
+
+Sources: `results/image-b-gs-2026-08-28/findings.md` (headline table,
+IP1–IP5 and HP1–HP5 verdict tables, the "what the paper can now say"
+claims, method and gates; original publication 2026-08-28);
+`results/image-b-gs-2026-08-28/analysis.json` (verified 2026-08-28:
+`image_best` f1 0.8412121 at prob_t 0.15 / min_votes 9, MCC 0.7985239;
+`anchor.f1_20` 0.8961353 against `registered` 0.8961;
+`head_to_head_20m` observed_diff 0.054923, p 0.001, 10,000
+permutations, **n_tiles 487**; buffer curves at 20/30/50/75 m;
+`ladder.1.best.f1` 0.6974460; `saturation_N3_vs_N10` −0.015890
+p 0.0689 and `saturation_N5_vs_N10` −0.003048 p 0.745);
+`results/image-b-gs-2026-08-28/high/pair_verdicts.json` (verified
+2026-08-28: `hp1_high_vs_min_20m` −0.007879 p 0.6216 at n_tiles 487;
+`hp2_union` 4,065 → 9,189, growth 1.2605; `hp3_mcc` delta 0.0008126;
+`hp4_points` min (0.15, 9) / high (0.20, 8); `hp5_cost` $59.0669 vs
+$20.30, ratio 2.9097); `results/image-b-gs-2026-08-28/sweep_20m.csv`
+and `high/`; `results/sensitivity-mde-2026-08-28/sensitivity-mde.md`
+and `sensitivity.json` (verified 2026-08-28: common-footprint
+instrument null SD median 0.008674, MDE₅₀ 0.0170, MDE₈₀ 0.0243,
+n_tiles 487, source `results/image-b-gs-2026-08-28/analysis.json`);
+`results/stride-2026-08-25/plateau_analyses.json`
+(`first_n_ladder.g384_ov192.N.1.best.f1` 0.8594 — the committed text
+N = 1 comparator); `planning/image-b-gs-2026-08-28.md` §§ 3, 5a
+(IP1–IP5 and HP1–HP5 committed before their respective launches, with
+outcomes recorded in § 5a); proposer, union, and verifier data under
+`outputs/image-b-gs-2026-08-28/`; commits `5112e9de4` (HIGH analysis
+and HP verdicts), `b8ea5aad5` (§ 5a outcome), `dbdf9a241` (findings).
+Related: **Obs 359** (the diversity dividend does not survive the
+verifier — pool recall ceiling as the binding constraint; this is the
+mechanism reproduced here on the image track as a matched pair, and
+the register dates that entry to Session 112 while `findings.md`
+labels the same finding "S111"); **Obs 141** (the accidental
+HIGH-thinking runs that first surfaced the diversity dividend — the
+dividend is confirmed at the proposer stage here, +126 % union, and
+shown to be worthless downstream of a verifier); **Obs 140** (HIGH
+thinking improving consensus while hurting individual runs — the
+consensus-era claim this entry bounds); **Obs 365** (per-mound
+economics on the production frontier — the cost discipline this
+campaign's ~$25 / ~$65 audited figures follow); **Obs 362** (the
+bounded-ignorance rule for GS ties, now given an independent numerical
+basis by the MDE appendix, whose MDE₅₀ of 0.044–0.045 on the raw GS
+instruments brackets the empirically stated ±0.03–0.045 band).
+
+## Observation 440: Believe the artefacts — a ledger audit refutes a "never run" claim that had reached the paper draft, and discharges the study's last unmet preregistration obligation (Session 143, 2026-08-28)
+
+A scoped agent audit on 2026-08-28 (commit `eb8c8c00f`,
+"docs(prereg): verify H1-H15 status at source") regenerated the
+summary tables of
+`docs/methodology/preregistration/hypothesis-tracking.md` against
+primary artefacts rather than against the file's own prior content.
+It produced two results worth the register's attention: one correction
+of a false negative claim that had already contaminated the paper, and
+one genuine outstanding obligation, discharged the same day.
+
+**(a) The H9 row was false, and the artefacts had said so for a
+month.** The ledger carried "Partially tested (H9-D only; H9-B/C/E not
+run)". Every primary artefact contradicts it. The dual-track Phase 3c
+design ran Track 1 (image) conditions **A, B, C, D, and E** and
+Track 2 (text) conditions **A, B, D, and E** — C is omitted on Track 2
+because image rotation is degenerate when
+`include_example_images=false` — at five sub-conditions × five
+replications, giving 125 execution units on Track 1 and 100 on
+Track 2. The filesystem agrees: all five `h9-A`…`h9-E` directories
+exist under `outputs/retest/phase3c/track1-image/`, and the tree
+carries **225 `*.meta.json` files**. Erratum **E63** independently
+records the same scope, executed 2026-03-18 to 2026-03-25. The
+registered design was run **twice** — a 60-tile pilot and a 340-tile
+Era-1 retest with cross-variant pooling. H9 was therefore **executed
+and REJECTED**: no diversity condition beats the identical-pass
+baseline A on either track, the **largest gain being +0.014
+(p = 0.626)** for Track 1 temperature diversity, with every Track 2
+contrast negative (−0.034 to −0.038). A null is a result, not an
+absence of one.
+
+**The provenance of the error is the methodological point.** The D17
+audit finding **U12**
+(`reports/d17-inventory/prereg-attribution-sweep.md:1007-1036`,
+2026-07-28) audited the "not run" claim *against the tracking file's
+own text* rather than against the experiment's artefacts, accepted it,
+and proposed the wording that was then written into the ledger. A
+**different D17 document, dated one day earlier** — the
+`d17-inventory-h9-h12.md` § 7 sibling — had already caught it: the
+matrix says the conditions were not run as separate experiments,
+"They were — twice. **Believe the artefacts**". U12 was thus
+superseded on this point by both an earlier and a later source (E63,
+2026-07-30) and propagated anyway.
+
+**The downstream consequences, both closed the same day.** The U12
+wording had reached the paper: `docs/paper/results-draft.md` asserted
+that registered H9-B/C/E "were never run, D17 audit U12". That
+sentence was corrected on 2026-08-28 (commit `9e69611b7`) and now
+states that all five H9 conditions were executed, dual-track and run
+twice, with the null and its largest ΔF1 reported. Separately, a **PI
+ruling made on the false premise** — "Tier A: I approve disclose only",
+2026-08-28, intending a disclose-only erratum on the E74 precedent for
+an H9 omission — was **recorded but not applied** by the audit, on the
+grounds that minting an erratum asserting a non-existent omission
+would put a false claim into the permanent protocol record, a worse
+defect than the stale row it was meant to close. The ruling is
+preserved in the decision trail and referred back to the PI on the
+corrected facts, with the observation that the defensible subject of
+any erratum is now the *documentation* defect — that two project
+documents carried a false "not executed" claim between 2026-07-28 and
+2026-08-28 — rather than a protocol omission.
+
+**(b) The one genuine unmet obligation, found and discharged in
+hours.** The same audit swept the preregistration's conditional
+triggers — promises of the form "if X, then we will also run Y" — and
+found the **H7 temperature-escalation trigger**
+(`osf/preregistration.md:731`) had fired and never been honoured. The
+rule: if T = 1.3 yields higher F1 than T = 1.0 on the point estimate,
+exploratory testing at **T = 1.6 and T = 2.0** will be conducted. On
+Track 2 (text) it fired — **0.5442 against 0.5335** — while Track 1
+did not (T = 1.0 0.5269 > T = 1.3 0.4903). It is a point-estimate rule
+and it fired on noise: across the three replicate runs the paired
+ΔF1 (T = 1.0 − T = 1.3) is −0.0362 (p = 0.247), +0.0022 (p = 0.910),
+and +0.0020 (p = 0.926) — **the sign is not consistent across
+replicates of the same condition**, the aggregate is carried entirely
+by run01, and the registered paired bootstrap agrees (ΔF1 −0.0357,
+95 % CI [−0.0908, +0.0137], p = 0.204). Mitigating evidence is not
+discharge, so the runs were made.
+
+**Discharged at the letter, PI-approved, for $1.37.** Both registered
+levels ran — T = 1.6 *and* T = 2.0, three replicates each, six single
+passes, 2,040 calls at real-time flex — rather than taking the
+sequential shortcut the prediction card had reserved. The frame is the
+Era-1 340-tile 512 px bounds against curator ground truth at 20 m, and
+a **replication gate** ran first: the committed T1.0-vs-T1.3 check
+reproduced exactly (ΔF1 −0.036229, p = 0.247) before any new
+comparison was trusted.
+
+| Level | Run 1 | Run 2 | Run 3 | vs same-replicate T = 1.3 |
+|---|---:|---:|---:|---|
+| T = 1.6 | 0.4806 | 0.4884 | 0.4524 | −0.0658 / −0.0480 / −0.0974 |
+| T = 2.0 | 0.4752 | 0.4714 | 0.4765 | −0.0712 / −0.0649 / −0.0733 |
+
+**Every T = 1.6 replicate sits below its T = 1.3 counterpart**, and
+five of the six escalation comparisons are significant (p = 0.0002,
+0.0013, 0.0017, 0.0061, and 0.0064; the sixth, T = 1.6 run 2, at
+p = 0.0846). The temperature–performance curve declines monotonically
+from the T = 0.3 optimum (0.6065) through T = 1.3 (0.5442) to a
+**degraded plateau ≈ 0.47 at T = 1.6–2.0**, with T = 2.0 ≈ T = 1.6 and
+no further collapse. The registered question — is there benefit above
+the vendor default? — is answered in the negative with a **directly
+measured** upper bound rather than an extrapolation. The card's
+primary prediction was confirmed (in fact overshot: 0.452–0.488 sits
+below the predicted 0.50–0.54 band), its tertiary prediction confirmed
+(precision falls faster than recall: P 0.429 → ~0.35 against
+R 0.75 → ~0.71), and its **secondary prediction was wrong,
+informatively** — the differences were predicted non-significant on the
+adjacent-pair pattern, and the curve separates from T = 1.3 at 1.6 in
+a way no earlier adjacent pair did.
+
+**The compliance position after this pass.** Every registered
+hypothesis is now executed, resolved by a v2 rerun, closed by erratum,
+or a deferral honoured: H1, H3, H4, H5, H7, H8, and H9–H13 executed
+(H8 returning a v2-rerun null, H10 and H12 likewise under E49/E50 and
+E52, H13's registered three-arm contrast under E75); H2 partially
+executed,
+with Condition C never run and recorded under E58 and E59; H6 not
+executed and formally closed disclose-only by PI ruling
+under E74; H14 and H15 registered as deferred, with the deferrals
+honoured under E76 and E77. Both conditional triggers are verified at
+source: **H4b did not fire** (Phase 2e returned 0 of 6 FDR-significant
+ordering comparisons, so no obligation arose), and **H7 fired on both
+clauses** — the lower-bound clause substantially discharged by later
+low-temperature campaigns though never under the escalation label, and
+the upper-bound clause now discharged with data.
+
+**Why this matters — the methodological moral.** The recurring failure
+mode in this project's compliance record is not experiments that were
+never run; it is **ledger-versus-artefact divergence**, where a
+hand-maintained status file drifts, an audit then verifies the file
+against itself, and the resulting claim propagates outward into paper
+text and PI rulings that inherit the false premise. That chain ran to
+four hops here — file → U12 → ledger row → paper sentence → PI
+ruling — with a correct rebuttal sitting in a sibling document the
+whole time. The rule an audit must follow is the one the sibling
+document already stated: **believe the artefacts**. Two structural
+defences follow. First, an audit's unit of verification is the
+experimental artefact — the meta files, the erratum, the results
+report — never a status document, however authoritative-looking.
+Second, when a decision has been made on a premise an audit later
+refutes, the correct move is to record the decision, decline to apply
+it, and refer it back on the corrected facts, rather than either
+executing it or silently dropping it. The audit's most valuable output
+was not the corrected row; it was the discovery, in the same sweep,
+of a real obligation nobody knew was outstanding.
+
+**Caveats.** `hypothesis-tracking.md` remains hand-maintained and will
+drift again — its own banner says so, and names
+`results/hypothesis-outcome-table/hypothesis-outcome-table.md`
+(a generated projection of `results/analyses-manifest.json`) as the
+authoritative disposition record, to be believed wherever the two
+disagree. The H9 null carries two standing riders from E63: the runs
+executed at HIGH thinking rather than the registered `minimal`, and
+HIGH thinking is itself a diversity mechanism, so the H9 baseline is
+not a low-diversity baseline and the null may be biased toward
+acceptance; E12 additionally records H9-C running as HN-diversity-only
+after HP pool exhaustion. The post-registration diversity-dividend
+finding concerns a mechanism H9 did not register and must not be
+merged into the H9 claim. The escalation runs deviate from the
+registered H7 in corpus — 340-tile Era-1 rather than the 60-tile
+holdout, per E36, consistent with every H7 cell they are compared
+against — and in billing mode (real-time flex rather than the Batch
+API; both bill at 50 % of list, an execution-infrastructure difference,
+not a parameter change). They are registered-*exploratory*: they
+characterise the upper bound of the curve and do not retest H7's
+primary prediction, which was already falsified when T = 0.0 won.
+Finally, two summary documents quote the escalation significance band
+slightly differently from the outcome table (`0.0002–0.0085` in the
+prediction card and `0.0002–0.085` in the ledger); the per-replicate
+p-values tabulated in the card's own § Outcome, used above, give
+0.0002–0.0064 across the five significant comparisons.
+
+Sources: `docs/methodology/preregistration/hypothesis-tracking.md`
+(verified 2026-08-28: the H1–H8 and H9–H15 summary tables with their
+per-row "Verified at" anchors; § H9 including "Provenance of the
+withdrawn status" and "PI ruling of 2026-08-28 — recorded, NOT
+applied"; § Conditional Triggers with the Phase 2b per-temperature
+means — Track 2 T = 1.0 0.5335 vs T = 1.3 0.5442, Track 1 0.5269 vs
+0.4903 — and the H4b verdict; § Status Key naming the generated ledger
+authoritative); `planning/run-predictions/h7-escalation-t1.6.md`
+(verified 2026-08-28: registered basis quoted from
+`osf/preregistration.md:731`, the pre-run predictions, and § Outcome
+with the six-row results table, the $1.37 cost, the 2,040 calls, and
+the replication gate ΔF1 −0.036229 p = 0.247);
+`reports/d17-inventory/prereg-attribution-sweep.md:1007-1036` (U12, the
+superseded finding); `reports/d17-inventory/d17-inventory-h9-h12.md`
+§ 7 item 1 ("Believe the artefacts", one day earlier);
+`results/phase3c-diversity/phase3c-comprehensive-results-report.md`
+§§ 1.1, 2.1–2.3 (the dual-track design and Table 2.2 contrasts);
+225 `*.meta.json` under `outputs/retest/phase3c/`;
+`docs/paper/results-draft.md` (the corrected H9 passage);
+`docs/methodology/preregistration/protocol-errata.md` (E12, E32, E36,
+E49, E50, E52, E58, E59, E63, E74, E75, E76, E77); artefacts
+`outputs/h7-escalation-2026-08-28/` and
+`results/h7-escalation-2026-08-28/` (T = 1.6 and T = 2.0, three
+replicate directories each); prior replicate checks under
+`results/h7-escalation-check/`. Commits `eb8c8c00f` (the ledger
+regeneration at source) and `9e69611b7` (the paper-draft correction),
+both 2026-08-28. Related: **Obs 431** (input-vintage drift as a corpus
+phenomenon fixed by disclosure at scoring time — the same preference
+for disclosing a measured fact over asserting a tidy one); **Obs 430**
+(the provenance settlement that corrected three confidently-stated
+"first Fable session" claims — the same failure mode of a confident
+claim surviving because nobody checked it against the archive);
+**Obs 141** (the diversity dividend, a mechanism H9 did not register
+and which must be kept out of the H9 claim); **Obs 140** (HIGH
+thinking as a diversity mechanism — the reason the H9 baseline is not
+a low-diversity baseline); **Obs 434** (the wrong-baseline correction,
+the closest prior instance of an audit overturning a claim by
+re-reading the source rather than the summary).
