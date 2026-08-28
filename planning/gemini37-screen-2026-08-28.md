@@ -64,7 +64,39 @@ expected, ~$18 ceiling**; a probe rate implying > $25 pauses.
    carried verifier (gated) → sweep + free N∈{1,3} rungs → the
    G1–G4 verdicts vs the committed anchors.
 
+## Escalation — PI-APPROVED 2026-08-29
+
+Screen outcome: the G1 informative outcome FIRED (verified best
+0.9139 @20 m at (0.10, k5) — above every Gemini 3 cell; (0.15, k5)
+0.9026 also above the anchor; union 791 with 59 % unanimous; recall
+0.9299; all-in ~$7.4). PI verdict (verbatim in substance): strong
+enough to escalate — "it looks like they've done something to vision
+that wasn't changed 3→3.5 that has raised the ceiling... worth
+working into the paper one way or another."
+
+**Approved next steps (launch detached on sapphire at next session
+start, background to the write-up):**
+
+1. **Passes 6–10** (+~$6.5): OUTROOT=outputs/gemini37-screen-2026-08-28
+   THINKING_ARGS="--thinking-level high"→NO — same MODEL_ARGS as the
+   K=5 run (`--model gemini-3.7-flash --thinking-level low`), runs
+   6–10 via the parameterised driver loop; then rebuild the union at
+   K=10, re-verify the increment, full sweep + ladders.
+2. **Verifier-role swap** (~$0.5–1): re-verify the K=5 union with
+   `--model gemini-3.7-flash` on the verifier config (3.7 as
+   verifier over its own and/or the text-B proposals — the S113
+   role-permutation pattern).
+3. **55-map deployment run** — PLAN (card + P-slate + probe first,
+   ~$45–55 at measured 3.7 rates, B geometry K=5): the resolving
+   test (deployment MDE80 0.013 vs the +0.018 effect). "Too good to
+   pass up exploring."
+
 ## Changelog
+
+### 2026-08-29 — Screen outcome + escalation approval
+
+G1 informative outcome recorded; PI approved passes 6–10, the
+verifier-role swap, and planning the 55-map run.
 
 ### 2026-08-28 — Original publication
 

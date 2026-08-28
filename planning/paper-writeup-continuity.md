@@ -34,7 +34,16 @@ project state.
 > Quarto (MD-per-section, elsarticle extension at final files);
 > literate-reporting pilot = the sensitivity appendix as .qmd.
 >
-> **NEXT SESSION = THE WRITE-UP**: skeleton decisions D-1..D-5
+> **NEXT SESSION, FIRST TASK (before the write-up): launch the
+> APPROVED Gemini 3.7 escalation DETACHED on sapphire** (card
+> planning/gemini37-screen-2026-08-28.md § Escalation): passes 6–10
+> at the same MODEL_ARGS, then the verifier-role swap; plan the
+> 55-map 3.7 run as a card. Background these to the writing. Context:
+> the 3.7 K=5 screen fired the G1 informative outcome — 0.9139 @20 m
+> ABOVE the whole Gemini 3 plateau (GS-unresolvable +0.0178 p=0.17;
+> deployment scale resolves), union 791/59 % unanimous, ~$7.4 all-in.
+> PI: "raised the ceiling... worth working into the paper".
+> **THEN THE WRITE-UP**: skeleton decisions D-1..D-5
 > (manuscript-skeleton-isprs.md), then the Quarto scaffold
 > (_quarto.yml, section stubs, bib wiring, render smoke), then
 > drafting against 8,500 words (journal-requirements-isprs.md is the
