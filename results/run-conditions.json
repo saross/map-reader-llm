@@ -7433,6 +7433,329 @@
      "detections": "outputs/h13/scoring/common/armC"
     }
    ]
+  },
+  "stride-phaseb-2026-08-25": {
+   "_note": "Stride programme Phase B (overnight 2026-08-25, PI-approved): four iso-stride geometry cells, K=10 brief-text MINIMAL T=0.7 flex. Winner-ladder exact verifications (k1/k3/k5, ~$3.4, PI-approved) nest here. Sweep interiors live under the stride-plateau analyses (PI ruling 2026-08-28).",
+   "proposer_pools": {
+    "g512_ov176": {
+     "modality": "text",
+     "path": "g512_ov176"
+    },
+    "g384_ov128": {
+     "modality": "text",
+     "path": "g384_ov128"
+    },
+    "g256_ov064": {
+     "modality": "text",
+     "path": "g256_ov064"
+    },
+    "g512_ov320": {
+     "modality": "text",
+     "path": "g512_ov320"
+    }
+   },
+   "verifier_passes": {
+    "g512_ov176-union-k10-verify": {
+     "modality": "text",
+     "path": "verifier/g512_ov176/verify"
+    },
+    "g384_ov128-union-k10-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov128/verify"
+    },
+    "g256_ov064-union-k10-verify": {
+     "modality": "text",
+     "path": "verifier/g256_ov064/verify"
+    },
+    "g512_ov320-union-k10-verify": {
+     "modality": "text",
+     "path": "verifier/g512_ov320/verify"
+    },
+    "g384_ov128-union-k1-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov128/verify_k1"
+    },
+    "g384_ov128-union-k3-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov128/verify_k3"
+    },
+    "g384_ov128-union-k5-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov128/verify_k5"
+    }
+   },
+   "conditions": [
+    {
+     "label": "g512-ov176-k10-verified-p0.15-k6",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g512_ov176",
+     "n_passes": 10,
+     "vote_threshold": 6,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride-2026-08-25/conditions-verified/g512_ov176/eval/evaluation.json",
+     "detections": "results/stride-2026-08-25/conditions-verified/g512_ov176/detections.geojson",
+     "_note": "Stride-programme verified best point (13-cell board member, F1@20 0.8655). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    },
+    {
+     "label": "g384-ov128-k10-verified-p0.15-k8",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128",
+     "n_passes": 10,
+     "vote_threshold": 8,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128/eval/evaluation.json",
+     "detections": "results/stride-2026-08-25/conditions-verified/g384_ov128/detections.geojson",
+     "_note": "Stride-programme verified best point (13-cell board member, F1@20 0.8982). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    },
+    {
+     "label": "g256-ov064-k10-verified-p0.15-k8",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g256_ov064",
+     "n_passes": 10,
+     "vote_threshold": 8,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride-2026-08-25/conditions-verified/g256_ov064/eval/evaluation.json",
+     "detections": "results/stride-2026-08-25/conditions-verified/g256_ov064/detections.geojson",
+     "_note": "Stride-programme verified best point (13-cell board member, F1@20 0.8795). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    },
+    {
+     "label": "g512-ov320-k10-verified-p0.15-k10",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g512_ov320",
+     "n_passes": 10,
+     "vote_threshold": 10,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride-2026-08-25/conditions-verified/g512_ov320/eval/evaluation.json",
+     "detections": "results/stride-2026-08-25/conditions-verified/g512_ov320/detections.geojson",
+     "_note": "Stride-programme verified best point (13-cell board member, F1@20 0.8800). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    },
+    {
+     "label": "g384-ov128-ladder-n1-verified-p0.15-k1",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/eval/evaluation.json",
+     "detections": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/detections.geojson",
+     "_note": "Winner-ladder exact rung (first-1 passes, exact re-verification; F1@20 0.8677, union 1290). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    },
+    {
+     "label": "g384-ov128-ladder-n3-verified-p0.15-k3",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128",
+     "n_passes": 3,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n3/eval/evaluation.json",
+     "detections": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n3/detections.geojson",
+     "_note": "Winner-ladder exact rung (first-3 passes, exact re-verification; F1@20 0.8911, union 1700). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    },
+    {
+     "label": "g384-ov128-ladder-n5-verified-p0.15-k4",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n5/eval/evaluation.json",
+     "detections": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n5/detections.geojson",
+     "_note": "Winner-ladder exact rung (first-5 passes, exact re-verification; F1@20 0.8856, union 1968). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    }
+   ]
+  },
+  "stride-phasec-2026-08-25": {
+   "_note": "Stride programme Phase C (2026-08-25): the 384/62.5% rung-144 cell, K=10, same protocol as Phase B.",
+   "proposer_pools": {
+    "g384_ov240": {
+     "modality": "text",
+     "path": "g384_ov240"
+    }
+   },
+   "verifier_passes": {
+    "g384_ov240-union-k10-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov240/verify"
+    }
+   },
+   "conditions": [
+    {
+     "label": "g384-ov240-k10-verified-p0.15-k10",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov240",
+     "n_passes": 10,
+     "vote_threshold": 10,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov240/eval/evaluation.json",
+     "detections": "results/stride-2026-08-25/conditions-verified/g384_ov240/detections.geojson",
+     "_note": "Stride-programme verified best point (13-cell board member, F1@20 0.8860). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    }
+   ]
+  },
+  "stride-55map-2026-08-25": {
+   "_note": "55-map deployment portfolio (card planning/55map-portfolio-2026-08-25.md; predictions P1-P8 registered by commit before launch). Runs A (384/33.3%, 141,600 calls) and B (384/50%, 245,610) + the 96,195-call carry-forward verifier. Canonical extended-GT evaluations; the standardised-reference final-board cells register in Pass 2. Sweeps/ladders live under their analyses (PI ruling 2026-08-28).",
+   "proposer_pools": {
+    "g384_ov128_55map": {
+     "modality": "text",
+     "path": "g384_ov128_55map"
+    },
+    "g384_ov192_55map": {
+     "modality": "text",
+     "path": "g384_ov192_55map"
+    }
+   },
+   "verifier_passes": {
+    "g384_ov128_55map-union-k10-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov128_55map/verify"
+    },
+    "g384_ov192_55map-union-k10-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map/verify"
+    }
+   },
+   "conditions": [
+    {
+     "label": "g384-ov128-55map-verified-carried-p0.15-k8-canonical-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 10,
+     "vote_threshold": 8,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride55-2026-08-27/g384_ov128_55map/primary/eval/evaluation.json",
+     "detections": "results/stride55-2026-08-27/g384_ov128_55map/primary/verified_detections.geojson",
+     "_note": "Run A PRIMARY (the carried deployment claim, committed before the sweep). Corrected-F1 vs canonical extended GT. Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    },
+    {
+     "label": "g384-ov128-55map-verified-oracle-p0.15-k7-canonical-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 10,
+     "vote_threshold": 7,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride55-2026-08-27/g384_ov128_55map/oracle/eval/evaluation.json",
+     "detections": "results/stride55-2026-08-27/g384_ov128_55map/oracle/verified_detections.geojson",
+     "_note": "Run A deployment ORACLE (sweep argmax @50m, corrected-F1 0.8362; post-hoc basis, labelled). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    },
+    {
+     "label": "g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 10,
+     "vote_threshold": 10,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride55-2026-08-27/g384_ov192_55map/primary/eval/evaluation.json",
+     "detections": "results/stride55-2026-08-27/g384_ov192_55map/primary/verified_detections.geojson",
+     "_note": "Run B PRIMARY (the carried deployment claim, committed before the sweep). Corrected-F1 vs canonical extended GT. Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    },
+    {
+     "label": "g384-ov192-55map-verified-oracle-p0.20-k9-canonical-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 10,
+     "vote_threshold": 9,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride55-2026-08-27/g384_ov192_55map/oracle/eval/evaluation.json",
+     "detections": "results/stride55-2026-08-27/g384_ov192_55map/oracle/verified_detections.geojson",
+     "_note": "Run B deployment ORACLE (sweep argmax @50m, corrected-F1 0.8503; post-hoc basis, labelled). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    }
+   ]
   }
  }
 }

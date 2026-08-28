@@ -1,5 +1,5 @@
 {
- "_README": "Per-run human-authored facts (the generator's INPUT, B1). Underscore fields (_scope_confidence/_scope_source/_flags) are human provenance retained for anti-confabulation (the generator ignores them). gt_reference: 4-map=curator, 55-map=student (evaluation-scopes.md §11). Scope vocab: evaluation-scopes.md + px256-1032 (bespoke 256px diagnostic). Named programmes: manifest-schema-design.md §2.6.",
+ "_README": "Per-run human-authored facts (the generator's INPUT, B1). Underscore fields (_scope_confidence/_scope_source/_flags) are human provenance retained for anti-confabulation (the generator ignores them). gt_reference: 4-map=curator, 55-map=student (evaluation-scopes.md \u00a711). Scope vocab: evaluation-scopes.md + px256-1032 (bespoke 256px diagnostic). Named programmes: manifest-schema-design.md \u00a72.6.",
  "facts": {
   "55maps-generalisation": {
    "primary_hypothesis": null,
@@ -162,7 +162,7 @@
     "Era 3"
    ],
    "_scope_confidence": "HIGH",
-   "_scope_source": "canonical(§6)+leakage: few-shot crops mined from pool_160 -> 327 excludes them",
+   "_scope_source": "canonical(\u00a76)+leakage: few-shot crops mined from pool_160 -> 327 excludes them",
    "_flags": [
     "487 evals = comparability siblings -> condition scope_override"
    ]
@@ -190,7 +190,7 @@
     "consensus-384-UNINTENDED-T1.0"
    ],
    "_scope_confidence": "HIGH",
-   "_scope_source": "canonical(§6)+empirical: results/paper-eval/flash-min-text-t10-*/ (E43 temperature analysis), bounds 487",
+   "_scope_source": "canonical(\u00a76)+empirical: results/paper-eval/flash-min-text-t10-*/ (E43 temperature analysis), bounds 487",
    "_flags": [
     "E43 T=1.0 deviation; feeds T=0.7-vs-1.0 temperature analysis (also_informs H7)"
    ]
@@ -215,7 +215,7 @@
     "Era 2"
    ],
    "_scope_confidence": "HIGH",
-   "_scope_source": "canonical(§6)+empirical: Era 2 leaderboard (results/leaderboard/per-architecture/era2/consensus/), bounds 487",
+   "_scope_source": "canonical(\u00a76)+empirical: Era 2 leaderboard (results/leaderboard/per-architecture/era2/consensus/), bounds 487",
    "_flags": []
   },
   "n1-outstanding-384": {
@@ -286,7 +286,7 @@
     "Era 2"
    ],
    "_scope_confidence": "HIGH",
-   "_scope_source": "canonical(§6)+empirical: Era 2 single-pass+PV leaderboard, bounds 487",
+   "_scope_source": "canonical(\u00a76)+empirical: Era 2 single-pass+PV leaderboard, bounds 487",
    "_flags": []
   },
   "proposer-verifier-512": {
@@ -367,7 +367,7 @@
    "_scope_confidence": "HIGH",
    "_scope_source": "empirical",
    "_flags": [
-    "feeds 4 study threads (§1A)"
+    "feeds 4 study threads (\u00a71A)"
    ]
   },
   "h12-v2": {
@@ -392,7 +392,7 @@
     "Era 3"
    ],
    "_scope_confidence": "HIGH",
-   "_scope_source": "canonical(§6)+leakage: hard cases mined from pool_160 (studies/h12-v2-ratio.yaml:104; E52)",
+   "_scope_source": "canonical(\u00a76)+leakage: hard cases mined from pool_160 (studies/h12-v2-ratio.yaml:104; E52)",
    "_flags": [
     "nominal 327 (leakage); 487 evals = comparability siblings -> condition scope_override; r2-balanced reuses h10 pool"
    ]
@@ -419,7 +419,7 @@
     "Era 3"
    ],
    "_scope_confidence": "HIGH",
-   "_scope_source": "canonical(§6)+leakage: hard cases mined from pool_160 (studies/h8-v2-library.yaml:93; E51)",
+   "_scope_source": "canonical(\u00a76)+leakage: hard cases mined from pool_160 (studies/h8-v2-library.yaml:93; E51)",
    "_flags": [
     "nominal 327 (leakage); 487 evals = comparability siblings -> condition scope_override"
    ]
@@ -467,7 +467,7 @@
     "Era 1"
    ],
    "_scope_confidence": "HIGH",
-   "_scope_source": "empirical (§8.1: H7 retest K=3 x 340)",
+   "_scope_source": "empirical (\u00a78.1: H7 retest K=3 x 340)",
    "_flags": [
     "5 cross-scope evals on 487 -> condition scope_override"
    ]
@@ -561,7 +561,7 @@
     "Era 1"
    ],
    "_scope_confidence": "HIGH",
-   "_scope_source": "canonical(§6)+empirical: results/retest/phase3a-consensus/, bounds 340",
+   "_scope_source": "canonical(\u00a76)+empirical: results/retest/phase3a-consensus/, bounds 340",
    "_flags": []
   },
   "retest-phase3a-high": {
@@ -584,7 +584,7 @@
     "Era 1"
    ],
    "_scope_confidence": "HIGH",
-   "_scope_source": "canonical(§6)+empirical: Era 1 leaderboard rows, bounds 340",
+   "_scope_source": "canonical(\u00a76)+empirical: Era 1 leaderboard rows, bounds 340",
    "_flags": [
     "HIGH thinking variant"
    ]
@@ -609,7 +609,7 @@
     "Era 1"
    ],
    "_scope_confidence": "HIGH",
-   "_scope_source": "canonical(§6)+empirical: results/retest/phase3a-consensus/replication/, bounds 340",
+   "_scope_source": "canonical(\u00a76)+empirical: results/retest/phase3a-consensus/replication/, bounds 340",
    "_flags": [
     "replication variant"
    ]
@@ -634,7 +634,7 @@
     "Era 1"
    ],
    "_scope_confidence": "HIGH",
-   "_scope_source": "canonical(§6)+empirical: results/phase3c-diversity/, bounds 340",
+   "_scope_source": "canonical(\u00a76)+empirical: results/phase3c-diversity/, bounds 340",
    "_flags": []
   },
   "retest-h11-single-pass-384-t0": {
@@ -702,13 +702,13 @@
     "n_calibration_tiles": null
    },
    "headline_condition_id": null,
-   "headline_rationale": "Deliberately none — NO new champion. The carry-forward headline pv-diag-384::verified-adv-text-consensus-16of30 (0.890) stands: the operational maximum here (verified-384-16of30-t0-3-n5-opmax, 0.8951) is NOT significant over it (paired tile-swap permutation p=0.363, results/verifier-robustness/opmax_vs_headline_permutation.json), so per the cost meta-rule (Obs 357) it is a numerical high only.",
+   "headline_rationale": "Deliberately none \u2014 NO new champion. The carry-forward headline pv-diag-384::verified-adv-text-consensus-16of30 (0.890) stands: the operational maximum here (verified-384-16of30-t0-3-n5-opmax, 0.8951) is NOT significant over it (paired tile-swap permutation p=0.363, results/verifier-robustness/opmax_vs_headline_permutation.json), so per the cost meta-rule (Obs 357) it is a numerical high only.",
    "historical_aliases": [],
    "_scope_confidence": "HIGH",
    "_scope_source": "scripts in repo: 384 cells score against bounds/384/full_evaluation_bounds.geojson (era-2-487); the two 256 cells carry scope_override px256-1032",
    "_flags": [
     "mixed tile-size run: 6 conditions at 384/487 tiles, 2 at 256/1032 (scope_override)",
-    "verifier-only API run — all proposer pools cross-run (source_run per condition)",
+    "verifier-only API run \u2014 all proposer pools cross-run (source_run per condition)",
     "S110 opmax run initially clobbered robustness_{grid,summary}_T0.3.json; repaired + re-homed to -16of30 names, --out-suffix guard added (commit 7d85b00ef)"
    ]
   },
@@ -730,12 +730,12 @@
     "n_calibration_tiles": null
    },
    "headline_condition_id": null,
-   "headline_rationale": "Deliberately none — a model comparison, not a champion search: Flash 3.5 wins in NO role (bare-proposer numerical tie 0.6196 vs 0.6204; PV proposer -0.0355, p=0.035 targeted tile-swap — the one resolved role gap; verifier -0.012..-0.015, within-noise ties, at 3x the price). The all-Flash-3 production stack stands (findings SS 14; results/flash35-2x2/flash35_permutations.json).",
+   "headline_rationale": "Deliberately none \u2014 a model comparison, not a champion search: Flash 3.5 wins in NO role (bare-proposer numerical tie 0.6196 vs 0.6204; PV proposer -0.0355, p=0.035 targeted tile-swap \u2014 the one resolved role gap; verifier -0.012..-0.015, within-noise ties, at 3x the price). The all-Flash-3 production stack stands (findings SS 14; results/flash35-2x2/flash35_permutations.json).",
    "historical_aliases": [],
    "_scope_confidence": "HIGH",
    "_scope_source": "scripts in repo: all evals score against bounds/384/full_evaluation_bounds.geojson (era-2-487)",
    "_flags": [
-    "verify-once-at-n10: the n=5 cells are method-matched first-5 derivations (results/verifier-robustness/first5of10-validation/) — analysis-internal, not registered (systematically +0.005..+0.011 high vs a true 5-pass merge)",
+    "verify-once-at-n10: the n=5 cells are method-matched first-5 derivations (results/verifier-robustness/first5of10-validation/) \u2014 analysis-internal, not registered (systematically +0.005..+0.011 high vs a true 5-pass merge)",
     "pass 1 lost tiles to transient JSON-parse failures; resume x4 policy enforced a 485/487 floor per pass (outputs/flash35-pv-2x2/tranche-full.log)",
     "the f3prop pool is cross-run (pv-diag-384 text-n10 minimal lineage), re-cropped in-run under min-f3-crops/ (source_run per condition)"
    ]
@@ -758,14 +758,14 @@
     "n_calibration_tiles": null
    },
    "headline_condition_id": null,
-   "headline_rationale": "Single-condition run; the citable cell is verified-5of10-canonical-gt (0.8290 @ 50 m, 5of10/pt0.15): significantly above TM-k3 (+0.0163, p<1e-4) and significantly below TH7-k3 (-0.0134, p=0.0026) — a priced cost/quality trade, not a tie (Obs 364).",
+   "headline_rationale": "Single-condition run; the citable cell is verified-5of10-canonical-gt (0.8290 @ 50 m, 5of10/pt0.15): significantly above TM-k3 (+0.0163, p<1e-4) and significantly below TH7-k3 (-0.0134, p=0.0026) \u2014 a priced cost/quality trade, not a tie (Obs 364).",
    "historical_aliases": [],
    "_scope_confidence": "HIGH",
    "_scope_source": "empirical: proposer ran the 55-map corpus; scored against bounds/384/55maps_evaluation_bounds.geojson (8,541 tiles)",
    "_flags": [
-    "gt_reference is the CANONICAL EXTENDED GT (Track-2, S105: reviewed student GT + 773 per-buffer-gated phantoms) — this run has NO Track-1 reviewed-student-GT scoring",
+    "gt_reference is the CANONICAL EXTENDED GT (Track-2, S105: reviewed student GT + 773 per-buffer-gated phantoms) \u2014 this run has NO Track-1 reviewed-student-GT scoring",
     "only the >=3-of-10 band was cropped/verified (16,482 candidates); sub-3-vote operating points are not reachable from the verified band",
-    "outputs/55maps-text-min-n10-uplift/proposer-all/ is an untracked symlink farm (regenerable merge scaffolding) — deliberate"
+    "outputs/55maps-text-min-n10-uplift/proposer-all/ is an untracked symlink farm (regenerable merge scaffolding) \u2014 deliberate"
    ]
   },
   "grid-2026-08-18": {
@@ -813,6 +813,80 @@
    "_scope_confidence": "HIGH",
    "_scope_source": "empirical",
    "_flags": []
+  },
+  "stride-phaseb-2026-08-25": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "H13"
+   ],
+   "purpose": "Stride programme Phase B (post-hoc, E41-class): four iso-stride geometry cells (512/34.4, 384/33.3, 256/25, 512/62.5) at K=10, one configuration, testing whether geometry is a plateau or a winner and where the interior stride optimum sits. Includes the union-k10 verifications and the winner-ladder exact re-verifications (k1/k3/k5).",
+   "tile_size_px": null,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "grid-common-487",
+    "bounds_path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+   "headline_rationale": "13-cell board point-leader (verified F1@20 0.8982), one statistical tier with the incumbents (plateau-not-winner, Obs 435).",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": [
+    "Tile size varies BETWEEN cells; run-level tile_size_px null by design."
+   ]
+  },
+  "stride-phasec-2026-08-25": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "H13"
+   ],
+   "purpose": "Stride programme Phase C: the 384/62.5% rung-144 cell at K=10 \u2014 the densest-overlap 384 px point, completing the stride ladder.",
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "grid-common-487",
+    "bounds_path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": "stride-phasec-2026-08-25::g384-ov240-k10-verified-p0.15-k10",
+   "headline_rationale": "The cell's verified best point (F1@20 0.8860).",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "stride-55map-2026-08-25": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "H13"
+   ],
+   "purpose": "55-map deployment portfolio (card planning/55map-portfolio-2026-08-25.md, predictions P1-P8 registered by commit): Runs A (384/33.3%, stride 256) and B (384/50%, stride 192) at K=10 with the carry-forward verifier over the full unions \u2014 the calibrate-on-GS-then-deploy transfer measurement.",
+   "tile_size_px": 384,
+   "corpus": "55-map",
+   "gt_reference": "combined",
+   "scope": {
+    "test_set_id": "55maps-8541",
+    "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "n_test_tiles": 8541,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": "stride-55map-2026-08-25::g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt",
+   "headline_rationale": "Run B's carried PRIMARY (corrected-F1@50 0.8422) \u2014 the committed deployment claim; B > A BH-robust (final-board Pass 2 registers the standardised cells).",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": [
+    "Proposer tilings are overlapping custom grids; evaluation is on the standard 8,541-tile frame.",
+    "gt_reference 'combined' = the canonical adjudicated extended GT (student + reviewer-promoted phantoms), the schema's combined class."
+   ]
   }
  }
 }

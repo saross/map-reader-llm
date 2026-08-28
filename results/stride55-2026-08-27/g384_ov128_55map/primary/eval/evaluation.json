@@ -1,0 +1,59 @@
+{
+ "summary": {
+  "buffers": [
+   {
+    "buffer_metres": 20,
+    "f1": 0.6689079275566642,
+    "precision": 0.6891620111731843,
+    "recall": 0.649810366624526,
+    "f1_ci_lower": 0.6548687047114692,
+    "f1_ci_upper": 0.6825123862206924,
+    "f1_ci_method": "percentile",
+    "ci_unreliable": false,
+    "ci_excludes_point": false,
+    "ci_flag_basis": "measured-exclusion-only"
+   },
+   {
+    "buffer_metres": 30,
+    "f1": 0.7882008458952392,
+    "precision": 0.8120670391061453,
+    "recall": 0.7656974294142436,
+    "f1_ci_lower": 0.7773207162647457,
+    "f1_ci_upper": 0.7989155911208922,
+    "f1_ci_method": "percentile",
+    "ci_unreliable": false,
+    "ci_excludes_point": false,
+    "ci_flag_basis": "measured-exclusion-only"
+   },
+   {
+    "buffer_metres": 50,
+    "f1": 0.8325895173845355,
+    "precision": 0.8963128491620111,
+    "recall": 0.7773255813953488,
+    "f1_ci_lower": 0.8235543294740573,
+    "f1_ci_upper": 0.8414307294287805,
+    "f1_ci_method": "percentile",
+    "ci_unreliable": false,
+    "ci_excludes_point": false,
+    "ci_flag_basis": "measured-exclusion-only"
+   }
+  ],
+  "tile_classification": {
+   "mcc": 0.6934407564418507,
+   "sensitivity": 0.6799091940976163,
+   "specificity": 0.965915885987642,
+   "confusion": {
+    "tp": 2396,
+    "tn": 4846,
+    "fp": 171,
+    "fn": 1128
+   }
+  },
+  "n_detections": 4475
+ },
+ "_metadata": {
+  "adapted_by": "scripts/register_pass1_adapt.py",
+  "source": "results/stride55-2026-08-27/g384_ov128_55map/primary/eval/summary.json",
+  "note": "Deterministic transform of the corrected-F1 engine summary (S105 adapter pattern); tile_classification pinned to the 50 m headline row; nothing recomputed."
+ }
+}
