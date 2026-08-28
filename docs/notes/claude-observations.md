@@ -1901,3 +1901,44 @@ monitor against a log that an in-flight process may still replace;
 and treat any compound `a && b && c` over ssh as a smell to refactor
 before running, not after debugging.
 
+
+## claude-obs 79 — 2026-08-29 (Session 143): the follow-up question is his sharpest instrument
+
+**Pattern.** Four times this session a short Shawn question reshaped
+an artefact I had considered finished: "remind me what sweep-interior
+points are" (produced the promotion-on-citation ruling), "why is
+text-min so much cheaper" (exposed the estimator's cached-token
+blindness and yielded the lean-cost column), "which library did we
+use?" (surfaced the plateau evidence that de-risked the whole image
+design), and "what is the correct use of k, n, x?" (became the
+canonical notation key). None was a correction; each was a request to
+re-derive something I was carrying as settled.
+
+**Lesson.** His questions are audits of my load-bearing assumptions,
+and the artefact that answers one is usually worth committing — the
+answer to a good question is documentation the paper needed anyway.
+
+**How to apply.** When a follow-up question takes more than a
+paragraph to answer well, assume the answer belongs in the repo, not
+just the chat, and say where it will live while answering.
+
+## claude-obs 80 — 2026-08-29 (Session 143): self-critique — I briefed the PI from a cache and his ruling inherited my error
+
+**Pattern.** I told Shawn H9-B/C/E were never run, sourcing the
+hand-maintained ledger plus a documented audit finding; he ruled
+disclose-only on that premise; a delegated agent then refused the
+resulting commission because the artefacts contradicted it. My own
+anti-confabulation rule ("re-read the source") was satisfied in
+letter — I *had* re-read a source — but the source was a cache whose
+own audit trail was circular.
+
+**Lesson.** Re-reading a document only discharges the verification
+duty if the document is ground truth for the claim. For execution
+claims, ground truth is the artefact tree, and a status ledger is
+never it. The agent caught this because its brief said "verify every
+row at source"; I had not applied that standard to my own briefing.
+
+**How to apply.** Before presenting any "X was never done" claim to
+Shawn, glob for X's artefacts first — the enumeration is cheaper than
+the correction cycle, and this session proved the correction cycle
+reaches all the way into his rulings and the paper draft.

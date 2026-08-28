@@ -9018,3 +9018,48 @@ decisions (D-1..D-5); the symbol-family framing adopted.
 - The standing PI queue (D24 brief, user-obs verdicts, Gould → D.9,
   Obs 433–436 review) remained open throughout.
 
+
+## Session 143 — 2026-08-27/29 (amd-tower + sapphire; ~US$100 API audited-flex; Fable 5)
+
+One continuous conversation spanning three calendar days. Factual
+record; interpretation lives in session-reflection and llm-obs.
+
+**Analyses landed ($0 unless noted):** stride55 sweep-oracle + N-ladder
++ A5-vs-B5 (transfer taxes +0.0036/+0.0081 vs incumbent +0.0324; P6
+informative failure, B > A BH-robust; `results/stride55-2026-08-27/`);
+the FINAL 23-cell 55-map board (standardised reference, GS tile-swap
+chain, CLD groups, costs, $/mound; emergent N=3 carried cells
+PI-directed; IM as-shipped ruling; `results/55map-final-board-
+2026-08-27/`); sensitivity/MDE appendix (GS MDE80 ≈ 0.065,
+verified-set 0.024, 55-map 0.013; H8 TOST Δ = 0.07;
+`results/sensitivity-mde-2026-08-28/`).
+
+**API campaigns:** image-on-B GS pair — MINIMAL (~$25) and HIGH
+(~$65): text > image +0.0549 @20 m p = 0.001 with MCC parity;
+HIGH ≈ MIN at verified best (−0.0079 ns) at 2.91× cost
+(`results/image-b-gs-2026-08-28/`). H7 escalation discharged at the
+letter (T=1.6 + T=2.0 ×3, $1.37; degraded plateau ≈ 0.47). Gemini 3.7
+Flash K=5 screen (~$7.4 incl. congestion probes): verified best
+0.9139 @20 m at (0.10, k5) — above the Gemini 3 plateau,
+GS-unresolvable (p = 0.17); union 791, 59 % unanimous
+(`results/gemini37-screen-2026-08-28/`). PI approved escalation
+(passes 6–10, verifier swap, 55-map plan) for next-session launch.
+
+**Compliance:** agent audit falsified D17-U12 (H9 ran twice, REJECTED;
+paper sentence corrected; PI ruling lapsed); hypothesis ledger
+regenerated with per-row anchors; both conditional triggers verified,
+H7's discharged. **Registration:** three PI-signed passes → registry
+38 runs / 374 conditions / 1,250 passes / 49 analyses, ALL VALID.
+**Docs:** findings for stride55, image campaign; notation key
+(canonical, `docs/methodology/notation-key.md`); benchmark prior-art
+note; uplift-supplement card (queued); gemini37 card with escalation.
+**Obs:** 437–440 (obs-writer). **User-obs:** S140+S142 candidates
+cleared (5 kept, 1 dropped). **Venue tooling:** Quarto decided.
+
+**Contextual assumptions:** the 3.7 screen ran during the model's
+launch-week congestion — six probe cycles failed on 503s before the
+gate passed; per-pass latencies (~11.5 s/call) are not steady-state.
+The HIGH-image "~$37" interim estimate was corrected to $59 audited
+(probe under-sampled thinking volume); the runner's live estimator
+over-records cached runs ~3.3× — billing console reconciliation
+pending (~$430 S142–143 combined expected).

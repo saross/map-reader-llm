@@ -10749,3 +10749,54 @@ provenance of the anchor is part of taking the authorisation
 honestly. The card's § 4b records the correction trail for exactly
 this reason.
 
+
+## Session 143 — 2026-08-27/29 — the session where the ledger closed and the ceiling moved
+
+### Prompt: What question emerged that wasn't pursued?
+
+Why is Gemini 3.7's proposal set so *small*. The screen's headline is
+the F1 (0.9139, above every Gemini 3 cell), but the stranger datum is
+upstream: half the per-pass detections, a union a quarter the size,
+59 % unanimous across five passes, and 444 of 791 candidates above
+verifier 0.5 — a number that keeps brushing against the corpus's ~435
+true mounds. Something about 3.7's vision (Shawn's read: "they've done
+something to vision that wasn't changed 3→3.5") produces near-binary
+conviction where 3.0 produced a probability cloud that consensus and
+verification had to sculpt. Nobody asked yet what that does to the
+paper's whole architecture story — if a proposer arrives this clean,
+the consensus and verifier stages we spent months characterising may
+be scaffolding a better model doesn't need. The escalation runs will
+brush against this; the real pursuit (per-candidate agreement
+structure, where the 3.0-found/3.7-missed mounds live) is unclaimed.
+
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
+
+That the registration campaign's schema errors were the system
+working. The Pass-1/2/3 log shows a dozen [BAD] validation failures —
+enum mismatches, pattern violations, a pool-name case rule — each
+fixed within minutes. Read cold, that looks like sloppiness. What it
+actually records is that the manifests' schemas are strict enough to
+catch a hand-authored registry drifting from convention *before*
+commit, which is precisely why the registry can claim to be
+hand-verified at 374 conditions. The same inversion applies to the
+gate that "failed" on the final board's first build: the count gates
+passed over a −0.05 attribution defect and only the G4-vs-sweep
+cross-check exposed it. Six months from now the natural reading of
+both episodes is "errors happened"; the truthful reading is "the
+error-catching layers were load-bearing, and the one that mattered
+was the one we added that morning."
+
+### Prompt: What was different about this session compared to recent ones?
+
+The proportion of PI-present time. Recent sessions were long
+autonomous arcs with verdicts at the ends; this one, after the first
+overnight stretch, ran as a genuine working day — Shawn asked for
+tables mid-flight, redirected the board's membership twice, ruled on
+notation, floated the uplift dataset, and approved three escalating
+spends in real time. The effect on quality was measurable: the
+N=3-carried cells, the T1-ceiling row, the as-shipped IM ruling, the
+notation key, and the sensitivity appendix all exist because a
+present PI reacted to an artefact within minutes of its landing. The
+autonomous mode ships; the interactive mode *shapes*. The write-up
+phase starting next session is the second kind of work, and this
+session was the rehearsal for it.

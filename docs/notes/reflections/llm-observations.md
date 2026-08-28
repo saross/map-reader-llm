@@ -7720,3 +7720,44 @@ storm, and spend ceilings agreed *before* the degradation so no
 mid-storm judgement call (switch to standard tier at 2× price?) was
 ever needed — the authorised answer already existed and was "no".
 
+
+## Session 143 — 2026-08-27/29 (the verifier absorbs the thinking dividend in both modalities; a model generation can move the ceiling without moving the protocol; verification sharpens an instrument 2.6×; launch-week endpoints fail loudly then heal)
+
+**The verifier absorbs the thinking dividend — now modality-general.**
+The matched MINIMAL-vs-HIGH image pair (one CLI flag) reproduced the
+S111/Obs 359 text finding exactly: HIGH thinking bought +126 % union
+candidates (6,751 singletons vs 1,938 — pre-verifier diversity) and
+then −0.0079 ns at the verified best, at 2.91× proposer cost. Under a
+proposer-verifier architecture, thinking is an expensive way to
+generate candidates the verifier would have licensed anyway. Both
+modalities, both directions of the diversity story, one mechanism.
+
+**A model generation moved the ceiling without touching the
+protocol.** Gemini 3.7 Flash at its *lowest* thinking level, run
+through the identical config/tiling/verifier at K=5, produced a
+verified best (0.9139 @20 m) above every Gemini 3 cell on the corpus
+— on a union one quarter the size with 59 % five-of-five unanimity
+and recall 0.9299. The uplift is upstream of everything we optimise:
+cleaner proposals, near-binary cross-pass agreement. Caveat recorded:
+GS-unresolvable (+0.0178, p = 0.17, at the instrument's MDE50); the
+3.5 precedent (regression at higher cost) shows family direction is
+not monotone, which is exactly why the screen was probe-gated.
+
+**Verification sharpens the measurement instrument ~2.6×.** Harvesting
+committed permutation nulls showed verified-set comparisons carry
+σ ≈ 0.0087 against raw consensus boards' ≈ 0.023 on the same corpus —
+the verifier strips the high-variance FP load from the *statistics*,
+not just the detections. Consequence: modality-scale effects resolve
+on four sheets (text-vs-image at p = 0.001) while same-sized contrasts
+between unverified cells sit at the detection threshold.
+
+**Launch-week endpoints fail loudly, then heal, and per-call retry
+budgets are the wrong shape for it.** 3.7's first hours returned
+sustained 503s (six probe cycles, 0/5 → 1/5); nine hours later the
+same endpoint ran 6,990 calls at 99.4–100 % per-pass completion. The
+self-gating driver (probe gate + spaced retries + spend ceiling)
+converted "temporarily impossible" into "done by morning for $7.4"
+without a human awake. The runner's 15-per-tile retry budget both
+saved the passes (24 residual failures across 6,990) and burned hours
+crawling — a global backoff-and-resume layer above per-call retries
+remains the missing primitive.

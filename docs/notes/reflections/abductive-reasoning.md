@@ -7690,3 +7690,100 @@ two-occupant column would cost. Here it cost ~$30 and one night, and
 it reversed the headline's mechanism while improving its deployment
 advice.
 
+
+## 2026-08-28 (Session 143, map-reader-llm): The count gates that passed over a −0.05 defect
+
+**Session:** 48517f09-4430-41ae-b4d0-ac1e7b03c491
+**Instance:** primary
+
+### Surprising fact
+
+The final-board sweep scored TH7's committed operating point at
+micro-F1 0.7885 while gate G4, minutes earlier in the same run,
+had scored the committed file of the *same cell* at 0.8387 — a −0.05
+discrepancy between two readings of what should be one number. Every
+count-based gate (union sizes, exact detection counts at the
+committed points) had passed.
+
+### Probe
+
+Geometry identity first: NN distance between the reconstruction and
+the committed file — max 0.00 m, so the points were identical and the
+defect had to live in the scoring path. Index-reset test: no change.
+Column diff exposed the lever: the committed files carried their
+build-time origin `source_tile`, while my loader had dropped the
+column, letting a spatial re-join assign tiles. Direct label diff on
+identical points: 305/4,786 detections (6.4 %) relabelled to the
+neighbouring map sheet — border detections whose origin tile belongs
+to map X but whose coordinates fall inside map Y's polygon. Per-map
+Hungarian matching then breaks each mislabelled pair into FP + FN.
+
+### Belief revision
+
+Before: exact-count gates at committed operating points certify a
+reconstruction. After: counts certify *membership*, not *scoring
+semantics* — attribution columns are part of the mechanism, and a
+gate family is only complete when it includes an exact
+integer-(TP,FP,FN) mechanism-equality check against the committed
+chain. The fix (carry origin attribution; add mechanism gates ×5 and
+geometry gates ×2) made the failure class unrepeatable, and those
+gates then ran green through three more board rebuilds.
+
+### Implications for practice
+
+Per-map/per-tile evaluation systems have a silent seam wherever a
+detection's *attribution* is recomputable by more than one rule.
+Any loader that reconstructs committed cells must inherit the
+committed attribution, never re-derive it — and the gate that
+enforces this is cheap (one triple comparison per family).
+
+## 2026-08-28 (Session 143, map-reader-llm): The ledger said "never run"; the artefacts said "twice"
+
+**Session:** 48517f09-4430-41ae-b4d0-ac1e7b03c491
+**Instance:** primary
+
+### Surprising fact
+
+A scoped compliance agent, commissioned to write a disclose-only
+erratum for "never-executed" H9-B/C/E, refused the commission: the
+conditions had been executed — twice (60-tile pilot, then the
+340-tile Era-1 retest; 225 metas on disk; erratum E63 already
+recorded it). The ledger row, a D17 audit finding (U12) ratifying it,
+my Pass-context briefing to the PI, the PI's ruling, and a sentence
+in the paper draft were all downstream of a claim the filesystem
+contradicted.
+
+### Probe
+
+Trace the error's genealogy: U12 had audited hypothesis-tracking.md
+*against its own text*, not against artefacts — while a sibling D17
+document dated one day earlier had already caught the truth and
+written "Believe the artefacts". The correction had existed in the
+corpus for a month without propagating; the false claim propagated
+instead, because the ledger is what gets read.
+
+### Belief revision
+
+Before: a hand-maintained status ledger corrected by a documented
+audit is trustworthy enough to brief a PI from. After: ledgers are
+caches, audits of ledgers against ledgers are no-ops, and the only
+grounding operation is artefact enumeration — which is also *cheaper*
+than it feels (the agent verified all fifteen hypothesis rows at
+source in one pass). The PI's ruling was recorded-not-applied and
+lapsed on corrected facts; the paper sentence was fixed same-day.
+
+### What would change this belief
+
+A demonstrated case where artefact enumeration itself misleads — e.g.
+outputs present on disk from a run whose configs silently diverged
+from the registered design, making "artefacts exist" the false
+positive. (The config-snapshot metas make this checkable, which is
+why the belief currently holds.)
+
+### Implications for practice
+
+The audit instruction that mattered was one sentence: "Do not trust
+the current file; verify every row at source." Grounding instructions
+to delegated auditors should name the artefact layer explicitly, and
+any finding that ratifies an existing document without leaving the
+document is not an audit.
