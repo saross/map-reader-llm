@@ -122,7 +122,8 @@ T=1.3 counterpart, inside the predicted 0.50–0.54… in fact below it
 (0.452–0.488) — the decline continued and steepened.
 **Secondary prediction WRONG, informatively**: the T=1.6 differences
 were predicted non-significant on the adjacent-pair pattern; five of
-six escalation comparisons are significant (p = 0.0002–0.0085 band) —
+six escalation comparisons are significant (p = 0.0002–0.0064; the
+sixth, T=1.6 run 2, is 0.0846 ns) —
 the curve separates from T=1.3 at 1.6 in a way no earlier adjacent
 pair did. **Tertiary CONFIRMED**: precision falls faster than recall
 (P 0.429 → ~0.35, R 0.75 → ~0.71).

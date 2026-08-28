@@ -183,8 +183,17 @@ PAPER_ROWS = [
     ("T0.7 (HIGH, K = 5)", "TH7-k4", "TH7-oracle"),
     ("min-uplift (K = 10)", None, "UPL-oracle"),
     ("text-min (K = 5)", "TM-k4", "TM-oracle"),
-    ("image (HIGH, K = 5)", "IM-k4", "IM-oracle"),
+    # PI ruling 2026-08-28: image's real-world column shows the cell the
+    # run actually shipped (k3); for image the shipped point coincides
+    # with the standardised-reference argmax, so carried and oracle are
+    # the same cell. IM-k4 (E82) stays as the comparability derivation.
+    ("image (HIGH, K = 5) — as shipped (k3)", "IM-oracle", "IM-oracle"),
+    ("image comparability (k4, E82)", "IM-k4", None),
 ]
+DISPLAY_BASIS = {
+    "image (HIGH, K = 5) — as shipped (k3)": "as-shipped (k3)",
+    "image comparability (k4, E82)": "comparability (k4)",
+}
 
 
 def eval50(eval_path: Path) -> dict:
@@ -467,6 +476,14 @@ def main() -> int:
         opoint = by_label[oracle]["point"] if oracle else "—"
         lines.append(f"| {row_name} | {fmt(carried)} | {fmt(oracle)} | "
                      f"{opoint} |")
+    lines += [
+        "",
+        "PI ruling 2026-08-28 on the image rows: the real-world column",
+        "shows the cell the image run actually SHIPPED (k3 — which for",
+        "image coincides with the standardised-reference argmax, so its",
+        "carried and oracle entries are the same cell); IM-k4 remains on",
+        "the board as E82's like-for-like comparability derivation.",
+    ]
     # ---- Cost-efficiency table: one row per run, deployment basis. ----
     eff_rows = []
     for row_name, carried, oracle in PAPER_ROWS:
@@ -476,7 +493,8 @@ def main() -> int:
         tp = round(c["precision_50"] * c["n_detections"])
         eff_rows.append({
             "name": row_name, "label": lbl,
-            "basis": c["basis"], "cost": cost, "f1": c["f1_50"],
+            "basis": DISPLAY_BASIS.get(row_name, c["basis"]),
+            "cost": cost, "f1": c["f1_50"],
             "tier": tier_of[lbl], "tp": tp,
             "usd_per_mound": cost / tp})
     eff_rows.sort(key=lambda r: r["cost"])
@@ -576,6 +594,13 @@ def main() -> int:
         "  point was ever registered there).",
         "",
         "## Changelog",
+        "",
+        "### 2026-08-28 (later) — Image rows per the as-shipped ruling",
+        "",
+        "PI ruling: image's real-world entry is the shipped k3 cell;",
+        "IM-k4 relabelled as the E82 comparability derivation. Board",
+        "membership, tiers, and all cell values unchanged — run-table",
+        "and efficiency-table presentation only.",
         "",
         "### 2026-08-28 — Emergent N = 3 carried cells + T1 ceiling row",
         "",

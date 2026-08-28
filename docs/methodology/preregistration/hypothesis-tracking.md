@@ -557,7 +557,8 @@ each on the Era-1 340-tile frame against the same-replicate T=1.3 runs
 (replication gate: the committed T1.0-vs-T1.3 check reproduced exactly
 first). Result: the decline continues and steepens — T=1.6 F1
 0.452–0.488, T=2.0 F1 0.471–0.477, five of six comparisons
-significantly below T=1.3 (p = 0.0002–0.085) — a degraded plateau
+significantly below T=1.3 (p = 0.0002–0.0064; the sixth 0.0846 ns) —
+a degraded plateau
 ≈ 0.47 with no benefit above the vendor default. Full outcome:
 `planning/run-predictions/h7-escalation-t1.6.md` § Outcome; artefacts
 `outputs/h7-escalation-2026-08-28/`,

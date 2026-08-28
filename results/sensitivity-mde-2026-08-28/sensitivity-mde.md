@@ -20,7 +20,7 @@ record of each instrument (`sensitivity.json` for provenance).
 |---|---:|---:|---:|---:|---:|
 | GS tile-swap, H8 v2 consensus (327, 20 m) | 327 | 7 | 0.0232 | 0.045 | **0.065** |
 | GS tile-swap, Era-1 board (340, 20 m) | 340 | 3,321 | 0.0226 | 0.044 | **0.063** |
-| GS tile-swap, verified sets on the common footprint (20 m) | 340 | 3 | 0.0087 | 0.017 | **0.024** |
+| GS tile-swap, verified sets on the common footprint (20 m) | 487 | 3 | 0.0087 | 0.017 | **0.024** |
 | 55-map tile-swap, final board (8,541, 50 m) | 8,541 | 253 | 0.0046 | 0.009 | **0.013** |
 
 Three structural readings:
