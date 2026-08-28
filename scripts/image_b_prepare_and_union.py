@@ -50,7 +50,6 @@ from scripts.stride_prepare_and_union import (  # noqa: E402
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-CELL = "g384_ov192_image"
 ROOT = PROJECT_ROOT / "outputs/image-b-gs-2026-08-28"
 MANIFEST = PROJECT_ROOT / "inputs/grid-2026-08-18/grid_384_ov192_manifest.json"
 VF_CALL_USD = 0.000687
@@ -59,7 +58,11 @@ VF_CALL_USD = 0.000687
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--write", action="store_true")
+    ap.add_argument("--cell", default="g384_ov192_image",
+                    help="Cell directory under the output root "
+                         "(g384_ov192_image or g384_ov192_image_high).")
     args = ap.parse_args()
+    CELL = args.cell  # noqa: N806 — keeps the original constant name in situ
 
     common_gdf = gpd.read_file(COMMON_BOUNDS)
     common_tiles = sorted(common_gdf["tile_name"].tolist())

@@ -71,7 +71,7 @@ from scripts.stride_verifier_analysis import (  # noqa: E402
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-CELL = "g384_ov192_image"
+CELL = "g384_ov192_image"  # overridden by --cell
 VROOT = PROJECT_ROOT / "outputs/image-b-gs-2026-08-28/verifier" / CELL
 SCORING = PROJECT_ROOT / "outputs/image-b-gs-2026-08-28/scoring"
 ANCHOR_DIR = (PROJECT_ROOT
@@ -85,11 +85,12 @@ N_PERMS = 10_000
 SEED = 42
 
 
-def load_image_union() -> gpd.GeoDataFrame:
+def load_image_union(vroot: Path = None) -> gpd.GeoDataFrame:
     """The image union joined to its probabilities, join-gated."""
-    gdf = gpd.read_file(VROOT / "union_k10.geojson").to_crs(CRS)
+    vroot = VROOT if vroot is None else vroot
+    gdf = gpd.read_file(vroot / "union_k10.geojson").to_crs(CRS)
     results = json.loads(
-        (VROOT / "verify/probabilities.json").read_text())["results"]
+        (vroot / "verify/probabilities.json").read_text())["results"]
     if len(results) != len(gdf):
         raise JoinGateError(
             f"{CELL}: {len(results)} probabilities vs {len(gdf)} features")
@@ -117,11 +118,24 @@ def sweep(gdf: gpd.GeoDataFrame, gdf_ref: gpd.GeoDataFrame,
 
 
 def main() -> int:
+    import argparse
+    global CELL, VROOT, OUT
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--cell", default="g384_ov192_image")
+    ap.add_argument("--out-dir", default=None,
+                    help="Results directory (default: the base cell home; "
+                         "pass e.g. results/image-b-gs-2026-08-28/high).")
+    args = ap.parse_args()
+    CELL = args.cell
+    VROOT = PROJECT_ROOT / "outputs/image-b-gs-2026-08-28/verifier" / CELL
+    if args.out_dir:
+        OUT = PROJECT_ROOT / args.out_dir
+
     bounds = gpd.read_file(COMMON_BOUNDS)
     gdf_ref = gpd.read_file(GROUND_TRUTH).to_crs(CRS)
 
     # ---- Image union, gated. ----
-    union = load_image_union()
+    union = load_image_union(VROOT)
     union = reassign_gate(union, bounds, CELL)
     logger.info("%s: union %d joined and reassignment-gated", CELL,
                 len(union))
