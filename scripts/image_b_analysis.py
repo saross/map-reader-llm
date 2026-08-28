@@ -125,6 +125,8 @@ def main() -> int:
     global CELL, VROOT, OUT
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--cell", default="g384_ov192_image")
+    ap.add_argument("--outputs-root", default="outputs/image-b-gs-2026-08-28",
+                    help="Campaign outputs root holding verifier/<cell>/.")
     ap.add_argument("--k", type=int, default=10,
                     help="Campaign pass count (sweep k range; ladder rungs "
                          "restricted to N < k).")
@@ -134,7 +136,7 @@ def main() -> int:
                          "pass e.g. results/image-b-gs-2026-08-28/high).")
     args = ap.parse_args()
     CELL = args.cell
-    VROOT = PROJECT_ROOT / "outputs/image-b-gs-2026-08-28/verifier" / CELL
+    VROOT = PROJECT_ROOT / args.outputs_root / "verifier" / CELL
     if args.out_dir:
         OUT = PROJECT_ROOT / args.out_dir
 
