@@ -59,6 +59,12 @@ different noise floors. Structural safeguards, machine-enforced:
    saturation onset vs per-pass look multiplicity (the Obs 438
    interpretive hypothesis).
 
+## Notation
+
+All symbols and column names conform to the canonical key
+`docs/methodology/notation-key.md` (PI-commissioned 2026-08-29); the
+CSV builder validates its columns against that key's §§ 6-7.
+
 ## Registration
 
 The flattening and pairing are derivations over registered artefacts —
