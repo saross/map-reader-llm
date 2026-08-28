@@ -19,7 +19,9 @@ PY=.venv/bin/python
 CONFIG=prompts/configs/detect_brief-text-image.json
 MANIFEST=inputs/grid-2026-08-18/grid_384_ov192_manifest.json
 TILES=inputs/tiles_384_ov192
-OUTROOT=outputs/image-b-gs-2026-08-28/g384_ov192_image
+OUTROOT=${OUTROOT:-outputs/image-b-gs-2026-08-28/g384_ov192_image}
+# THINKING_ARGS="--thinking-level high" selects the §5a HIGH cell.
+THINKING_ARGS=${THINKING_ARGS:-}
 
 for run in 1 2 3 4 5 6 7 8 9 10; do
   out=$OUTROOT/run_$run
@@ -36,7 +38,7 @@ for run in 1 2 3 4 5 6 7 8 9 10; do
       --mode realtime \
       --service-tier flex \
       --temperature 0.7 \
-      --use-cache \
+      --use-cache $THINKING_ARGS \
       --workers "${WORKERS:-12}"; then
     touch "$out/.done"
     echo "=== run_$run done $(date -Is)"
