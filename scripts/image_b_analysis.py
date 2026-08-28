@@ -88,7 +88,10 @@ SEED = 42
 def load_image_union(vroot: Path = None) -> gpd.GeoDataFrame:
     """The image union joined to its probabilities, join-gated."""
     vroot = VROOT if vroot is None else vroot
-    gdf = gpd.read_file(vroot / "union_k10.geojson").to_crs(CRS)
+    unions = sorted(vroot.glob("union_k*.geojson"))
+    if len(unions) != 1:
+        raise JoinGateError(f"{vroot}: expected one union, found {len(unions)}")
+    gdf = gpd.read_file(unions[0]).to_crs(CRS)
     results = json.loads(
         (vroot / "verify/probabilities.json").read_text())["results"]
     if len(results) != len(gdf):
@@ -122,6 +125,10 @@ def main() -> int:
     global CELL, VROOT, OUT
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--cell", default="g384_ov192_image")
+    ap.add_argument("--k", type=int, default=10,
+                    help="Campaign pass count (sweep k range; ladder rungs "
+                         "restricted to N < k).")
+    ap.add_argument("--no-ladder", action="store_true")
     ap.add_argument("--out-dir", default=None,
                     help="Results directory (default: the base cell home; "
                          "pass e.g. results/image-b-gs-2026-08-28/high).")
@@ -154,7 +161,7 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
 
     # ---- The image sweep at 20 m; best point. ----
-    rows = sweep(union, gdf_ref, bounds, range(1, 11))
+    rows = sweep(union, gdf_ref, bounds, range(1, args.k + 1))
     with (OUT / "sweep_20m.csv").open("w", newline="") as fh:
         w = csvmod.DictWriter(fh, fieldnames=list(rows[0].keys()))
         w.writeheader()
@@ -188,6 +195,20 @@ def main() -> int:
                 head["observed_diff"], head["p_value"])
 
     # ---- First-N ladder (IP5). ----
+    if args.no_ladder:
+        payload = {
+            "cell": CELL, "buffer_primary_m": BUFFER_PRIMARY,
+            "image_best": best,
+            "anchor": {"f1_20": a20["f1"], "registered": ANCHOR_F1_20,
+                       "n": int(len(anchor))},
+            "buffer_curves": curves,
+            "head_to_head_20m": head,
+        }
+        (OUT / "analysis.json").write_text(
+            json.dumps(payload, indent=2, default=float) + "\n")
+        logger.info("ANALYSIS COMPLETE (no ladder) -> %s",
+                    (OUT / "analysis.json").relative_to(PROJECT_ROOT))
+        return 0
     passes = load_cell_passes(SCORING, CELL)
     tree = cKDTree(np.c_[union.geometry.x, union.geometry.y])
     probs10 = union["mound_probability"].to_numpy()
