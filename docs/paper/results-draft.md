@@ -212,12 +212,14 @@ single-pass is preregistered H3, confirmed; the thinking-level diversity
 claim is a post-registration discovery, the registration having fixed
 thinking at MINIMAL (§8.9) — D17 audit U5; replication +0.067 F1,
 +0.234 MCC). Deliberately engineered diversity, however, adds nothing on
-the one registered mechanism actually tested: H9's temperature-diversity
-arm (H9-D, exercised incidentally via Phase 3c cross-variant pooling)
-found no significant gain over a same-variant baseline pool (all p > 0.37
-image, > 0.06 text; registered H9-B/C/E — text and image diversity — were
-never run, D17 audit U12) — temperature sampling already supplies what engineering was
-supposed to add. Strict unanimity hurts; permissive-to-mid thresholds win.
+any registered mechanism: all five H9 conditions — baseline A and the
+engineered text-, image-, and temperature-diversity variants B–E — were
+executed (Phase 3c dual-track, run twice: 60-tile pilot then the
+340-tile Era-1 retest; erratum E63), and none shows a significant gain
+over the same-variant baseline pool (largest ΔF1 +0.014, p = 0.63; all
+p > 0.37 image, > 0.06 text; the S143 artefact audit corrected the
+earlier D17 U12 claim that H9-B/C/E were never run) — temperature
+sampling already supplies what engineering was supposed to add. Strict unanimity hurts; permissive-to-mid thresholds win.
 The consensus-era reading of these results — buy diversity with HIGH
 thinking — is revised, but not contradicted, by the verifier results in
 § R5: the dividend is real for consensus-*only* architectures and obsolete
