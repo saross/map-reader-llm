@@ -1,0 +1,134 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-08-28T12:01:21.142973+00:00",
+  "summary": {
+    "label": "detections",
+    "n_detections": 411,
+    "buffers": [
+      {
+        "buffer_metres": 20,
+        "f1": 0.8677,
+        "f1_point": 0.8677,
+        "f1_ci_lower": 0.8369,
+        "f1_ci_upper": 0.8953,
+        "f1_ci_method": "BCa",
+        "precision": 0.8856,
+        "p_point": 0.8856,
+        "p_ci_lower": 0.851,
+        "p_ci_upper": 0.9158,
+        "p_ci_method": "BCa",
+        "recall": 0.8505,
+        "r_point": 0.8505,
+        "r_ci_lower": 0.8066,
+        "r_ci_upper": 0.8883,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 279,
+          "zero_fraction": 0.5728952772073922,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid",
+          "coverage_source": "zero_fraction_heuristic",
+          "n_processed_tiles": null,
+          "n_unprocessed_tiles": null,
+          "coverage_detail": null
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": false,
+        "ci_excludes_point": false,
+        "sparse_coverage": true,
+        "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+      }
+    ],
+    "ci_unreliable_any_buffer": false,
+    "coverage_status": "sparse_cross_grid",
+    "tile_classification": {
+      "confusion": {
+        "tp": 184,
+        "tn": 251,
+        "fp": 11,
+        "fn": 41
+      },
+      "mcc": {
+        "point": 0.7894,
+        "mean": 0.7894,
+        "ci_lower": 0.7316,
+        "ci_upper": 0.8382,
+        "method": "BCa"
+      },
+      "sensitivity": {
+        "point": 0.8178,
+        "mean": 0.8176,
+        "ci_lower": 0.7633,
+        "ci_upper": 0.8649,
+        "method": "BCa"
+      },
+      "specificity": {
+        "point": 0.958,
+        "mean": 0.9582,
+        "ci_lower": 0.9265,
+        "ci_upper": 0.9773,
+        "method": "BCa"
+      }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.3",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "cc6ede6df",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-08-28T12:01:18.949705+00:00",
+    "cli_args": {
+      "detections": [
+        "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/detections.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": null,
+      "buffers": [
+        20
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/eval",
+      "label": null,
+      "mcc": true,
+      "require_clean_inputs": false,
+      "workers": 1
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level",
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
+      "method": "BCa",
+      "methods_measured": [
+        "BCa"
+      ]
+    },
+    "input_files": {
+      "detections": [
+        "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/detections.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+    },
+    "input_git_state": {
+      "head": "cc6ede6df",
+      "inputs": {
+        "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/detections.geojson": "untracked",
+        "inputs/vectors/references/mounds-reference.geojson": "clean",
+        "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "clean"
+      }
+    },
+    "spatial": {
+      "evaluation_crs": "EPSG:32635",
+      "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
+      "geojson_storage_crs": "EPSG:4326",
+      "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
+    }
+  }
+}
