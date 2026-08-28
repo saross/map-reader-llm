@@ -50,6 +50,11 @@ project state.
 > contract; observed-practice medians: abstract 237, figs 9, refs 63).
 > **PI standing list**: D24 BRIEF (STANDING); Gould → D.9; Obs 433–440 review; billing
 > glance (~$338 S142 + ~$92 S143 image/H7 ≈ $430 expected).
+> Carry-forwards: archive-drift gate (1 raw session -> bulk-archive.py,
+> from S143 session start, still pending); draft the Gemini 3.7 Obs
+> AFTER the escalation lands (screen + K=10 together make one Obs);
+> S143 reflections/claude-obs 79-80 written; user-obs S143 candidates
+> pending in user-observations.md.
 > Riders: sapphire regenerable tile trees await cleanup; HIGH-image
 > estimator over-records ~3.3× in metas (audited basis in card).
 
