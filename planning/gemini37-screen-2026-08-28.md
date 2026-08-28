@@ -77,11 +77,10 @@ working into the paper one way or another."
 **Approved next steps (launch detached on sapphire at next session
 start, background to the write-up):**
 
-1. **Passes 6–10** (+~$6.5): OUTROOT=outputs/gemini37-screen-2026-08-28
-   THINKING_ARGS="--thinking-level high"→NO — same MODEL_ARGS as the
-   K=5 run (`--model gemini-3.7-flash --thinking-level low`), runs
-   6–10 via the parameterised driver loop; then rebuild the union at
-   K=10, re-verify the increment, full sweep + ladders.
+1. **Passes 6–10** (+~$6.5): the SAME invocation as the K=5 run
+   (`--model gemini-3.7-flash --thinking-level low`, T=0.7, flex,
+   cell g384_ov192_g37), runs 6–10 via the driver loop; then rebuild
+   the union at K=10, verify the increment, full sweep + ladders.
 2. **Verifier-role swap** (~$0.5–1): re-verify the K=5 union with
    `--model gemini-3.7-flash` on the verifier config (3.7 as
    verifier over its own and/or the text-B proposals — the S113
