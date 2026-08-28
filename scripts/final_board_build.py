@@ -173,11 +173,11 @@ def compact_letters(ordered_labels: list[str],
 PAPER_ROWS = [
     ("B, N = 10 (384/50 %)", "B-N10-carried", "B-N10-oracle"),
     ("B, N = 5", "B-N5-carried", "B-N5-oracle"),
-    ("B, N = 3", None, "B-N3-oracle"),
+    ("B, N = 3", "B-N3-carried", "B-N3-oracle"),
     ("B, N = 1", None, "B-N1-oracle"),
     ("A, N = 10 (384/33 %)", "A-N10-carried", "A-N10-oracle"),
     ("A, N = 5", "A-N5-carried", "A-N5-oracle"),
-    ("A, N = 3", None, "A-N3-oracle"),
+    ("A, N = 3", "A-N3-carried", "A-N3-oracle"),
     ("A, N = 1", None, "A-N1-oracle"),
     ("T0.3 (HIGH, K = 5)", "T03-k4", "T03-oracle"),
     ("T0.7 (HIGH, K = 5)", "TH7-k4", "TH7-oracle"),
@@ -252,8 +252,9 @@ def render_figure(ordered: list[dict], tier_of: dict, sig: dict,
     for c, y in zip(ordered, ys):
         if tier_of[c["label"]] % 2 == 0:
             ax1.axhspan(y - 0.5, y + 0.5, color="0.92", zorder=0)
-        colour = "#1a6faf" if c["basis"] == "carried" else "#c25e00"
-        marker = "o" if c["basis"] == "carried" else "s"
+        colour = ("#1a6faf" if c["basis"].startswith("carried")
+                  else "#c25e00")
+        marker = "o" if c["basis"].startswith("carried") else "s"
         ax1.plot([c["ci"][0], c["ci"][1]], [y, y], color=colour, lw=1.4,
                  zorder=2)
         ax1.plot(c["f1_50"], y, marker, color=colour, ms=6, zorder=3)
@@ -491,6 +492,18 @@ def main() -> int:
                 d_f1 = (r["f1"] - prev["f1"]) * 100
                 r["marginal"] = (r["cost"] - prev["cost"]) / d_f1
             prev = r
+    # T1 ceiling rows: the Tier-1 cell(s), shown for cost comparison
+    # only — outside the deployment-basis frontier computation.
+    for lbl in tiers[0]:
+        c = by_label[lbl]
+        cost = FAMILY_COST[family_of(lbl)]
+        tp = round(c["precision_50"] * c["n_detections"])
+        eff_rows.append({
+            "name": f"{lbl} (T1 ceiling)", "label": lbl,
+            "basis": c["basis"], "cost": cost, "f1": c["f1_50"],
+            "tier": tier_of[lbl], "tp": tp,
+            "usd_per_mound": cost / tp, "frontier": "ceiling"})
+    eff_rows.sort(key=lambda r: r["cost"])
     lines += [
         "",
         "## Cost efficiency: what a dollar buys",
@@ -511,12 +524,36 @@ def main() -> int:
     for r in eff_rows:
         marg = (f"${r['marginal']:.2f}" if r.get("marginal") is not None
                 and r["frontier"] and "marginal" in r else "—")
+        front = ("ceiling" if r["frontier"] == "ceiling"
+                 else "YES" if r["frontier"] else "—")
         lines.append(
             f"| {r['name']} | {r['basis']} | ${r['cost']:.0f} | "
             f"{r['f1']:.4f} (T{r['tier']}) | {r['tp']:,} | "
-            f"${r['usd_per_mound']:.4f} | "
-            f"{'YES' if r['frontier'] else '—'} | {marg} |")
+            f"${r['usd_per_mound']:.4f} | {front} | {marg} |")
     lines += [
+        "",
+        "## Post-hoc: the emergent N = 3 carried cells",
+        "",
+        "The `A-N3-carried` and `B-N3-carried` cells are **emergent",
+        "post-hoc nominations**, not registered claims: the card carried",
+        "operating points only at N = 5 and N = 10, so no N = 3 point was",
+        "nominated before launch. They are on the board because the",
+        "question \"could the N = 3 configuration have been specified in",
+        "advance?\" turns out to have a documented answer: the committed",
+        "GS stride ladder (`results/stride-2026-08-25/",
+        "plateau_analyses.json`, built before the 55-map launch) had",
+        "already selected **(0.15, k3-of-3) for BOTH geometries** at",
+        "N = 3. These cells simply evaluate that pre-existing GS",
+        "selection at deployment — the same derivation discipline as the",
+        "registered P2/P4 points, applied one rung further down. The",
+        "distinction that matters: the GS selection is pre-launch and",
+        "committed; the DECISION to evaluate it is post-hoc (2026-08-28,",
+        "PI-directed), motivated by the N = 3 oracle's position on the",
+        "cost frontier. Read their tiers and group letters accordingly —",
+        "instructive, not confirmatory. A registered replication (e.g.",
+        "nominating N = 3 in any future deployment card, or the",
+        "retro-N = 3 exploration of other runs the PI has flagged) is",
+        "the honest path to promoting this rung.",
         "",
         "## Provenance and gates",
         "",
@@ -539,6 +576,14 @@ def main() -> int:
         "  point was ever registered there).",
         "",
         "## Changelog",
+        "",
+        "### 2026-08-28 — Emergent N = 3 carried cells + T1 ceiling row",
+        "",
+        "PI direction: the GS-ladder-selected (0.15, k3) points for both",
+        "geometries added as `carried (post-hoc)` cells (23-cell board,",
+        "253 pairs re-tiered; see the post-hoc section for the emergent",
+        "status), and the Tier-1 cell added to the efficiency table as a",
+        "ceiling row for cost comparison.",
         "",
         "### 2026-08-27 (later) — Groups, costs, and efficiency",
         "",
