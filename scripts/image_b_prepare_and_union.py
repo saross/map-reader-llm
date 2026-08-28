@@ -35,7 +35,6 @@ import geopandas as gpd
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.grid_analysis import load_cell_passes  # noqa: E402
 from scripts.grid_prepare_scoring import CoverageError, load_pass  # noqa: E402
 from scripts.materialise_grid_unions import union_with_votes  # noqa: E402
 from scripts.merge_passes import deduplicate_within_pass  # noqa: E402
@@ -102,7 +101,20 @@ def main() -> int:
     if not args.write:
         logger.info("dry run complete — re-run with --write")
         return 0
-    passes = load_cell_passes(scoring, CELL)
+    # load_cell_passes iterates a fixed N_PASSES=10, so for k_total<10
+    # read the prepared dedup passes directly (same parsing, same shape).
+    passes = []
+    for i in range(1, k_total + 1):
+        path = scoring / "common" / CELL / f"run_{i}" / "detections_dedup.geojson"
+        if not path.exists():
+            raise CoverageError(f"prepared pass missing: {path}")
+        data = json.loads(path.read_text())
+        passes.append([
+            {"centroid": tuple(f["geometry"]["coordinates"]),
+             "label": f["properties"].get("label", "mound"),
+             "source_tiles": (f["properties"].get("origin_tiles") or "").split(";"),
+             "cluster_size": int(f["properties"].get("cluster_size", 1))}
+            for f in data["features"]])
     if len(passes) != k_total:
         raise CoverageError(f"{CELL}: loader returned {len(passes)} passes")
     gdf = union_with_votes(passes, common_gdf)
