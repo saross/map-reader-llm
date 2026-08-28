@@ -878,10 +878,7 @@ store searched, the method, and its known limits before any alarm
 framing. (The O'Hara/GMFS full-text episode, Obs 429, is the same
 lesson from the literature side.)
 
-## Pending review — Session 140–141 candidates (2026-08-24, drafted at close)
-
-Drafted at the reflection close; accept / edit / discard / replace.
-Unanswered candidates hold over — silence never discards.
+## Session 140–141 — 2026-08-24 (reviewed 2026-08-28; candidate 3 dropped at review)
 
 **S140-C1 — the mid-walk evidence-vintage injection.** On the Obs 258
 card you declined the recommended option and instead supplied the fact
@@ -899,19 +896,7 @@ structure, the correction is usually a missing category — worth my
 presenting taxonomies with the merged distinctions made visible so the
 correction stays cheap.
 
-**S140-C3 (in-the-moment reaction, relayed per the exception rule).**
-"'One key per group' (other than external groups I'm part of) seems a
-little excessive" — the cost-of-ceremony instinct, applied to security
-architecture: granularity must buy protection proportional to its
-management burden. Candidate: the same lens you apply to statistical
-and spend decisions governs infrastructure design, and proposals
-should arrive pre-weighed against it.
-
-## Pending review — Session 142 candidates (2026-08-27, drafted at handoff)
-
-Drafted at close; accept / edit / discard / replace. Unanswered
-candidates hold over — silence never discards. (The three S140
-candidates above also still await verdicts.)
+## Session 142 — 2026-08-27 (reviewed 2026-08-28; all three kept)
 
 **S142-C1 (in-the-moment reaction, relayed per the exception rule).**
 At close: "It's been a real pleasure working through this with you,
@@ -936,4 +921,7 @@ withheld both numbers until the cause was proven. You never had to
 catch an error yourself this session. Candidate: this
 stop-and-show-before-resolving cadence is the right default for
 result-bearing work — worth confirming you want it even when it slows
-a headline you are waiting on.
+a headline you are waiting on. **Confirmed at review (2026-08-28)**:
+"the default referenced… is properly calibrated" — and the S143
+corroborations (the −0.05 map-attribution catch; the H9 artefact
+audit) ran the same cadence.
