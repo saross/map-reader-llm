@@ -61,8 +61,8 @@ proposer = per_call * 6990
 all_in = proposer + 3.1  # verifier ceiling allowance
 print(f"probe gate: 5/5 ok; think/tile {think_pt:.0f}; "
       f"proposer est ${proposer:.2f}; all-in est ${all_in:.2f}")
-if all_in > 25:
-    print("probe gate: EXCEEDS the $25 pause clause — stopping")
+if all_in > 35:
+    print("probe gate: EXCEEDS the $35 clause (card $25 + PI +$10, 2026-08-28) — stopping")
     raise SystemExit(2)
 PYEOF
   then probe_ok=1; break; fi
