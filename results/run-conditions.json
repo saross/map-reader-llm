@@ -4550,6 +4550,25 @@
      "eval_path": "results/55maps-standardised-ref-2026-08-14/T03-k3/evaluation.json",
      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
      "_note": "T03-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference \u2014 queue items 2-3, Session 132)"
+    },
+    {
+     "label": "verified-oracle-p0.20-k3-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/T03-oracle/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/T03-oracle/detections.geojson",
+     "_note": "Standardised-reference deployment ORACLE re-derived by the final-board argmax sweep (moved from the S104 point; F1@50 0.8406). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
     }
    ]
   },
@@ -4658,6 +4677,25 @@
      "eval_path": "results/55maps-standardised-ref-2026-08-14/TM-k3/evaluation.json",
      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
      "_note": "TM-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference \u2014 queue items 2-3, Session 132)"
+    },
+    {
+     "label": "verified-oracle-p0.20-k3-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/TM-oracle/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/TM-oracle/detections.geojson",
+     "_note": "Standardised-reference deployment ORACLE re-derived by the final-board argmax sweep (moved from the S104 point; F1@50 0.8110). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
     }
    ]
   },
@@ -7754,6 +7792,272 @@
      "eval_path": "results/stride55-2026-08-27/g384_ov192_55map/oracle/eval/evaluation.json",
      "detections": "results/stride55-2026-08-27/g384_ov192_55map/oracle/verified_detections.geojson",
      "_note": "Run B deployment ORACLE (sweep argmax @50m, corrected-F1 0.8503; post-hoc basis, labelled). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+    },
+    {
+     "label": "g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 10,
+     "vote_threshold": 7,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/A-N10-oracle/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/A-N10-oracle/detections.geojson",
+     "_note": "Final-board cell A-N10-oracle (oracle (standardised-reference argmax), F1@50 0.8420, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov128-55map-n10-carried-p0.15-k8-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 10,
+     "vote_threshold": 8,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/A-N10-carried/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/A-N10-carried/detections.geojson",
+     "_note": "Final-board cell A-N10-carried (carried, F1@50 0.8392, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/A-N1-oracle/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/A-N1-oracle/detections.geojson",
+     "_note": "Final-board cell A-N1-oracle (oracle (standardised-reference argmax), F1@50 0.8231, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 3,
+     "vote_threshold": 2,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/A-N3-oracle/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/A-N3-oracle/detections.geojson",
+     "_note": "Final-board cell A-N3-oracle (oracle (standardised-reference argmax), F1@50 0.8326, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/A-N5-oracle/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/A-N5-oracle/detections.geojson",
+     "_note": "Final-board cell A-N5-oracle (oracle (standardised-reference argmax), F1@50 0.8383, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov128-55map-n5-carried-p0.15-k4-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/A-N5-carried/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/A-N5-carried/detections.geojson",
+     "_note": "Final-board cell A-N5-carried (carried, F1@50 0.8383, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 10,
+     "vote_threshold": 9,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/B-N10-oracle/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/B-N10-oracle/detections.geojson",
+     "_note": "Final-board cell B-N10-oracle (oracle (standardised-reference argmax), F1@50 0.8558, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov192-55map-n10-carried-p0.15-k10-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 10,
+     "vote_threshold": 10,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/B-N10-carried/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/B-N10-carried/detections.geojson",
+     "_note": "Final-board cell B-N10-carried (carried, F1@50 0.8498, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/B-N1-oracle/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/B-N1-oracle/detections.geojson",
+     "_note": "Final-board cell B-N1-oracle (oracle (standardised-reference argmax), F1@50 0.8013, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 3,
+     "vote_threshold": 3,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/B-N3-oracle/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/B-N3-oracle/detections.geojson",
+     "_note": "Final-board cell B-N3-oracle (oracle (standardised-reference argmax), F1@50 0.8505, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/B-N5-oracle/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/B-N5-oracle/detections.geojson",
+     "_note": "Final-board cell B-N5-oracle (oracle (standardised-reference argmax), F1@50 0.8515, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov192-55map-n5-carried-p0.15-k5-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/B-N5-carried/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/B-N5-carried/detections.geojson",
+     "_note": "Final-board cell B-N5-carried (carried, F1@50 0.8502, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+    },
+    {
+     "label": "g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 3,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/A-N3-carried/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/A-N3-carried/detections.geojson",
+     "_note": "Final-board cell A-N3-carried (carried (post-hoc), F1@50 0.8308, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008). EMERGENT post-hoc nomination (PI-directed 2026-08-28): the GS-ladder-selected point, evaluated after the N=3 oracle's frontier position emerged \u2014 see the board's post-hoc section."
+    },
+    {
+     "label": "g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 3,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55map-final-board-2026-08-27/cells/B-N3-carried/evaluation.json",
+     "detections": "results/55map-final-board-2026-08-27/cells/B-N3-carried/detections.geojson",
+     "_note": "Final-board cell B-N3-carried (carried (post-hoc), F1@50 0.8476, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008). EMERGENT post-hoc nomination (PI-directed 2026-08-28): the GS-ladder-selected point, evaluated after the N=3 oracle's frontier position emerged \u2014 see the board's post-hoc section."
     }
    ]
   }

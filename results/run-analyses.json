@@ -1618,6 +1618,90 @@
     "Obs 437 \u2014 the transfer tax collapses at 55 maps (the A5-vs-B5 recommendation-rung test folded into the findings BH family)"
    ],
    "manually_verified_at": "2026-08-28T12:16:45Z"
+  },
+  {
+   "analysis_id": "55map-final-board-2026-08-27",
+   "type": "leaderboard",
+   "_note": "THE FINAL 55-map board (PI-declared final; card planning/55map-final-board-2026-08-27.md, signed): 23 cells, every run at carried and oracle points, standardised reference, the GS tile-swap chain verbatim (10k/seed 42, BH q=0.05, greedy cliques + compact letter display). Gates: G3 exact 8-cell board reproduction (f1, 28 p-values, tiers); coincidence gates; per-cell 0.003 mechanism bound; argmax oracles re-derived on the board's own reference (11/13 confirmed the original points). Includes cost and $/mound efficiency framing and the IM as-shipped ruling.",
+   "_prereg_rationale": "Post-hoc E41-class synthesis; the paper's deployment board.",
+   "conditions_compared": [
+    "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
+    "55maps-text-high-generalisation::verified-k4-standardised-gt",
+    "55maps-text-high-generalisation::verified-k3-standardised-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k4-standardised-gt",
+    "55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-standardised-gt",
+    "55maps-text-min-generalisation::verified-k4-standardised-gt",
+    "55maps-text-min-generalisation::verified-oracle-p0.20-k3-standardised-gt",
+    "55maps-image-generalisation::verified-k3-standardised-gt",
+    "55maps-image-generalisation::verified-k4-standardised-gt",
+    "55maps-text-min-n10-uplift::verified-5of10-standardised-gt"
+   ],
+   "hypothesis_refs": [
+    "H13",
+    "H3"
+   ],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "predicted_outcome": "(none \u2014 synthesis board)",
+   "outcome": "209/253 pairs significant, 9 tiers. B owns T1-T2 (sole T1 B-N10-oracle 0.8558; T2 all four other B cells). Best carried cell B-N5-carried 0.8502. B-N3-carried (post-hoc) 0.8476 T3, indistinguishable from B-N5/N10 carried \u2014 B saturates at N=3; A does not (A-N3-carried sig below A-N5). Best incumbent carried T03-k4 T5. A single pass of A (T6, ~$21) ties the HIGH incumbent carried (~$207). Obs 438.",
+   "paper_section": "Results",
+   "output_path": "results/55map-final-board-2026-08-27/final_board_50m.json",
+   "working_notes_obs": [
+    "Obs 438 \u2014 the final board and the emergent N=3 rung: B saturates at N=3 carried; the GS-determinable $65 bargain step"
+   ],
+   "manually_verified_at": null
+  },
+  {
+   "analysis_id": "sensitivity-mde-2026-08-28",
+   "type": "diagnostic",
+   "_note": "Instrument-sensitivity appendix (PI-commissioned 2026-08-28; scripts/sensitivity_mde.py): MDEs from committed permutation nulls per instrument (GS consensus boards sigma~0.023 -> MDE80 0.063-0.065; GS verified-set instrument 2.6x finer at 0.0087 -> 0.024; 55-map final board 0.0046 -> 0.013), plus normal-approximation TOST over the seven H8 contrasts (smallest passing margin 0.07) and the P6/IP5 cross-scale calibration specimens. No permutations re-run. Recommended equivalence margins: 0.07 (GS composition nulls), 0.015 (deployment nulls). conditions_compared lists the H8 v2 cells (the TOST subjects); the MDE harvest spans every committed pairwise record per instrument (see sensitivity.json sources).",
+   "_prereg_rationale": "Post-hoc methodological appendix qualifying the study's negative claims; avoids the observed-power fallacy by construction.",
+   "conditions_compared": [
+    "h8-v2::greedy-pure-positive-canon",
+    "h8-v2::greedy-canonical",
+    "h8-v2::greedy-plus-hp",
+    "h8-v2::greedy-scale-4",
+    "h8-v2::greedy-scale-8",
+    "h8-v2::greedy-scale-16",
+    "h8-v2::greedy-scale-32",
+    "h8-v2::wbf-pure-positive-canon",
+    "h8-v2::wbf-canonical",
+    "h8-v2::wbf-plus-hp",
+    "h8-v2::wbf-scale-4",
+    "h8-v2::wbf-scale-8",
+    "h8-v2::wbf-scale-16",
+    "h8-v2::wbf-scale-32",
+    "h8-v2::verified-scale-4",
+    "h8-v2::verified-wbf-scale-4",
+    "h8-v2::verified-wbf-scale-8"
+   ],
+   "hypothesis_refs": [
+    "H8",
+    "H9",
+    "H10",
+    "H12"
+   ],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "predicted_outcome": "(none \u2014 measurement of the instruments)",
+   "outcome": "Two-tier design made explicit: GS = screening (excludes effects >~0.065 at 80% power), 55-map = resolution (0.013). H8 equivalence at Delta=0.07. Verification sharpens GS ~2.6x.",
+   "paper_section": "Appendix",
+   "output_path": "results/sensitivity-mde-2026-08-28/sensitivity.json",
+   "working_notes_obs": [],
+   "manually_verified_at": null
   }
  ]
 }
