@@ -61,7 +61,14 @@ sweep space). Tiers from the 21-cell board above.
 | T0.7 (HIGH, K = 5) | 0.8169 (T6) | 0.8387 (T4) | (0.15, k3) |
 | min-uplift (K = 10) | — | 0.8279 (T5) | (0.15, k5) |
 | text-min (K = 5) | 0.7833 (T8) | 0.8110 (T7) | (0.20, k3) |
-| image (HIGH, K = 5) | 0.7400 (T9) | 0.8010 (T7) | (0.15, k3) |
+| image (HIGH, K = 5) — as shipped (k3) | 0.8010 (T7) | 0.8010 (T7) | (0.15, k3) |
+| image comparability (k4, E82) | 0.7400 (T9) | — | — |
+
+PI ruling 2026-08-28 on the image rows: the real-world column
+shows the cell the image run actually SHIPPED (k3 — which for
+image coincides with the standardised-reference argmax, so its
+carried and oracle entries are the same cell); IM-k4 remains on
+the board as E82's like-for-like comparability derivation.
 
 ## Cost efficiency: what a dollar buys
 
@@ -87,7 +94,8 @@ almost regardless of quality.
 | A, N = 10 (384/33 %) | carried | $104 | 0.8392 (T4) | 3,980 | $0.0261 | — | — |
 | B, N = 10 (384/50 %) | carried | $174 | 0.8498 (T2) | 4,043 | $0.0429 | — | — |
 | B-N10-oracle (T1 ceiling) | oracle | $174 | 0.8558 (T1) | 4,129 | $0.0420 | ceiling | — |
-| image (HIGH, K = 5) | carried | $195 | 0.7400 (T9) | 3,164 | $0.0618 | — | — |
+| image (HIGH, K = 5) — as shipped (k3) | as-shipped (k3) | $195 | 0.8010 (T7) | 3,881 | $0.0503 | — | — |
+| image comparability (k4, E82) | comparability (k4) | $195 | 0.7400 (T9) | 3,164 | $0.0618 | — | — |
 | T0.7 (HIGH, K = 5) | carried | $207 | 0.8169 (T6) | 3,747 | $0.0554 | — | — |
 | T0.3 (HIGH, K = 5) | carried | $261 | 0.8303 (T5) | 3,886 | $0.0672 | — | — |
 
@@ -135,6 +143,13 @@ the honest path to promoting this rung.
   point was ever registered there).
 
 ## Changelog
+
+### 2026-08-28 (later) — Image rows per the as-shipped ruling
+
+PI ruling: image's real-world entry is the shipped k3 cell;
+IM-k4 relabelled as the E82 comparability derivation. Board
+membership, tiers, and all cell values unchanged — run-table
+and efficiency-table presentation only.
 
 ### 2026-08-28 — Emergent N = 3 carried cells + T1 ceiling row
 
