@@ -10749,7 +10749,6 @@ provenance of the anchor is part of taking the authorisation
 honestly. The card's § 4b records the correction trail for exactly
 this reason.
 
-
 ## Session 143 — 2026-08-27/29 — the session where the ledger closed and the ceiling moved
 
 ### Prompt: What question emerged that wasn't pursued?
