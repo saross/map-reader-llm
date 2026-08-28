@@ -95,5 +95,40 @@ compared against.
 
 ## Outcome
 
-*Not yet run. To be completed after execution — do not edit the Prediction
-section above.*
+**Executed 2026-08-28 (Session 143), PI-approved ("yes, let's run it at
+that cost"). BOTH registered levels run — T=1.6 AND T=2.0 — so the
+obligation is discharged at the letter; the sequential shortcut above
+was not exercised and no deviation entry is needed for it.** Six
+single passes (3 per level), 2,040 calls, real-time flex, ~$1.37
+total (the registered runs used the Batch API — both bill at 50 % of
+list; execution-infrastructure note, not a parameter change).
+Replication gate: the committed T1.0-vs-T1.3 check reproduced exactly
+(ΔF1 −0.036229, p = 0.247, 340 tiles) before any new comparison was
+trusted; frame = Era-1 340-tile 512 px bounds
+(`inputs/vectors/bounds/full_evaluation_bounds.geojson`), curator GT,
+20 m — the E36 corpus, as § Run parameters declared.
+
+| level | run | F1 | P | R | ΔF1 vs T=1.3 (same replicate) | p |
+|---|---|---:|---:|---:|---:|---:|
+| T=1.6 | 1 | 0.4806 | 0.362 | 0.714 | −0.0658 | 0.0061 |
+| T=1.6 | 2 | 0.4884 | 0.369 | 0.722 | −0.0480 | 0.0846 |
+| T=1.6 | 3 | 0.4524 | 0.338 | 0.683 | −0.0974 | 0.0002 |
+| T=2.0 | 1 | 0.4752 | 0.359 | 0.703 | −0.0712 | 0.0017 |
+| T=2.0 | 2 | 0.4714 | 0.350 | 0.720 | −0.0649 | 0.0064 |
+| T=2.0 | 3 | 0.4765 | 0.357 | 0.714 | −0.0733 | 0.0013 |
+
+**Primary prediction CONFIRMED**: every T=1.6 replicate sits below its
+T=1.3 counterpart, inside the predicted 0.50–0.54… in fact below it
+(0.452–0.488) — the decline continued and steepened.
+**Secondary prediction WRONG, informatively**: the T=1.6 differences
+were predicted non-significant on the adjacent-pair pattern; five of
+six escalation comparisons are significant (p = 0.0002–0.0085 band) —
+the curve separates from T=1.3 at 1.6 in a way no earlier adjacent
+pair did. **Tertiary CONFIRMED**: precision falls faster than recall
+(P 0.429 → ~0.35, R 0.75 → ~0.71).
+**The registered question is answered**: there is no benefit above the
+vendor default; the temperature-performance curve declines monotonically
+from the T=0.3 optimum (0.6065) through T=1.3 (0.544) to a degraded
+plateau ≈ 0.47 at T=1.6–2.0 (T=2.0 ≈ T=1.6; no further collapse).
+Artefacts: `outputs/h7-escalation-2026-08-28/`,
+`results/h7-escalation-2026-08-28/`.
