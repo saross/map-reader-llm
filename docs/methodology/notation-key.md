@@ -38,7 +38,7 @@ TH7-k3 is the 3-of-5 cell of a K = 5 run, not a 3-pass run.
 | UPL / min-uplift | text MINIMAL 10-pass standard-grid run (5 original + 5 uplift passes) |
 | A | 384 px / 33.3 % overlap (stride 256) deployment run, K = 10 |
 | B | 384 px / 50 % overlap (stride 192) deployment run, K = 10 — the leading geometry |
-| g\<px\>_ov\<o\> | Geometry cell: tile size px, overlap o px (stride = px − o) | e.g. g384_ov192 = 384 px tiles, 192 px overlap, stride 192 |
+| g\<px\>_ov\<o\> | Geometry cell: tile size px, overlap o px (stride = px − o); e.g. g384_ov192 = 384 px tiles, 192 px overlap, stride 192 |
 | MIN / MINIMAL, HIGH, low | Thinking levels (Gemini 3 family: minimal/high; Gemini 3.7: low/medium/high) |
 | PV | proposer–verifier (two-stage architecture) |
 
@@ -91,7 +91,7 @@ TH7-k3 is the 3-of-5 cell of a K = 5 run, not a 3-pass run.
 | era-1-340 | 340 | GS 4 maps, 512 px frame | 20 m |
 | grid-common-487 | 487 | GS 4 maps, common footprint of the grid/stride campaigns | 20 m |
 | 55maps-8541 | 8,541 | 55-sheet deployment corpus, standard 384 grid | 50 m |
-| stratum_id | Composite key corpus × reference × buffer × frame (the uplift dataset's mandatory grouping key; cross-stratum aggregation only as explicit transfer pairs) | | |
+| stratum_id | — | Composite key corpus × reference × buffer × frame (the uplift dataset's mandatory grouping key; cross-stratum aggregation only as explicit transfer pairs) | — |
 
 ## 7. Standard dataset column names
 
