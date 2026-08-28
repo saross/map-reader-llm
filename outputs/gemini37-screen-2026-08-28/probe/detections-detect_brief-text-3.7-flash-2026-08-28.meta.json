@@ -1,0 +1,985 @@
+{
+  "run_id": "79d86f26-0cfc-4ab6-afe6-8150129dabf2",
+  "timestamp": {
+    "start": "2026-08-28T13:11:02.520774+00:00",
+    "end": "2026-08-28T13:20:47.795954+00:00",
+    "duration_seconds": 585.27518
+  },
+  "environment": {
+    "git_commit": "bf15f7bc97d36670c32a77bb4ab8ef4c2de8ffa2",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "6.0.0"
+  },
+  "configuration": {
+    "version": "detect_brief-text",
+    "model": "gemini-3.7-flash",
+    "instruction_file": "detect_brief-text.md",
+    "system_instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+    "system_instruction_text": "# Mound Detection\n\nDetect all burial mound symbols in this Soviet topographic map tile.\n\n## Target Symbols\n\nAll mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a \"sunburst\" or \"gear\" pattern. This indicates elevated terrain.\n\n**Subtypes to detect:**\n\n- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or \"\u043a\u0443\u0440\u0433.\" label.\n- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).\n- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.\n- **Benchmark on mound**: Black square with central dot, surrounded by black rays.\n\nThe **rays pointing outward** are essential. Symbols without visible rays are not mounds.\n\n## Guidelines\n\n1. Provide individual bounding boxes for each symbol, even in clusters.\n2. Symbols may be partially occluded by lines, shapes, or text. Include if the sunburst pattern remains discernible.\n3. If reference examples are provided, compare uncertain cases against them. Each reference image is centred on the feature being labelled \u2014 the target symbol for Positive examples, the confusable feature for Negative examples.\n\n## Output Format\n\nReturn JSON with normalised coordinates (0-1000):\n\n{\n    \"detections\": [\n        {\n            \"box_2d\": [ymin, xmin, ymax, xmax],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\" | \"settlement_mound\" | \"triangulation_mound\" | \"benchmark_mound\"\n        }\n    ]\n}\n",
+    "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+    "temperature": 0.7,
+    "max_output_tokens": 8192,
+    "thinking_level": "low",
+    "tile_size": null,
+    "include_example_images": false,
+    "example_count": 17,
+    "full_config_snapshot": {
+      "version": "detect_brief-text",
+      "description": "H1 baseline. M/E=Brief-text (no images), H5=Minimal, canonical-first ordering.",
+      "hypothesis": "H1",
+      "model": "gemini-3.7-flash",
+      "instruction_file": "detect_brief-text.md",
+      "temperature": 0.7,
+      "max_output_tokens": 8192,
+      "include_example_images": false,
+      "examples": [
+        {
+          "path": "neutral-naming/example_01.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_02.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_03.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_04.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_05.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_06.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_07.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_08.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_09.png",
+          "label": "Negative",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_10.png",
+          "label": "Negative",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_11.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_12.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_13.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_14.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_15.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_16.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_17.png",
+          "label": "Negative",
+          "category": "null"
+        }
+      ],
+      "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8). Text-only modality tested at H5=Minimal only.",
+      "thinking_level": "low",
+      "manifest_path": "inputs/image-b-gs-2026-08-28/probe_manifest.json"
+    }
+  },
+  "execution_stats": {
+    "items_processed": 0,
+    "items_failed": 5,
+    "items_skipped": 0,
+    "retries_total": 75,
+    "retries_rate_limit": 0,
+    "retries_server_error": 75,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "error": 5
+    },
+    "safety_blocks": 0,
+    "parse_failures": 5,
+    "empty_responses": 5,
+    "completed_items": [],
+    "failed_items": [
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-08-28T13:20:29.566990+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-08-28T13:20:29.667279+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-08-28T13:20:35.889684+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-08-28T13:20:41.513253+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-08-28T13:20:47.794991+00:00"
+      }
+    ],
+    "retry_details": [
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:11:05.385812+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:11:05.385953+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:11:05.953230+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:11:05.955958+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:11:08.322128+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:11:37.750845+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:11:39.564717+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:11:39.667216+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:11:45.995474+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:11:46.895177+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:12:11.864018+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:12:18.406392+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:12:21.226135+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:12:21.456458+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:12:21.570003+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:12:45.712525+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:12:58.909246+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:12:59.481409+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:13:03.543385+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:13:07.718927+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 5,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:13:23.742885+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 5,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:13:38.935374+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 5,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:13:39.047232+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 5,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:13:46.374433+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 5,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:13:46.827063+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 6,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:14:03.766468+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 6,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:14:15.962906+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 6,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:14:16.303027+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 6,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:14:21.956082+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 6,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:14:24.880765+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 7,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:14:40.906960+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 7,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:14:53.802892+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 7,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:14:56.848013+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 7,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:14:58.652005+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 7,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:15:04.726992+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 8,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:15:17.816984+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 8,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:15:32.712278+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 8,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:15:32.930097+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 8,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:15:33.494352+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 8,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:15:40.026297+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 9,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:15:55.812891+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 9,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:16:07.689708+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 9,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:16:11.864880+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 9,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:16:12.432836+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 9,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:16:13.781591+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 10,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:16:30.380224+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 10,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:16:47.750880+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 10,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:16:50.009752+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 10,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:16:52.377870+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 10,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:16:54.958733+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 11,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:17:13.358737+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 11,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:17:24.430444+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 11,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:17:26.073841+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 11,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:17:28.647198+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 11,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:17:31.737734+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 12,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:17:53.186417+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 12,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:18:04.507139+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 12,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:18:04.927804+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 12,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:18:06.877759+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 12,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:18:12.469468+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 13,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:18:35.948834+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 13,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:18:40.669254+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 13,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:18:43.852638+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 13,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:18:47.756385+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 13,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:18:52.491194+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 14,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:19:13.290211+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 14,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:19:13.607094+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 14,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:19:20.721249+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 14,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:19:22.776110+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 14,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:19:30.081883+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+        "attempt": 15,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:19:50.807759+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+        "attempt": 15,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:19:52.450845+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+        "attempt": 15,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:19:56.148830+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+        "attempt": 15,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:20:03.978605+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+        "attempt": 15,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-08-28T13:20:14.700951+00:00"
+      }
+    ]
+  },
+  "usage_stats": {
+    "total_input_tokens": 0,
+    "total_output_tokens": 0,
+    "total_cached_tokens": 0,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 0,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "request_count": 5
+      }
+    }
+  },
+  "results_summary": {
+    "total_detections": 0,
+    "class_counts": {},
+    "parsed_detections": 0,
+    "detections_not_emitted": 0,
+    "reconciled_against": "geojson feature count"
+  },
+  "per_item_metadata": [
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x3840_y960.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.7-flash",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-08-28T13:19:47.202355+00:00",
+      "response_timestamp": "2026-08-28T13:19:50.807729+00:00",
+      "latency_ms": 3605,
+      "attempt_number": 15,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x3840_y384.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.7-flash",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-08-28T13:19:49.687113+00:00",
+      "response_timestamp": "2026-08-28T13:19:52.450812+00:00",
+      "latency_ms": 2763,
+      "attempt_number": 15,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x384_y0.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.7-flash",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-08-28T13:19:54.122891+00:00",
+      "response_timestamp": "2026-08-28T13:19:56.148801+00:00",
+      "latency_ms": 2025,
+      "attempt_number": 15,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x3840_y768.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.7-flash",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-08-28T13:19:59.302390+00:00",
+      "response_timestamp": "2026-08-28T13:20:03.978572+00:00",
+      "latency_ms": 4676,
+      "attempt_number": 15,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x3840_y576.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.7-flash",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-08-28T13:20:08.803536+00:00",
+      "response_timestamp": "2026-08-28T13:20:14.700919+00:00",
+      "latency_ms": 5897,
+      "attempt_number": 15,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    }
+  ],
+  "cost_estimate": {
+    "input_cost_usd": 0.0,
+    "output_cost_usd": 0.0,
+    "total_cost_usd": 0.0,
+    "list_input_cost_usd": 0.0,
+    "list_output_cost_usd": 0.0,
+    "list_total_cost_usd": 0.0,
+    "cost_basis": "billed",
+    "pricing_used": {
+      "model": "gemini-3.7-flash",
+      "input_per_1m": 0.5,
+      "output_per_1m": 3.0,
+      "discount": 0.5,
+      "discount_reason": "Gemini real-time flex (50 % of list, as per Batch API)"
+    }
+  },
+  "tpm_governor": {
+    "governor_type": "token_bucket",
+    "rpm_limit": 20000,
+    "tpm_limit": 20000000,
+    "target_rpm": 14400,
+    "target_tpm": 14400000,
+    "target_utilisation": 0.72,
+    "current_tpm": 0,
+    "available_request_capacity": 14400.0,
+    "available_token_capacity": 14400000.0,
+    "cooldown_seconds": 15.0,
+    "tokens_per_request": 1500,
+    "total_tokens": 0,
+    "total_requests": 75,
+    "total_rate_limits": 0,
+    "total_cooldown_seconds": 0.0,
+    "avg_latency_seconds": null,
+    "peak_wait_seconds": 0.0,
+    "elapsed_seconds": 585.3
+  }
+}
