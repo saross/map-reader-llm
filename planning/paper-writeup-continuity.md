@@ -8,7 +8,44 @@ project state.
 
 ---
 
-## 🔍 S143 PROGRESS NOTE (2026-08-27, autonomous — Claude queue items 1–2 COMPLETE)
+## 🔍 STATE AFTER S143 (2026-08-27→28 — the construction ledger CLOSED; next session = WRITING)
+
+> **EVERYTHING analytical and registrable is DONE.** Landed, all
+> committed + synced + PI-signed where applicable: (1) stride55
+> secondary analyses (oracles, ladders, A5-vs-B5; transfer tax
+> COLLAPSED +0.004/+0.008 vs +0.032; P6 informative failure — B beats
+> A, BH-robust; findings + Obs 437). (2) THE FINAL 23-cell 55-map
+> board (B owns T1–T2; emergent N=3 carried cells per PI ruling —
+> B saturates at N=3, the GS-determinable ~$65 bargain step; CLD
+> groups + significance figure + costs + $/mound; IM as-shipped
+> ruling applied; Obs 438). (3) Sensitivity/MDE appendix (GS
+> screening MDE80 ~0.065, verified-set 0.024, 55-map 0.013; H8 TOST
+> Δ=0.07; margins proposed 0.07/0.015 — PI: "explained perfectly").
+> (4) IMAGE CAMPAIGN on the leading config (~$90): text beats image
+> +0.0549@20m p=0.001 with MCC PARITY; first MIN-vs-HIGH image pair —
+> verifier absorbs the thinking dividend (−0.008 ns at 2.91×);
+> findings + Obs 439. (5) PREREG COMPLIANCE COMPLETE: agent audit
+> falsified D17-U12 (H9 ran TWICE, rejected — paper sentence fixed,
+> PI ruling lapsed); H7 escalation trigger DISCHARGED at the letter
+> (T=1.6+T=2.0, $1.37, degraded plateau ~0.47); ledger regenerated
+> with per-row anchors; Obs 440. (6) REGISTRATION BACKLOG CLEAR in
+> three PI-signed passes: registry now 38 runs / 374 conditions /
+> 1,250 passes / 49 analyses, ALL VALID. (7) Venue tooling decided:
+> Quarto (MD-per-section, elsarticle extension at final files);
+> literate-reporting pilot = the sensitivity appendix as .qmd.
+>
+> **NEXT SESSION = THE WRITE-UP**: skeleton decisions D-1..D-5
+> (manuscript-skeleton-isprs.md), then the Quarto scaffold
+> (_quarto.yml, section stubs, bib wiring, render smoke), then
+> drafting against 8,500 words (journal-requirements-isprs.md is the
+> contract; observed-practice medians: abstract 237, figs 9, refs 63).
+> **PI standing list**: D24 BRIEF (STANDING); user-obs verdicts
+> (3× S140 + 3× S142); Gould → D.9; Obs 433–440 review; billing
+> glance (~$338 S142 + ~$92 S143 image/H7 ≈ $430 expected).
+> Riders: sapphire regenerable tile trees await cleanup; HIGH-image
+> estimator over-records ~3.3× in metas (audited basis in card).
+
+## 🔍 S143 EARLIER PROGRESS NOTE (2026-08-27, superseded by the block above)
 
 > **The sweep-oracle + N-ladder secondary analysis LANDED, $0 API, every
 > gate passed** (sweep and ladder each reproduce the committed primaries
