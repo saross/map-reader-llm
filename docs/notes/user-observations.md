@@ -925,3 +925,37 @@ a headline you are waiting on. **Confirmed at review (2026-08-28)**:
 "the default referenced… is properly calibrated" — and the S143
 corroborations (the −0.05 map-attribution catch; the H9 artefact
 audit) ran the same cadence.
+
+## Pending review — Session 143 candidates (2026-08-29, drafted at handoff)
+
+Accept / edit / discard / replace; silence never discards.
+
+**S143-C1 (in-the-moment reactions, relayed per the exception rule).**
+"That was explained perfectly, thanks" (the statistical-power/MDE
+explanation, which you then commissioned as the sensitivity appendix)
+and "great ideas! thank you" (the strata-enforcement design). Both
+followed the same shape S133 recorded: an explanation requested
+conversationally, answered with structure-first prose, then promoted
+to a committed artefact within the hour. Candidate: the
+explanation-to-artefact pipeline is now a reliable production path,
+not a one-off.
+
+**S143-C2 — your follow-up questions repeatedly converted my "settled"
+into repo artefacts.** Four short questions (sweep-interior points;
+why text-min is cheaper; which image library; k/n/x usage) each
+exposed something I was carrying as resolved and each produced a
+committed deliverable (the promotion ruling, the lean-cost column,
+the plateau evidence, the notation key). Candidate: when your
+question takes me more than a paragraph to answer, the answer is
+paper material — worth you continuing to ask them exactly this way.
+
+**S143-C3 — the H9 error chain reached your ruling before the
+artefact layer caught it.** I briefed you from the ledger + a
+documented audit; you ruled on my briefing; a delegated agent with a
+"verify at source" instruction refused the commission and unwound
+the chain the same day. Candidate worth your verdict: the layered
+design (your ruling revocable, the agent grounded in artefacts,
+recorded-not-applied as the safe default) worked — but the cheaper
+fix is upstream: I should artefact-check any "never done" claim
+before it reaches you, and you may want to treat my status-ledger
+citations as weaker evidence than my artefact citations.
