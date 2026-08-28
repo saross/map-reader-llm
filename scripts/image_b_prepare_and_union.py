@@ -43,14 +43,14 @@ from scripts.prepare_h13_scoring import write_dedup_geojson  # noqa: E402
 from scripts.stride_prepare_and_union import (  # noqa: E402
     COMMON_BOUNDS,
     DEDUP_METRES,
-    K,
     resolve_pass_paths,
 )
+from scripts.stride_prepare_and_union import K as DEFAULT_K  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-ROOT = PROJECT_ROOT / "outputs/image-b-gs-2026-08-28"
+ROOT = PROJECT_ROOT / "outputs/image-b-gs-2026-08-28"  # overridable via --root
 MANIFEST = PROJECT_ROOT / "inputs/grid-2026-08-18/grid_384_ov192_manifest.json"
 VF_CALL_USD = 0.000687
 
@@ -61,17 +61,24 @@ def main() -> int:
     ap.add_argument("--cell", default="g384_ov192_image",
                     help="Cell directory under the output root "
                          "(g384_ov192_image or g384_ov192_image_high).")
+    ap.add_argument("--root", default=None,
+                    help="Output root override (e.g. "
+                         "outputs/gemini37-screen-2026-08-28).")
+    ap.add_argument("--k", type=int, default=None,
+                    help="Pass count override (default: the stride K=10).")
     args = ap.parse_args()
     CELL = args.cell  # noqa: N806 — keeps the original constant name in situ
+    root = PROJECT_ROOT / args.root if args.root else ROOT
+    k_total = args.k or DEFAULT_K
 
     common_gdf = gpd.read_file(COMMON_BOUNDS)
     common_tiles = sorted(common_gdf["tile_name"].tolist())
     common_geom = common_gdf.geometry.union_all()
     manifest = set(json.loads(MANIFEST.read_text()))
-    cell_dir = ROOT / CELL
-    scoring = ROOT / "scoring"
+    cell_dir = root / CELL
+    scoring = root / "scoring"
 
-    for i in range(1, K + 1):
+    for i in range(1, k_total + 1):
         run = f"run_{i}"
         paths = resolve_pass_paths(cell_dir, run)
         raw, processed = load_pass(paths)
@@ -96,11 +103,11 @@ def main() -> int:
         logger.info("dry run complete — re-run with --write")
         return 0
     passes = load_cell_passes(scoring, CELL)
-    if len(passes) != K:
+    if len(passes) != k_total:
         raise CoverageError(f"{CELL}: loader returned {len(passes)} passes")
     gdf = union_with_votes(passes, common_gdf)
     votes = gdf["vote_count"].value_counts().sort_index().to_dict()
-    dest = ROOT / "verifier" / CELL / "union_k10.geojson"
+    dest = root / "verifier" / CELL / f"union_k{k_total}.geojson"
     dest.parent.mkdir(parents=True, exist_ok=True)
     gdf.to_crs("EPSG:4326").to_file(dest, driver="GeoJSON")
     written = len(json.loads(dest.read_text())["features"])
