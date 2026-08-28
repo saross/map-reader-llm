@@ -1702,6 +1702,79 @@
    "output_path": "results/sensitivity-mde-2026-08-28/sensitivity.json",
    "working_notes_obs": [],
    "manually_verified_at": "2026-08-28T12:22:08Z"
+  },
+  {
+   "analysis_id": "image-b-modality-2026-08-28",
+   "type": "comparison",
+   "_note": "The modality head-to-head on the leading configuration (scripts/image_b_analysis.py): join + reassignment gates; anchor gate (text-B re-scored through the analysis path reproduces its registered 0.8961 exactly); full sweep at 20 m; buffer curves; board-chain paired tile-swap (10k/seed 42, 487-tile common footprint); first-N ladder with inherited verification. Findings: results/image-b-gs-2026-08-28/findings.md.",
+   "_prereg_rationale": "Predictions IP1-IP5 registered by commit before launch (card planning/image-b-gs-2026-08-28.md \u00a7 3).",
+   "conditions_compared": [
+    "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9",
+    "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10"
+   ],
+   "hypothesis_refs": [
+    "H1"
+   ],
+   "preregistered": "registered-exploratory",
+   "deviations": [],
+   "predicted_outcome": "IP1 text > image at <=30m; IP2 gap narrows monotonically to 75m; IP3 MCC within \u00b10.02; IP4 prob in {0.15,0.20}; IP5 image saturates slower.",
+   "outcome": "IP1-IP4 CONFIRMED (text +0.0549 @20m p=0.0010; gap 0.0549->0.0258; MCC 0.7985 vs 0.7965; prob 0.15). IP5 indeterminate at GS power (N3-N10 -0.0159 p=0.069 \u2014 the GS indeterminate zone per the sensitivity appendix). Image N=1 collapses (0.6974); needs near-unanimity consensus. Obs 439.",
+   "paper_section": "Results",
+   "output_path": "results/image-b-gs-2026-08-28/analysis.json",
+   "working_notes_obs": [
+    "Obs 439 \u2014 image campaign: text stronger for localisation with MCC parity; the verifier absorbs the thinking dividend on the image track"
+   ],
+   "manually_verified_at": null
+  },
+  {
+   "analysis_id": "image-b-thinking-pair-2026-08-28",
+   "type": "comparison",
+   "_note": "The first matched MINIMAL-vs-HIGH image pair (scripts/image_b_pair.py; one CLI flag differs): paired tile-swap at verified bests, union growth, MCC delta, lattice check, audited-rate cost reconciliation. Card \u00a7 5a records the outcome and the probe's thinking-volume under-estimate correction ($59.07 audited proposer, not ~$37).",
+   "_prereg_rationale": "Predictions HP1-HP5 registered at approval (card planning/image-b-gs-2026-08-28.md \u00a7 5a).",
+   "conditions_compared": [
+    "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9",
+    "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8"
+   ],
+   "hypothesis_refs": [
+    "H1"
+   ],
+   "preregistered": "registered-exploratory",
+   "deviations": [],
+   "predicted_outcome": "HP1 HIGH~MIN within 0.03 at verified best; HP2 union >=+20%; HP3 MCC \u00b10.02; HP4 lattice; HP5 cost 3.0-3.5x.",
+   "outcome": "HP1-HP4 CONFIRMED (HIGH -0.0079 p=0.62; union +126%; MCC +0.0008; (0.20,k8)); HP5 narrow miss (2.91x). The verifier absorbs the thinking dividend \u2014 the S111/Obs 359 recall-ceiling mechanism reproduced on the image track. Obs 439.",
+   "paper_section": "Results",
+   "output_path": "results/image-b-gs-2026-08-28/high/pair_verdicts.json",
+   "working_notes_obs": [
+    "Obs 439 \u2014 image campaign: text stronger for localisation with MCC parity; the verifier absorbs the thinking dividend on the image track"
+   ],
+   "manually_verified_at": null
+  },
+  {
+   "analysis_id": "h7-escalation-2026-08-28",
+   "type": "comparison",
+   "_note": "Discharge of the fired H7 escalation trigger at the letter (both registered levels; the prediction card planning/run-predictions/h7-escalation-t1.6.md committed 2026-07-28, outcome recorded 2026-08-28). Replication gate: the committed T1.0-vs-T1.3 check reproduced exactly (dF1 -0.036229, p=0.247, 340 tiles) before any new comparison. Instrument: pairwise_permutation_test.py, same-replicate pairing, era-1-340 frame.",
+   "_prereg_rationale": "The preregistration's own trigger clause (osf:731) names this exploratory testing \u2014 registered-exploratory.",
+   "conditions_compared": [
+    "h7-escalation-2026-08-28::text-t1.6",
+    "h7-escalation-2026-08-28::text-t2.0",
+    "retest-phase2b::text-t1.3",
+    "retest-phase2b::text-t1.0"
+   ],
+   "hypothesis_refs": [
+    "H7"
+   ],
+   "preregistered": "registered-exploratory",
+   "deviations": [
+    "Era-1 340-tile corpus per E36 (registered H7 ran the 60-tile holdout); real-time flex vs Batch (both 50% of list)."
+   ],
+   "predicted_outcome": "Card: T=1.6 below T=1.3 (0.50-0.54), differences ns, precision falls faster than recall.",
+   "outcome": "Primary CONFIRMED and exceeded (T=1.6 0.452-0.488, below the predicted band's floor); secondary WRONG informatively (five of six comparisons significant, p=0.0002-0.0064 \u2014 the curve separates at 1.6 as no adjacent pair below did); tertiary confirmed. Degraded plateau ~0.47 at 1.6-2.0; no benefit above the vendor default; obligation discharged. Obs 440.",
+   "paper_section": "Appendix",
+   "output_path": "results/h7-escalation-2026-08-28",
+   "working_notes_obs": [
+    "Obs 440 \u2014 the preregistration compliance audit: believe the artefacts; the last obligation discharged with data"
+   ],
+   "manually_verified_at": null
   }
  ]
 }

@@ -887,6 +887,54 @@
     "Proposer tilings are overlapping custom grids; evaluation is on the standard 8,541-tile frame.",
     "gt_reference 'combined' = the canonical adjudicated extended GT (student + reviewer-promoted phantoms), the schema's combined class."
    ]
+  },
+  "image-b-gs-2026-08-28": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "H1"
+   ],
+   "purpose": "Image variant of the leading configuration on the GS corpus: the modality head-to-head under matched everything (vs the committed text-B anchor), plus the first matched MINIMAL-vs-HIGH image thinking pair. Card planning/image-b-gs-2026-08-28.md.",
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "grid-common-487",
+    "bounds_path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9",
+   "headline_rationale": "The modality comparison's image side at MINIMAL \u2014 the like-for-like cell the paper claim rests on.",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": [
+    "Explicit context caching (~94% of input tokens); live estimator over-records ~3.3x on cached tokens \u2014 audited basis in the card and findings."
+   ]
+  },
+  "h7-escalation-2026-08-28": {
+   "primary_hypothesis": "H7",
+   "also_informs": [],
+   "purpose": "Discharge of the H7 temperature-escalation trigger (osf:731): T=1.6 and T=2.0 at the optimal configuration, characterising the upper bound of the temperature-performance curve.",
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-1-340",
+    "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": "h7-escalation-2026-08-28::text-t1.6",
+   "headline_rationale": "The first registered escalation level; the monotone-decline verdict.",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": [
+    "Real-time flex where the registered H7 ran Batch API \u2014 both bill 50% of list; execution infrastructure, not a parameter."
+   ]
   }
  }
 }
