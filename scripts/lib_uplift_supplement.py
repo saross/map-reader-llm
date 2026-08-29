@@ -76,6 +76,8 @@ __all__ = [
     "NotationKey",
     "PRIMARY_BUFFER_BY_CORPUS",
     "REFERENCE_BY_FILENAME",
+    "SHELL_EPILOGUE",
+    "SHELL_PREAMBLE",
     "ScoringRecipe",
     "StratumKey",
     "UnknownColumnError",
@@ -377,6 +379,8 @@ COLUMN_EXTENSIONS: dict[str, ColumnExtension] = {
              "Which scorer the job needs: evaluate_detections or corrected_f1_multi_buffer."),
         _ext("command", "anti-confabulation",
              "The exact invocation the operator runs on sapphire."),
+        _ext("materialise_command", "anti-confabulation",
+             "Prelude that builds the twin with the source_tile the engine scopes by."),
         _ext("source_condition", "§ 7 (registry ids)",
              "The K >= 3 consensus cell whose K = 1 rung this job supplies."),
         _ext("verified_condition_id", "§ 7 (registry ids)",
@@ -1619,6 +1623,36 @@ def iter_condition_specs(
 # --------------------------------------------------------------------------- #
 # CSV writing
 # --------------------------------------------------------------------------- #
+
+
+#: Preamble for a generated batch script. `set -e` is deliberately ABSENT: the
+#: jobs are independent, and aborting at the first failure turns one crash into
+#: twelve unrun jobs and a misleading partial result — which is exactly what
+#: happened to the pairing batch on 2026-08-29. `run` records each failure and
+#: keeps going; the epilogue reports them and sets the exit code.
+SHELL_PREAMBLE: tuple[str, ...] = (
+    "set -uo pipefail",
+    "",
+    "FAILED=()",
+    "run() {",
+    '  echo "+ $*"',
+    '  if ! "$@"; then',
+    '    echo "FAILED: $*" >&2',
+    '    FAILED+=("$1 $2")',
+    "  fi",
+    "}",
+)
+
+#: Epilogue matching :data:`SHELL_PREAMBLE`.
+SHELL_EPILOGUE: tuple[str, ...] = (
+    'if [ ${#FAILED[@]} -ne 0 ]; then',
+    '  echo "" >&2',
+    '  echo "${#FAILED[@]} job(s) failed:" >&2',
+    '  printf "  %s\\n" "${FAILED[@]}" >&2',
+    "  exit 1",
+    "fi",
+    'echo "all jobs succeeded"',
+)
 
 
 def generated_doc_banner(reason: str, generator: str) -> list[str]:

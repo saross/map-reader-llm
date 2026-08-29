@@ -2,7 +2,7 @@
 
 > **Last revised**: 2026-08-29 (regenerated from committed artefacts by `scripts/build_k1_gapfill_worklist.py`; original publication; the K = 1 plan and its disclosure). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-08-29T04:34:04Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-08-29T09:52:27Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 Build order step 2 of `planning/uplift-supplement-2026-08-28.md`. No
 scoring has been run: this document and its worklist are the plan.

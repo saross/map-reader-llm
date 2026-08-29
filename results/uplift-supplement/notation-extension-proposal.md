@@ -2,7 +2,7 @@
 
 > **Last revised**: 2026-08-29 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-08-29T04:34:08Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-08-29T09:52:32Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 The canonical key `docs/methodology/notation-key.md` requires that
 "new tables and dataset builders must conform to it or extend it here
@@ -44,6 +44,7 @@ loudly.
 | `job_id` | anti-confabulation | Primary key of a scoring job in a worklist. |
 | `k1_with_verifier` | § 2 (PV) | derivable / blocked / not-applicable — the card's disclosed K = 1 PV anchor. |
 | `k1_with_verifier_reason` | anti-confabulation | The measured ground for that verdict; never an approximation. |
+| `materialise_command` | anti-confabulation | Prelude that builds the twin with the source_tile the engine scopes by. |
 | `materialise_filter` | § 1 (k) | The vote_count predicate that turns the union into the paired shell. |
 | `mde_50` | § 5 (MDE 50 %/80 %) | Minimum detectable effect at 50 % power, joined from sensitivity.json. |
 | `mde_80` | § 5 (MDE 50 %/80 %) | Minimum detectable effect at 80 % power, joined from sensitivity.json. |
