@@ -1,7 +1,8 @@
 # Billing reconciliation, 2026-08-29: the Gemini 3 Flash ×1.6 gap
 
-> **Last revised**: 2026-08-29 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-29 (SKU check attempted — detailed
+> reports lag ~48 h, determination DEFERRED to ~2026-09-02; see the
+> changelog). See [§ Changelog](#changelog) for revision history.
 
 **Classification**: post-hoc cost audit, $0 API spend. Read-only analysis of
 committed run metadata. No Application Programming Interface (API) call was
@@ -283,6 +284,32 @@ in-window campaigns, and their absence is why this reconciliation has to
 argue from prices rather than simply read what was requested.
 
 ## Changelog
+
+### 2026-08-29 (later) — SKU check: partial post, ALL Flex; hypothesis re-ranked
+
+The PI attempted the § 9 decisive check the same day. Two findings:
+
+1. **The detailed (SKU-grouped) reports lag ~48 hours**: the
+   model-level view reads ~$800 total, but only ~$250 has posted to
+   the detailed reports. Full determination deferred — **re-check on
+   or after ~2026-09-02**.
+2. **Every charge posted so far is on "Gemini 3 Flash Flex" SKUs.**
+
+Finding 2 re-ranks the hypotheses. The posted ~$250 covers roughly
+the window's first days, whose flex-basis recomputation is of the
+same order — consistent with the flex discount being HONOURED. If
+the remaining days also post as Flex, the detailed total should land
+near the § 5 flex basis ($400.63–$506.43), NOT at $700 — implying
+the model-level "$700.01" is a **display-basis artefact**: a
+usage-page rendering priced at list rates (the § 5 list bracket
+[$670.09, $801.26] contains it) while actual billing applies the
+flex SKUs. Under that reading there is no billing anomaly, true
+window spend is ≈ $400–500, and the token-load-audit flex anchors
+stand. The alternative (later days post at Standard SKUs) remains
+open until the reports catch up. Until settled, cost planning keeps
+the conservative list basis for `gemini-3-flash-preview` ceilings;
+paper cost figures remain untouched either way pending the
+~2026-09-02 re-check.
 
 ### 2026-08-29 — Original publication
 
