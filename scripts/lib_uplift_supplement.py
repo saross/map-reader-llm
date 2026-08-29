@@ -160,6 +160,14 @@ _GEOMETRY_RE = re.compile(r"g(\d+)[-_]ov(\d+)")
 #: ``geometry_basis = "label-overlap-percent"``.
 _OVERLAP_PCT_RE = re.compile(r"overlap-(\d+)(?:-(\d+))?")
 
+#: Anchor for re-relativising an absolute path recorded by a scoring engine.
+#: Matches the first top-level project directory segment, so a path recorded in
+#: the main checkout re-relativises correctly from a worktree (whose directory
+#: is named for the branch, not the repository).
+_REPO_RELATIVE_RE = re.compile(
+    r"/((?:inputs|results|outputs|prompts|scripts|docs|configs|studies)/)"
+)
+
 
 # --------------------------------------------------------------------------- #
 # Errors
@@ -990,12 +998,19 @@ def read_scoring_recipe(
         return None, f"{summary_rel} records no input_paths block"
 
     def _rel(value: str | None) -> str | None:
-        """Make an absolute recorded path repo-relative where possible."""
+        """Make an absolute recorded path repo-relative where possible.
+
+        The corrected-F1 engine records absolute paths. Re-relativising on the
+        repository directory NAME fails inside a worktree (whose directory is
+        named for the branch, not the repo), so the anchor is the first
+        top-level project directory segment instead — stable wherever the
+        checkout lives.
+        """
         if not value:
             return None
-        text = str(value)
-        marker = f"{repo_root.name}/"
-        return text.split(marker, 1)[1] if marker in text else text
+        text = str(value).replace("\\", "/")
+        match = _REPO_RELATIVE_RE.search(text)
+        return text[match.start(1):] if match else text
 
     return ScoringRecipe(
         engine="corrected_f1_multi_buffer",
