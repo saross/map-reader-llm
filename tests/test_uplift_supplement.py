@@ -22,18 +22,25 @@ Created: 2026-08-29 (uplift-supplement card, Build order steps 1-3)
 from __future__ import annotations
 
 import csv
+import json
 from pathlib import Path
 
 import pytest
 
+from scripts.compute_verifier_uplift import _metric_from_eval, _value_for
 from scripts.lib_uplift_supplement import (
     COLUMN_EXTENSIONS,
     NOTATION_KEY_PATH,
     REFERENCE_N_MOUNDS,
+    REFERENCE_PATH,
     CrossStratumAggregationError,
     NotationKey,
     StratumKey,
     UnknownColumnError,
+    VerifierManifest,
+    collect_verifier_manifests,
+    match_verifier_manifest,
+    read_scoring_recipe,
     refuse_cross_stratum,
     resolve_basis,
     resolve_geometry,
@@ -153,6 +160,21 @@ class TestRefuseCrossStratum:
         """An empty aggregate has no stratum, so it cannot be labelled."""
         with pytest.raises(CrossStratumAggregationError, match="no rows"):
             refuse_cross_stratum([])
+
+    def test_empty_string_stratum_id_counts_as_missing(self) -> None:
+        """An empty key is absent, not a stratum named "".
+
+        A CSV round-trip turns a null into ``""``, so a builder that dropped
+        the key would otherwise sail through the guard on every row.
+        """
+        rows = [_row("4-map-gs|curator|20m|era-2-487"), {"stratum_id": ""}]
+        with pytest.raises(CrossStratumAggregationError, match="no stratum_id"):
+            refuse_cross_stratum(rows)
+
+    def test_all_rows_empty_string_raises(self) -> None:
+        """Uniformly empty keys must not aggregate as one anonymous stratum."""
+        with pytest.raises(CrossStratumAggregationError, match="no stratum_id"):
+            refuse_cross_stratum([{"stratum_id": ""}, {"stratum_id": ""}])
 
     def test_transfer_flag_does_not_excuse_a_missing_key(self) -> None:
         """`transfer=True` licenses a span, not an unkeyed row."""
@@ -380,18 +402,37 @@ class TestResolveReference:
         meta = {"input_files": {
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson"
         }}
-        term, path, basis = resolve_reference(meta, "verified-k4", "student")
-        assert (term, basis) == ("standardised", "eval-ground-truth")
-        assert path.endswith("best-available-gt-55maps.geojson")
+        resolved = resolve_reference(meta, "verified-k4", "student")
+        assert resolved.term == "standardised"
+        assert resolved.basis == "eval-ground-truth"
+        assert resolved.path.endswith("best-available-gt-55maps.geojson")
+        assert resolved.consumed_path is None
 
     def test_frozen_replay_copies_resolve_by_basename(self) -> None:
         """Replays under a scratch 'frozen' tree name the same reference file."""
-        meta = {"cli_args": {
-            "ground_truth": "/home/x/cc-scratch/tmp/tmpabc/frozen/inputs/vectors/"
-                            "references/mounds-reference.geojson"
-        }}
-        term, _path, basis = resolve_reference(meta, "consensus-4of5", "curator")
-        assert (term, basis) == ("curator", "eval-ground-truth")
+        consumed = ("/home/x/cc-scratch/tmp/tmpabc/frozen/inputs/vectors/"
+                    "references/mounds-reference.geojson")
+        resolved = resolve_reference(
+            {"cli_args": {"ground_truth": consumed}}, "consensus-4of5", "curator"
+        )
+        assert resolved.term == "curator"
+        assert resolved.basis == "eval-ground-truth"
+
+    def test_replay_copy_never_becomes_the_published_anchor(self) -> None:
+        """`reference_path` is documented as re-verifiable, so it must resolve.
+
+        Nine committed evaluations ran against a frozen scratch copy that no
+        longer exists. Publishing that path as the anchor hands a reader a dead
+        link; the canonical in-repo file is the anchor and the consumed path is
+        preserved separately.
+        """
+        consumed = ("/home/x/cc-scratch/tmp/tmpabc/frozen/inputs/vectors/"
+                    "references/mounds-reference.geojson")
+        resolved = resolve_reference(
+            {"cli_args": {"ground_truth": consumed}}, "consensus-4of5", "curator"
+        )
+        assert resolved.path == "inputs/vectors/references/mounds-reference.geojson"
+        assert resolved.consumed_path == consumed
 
     @pytest.mark.parametrize(
         ("label", "expected"),
@@ -400,8 +441,8 @@ class TestResolveReference:
     )
     def test_label_suffix_is_the_fallback(self, label: str, expected: str) -> None:
         """The explicit suffixes resolve when the evaluation records nothing."""
-        term, _path, basis = resolve_reference(None, label, "combined")
-        assert (term, basis) == (expected, "label-suffix")
+        resolved = resolve_reference(None, label, "combined")
+        assert (resolved.term, resolved.basis) == (expected, "label-suffix")
 
     @pytest.mark.parametrize(
         "label", ["greedy-canonical", "wbf-canonical", "canonical-first",
@@ -411,19 +452,36 @@ class TestResolveReference:
         self, label: str
     ) -> None:
         """These name a CONFIG, not a reference; the run's facts must win."""
-        term, _path, basis = resolve_reference(None, label, "curator")
-        assert (term, basis) == ("curator", "run-facts")
+        resolved = resolve_reference(None, label, "curator")
+        assert (resolved.term, resolved.basis) == ("curator", "run-facts")
 
     def test_combined_schema_class_maps_to_canonical(self) -> None:
         """The manifest's 'combined' is the notation key's canonical extended GT."""
-        term, _path, basis = resolve_reference(None, "verified", "combined")
-        assert (term, basis) == ("canonical", "run-facts")
+        resolved = resolve_reference(None, "verified", "combined")
+        assert (resolved.term, resolved.basis) == ("canonical", "run-facts")
 
     def test_unresolvable_reference_is_none_not_a_guess(self) -> None:
         """No rule firing yields None and says so."""
-        term, _path, basis = resolve_reference(None, "verified", None)
-        assert term is None
-        assert basis == "unresolved"
+        resolved = resolve_reference(None, "verified", None)
+        assert resolved.term is None
+        assert resolved.basis == "unresolved"
+
+    @pytest.mark.parametrize("unknown", ["lidar", "combined-v2", "reviewer"])
+    def test_unrecognised_run_reference_does_not_become_a_stratum_component(
+        self, unknown: str
+    ) -> None:
+        """An unknown vocabulary term must surface, not be welded into a key.
+
+        Documented behaviour: a `gt_reference` the § 4 vocabulary does not
+        recognise resolves to `None` with basis `unresolved`. The flatten then
+        writes `unknown` into the stratum id, which is legible as a gap. Passing
+        the raw value through would mint a stratum nobody can interpret and that
+        no MDE or reference count could ever join to.
+        """
+        resolved = resolve_reference(None, "verified", unknown)
+        assert resolved.term is None
+        assert resolved.basis == "unresolved"
+        assert resolved.path is None
 
     def test_every_reference_term_has_a_committed_mound_count(self) -> None:
         """The strata table's n_refs is defined for every vocabulary term."""
@@ -496,3 +554,394 @@ class TestResolveBasis:
     def test_unencoded_label_returns_none(self) -> None:
         """as-shipped and comparability are editorial, not in label text."""
         assert resolve_basis("consensus-4of5") is None
+
+
+# --------------------------------------------------------------------------- #
+# Scoring-recipe recovery
+# --------------------------------------------------------------------------- #
+
+
+class TestReadScoringRecipe:
+    """Recovering how a committed evaluation was produced."""
+
+    def test_direct_cli_args_shape(self, tmp_path: Path) -> None:
+        """An evaluate_detections artefact yields its own invocation."""
+        document = {
+            "summary": {"buffers": [{"buffer_metres": 20}, {"buffer_metres": 50}]},
+            "_metadata": {
+                "cli_args": {
+                    "buffers": [20, 50], "bootstrap": 10000, "seed": 42,
+                    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+                    "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+                },
+                "bootstrap": {"n_iterations": 10000, "seed": 42},
+            },
+        }
+        recipe, problem = read_scoring_recipe(tmp_path, "results/x/evaluation.json",
+                                              document)
+        assert problem is None
+        assert recipe.engine == "evaluate_detections"
+        assert recipe.buffers == (20, 50)
+        assert recipe.bootstrap == 10000 and recipe.seed == 42
+        assert recipe.ground_truth.endswith("mounds-reference.geojson")
+        assert recipe.recovered_from == "results/x/evaluation.json"
+
+    def test_seed_zero_survives(self, tmp_path: Path) -> None:
+        """A recorded seed of 0 must not be replaced by the project default.
+
+        An `or` chain treats 0 as absent, which silently reruns a different
+        experiment. The value is checked against None, so 0 comes through.
+        """
+        document = {
+            "summary": {"buffers": [{"buffer_metres": 20}]},
+            "_metadata": {"cli_args": {"seed": 0, "bootstrap": 0, "buffers": [20]}},
+        }
+        recipe, _ = read_scoring_recipe(tmp_path, None, document)
+        assert recipe.seed == 0
+        assert recipe.bootstrap == 0
+
+    def test_adapted_summary_shape(self, tmp_path: Path) -> None:
+        """An adapter's output is followed one hop to the engine summary."""
+        summary = tmp_path / "results" / "x" / "summary.json"
+        summary.parent.mkdir(parents=True)
+        summary.write_text(json.dumps({"metadata": {
+            "seed": 42, "bootstrap_n": 10000,
+            "input_paths": {
+                "student_gt": "/somewhere/else/inputs/vectors/references/"
+                              "student-mounds-55maps-reviewed.geojson",
+                "bounds": "/somewhere/else/inputs/vectors/bounds/384/"
+                          "55maps_evaluation_bounds.geojson",
+                "review_today": "/somewhere/else/results/canon/review.csv",
+            },
+        }}), encoding="utf-8")
+        document = {
+            "summary": {"buffers": [{"buffer_metres": 50}]},
+            "_metadata": {"source": "results/x/summary.json"},
+        }
+        recipe, problem = read_scoring_recipe(tmp_path, "results/x/evaluation.json",
+                                              document)
+        assert problem is None
+        assert recipe.engine == "corrected_f1_multi_buffer"
+        assert recipe.bootstrap == 10000 and recipe.seed == 42
+        assert recipe.extra["review_today"] == "results/canon/review.csv"
+
+    def test_absolute_paths_are_re_relativised_from_any_checkout(
+        self, tmp_path: Path
+    ) -> None:
+        """The anchor is the project directory segment, not the repo's name.
+
+        Splitting on the repository DIRECTORY NAME works in the main checkout
+        and fails in a worktree, whose directory is named for the branch — the
+        defect fixed in 59e688185. `tmp_path` here is named nothing like the
+        repo, which is exactly the condition that used to break it.
+        """
+        summary = tmp_path / "summary.json"
+        summary.write_text(json.dumps({"metadata": {"input_paths": {
+            "student_gt": "/home/someone/Code/anything/inputs/vectors/"
+                          "references/student-mounds-55maps-reviewed.geojson",
+            "bounds": "/home/someone/Code/anything/inputs/vectors/bounds/"
+                      "384/55maps_evaluation_bounds.geojson",
+        }}}), encoding="utf-8")
+        document = {"summary": {"buffers": []},
+                    "_metadata": {"source_summary": "summary.json"}}
+        recipe, _ = read_scoring_recipe(tmp_path, None, document)
+        assert recipe.ground_truth == (
+            "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
+        )
+        assert recipe.bounds == (
+            "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+        )
+
+    def test_missing_document_is_reported_not_guessed(self, tmp_path: Path) -> None:
+        """No artefact, no recipe — and a reason a reader can act on."""
+        recipe, problem = read_scoring_recipe(tmp_path, None, None)
+        assert recipe is None
+        assert "no readable evaluation artefact" in problem
+
+    def test_no_recipe_anywhere_is_reported(self, tmp_path: Path) -> None:
+        """An evaluation with neither CLI args nor a summary pointer blocks."""
+        recipe, problem = read_scoring_recipe(
+            tmp_path, None, {"summary": {"buffers": []}, "_metadata": {}}
+        )
+        assert recipe is None
+        assert "cannot be reproduced" in problem
+
+    def test_named_summary_missing_on_disk_is_reported(self, tmp_path: Path) -> None:
+        """A dangling pointer names the file it could not find."""
+        recipe, problem = read_scoring_recipe(
+            tmp_path, None,
+            {"summary": {"buffers": []}, "_metadata": {"source": "nope.json"}},
+        )
+        assert recipe is None
+        assert "nope.json" in problem
+
+
+# --------------------------------------------------------------------------- #
+# Metric lifting for the uplift column
+# --------------------------------------------------------------------------- #
+
+
+class TestMetricFromEval:
+    """Lifting one metric at one buffer out of an evaluation document."""
+
+    @staticmethod
+    def _document(mcc: object) -> dict:
+        """Build a document whose tile MCC takes the given shape."""
+        return {"summary": {
+            "buffers": [
+                {"buffer_metres": 20, "f1": 0.8, "precision": 0.7, "recall": 0.9},
+                {"buffer_metres": 50, "f1": 0.85, "precision": 0.75, "recall": 0.95},
+            ],
+            "tile_classification": {"mcc": mcc},
+        }}
+
+    @pytest.mark.parametrize(
+        ("metric", "expected"), [("F1", 0.8), ("precision", 0.7), ("recall", 0.9)]
+    )
+    def test_buffer_metrics_are_read_at_the_requested_buffer(
+        self, metric: str, expected: float
+    ) -> None:
+        """The buffer selects the row; 20 m and 50 m are different numbers."""
+        assert _metric_from_eval(self._document(0.5), metric, 20) == expected
+
+    def test_a_different_buffer_gives_a_different_value(self) -> None:
+        """Guards against the reader ignoring its buffer argument."""
+        assert _metric_from_eval(self._document(0.5), "F1", 50) == 0.85
+
+    def test_absent_buffer_returns_none(self) -> None:
+        """A buffer the evaluation never reported is missing, not zero."""
+        assert _metric_from_eval(self._document(0.5), "F1", 999) is None
+
+    def test_scalar_mcc(self) -> None:
+        """The common shape: a bare number."""
+        assert _metric_from_eval(self._document(0.42), "MCC", 20) == 0.42
+
+    def test_dict_mcc_unwraps_its_point_estimate(self) -> None:
+        """Some evaluations wrap MCC with its CI; the point estimate is wanted."""
+        wrapped = {"point": 0.42, "ci": [0.3, 0.5], "n_runs": 5}
+        assert _metric_from_eval(self._document(wrapped), "MCC", 20) == 0.42
+
+    def test_null_mcc_stays_none(self) -> None:
+        """An undefined MCC is null, never 0.0 (erratum E81)."""
+        assert _metric_from_eval(self._document(None), "MCC", 20) is None
+
+    def test_mcc_ignores_the_buffer(self) -> None:
+        """Tile MCC is buffer-agnostic, so both buffers give the same value."""
+        document = self._document(0.42)
+        assert (_metric_from_eval(document, "MCC", 20)
+                == _metric_from_eval(document, "MCC", 50))
+
+
+class TestValueFor:
+    """Resolving one side of a pair to a metric value."""
+
+    def test_prefers_the_flatten(self, tmp_path: Path) -> None:
+        """A registered condition's value comes from conditions.csv."""
+        conditions = {"a::b": {"F1": "0.61", "MCC": "0.4"}}
+        value, source = _value_for(tmp_path, conditions, "a::b", None, "F1", 20)
+        assert value == pytest.approx(0.61)
+        assert source == "conditions.csv"
+
+    def test_falls_back_to_a_freshly_scored_evaluation(self, tmp_path: Path) -> None:
+        """A twin scored from the worklist has no row yet, but has an artefact."""
+        out = tmp_path / "job"
+        out.mkdir()
+        (out / "evaluation.json").write_text(json.dumps({"summary": {
+            "buffers": [{"buffer_metres": 20, "f1": 0.55}],
+        }}), encoding="utf-8")
+        value, source = _value_for(tmp_path, {}, None, "job", "F1", 20)
+        assert value == pytest.approx(0.55)
+        assert source == "job/evaluation.json"
+
+    def test_missing_on_both_routes(self, tmp_path: Path) -> None:
+        """Absent is reported as missing, never as a default."""
+        assert _value_for(tmp_path, {}, None, None, "F1", 20) == (None, "missing")
+
+    def test_blank_csv_cell_is_missing_not_zero(self, tmp_path: Path) -> None:
+        """An empty CSV cell means the metric was not computed."""
+        conditions = {"a::b": {"F1": ""}}
+        assert _value_for(tmp_path, conditions, "a::b", None, "F1", 20) == (
+            None, "missing"
+        )
+
+
+# --------------------------------------------------------------------------- #
+# The committed reference constants
+# --------------------------------------------------------------------------- #
+
+
+class TestReferenceCounts:
+    """`REFERENCE_N_MOUNDS` must match the committed reference files."""
+
+    @pytest.mark.parametrize(
+        ("term", "expected"),
+        [("curator", 569), ("student", 4746), ("canonical", 5161),
+         ("standardised", 5010)],
+    )
+    def test_recounts_the_committed_geojson(self, term: str, expected: int) -> None:
+        """Recount the file rather than trusting the constant.
+
+        `n_refs` is published in `strata.csv` and read as a fact about the
+        reference. A reference that is re-materialised without the constant
+        being updated would publish a stale count with no warning; this test is
+        the warning. Skipped rather than failed where a reference is not
+        present in the checkout, since the constants are the thing under test,
+        not the availability of large committed data.
+        """
+        path = PROJECT_ROOT / REFERENCE_PATH[term]
+        if not path.exists():  # pragma: no cover - depends on checkout contents
+            pytest.skip(f"{path} is not present in this checkout")
+        counted = len(json.loads(path.read_text(encoding="utf-8"))["features"])
+        assert counted == expected == REFERENCE_N_MOUNDS[term]
+
+
+# --------------------------------------------------------------------------- #
+# Verifier-stage matching
+# --------------------------------------------------------------------------- #
+
+
+def _manifest(path: str, source: str, min_vote: int) -> VerifierManifest:
+    """Build a VerifierManifest for the matcher tests."""
+    return VerifierManifest(
+        path=path, source_basename=source, min_vote=min_vote,
+        max_vote=min_vote + 4, n_candidates=100,
+    )
+
+
+class TestMatchVerifierManifest:
+    """Matching a verified cell to the candidate manifest of ITS stage."""
+
+    def test_no_manifests(self) -> None:
+        """A run with no verifier stage cannot be measured."""
+        assert match_verifier_manifest([], "verified-v1", "pool", None, 5) == (
+            None, "no-manifest"
+        )
+
+    def test_sole_manifest_is_taken(self) -> None:
+        """One stage, nothing to confuse it with."""
+        only = _manifest("outputs/r/crops/candidate_manifest.json",
+                         "consensus-4of5.geojson", 4)
+        assert match_verifier_manifest([only], "verified-v1", "pool", None, 5) == (
+            only, "sole-manifest"
+        )
+
+    def test_union_shell_matches_on_exact_n(self) -> None:
+        """union_k1 must not match a cell at N = 10, nor the reverse.
+
+        Substring matching would: "union_k1" is a prefix of "union_k10".
+        """
+        k1 = _manifest("outputs/r/v/p/crops_k1/candidate_manifest.json",
+                       "union_k1.geojson", 1)
+        k10 = _manifest("outputs/r/v/p/crops/candidate_manifest.json",
+                        "union_k10.geojson", 1)
+        assert match_verifier_manifest([k1, k10], "ladder-n1", "p", None, 1)[0] is k1
+        assert match_verifier_manifest([k1, k10], "k10-cell", "p", None, 10)[0] is k10
+
+    def test_consensus_shell_separates_stages_sharing_a_pool(self) -> None:
+        """verifier-robustness verified a union stage and a ge3of5 stage."""
+        union = _manifest("outputs/r/384-text-1of5-union/crops/candidate_manifest.json",
+                          "flash-high-text-1of5.geojson", 1)
+        ge3 = _manifest("outputs/r/384-text-ge3of5/crops/candidate_manifest.json",
+                        "flash-high-text-ge3of5.geojson", 3)
+        matched, basis = match_verifier_manifest(
+            [union, ge3], "verified-384-ge3of5-t0-3-n5", "flash-high-text-1of5",
+            None, 5,
+        )
+        assert matched is ge3 and matched.min_vote == 3
+        assert basis.startswith("matched-")
+
+    def test_fusion_family_is_applied_symmetrically(self) -> None:
+        """A greedy cell must NOT land on the WBF stage, and vice versa."""
+        greedy = _manifest("outputs/h8/scale-4/crops/candidate_manifest.json",
+                           "consensus_t1.geojson", 1)
+        wbf = _manifest("outputs/h8/wbf/scale-4/crops/candidate_manifest.json",
+                        "wbf_candidates.geojson", 1)
+        assert match_verifier_manifest(
+            [greedy, wbf], "verified-scale-4", "scale-4", None, 5)[0] is greedy
+        assert match_verifier_manifest(
+            [greedy, wbf], "verified-wbf-scale-4", "scale-4", None, 5)[0] is wbf
+
+    def test_exact_segment_beats_substring(self) -> None:
+        """`g384_ov192_image` is a substring of `g384_ov192_image_high`.
+
+        Substring scoring ties the two stages; matching a whole path segment
+        separates them.
+        """
+        plain = _manifest(
+            "outputs/ib/verifier/g384_ov192_image/crops/candidate_manifest.json",
+            "union_k10.geojson", 1)
+        high = _manifest(
+            "outputs/ib/verifier/g384_ov192_image_high/crops/candidate_manifest.json",
+            "union_k10.geojson", 1)
+        matched, basis = match_verifier_manifest(
+            [plain, high], "g384-ov192-image-min-k10-verified", "g384_ov192_image",
+            "g384_ov192", 10,
+        )
+        assert matched is plain
+        assert basis == "matched-lineage-segment"
+
+    def test_unmatchable_lineage_is_disclosed_not_defaulted(self) -> None:
+        """Two indistinguishable stages give no verdict, not the run minimum."""
+        first = _manifest("outputs/r/a/crops/candidate_manifest.json", "x.geojson", 1)
+        second = _manifest("outputs/r/b/crops/candidate_manifest.json", "y.geojson", 4)
+        matched, basis = match_verifier_manifest(
+            [first, second], "verified-adv", "nowhere", None, 5
+        )
+        assert matched is None
+        assert basis == "ambiguous-lineage"
+
+
+class TestCollectVerifierManifests:
+    """Surveying a run's candidate manifests."""
+
+    def test_smoke_trees_are_excluded_and_reported(self, tmp_path: Path) -> None:
+        """A 12-candidate rehearsal must not set a campaign's coverage floor."""
+        real = tmp_path / "stage" / "crops" / "candidate_manifest.json"
+        smoke = tmp_path / "_smoke" / "stage" / "crops" / "candidate_manifest.json"
+        for path, votes in ((real, [3, 4, 5]), (smoke, [1, 5])):
+            path.parent.mkdir(parents=True)
+            path.write_text(json.dumps({
+                "source_geojson": "s.geojson",
+                "candidates": [{"properties": {"vote_count": v}} for v in votes],
+            }), encoding="utf-8")
+
+        manifests, skipped = collect_verifier_manifests(tmp_path, tmp_path)
+        assert [m.min_vote for m in manifests] == [3]
+        assert len(skipped) == 1
+        assert "smoke-test tree" in skipped[0]
+
+    def test_manifests_without_vote_counts_are_reported(self, tmp_path: Path) -> None:
+        """A single-pass verifier crops from a raw pass and has no votes."""
+        path = tmp_path / "stage" / "crops" / "candidate_manifest.json"
+        path.parent.mkdir(parents=True)
+        path.write_text(json.dumps({
+            "source_geojson": "s.geojson",
+            "candidates": [{"properties": {}}],
+        }), encoding="utf-8")
+        manifests, skipped = collect_verifier_manifests(tmp_path, tmp_path)
+        assert manifests == []
+        assert "no integer vote counts" in skipped[0]
+
+    def test_unreadable_manifest_is_reported_not_swallowed(
+        self, tmp_path: Path
+    ) -> None:
+        """Dropping a manifest silently can raise a floor and flip a verdict."""
+        path = tmp_path / "stage" / "crops" / "candidate_manifest.json"
+        path.parent.mkdir(parents=True)
+        path.write_text("{not json", encoding="utf-8")
+        manifests, skipped = collect_verifier_manifests(tmp_path, tmp_path)
+        assert manifests == []
+        assert "unreadable" in skipped[0]
+
+    def test_paths_are_recorded_relative_to_the_repository(
+        self, tmp_path: Path
+    ) -> None:
+        """Published evidence must not bake in a machine-local absolute path."""
+        path = tmp_path / "run" / "stage" / "crops" / "candidate_manifest.json"
+        path.parent.mkdir(parents=True)
+        path.write_text(json.dumps({
+            "source_geojson": "s.geojson",
+            "candidates": [{"properties": {"vote_count": 2}}],
+        }), encoding="utf-8")
+        manifests, _ = collect_verifier_manifests(tmp_path / "run", tmp_path)
+        assert manifests[0].path == "run/stage/crops/candidate_manifest.json"
