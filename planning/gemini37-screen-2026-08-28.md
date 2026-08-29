@@ -116,6 +116,18 @@ review; bears on the 55-map run's carried-verifier design (step 3,
 IN FLIGHT on the proposer-axis-isolation card as approved). Data
 commits `b9516c26f`, `3039d3ac9`.
 
+Provenance notes (Obs 441 source checks): the K=10 re-verification
+meta prices at ≈ $0.64 flex, not $0.63. The swap's `run.meta.json`
+was OVERWRITTEN by the two-candidate cleanup pass (a `run_pv.py
+cleanup` behaviour — fix queued with the service-tier stamping);
+the main swap run's usage, read in-session before the overwrite and
+otherwise unrecorded: 789 processed / 2 failed, tokens in 1,413,888
+/ out 98,574 / thinking 83,728 → ≈ $0.87 token-basis flex for the
+789, ≈ $0.9 with the cleanup pair. The runner's live estimator
+prices 3.7 at Gemini 3 rates and excludes thinking — meta
+`cost_estimate` fields for 3.7 runs are underestimates; use token
+counts × 3.7 rates or the billed SKU.
+
 ### 2026-08-29 — Screen outcome + escalation approval
 
 G1 informative outcome recorded; PI approved passes 6–10, the
