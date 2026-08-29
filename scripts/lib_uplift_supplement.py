@@ -82,6 +82,8 @@ __all__ = [
     "VerifierManifest",
     "collect_verifier_manifests",
     "condition_stratum",
+    "lineage_match_count",
+    "path_matches_lineage",
     "generated_doc_banner",
     "iter_condition_specs",
     "match_verifier_manifest",
@@ -91,6 +93,7 @@ __all__ = [
     "resolve_geometry",
     "resolve_reference",
     "resolve_scope",
+    "shell_strip",
     "validate_columns",
     "write_csv",
 ]
@@ -393,7 +396,7 @@ COLUMN_EXTENSIONS: dict[str, ColumnExtension] = {
         _ext("verified_stratum_id", "§ 6",
              "The verified cell's own stratum, keyed from its own evidence."),
         _ext("unverified_stratum_id", "§ 6",
-             "The twin's stratum, keyed independently so the guard has something to check."),
+             "The twin's stratum, keyed independently; a tripwire, not a lineage check."),
         _ext("unverified_stratum_basis", "anti-confabulation",
              "Whether the twin's stratum was derived from its own cell or from the recipe."),
         _ext("pairing_basis", "anti-confabulation",
@@ -1173,16 +1176,30 @@ def condition_stratum(
 # Verifier coverage
 # --------------------------------------------------------------------------- #
 
-#: Path segments marking a smoke-test tree. Their manifests describe 12-candidate
-#: rehearsals, not the campaign, and one of them (``_smoke/384-...-1of5-union``)
-#: carries a vote-1 candidate that would drag a run's measured floor to 1 and
-#: flip a blocked verdict to derivable.
-_SMOKE_SEGMENTS = ("_smoke", "smoke-384", "smoke-512", "smoke-armb")
+#: Path-segment PREFIXES marking a smoke-test tree. Their manifests describe
+#: 12-candidate rehearsals, not the campaign, and one of them
+#: (``_smoke/384-...-1of5-union``) carries a vote-1 candidate that would drag a
+#: real stage's measured floor to 1 and flip a blocked verdict to derivable. A
+#: prefix rule rather than an allowlist: a new ``smoke-`` tree must be excluded
+#: the day it lands, not the day someone remembers to extend a list.
+_SMOKE_SEGMENT_PREFIXES = ("_smoke", "smoke-")
+
+#: Property keys under which a candidate manifest records the vote count its
+#: candidate arrived with. Two vocabularies are in the committed corpus:
+#: ``vote_count`` in most campaigns and ``proposer_votes`` in the
+#: ``e47-propose-brief`` ladder. Reading only the first excluded eight real
+#: stages under a reason that was not true of them.
+_VOTE_COUNT_KEYS = ("vote_count", "proposer_votes")
 
 #: A consensus shell named in a condition label: ``union``, ``4of5``, ``ge3of5``,
 #: ``16of30``. This is the token that separates two verifier stages sharing one
 #: proposer pool, which the pool name alone cannot do.
 _SHELL_TOKEN_RE = re.compile(r"(?:^|-)(union|ge\d+of\d+|\d+of\d+)(?:-|$)")
+
+#: Delimiters a shell token must sit between when matched against a path or a
+#: source name. Unbounded containment makes ``3of5`` match ``ge3of5`` and
+#: ``13of50``, which silently merges distinct stages.
+_DELIMITERS = "-_/."
 
 #: Tokens too generic to identify a verifier lineage. Deliberately NARROW:
 #: modality and thinking words ("text", "image", "high", "minimal") look
@@ -1241,32 +1258,55 @@ def collect_verifier_manifests(
     skipped: list[str] = []
     for path in sorted(run_dir.rglob("candidate_manifest.json")):
         relative = str(path.relative_to(repo_root))
-        parts = {segment.lower() for segment in path.parts}
-        if parts & set(_SMOKE_SEGMENTS):
-            skipped.append(f"{relative}: smoke-test tree, excluded by design")
+        smoke = [
+            segment for segment in path.parts
+            if segment.lower().startswith(_SMOKE_SEGMENT_PREFIXES)
+        ]
+        if smoke:
+            skipped.append(
+                f"{relative}: smoke-test tree (path segment {smoke[0]!r}), "
+                "excluded by design"
+            )
             continue
         try:
             document = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as error:
             skipped.append(f"{relative}: unreadable ({type(error).__name__})")
             continue
-        votes = [
-            candidate.get("properties", {}).get("vote_count")
-            for candidate in document.get("candidates", [])
-        ]
-        votes = [v for v in votes if isinstance(v, int)]
+
+        candidates = document.get("candidates", [])
+        votes: list[int] = []
+        for key in _VOTE_COUNT_KEYS:
+            votes = [
+                candidate.get("properties", {}).get(key)
+                for candidate in candidates
+            ]
+            votes = [v for v in votes if isinstance(v, int)]
+            if votes:
+                break
         if not votes:
+            # DIAGNOSTIC, not boilerplate. An earlier build asserted "a
+            # single-pass verifier stage crops from a raw pass" of every
+            # exclusion, which was false of eight e47-propose-brief stages that
+            # simply used a different key. State what was actually there.
+            observed = sorted({
+                key
+                for candidate in candidates[:200]
+                for key in (candidate.get("properties") or {})
+            })
             skipped.append(
-                f"{relative}: records no integer vote counts "
-                "(a single-pass verifier stage crops from a raw pass)"
+                f"{relative}: no integer vote count under any of "
+                f"{', '.join(_VOTE_COUNT_KEYS)}; {len(candidates)} candidate(s) "
+                f"carry properties {observed or '(none)'}"
             )
             continue
+
         manifests.append(VerifierManifest(
             path=relative,
             source_basename=Path(str(document.get("source_geojson") or "")).name,
             min_vote=min(votes),
             max_vote=max(votes),
-            n_candidates=len(document.get("candidates", [])),
+            n_candidates=len(candidates),
         ))
     return manifests, skipped
 
@@ -1298,6 +1338,7 @@ def match_verifier_manifest(
     pool: str,
     geometry: str | None,
     n_passes: int,
+    siblings: Sequence[tuple[str, str | None]] = (),
 ) -> tuple[VerifierManifest | None, str]:
     """Match a verified condition to the candidate manifest of ITS verifier stage.
 
@@ -1326,27 +1367,74 @@ def match_verifier_manifest(
         pool: The proposer pool.
         geometry: The geometry cell, where resolved.
         n_passes: N.
+        siblings: Every (pool, geometry) lineage the run registers. Used
+            only by the sole-manifest rule, to detect a stage that belongs
+            to a DIFFERENT lineage than this cell's.
 
     Returns:
         ``(manifest, basis)``. ``manifest`` is ``None`` when no unique match
         exists, and ``basis`` then says why — an unmatched lineage is disclosed
         as such, never resolved to the run minimum.
     """
+    tokens = _lineage_tokens(label, pool, geometry)
     if not manifests:
         return None, "no-manifest"
     if len(manifests) == 1:
+        # A lone manifest is not automatically THIS cell's. n1-outstanding-384
+        # holds seven pools and exactly one verifier stage, sitting under the
+        # `image-t0` pool directory, and the short circuit handed that image
+        # stage's manifest to text cells as their evidence.
+        #
+        # The test is CONTRADICTION, not confirmation. Many stages name no pool
+        # at all — gold-standard-v2 crops at run level from a
+        # `consensus-4of5.geojson` that carries no lineage in its name — and
+        # requiring positive confirmation would reject those correct matches.
+        # So: reject only when the manifest positively belongs to one of the
+        # run's OTHER lineages and not to this one.
+        forms = _boundary_forms(manifests[0])
+        mine = lineage_match_count(forms, tokens)
+        theirs = max(
+            (lineage_match_count(forms, _lineage_tokens("", p, g))
+             for p, g in (siblings or ())
+             if (p, g) != (pool, geometry)),
+            default=0,
+        )
+        if theirs > mine:
+            return None, "sole-manifest-lineage-mismatch"
         return manifests[0], "sole-manifest"
 
-    pool_of = [m for m in manifests if m.source_basename.startswith("union_k")]
-    if pool_of:
-        exact = [m for m in pool_of if m.source_basename == f"union_k{n_passes}.geojson"]
-        candidates = exact + [m for m in manifests if m not in pool_of]
+    # Union shells NARROW the field; they never terminate the search. An
+    # earlier build returned `unmatched-union-shell` the moment no manifest
+    # carried this cell's exact N, which discarded the eight stride-55map
+    # N = 3 / N = 5 rungs even though each one's lineage directory identifies
+    # its stage uniquely.
+    suffix = ""
+    unions = [m for m in manifests if m.source_basename.startswith("union_k")]
+    others = [m for m in manifests if m not in unions]
+    if unions:
+        exact = [
+            m for m in unions if m.source_basename == f"union_k{n_passes}.geojson"
+        ]
+        if exact:
+            candidates = exact + others
+        else:
+            # No stage cropped the N-pass union. The K-pass union's candidate
+            # set is a SUPERSET of the N-pass one (a candidate found in any of
+            # the first N passes is found in any of K >= N), so its floor is
+            # still informative about this rung — but it is a different set,
+            # and the basis says so rather than passing the number off as the
+            # rung's own measurement.
+            candidates = unions + others
+            widest = max(
+                (m.source_basename for m in unions),
+                key=lambda name: int(name[len("union_k"):].split(".")[0] or 0),
+            )
+            suffix = f"-via-{Path(widest).stem}-superset"
     else:
         candidates = list(manifests)
-    if not candidates:
-        return None, "unmatched-union-shell"
+
     if len(candidates) == 1:
-        return candidates[0], "matched-union-shell"
+        return candidates[0], f"matched-union-shell{suffix}"
 
     # Fusion family, applied symmetrically: a WBF-verified cell belongs to the
     # WBF verifier stage, and a greedy-verified cell belongs to a stage that is
@@ -1355,7 +1443,7 @@ def match_verifier_manifest(
     wants_wbf = "wbf" in label.lower()
     by_fusion = [m for m in candidates if ("wbf" in m.path.lower()) == wants_wbf]
     if len(by_fusion) == 1:
-        return by_fusion[0], "matched-fusion-family"
+        return by_fusion[0], f"matched-fusion-family{suffix}"
     if by_fusion:
         candidates = by_fusion
 
@@ -1363,60 +1451,117 @@ def match_verifier_manifest(
     if shell:
         narrowed = [
             m for m in candidates
-            if shell.group(1) in m.path or shell.group(1) in m.source_basename
+            if _shell_at_boundary(shell.group(1), m.path)
+            or _shell_at_boundary(shell.group(1), m.source_basename)
         ]
         if len(narrowed) == 1:
-            return narrowed[0], "matched-consensus-shell"
+            return narrowed[0], f"matched-consensus-shell{suffix}"
         if narrowed:
             candidates = narrowed
 
-    tokens = _lineage_tokens(label, pool, geometry)
-
-    # Exact path-SEGMENT matching first. Substring containment alone confuses
-    # nested names: the image-B campaign's pool `g384_ov192_image` is a
-    # substring of its sibling `g384_ov192_image_high`, so a substring score
-    # ties the two stages and loses both. A directory named exactly for the
-    # pool is unambiguous evidence; substring is only a hint.
-    for scorer, basis in (
-        (_segment_score, "matched-lineage-segment"),
-        (_substring_score, "matched-lineage"),
-    ):
-        scored = [(scorer(m, tokens), m) for m in candidates]
-        best = max(score for score, _ in scored)
-        winners = [m for score, m in scored if score == best]
-        if best > 0 and len(winners) == 1:
-            return winners[0], basis
+    scored = [(lineage_match_count(_boundary_forms(m), tokens), m)
+              for m in candidates]
+    best = max(score for score, _ in scored)
+    winners = [m for score, m in scored if score == best]
+    if best > 0 and len(winners) == 1:
+        return winners[0], f"matched-lineage{suffix}"
     return None, "ambiguous-lineage"
 
 
-def _segment_score(manifest: VerifierManifest, tokens: Sequence[str]) -> int:
-    """Count tokens matching a whole path segment or the source basename stem.
+def shell_strip(name: str) -> str:
+    """Strip a trailing vote-shell suffix from an identifier.
+
+    ``flash-high-text-1of5`` → ``flash-high-text``. A pool is named for the
+    shell it was BUILT at and its verifier stage for the shell it was VERIFIED
+    at, so the stems are what the two legitimately share.
+
+    Args:
+        name: The identifier.
+
+    Returns:
+        The stem, or the name unchanged when it carries no shell suffix.
+    """
+    match = _POOL_STEM_RE.match(name)
+    return match.group(1) if match else name
+
+
+def _boundary_forms(manifest: VerifierManifest) -> frozenset[str]:
+    """Every identifier a token may legitimately be EQUAL to.
+
+    Matching is equality against this set, never containment. Unbounded
+    containment is what let the pool ``text-1of10`` claim the stage whose source
+    was ``flash-high-text-1of10.geojson`` — a different pool that merely ends
+    the same way — and cite its manifest as evidence for a cell it never
+    verified. Two identifiers that are not equal at a boundary are two
+    identifiers.
 
     Args:
         manifest: The manifest under test.
-        tokens: The cell's lineage tokens.
 
     Returns:
-        How many tokens match exactly.
+        Path segments and the source stem, each also in shell-stripped form.
     """
-    segments = set(Path(manifest.path).parts)
-    segments.add(Path(manifest.source_basename).stem)
-    return sum(1 for t in tokens if t in segments)
+    forms = set(Path(manifest.path).parts)
+    if manifest.source_basename:
+        forms.add(Path(manifest.source_basename).stem)
+    return frozenset(forms | {shell_strip(f) for f in forms})
 
 
-def _substring_score(manifest: VerifierManifest, tokens: Sequence[str]) -> int:
-    """Count tokens appearing anywhere in the manifest's path or source name.
+def lineage_match_count(forms: Iterable[str], tokens: Sequence[str]) -> int:
+    """Count a cell's tokens that match an identifier set at a boundary.
 
     Args:
-        manifest: The manifest under test.
+        forms: Candidate identifiers (see :func:`_boundary_forms`).
         tokens: The cell's lineage tokens.
 
     Returns:
-        How many tokens appear.
+        How many distinct tokens match, by equality or by shell-stripped
+        equality.
     """
+    haystack = set(forms)
     return sum(
-        1 for t in tokens if t in manifest.path or t in manifest.source_basename
+        1 for t in tokens
+        if t in haystack or shell_strip(t) in haystack
     )
+
+
+def path_matches_lineage(path: str, tokens: Sequence[str]) -> bool:
+    """Whether a file path carries a cell's lineage at a segment boundary.
+
+    The same rule as :func:`lineage_match_count`, for the pairing builder's
+    consensus and union searches, which had their own unbounded ``in`` tests.
+
+    Args:
+        path: The path under test.
+        tokens: The cell's lineage tokens.
+
+    Returns:
+        True when at least one token matches a whole segment or a stem.
+    """
+    parts = set(Path(path).parts)
+    parts |= {Path(p).stem for p in parts}
+    forms = parts | {shell_strip(p) for p in parts}
+    return lineage_match_count(forms, tokens) > 0
+
+
+def _shell_at_boundary(shell: str, haystack: str) -> bool:
+    """Whether a shell token appears in ``haystack`` delimited on both sides.
+
+    Unbounded containment makes ``3of5`` match ``ge3of5`` and ``13of50``, which
+    merges stages that verified different vote shells.
+
+    Args:
+        shell: The shell token, e.g. ``ge3of5``.
+        haystack: A path or source basename.
+
+    Returns:
+        True when the token sits between delimiters or at a string edge.
+    """
+    return re.search(
+        rf"(?:^|[{re.escape(_DELIMITERS)}]){re.escape(shell)}"
+        rf"(?:[{re.escape(_DELIMITERS)}]|$)",
+        haystack,
+    ) is not None
 
 
 def iter_condition_specs(
@@ -1452,13 +1597,15 @@ def iter_condition_specs(
 def generated_doc_banner(reason: str, generator: str) -> list[str]:
     """Render the revision banner every generated document in the set carries.
 
-    The project's Document Revision Policy wants a stable "Original
-    publication" baseline that later revisions diff against. These documents
-    are fully generated, so their content changes whenever the corpus does —
-    but the ORIGINAL date must not move, or there is no baseline. The banner
-    therefore pins the original date from :data:`ORIGINAL_PUBLICATION_DATE` and
-    stamps the regeneration time on a separate line, which is a fact about this
-    build rather than a claim of revision. Git remains the canonical history.
+    Two dates, each in its proper place. **Last revised** carries the date this
+    build ran, because that is what a reader asking "is this current?" needs —
+    the body IS revised whenever the corpus moves. **First published** carries
+    :data:`ORIGINAL_PUBLICATION_DATE`, pinned, so the changelog's
+    original-publication stub keeps the baseline later revisions diff against.
+
+    An earlier build had these the wrong way round: the banner froze at the
+    original date while the body changed underneath it, which is precisely the
+    "is this current?" failure the policy exists to prevent.
 
     Args:
         reason: Short parenthetical describing what the document is.
@@ -1467,14 +1614,16 @@ def generated_doc_banner(reason: str, generator: str) -> list[str]:
     Returns:
         Banner lines, ready to join with newlines.
     """
-    stamped = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    stamped = datetime.now(timezone.utc)
     return [
-        f"> **Last revised**: {ORIGINAL_PUBLICATION_DATE} ({reason}). "
+        f"> **Last revised**: {stamped.date().isoformat()} (regenerated from "
+        f"committed artefacts by `{generator}`; {reason}). "
         "See [§ Changelog](#changelog) for revision history.",
         ">",
-        f"> **Regenerated**: {stamped} by `{generator}`. This document is "
-        "generated in full from committed artefacts; regeneration is not a "
-        "revision, and git carries the content history.",
+        f"> **First published**: {ORIGINAL_PUBLICATION_DATE}. Regenerated "
+        f"{stamped.strftime('%Y-%m-%dT%H:%M:%SZ')}. This document is generated "
+        "in full from committed artefacts, so its body always reflects the "
+        "current corpus; git carries the content history.",
     ]
 
 
