@@ -2,7 +2,7 @@
 
 > **Last revised**: 2026-08-29 (regenerated from committed artefacts by `scripts/build_k1_gapfill_worklist.py`; original publication; the K = 1 plan and its disclosure). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-08-29T04:21:56Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-08-29T04:34:04Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 Build order step 2 of `planning/uplift-supplement-2026-08-28.md`. No
 scoring has been run: this document and its worklist are the plan.
@@ -41,6 +41,28 @@ Each verifier stage writes a `candidate_manifest.json` listing the
 candidates it cropped, each carrying the `vote_count` it arrived with.
 The minimum in THAT stage's manifest is the floor of coverage for the
 cells it produced.
+
+**Only verified cells carry a citation.** A consensus cell has no
+verifier stage, so any manifest attributed to it is a false evidence
+path. Forty-one such rows were published before this was noticed, every
+one of them pointing at some other lineage's stage.
+
+**A pool that verified in its own subtree owns those stages.** Run-level
+stages belong to whichever lineage built them. In `pv-diag-384` they
+belong to different pools entirely: `verified/image-6of10` cropped
+`consensus/image-1of10.geojson`, while the
+`flash-high-image-n5/image-t1.0` pool cropped its own
+`image-t1.0/consensus/consensus_t1.geojson`. Both are image, both carry
+the shell, so token scoring cannot separate them; containment in the
+pool directory decides it.
+
+One apparent exception was checked and is not one. `h8-v2`'s
+WBF-verified cells cite `outputs/h8-v2/wbf/scale-4/crops/`, outside the
+`scale-4` proposer-pool directory. The recorded sources settle it: that
+stage cropped `wbf_candidates.geojson` while the in-pool stage cropped
+`consensus_t1.geojson`, so the WBF stage IS the right one for a
+WBF-verified cell. The pool-subtree rule therefore runs after the
+fusion-family filter, never before it.
 
 **Coverage is a property of a verifier STAGE, not of a run.** An earlier
 build of this worklist took the minimum across every manifest in a run

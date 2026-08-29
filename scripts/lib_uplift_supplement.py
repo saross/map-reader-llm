@@ -1339,6 +1339,7 @@ def match_verifier_manifest(
     geometry: str | None,
     n_passes: int,
     siblings: Sequence[tuple[str, str | None]] = (),
+    pool_dir: str | None = None,
 ) -> tuple[VerifierManifest | None, str]:
     """Match a verified condition to the candidate manifest of ITS verifier stage.
 
@@ -1357,9 +1358,11 @@ def match_verifier_manifest(
        ``union_k10``.
     2. **Consensus shell** — a ``union`` / ``<k>of<N>`` / ``ge<k>of<N>`` token in
        the condition label names the shell its verifier consumed.
-    3. **Lineage tokens** — geometry, pool, and the label's own distinctive
-       segments, scored by how many appear in the manifest's path or source
-       name. A unique strict maximum wins.
+    3. **Pool subtree** — where the pool verified inside its own directory,
+       only those stages are its own.
+    4. **Lineage tokens** — geometry, pool, and the label's own distinctive
+       segments, matched by equality at segment/stem boundaries. A unique
+       strict maximum wins.
 
     Args:
         manifests: The run's real manifests.
@@ -1370,6 +1373,10 @@ def match_verifier_manifest(
         siblings: Every (pool, geometry) lineage the run registers. Used
             only by the sole-manifest rule, to detect a stage that belongs
             to a DIFFERENT lineage than this cell's.
+        pool_dir: Repo-relative proposer-pool directory. Where the pool
+            verified inside its own subtree, those stages take precedence
+            over run-level ones, which belong to whichever lineage built
+            them.
 
     Returns:
         ``(manifest, basis)``. ``manifest`` is ``None`` when no unique match
@@ -1446,6 +1453,26 @@ def match_verifier_manifest(
         return by_fusion[0], f"matched-fusion-family{suffix}"
     if by_fusion:
         candidates = by_fusion
+
+    # A pool that verified inside its OWN subtree owns those stages. Run-level
+    # stages belong to whichever lineage built them, and in pv-diag-384 they
+    # belong to different pools entirely: `verified/image-6of10` cropped
+    # `consensus/image-1of10.geojson`, while the `flash-high-image-n5/image-t1.0`
+    # pool cropped its own `image-t1.0/consensus/consensus_t1.geojson`. Token
+    # scoring cannot separate those — both are image, both carry the shell —
+    # so containment in the pool directory decides it.
+    #
+    # This runs AFTER the fusion filter, deliberately. The h8-v2 WBF stages sit
+    # in a parallel `wbf/` tree outside the proposer pool directory, so a
+    # subtree rule applied first would have pulled a WBF-verified cell back
+    # onto the greedy stage.
+    if pool_dir:
+        prefix = pool_dir.rstrip("/") + "/"
+        inside = [m for m in candidates if m.path.startswith(prefix)]
+        if len(inside) == 1:
+            return inside[0], f"matched-pool-subtree{suffix}"
+        if inside:
+            candidates = inside
 
     shell = _SHELL_TOKEN_RE.search(label)
     if shell:

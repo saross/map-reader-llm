@@ -256,19 +256,36 @@ def build_worklist(
                 manifests, skipped = [], []
             coverage[run_id] = RunCoverage(manifests=manifests, skipped=skipped)
 
+        is_verified = spec.get("aggregation") == "verified"
+        pool_dir = sources.pool_directory(run_id, pool)
+        pool_rel = (
+            str(pool_dir.relative_to(sources.repo_root)) if pool_dir else None
+        )
+
         # Verifier coverage is a property of a verifier STAGE, not of a run.
         # The run's other lineages go in so a lone stage belonging to one of
-        # them cannot be cited as this cell's evidence.
-        matched, floor_basis = match_verifier_manifest(
-            coverage[run_id].manifests, spec["label"], pool, geometry, n_passes,
-            siblings=sorted(lineages.get(run_id, set())),
-        )
+        # them cannot be cited as this cell's evidence, and the pool directory
+        # so a pool that verified in its own subtree is not handed another
+        # lineage's run-level stage.
+        #
+        # Only VERIFIED cells get a citation at all. A consensus cell has no
+        # verifier stage, so any manifest attributed to it is a false evidence
+        # path — fifteen such rows were published, all of them pointing at
+        # another lineage's stage.
+        if is_verified:
+            matched, floor_basis = match_verifier_manifest(
+                coverage[run_id].manifests, spec["label"], pool, geometry,
+                n_passes,
+                siblings=sorted(lineages.get(run_id, set())),
+                pool_dir=pool_rel,
+            )
+        else:
+            matched, floor_basis = None, "not-applicable"
 
         recipe, recipe_problem = read_scoring_recipe(
             sources.repo_root, eval_path, document
         )
         detections = None
-        pool_dir = sources.pool_directory(run_id, pool)
         if pool_dir is not None:
             # Where the passes manifest knows this pool's K, assert it against
             # the disk: a divergence between the two is exactly the undercount
@@ -286,7 +303,6 @@ def build_worklist(
             if passes:
                 detections = str(passes[0].relative_to(sources.repo_root))
 
-        is_verified = spec.get("aggregation") == "verified"
         job_id = f"k1::{condition_id}"
         slug = condition_id.replace("::", "__").replace(".", "_")
         output_dir = f"results/uplift-supplement/k1-gapfill/{slug}"
@@ -448,6 +464,28 @@ def render_disclosure(
         "candidates it cropped, each carrying the `vote_count` it arrived with.",
         "The minimum in THAT stage's manifest is the floor of coverage for the",
         "cells it produced.",
+        "",
+        "**Only verified cells carry a citation.** A consensus cell has no",
+        "verifier stage, so any manifest attributed to it is a false evidence",
+        "path. Forty-one such rows were published before this was noticed, every",
+        "one of them pointing at some other lineage's stage.",
+        "",
+        "**A pool that verified in its own subtree owns those stages.** Run-level",
+        "stages belong to whichever lineage built them. In `pv-diag-384` they",
+        "belong to different pools entirely: `verified/image-6of10` cropped",
+        "`consensus/image-1of10.geojson`, while the",
+        "`flash-high-image-n5/image-t1.0` pool cropped its own",
+        "`image-t1.0/consensus/consensus_t1.geojson`. Both are image, both carry",
+        "the shell, so token scoring cannot separate them; containment in the",
+        "pool directory decides it.",
+        "",
+        "One apparent exception was checked and is not one. `h8-v2`'s",
+        "WBF-verified cells cite `outputs/h8-v2/wbf/scale-4/crops/`, outside the",
+        "`scale-4` proposer-pool directory. The recorded sources settle it: that",
+        "stage cropped `wbf_candidates.geojson` while the in-pool stage cropped",
+        "`consensus_t1.geojson`, so the WBF stage IS the right one for a",
+        "WBF-verified cell. The pool-subtree rule therefore runs after the",
+        "fusion-family filter, never before it.",
         "",
         "**Coverage is a property of a verifier STAGE, not of a run.** An earlier",
         "build of this worklist took the minimum across every manifest in a run",
