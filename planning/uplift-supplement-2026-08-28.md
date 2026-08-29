@@ -1,7 +1,7 @@
 # Uplift supplement + corpus dataset: consensus and verifier, quantified
 
-> **Last revised**: 2026-08-28 (original publication; QUEUED behind
-> the skeleton/drafting work — background-able, $0 throughout). See
+> **Last revised**: 2026-08-29 (build steps 1–3 EXECUTED and merged;
+> scoring worklists running on sapphire). See
 > [§ Changelog](#changelog).
 
 **PI concept (2026-08-28, in-session)**: anchor every consensus run
@@ -73,6 +73,22 @@ sweep-interior ruling; any cell the supplement headline-cites gets
 promoted on citation as usual.
 
 ## Changelog
+
+### 2026-08-29 — Build executed (S144)
+
+Steps 1–3 built by a background worktree agent, hardened through a
+two-lens audit plus three fix/verify rounds (merge `8f0d6e033`), and
+merged: strata-enforced flatten (374 conditions / 113 strata /
+54 columns), K=1 gap-fill worklist (115 ready scoring jobs; the
+with-verifier floors MEASURED per stage — note the card's "vote ≥ 3
+shells" premise was wrong: 11 runs verified from vote ≥ 1, five only
+from vote ≥ 4; see `results/uplift-supplement/k1-gapfill-disclosure.md`),
+verifier pairing (15 ready pairs; 21 more await a vote-shell
+materialiser, not yet built), and the uplift computer. Scoring
+launched on sapphire same day. Registration and any headline citation
+remain gated on PI sign-off per § Registration. Notation-key § 6/§ 7
+extensions proposed, canonical key untouched
+(`results/uplift-supplement/notation-extension-proposal.md`).
 
 ### 2026-08-28 — Original publication
 
