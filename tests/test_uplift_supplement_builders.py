@@ -16,10 +16,13 @@ behaviours that emerge from the builders wiring the library together:
   ever says "blocked" would pass a one-sided test;
 * the uplift's sign and magnitude on a known pair.
 
-The fixture corpus has three runs: ``alpha`` and ``beta`` share a stratum
-(4-map-gs / curator / 20 m / era-1-340) and ``gamma`` sits in another
-(55-map / student / 50 m / 55maps-8541), so cross-stratum behaviour is
-exercisable without touching the real corpus.
+The fixture corpus has five runs. ``alpha`` and ``beta`` share a stratum
+(4-map-gs / curator / 20 m / era-1-340) and differ only in verifier
+coverage; ``gamma`` sits in another (55-map / student / 50 m /
+55maps-8541) so cross-stratum behaviour is exercisable; ``delta`` holds
+four verifier stages so the matcher proper is reached; and ``epsilon``
+reproduces the corrected-F1 shape whose consensus twin carries no
+``source_tile``.
 
 Created: 2026-08-29 (uplift-supplement card, audit fix pass)
 """
@@ -149,10 +152,11 @@ STUDENT = "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
 def corpus(tmp_path: Path) -> Path:
     """Build a miniature committed corpus and return its repository root.
 
-    Three runs. ``alpha`` and ``beta`` share a stratum and differ only in their
+    ``alpha`` and ``beta`` share a stratum and differ only in their
     verifier's coverage floor (1 vs 2), which is what makes the with-verifier
     disclosure testable in both directions. ``gamma`` sits in a different
-    stratum so cross-stratum machinery has something to refuse.
+    stratum so cross-stratum machinery has something to refuse. ``delta``
+    and ``epsilon`` are added below.
     """
     root = tmp_path / "repo"
     (root / "docs" / "methodology").mkdir(parents=True)
@@ -321,6 +325,98 @@ def corpus(tmp_path: Path) -> Path:
         "conditions": delta_conditions,
     }
 
+    # ---- `epsilon`: a corrected-F1 twin with no source_tile -------------- #
+    # The 55-map shape that crashed on sapphire. Its committed consensus set
+    # carries `source_tiles` (plural, per-cluster) and no singular column, so
+    # the corrected-F1 engine — which scopes per sheet by `source_tile` —
+    # cannot score it. The verifier's crop manifest holds the singular value
+    # the verified side used, so the twin is materialised from there.
+    eps = root / "outputs" / "epsilon"
+    registry.append({"run_id": "epsilon", "directory_path": "outputs/epsilon",
+                     "status": "active"})
+    facts["epsilon"] = {
+        "purpose": "fixture run scored by the corrected-F1 engine",
+        "tile_size_px": 384, "corpus": "55-map", "gt_reference": "combined",
+        "scope": {
+            "test_set_id": "55maps-8541",
+            "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+            "n_test_tiles": 8541,
+        },
+    }
+    for pass_n in (1, 2, 3):
+        _write_json(
+            eps / "text-eps" / f"run_{pass_n}"
+            / f"detections_text-eps_run0{pass_n}.geojson",
+            {"type": "FeatureCollection", "features": []},
+        )
+        passes.append({
+            "pass_id": f"epsilon::text-eps::run{pass_n}", "run_id": "epsilon",
+            "proposer_pool": "text-eps", "pass_n": pass_n,
+            "model_used": "gemini-3-flash-preview", "modality": "text",
+            "thinking_level": "minimal", "temperature": 0.7, "status": "ok",
+            "n_tiles_processed": 8541, "cost_usd": 1.0,
+            "provenance": {"source_files": [], "extractor_version": "test"},
+        })
+
+    # Consensus set WITHOUT a singular source_tile — the crashing shape.
+    _write_json(eps / "text-eps" / "consensus" / "consensus-2of3.geojson", {
+        "type": "FeatureCollection",
+        "features": [
+            {"type": "Feature",
+             "geometry": {"type": "Point", "coordinates": [400000.0, 4700000.0]},
+             "properties": {"vote_count": v, "source_tiles": ["a", "b"]}}
+            for v in (2, 3)
+        ],
+    })
+    _write_json(eps / "crops" / "candidate_manifest.json", {
+        "source_geojson": "outputs/epsilon/text-eps/consensus/consensus-2of3.geojson",
+        "total_detections": 2,
+        "candidates": [
+            {"candidate_id": i, "centroid_x": 400000.0 + i,
+             "centroid_y": 4700000.0 + i, "source_tile": f"K-35-052-4_x{i}_y0",
+             "properties": {"vote_count": v}}
+            for i, v in enumerate((2, 3))
+        ],
+    })
+
+    # An adapter-shaped evaluation, so read_scoring_recipe returns the
+    # corrected-F1 engine rather than evaluate_detections.
+    _write_json(root / "results" / "epsilon" / "eval" / "summary.json", {
+        "metadata": {
+            "seed": 42, "bootstrap_n": 10000,
+            "input_paths": {
+                "student_gt": "inputs/vectors/references/"
+                              "student-mounds-55maps-reviewed.geojson",
+                "bounds": "inputs/vectors/bounds/384/"
+                          "55maps_evaluation_bounds.geojson",
+            },
+        },
+    })
+    _write_json(root / "results" / "epsilon" / "eval" / "evaluation.json", {
+        "summary": {
+            "n_detections": 2,
+            "buffers": [{"buffer_metres": 50, "f1": 0.8, "precision": 0.8,
+                         "recall": 0.8, "f1_ci_lower": 0.75,
+                         "f1_ci_upper": 0.85, "f1_ci_method": "percentile",
+                         "ci_unreliable": False}],
+            "tile_classification": {
+                "mcc": 0.5, "confusion": {"tp": 1, "tn": 2, "fp": 3, "fn": 4}},
+        },
+        "_metadata": {"source": "results/epsilon/eval/summary.json"},
+    })
+    decomposition["epsilon"] = {
+        "proposer_pools": {"text-eps": {"modality": "text", "path": "text-eps"}},
+        "verifier_passes": {},
+        "conditions": [{
+            "label": "verified-2of3", "architecture": "proposer-verifier",
+            "aggregation": "verified", "proposer_pool": "text-eps",
+            "n_passes": 3, "vote_threshold": 2, "prob_threshold": 0.2,
+            "verifier_config": {"variant": "v1"},
+            "detections": "outputs/epsilon/verified/verified.geojson",
+            "eval_path": "results/epsilon/eval/evaluation.json",
+        }],
+    }
+
     _write_json(root / "results" / "run-registry.json",
                 {"schema_version": "1.0", "generated_at": "2026-08-01T00:00:00Z",
                  "registry": registry})
@@ -372,15 +468,16 @@ class TestFlattenEndToEnd:
             assert (out / name).exists(), name
 
     def test_one_row_per_registered_spec(self, corpus: Path, tmp_path: Path) -> None:
-        """Nine specs in, nine rows out — no condition silently dropped."""
+        """Ten specs in, ten rows out — no condition silently dropped."""
         out = tmp_path / "out"
         flatten_main(["--repo-root", str(corpus), "--out-dir", str(out)])
         rows = _read_csv(out / "conditions.csv")
-        assert len(rows) == 9
+        assert len(rows) == 10
         assert {r["condition_id"] for r in rows} >= {
             "alpha::consensus-2of3", "alpha::verified-2of3",
             "beta::consensus-2of3", "beta::verified-2of3",
             "gamma::consensus-2of3", "gamma::verified-2of3",
+            "epsilon::verified-2of3",
         }
 
     def test_every_row_carries_a_stratum_id(self, corpus: Path, tmp_path: Path) -> None:
@@ -510,8 +607,8 @@ class TestK1GapFillEndToEnd:
                 for r in _read_csv(out / "k1-gapfill-worklist.csv")}
 
     def test_covers_every_multi_pass_cell(self, rows: dict) -> None:
-        """All nine N = 3 cells need an anchor; none is skipped."""
-        assert len(rows) == 9
+        """All ten N = 3 cells need an anchor; none is skipped."""
+        assert len(rows) == 10
 
     def test_ready_jobs_point_at_the_first_committed_pass(self, rows: dict) -> None:
         """The N = 1 rung scores run_1, per the preregistered first-N rule."""
@@ -686,8 +783,8 @@ class TestPairingAndUpliftEndToEnd:
         return out
 
     def test_each_verified_cell_gets_a_row(self, built: Path) -> None:
-        """Six verified cells, six pairing rows."""
-        assert len(_read_csv(built / "verifier-pairing-worklist.csv")) == 6
+        """Seven verified cells, seven pairing rows."""
+        assert len(_read_csv(built / "verifier-pairing-worklist.csv")) == 7
 
     def test_twin_is_the_registered_consensus_cell(self, built: Path) -> None:
         """The pre-verifier twin is already scored, so nothing needs running."""
@@ -707,6 +804,58 @@ class TestPairingAndUpliftEndToEnd:
         assert row["verified_stratum_id"] == "4-map-gs|curator|20m|era-1-340"
         assert row["unverified_stratum_id"] == "4-map-gs|curator|20m|era-1-340"
         assert row["unverified_stratum_basis"] == "derived-from-twin-cell"
+
+    def test_corrected_f1_twin_gets_a_materialise_prelude(
+        self, built: Path
+    ) -> None:
+        """A twin with no source_tile must be rebuilt before it can be scored.
+
+        The corrected-F1 engine scopes per sheet with
+        `source_tile.str.startswith(...)`; a committed consensus set carries
+        `source_tiles` (plural) instead, so passing one straight in raises
+        KeyError at the first buffer. That is what happened on sapphire.
+        """
+        row = next(r for r in _read_csv(built / "verifier-pairing-worklist.csv")
+                   if r["verified_condition_id"] == "epsilon::verified-2of3")
+        assert row["status"] == "ready"
+        assert row["engine"] == "corrected_f1_multi_buffer"
+        assert "materialise_pairing_twin.py" in row["materialise_command"]
+        assert "--crop-manifest outputs/epsilon/crops/candidate_manifest.json" in (
+            row["materialise_command"]
+        )
+        assert "--min-votes 2" in row["materialise_command"]
+        # The scoring command must consume the MATERIALISED twin, not the
+        # consensus set that cannot be scored.
+        assert "twin-2of3.geojson" in row["command"]
+        assert "consensus-2of3.geojson" not in row["command"]
+
+    def test_only_corrected_f1_twins_get_a_prelude(self, built: Path) -> None:
+        """Only the corrected-F1 engine scopes by source_tile.
+
+        `evaluate_detections.py` does not, so its twins are scored directly. A
+        blanket prelude would change how the eleven working jobs are fed —
+        a parameter change smuggled in behind a bug fix.
+        """
+        for row in _read_csv(built / "verifier-pairing-worklist.csv"):
+            if row["materialise_command"]:
+                assert row["engine"] == "corrected_f1_multi_buffer", row["job_id"]
+
+    def test_the_command_script_runs_the_prelude_first(self, built: Path) -> None:
+        """Order matters: the twin must exist before the scorer opens it."""
+        script = (built / "verifier-pairing-commands.sh").read_text(encoding="utf-8")
+        materialise = script.index("materialise_pairing_twin.py")
+        score = script.index("compute_corrected_f1_multi_buffer.py")
+        assert materialise < score
+
+    def test_the_command_script_does_not_abort_on_first_failure(
+        self, built: Path
+    ) -> None:
+        """`set -e` turned one crash into twelve unrun jobs on 2026-08-29."""
+        script = (built / "verifier-pairing-commands.sh").read_text(encoding="utf-8")
+        assert "set -euo pipefail" not in script
+        assert "set -uo pipefail" in script
+        assert "FAILED+=" in script
+        assert "exit 1" in script
 
     def test_uplift_sign_and_magnitude(self, corpus: Path, built: Path) -> None:
         """verified minus unverified: 0.75 - 0.60 = +0.15 on a known pair."""

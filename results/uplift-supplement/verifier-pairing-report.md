@@ -2,7 +2,7 @@
 
 > **Last revised**: 2026-08-29 (regenerated from committed artefacts by `scripts/build_verifier_pairing_worklist.py`; original publication; the with/without-verifier pairing plan). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-08-29T04:34:04Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-08-29T09:52:28Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 Build order step 3 of `planning/uplift-supplement-2026-08-28.md`. No
 scoring has been run: this document and its worklist are the plan.
@@ -145,6 +145,33 @@ Once the twins have scores, `scripts/compute_verifier_uplift.py` joins
 them and writes `verifier-uplift.csv`. It refuses any pair whose two
 cells do not share a `stratum_id`, so a mis-paired row fails loudly
 rather than producing a plausible number.
+
+### How many pairs can be computed
+
+A pair is computable when BOTH sides have a score. Where each status
+stands:
+
+| Status | Pairs | Computable | Why |
+|---|---:|---:|---|
+| `already-registered` | 6 | 6 | Both sides are registered conditions, so both are already in `conditions.csv`. No scoring needed. |
+| `ready` | 15 | 15 | Once the emitted job writes its score. |
+| `ready-after-materialise` | 21 | 0 | The vote shell has to be filtered out of the committed union first, and no job is emitted for that yet. |
+| `blocked` | 76 | 0 | No twin located. |
+
+So the ceiling after a clean run of `verifier-pairing-commands.sh` is **21 computed, 97 pending**.
+
+The 2026-08-29 run produced 8, which is the 6 already-registered pairs
+plus 2 scored twins. Two defects, both now fixed, account for the gap:
+
+1. **The script aborted at the first failure.** `set -e` stopped the
+   batch at the third command, so twelve jobs that would have succeeded
+   never ran. The two that had already completed are the two scores.
+2. **Corrected-F1 scores were unreadable anyway.** Eight of the fifteen
+   jobs use `compute_corrected_f1_multi_buffer.py`, which writes
+   `summary.json`; the uplift computer only looked for
+   `evaluation.json`. Even a fully successful batch would have capped
+   at 6 + 7 = 13, with the eight corrected-F1 pairs stuck at `pending`
+   and nothing to say why.
 
 ## Changelog
 

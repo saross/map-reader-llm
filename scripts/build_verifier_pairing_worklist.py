@@ -74,14 +74,16 @@ from scripts.lib_detection_paths import (  # noqa: E402
 )
 from scripts.lib_uplift_supplement import (  # noqa: E402
     ORIGINAL_PUBLICATION_DATE,
+    SHELL_EPILOGUE,
+    SHELL_PREAMBLE,
     CorpusSources,
     ScoringRecipe,
     VerifierManifest,
     collect_verifier_manifests,
     condition_stratum,
     generated_doc_banner,
-    match_verifier_manifest,
     iter_condition_specs,
+    match_verifier_manifest,
     path_matches_lineage,
     read_scoring_recipe,
     resolve_geometry,
@@ -100,7 +102,8 @@ WORKLIST_COLUMNS: tuple[str, ...] = (
     "status", "pairing_basis", "blocked_reason",
     "unverified_condition_id", "unverified_detections_path",
     "unverified_eval_path", "union_path", "materialise_filter",
-    "reference_path", "bounds_path", "engine", "output_dir", "command",
+    "reference_path", "bounds_path", "engine", "output_dir",
+    "materialise_command", "command",
     "notes",
 )
 
@@ -292,6 +295,33 @@ def _render_command(
         for name, value in recipe.extra.items():
             parts += [f"--{name.replace('_', '-')}", value]
     return " ".join(shlex.quote(p) for p in parts)
+
+
+def _has_source_tile(path: Path) -> bool:
+    """Whether a detection GeoJSON carries a singular per-feature ``source_tile``.
+
+    The corrected-F1 engine scopes detections per map sheet with
+    ``gdf_det["source_tile"].str.startswith(map_name)``, so the column's absence
+    is a hard failure rather than a degraded result. Checked by reading the
+    file, because the committed corpus mixes both shapes: verified sets carry
+    ``source_tile`` and consensus sets carry ``source_tiles``.
+
+    Args:
+        path: The detection GeoJSON.
+
+    Returns:
+        True when the first feature carries the singular key.
+    """
+    if not path.exists():
+        return False
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    features = document.get("features") or []
+    if not features:
+        return False
+    return "source_tile" in (features[0].get("properties") or {})
 
 
 def _run_manifests(
@@ -533,6 +563,53 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
         slug = condition_id.replace("::", "__").replace(".", "_")
         output_dir = f"results/uplift-supplement/verifier-pairing/{slug}"
         scoreable = twin_detections if basis == "consensus-file" else None
+
+        # The corrected-F1 engine scopes per map sheet with
+        # `source_tile.str.startswith(...)`, so a detection set without that
+        # column raises KeyError at the first buffer. Committed consensus sets
+        # do not have it: a consensus candidate is a CLUSTER, so they carry
+        # `source_tiles` (plural) instead. The verified side got its singular
+        # value from the verifier's crop manifest, so the twin is materialised
+        # from that same manifest — same candidates, same tiles, differing only
+        # in the probability filter.
+        materialise_command = None
+        if (
+            scoreable
+            and recipe is not None
+            and recipe.engine == "corrected_f1_multi_buffer"
+            and not _has_source_tile(sources.repo_root / scoreable)
+        ):
+            stage, _stage_basis = match_verifier_manifest(
+                _run_manifests(sources, run_id, coverage),
+                spec["label"], pool, geometry, n_passes,
+                siblings=sorted(lineages.get(run_id, set())),
+                pool_dir=(
+                    str(pool_dir.relative_to(sources.repo_root))
+                    if pool_dir else None
+                ),
+            )
+            if stage is None:
+                status, blocked = "blocked", (
+                    f"{Path(scoreable).name} carries no per-feature source_tile "
+                    "(consensus sets record source_tiles, plural), and no "
+                    "verifier stage could be matched to supply one. Scoring it "
+                    "with the corrected-F1 engine raises KeyError: 'source_tile'"
+                )
+                scoreable = None
+            else:
+                materialised = f"{output_dir}/twin-{int(votes)}of{n_passes}.geojson"
+                materialise_command = " ".join(shlex.quote(part) for part in [
+                    "python", "scripts/materialise_pairing_twin.py",
+                    "--crop-manifest", stage.path,
+                    "--min-votes", str(int(votes)),
+                    "--expect-consensus", scoreable,
+                    "--output", materialised,
+                ])
+                notes.append(
+                    "twin materialised from the verifier stage's own crop "
+                    f"manifest ({stage.path}) to carry source_tile"
+                )
+                scoreable = materialised
         rows.append({
             "job_id": f"pair::{condition_id}",
             "verified_condition_id": condition_id,
@@ -560,6 +637,9 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
             "bounds_path": recipe.bounds if recipe else None,
             "engine": recipe.engine if recipe else None,
             "output_dir": output_dir if status.startswith("ready") else None,
+            "materialise_command": (
+                materialise_command if status == "ready" else None
+            ),
             "command": (
                 _render_command(recipe, scoreable, output_dir, f"{slug}-unverified")
                 if status == "ready" and recipe and scoreable else None
@@ -578,7 +658,7 @@ def render_report(rows: list[dict[str, Any]]) -> str:
     Returns:
         The Markdown document.
     """
-    status_counts = Counter(r["status"] for r in rows)
+    status_counts: Counter[str] = Counter(r["status"] for r in rows)
     basis_counts = Counter(r["pairing_basis"] for r in rows)
     lines = [
         "# With/without-verifier pairing — worklist",
@@ -663,6 +743,41 @@ def render_report(rows: list[dict[str, Any]]) -> str:
         "cells do not share a `stratum_id`, so a mis-paired row fails loudly",
         "rather than producing a plausible number.",
         "",
+        "### How many pairs can be computed",
+        "",
+        "A pair is computable when BOTH sides have a score. Where each status",
+        "stands:",
+        "",
+        "| Status | Pairs | Computable | Why |",
+        "|---|---:|---:|---|",
+        f"| `already-registered` | {status_counts['already-registered']} "
+        f"| {status_counts['already-registered']} | Both sides are registered "
+        "conditions, so both are already in `conditions.csv`. No scoring needed. |",
+        f"| `ready` | {status_counts['ready']} | {status_counts['ready']} "
+        "| Once the emitted job writes its score. |",
+        f"| `ready-after-materialise` | {status_counts['ready-after-materialise']} "
+        "| 0 | The vote shell has to be filtered out of the committed union "
+        "first, and no job is emitted for that yet. |",
+        f"| `blocked` | {status_counts['blocked']} | 0 | No twin located. |",
+        "",
+        f"So the ceiling after a clean run of `verifier-pairing-commands.sh` is "
+        f"**{status_counts['already-registered'] + status_counts['ready']} "
+        f"computed, {len(rows) - status_counts['already-registered'] - status_counts['ready']} "
+        "pending**.",
+        "",
+        "The 2026-08-29 run produced 8, which is the 6 already-registered pairs",
+        "plus 2 scored twins. Two defects, both now fixed, account for the gap:",
+        "",
+        "1. **The script aborted at the first failure.** `set -e` stopped the",
+        "   batch at the third command, so twelve jobs that would have succeeded",
+        "   never ran. The two that had already completed are the two scores.",
+        "2. **Corrected-F1 scores were unreadable anyway.** Eight of the fifteen",
+        "   jobs use `compute_corrected_f1_multi_buffer.py`, which writes",
+        "   `summary.json`; the uplift computer only looked for",
+        "   `evaluation.json`. Even a fully successful batch would have capped",
+        "   at 6 + 7 = 13, with the eight corrected-F1 pairs stuck at `pending`",
+        "   and nothing to say why.",
+        "",
         "## Changelog",
         "",
         f"### {ORIGINAL_PUBLICATION_DATE} — Original publication",
@@ -718,12 +833,23 @@ def main(argv: list[str] | None = None) -> int:
         "# Rows with status 'ready-after-materialise' are NOT here: their vote",
         "# shell must first be filtered out of the committed union named in the",
         "# worklist's union_path, using the materialise_filter predicate.",
-        "set -euo pipefail",
+        "#",
+        "# Jobs are INDEPENDENT and the script does not stop at the first",
+        "# failure. It did once: `set -e` aborted the 2026-08-29 run at the",
+        "# third command, so twelve jobs that would have succeeded never ran and",
+        "# one crash looked like a partial success. Failures are collected and",
+        "# reported at the end, and the exit code still reflects them.",
+        *SHELL_PREAMBLE,
         "",
     ]
     for row in rows:
-        if row["status"] == "ready" and row["command"]:
-            script += [f"# {row['job_id']}", row["command"], ""]
+        if row["status"] != "ready" or not row["command"]:
+            continue
+        script.append(f"# {row['job_id']}")
+        if row["materialise_command"]:
+            script.append(f"run {row['materialise_command']}")
+        script += [f"run {row['command']}", ""]
+    script += list(SHELL_EPILOGUE)
     (out_dir / "verifier-pairing-commands.sh").write_text(
         "\n".join(script), encoding="utf-8"
     )

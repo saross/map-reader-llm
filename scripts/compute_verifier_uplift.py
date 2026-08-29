@@ -35,8 +35,10 @@ Score sources, in order
 -----------------------
 1. ``results/uplift-supplement/conditions.csv`` — the flatten, for both cells
    where both are registered conditions.
-2. A freshly written ``evaluation.json`` under the job's ``output_dir``, for
-   twins scored from the worklist.
+2. A freshly written score under the job's ``output_dir``: ``evaluation.json``
+   from ``evaluate_detections.py``, or ``summary.json`` from
+   ``compute_corrected_f1_multi_buffer.py``. Both shapes are read, because a
+   twin is scored with whichever engine its verified pair used.
 
 Zero API. The join and arithmetic are trivial; the bootstrap that produced the
 inputs is what belongs on sapphire.
@@ -107,6 +109,35 @@ def _read_conditions(path: Path) -> dict[str, dict[str, str]]:
         return {row["condition_id"]: row for row in csv.DictReader(handle)}
 
 
+def _metric_from_summary(
+    document: dict[str, Any], metric: str, buffer_m: int
+) -> float | None:
+    """Lift one metric out of a corrected-F1 engine ``summary.json``.
+
+    The two engines write different files. ``evaluate_detections.py`` writes
+    ``evaluation.json``; ``compute_corrected_f1_multi_buffer.py`` writes
+    ``summary.json`` with a ``results`` list keyed by ``R_m`` and capitalised
+    metric names. Reading only the first meant every corrected-F1 twin scored on
+    sapphire stayed ``pending`` for ever, with nothing to say why.
+
+    Args:
+        document: The parsed ``summary.json``.
+        metric: A key of :data:`SUPPORTED_METRICS`.
+        buffer_m: Buffer radius in metres.
+
+    Returns:
+        The value, or ``None`` if this summary does not report it.
+    """
+    for row in document.get("results") or []:
+        if int(row.get("R_m", -1)) != buffer_m:
+            continue
+        if metric == "MCC":
+            return (row.get("tile_classification") or {}).get("mcc")
+        return row.get({"F1": "F1", "precision": "precision",
+                        "recall": "recall"}[metric])
+    return None
+
+
 def _metric_from_eval(
     document: dict[str, Any], metric: str, buffer_m: int
 ) -> float | None:
@@ -151,18 +182,25 @@ def _value_for(
         buffer_m: Buffer radius in metres.
 
     Returns:
-        ``(value, source)``. ``source`` is ``conditions.csv``, the evaluation
-        path, or ``missing``.
+        ``(value, source)``. ``source`` is ``conditions.csv``, the path of the
+        score that was read, or ``missing``.
     """
     if condition_id and condition_id in conditions:
         raw = conditions[condition_id].get(metric)
         if raw:
             return float(raw), "conditions.csv"
     if output_dir:
-        candidate = repo_root / output_dir / "evaluation.json"
-        if candidate.exists():
+        # Both engines' output shapes, because a twin is scored with whichever
+        # engine its verified pair used.
+        for filename, reader in (
+            ("evaluation.json", _metric_from_eval),
+            ("summary.json", _metric_from_summary),
+        ):
+            candidate = repo_root / output_dir / filename
+            if not candidate.exists():
+                continue
             document = json.loads(candidate.read_text(encoding="utf-8"))
-            value = _metric_from_eval(document, metric, buffer_m)
+            value = reader(document, metric, buffer_m)
             if value is not None:
                 return float(value), str(candidate.relative_to(repo_root))
     return None, "missing"
