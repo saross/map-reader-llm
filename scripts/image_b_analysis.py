@@ -135,7 +135,7 @@ def sweep(gdf: gpd.GeoDataFrame, gdf_ref: gpd.GeoDataFrame,
 
 def main() -> int:
     import argparse
-    global CELL, VROOT, OUT
+    global CELL, VROOT, OUT, SCORING
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--cell", default="g384_ov192_image")
     ap.add_argument("--outputs-root", default="outputs/image-b-gs-2026-08-28",
@@ -156,6 +156,7 @@ def main() -> int:
     args = ap.parse_args()
     CELL = args.cell
     VROOT = PROJECT_ROOT / args.outputs_root / "verifier" / CELL
+    SCORING = PROJECT_ROOT / args.outputs_root / "scoring"
     if args.out_dir:
         OUT = PROJECT_ROOT / args.out_dir
 
