@@ -459,7 +459,9 @@ def test_run_registry_input_valid_and_in_sync(registry):
     # +55maps-text-min-n10-uplift (S113 second wave)
     # 32 since Session 136: the H13 overlap arms were registered as a
     # first-class run (run_id "h13"), adding 3 conditions and 6 passes.
-    assert len(reg["registry"]) == 33
+    # 38 since Session 143: the three PI-signed registration passes
+    # (grid-postverifier, stride programme, 55-map portfolio + image/H7).
+    assert len(reg["registry"]) == 38
     assert "generator_version" not in reg  # run-registry schema is closed; no generator_version
     # registry and facts must describe the same run set (the B1 drift guard)
     assert drift_check(reg["registry"], load_run_facts()) == []
@@ -489,7 +491,8 @@ def test_manifest_envelopes_valid(registry):
     _reg, run_rows, conditions, passes, analyses, warnings = build_manifests(at)
     # 29: +verifier-robustness (S111); 31: +flash35-pv-2x2,
     # +55maps-text-min-n10-uplift (S113 second wave)
-    assert len(run_rows) == 33  # +h13 (S136), +grid-2026-08-18 (S137, D16)
+    # 33: +h13 (S136), +grid-2026-08-18 (S137, D16)
+    assert len(run_rows) == 38  # +5 in the S143 PI-signed registration passes
     assert warnings == []
 
     runs_obj = assemble_manifest("runs", run_rows, at)
