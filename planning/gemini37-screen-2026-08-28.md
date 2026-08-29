@@ -1,8 +1,8 @@
 # Gemini 3.7 Flash family screen: one cell, K=5, probe-first
 
-> **Last revised**: 2026-08-28 (original publication; PREPARED FOR
-> PI GO — nothing runs until it is given). See
-> [§ Changelog](#changelog).
+> **Last revised**: 2026-08-29 (escalation EXECUTED — K=10 saturated;
+> the all-3.7 stack GS-significant at +0.0304, p=0.0105; PI review
+> pending). See [§ Changelog](#changelog).
 
 **Question**: has the Flash family improved since Gemini 3? (3.5
 regressed badly at higher cost — S113: won in no role, bare tie
@@ -91,6 +91,30 @@ start, background to the write-up):**
    pass up exploring."
 
 ## Changelog
+
+### 2026-08-29 (later) — Escalation EXECUTED, all three steps
+
+Passes 6–10 landed (6,990 tiles, two single-tile recoveries; billed
+≈ $5.4 expected). Union @ K=10: 913 candidates, 49 % unanimous.
+Deviation, disclosed: the FULL K=10 union was re-verified with the
+carried verifier ($0.63 measured) instead of increment-stitching —
+cheaper than the matching-error risk, single-vintage probabilities.
+(A wrong-instrument stray — `5_verify_crops.py`, ~$0.60 — archived
+beside the real run.) **K=10 verdict: verified best 0.9142 @20 m
+(+0.0181 vs anchor, p = 0.21); K=5→K=10 adds +0.0003 — saturated by
+N=5** (ladder 0.8588/0.9018/0.9131/0.9142 at N=1/3/5/10). **The
+verifier-role swap is the headline: the all-3.7 stack (3.7 verifier
+over the 3.7 K=5 union) reaches 0.9265 @20 m at (0.80, k5), P 0.925
+/ R 0.928 / MCC 0.808 — +0.0304 vs anchor, p = 0.0105, the first
+GS-RESOLVABLE 3.7 margin.** Mechanism: the 3.7 verifier is more
+permissive (mean prob 0.687 vs the carried 0.587), so its optimum
+sits at prob_t 0.8 — verifier calibration is model-dependent;
+thresholds do not transfer across verifier models. Caveats: sweep
+oracle point, single comparison. Contradicts the S113-grounded
+expectation that model swaps lose in every role — flagged for PI
+review; bears on the 55-map run's carried-verifier design (step 3,
+IN FLIGHT on the proposer-axis-isolation card as approved). Data
+commits `b9516c26f`, `3039d3ac9`.
 
 ### 2026-08-29 — Screen outcome + escalation approval
 
