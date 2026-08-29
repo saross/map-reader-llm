@@ -861,11 +861,11 @@ class TestMatchVerifierManifest:
         assert match_verifier_manifest(
             [greedy, wbf], "verified-wbf-scale-4", "scale-4", None, 5)[0] is wbf
 
-    def test_exact_segment_beats_substring(self) -> None:
+    def test_nested_pool_names_do_not_collide(self) -> None:
         """`g384_ov192_image` is a substring of `g384_ov192_image_high`.
 
-        Substring scoring ties the two stages; matching a whole path segment
-        separates them.
+        Any containment-based score ties the two stages. Matching whole path
+        segments separates them, and each cell keeps its own.
         """
         plain = _manifest(
             "outputs/ib/verifier/g384_ov192_image/crops/candidate_manifest.json",
@@ -878,7 +878,126 @@ class TestMatchVerifierManifest:
             "g384_ov192", 10,
         )
         assert matched is plain
-        assert basis == "matched-lineage-segment"
+        assert basis == "matched-lineage"
+        other, _basis = match_verifier_manifest(
+            [plain, high], "g384-ov192-image-high-k10-verified",
+            "g384_ov192_image_high", "g384_ov192", 10,
+        )
+        assert other is high
+
+    def test_a_pool_may_not_match_a_longer_pool_ending_the_same_way(self) -> None:
+        """`text-1of10` must not claim the stage of `flash-high-text-1of10`.
+
+        The original substring failure, in its exact corpus shape: pv-diag-384
+        holds both pools, and unbounded containment let the shorter one cite the
+        longer one's manifest as its evidence. Boundary matching separates them.
+        """
+        stage = _manifest(
+            "outputs/h11/pv-diag-384/verified/flash-high-text-6of10/"
+            "candidate_manifest.json",
+            "flash-high-text-1of10.geojson", 6)
+        other = _manifest(
+            "outputs/h11/pv-diag-384/verified/image-6of10/candidate_manifest.json",
+            "image-1of10.geojson", 6)
+        matched, basis = match_verifier_manifest(
+            [stage, other], "verified-adv-text-min-6of10", "text-1of10", None, 10
+        )
+        assert matched is None
+        assert basis == "ambiguous-lineage"
+
+    def test_the_owning_pool_still_matches_its_own_stage(self) -> None:
+        """The negative above must not cost the true match its resolution."""
+        stage = _manifest(
+            "outputs/h11/pv-diag-384/verified/flash-high-text-6of10/"
+            "candidate_manifest.json",
+            "flash-high-text-1of10.geojson", 6)
+        other = _manifest(
+            "outputs/h11/pv-diag-384/verified/image-6of10/candidate_manifest.json",
+            "image-1of10.geojson", 6)
+        matched, _basis = match_verifier_manifest(
+            [stage, other], "verified-adv-text-6of10", "flash-high-text-1of10",
+            None, 10,
+        )
+        assert matched is stage
+
+    def test_sole_manifest_of_another_lineage_is_refused(self) -> None:
+        """n1-outstanding-384 has seven pools and one image verifier stage.
+
+        The short circuit handed that stage to text cells as their evidence.
+        """
+        only = _manifest(
+            "outputs/h11/n1-outstanding-384/image-t0/verified-v1-n3/crops/"
+            "candidate_manifest.json",
+            "consensus_t1.geojson", 1)
+        siblings = [("image-t0", None), ("brief-text-t03", None)]
+        matched, basis = match_verifier_manifest(
+            [only], "baseline-flash-text-minimal-t-0-3", "brief-text-t03", None,
+            1, siblings=siblings,
+        )
+        assert matched is None
+        assert basis == "sole-manifest-lineage-mismatch"
+
+    def test_sole_manifest_of_the_own_lineage_is_accepted(self) -> None:
+        """The image cell of that same run keeps its stage."""
+        only = _manifest(
+            "outputs/h11/n1-outstanding-384/image-t0/verified-v1-n3/crops/"
+            "candidate_manifest.json",
+            "consensus_t1.geojson", 1)
+        siblings = [("image-t0", None), ("brief-text-t03", None)]
+        matched, basis = match_verifier_manifest(
+            [only], "baseline-flash-image-minimal-t-0-0", "image-t0", None, 3,
+            siblings=siblings,
+        )
+        assert matched is only
+        assert basis == "sole-manifest"
+
+    def test_sole_manifest_naming_no_lineage_is_accepted(self) -> None:
+        """gold-standard-v2 crops at run level from an unnamed consensus set.
+
+        The check is contradiction, not confirmation: a stage that names no
+        lineage contradicts nothing, and requiring positive confirmation would
+        reject every correct single-pool match in the corpus.
+        """
+        only = _manifest(
+            "outputs/gs/gold-standard-v2/crops/candidate_manifest.json",
+            "consensus-4of5.geojson", 4)
+        matched, basis = match_verifier_manifest(
+            [only], "verified-v1", "detect_brief-text", None, 5,
+            siblings=[("detect_brief-text", None)],
+        )
+        assert matched is only
+        assert basis == "sole-manifest"
+
+    def test_union_shell_narrows_rather_than_terminating(self) -> None:
+        """A rung with no union of its own N still reaches lineage matching.
+
+        stride-55map cropped only the ten-pass union, and an early return
+        discarded its eight N = 3 / N = 5 rungs before their lineage
+        directories could identify them.
+        """
+        mine = _manifest(
+            "outputs/s/verifier/g384_ov128_55map/crops/candidate_manifest.json",
+            "union_k10.geojson", 1)
+        other = _manifest(
+            "outputs/s/verifier/g384_ov192_55map/crops/candidate_manifest.json",
+            "union_k10.geojson", 1)
+        matched, basis = match_verifier_manifest(
+            [mine, other], "g384-ov128-55map-n3-oracle", "g384_ov128_55map",
+            "g384_ov128", 3,
+        )
+        assert matched is mine
+        assert basis.endswith("-via-union_k10-superset")
+
+    def test_shell_tokens_match_only_at_delimiters(self) -> None:
+        """`3of5` must not match `ge3of5`; they are different vote shells."""
+        ge3 = _manifest("outputs/r/a-ge3of5/crops/candidate_manifest.json",
+                        "a-ge3of5.geojson", 3)
+        three = _manifest("outputs/r/a-3of5/crops/candidate_manifest.json",
+                          "a-3of5.geojson", 3)
+        matched, _basis = match_verifier_manifest(
+            [ge3, three], "verified-x-3of5", "nowhere", None, 5
+        )
+        assert matched is three
 
     def test_unmatchable_lineage_is_disclosed_not_defaulted(self) -> None:
         """Two indistinguishable stages give no verdict, not the run minimum."""
@@ -893,6 +1012,31 @@ class TestMatchVerifierManifest:
 
 class TestCollectVerifierManifests:
     """Surveying a run's candidate manifests."""
+
+    @pytest.mark.parametrize(
+        "smoke_segment", ["_smoke", "smoke-384", "smoke-512", "smoke-armB",
+                          "smoke-anything-new"],
+    )
+    def test_smoke_prefix_rule_covers_unlisted_trees(
+        self, tmp_path: Path, smoke_segment: str
+    ) -> None:
+        """A prefix rule, not an allowlist.
+
+        The previous version enumerated the smoke directories that existed on
+        the day it was written, so the next one would have been counted as a
+        real stage until somebody noticed.
+        """
+        real = tmp_path / "stage" / "crops" / "candidate_manifest.json"
+        smoke = tmp_path / smoke_segment / "crops" / "candidate_manifest.json"
+        for path, votes in ((real, [3, 4, 5]), (smoke, [1, 5])):
+            path.parent.mkdir(parents=True)
+            path.write_text(json.dumps({
+                "source_geojson": "s.geojson",
+                "candidates": [{"properties": {"vote_count": v}} for v in votes],
+            }), encoding="utf-8")
+        manifests, skipped = collect_verifier_manifests(tmp_path, tmp_path)
+        assert [m.min_vote for m in manifests] == [3]
+        assert len(skipped) == 1
 
     def test_smoke_trees_are_excluded_and_reported(self, tmp_path: Path) -> None:
         """A 12-candidate rehearsal must not set a campaign's coverage floor."""
@@ -910,17 +1054,46 @@ class TestCollectVerifierManifests:
         assert len(skipped) == 1
         assert "smoke-test tree" in skipped[0]
 
-    def test_manifests_without_vote_counts_are_reported(self, tmp_path: Path) -> None:
-        """A single-pass verifier crops from a raw pass and has no votes."""
+    def test_proposer_votes_is_read_as_a_vote_count(self, tmp_path: Path) -> None:
+        """Two key vocabularies exist; reading one excluded eight real stages.
+
+        The e47-propose-brief ladder records `proposer_votes`, and every one of
+        its stages was dropped under a reason that was not true of it.
+        """
+        path = tmp_path / "stage" / "crops" / "candidate_manifest.json"
+        path.parent.mkdir(parents=True)
+        path.write_text(json.dumps({
+            "source_geojson": "flash-high-text-1of5.geojson",
+            "candidates": [
+                {"properties": {"proposer_votes": v, "cluster_size": v}}
+                for v in (3, 4, 5)
+            ],
+        }), encoding="utf-8")
+        manifests, skipped = collect_verifier_manifests(tmp_path, tmp_path)
+        assert skipped == []
+        assert manifests[0].min_vote == 3
+        assert manifests[0].max_vote == 5
+
+    def test_manifests_without_vote_counts_are_reported_diagnostically(
+        self, tmp_path: Path
+    ) -> None:
+        """The exclusion reason must describe THIS manifest, not a stock story.
+
+        The previous reason asserted "a single-pass verifier stage crops from a
+        raw pass" of every exclusion, which was false of the eight stages that
+        merely used a different key.
+        """
         path = tmp_path / "stage" / "crops" / "candidate_manifest.json"
         path.parent.mkdir(parents=True)
         path.write_text(json.dumps({
             "source_geojson": "s.geojson",
-            "candidates": [{"properties": {}}],
+            "candidates": [{"properties": {"confidence": 1.0, "subtype": "x"}}],
         }), encoding="utf-8")
         manifests, skipped = collect_verifier_manifests(tmp_path, tmp_path)
         assert manifests == []
-        assert "no integer vote counts" in skipped[0]
+        assert "vote_count, proposer_votes" in skipped[0]
+        assert "confidence" in skipped[0] and "subtype" in skipped[0]
+        assert "single-pass verifier stage" not in skipped[0]
 
     def test_unreadable_manifest_is_reported_not_swallowed(
         self, tmp_path: Path

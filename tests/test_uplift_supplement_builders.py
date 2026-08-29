@@ -220,6 +220,11 @@ def corpus(tmp_path: Path) -> Path:
                         f"outputs/{run_id}/{pool}/consensus/consensus-2of3.geojson",
                         votes,
                     ))
+        # A smoke rehearsal in every run: 12 candidates, one of them a
+        # singleton. Excluding it is what keeps beta's floor at 2, so the
+        # exclusion is load-bearing rather than cosmetic.
+        _write_json(run_dir / "_smoke" / "crops" / "candidate_manifest.json",
+                    _candidate_manifest("subset.geojson", [1, 5]))
 
         _write_json(root / "results" / run_id / "consensus" / "evaluation.json",
                     _evaluation(0.60, buffer_m, gt, 100))
@@ -248,6 +253,73 @@ def corpus(tmp_path: Path) -> Path:
                 },
             ],
         }
+
+    # ---- `delta`: one run, four verifier stages -------------------------- #
+    # The three runs above have a single stage each, so every match short
+    # circuits on `sole-manifest` and the matcher proper is never reached. This
+    # run exercises it: two pools (text and image) so a lineage crossing is
+    # possible, a union_k5 stage the N = 3 narrowing must drop, and a ge2of3
+    # stage only the consensus-shell rule can separate from the union stage.
+    delta = root / "outputs" / "delta"
+    registry.append({"run_id": "delta", "directory_path": "outputs/delta",
+                     "status": "active"})
+    facts["delta"] = {
+        "purpose": "fixture run with several verifier stages",
+        "tile_size_px": 384, "corpus": "4-map-gs", "gt_reference": "curator",
+        "scope": {
+            "test_set_id": "era-1-340",
+            "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+            "n_test_tiles": 340,
+        },
+    }
+    for pool in ("text-delta", "image-delta"):
+        for pass_n in (1, 2, 3):
+            name = f"detections_{pool}_run0{pass_n}.geojson"
+            _write_json(delta / pool / f"run_{pass_n}" / name,
+                        {"type": "FeatureCollection", "features": []})
+            passes.append({
+                "pass_id": f"delta::{pool}::run{pass_n}", "run_id": "delta",
+                "proposer_pool": pool, "pass_n": pass_n,
+                "model_used": "gemini-3-flash-preview",
+                "modality": "image" if pool.startswith("image") else "text",
+                "thinking_level": "minimal", "temperature": 0.7,
+                "status": "ok", "n_tiles_processed": 340, "cost_usd": 1.0,
+                "provenance": {"source_files": [], "extractor_version": "test"},
+            })
+
+    for relative, source, votes in (
+        ("verifier/text-delta/crops", "union_k3.geojson", [1, 2, 3]),
+        ("verifier/text-delta/crops_k5", "union_k5.geojson", [3, 4, 5]),
+        ("verifier/text-delta/crops_ge2of3", "text-delta-ge2of3.geojson", [2, 3]),
+        ("verifier/image-delta/crops", "union_k3.geojson", [2, 3]),
+    ):
+        _write_json(delta / relative / "candidate_manifest.json",
+                    _candidate_manifest(source, votes))
+
+    delta_conditions = []
+    for label, pool in (
+        ("text-delta-union-2of3", "text-delta"),
+        ("image-delta-union-2of3", "image-delta"),
+        ("text-delta-ge2of3", "text-delta"),
+    ):
+        _write_json(root / "results" / "delta" / label / "evaluation.json",
+                    _evaluation(0.70, 20, CURATOR, 90))
+        delta_conditions.append({
+            "label": label, "architecture": "proposer-verifier",
+            "aggregation": "verified", "proposer_pool": pool,
+            "n_passes": 3, "vote_threshold": 2, "prob_threshold": 0.2,
+            "verifier_config": {"variant": "v1"},
+            "detections": f"outputs/delta/{label}.geojson",
+            "eval_path": f"results/delta/{label}/evaluation.json",
+        })
+    decomposition["delta"] = {
+        "proposer_pools": {
+            "text-delta": {"modality": "text", "path": "text-delta"},
+            "image-delta": {"modality": "image", "path": "image-delta"},
+        },
+        "verifier_passes": {},
+        "conditions": delta_conditions,
+    }
 
     _write_json(root / "results" / "run-registry.json",
                 {"schema_version": "1.0", "generated_at": "2026-08-01T00:00:00Z",
@@ -300,12 +372,12 @@ class TestFlattenEndToEnd:
             assert (out / name).exists(), name
 
     def test_one_row_per_registered_spec(self, corpus: Path, tmp_path: Path) -> None:
-        """Six specs in, six rows out — no condition silently dropped."""
+        """Nine specs in, nine rows out — no condition silently dropped."""
         out = tmp_path / "out"
         flatten_main(["--repo-root", str(corpus), "--out-dir", str(out)])
         rows = _read_csv(out / "conditions.csv")
-        assert len(rows) == 6
-        assert {r["condition_id"] for r in rows} == {
+        assert len(rows) == 9
+        assert {r["condition_id"] for r in rows} >= {
             "alpha::consensus-2of3", "alpha::verified-2of3",
             "beta::consensus-2of3", "beta::verified-2of3",
             "gamma::consensus-2of3", "gamma::verified-2of3",
@@ -438,8 +510,8 @@ class TestK1GapFillEndToEnd:
                 for r in _read_csv(out / "k1-gapfill-worklist.csv")}
 
     def test_covers_every_multi_pass_cell(self, rows: dict) -> None:
-        """All six N = 3 cells need an anchor; none is skipped."""
-        assert len(rows) == 6
+        """All nine N = 3 cells need an anchor; none is skipped."""
+        assert len(rows) == 9
 
     def test_ready_jobs_point_at_the_first_committed_pass(self, rows: dict) -> None:
         """The N = 1 rung scores run_1, per the preregistered first-N rule."""
@@ -478,14 +550,86 @@ class TestK1GapFillEndToEnd:
         for row in rows.values():
             assert not (row["verifier_crop_manifest"] or "").startswith("/")
 
-    def test_disclosure_reports_the_skipped_manifest_count(
+    def test_disclosure_reports_a_nonzero_skipped_count(
         self, corpus: Path, tmp_path: Path
     ) -> None:
-        """Exclusions are published: a dropped manifest can move a floor."""
+        """Exclusions are published: a dropped manifest can move a floor.
+
+        Every fixture run carries a smoke rehearsal, so the count is NONZERO —
+        a test that passed on "0 manifests were excluded" would not notice the
+        exclusion machinery being removed.
+        """
         out = tmp_path / "out"
         k1_main(["--repo-root", str(corpus), "--out-dir", str(out)])
         text = (out / "k1-gapfill-disclosure.md").read_text(encoding="utf-8")
         assert "candidate manifest(s) were excluded" in text
+        assert "**0 candidate manifest(s) were excluded" not in text
+        assert "smoke-test tree" in text
+        assert "_smoke" in text
+
+    def test_smoke_rehearsal_does_not_lower_a_measured_floor(
+        self, rows: dict
+    ) -> None:
+        """beta's smoke tree holds a vote-1 candidate; its floor stays 2.
+
+        This is why the exclusion exists: without it the rehearsal would drag
+        the run to floor 1 and flip a blocked verdict to derivable.
+        """
+        assert rows["beta::verified-2of3"]["verifier_min_vote_seen"] == "2"
+        assert rows["beta::verified-2of3"]["k1_with_verifier"] == "blocked"
+
+    def test_multi_stage_run_matches_each_cell_to_its_own_stage(
+        self, rows: dict
+    ) -> None:
+        """The `delta` run has four stages; each cell must find its own.
+
+        Text and image pools verified at different floors, so a crossing shows
+        up as a wrong verdict rather than merely a wrong citation.
+        """
+        text_cell = rows["delta::text-delta-union-2of3"]
+        image_cell = rows["delta::image-delta-union-2of3"]
+        assert text_cell["verifier_crop_manifest"] == (
+            "outputs/delta/verifier/text-delta/crops/candidate_manifest.json"
+        )
+        assert text_cell["verifier_min_vote_seen"] == "1"
+        assert text_cell["k1_with_verifier"] == "derivable"
+        assert image_cell["verifier_crop_manifest"] == (
+            "outputs/delta/verifier/image-delta/crops/candidate_manifest.json"
+        )
+        assert image_cell["verifier_min_vote_seen"] == "2"
+        assert image_cell["k1_with_verifier"] == "blocked"
+
+    def test_union_shell_narrowing_drops_the_wrong_rung(self, rows: dict) -> None:
+        """delta has a union_k5 stage; an N = 3 cell must not land on it."""
+        row = rows["delta::text-delta-union-2of3"]
+        assert "crops_k5" not in row["verifier_crop_manifest"]
+
+    def test_consensus_shell_separates_stages_of_one_pool(
+        self, rows: dict
+    ) -> None:
+        """text-delta has both a union stage and a ge2of3 stage."""
+        row = rows["delta::text-delta-ge2of3"]
+        assert row["verifier_crop_manifest"].endswith(
+            "verifier/text-delta/crops_ge2of3/candidate_manifest.json"
+        )
+        assert row["verifier_floor_basis"].startswith("matched-consensus-shell")
+        assert row["verifier_min_vote_seen"] == "2"
+
+    def test_no_citation_crosses_modality(self, rows: dict) -> None:
+        """A text cell must never cite an image stage's manifest, or vice versa.
+
+        The failure this pins is a false EVIDENCE path — the floor can be
+        coincidentally right while the manifest belongs to another condition.
+        """
+        for row in rows.values():
+            manifest = row["verifier_crop_manifest"]
+            if not manifest:
+                continue
+            pool = row["proposer_pool"]
+            if pool.startswith("image"):
+                assert "/text-" not in manifest, row["source_condition"]
+            if pool.startswith("text"):
+                assert "/image-" not in manifest, row["source_condition"]
 
 
 # --------------------------------------------------------------------------- #
@@ -505,8 +649,8 @@ class TestPairingAndUpliftEndToEnd:
         return out
 
     def test_each_verified_cell_gets_a_row(self, built: Path) -> None:
-        """Three verified cells, three pairing rows."""
-        assert len(_read_csv(built / "verifier-pairing-worklist.csv")) == 3
+        """Six verified cells, six pairing rows."""
+        assert len(_read_csv(built / "verifier-pairing-worklist.csv")) == 6
 
     def test_twin_is_the_registered_consensus_cell(self, built: Path) -> None:
         """The pre-verifier twin is already scored, so nothing needs running."""
