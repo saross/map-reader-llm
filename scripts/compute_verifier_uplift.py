@@ -8,7 +8,8 @@ belongs to which verified cell; this script joins the two scores and writes the
 uplift.
 
 Uplift is ``verified - unverified`` on one metric, both cells in the SAME
-stratum. That is not a convention here, it is enforced: every pair goes through
+stratum. That is not a convention here, it is enforced: the worklist carries the
+two sides' SEPARATELY DERIVED stratum ids, and both are handed to
 :func:`~scripts.lib_uplift_supplement.refuse_cross_stratum`, so a pair whose two
 cells were scored against different references, buffers, or frames raises rather
 than producing a plausible number. Cross-stratum comparisons belong in
@@ -198,13 +199,19 @@ def compute_uplift(
             pair["output_dir"] or None, metric, buffer_m,
         )
 
-        # Both sides are declared to sit in the pair's single stratum: the
-        # worklist pairs within one run, pool, reference, buffer, and frame by
-        # construction. The guard proves it rather than assuming it, and turns
-        # a future mis-pairing into a stop rather than a plausible number.
+        # The guard is given the two sides' SEPARATELY DERIVED stratum ids. An
+        # earlier build passed the verified cell's id twice, which made the
+        # check tautological — it could not fail on any input, and so proved
+        # nothing about the pairing it was there to protect.
         stratum_id = refuse_cross_stratum(
-            [{"stratum_id": pair["stratum_id"]}, {"stratum_id": pair["stratum_id"]}],
-            what=f"verifier uplift for {pair['verified_condition_id']}",
+            [
+                {"stratum_id": pair["verified_stratum_id"]},
+                {"stratum_id": pair["unverified_stratum_id"]},
+            ],
+            what=(
+                f"verifier uplift for {pair['verified_condition_id']} "
+                f"against {pair['unverified_condition_id'] or 'its derived twin'}"
+            ),
         )
 
         notes: list[str] = []

@@ -18,8 +18,11 @@ How a twin is located
 Four rules, in descending order of authority, each recorded in ``pairing_basis``:
 
 ``registered``
-    A sibling condition already in the registry with the same run, pool, N, and
-    vote threshold, and no verifier. Nothing to score — it already has metrics.
+    A sibling condition already in the registry sharing the verified cell's run,
+    pool, geometry, reference, frame, fusion family, N, and vote threshold, with
+    no verifier. Nothing to score — it already has metrics. Its stratum is then
+    keyed from ITS OWN evidence, not inherited, so the cross-stratum guard
+    downstream has two independently derived ids to compare.
 ``consensus-file``
     A committed consensus GeoJSON at that vote threshold under the pool
     (``consensus_t<k>.geojson`` or ``consensus-<k>of<N>.geojson``). Accepted only
@@ -57,9 +60,8 @@ import json
 import shlex
 import sys
 from collections import Counter
-from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Mapping, Sequence
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -71,14 +73,16 @@ from scripts.lib_detection_paths import (  # noqa: E402
     resolve_pool_passes,
 )
 from scripts.lib_uplift_supplement import (  # noqa: E402
-    PRIMARY_BUFFER_BY_CORPUS,
+    ORIGINAL_PUBLICATION_DATE,
     CorpusSources,
     ScoringRecipe,
-    StratumKey,
+    condition_stratum,
+    generated_doc_banner,
     iter_condition_specs,
     read_scoring_recipe,
     resolve_geometry,
     resolve_reference,
+    resolve_scope,
     write_csv,
 )
 
@@ -86,7 +90,8 @@ DEFAULT_OUT_DIR = Path("results/uplift-supplement")
 
 WORKLIST_COLUMNS: tuple[str, ...] = (
     "job_id", "verified_condition_id", "run_id", "proposer_pool",
-    "stratum_id", "corpus", "reference", "buffer_m", "frame_id",
+    "verified_stratum_id", "unverified_stratum_id", "unverified_stratum_basis",
+    "corpus", "reference", "buffer_m", "frame_id",
     "N", "min_votes", "prob_t",
     "status", "pairing_basis", "blocked_reason",
     "unverified_condition_id", "unverified_detections_path",
@@ -102,6 +107,7 @@ def _find_consensus_file(
     votes: int,
     n_passes: int,
     discriminators: Sequence[str] = (),
+    n_lineages: int = 1,
 ) -> tuple[Path | None, str | None]:
     """Locate a committed consensus GeoJSON at a given vote threshold.
 
@@ -124,31 +130,52 @@ def _find_consensus_file(
         n_passes: N, the passes the verified cell consumed.
         discriminators: Tokens identifying the cell (geometry, pool), used to
             choose between several explicit matches under one root.
+        n_lineages: How many distinct (pool, geometry) lineages the run
+            registers. A lone glob hit is unambiguous only when the run has one
+            lineage for it to belong to; where the run has several, the hit must
+            positively carry this cell's tokens.
 
     Returns:
         ``(path, rejection_reason)``. The reason is populated only when a
         candidate was found and deliberately refused.
     """
-    roots = [d for d in (pool_dir, run_dir) if d is not None and d.is_dir()]
-    for root in roots:
+    tokens = [t for t in discriminators if t]
+    for root, scope in ((pool_dir, "pool"), (run_dir, "run")):
+        if root is None or not root.is_dir():
+            continue
         explicit = sorted(
             {
                 *root.glob(f"consensus/*-{votes}of{n_passes}.geojson"),
                 *root.glob(f"*/consensus/*-{votes}of{n_passes}.geojson"),
             }
         )
-        if len(explicit) == 1:
+        if not explicit:
+            continue
+        # A single glob hit is self-evident only in a single-lineage run. In a
+        # multi-lineage run it is merely the only file with that vote SHAPE
+        # anywhere in the tree, which is how three pv-diag-384 cells — text,
+        # image, and text-min, on three different pools — all resolved to one
+        # text consensus set and were emitted as ready scoring jobs.
+        if len(explicit) == 1 and (n_lineages <= 1 or scope == "pool"):
             return explicit[0], None
-        if explicit:
-            for token in discriminators:
-                narrowed = [p for p in explicit if token and token in str(p)]
-                if len(narrowed) == 1:
-                    return narrowed[0], None
+        matched = [p for p in explicit if any(t in str(p) for t in tokens)]
+        if len(matched) == 1:
+            return matched[0], None
+        if not matched:
             return None, (
-                f"{len(explicit)} committed {votes}-of-{n_passes} consensus sets "
-                f"sit under {root}, and none of the cell's identifying tokens "
-                "picks exactly one. Refused rather than guessed"
+                f"{len(explicit)} committed {votes}-of-{n_passes} consensus "
+                f"set(s) sit under the {scope} tree, which serves "
+                f"{n_lineages} distinct pool/geometry lineages, and none "
+                f"carries this cell's tokens "
+                f"({', '.join(tokens) or 'no tokens resolved'}). None can be "
+                "shown to be the set its verifier consumed; refused rather "
+                "than guessed"
             )
+        return None, (
+            f"{len(matched)} committed {votes}-of-{n_passes} consensus sets "
+            f"under the {scope} tree carry this cell's lineage, and no token "
+            "picks exactly one. Refused rather than guessed"
+        )
 
     if pool_dir is None or not pool_dir.is_dir():
         return None, None
@@ -171,7 +198,10 @@ def _find_consensus_file(
 
 
 def _find_union(
-    run_dir: Path, discriminators: Sequence[str], n_passes: int
+    run_dir: Path,
+    discriminators: Sequence[str],
+    n_passes: int,
+    n_lineages: int = 1,
 ) -> Path | None:
     """Locate the committed vote >= 1 union over a pool's first N passes.
 
@@ -185,6 +215,8 @@ def _find_union(
         run_dir: The run's output directory.
         discriminators: Tokens identifying the cell, most specific first.
         n_passes: N.
+        n_lineages: How many distinct (pool, geometry) lineages the run
+            registers.
 
     Returns:
         The union file, or ``None`` when no unambiguous match exists.
@@ -192,13 +224,19 @@ def _find_union(
     candidates = sorted(run_dir.rglob(f"union_k{n_passes}.geojson"))
     if not candidates:
         return None
-    for token in discriminators:
-        if not token:
-            continue
+    tokens = [t for t in discriminators if t]
+    for token in tokens:
         matches = [c for c in candidates if token in str(c)]
         if len(matches) == 1:
             return matches[0]
-    return candidates[0] if len(candidates) == 1 else None
+    # A lone union is accepted only when the run has one lineage for it to
+    # belong to, or when the cell's own tokens appear in its path. "It was the
+    # only file" is not, by itself, evidence that it is the RIGHT file.
+    if len(candidates) == 1 and (
+        n_lineages <= 1 or any(t in str(candidates[0]) for t in tokens)
+    ):
+        return candidates[0]
+    return None
 
 
 def _render_command(
@@ -248,6 +286,27 @@ def _render_command(
     return " ".join(shlex.quote(p) for p in parts)
 
 
+def _eval_metadata(
+    sources: CorpusSources, spec: Mapping[str, Any]
+) -> dict[str, Any] | None:
+    """Read a condition's evaluation ``_metadata`` block, if it has one.
+
+    Args:
+        sources: Loaded corpus sources.
+        spec: The condition spec.
+
+    Returns:
+        The ``_metadata`` block, or ``None`` when no evaluation is readable.
+    """
+    eval_path = spec.get("eval_path")
+    if not eval_path:
+        return None
+    path = sources.repo_root / str(eval_path)
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8")).get("_metadata")
+
+
 def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
     """Pair every verified cell with its pre-verifier twin.
 
@@ -259,7 +318,9 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
     """
     specs = list(iter_condition_specs(sources))
 
-    def _pair_key(run: str, spec: dict[str, Any]) -> tuple[Any, ...]:
+    def _pair_key(
+        run: str, condition: str, spec: dict[str, Any]
+    ) -> tuple[Any, ...]:
         """Build the identity a verified cell and its twin must share.
 
         Pool + N + vote threshold is not enough on its own. The grid campaign's
@@ -269,24 +330,44 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
         The fusion family matters for the same reason: h8-v2 registers greedy
         and WBF aggregations of the same passes, and a WBF-verified cell must be
         paired with the WBF consensus, not the greedy one.
+
+        The REFERENCE is in the key too. Several 55-map cells are registered
+        once per reference — ``-canonical-gt`` and ``-standardised-gt`` variants
+        of the same detections — and pairing across those compares two
+        different ground truths while calling the difference a verifier effect.
         """
         facts = sources.facts.get(run, {})
         geometry = resolve_geometry(
             spec.get("proposer_pool"), spec["label"], facts.get("tile_size_px")
         )["geometry"]
+        reference = resolve_reference(
+            _eval_metadata(sources, spec), spec["label"], facts.get("gt_reference")
+        )
         return (
             run,
             spec.get("proposer_pool") or "",
             geometry,
+            reference.term,
+            resolve_scope(sources, run, condition).get("test_set_id"),
             "wbf" if "wbf" in spec["label"] else "greedy",
             int(spec["n_passes"]),
             spec.get("vote_threshold"),
         )
 
     registered: dict[tuple[Any, ...], tuple[str, dict[str, Any]]] = {}
+    lineages: dict[str, set[tuple[str, str | None]]] = {}
     for run_id, condition_id, spec in specs:
+        facts = sources.facts.get(run_id, {})
+        lineages.setdefault(run_id, set()).add((
+            spec.get("proposer_pool") or "",
+            resolve_geometry(
+                spec.get("proposer_pool"), spec["label"], facts.get("tile_size_px")
+            )["geometry"],
+        ))
         if spec.get("aggregation") in {"consensus", "greedy", "wbf"}:
-            registered.setdefault(_pair_key(run_id, spec), (condition_id, spec))
+            registered.setdefault(
+                _pair_key(run_id, condition_id, spec), (condition_id, spec)
+            )
 
     rows: list[dict[str, Any]] = []
     for run_id, condition_id, spec in specs:
@@ -304,16 +385,10 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
             document = json.loads(
                 (sources.repo_root / eval_path).read_text(encoding="utf-8")
             )
-        reference, reference_path, _ = resolve_reference(
-            (document or {}).get("_metadata"), spec["label"], facts.get("gt_reference")
+        stratum, reference, scope = condition_stratum(
+            sources, run_id, condition_id, spec, (document or {}).get("_metadata")
         )
-        scope = facts.get("scope") or {}
         corpus = facts.get("corpus")
-        buffer_m = PRIMARY_BUFFER_BY_CORPUS.get(corpus or "", 0)
-        stratum = StratumKey(
-            corpus=corpus or "unknown", reference=reference or "unknown",
-            buffer_m=buffer_m, frame_id=scope.get("test_set_id") or "unknown",
-        )
         recipe, recipe_problem = read_scoring_recipe(
             sources.repo_root, eval_path, document
         )
@@ -329,10 +404,21 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
         materialise_filter = None
         notes: list[str] = []
 
+        # The twin's stratum is keyed INDEPENDENTLY, so the cross-stratum guard
+        # downstream has two separately derived ids to compare. Passing the
+        # verified cell's id twice — which an earlier build did — makes the
+        # guard tautological: it can never fire, on any input.
+        twin_stratum = stratum
+        twin_stratum_basis = (
+            "same-recipe-by-construction: the twin is scored with the verified "
+            "cell's own recorded recipe, so its reference, buffer, and frame "
+            "are that cell's by construction"
+        )
+
         geometry = resolve_geometry(
             pool, spec["label"], facts.get("tile_size_px")
         )["geometry"]
-        sibling = registered.get(_pair_key(run_id, spec))
+        sibling = registered.get(_pair_key(run_id, condition_id, spec))
         if votes is None:
             blocked = (
                 "the verified cell records no vote threshold, so there is no "
@@ -343,17 +429,27 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
             twin_id, twin_spec = sibling
             twin_detections = twin_spec.get("detections")
             twin_eval = twin_spec.get("eval_path")
+            # A registered twin is a condition in its own right, so its stratum
+            # is derived from ITS evidence — its own evaluation's ground truth
+            # and its own scope override — not inherited from the verified cell.
+            twin_stratum, _twin_reference, _twin_scope = condition_stratum(
+                sources, twin_id.split("::", 1)[0], twin_id, twin_spec,
+                _eval_metadata(sources, twin_spec),
+            )
+            twin_stratum_basis = "derived-from-twin-cell"
             notes.append("the pre-verifier twin is already scored and registered")
         else:
+            n_lineages = len(lineages.get(run_id, {("", None)}))
             found, refusal = _find_consensus_file(
-                pool_dir, run_dir, int(votes), n_passes, (geometry or "", pool)
+                pool_dir, run_dir, int(votes), n_passes,
+                (geometry or "", pool), n_lineages,
             )
             if found is not None:
                 basis = "consensus-file"
                 twin_detections = str(found.relative_to(sources.repo_root))
             elif run_dir is not None and run_dir.is_dir():
                 union = _find_union(
-                    run_dir, (geometry or "", pool), n_passes
+                    run_dir, (geometry or "", pool), n_passes, n_lineages
                 )
                 if union is not None:
                     basis = "union"
@@ -385,10 +481,12 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
             "verified_condition_id": condition_id,
             "run_id": run_id,
             "proposer_pool": pool,
-            "stratum_id": stratum.stratum_id,
+            "verified_stratum_id": stratum.stratum_id,
+            "unverified_stratum_id": twin_stratum.stratum_id,
+            "unverified_stratum_basis": twin_stratum_basis,
             "corpus": corpus,
-            "reference": reference,
-            "buffer_m": buffer_m,
+            "reference": reference.term,
+            "buffer_m": stratum.buffer_m,
             "frame_id": scope.get("test_set_id"),
             "N": n_passes,
             "min_votes": votes,
@@ -401,7 +499,7 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
             "unverified_eval_path": twin_eval,
             "union_path": union_path,
             "materialise_filter": materialise_filter,
-            "reference_path": (recipe.ground_truth if recipe else None) or reference_path,
+            "reference_path": reference.path,
             "bounds_path": recipe.bounds if recipe else None,
             "engine": recipe.engine if recipe else None,
             "output_dir": output_dir if status.startswith("ready") else None,
@@ -423,15 +521,15 @@ def render_report(rows: list[dict[str, Any]]) -> str:
     Returns:
         The Markdown document.
     """
-    today = datetime.now(timezone.utc).date().isoformat()
     status_counts = Counter(r["status"] for r in rows)
     basis_counts = Counter(r["pairing_basis"] for r in rows)
     lines = [
         "# With/without-verifier pairing — worklist",
         "",
-        f"> **Last revised**: {today} (original publication; generated by "
-        "`scripts/build_verifier_pairing_worklist.py`).",
-        "> See [§ Changelog](#changelog) for revision history.",
+        *generated_doc_banner(
+            "original publication; the with/without-verifier pairing plan",
+            "scripts/build_verifier_pairing_worklist.py",
+        ),
         "",
         "Build order step 3 of `planning/uplift-supplement-2026-08-28.md`. No",
         "scoring has been run: this document and its worklist are the plan.",
@@ -439,8 +537,15 @@ def render_report(rows: list[dict[str, Any]]) -> str:
         "Verifier uplift is the difference a verifier makes holding everything",
         "else fixed. Each row pairs one verified cell with the consensus set that",
         "went INTO its verifier at the same vote threshold — same passes, same",
-        "reference, same buffer, same frame, so the pair sits in one stratum by",
-        "construction and the uplift is a within-stratum difference.",
+        "reference, same buffer, same frame.",
+        "",
+        "The two sides carry SEPARATE stratum ids (`verified_stratum_id` and",
+        "`unverified_stratum_id`). For a derived twin they agree by construction,",
+        "because the twin is scored with the verified cell's own recipe; for a",
+        "registered twin the id is derived from that cell's own evidence, so a",
+        "mismatch is detectable. `scripts/compute_verifier_uplift.py` passes both",
+        "to the cross-stratum guard, which is what makes the guard a check rather",
+        "than a formality.",
         "",
         f"{len(rows)} verified cell(s) in the registry.",
         "",
@@ -496,7 +601,7 @@ def render_report(rows: list[dict[str, Any]]) -> str:
         "",
         "## Changelog",
         "",
-        f"### {today} — Original publication",
+        f"### {ORIGINAL_PUBLICATION_DATE} — Original publication",
         "",
         "Generated with the first build of the verifier-pairing worklist.",
         "",
