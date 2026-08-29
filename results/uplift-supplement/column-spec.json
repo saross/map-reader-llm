@@ -1,0 +1,549 @@
+{
+  "generated_at": "2026-08-29T04:34:08Z",
+  "notation_key": "docs/methodology/notation-key.md",
+  "sanctioned_by_notation_key": [
+    "55maps-8541",
+    "F1",
+    "F1_CI_hi",
+    "F1_CI_lo",
+    "FN",
+    "FP",
+    "MCC",
+    "MCC_CI_hi",
+    "MCC_CI_lo",
+    "N",
+    "R_m",
+    "TP",
+    "basis",
+    "bh_adjusted_p",
+    "cell",
+    "ci",
+    "corrected_f1",
+    "cost_usd",
+    "era-1-340",
+    "f1_50",
+    "fn",
+    "fp",
+    "grid-common-487",
+    "group",
+    "label",
+    "mcc",
+    "micro_f1_50",
+    "min_votes",
+    "n_detections",
+    "n_permutations",
+    "n_phantom_duplicates_dropped",
+    "n_ref_extended",
+    "n_ref_student_only",
+    "n_reviewer_promoted_at_R",
+    "n_tiles",
+    "null_mean",
+    "null_std",
+    "observed_diff",
+    "p_value",
+    "point",
+    "precision",
+    "precision_50",
+    "precision_CI_hi",
+    "precision_CI_lo",
+    "prob_t",
+    "recall",
+    "recall_50",
+    "recall_CI_hi",
+    "recall_CI_lo",
+    "sensitivity",
+    "significant",
+    "specificity",
+    "stratum_id",
+    "tier",
+    "tiers",
+    "tile_FN",
+    "tile_FP",
+    "tile_TN",
+    "tile_TP",
+    "tp"
+  ],
+  "declared_extensions": {
+    "K": {
+      "extends": "\u00a7 1 (K)",
+      "rationale": "Passes RUN in the pool. The key defines the symbol; this is the column."
+    },
+    "aggregation": {
+      "extends": "conditions-manifest schema",
+      "rationale": "none / greedy / wbf / consensus / verified."
+    },
+    "architecture": {
+      "extends": "conditions-manifest schema",
+      "rationale": "single-pass / consensus / proposer-verifier \u2014 the evaluable architecture."
+    },
+    "blocked_reason": {
+      "extends": "anti-confabulation",
+      "rationale": "Why a blocked job cannot run; never a placeholder, always a measured fact."
+    },
+    "bounds_path": {
+      "extends": "\u00a7 6",
+      "rationale": "The evaluation bounds defining the frame."
+    },
+    "buffer_m": {
+      "extends": "\u00a7 1 (R / R_m)",
+      "rationale": "Third component, as an integer column; `R_m` is the corrected-F1 CSV's name."
+    },
+    "ci_method": {
+      "extends": "\u00a7 5 (CI, BCa, percentile)",
+      "rationale": "The CI method the source evaluation recorded; omitted where it recorded none."
+    },
+    "ci_unreliable": {
+      "extends": "conditions-manifest schema",
+      "rationale": "The measured D28/E72 reliability verdict carried through from the source."
+    },
+    "command": {
+      "extends": "anti-confabulation",
+      "rationale": "The exact invocation the operator runs on sapphire."
+    },
+    "condition_id": {
+      "extends": "\u00a7 7 (registry ids)",
+      "rationale": "The `run_id::label` composite spelled as a column name."
+    },
+    "corpus": {
+      "extends": "\u00a7 6",
+      "rationale": "First component of stratum_id: 4-map-gs or 55-map, from run-facts.json."
+    },
+    "cost_basis": {
+      "extends": "\u00a7 8 (audited / list / flex)",
+      "rationale": "Which cost basis `cost_usd` carries; NOT the audited basis (see build report)."
+    },
+    "delta": {
+      "extends": "\u00a7 3 (transfer tax)",
+      "rationale": "target_value - source_value; a transfer tax when the sign is negative."
+    },
+    "detections_path": {
+      "extends": "anti-confabulation",
+      "rationale": "The detection set scored."
+    },
+    "engine": {
+      "extends": "anti-confabulation",
+      "rationale": "Which scorer the job needs: evaluate_detections or corrected_f1_multi_buffer."
+    },
+    "eval_path": {
+      "extends": "anti-confabulation",
+      "rationale": "The evaluation artefact the metrics came from."
+    },
+    "frame_id": {
+      "extends": "\u00a7 6",
+      "rationale": "Fourth component: the evaluation frame id (era-1-340, era-2-487, ...)."
+    },
+    "geometry": {
+      "extends": "\u00a7 2 (geometry cell)",
+      "rationale": "The geometry cell label the key defines, as a column."
+    },
+    "geometry_basis": {
+      "extends": "\u00a7 2",
+      "rationale": "Which rule resolved the geometry: pool-name, label, or run-facts-tile-size."
+    },
+    "is_primary_buffer": {
+      "extends": "\u00a7 1 (R)",
+      "rationale": "True where buffer_m is the corpus headline buffer (20 m GS / 50 m 55-map)."
+    },
+    "job_id": {
+      "extends": "anti-confabulation",
+      "rationale": "Primary key of a scoring job in a worklist."
+    },
+    "k1_with_verifier": {
+      "extends": "\u00a7 2 (PV)",
+      "rationale": "derivable / blocked / not-applicable \u2014 the card's disclosed K = 1 PV anchor."
+    },
+    "k1_with_verifier_reason": {
+      "extends": "anti-confabulation",
+      "rationale": "The measured ground for that verdict; never an approximation."
+    },
+    "materialise_filter": {
+      "extends": "\u00a7 1 (k)",
+      "rationale": "The vote_count predicate that turns the union into the paired shell."
+    },
+    "mde_50": {
+      "extends": "\u00a7 5 (MDE 50 %/80 %)",
+      "rationale": "Minimum detectable effect at 50 % power, joined from sensitivity.json."
+    },
+    "mde_80": {
+      "extends": "\u00a7 5 (MDE 50 %/80 %)",
+      "rationale": "Minimum detectable effect at 80 % power, joined from sensitivity.json."
+    },
+    "mde_instrument": {
+      "extends": "\u00a7 5",
+      "rationale": "The named permutation instrument the MDE and null SD describe."
+    },
+    "mde_join_basis": {
+      "extends": "\u00a7 5",
+      "rationale": "The join key used (n_tiles + buffer_m) and any ambiguity it carries."
+    },
+    "mde_source": {
+      "extends": "\u00a7 5",
+      "rationale": "The artefact the instrument's null SD was measured from."
+    },
+    "metric": {
+      "extends": "\u00a7 5",
+      "rationale": "Which metric the delta is on (F1, MCC, precision, recall)."
+    },
+    "metrics_source": {
+      "extends": "anti-confabulation",
+      "rationale": "conditions-manifest or evaluation-json \u2014 where this row's metrics were read."
+    },
+    "modality": {
+      "extends": "\u00a7 2 (image / text)",
+      "rationale": "Proposer input modality; the key names the values, not a column."
+    },
+    "model_used": {
+      "extends": "passes-manifest schema",
+      "rationale": "Authoritative model identity, read from per-item metadata, never a name."
+    },
+    "n_comparisons": {
+      "extends": "\u00a7 5",
+      "rationale": "Pairwise comparisons the instrument's null SD was measured over."
+    },
+    "n_conditions": {
+      "extends": "\u00a7 6",
+      "rationale": "How many registered conditions resolve into the stratum."
+    },
+    "n_refs": {
+      "extends": "\u00a7 4",
+      "rationale": "Reference mounds in the stratum's reference file; the key gives no column name."
+    },
+    "notes": {
+      "extends": "anti-confabulation",
+      "rationale": "Free text recording any gap or caveat attached to this row."
+    },
+    "null_sd_hi": {
+      "extends": "\u00a7 5 (null SD)",
+      "rationale": "High end of the instrument's observed null-SD range."
+    },
+    "null_sd_lo": {
+      "extends": "\u00a7 5 (null SD)",
+      "rationale": "Low end of the instrument's observed null-SD range."
+    },
+    "output_dir": {
+      "extends": "anti-confabulation",
+      "rationale": "Where the job writes its evaluation."
+    },
+    "overlap_px": {
+      "extends": "\u00a7 2 (geometry cell)",
+      "rationale": "Overlap in pixels, the second half of the geometry cell."
+    },
+    "pair_id": {
+      "extends": "\u00a7 6 (stratum_id)",
+      "rationale": "Primary key of a transfer pair; the key defines the object, not the column."
+    },
+    "pairing_basis": {
+      "extends": "anti-confabulation",
+      "rationale": "Which rule located the pre-verifier twin: registered, consensus-file, union."
+    },
+    "proposer_pool": {
+      "extends": "\u00a7 7 (registry ids: run_id::pool::runN)",
+      "rationale": "The pool component of the pass id, as a column."
+    },
+    "rationale": {
+      "extends": "anti-confabulation",
+      "rationale": "Why this pair is a meaningful comparison despite spanning strata."
+    },
+    "reference": {
+      "extends": "\u00a7 4",
+      "rationale": "Second component: curator / student / canonical / standardised."
+    },
+    "reference_basis": {
+      "extends": "\u00a7 4",
+      "rationale": "Which rule resolved `reference`: eval-ground-truth, label-suffix, or run-facts."
+    },
+    "reference_consumed_path": {
+      "extends": "anti-confabulation",
+      "rationale": "The path the evaluation literally recorded, where it differs from the anchor."
+    },
+    "reference_path": {
+      "extends": "\u00a7 4",
+      "rationale": "The ground-truth GeoJSON the evaluation consumed (the re-verify anchor)."
+    },
+    "registered_analysis_id": {
+      "extends": "analyses-manifest schema",
+      "rationale": "The registered analysis this pair belongs to, where one exists."
+    },
+    "run_id": {
+      "extends": "\u00a7 7 (registry ids)",
+      "rationale": "Foreign key to the run registry; the key names the composite, not the part."
+    },
+    "rung": {
+      "extends": "\u00a7 1 (N)",
+      "rationale": "Which ladder rung the job scores (N = 1 for the K = 1 gap-fill)."
+    },
+    "source_condition": {
+      "extends": "\u00a7 7 (registry ids)",
+      "rationale": "The K >= 3 consensus cell whose K = 1 rung this job supplies."
+    },
+    "source_condition_id": {
+      "extends": "\u00a7 7 (registry ids)",
+      "rationale": "The cell a calibration or claim came FROM."
+    },
+    "source_stratum_id": {
+      "extends": "\u00a7 6",
+      "rationale": "Its stratum \u2014 necessarily different from the target's."
+    },
+    "source_value": {
+      "extends": "\u00a7 5",
+      "rationale": "The metric's value in the source cell."
+    },
+    "status": {
+      "extends": "anti-confabulation",
+      "rationale": "ready / blocked / already-registered \u2014 whether the job can run at all."
+    },
+    "stride_px": {
+      "extends": "\u00a7 2 (geometry cell)",
+      "rationale": "tile_px - overlap_px, which the key defines as the stride."
+    },
+    "target_condition_id": {
+      "extends": "\u00a7 7 (registry ids)",
+      "rationale": "The cell the claim was carried TO."
+    },
+    "target_stratum_id": {
+      "extends": "\u00a7 6",
+      "rationale": "The target cell's stratum; the delta is a transfer across the two."
+    },
+    "target_value": {
+      "extends": "\u00a7 5",
+      "rationale": "The metric's value in the target cell."
+    },
+    "tax_kind": {
+      "extends": "\u00a7 3 (transfer tax)",
+      "rationale": "Which tax the pair isolates: geometry, reference, corpus, buffer, or frame."
+    },
+    "temperature": {
+      "extends": "\u00a7 1 (T)",
+      "rationale": "Sampling temperature. `T` alone is too short to be a safe CSV header."
+    },
+    "thinking": {
+      "extends": "\u00a7 2 (MIN / HIGH / low)",
+      "rationale": "Thinking level; the key names the levels, not a column."
+    },
+    "tile_px": {
+      "extends": "\u00a7 2 (geometry cell)",
+      "rationale": "Tile size in pixels, the first half of the geometry cell."
+    },
+    "transfer": {
+      "extends": "heterogeneity design \u00a7 3",
+      "rationale": "Always TRUE here: the flag that licenses a cross-stratum number."
+    },
+    "union_path": {
+      "extends": "anti-confabulation",
+      "rationale": "The committed vote >= 1 union the vote shell must be filtered out of."
+    },
+    "unverified_condition_id": {
+      "extends": "\u00a7 7 (registry ids)",
+      "rationale": "The registered pre-verifier cell, where one already exists."
+    },
+    "unverified_detections_path": {
+      "extends": "anti-confabulation",
+      "rationale": "The pre-verifier consensus set at the same vote threshold."
+    },
+    "unverified_eval_path": {
+      "extends": "anti-confabulation",
+      "rationale": "That cell's committed evaluation, where one already exists."
+    },
+    "unverified_stratum_basis": {
+      "extends": "anti-confabulation",
+      "rationale": "Whether the twin's stratum was derived from its own cell or from the recipe."
+    },
+    "unverified_stratum_id": {
+      "extends": "\u00a7 6",
+      "rationale": "The twin's stratum, keyed independently; a tripwire, not a lineage check."
+    },
+    "unverified_value": {
+      "extends": "\u00a7 5",
+      "rationale": "The paired unverified cell's metric value."
+    },
+    "uplift": {
+      "extends": "\u00a7 3",
+      "rationale": "verified minus unverified on the same metric, same stratum."
+    },
+    "uplift_metric": {
+      "extends": "\u00a7 5",
+      "rationale": "Which metric the uplift column is computed on."
+    },
+    "verified": {
+      "extends": "\u00a7 2 (PV)",
+      "rationale": "Boolean: a verifier stage ran. The key names the architecture, not a flag."
+    },
+    "verified_condition_id": {
+      "extends": "\u00a7 7 (registry ids)",
+      "rationale": "The verified cell of a with/without-verifier pair."
+    },
+    "verified_stratum_id": {
+      "extends": "\u00a7 6",
+      "rationale": "The verified cell's own stratum, keyed from its own evidence."
+    },
+    "verified_value": {
+      "extends": "\u00a7 5",
+      "rationale": "The verified cell's metric value."
+    },
+    "verifier_crop_manifest": {
+      "extends": "anti-confabulation",
+      "rationale": "The candidate manifest that measurement came from."
+    },
+    "verifier_floor_basis": {
+      "extends": "anti-confabulation",
+      "rationale": "How the cell's verifier stage was matched: lineage, shell, sole, or ambiguous."
+    },
+    "verifier_min_vote_seen": {
+      "extends": "\u00a7 1 (k)",
+      "rationale": "Lowest vote_count the verifier actually saw, measured from the crop manifest."
+    },
+    "verifier_variant": {
+      "extends": "\u00a7 2 (PV)",
+      "rationale": "Verifier variant id from the condition's verifier_config."
+    }
+  },
+  "tables": {
+    "conditions.csv": [
+      "condition_id",
+      "run_id",
+      "label",
+      "stratum_id",
+      "corpus",
+      "reference",
+      "buffer_m",
+      "frame_id",
+      "n_tiles",
+      "n_refs",
+      "is_primary_buffer",
+      "geometry",
+      "tile_px",
+      "overlap_px",
+      "stride_px",
+      "geometry_basis",
+      "modality",
+      "thinking",
+      "temperature",
+      "model_used",
+      "architecture",
+      "aggregation",
+      "proposer_pool",
+      "K",
+      "N",
+      "prob_t",
+      "min_votes",
+      "verified",
+      "verifier_variant",
+      "basis",
+      "F1",
+      "F1_CI_lo",
+      "F1_CI_hi",
+      "ci_method",
+      "ci_unreliable",
+      "precision",
+      "recall",
+      "MCC",
+      "sensitivity",
+      "specificity",
+      "tile_TP",
+      "tile_TN",
+      "tile_FP",
+      "tile_FN",
+      "n_detections",
+      "cost_usd",
+      "cost_basis",
+      "metrics_source",
+      "eval_path",
+      "detections_path",
+      "reference_path",
+      "reference_basis",
+      "reference_consumed_path",
+      "notes"
+    ],
+    "conditions-by-buffer.csv": [
+      "condition_id",
+      "run_id",
+      "label",
+      "stratum_id",
+      "corpus",
+      "reference",
+      "buffer_m",
+      "frame_id",
+      "n_tiles",
+      "n_refs",
+      "is_primary_buffer",
+      "geometry",
+      "tile_px",
+      "overlap_px",
+      "stride_px",
+      "geometry_basis",
+      "modality",
+      "thinking",
+      "temperature",
+      "model_used",
+      "architecture",
+      "aggregation",
+      "proposer_pool",
+      "K",
+      "N",
+      "prob_t",
+      "min_votes",
+      "verified",
+      "verifier_variant",
+      "basis",
+      "F1",
+      "F1_CI_lo",
+      "F1_CI_hi",
+      "ci_method",
+      "ci_unreliable",
+      "precision",
+      "recall",
+      "MCC",
+      "sensitivity",
+      "specificity",
+      "tile_TP",
+      "tile_TN",
+      "tile_FP",
+      "tile_FN",
+      "n_detections",
+      "cost_usd",
+      "cost_basis",
+      "metrics_source",
+      "eval_path",
+      "detections_path",
+      "reference_path",
+      "reference_basis",
+      "reference_consumed_path",
+      "notes"
+    ],
+    "strata.csv": [
+      "stratum_id",
+      "corpus",
+      "reference",
+      "buffer_m",
+      "frame_id",
+      "n_tiles",
+      "n_refs",
+      "n_conditions",
+      "null_std",
+      "null_sd_lo",
+      "null_sd_hi",
+      "n_comparisons",
+      "mde_50",
+      "mde_80",
+      "mde_instrument",
+      "mde_source",
+      "mde_join_basis",
+      "notes"
+    ],
+    "transfer-pairs.csv": [
+      "pair_id",
+      "source_condition_id",
+      "source_stratum_id",
+      "source_value",
+      "target_condition_id",
+      "target_stratum_id",
+      "target_value",
+      "metric",
+      "delta",
+      "tax_kind",
+      "transfer",
+      "rationale",
+      "registered_analysis_id"
+    ]
+  }
+}
