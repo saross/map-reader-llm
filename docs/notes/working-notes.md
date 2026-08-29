@@ -29824,3 +29824,223 @@ thinking as a diversity mechanism — the reason the H9 baseline is not
 a low-diversity baseline); **Obs 434** (the wrong-baseline correction,
 the closest prior instance of an audit overturning a claim by
 re-reading the source rather than the summary).
+
+## Observation 441: Gemini 3.7 Flash clears the Gemini 3 plateau but resolves only in the verifier role — the all-3.7 stack is the study's first GS-significant model gain, and verifier calibration does not transfer across models (Sessions 143–144, 2026-08-28/29)
+
+The Flash family had been screened once before and lost: Flash 3.5
+won in no role — bare-proposer dead-tie, worse as a verifier at ~3×
+the price — and the project has carried "model swaps lose or tie"
+as a prior ever since (**Obs 359**). Gemini 3.7 Flash was screened
+on the same pattern on 2026-08-28: one cell, `g384_ov192_g37`, the
+byte-identical `detect_brief-text` config with exactly two
+command-line overrides (`--model gemini-3.7-flash --thinking-level
+low`), K = 5 at T = 0.7 on real-time flex, B geometry (384 px /
+50 %, stride 192) over the four gold-standard (GS) sheets, and the
+**carried gemini-3-flash verifier** (`verify_adversarial-text`,
+T = 0.0, MINIMAL, n = 1) held fixed so that only the proposer model
+moves. Predictions G1–G4 were committed at PI go in
+`planning/gemini37-screen-2026-08-28.md` § "Registered
+expectations". G1 predicted 3.7 *at or below* the Gemini 3 plateau.
+It was wrong, the card's pre-named informative outcome fired, and
+the PI approved a three-step escalation, of which two steps landed
+on 2026-08-29.
+
+| Cell | Verified best @ 20 m | Point | P | R | tile-MCC | n det | Δ vs anchor | p |
+|---|---:|---|---:|---:|---:|---:|---:|---:|
+| text-B (committed anchor) | **0.8961** | — | 0.9275 | 0.8668 | 0.7965 | 400 | — | — |
+| 3.7 K = 5, carried verifier | 0.9139 | (0.10, k5) | 0.8984 | 0.9299 | 0.7797 | 443 | +0.0178 | 0.17 |
+| 3.7 K = 10, carried verifier | 0.9142 | (0.10, k10) | 0.9196 | 0.9089 | 0.7817 | 423 | +0.0181 | 0.21 |
+| **3.7 K = 5, 3.7 verifier** | **0.9265** | (0.80, k5) | 0.9254 | 0.9276 | **0.8078** | 429 | **+0.0304** | **0.0105** |
+
+**(a) The screen — above the plateau, below the instrument.** The
+K = 5 cell reaches **0.9139 F1 @ 20 m** at (0.10, k5) on a
+791-candidate union with 59 % unanimity (468 of 791 at 5/5),
+nominally above *every* Gemini 3 cell on this corpus: the anchor
+0.8961, the card's N = 5 ladder comparator 0.8934, and the nine-cell
+board top 0.8982 (384 px / 33.3 %). It clears at every buffer. But
+the paired tile-swap permutation (10,000 draws, 487 tiles) returns
+**+0.0178, p = 0.17** against a null SD of 0.0129 — by the
+sensitivity appendix's convention that is an MDE₅₀ of 0.025 and an
+MDE₈₀ of 0.036, so the margin sits *below the instrument's 50 %-power
+floor*. The profile is recall-led: R 0.9299 against the anchor's
+0.8668, at a precision cost (P 0.8984 vs 0.9275). Tile-level MCC
+moves the other way — **0.7797, nominally below the anchor's
+0.7965** — so the carried-verifier gain is localisation, not
+tile-level discrimination. All-in ≈ $7.4 against a pre-run envelope
+of $5.5–16; the PI's console glance puts the K = 5 screen at
+**$5.28 billed on the 3.7 SKU** (6,990 proposer calls, effective
+$0.000755/call).
+
+**(b) The escalation — saturated by N = 5, exactly the Gemini 3
+pattern.** Passes 6–10 ran on the same invocation. The union grows
+791 → **913** and unanimity falls 59 % → 49 % (449 of 913 at 10/10),
+the expected dilution. The full K = 10 union was then re-verified
+with the carried verifier rather than stitching the increment — a
+deviation from the approved step, disclosed on the card, taken
+because a single-vintage probability set is worth more than the
+matching-error risk it avoids (913/913, ≈ $0.63).
+
+| First-N rung | Union | Verified best @ 20 m |
+|---:|---:|---:|
+| N = 1 | 590 | 0.8588 |
+| N = 3 | 697 | 0.9018 |
+| N = 5 | 791 | 0.9131 |
+| N = 10 | 913 | 0.9142 |
+
+**Five more passes bought +0.0003.** The standalone K = 5 run's
+0.9139 and the K = 10 board's 0.9142 differ by 0.0003; the ladder's
+own N5 − N10 contrast is **−0.0011, p = 0.79** — a flat tie. The
+ladder's shape is the Gemini 3 shape: the whole climb is in the
+first five passes, N = 3 is already within 0.013 of the top, and
+nothing after N = 5 is measurable. Saturation is therefore a
+property of the architecture and the geometry, not of the model
+version, which is the strongest available reading of **Obs 438**'s
+geometry-dependent saturation ruling. One margin does widen with
+buffer: at 50 m the K = 10 cell reads **0.9377 against 0.9058,
++0.032**.
+
+**(c) The surprise — swap the verifier and the margin resolves.**
+Step 2 re-verified the *same* 791-candidate K = 5 union with
+gemini-3.7-flash in the verifier seat (791/791: 789 first pass plus
+2 recovered in a single cleanup attempt after 503 congestion
+errors, ≈ $0.7). It reaches **0.9265 @ 20 m at (0.80, k5), P 0.9254
+/ R 0.9276 / MCC 0.8078 — +0.0304 vs the anchor, p = 0.0105**: the
+**first GS-resolvable margin any model swap has produced in this
+study**, and the only cell in the arc that beats the anchor on F1
+*and* tile-MCC simultaneously. Against its own null SD of 0.0121 it
+clears MDE₅₀ (0.024) though not MDE₈₀ (0.034).
+
+**The mechanism is calibration, not judgement.** On the identical
+791 candidates the 3.7 verifier is systematically more permissive:
+mean `mound_probability` **0.687 against the carried verifier's
+0.587**, and **546 candidates at ≥ 0.5 against 444**. Its optimum
+therefore migrates to **prob_t 0.80**, four rungs up a lattice that
+has sat at 0.10–0.20 across every model the study has run. The
+generalisable claim is not "3.7 is a better verifier" — it is that
+**verifier probability output is model-specific, so an operating
+threshold selected under one verifier does not transfer to
+another**. A swap performed at the incumbent's threshold would have
+measured a loss and reported the wrong conclusion.
+
+**Why this matters.** Three things. First, the standing prior is
+broken: **Obs 359**'s "wins in no role" verdict for Flash 3.5 does
+not generalise to 3.7, and the study now has a family-version gain
+worth writing up — the PI's reading is that vision changed between
+3 → 3.7 in a way it did not between 3 → 3.5. Second, the
+threshold-transfer claim is architectural and portable: any paper
+reporting a proposer–verifier stack must re-sweep the probability
+dial when the verifier model changes, or its comparison is
+confounded by calibration. That is a methods-section sentence
+independent of which model wins. Third, the cost ordering is
+instructive — the escalation's five extra passes cost ≈ $5.4 and
+bought +0.0003, while the role swap cost ≈ $0.7 and bought +0.0126
+over the same union. **The cheapest lever in the arc was the one
+that changed roles, not the one that added compute**, which is the
+proposer-side cost meta-rule pointed at the verifier.
+
+**Caveats.** The comparability caveat recorded on the card before
+launch stands and now applies twice. Gemini 3 MINIMAL measured
+*zero* thinking tokens, whereas 3.7-`low` emits **276 thinking
+tokens/tile** (K = 5 metas, 6,990 tiles: in 1,502, out 76,
+thinking 276) — 3.7 has no `minimal` level, so this is "each model
+at its cheapest thinking level", the practitioner-relevant axis,
+with model-versus-thinking confounded in any 3.7 win. The swap
+inherits the same confound in the verifier seat: the 3.7 verifier
+ran at `low` against the carried verifier's `minimal`, and the
+carried K = 5 verify meta records 0 thoughts tokens across 791
+items. Both sides of every contrast here are **sweep-selected
+operating points**, so the swap's p = 0.0105 is measured at an
+argmax chosen on the same evaluation set and carries selection
+inflation; it is a **single comparison with no family correction**,
+on four GS sheets, one geometry, one proposer configuration, and
+n = 1 verification. The margin's *direction* is better supported
+than its magnitude. Three artefact defects for anyone citing the
+cost figures: the swap's `run.meta.json` was overwritten by the
+2-candidate cleanup pass (items_processed 2, $0.0027), so no
+measured total survives for the 789-candidate main pass and the
+≈ $0.7 is the commit-message figure; the K = 10 re-verification meta
+lists $1.281, i.e. ≈ $0.64 at flex against the card's and commit's
+"$0.63"; and the proposer estimator prices the 3.7 SKU at
+**Gemini 3 Flash list rates** (`pricing_used` 0.5/3.0 per 1M) *and*
+excludes thinking tokens from output cost, which is why the metas
+total $3.43 across the K = 5 passes against $5.28 billed — the same
+direction as the ×1.6 Gemini 3 billing gap the 55-map card has
+opened a reconciliation on. A wrong-instrument stray
+(`5_verify_crops.py`, ≈ $0.60) was archived in place beside the real
+run. **This entry is written ahead of PI review**: the swap result
+contradicts the pre-registered expectation the card was built on
+and is flagged for review on the card banner and in commit
+`3039d3ac9`. Finally, scope — step 3, the deployment-resolving
+test (55-map B geometry, K = 5, **carried**-verifier design to hold
+the proposer-axis isolation, 55-map instrument MDE₈₀ ≈ 0.013 against
+the observed +0.018), was **in flight as this was written**. The
+swap raises a follow-on question for that campaign — whether a
+3.7-verifier re-scoring of its union is warranted — which is a **PI
+decision, not an assumption of this entry**, and its result will
+need its own entry or a rider here.
+
+Sources: `results/gemini37-screen-2026-08-28/analysis.json` (verified
+2026-08-29: `image_best` f1 0.9138920780711826 at prob_t 0.1 /
+min_votes 5, P 0.8984198645598194, R 0.9299065420560748,
+MCC 0.779695835162132, n 443; `anchor.f1_20` 0.8961352657004831
+against `registered` 0.8961; `head_to_head_20m` observed_diff
+−0.017757, p 0.1697, 10,000 permutations, n_tiles 487, null_std
+0.012934); `results/gemini37-screen-2026-08-28/k10/analysis.json`
+(verified 2026-08-29: best 0.9142185663924794 at (0.1, 10),
+observed_diff −0.018083 p 0.2076 null_std 0.014213; `ladder` union_n
+590 / 697 / 791 with best f1 0.8587570621468926 / 0.9018264840182649
+/ 0.9130938586326768; `saturation_N5_vs_N10` −0.001125 p 0.7928;
+50 m image 0.9377203290246768 vs text 0.9057971014492754);
+`results/gemini37-screen-2026-08-28/swap37/analysis.json` (verified
+2026-08-29: best 0.9264877479579929 at prob_t 0.8 / min_votes 5,
+P 0.9254079254079254, R 0.927570093457944, MCC 0.807772216747559,
+n 429; observed_diff −0.030352, p 0.0105, null_std 0.012133);
+verifier probabilities and metas under
+`outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/`
+(verified 2026-08-29 by direct computation over
+`verify_swap37/probabilities.json` and `verify/probabilities.json`:
+791 results each, mean mound_probability 0.6875 vs 0.5868, 546 vs
+444 at ≥ 0.5; swap `cleanup_history` initial_missing 2, recovered 2,
+still_missing 0; `verify_k10/run.meta.json` items_processed 913,
+list total $1.280777; `verify/run.meta.json` items_processed 791,
+total_thoughts_tokens 0); `union_k5.geojson` 791 features with 468
+at vote_count 5, `union_k10.geojson` 913 with 449 at vote_count 10;
+proposer metas under
+`outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_*/` (verified
+2026-08-29: model `gemini-3.7-flash`, thinking_level `low`,
+temperature 0.7; runs 1–5 aggregate 6,990 items, per-tile in 1,502 /
+out 76 / thinking 276, cost_basis `billed` at `pricing_used` 0.5/3.0
+with a 0.5 flex discount and thoughts tokens excluded);
+`planning/gemini37-screen-2026-08-28.md` (G1–G4 committed at PI go,
+the comparability caveat recorded up front, the escalation approval,
+and the 2026-08-29 "later" changelog entry recording all three
+outcomes); `planning/gemini37-55map-2026-08-29.md` §§ 1, 2, 4 (the
+in-flight deployment test, the carried-verifier design, the $200 PI
+ceiling, and the billed-actual $5.28 / $0.000755-per-call anchors);
+`results/stride-2026-08-25/findings.md` and `plateau_analyses.json`
+(`board_13cell.f1.g384_ov128` 0.898159509202454 — the Gemini 3 board
+top — and `first_n_ladder.g384_ov192.N.5.best.f1` 0.893413);
+`results/sensitivity-mde-2026-08-28/sensitivity.json` (the MDE
+convention — 1.96 × null SD at 50 % power, ≈ 2.80 × at 80 % — and the
+55-map row's mde_80pc_power 0.01290410051). Commits `b19071e37`
+(screen verdict), `b9516c26f` (passes 6–10, K = 10 union, verify and
+analysis), `3039d3ac9` (verifier-role swap), and `de7f65a2d` (the
+card's escalation-outcome changelog). Related: **Obs 359** (Flash
+3.5 and Pro 3.1 win in no role — the precedent this arc contradicts,
+and the source of the carried-verifier design that isolates the
+proposer axis; note the register dates that entry to Session 112
+while the 3.7 cards label the same precedent "S113"); **Obs 438**
+(the final 55-map board and its geometry-dependent saturation
+ruling — 3.7's first-N ladder reproduces the Gemini 3 shape exactly,
+which is what makes saturation architectural rather than a
+model-version quirk); **Obs 362** (the GS tie as bounded ignorance
+at ±0.03 — the discipline that keeps the screen's +0.0178 at
+p = 0.17 from being read as either a win or a null, and the reason
+step 3 exists at all); **Obs 355** (the 1-of-5 union as the worst
+verifier input — the standing result that verifier value is governed
+by what the union hands it, here extended to *how the verifier
+scores* what it is handed); **Obs 439** (the image and HIGH-thinking
+campaign on this same anchor cell, four days earlier — same
+byte-matched-except-the-declared-bundle design, same 487-tile
+instrument, and the entry that first put the MDE appendix beside a
+GS margin).
