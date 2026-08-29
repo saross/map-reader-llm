@@ -27,7 +27,11 @@ from pathlib import Path
 
 import pytest
 
-from scripts.compute_verifier_uplift import _metric_from_eval, _value_for
+from scripts.compute_verifier_uplift import (
+    _metric_from_eval,
+    _metric_from_summary,
+    _value_for,
+)
 from scripts.lib_uplift_supplement import (
     COLUMN_EXTENSIONS,
     NOTATION_KEY_PATH,
@@ -732,6 +736,45 @@ class TestMetricFromEval:
                 == _metric_from_eval(document, "MCC", 50))
 
 
+class TestMetricFromSummary:
+    """Lifting a metric out of a corrected-F1 engine ``summary.json``.
+
+    The two engines write different files: ``evaluate_detections.py`` writes
+    ``evaluation.json``, ``compute_corrected_f1_multi_buffer.py`` writes
+    ``summary.json``. Reading only the first left every corrected-F1 twin
+    scored on sapphire stuck at ``pending`` with nothing to say why.
+    """
+
+    @staticmethod
+    def _document() -> dict:
+        """Build a two-buffer corrected-F1 summary."""
+        return {"results": [
+            {"R_m": 20, "F1": 0.66, "precision": 0.68, "recall": 0.64,
+             "tile_classification": {"mcc": 0.67}},
+            {"R_m": 50, "F1": 0.83, "precision": 0.89, "recall": 0.77,
+             "tile_classification": {"mcc": 0.69}},
+        ]}
+
+    @pytest.mark.parametrize(
+        ("metric", "buffer_m", "expected"),
+        [("F1", 20, 0.66), ("F1", 50, 0.83), ("precision", 20, 0.68),
+         ("recall", 50, 0.77), ("MCC", 20, 0.67), ("MCC", 50, 0.69)],
+    )
+    def test_reads_each_metric_at_each_buffer(
+        self, metric: str, buffer_m: int, expected: float
+    ) -> None:
+        """The capitalised corrected-F1 field names map to the shared vocabulary."""
+        assert _metric_from_summary(self._document(), metric, buffer_m) == expected
+
+    def test_absent_buffer_is_none(self) -> None:
+        """A buffer the engine did not report is missing, not zero."""
+        assert _metric_from_summary(self._document(), "F1", 999) is None
+
+    def test_empty_document_is_none(self) -> None:
+        """A summary with no results yields nothing rather than raising."""
+        assert _metric_from_summary({}, "F1", 20) is None
+
+
 class TestValueFor:
     """Resolving one side of a pair to a metric value."""
 
@@ -752,6 +795,35 @@ class TestValueFor:
         value, source = _value_for(tmp_path, {}, None, "job", "F1", 20)
         assert value == pytest.approx(0.55)
         assert source == "job/evaluation.json"
+
+    def test_falls_back_to_a_corrected_f1_summary(self, tmp_path: Path) -> None:
+        """A corrected-F1 twin writes summary.json, not evaluation.json.
+
+        Without this the eight 55-map twin jobs would score on sapphire and
+        still read ``pending`` for ever.
+        """
+        out = tmp_path / "job"
+        out.mkdir()
+        (out / "summary.json").write_text(json.dumps({"results": [
+            {"R_m": 50, "F1": 0.71, "tile_classification": {"mcc": 0.6}},
+        ]}), encoding="utf-8")
+        value, source = _value_for(tmp_path, {}, None, "job", "F1", 50)
+        assert value == pytest.approx(0.71)
+        assert source == "job/summary.json"
+
+    def test_evaluation_json_is_preferred_when_both_exist(
+        self, tmp_path: Path
+    ) -> None:
+        """A directory holding both shapes resolves deterministically."""
+        out = tmp_path / "job"
+        out.mkdir()
+        (out / "evaluation.json").write_text(json.dumps({"summary": {
+            "buffers": [{"buffer_metres": 50, "f1": 0.60}]}}), encoding="utf-8")
+        (out / "summary.json").write_text(json.dumps({"results": [
+            {"R_m": 50, "F1": 0.71}]}), encoding="utf-8")
+        value, source = _value_for(tmp_path, {}, None, "job", "F1", 50)
+        assert value == pytest.approx(0.60)
+        assert source.endswith("evaluation.json")
 
     def test_missing_on_both_routes(self, tmp_path: Path) -> None:
         """Absent is reported as missing, never as a default."""
