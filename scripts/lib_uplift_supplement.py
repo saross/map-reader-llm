@@ -63,11 +63,13 @@ import csv
 import json
 import re
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 __all__ = [
     "COLUMN_EXTENSIONS",
+    "ORIGINAL_PUBLICATION_DATE",
     "ColumnExtension",
     "CorpusSources",
     "CrossStratumAggregationError",
@@ -77,15 +79,28 @@ __all__ = [
     "ScoringRecipe",
     "StratumKey",
     "UnknownColumnError",
+    "VerifierManifest",
+    "collect_verifier_manifests",
+    "condition_stratum",
+    "generated_doc_banner",
     "iter_condition_specs",
+    "match_verifier_manifest",
     "read_scoring_recipe",
     "refuse_cross_stratum",
     "resolve_basis",
     "resolve_geometry",
     "resolve_reference",
+    "resolve_scope",
     "validate_columns",
     "write_csv",
 ]
+
+#: Date the generated documents in ``results/uplift-supplement/`` were first
+#: published. PINNED, not ``datetime.now``: the project's Document Revision
+#: Policy wants an "Original publication" entry that stays put, and a builder
+#: that restamps it on every rebuild destroys exactly the baseline the policy
+#: exists to preserve. The regeneration timestamp is stamped separately.
+ORIGINAL_PUBLICATION_DATE = "2026-08-29"
 
 #: Repository root (this file lives in ``<repo>/scripts/``).
 REPO_ROOT: Path = Path(__file__).resolve().parents[1]
@@ -243,6 +258,8 @@ COLUMN_EXTENSIONS: dict[str, ColumnExtension] = {
              "The ground-truth GeoJSON the evaluation consumed (the re-verify anchor)."),
         _ext("reference_basis", "§ 4",
              "Which rule resolved `reference`: eval-ground-truth, label-suffix, or run-facts."),
+        _ext("reference_consumed_path", "anti-confabulation",
+             "The path the evaluation literally recorded, where it differs from the anchor."),
         _ext("buffer_m", "§ 1 (R / R_m)",
              "Third component, as an integer column; `R_m` is the corrected-F1 CSV's name."),
         _ext("frame_id", "§ 6",
@@ -371,6 +388,14 @@ COLUMN_EXTENSIONS: dict[str, ColumnExtension] = {
              "derivable / blocked / not-applicable — the card's disclosed K = 1 PV anchor."),
         _ext("k1_with_verifier_reason", "anti-confabulation",
              "The measured ground for that verdict; never an approximation."),
+        _ext("verifier_floor_basis", "anti-confabulation",
+             "How the cell's verifier stage was matched: lineage, shell, sole, or ambiguous."),
+        _ext("verified_stratum_id", "§ 6",
+             "The verified cell's own stratum, keyed from its own evidence."),
+        _ext("unverified_stratum_id", "§ 6",
+             "The twin's stratum, keyed independently so the guard has something to check."),
+        _ext("unverified_stratum_basis", "anti-confabulation",
+             "Whether the twin's stratum was derived from its own cell or from the recipe."),
         _ext("pairing_basis", "anti-confabulation",
              "Which rule located the pre-verifier twin: registered, consensus-file, union."),
         _ext("unverified_condition_id", "§ 7 (registry ids)",
@@ -635,11 +660,36 @@ def refuse_cross_stratum(
 # --------------------------------------------------------------------------- #
 
 
+@dataclass(frozen=True)
+class ReferenceResolution:
+    """Which ground-truth reference a condition was scored against, and how.
+
+    Attributes:
+        term: The § 4 vocabulary term (``curator`` / ``student`` / ``canonical``
+            / ``standardised``), or ``None`` when no rule fires.
+        path: The IN-REPO reference file the term names — the re-verifiable
+            anchor a reader can open. Always canonical, never the machine-local
+            copy an old replay happened to consume.
+        basis: Which rule fired (``eval-ground-truth`` / ``label-suffix`` /
+            ``run-facts`` / ``unresolved``).
+        consumed_path: The path the evaluation literally recorded, kept verbatim
+            when it differs from :attr:`path`. Nine committed evaluations ran
+            against a frozen replay copy under a machine-local scratch tree that
+            no longer exists; publishing that as the anchor would hand a reader
+            a dead path, so it is preserved here and the anchor stays canonical.
+    """
+
+    term: str | None
+    path: str | None
+    basis: str
+    consumed_path: str | None = None
+
+
 def resolve_reference(
     eval_metadata: Mapping[str, Any] | None,
     label: str,
     run_gt_reference: str | None,
-) -> tuple[str | None, str | None, str]:
+) -> ReferenceResolution:
     """Resolve which ground-truth reference a condition was scored against.
 
     Three rules, tried in order of authority:
@@ -657,11 +707,14 @@ def resolve_reference(
     Args:
         eval_metadata: The evaluation's ``_metadata`` block, if available.
         label: The registered condition label.
-        run_gt_reference: ``gt_reference`` from ``run-facts.json``.
+        run_gt_reference: ``gt_reference`` from ``run-facts.json``. A value the
+            § 4 vocabulary does not recognise resolves to ``None`` rather than
+            being welded into a ``stratum_id`` as an unknown term — an
+            unrecognised reference must surface as ``unresolved``, not as a
+            plausible-looking stratum nobody can interpret.
 
     Returns:
-        ``(reference, reference_path, basis)``. ``reference`` is ``None`` only
-        when no rule fires, and ``basis`` then reads ``unresolved``.
+        A :class:`ReferenceResolution`.
     """
     meta = eval_metadata or {}
     gt = (
@@ -672,19 +725,30 @@ def resolve_reference(
     if gt:
         term = REFERENCE_BY_FILENAME.get(Path(str(gt)).name)
         if term:
-            return term, str(gt), "eval-ground-truth"
+            canonical = REFERENCE_PATH[term]
+            consumed = str(gt)
+            return ReferenceResolution(
+                term, canonical, "eval-ground-truth",
+                consumed if consumed != canonical else None,
+            )
 
     if label.endswith("-standardised-gt"):
-        return "standardised", REFERENCE_PATH["standardised"], "label-suffix"
+        return ReferenceResolution(
+            "standardised", REFERENCE_PATH["standardised"], "label-suffix"
+        )
     if label.endswith("-canonical-gt"):
-        return "canonical", REFERENCE_PATH["canonical"], "label-suffix"
+        return ReferenceResolution(
+            "canonical", REFERENCE_PATH["canonical"], "label-suffix"
+        )
 
     schema_class = {"combined": "canonical"}.get(
         run_gt_reference or "", run_gt_reference or ""
     )
     if schema_class in REFERENCE_N_MOUNDS:
-        return schema_class, REFERENCE_PATH.get(schema_class), "run-facts"
-    return None, str(gt) if gt else None, "unresolved"
+        return ReferenceResolution(
+            schema_class, REFERENCE_PATH[schema_class], "run-facts"
+        )
+    return ReferenceResolution(None, None, "unresolved", str(gt) if gt else None)
 
 
 def resolve_geometry(
@@ -971,12 +1035,23 @@ def read_scoring_recipe(
 
     cli = meta.get("cli_args")
     if cli:
-        bootstrap = meta.get("bootstrap") or {}
+        # Explicit None checks throughout: `seed` is legitimately 0 in some
+        # recipes and `bootstrap` could be, and an `or` chain silently replaces
+        # a recorded 0 with the project default — which is a different
+        # experiment, quietly.
+        bootstrap_block = meta.get("bootstrap") or {}
+        recorded_bootstrap = cli.get("bootstrap")
+        if recorded_bootstrap is None:
+            recorded_bootstrap = bootstrap_block.get("n_iterations")
+        recorded_seed = cli.get("seed")
+        if recorded_seed is None:
+            recorded_seed = bootstrap_block.get("seed")
+        recorded_buffers = cli.get("buffers")
         return ScoringRecipe(
             engine="evaluate_detections",
-            buffers=tuple(cli.get("buffers") or buffers),
-            bootstrap=cli.get("bootstrap") or bootstrap.get("n_iterations"),
-            seed=cli.get("seed") or bootstrap.get("seed"),
+            buffers=tuple(recorded_buffers if recorded_buffers else buffers),
+            bootstrap=recorded_bootstrap,
+            seed=recorded_seed,
             ground_truth=str(cli["ground_truth"]) if cli.get("ground_truth") else None,
             bounds=str(cli["bounds"]) if cli.get("bounds") else None,
             recovered_from=eval_path or "",
@@ -1028,6 +1103,322 @@ def read_scoring_recipe(
     ), None
 
 
+def resolve_scope(
+    sources: CorpusSources, run_id: str, condition_id: str
+) -> dict[str, Any]:
+    """Resolve the evaluation scope (frame) that actually applies to a condition.
+
+    The run's nominal scope is the default, but a condition may override it: the
+    conditions manifest carries ``scope_override`` for the ~2 % of cells
+    evaluated on a different frame from their run (two ``verifier-robustness``
+    cells run at 256 px on the 1,032-tile frame while the run is nominally
+    era-2-487). Reading the run's scope alone puts those cells in the wrong
+    stratum, which is the one error the whole design exists to prevent — so all
+    three builders resolve the frame through this one function.
+
+    Args:
+        sources: Loaded corpus sources.
+        run_id: The run.
+        condition_id: The condition, as ``run_id::label``.
+
+    Returns:
+        The scope block: ``test_set_id``, ``bounds_path``, ``n_test_tiles``, …
+    """
+    override = (sources.conditions.get(condition_id) or {}).get("scope_override")
+    if override:
+        return dict(override)
+    return dict(sources.facts.get(run_id, {}).get("scope") or {})
+
+
+def condition_stratum(
+    sources: CorpusSources,
+    run_id: str,
+    condition_id: str,
+    spec: Mapping[str, Any],
+    eval_metadata: Mapping[str, Any] | None,
+) -> tuple[StratumKey, ReferenceResolution, dict[str, Any]]:
+    """Build one condition's stratum key from its own evidence.
+
+    The single place a ``stratum_id`` is constructed. Every builder calls it, so
+    a cell lands in the same stratum whichever table it appears in — and, in the
+    pairing worklist, so that the two sides of a pair are keyed INDEPENDENTLY
+    and the cross-stratum guard has something real to check.
+
+    Args:
+        sources: Loaded corpus sources.
+        run_id: The run.
+        condition_id: The condition, as ``run_id::label``.
+        spec: The condition spec from ``run-conditions.json``.
+        eval_metadata: The condition evaluation's ``_metadata`` block, if read.
+
+    Returns:
+        ``(key, reference_resolution, scope)``.
+    """
+    facts = sources.facts.get(run_id, {})
+    reference = resolve_reference(
+        eval_metadata, str(spec["label"]), facts.get("gt_reference")
+    )
+    scope = resolve_scope(sources, run_id, condition_id)
+    corpus = facts.get("corpus")
+    key = StratumKey(
+        corpus=corpus or "unknown",
+        reference=reference.term or "unknown",
+        buffer_m=PRIMARY_BUFFER_BY_CORPUS.get(corpus or "", 0),
+        frame_id=scope.get("test_set_id") or "unknown",
+    )
+    return key, reference, scope
+
+
+# --------------------------------------------------------------------------- #
+# Verifier coverage
+# --------------------------------------------------------------------------- #
+
+#: Path segments marking a smoke-test tree. Their manifests describe 12-candidate
+#: rehearsals, not the campaign, and one of them (``_smoke/384-...-1of5-union``)
+#: carries a vote-1 candidate that would drag a run's measured floor to 1 and
+#: flip a blocked verdict to derivable.
+_SMOKE_SEGMENTS = ("_smoke", "smoke-384", "smoke-512", "smoke-armb")
+
+#: A consensus shell named in a condition label: ``union``, ``4of5``, ``ge3of5``,
+#: ``16of30``. This is the token that separates two verifier stages sharing one
+#: proposer pool, which the pool name alone cannot do.
+_SHELL_TOKEN_RE = re.compile(r"(?:^|-)(union|ge\d+of\d+|\d+of\d+)(?:-|$)")
+
+#: Tokens too generic to identify a verifier lineage. Deliberately NARROW:
+#: modality and thinking words ("text", "image", "high", "minimal") look
+#: generic but are exactly what separates one verifier stage from another in
+#: the pv-diag-384 tree, so they stay available as tokens. Only words that
+#: describe the CELL rather than its lineage are removed.
+_LINEAGE_STOPWORDS = frozenset({
+    "verified", "verify", "verifier", "adv", "adversarial", "paired", "gt",
+    "canonical", "standardised", "carried", "oracle", "posthoc", "consensus",
+    "best", "primary", "full", "scope", "opmax",
+})
+
+#: Trailing vote-shell suffix on a proposer-pool name (``flash-high-text-1of5``
+#: → stem ``flash-high-text``). The pool is named for the shell it was BUILT
+#: at, while its verifier stage is named for the shell it was VERIFIED at, so
+#: the stem is what the two have in common.
+_POOL_STEM_RE = re.compile(r"^(.*?)-(?:ge)?\d+of\d+$")
+
+
+@dataclass(frozen=True)
+class VerifierManifest:
+    """One verifier stage's candidate manifest, summarised.
+
+    Attributes:
+        path: Repo-relative path of the ``candidate_manifest.json``.
+        source_basename: Basename of the pre-verifier set it cropped from.
+        min_vote: Lowest ``vote_count`` the verifier actually processed.
+        max_vote: Highest.
+        n_candidates: How many candidates it cropped.
+    """
+
+    path: str
+    source_basename: str
+    min_vote: int
+    max_vote: int
+    n_candidates: int
+
+
+def collect_verifier_manifests(
+    run_dir: Path, repo_root: Path
+) -> tuple[list[VerifierManifest], list[str]]:
+    """Summarise every real candidate manifest under a run.
+
+    Args:
+        run_dir: The run's output directory.
+        repo_root: Repository root, so paths are recorded relative.
+
+    Returns:
+        ``(manifests, skipped)``. ``manifests`` holds only those recording
+        integer vote counts, smoke trees excluded. ``skipped`` names every
+        manifest that could not be read or carried no vote counts, with the
+        reason — a silently dropped manifest can RAISE a measured floor and
+        flip a verdict, so the count is published rather than swallowed.
+    """
+    manifests: list[VerifierManifest] = []
+    skipped: list[str] = []
+    for path in sorted(run_dir.rglob("candidate_manifest.json")):
+        relative = str(path.relative_to(repo_root))
+        parts = {segment.lower() for segment in path.parts}
+        if parts & set(_SMOKE_SEGMENTS):
+            skipped.append(f"{relative}: smoke-test tree, excluded by design")
+            continue
+        try:
+            document = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            skipped.append(f"{relative}: unreadable ({type(error).__name__})")
+            continue
+        votes = [
+            candidate.get("properties", {}).get("vote_count")
+            for candidate in document.get("candidates", [])
+        ]
+        votes = [v for v in votes if isinstance(v, int)]
+        if not votes:
+            skipped.append(
+                f"{relative}: records no integer vote counts "
+                "(a single-pass verifier stage crops from a raw pass)"
+            )
+            continue
+        manifests.append(VerifierManifest(
+            path=relative,
+            source_basename=Path(str(document.get("source_geojson") or "")).name,
+            min_vote=min(votes),
+            max_vote=max(votes),
+            n_candidates=len(document.get("candidates", [])),
+        ))
+    return manifests, skipped
+
+
+def _lineage_tokens(label: str, pool: str, geometry: str | None) -> list[str]:
+    """Derive the tokens that identify one condition's verifier lineage.
+
+    Args:
+        label: The registered condition label.
+        pool: The proposer pool name.
+        geometry: The geometry cell, where resolved.
+
+    Returns:
+        Distinct tokens, longest first, with generic vocabulary removed.
+    """
+    tokens = {geometry or "", pool or ""}
+    stem = _POOL_STEM_RE.match(pool or "")
+    if stem:
+        tokens.add(stem.group(1))
+    for segment in re.split(r"[-_.]", label):
+        if len(segment) >= 3 and segment.lower() not in _LINEAGE_STOPWORDS:
+            tokens.add(segment)
+    return sorted({t for t in tokens if len(t) >= 3}, key=len, reverse=True)
+
+
+def match_verifier_manifest(
+    manifests: Sequence[VerifierManifest],
+    label: str,
+    pool: str,
+    geometry: str | None,
+    n_passes: int,
+) -> tuple[VerifierManifest | None, str]:
+    """Match a verified condition to the candidate manifest of ITS verifier stage.
+
+    Verifier coverage is a property of a verifier STAGE, not of a run. Taking a
+    run's minimum across every stage is wrong wherever a run verified several
+    shells: ``verifier-robustness`` ran a vote >= 1 union stage alongside three
+    vote >= 3 stages and one vote >= 16 stage, so the run minimum of 1 declared
+    a K = 1 PV anchor derivable for cells whose verifier never saw a candidate
+    below vote 3, citing a manifest belonging to a different condition.
+
+    Three ordered filters, each narrowing the candidate set:
+
+    1. **Union shell** — a manifest whose source is ``union_k<N>.geojson``
+       belongs to the N-pass ladder rung of that name; keep only the matching N.
+       Matched on the exact basename, because ``union_k1`` is a substring of
+       ``union_k10``.
+    2. **Consensus shell** — a ``union`` / ``<k>of<N>`` / ``ge<k>of<N>`` token in
+       the condition label names the shell its verifier consumed.
+    3. **Lineage tokens** — geometry, pool, and the label's own distinctive
+       segments, scored by how many appear in the manifest's path or source
+       name. A unique strict maximum wins.
+
+    Args:
+        manifests: The run's real manifests.
+        label: The condition label.
+        pool: The proposer pool.
+        geometry: The geometry cell, where resolved.
+        n_passes: N.
+
+    Returns:
+        ``(manifest, basis)``. ``manifest`` is ``None`` when no unique match
+        exists, and ``basis`` then says why — an unmatched lineage is disclosed
+        as such, never resolved to the run minimum.
+    """
+    if not manifests:
+        return None, "no-manifest"
+    if len(manifests) == 1:
+        return manifests[0], "sole-manifest"
+
+    pool_of = [m for m in manifests if m.source_basename.startswith("union_k")]
+    if pool_of:
+        exact = [m for m in pool_of if m.source_basename == f"union_k{n_passes}.geojson"]
+        candidates = exact + [m for m in manifests if m not in pool_of]
+    else:
+        candidates = list(manifests)
+    if not candidates:
+        return None, "unmatched-union-shell"
+    if len(candidates) == 1:
+        return candidates[0], "matched-union-shell"
+
+    # Fusion family, applied symmetrically: a WBF-verified cell belongs to the
+    # WBF verifier stage, and a greedy-verified cell belongs to a stage that is
+    # NOT under the WBF tree. h8-v2 verified both fusions of the same pool, so
+    # without this the two cells tie on every other token.
+    wants_wbf = "wbf" in label.lower()
+    by_fusion = [m for m in candidates if ("wbf" in m.path.lower()) == wants_wbf]
+    if len(by_fusion) == 1:
+        return by_fusion[0], "matched-fusion-family"
+    if by_fusion:
+        candidates = by_fusion
+
+    shell = _SHELL_TOKEN_RE.search(label)
+    if shell:
+        narrowed = [
+            m for m in candidates
+            if shell.group(1) in m.path or shell.group(1) in m.source_basename
+        ]
+        if len(narrowed) == 1:
+            return narrowed[0], "matched-consensus-shell"
+        if narrowed:
+            candidates = narrowed
+
+    tokens = _lineage_tokens(label, pool, geometry)
+
+    # Exact path-SEGMENT matching first. Substring containment alone confuses
+    # nested names: the image-B campaign's pool `g384_ov192_image` is a
+    # substring of its sibling `g384_ov192_image_high`, so a substring score
+    # ties the two stages and loses both. A directory named exactly for the
+    # pool is unambiguous evidence; substring is only a hint.
+    for scorer, basis in (
+        (_segment_score, "matched-lineage-segment"),
+        (_substring_score, "matched-lineage"),
+    ):
+        scored = [(scorer(m, tokens), m) for m in candidates]
+        best = max(score for score, _ in scored)
+        winners = [m for score, m in scored if score == best]
+        if best > 0 and len(winners) == 1:
+            return winners[0], basis
+    return None, "ambiguous-lineage"
+
+
+def _segment_score(manifest: VerifierManifest, tokens: Sequence[str]) -> int:
+    """Count tokens matching a whole path segment or the source basename stem.
+
+    Args:
+        manifest: The manifest under test.
+        tokens: The cell's lineage tokens.
+
+    Returns:
+        How many tokens match exactly.
+    """
+    segments = set(Path(manifest.path).parts)
+    segments.add(Path(manifest.source_basename).stem)
+    return sum(1 for t in tokens if t in segments)
+
+
+def _substring_score(manifest: VerifierManifest, tokens: Sequence[str]) -> int:
+    """Count tokens appearing anywhere in the manifest's path or source name.
+
+    Args:
+        manifest: The manifest under test.
+        tokens: The cell's lineage tokens.
+
+    Returns:
+        How many tokens appear.
+    """
+    return sum(
+        1 for t in tokens if t in manifest.path or t in manifest.source_basename
+    )
+
+
 def iter_condition_specs(
     sources: CorpusSources,
 ) -> Iterable[tuple[str, str, dict[str, Any]]]:
@@ -1056,6 +1447,35 @@ def iter_condition_specs(
 # --------------------------------------------------------------------------- #
 # CSV writing
 # --------------------------------------------------------------------------- #
+
+
+def generated_doc_banner(reason: str, generator: str) -> list[str]:
+    """Render the revision banner every generated document in the set carries.
+
+    The project's Document Revision Policy wants a stable "Original
+    publication" baseline that later revisions diff against. These documents
+    are fully generated, so their content changes whenever the corpus does —
+    but the ORIGINAL date must not move, or there is no baseline. The banner
+    therefore pins the original date from :data:`ORIGINAL_PUBLICATION_DATE` and
+    stamps the regeneration time on a separate line, which is a fact about this
+    build rather than a claim of revision. Git remains the canonical history.
+
+    Args:
+        reason: Short parenthetical describing what the document is.
+        generator: The script that writes it.
+
+    Returns:
+        Banner lines, ready to join with newlines.
+    """
+    stamped = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return [
+        f"> **Last revised**: {ORIGINAL_PUBLICATION_DATE} ({reason}). "
+        "See [§ Changelog](#changelog) for revision history.",
+        ">",
+        f"> **Regenerated**: {stamped} by `{generator}`. This document is "
+        "generated in full from committed artefacts; regeneration is not a "
+        "revision, and git carries the content history.",
+    ]
 
 
 def write_csv(
