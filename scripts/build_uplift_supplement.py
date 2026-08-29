@@ -69,6 +69,7 @@ import argparse
 import json
 import sys
 from collections import Counter, defaultdict
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -84,14 +85,16 @@ from scripts.lib_detection_paths import (  # noqa: E402
 )
 from scripts.lib_uplift_supplement import (  # noqa: E402
     COLUMN_EXTENSIONS,
+    ORIGINAL_PUBLICATION_DATE,
     PRIMARY_BUFFER_BY_CORPUS,
     REFERENCE_N_MOUNDS,
     CorpusSources,
     StratumKey,
+    condition_stratum,
+    generated_doc_banner,
     iter_condition_specs,
     resolve_basis,
     resolve_geometry,
-    resolve_reference,
     write_csv,
 )
 
@@ -114,7 +117,7 @@ CONDITION_COLUMNS: tuple[str, ...] = (
     "tile_TP", "tile_TN", "tile_FP", "tile_FN",
     "n_detections", "cost_usd", "cost_basis",
     "metrics_source", "eval_path", "detections_path", "reference_path",
-    "reference_basis", "notes",
+    "reference_basis", "reference_consumed_path", "notes",
 )
 
 #: Strata table.
@@ -288,6 +291,10 @@ def _meta_fallback_factors(
     if pool_dir is None:
         return empty
     try:
+        # No expected_passes here, deliberately: this branch runs only for pools
+        # ABSENT from the passes manifest, so K is the quantity being measured
+        # and there is no independent count to assert against. Asserting the
+        # answer against itself would be theatre.
         passes = resolve_pool_passes(pool_dir, allow_multiple=False)
     except (AmbiguousPassError, PassCountMismatch):
         return empty
@@ -396,14 +403,12 @@ def build_condition_rows(sources: CorpusSources) -> tuple[list[dict], list[dict]
         else:
             buffers, metrics_source = {}, "none"
 
-        scope = (manifest_row or {}).get("scope_override") or facts.get("scope") or {}
+        stratum_key, reference, scope = condition_stratum(
+            sources, run_id, condition_id, spec, (document or {}).get("_metadata")
+        )
         frame_id = scope.get("test_set_id")
         n_tiles = scope.get("n_test_tiles")
         corpus = facts.get("corpus")
-
-        reference, reference_path, reference_basis = resolve_reference(
-            (document or {}).get("_metadata"), spec["label"], facts.get("gt_reference")
-        )
         geometry = resolve_geometry(
             spec.get("proposer_pool"), spec["label"], facts.get("tile_size_px")
         )
@@ -420,18 +425,30 @@ def build_condition_rows(sources: CorpusSources) -> tuple[list[dict], list[dict]
         elif metrics_source == "evaluation-json":
             notes.append("metrics read from the evaluation artefact: this "
                          "condition post-dates the last manifest regeneration")
-        if reference_basis == "unresolved":
+        if reference.basis == "unresolved":
             notes.append("reference unresolved from eval metadata, label, or run facts")
+        if reference.consumed_path:
+            notes.append(
+                "scored against a replay copy of the reference; "
+                "reference_path is the canonical in-repo anchor and "
+                "reference_consumed_path records what the evaluation read"
+            )
+
+        manifest_detections = (manifest_row or {}).get("n_detections")
+        if manifest_detections is None:
+            manifest_detections = ((document or {}).get("summary") or {}).get(
+                "n_detections"
+            )
 
         shared = {
             "condition_id": condition_id,
             "run_id": run_id,
             "label": spec["label"],
             "corpus": corpus,
-            "reference": reference,
+            "reference": reference.term,
             "frame_id": frame_id,
             "n_tiles": n_tiles,
-            "n_refs": REFERENCE_N_MOUNDS.get(reference or ""),
+            "n_refs": REFERENCE_N_MOUNDS.get(reference.term or ""),
             "architecture": spec.get("architecture"),
             "aggregation": spec.get("aggregation"),
             "proposer_pool": spec.get("proposer_pool"),
@@ -441,13 +458,13 @@ def build_condition_rows(sources: CorpusSources) -> tuple[list[dict], list[dict]
             "verified": spec.get("aggregation") == "verified",
             "verifier_variant": verifier_config.get("variant"),
             "basis": resolve_basis(spec["label"]),
-            "n_detections": (manifest_row or {}).get("n_detections")
-            or ((document or {}).get("summary") or {}).get("n_detections"),
+            "n_detections": manifest_detections,
             "metrics_source": metrics_source,
             "eval_path": spec.get("eval_path"),
             "detections_path": spec.get("detections"),
-            "reference_path": reference_path,
-            "reference_basis": reference_basis,
+            "reference_path": reference.path,
+            "reference_basis": reference.basis,
+            "reference_consumed_path": reference.consumed_path,
             "notes": "; ".join(notes) or None,
             **geometry,
             **factors,
@@ -456,12 +473,10 @@ def build_condition_rows(sources: CorpusSources) -> tuple[list[dict], list[dict]
 
         primary_buffer = PRIMARY_BUFFER_BY_CORPUS.get(corpus or "")
         for buffer_m, metrics in sorted(buffers.items()):
-            key = StratumKey(
-                corpus=corpus or "unknown",
-                reference=reference or "unknown",
-                buffer_m=buffer_m,
-                frame_id=frame_id or "unknown",
-            )
+            # The stratum key comes from condition_stratum (the single
+            # constructor) with only the buffer varied, so a by-buffer row and
+            # its master row cannot disagree about corpus, reference, or frame.
+            key = replace(stratum_key, buffer_m=buffer_m)
             row = {
                 **shared, **metrics,
                 "buffer_m": buffer_m,
@@ -477,12 +492,7 @@ def build_condition_rows(sources: CorpusSources) -> tuple[list[dict], list[dict]
             # into the master anyway, with null metrics and the reason: a
             # missing row is a fact about the corpus, not a reason to drop a
             # registered condition from the census.
-            key = StratumKey(
-                corpus=corpus or "unknown",
-                reference=reference or "unknown",
-                buffer_m=primary_buffer or 0,
-                frame_id=frame_id or "unknown",
-            )
+            key = replace(stratum_key, buffer_m=primary_buffer or 0)
             reason = (
                 f"no evaluation row at the corpus headline buffer "
                 f"({primary_buffer} m); evaluated buffers: "
@@ -625,13 +635,13 @@ def render_extension_proposal(sanctioned: int) -> str:
     Returns:
         The Markdown document.
     """
-    today = datetime.now(timezone.utc).date().isoformat()
     lines = [
         "# Notation-key extension proposal — uplift supplement",
         "",
-        f"> **Last revised**: {today} (original publication; generated by "
-        "`scripts/build_uplift_supplement.py`).",
-        "> See [§ Changelog](#changelog) for revision history.",
+        *generated_doc_banner(
+            "original publication; proposed § 7 additions",
+            "scripts/build_uplift_supplement.py",
+        ),
         "",
         "The canonical key `docs/methodology/notation-key.md` requires that",
         "\"new tables and dataset builders must conform to it or extend it here",
@@ -668,7 +678,7 @@ def render_extension_proposal(sanctioned: int) -> str:
         "",
         "## Changelog",
         "",
-        f"### {today} — Original publication",
+        f"### {ORIGINAL_PUBLICATION_DATE} — Original publication",
         "",
         "Generated with the first build of the uplift-supplement dataset",
         "(card `planning/uplift-supplement-2026-08-28.md`, Build order step 1).",
@@ -694,7 +704,6 @@ def render_build_report(
     Returns:
         The Markdown document.
     """
-    today = datetime.now(timezone.utc).date().isoformat()
     sources_count = Counter(r["metrics_source"] for r in master)
     with_ci = sum(1 for r in master if r.get("F1_CI_lo") is not None)
     with_f1 = sum(1 for r in master if r.get("F1") is not None)
@@ -705,8 +714,10 @@ def render_build_report(
     lines = [
         "# Uplift supplement — build report",
         "",
-        f"> **Last revised**: {today} (original publication; first build of the "
-        "flatten). See [§ Changelog](#changelog) for revision history.",
+        *generated_doc_banner(
+            "original publication; the flatten's coverage and decisions",
+            "scripts/build_uplift_supplement.py",
+        ),
         "",
         "Generated by `scripts/build_uplift_supplement.py` from committed",
         "artefacts only. Zero API calls; nothing is recomputed.",
@@ -821,6 +832,23 @@ def render_build_report(
         "   `-canonical-gt` / `-standardised-gt` label suffixes are the fallback",
         "   and are matched as whole suffixes only, because labels such as",
         "   `greedy-canonical` and `canonical-first` use the word for a config.",
+        "6. **`reference_path` is the canonical in-repo anchor, always.** Nine",
+        "   committed evaluations ran against a frozen replay copy under a",
+        "   machine-local scratch tree that no longer exists. Publishing that as",
+        "   the anchor would hand a reader a dead path, so the anchor is the",
+        "   in-repo file the basename names and the literal consumed path is",
+        "   preserved in `reference_consumed_path`.",
+        "7. **The frame comes from `resolve_scope`, which honours",
+        "   `scope_override`.** Two `verifier-robustness` cells run at 256 px on",
+        "   the 1,032-tile frame while their run is nominally era-2-487. All",
+        "   three builders resolve the frame through that one function, so a",
+        "   cell cannot sit in one stratum in the master table and another in a",
+        "   worklist.",
+        "8. **Generated documents pin their original-publication date.** These",
+        "   documents are regenerated in full, so restamping the changelog on",
+        "   every build would destroy the revision-policy baseline it exists to",
+        "   provide. The original date is a constant; the regeneration time is",
+        "   stamped separately in the banner and is not a revision claim.",
         "",
         "## Gaps and open questions for the PI",
         "",
@@ -873,9 +901,29 @@ def render_build_report(
         "- **The § 6 frame vocabulary is incomplete** — see",
         "  `notation-extension-proposal.md`.",
         "",
+        "## Known and accepted limitations",
+        "",
+        "Surfaced by the 2026-08-29 audit and left as they are, deliberately:",
+        "",
+        "- **`h13-common-338` records `n_test_tiles: 338` under a frame id of",
+        "  338 but `run-facts.json` gives 340**, so it joins the 340-tile",
+        "  instrument. The disagreement is a fact about the registry, not",
+        "  something this builder should paper over; `strata.csv` records the",
+        "  count it was given.",
+        "- **`geometry` is unresolved for 335 of 374 conditions.** Overlap was",
+        "  not machine-recorded before the geometry programmes. Recovering it",
+        "  would mean parsing tile grids, which is a separate job.",
+        "- **Per-condition audited cost does not exist corpus-wide.** See",
+        "  decision 3; `cost_usd` states its basis on every row.",
+        "- **19 `pv-diag-384` cells cannot be matched to their own verifier",
+        "  stage** (`ambiguous-lineage` in the K = 1 worklist). Their labels and",
+        "  pool names do not distinguish stages that differ only in verifier",
+        "  configuration. They are disclosed as unmeasurable rather than given a",
+        "  neighbouring stage's floor.",
+        "",
         "## Changelog",
         "",
-        f"### {today} — Original publication",
+        f"### {ORIGINAL_PUBLICATION_DATE} — Original publication",
         "",
         "First build of the uplift-supplement flatten (card",
         "`planning/uplift-supplement-2026-08-28.md`, Build order step 1).",
