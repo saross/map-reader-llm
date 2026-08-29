@@ -85,15 +85,28 @@ N_PERMS = 10_000
 SEED = 42
 
 
-def load_image_union(vroot: Path = None) -> gpd.GeoDataFrame:
-    """The image union joined to its probabilities, join-gated."""
+def load_image_union(vroot: Path = None, union_name: str | None = None,
+                     verify_dir: str = "verify") -> gpd.GeoDataFrame:
+    """The image union joined to its probabilities, join-gated.
+
+    ``union_name``/``verify_dir`` select a specific union and verify
+    stage when a cell holds more than one (e.g. the gemini37 K=5
+    screen beside its K=10 escalation); the defaults preserve the
+    original single-union behaviour.
+    """
     vroot = VROOT if vroot is None else vroot
-    unions = sorted(vroot.glob("union_k*.geojson"))
-    if len(unions) != 1:
-        raise JoinGateError(f"{vroot}: expected one union, found {len(unions)}")
+    if union_name is not None:
+        unions = [vroot / union_name]
+        if not unions[0].exists():
+            raise JoinGateError(f"{unions[0]}: named union not found")
+    else:
+        unions = sorted(vroot.glob("union_k*.geojson"))
+        if len(unions) != 1:
+            raise JoinGateError(
+                f"{vroot}: expected one union, found {len(unions)}")
     gdf = gpd.read_file(unions[0]).to_crs(CRS)
     results = json.loads(
-        (vroot / "verify/probabilities.json").read_text())["results"]
+        (vroot / verify_dir / "probabilities.json").read_text())["results"]
     if len(results) != len(gdf):
         raise JoinGateError(
             f"{CELL}: {len(results)} probabilities vs {len(gdf)} features")
@@ -134,6 +147,12 @@ def main() -> int:
     ap.add_argument("--out-dir", default=None,
                     help="Results directory (default: the base cell home; "
                          "pass e.g. results/image-b-gs-2026-08-28/high).")
+    ap.add_argument("--union-name", default=None,
+                    help="Union filename under verifier/<cell>/ when the "
+                         "cell holds more than one (e.g. union_k10.geojson).")
+    ap.add_argument("--verify-dir", default="verify",
+                    help="Verify-stage directory under verifier/<cell>/ "
+                         "holding probabilities.json (default: verify).")
     args = ap.parse_args()
     CELL = args.cell
     VROOT = PROJECT_ROOT / args.outputs_root / "verifier" / CELL
@@ -144,7 +163,7 @@ def main() -> int:
     gdf_ref = gpd.read_file(GROUND_TRUTH).to_crs(CRS)
 
     # ---- Image union, gated. ----
-    union = load_image_union(VROOT)
+    union = load_image_union(VROOT, args.union_name, args.verify_dir)
     union = reassign_gate(union, bounds, CELL)
     logger.info("%s: union %d joined and reassignment-gated", CELL,
                 len(union))
