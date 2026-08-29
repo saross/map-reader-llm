@@ -45,3 +45,9 @@ python scripts/compute_corrected_f1_multi_buffer.py --verified-detections output
 
 # pair::55maps-text-min-generalisation::verified-k4-standardised-gt
 python scripts/compute_corrected_f1_multi_buffer.py --verified-detections outputs/55maps-text-min-generalisation/consensus/consensus-4of5.geojson --student-gt results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson --bounds inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson --buffers 5 10 15 20 25 30 35 40 45 50 75 100 125 150 --n-bootstrap 10000 --seed 42 --compute-mcc --output-dir results/uplift-supplement/verifier-pairing/55maps-text-min-generalisation__verified-k4-standardised-gt --extension-csv results/deployment-oracle-2026-06-06/canonical-gt/standardised/extension-mounds-standardised.csv
+
+# pair::pv-diag-384::verified-adv-text-min-6of10
+python scripts/evaluate_detections.py --detections outputs/h11/pv-diag-384/consensus/text-6of10.geojson --ground-truth inputs/vectors/references/mounds-reference.geojson --bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson --buffers 5 10 15 20 25 30 35 40 45 50 75 100 125 150 --bootstrap 10000 --seed 42 --mcc --output-dir results/uplift-supplement/verifier-pairing/pv-diag-384__verified-adv-text-min-6of10 --label pv-diag-384__verified-adv-text-min-6of10-unverified
+
+# pair::pv-diag-384::verified-adv-image-min-3of5
+python scripts/evaluate_detections.py --detections outputs/h11/pv-diag-384/consensus/image-3of5.geojson --ground-truth inputs/vectors/references/mounds-reference.geojson --bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson --buffers 5 10 15 20 25 30 35 40 45 50 75 100 125 150 --bootstrap 10000 --seed 42 --mcc --output-dir results/uplift-supplement/verifier-pairing/pv-diag-384__verified-adv-image-min-3of5 --label pv-diag-384__verified-adv-image-min-3of5-unverified

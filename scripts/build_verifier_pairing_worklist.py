@@ -76,9 +76,13 @@ from scripts.lib_uplift_supplement import (  # noqa: E402
     ORIGINAL_PUBLICATION_DATE,
     CorpusSources,
     ScoringRecipe,
+    VerifierManifest,
+    collect_verifier_manifests,
     condition_stratum,
     generated_doc_banner,
+    match_verifier_manifest,
     iter_condition_specs,
+    path_matches_lineage,
     read_scoring_recipe,
     resolve_geometry,
     resolve_reference,
@@ -155,10 +159,17 @@ def _find_consensus_file(
         # multi-lineage run it is merely the only file with that vote SHAPE
         # anywhere in the tree, which is how three pv-diag-384 cells — text,
         # image, and text-min, on three different pools — all resolved to one
-        # text consensus set and were emitted as ready scoring jobs.
-        if len(explicit) == 1 and (n_lineages <= 1 or scope == "pool"):
+        # text consensus set and were emitted as ready scoring jobs. The pool
+        # tree gets no exemption: a pool directory can serve several
+        # geometries, so "under the pool" is not by itself proof of lineage.
+        if len(explicit) == 1 and n_lineages <= 1:
             return explicit[0], None
-        matched = [p for p in explicit if any(t in str(p) for t in tokens)]
+        # Lineage matching is boundary-anchored (whole path segment or stem,
+        # each also shell-stripped). Bare containment both invents matches —
+        # `text-1of10` inside `flash-high-text-1of10` — and misses real ones,
+        # because a pool is named for the shell it was BUILT at while its
+        # consensus set is named for the shell it was AGGREGATED at.
+        matched = [p for p in explicit if path_matches_lineage(str(p), tokens)]
         if len(matched) == 1:
             return matched[0], None
         if not matched:
@@ -225,16 +236,13 @@ def _find_union(
     if not candidates:
         return None
     tokens = [t for t in discriminators if t]
-    for token in tokens:
-        matches = [c for c in candidates if token in str(c)]
-        if len(matches) == 1:
-            return matches[0]
+    matched = [c for c in candidates if path_matches_lineage(str(c), tokens)]
+    if len(matched) == 1:
+        return matched[0]
     # A lone union is accepted only when the run has one lineage for it to
-    # belong to, or when the cell's own tokens appear in its path. "It was the
-    # only file" is not, by itself, evidence that it is the RIGHT file.
-    if len(candidates) == 1 and (
-        n_lineages <= 1 or any(t in str(candidates[0]) for t in tokens)
-    ):
+    # belong to. "It was the only file" is not, by itself, evidence that it is
+    # the RIGHT file.
+    if len(candidates) == 1 and n_lineages <= 1:
         return candidates[0]
     return None
 
@@ -284,6 +292,29 @@ def _render_command(
         for name, value in recipe.extra.items():
             parts += [f"--{name.replace('_', '-')}", value]
     return " ".join(shlex.quote(p) for p in parts)
+
+
+def _run_manifests(
+    sources: CorpusSources, run_id: str, cache: dict[str, list[VerifierManifest]]
+) -> list[VerifierManifest]:
+    """Return a run's verifier manifests, surveying it at most once.
+
+    Args:
+        sources: Loaded corpus sources.
+        run_id: The run.
+        cache: Per-run survey cache, mutated in place.
+
+    Returns:
+        The run's real candidate manifests.
+    """
+    if run_id not in cache:
+        entry = sources.registry.get(run_id)
+        run_dir = sources.repo_root / entry["directory_path"] if entry else None
+        if run_dir is not None and run_dir.is_dir():
+            cache[run_id] = collect_verifier_manifests(run_dir, sources.repo_root)[0]
+        else:
+            cache[run_id] = []
+    return cache[run_id]
 
 
 def _eval_metadata(
@@ -369,6 +400,7 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
                 _pair_key(run_id, condition_id, spec), (condition_id, spec)
             )
 
+    coverage: dict[str, list[VerifierManifest]] = {}
     rows: list[dict[str, Any]] = []
     for run_id, condition_id, spec in specs:
         if spec.get("aggregation") != "verified":
@@ -452,13 +484,38 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
                     run_dir, (geometry or "", pool), n_passes, n_lineages
                 )
                 if union is not None:
-                    basis = "union"
-                    union_path = str(union.relative_to(sources.repo_root))
-                    materialise_filter = f"vote_count >= {int(votes)}"
-                    notes.append(
-                        "the paired shell must be filtered out of the union "
-                        "before scoring; no API spend, no re-aggregation"
+                    # The union must be the SAME set the verifier consumed, or
+                    # the "pair" differs in two things at once. The verifier
+                    # stage records what it cropped in its candidate manifest,
+                    # so the claim is checkable rather than asserted.
+                    matched_stage, _stage_basis = match_verifier_manifest(
+                        _run_manifests(sources, run_id, coverage),
+                        spec["label"], pool, geometry, n_passes,
                     )
+                    recorded = matched_stage.source_basename if matched_stage else None
+                    if recorded and recorded != union.name:
+                        blocked = (
+                            f"the committed union {union.name} is not the set "
+                            f"this cell's verifier consumed: its stage "
+                            f"({matched_stage.path}) records "
+                            f"source_geojson {recorded}. Pairing them would "
+                            "differ in the candidate set as well as the "
+                            "verifier. Refused rather than assumed"
+                        )
+                    else:
+                        basis = "union"
+                        union_path = str(union.relative_to(sources.repo_root))
+                        materialise_filter = f"vote_count >= {int(votes)}"
+                        notes.append(
+                            "the paired shell must be filtered out of the union "
+                            "before scoring; no API spend, no re-aggregation"
+                        )
+                        notes.append(
+                            f"union cross-checked against {matched_stage.path}"
+                            if matched_stage
+                            else "no verifier stage matched, so the union could "
+                                 "not be cross-checked against a recorded source"
+                        )
 
             if basis == "unresolved":
                 blocked = refusal or (
@@ -540,12 +597,19 @@ def render_report(rows: list[dict[str, Any]]) -> str:
         "reference, same buffer, same frame.",
         "",
         "The two sides carry SEPARATE stratum ids (`verified_stratum_id` and",
-        "`unverified_stratum_id`). For a derived twin they agree by construction,",
-        "because the twin is scored with the verified cell's own recipe; for a",
-        "registered twin the id is derived from that cell's own evidence, so a",
-        "mismatch is detectable. `scripts/compute_verifier_uplift.py` passes both",
-        "to the cross-stratum guard, which is what makes the guard a check rather",
-        "than a formality.",
+        "`unverified_stratum_id`), and `scripts/compute_verifier_uplift.py`",
+        "passes both to the cross-stratum guard.",
+        "",
+        "**What that guard is and is not.** A `stratum_id` is",
+        "corpus × reference × buffer × frame. Pool, geometry, and fusion family",
+        "are NOT in it — they are in the pairing key, which already forces the",
+        "two sides to agree on all four stratum components before a pair is",
+        "emitted. The guard is therefore a consistency TRIPWIRE: it catches an",
+        "externally edited worklist, or a future change that lets the key and the",
+        "stratum drift apart. It cannot catch a cross-LINEAGE mispair, because",
+        "two cells of the same run at different geometries share a stratum. What",
+        "protects against that is the lineage matching in this builder, not the",
+        "guard downstream.",
         "",
         f"{len(rows)} verified cell(s) in the registry.",
         "",

@@ -8,12 +8,23 @@ belongs to which verified cell; this script joins the two scores and writes the
 uplift.
 
 Uplift is ``verified - unverified`` on one metric, both cells in the SAME
-stratum. That is not a convention here, it is enforced: the worklist carries the
-two sides' SEPARATELY DERIVED stratum ids, and both are handed to
+stratum. The worklist carries the two sides' separately derived stratum ids and
+both are handed to
 :func:`~scripts.lib_uplift_supplement.refuse_cross_stratum`, so a pair whose two
 cells were scored against different references, buffers, or frames raises rather
-than producing a plausible number. Cross-stratum comparisons belong in
-``transfer-pairs.csv``, with a delta and a named tax.
+than producing a plausible number.
+
+That check is a **tripwire, not an independent verification**. A ``stratum_id``
+is corpus x reference x buffer x frame; the pairing key already forces both
+sides to agree on all four before a row is emitted, so on an unedited worklist
+the guard cannot fire. What it catches is an externally edited worklist, or a
+future change that lets the pairing key and the stratum key drift apart. It can
+NEVER catch a cross-lineage mispair — two cells of one run at different
+geometries share a stratum — and the protection against that lives in
+``build_verifier_pairing_worklist``'s lineage matching.
+
+Cross-stratum comparisons belong in ``transfer-pairs.csv``, with a delta and a
+named tax.
 
 Where an unverified score does not exist yet the row is written with a null
 uplift and a status saying which side is missing. Running this before the
@@ -199,10 +210,10 @@ def compute_uplift(
             pair["output_dir"] or None, metric, buffer_m,
         )
 
-        # The guard is given the two sides' SEPARATELY DERIVED stratum ids. An
-        # earlier build passed the verified cell's id twice, which made the
-        # check tautological — it could not fail on any input, and so proved
-        # nothing about the pairing it was there to protect.
+        # The two sides' separately derived ids, not one id passed twice (an
+        # earlier build did that, making the check unfailable on any input).
+        # This is a tripwire against external edits and future key drift, not an
+        # independent check of the pairing — see the module docstring.
         stratum_id = refuse_cross_stratum(
             [
                 {"stratum_id": pair["verified_stratum_id"]},
