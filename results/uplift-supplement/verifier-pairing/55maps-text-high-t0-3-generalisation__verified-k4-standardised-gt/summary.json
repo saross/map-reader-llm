@@ -1,0 +1,556 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-08-29T10:37:31.394216+00:00",
+  "methodology": "Approach B \u2014 extended-GT Hungarian matching, standardised reference (ruling 21): extension layer at marked centres, included whole at every R",
+  "metadata": {
+    "seed": 42,
+    "bootstrap_n": 10000,
+    "git_commit": "390c65af31865305f183aa6c22e89805b6ef806b",
+    "input_paths": {
+      "detections": "results/uplift-supplement/verifier-pairing/55maps-text-high-t0-3-generalisation__verified-k4-standardised-gt/twin-4of5.geojson",
+      "student_gt": "results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "extension_csv": "results/deployment-oracle-2026-06-06/canonical-gt/standardised/extension-mounds-standardised.csv"
+    }
+  },
+  "exclusions": {
+    "sentinel_buffer_metres": null,
+    "n_excluded_candidates": 0,
+    "note": "Standardised-extension mode: the ruling-21 extension layer carries marked centres (\u00b12.5 m), so no ring sentinels exist and the whole layer enters the extended GT at every buffer radius. Legacy ring gating (Obs 371) does not apply."
+  },
+  "obs_272_reference": "Obs 272 in docs/notes/reflections/working-notes.md shows the attractor-pull effect is statistically significant only through 125 m \u2014 shells at (125, 150] and (150, 286] are indistinguishable from within-tile random placement. The 150 m row should be treated as an optimistic upper bound, not a practitioner-useful recall claim.",
+  "results": [
+    {
+      "R_m": 5,
+      "TP": 591,
+      "FP": 9319,
+      "FN": 4419,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.05963673057517659,
+      "precision_CI": [
+        0.054441540842867675,
+        0.06477012254232603
+      ],
+      "recall": 0.11796407185628742,
+      "recall_CI": [
+        0.10844325908104784,
+        0.12755750773130375
+      ],
+      "F1": 0.07922252010723861,
+      "F1_CI": [
+        0.07266241574780431,
+        0.08575178403045365
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 10,
+      "TP": 1644,
+      "FP": 8266,
+      "FN": 3366,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.16589303733602423,
+      "precision_CI": [
+        0.15688407388121084,
+        0.17494304400706517
+      ],
+      "recall": 0.3281437125748503,
+      "recall_CI": [
+        0.3138670742853917,
+        0.3425945745819379
+      ],
+      "F1": 0.22037533512064345,
+      "F1_CI": [
+        0.20960917316994732,
+        0.2309362720588838
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 15,
+      "TP": 2593,
+      "FP": 7317,
+      "FN": 2417,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.2616548940464178,
+      "precision_CI": [
+        0.25020021237751333,
+        0.2733340923173399
+      ],
+      "recall": 0.5175648702594811,
+      "recall_CI": [
+        0.502075125183323,
+        0.5334527164353434
+      ],
+      "F1": 0.34758713136729225,
+      "F1_CI": [
+        0.33493349987754834,
+        0.36040009290822805
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 20,
+      "TP": 3304,
+      "FP": 6606,
+      "FN": 1706,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.3334006054490414,
+      "precision_CI": [
+        0.3205244790748075,
+        0.3463440646470249
+      ],
+      "recall": 0.6594810379241517,
+      "recall_CI": [
+        0.6446296136909119,
+        0.6746255480065916
+      ],
+      "F1": 0.4428954423592493,
+      "F1_CI": [
+        0.42933690481522024,
+        0.45622490162958046
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 25,
+      "TP": 3705,
+      "FP": 6205,
+      "FN": 1305,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.3738647830474268,
+      "precision_CI": [
+        0.36013298376618286,
+        0.38733507874355094
+      ],
+      "recall": 0.7395209580838323,
+      "recall_CI": [
+        0.7259672465166556,
+        0.7534047156792717
+      ],
+      "F1": 0.4966487935656836,
+      "F1_CI": [
+        0.48272539407183296,
+        0.5101533837259955
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 30,
+      "TP": 3908,
+      "FP": 6002,
+      "FN": 1102,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.3943491422805247,
+      "precision_CI": [
+        0.38026402261939696,
+        0.4083183746933973
+      ],
+      "recall": 0.7800399201596806,
+      "recall_CI": [
+        0.7671957671957672,
+        0.7927072565562653
+      ],
+      "F1": 0.5238605898123324,
+      "F1_CI": [
+        0.5100278647426176,
+        0.5374370276244915
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 35,
+      "TP": 4005,
+      "FP": 5905,
+      "FN": 1005,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.4041372351160444,
+      "precision_CI": [
+        0.38979886266847713,
+        0.4181673154698773
+      ],
+      "recall": 0.7994011976047904,
+      "recall_CI": [
+        0.7869483220000747,
+        0.8119087916304809
+      ],
+      "F1": 0.5368632707774799,
+      "F1_CI": [
+        0.5229707923549519,
+        0.5505073953704318
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 40,
+      "TP": 4053,
+      "FP": 5857,
+      "FN": 957,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.4089808274470232,
+      "precision_CI": [
+        0.3945593403966677,
+        0.42309985165397257
+      ],
+      "recall": 0.8089820359281437,
+      "recall_CI": [
+        0.7966767094977362,
+        0.8214782549473951
+      ],
+      "F1": 0.5432975871313672,
+      "F1_CI": [
+        0.529292004320927,
+        0.5570683627218437
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 45,
+      "TP": 4082,
+      "FP": 5828,
+      "FN": 928,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.4119071644803229,
+      "precision_CI": [
+        0.39744662877952713,
+        0.42602554126377906
+      ],
+      "recall": 0.8147704590818363,
+      "recall_CI": [
+        0.8024392252937703,
+        0.826949981423391
+      ],
+      "F1": 0.5471849865951742,
+      "F1_CI": [
+        0.5332873796906936,
+        0.5608709960107814
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 50,
+      "TP": 4094,
+      "FP": 5816,
+      "FN": 916,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.4131180625630676,
+      "precision_CI": [
+        0.3987692150573256,
+        0.42731217492296836
+      ],
+      "recall": 0.8171656686626747,
+      "recall_CI": [
+        0.8049171900225779,
+        0.8292445157127352
+      ],
+      "F1": 0.5487935656836461,
+      "F1_CI": [
+        0.5348580023733446,
+        0.5625254803483954
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 75,
+      "TP": 4106,
+      "FP": 5804,
+      "FN": 904,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.4143289606458123,
+      "precision_CI": [
+        0.3998583085504448,
+        0.42855842847542014
+      ],
+      "recall": 0.819560878243513,
+      "recall_CI": [
+        0.8072798244237642,
+        0.8316318444192127
+      ],
+      "F1": 0.550402144772118,
+      "F1_CI": [
+        0.5365111268050302,
+        0.5641129330842706
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 100,
+      "TP": 4115,
+      "FP": 5795,
+      "FN": 895,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.41523713420787084,
+      "precision_CI": [
+        0.40077848450126835,
+        0.42948477770426724
+      ],
+      "recall": 0.8213572854291418,
+      "recall_CI": [
+        0.809278265746301,
+        0.8334319268222596
+      ],
+      "F1": 0.5516085790884718,
+      "F1_CI": [
+        0.5377738796267971,
+        0.5653143001894989
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 125,
+      "TP": 4118,
+      "FP": 5792,
+      "FN": 892,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.41553985872855703,
+      "precision_CI": [
+        0.40104035424286594,
+        0.4297600445974803
+      ],
+      "recall": 0.8219560878243513,
+      "recall_CI": [
+        0.8098134323959084,
+        0.8340378334214225
+      ],
+      "F1": 0.5520107238605898,
+      "F1_CI": [
+        0.5381171397534268,
+        0.5657274485635533
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    },
+    {
+      "R_m": 150,
+      "TP": 4124,
+      "FP": 5786,
+      "FN": 886,
+      "n_ref_student_only": 4731,
+      "n_reviewer_promoted_at_R": 279,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 5010,
+      "precision": 0.41614530776992936,
+      "precision_CI": [
+        0.4017282011367489,
+        0.4304699132094077
+      ],
+      "recall": 0.8231536926147704,
+      "recall_CI": [
+        0.8109755487072292,
+        0.8353131570476469
+      ],
+      "F1": 0.5528150134048258,
+      "F1_CI": [
+        0.5389747655139111,
+        0.5665296309289094
+      ],
+      "tile_classification": {
+        "mcc": 0.27280036245133843,
+        "mcc_CI": [
+          0.2534602320949021,
+          0.2920009738874564
+        ],
+        "tp": 2801,
+        "tn": 2365,
+        "fp": 2652,
+        "fn": 723,
+        "sensitivity": 0.7948354143019296,
+        "specificity": 0.4713972493522025
+      }
+    }
+  ]
+}
