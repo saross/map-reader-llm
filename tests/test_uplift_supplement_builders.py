@@ -615,6 +615,43 @@ class TestK1GapFillEndToEnd:
         assert row["verifier_floor_basis"].startswith("matched-consensus-shell")
         assert row["verifier_min_vote_seen"] == "2"
 
+    def test_cells_without_a_verifier_cite_nothing(self, rows: dict) -> None:
+        """A consensus cell has no verifier stage, so it can cite none.
+
+        Forty-one such citations were published, every one pointing at another
+        lineage's stage — a false evidence path even where the floor happened
+        to be right.
+        """
+        for row in rows.values():
+            if row["verified"] == "true":
+                continue
+            assert row["verifier_crop_manifest"] == "", row["source_condition"]
+            assert row["verifier_min_vote_seen"] == "", row["source_condition"]
+            assert row["verifier_floor_basis"] == "not-applicable"
+
+    def test_pool_subtree_stages_win_over_run_level_stages(
+        self, corpus: Path, tmp_path: Path
+    ) -> None:
+        """End-to-end: a pool with its own stages must cite from its own tree.
+
+        The `delta` run's `text-delta` pool verifies under
+        `verifier/text-delta/`, and a decoy run-level stage carrying the same
+        modality and shell sits alongside it. Token scoring alone cannot
+        separate them.
+        """
+        decoy = corpus / "outputs" / "delta" / "verified" / "text-2of3"
+        _write_json(decoy / "candidate_manifest.json",
+                    _candidate_manifest("text-1of3.geojson", [2, 3]))
+        out = tmp_path / "out"
+        k1_main(["--repo-root", str(corpus), "--out-dir", str(out)])
+        rows = {r["source_condition"]: r
+                for r in _read_csv(out / "k1-gapfill-worklist.csv")}
+        row = rows["delta::text-delta-union-2of3"]
+        assert row["verifier_crop_manifest"].startswith(
+            "outputs/delta/verifier/text-delta/"
+        )
+        assert "verified/text-2of3" not in row["verifier_crop_manifest"]
+
     def test_no_citation_crosses_modality(self, rows: dict) -> None:
         """A text cell must never cite an image stage's manifest, or vice versa.
 

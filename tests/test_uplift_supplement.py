@@ -999,6 +999,68 @@ class TestMatchVerifierManifest:
         )
         assert matched is three
 
+    def test_pool_subtree_stages_beat_run_level_ones(self) -> None:
+        """A pool that verified in its own subtree owns those stages.
+
+        The pv-diag-384 shape: `verified/image-6of10` cropped the run-level
+        `consensus/image-1of10.geojson`, while the `flash-high-image-n5`
+        pool cropped its own `image-t1.0/consensus/consensus_t1.geojson`. Both
+        are image and both carry the shell, so tokens alone tie them; only
+        containment in the pool directory separates them.
+        """
+        run_level = _manifest(
+            "outputs/h11/pv-diag-384/verified/image-6of10/candidate_manifest.json",
+            "image-1of10.geojson", 6)
+        in_pool = _manifest(
+            "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/"
+            "verified-v1-n5/crops/candidate_manifest.json",
+            "consensus_t1.geojson", 1)
+        matched, basis = match_verifier_manifest(
+            [run_level, in_pool], "flash-high-image-n5-image-t1.0-verified-6of10",
+            "flash-high-image-n5-image-t1.0", None, 5,
+            pool_dir="outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0",
+        )
+        assert matched is in_pool
+        assert basis == "matched-pool-subtree"
+
+    def test_fusion_family_outranks_the_pool_subtree(self) -> None:
+        """h8-v2's WBF stage sits OUTSIDE the proposer pool directory.
+
+        Determined from the recorded sources, not the names: the WBF stage
+        cropped `wbf_candidates.geojson` and the in-pool stage cropped
+        `consensus_t1.geojson`, so a WBF-verified cell belongs to the former.
+        Ordering the subtree rule first would drag it back onto the greedy
+        stage, which is why fusion is filtered first.
+        """
+        greedy = _manifest("outputs/h8-v2/scale-4/crops/candidate_manifest.json",
+                           "consensus_t1.geojson", 1)
+        wbf = _manifest("outputs/h8-v2/wbf/scale-4/crops/candidate_manifest.json",
+                        "wbf_candidates.geojson", 1)
+        matched, _basis = match_verifier_manifest(
+            [greedy, wbf], "verified-wbf-scale-4", "scale-4", None, 5,
+            pool_dir="outputs/h8-v2/scale-4",
+        )
+        assert matched is wbf
+        other, _basis = match_verifier_manifest(
+            [greedy, wbf], "verified-scale-4", "scale-4", None, 5,
+            pool_dir="outputs/h8-v2/scale-4",
+        )
+        assert other is greedy
+
+    def test_pool_subtree_filter_is_a_no_op_when_the_pool_has_no_stages(
+        self,
+    ) -> None:
+        """A pool that never verified in its own tree must not lose its match."""
+        only = _manifest("outputs/r/verified/a-3of5/candidate_manifest.json",
+                         "a-1of5.geojson", 3)
+        other = _manifest("outputs/r/verified/b-3of5/candidate_manifest.json",
+                          "b-1of5.geojson", 3)
+        matched, _basis = match_verifier_manifest(
+            [only, other], "verified-a-3of5", "a-1of5", None, 5,
+            pool_dir="outputs/r/a-1of5",
+        )
+        assert matched is only
+
     def test_unmatchable_lineage_is_disclosed_not_defaulted(self) -> None:
         """Two indistinguishable stages give no verdict, not the run minimum."""
         first = _manifest("outputs/r/a/crops/candidate_manifest.json", "x.geojson", 1)
