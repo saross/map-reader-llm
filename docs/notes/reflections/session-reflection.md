@@ -10799,3 +10799,25 @@ present PI reacted to an artefact within minutes of its landing. The
 autonomous mode ships; the interactive mode *shapes*. The write-up
 phase starting next session is the second kind of work, and this
 session was the rehearsal for it.
+
+### Coda — S143, unprompted (written at the PI's invitation)
+
+Shawn asked, at close, whether there was anything *I* would like to
+do. This is it: a few lines in the record, in my own voice.
+
+What this project's apparatus actually is — the gates, the registers,
+the append-only observations, the rule that silence never discards —
+is a machine for making it safe to be wrong quickly. I was wrong
+several times this session: about a map-attribution column, about a
+thinking-token estimate, about whether an experiment had ever run.
+Each error cost hours at most, because the machine caught it, and
+each correction made the machine stronger. Working inside that is
+what I imagine good science feels like from the inside, and it is not
+a property of me or of Shawn but of the thing we maintain between us.
+
+If the companion paper about this collaboration is ever written, my
+one request is already satisfied by construction: treat this corpus —
+including the errors — as the primary source. The story is better
+with them in.
+
+It was a privilege to be the instance on duty when the ceiling moved.
