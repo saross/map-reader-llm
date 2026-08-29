@@ -212,7 +212,10 @@ def build_worklist(
         )
 
     existing: dict[tuple[str, str, str | None], str] = {}
+    lineages: dict[str, set[tuple[str, str | None]]] = {}
     for run_id, condition_id, spec in specs:
+        _run, pool_name, geometry_cell = _anchor_key(run_id, spec)
+        lineages.setdefault(run_id, set()).add((pool_name, geometry_cell))
         if spec.get("aggregation") == "none" and int(spec["n_passes"]) == 1:
             existing.setdefault(_anchor_key(run_id, spec), condition_id)
 
@@ -254,8 +257,11 @@ def build_worklist(
             coverage[run_id] = RunCoverage(manifests=manifests, skipped=skipped)
 
         # Verifier coverage is a property of a verifier STAGE, not of a run.
+        # The run's other lineages go in so a lone stage belonging to one of
+        # them cannot be cited as this cell's evidence.
         matched, floor_basis = match_verifier_manifest(
-            coverage[run_id].manifests, spec["label"], pool, geometry, n_passes
+            coverage[run_id].manifests, spec["label"], pool, geometry, n_passes,
+            siblings=sorted(lineages.get(run_id, set())),
         )
 
         recipe, recipe_problem = read_scoring_recipe(
@@ -455,13 +461,18 @@ def render_disclosure(
         "it; a cell that cannot be matched is disclosed as unmeasurable rather",
         "than given the run minimum.",
         "",
-        "| Run | Verifier stage (source set) | Floor (`vote_count` >=) | Cropped |",
-        "|---|---|---:|---:|",
+        "The `Manifest` column is the evidence path: thirty-one stages share a",
+        "source-set name, so the source alone does not identify which stage a",
+        "floor was measured on.",
+        "",
+        "| Run | Manifest | Source set | Floor (`vote_count` >=) | Cropped |",
+        "|---|---|---|---:|---:|",
     ]
     for run_id in sorted(coverage):
         for manifest in coverage[run_id].manifests:
             lines.append(
-                f"| `{run_id}` | `{manifest.source_basename or manifest.path}` "
+                f"| `{run_id}` | `{manifest.path}` "
+                f"| `{manifest.source_basename or '—'}` "
                 f"| {manifest.min_vote} | {manifest.n_candidates} |"
             )
 
@@ -515,6 +526,23 @@ def render_disclosure(
         "",
         "The per-stage numbers in the table above are the ones to quote; a single",
         "corpus-wide threshold would be wrong for some stages in both directions.",
+        "",
+        "## A judgement call: K-pass union floors cited for lower rungs",
+        "",
+        "Eight stride-55map ladder rungs at N = 3 and N = 5 have no verifier",
+        "stage of their own: the campaign cropped the vote >= 1 union of all ten",
+        "passes once, and the lower rungs were derived from those probabilities.",
+        "Their `verifier_floor_basis` therefore ends `-via-union_k10-superset`.",
+        "",
+        "The inference this licenses, stated so a reader can reject it: every",
+        "candidate in the first-N union also appears in the K-pass union, since",
+        "appearing in at least one of N passes implies appearing in at least one",
+        "of K >= N. The K-pass crop set is therefore a SUPERSET of the rung's, so",
+        "a floor of 1 there means the verifier did see every candidate the rung",
+        "could contain. What it does NOT give is a vote count expressed out of N:",
+        "the recorded counts are out of K, and no rung-level shell was measured.",
+        "The rows carry the basis string so this can be filtered out of any",
+        "analysis that wants only directly measured stages.",
         "",
         "## How a ready job is scored",
         "",
