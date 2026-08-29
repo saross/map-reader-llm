@@ -1,8 +1,8 @@
 # Notation-key extension proposal — uplift supplement
 
-> **Last revised**: 2026-08-29 (original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-29 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
 >
-> **Regenerated**: 2026-08-29T03:49:54Z by `scripts/build_uplift_supplement.py`. This document is generated in full from committed artefacts; regeneration is not a revision, and git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-08-29T04:22:01Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 The canonical key `docs/methodology/notation-key.md` requires that
 "new tables and dataset builders must conform to it or extend it here
@@ -92,7 +92,7 @@ loudly.
 | `unverified_detections_path` | anti-confabulation | The pre-verifier consensus set at the same vote threshold. |
 | `unverified_eval_path` | anti-confabulation | That cell's committed evaluation, where one already exists. |
 | `unverified_stratum_basis` | anti-confabulation | Whether the twin's stratum was derived from its own cell or from the recipe. |
-| `unverified_stratum_id` | § 6 | The twin's stratum, keyed independently so the guard has something to check. |
+| `unverified_stratum_id` | § 6 | The twin's stratum, keyed independently; a tripwire, not a lineage check. |
 | `unverified_value` | § 5 | The paired unverified cell's metric value. |
 | `uplift` | § 3 | verified minus unverified on the same metric, same stratum. |
 | `uplift_metric` | § 5 | Which metric the uplift column is computed on. |

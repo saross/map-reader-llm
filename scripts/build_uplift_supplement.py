@@ -66,6 +66,7 @@ Licence: Apache 2.0
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import sys
 from collections import Counter, defaultdict
@@ -687,11 +688,54 @@ def render_extension_proposal(sanctioned: int) -> str:
     return "\n".join(lines)
 
 
+def _unmatched_lineage_note(out_dir: Path) -> list[str]:
+    """Report how many cells could not be matched to their own verifier stage.
+
+    COUNTED from the K = 1 worklist, never asserted. A hard-coded number in a
+    generated document is a claim that stops being true the moment the matcher
+    or the corpus changes, and an earlier build of this report said 19 when the
+    worklist held 16.
+
+    Args:
+        out_dir: The output directory, where the worklist may already sit.
+
+    Returns:
+        Bullet lines, or a line saying the count is not yet available.
+    """
+    worklist = out_dir / "k1-gapfill-worklist.csv"
+    if not worklist.exists():
+        return [
+            "- **Verifier-lineage coverage is reported in",
+            "  `k1-gapfill-disclosure.md`**, which had not been built when this",
+            "  report was written. Rebuild the K = 1 worklist, then this report,",
+            "  to see the count here.",
+        ]
+    with worklist.open(encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    unmatched = [
+        r for r in rows
+        if r.get("verifier_floor_basis") in {
+            "ambiguous-lineage", "sole-manifest-lineage-mismatch",
+        }
+    ]
+    if not unmatched:
+        return ["- **Every cell matched its own verifier stage.**"]
+    by_run = Counter(r["run_id"] for r in unmatched)
+    runs = ", ".join(f"`{run}` ({n})" for run, n in by_run.most_common())
+    return [
+        f"- **{len(unmatched)} cell(s) cannot be matched to their own verifier",
+        f"  stage**: {runs}. Their labels and pool names do not distinguish",
+        "  stages that differ only in verifier configuration. They are disclosed",
+        "  as unmeasurable rather than given a neighbouring stage's floor.",
+    ]
+
+
 def render_build_report(
     sources: CorpusSources,
     master: list[dict[str, Any]],
     by_buffer: list[dict[str, Any]],
     strata: list[dict[str, Any]],
+    out_dir: Path,
 ) -> str:
     """Render the human-readable coverage and decisions report.
 
@@ -700,6 +744,7 @@ def render_build_report(
         master: Master condition rows.
         by_buffer: By-buffer condition rows.
         strata: Stratum rows.
+        out_dir: Output directory, read for the K = 1 worklist's lineage counts.
 
     Returns:
         The Markdown document.
@@ -905,21 +950,18 @@ def render_build_report(
         "",
         "Surfaced by the 2026-08-29 audit and left as they are, deliberately:",
         "",
-        "- **`h13-common-338` records `n_test_tiles: 338` under a frame id of",
-        "  338 but `run-facts.json` gives 340**, so it joins the 340-tile",
-        "  instrument. The disagreement is a fact about the registry, not",
-        "  something this builder should paper over; `strata.csv` records the",
-        "  count it was given.",
+        "- **The `h13-common-338` frame id and its recorded tile count",
+        "  disagree.** The frame id string says 338; nothing records 338 as a",
+        "  count. `results/run-facts.json` records `n_test_tiles: 340` for the",
+        "  run, so the stratum joins the 340-tile instrument. The disagreement",
+        "  is a fact about the registry, not something this builder should",
+        "  paper over; `strata.csv` records the count it was given.",
         "- **`geometry` is unresolved for 335 of 374 conditions.** Overlap was",
         "  not machine-recorded before the geometry programmes. Recovering it",
         "  would mean parsing tile grids, which is a separate job.",
         "- **Per-condition audited cost does not exist corpus-wide.** See",
         "  decision 3; `cost_usd` states its basis on every row.",
-        "- **19 `pv-diag-384` cells cannot be matched to their own verifier",
-        "  stage** (`ambiguous-lineage` in the K = 1 worklist). Their labels and",
-        "  pool names do not distinguish stages that differ only in verifier",
-        "  configuration. They are disclosed as unmeasurable rather than given a",
-        "  neighbouring stage's floor.",
+        *_unmatched_lineage_note(out_dir),
         "",
         "## Changelog",
         "",
@@ -989,7 +1031,7 @@ def main(argv: list[str] | None = None) -> int:
         render_extension_proposal(len(sources.notation.sanctioned)), encoding="utf-8"
     )
     (out_dir / "build-report.md").write_text(
-        render_build_report(sources, master, by_buffer, strata), encoding="utf-8"
+        render_build_report(sources, master, by_buffer, strata, out_dir), encoding="utf-8"
     )
 
     print(f"conditions.csv            {len(master):>5} rows")
