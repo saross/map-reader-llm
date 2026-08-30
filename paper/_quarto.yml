@@ -1,0 +1,26 @@
+# Quarto project for the ISPRS JPRS manuscript.
+#
+# Venue contract: docs/paper/journal-requirements-isprs.md (~8,500
+# words body; section budgets in § 3). Structure:
+# docs/paper/manuscript-skeleton-isprs.md (decisions D-1..D-5 gate
+# content conversion). Notation: docs/methodology/notation-key.md
+# governs all symbols. Drafting register: the academic-prose skill's
+# contract.
+#
+# Drafting renders to HTML for preview; the elsarticle PDF extension
+# is applied at final-files time (S143 venue-tooling decision).
+
+project:
+  type: default
+  output-dir: _output
+
+format:
+  html:
+    toc: true
+    number-sections: true
+    theme: cosmo
+
+bibliography: references.bib
+
+execute:
+  freeze: auto
