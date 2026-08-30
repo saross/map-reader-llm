@@ -1,7 +1,7 @@
 # AB+ corpus for the ISPRS paper bibliography — run card
 
-> **Last revised**: 2026-08-30 (original publication; AWAITING PI GO
-> — no agents launch before it). See [§ Changelog](#changelog).
+> **Last revised**: 2026-08-30 (pilot COMPLETE and rendered; build
+> PAUSED at the usage checkpoint). See [§ Changelog](#changelog).
 
 **Purpose**: per-source Annotated Bibliography Plus (AB+) entries for
 every work the paper may cite — attested quotes with page anchors,
@@ -70,6 +70,16 @@ iterate pattern); two consecutive failures escalate to the PI.
   scope otherwise as proposed.
 
 ## Changelog
+
+### 2026-08-30 (later) — Pilot COMPLETE, corpus build PAUSED
+
+All 25 pilot sources rendered and committed (0/25 passed fresh-context
+verification without edits — the two-mechanism design caught
+interpretive defects everywhere; nothing fabricated). Full findings,
+catch taxonomy, pipeline amendments, and the usage arithmetic:
+`reports/ab-plus-pilot-report-2026-08-30.md`. PAUSED per the PI's
+quota ruling; the remaining ~88 sources run on PI go with the
+amendments applied (cache pre-flight gate, per-citekey workdirs).
 
 ### 2026-08-30 — Original publication
 
