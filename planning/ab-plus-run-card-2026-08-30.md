@@ -63,7 +63,11 @@ iterate pattern); two consecutive failures escalate to the PI.
 
 ## Sign-off
 
-- [ ] PI go (scope, agent counts, vendoring approach)
+- [x] PI go — 2026-08-30, **PILOT FIRST**: 25 sources (the 8 adjacent
+  + 17 core named in the seeds/skeleton), then a Claude-usage
+  checkpoint against the PI's weekly meter (baseline **26 % used** at
+  approval) before the remaining ~88 are authorised. Vendoring and
+  scope otherwise as proposed.
 
 ## Changelog
 
