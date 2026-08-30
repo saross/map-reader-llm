@@ -56,3 +56,7 @@ streamlit
 # (altair selections) cannot return an arbitrary continuous position —
 # only a selected datum or an interval. MIT-licensed, pure front-end.
 streamlit-image-coordinates
+pymupdf>=1.24  # AB+ PDF extraction (vendored ab_plus pipeline)
+pdfplumber  # AB+ extractor dependency
+python-slugify  # AB+ extractor dependency
+bibtexparser  # AB+ resolve stage

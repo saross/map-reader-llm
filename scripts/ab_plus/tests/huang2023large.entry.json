@@ -1,0 +1,61 @@
+{
+  "citekey": "Huang2023large",
+  "register": "Borrowed (NLP/ML)",
+  "primary_gap": "Gap 2 — self-correction limits (the load-bearing cluster)",
+  "also_touches": ["Gap 3 — independent / adversarial verification"],
+  "summary": "Huang et al. open with a deceptively simple question: if a language model can correct its own reasoning, why didn't it produce the right answer the first time? Across three reasoning benchmarks (GSM8K, CommonSenseQA, HotpotQA) and four models (GPT-3.5, GPT-4, GPT-4-Turbo, Llama-2), their answer is that, left to itself, it largely cannot. The paper's decisive move is conceptual rather than empirical: it isolates intrinsic self-correction — a model revising using only its own capabilities, with no external feedback — and shows that earlier optimistic results quietly depended on an oracle, a ground-truth signal telling the model when to stop. Strip the oracle out, force the model to decide for itself whether to revise, and accuracy falls on every model and benchmark; the model is more likely to talk itself out of a correct answer than into one. The diagnosis is the sentence most relevant to us: a model cannot properly judge the correctness of its reasoning, so a self-review pass is as able to spoil a good answer as to fix a bad one. The paper then deflates two apparent counter-examples. Multi-agent debate (Du et al.), compared fairly at an equal number of generations, underperforms plain self-consistency (majority voting) — its gains come from selecting among samples, not from critique; tellingly, the debating agents are multiple instances of the same model, so this is consistency, not the independence of context that would actually add information. Second, many headline self-correction wins trace to weak initial prompts: when the baseline prompt is specified properly, the apparent improvement evaporates — a methodological caution that the measured effect can be an artefact of the comparison, not a property of the model. What does work is feedback from outside: a code executor running unit tests (the authors call it the perfect verifier), a search engine, a calculator, or a human. For our project the paper is doubly useful — it supplies the empirical floor under self-checking is unreliable, and its own remedy, routing judgement through an independent external check, is structurally the guard our argument advances.",
+  "positioning": "This is the empirical anchor for §2's independent-confirmation requirement: it demonstrates, inside the NLP literature's own terms, that an LLM revising on its own commitments does not improve and often degrades, because the model cannot properly judge the correctness of its reasoning. That is our independence-of-context principle stated from the other side of the disciplinary fence. Its closing leverage-external-feedback section also seeds the constructive half (Gap 3 / §5): the external verifier the authors reach for is structurally the same move as our independent-context Guard.",
+  "key_points": [
+    {
+      "quote": "The fundamental issue is that LLMs cannot properly judge the correctness of their reasoning",
+      "page_index": 3,
+      "section": "§3.3 Why does the performance not increase, but instead decrease?",
+      "paraphrase": "The degradation has a single root cause: a model has no reliable internal signal for whether its own reasoning is right, so a self-review step is as likely to break a correct answer as to fix a wrong one.",
+      "relevance_gap": "Gap 2 — self-correction limits",
+      "relevance_section": "§2",
+      "relevance_stance": "supports"
+    },
+    {
+      "quote": "the accuracies of all models drop across all benchmarks",
+      "page_index": 3,
+      "section": "§3.2 Results (intrinsic self-correction)",
+      "paraphrase": "Across every model and benchmark tested, removing oracle labels and letting models decide when to stop lowered accuracy rather than raising it.",
+      "relevance_gap": "Gap 2 — self-correction limits",
+      "relevance_section": "§2",
+      "relevance_stance": "supports"
+    },
+    {
+      "quote": "current LLMs struggle to self-correct their reasoning without external feedback",
+      "page_index": 7,
+      "section": "§6 Conclusion and Discussion",
+      "paraphrase": "The paper's bottom line: contemporary models cannot reliably improve their own reasoning unless feedback comes from outside the model.",
+      "relevance_gap": "Gap 2 — self-correction limits",
+      "relevance_section": "§2",
+      "relevance_stance": "supports"
+    },
+    {
+      "quote": "based solely on its inherent capabilities, without the crutch of external feedback",
+      "page_index": 0,
+      "section": "§1 Introduction (definition of intrinsic self-correction)",
+      "paraphrase": "Intrinsic self-correction is defined precisely as correction with no external input — exactly the no-independence condition the argument isolates.",
+      "relevance_gap": "Gap 2 — self-correction limits",
+      "relevance_section": "§2",
+      "relevance_stance": "supports"
+    },
+    {
+      "quote": "the code executor serves as the perfect verifier to judge the correctness of predicted programs",
+      "page_index": 7,
+      "section": "§6 Conclusion and Discussion (Leveraging external feedback)",
+      "paraphrase": "Where an external, independent check exists — a code executor running unit tests — it can reliably verify correctness, and self-correction succeeds because the judgement comes from outside the model.",
+      "relevance_gap": "Gap 3 — independent / adversarial verification",
+      "relevance_section": "§5 design principles",
+      "relevance_stance": "extends"
+    }
+  ],
+  "framing_hook": {
+    "quote": "If an LLM possesses the ability to self-correct, why doesn't it simply offer the correct answer in its initial attempt?",
+    "page_index": 0,
+    "section": "§1 Introduction",
+    "note": "A rhetorical opener that carries the paradox in the authors' own voice."
+  }
+}
