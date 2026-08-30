@@ -71,6 +71,20 @@ iterate pattern); two consecutive failures escalate to the PI.
 
 ## Changelog
 
+### 2026-08-30 (later still) — Usage checkpoint MEASURED
+
+PI meter: the 25-source pilot cost **~10 % of the weekly Claude
+quota** (26 % → ~35 %). Implication: the remaining ~88 sources ≈
+35 % of a week in one push — too much beside drafting. Plan: batch
+the tail at ~25–30 sources per quota week (~10–12 %/week), scheduled
+early in fresh weeks, prioritised by citation likelihood; the core
+Related-work slate is already covered by the pilot, so nothing in
+the tail blocks drafting. Economy option for the least-cited tail,
+PI's call: Sonnet-tier drafters with Opus verifiers (the
+deterministic checker is model-independent and the verifier layer is
+what catches interpretive defects) — estimated ~40–50 % cheaper per
+source, at the cost of heavier verifier passes.
+
 ### 2026-08-30 (later) — Pilot COMPLETE, corpus build PAUSED
 
 All 25 pilot sources rendered and committed (0/25 passed fresh-context
