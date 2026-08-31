@@ -88,6 +88,28 @@ canonical incumbent by +0.0224. The proposer-seat gain partially
 exists; the GS-selected threshold failed to carry it across the
 corpus change, and the failure is specific to the G3-verifier arm.
 
+## The N-ladder: first-N rungs under both arms (canonical chain)
+
+Card § 5 step 4's N ∈ {1, 3} rungs, derived by the gated stride55
+ladder method (first-5 union rebuild exact at 12,715 / max centroid
+drift 0.069 m; both carried points reproduced to 1e-6; probability
+inheritance ≤ 10 m, unmatched 54 at N=1 and 3 at N=3). Rung oracles
+are descriptive (screening protocol — no carried claims below N=5):
+
+| Rung | Union | Arm 1 oracle | Arm 2 oracle |
+|---|---:|---|---|
+| N=1 | 8,426 | 0.8378 at (0.20, k1) | **0.8563** at (0.98, k1) |
+| N=3 | 11,079 | 0.8645 at (0.15, k3) | **0.8790** at (0.95, k3) |
+| N=5 (committed) | 12,715 | carried 0.8494 / oracle 0.8662 | carried 0.8763 / oracle 0.8806 |
+
+Two patterns replicate from the Gemini-3 programme: **saturation by
+N=3** (arm 2's N=3 oracle sits within 0.0016 of its N=5 oracle), and
+the all-3.7 lattice staying at the probability scale's top on every
+rung (D7 across the ladder). The cost headline: a **single 3.7 pass
+under the 3.7 verifier (N=1, 0.8563) beats the canonical incumbent
+five-pass Gemini-3 stack (0.8438)** on roughly one-fifth the proposer
+spend (~$29 of the $144 K=5 token-basis proposer total).
+
 ## Paired tests (per-sheet permutation + BH, canonical chain)
 
 Preview over the three fourth-cell-independent tests of the declared
