@@ -47,9 +47,56 @@ contains, per the PI (2026-08-31): per-record creator attribution
 **plus polygons designating each student's assigned area of
 analysis** — one student is known to have missed a whole horizontal
 swath, which the polygons make attributable ("should be held against
-him"). Location: local download if present, else Google Drive under
-publications → participatory GIS / crowdsourcing, ca. 2022–2023
-(agent scout dispatched S145; manifest to be appended here).
+him").
+
+### 2b. Drive scout manifest (agent, 2026-08-31) — both verdicts CONFIRMED
+
+The data spans three Drive locations, not one:
+`2022-MapDigitisationModule` (shared drive; QA analysis +
+manuscript), `Mound Digitisation from Maps project` (personal My
+Drive; the FAIMS campaign exports), and `Publications` (final PDF
+only).
+
+- **Per-record attribution CONFIRMED**: every export carries
+  `createdBy`/`createdAtGMT` plus a duplicating
+  `FeatureAuthor`/`FeatureTimestamp` pair (the latter sometimes in
+  local +03:00 rather than GMT — reconcile before analysis), and
+  `modifiedBy`/`modifiedAtGMT` for partial edit history.
+- **Assignment polygons CONFIRMED**: `Analysis-areas-by-student.shp`
+  in `QGIS-work`, with an earlier same-named `.dbf` variant (typo
+  filename, richer attribute table — diff both before choosing) and
+  companions `Mound-count-by-student.shp` /
+  `Error-count-by-student.shp` already spatially joined per student.
+- **Pre-curation GS-4 per-student audit FOUND**: the "QA time on
+  task" sheet holds a per-tile, per-student pre-cleaning error audit
+  for exactly the four GS sheets — error rates 1.71 % (Elenovo),
+  2.87 % (K-35-052-4), 7.44 % (Lesovo), **12.42 % (Rakovski)**.
+  Early cross-validation for free: the ordering matches our GS-4
+  per-sheet FN pattern (Rakovski was our 9.18 % outlier, Obs 316).
+- **Raw daily FAIMS server exports** (`rawdata/Entity-YYYYMMDD.csv`
+  + `MapDig_ALLfixedNE.csv`) survive alongside the merged "good"
+  CSVs — genuine pre-cleaning granularity.
+- **Session/time logs** (`RecordingProgress`: per-volunteer session
+  start/end) enable time-on-task performance modelling.
+- **Reusable pipeline**: `Original-data/README` points to a public R
+  loader (github.com/adivea/MapMoundsDigitized, `MapMoundLoad.R`).
+
+**Priority download list** (Drive IDs in the S145 scout report,
+archived with the session): (1) `MapMounds17_18allgood.csv` — full
+attributed export, 10,825 pts (cross-check headers/row-counts
+against the `NEgood` and `withnas` variants before committing to
+one); (2) the `rawdata/` daily exports; (3) the whole `QGIS-work`
+shapefile set + `QA-workspace.qgz`; (4) "QA time on task" +
+`MapDigitisation` assignment log + `RecordingProgress`;
+(5) `Mapmounds.7z` (shapefile cross-check) and the four GS
+GeoTIFFs if needed. Also inspect the small unopened
+`QA-review-2023-02-18-export.7z`.
+
+**Sensitivity**: the `Student-coding-sheet` is the code↔name
+de-anonymisation key. Handle per the dormant teaching-data policy
+instincts: analysis artefacts committed to this repo use student
+CODES only; the key and any personal names stay OUT of the
+repository and out of committed outputs.
 
 ## 3. Phase 0 — repo-only (no source data, $0 API)
 
@@ -148,6 +195,18 @@ scriptable within existing machinery (Hungarian matcher,
 bootstrap-by-sheet, Streamlit reviewer).
 
 ## Changelog
+
+### 2026-08-31 (later) — Drive scout manifest appended
+
+Agent scout located the full data ecosystem across three Drive
+locations; both PI-anticipated assets confirmed (per-record
+attribution; assignment polygons), plus unanticipated finds: the
+per-tile per-student pre-cleaning GS-4 QA audit (whose per-student
+error ordering already matches Obs 316's per-sheet FN pattern), raw
+daily FAIMS exports, session/time logs, and a public R loading
+pipeline. § 2b carries the condensed manifest and the
+priority download list; sensitivity note added for the
+de-anonymisation key. Phase 1 is now gated only on downloading.
 
 ### 2026-08-31 — Original publication
 
