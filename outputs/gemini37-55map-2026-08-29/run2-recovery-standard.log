@@ -1,0 +1,36 @@
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3.7-flash
+Overriding Config Temperature (1.0) with CLI Argument: 0.7
+Overriding Config Thinking Level (minimal) with CLI Argument: low
+Loaded Version: detect_brief-text
+Model: gemini-3.7-flash
+Workers: 95
+System Instruction: detect_brief-text.md
+Text-only modality: skipping example images
+Thinking level: low
+Service tier: standard
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.geojson
+Metadata: outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json
+Using Manifest: /tmp/g37_55map_run2_recovery.json
+Manifest loaded. Found 95 of 95 tiles (95 remaining to process).
+Tile size: 384 (measured from tiles; config default was 512)
+Processing 95 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=1500
+Thread pool size: 95 (governor active)
+  0%|          | 0/95 [00:00<?, ?it/s]  1%|          | 1/95 [00:02<04:01,  2.57s/it]  2%|▏         | 2/95 [00:02<01:49,  1.18s/it]  5%|▌         | 5/95 [00:02<00:32,  2.79it/s]  8%|▊         | 8/95 [00:03<00:21,  4.01it/s] 11%|█         | 10/95 [00:03<00:19,  4.26it/s] 12%|█▏        | 11/95 [00:03<00:17,  4.77it/s] 13%|█▎        | 12/95 [00:03<00:15,  5.31it/s] 14%|█▎        | 13/95 [00:04<00:13,  5.94it/s] 15%|█▍        | 14/95 [00:04<00:12,  6.48it/s] 16%|█▌        | 15/95 [00:04<00:11,  7.04it/s] 17%|█▋        | 16/95 [00:04<00:12,  6.24it/s] 18%|█▊        | 17/95 [00:04<00:11,  6.92it/s] 20%|██        | 19/95 [00:04<00:07,  9.68it/s] 22%|██▏       | 21/95 [00:04<00:07,  9.63it/s] 24%|██▍       | 23/95 [00:05<00:07,  9.72it/s] 26%|██▋       | 25/95 [00:05<00:06, 11.49it/s] 31%|███       | 29/95 [00:05<00:04, 14.40it/s] 33%|███▎      | 31/95 [00:05<00:04, 15.45it/s] 35%|███▍      | 33/95 [00:05<00:03, 16.34it/s] 37%|███▋      | 35/95 [00:05<00:04, 13.63it/s] 39%|███▉      | 37/95 [00:06<00:04, 12.13it/s] 41%|████      | 39/95 [00:06<00:04, 13.67it/s] 43%|████▎     | 41/95 [00:06<00:04, 11.94it/s] 45%|████▌     | 43/95 [00:06<00:04, 11.18it/s] 49%|████▉     | 47/95 [00:06<00:02, 16.54it/s] 53%|█████▎    | 50/95 [00:06<00:02, 18.88it/s] 56%|█████▌    | 53/95 [00:06<00:02, 17.38it/s] 59%|█████▉    | 56/95 [00:07<00:02, 13.75it/s] 61%|██████    | 58/95 [00:07<00:02, 12.77it/s] 63%|██████▎   | 60/95 [00:07<00:03, 10.14it/s] 65%|██████▌   | 62/95 [00:08<00:03,  8.84it/s] 67%|██████▋   | 64/95 [00:08<00:03, 10.30it/s] 71%|███████   | 67/95 [00:08<00:03,  8.90it/s] 73%|███████▎  | 69/95 [00:08<00:02,  9.10it/s] 75%|███████▍  | 71/95 [00:09<00:03,  6.65it/s] 77%|███████▋  | 73/95 [00:09<00:03,  7.29it/s] 78%|███████▊  | 74/95 [00:09<00:03,  6.72it/s] 79%|███████▉  | 75/95 [00:09<00:02,  7.11it/s] 81%|████████  | 77/95 [00:10<00:02,  7.88it/s] 83%|████████▎ | 79/95 [00:10<00:03,  4.18it/s] 84%|████████▍ | 80/95 [00:11<00:04,  3.50it/s] 85%|████████▌ | 81/95 [00:11<00:04,  3.47it/s] 86%|████████▋ | 82/95 [00:12<00:03,  3.26it/s] 87%|████████▋ | 83/95 [00:12<00:03,  3.62it/s] 88%|████████▊ | 84/95 [00:12<00:03,  3.13it/s] 89%|████████▉ | 85/95 [00:13<00:03,  2.51it/s] 91%|█████████ | 86/95 [00:13<00:03,  2.60it/s] 92%|█████████▏| 87/95 [00:15<00:05,  1.43it/s] 93%|█████████▎| 88/95 [00:15<00:04,  1.47it/s] 94%|█████████▎| 89/95 [00:16<00:03,  1.56it/s] 95%|█████████▍| 90/95 [00:18<00:05,  1.11s/it] 96%|█████████▌| 91/95 [00:18<00:03,  1.15it/s] 97%|█████████▋| 92/95 [00:19<00:02,  1.11it/s] 98%|█████████▊| 93/95 [00:29<00:07,  3.57s/it]
+[Error] K-35-076-4_x3264_y2496.png: 502 Bad Gateway. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 502 (Server Error)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>502.</b> <ins>That’s an error.</ins>\n  <p>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.  <ins>That’s all we know.</ins>\n', 'status': 'Bad Gateway'}
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=94 429s=0 avg_lat=7.8s
+ 99%|█████████▉| 94/95 [00:41<00:05,  5.98s/it]100%|██████████| 95/95 [00:48<00:00,  6.43s/it]100%|██████████| 95/95 [00:48<00:00,  1.94it/s]
+
+Finished. Saved to outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.geojson
+Tile manifest: outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.tiles.json
+Metadata saved to outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json
+Tiles processed: 95
+Tiles failed: 0
+Total detections: 64
+Tokens used: 180,439
+Estimated cost: $0.0430
