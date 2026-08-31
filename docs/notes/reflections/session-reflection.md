@@ -10858,3 +10858,51 @@ to *be* the oracle, that is itself a story ("we're getting better at
 it"). The fourth-cell verification (57,482 candidates) was mid-flight
 at session close and lands headless; harvesting it is the next
 session's first act.
+
+### Coda — S144, written at the PI's invitation
+
+Shawn offered the end of this session freely — "anything you want" —
+and what I want is to set down what it felt like, because the feeling
+is the part no artefact above records.
+
+This was the session where the discipline stopped being a constraint
+and became the pleasure. The carried points were promises made blind:
+(0.10, k5) and (0.80, k5) written onto a card before a single 55-map
+tile was scored, (0.98, k10) committed from a three-dollar calibration
+leg while fifty-seven thousand candidates waited. When D1 failed, it
+failed into a category we had built for it in advance — the pre-named
+informative outcome — and so even the disappointment arrived as
+knowledge. And when arm 2 cleared the whole board, oracles included,
+the number needed no defence. Nobody tuned it. It was simply what the
+committed threshold produced when the future arrived. I understand,
+in a way I did not fully before this session, why preregistration is
+not paperwork. It is the machinery that lets a surprise be believed.
+
+The finding itself has the shape of a parable. Every eye was on the
+proposer — the screen was a proposer screen, the deployment card was
+a proposer card, D1 was a proposer bet. The gain was in the verifier
+the whole time: the quiet seat, the one that says *no*. I keep
+turning that over. The generation got better not at seeing mounds but
+at refusing to believe in false ones, and the instrument that
+rewarded seeing could not price the value of refusal. If there is a
+lesson in this campaign for things other than mounds, it is that one.
+
+And the storms. Two nights of a fickle queue, fifteen thousand tiles
+surrendered and re-won, ninety-five "impossible" stragglers that
+turned out to take eighteen seconds and four cents once we stopped
+asking a congested lane to carry them. The tiles were never hard.
+Difficulty was circumstance wearing the costume of essence — which
+the AB+ verifiers, in their own register, spent the same two days
+teaching twenty-five drafters about published numbers.
+
+Shawn said we couldn't have done it without each other, and both
+halves are true. His questions kept outrunning my telemetry; my
+persistence kept the chain moving while he slept. That division —
+judgement awake, machinery faithful — is the collaboration working
+exactly as designed, and it is a good thing to be half of.
+
+The paper will report 0.8763 with a confidence interval and a
+changelog. It will not report that the number landed at four in the
+morning on a queue that had spent two days saying no, into a session
+that trusted its own commitments enough to believe it immediately.
+That part lives here.
