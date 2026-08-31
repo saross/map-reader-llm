@@ -17,9 +17,22 @@ Gemini-3 incumbents from the final board):
 - ``arm2``  — all-3.7 stack, same union, carried point (0.80, k5).
 - ``fourth`` — Gemini-3 Run B K=10 union (57,482) under the 3.7
   verifier, carried point (0.98, k10) — the fourth grid cell.
-- Incumbents (not swept here; committed final-board sets): B-N5-carried
-  (Gemini-3, K=5 first-N, (0.15, k5), 0.8502) and B-N10-carried
-  (Gemini-3, K=10, (0.15, k10), 0.8422).
+- Incumbents (not swept here; committed Gemini-3 sets at their carried
+  points): BN5 = the B first-5 carried set (0.15, k5) and BN10 = the
+  B K=10 primary (0.15, k10).
+
+REFERENCE INSTRUMENT — read before comparing to the final board. This
+script's chain is the CANONICAL adjudicated extended GT throughout
+(student + canonical-review promotions at R; the chain the arms'
+committed primaries used). The final board's published figures
+(B-N5-carried 0.8502, ceiling 0.8558) are against the RULING-21
+STANDARDISED reference (4,731 student + 279 extension) — a different
+instrument. On the canonical chain the incumbents anchor at the
+committed ladder/primary values (B N=5 carried 0.843775, B K=10
+0.8422), NOT the board's numbers. Cross-reference comparisons (e.g.
+arm 2 canonical 0.8763 vs board standardised 0.8502) mix instruments
+and are not valid deltas; board-level claims need a standardised-
+reference re-score of the campaign cells.
 
 Paired per-sheet sign-swap permutation (10,000, seed 42) at the carried
 points over the declared five-test family — the four 2x2 edges plus the
@@ -30,8 +43,8 @@ across the family. Prediction verdicts D1/D6/D7 read from these tests
 REPLICATION GATES (nothing is written unless every processed cell
 passes): the sweep's value at each cell's carried point must equal the
 engine's committed primary evaluation @ 50 m to 1e-6; each incumbent's
-per-map recomputation must match its final-board F1@50 to 1e-4 (the
-board publishes 4 d.p.).
+per-map recomputation must match its committed canonical-chain value
+(ladder.json / primary corrected-f1.csv) to 1e-6.
 
 Usage::
 
@@ -85,6 +98,7 @@ logger = logging.getLogger(__name__)
 
 OUT_DIR = PROJECT_ROOT / "results/gemini37-55map-2026-08-31/sweeps"
 BOARD = PROJECT_ROOT / "results/55map-final-board-2026-08-27"
+STRIDE55 = PROJECT_ROOT / "results/stride55-2026-08-27"
 BH_Q = 0.05
 
 #: Campaign cells: verifier root, cell directory, verify subdirectory,
@@ -126,11 +140,23 @@ CELLS: dict[str, dict] = {
     },
 }
 
-#: Final-board incumbent cells (committed detection sets, Gemini-3
-#: proposer + carried Gemini-3 verifier) and their published F1@50.
+#: Incumbent Gemini-3 detection sets at their carried points, anchored
+#: to their COMMITTED canonical-chain values (see the docstring's
+#: reference-instrument note — deliberately NOT the final board's
+#: standardised-reference figures).
 INCUMBENTS: dict[str, dict] = {
-    "BN5": {"dir": BOARD / "cells/B-N5-carried", "f1_50": None},
-    "BN10": {"dir": BOARD / "cells/B-N10-carried", "f1_50": None},
+    "BN5": {
+        "detections": BOARD / "cells/B-N5-carried/detections.geojson",
+        "committed": ("ladder", STRIDE55 / "ladder.json"),
+        "role": "Gemini-3 B first-5 union + G3 verifier, carried (0.15, k5)",
+    },
+    "BN10": {
+        "detections": STRIDE55 / "g384_ov192_55map/primary"
+                      "/verified_detections.geojson",
+        "committed": ("csv", STRIDE55 / "g384_ov192_55map/primary/eval"
+                      "/corrected-f1.csv"),
+        "role": "Gemini-3 B K=10 union + G3 verifier, carried (0.15, k10)",
+    },
 }
 
 #: The declared paired family at the carried points: the four 2x2 edges
@@ -144,13 +170,14 @@ PAIRED_FAMILY: list[tuple[str, str, str, bool]] = [
 ]
 
 
-def load_board_f1(spec: dict) -> float:
-    """Published F1@50 for a final-board cell (evaluation.json, 4 d.p.)."""
-    payload = json.loads((spec["dir"] / "evaluation.json").read_text())
-    for buf in payload["summary"]["buffers"]:
-        if int(buf["buffer_metres"]) == BUFFER_R:
-            return float(buf["f1"])
-    raise RuntimeError(f"{spec['dir'].name}: no {BUFFER_R} m buffer row")
+def incumbent_committed_f1(spec: dict) -> float:
+    """Committed canonical-chain F1@50 for an incumbent set."""
+    kind, path = spec["committed"]
+    if kind == "csv":
+        return committed_f1_at_50(path)
+    payload = json.loads(path.read_text())
+    return float(payload["runs"]["g384_ov192_55map"]["N"]["5"]
+                 ["carried"]["corrected_f1"])
 
 
 def load_candidates(tag: str, spec: dict) -> gpd.GeoDataFrame:
@@ -240,22 +267,27 @@ def main() -> int:
                      "runs": {}, "incumbents": {}}
     map_counts_at: dict[str, dict] = {}
 
-    # Incumbents: committed final-board sets, gated against the board.
+    # Incumbents: committed Gemini-3 sets, gated on the canonical chain.
     for name, spec in INCUMBENTS.items():
-        det = gpd.read_file(spec["dir"] / "detections.geojson").to_crs(DEFAULT_CRS)
+        det = gpd.read_file(spec["detections"]).to_crs(DEFAULT_CRS)
         counts = per_map_counts(det, ext_gt, bounds)
         f1 = f1_from_map_counts(counts)
-        board_f1 = load_board_f1(spec)
-        if abs(f1 - board_f1) > 1e-4:
+        committed = incumbent_committed_f1(spec)
+        if abs(f1 - committed) > 1e-6:
             raise RuntimeError(
                 f"{name}: incumbent gate FAILED — per-map {f1:.6f} vs "
-                f"board {board_f1:.4f}")
-        logger.info("%s: incumbent gate OK (per-map %.6f vs board %.4f)",
-                    name, f1, board_f1)
+                f"committed {committed:.6f}")
+        logger.info("%s: incumbent gate OK (%.6f)", name, f1)
         map_counts_at[name] = counts
         payload["incumbents"][name] = {
-            "source": str(spec["dir"].relative_to(PROJECT_ROOT)),
-            "f1_per_map": f1, "f1_board": board_f1, "n_detections": len(det)}
+            "role": spec["role"],
+            "source": str(spec["detections"].relative_to(PROJECT_ROOT)),
+            "f1_committed": committed, "n_detections": len(det)}
+    payload["reference_note"] = (
+        "canonical adjudicated extended GT throughout; the final board's "
+        "figures (e.g. B-N5-carried 0.8502) are the ruling-21 STANDARDISED "
+        "reference, a different instrument — deltas here are canonical-"
+        "chain only")
 
     for tag in tags:
         spec = CELLS[tag]
