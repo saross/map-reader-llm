@@ -77,15 +77,34 @@ def resolve_pass_paths(cell_dir: Path, run: str) -> list[Path]:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--write", action="store_true")
+    ap.add_argument("--root", default=None,
+                    help="Output root override (e.g. "
+                         "outputs/gemini37-55map-2026-08-29).")
+    ap.add_argument("--cell", default=None,
+                    help="Single cell override; requires --manifest.")
+    ap.add_argument("--manifest", default=None,
+                    help="Manifest path for the --cell override.")
+    ap.add_argument("--k", type=int, default=None,
+                    help="Pass-count override (default: the campaign K=10).")
     args = ap.parse_args()
+    outroot = PROJECT_ROOT / args.root if args.root else OUTROOT
+    k_total = args.k or K
+    if args.cell:
+        if not args.manifest:
+            ap.error("--cell requires --manifest")
+        cells = {args.cell: args.manifest}
+    else:
+        cells = CELLS
 
     total_cands = 0
     per_cell: dict[str, int] = {}
-    for cell, manifest_name in CELLS.items():
-        manifest = set(json.loads((MANDIR / manifest_name).read_text()))
-        cell_dir = OUTROOT / cell
+    for cell, manifest_name in cells.items():
+        man_path = (PROJECT_ROOT / manifest_name if args.cell
+                    else MANDIR / manifest_name)
+        manifest = set(json.loads(man_path.read_text()))
+        cell_dir = outroot / cell
         deduped_passes: list[list[dict]] = []
-        for i in range(1, K + 1):
+        for i in range(1, k_total + 1):
             run = f"run_{i}"
             raw, processed = load_pass(resolve_pass_paths(cell_dir, run))
             missing = manifest - processed
@@ -131,7 +150,7 @@ def main() -> int:
         logger.info("%s: union n=%d, verifier flex $%.2f", cell, len(gdf), cost)
 
         if args.write:
-            dest = OUTROOT / "verifier" / cell / "union_k10.geojson"
+            dest = outroot / "verifier" / cell / f"union_k{k_total}.geojson"
             dest.parent.mkdir(parents=True, exist_ok=True)
             gdf.to_crs("EPSG:4326").to_file(dest, driver="GeoJSON")
             written = len(json.loads(dest.read_text())["features"])
