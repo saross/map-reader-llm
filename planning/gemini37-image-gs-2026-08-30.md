@@ -1,8 +1,8 @@
 # Gemini 3.7 image-track screen: has the modality gap moved?
 
-> **Last revised**: 2026-08-30 (original publication; PI commissioned
-> same day — QUEUED behind the 55-map proposers on the 3.7 SKU;
-> probe-first before the full run). See [§ Changelog](#changelog).
+> **Last revised**: 2026-08-31 (PI GO GIVEN — next in the 3.7-SKU
+> queue after the fourth-cell verification lands; probe-first, then
+> the full run). See [§ Changelog](#changelog).
 
 **Question**: did 3.7's vision change shift RELATIVE modality
 performance? On Gemini 3, text examples beat image examples by
@@ -96,6 +96,17 @@ the text screen's exact machinery (`image_b_prepare_and_union.py`
 difference-in-differences gap test.
 
 ## Changelog
+
+### 2026-08-31 — PI go given
+
+PI: "After that, we can run the queued image-mode GS" (following the
+fourth-cell commissioning). Queue position: after the fourth-cell
+55-map verification + scoring harvest. Execution unchanged from this
+card: probe (cache-fraction gate ≥ 80 %) → /audit-config delta →
+K=5 driver at the WORKERS=400 standing default → union → BOTH
+verifier arms → I1-I5 verdicts + the difference-in-differences gap
+test. Anchors and costs as below.
+
 
 ### 2026-08-30 — Original publication
 
