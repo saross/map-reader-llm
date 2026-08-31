@@ -70,7 +70,8 @@ def resolve_pass_paths(cell_dir: Path, run: str) -> list[Path]:
         raise FileNotFoundError(
             f"{cell_dir / run}: expected one detections geojson, found {len(main)}")
     paths = list(main)
-    paths.extend(sorted((cell_dir / f"{run}_recovery").glob("detections-*.geojson")))
+    for frag in sorted(cell_dir.glob(f"{run}_recovery*")):
+        paths.extend(sorted(frag.glob("detections-*.geojson")))
     return paths
 
 
