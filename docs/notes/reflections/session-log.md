@@ -9063,3 +9063,55 @@ The HIGH-image "~$37" interim estimate was corrected to $59 audited
 (probe under-sampled thinking volume); the runner's live estimator
 over-records cached runs ~3.3× — billing console reconciliation
 pending (~$430 S142–143 combined expected).
+
+## Session 144 — 2026-08-29/31 (amd-tower + sapphire; ~US$150-190 Gemini API est., billed reconciliation pending; ~10 % weekly Claude quota on the AB+ pilot; Fable 5)
+
+Factual record; interpretation in session-reflection and llm-obs.
+
+**Gemini 3.7 arc, complete through three instruments.** (1) GS
+escalation executed: passes 6-10 (saturation — K=10 adds +0.0003 over
+K=5; ladder 0.8588/0.9018/0.9131/0.9142), full-union re-verification
+(913 cands, $0.63; deviation-from-increment disclosed), verifier-role
+swap (all-3.7 0.9265 @20 m, +0.0304, p=0.0105 — first GS-resolvable
+margin; mechanism: 3.7 verifier more permissive, optimum at prob 0.8);
+Obs 441. (2) 55-map deployment (B geometry, K=5, both verifier arms,
+carried points pre-committed): five passes at exact coverage through
+two flex-503 storms (recoveries: 322/95+9/15,375+9/6/1 tiles; the
+15,375-tile run_3 collapse re-run in a clear window; small residues at
+standard tier per the new <$10 bailout rule); union 12,715 (vs 44k
+est.); arm 1 (carried G3 vf, (0.10,k5)) 0.8494 — D1's pre-named
+informative failure; arm 2 (all-3.7, (0.80,k5)) **0.8763 / MCC
+0.7073** — +0.026 over the incumbent (2× MDE80), above the entire
+final board incl. oracles. (3) Fourth grid cell commissioned (PI):
+GS calibration leg run (G3 union + 3.7 vf: 0.9140 @20 m at (0.98,
+k10), MCC 0.8239); carried point committed; 57,482-candidate 55-map
+verification IN FLIGHT at session close (resume-capable; 5,899 done
+at the 400-worker relaunch). Sweeps/oracles, paired tests, D-verdict
+formalisation, findings, Obs, register rows ALL QUEUED next session.
+
+**AB+ pilot, complete and paused.** Pipeline vendored from paper-b;
+references.bib (113) exported; 25 sources through
+draft→byte-check→fresh-verify→edit→re-check→render (196 quotes).
+0/25 unedited through verification; 3/25 rasterised PDFs OCR-repaired;
+two verifier-side errors caught by drafters. Usage measured: ~10 % of
+weekly quota per 25 sources (PI meter 26→35 %); remaining 88 batched
+to future weeks. Pilot report + card updated. Zotero: WODAN dedupe,
+two API-side attachments (client attach bug = plugin-exception
+hypothesis, PI debug read pending), adjacent collection merged in.
+
+**Infrastructure/process.** Billing reconciliation: billed $700 G3
+exceeds the flex ceiling ($506) but posted detail is all-Flex —
+leading hypothesis: model-level display prices at list; re-check
+~2026-09-02. Uplift supplement built+merged through a two-lens audit
+plus three fix rounds (21/118 uplift pairs computed; vote-shell
+materialiser unbuilt). Quarto scaffold rendered (paper/). Standing
+rules adopted: flex→standard bailout <$10; WORKERS=400 default;
+concurrency arithmetic anchored to the 850/85 uplink. Registry test
+pins fixed 33→38. Campaign data commit bce396250 (run_3 meta gzipped,
+134 MB > GitHub limit).
+
+**Contextual assumptions:** all 3.7 flex behaviour observed during
+launch-week congestion — storm cadence (multi-hour on/off) may not
+persist; the arm-2 sweep and fourth cell were deliberately left unrun
+at close (PI: queue rather than burn context); D-1..D-5 remained
+unanswered throughout — drafting stays gated on them.

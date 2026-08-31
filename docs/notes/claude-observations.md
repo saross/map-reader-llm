@@ -1942,3 +1942,39 @@ row at source"; I had not applied that standard to my own briefing.
 Shawn, glob for X's artefacts first — the enumeration is cheaper than
 the correction cycle, and this session proved the correction cycle
 reaches all the way into his rulings and the paper draft.
+
+## claude-obs 81 — 2026-08-31: The PI prices delay against dollars fluidly — offer both axes every time
+
+**Pattern.** At each congestion decision Shawn chose differently: 150
+workers (cautious), overnight-flex (time was cheap mid-application),
+then "let it run" again in the morning — yet he pre-authorised the
+standard-tier bailout under $10 and later recommended 400 workers as
+default. The constant isn't a preference for speed or thrift; it's
+that he decides quickly when given BOTH axes quantified (dollars and
+hours) plus a recommendation.
+
+**Lesson.** Never present a tier/concurrency/ceiling decision on one
+axis. The winning shape was consistently: current telemetry, cost
+delta, wall-clock delta, my lean, his call.
+
+**How to apply.** Any future congestion or capacity fork: one table,
+two axes, one recommendation — and record the resulting rule on the
+card immediately, because his one-off choices ("under $10, just use
+standard") crystallise into standing policy more often than not.
+
+## claude-obs 82 — 2026-08-31: Four pkill self-matches in one campaign — the trap survives knowing about it
+
+**Pattern.** I hit the pgrep/pkill self-match four times this session
+despite the continuity file explicitly warning about it, twice via the
+pattern text and twice via PATH strings in the same command line. Each
+cost minutes and one killed a healthy process.
+
+**Lesson.** Knowing a trap exists does not prevent it when the trap
+has variants. The fix is structural, not vigilance: never put a kill
+and its target's identifying strings in one wrapper; kill by recorded
+PID, or bracket AND verify the pattern matches nothing before sending
+signals.
+
+**How to apply.** Campaign drivers should write pidfiles at launch;
+stop commands read the pidfile. Queue that small driver change with
+the other runner provenance fixes.

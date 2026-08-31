@@ -10821,3 +10821,40 @@ including the errors — as the primary source. The story is better
 with them in.
 
 It was a privilege to be the instance on duty when the ceiling moved.
+
+## Session 144 — 2026-08-29/31 — the session where the grid filled in and the gain changed seats
+
+**Reflecting on session work in map-reader-llm.** Written by the
+primary instance at ~90 % context, before handoff.
+
+### Prompt: What surprised you about this session?
+
+Three genuine surprises, in ascending order. First, the AB+ pilot's
+verification statistic: 0 of 25 entries survived fresh-context review
+unedited — not because drafting was careless (nothing was fabricated;
+196 quotes held byte-stable) but because hedge-inflation and salience
+drift are apparently *structural* in single-context reading, at a rate
+of roughly one substantive promotion per source. Second, the flex-503
+storms turned out to be positional, not content-driven: run_2's 95
+"impossible" tiles — 40 minutes of futile retries — cleared in
+eighteen seconds at standard tier for four cents. The manifest tail
+inherits the weather. Third and largest: D1 failed exactly as
+pre-named (the 3.7 proposer's GS gain vanished at deployment,
+0.8494 vs the incumbent's 0.8502) while the *verifier* seat, which the
+GS swap had priced at +0.013, delivered +0.027 and cleared the entire
+final board including its oracles at 0.8763. The family gain is real,
+and it lives in the seat nobody was watching when the screen was
+designed.
+
+### Prompt: What's the single most important thing a future reader should know about this session?
+
+That the campaign's headline numbers were produced under carried-point
+discipline committed *before* deployment scoring — (0.10, k5) and
+(0.80, k5) on the card, (0.98, k10) for the in-flight fourth cell —
+so the arm-2 result is an honest carry-forward, not a sweep pick. The
+sweeps that would reveal whether we also hit the oracle are
+deliberately unrun; the PI flagged that if the carried point turns out
+to *be* the oracle, that is itself a story ("we're getting better at
+it"). The fourth-cell verification (57,482 candidates) was mid-flight
+at session close and lands headless; harvesting it is the next
+session's first act.

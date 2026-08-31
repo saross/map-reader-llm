@@ -7761,3 +7761,24 @@ without a human awake. The runner's 15-per-tile retry budget both
 saved the passes (24 residual failures across 6,990) and burned hours
 crawling — a global backoff-and-resume layer above per-call retries
 remains the missing primitive.
+
+## Session 144 — 2026-08-29/31 (the family gain lives in the verifier seat; flex storms are positional and tier-escapable; verifier probability scales are pool-dependent; carried-point discipline survived a generation swap)
+
+- **The 3.7 generation's transferable gain is in the verifier, not the
+  proposer.** Deployment: proposer swap alone ≈ 0 (0.8494 vs 0.8502);
+  verifier swap +0.027 at a pre-committed threshold (0.8763,
+  MCC 0.7073) — above the final board's oracles. GS had priced the
+  seats the other way round.
+- **Verifier calibration is model- AND pool-dependent.** The 3.7
+  verifier's mean probability: 0.687 over its own union, 0.209 over
+  the Gemini-3 union; optima at 0.80 and 0.98. Thresholds do not
+  transfer across verifier models or across proposer pools; they must
+  be re-derived per (verifier, pool) pair — cheap on GS (~$1-3).
+- **Flex 503 storms are positional, not content-driven.** Retry
+  exhaustion clusters on the manifest tail (87 of run_2's 95 failures
+  on the last sheet block); the same tiles clear instantly at standard
+  tier. Recovery fragments should default to standard (<$10 rule).
+- **The 3.7 proposer is 3.5× more concentrated than Gemini-3's** on
+  the same corpus (12,715-candidate union vs 43,909 at comparable
+  grain, 49 % unanimous) — the verifier's job shrinks with the
+  generation even where headline F1 does not move.

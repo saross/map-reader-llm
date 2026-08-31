@@ -7787,3 +7787,50 @@ the current file; verify every row at source." Grounding instructions
 to delegated auditors should name the artefact layer explicitly, and
 any finding that ratifies an existing document without leaving the
 document is not an audit.
+
+## 2026-08-31 (Session 144, map-reader-llm): The gain that changed seats between instruments
+
+**Session:** ee7fff1b-9617-4c7f-b93f-ec42d4d436e9
+**Instance:** primary
+
+### Surprising fact
+
+The 55-map deployment run returned a split verdict that neither
+registered prediction anticipated in shape: D1 (3.7 proposer beats the
+incumbent by ≥ MDE80) failed as a dead heat (0.8494 vs 0.8502), while
+D6 (all-3.7 stack ahead by ≈ +0.013, the GS swap delta) was confirmed
+at double the predicted magnitude (+0.027, carried 0.8763 — above
+every cell on the final board including its oracles).
+
+### Probe
+
+Both arms share one union (12,715 candidates), one scoring chain
+(map-constrained tile assignment, canonical GT, B = 10,000, seed 42),
+and pre-committed carried points; only the verifier model and its
+committed threshold differ. The union itself was 3.5× smaller than
+the Gemini-3 K=10 comparator (12,715 vs 43,909 at N=5-equivalent
+grain), and the GS calibration legs showed the 3.7 verifier's
+probability scale is pool-dependent: mean 0.687 over its own
+proposer's union, 0.209 over the noisy Gemini-3 union, optimum
+migrating from 0.80 to 0.98 accordingly.
+
+### Belief revision
+
+Before: the GS screen's +0.018 was read as a proposer-generation gain,
+GS-unresolvable, with deployment as the resolving test. After: the
+proposer gain was a screening-instrument phenomenon that did not
+transfer; the durable gain is the verifier's discrimination, which the
+GS instrument *under*-priced (+0.013 GS → +0.027 deployed). Model
+generations can improve asymmetrically by pipeline seat, and the seat
+that transfers is not necessarily the seat that screens well.
+
+### What would change this belief
+
+The queued arm-2 sweep: if the 55-map oracle sits materially above the
+carried 0.8763 at a different threshold, part of the "verifier gain"
+is threshold luck rather than discrimination; if the carried point IS
+the oracle, the calibration-transfer claim strengthens to its strong
+form. The fourth cell (G3 proposer + 3.7 verifier, in flight) also
+bounds the claim: if it reproduces most of arm 2's margin, the
+verifier seat alone carries the gain; if not, the proposer-verifier
+interaction matters.
