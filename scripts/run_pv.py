@@ -331,6 +331,16 @@ def cmd_cleanup(args: argparse.Namespace) -> int:
     shutil.copy(probs_path, backup_path)
     logger.info("Backup: %s", backup_path.name)
 
+    # The retry pass's tracker rewrites run.meta.json with the retries'
+    # usage only, so the main run's usage stats survive here or nowhere.
+    meta_path = args.verified_dir / "run.meta.json"
+    if meta_path.exists():
+        meta_backup = meta_path.with_name(
+            f"run.meta.json.pre-cleanup-{timestamp}.backup"
+        )
+        shutil.copy(meta_path, meta_backup)
+        logger.info("Backup: %s", meta_backup.name)
+
     # Iterative cleanup loop
     attempts_used = 0
     for attempt in range(1, args.max_attempts + 1):
