@@ -1,0 +1,79 @@
+{
+  "buffer_m": 50,
+  "inherit_tol_m": 10.0,
+  "cell": "g384_ov192_55map_g37",
+  "arms": {
+    "arm1": {
+      "1": {
+        "union_n": 8426,
+        "unmatched": 54,
+        "oracle": {
+          "arm": "arm1",
+          "N": 1,
+          "prob_t": 0.2,
+          "min_votes": 1,
+          "n_detections": 5219,
+          "tp": 4348,
+          "fp": 871,
+          "fn": 812,
+          "precision": 0.8331097911477294,
+          "recall": 0.8426356589147287,
+          "corrected_f1": 0.8378456498699297
+        }
+      },
+      "3": {
+        "union_n": 11079,
+        "unmatched": 3,
+        "oracle": {
+          "arm": "arm1",
+          "N": 3,
+          "prob_t": 0.15,
+          "min_votes": 3,
+          "n_detections": 4772,
+          "tp": 4293,
+          "fp": 479,
+          "fn": 867,
+          "precision": 0.8996227996647108,
+          "recall": 0.8319767441860465,
+          "corrected_f1": 0.864478453483689
+        }
+      }
+    },
+    "arm2": {
+      "1": {
+        "union_n": 8426,
+        "unmatched": 54,
+        "oracle": {
+          "arm": "arm2",
+          "N": 1,
+          "prob_t": 0.98,
+          "min_votes": 1,
+          "n_detections": 5021,
+          "tp": 4359,
+          "fp": 662,
+          "fn": 801,
+          "precision": 0.8681537542322246,
+          "recall": 0.8447674418604652,
+          "corrected_f1": 0.8563009527551322
+        }
+      },
+      "3": {
+        "union_n": 11079,
+        "unmatched": 3,
+        "oracle": {
+          "arm": "arm2",
+          "N": 3,
+          "prob_t": 0.95,
+          "min_votes": 3,
+          "n_detections": 5097,
+          "tp": 4508,
+          "fp": 589,
+          "fn": 652,
+          "precision": 0.8844418285265843,
+          "recall": 0.8736434108527131,
+          "corrected_f1": 0.879009456956225
+        }
+      }
+    }
+  }
+}
