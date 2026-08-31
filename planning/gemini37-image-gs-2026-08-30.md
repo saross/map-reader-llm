@@ -107,7 +107,6 @@ K=5 driver at the WORKERS=400 standing default → union → BOTH
 verifier arms → I1-I5 verdicts + the difference-in-differences gap
 test. Anchors and costs as below.
 
-
 ### 2026-08-30 — Original publication
 
 PI commissioned in-session ("draft the card now. Be sure to use
