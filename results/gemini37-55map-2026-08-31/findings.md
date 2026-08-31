@@ -132,8 +132,8 @@ survives the reference correction.
 | D1 | Headline vs B-Gemini-3 | carried above B-N5 by ≥ MDE80 0.013 | **INFORMATIVE FAILURE (pre-named)** — +0.0056 canonical, unresolvable |
 | D2 | Direction of the gain | recall-led | **CONFIRMED** — arm 1 recall 0.855 vs incumbent 0.809; precision 0.844 vs 0.882 |
 | D3 | Operating lattice | prob_t ∈ {0.10, 0.15}, k4–k5 | **CONFIRMED** — arm 1 oracle (0.15, k5) on the predicted lattice |
-| D4 | Thinking volume | ≈ 276 t/tile on 55-map content | **CONFIRMED** — run_1 measured 265 t/tile (6,518,509 / 24,561 calls) [full-campaign aggregate PENDING] |
-| D5 | Cost | within card § 4 envelope | [PENDING — billing reconciliation ~2026-09-02; estimator caveat noted in card] |
+| D4 | Thinking volume | ≈ 276 t/tile on 55-map content | **CONFIRMED** — clean passes 265–277 t/call (run_1..run_5 metas; run_3's meta carries the known collapse accounting mismatch: 24,561 recorded calls vs ~9.2k calls' worth of tokens) |
+| D5 | Cost | within card § 4 envelope | **PROVISIONAL PASS (token basis)** — proposer $144 (envelope $93–150), verifier arms $12.54 + $14.31; campaign ≈ $171 token-basis flex before the fourth cell. Billed-actual reconciliation ~2026-09-02 (3.7 SKU has billed ~0.6× token basis to date) |
 | D6 | Arm 2 vs arm 1 | +≈0.013, direction positive | **CONFIRMED, magnitude 2×** — +0.0270, p = 0.0001, BH-significant |
 | D7 | Arm-2 lattice | oracle prob_t ≥ 0.6 | **CONFIRMED** — 55-map oracle (0.95, k5); the calibration shift transfers |
 
