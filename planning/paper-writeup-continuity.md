@@ -8,6 +8,75 @@ project state.
 
 ---
 
+## 🔍 STATE AFTER S144 (2026-08-29→31 — the 3.7 grid filled; the gain changed seats; AB+ pilot done)
+
+> **HEADLINES, all committed (`bce396250` + planning/reflection
+> commits):** (1) **The 55-map 3.7 deployment run is COMPLETE with
+> both verifier arms at pre-committed carried points**: arm 1 (3.7
+> proposer + carried G3 verifier, (0.10, k5)) corrected-F1@50
+> **0.8494** — D1's PRE-NAMED INFORMATIVE FAILURE, dead heat with the
+> incumbent B-N5-carried 0.8502; arm 2 (all-3.7, (0.80, k5))
+> **0.8763 / MCC 0.7073** — +0.026 over the incumbent (2× MDE80),
+> ABOVE THE ENTIRE FINAL BOARD INCLUDING ORACLES (ceiling was
+> 0.8558). The family gain lives in the VERIFIER seat. Union was
+> 12,715 candidates (vs 44k est — 3.7 proposes 3.5× tighter).
+> (2) GS escalation closed: K=10 saturated (+0.0003); all-3.7 swap
+> 0.9265 GS-significant p=0.0105; Obs 441. (3) **FOURTH GRID CELL IN
+> FLIGHT at close**: G3 Run B K=10 union (57,482) under the 3.7
+> verifier on sapphire (resume-capable run_pv, 400 workers; carried
+> point **(0.98, k10)** committed on the 55-map card from the GS leg
+> — G3 union + 3.7 vf GS best 0.9140@20/MCC 0.8239, mean prob 0.209
+> vs 0.687 on 3.7's own union: verifier scales are pool-dependent).
+> (4) AB+ pilot COMPLETE and PAUSED: 25/113 sources rendered
+> (0/25 survived fresh-context verification unedited), ~10 % weekly
+> Claude quota per 25; remaining 88 batched to future weeks
+> (amendments in reports/ab-plus-pilot-report-2026-08-30.md).
+> (5) Billing: $700 G3 exceeds the flex ceiling but posted SKUs are
+> all Flex — display-basis hypothesis; RE-CHECK ~2026-09-02.
+>
+> **NEXT SESSION, FIRST ACT — HARVEST THE FOURTH CELL:**
+> 1. Check `outputs/gemini37-55map-2026-08-29/fourth-cell-verify.log`
+>    on sapphire for "Probabilities written" (run started 07:09 UTC
+>    08-31, ~50 min projected). If it died mid-run, RELAUNCH THE SAME
+>    `run_pv.py verify` COMMAND (verify_37 output dir under
+>    outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/) —
+>    run_pv RESUMES, skipping verified candidates. Gaps → `run_pv.py
+>    cleanup` at `--service-tier standard` (the <$10 bailout rule).
+> 2. Score at the committed carried point: `stride55_score.py --vroot
+>    outputs/stride-55map-2026-08-25/verifier --out-base
+>    results/gemini37-fourth-cell/55map --cell g384_ov192_55map
+>    --verify-dir verify_37 --union-n 57482 --prob-t 0.98 --min-votes
+>    10 --no-invariance-gate` + N-rungs by first-N inheritance.
+> 3. **The PI's oracle question (queued deliberately):** run the
+>    (prob_t × k) sweeps for BOTH 55-map 3.7 arms + the fourth cell —
+>    did the carried (0.80, k5) hit the arm-2 oracle exactly? "If so,
+>    that's a story worth telling" (PI). Then paired permutation +
+>    BH, D1–D7 verdict formalisation, findings doc, campaign Obs
+>    (obs-writer), register rows (interactive, PI-signed).
+> 4. **THEN the image-GS screen** — card
+>    planning/gemini37-image-gs-2026-08-30.md, PI GO RECORDED
+>    2026-08-31; probe-first (cache-fraction gate), WORKERS=400.
+> 5. Data commit for the fourth cell from sapphire when it lands.
+>
+> **Standing rules adopted S144**: flex→standard bailout when a
+> stage's remainder < ~$10 (on the 55-map card); **WORKERS=400
+> default on large jobs** (850/85 uplink saturates ~400 on proposer
+> tiles; verifier crops are latency-bound); pkill must NEVER share
+> substrings with target paths — four self-matches this session; use
+> pidfiles (queued runner fix). Runner provenance fixes queued:
+> stamp service_tier in metas; run_pv cleanup overwrites
+> run.meta.json (the swap's main-run usage was rescued into the
+> screen card's changelog); the live estimator prices 3.7 at G3 rates
+> sans thinking. NOTE: run_3's 55-map meta is committed as .gz
+> (134 MB > GitHub limit) — gunzip before meta-reading tools.
+> **PI standing list**: D-1..D-5 skeleton rulings (STILL OPEN — 
+> drafting gated); Srivastava 2018 read (D.9 prerequisite, PDF in
+> ~/Downloads); Obs 433–441 review; billing SKU re-check ~09-02;
+> Zotero client-bug debug-log read; D24 brief (standing). AB+
+> resumes in a fresh quota week (~25-30/batch). Quarto scaffold
+> ready (paper/). Uplift supplement: 21/118 pairs computed;
+> vote-shell materialiser unbuilt; registration pending PI.
+
 ## 🔍 STATE AFTER S143 (2026-08-27→28 — the construction ledger CLOSED; next session = WRITING)
 
 > **EVERYTHING analytical and registrable is DONE.** Landed, all
