@@ -959,3 +959,21 @@ recorded-not-applied as the safe default) worked — but the cheaper
 fix is upstream: I should artefact-check any "never done" claim
 before it reaches you, and you may want to treat my status-ledger
 citations as weaker evidence than my artefact citations.
+
+## Pending review — Session 144 candidates (2026-08-31, drafted at handoff)
+
+- **S144-C1 — the diagnostic question again outran the monitoring.**
+  "What is the delay? 503s? iterative failures?" named the exact
+  fork (server-error vs timeout vs rate-limit) before Claude had
+  pulled the retry breakdown — and the answer (30,545 server errors,
+  zero timeouts, positionally clustered) reshaped recovery policy
+  within minutes. Companion to claude-obs 79's pattern.
+- **S144-C2 — infrastructure intuition beat the arithmetic to the
+  answer.** "Maybe 400 was safer?" landed exactly on the uplink
+  saturation point (85 Mbps ÷ 370 KB/call × 14 s ≈ 402) before
+  seeing the calculation. PI instincts about physical constraints
+  deserve first-class weight, not post-hoc confirmation.
+- **S144-C3 — the human caught the context ceiling first.** Shawn
+  flagged 90 % context and forced the wind-down sequencing; Claude
+  had not raised it and was mid-launch on new work. Claude should
+  track and surface session-scale risk before the human has to.
