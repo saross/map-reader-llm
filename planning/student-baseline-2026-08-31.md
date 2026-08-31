@@ -171,13 +171,20 @@ Consequences for the phases above:
   12.42 %) match Table 3's pattern, implying A↔Elenovo,
   B↔K-35-052-4, C↔Rakovski, D↔Lesovo — verify from export author
   fields (Phase 1a gate), never assume.
-- **⚠ Selection-bias caveat may be unfounded**: the paper says the
-  four audited sheets were "randomly selected" — our GS-4 report and
-  Obs 316 explain the 4-GS-vs-55-map FN divergence partly via
-  "sheets chosen for fieldwork-grade reference quality". Random
-  selection strengthens the 4-sheet estimate instead. Flag to the PI;
-  if confirmed, a corrective observation is needed (Obs are
-  immutable — correct by new Obs, not edits).
+- **⚠ Selection-bias caveat is unfounded — PI-CONFIRMED
+  (2026-08-31)**: the four audited sheets were randomly selected
+  from the complete corpus (PI: "randomly selected from the complete
+  59-map corpus"; the paper's § 3.5.2 says 4 of 58 — reconcile the
+  58-vs-59 sheet count from the export during Phase 1). The
+  "chosen for fieldwork-grade reference quality → downward-biased
+  FN" framing in the GS-4 report and Obs 316 was a session-side
+  confabulation. Random selection STRENGTHENS the 4-sheet estimate.
+  Actions queued with Phase 0: corrective observation (new Obs —
+  Obs are immutable), and a changelog-attached correction to
+  `results/student-gt-fn-rate-analysis-gs4/report.md` § Caveats.
+  The 4-GS-vs-55-map FN divergence then needs a different
+  explanation: n=4 sampling variance, corpus/era variation, and the
+  VLM-mediated lower-bound methodology.
 - **Analysis hygiene from the paper**: exclude (or separately report)
   the 32 staff-Tester features; re-map the six symbol classes (four
   are mound-bearing); reconcile the FeatureTimestamp local-time
