@@ -1,0 +1,135 @@
+{
+  "buffer_m": 50,
+  "cells_processed": [
+    "arm1",
+    "arm2"
+  ],
+  "runs": {
+    "arm1": {
+      "role": "3.7 proposer + carried Gemini-3 verifier",
+      "carried_point": [
+        0.1,
+        5
+      ],
+      "carried": {
+        "cell": "arm1",
+        "prob_t": 0.1,
+        "min_votes": 5,
+        "n_detections": 5229,
+        "tp": 4412,
+        "fp": 817,
+        "fn": 748,
+        "precision": 0.8437559762860968,
+        "recall": 0.8550387596899225,
+        "corrected_f1": 0.8493598998941189
+      },
+      "oracle": {
+        "cell": "arm1",
+        "prob_t": 0.15,
+        "min_votes": 5,
+        "n_detections": 4616,
+        "tp": 4234,
+        "fp": 382,
+        "fn": 926,
+        "precision": 0.9172443674176777,
+        "recall": 0.8205426356589147,
+        "corrected_f1": 0.8662029459901801
+      },
+      "oracle_ties": [
+        [
+          0.15,
+          5
+        ]
+      ],
+      "carried_hit_oracle_exactly": false,
+      "transfer_gap": 0.016843046096061243,
+      "n_sweep_rows": 95
+    },
+    "arm2": {
+      "role": "all-3.7 stack (3.7 proposer + 3.7 verifier)",
+      "carried_point": [
+        0.8,
+        5
+      ],
+      "carried": {
+        "cell": "arm2",
+        "prob_t": 0.8,
+        "min_votes": 5,
+        "n_detections": 5003,
+        "tp": 4453,
+        "fp": 550,
+        "fn": 707,
+        "precision": 0.8900659604237458,
+        "recall": 0.862984496124031,
+        "corrected_f1": 0.8763160484109023
+      },
+      "oracle": {
+        "cell": "arm2",
+        "prob_t": 0.95,
+        "min_votes": 5,
+        "n_detections": 4924,
+        "tp": 4440,
+        "fp": 484,
+        "fn": 720,
+        "precision": 0.9017059301380991,
+        "recall": 0.8604651162790697,
+        "corrected_f1": 0.8806029353431178
+      },
+      "oracle_ties": [
+        [
+          0.95,
+          5
+        ]
+      ],
+      "carried_hit_oracle_exactly": false,
+      "transfer_gap": 0.004286886932215572,
+      "n_sweep_rows": 135
+    }
+  },
+  "incumbents": {
+    "BN5": {
+      "role": "Gemini-3 B first-5 union + G3 verifier, carried (0.15, k5)",
+      "source": "results/55map-final-board-2026-08-27/cells/B-N5-carried/detections.geojson",
+      "f1_committed": 0.8437752627324171,
+      "n_detections": 4736
+    },
+    "BN10": {
+      "role": "Gemini-3 B K=10 union + G3 verifier, carried (0.15, k10)",
+      "source": "results/stride55-2026-08-27/g384_ov192_55map/primary/verified_detections.geojson",
+      "f1_committed": 0.8422141748577341,
+      "n_detections": 4505
+    }
+  },
+  "reference_note": "canonical adjudicated extended GT throughout; the final board's figures (e.g. B-N5-carried 0.8502) are the ruling-21 STANDARDISED reference, a different instrument \u2014 deltas here are canonical-chain only",
+  "paired": {
+    "D1_proposer_under_G3vf__arm1_vs_BN5": {
+      "delta_f1": 0.0055846371617017665,
+      "p_two_sided": 0.3488,
+      "n_permutations": 10000,
+      "seed": 42,
+      "convention": "delta = arm1 - BN5, corrected-F1@50m",
+      "bh_significant_q05": false
+    },
+    "D6_verifier_under_37prop__arm2_vs_arm1": {
+      "delta_f1": 0.026956148516783407,
+      "p_two_sided": 0.0001,
+      "n_permutations": 10000,
+      "seed": 42,
+      "convention": "delta = arm2 - arm1, corrected-F1@50m",
+      "bh_significant_q05": true
+    },
+    "headline_diagonal__arm2_vs_BN5": {
+      "delta_f1": 0.03254078567848517,
+      "p_two_sided": 0.0001,
+      "n_permutations": 10000,
+      "seed": 42,
+      "convention": "delta = arm2 - BN5, corrected-F1@50m",
+      "bh_significant_q05": true
+    }
+  },
+  "bh": {
+    "q": 0.05,
+    "family_size": 3,
+    "note": "family = the declared five tests; a subset run (arms-only preview) adjusts over the subset and is superseded by the full run"
+  }
+}
