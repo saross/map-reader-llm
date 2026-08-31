@@ -42,6 +42,7 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 VROOT = PROJECT_ROOT / "outputs/stride-55map-2026-08-25/verifier"
+VERIFY_DIR = "verify"
 OUT_BASE = PROJECT_ROOT / "results/stride55-2026-08-27"
 STUDENT_GT = PROJECT_ROOT / "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
 BOUNDS = PROJECT_ROOT / "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
@@ -101,7 +102,8 @@ def materialise_primary(cell: str, spec: dict) -> Path:
     """
     vdir = VROOT / cell
     manifest = json.loads((vdir / "crops" / "candidate_manifest.json").read_text())
-    results = json.loads((vdir / "verify" / "probabilities.json").read_text())["results"]
+    results = json.loads(
+        (vdir / VERIFY_DIR / "probabilities.json").read_text())["results"]
     cands = manifest["candidates"]
     if len(cands) != spec["union_n"]:
         raise RuntimeError(
@@ -207,11 +209,45 @@ def score(cell: str, detections: Path) -> None:
 
 
 def main() -> int:
+    import argparse
     import csv as csvmod
+    global VROOT, OUT_BASE
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--vroot", default=None,
+                    help="Verifier root override (e.g. "
+                         "outputs/gemini37-55map-2026-08-29/verifier).")
+    ap.add_argument("--out-base", default=None,
+                    help="Results base override (e.g. "
+                         "results/gemini37-55map-2026-08-31).")
+    ap.add_argument("--cell", default=None,
+                    help="Single-cell override; needs the point/count args.")
+    ap.add_argument("--verify-dir", default="verify",
+                    help="Probabilities dir under the cell (default verify; "
+                         "e.g. verify_arm1).")
+    ap.add_argument("--union-n", type=int, default=None)
+    ap.add_argument("--prob-t", type=float, default=None)
+    ap.add_argument("--min-votes", type=int, default=None)
+    ap.add_argument("--no-invariance-gate", action="store_true",
+                    help="Skip the expect_f1_50 gate (no committed "
+                         "expectation exists for a new cell).")
+    args = ap.parse_args()
+    global VERIFY_DIR
+    VERIFY_DIR = args.verify_dir
+    if args.vroot:
+        VROOT = PROJECT_ROOT / args.vroot
+    if args.out_base:
+        OUT_BASE = PROJECT_ROOT / args.out_base
+    if args.cell:
+        if None in (args.union_n, args.prob_t, args.min_votes):
+            ap.error("--cell requires --union-n, --prob-t, --min-votes")
+        runs = {args.cell: {"union_n": args.union_n, "prob_t": args.prob_t,
+                            "min_votes": args.min_votes}}
+    else:
+        runs = RUNS
     for required in (STUDENT_GT, BOUNDS, CANONICAL_REVIEW):
         if not required.exists():
             raise FileNotFoundError(required)
-    for cell, spec in RUNS.items():
+    for cell, spec in runs.items():
         det = materialise_primary(cell, spec)
         score(cell, det)
         # Attribution-invariance gate: map-constrained standard-tile
@@ -222,7 +258,10 @@ def main() -> int:
               "corrected-f1.csv").open() as fh:
             f1_50 = next(float(r["F1"]) for r in csvmod.DictReader(fh)
                          if int(r["R_m"]) == 50)
-        if abs(f1_50 - spec["expect_f1_50"]) > 1e-6:
+        if args.no_invariance_gate or "expect_f1_50" not in spec:
+            logger.info("%s: invariance gate skipped (new cell); F1@50=%.6f",
+                        cell, f1_50)
+        elif abs(f1_50 - spec["expect_f1_50"]) > 1e-6:
             raise RuntimeError(
                 f"{cell}: attribution-invariance gate FAILED — F1@50 "
                 f"{f1_50:.10f} vs expected {spec['expect_f1_50']:.10f}")
