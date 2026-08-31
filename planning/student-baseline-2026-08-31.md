@@ -150,6 +150,45 @@ campaign governs until then).
   `[unverified]` flag (does the 55-map layer descend from the 2023
   campaign?).
 
+## 4b. Design notes from the 2023 paper (S145 agent synopsis)
+
+Full synopsis:
+`docs/methodology/research/claude-sobotkova-2023-synopsis.md`.
+Consequences for the phases above:
+
+- **No designed redundancy existed** — the paper reports no
+  inter-annotator agreement and proposes multi-student redundancy as
+  FUTURE WORK (§ 3.5.2/§ 5). Any overlap the census finds is
+  accidental; if usable, Phase 1b literally fulfils the paper's own
+  recommendation (quotable framing for the write-up).
+- **Paper-derived per-student F1s** (staff-recount truth, agent
+  translation): A 0.993, B 0.985, C 0.945, D 0.962 — the ranking
+  baseline expectation. The model's nearest target is Student C
+  (0.945, the missed-swath case). All four must be RE-computed
+  against the curator GT at matched radius before any ranking claim.
+- **Sheet↔student alignment**: Table 3 is per-student with no sheet
+  names; the Drive QA workbook's per-sheet rates (1.71/2.87/7.44/
+  12.42 %) match Table 3's pattern, implying A↔Elenovo,
+  B↔K-35-052-4, C↔Rakovski, D↔Lesovo — verify from export author
+  fields (Phase 1a gate), never assume.
+- **⚠ Selection-bias caveat may be unfounded**: the paper says the
+  four audited sheets were "randomly selected" — our GS-4 report and
+  Obs 316 explain the 4-GS-vs-55-map FN divergence partly via
+  "sheets chosen for fieldwork-grade reference quality". Random
+  selection strengthens the 4-sheet estimate instead. Flag to the PI;
+  if confirmed, a corrective observation is needed (Obs are
+  immutable — correct by new Obs, not edits).
+- **Analysis hygiene from the paper**: exclude (or separately report)
+  the 32 staff-Tester features; re-map the six symbol classes (four
+  are mound-bearing); reconcile the FeatureTimestamp local-time
+  quirk; expect multi-instance exports per device; per-feature times
+  include form-filling (not a detection-latency comparator);
+  distinguish coverage failure (swaths — Student C's 2.8 %
+  rate-if-excluded) from perception failure in all reporting.
+- The paper assessed **no positional accuracy and no matching
+  tolerance** — our matched-radius recomputation (Phase 0a/1a) is
+  the first to put these students on a defined tolerance.
+
 ## 5. Phase 2 — the empty-tile audit (PI-executed, ~40–80 min)
 
 Estimates the double-miss floor: mounds missed by BOTH students and
