@@ -6,9 +6,9 @@
 **Classification**: Phase 0a/1a of the student-baseline programme
 (`planning/student-baseline-2026-08-31.md`), run overnight on PI
 authorisation (2026-08-31 "proceed through the analysis as far as
-you can"). Descriptive — no significance tests yet (the per-sheet
-paired instrument can be adapted next). All numbers:
-`analysis.json` / `per_student.csv` alongside this file.
+you can"). Significance via the board's tile-swap instrument —
+§ Significance. All numbers: `analysis.json` / `per_student.csv` /
+`significance.json` alongside this file.
 
 ## What was computed
 
