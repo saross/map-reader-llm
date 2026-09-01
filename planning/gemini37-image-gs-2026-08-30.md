@@ -1,8 +1,8 @@
 # Gemini 3.7 image-track screen: has the modality gap moved?
 
-> **Last revised**: 2026-08-31 (PI GO GIVEN — next in the 3.7-SKU
-> queue after the fourth-cell verification lands; probe-first, then
-> the full run). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-01 (LAUNCHED — probe gates run, cache
+> shortfall ruled acceptable by the PI; K=5 in flight).
+> See [§ Changelog](#changelog).
 
 **Question**: did 3.7's vision change shift RELATIVE modality
 performance? On Gemini 3, text examples beat image examples by
@@ -96,6 +96,21 @@ the text screen's exact machinery (`image_b_prepare_and_union.py`
 difference-in-differences gap test.
 
 ## Changelog
+
+### 2026-09-01 — Probe gates run; PI approved launch at probed cost
+
+Probe (5 tiles, $0.026): stamps PASS (gemini-3.7-flash / low),
+thinking 189 t/call (I4 PASS). **Cache-fraction gate FAILED at face
+value (16.3 %)**; a sequential 15-call re-probe ($0.077) showed
+warm-up dynamics: 54.2 % aggregate, ~60–65 % estimated steady state —
+caching engages but well short of G3's 94.5 %, so **I5 fails
+informatively** (runs as the registered prediction). Implied all-in
+~$34–36 token-basis (~$20–22 billed-expected at the SKU's ~0.6×
+history), over this card's $30 pause line — PI ruled 2026-09-01:
+"that cost is acceptable, please use caching". Launched 05:5x UTC:
+`scripts/gemini37-image-gs-driver.sh`, K=5, WORKERS=400, flex,
+byte-identical config (md5 9ff5e64d…), manifest = tree 1,398/0,
+prefix warmed by the probes. /audit-config delta clean.
 
 ### 2026-08-31 — PI go given
 
