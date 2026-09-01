@@ -105,10 +105,14 @@ are descriptive (screening protocol — no carried claims below N=5):
 Two patterns replicate from the Gemini-3 programme: **saturation by
 N=3** (arm 2's N=3 oracle sits within 0.0016 of its N=5 oracle), and
 the all-3.7 lattice staying at the probability scale's top on every
-rung (D7 across the ladder). The cost headline: a **single 3.7 pass
-under the 3.7 verifier (N=1, 0.8563) beats the canonical incumbent
-five-pass Gemini-3 stack (0.8438)** on roughly one-fifth the proposer
-spend (~$29 of the $144 K=5 token-basis proposer total).
+rung (D7 across the ladder). The cost headline needs its qualifier:
+a **single 3.7 pass under the 3.7 verifier reaches 0.8563 at its
+rung ORACLE** — beating the canonical incumbent five-pass stack
+(0.8438) on ~one-fifth the proposer spend — but at the carried
+threshold the N=1 rung reads 0.8421, a wash with the incumbents
+(grid-board Tier 4). The one-pass economy is real only with a
+rung-tuned threshold, which the carry-forward discipline does not
+supply.
 
 ## Paired tests (per-sheet permutation + BH, canonical chain)
 
@@ -149,11 +153,13 @@ greedy-clique tiers. Tier 1 = arm 2's N5 and N3 oracles alone;
 Tier 2 = arm2-N5-carried, fourth-N10-oracle, and **arm2-N3-carried**
 — the practitioner cell shares the deployed tier at 3/5 proposer
 cost; **both Gemini-3 incumbents sit in Tier 4 of six**. Named
-contrasts, family-corrected: all five carried→oracle gaps are
-significant (even arm 2's +0.0043, adj p = 0.0002) — threshold
-transfer costs are sheet-consistent real effects at every scale;
-N1→N3 is significant everywhere, while **N3→N5 is not significant
-for arm 2 on either basis** (saturation at N=3 is statistical, and
+contrasts, family-corrected: all seven carried→oracle gaps are
+significant (the three committed cells plus the four arm rungs; even
+arm 2's +0.0043, adj p = 0.0002) — threshold transfer costs are
+sheet-consistent real effects at every scale; N1→N3 is significant
+everywhere, while **N3→N5 is not significant for arm 2 on either
+basis** (arm 1's carried N3→N5 remains significant at +0.0076 —
+the saturation claim is arm-2-specific; and
 arm 2's fourth-cell sibling saturates identically — ladder N=3
 0.8688 vs N=5-inheritance 0.8697 with oracle prob_t pinned at 0.96
 on every rung).
@@ -208,7 +214,11 @@ gates green: primary 0.8656 (n=4,246), ladder (N=3 saturation),
 full five-test family (verifier axis significant on both edges,
 proposer axis on neither), 16-cell grid board (six tiers; all
 carried→oracle contrasts significant; arm-2 N3→N5 ns both bases),
-standardised eval 0.8732. Data commit `a73d64346`.
+standardised eval 0.8732. Data commit `a73d64346`. Same-day
+corrections from Obs 444's source verification: carried→oracle
+contrast count five→seven (rung contrasts included); the N=1
+economics headline qualified as oracle-based (carried N=1 is a wash
+with the incumbents); saturation-at-N=3 scoped to arm 2.
 
 ### 2026-08-31 — Original publication
 
