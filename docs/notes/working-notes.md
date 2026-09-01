@@ -30467,3 +30467,66 @@ these same sheets — why the lower-bound FN rates sit further below truth
 than independence would imply); **Obs 261** (the 96-cluster duplicate
 review that produced the reviewed layer at 4,744 points, since grown to
 4,746 — the lineage in which the near-zero-FP generalisation sits).
+
+**Addendum — 2026-09-01 (same day, PI-flagged): the entry above mixes
+two FN denominator conventions, and this paragraph repairs it without
+altering a word of it.** The per-sheet min–max figures in the
+per-student table are read straight out of the `FN_rate_headline` column
+of `per_map_fn_breakdown.csv`, which is **student-anchored** —
+FN / (GT + FN). The 55-map analysis uses that convention throughout: its
+report states the headline as "462 candidate FN mounds added to 4745
+student-GT mounds across 55 maps", and 462 / 5,207 = **0.0887**, which
+is Obs 305's number (the truth-anchored alternative, 462 / 4,745, would
+give 0.0974). The **Weighted FN** column and the cohort figure of 0.087,
+by contrast, were computed **truth-anchored** — FN / GT — which is the
+convention Sobotkova 2023 uses for Table 3 (per the synopsis, "FN and
+total-error rates use the *true feature count*", 42 / 834 = 5.04 %) and
+the one Obs 316's GS-4 rate of 5.27 % inherits. Both conventions are
+defensible; quoting one column in each is not. Side by side:
+
+| Code | Student-anchored FN/(GT+FN) | Truth-anchored FN/GT |
+|---|---:|---:|
+| A | 0.057 | 0.060 |
+| B | 0.075 | 0.081 |
+| C | 0.069 | 0.074 |
+| D | 0.072 | 0.078 |
+| E | 0.124 | 0.141 |
+| F | 0.067 | 0.072 |
+| G | **0.143** | **0.167** |
+| H | **0.034** | **0.035** |
+| Cohort (52) | 0.080 (403 / 5,041) | 0.087 (403 / 4,638) |
+
+**Read the range statement as student-anchored**, to match the per-sheet
+figures sitting beside it: weighted per-student rates span **0.034 (H)
+to 0.143 (G)**, with E at 0.124 and the cohort at 0.080. The sentence in
+the entry above — "0.035 (H) to 0.167 (G)" — is the truth-anchored
+statement of the same fact, correct on its own terms and correct for
+comparison against Table 3 or the GS-4 5.27 %, but not against Obs 305.
+G's endpoint is arithmetically explicit: his five sheets at ≥ 90 %
+dominance are `K-35-067-4`, `K-35-075-1`, `K-35-076-1`, `K-35-077-3`,
+and `K-35-077-4`, summing to 56 FN against 336 GT, so 56 / 392 = 0.1429
+student-anchored and 56 / 336 = 0.1667 truth-anchored.
+
+**Nothing substantive moves.** The per-student ordering is identical
+under both conventions (H < A < F < C < D < B < E < G), E and G remain
+the two systematically weaker digitisers, the per-sheet spreads and the
+0.072 median were already student-anchored and are untouched, and every
+comparison the entry draws is within-convention. **One flag is
+withdrawn**: the commit message for `02cf1c0b9` recorded G's 0.143 as a
+garble of E's 0.141. It was not — it was G under the student-anchored
+convention, and the dispatch spec was right. E is 0.124 student-anchored
+and 0.141 truth-anchored; the two numbers are unrelated coincidences of
+rounding. **The rule for the paper**: student-anchored when comparing to
+the 55-map instrument (Obs 305, 8.87 %), truth-anchored when comparing
+to Sobotkova Table 3 or the GS-4 audit (Obs 316, 5.27 %), the convention
+named in the caption either way, and never two conventions inside one
+table. Anchors verified 2026-09-01:
+`results/student-gt-fn-rate-analysis/report.md` § "Headline result" (the
+462 / 4745 sentence — note there is no § "FN-rate denominator" heading in
+that file; the convention is established by this arithmetic, not by a
+labelled section) and `per_map_fn_breakdown.csv` row-level check
+(K-35-042-3, GT 18 / FN 5, stored 0.217391 = 5 / 23, not 5 / 18);
+`docs/methodology/research/claude-sobotkova-2023-synopsis.md` § 2
+"Denominator conventions (reverse-engineered; never defined)". Both
+columns above recomputed in-session S145 from the same committed inputs
+named in the Sources paragraph.
