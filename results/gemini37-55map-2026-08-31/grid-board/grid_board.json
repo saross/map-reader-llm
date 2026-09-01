@@ -1,0 +1,287 @@
+{
+  "buffer_m": 50,
+  "instrument": "per-sheet paired sign-swap permutation (10000, seed 42) + BH q=0.05 over all pairs + greedy-clique tiers",
+  "reference": "canonical adjudicated extended GT",
+  "cells": [
+    {
+      "label": "arm2-N5-oracle",
+      "f1_50": 0.8806029353431178,
+      "point": "(0.95, k5)",
+      "basis": "oracle",
+      "n_detections": 4924,
+      "tier": 1
+    },
+    {
+      "label": "arm2-N3-oracle",
+      "f1_50": 0.879009456956225,
+      "point": "(0.95, k3)",
+      "basis": "oracle",
+      "n_detections": 5097,
+      "tier": 1
+    },
+    {
+      "label": "arm2-N5-carried",
+      "f1_50": 0.8763160484109023,
+      "point": "(0.80, k5)",
+      "basis": "carried",
+      "n_detections": 5003,
+      "tier": 2
+    },
+    {
+      "label": "fourth-N10-oracle",
+      "f1_50": 0.8758156395649922,
+      "point": "(0.96, k9)",
+      "basis": "oracle",
+      "n_detections": 4495,
+      "tier": 2
+    },
+    {
+      "label": "arm2-N3-carried",
+      "f1_50": 0.8744563641635256,
+      "point": "(0.80, k3)",
+      "basis": "carried-analogue",
+      "n_detections": 5187,
+      "tier": 2
+    },
+    {
+      "label": "arm1-N5-oracle",
+      "f1_50": 0.8662029459901801,
+      "point": "(0.15, k5)",
+      "basis": "oracle",
+      "n_detections": 4616,
+      "tier": 3
+    },
+    {
+      "label": "fourth-N10-carried",
+      "f1_50": 0.8656176908356368,
+      "point": "(0.98, k10)",
+      "basis": "carried",
+      "n_detections": 4246,
+      "tier": 3
+    },
+    {
+      "label": "arm1-N3-oracle",
+      "f1_50": 0.864478453483689,
+      "point": "(0.15, k3)",
+      "basis": "oracle",
+      "n_detections": 4772,
+      "tier": 3
+    },
+    {
+      "label": "arm2-N1-oracle",
+      "f1_50": 0.8563009527551322,
+      "point": "(0.98, k1)",
+      "basis": "oracle",
+      "n_detections": 5021,
+      "tier": 3
+    },
+    {
+      "label": "arm1-N5-carried",
+      "f1_50": 0.8493598998941189,
+      "point": "(0.10, k5)",
+      "basis": "carried",
+      "n_detections": 5229,
+      "tier": 4
+    },
+    {
+      "label": "BN5-carried",
+      "f1_50": 0.8437752627324171,
+      "point": "(0.15, unanimity)",
+      "basis": "carried",
+      "n_detections": 4736,
+      "tier": 4
+    },
+    {
+      "label": "BN10-carried",
+      "f1_50": 0.8422141748577341,
+      "point": "(0.15, unanimity)",
+      "basis": "carried",
+      "n_detections": 4505,
+      "tier": 4
+    },
+    {
+      "label": "arm2-N1-carried",
+      "f1_50": 0.8421052631578947,
+      "point": "(0.80, k1)",
+      "basis": "carried-analogue",
+      "n_detections": 5936,
+      "tier": 4
+    },
+    {
+      "label": "arm1-N3-carried",
+      "f1_50": 0.8417590678443901,
+      "point": "(0.10, k3)",
+      "basis": "carried-analogue",
+      "n_detections": 5482,
+      "tier": 5
+    },
+    {
+      "label": "arm1-N1-oracle",
+      "f1_50": 0.8378456498699297,
+      "point": "(0.20, k1)",
+      "basis": "oracle",
+      "n_detections": 5219,
+      "tier": 5
+    },
+    {
+      "label": "arm1-N1-carried",
+      "f1_50": 0.7834179357021996,
+      "point": "(0.10, k1)",
+      "basis": "carried-analogue",
+      "n_detections": 6660,
+      "tier": 6
+    }
+  ],
+  "tiers": [
+    [
+      "arm2-N5-oracle",
+      "arm2-N3-oracle"
+    ],
+    [
+      "arm2-N5-carried",
+      "fourth-N10-oracle",
+      "arm2-N3-carried"
+    ],
+    [
+      "arm1-N5-oracle",
+      "fourth-N10-carried",
+      "arm1-N3-oracle",
+      "arm2-N1-oracle"
+    ],
+    [
+      "arm1-N5-carried",
+      "BN5-carried",
+      "BN10-carried",
+      "arm2-N1-carried"
+    ],
+    [
+      "arm1-N3-carried",
+      "arm1-N1-oracle"
+    ],
+    [
+      "arm1-N1-carried"
+    ]
+  ],
+  "named_contrasts": {
+    "arm1-N5: carried vs oracle": {
+      "a": "arm1-N5-carried",
+      "b": "arm1-N5-oracle",
+      "delta_f1": -0.016843046096061243,
+      "p_value": 0.0001,
+      "bh_adjusted_p": 0.000162,
+      "significant": true
+    },
+    "arm2-N5: carried vs oracle": {
+      "a": "arm2-N5-carried",
+      "b": "arm2-N5-oracle",
+      "delta_f1": -0.004286886932215572,
+      "p_value": 0.0001,
+      "bh_adjusted_p": 0.000162,
+      "significant": true
+    },
+    "fourth-N10: carried vs oracle": {
+      "a": "fourth-N10-carried",
+      "b": "fourth-N10-oracle",
+      "delta_f1": -0.010197948729355422,
+      "p_value": 0.0001,
+      "bh_adjusted_p": 0.000162,
+      "significant": true
+    },
+    "arm1-N1: carried vs oracle": {
+      "a": "arm1-N1-carried",
+      "b": "arm1-N1-oracle",
+      "delta_f1": -0.05442771416773007,
+      "p_value": 0.0001,
+      "bh_adjusted_p": 0.000162,
+      "significant": true
+    },
+    "arm1-N3: carried vs oracle": {
+      "a": "arm1-N3-carried",
+      "b": "arm1-N3-oracle",
+      "delta_f1": -0.022719385639298872,
+      "p_value": 0.0001,
+      "bh_adjusted_p": 0.000162,
+      "significant": true
+    },
+    "arm1: N1 vs N3 (carried)": {
+      "a": "arm1-N1-carried",
+      "b": "arm1-N3-carried",
+      "delta_f1": -0.0583411321421905,
+      "p_value": 0.0001,
+      "bh_adjusted_p": 0.000162,
+      "significant": true
+    },
+    "arm1: N3 vs N5 (carried)": {
+      "a": "arm1-N5-carried",
+      "b": "arm1-N3-carried",
+      "delta_f1": 0.007600832049728723,
+      "p_value": 0.0001,
+      "bh_adjusted_p": 0.000162,
+      "significant": true
+    },
+    "arm1: N1 vs N3 (oracle)": {
+      "a": "arm1-N1-oracle",
+      "b": "arm1-N3-oracle",
+      "delta_f1": -0.026632803613759304,
+      "p_value": 0.0001,
+      "bh_adjusted_p": 0.000162,
+      "significant": true
+    },
+    "arm1: N3 vs N5 (oracle)": {
+      "a": "arm1-N5-oracle",
+      "b": "arm1-N3-oracle",
+      "delta_f1": 0.0017244925064910932,
+      "p_value": 0.1947,
+      "bh_adjusted_p": 0.236,
+      "significant": false
+    },
+    "arm2-N1: carried vs oracle": {
+      "a": "arm2-N1-carried",
+      "b": "arm2-N1-oracle",
+      "delta_f1": -0.014195689597237493,
+      "p_value": 0.0007,
+      "bh_adjusted_p": 0.001105,
+      "significant": true
+    },
+    "arm2-N3: carried vs oracle": {
+      "a": "arm2-N3-carried",
+      "b": "arm2-N3-oracle",
+      "delta_f1": -0.0045530927926994424,
+      "p_value": 0.0001,
+      "bh_adjusted_p": 0.000162,
+      "significant": true
+    },
+    "arm2: N1 vs N3 (carried)": {
+      "a": "arm2-N1-carried",
+      "b": "arm2-N3-carried",
+      "delta_f1": -0.03235110100563088,
+      "p_value": 0.0001,
+      "bh_adjusted_p": 0.000162,
+      "significant": true
+    },
+    "arm2: N3 vs N5 (carried)": {
+      "a": "arm2-N5-carried",
+      "b": "arm2-N3-carried",
+      "delta_f1": 0.0018596842473767028,
+      "p_value": 0.2199,
+      "bh_adjusted_p": 0.258824,
+      "significant": false
+    },
+    "arm2: N1 vs N3 (oracle)": {
+      "a": "arm2-N1-oracle",
+      "b": "arm2-N3-oracle",
+      "delta_f1": -0.022708504201092827,
+      "p_value": 0.0001,
+      "bh_adjusted_p": 0.000162,
+      "significant": true
+    },
+    "arm2: N3 vs N5 (oracle)": {
+      "a": "arm2-N5-oracle",
+      "b": "arm2-N3-oracle",
+      "delta_f1": 0.0015934783868928326,
+      "p_value": 0.2905,
+      "bh_adjusted_p": 0.335192,
+      "significant": false
+    }
+  }
+}

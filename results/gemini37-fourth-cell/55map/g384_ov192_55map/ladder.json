@@ -1,0 +1,69 @@
+{
+  "buffer_m": 50,
+  "inherit_tol_m": 10.0,
+  "cell": "g384_ov192_55map",
+  "verify_dir": "verify_37",
+  "carried_point": [
+    0.98,
+    10
+  ],
+  "N": {
+    "1": {
+      "union_n": 25586,
+      "unmatched": 663,
+      "match_dist_p50_m": 2.4472322262747825,
+      "match_dist_p95_m": 7.723508022626857,
+      "oracle": {
+        "cell": "g384_ov192_55map",
+        "N": 1,
+        "prob_t": 0.96,
+        "min_votes": 1,
+        "n_detections": 5337,
+        "tp": 4374,
+        "fp": 963,
+        "fn": 786,
+        "precision": 0.8195615514333895,
+        "recall": 0.8476744186046512,
+        "corrected_f1": 0.8333809659902829
+      }
+    },
+    "3": {
+      "union_n": 36757,
+      "unmatched": 285,
+      "match_dist_p50_m": 1.3855721642202394,
+      "match_dist_p95_m": 6.4409366937232315,
+      "oracle": {
+        "cell": "g384_ov192_55map",
+        "N": 3,
+        "prob_t": 0.96,
+        "min_votes": 3,
+        "n_detections": 4626,
+        "tp": 4251,
+        "fp": 375,
+        "fn": 909,
+        "precision": 0.9189364461738002,
+        "recall": 0.8238372093023256,
+        "corrected_f1": 0.8687921520539547
+      }
+    },
+    "5": {
+      "union_n": 43909,
+      "unmatched": 119,
+      "match_dist_p50_m": 0.7832993709596955,
+      "match_dist_p95_m": 5.403616731455852,
+      "oracle": {
+        "cell": "g384_ov192_55map",
+        "N": 5,
+        "prob_t": 0.96,
+        "min_votes": 4,
+        "n_detections": 4779,
+        "tp": 4322,
+        "fp": 457,
+        "fn": 838,
+        "precision": 0.9043732998535259,
+        "recall": 0.8375968992248062,
+        "corrected_f1": 0.8697052017305564
+      }
+    }
+  }
+}

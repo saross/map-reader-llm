@@ -2,7 +2,8 @@
   "buffer_m": 50,
   "cells_processed": [
     "arm1",
-    "arm2"
+    "arm2",
+    "fourth"
   ],
   "runs": {
     "arm1": {
@@ -84,6 +85,46 @@
       "carried_hit_oracle_exactly": false,
       "transfer_gap": 0.004286886932215572,
       "n_sweep_rows": 135
+    },
+    "fourth": {
+      "role": "Gemini-3 Run B K=10 union + 3.7 verifier",
+      "carried_point": [
+        0.98,
+        10
+      ],
+      "carried": {
+        "cell": "fourth",
+        "prob_t": 0.98,
+        "min_votes": 10,
+        "n_detections": 4246,
+        "tp": 4071,
+        "fp": 175,
+        "fn": 1089,
+        "precision": 0.9587847385774847,
+        "recall": 0.788953488372093,
+        "corrected_f1": 0.8656176908356368
+      },
+      "oracle": {
+        "cell": "fourth",
+        "prob_t": 0.96,
+        "min_votes": 9,
+        "n_detections": 4495,
+        "tp": 4228,
+        "fp": 267,
+        "fn": 932,
+        "precision": 0.9406006674082313,
+        "recall": 0.8193798449612403,
+        "corrected_f1": 0.8758156395649922
+      },
+      "oracle_ties": [
+        [
+          0.96,
+          9
+        ]
+      ],
+      "carried_hit_oracle_exactly": false,
+      "transfer_gap": 0.010197948729355422,
+      "n_sweep_rows": 270
     }
   },
   "incumbents": {
@@ -125,11 +166,27 @@
       "seed": 42,
       "convention": "delta = arm2 - BN5, corrected-F1@50m",
       "bh_significant_q05": true
+    },
+    "verifier_under_G3prop__fourth_vs_BN10": {
+      "delta_f1": 0.02340351597790269,
+      "p_two_sided": 0.0001,
+      "n_permutations": 10000,
+      "seed": 42,
+      "convention": "delta = fourth - BN10, corrected-F1@50m",
+      "bh_significant_q05": true
+    },
+    "proposer_under_37vf__arm2_vs_fourth": {
+      "delta_f1": 0.010698357575265494,
+      "p_two_sided": 0.0738,
+      "n_permutations": 10000,
+      "seed": 42,
+      "convention": "delta = arm2 - fourth, corrected-F1@50m",
+      "bh_significant_q05": false
     }
   },
   "bh": {
     "q": 0.05,
-    "family_size": 3,
+    "family_size": 5,
     "note": "family = the declared five tests; a subset run (arms-only preview) adjusts over the subset and is superseded by the full run"
   }
 }

@@ -1,0 +1,139 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-09-01T04:10:56.072554+00:00",
+  "methodology": "Approach B \u2014 extended-GT-at-R Hungarian matching",
+  "metadata": {
+    "seed": 42,
+    "bootstrap_n": 10000,
+    "git_commit": "405b3901c15c5ada3e1604ab741b748f534e8244",
+    "input_paths": {
+      "detections": "/home/shawn/Code/map-reader-llm/results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/verified_detections.geojson",
+      "student_gt": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "review_yesterday": "/home/shawn/Code/map-reader-llm/results/gemini37-fourth-cell/55map/empty-yesterday-review.csv",
+      "review_today": "/home/shawn/Code/map-reader-llm/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv"
+    }
+  },
+  "exclusions": {
+    "sentinel_buffer_metres": 200,
+    "n_excluded_candidates": 10,
+    "note": "Today's review included 10 candidates labelled 'mound' at buffer_metres=200 \u2014 the '>150 m' sentinel shell. These are visible mounds inside the 286 m corners-plus-5 px circle but outside all review rings. They are EXCLUDED from every extended-GT build here; their detections appear as FP at every R \u2264 150 m, which is the correct behaviour under the 150 m practitioner cap."
+  },
+  "obs_272_reference": "Obs 272 in docs/notes/reflections/working-notes.md shows the attractor-pull effect is statistically significant only through 125 m \u2014 shells at (125, 150] and (150, 286] are indistinguishable from within-tile random placement. The 150 m row should be treated as an optimistic upper bound, not a practitioner-useful recall claim.",
+  "results": [
+    {
+      "R_m": 20,
+      "TP": 3185,
+      "FP": 1061,
+      "FN": 1561,
+      "n_ref_student_only": 4746,
+      "n_reviewer_promoted_at_R": 0,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 4746,
+      "precision": 0.7501177578897786,
+      "precision_CI": [
+        0.7355429232694488,
+        0.7648611685755925
+      ],
+      "recall": 0.6710914454277286,
+      "recall_CI": [
+        0.6561446965602928,
+        0.6863917859767095
+      ],
+      "F1": 0.7084074733096085,
+      "F1_CI": [
+        0.6950353402951783,
+        0.7218492222019092
+      ],
+      "tile_classification": {
+        "mcc": 0.7108679773296488,
+        "mcc_CI": [
+          0.6965998773946758,
+          0.7243882614969557
+        ],
+        "tp": 2279,
+        "tn": 5049,
+        "fp": 111,
+        "fn": 1102,
+        "sensitivity": 0.6740609287193138,
+        "specificity": 0.9784883720930233
+      }
+    },
+    {
+      "R_m": 30,
+      "TP": 3717,
+      "FP": 529,
+      "FN": 1029,
+      "n_ref_student_only": 4746,
+      "n_reviewer_promoted_at_R": 0,
+      "n_phantom_duplicates_dropped": 0,
+      "n_ref_extended": 4746,
+      "precision": 0.8754121526142251,
+      "precision_CI": [
+        0.8638485277413512,
+        0.8865885621589135
+      ],
+      "recall": 0.7831858407079646,
+      "recall_CI": [
+        0.770031630999193,
+        0.7962613184439229
+      ],
+      "F1": 0.8267348754448399,
+      "F1_CI": [
+        0.8164993624100412,
+        0.8366392556004355
+      ],
+      "tile_classification": {
+        "mcc": 0.7108679773296488,
+        "mcc_CI": [
+          0.6965998773946758,
+          0.7243882614969557
+        ],
+        "tp": 2279,
+        "tn": 5049,
+        "fp": 111,
+        "fn": 1102,
+        "sensitivity": 0.6740609287193138,
+        "specificity": 0.9784883720930233
+      }
+    },
+    {
+      "R_m": 50,
+      "TP": 4071,
+      "FP": 175,
+      "FN": 1089,
+      "n_ref_student_only": 4746,
+      "n_reviewer_promoted_at_R": 414,
+      "n_phantom_duplicates_dropped": 1,
+      "n_ref_extended": 5160,
+      "precision": 0.9587847385774847,
+      "precision_CI": [
+        0.9528144176711187,
+        0.9646924147433807
+      ],
+      "recall": 0.788953488372093,
+      "recall_CI": [
+        0.7763710635551578,
+        0.8013751942594175
+      ],
+      "F1": 0.8656176908356368,
+      "F1_CI": [
+        0.8573873651439876,
+        0.8736117183516486
+      ],
+      "tile_classification": {
+        "mcc": 0.7268024827224564,
+        "mcc_CI": [
+          0.7141038248618844,
+          0.7393297174113062
+        ],
+        "tp": 2358,
+        "tn": 4985,
+        "fp": 32,
+        "fn": 1166,
+        "sensitivity": 0.6691259931895573,
+        "specificity": 0.9936216862666932
+      }
+    }
+  ]
+}
