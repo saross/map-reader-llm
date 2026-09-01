@@ -30883,3 +30883,207 @@ the study has got on raw imagery); **Obs 443** (model consistency
 against novice variance — the source of the terrain-driven model
 variance and the students' per-sheet spread that the speculative
 dark-band mechanism above would partly underlie).
+
+## Observation 446: The first true double-misses are obscured symbols, not faint ones in clean terrain — and the PI's reviewer-recall calibration on the empty-tile audit (Session 145, 2026-09-01)
+
+**Provenance, and the audit state at writing.** The empty-tile audit
+(card § 5, `planning/student-baseline-2026-08-31.md`) is **in flight**
+as this entry is written; every count below will move. State at
+writing: **160 distinct tiles reviewed of the 470-tile 10 % tier**
+(`results/empty-tile-audit/verdicts.csv`, order indices 0–159, latest
+timestamp 2026-09-01T09:26:18Z; two tiles re-reviewed, giving 162
+rows), yielding **3 marks** — 1 known-in-GT edge artefact and **2 true
+double-misses**, all three logged with symbol "Hairy brown circle".
+The observations recorded here are the **PI's own interpretive
+assessments, made mid-audit**; the adjudication numbers supporting
+them are recomputed from committed inputs and are separable from the
+judgements.
+
+**(a) Reviewer-recall calibration — the PI's judgement, not a measured
+quantity.** The PI reports that the two true double-miss finds "were
+not hard for me, so I don't *think* I'm missing many": his assessment
+is that the audit's **reviewer recall is high**, and therefore that
+the measured double-miss floor is **unlikely to be badly
+under-estimated by reviewer misses**. Two corroborating arguments he
+offers. First, **symbol obtrusiveness**: benchmark and trig-point
+symbols — the non-mound cousins of the mound-bearing variants; Obs
+306's closed list names all four mound categories (`burial-mound`,
+`benchmark-on-burial-mound`, `triangulation-point-on-burial-mound`,
+`settlement-mound`, mirrored in the proposer prompt's
+`burial_mound | settlement_mound | triangulation_mound |
+benchmark_mound` enum) — are so obtrusive on these sheets that the
+mound-bearing versions would surely be caught. Second, **task shape**:
+the audit is a focused single-tile read at 2× magnification, not the
+students' sheet-wide scan, so the attention budget per square
+kilometre is incomparably larger. **This is a calibration judgement
+and must be written as one.** The empty-tile audit has **no formal
+reviewer-recall check**: a second-reader sample of dismissed tiles
+would measure it, and none has been run or commissioned. If the floor
+is ever quoted as a floor with a stated reviewer-recall assumption,
+that sample is the instrument that would discharge it.
+
+**(b) The obscuration mechanism — the first direct evidence of what
+the joint blind spot contains.** Both adjudicated true double-misses
+were, in the PI's reading, **partly obscured / intersected by other
+map features**. That is his interpretation of why both the novice
+digitisers and every model configuration missed them, and it is the
+first mechanistic account of the joint blind spot's *content*: **not
+faint symbols in clean terrain, but symbols broken by overprinting and
+intersection**. Nearest-neighbour distances (recomputed in-session
+S145 from the committed files named in Sources, all CRS-normalised to
+EPSG:32635; the adjudication radius is 50 m):
+
+| Nearest neighbour to the mark | Order 144 (K-35-077-2) | Order 146 (K-35-051-3) |
+|---|---:|---:|
+| Canonical GT (5,161 refs) | 1,291.4 m | 571.5 m |
+| Arm-2 carried detections | 1,283.6 m | 585.5 m |
+| B-N5 carried incumbent | 1,293.1 m | 583.8 m |
+| Fourth-cell detections | 1,293.3 m | 583.7 m |
+| 3.7 K = 5 raw union (12,715 cand.) | 1,283.6 m | 585.5 m |
+| G3 K = 10 raw union (57,482 cand.) | **346.3 m** | 583.8 m |
+| **Nearest anything, any family** | **346.3 m** | **571.5 m** |
+
+Nothing from either proposer family sits within 50 m — or within
+340 m — of either mark, so neither mound was **proposed by any of the
+fifteen combined passes** (3.7 at K = 5 plus Gemini 3 at K = 10).
+These are proposer-side blindnesses, not verifier or threshold kills.
+The nearest G3-union candidate to order 144, at 346.3 m, is itself
+apposite: the 3.7 verifier scored it **0.05** and reasoned "no visual
+evidence of a kurgan/mound sunburst symbol under or around the
+triangulation point… purely a geodetic survey marker on a natural
+hill" — the trig-point cousin of (a), correctly rejected, a third of a
+kilometre from the mound the pipeline never saw.
+
+**Note both are ISOLATED misses.** The empty-tile frame guarantees it,
+and it matters for **Obs 361**: miss-correlation (1.5–1.67×) says
+double-misses cluster, but obscuration evidently operates **outside**
+clusters too, so the two mechanisms are additive rather than the same
+story told twice. Obscuration is also the **FN-side counterpart to the
+FP mechanism work** (**Obs 313–315**): the colour-veto and
+central-glyph-anchor mechanisms explain what the model wrongly fires
+*on*; overprinting explains what it cannot see at all. The project's
+own **Obs 2** anticipated it from the first weeks — a linear feature
+crossing a symbol's centre "can break the 'gestalt' of the circle" —
+and **Obs 4** recorded the first casualty ("one small, heavily
+obscured mound"). Obs 446 is the point where that early intuition
+becomes measured, adjudicated, corpus-scale evidence. It is also an
+**image-quality axis adjacent to Obs 445**: dark bands and scan
+defects and overprinted symbols are different insults to the same
+input, and preprocessing or symbol reconstruction is the one axis this
+study has never varied.
+
+**(c) The known-in-GT edge case is the campaign's verifier-seat
+finding in a single mound.** Order 122
+(`K-35-063-4_Skobelevo_4326_x336_y3360.png`) adjudicated as
+known-in-GT — a canonical GT point 17.8 m away in the neighbour tile's
+strip, an artefact of tile-based emptiness rather than a miss. Its
+per-cell history is the instructive part: **arm-2-found at 2.9 m on
+5/5 votes** at probability 0.98; present in the **Gemini-3 K = 10
+union at 6.4 m on 6 votes**, where the 3.7 verifier scored it **0.98**
+("unmistakable orange-brown ring with distinct outward-radiating
+hachures… and a mound height number '2'") — **at** the fourth cell's
+carried probability point of 0.98 but **below its k ≥ 10 vote floor**,
+so filtered; and **missed outright by the G3 incumbent** (nearest
+B-N5 detection 1,456.3 m, nearest fourth-cell detection 2,268.0 m).
+One mound, found by the 3.7 stack, correctly recognised by the 3.7
+verifier on the G3 pool, and lost to a consensus threshold — **Obs
+444**'s finding that the family gain lives in the verifier seat,
+instantiated.
+
+**(d) Rate, and a denominator caution.** 2 true double-misses in 160
+reviewed tiles = **1.25 %** of empty tiles (card § 5b recorded
+2/150 ≈ 1.3 % at the moment of adjudication), **dead centre of the
+card's pre-agreed 1–3 % expectation**, so the escalation rule to the
+20 % tier is not triggered on present evidence. It is called
+"consistent with the GS-anchored ~0.9 % double-miss rate", and that is
+the right *order-of-magnitude* reading, but the two figures are **not
+the same quantity**: the GS 0.92 % is 4 both-miss events over 435
+in-bounds curator mounds (a per-GT-mound rate,
+`gs-miss-correlation.json`), while 1.25 % is a per-empty-tile rate
+over a stratified sample. Agreement to within a factor of ~1.4 across
+different denominators is reassuring, not confirmatory, and the paper
+must not present them as one number measured twice.
+
+**(e) Commissioned follow-ons (cited, not re-planned).** Two are
+already specified and approved on the card at commit `ac02952b3`.
+**Phase 2b, the cluster audit** (§ 5c): a full **census** of the 739
+evaluation tiles intersecting the 464 clusters (2+ canonical-GT mounds
+single-linkage-chained at ≤ 125 m, 1,006 mounds = 19 % of GT), with a
+known-mounds overlay so the reviewer marks only additional mounds —
+the instrument for the clustered double-misses this audit structurally
+cannot see, with **singleton undercounts explicitly out of scope**
+(reliant on the existing 1,000+ candidate reviews). Its census
+manifest and overlay have since been built and committed, reproducing
+the card's frame exactly. **The FN image
+bank** (§ 5d): every adjudicated true double-miss cropped at verifier
+resolution for the paper or supplement — the crops are the evidence
+for (b), and are to be built after the audit closes on the final FN
+set.
+
+Sources: `results/empty-tile-audit/verdicts.csv` (read 2026-09-01;
+**uncommitted and still being written at the time of this entry** —
+162 rows / 160 distinct tiles, all tier `10pct`, verdicts
+`no_mounds` 159 / `mound` 3, the three marks at order indices 122,
+144, and 146 with the world coordinates used in the adjudication
+above); `results/empty-tile-audit/sample_summary.json` and
+`audit_manifest.csv` (verified 2026-09-01: seed 42, `n_empty` 4,676 =
+`n_expected_empty`, `n_sampled` 936, `n_inner` 470, and manifest tier
+counts 10pct 470 / 20pct 466 — **note the card § 5 nominal figure is
+"10 % = 468 tiles"; the realised 10 % tier is 470**, a per-sheet
+proportional-allocation rounding difference, and 470 is the correct
+denominator for any rate quoted off this manifest);
+`planning/student-baseline-2026-08-31.md` §§ 5, 5b, 5c, and 5d
+(verified 2026-09-01 at commit `ac02952b3`, "planning(student-
+baseline): adjudication protocol, cluster audit, FN image bank": the
+4,676 empty tiles of 8,541 (54.7 %), the 1–3 % expectation and
+escalation rule, the four adjudication classes, the 17.8 m
+known-in-GT description, the ≤ 125 m cluster definition with its
+464 clusters / 1,006 mounds / 739 tiles frame and X = 100 m → 348/601
+and X = 150 m → 540/839 sensitivity framings, and the singleton-
+undercount scope boundary); `scripts/empty_tile_audit_sample.py`
+(verified 2026-09-01: the emptiness definition and the two detection
+sets it excludes against); `results/cluster-audit/census_summary.json`
+(verified 2026-09-01: `chain_m` 125.0, `buffer_m` 50.0, `n_clusters`
+464, `n_mounds_in_clusters` 1,006, `n_census_tiles` 739,
+`n_overlay_tiles` 723 — the built Phase 2b frame, matching § 5c).
+Adjudication distances **computed
+in-session S145, no script committed**, from these committed inputs:
+`inputs/vectors/references/canonical-gt-55maps-r50.geojson` (5,161
+features, EPSG:32635);
+`results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/verified_detections.geojson`;
+`results/55map-final-board-2026-08-27/cells/B-N5-carried/detections.geojson`;
+`results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/verified_detections.geojson`;
+`outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/union_k5.geojson`
+(12,715 candidates);
+`outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/union_k10.geojson`
+(57,482 candidates, matching Obs 444's fourth-cell pool) with
+`verify_37/probabilities.json` (`verifier_config`
+`verify_adversarial-text`, `total_results` 57,482 — source of the
+0.98 on `candidate_10249` and the 0.05 on `candidate_24100`);
+`results/working-precision/gs-miss-correlation.json` (verified
+2026-09-01: `n_curator_in_bounds` 435, `both_miss` 4,
+`double_miss_observed` 0.0092 at all three system radii,
+`correlation_ratio` 1.5 at 20 m and 1.67 at 30 and 50 m);
+`prompts/system-instructions/detect_brief-text.md` (verified
+2026-09-01: the four-value `subtype` enum quoted above). Related:
+**Obs 361** (the double-miss blind spot and miss-correlation 1.5–1.67×
+on the GS sheets — the GS-anchored rate this audit is being compared
+against, and the clustering claim that (b) shows is not the whole
+mechanism); **Obs 444** (the complete proposer × verifier 2×2 and the
+fourth cell's carried (0.98, k10) point — the cell whose vote floor
+kills the order-122 candidate in (c)); **Obs 445** (image
+preprocessing as the untouched axis — overprinted symbols are a
+related image-quality insult to the same raw tiles); **Obs 313–315**
+(the FP mechanism work: colour-veto failure and the central-glyph
+anchor — the false-positive counterparts to this entry's
+false-negative mechanism); **Obs 306** (the closed-list expansion
+naming all four burial-mound categories, including the benchmark and
+triangulation variants that anchor the PI's obtrusiveness argument in
+(a)); **Obs 272** (attractor-pull significant to ~125 m — the
+project's interaction scale, and the reason the cluster audit chains
+at ≤ 125 m); **Obs 316** (the GS-4 student baseline, 5.27 % FN /
+0.00 % FP — the direct-comparison instrument the double-miss floor
+qualifies); **Obs 2** and **Obs 4** (the earliest entries in this
+register: bisected symbols breaking the circle's gestalt, and the
+first "small, heavily obscured mound" lost to strictness — the
+intuition (b) now confirms at corpus scale).
