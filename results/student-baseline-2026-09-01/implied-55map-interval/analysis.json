@@ -1,0 +1,62 @@
+{
+  "n_draws": 100000,
+  "seed": 42,
+  "inputs": {
+    "fn_headline": [
+      0.08872671403879392,
+      0.06923879971989322,
+      0.11351482810051709
+    ],
+    "vlm_recall": [
+      0.7958,
+      0.7836,
+      0.8077
+    ],
+    "k_miss_correlation": [
+      1.0,
+      1.7
+    ],
+    "precision_bound": [
+      0.995,
+      1.0
+    ]
+  },
+  "fn_true": {
+    "median": 0.12233333501868277,
+    "ci95": [
+      0.09017228098231769,
+      0.1581015741686916
+    ]
+  },
+  "recall": {
+    "median": 0.8776666649813172,
+    "ci95": [
+      0.8418984258313085,
+      0.9098277190176823
+    ]
+  },
+  "implied_f1": {
+    "median": 0.933747162710429,
+    "ci95": [
+      0.9130668548685054,
+      0.9516445098836888
+    ]
+  },
+  "model_anchors": {
+    "arm2-carried-canonical": 0.8763,
+    "arm2-standardised": 0.8825
+  },
+  "gap_to_arm2_canonical": {
+    "median": 0.057447162710429045,
+    "ci95": [
+      0.036766854868505415,
+      0.07534450988368879
+    ],
+    "p_model_at_or_above_students": 0.0
+  },
+  "caveats": [
+    "circularity: canonical reference is 92% the students' own layer \u2014 interval is generosity-bounded above",
+    "double-miss floor excluded by construction (empty-tile audit measures it; both recall estimates fall if nonzero)",
+    "cohort-pooled; per-student weighted FN rates vary ~4x (Obs 443)"
+  ]
+}
