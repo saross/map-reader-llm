@@ -1,8 +1,8 @@
 # Gemini 3.7 at deployment: the gain changes seats
 
-> **Last revised**: 2026-08-31 (initial findings; fourth grid cell
-> verification in flight). See [§ Changelog](#changelog) for revision
-> history.
+> **Last revised**: 2026-09-01 (fourth cell harvested; the 2×2 grid,
+> five-test family, N-ladders, and the 16-cell grid board complete).
+> See [§ Changelog](#changelog) for revision history.
 
 **Classification**: registered-by-card deployment test (card:
 `planning/gemini37-55map-2026-08-29.md`; predictions D1–D7 and both
@@ -44,7 +44,7 @@ below names its chain.
 |---|---|---|---:|---:|---:|---:|
 | Arm 1 | 3.7 proposer + carried G3 verifier | (0.10, k5) | **0.8494** | 0.844 | 0.855 | 0.666 |
 | Arm 2 | all-3.7 (3.7 proposer + 3.7 verifier) | (0.80, k5) | **0.8763** | 0.890 | 0.863 | 0.707 |
-| Fourth cell | G3 Run B K=10 union + 3.7 verifier | (0.98, k10) | **[PENDING — verification in flight]** | | | |
+| Fourth cell | G3 Run B K=10 union + 3.7 verifier | (0.98, k10) | **0.8656** | 0.959 | 0.789 | 0.727 |
 | Incumbent B N=5 | G3 proposer + G3 verifier (K=5) | (0.15, k5) | 0.8438 | 0.882 | 0.809 | — |
 | Incumbent B K=10 | G3 proposer + G3 verifier (K=10) | (0.15, k10) | 0.8422 | 0.903 | 0.789 | 0.698 |
 
@@ -69,7 +69,7 @@ cell's deployment oracle?
 |---|---|---:|---|---:|---:|---|
 | Arm 1 | (0.10, k5) | 0.8494 | (0.15, k5) | 0.8662 | +0.0168 | NO |
 | Arm 2 | (0.80, k5) | 0.8763 | (0.95, k5) | 0.8806 | +0.0043 | NO — but nearly |
-| Fourth cell | (0.98, k10) | [PENDING] | | | | |
+| Fourth cell | (0.98, k10) | 0.8656 | (0.96, k9) | 0.8758 | +0.0102 | NO |
 
 **The PI's oracle question answered**: arm 2's carried (0.80, k5) did
 **not** land on the 55-map oracle exactly — but it came within
@@ -123,9 +123,46 @@ fourth cell lands):
 | D6: arm 2 − arm 1 (verifier axis, 3.7 proposer) | +0.0270 | 0.0001 | **yes** |
 | Diagonal: arm 2 − B N=5 (all-3.7 vs incumbent stack) | +0.0325 | 0.0001 | **yes** |
 
-Remaining two (fourth-cell contrasts, [PENDING]): fourth − B K=10
-(verifier axis on the G3 pool); arm 2 − fourth (proposer axis under
-the 3.7 verifier).
+**The full five-test family (2026-09-01 harvest)** — BH q = 0.05
+family-adjusted, `sweeps/sweep_oracle.json`:
+
+| Test | ΔF1@50 | p | BH sig. |
+|---|---:|---:|---|
+| D1: arm 1 − B N=5 (proposer axis, G3 verifier) | +0.0056 | 0.3488 | no |
+| D6: arm 2 − arm 1 (verifier axis, 3.7 proposer) | +0.0270 | 0.0001 | **yes** |
+| Diagonal: arm 2 − B N=5 | +0.0325 | 0.0001 | **yes** |
+| Fourth − B K=10 (verifier axis, G3 pool) | +0.0234 | 0.0001 | **yes** |
+| Arm 2 − fourth (proposer axis, 3.7 verifier) | +0.0107 | 0.0738 | no |
+
+**The grid's verdict**: both verifier-axis tests are significant
+(+0.027 on the 3.7 pool, +0.023 on the G3 pool); both proposer-axis
+tests are not. The family gain lives in the verifier seat on the
+complete 2×2, not one diagonal. The fourth cell also takes the
+grid's MCC crown (0.7268) and precision crown (0.9588) — the
+discriminating 3.7 verifier on the noisy G3 pool trades recall for
+precision hard.
+
+## The grid board (16 cells, all-pairs + BH + tiers)
+
+`grid-board/grid_board.json`: 120 pairs, 89 BH-significant, six
+greedy-clique tiers. Tier 1 = arm 2's N5 and N3 oracles alone;
+Tier 2 = arm2-N5-carried, fourth-N10-oracle, and **arm2-N3-carried**
+— the practitioner cell shares the deployed tier at 3/5 proposer
+cost; **both Gemini-3 incumbents sit in Tier 4 of six**. Named
+contrasts, family-corrected: all five carried→oracle gaps are
+significant (even arm 2's +0.0043, adj p = 0.0002) — threshold
+transfer costs are sheet-consistent real effects at every scale;
+N1→N3 is significant everywhere, while **N3→N5 is not significant
+for arm 2 on either basis** (saturation at N=3 is statistical, and
+arm 2's fourth-cell sibling saturates identically — ladder N=3
+0.8688 vs N=5-inheritance 0.8697 with oracle prob_t pinned at 0.96
+on every rung).
+
+## Board comparability — completed
+
+Fourth cell standardised-reference @50: **0.8732** [0.8649, 0.8810]
+(P 0.9517 / R 0.8066) — above the board ceiling 0.8558, second only
+to arm 2's 0.8825 among deployment cells on the board's instrument.
 
 ## Board comparability (standardised chain)
 
@@ -145,7 +182,8 @@ substantive conclusions agree across chains: D1 stays an
 unresolvable near-tie on both, and arm 2 clears the entire final
 board **on the board's own instrument** — the S144 interim claim
 survives the reference correction.
-[Fourth cell standardised evaluation PENDING.]
+(The fourth cell's standardised evaluation appears in § The grid
+board above.)
 
 ## Prediction verdicts D1–D7
 
@@ -160,6 +198,17 @@ survives the reference correction.
 | D7 | Arm-2 lattice | oracle prob_t ≥ 0.6 | **CONFIRMED** — 55-map oracle (0.95, k5); the calibration shift transfers |
 
 ## Changelog
+
+### 2026-09-01 — Fourth cell harvested; grid complete
+
+Verification completed 04:07 UTC through the storm-resilient loop
+driver (seven rounds, five storm-killed; only round-7 usage survives
+in run.meta.json — noted in the data commit). Harvest chain all
+gates green: primary 0.8656 (n=4,246), ladder (N=3 saturation),
+full five-test family (verifier axis significant on both edges,
+proposer axis on neither), 16-cell grid board (six tiers; all
+carried→oracle contrasts significant; arm-2 N3→N5 ns both bases),
+standardised eval 0.8732. Data commit `a73d64346`.
 
 ### 2026-08-31 — Original publication
 
