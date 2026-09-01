@@ -30799,3 +30799,87 @@ basis under every GS-to-55-map carry-forward this campaign performs);
 **Obs 443** (model consistency against novice variance — the entry
 that draws on these cells, using the all-3.7 configuration as the
 model arm of the human comparison).
+
+## Observation 445: Image preprocessing is the untouched axis — every result to date runs on raw scan tiles, and the PI found the defects by hand (Session 145, 2026-09-01)
+
+**Provenance.** While hand-reviewing empty tiles for the double-miss
+audit (`planning/student-baseline-2026-08-31.md` § 5 — the
+PI-executed pass over a 468-tile stratified sample of the 4,676
+empty tiles, driven by `scripts/review_empty_tiles_app.py`, which
+renders each 384 px tile at 2× under LANCZOS resampling), the PI
+observed that many production tiles carry scan defects — dark bands
+and similar artefacts of the original scanning — and that
+"everything needs sharpening". His conclusion, offered in passing:
+*the next way to improve extractions would probably be to process
+the imagery a little.*
+
+**The claim worth a sentence in the paper.** Every number this study
+has produced — the gold-standard (GS) screens, the 55-map deployment
+board, the complete proposer × verifier 2×2 (**Obs 444**) — was
+computed on **unprocessed tile imagery cut straight from the
+georeferenced scans**. No defect removal, no contrast normalisation,
+no sharpening, no enhancement of any kind. That single fact earns a
+passing sentence twice over. As a **simplicity property**, the
+pipeline's inputs are what any practitioner already has, with no
+bespoke preprocessing stage to specify or reproduce, which is a real
+part of why the stack is portable. As **untapped headroom**,
+preprocessing is an **orthogonal axis that no experiment in this
+study has varied** — the whole factorial has moved models, prompts,
+tiling, thresholds, pass counts, and seats, and never once the
+pixels.
+
+**A speculative mechanism, flagged as such.** Dark-band defects are
+a plausible candidate cause for *some* of the sheet-level false-
+negative variation measured on both arms of the human comparison —
+the students' per-sheet spread and the model's terrain-driven
+variance (**Obs 443**). A band across a sheet degrades the same
+evidence for both readers, which would make it a shared cause that
+is neither person-driven nor model-driven, and it would sit
+underneath the "terrain" term rather than beside it. **This is
+speculation and must not be written as a finding**: no tile-level
+defect inventory exists, no defect has been coded or located, and
+nothing has been tested for association with per-sheet recall.
+
+**Literature starting point — recorded as unread.** The natural
+entry to the enhancement literature is already in the project
+bibliography: Ren, Guilei (2026), *Multiscale Image Enhancement and
+Visualization Analysis for Historical Maps*, International Journal
+of Advanced Computer Science and Applications 17(7), DOI
+10.14569/IJACSA.2026.0170765, bibkey `ren_multiscale_2026`. It is
+**unread as of this entry** and **none of its findings are relied on
+here** — it is recorded only as the place to start, and is to be
+READ before any implementation work or any citation of its results.
+
+**Scope.** This is a future-work / Discussion-in-passing note, not a
+commissioned experiment, and nothing in it authorises a run. If it
+is ever run, it is a **new experimental phase, so the phase-gate
+applies** before any API spend, and the natural design is a **paired
+re-run of an already-committed cell on preprocessed tiles** — same
+proposer and verifier stack, same carried operating point, same
+reference instrument, with the imagery as the only thing that moves.
+Obs 444's committed cells are the baseline any such comparison would
+run against.
+
+Sources: `planning/student-baseline-2026-08-31.md` § 5 "Phase 2 —
+the empty-tile audit (PI-executed, ~40–80 min)" (verified
+2026-09-01: empty tiles 4,676 of the 8,541-tile evaluation grid
+(54.7 %), the 10 % = 468-tile sheet-stratified sample, and the
+estimand caveat that the audit sees only unflagged terrain — this is
+the review session in which the observation was made);
+`scripts/review_empty_tiles_app.py:56` (verified 2026-09-01:
+`DISPLAY_SCALE = 2  # 384 px tile shown at 768 px`, with the
+LANCZOS resize at line 230 — the 2× magnification at which the scan
+defects became visible to the reviewer); `paper/references.bib`
+lines 21–34 (verified 2026-09-01: `ren_multiscale_2026`, author
+"Ren, Guilei", year 2026, volume 17, number 7, DOI
+10.14569/IJACSA.2026.0170765, journal as given above; note the
+title field is stored with a stray solidus, "Historical {Map}/s",
+which should be repaired to "Historical Maps" — as the attached
+PDF's own filename has it — before the entry is used in the paper).
+Related: **Obs 444** (the complete proposer × verifier 2×2 — the
+committed cells that would serve as the paired baseline for any
+preprocessing comparison, and the campaign that establishes how far
+the study has got on raw imagery); **Obs 443** (model consistency
+against novice variance — the source of the terrain-driven model
+variance and the students' per-sheet spread that the speculative
+dark-band mechanism above would partly underlie).
