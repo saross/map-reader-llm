@@ -335,8 +335,9 @@ def main() -> None:
 
     n10 = int((manifest["tier"] == "10pct").sum())
     n_done = len(done)
-    tier_note = ("10 % tier" if row.tier == "10pct"
-                 else "20 % ESCALATION tier — stopping here is fine")
+    tier_note = {"10pct": "10 % tier",
+                 "census": "cluster CENSUS"}.get(
+        row.tier, "20 % ESCALATION tier — stopping here is fine")
     st.markdown(
         f"**Tile {cursor + 1} / {len(manifest)}** ({n_done} saved) · "
         f"`{row.tile_name}` · {tier_note} · 10 % boundary at {n10}")
