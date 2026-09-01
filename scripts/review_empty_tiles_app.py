@@ -295,6 +295,28 @@ def main() -> None:
         return
 
     row = manifest.iloc[cursor]
+
+    # On first render of a tile (including revisits via `b`), load any
+    # previously saved marks so going back shows what was recorded —
+    # without this, a revisited tile opens blank and a reflexive
+    # re-save would supersede a real verdict with an empty one.
+    if st.session_state.get("loaded_for") != cursor:
+        st.session_state.loaded_for = cursor
+        st.session_state.marks = []
+        st.session_state.pending_click = None
+        st.session_state.last_click = None
+        prior = verdicts[verdicts["tile_name"] == row.tile_name]
+        if len(prior):
+            st.session_state.prior_verdict = str(prior.iloc[0]["verdict"])
+            for _, r in prior[prior["verdict"] == "mound"].iterrows():
+                st.session_state.marks.append({
+                    "x_px": float(r["x_px"]), "y_px": float(r["y_px"]),
+                    "symbol": str(r["symbol"]),
+                    "note": "" if pd.isna(r.get("note")) else str(r["note"]),
+                })
+        else:
+            st.session_state.prior_verdict = None
+
     n10 = int((manifest["tier"] == "10pct").sum())
     n_done = len(done)
     tier_note = ("10 % tier" if row.tier == "10pct"
@@ -302,6 +324,9 @@ def main() -> None:
     st.markdown(
         f"**Tile {cursor + 1} / {len(manifest)}** ({n_done} saved) · "
         f"`{row.tile_name}` · {tier_note} · 10 % boundary at {n10}")
+    if st.session_state.get("prior_verdict"):
+        st.info(f"Previously saved: **{st.session_state.prior_verdict}** "
+                "(marks shown below if any) — saving again supersedes.")
 
     img_path = tiles_dir / row.map_name / row.tile_name
     if not img_path.exists():
