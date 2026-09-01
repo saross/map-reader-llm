@@ -290,6 +290,21 @@ review of known-cluster neighbourhoods:
   candidate reviews. The estimand is additional mounds in
   known-cluster neighbourhoods.
 
+### 5d-i. Instrument-design note (PI, 2026-09-01 — note only, do not build)
+
+Empty-tile review proved highly fatiguing: sustained vigilance for
+ABSENCE, "tile after tile where nothing is usually there", with
+384 px frames forcing back-and-forth eye scanning — one sitting's
+budget was ~253 tiles. The PI's design for a purpose-built audit
+app: present **verifier-sized chunks assessable at a single glance**
+instead of full tiles. Worth recording because it independently
+recapitulates the pipeline's own architecture — the verifier's
+small-crop-at-a-time primitive is what efficient assessment
+converged on for the model too, and it reframes audit-app design as
+reviewer ergonomics (single-fixation presence checks over
+scanning). The census overlay (yellow anchors) is the interim
+mitigation; the chunked app is future work if audits recur.
+
 ### 5d. FN image bank (PI-commissioned 2026-09-01)
 
 Build a small image bank of every adjudicated true double-miss at
