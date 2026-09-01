@@ -17,6 +17,9 @@ Interaction (keyboard shortcuts via the battle-tested handler from
   and press ``a`` (or the button) to add it. Multiple marks per tile.
 - ``m`` — save this tile's marks and advance (needs ≥ 1 mark).
 - ``u`` — undo the last staged mark.
+- ``i``/``j``/``k``/``l`` — nudge north/west/south/east (metres step
+  slider, default 2.5 m): moves the pending click if one is staged,
+  otherwise the last added mark (the marking app's mechanism).
 - ``s`` — skip (decide later; skipped tiles resurface at the end).
 - ``b`` — back one tile (re-opens it for editing).
 
@@ -72,6 +75,17 @@ VERDICT_FIELDS = [
     "mark_index", "x_px", "y_px", "x_world", "y_world", "symbol",
     "note", "reviewed_at", "pass_id",
 ]
+
+#: Keyboard nudge, mirroring mark_mound_centres.py (i/j/k/l, metres
+#: step slider). Applies to the pending click when one is staged,
+#: otherwise to the most recently added mark.
+DEFAULT_NUDGE_M = 2.5
+NUDGE_KEYS = {
+    "i": ("north", 0.0, -1.0),
+    "k": ("south", 0.0, 1.0),
+    "j": ("west", -1.0, 0.0),
+    "l": ("east", 1.0, 0.0),
+}
 
 # Same handler as mark_mound_centres.py, with the log prefix, document
 # property, and timer renamed so concurrently open review apps do not
@@ -225,8 +239,10 @@ def to_world(row: pd.Series, x_px: float, y_px: float) -> tuple[float, float]:
     return (row.minx + x_px * row.px_m, row.maxy - y_px * row.px_m)
 
 
-def annotated_image(img: Image.Image, marks: list[dict]) -> Image.Image:
-    """The display image with staged marks drawn as crosses."""
+def annotated_image(img: Image.Image, marks: list[dict],
+                    pending: dict | None = None) -> Image.Image:
+    """The display image with added marks (red) and the pending,
+    nudgeable click (cyan circle) drawn on."""
     out = img.resize((TILE_PX * DISPLAY_SCALE,) * 2, Image.LANCZOS)
     draw = ImageDraw.Draw(out)
     for i, m in enumerate(marks):
@@ -235,6 +251,13 @@ def annotated_image(img: Image.Image, marks: list[dict]) -> Image.Image:
         draw.line([(x - r, y), (x + r, y)], fill="red", width=3)
         draw.line([(x, y - r), (x, y + r)], fill="red", width=3)
         draw.text((x + 6, y + 6), str(i + 1), fill="red")
+    if pending is not None:
+        x = pending["x_px"] * DISPLAY_SCALE
+        y = pending["y_px"] * DISPLAY_SCALE
+        r = 10
+        draw.ellipse([x - r, y - r, x + r, y + r], outline="cyan", width=3)
+        draw.line([(x - 3, y), (x + 3, y)], fill="cyan", width=1)
+        draw.line([(x, y - 3), (x, y + 3)], fill="cyan", width=1)
     return out
 
 
@@ -291,8 +314,9 @@ def main() -> None:
     col_img, col_ctl = st.columns([3, 1])
     with col_img:
         click = streamlit_image_coordinates(
-            annotated_image(img, st.session_state.marks),
-            key=f"tile_{cursor}",
+            annotated_image(img, st.session_state.marks,
+                            st.session_state.get("pending_click")),
+            key=f"tile_{cursor}_{st.session_state.get('nudge_epoch', 0)}",
         )
         # The component re-reports its last click every rerun; only a NEW
         # raw position counts (same guard as mark_mound_centres.py).
@@ -323,6 +347,31 @@ def main() -> None:
                      disabled=not st.session_state.marks):
             st.session_state.marks.pop()
             st.rerun()
+
+        # Nudge (i/j/k/l): pending click if staged, else the last
+        # added mark. The nudge_epoch in the image key forces the
+        # click component to redraw without treating the reposition
+        # as a stale click re-report.
+        step_m = st.select_slider(
+            "Nudge step (m)", options=[1.0, 2.5, 5.0, 10.0],
+            value=st.session_state.get("nudge_step", DEFAULT_NUDGE_M),
+            key="nudge_step")
+        step_px = step_m / row.px_m
+        target = (st.session_state.get("pending_click")
+                  or (st.session_state.marks[-1]
+                      if st.session_state.marks else None))
+        ncols = st.columns(4)
+        for col, (key, (name, dx, dy)) in zip(ncols, NUDGE_KEYS.items()):
+            with col:
+                if st.button(f"{key}: {name}", disabled=target is None):
+                    target["x_px"] = min(max(
+                        target["x_px"] + dx * step_px, 0), TILE_PX - 1)
+                    target["y_px"] = min(max(
+                        target["y_px"] + dy * step_px, 0), TILE_PX - 1)
+                    st.session_state.nudge_epoch = (
+                        st.session_state.get("nudge_epoch", 0) + 1)
+                    st.session_state.last_click = None
+                    st.rerun()
         for i, m in enumerate(st.session_state.marks):
             st.caption(f"{i + 1}. {m['symbol']} @ "
                        f"({m['x_px']:.0f}, {m['y_px']:.0f})")
