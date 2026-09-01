@@ -1,5 +1,10 @@
 # Student GT False-Negative Rate — 4 GS Maps Direct Curator-vs-Student
 
+> **Last revised**: 2026-09-01 (selection framing corrected per
+> Obs 442 — the four sheets were randomly selected, not
+> quality-selected). See [§ Changelog](#changelog) for revision
+> history.
+
 Direct confusion-matrix analysis (TP / FP / FN) of the cleaned student
 ground truth against the curator-corrected reference, on the four
 gold-standard (GS) map sheets. This is the proper analogue to
@@ -28,7 +33,7 @@ At a 50 m Hungarian match radius (project canonical, Obs 272):
 | 55-map recall-adjusted central | 0.1115 | n/a | `results/student-gt-fn-rate-analysis/` |
 
 **Verdict — FN rate**. The 4-GS direct FN rate (5.27 %) is consistent with Sobotkova 2023 (delta +0.3 pp); it diverges from the 55-map estimate by -4.4 percentage points.
- The direction of the difference is informative: the 4 GS maps were selected as fieldwork-grade reference quality and may be among the best-mapped sheets in the wider corpus, so a lower-than-corpus FN rate is consistent with the 55-map analysis's earlier hypothesis that the original 4-map calibration is downward-biased relative to the wider corpus (see `results/student-gt-fn-rate-analysis/report.md` §Comparison).
+ The four sheets were **randomly selected** from the complete corpus (Sobotkova et al. 2023 § 3.5.2 "four randomly selected maps"; PI confirmation 2026-08-31; Obs 442 — an earlier "selected for fieldwork-grade reference quality" framing here is retracted), so the divergence is not a selection artefact. The plausible drivers are n = 4 sampling variance (the bootstrap CI below nearly reaches the 55-map headline), genuine corpus/era variation (all four audited sheets are 2017 digitisations), and the two estimates' different instruments — the 55-map figure is a VLM-mediated lower bound whose recall adjustment is itself optimistic under miss-correlation (Obs 361).
 
 **Verdict — FP rate**. The 4-GS direct FP rate is 0.00 % (delta -0.10 pp from Sobotkova 2023's 0.1 %). After clipping student GT to the trapezoidal active area (see §Active-area clipping), all 17 features previously counted as FPs are excluded as black-collar artefacts. The remaining FP count is 0, which is consistent with — and slightly cleaner than — Sobotkova 2023's published comparator. The pre-fix analysis (rectangular raster envelope, no neat-line clipping) reported 17 FPs and a 3.06 % rate; that analysis is preserved at `archive/student-gt-fn-rate-analysis-gs4-rectangular-bounds-pre-fix/` for transparency.
 
@@ -115,8 +120,12 @@ Bootstrap-by-sheet, 10,000 iterations, seed 42. Each iteration resamples 4 sheet
 
 ## Caveats
 
-- **Selection bias of the 4 GS sheets**. These sheets were chosen for fieldwork-grade reference quality. Their FN rate is therefore plausibly an under-estimate of the corpus-wide rate; the 55-map analysis (which spans more diverse sheets) is the better corpus-
- level estimate.
+- **Sampling of the 4 GS sheets**. The sheets were randomly selected
+ from the complete corpus (Obs 442, correcting this report's original
+ selection-bias caveat), so the estimate is unbiased — but n = 4
+ leaves wide sampling variance (see § Bootstrap), and the draw is
+ all-2017 by chance (hypergeometric P ≈ 0.26; the 2018 cohort was
+ never audited), so era coverage is a scope limit.
 - **Single human cleaning pass**. The student GT used here was
  cleaned and reviewed in a single human pass landed at commit
  `a8b576d5`. Reviewer-induced systematic errors (e.g., missing a
@@ -143,3 +152,26 @@ Bootstrap-by-sheet, 10,000 iterations, seed 42. Each iteration resamples 4 sheet
   - `match_radius_sweep.csv`
   - `bootstrap_summary.json`
   - `figures/fn_rate_by_sheet.png`
+
+## Changelog
+
+### 2026-09-01 — Selection framing corrected (Obs 442)
+
+The two claims that the four sheets were "selected/chosen for
+fieldwork-grade reference quality" (§ Comparison verdict, § Caveats)
+are corrected in place: the sheets were randomly selected from the
+complete corpus (Sobotkova et al. 2023 § 3.5.2; PI confirmation
+2026-08-31; register history in Obs 317/442 — the register recorded
+the random selection one day after Obs 316 but it never propagated
+here). Numerical results unchanged; the FN-divergence explanation now
+rests on n = 4 variance, era/corpus variation, and instrument
+differences rather than selection bias. Banner added; this changelog
+initiated. Commit: see `git log` for this entry.
+
+### 2026-04-30 — Original publication
+
+Direct curator-vs-student confusion-matrix analysis on the four GS
+sheets with trapezoidal active-area clipping (Obs 316): FN 5.27 %
+(CI 2.92–8.80 %), FP 0.00 %, student F1 0.9729 at 50 m,
+radius-insensitive 50–150 m; pre-fix rectangular-bounds outputs
+archived.
