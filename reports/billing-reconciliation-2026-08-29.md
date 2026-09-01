@@ -1,8 +1,9 @@
 # Billing reconciliation, 2026-08-29: the Gemini 3 Flash ×1.6 gap
 
-> **Last revised**: 2026-08-29 (SKU check attempted — detailed
-> reports lag ~48 h, determination DEFERRED to ~2026-09-02; see the
-> changelog). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-02 (August invoice actual received:
+> >$1,200 incl. the 3.7 campaign's 31 Aug start; expected-side
+> ledger added for the line-item reconciliation; detailed SKU report
+> pending from the PI). See [§ Changelog](#changelog).
 
 **Classification**: post-hoc cost audit, $0 API spend. Read-only analysis of
 committed run metadata. No Application Programming Interface (API) call was
@@ -283,7 +284,43 @@ recording `service_tier` (as the legacy `55maps-*` runs did) and retain the
 in-window campaigns, and their absence is why this reconciliation has to
 argue from prices rather than simply read what was requested.
 
+## August 2026 invoice — the actual, and the expected-side ledger
+
+**Actual (PI, 2026-09-02)**: the August bill came in at **over
+$1,200**, inclusive of the Gemini 3.7 campaign's beginning on
+31 August. Detailed line-item report to follow.
+
+**Expected-side ledger** (committed anchors; for matching against
+the detailed report when it arrives — billing months run on US
+Pacific Time, so 31 Aug UTC activity straddles the boundary):
+
+| Item | Expected (audited flex) | Anchor |
+|---|---|---|
+| S142 programme (grid post-verifier, stride, 55-map A/B) | ≈ $338 | S142 continuity beacon; token-audit basis |
+| S143 programme (image campaign + H7 discharge) | ≈ $92 | S143 beacon |
+| Gemini 3 Flash 7-day line as BILLED | $700.01 vs ≈ $437 expected | § 1 of this report — the ×1.6 gap under investigation; overlaps the S142/S143 rows, do not double-count |
+| 3.7 screen (S144) | $5.28 billed (console-confirmed) | § 1 |
+| 3.7 55-map campaign (proposers + both arms, 29–31 Aug) | ≈ $171 token-basis; $155–175 expected billed | campaign card § 4b; S145 meta audit |
+| Fourth-cell GS calibration leg | ≈ $3 | card changelog 2026-08-31 |
+| Fourth-cell 57k verify | began 31 Aug ~07:09 UTC; ~40 % of its calls landed before the PT month boundary | run logs; splits across invoices |
+| Early August (S138–S141 era: E82 campaign etc.) | to be enumerated from session records at reconciliation | not yet tabulated — do NOT infer from memory |
+
+Reading: ≈ $430 (S142+S143 audited) + ≈ $180 (3.7 campaign to
+31 Aug) + early-August items + the ×1.6 anomaly applied across
+G3 spend (≈ +$260 if the $700-vs-$437 basis generalises) lands in
+the $1,100–1,300 region — the invoice is consistent with the ×1.6
+hypothesis rather than evidence of a new problem, but only the
+line-item report can settle which.
+
 ## Changelog
+
+### 2026-09-02 — August actual recorded; expected-side ledger
+
+PI reported the August invoice (> $1,200, incl. 31 Aug campaign
+start); expected-side ledger added from committed anchors so the
+detailed report reconciles line-by-line. Early-August rows
+deliberately left un-tabulated pending session-record enumeration
+(anti-confabulation: no figures from memory).
 
 ### 2026-08-29 (later) — SKU check: partial post, ALL Flex; hypothesis re-ranked
 
