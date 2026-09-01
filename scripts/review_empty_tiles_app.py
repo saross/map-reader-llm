@@ -198,6 +198,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Directory holding <map_name>/<tile_name> PNGs.")
     parser.add_argument(
         "--output", default="results/empty-tile-audit/verdicts.csv")
+    parser.add_argument(
+        "--overlay", default="",
+        help="Optional overlay.json (tile_name -> [[x_px, y_px], ...]) "
+             "of KNOWN mounds to draw in yellow — cluster-audit mode: "
+             "mark only ADDITIONAL, unrecorded symbols.")
     return parser.parse_args(argv if argv is not None else sys.argv[1:])
 
 
@@ -240,11 +245,18 @@ def to_world(row: pd.Series, x_px: float, y_px: float) -> tuple[float, float]:
 
 
 def annotated_image(img: Image.Image, marks: list[dict],
-                    pending: dict | None = None) -> Image.Image:
-    """The display image with added marks (red) and the pending,
-    nudgeable click (cyan circle) drawn on."""
+                    pending: dict | None = None,
+                    known: list[list[float]] | None = None) -> Image.Image:
+    """The display image with added marks (red), the pending,
+    nudgeable click (cyan circle), and any KNOWN mounds (yellow
+    circles — cluster-audit overlay) drawn on."""
     out = img.resize((TILE_PX * DISPLAY_SCALE,) * 2, Image.LANCZOS)
     draw = ImageDraw.Draw(out)
+    for k in known or []:
+        x, y = k[0] * DISPLAY_SCALE, k[1] * DISPLAY_SCALE
+        r = 11
+        draw.ellipse([x - r, y - r, x + r, y + r], outline="yellow",
+                     width=3)
     for i, m in enumerate(marks):
         x, y = m["x_px"] * DISPLAY_SCALE, m["y_px"] * DISPLAY_SCALE
         r = 12
@@ -267,6 +279,10 @@ def main() -> None:
     manifest = load_manifest(args.manifest)
     out_path = PROJECT_ROOT / args.output
     tiles_dir = PROJECT_ROOT / args.tiles_dir
+    overlay: dict = {}
+    if args.overlay:
+        import json as _json
+        overlay = _json.loads((PROJECT_ROOT / args.overlay).read_text())
 
     verdicts = latest_pass(load_verdicts(out_path))
     done = set(verdicts["tile_name"])
@@ -324,6 +340,11 @@ def main() -> None:
     st.markdown(
         f"**Tile {cursor + 1} / {len(manifest)}** ({n_done} saved) · "
         f"`{row.tile_name}` · {tier_note} · 10 % boundary at {n10}")
+    if overlay:
+        n_known = len(overlay.get(row.tile_name, []))
+        st.caption(f"Cluster-audit mode: {n_known} known mound(s) shown "
+                   "in YELLOW — mark only additional, unrecorded symbols; "
+                   "n = no additional mounds.")
     if st.session_state.get("prior_verdict"):
         st.info(f"Previously saved: **{st.session_state.prior_verdict}** "
                 "(marks shown below if any) — saving again supersedes.")
@@ -340,7 +361,8 @@ def main() -> None:
     with col_img:
         click = streamlit_image_coordinates(
             annotated_image(img, st.session_state.marks,
-                            st.session_state.get("pending_click")),
+                            st.session_state.get("pending_click"),
+                            overlay.get(row.tile_name)),
             key=f"tile_{cursor}_{st.session_state.get('nudge_epoch', 0)}",
         )
         # The component re-reports its last click every rerun; only a NEW
