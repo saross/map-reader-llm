@@ -30530,3 +30530,272 @@ labelled section) and `per_map_fn_breakdown.csv` row-level check
 "Denominator conventions (reverse-engineered; never defined)". Both
 columns above recomputed in-session S145 from the same committed inputs
 named in the Sources paragraph.
+
+## Observation 444: The complete proposer × verifier 2×2 — the family gain lives in the verifier seat, consensus absorbs threshold miscalibration, and saturation at N = 3 is statistical (Sessions 144–145, 2026-08-29/2026-09-01)
+
+**Obs 441** closed with two open items: the deployment test that was
+in flight as it was written, and a follow-on it explicitly refused to
+prejudge — whether a 3.7-verifier re-scoring of the 55-map union was
+warranted, "a **PI decision, not an assumption of this entry**". Both
+are now discharged. The PI approved completing the **2×2 grid**
+(proposer model × verifier model), and the fourth cell — the Gemini-3
+Run B K = 10 union, 57,482 candidates, re-verified with the 3.7
+verifier — was harvested on 2026-09-01. Every corner sits at an
+operating point **committed on the card before any deployment
+scoring**, so the whole grid is an honest carry-forward rather than a
+set of argmaxes, and it answers a question the gold-standard (GS)
+screen could only gesture at: *which seat does the family gain live
+in?*
+
+**(a) The complete grid, and the seat the gain lives in.** Canonical
+adjudicated extended Ground Truth (GT), 5,160 references, corrected-F1
+at 50 m primary with tile-level Matthews Correlation Coefficient (MCC)
+alongside:
+
+| Cell | Stack | Carried point | F1@50 | 95 % CI | P | R | tile-MCC |
+|---|---|---|---:|---|---:|---:|---:|
+| Incumbent B K = 10 | Gemini 3 + Gemini 3 | (0.15, k10) | 0.8422 | [0.8335, 0.8506] | 0.9034 | 0.7888 | 0.6982 |
+| Incumbent B N = 5 | Gemini 3 + Gemini 3 | (0.15, k5) | 0.8438 | — | 0.8815 | 0.8091 | — |
+| Arm 1 | **3.7** + Gemini 3 | (0.10, k5) | 0.8494 | [0.8410, 0.8574] | 0.8438 | 0.8550 | 0.6665 |
+| Fourth cell | Gemini 3 K = 10 union + **3.7** | (0.98, k10) | 0.8656 | [0.8574, 0.8736] | **0.9588** | 0.7890 | **0.7268** |
+| Arm 2 (all-3.7) | **3.7** + **3.7** | (0.80, k5) | **0.8763** | [0.8686, 0.8837] | 0.8901 | 0.8630 | 0.7073 |
+
+The declared five-test family — per-sheet paired sign-swap
+permutation, 10,000 draws, seed 42, Benjamini–Hochberg (BH) False
+Discovery Rate (FDR) at q = 0.05 across all five — resolves the grid
+along one axis only:
+
+| Test | Axis | ΔF1@50 | p | BH sig. |
+|---|---|---:|---:|---|
+| D1: arm 1 − B N = 5 | proposer, under the Gemini-3 verifier | +0.0056 | 0.3488 | no |
+| D6: arm 2 − arm 1 | **verifier**, under the 3.7 proposer | **+0.0270** | 0.0001 | **yes** |
+| Fourth − B K = 10 | **verifier**, under the Gemini-3 proposer | **+0.0234** | 0.0001 | **yes** |
+| Arm 2 − fourth | proposer, under the 3.7 verifier | +0.0107 | 0.0738 | no |
+| Diagonal: arm 2 − B N = 5 | both seats (all-3.7 vs incumbent) | **+0.0325** | 0.0001 | **yes** |
+
+**Both verifier-axis tests are significant; neither proposer-axis test
+is.** The family gain lives in the verifier seat on the *complete*
+grid, not on one diagonal — and the claim is now doubly supported,
+holding on the 3.7 candidate pool (+0.0270) and on the noisier
+Gemini-3 pool (+0.0234). Two card predictions land on this table.
+**D1 is the pre-named informative failure**: the proposer-seat gain
+Obs 441 measured on the GS sheets (+0.018) did *not* transfer as a
+resolvable deployment win, at +0.0056 against a 55-map MDE₈₀ of 0.013.
+**D6 is confirmed at twice its predicted magnitude** (+0.013
+predicted, +0.0270 observed). The fourth cell also takes the grid's
+MCC crown (0.7268) and precision crown (0.9588): the discriminating
+3.7 verifier trades recall for precision hard on a noisy pool, which
+is Obs 441's calibration story pointed the other way.
+
+**(b) A reference-instrument correction en route.** Session 144's
+interim headlines ("arm 1 0.8494 vs incumbent 0.8502"; "arm 2 above
+the entire board") compared **across two different instruments**. The
+campaign's primaries are scored on the canonical adjudicated extended
+GT; the final 55-map board (**Obs 438**) is scored on the ruling-21
+standardised reference (4,731 student + 279 extension = 5,010). The
+mix was caught by the sweep harness's **1e-6 incumbent gate** —
+`gemini37_sweep_oracle.py` recomputes each incumbent's per-map F1 and
+raises rather than writes unless it reproduces the committed
+*canonical-chain* value, which anchors B N = 5 at 0.843775 and
+B K = 10 at 0.8422, not the board's 0.8502 / 0.8558. Conclusions
+survive on both chains, and every delta now names its chain:
+
+| Cell | Canonical | Standardised | Board anchor |
+|---|---:|---|---|
+| Arm 1 carried | 0.8494 | 0.8550 [0.8465, 0.8630] | B-N5-carried 0.8502 [0.8416, 0.8582] — +0.0048, CIs overlap |
+| Arm 2 carried | 0.8763 | **0.8825** [0.8746, 0.8897] | board ceiling B-N10-oracle 0.8558 — **+0.0267 above the whole board, oracles included** |
+| Fourth cell | 0.8656 | 0.8732 [0.8649, 0.8810] | above the 0.8558 ceiling; second only to arm 2 among deployment cells |
+
+The offset is roughly uniform (standardised reads ~+0.005–0.006 above
+canonical for these cells), which is why nothing substantive moves:
+D1 stays an unresolvable near-tie on both chains, and arm 2 clears the
+entire final board **on the board's own instrument**. The
+methodological lesson is narrow and portable — a study maintaining two
+reference builds needs a machine-checked gate on every incumbent value
+it quotes, because instrument mixing is invisible at the level of a
+headline number and survives review by looking exactly like a result.
+
+**(c) Consensus absorbs threshold miscalibration.** The 16-cell grid
+board (120 pairs, 89 BH-significant, six greedy-clique tiers) puts
+every carried point beside its own oracle. **All seven carried→oracle
+contrasts are BH-significant** — including arm 2's +0.0043 (adjusted
+p = 0.000162) — so threshold-transfer costs are sheet-consistent real
+effects at every scale, not sampling noise, even where they are
+practically negligible. What the ladder adds is a shape:
+
+| Rung | Arm 1 gap (3.7 proposer + Gemini-3 verifier) | Arm 2 gap (all-3.7) | Ratio |
+|---|---:|---:|---:|
+| N = 1 | +0.0544 | +0.0142 | 3.8× |
+| N = 3 | +0.0227 | +0.0046 | 5.0× |
+| N = 5 | +0.0168 | +0.0043 | 3.9× |
+
+**The gap shrinks with N in both arms**: more proposer passes make the
+consensus vote a partial substitute for a correctly calibrated
+probability threshold, because a candidate carried by k of N passes
+has already been filtered before the probability dial touches it. And
+the **cross-model arm pays roughly four times the same-model arm's tax
+at every rung**. This is the direct extension of **Obs 437**, which
+found the within-Gemini-3 transfer tax collapsed to +0.0036 (A) and
++0.0081 (B) on this corpus: the tax did not disappear, it was hiding
+behind model identity, and swapping the verifier family re-opens it.
+Arm 2's tax (+0.0043) sits *inside* Obs 437's collapsed band; arm 1's
+(+0.0168) sits above both of its figures. At its own oracle
+(0.15, k5) arm 1 would have reached **0.8662, +0.0224 over the
+canonical incumbent** — so the proposer-seat gain partially exists,
+and it is the GS-selected threshold that failed to carry it across the
+corpus change.
+
+**(d) Saturation at N = 3 is statistical, and the economics are
+brutal.** Arm 2's N3→N5 contrast is **not significant on either
+basis** (carried adjusted p = 0.2588; oracle adjusted p = 0.3352), and
+the fourth cell's independent ladder saturates identically (N = 3
+0.8688 against N = 5 0.8697, with the oracle prob_t pinned at 0.96 on
+every rung). Obs 438's emergent N = 3 rung was a cost-frontier
+observation; it is now a *tested* one, on two pools — while N1→N3
+remains significant everywhere. Three cost consequences follow:
+
+- **arm2-N3-carried (0.8745) shares Tier 2 with the deployed
+  arm2-N5-carried** at 3/5 of the proposer spend.
+- **Both Gemini-3 incumbents sit in Tier 4 of six.**
+- A **single 3.7 proposer pass under the 3.7 verifier (N = 1, 0.8563)
+  beats the canonical incumbent five-pass stack (0.8438)** on roughly
+  one-fifth of the proposer spend (~$29 of the $144 K = 5 token-basis
+  total) — subject to the rung-oracle caveat below.
+
+**(e) Campaign mechanics worth recording.** Every headline above is a
+carry-forward, not an argmax: the card committed both arms' carried
+points and predictions D1–D7 before any deployment scoring, and the
+fourth cell's (0.98, k10) was fixed from a separate ≈ $3 GS
+calibration leg (best 0.9140 @ 20 m; mean verifier probability 0.209
+on the Gemini-3 pool against 0.687 on 3.7's own union) rather than
+chosen on 55-map data. The fourth cell's verification then survived a
+multi-day flex 503 storm behind a storm-resilient loop driver —
+**seven rounds, five of them storm-killed**, completing 04:07 UTC —
+and the cost of that was wall-clock hygiene only: no tier changed and
+no gate was relaxed. Costs take a **provisional pass on the token
+basis** (proposer $144 against the card's $93–150 envelope; verifier
+arms $12.54 and $14.31; campaign ≈ $171 token-basis flex before the
+fourth cell), with billed reconciliation due ~2026-09-02 — the 3.7
+stock-keeping unit (SKU) has billed ≈ 0.6× token basis to date.
+
+**Caveats.** Three a paper writer must carry. First, **the grid is not
+square in pass count**: the Gemini-3 row is K = 10 and the 3.7 row is
+K = 5, which is why the two proposer-axis tests use different
+comparators (D1 against B N = 5 for like-for-like K = 5; the fourth
+cell against B K = 10). Second, **rung oracles below N = 5 are
+descriptive** by the screening protocol — no carried claims were
+registered there — so the N = 1 economics headline is an *oracle*
+statement, and the honest carried comparison at N = 1 is
+arm2-N1-carried 0.8421, a Tier 4 tie with the very incumbents it is
+being set against. Third, **the campaign findings doc miscounts the
+carried→oracle contrasts as five; the artefact holds seven**, all
+significant (`grid-board/grid_board.json` `named_contrasts`). The
+substantive claim is unaffected — "all of them are significant" holds
+a fortiori — but quote seven. Note also the asymmetry the summary
+elides: N3→N5 is ns for arm 2 on both bases, but for arm 1 it *is*
+significant on the carried basis (+0.0076, adjusted p = 0.000162), so
+saturation at N = 3 is an arm-2 property, not a grid-wide one. Two
+artefact defects stand: the fourth cell's `run.meta.json` for
+`verify_37` carries **round-7 usage only** (the driver overwrote it
+per round), so no whole-cell measured cost survives, and the
+per-invocation meta stamping fix stays on the runner queue. Finally,
+the D5 cost verdict is token-basis and provisional until the billed
+reconciliation lands, and D1's card text was itself written against
+the board's standardised 0.8502 — the verdict above re-anchors it to
+the canonical 0.8438.
+
+Sources: `results/gemini37-55map-2026-08-31/findings.md` (verified
+2026-09-01: the canonical-chain headline table, the full five-test
+family, the D1–D7 verdict table, the reference-instruments section,
+and the 2026-09-01 changelog entry recording the storm-resilient
+driver's seven rounds and the round-7 meta note — this document is the
+campaign's canonical statement and every figure above is reconciled
+against it);
+`results/gemini37-55map-2026-08-31/sweeps/sweep_oracle.json` (verified
+2026-09-01: arm 1 carried 0.8493598998941189 at (0.10, k5), oracle
+0.8662029459901801 at (0.15, k5), `transfer_gap` 0.016843046096061243;
+arm 2 carried 0.8763160484109023 at (0.80, k5), oracle
+0.8806029353431178 at (0.95, k5) with P 0.9017 / R 0.8605, gap
+0.004286886932215572; fourth carried 0.8656176908356368 at (0.98, k10),
+oracle 0.8758156395649922 at (0.96, k9), gap 0.010197948729355422;
+`carried_hit_oracle_exactly` false for all three;
+`incumbents.BN5.f1_committed` 0.8437752627324171 and `BN10`
+0.8422141748577341; the five `paired` tests and `bh` q 0.05 /
+family_size 5 exactly as tabulated); `scripts/gemini37_sweep_oracle.py`
+lines 24–47 and 271–288 (verified 2026-09-01: the REFERENCE INSTRUMENT
+docstring naming the canonical/standardised split, and the incumbent
+gate that raises rather than writes when the per-map recomputation
+misses the committed canonical value by more than 1e-6 — the same
+gate is re-asserted at `scripts/gemini37_grid_board.py:147`);
+`results/gemini37-55map-2026-08-31/grid-board/grid_board.json` and
+`pairwise.csv` (verified 2026-09-01: 16 cells; 120 pairwise rows of
+which 89 significant; six tiers — Tier 1 arm2-N5-oracle and
+arm2-N3-oracle, Tier 2 arm2-N5-carried, fourth-N10-oracle, and
+arm2-N3-carried 0.8744563641635256, Tier 4 arm1-N5-carried,
+BN5-carried, BN10-carried, and arm2-N1-carried 0.8421052631578947;
+seven carried-vs-oracle named contrasts, all significant, arm2-N1 at
+adjusted p 0.001105 and the other six at 0.000162; arm 2 N3-vs-N5
+carried adjusted p 0.258824 and oracle 0.335192, both ns; arm 1
+N3-vs-N5 carried +0.007600832049728723 at adjusted p 0.000162,
+significant);
+`results/gemini37-55map-2026-08-31/ladder/ladder.json` (verified
+2026-09-01: unions 8,426 at N = 1 and 11,079 at N = 3; arm 1 rung
+oracles 0.8378456498699297 and 0.864478453483689; arm 2 rung oracles
+0.8563009527551322 at (0.98, k1) and 0.879009456956225 at (0.95, k3));
+`results/gemini37-fourth-cell/55map/g384_ov192_55map/ladder.json`
+(verified 2026-09-01: prob_t 0.96 at every rung; N = 3
+0.8687921520539547 against N = 5 0.8697052017305564);
+`.../primary/eval/summary.json` (verified 2026-09-01: the R_m 50 row —
+F1 0.8656176908356368 [0.8573873651439876, 0.8736117183516486],
+P 0.9587847385774847, R 0.788953488372093, tile MCC 0.7268024827224564
+[0.7141, 0.7393], `n_ref_extended` 5160);
+`.../standardised-ref/evaluation.json` (verified 2026-09-01: buffer
+50 m F1 0.8732 [0.8649, 0.8810], P 0.9517, R 0.8066, n_detections
+4246); the arms' equivalents under
+`results/gemini37-55map-2026-08-31/arm1|arm2/g384_ov192_55map_g37/`
+(verified 2026-09-01: arm 1 canonical 0.849360 [0.8410, 0.8574] with
+MCC 0.6665 and standardised 0.8550 [0.8465, 0.8630]; arm 2 canonical
+0.876316 [0.8686, 0.8837] with MCC 0.7073 and standardised 0.8825
+[0.8746, 0.8897]); `results/stride55-2026-08-27/ladder.json` and
+`g384_ov192_55map/primary/eval/summary.json` (verified 2026-09-01: the
+canonical incumbents — B N = 5 carried 0.8437752627324171 at (0.15, k5)
+with P 0.8815 / R 0.8091, and B K = 10 0.842214 [0.8335, 0.8506] with
+P 0.9034 / R 0.7888 / MCC 0.6982; note that the findings doc's
+"`ladder.json`" pointer for 0.843775 is *this* stride55 file, not the
+campaign's own ladder); `results/55map-final-board-2026-08-27/
+final-board-50m.md` (verified 2026-09-01: B-N10-oracle 0.8558
+[0.8475, 0.8636] and B-N5-carried 0.8502 [0.8416, 0.8582] on the
+standardised instrument); `results/sensitivity-mde-2026-08-28/
+sensitivity.json` (verified 2026-09-01: the 55-map final-board 50 m
+row — 8,541 tiles, null_sd_median 0.004606, mde_50pc_power 0.009028,
+mde_80pc_power 0.01290410051, the 0.013 D1 is measured against);
+`planning/gemini37-55map-2026-08-29.md` (verified 2026-09-01: D1–D5 at
+§ 2 — with D1 written against the board's 0.8502 — the D6–D7 prediction
+addendum, the § 4 envelope row "$93–150", the 2026-08-30 changelog
+committing both arms' carried points before any deployment scoring,
+and the 2026-08-31 entry committing the fourth cell's (0.98, k10) from
+its GS leg on the 57,482-candidate union). Commits `a73d64346` (fourth
+cell harvested, grid board, five-test family, and the round-7 meta
+note) and `7187e8135` (findings doc completed). Related: **Obs 441**
+(the Gemini 3.7 GS screen and the verifier-role swap — the entry this
+campaign discharges: its in-flight step 3 *is* arm 1, its "is a
+3.7-verifier re-scoring warranted?" follow-on became arm 2 and the
+fourth cell, and its threshold-transfer claim is what the 4×
+cross-model tax here quantifies at deployment scale); **Obs 437** (the
+55-map portfolio's near-lossless transfer, with the within-Gemini-3
+tax collapsed to +0.0036 and +0.0081 — the result this Obs qualifies:
+the collapse was a same-model property, and the cross-model arm
+re-opens the tax at roughly four times the size); **Obs 438** (the
+final 55-map board, the ruling-21 standardised instrument the
+correction in (b) turns on, and the emergent N = 3 rung this Obs
+converts from a cost-frontier observation into a tested one);
+**Obs 362** (a GS tie that reversed at deployment, and the
+instrument-resolution qualifier it put on the cost meta-rule — the
+precedent for reading D1's +0.0056 as bounded ignorance rather than a
+null, since the screen's +0.018 and the deployment's +0.0056 are the
+same stack measured at two resolutions); **Obs 442** (the four GS
+sheets were randomly selected, not quality-selected — the sampling
+basis under every GS-to-55-map carry-forward this campaign performs);
+**Obs 443** (model consistency against novice variance — the entry
+that draws on these cells, using the all-3.7 configuration as the
+model arm of the human comparison).
