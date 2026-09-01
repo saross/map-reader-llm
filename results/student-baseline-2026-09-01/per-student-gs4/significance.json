@@ -1,0 +1,146 @@
+{
+  "instrument": "per-tile tile-swap micro-F1 permutation (10000, seed 42) + BH q=0.05, family of 14",
+  "convention": "diff = students - model (positive = humans ahead)",
+  "tests": [
+    {
+      "test": "pooled: students vs model:3.7-text-screen-best @20m",
+      "f1_a": 0.848414,
+      "f1_b": 0.906606,
+      "observed_diff": -0.058192,
+      "p_value": 0.0073,
+      "n_tiles": 505,
+      "bh_adjusted_p": 0.017033,
+      "significant": true
+    },
+    {
+      "test": "pooled: students vs model:all-3.7-swap-best @20m",
+      "f1_a": 0.848414,
+      "f1_b": 0.918981,
+      "observed_diff": -0.070568,
+      "p_value": 0.0006,
+      "n_tiles": 505,
+      "bh_adjusted_p": 0.00168,
+      "significant": true
+    },
+    {
+      "test": "zone K-35-052-4_32635[B]: student vs all-3.7 @20m",
+      "f1_a": 0.946237,
+      "f1_b": 0.923913,
+      "observed_diff": 0.022324,
+      "p_value": 0.4369,
+      "n_tiles": 117,
+      "bh_adjusted_p": 0.509717,
+      "significant": false
+    },
+    {
+      "test": "zone K-35-062-2_Rakovski[C]: student vs all-3.7 @20m",
+      "f1_a": 0.749206,
+      "f1_b": 0.978852,
+      "observed_diff": -0.229646,
+      "p_value": 0.0,
+      "n_tiles": 134,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "test": "zone K-35-078-1_Lesovo[D]: student vs all-3.7 @20m",
+      "f1_a": 0.896552,
+      "f1_b": 0.705882,
+      "observed_diff": 0.190669,
+      "p_value": 0.0643,
+      "n_tiles": 111,
+      "bh_adjusted_p": 0.100022,
+      "significant": false
+    },
+    {
+      "test": "zone K-35-053-3_Elenovo[C]: student vs all-3.7 @20m",
+      "f1_a": 0.91954,
+      "f1_b": 0.906977,
+      "observed_diff": 0.012563,
+      "p_value": 0.8945,
+      "n_tiles": 45,
+      "bh_adjusted_p": 0.8945,
+      "significant": false
+    },
+    {
+      "test": "zone K-35-053-3_Elenovo[A]: student vs all-3.7 @20m",
+      "f1_a": 0.871795,
+      "f1_b": 0.864629,
+      "observed_diff": 0.007166,
+      "p_value": 0.8524,
+      "n_tiles": 98,
+      "bh_adjusted_p": 0.8945,
+      "significant": false
+    },
+    {
+      "test": "pooled: students vs model:3.7-text-screen-best @50m",
+      "f1_a": 0.975323,
+      "f1_b": 0.920273,
+      "observed_diff": 0.05505,
+      "p_value": 0.0,
+      "n_tiles": 505,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "test": "pooled: students vs model:all-3.7-swap-best @50m",
+      "f1_a": 0.975323,
+      "f1_b": 0.93287,
+      "observed_diff": 0.042453,
+      "p_value": 0.0005,
+      "n_tiles": 505,
+      "bh_adjusted_p": 0.00168,
+      "significant": true
+    },
+    {
+      "test": "zone K-35-052-4_32635[B]: student vs all-3.7 @50m",
+      "f1_a": 0.978495,
+      "f1_b": 0.923913,
+      "observed_diff": 0.054582,
+      "p_value": 0.0163,
+      "n_tiles": 117,
+      "bh_adjusted_p": 0.028525,
+      "significant": true
+    },
+    {
+      "test": "zone K-35-062-2_Rakovski[C]: student vs all-3.7 @50m",
+      "f1_a": 0.95873,
+      "f1_b": 0.984894,
+      "observed_diff": -0.026164,
+      "p_value": 0.1442,
+      "n_tiles": 134,
+      "bh_adjusted_p": 0.20188,
+      "significant": false
+    },
+    {
+      "test": "zone K-35-078-1_Lesovo[D]: student vs all-3.7 @50m",
+      "f1_a": 0.965517,
+      "f1_b": 0.764706,
+      "observed_diff": 0.200811,
+      "p_value": 0.0162,
+      "n_tiles": 111,
+      "bh_adjusted_p": 0.028525,
+      "significant": true
+    },
+    {
+      "test": "zone K-35-053-3_Elenovo[C]: student vs all-3.7 @50m",
+      "f1_a": 0.988506,
+      "f1_b": 0.930233,
+      "observed_diff": 0.058273,
+      "p_value": 0.194,
+      "n_tiles": 45,
+      "bh_adjusted_p": 0.246909,
+      "significant": false
+    },
+    {
+      "test": "zone K-35-053-3_Elenovo[A]: student vs all-3.7 @50m",
+      "f1_a": 0.991453,
+      "f1_b": 0.89083,
+      "observed_diff": 0.100623,
+      "p_value": 0.0002,
+      "n_tiles": 98,
+      "bh_adjusted_p": 0.000933,
+      "significant": true
+    }
+  ]
+}

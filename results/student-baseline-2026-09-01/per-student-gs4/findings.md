@@ -59,18 +59,43 @@ sheet); B and A edge the model narrowly on their zones (0.9462 vs
 both models on their own zone; the model still beats C on Rakovski
 (0.9849 vs 0.9587).
 
+## Significance (tile-swap permutation + BH)
+
+The board instrument (per-tile micro-F1 tile-swap permutation,
+10,000 draws, seed 42; per-tile counts gate-exact against the zone
+confusion counts) over a declared 14-test family, BH q = 0.05
+(`significance.json`; diff = students − model, positive = humans
+ahead):
+
+- **20 m, pooled**: the model leads the cohort SIGNIFICANTLY — all-3.7
+  −0.0706 (adj p = 0.0017), screen −0.0582 (adj p = 0.017). Zone-wise
+  only the Rakovski rout is significant (C: −0.2296, adj p < 0.0001);
+  B, D, and the three Elenovo comparisons are ns at 20 m.
+- **50 m, pooled**: the cohort leads SIGNIFICANTLY — +0.0425 vs
+  all-3.7 (adj p = 0.0017), +0.0551 vs screen (adj p < 0.0001).
+  Individually, A (+0.1006, adj p = 0.0009), B (+0.0546, adj
+  p = 0.029), and D (+0.2008, adj p = 0.029) each significantly beat
+  the model on their own ground; both C zones are ns — Student C is
+  the only novice the model does not significantly lose to at 50 m.
+
+The radius crossover is therefore statistical, not descriptive, in
+both directions.
+
 ## The three findings
 
 1. **The PI's bet lands: the model beats at least one student.**
-   The all-3.7 stack beats Student C on his main sheet at BOTH radii
-   — and C is not a strawman: excluding his three digitised
-   missed-swath polygons (coverage failure), his 50 m performance is
-   excellent (0.9916). The model's win over C at 50 m is a win over
-   his *coverage*, not his eye; at 20 m it is a win over both.
+   The all-3.7 stack beats Student C on his main sheet decisively at
+   20 m (0.9789 vs 0.7492, BH-adj p < 0.0001); at 50 m its edge is
+   not significant, but C is the only novice the model does not
+   significantly lose to there. C is not a strawman: excluding his
+   three digitised missed-swath polygons (coverage failure), his
+   50 m performance is excellent (0.9916). The model's advantage
+   over C is over his *coverage and localisation*, not his eye.
 2. **The human–model comparison is radius-dependent, and the
-   crossover is the finding.** At 20 m the model beats the pooled
-   cohort (+0.071); at 50 m the cohort's near-perfect precision
-   (0.9976) restores a clear human lead (+0.042). Novice error is
+   crossover is the finding — now statistically in both directions.**
+   At 20 m the model beats the pooled cohort (+0.071, BH-adj
+   p = 0.0017); at 50 m the cohort's near-perfect precision (0.9976)
+   restores a clear human lead (+0.042, BH-adj p = 0.0017). Novice error is
    **localisation-dominated** (loose clicks on true mounds); model
    error is **identification-dominated** (FPs and genuine misses
    that no radius forgives). This asymmetry is invisible in any
@@ -86,9 +111,9 @@ both models on their own zone; the model still beats C on Rakovski
 
 ## Caveats
 
-- Descriptive ranking; no significance tests yet. Zone n_ref spans
-  15–164, so per-zone deltas are unequally reliable (Lesovo
-  especially).
+- Zone n_ref spans 15–164, so per-zone deltas are unequally
+  reliable (Lesovo especially: its +0.19/+0.20 deltas reach
+  significance only at 50 m on 15 reference mounds).
 - The model cells are 20 m-optimised operating points; their 50 m
   rows slightly under-serve the model.
 - The reviewed student layer carries a single cleaning pass
@@ -105,7 +130,8 @@ both models on their own zone; the model still beats C on Rakovski
 
 Overnight Phase 0a/1a run (Session 145): per-student decomposition
 (gate exact), footprint-basis ranking, the full-sheet model-scoring
-catch, and the three findings above. Queued next: paired
-significance on the zone ranking; the A/C Elenovo-split note for
+catch, and the three findings above; significance added same day
+(tile-swap instrument, two gate-caught scoping fixes recorded in the
+script). Queued next: the A/C Elenovo-split note for
 Table 3 reconciliation; the corrective observation on the GS-4
 random-selection framing (card § 4b).
