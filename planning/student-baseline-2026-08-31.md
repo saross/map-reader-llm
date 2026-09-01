@@ -243,6 +243,63 @@ model — the blind spot no existing instrument can see.
   the 55-map FP side is considered nailed down (PI, 2026-08-31;
   Obs 361 precision review-verified).
 
+### 5b. Mark adjudication protocol (adopted S145, after the first edge case)
+
+Every mark is classified corpus-wide (nearest neighbour at 50 m
+across ALL tiles) against: (a) the canonical GT, (b) the deployed
+detection sets (arm 2 carried; B-N5 incumbent), (c) both raw unions
+(3.7 K=5; G3 K=10, with the 3.7-verifier probability). Classes:
+**true double-miss** (nothing anywhere near) / **known-in-GT**
+(edge artefact of tile-based emptiness — the first flagged mark was
+one: GT point 17.8 m away in the neighbour tile's strip, arm-2-found
+at 5/5 votes, missed by every G3-era cell) / **proposed-but-
+filtered** (in a union below the operating point) / **detected**.
+Only true double-misses count toward the FN floor; the
+proposed-but-filtered class separates proposer blindness from
+verifier/threshold kills. First adjudication results: 3 marks in the
+first ~150 tiles → 1 known-in-GT + 2 true double-misses (nearest
+anything 340+ m) — 2/150 ≈ 1.3 % of empty tiles, dead centre of the
+card's 1–3 % expectation and consistent with the GS-anchored ~0.9 %
+double-miss rate.
+
+### 5c. Phase 2b — the cluster audit (PI-commissioned 2026-09-01)
+
+The empty-tile instrument sees only ISOLATED double-misses; Obs 361's
+miss-correlation predicts FNs concentrate in mound groups. Follow-on
+review of known-cluster neighbourhoods:
+
+- **Cluster definition**: 2+ canonical-GT mounds single-linkage-
+  chained at **≤ 125 m** — the project's own interaction scale
+  (Obs 272 attractor-pull significant to 125 m; the FN analysis's
+  marginal-tier boundary), sitting between the GT nearest-neighbour
+  p10 (83 m) and p25 (164 m) so it captures genuine groups without
+  chaining the background (median NN 453 m). Sensitivity framings
+  computed S145: X=100 m → 348 clusters/601 tiles; X=150 m → 540
+  clusters/839 tiles.
+- **Frame at X=125 m**: 464 clusters, 1,006 mounds (19 % of GT),
+  **739 evaluation tiles** intersecting the 50 m-buffered clusters —
+  small enough for a full CENSUS (no sampling error in this
+  stratum; ~1–1.5 h at the observed review pace).
+- **Protocol**: the audit app extended with a KNOWN-MOUNDS OVERLAY
+  (canonical GT drawn on the tile) so the reviewer marks only
+  ADDITIONAL, unrecorded mounds; same adjudication protocol (§ 5b).
+- **Explicit scope boundary (PI, 2026-09-01)**: locations where one
+  mound was marked but 2–3 truly exist AND no second known mound
+  sits within X — singleton undercounts — are NOT discoverable by
+  this design; they are covered only by the existing 1,000+
+  candidate reviews. The estimand is additional mounds in
+  known-cluster neighbourhoods.
+
+### 5d. FN image bank (PI-commissioned 2026-09-01)
+
+Build a small image bank of every adjudicated true double-miss at
+verifier resolution (the verifier-crop convention), for the paper or
+supplement — the PI's reading of the first two is that both were
+partly obscured / intersected by other map features, and the crops
+are the evidence. Build after the audit closes (final FN set);
+script cuts crops centred on the marked positions plus a context
+frame, named by order_index and sheet.
+
 ## 6. Held in reserve
 
 A fresh curator pass over a stratified ~5-sheet sample of the 55
