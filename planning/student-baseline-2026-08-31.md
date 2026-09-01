@@ -196,6 +196,23 @@ Consequences for the phases above:
   tolerance** — our matched-radius recomputation (Phase 0a/1a) is
   the first to put these students on a defined tolerance.
 
+## 4c. Queued PI decision — non-Mound points in the canonical reference (found S145)
+
+The Obs 443 verification established that the reviewed 55-map layer's
+23 non-Mound entries (16 "Surface feature" — all Student B's own
+conscientious typing — plus 5 "Other", 2 "NA"; 81/10,827 = 0.75 %
+corpus-wide) are **not review demotions but the volunteers' own
+original labels**. Follow-on check: `compute_corrected_f1_multi_buffer.py`
+applies no FeatureType filter and the canonical GT carries none, so
+these 23 points sit in the 5,160-reference canonical extended GT as
+mound references (~0.45 % contamination). Impact is bounded and
+symmetric across cells (paired comparisons largely immune; absolute
+F1 shifts ≲ 0.003 if removed), but it is a reference-definition
+question and therefore a **PI ruling**: filter non-Mound FeatureTypes
+in a future GT revision (registered-analysis impact — every 55-map
+evaluation would shift by a hair), or document-and-retain. No action
+taken; queued for the next interactive register session.
+
 ## 5. Phase 2 — the empty-tile audit (PI-executed, ~40–80 min)
 
 Estimates the double-miss floor: mounds missed by BOTH students and
