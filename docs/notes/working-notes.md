@@ -30044,3 +30044,191 @@ campaign on this same anchor cell, four days earlier — same
 byte-matched-except-the-declared-bundle design, same 487-tile
 instrument, and the entry that first put the MDE appendix beside a
 GS margin).
+
+## Observation 442: The four GS sheets were randomly selected, not quality-selected — Obs 316's selection-bias caveat is retracted, and the register had already said so (Session 145, 2026-09-01)
+
+Two artefacts have carried the same unsourced sentence for four
+months. **Obs 316** explained part of the 4-GS-versus-55-map
+false-negative (FN) divergence — **5.27 % against 8.87 %** — by
+asserting that "the 4 GS sheets were selected for fieldwork-grade
+reference quality and may be among the best-mapped sheets in the
+wider corpus", adding that "small-sample random variation across the
+4 chosen sheets adds further downward bias".
+`results/student-gt-fn-rate-analysis-gs4/report.md` states it twice
+and harder: the sheets "were selected as fieldwork-grade reference
+quality" (§ Comparison), and § Caveats opens a bullet with
+"**Selection bias of the 4 GS sheets**. These sheets were chosen for
+fieldwork-grade reference quality. Their FN rate is therefore
+plausibly an under-estimate of the corpus-wide rate". Session 145
+went looking for the provenance of that claim and found none. **It is
+a session-side confabulation**, and it is retracted here.
+
+**What the record actually says.** Sobotkova et al. 2023 § 3.5.2
+(p. 7) describes the audit as "a review by project staff of **four
+randomly selected maps** (7 % of the total)" — 4 of 58 sheets =
+6.9 %. The synopsis commissioned this session characterises the
+selection as "random, post hoc, unstratified", and records that the
+paper never names the four sheets (no "K-35", "Elenovo", "Rakovski",
+or "Lesovo" appears in it). The PI confirmed the same point
+interactively on 2026-08-31: "randomly selected from the complete
+59-map corpus". A documentary source and a testimonial source agree,
+and nothing in either supports quality-selection.
+
+**The 58-versus-59 sheet count is resolved, not a conflict.** The
+paper says 58; the PI recalls 59. Counting distinct graticule cells
+occupied by the staged 2023 point layer settles it — the count is
+stable at **59** from a floor of 3 features per sheet all the way to
+20, with six further cells holding one or two features each (edge
+bleed, not worked sheets). Split by season at a 10-feature floor, and
+the two seasons are disjoint: **2017 gives 42 sheets** (matching the
+published figure and the assignment log exactly) and **2018 gives
+17** against a published tally of 16. The extra sheet is
+`K-35-077-4`, which holds 59 features from a single digitiser whose
+convex hull covers only **34 % of the sheet**, where every other 2018
+sheet holds 91–284 features at 84–96 % areal coverage. The paper's 58
+is "sheets completed"; the PI's 59 is "sheets touched". Both numbers
+are right about different things, and neither disturbs the randomness
+claim.
+
+**Direction of the consequence — the correction runs in our
+favour.** A quality-selected sample would be a biased draw, and the
+5.27 % would be an under-estimate of corpus-wide novice FN. A random
+draw is unbiased in expectation, so **random selection strengthens
+the 4-sheet estimate** rather than weakening it. What survives is
+n = 4 variance, which was never in dispute: the bootstrap-by-sheet
+95 % CI is **2.92–8.80 %** (10,000 iterations, seed 42), whose upper
+edge nearly reaches the 55-map lower-bound headline of 8.87 %.
+Precision of interpretation improves; the interval does not narrow.
+
+**The register already knew, which is the methodological finding
+here.** **Obs 317** — written on 2026-04-30, one day after Obs 316
+and three entries later in this same file — states in its caveats
+that "**the 4 GS maps were chosen randomly** from the 59-map set",
+and demotes the whole cross-corpus framing to sampling variance plus
+inter-student variance. The correction was therefore recorded, in the
+canonical register, four months ago; it simply never propagated to
+the artefact that most needed it. The GS-4 report predates Obs 317
+and was never revised, and Obs 316's caveat was left standing
+(correctly — observations are immutable), with the result that the
+stale framing remained the most legible version and was still being
+cited into this session's planning. Obs 317 rested the claim on
+"Shawn's domain judgement (shared verbally)" and carried no
+documentary anchor; this entry upgrades it to a published sentence in
+the source paper plus an explicit PI confirmation, so a future
+session cannot re-derive the confabulation from an unanchored note.
+
+**What actually explains the divergence.** Four mechanisms, none of
+them selection bias:
+
+| Mechanism | Evidence | Weight |
+|---|---|---|
+| n = 4 sampling variance | 4-GS CI 2.92–8.80 % nearly reaches 8.87 % | dominant |
+| Inter-student variance | per-sheet FN spans 2.76–9.18 %, a 6.4 pp range wider than the 3.6 pp gap (Obs 317) | dominant |
+| Corpus / era composition | the audited four are **2017-only**; the entire 2018 cohort (Students F–I, 2,463 features) was never audited | scope limit |
+| 55-map lower-bound method | 8.87 % counts only VLM-detected student misses; Obs 361's miss correlation pushes the truth above the recall-adjusted 11.15 % | raises the far side |
+
+The era point deserves care, because it is *not* a rebadged
+selection bias. Under a random draw of 4 from 58 with 42 sheets in
+the 2017 season, an all-2017 outcome has probability ≈ **0.26**
+(hypergeometric, computed this session), so the realised composition
+is unremarkable and is no evidence against randomness. What it does
+mean is that the 4-sheet estimate carries **no information about the
+2018 season**, while the wider corpus contains it. That is a scope
+limit on generalisation, not a bias in the estimate.
+
+The last row is the one that widens the gap rather than narrowing
+it. Obs 305's recall-adjusted central estimate of 11.15 % assumes the
+VLM's misses and the students' misses are independent; **Obs 361**
+measured them as mildly positively correlated on these same GS sheets
+(double-miss observed 0.92 % against 0.61 % / 0.55 % under
+independence — correlation ratios of 1.50 and 1.67 at the two
+buffers, Fisher OR 1.91, underpowered at 4 double-miss events). A
+correlated blind spot means the VLM is less likely to surface exactly
+the mounds the students missed, so the true 55-map FN sits **above**
+11.15 %. Taken together, the corrected reading is that the 4-GS
+figure is honest and the 55-map figure is conservative, and the two
+are further apart in appearance than in truth.
+
+**Scope of this retraction.** It reaches Obs 316's selection-bias
+caveat and nothing else. **Obs 316 is not edited** — observations are
+immutable — and its primary result stands entirely: the trapezoidal
+active-area correction, the 17 collar-artefact FPs resolved to zero,
+the corrected 5.27 % FN / 0.00 % FP, the Pulkovo-1942 datum finding,
+and the retraction of the older "Sobotkova's 5.0 % was a calculation
+error" framing. Only the sentence about why the 4-GS figure is lower
+than the 55-map figure is withdrawn. The corresponding fix to
+`results/student-gt-fn-rate-analysis-gs4/report.md` § Caveats is a
+**separate queued edit** in the student-baseline programme, to be
+made in place with a changelog entry per the document revision
+policy; note for whoever makes it that the report currently carries
+neither a `Last revised` banner nor a `## Changelog` section, so that
+edit must also add the original-publication stub.
+
+**Why this matters beyond the one caveat.** The confabulated
+rationale was plausible, load-bearing, and directionally
+self-serving: it explained an inconvenient divergence in a way that
+protected both numbers, which is precisely the shape of an
+explanation that should attract scrutiny rather than deflect it. It
+survived four months, a corrective observation that contradicted it,
+and citation into a live planning card, and it was caught only
+because this session read the source paper to answer a different
+question. The transferable lesson is the anti-confabulation rule
+applied to *rationales*, not just to figures — a causal story about
+why a number came out as it did needs a source anchor exactly as much
+as the number does — and the second lesson is that a corrective Obs
+discharges its duty to the register but not to the downstream
+documents, which have to be chased separately.
+
+Sources: `docs/methodology/research/claude-sobotkova-2023-synopsis.md`
+(verified 2026-09-01: § 3 "Design" quoting "a review by project staff
+of four randomly selected maps (7 % of the total)", § 3.5.2 p. 7, with
+the synopsis's own arithmetic "4 of 58 sheets = 6.9 %"; § 5 "The four
+audited sheets" — "random, post hoc, unstratified", the paper names
+none of them; the scope note "Students A–D — four sheets, four
+students, 2017 only", with Student E and the 2018 cohort F–I, 2,463
+features, never audited);
+`inputs/student-baseline-2023/staged/STAGING.md` § 6.4 "Reconciling 58
+against 59 sheets" (verified 2026-09-01: distinct-sheet counts 65 / 62
+/ 59 / 59 / 59 / 58 at thresholds of ≥ 1 / 2 / 3 / 10 / 20 / 50
+features; 2017 = 42 sheets, 2018 = 17 against a published 16, seasons
+disjoint at a 10-feature floor; `K-35-077-4` holds 59 features at 34 %
+convex-hull coverage against 91–284 features at 84–96 % for every
+other 2018 sheet; "The 58 in the paper is 'sheets completed'; the 59
+the principal investigator recalls is 'sheets touched'");
+`planning/student-baseline-2026-08-31.md` § 4b (verified 2026-09-01:
+the "⚠ Selection-bias caveat is unfounded — PI-CONFIRMED (2026-08-31)"
+bullet, the PI quote "randomly selected from the complete 59-map
+corpus", and the two queued actions — this observation and the report
+correction); `results/student-gt-fn-rate-analysis-gs4/report.md`
+(verified 2026-09-01: the quality-selection framing still present and
+uncorrected at § Comparison and in the § Caveats "Selection bias of
+the 4 GS sheets" bullet; no `Last revised` banner and no `## Changelog`
+section in the file); `results/student-gt-fn-rate-analysis-gs4/`
+`{bootstrap_summary.json, per_sheet_confusion.csv}` (the 2.92–8.80 %
+CI and the per-sheet FN rates, as tabulated in Obs 316 and Obs 317);
+`results/student-baseline-2026-09-01/per-student-gs4/findings.md` (the
+follow-on per-student decomposition of these same four sheets, whose
+changelog queues this entry as "the corrective observation on the GS-4
+random-selection framing (card § 4b)"). Commits `b20127281` (the
+synopsis and the card's design notes), `9904f6650` (the PI-confirmed
+random-selection ruling in § 4b), `4b3cd0e73` (the anonymised staged
+2023 layers and pipeline that resolve 58 against 59), and `8e57e8fa3`
+/ `204ed64fb` / `1123ae4dd` / `84316acf1` (the per-student GS-4
+decomposition, its findings document, and the significance pass).
+Related: **Obs 316** (the trapezoidal correction, 5.27 % FN / 0.00 %
+FP, commit `0bb7c448` — this entry supersedes its selection-bias
+caveat *only*; the correction itself and every number in it stand
+unaltered, and the entry is deliberately left unedited); **Obs 317**
+(the gap reframed as small-N plus inter-student variance — it already
+stated the sheets were "chosen randomly from the 59-map set" on
+verbal recollection, making this entry a re-anchoring of a correction
+the register had held since 2026-04-30 rather than a new discovery,
+and its per-sheet spread 2.76–9.18 % supplies the dominant
+mechanism); **Obs 305** (the 55-map lower bound 8.87 %, 95 % CI
+6.93–11.35 %, recall-adjusted 11.15 %, commit `508e498f` — the far
+side of the divergence, and the estimate the correlation result
+pushes upward); **Obs 361** (recall as a measured upper bound and the
+double-miss blind spot quantified on these same GS sheets —
+correlation ratios 1.50 and 1.67, Fisher OR 1.91 at 4 events, the
+reason the 55-map truth sits above the independence-based
+adjustment).
