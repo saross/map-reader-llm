@@ -30232,3 +30232,238 @@ double-miss blind spot quantified on these same GS sheets —
 correlation ratios 1.50 and 1.67, Fisher OR 1.91 at 4 events, the
 reason the 55-map truth sits above the independence-based
 adjustment).
+
+## Observation 443: Model consistency against novice variance — the human baseline's uncertainty is person-driven, the model's is terrain-driven, and only the second is knowable before deployment (Session 145, 2026-09-01)
+
+The per-student decomposition invites an obvious paper claim — *the
+model is more consistent than a novice* — and the claim is defensible,
+but not in its naive form. This entry states the version that survives
+the checks, and records the check that nearly refuted it.
+
+**Novice variance is large, and it is a property of the person.**
+Sobotkova et al. 2023 Table 3 reports individual error rates from
+**1.3 % to 10.6 %** across four audited volunteers — an 8× spread, and
+the paper says so in terms (§ 3.5.2, p. 9). Session 145's re-scoring on
+identical ground reproduces the shape independently: zone F1 at the 20 m
+working radius spans **0.7492** (Student C, Rakovski) to **0.9462**
+(Student B, K-35-052-4) on the footprint basis, a range of **0.197**.
+The 2023 paper's speed–accuracy result is the *opposite* of a trade-off
+— "the two fastest digitisers (Students A and B; 44 and 45 s per
+feature) also had the lowest error rates (1.3 and 2.9 %), while the two
+slowest (Students C and D; 61 and 73 s) had the highest (10.6 and
+7.4 %)" — so speed does not buy back accuracy, and nothing observable at
+enrolment predicts which volunteer you get. Note the framing carefully:
+these were **volunteers**, undergraduates on a field school doing
+digitisation as an ancillary rainy-day activity, with training that "took
+no more than half an hour of staff time across the entire season". The
+paper is not a hiring study and must not be written as one. Recruiting
+one novice is a draw from a wide distribution, and the draw is unknowable
+in advance.
+
+**But both systems vary by terrain, which is the check that nearly
+refuted the claim.** Joining the 55-sheet FN breakdown to the staged
+per-sheet student census (sheet keys normalised past the alias and EPSG
+suffixes; dominant digitiser at ≥ 90 % of a sheet's features) attributes
+**52 of 55 sheets** to a single volunteer. Within-student, across-sheet
+headline-FN spreads are wide for *everyone*:
+
+| Code | Sheets | Per-sheet FN, min–max | Weighted FN |
+|---|---:|---|---:|
+| A | 10 | 0.018–0.128 | 0.060 |
+| B | 8 | 0.027–0.153 | 0.081 |
+| C | 7 | 0.020–0.187 | 0.074 |
+| D | 7 | 0.009–0.137 | 0.078 |
+| E | 6 | 0.058–0.230 | **0.141** |
+| F | 7 | 0.017–0.500 | 0.072 |
+| G | 5 | 0.071–0.254 | **0.167** |
+| H | 2 | 0.000–0.042 | 0.035 |
+| **Cohort (52)** | 52 | median 0.072 | **0.087** (403 / 4,638) |
+
+Weighted per-student rates span **0.035 (H) to 0.167 (G)**, with E
+(0.141) and G the two systematically weaker digitisers — everyone else
+lands between 0.060 and 0.081, a band narrower than any single
+volunteer's own across-sheet range. So human variance decomposes into
+**terrain + person + idiosyncratic coverage failure**, while model
+variance decomposes into **terrain + near-zero run noise**: Obs 354
+measured single-run F1 spread at **SD 0.0025–0.0072** across independent
+T = 0.0 passes (worst min–max ≈ 0.019). The person term and the coverage
+term have no model-side counterpart.
+
+**The K-35-076-2 outlier is a coverage failure, not a weak digitiser.**
+Obs 305 flagged this sheet at a **52.5 % FN rate** (52 likely-FN against
+47 student-GT mounds), the corpus maximum by a wide margin. The census
+attributes it to **Student F on a plurality of 73.5 %** (97 features of
+132, with H holding the other 35) — which is *below* the 90 % dominance
+threshold, so the sheet is one of the three excluded from the 52 above,
+alongside K-35-074-4 (G, 88.9 %) and K-35-076-4 (F, 86.0 %). Attribution
+here is therefore weaker than for the other 52 and should be quoted as
+such. What the rest of F's record shows is that he is not a chronically
+weak digitiser: his three largest sheets — 135, 57, and 31 reference
+mounds — run **0.043, 0.017, and 0.031**, all below the cohort median,
+and his weighted rate of 0.072 sits essentially *on* that median
+(0.0718). His three high rates all sit on sheets holding 18, 10, and 2
+reference mounds, where one miss moves the rate by tens of points. This
+is the Student-C swath signature — a bounded coverage failure on
+particular ground — not a uniformly poor eye, and it is the failure mode
+Sobotkova 2023 describes as "mostly from contiguous map sections".
+
+**The honest wrinkle, recorded up front: the naive range is wider for
+the model.** Across the same five zones at 20 m on the footprint basis,
+the all-3.7 swap configuration spans **0.7059** (Lesovo) to **0.9789**
+(Rakovski) — a range of **0.273** against the students' 0.197. The
+3.7-text-screen arm is wider still (0.5854–0.9731, range 0.388). Lesovo
+is the cause: 15 reference mounds in-zone, and precision collapses to
+0.63 (swap) and 0.46 (screen) as a handful of false positives overwhelms
+a sparse denominator. **The consistency claim is therefore not "lower
+variance everywhere", and must not be written that way.** It is three
+narrower claims, each separately supportable:
+
+1. **Run-to-run determinism against the person lottery.** Re-running the
+   model returns the same answer to within SD 0.0072 F1 (Obs 354);
+   re-drawing a volunteer returns an 8× error-rate range (Table 3) and a
+   0.197 zone-F1 range. The model's *replication* variance is
+   effectively nil; the human baseline's dominant variance component has
+   no replication analogue at all.
+2. **Model terrain-variance is structural and diagnosable in advance.**
+   The sparse-sheet FP fragility is predictable from mound density
+   before a single call is made — you can look at a sheet and forecast
+   the regime. Human coverage failures were not: Student C's three
+   missed swaths and F's K-35-076-2 were invisible until somebody
+   audited, and the 2023 audit only reached 4 of 58 sheets.
+3. **Redundancy by design against redundancy foregone.** The model ships
+   with its aggregation mechanism built in — consensus voting over its
+   own proposer passes. The 2023 campaign's redundancy was *foregone,
+   not impossible*: multi-evaluator redundancy is a standard lever for
+   improving crowdsourced results (PI's assessment; a targeted
+   literature check on evaluator-diversity management is banked
+   separately, with a full lit-scout held in reserve), and the paper
+   itself recommends exactly it as future work — "assigning multiple
+   students to digitise the same map tiles independently or assigning
+   one student to review work by another would likely eliminate most
+   errors" (§ 3.5.2 p. 9, echoed § 5 p. 11). None was designed: the
+   entire double-surveyed estate is 3.7 sq km of about 22,500, or
+   **0.017 %**, and it is accidental boundary spill. Phrase this in the
+   paper as *redundancy by design against redundancy foregone*, never as
+   "uncontrolled human noise" — the cohort did not have the instrument,
+   it was not offered one.
+
+**Student false positives are rare and also person-concentrated — but
+the mechanism is not what the check set out to test.** The 55-map
+reviewed layer holds **23 non-Mound points of 4,746** (16 "Surface
+feature", 5 "Other", 2 "NA"). Attributing them to the staged master by
+nearest join (≤ 5 m) resolves **20**, and they are lopsided: **Student B
+holds 16 of the 20 — 2.19 % of his 732 attributable reviewed points, all
+16 of them "Surface feature"** — with every other code at or below
+0.33 % (C 2 = 0.33 %, F 1 = 0.30 %, G 1 = 0.29 %, and A, D, E, H all
+exactly 0.00 %). Three are unattributable, joining at 15.4, 16.0, and
+18.5 m to a master point labelled Mound; they belong to the curation-
+artefact class findings.md already flags (111 of 4,746 reviewed points
+join beyond 5 m, maximum 2,357.8 m). **The correction:** 19 of the 20
+carry the volunteer's *own original* non-Mound label in the staged
+master — they are not curator demotions. Only one (F, joining at 3.0 m)
+is a genuine Mound → non-Mound change. That makes the result stronger,
+not weaker, for the near-zero-FP generalisation in the Obs 261 lineage:
+B's 16 points are correctly self-labelled non-mound observations that a
+mound-only evaluation must exclude, not detection errors he committed.
+The same concentration holds across the full staged corpus, where the
+denominators are larger and the attribution is exact rather than
+spatial:
+
+| Code | Non-Mound | Of total | Rate |
+|---|---:|---:|---:|
+| B | 57 | 1,799 | **3.17 %** |
+| G | 14 | 810 | 1.73 % |
+| C | 6 | 1,615 | 0.37 % |
+| F | 4 | 1,305 | 0.31 % |
+| A, D, E, H, I, TESTER-1 | 0 | 5,298 | 0.00 % |
+| **Cohort** | **81** | **10,827** | **0.75 %** |
+
+So the near-zero-FP generalisation holds cohort-wide with a person-level
+exception, and the exception is a labelling *habit* — B annotating
+ambiguous circles as surface features where five colleagues annotated
+none at all — rather than a detection failure.
+
+**What this buys the paper.** The deployment framing is the payload:
+**novice-baseline uncertainty is dominated by which volunteer you draw
+and how disciplined their coverage is; model uncertainty is dominated by
+which terrain you point it at — and only the second is measurable before
+deployment.** A project commissioning novice digitisation cannot forecast
+its error rate; a project deploying this stack can, from mound density
+alone. That asymmetry, not a raw variance comparison, is the consistency
+argument, and it sits naturally beside Obs 442's radius crossover: the
+model wins the pooled cohort at 20 m (−0.0706 F1, BH-adjusted
+p = 0.0017) and loses it at 50 m (+0.0425, BH-adjusted p = 0.0017), so
+neither system is simply better and the interesting comparison was never
+the mean.
+
+**Caveats.** The per-sheet FN rates are the **VLM-mediated lower-bound
+instrument** of Obs 305 — they count only student misses that the VLM
+independently found, so every figure in the first table is a floor, and
+Obs 361's measured miss correlation means the true rates sit above the
+independence-based adjustment. The false-positive review attention was
+targeted rather than uniform, so the demotion rates are lower bounds
+too. Dominance attribution at ≥ 90 % is a heuristic, not a documented
+assignment — the 2023 paper never published a student→sheet lookup
+(Obs 442). Student H rests on 2 sheets and 86 reference mounds, and I
+never reaches dominance on any sheet, so the bottom of the weighted range
+is thinly supported. The reviewed layer now holds 4,746 points, not the
+4,744 recorded in Obs 261 and Obs 305; two curator mounds were added on
+2026-05-03 (`2e075eb99`, `baf1497a7`), which is why counts quoted from
+those entries will be two short. Finally, the two computations reported
+here have **no committed script yet** — they were computed in-session
+(S145) from the named committed inputs, and the input files, not a
+pipeline artefact, are the anchor.
+
+Sources: `docs/methodology/research/claude-sobotkova-2023-synopsis.md`
+(verified 2026-09-01: § 3 Table 3 per-student rates "A 1.3 %; B 2.9 %;
+C FN 8.7 %, total 10.6 %; D FN 5.9 %, total 7.4 %" and the reported
+spread "individual error rates ranged from 1.3 % to 10.6 %", § 3.5.2
+p. 9; the speed–accuracy inversion quoted verbatim above, § 3.5.2 p. 9;
+the redundancy recommendation, § 3.5.2 p. 9 and § 5 p. 11; the volunteer
+framing and "no more than half an hour of staff time across the entire
+season", § 2.2 p. 4 and § 3.1 p. 7; the swath-omission structural claim,
+§ 3.5.2 p. 9);
+`results/student-baseline-2026-09-01/per-student-gs4/analysis.json`
+(verified 2026-09-01: footprint-basis 20 m rows — students 0.7492
+C@Rakovski to 0.9462 B@K-35-052-4; `all-3.7-swap-best` 0.7059
+Lesovo to 0.9789 Rakovski; `3.7-text-screen-best` 0.5854 to 0.9731;
+Lesovo n_ref 15 with precision 0.6316 / 0.4615);
+`results/student-baseline-2026-09-01/per-student-gs4/significance.json`
+(verified 2026-09-01: pooled students-minus-model −0.070568 at 20 m,
+BH-adjusted p = 0.00168, and +0.042453 at 50 m, BH-adjusted p = 0.00168,
+both against `all-3.7-swap-best`, 505 tiles, 10,000 draws, seed 42);
+`results/student-baseline-2026-09-01/per-student-gs4/findings.md`
+(verified 2026-09-01: the radius-crossover framing, the sparse-sheet
+precision-collapse finding, and the far-join curation caveat);
+`results/student-gt-fn-rate-analysis/per_map_fn_breakdown.csv` joined to
+`inputs/student-baseline-2023/staged/sheet-student-census.csv`
+(computed in-session S145 from these committed inputs, no script
+committed: 55 sheets all joining, 52 with a ≥ 90 % dominant code, the
+per-student table above, and K-35-076-2 = F at 97/132 = 73.5 %);
+`inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
+joined to `inputs/student-baseline-2023/staged/mounds-attributed.geojson`
+(computed in-session S145, likewise unscripted: 23 non-Mound of 4,746,
+20 attributable at ≤ 5 m, B 16 = 2.19 % of 732, the three far joins, and
+the master-side non-Mound table — 81 of 10,827 = 0.75 %, of which 205
+master features carry null geometry and are excluded from the join);
+`inputs/student-baseline-2023/staged/STAGING.md` § 7.4 (verified
+2026-09-01: "the entire double-surveyed estate in this corpus is 3.7 sq
+km… the double-surveyed fraction is **0.017 %**", and § 7.1 "there is no
+cross-student polygon overlap"). Related: **Obs 442** (the four GS
+sheets were randomly selected, not quality-selected — the entry that
+re-anchors this comparison's sampling basis, and the source of the
+radius-crossover significance quoted above); **Obs 354** (T = 0.0
+run-to-run F1 spread SD 0.0025–0.0072, worst min–max ≈ 0.019 — the
+determinism half of claim 1, and the reason the model has no replication
+variance to trade against the person lottery); **Obs 305** (the 55-map
+VLM-mediated FN lower bound 8.87 %, 95 % CI 6.93–11.35 %, median 7.5 %,
+IQR 4.3–12.8 %, and the K-35-076-2 outlier at 52.5 % — the instrument
+underlying the per-sheet table and the caveat that every figure in it is
+a floor); **Obs 316** (the trapezoidal correction, 5.27 % FN / 0.00 % FP
+on the four GS sheets — the near-zero student FP result this entry
+extends from four sheets to the full 10,827-point corpus); **Obs 361**
+(recall as a measured upper bound and the double-miss blind spot on
+these same sheets — why the lower-bound FN rates sit further below truth
+than independence would imply); **Obs 261** (the 96-cluster duplicate
+review that produced the reviewed layer at 4,744 points, since grown to
+4,746 — the lineage in which the near-zero-FP generalisation sits).
