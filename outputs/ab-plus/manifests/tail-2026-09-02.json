@@ -1,0 +1,888 @@
+{
+ "created": "2026-09-02",
+ "purpose": "AB+ tail run — the 88 sources remaining after the 25-source pilot (reports/ab-plus-pilot-report-2026-08-30.md); cluster = primary positioning cluster for the drafter dispatch; wave = launch order; gate = pre-flight cache-quality result (chars/page, empty pages, watermark-signature duplicate pages)",
+ "gate_rule": "FAIL if >1 identical pages AND <1000 chars/page (Wiley watermark-only rasterised PDF); WARN if any empty page; else PASS",
+ "model": "opus alias (claude-opus-5) for drafter, verifier, and editor",
+ "sources": [
+  {
+   "citekey": "berganzo-besga_hybrid_2021",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 18,
+   "chars": 53954,
+   "chars_per_page": 2997,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "canedo_automated_2025",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 15,
+   "chars": 59741,
+   "chars_per_page": 3983,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "canedo_synergy_2024",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 18,
+   "chars": 53659,
+   "chars_per_page": 2981,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "castiello_remote_2025",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 18,
+   "chars": 57752,
+   "chars_per_page": 3208,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "chen_ancient_2026",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 18,
+   "chars": 59413,
+   "chars_per_page": 3301,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "chen_automatic_2021",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 21,
+   "chars": 75592,
+   "chars_per_page": 3600,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "davis_comparison_2019",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 57,
+   "chars": 74446,
+   "chars_per_page": 1306,
+   "gate": "WARN: 6 empty page(s) (image-only figure pages); pagination caveat",
+   "status": "queued"
+  },
+  {
+   "citekey": "davis_deep_2021",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 12,
+   "chars": 58273,
+   "chars_per_page": 4856,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "guyotDetectingNeolithicBurial2018",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 19,
+   "chars": 42109,
+   "chars_per_page": 2216,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "landauer_archaeological_2025",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 17,
+   "chars": 51760,
+   "chars_per_page": 3045,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "landauer_visual_2025",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 25,
+   "chars": 69871,
+   "chars_per_page": 2795,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "niculitaGeomorphometricMethodsBurial2020",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 30,
+   "chars": 84201,
+   "chars_per_page": 2807,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "shteriyanov_blueprintsymvl_2025",
+   "cluster": "symbol-on-technical-drawing analogue",
+   "wave": 1,
+   "pages": 13,
+   "chars": 76474,
+   "chars_per_page": 5883,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "sobotkova_validating_2024",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 23,
+   "chars": 79914,
+   "chars_per_page": 3475,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "trier_automated_2021",
+   "cluster": "archaeological prospection prior art",
+   "wave": 1,
+   "pages": 19,
+   "chars": 59012,
+   "chars_per_page": 3106,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "arundel_deep_2022",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 14,
+   "chars": 64443,
+   "chars_per_page": 4603,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "canAutomaticDetectionRoad2021",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 10,
+   "chars": 41950,
+   "chars_per_page": 4195,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "ekimAutomaticRoadExtraction2021",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 15,
+   "chars": 44895,
+   "chars_per_page": 2993,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "garciamolsosa_potential_2021",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 13,
+   "chars": 64373,
+   "chars_per_page": 4952,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "goldman_extracting_2025",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 15,
+   "chars": 51454,
+   "chars_per_page": 3430,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "huang_leveraging_2023",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 23,
+   "chars": 57601,
+   "chars_per_page": 2504,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "huang_peace_2025",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 10,
+   "chars": 51975,
+   "chars_per_page": 5198,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "kramm_deep_2025",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 14,
+   "chars": 69302,
+   "chars_per_page": 4950,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "liu_zero-shot_2025",
+   "cluster": "open-vocabulary / VLM detection alternative",
+   "wave": 2,
+   "pages": 5,
+   "chars": 21762,
+   "chars_per_page": 4352,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "ren_multiscale_2026",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 12,
+   "chars": 47505,
+   "chars_per_page": 3959,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "sterzinger_few-shot_2025",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 18,
+   "chars": 46337,
+   "chars_per_page": 2574,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "uhlAutomatedExtractionHuman2020",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 19,
+   "chars": 80605,
+   "chars_per_page": 4242,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "ung_cartomapqa_2025",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 14,
+   "chars": 72508,
+   "chars_per_page": 5179,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "vassanyi_automatic_2021",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 5,
+   "chars": 23963,
+   "chars_per_page": 4793,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "zhang_machine_2022",
+   "cluster": "historical-map extraction lineage",
+   "wave": 2,
+   "pages": 21,
+   "chars": 72632,
+   "chars_per_page": 3459,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "brown_large_2024",
+   "cluster": "consensus / test-time-compute antecedent",
+   "wave": 3,
+   "pages": 27,
+   "chars": 76114,
+   "chars_per_page": 2819,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "chen_are_2024",
+   "cluster": "consensus / test-time-compute antecedent",
+   "wave": 3,
+   "pages": 18,
+   "chars": 51811,
+   "chars_per_page": 2878,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "huangLargeLanguageModels2023",
+   "cluster": "consensus / test-time-compute antecedent",
+   "wave": 3,
+   "pages": 17,
+   "chars": 57758,
+   "chars_per_page": 3398,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "kim_are_2026",
+   "cluster": "consensus / test-time-compute antecedent",
+   "wave": 3,
+   "pages": 17,
+   "chars": 65462,
+   "chars_per_page": 3851,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "li_more_2024",
+   "cluster": "consensus / test-time-compute antecedent",
+   "wave": 3,
+   "pages": 18,
+   "chars": 55912,
+   "chars_per_page": 3106,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "li_unleashing_2025",
+   "cluster": "open-vocabulary / VLM detection alternative",
+   "wave": 3,
+   "pages": 23,
+   "chars": 70467,
+   "chars_per_page": 3064,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "liu_more_2025",
+   "cluster": "open-vocabulary / VLM detection alternative",
+   "wave": 3,
+   "pages": 13,
+   "chars": 50808,
+   "chars_per_page": 3908,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "naik_diversity_2023",
+   "cluster": "consensus / test-time-compute antecedent",
+   "wave": 3,
+   "pages": 22,
+   "chars": 71741,
+   "chars_per_page": 3261,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "snell_scaling_2024",
+   "cluster": "consensus / test-time-compute antecedent",
+   "wave": 3,
+   "pages": 37,
+   "chars": 91857,
+   "chars_per_page": 2483,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "taubenfeld_confidence_2025",
+   "cluster": "consensus / test-time-compute antecedent",
+   "wave": 3,
+   "pages": 22,
+   "chars": 68514,
+   "chars_per_page": 3114,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "tian_more_2025",
+   "cluster": "open-vocabulary / VLM detection alternative",
+   "wave": 3,
+   "pages": 37,
+   "chars": 121023,
+   "chars_per_page": 3271,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "wan_reasoning_2025",
+   "cluster": "consensus / test-time-compute antecedent",
+   "wave": 3,
+   "pages": 23,
+   "chars": 81306,
+   "chars_per_page": 3535,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "wangSelfConsistencyImprovesChain2022",
+   "cluster": "consensus / test-time-compute antecedent",
+   "wave": 3,
+   "pages": 24,
+   "chars": 90714,
+   "chars_per_page": 3780,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "yu_visrag_2024",
+   "cluster": "open-vocabulary / VLM detection alternative",
+   "wave": 3,
+   "pages": 25,
+   "chars": 87167,
+   "chars_per_page": 3487,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "zhang_consensus_2025",
+   "cluster": "consensus / test-time-compute antecedent",
+   "wave": 3,
+   "pages": 41,
+   "chars": 118476,
+   "chars_per_page": 2890,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "agarwal_many-shot_2024",
+   "cluster": "few-shot / in-context learning / annotation budget",
+   "wave": 4,
+   "pages": 37,
+   "chars": 117901,
+   "chars_per_page": 3187,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "baldassini_what_2024",
+   "cluster": "few-shot / in-context learning / annotation budget",
+   "wave": 4,
+   "pages": 21,
+   "chars": 69664,
+   "chars_per_page": 3317,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "chen_can_2025",
+   "cluster": "few-shot / in-context learning / annotation budget",
+   "wave": 4,
+   "pages": 11,
+   "chars": 52751,
+   "chars_per_page": 4796,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "chen_true_2025",
+   "cluster": "few-shot / in-context learning / annotation budget",
+   "wave": 4,
+   "pages": 21,
+   "chars": 73327,
+   "chars_per_page": 3492,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "groot_overconfidence_2024",
+   "cluster": "calibration / verbalised confidence",
+   "wave": 4,
+   "pages": 27,
+   "chars": 70023,
+   "chars_per_page": 2593,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "jiang_many-shot_2024",
+   "cluster": "few-shot / in-context learning / annotation budget",
+   "wave": 4,
+   "pages": 17,
+   "chars": 47942,
+   "chars_per_page": 2820,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "lu_fantastically_2022",
+   "cluster": "few-shot / in-context learning / annotation budget",
+   "wave": 4,
+   "pages": 13,
+   "chars": 44451,
+   "chars_per_page": 3419,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "nosekPreregistrationRevolution2018",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 4,
+   "pages": 7,
+   "chars": 55733,
+   "chars_per_page": 7962,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "nosek_preregistration_2019",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 4,
+   "pages": 4,
+   "chars": 23756,
+   "chars_per_page": 5939,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "srivastava_sound_2018",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 4,
+   "pages": 28,
+   "chars": 49738,
+   "chars_per_page": 1776,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "tian_just_2023",
+   "cluster": "calibration / verbalised confidence",
+   "wave": 4,
+   "pages": 10,
+   "chars": 40245,
+   "chars_per_page": 4024,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "xuan_seeing_2025",
+   "cluster": "calibration / verbalised confidence",
+   "wave": 4,
+   "pages": 43,
+   "chars": 159422,
+   "chars_per_page": 3707,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "yang_empirical_2022",
+   "cluster": "few-shot / in-context learning / annotation budget",
+   "wave": 4,
+   "pages": 9,
+   "chars": 43952,
+   "chars_per_page": 4884,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "zhao_calibrate_2021",
+   "cluster": "few-shot / in-context learning / annotation budget",
+   "wave": 4,
+   "pages": 15,
+   "chars": 53138,
+   "chars_per_page": 3543,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "zhou_unibias_2024",
+   "cluster": "few-shot / in-context learning / annotation budget",
+   "wave": 4,
+   "pages": 24,
+   "chars": 79738,
+   "chars_per_page": 3322,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "bakkerEnsuringQualitySpecificity2020",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 18,
+   "chars": 74652,
+   "chars_per_page": 4147,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "binney_practical_2025",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 13,
+   "chars": 67332,
+   "chars_per_page": 5179,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "chambers_past_2021",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 14,
+   "chars": 101490,
+   "chars_per_page": 7249,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "cruwell_preregistration_2021",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 22,
+   "chars": 108571,
+   "chars_per_page": 4935,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "dwork_reusable_2015",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 4,
+   "chars": 24495,
+   "chars_per_page": 6124,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "fafchamps_using_2017",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 18,
+   "chars": 63529,
+   "chars_per_page": 3529,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "gamble_guidelines_2017",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 7,
+   "chars": 40303,
+   "chars_per_page": 5758,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "hekler_agile_2016",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 12,
+   "chars": 69195,
+   "chars_per_page": 5766,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "hemming_prospective_2020",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 2,
+   "chars": 11507,
+   "chars_per_page": 5754,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "ioannidis_pre-registration_2022",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 7,
+   "chars": 53309,
+   "chars_per_page": 7616,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "lakens_when_2024",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 14,
+   "chars": 68966,
+   "chars_per_page": 4926,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "lin_standard_2016",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 6,
+   "chars": 34859,
+   "chars_per_page": 5810,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "liu_paths_2020",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 14,
+   "chars": 76059,
+   "chars_per_page": 5433,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "maccoun_blind_2015",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 3,
+   "chars": 14092,
+   "chars_per_page": 4697,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "ofosu_pre-analysis_2023",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 5,
+   "pages": 17,
+   "chars": 85913,
+   "chars_per_page": 5054,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "gerasimova_argumentbased_2024",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 22,
+   "chars": 8547,
+   "chars_per_page": 388,
+   "gate": "FAIL: watermark-only text layer (OCR repair required)",
+   "status": "queued"
+  },
+  {
+   "citekey": "pu_designing_2019",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 35,
+   "chars": 61697,
+   "chars_per_page": 1763,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "ross_introducing_2022",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 19,
+   "chars": 57997,
+   "chars_per_page": 3052,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "sarafoglou_comparing_2023",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 20,
+   "chars": 87899,
+   "chars_per_page": 4395,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "sarafoglou_survey_2022",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 19,
+   "chars": 79553,
+   "chars_per_page": 4187,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "strobl_simp2l_2026",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 38,
+   "chars": 86766,
+   "chars_per_page": 2283,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "thomas_mitigating_2026",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 19,
+   "chars": 68915,
+   "chars_per_page": 3627,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "trier_using_2019",
+   "cluster": "archaeological prospection prior art",
+   "wave": 6,
+   "pages": 11,
+   "chars": 4050,
+   "chars_per_page": 368,
+   "gate": "FAIL: watermark-only text layer (OCR repair required)",
+   "status": "queued"
+  },
+  {
+   "citekey": "vaccaro_preregistration_2026",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 14,
+   "chars": 66326,
+   "chars_per_page": 4738,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "van_den_akker_preregistration_2021",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 19,
+   "chars": 78180,
+   "chars_per_page": 4115,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "van_miltenburg_preregistering_2021",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 11,
+   "chars": 47303,
+   "chars_per_page": 4300,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "willroth_best_2024",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 14,
+   "chars": 59298,
+   "chars_per_page": 4236,
+   "gate": "PASS",
+   "status": "queued"
+  },
+  {
+   "citekey": "willroth_challenges_2022",
+   "cluster": "preregistration and open-science methodology",
+   "wave": 6,
+   "pages": 10,
+   "chars": 28859,
+   "chars_per_page": 2886,
+   "gate": "PASS",
+   "status": "queued"
+  }
+ ]
+}
