@@ -1,8 +1,6 @@
 # AB+ corpus for the ISPRS paper bibliography — run card
 
-> **Last revised**: 2026-09-02 (tail run PAUSED at the usage limit with
-> 45/88 rendered; resume protocol in the continuity file).
-> See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-02 (S147 — tail run COMPLETE, 88/88). See [§ Changelog](#changelog).
 
 **Purpose**: per-source Annotated Bibliography Plus (AB+) entries for
 every work the paper may cite — attested quotes with page anchors,
@@ -79,7 +77,35 @@ concurrent drafters at the Opus tier, verifiers dispatched as drafts
 land, editors on every PASS-WITH-EDITS; deterministic check + render
 per wave, stamped `--model claude-opus-5 --run-date 2026-09-02`.
 
+**Status (2026-09-02, S147): COMPLETE.** 88/88 rendered; corpus 113
+deliverables (25 pilot + 88 tail), every one model-stamped. Final
+numbers and the catch taxonomy: `reports/ab-plus-tail-report-2026-09-02.md`.
+
 ## Changelog
+
+### 2026-09-02 (S147) — Tail run COMPLETE
+
+Resumed after the S146 pause; manifest-versus-disk reconcile matched
+exactly (agents write outputs only at the end, so nothing in flight at
+the pause had landed). Ran at the 20-agent cap with rolling refill to
+the end. Final: **88/88 rendered** (batches 38–58 this session);
+**88 PASS-WITH-EDITS, 0 FAIL, 0 clean**; 753 points scored (564
+SUPPORTED / 186 OVERREACH / 2 UNSUPPORTED / 1 filed NOT CHECKABLE
+outside the enum); 751 edits proposed, median 8 per entry (3–18);
+703 attested quotes; summaries median 498 words (437–500), all in
+band; 87 of 88 entries at seven key points (maccoun_blind_2015, a
+three-page Comment, at six). The two OCR-rebuilt Wiley sources
+(trier_using_2019, gerasimova_argumentbased_2024) were drafted last
+under the provenance-note controls — drafter, verifier, and editor
+each visually attested every span on rendered pages; no transcription
+error found. One orchestrator ruling: gerasimova key point 5's stance
+changed supports → complicates after the edit (the source guarantees
+disclosure of a moved criterion, not a fixed one). One accepted
+deviation: trier's positioning runs to six sentences (315 words)
+because the verifier's lead correction split into two claims. Agent
+count from the session's task transcripts: 88 drafters, 88 verifiers,
+88 editors. Report: `reports/ab-plus-tail-report-2026-09-02.md`
+(commit `d2f6b6b6c`); render-complete commit `bcf2e4692`.
 
 ### 2026-09-02 (later) — Tail run PAUSED at the usage limit
 
