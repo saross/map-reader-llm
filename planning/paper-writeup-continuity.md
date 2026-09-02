@@ -8,6 +8,77 @@ project state.
 
 ---
 
+## 🔍 STATE AFTER S145 (2026-08-31→09-02 — the 3.7 arc CLOSED on three instruments; the student baseline hardened; two PI audits in flight)
+
+> **HEADLINES, all committed and gate-verified:** (1) **The 2×2 grid
+> is complete**: fourth cell (G3 K=10 union × 3.7 vf, carried (0.98,
+> k10)) F1@50 **0.8656** / P 0.9588 / MCC 0.7268 (grid crowns). The
+> five-test family: verifier axis significant on BOTH edges
+> (+0.0270/+0.0234, p=0.0001), proposer axis on NEITHER — the gain
+> lives in the verifier seat on the full grid. 16-cell grid board:
+> six tiers, all seven carried→oracle gaps significant, arm-2 N3→N5
+> ns (saturation statistical), incumbents Tier 4. **The PI's oracle
+> answer: arm 2 missed its oracle by +0.0043 (0.8806 at (0.95,k5)).**
+> (2) **REFERENCE-INSTRUMENT CORRECTION**: S144 headlines mixed the
+> canonical and standardised chains (gate-caught); conclusions
+> survive on both — std: arm2 0.8825 > ceiling 0.8558; fourth
+> 0.8732; arm1 0.8550 ≈ 0.8502 ns. Obs 442 (+ the Obs 317
+> failure-to-propagate lesson); GS-4 report corrected. (3) **The
+> IMAGE-GS screen ran end-to-end and THE MODALITY GAP IS
+> ELIMINATED**: 3.7-image 0.9254 (carried vf) / 0.9308 (all-3.7,
+> (0.90,k5)); within-3.7 text−image −0.0115 p=0.25 / −0.0043 p=0.68
+> vs G3's +0.0549 p=0.001. I1 confirmed at ~5× the text gain; I5
+> informative failure (caching 79.5 %); **escalation trigger NOT
+> met** (no resolvable new high; 55-map image extension does NOT
+> proceed). Findings: `results/gemini37-image-gs-2026-09-01/`.
+> (4) **Student-baseline programme built and largely executed**
+> (card `planning/student-baseline-2026-08-31.md`): 2023 data staged
+> ANONYMISED (name-leak checks ×2); per-student GS-4 decomposition
+> gate-exact; **the radius crossover is statistical both ways**
+> (model beats the pooled cohort @20 adj p=0.0017; cohort beats the
+> model @50 adj p=0.0017; the model routs Student C @20 adj p<1e-4;
+> A/B/D each beat it @50); implied 55-map cohort F1 0.934 [0.913,
+> 0.952]; overlap census: NO usable double-marked corpus (0.017 %);
+> Obs 443 (+ conventions addendum). (5) **PI audits in flight**:
+> empty-tile at 253/470 (resume `.venv/bin/streamlit run
+> scripts/review_empty_tiles_app.py`; 4 true double-misses incl. an
+> unrecorded PAIR + 2 edge artefacts, ~1.3 %, on expectation; app
+> gained nudge/revisit/overlay); **cluster census BUILT, untouched**
+> (739 tiles, overlay mode — command in the card § 5c area / chat).
+> (6) Register at **Obs 447**; billing: August actual **>$1,200**
+> recorded + expected-side ledger (×1.6 hypothesis spans most of it;
+> line-item report PENDING from PI).
+>
+> **NEXT SESSION, FIRST ACT — AB+ RESUMPTION (PI-directed):** the PI
+> holds EXTRA Claude usage credit for ~24 h from 2026-09-02 — launch
+> the remaining **88 AB+ sources** with batching more aggressive
+> than the pilot's 25 (pipeline + amendments:
+> `reports/ab-plus-pilot-report-2026-08-30.md`; pilot measured
+> ~10 % weekly quota per 25 at normal credit).
+> **THEN the interactive backlog:** register rows for the whole 3.7
+> arc (PI-signed); Obs review 433–447; the queued BOARD REBUILDS
+> (recorded on the 55-map campaign card — 55-map final-board fold-in
+> needs a MEMBERSHIP RULING; GS leaderboard refresh: five unboarded
+> 3.7 cells; sequencing register→membership→rebuild); the non-Mound
+> reference ruling (student-baseline card § 4c); billing line-item
+> reconciliation when the report arrives; D-1..D-5 skeleton rulings
+> (STILL OPEN); Srivastava read (D.9).
+>
+> **Standing state/gotchas:** NO campaign processes running (all
+> drivers exited clean). The daily flex-storm window ~13:00–19:00
+> UTC held two consecutive days — schedule 3.7 runs around it.
+> Image-mode runners: ulimit 8192 + WORKERS≤150 (fd lesson, fixed in
+> `scripts/gemini37-image-gs-driver.sh`); per-invocation meta
+> stamping STILL QUEUED (verify rounds overwrite run.meta — only
+> round-7 usage survives for the fourth cell). Two background
+> watchers were killed by unknown cause ~2026-09-01 20:00 UTC —
+> treated as a quiet-down signal; if it recurs unprompted, suspect
+> the harness. S144 user-obs candidates ×3 STILL pending verdicts
+> (held over twice); S145 candidates added (pending section).
+> Sapphire riders: regenerable tile trees + image-GS crops await
+> cleanup. The paper's "text beats image" claim (Obs 439 lineage)
+> must be reframed GEMINI-3-SPECIFIC at drafting.
+
 ## 🔍 STATE AFTER S144 (2026-08-29→31 — the 3.7 grid filled; the gain changed seats; AB+ pilot done)
 
 > **HEADLINES, all committed (`bce396250` + planning/reflection
@@ -35,6 +106,7 @@ project state.
 > all Flex — display-basis hypothesis; RE-CHECK ~2026-09-02.
 >
 > **NEXT SESSION, FIRST ACT — HARVEST THE FOURTH CELL:**
+>
 > 1. Check `outputs/gemini37-55map-2026-08-29/fourth-cell-verify.log`
 >    on sapphire for "Probabilities written" (run started 07:09 UTC
 >    08-31, ~50 min projected). If it died mid-run, RELAUNCH THE SAME
@@ -58,6 +130,7 @@ project state.
 >    2026-08-31; probe-first (cache-fraction gate), WORKERS=400.
 > 5. Data commit for the fourth cell from sapphire when it lands.
 >
+>
 > **Standing rules adopted S144**: flex→standard bailout when a
 > stage's remainder < ~$10 (on the 55-map card); **WORKERS=400
 > default on large jobs** (850/85 uplink saturates ~400 on proposer
@@ -69,7 +142,7 @@ project state.
 > screen card's changelog); the live estimator prices 3.7 at G3 rates
 > sans thinking. NOTE: run_3's 55-map meta is committed as .gz
 > (134 MB > GitHub limit) — gunzip before meta-reading tools.
-> **PI standing list**: D-1..D-5 skeleton rulings (STILL OPEN — 
+> **PI standing list**: D-1..D-5 skeleton rulings (STILL OPEN —
 > drafting gated); Srivastava 2018 read (D.9 prerequisite, PDF in
 > ~/Downloads); Obs 433–441 review; billing SKU re-check ~09-02;
 > Zotero client-bug debug-log read; D24 brief (standing). AB+
