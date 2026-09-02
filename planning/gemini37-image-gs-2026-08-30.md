@@ -1,7 +1,8 @@
 # Gemini 3.7 image-track screen: has the modality gap moved?
 
-> **Last revised**: 2026-09-01 (LAUNCHED — probe gates run, cache
-> shortfall ruled acceptable by the PI; K=5 in flight).
+> **Last revised**: 2026-09-02 (COMPLETE — verdicts I1–I5 in;
+> the modality gap is eliminated at 3.7; findings at
+> `results/gemini37-image-gs-2026-09-01/findings.md`).
 > See [§ Changelog](#changelog).
 
 **Question**: did 3.7's vision change shift RELATIVE modality
@@ -96,6 +97,17 @@ the text screen's exact machinery (`image_b_prepare_and_union.py`
 difference-in-differences gap test.
 
 ## Changelog
+
+### 2026-09-02 — Screen complete; gap eliminated
+
+All verdicts in (findings doc is canonical): I1 confirmed at ~5× the
+text-side gain (0.9254/0.9308 vs the 0.8412 anchor); I2 overshot to
+statistical parity (text−image −0.0115 p=0.25 / −0.0043 p=0.68 vs
+G3's +0.0549 p=0.001); I3 exact; I4 lighter than predicted; I5
+informative failure (79.5 % caching). No resolvable new F1 high —
+the 55-map image-extension trigger is NOT met. Execution survived an
+fd-ulimit failure mode (fixed in the committed driver) and the daily
+flex-storm window (recovery driver, one clear-window round).
 
 ### 2026-09-01 — Probe gates run; PI approved launch at probed cost
 
