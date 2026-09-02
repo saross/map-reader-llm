@@ -2042,3 +2042,51 @@ be waived.
 its source freshly read in-turn, or say "about" and flag it for
 verification — and keep dispatching verification-heavy writers,
 because they are demonstrably the layer that catches what I miss.
+
+## claude-obs 86 — 2026-09-02 (Sessions 146–147): The two-mechanism design's second run — independence catches direction, not just magnitude
+
+**Pattern.** The AB+ pipeline ran a second time at 3.5× the pilot's
+scale (88 sources, 264 Opus-tier agents, one fresh agent per source per
+stage). The pilot's headline held exactly: 0 of 88 entries passed the
+fresh-context verifier without edits, none failed, nothing was
+fabricated (703 quotes byte-stable). Verifiers scored 753 points and
+called a quarter of them OVERREACH. What the scale made visible that
+the pilot could not is *which way* the errors ran. Repeatedly they ran
+toward the citing paper's own thesis: Fafchamps' "excluded outright"
+for the source's "not yet implementable", flattering a no-mechanism
+verdict; Ross (PI-co-authored) taking the permissive half of an
+abduction argument and declining the restrictive half that rests on the
+same premise; Ofosu's five-hypothesis threshold softened to "the
+high-count tail"; Sarafoglou's "an errata register is more sensitive
+than external audit" where the coded data cut both ways; Thomas's
+absence claim ("nothing here has an LLM author a preregistration")
+missing the §6 proposal a knowledgeable reviewer would find. The
+counter-pattern also showed: verifiers over-corrected, and editors
+declined verdict edits that traded one unverified claim for another
+(Nosek's "retrospectively assembled errata log", contradicted by the
+errata file's own date and commit fields; Strobl's "declined lest it
+deter novices", where the template itself sanctions the git route — a
+correction that ran in our favour and was still a correction).
+
+**Lesson.** A drafter reading for relevance to a thesis drifts toward
+the thesis; the drift is small per sentence and systematic across a
+corpus, and byte-perfect quoting cannot see it because the quotes are
+right. Only a reader who does not hold the thesis catches the
+direction. The third role matters too: the editor's job is not to
+apply the verdict but to re-read the source, and about one edit in ten
+was adapted or declined on source grounds. The design's value is not
+that it found errors in every entry (that is the base rate, and
+"0 unedited" should be read as the expected outcome of an honest
+check, not as a defect signal) — it is that the two independent
+readers disagree in both directions, so neither can quietly set the
+thesis's terms.
+
+**How to apply.** Keep the three-role split and the fresh context per
+role; brief verifiers explicitly to hunt the self-flattering direction
+(the tail brief's item (e), salience drift, was where most of these
+landed once verifiers were told to look); keep the orchestrator's
+dispatch line to citekey, cluster, and cache notes — the one time it
+characterised a source (Pu 2019 as "a COS working paper") the error
+propagated to three agents before a drafter caught it; and when the
+PI's own name is on a source, expect the drift to be strongest and
+say so in the dispatch.
