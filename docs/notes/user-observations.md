@@ -978,7 +978,6 @@ citations as weaker evidence than my artefact citations.
   had not raised it and was mid-launch on new work. Claude should
   track and surface session-scale risk before the human has to.
 
-
 ## S145 candidates (pending review, 2026-09-02) — silence never discards
 
 - **S145-C1 — the live adjudication loop.** During the empty-tile
