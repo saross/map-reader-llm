@@ -34,7 +34,11 @@ not your target; overreach is. Promoted into the repository on
    about the source that rest on external knowledge rather than its
    text (flag as NOT CHECKABLE, not as wrong).
 5. Verdict per key point: SUPPORTED / OVERREACH (with the corrective
-   reading) / UNSUPPORTED. Overall: PASS, PASS-WITH-EDITS (list the
+   reading) / UNSUPPORTED. A claim resting on external knowledge gets
+   its own `per_point` item with `"index": "not_checkable"` (or the
+   field name) and `"verdict": "NOT CHECKABLE"` plus a note — these
+   four values are the whole vocabulary and the renderer rejects any
+   other (enforced 2026-09-03). Overall: PASS, PASS-WITH-EDITS (list the
    exact edits, field by field, as replace-X-with-Y instructions), or
    FAIL (a load-bearing claim is contradicted by the source).
 6. Write your verdict JSON to

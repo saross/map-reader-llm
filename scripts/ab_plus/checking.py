@@ -152,3 +152,42 @@ def format_report(report: CheckReport) -> str:
         )
         lines.append(f"  [{r.status.value:16}] {r.role}[{r.index}] {loc}  “{r.quote_preview}”")
     return "\n".join(lines)
+
+
+def check_overflow(overflow: dict, pages: list[dict]) -> CheckReport:
+    """Byte-check every overflow item's quote exactly like a key-point quote.
+
+    Added 2026-09-03: the overflow sidecar pairs each paraphrase with the
+    verbatim span it rests on, so the same deterministic check that guards
+    key points guards the appendix. Items are reported under the role
+    ``overflow`` with their list index; an empty quote counts as NOT_FOUND.
+
+    Args:
+        overflow: The parsed sidecar (see ``schema.OVERFLOW_SCHEMA``).
+        pages: The cached page list for the citekey.
+
+    Returns:
+        A :class:`CheckReport` over the overflow items only.
+    """
+    results: list[QuoteResult] = []
+    for i, item in enumerate(overflow.get("items") or []):
+        quote = str(item.get("quote", ""))
+        claimed = item.get("page_index")
+        found = _matching_pages(quote, pages) if quote.strip() else []
+        if not found:
+            status = QuoteStatus.NOT_FOUND
+        elif claimed in found:
+            status = QuoteStatus.PASS
+        else:
+            status = QuoteStatus.LOCATOR_MISMATCH
+        results.append(
+            QuoteResult(
+                role="overflow",
+                index=i,
+                quote=quote,
+                claimed_page=claimed,
+                verified_pages=found,
+                status=status,
+            )
+        )
+    return CheckReport(citekey=str(overflow.get("citekey", "")), results=results)

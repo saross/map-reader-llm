@@ -32,10 +32,14 @@ Written 2026-09-02 from the pilot's per-entry edit dispatches (S144,
   re-cut quote, it must pass the deterministic checker.
 - Edit only interpretive fields (summary, positioning, paraphrases,
   gap labels, framing_hook.note) unless the verdict names a quote.
-- Keep the summary inside the 300–500-word band; move a verified
-  secondary caveat that will not fit to
-  `outputs/ab-plus/_work/<citekey>.overflow-notes.md` rather than
-  dropping it.
+- Keep the summary inside the 300–500-word band and the positioning
+  at 2–3 sentences where you can; move a verified secondary caveat
+  that will not fit to the overflow sidecar
+  `outputs/ab-plus/_work/<citekey>.overflow.json` (paraphrase + verbatim
+  span + page_index; see the drafter brief) rather than dropping it.
+  Both limits are targets, not gates (PI ruling 2026-09-03): exceed
+  them only when a verified nuance would otherwise be lost, and say so
+  in your report — as the Trier 2019 editor did.
 - Write back with the same JSON formatting (`indent=1`,
   `ensure_ascii=False`). Temporary files only in the per-citekey
   scratch directory named in the dispatch message.

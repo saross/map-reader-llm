@@ -51,7 +51,10 @@ same rules.
   SOURCE must be true of the source.
 - positioning: 2–3 sentences on where this source sits relative to
   the citing paper's claims, naming ONE primary cluster from the list
-  below (others may be mentioned as secondary).
+  below (others may be mentioned as secondary). The sentence target
+  and the summary band are targets, not gates (PI ruling 2026-09-03,
+  after the tail): exceed them only when a verified nuance would
+  otherwise be lost, and say so in your report.
 - Numbers quoted or restated from the source must match the page
   text exactly; denominators, baselines, and conditions travel with
   every comparative number. Anti-confabulation is the point of this
@@ -59,8 +62,16 @@ same rules.
 - Hedged findings stay hedged; condition-specific results stay
   scoped; the source's own caveats travel with the point they weaken.
 - If a secondary, verified caveat will not fit the summary band,
-  write it to `outputs/ab-plus/_work/<citekey>.overflow-notes.md`
-  (short, with page indices) rather than dropping it.
+  write it to the overflow sidecar
+  `outputs/ab-plus/_work/<citekey>.overflow.json` rather than dropping
+  it: one item per caveat with `paraphrase` (our words), `quote` (the
+  VERBATIM span it rests on — byte-checked by `cli.py check`),
+  `page_index`, and optional `topic`/`section`. The renderer publishes
+  the paraphrase and page anchor only; the sidecar is the complete
+  copy. Schema: `python -m ab_plus.cli schema --overflow`. A free-form
+  `<citekey>.overflow-notes.md` may accompany it for cache-defect
+  registers and working notes, but anything a reader should see goes
+  in the sidecar.
 - UK/Australian English in all free text.
 
 ## The citing paper (what "salience" is measured against)

@@ -124,6 +124,8 @@ def render_entry(
     report: CheckReport,
     verdict: dict[str, Any] | None = None,
     provenance: dict[str, str] | None = None,
+    overflow: dict[str, Any] | None = None,
+    overflow_report: CheckReport | None = None,
 ) -> str:
     """Render an AB+ entry to markdown.
 
@@ -131,6 +133,12 @@ def render_entry(
         entry: The structured AB+ entry (proposer output).
         report: The deterministic quote-check report for this entry.
         verdict: Optional independent-verifier output (advisory flags).
+        overflow: Optional overflow sidecar (2026-09-03; see
+            ``schema.OVERFLOW_SCHEMA``). Only the paraphrase and its page
+            anchor are rendered — the verbatim span stays in the working
+            copy — and only for items whose quote the checker verified.
+        overflow_report: The ``check_overflow`` report for ``overflow``;
+            required when ``overflow`` is given.
         provenance: Optional generation provenance stamped into the
             auto-generated block. Recognised keys: ``model`` (the model ID
             requested for the proposer + verifier agents), ``run_date``,
@@ -205,6 +213,32 @@ def render_entry(
             lines.append(f"- **Why:** {hook['note'].strip()}")
         lines.append("")
 
+    if overflow and overflow_report is not None:
+        verified = {r.index for r in overflow_report.results if r.status is QuoteStatus.PASS}
+        items = overflow.get("items") or []
+        shown = [(i, it) for i, it in enumerate(items) if i in verified]
+        lines.append("## Overflow (paraphrase only; each rests on a byte-checked span)")
+        lines.append("")
+        lines.append(
+            "Verified secondary material that did not fit the summary band. The "
+            "verbatim spans behind these paraphrases are held in the working copy "
+            f"(`_work/{citekey}.overflow.json`), not published; page anchors are to "
+            "the extracted page cache."
+        )
+        lines.append("")
+        for i, it in shown:
+            anchor_bits = [f"page_index {it.get('page_index')}", _printed(int(it["page_index"]))]
+            if it.get("section"):
+                anchor_bits.append(str(it["section"]))
+            topic = f"**{it['topic'].strip()}** — " if it.get("topic") else ""
+            lines.append(f"- {topic}{it.get('paraphrase', '').strip()} ({' · '.join(anchor_bits)})")
+        if len(shown) < len(items):
+            lines.append(
+                f"- ⚠ {len(items) - len(shown)} item(s) withheld: their spans did not verify "
+                "against the cache."
+            )
+        lines.append("")
+
     # --- Auto-generated provenance block ---
     lines.append("## Extraction / fidelity notes (auto-generated)")
     lines.append("")
@@ -216,6 +250,11 @@ def render_entry(
         lines.append(
             f"  - `{r.status.value}` {r.role}[{r.index}]: claimed p{r.claimed_page}, "
             f"found {r.verified_pages or 'nowhere'} — “{r.quote_preview}”"
+        )
+    if overflow_report is not None and overflow_report.n_quotes:
+        lines.append(
+            f"- Overflow span check: **{overflow_report.n_passed}/{overflow_report.n_quotes} "
+            "passed**."
         )
     if provenance:
         # Sanitise: a backtick or newline in a value would break the code
@@ -252,7 +291,9 @@ def render_entry(
             # printed "none" for entries carrying OVERREACH verdicts.
             for pp in verdict.get("per_point") or []:
                 idx = pp.get("index")
-                label = f"KP{idx + 1}" if isinstance(idx, int) else "KP?"
+                # An int indexes a key point; a string names a field (summary,
+                # positioning, framing_hook) or a NOT CHECKABLE aside.
+                label = f"KP{idx + 1}" if isinstance(idx, int) else str(idx or "note")
                 note = str(pp.get("note", "")).strip()
                 lines.append(f"- **{label}: {pp.get('verdict', '?')}** — {note}")
             edits = verdict.get("edits") or []
@@ -287,6 +328,8 @@ def write_entry(
     verdict: dict[str, Any] | None = None,
     out_dir: Path | None = None,
     provenance: dict[str, str] | None = None,
+    overflow: dict[str, Any] | None = None,
+    overflow_report: CheckReport | None = None,
 ) -> Path:
     """Render an entry and write it to ``<out_dir>/<citekey-lower>.md``.
 
@@ -304,7 +347,10 @@ def write_entry(
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"{entry.get('citekey', 'entry').lower()}.md"
     path.write_text(
-        render_entry(entry, report, verdict, provenance=provenance),
+        render_entry(
+            entry, report, verdict, provenance=provenance,
+            overflow=overflow, overflow_report=overflow_report,
+        ),
         encoding="utf-8",
     )
     return path

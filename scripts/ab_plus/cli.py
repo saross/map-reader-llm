@@ -30,13 +30,20 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from ab_plus.checking import check_entry, format_report
+from ab_plus.checking import check_entry, check_overflow, format_report
 from ab_plus.config import REPO_ROOT, WORK_DIR
 from ab_plus.extraction import extract_source, load_cached_pages
 from ab_plus.gate import assess_cache, format_table
 from ab_plus.ocr_repair import ocr_repair
-from ab_plus.rendering import write_entry
-from ab_plus.schema import ENTRY_SCHEMA, validate_entry
+from ab_plus.rendering import _bib_fields, write_entry
+from ab_plus.schema import (
+    ENTRY_SCHEMA,
+    OVERFLOW_SCHEMA,
+    entry_warnings,
+    validate_entry,
+    validate_overflow,
+    validate_verdict,
+)
 from ab_plus.zotero import resolve_collection
 
 
@@ -122,8 +129,15 @@ def _cmd_gate(args: argparse.Namespace) -> int:
         citekeys = sorted(
             p.name[: -len(".pages.json")] for p in WORK_DIR.glob("*.pages.json")
         )
+    # Content heuristics (2026-09-03) use the source's DOI, when the .bib has
+    # one, to tell a sibling article's DOI from the source's own.
     results = [
-        assess_cache(ck, load_cached_pages(ck), min_chars_per_page=args.min_chars_per_page)
+        assess_cache(
+            ck,
+            load_cached_pages(ck),
+            min_chars_per_page=args.min_chars_per_page,
+            source_doi=_bib_fields(ck).get("doi"),
+        )
         for ck in citekeys
     ]
     print(format_table(results))
@@ -152,18 +166,49 @@ def _cmd_ocr_repair(args: argparse.Namespace) -> int:
     return 0
 
 
+def _overflow_path(citekey: str) -> Path:
+    """Where the overflow sidecar for a citekey lives (may not exist)."""
+    return WORK_DIR / f"{citekey}.overflow.json"
+
+
+def _load_overflow(citekey: str, explicit: str | None) -> dict | None:
+    """Load the overflow sidecar named on the CLI or auto-detected in _work/."""
+    path = Path(explicit) if explicit else _overflow_path(citekey)
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
 def _cmd_check(args: argparse.Namespace) -> int:
-    """Run the deterministic quote check on an entry JSON file."""
+    """Run the deterministic quote check on an entry JSON file.
+
+    Since 2026-09-03 also prints advisory band warnings (never failing) and,
+    when an overflow sidecar exists for the citekey, checks its spans too —
+    a failed overflow span fails the check, because the appendix would
+    otherwise publish a paraphrase whose anchor cannot be verified.
+    """
     entry = json.loads(Path(args.entry).read_text(encoding="utf-8"))
     problems = validate_entry(entry)
     if problems:
         print("Structural problems:")
         for p in problems:
             print(f"  - {p}")
+    for w in entry_warnings(entry):
+        print(f"Advisory: {w}")
     pages = load_cached_pages(entry["citekey"])
     report = check_entry(entry, pages)
     print(format_report(report))
-    return 0 if report.all_passed else 2
+    rc = 0 if report.all_passed else 2
+    overflow = _load_overflow(entry["citekey"], getattr(args, "overflow", None))
+    if overflow is not None:
+        for p in validate_overflow(overflow):
+            print(f"Overflow structural problem: {p}")
+            rc = 2
+        oreport = check_overflow(overflow, pages)
+        print(format_report(oreport).replace("Quote check", "Overflow span check", 1))
+        if not oreport.all_passed:
+            rc = 2
+    return rc
 
 
 def _cmd_render(args: argparse.Namespace) -> int:
@@ -172,6 +217,27 @@ def _cmd_render(args: argparse.Namespace) -> int:
     pages = load_cached_pages(entry["citekey"])
     report = check_entry(entry, pages)
     verdict = json.loads(Path(args.verdict).read_text(encoding="utf-8")) if args.verdict else None
+    if verdict is not None:
+        # Enforced since 2026-09-03: a verdict outside the vocabulary must
+        # not reach the deliverable silently (the tail rendered one).
+        problems = validate_verdict(verdict)
+        if problems:
+            print("Verdict problems (not rendered):", file=sys.stderr)
+            for p in problems:
+                print(f"  - {p}", file=sys.stderr)
+            return 2
+    for w in entry_warnings(entry):
+        print(f"Advisory: {w}", file=sys.stderr)
+    overflow = _load_overflow(entry["citekey"], args.overflow)
+    overflow_report = None
+    if overflow is not None:
+        problems = validate_overflow(overflow)
+        if problems:
+            print("Overflow problems (not rendered):", file=sys.stderr)
+            for p in problems:
+                print(f"  - {p}", file=sys.stderr)
+            return 2
+        overflow_report = check_overflow(overflow, pages)
     out_dir = Path(args.out_dir) if args.out_dir else None
     # Generation provenance (2026-07-24): the caller passes the model/run
     # identity the workflow pinned; the git revision is derived here. Only an
@@ -193,14 +259,21 @@ def _cmd_render(args: argparse.Namespace) -> int:
             "provenance (pass --model/--run-date/--workflow-run on real runs).",
             file=sys.stderr,
         )
-    path = write_entry(entry, report, verdict, out_dir=out_dir, provenance=provenance)
-    print(f"Wrote {path}  ({report.n_passed}/{report.n_quotes} quotes verified)")
+    path = write_entry(
+        entry, report, verdict, out_dir=out_dir, provenance=provenance,
+        overflow=overflow, overflow_report=overflow_report,
+    )
+    extra = (
+        f"; overflow {overflow_report.n_passed}/{overflow_report.n_quotes}"
+        if overflow_report is not None else ""
+    )
+    print(f"Wrote {path}  ({report.n_passed}/{report.n_quotes} quotes verified{extra})")
     return 0
 
 
 def _cmd_schema(args: argparse.Namespace) -> int:
-    """Print the AB+ entry JSON schema (for the proposer agent)."""
-    print(json.dumps(ENTRY_SCHEMA, indent=2))
+    """Print the AB+ entry JSON schema (or, with --overflow, the sidecar schema)."""
+    print(json.dumps(OVERFLOW_SCHEMA if args.overflow else ENTRY_SCHEMA, indent=2))
     return 0
 
 
@@ -243,11 +316,17 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_check = sub.add_parser("check", help="deterministic quote check of an entry JSON")
     p_check.add_argument("--entry", required=True, help="path to entry JSON")
+    p_check.add_argument(
+        "--overflow", help="overflow sidecar JSON (default: _work/<citekey>.overflow.json if present)"
+    )
     p_check.set_defaults(func=_cmd_check)
 
     p_render = sub.add_parser("render", help="render an entry JSON to markdown")
     p_render.add_argument("--entry", required=True, help="path to entry JSON")
     p_render.add_argument("--verdict", help="optional verifier verdict JSON")
+    p_render.add_argument(
+        "--overflow", help="overflow sidecar JSON (default: _work/<citekey>.overflow.json if present)"
+    )
     p_render.add_argument("--out-dir", help="output dir (default: ab-plus deliverables)")
     p_render.add_argument(
         "--model", help="model ID the workflow pinned for proposer + verifier"
@@ -258,9 +337,11 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p_render.set_defaults(func=_cmd_render)
 
-    sub.add_parser("schema", help="print the AB+ entry JSON schema").set_defaults(
-        func=_cmd_schema
+    p_schema = sub.add_parser("schema", help="print the AB+ entry JSON schema")
+    p_schema.add_argument(
+        "--overflow", action="store_true", help="print the overflow sidecar schema instead"
     )
+    p_schema.set_defaults(func=_cmd_schema)
     return parser
 
 

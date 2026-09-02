@@ -23,3 +23,19 @@ The pilot (25 sources, 2026-08-30) ran these briefs from a session
 scratchpad; they were promoted here on 2026-09-02, extended with the
 tail's positioning clusters, the per-citekey scratch rule, and the
 overflow-notes convention, before the remaining 88 sources ran.
+
+## Dispatch discipline (2026-09-03, from claude-obs 86)
+
+- The orchestrator's dispatch line carries the citekey, the cluster,
+  and the cache notes — nothing that characterises the source. The one
+  time it did ("a COS working paper" for pu_designing_2019) the error
+  reached three agents before a drafter caught it.
+- Paste the gate's content notes (`cli.py gate --citekey X`) into the
+  drafter and verifier dispatches verbatim: cover-sheet and
+  author-manuscript (page mapping), neighbour-contamination and
+  trailing-text (attribute by reading), caption-only-table (render
+  before citing), sections-empty (reconstruct locators).
+- When an author of the source is an author of the citing paper, say
+  so in the verifier dispatch: the self-flattering drift was strongest
+  there.
+- Length limits are targets, not gates (PI ruling 2026-09-03).

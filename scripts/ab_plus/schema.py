@@ -21,10 +21,63 @@ from __future__ import annotations
 
 from typing import Any
 
-from .config import KEY_POINT_MAX, KEY_POINT_MIN
+from .config import KEY_POINT_MAX, KEY_POINT_MIN, SUMMARY_WORDS_MAX, SUMMARY_WORDS_MIN
 
 # Allowed stances a key point can take toward the paper's argument.
 RELEVANCE_STANCES: tuple[str, ...] = ("supports", "complicates", "extends")
+
+# Verifier verdict vocabulary (per-point shape, map-reader-llm pilot 2026-08-30;
+# enforced at render since 2026-09-03 — one tail verifier filed a fourth value
+# and the renderer accepted it silently). NOT CHECKABLE is legal for a claim
+# resting on external knowledge (verifier brief step 4(g)); it must carry a
+# note and is never counted as SUPPORTED.
+PER_POINT_VERDICTS: tuple[str, ...] = ("SUPPORTED", "OVERREACH", "UNSUPPORTED", "NOT CHECKABLE")
+OVERALL_VERDICTS: tuple[str, ...] = ("PASS", "PASS-WITH-EDITS", "FAIL")
+
+POSITIONING_MAX_SENTENCES: int = 3
+"""Drafter-brief target for the positioning field. Advisory since the PI's
+2026-09-03 ruling (Trier 2019: six sentences accepted because the verifier's
+lead correction split into two claims): exceed it only when a verified
+nuance would otherwise be lost, and say so in the agent report."""
+
+# Overflow sidecar (2026-09-03, PI decision on the tail report): verified
+# secondary material that did not fit the summary band. The COMPLETE copy —
+# paraphrase paired with its verbatim span — stays in the gitignored working
+# directory so paraphrase accuracy can be checked against the text; the
+# renderer emits the paraphrase and its page anchor only, which is what the
+# public repository carries.
+OVERFLOW_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": ["citekey", "items"],
+    "properties": {
+        "citekey": {"type": "string"},
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": ["paraphrase", "quote", "page_index"],
+                "properties": {
+                    "topic": {"type": "string", "description": "Short heading, optional."},
+                    "paraphrase": {
+                        "type": "string",
+                        "description": "Our words; the only text the public entry carries.",
+                    },
+                    "quote": {
+                        "type": "string",
+                        "description": (
+                            "VERBATIM span the paraphrase rests on; byte-checked like a "
+                            "key-point quote; never rendered."
+                        ),
+                    },
+                    "page_index": {"type": "integer", "minimum": 0},
+                    "section": {"type": "string"},
+                },
+            },
+        },
+    },
+}
 
 # JSON Schema for the proposer's structured output. additionalProperties is
 # False everywhere so the proposer cannot smuggle in unvalidated fields.
@@ -194,6 +247,117 @@ def iter_quotes(entry: dict[str, Any]) -> list[dict[str, Any]]:
             }
         )
     return quotes
+
+
+_ABBREVIATIONS: frozenset[str] = frozenset(
+    {"p", "pp", "e.g", "i.e", "cf", "vs", "al", "fig", "no", "vol", "ch", "sec", "eq", "approx"}
+)
+
+
+def _sentence_count(text: str) -> int:
+    """Count sentence terminators, ignoring common abbreviations ("p. 171", "et al.").
+
+    A terminator counts when followed by whitespace or end of text and the
+    token before it is not a single letter or a listed abbreviation.
+    """
+    import re
+
+    count = 0
+    for m in re.finditer(r"(\S*?)([.!?])[\"'”’)\]]*(?:\s+|$)", text.strip()):
+        token = m.group(1).rstrip(".").lower().lstrip("(\"'“‘[")
+        if m.group(2) == "." and (len(token) == 1 or token in _ABBREVIATIONS):
+            continue
+        count += 1
+    return count
+
+
+def entry_warnings(entry: dict[str, Any]) -> list[str]:
+    """Advisory checks that do not fail the deterministic path.
+
+    Added 2026-09-03 (PI ruling): the summary word band and the positioning
+    sentence target are targets, not gates — an entry may exceed them when a
+    verified nuance would otherwise be lost — so they surface here as
+    warnings the orchestrator reads, never as errors that block a render.
+
+    Args:
+        entry: A parsed AB+ entry.
+
+    Returns:
+        Human-readable warning strings; empty when the entry is in band.
+    """
+    warnings: list[str] = []
+    words = len(str(entry.get("summary", "")).split())
+    if words and not (SUMMARY_WORDS_MIN <= words <= SUMMARY_WORDS_MAX):
+        warnings.append(
+            f"summary is {words} words; band is {SUMMARY_WORDS_MIN}–{SUMMARY_WORDS_MAX} "
+            "(exceed only where a verified nuance would otherwise be lost)"
+        )
+    sentences = _sentence_count(str(entry.get("positioning", "")))
+    if sentences > POSITIONING_MAX_SENTENCES:
+        warnings.append(
+            f"positioning runs to {sentences} sentences; target is "
+            f"{POSITIONING_MAX_SENTENCES} (accepted when nuance requires — say so in the "
+            "report)"
+        )
+    return warnings
+
+
+def validate_verdict(verdict: dict[str, Any]) -> list[str]:
+    """Structural validation of a verifier verdict before it is rendered.
+
+    Enforces the vocabulary in :data:`PER_POINT_VERDICTS` and
+    :data:`OVERALL_VERDICTS` for the per-point shape. The vendored paper-b
+    flag-list shape (``paraphrase_flags`` …) is accepted as-is. Returns
+    problems rather than raising so the CLI can list them all.
+
+    Args:
+        verdict: The parsed verdict JSON.
+
+    Returns:
+        A list of problem strings; empty if the verdict is well formed.
+    """
+    problems: list[str] = []
+    overall = verdict.get("overall")
+    if overall is not None and overall not in OVERALL_VERDICTS:
+        problems.append(f"overall {overall!r} not in {OVERALL_VERDICTS}")
+    if "per_point" not in verdict:
+        return problems
+    points = verdict.get("per_point") or []
+    if not isinstance(points, list):
+        return problems + ["per_point is not a list"]
+    for i, pp in enumerate(points):
+        if not isinstance(pp, dict):
+            problems.append(f"per_point[{i}] is not an object")
+            continue
+        v = pp.get("verdict")
+        if v not in PER_POINT_VERDICTS:
+            problems.append(f"per_point[{i}]: verdict {v!r} not in {PER_POINT_VERDICTS}")
+        if v == "NOT CHECKABLE" and not str(pp.get("note", "")).strip():
+            problems.append(f"per_point[{i}]: NOT CHECKABLE requires a note")
+        idx = pp.get("index")
+        if not (isinstance(idx, int) or isinstance(idx, str)):
+            problems.append(f"per_point[{i}]: index must be an int or a field label")
+    edits = verdict.get("edits")
+    if edits is not None and not isinstance(edits, list):
+        problems.append("edits is not a list")
+    return problems
+
+
+def validate_overflow(overflow: dict[str, Any]) -> list[str]:
+    """Structural validation of an overflow sidecar (see :data:`OVERFLOW_SCHEMA`)."""
+    problems: list[str] = []
+    if not overflow.get("citekey"):
+        problems.append("missing citekey")
+    items = overflow.get("items")
+    if not isinstance(items, list):
+        return problems + ["items must be a list"]
+    for i, it in enumerate(items):
+        for fld in ("paraphrase", "quote"):
+            if not str(it.get(fld, "")).strip():
+                problems.append(f"items[{i}]: empty {fld}")
+        if not isinstance(it.get("page_index"), int):
+            problems.append(f"items[{i}]: page_index must be an int")
+    return problems
 
 
 def validate_entry(entry: dict[str, Any]) -> list[str]:
