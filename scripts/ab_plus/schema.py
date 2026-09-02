@@ -52,6 +52,12 @@ OVERFLOW_SCHEMA: dict[str, Any] = {
     "required": ["citekey", "items"],
     "properties": {
         "citekey": {"type": "string"},
+        "generated": {"type": "string", "description": "ISO date the sidecar was structured."},
+        "model": {"type": "string", "description": "Model ID requested for the structurer."},
+        "source_notes": {
+            "type": "string",
+            "description": "Path of the free-form notes the items were structured from, if any.",
+        },
         "items": {
             "type": "array",
             "items": {

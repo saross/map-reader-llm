@@ -219,11 +219,17 @@ def render_entry(
         shown = [(i, it) for i, it in enumerate(items) if i in verified]
         lines.append("## Overflow (paraphrase only; each rests on a byte-checked span)")
         lines.append("")
+        prov_bits = []
+        if overflow.get("generated"):
+            prov_bits.append(f"structured {overflow['generated']}")
+        if overflow.get("model"):
+            prov_bits.append(f"model `{str(overflow['model']).replace(chr(96), chr(39))}` requested")
+        prov = f" ({'; '.join(prov_bits)})" if prov_bits else ""
         lines.append(
             "Verified secondary material that did not fit the summary band. The "
             "verbatim spans behind these paraphrases are held in the working copy "
             f"(`_work/{citekey}.overflow.json`), not published; page anchors are to "
-            "the extracted page cache."
+            f"the extracted page cache{prov}."
         )
         lines.append("")
         for i, it in shown:

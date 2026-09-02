@@ -1,0 +1,625 @@
+{
+ "created": "2026-09-03",
+ "purpose": "AB+ overflow structuring — convert each free-form _work/<citekey>.overflow-notes.md into the checkable sidecar _work/<citekey>.overflow.json (paraphrase + verbatim span + page_index), then re-render the entry with its paraphrase-only appendix. PI approval 2026-09-03 (credit window).",
+ "brief": "prompts/ab-plus/overflow-brief.md",
+ "model": "opus alias (claude-opus-5)",
+ "statuses": "queued | structuring | structured | rendered | escalate:<reason>",
+ "sources": [
+  {
+   "citekey": "agarwal_many-shot_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "arundel_deep_2022",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "bakkerEnsuringQualitySpecificity2020",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "baldassini_what_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "berganzo-besga_hybrid_2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "binney_practical_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "brown_large_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "canAutomaticDetectionRoad2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "canedo_automated_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "canedo_synergy_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "castiello_remote_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "chambers_past_2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "chen_ancient_2026",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "chen_are_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "chen_automatic_2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "chen_can_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "chen_true_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "cruwell_preregistration_2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "davis_comparison_2019",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "davis_deep_2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "dwork_reusable_2015",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "ekimAutomaticRoadExtraction2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "fafchamps_using_2017",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "gamble_guidelines_2017",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "garciamolsosa_potential_2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "gerasimova_argumentbased_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": true,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "goldman_extracting_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "groot_overconfidence_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "guyotDetectingNeolithicBurial2018",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "hekler_agile_2016",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "hemming_prospective_2020",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "huangLargeLanguageModels2023",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "huang_leveraging_2023",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "huang_peace_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "ioannidis_pre-registration_2022",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "jiang_many-shot_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "kim_are_2026",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "kramm_deep_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "lakens_when_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "landauer_archaeological_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "landauer_visual_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "li_more_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "li_unleashing_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "lin_standard_2016",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "liu_more_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "liu_paths_2020",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "liu_zero-shot_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "lu_fantastically_2022",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "maccoun_blind_2015",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "naik_diversity_2023",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "niculitaGeomorphometricMethodsBurial2020",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "nosekPreregistrationRevolution2018",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "nosek_preregistration_2019",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "ofosu_pre-analysis_2023",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "pu_designing_2019",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "ren_multiscale_2026",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "ross_introducing_2022",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "sarafoglou_comparing_2023",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "sarafoglou_survey_2022",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "shteriyanov_blueprintsymvl_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "snell_scaling_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "sobotkova_validating_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "srivastava_sound_2018",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "sterzinger_few-shot_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "strobl_simp2l_2026",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "taubenfeld_confidence_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "thomas_mitigating_2026",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "tian_just_2023",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "tian_more_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "trier_automated_2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "trier_using_2019",
+   "cohort": "tail",
+   "ocr_rebuilt": true,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "uhlAutomatedExtractionHuman2020",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "ung_cartomapqa_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "vaccaro_preregistration_2026",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "van_den_akker_preregistration_2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "van_miltenburg_preregistering_2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "vassanyi_automatic_2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "wan_reasoning_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "wangSelfConsistencyImprovesChain2022",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "willroth_best_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "willroth_challenges_2022",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "xuan_seeing_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "yang_empirical_2022",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "yu_visrag_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "zhang_consensus_2025",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "zhang_machine_2022",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "zhao_calibrate_2021",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  },
+  {
+   "citekey": "zhou_unibias_2024",
+   "cohort": "tail",
+   "ocr_rebuilt": false,
+   "status": "queued",
+   "status_at": null
+  }
+ ]
+}

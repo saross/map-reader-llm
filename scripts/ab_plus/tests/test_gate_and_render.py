@@ -207,7 +207,7 @@ def test_validate_verdict_enforces_vocabulary() -> None:
 
 def test_overflow_check_and_paraphrase_only_render() -> None:
     entry, pages = _entry_and_pages()
-    overflow = {"citekey": "k", "items": [
+    overflow = {"citekey": "k", "generated": "2026-09-03", "model": "claude-opus-5", "items": [
         {"topic": "Count", "paraphrase": "About one image in seven carried a mound.",
          "quote": "169 of 1212 images", "page_index": 0, "section": "§3"},
         {"paraphrase": "This one is invented.", "quote": "not in the source", "page_index": 0},
@@ -221,6 +221,7 @@ def test_overflow_check_and_paraphrase_only_render() -> None:
     assert "169 of 1212 images" not in md.split("## Overflow")[1].split("## Extraction")[0]
     assert "1 item(s) withheld" in md
     assert "Overflow span check: **1/2 passed**" in md
+    assert "structured 2026-09-03; model `claude-opus-5` requested" in md
     assert validate_overflow({"citekey": "k", "items": [{"paraphrase": "", "quote": "q", "page_index": "0"}]})
 
 
