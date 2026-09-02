@@ -64,8 +64,7 @@ the expensive 55-map image extension is NOT met. (Arm 2's image MCC
 finding stands on the GS instrument: parity, at image-track prices
 that caching makes comparable to text.
 
-## Operational notes (for the runner-fix queue and the paper's cost
-section)
+## Operational notes (runner-fix queue; paper cost section)
 
 Two flex-era lessons from execution: image mode at WORKERS=400 blew
 the default fd ulimit (17 example images per call; passes died in
