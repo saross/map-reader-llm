@@ -1,0 +1,32 @@
+{
+  "buffer_m": 20,
+  "g3_gap_committed": {
+    "delta_f1": 0.0549,
+    "p": 0.001,
+    "source": "results/image-b-gs-2026-08-28/analysis.json"
+  },
+  "pairs": {
+    "carried-verifier": {
+      "f1_a": 0.913892,
+      "f1_b": 0.925408,
+      "observed_diff": -0.011516,
+      "p_value": 0.2533,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 0.000118,
+      "null_std": 0.009938,
+      "convention": "delta = text - image @20m"
+    },
+    "all-3.7": {
+      "f1_a": 0.926488,
+      "f1_b": 0.930832,
+      "observed_diff": -0.004345,
+      "p_value": 0.6767,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 5.3e-05,
+      "null_std": 0.009206,
+      "convention": "delta = text - image @20m"
+    }
+  }
+}

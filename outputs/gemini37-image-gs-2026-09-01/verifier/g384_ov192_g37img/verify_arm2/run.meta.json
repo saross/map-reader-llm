@@ -1,0 +1,3724 @@
+{
+  "run_id": "e6b8434f-3153-451e-aea6-6f4de65f7d12",
+  "timestamp": {
+    "start": "2026-09-01T22:30:25.015828+00:00",
+    "end": "2026-09-01T22:37:43.569070+00:00",
+    "duration_seconds": 438.553242
+  },
+  "environment": {
+    "git_commit": "1c46243d28c5c2011d9259ab099078abdb75c498",
+    "script": "run_pv.py",
+    "script_version": "1.0.0"
+  },
+  "configuration": {
+    "version": "verify_adversarial-text",
+    "model": "gemini-3.7-flash",
+    "instruction_file": "verify_adversarial.md",
+    "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+    "system_instruction_text": "# Two-Stage Detection: Adversarial Verifier\n\nA detection system has identified the symbol at the centre of this crop as a\npossible burial mound. Your task is to **find reasons it is NOT a burial mound**.\n\nAssume the detection system made an error. Argue for the strongest non-mound\ninterpretation of this symbol. Only confirm it as a burial mound if you cannot\nfind a plausible alternative explanation.\n\n## What burial mounds look like\n\nBurial mound symbols have **short lines (rays) radiating OUTWARD** from a\ncentral shape, forming a \"sunburst\" or \"gear\" pattern. The rays point away\nfrom the centre, indicating elevated terrain. The central shape is typically\na small circle or oval in orange-brown, or a triangle or square in black\n(when a survey marker sits on a mound).\n\n## Common false alarms \u2014 argue for these first\n\nBefore confirming a mound, check whether the symbol could instead be:\n\n- **A triangulation point without a mound**: A solid black triangle, possibly\n  with a central dot \u2014 but with NO outward-radiating rays around it. These\n  are extremely common on Soviet maps and frequently confused with mounds.\n- **A benchmark without a mound**: A solid black square, possibly with a\n  central dot \u2014 but with NO outward-radiating rays around it.\n- **A contour feature**: Lines that approach or converge on a point, but the\n  lines point INWARD (downhill flow) rather than radiating OUTWARD. These\n  can appear in the same orange-brown colour family as mound symbols.\n- **A vegetation or land-use boundary**: Small marks along a boundary line\n  that may resemble rays but are actually boundary indicators.\n- **Text or numbering artefact**: Partial Cyrillic characters or elevation\n  numbers that coincidentally resemble radiating lines.\n- **A spot height marker**: A small dot with a nearby number \u2014 no rays.\n\n## Decision process\n\n1. Identify the strongest non-mound interpretation of the symbol.\n2. Describe the specific visual evidence supporting that interpretation.\n3. Only if NO non-mound interpretation is plausible, confirm as a mound.\n\n## Output Format\n\nReturn JSON:\n\n{\n    \"best_alternative\": \"The strongest non-mound interpretation of this symbol.\",\n    \"alternative_evidence\": \"Specific visual features supporting the non-mound interpretation.\",\n    \"reasoning\": \"Why you accept or reject the non-mound interpretation.\",\n    \"mound_probability\": 0.0\n}\n\n## Scoring Guide\n\n- **0.9-1.0**: No plausible alternative \u2014 clear sunburst with outward rays\n- **0.6-0.8**: The non-mound interpretation is weak but not impossible\n- **0.3-0.5**: Genuinely ambiguous \u2014 mound and non-mound are equally plausible\n- **0.0-0.2**: Strong non-mound interpretation \u2014 symbol is most likely something else\n",
+    "library_hash": "no_examples",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "low",
+    "tile_size": null,
+    "include_example_images": true,
+    "example_count": 0,
+    "full_config_snapshot": {
+      "version": "verify_adversarial-text",
+      "description": "Two-Stage Verifier (Stage 2). Adversarial, text-only (no example images). Matches Phase 3d Track 2 best config (F1=0.796).",
+      "hypothesis": "H2",
+      "model": "gemini-3-flash",
+      "instruction_file": "verify_adversarial.md",
+      "temperature": 0.0,
+      "max_output_tokens": 8192,
+      "thinking_level": "low",
+      "_config_notes": {
+        "source": "Phase 3d Track 2 (Session 43). Text-only adversarial verifier achieved F1=0.796 at T=0.0, threshold 0.2.",
+        "temperature": "0.0 based on Phase 3d: T=0.5 and T=1.0 did not improve over T=0.0 baseline.",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
+        "track": "Track 2 \u2014 text-only. Text example labels sent (no images), matching Phase 3d run_h2_pilot.py build_verifier_request(include_examples=False).",
+        "usage": "Used in proposer-verifier pipeline Stage 2. Feed proposer GeoJSON directly."
+      },
+      "examples": [],
+      "text_only_labels": [
+        "Positive: Burial Mound (Kurgan)",
+        "Positive: Settlement Mound",
+        "Positive: Triangulation Point ON Mound",
+        "Positive: Benchmark ON Mound",
+        "Negative: Triangulation Point ALONE",
+        "Negative: Benchmark ALONE"
+      ],
+      "crop_label": "Now classify the candidate symbol at the centre of this crop:"
+    }
+  },
+  "execution_stats": {
+    "items_processed": 674,
+    "items_failed": 0,
+    "items_skipped": 0,
+    "retries_total": 420,
+    "retries_rate_limit": 0,
+    "retries_server_error": 420,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "success": 674,
+      "error": 420
+    },
+    "safety_blocks": 0,
+    "parse_failures": 420,
+    "empty_responses": 420,
+    "completed_items": [
+      "candidate_00010",
+      "candidate_00049",
+      "candidate_00022",
+      "candidate_00002",
+      "candidate_00032",
+      "candidate_00091",
+      "candidate_00059",
+      "candidate_00007",
+      "candidate_00098",
+      "candidate_00057",
+      "candidate_00094",
+      "candidate_00046",
+      "candidate_00076",
+      "candidate_00019",
+      "candidate_00052",
+      "candidate_00006",
+      "candidate_00031",
+      "candidate_00072",
+      "candidate_00004",
+      "candidate_00045",
+      "candidate_00020",
+      "candidate_00008",
+      "candidate_00077",
+      "candidate_00047",
+      "candidate_00053",
+      "candidate_00013",
+      "candidate_00066",
+      "candidate_00040",
+      "candidate_00069",
+      "candidate_00084",
+      "candidate_00081",
+      "candidate_00050",
+      "candidate_00111",
+      "candidate_00018",
+      "candidate_00109",
+      "candidate_00103",
+      "candidate_00016",
+      "candidate_00033",
+      "candidate_00116",
+      "candidate_00100",
+      "candidate_00112",
+      "candidate_00108",
+      "candidate_00120",
+      "candidate_00122",
+      "candidate_00080",
+      "candidate_00025",
+      "candidate_00106",
+      "candidate_00117",
+      "candidate_00126",
+      "candidate_00133",
+      "candidate_00135",
+      "candidate_00110",
+      "candidate_00138",
+      "candidate_00123",
+      "candidate_00136",
+      "candidate_00102",
+      "candidate_00143",
+      "candidate_00142",
+      "candidate_00127",
+      "candidate_00164",
+      "candidate_00115",
+      "candidate_00118",
+      "candidate_00144",
+      "candidate_00157",
+      "candidate_00151",
+      "candidate_00167",
+      "candidate_00156",
+      "candidate_00165",
+      "candidate_00177",
+      "candidate_00134",
+      "candidate_00087",
+      "candidate_00166",
+      "candidate_00155",
+      "candidate_00146",
+      "candidate_00162",
+      "candidate_00148",
+      "candidate_00068",
+      "candidate_00179",
+      "candidate_00194",
+      "candidate_00038",
+      "candidate_00195",
+      "candidate_00099",
+      "candidate_00202",
+      "candidate_00200",
+      "candidate_00043",
+      "candidate_00197",
+      "candidate_00051",
+      "candidate_00021",
+      "candidate_00217",
+      "candidate_00218",
+      "candidate_00206",
+      "candidate_00223",
+      "candidate_00085",
+      "candidate_00226",
+      "candidate_00227",
+      "candidate_00230",
+      "candidate_00212",
+      "candidate_00092",
+      "candidate_00208",
+      "candidate_00184",
+      "candidate_00234",
+      "candidate_00048",
+      "candidate_00245",
+      "candidate_00235",
+      "candidate_00231",
+      "candidate_00187",
+      "candidate_00086",
+      "candidate_00229",
+      "candidate_00074",
+      "candidate_00042",
+      "candidate_00249",
+      "candidate_00097",
+      "candidate_00247",
+      "candidate_00251",
+      "candidate_00064",
+      "candidate_00160",
+      "candidate_00248",
+      "candidate_00254",
+      "candidate_00252",
+      "candidate_00259",
+      "candidate_00260",
+      "candidate_00263",
+      "candidate_00041",
+      "candidate_00256",
+      "candidate_00214",
+      "candidate_00265",
+      "candidate_00096",
+      "candidate_00270",
+      "candidate_00266",
+      "candidate_00170",
+      "candidate_00275",
+      "candidate_00271",
+      "candidate_00273",
+      "candidate_00168",
+      "candidate_00101",
+      "candidate_00198",
+      "candidate_00279",
+      "candidate_00044",
+      "candidate_00015",
+      "candidate_00130",
+      "candidate_00286",
+      "candidate_00073",
+      "candidate_00003",
+      "candidate_00161",
+      "candidate_00285",
+      "candidate_00128",
+      "candidate_00078",
+      "candidate_00287",
+      "candidate_00152",
+      "candidate_00140",
+      "candidate_00011",
+      "candidate_00240",
+      "candidate_00296",
+      "candidate_00095",
+      "candidate_00298",
+      "candidate_00009",
+      "candidate_00213",
+      "candidate_00104",
+      "candidate_00300",
+      "candidate_00299",
+      "candidate_00278",
+      "candidate_00028",
+      "candidate_00301",
+      "candidate_00297",
+      "candidate_00221",
+      "candidate_00027",
+      "candidate_00305",
+      "candidate_00306",
+      "candidate_00307",
+      "candidate_00233",
+      "candidate_00222",
+      "candidate_00304",
+      "candidate_00062",
+      "candidate_00061",
+      "candidate_00141",
+      "candidate_00308",
+      "candidate_00314",
+      "candidate_00070",
+      "candidate_00180",
+      "candidate_00207",
+      "candidate_00145",
+      "candidate_00239",
+      "candidate_00029",
+      "candidate_00065",
+      "candidate_00318",
+      "candidate_00124",
+      "candidate_00323",
+      "candidate_00325",
+      "candidate_00114",
+      "candidate_00035",
+      "candidate_00125",
+      "candidate_00288",
+      "candidate_00185",
+      "candidate_00257",
+      "candidate_00321",
+      "candidate_00330",
+      "candidate_00335",
+      "candidate_00313",
+      "candidate_00158",
+      "candidate_00075",
+      "candidate_00340",
+      "candidate_00338",
+      "candidate_00329",
+      "candidate_00284",
+      "candidate_00342",
+      "candidate_00132",
+      "candidate_00189",
+      "candidate_00192",
+      "candidate_00353",
+      "candidate_00088",
+      "candidate_00169",
+      "candidate_00113",
+      "candidate_00178",
+      "candidate_00355",
+      "candidate_00352",
+      "candidate_00159",
+      "candidate_00356",
+      "candidate_00357",
+      "candidate_00294",
+      "candidate_00001",
+      "candidate_00358",
+      "candidate_00359",
+      "candidate_00361",
+      "candidate_00017",
+      "candidate_00362",
+      "candidate_00369",
+      "candidate_00366",
+      "candidate_00303",
+      "candidate_00364",
+      "candidate_00209",
+      "candidate_00295",
+      "candidate_00253",
+      "candidate_00316",
+      "candidate_00365",
+      "candidate_00060",
+      "candidate_00232",
+      "candidate_00375",
+      "candidate_00237",
+      "candidate_00371",
+      "candidate_00258",
+      "candidate_00376",
+      "candidate_00378",
+      "candidate_00380",
+      "candidate_00264",
+      "candidate_00328",
+      "candidate_00183",
+      "candidate_00267",
+      "candidate_00163",
+      "candidate_00392",
+      "candidate_00272",
+      "candidate_00241",
+      "candidate_00393",
+      "candidate_00224",
+      "candidate_00181",
+      "candidate_00274",
+      "candidate_00319",
+      "candidate_00269",
+      "candidate_00204",
+      "candidate_00386",
+      "candidate_00399",
+      "candidate_00390",
+      "candidate_00396",
+      "candidate_00310",
+      "candidate_00246",
+      "candidate_00036",
+      "candidate_00398",
+      "candidate_00220",
+      "candidate_00026",
+      "candidate_00137",
+      "candidate_00225",
+      "candidate_00203",
+      "candidate_00262",
+      "candidate_00312",
+      "candidate_00405",
+      "candidate_00093",
+      "candidate_00401",
+      "candidate_00411",
+      "candidate_00412",
+      "candidate_00410",
+      "candidate_00191",
+      "candidate_00421",
+      "candidate_00417",
+      "candidate_00347",
+      "candidate_00121",
+      "candidate_00302",
+      "candidate_00414",
+      "candidate_00276",
+      "candidate_00430",
+      "candidate_00431",
+      "candidate_00317",
+      "candidate_00242",
+      "candidate_00343",
+      "candidate_00236",
+      "candidate_00280",
+      "candidate_00083",
+      "candidate_00054",
+      "candidate_00024",
+      "candidate_00374",
+      "candidate_00190",
+      "candidate_00175",
+      "candidate_00147",
+      "candidate_00372",
+      "candidate_00309",
+      "candidate_00424",
+      "candidate_00445",
+      "candidate_00385",
+      "candidate_00205",
+      "candidate_00331",
+      "candidate_00250",
+      "candidate_00079",
+      "candidate_00326",
+      "candidate_00451",
+      "candidate_00149",
+      "candidate_00404",
+      "candidate_00196",
+      "candidate_00407",
+      "candidate_00211",
+      "candidate_00150",
+      "candidate_00315",
+      "candidate_00154",
+      "candidate_00351",
+      "candidate_00290",
+      "candidate_00056",
+      "candidate_00277",
+      "candidate_00427",
+      "candidate_00354",
+      "candidate_00453",
+      "candidate_00370",
+      "candidate_00293",
+      "candidate_00129",
+      "candidate_00119",
+      "candidate_00429",
+      "candidate_00363",
+      "candidate_00039",
+      "candidate_00344",
+      "candidate_00182",
+      "candidate_00439",
+      "candidate_00468",
+      "candidate_00471",
+      "candidate_00268",
+      "candidate_00484",
+      "candidate_00480",
+      "candidate_00486",
+      "candidate_00476",
+      "candidate_00479",
+      "candidate_00474",
+      "candidate_00090",
+      "candidate_00381",
+      "candidate_00492",
+      "candidate_00487",
+      "candidate_00368",
+      "candidate_00496",
+      "candidate_00034",
+      "candidate_00498",
+      "candidate_00499",
+      "candidate_00394",
+      "candidate_00389",
+      "candidate_00082",
+      "candidate_00433",
+      "candidate_00481",
+      "candidate_00503",
+      "candidate_00459",
+      "candidate_00504",
+      "candidate_00507",
+      "candidate_00452",
+      "candidate_00012",
+      "candidate_00501",
+      "candidate_00416",
+      "candidate_00291",
+      "candidate_00139",
+      "candidate_00228",
+      "candidate_00367",
+      "candidate_00377",
+      "candidate_00418",
+      "candidate_00379",
+      "candidate_00519",
+      "candidate_00461",
+      "candidate_00023",
+      "candidate_00333",
+      "candidate_00449",
+      "candidate_00058",
+      "candidate_00426",
+      "candidate_00448",
+      "candidate_00345",
+      "candidate_00238",
+      "candidate_00441",
+      "candidate_00515",
+      "candidate_00454",
+      "candidate_00415",
+      "candidate_00466",
+      "candidate_00489",
+      "candidate_00107",
+      "candidate_00440",
+      "candidate_00457",
+      "candidate_00536",
+      "candidate_00540",
+      "candidate_00482",
+      "candidate_00491",
+      "candidate_00500",
+      "candidate_00360",
+      "candidate_00450",
+      "candidate_00511",
+      "candidate_00463",
+      "candidate_00539",
+      "candidate_00292",
+      "candidate_00434",
+      "candidate_00516",
+      "candidate_00089",
+      "candidate_00395",
+      "candidate_00320",
+      "candidate_00324",
+      "candidate_00373",
+      "candidate_00547",
+      "candidate_00521",
+      "candidate_00556",
+      "candidate_00543",
+      "candidate_00030",
+      "candidate_00469",
+      "candidate_00105",
+      "candidate_00384",
+      "candidate_00473",
+      "candidate_00553",
+      "candidate_00391",
+      "candidate_00419",
+      "candidate_00472",
+      "candidate_00420",
+      "candidate_00546",
+      "candidate_00428",
+      "candidate_00563",
+      "candidate_00327",
+      "candidate_00348",
+      "candidate_00334",
+      "candidate_00014",
+      "candidate_00562",
+      "candidate_00566",
+      "candidate_00561",
+      "candidate_00063",
+      "candidate_00067",
+      "candidate_00567",
+      "candidate_00244",
+      "candidate_00215",
+      "candidate_00423",
+      "candidate_00518",
+      "candidate_00475",
+      "candidate_00581",
+      "candidate_00571",
+      "candidate_00387",
+      "candidate_00578",
+      "candidate_00569",
+      "candidate_00337",
+      "candidate_00554",
+      "candidate_00199",
+      "candidate_00432",
+      "candidate_00583",
+      "candidate_00585",
+      "candidate_00575",
+      "candidate_00483",
+      "candidate_00188",
+      "candidate_00055",
+      "candidate_00550",
+      "candidate_00531",
+      "candidate_00533",
+      "candidate_00460",
+      "candidate_00216",
+      "candidate_00528",
+      "candidate_00408",
+      "candidate_00603",
+      "candidate_00576",
+      "candidate_00490",
+      "candidate_00526",
+      "candidate_00606",
+      "candidate_00604",
+      "candidate_00403",
+      "candidate_00607",
+      "candidate_00611",
+      "candidate_00610",
+      "candidate_00613",
+      "candidate_00605",
+      "candidate_00513",
+      "candidate_00413",
+      "candidate_00243",
+      "candidate_00618",
+      "candidate_00283",
+      "candidate_00621",
+      "candidate_00502",
+      "candidate_00173",
+      "candidate_00616",
+      "candidate_00622",
+      "candidate_00634",
+      "candidate_00626",
+      "candidate_00636",
+      "candidate_00322",
+      "candidate_00595",
+      "candidate_00383",
+      "candidate_00637",
+      "candidate_00627",
+      "candidate_00639",
+      "candidate_00638",
+      "candidate_00614",
+      "candidate_00560",
+      "candidate_00438",
+      "candidate_00311",
+      "candidate_00647",
+      "candidate_00593",
+      "candidate_00646",
+      "candidate_00523",
+      "candidate_00641",
+      "candidate_00644",
+      "candidate_00653",
+      "candidate_00210",
+      "candidate_00654",
+      "candidate_00172",
+      "candidate_00346",
+      "candidate_00336",
+      "candidate_00548",
+      "candidate_00648",
+      "candidate_00632",
+      "candidate_00568",
+      "candidate_00657",
+      "candidate_00462",
+      "candidate_00662",
+      "candidate_00425",
+      "candidate_00497",
+      "candidate_00658",
+      "candidate_00406",
+      "candidate_00660",
+      "candidate_00664",
+      "candidate_00509",
+      "candidate_00663",
+      "candidate_00584",
+      "candidate_00534",
+      "candidate_00671",
+      "candidate_00669",
+      "candidate_00409",
+      "candidate_00623",
+      "candidate_00541",
+      "candidate_00153",
+      "candidate_00174",
+      "candidate_00559",
+      "candidate_00619",
+      "candidate_00612",
+      "candidate_00538",
+      "candidate_00551",
+      "candidate_00592",
+      "candidate_00552",
+      "candidate_00349",
+      "candidate_00617",
+      "candidate_00564",
+      "candidate_00289",
+      "candidate_00596",
+      "candidate_00477",
+      "candidate_00609",
+      "candidate_00071",
+      "candidate_00400",
+      "candidate_00672",
+      "candidate_00599",
+      "candidate_00458",
+      "candidate_00176",
+      "candidate_00628",
+      "candidate_00565",
+      "candidate_00255",
+      "candidate_00443",
+      "candidate_00574",
+      "candidate_00388",
+      "candidate_00579",
+      "candidate_00281",
+      "candidate_00601",
+      "candidate_00444",
+      "candidate_00464",
+      "candidate_00000",
+      "candidate_00600",
+      "candidate_00570",
+      "candidate_00645",
+      "candidate_00587",
+      "candidate_00506",
+      "candidate_00005",
+      "candidate_00193",
+      "candidate_00494",
+      "candidate_00530",
+      "candidate_00495",
+      "candidate_00615",
+      "candidate_00465",
+      "candidate_00517",
+      "candidate_00665",
+      "candidate_00422",
+      "candidate_00512",
+      "candidate_00544",
+      "candidate_00332",
+      "candidate_00602",
+      "candidate_00670",
+      "candidate_00598",
+      "candidate_00643",
+      "candidate_00437",
+      "candidate_00555",
+      "candidate_00668",
+      "candidate_00666",
+      "candidate_00382",
+      "candidate_00467",
+      "candidate_00582",
+      "candidate_00510",
+      "candidate_00456",
+      "candidate_00542",
+      "candidate_00580",
+      "candidate_00485",
+      "candidate_00488",
+      "candidate_00620",
+      "candidate_00455",
+      "candidate_00436",
+      "candidate_00435",
+      "candidate_00201",
+      "candidate_00659",
+      "candidate_00397",
+      "candidate_00590",
+      "candidate_00591",
+      "candidate_00446",
+      "candidate_00625",
+      "candidate_00532",
+      "candidate_00652",
+      "candidate_00655",
+      "candidate_00624",
+      "candidate_00442",
+      "candidate_00508",
+      "candidate_00649",
+      "candidate_00572",
+      "candidate_00630",
+      "candidate_00529",
+      "candidate_00505",
+      "candidate_00545",
+      "candidate_00527",
+      "candidate_00650",
+      "candidate_00629",
+      "candidate_00608",
+      "candidate_00350",
+      "candidate_00597",
+      "candidate_00594",
+      "candidate_00589",
+      "candidate_00402",
+      "candidate_00535",
+      "candidate_00573",
+      "candidate_00131",
+      "candidate_00171",
+      "candidate_00667",
+      "candidate_00537",
+      "candidate_00577",
+      "candidate_00341",
+      "candidate_00522",
+      "candidate_00635",
+      "candidate_00558",
+      "candidate_00261",
+      "candidate_00586",
+      "candidate_00339",
+      "candidate_00640",
+      "candidate_00219",
+      "candidate_00447",
+      "candidate_00631",
+      "candidate_00642",
+      "candidate_00493",
+      "candidate_00588",
+      "candidate_00656",
+      "candidate_00557",
+      "candidate_00651",
+      "candidate_00186",
+      "candidate_00282",
+      "candidate_00673",
+      "candidate_00514",
+      "candidate_00520",
+      "candidate_00470",
+      "candidate_00037",
+      "candidate_00524",
+      "candidate_00478",
+      "candidate_00661",
+      "candidate_00633",
+      "candidate_00525",
+      "candidate_00549"
+    ],
+    "failed_items": [],
+    "retry_details": [
+      {
+        "item_id": "cand_0026_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:27.471449+00:00"
+      },
+      {
+        "item_id": "cand_0011_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:27.681914+00:00"
+      },
+      {
+        "item_id": "cand_0001_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:27.881925+00:00"
+      },
+      {
+        "item_id": "cand_0029_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:27.994322+00:00"
+      },
+      {
+        "item_id": "cand_0079_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:28.004126+00:00"
+      },
+      {
+        "item_id": "cand_0014_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:28.095179+00:00"
+      },
+      {
+        "item_id": "cand_0028_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:28.102880+00:00"
+      },
+      {
+        "item_id": "cand_0058_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:28.296171+00:00"
+      },
+      {
+        "item_id": "cand_0067_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:28.400852+00:00"
+      },
+      {
+        "item_id": "cand_0012_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:28.423203+00:00"
+      },
+      {
+        "item_id": "cand_0090_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:28.619011+00:00"
+      },
+      {
+        "item_id": "cand_0027_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:29.433160+00:00"
+      },
+      {
+        "item_id": "cand_0037_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:29.538906+00:00"
+      },
+      {
+        "item_id": "cand_0023_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:29.954001+00:00"
+      },
+      {
+        "item_id": "cand_0035_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:30.166947+00:00"
+      },
+      {
+        "item_id": "cand_0124_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:30.582689+00:00"
+      },
+      {
+        "item_id": "cand_0113_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:30.582808+00:00"
+      },
+      {
+        "item_id": "cand_0061_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:30.781876+00:00"
+      },
+      {
+        "item_id": "cand_0056_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:30.891817+00:00"
+      },
+      {
+        "item_id": "cand_0075_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:31.099363+00:00"
+      },
+      {
+        "item_id": "cand_0131_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:31.199215+00:00"
+      },
+      {
+        "item_id": "cand_0119_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:32.030253+00:00"
+      },
+      {
+        "item_id": "cand_0141_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:32.130511+00:00"
+      },
+      {
+        "item_id": "cand_0129_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:32.135325+00:00"
+      },
+      {
+        "item_id": "cand_0125_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:32.233741+00:00"
+      },
+      {
+        "item_id": "cand_0137_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:32.242945+00:00"
+      },
+      {
+        "item_id": "cand_0139_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:33.387346+00:00"
+      },
+      {
+        "item_id": "cand_0149_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:33.896390+00:00"
+      },
+      {
+        "item_id": "cand_0173_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:34.315417+00:00"
+      },
+      {
+        "item_id": "cand_0082_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:34.417986+00:00"
+      },
+      {
+        "item_id": "cand_0163_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:34.426703+00:00"
+      },
+      {
+        "item_id": "cand_0154_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:34.630781+00:00"
+      },
+      {
+        "item_id": "cand_0105_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:35.869195+00:00"
+      },
+      {
+        "item_id": "cand_0174_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:36.182439+00:00"
+      },
+      {
+        "item_id": "cand_0145_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:36.288707+00:00"
+      },
+      {
+        "item_id": "cand_0199_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:36.499423+00:00"
+      },
+      {
+        "item_id": "cand_0178_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:36.697768+00:00"
+      },
+      {
+        "item_id": "cand_0196_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:36.911059+00:00"
+      },
+      {
+        "item_id": "cand_0063_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:37.011475+00:00"
+      },
+      {
+        "item_id": "cand_0171_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:37.626892+00:00"
+      },
+      {
+        "item_id": "cand_0039_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:37.627017+00:00"
+      },
+      {
+        "item_id": "cand_0201_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:38.041248+00:00"
+      },
+      {
+        "item_id": "cand_0055_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:38.160395+00:00"
+      },
+      {
+        "item_id": "cand_0024_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:38.468717+00:00"
+      },
+      {
+        "item_id": "cand_0205_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:39.191844+00:00"
+      },
+      {
+        "item_id": "cand_0216_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:39.400102+00:00"
+      },
+      {
+        "item_id": "cand_0150_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:39.611110+00:00"
+      },
+      {
+        "item_id": "cand_0159_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:40.336839+00:00"
+      },
+      {
+        "item_id": "cand_0215_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:40.337764+00:00"
+      },
+      {
+        "item_id": "cand_0211_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:40.850575+00:00"
+      },
+      {
+        "item_id": "cand_0193_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:41.061892+00:00"
+      },
+      {
+        "item_id": "cand_0219_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:41.374455+00:00"
+      },
+      {
+        "item_id": "cand_0225_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:42.099428+00:00"
+      },
+      {
+        "item_id": "cand_0017_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:42.827455+00:00"
+      },
+      {
+        "item_id": "cand_0203_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:43.240858+00:00"
+      },
+      {
+        "item_id": "cand_0238_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:43.661153+00:00"
+      },
+      {
+        "item_id": "cand_0034_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:43.661227+00:00"
+      },
+      {
+        "item_id": "cand_0243_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:43.770381+00:00"
+      },
+      {
+        "item_id": "cand_0244_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:44.304563+00:00"
+      },
+      {
+        "item_id": "cand_0237_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:44.505025+00:00"
+      },
+      {
+        "item_id": "cand_0250_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:44.612744+00:00"
+      },
+      {
+        "item_id": "cand_0172_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:45.024330+00:00"
+      },
+      {
+        "item_id": "cand_0181_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:45.539445+00:00"
+      },
+      {
+        "item_id": "cand_0253_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:45.642343+00:00"
+      },
+      {
+        "item_id": "cand_0060_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:45.958791+00:00"
+      },
+      {
+        "item_id": "cand_0153_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:46.688464+00:00"
+      },
+      {
+        "item_id": "cand_0255_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:47.105070+00:00"
+      },
+      {
+        "item_id": "cand_0210_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:47.110073+00:00"
+      },
+      {
+        "item_id": "cand_0258_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:47.214341+00:00"
+      },
+      {
+        "item_id": "cand_0261_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:48.248105+00:00"
+      },
+      {
+        "item_id": "cand_0267_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:48.571026+00:00"
+      },
+      {
+        "item_id": "cand_0220_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:49.295660+00:00"
+      },
+      {
+        "item_id": "cand_0262_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:49.605450+00:00"
+      },
+      {
+        "item_id": "cand_0269_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:50.433940+00:00"
+      },
+      {
+        "item_id": "cand_0272_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:50.538147+00:00"
+      },
+      {
+        "item_id": "cand_0264_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:50.642149+00:00"
+      },
+      {
+        "item_id": "cand_0276_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:50.959666+00:00"
+      },
+      {
+        "item_id": "cand_0183_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:51.062563+00:00"
+      },
+      {
+        "item_id": "cand_0246_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:51.902172+00:00"
+      },
+      {
+        "item_id": "cand_0191_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:53.155754+00:00"
+      },
+      {
+        "item_id": "cand_0280_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:53.682833+00:00"
+      },
+      {
+        "item_id": "cand_0277_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:54.616378+00:00"
+      },
+      {
+        "item_id": "cand_0175_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:55.353823+00:00"
+      },
+      {
+        "item_id": "cand_0283_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:55.972439+00:00"
+      },
+      {
+        "item_id": "cand_0093_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:57.951369+00:00"
+      },
+      {
+        "item_id": "cand_0289_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:58.576226+00:00"
+      },
+      {
+        "item_id": "cand_0291_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:58.677643+00:00"
+      },
+      {
+        "item_id": "cand_0292_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:58.789982+00:00"
+      },
+      {
+        "item_id": "cand_0293_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:30:59.721049+00:00"
+      },
+      {
+        "item_id": "cand_0083_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:00.241796+00:00"
+      },
+      {
+        "item_id": "cand_0000_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:00.344252+00:00"
+      },
+      {
+        "item_id": "cand_0131_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:03.894355+00:00"
+      },
+      {
+        "item_id": "cand_0242_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:04.215984+00:00"
+      },
+      {
+        "item_id": "cand_0302_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:04.318421+00:00"
+      },
+      {
+        "item_id": "cand_0082_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:07.658438+00:00"
+      },
+      {
+        "item_id": "cand_0054_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:07.865075+00:00"
+      },
+      {
+        "item_id": "cand_0139_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:07.972504+00:00"
+      },
+      {
+        "item_id": "cand_0315_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:08.291406+00:00"
+      },
+      {
+        "item_id": "cand_0056_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:09.226448+00:00"
+      },
+      {
+        "item_id": "cand_0089_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:09.329425+00:00"
+      },
+      {
+        "item_id": "cand_0311_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:09.333642+00:00"
+      },
+      {
+        "item_id": "cand_0058_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:09.645119+00:00"
+      },
+      {
+        "item_id": "cand_0023_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:09.650168+00:00"
+      },
+      {
+        "item_id": "cand_0012_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:10.687242+00:00"
+      },
+      {
+        "item_id": "cand_0173_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:10.797212+00:00"
+      },
+      {
+        "item_id": "cand_0324_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:11.730440+00:00"
+      },
+      {
+        "item_id": "cand_0322_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:12.254729+00:00"
+      },
+      {
+        "item_id": "cand_0199_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:12.561319+00:00"
+      },
+      {
+        "item_id": "cand_0154_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:12.670436+00:00"
+      },
+      {
+        "item_id": "cand_0334_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:12.871345+00:00"
+      },
+      {
+        "item_id": "cand_0337_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:13.182349+00:00"
+      },
+      {
+        "item_id": "cand_0129_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:13.284864+00:00"
+      },
+      {
+        "item_id": "cand_0119_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:13.496767+00:00"
+      },
+      {
+        "item_id": "cand_0341_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:13.812362+00:00"
+      },
+      {
+        "item_id": "cand_0219_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:14.117409+00:00"
+      },
+      {
+        "item_id": "cand_0215_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:14.964239+00:00"
+      },
+      {
+        "item_id": "cand_0336_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:15.593103+00:00"
+      },
+      {
+        "item_id": "cand_0063_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:15.693957+00:00"
+      },
+      {
+        "item_id": "cand_0171_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:15.694033+00:00"
+      },
+      {
+        "item_id": "cand_0346_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:15.697968+00:00"
+      },
+      {
+        "item_id": "cand_0201_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:16.525768+00:00"
+      },
+      {
+        "item_id": "cand_0150_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:16.631025+00:00"
+      },
+      {
+        "item_id": "cand_0149_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:16.743827+00:00"
+      },
+      {
+        "item_id": "cand_0238_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:17.365482+00:00"
+      },
+      {
+        "item_id": "cand_0348_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:17.464151+00:00"
+      },
+      {
+        "item_id": "cand_0345_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:17.875560+00:00"
+      },
+      {
+        "item_id": "cand_0354_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:18.295565+00:00"
+      },
+      {
+        "item_id": "cand_0344_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:19.123684+00:00"
+      },
+      {
+        "item_id": "cand_0172_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:22.246969+00:00"
+      },
+      {
+        "item_id": "cand_0373_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:22.964543+00:00"
+      },
+      {
+        "item_id": "cand_0107_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:22.964623+00:00"
+      },
+      {
+        "item_id": "cand_0368_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:23.794389+00:00"
+      },
+      {
+        "item_id": "cand_0210_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:24.621391+00:00"
+      },
+      {
+        "item_id": "cand_0382_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:25.456587+00:00"
+      },
+      {
+        "item_id": "cand_0379_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:25.880426+00:00"
+      },
+      {
+        "item_id": "cand_0387_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:26.086177+00:00"
+      },
+      {
+        "item_id": "cand_0384_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:26.513271+00:00"
+      },
+      {
+        "item_id": "cand_0389_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:27.343578+00:00"
+      },
+      {
+        "item_id": "cand_0383_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:27.651583+00:00"
+      },
+      {
+        "item_id": "cand_0381_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:27.963238+00:00"
+      },
+      {
+        "item_id": "cand_0388_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:28.075035+00:00"
+      },
+      {
+        "item_id": "cand_0090_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:28.906657+00:00"
+      },
+      {
+        "item_id": "cand_0391_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:29.432408+00:00"
+      },
+      {
+        "item_id": "cand_0261_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:30.467997+00:00"
+      },
+      {
+        "item_id": "cand_0400_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:30.468081+00:00"
+      },
+      {
+        "item_id": "cand_0394_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:31.086461+00:00"
+      },
+      {
+        "item_id": "cand_0397_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:31.716911+00:00"
+      },
+      {
+        "item_id": "cand_0071_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:31.815117+00:00"
+      },
+      {
+        "item_id": "cand_0395_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:32.338697+00:00"
+      },
+      {
+        "item_id": "cand_0406_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:32.342593+00:00"
+      },
+      {
+        "item_id": "cand_0367_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:32.543249+00:00"
+      },
+      {
+        "item_id": "cand_0403_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:33.480691+00:00"
+      },
+      {
+        "item_id": "cand_0413_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:34.114993+00:00"
+      },
+      {
+        "item_id": "cand_0415_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:34.423956+00:00"
+      },
+      {
+        "item_id": "cand_0408_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:34.533221+00:00"
+      },
+      {
+        "item_id": "cand_0289_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:36.193480+00:00"
+      },
+      {
+        "item_id": "cand_0425_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:36.292637+00:00"
+      },
+      {
+        "item_id": "cand_0428_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:36.499800+00:00"
+      },
+      {
+        "item_id": "cand_0292_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:37.028120+00:00"
+      },
+      {
+        "item_id": "cand_0283_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:37.131385+00:00"
+      },
+      {
+        "item_id": "cand_0402_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:37.552102+00:00"
+      },
+      {
+        "item_id": "cand_0418_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:38.061434+00:00"
+      },
+      {
+        "item_id": "cand_0174_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:38.585201+00:00"
+      },
+      {
+        "item_id": "cand_0416_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:39.533783+00:00"
+      },
+      {
+        "item_id": "cand_0228_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:39.753682+00:00"
+      },
+      {
+        "item_id": "cand_0437_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:40.784865+00:00"
+      },
+      {
+        "item_id": "cand_0419_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:41.939815+00:00"
+      },
+      {
+        "item_id": "cand_0173_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:43.601146+00:00"
+      },
+      {
+        "item_id": "cand_0434_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:43.707269+00:00"
+      },
+      {
+        "item_id": "cand_0442_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:46.228322+00:00"
+      },
+      {
+        "item_id": "cand_0023_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:46.336998+00:00"
+      },
+      {
+        "item_id": "cand_0443_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:46.429143+00:00"
+      },
+      {
+        "item_id": "cand_0440_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:47.905011+00:00"
+      },
+      {
+        "item_id": "cand_0438_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:48.115250+00:00"
+      },
+      {
+        "item_id": "cand_0333_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:48.743969+00:00"
+      },
+      {
+        "item_id": "cand_0336_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:49.160878+00:00"
+      },
+      {
+        "item_id": "cand_0449_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:49.161327+00:00"
+      },
+      {
+        "item_id": "cand_0450_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:49.268414+00:00"
+      },
+      {
+        "item_id": "cand_0037_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:50.000623+00:00"
+      },
+      {
+        "item_id": "cand_0448_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:51.044314+00:00"
+      },
+      {
+        "item_id": "cand_0311_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:51.154121+00:00"
+      },
+      {
+        "item_id": "cand_0454_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:52.508010+00:00"
+      },
+      {
+        "item_id": "cand_0255_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:55.021795+00:00"
+      },
+      {
+        "item_id": "cand_0470_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:55.541032+00:00"
+      },
+      {
+        "item_id": "cand_0441_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:57.001084+00:00"
+      },
+      {
+        "item_id": "cand_0322_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:58.571874+00:00"
+      },
+      {
+        "item_id": "cand_0373_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:58.669152+00:00"
+      },
+      {
+        "item_id": "cand_0171_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:58.673916+00:00"
+      },
+      {
+        "item_id": "cand_0457_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:58.887437+00:00"
+      },
+      {
+        "item_id": "cand_0382_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:58.992052+00:00"
+      },
+      {
+        "item_id": "cand_0176_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:31:59.713179+00:00"
+      },
+      {
+        "item_id": "cand_0467_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:00.228572+00:00"
+      },
+      {
+        "item_id": "cand_0488_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:00.228813+00:00"
+      },
+      {
+        "item_id": "cand_0348_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:00.437177+00:00"
+      },
+      {
+        "item_id": "cand_0473_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:00.439121+00:00"
+      },
+      {
+        "item_id": "cand_0485_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:01.177215+00:00"
+      },
+      {
+        "item_id": "cand_0482_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:01.385725+00:00"
+      },
+      {
+        "item_id": "cand_0201_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:01.498311+00:00"
+      },
+      {
+        "item_id": "cand_0469_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:03.169318+00:00"
+      },
+      {
+        "item_id": "cand_0494_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:03.684945+00:00"
+      },
+      {
+        "item_id": "cand_0210_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:04.522264+00:00"
+      },
+      {
+        "item_id": "cand_0491_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:05.042880+00:00"
+      },
+      {
+        "item_id": "cand_0493_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:05.873110+00:00"
+      },
+      {
+        "item_id": "cand_0188_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:06.084314+00:00"
+      },
+      {
+        "item_id": "cand_0384_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:06.605161+00:00"
+      },
+      {
+        "item_id": "cand_0446_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:06.820637+00:00"
+      },
+      {
+        "item_id": "cand_0383_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:07.239382+00:00"
+      },
+      {
+        "item_id": "cand_0400_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:07.667511+00:00"
+      },
+      {
+        "item_id": "cand_0502_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:09.851504+00:00"
+      },
+      {
+        "item_id": "cand_0505_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:09.949739+00:00"
+      },
+      {
+        "item_id": "cand_0388_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:09.955220+00:00"
+      },
+      {
+        "item_id": "cand_0243_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:10.159762+00:00"
+      },
+      {
+        "item_id": "cand_0497_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:10.164870+00:00"
+      },
+      {
+        "item_id": "cand_0014_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:10.479921+00:00"
+      },
+      {
+        "item_id": "cand_0425_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:11.097883+00:00"
+      },
+      {
+        "item_id": "cand_0413_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:12.772842+00:00"
+      },
+      {
+        "item_id": "cand_0387_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:13.195256+00:00"
+      },
+      {
+        "item_id": "cand_0289_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:13.195556+00:00"
+      },
+      {
+        "item_id": "cand_0071_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:13.195631+00:00"
+      },
+      {
+        "item_id": "cand_0283_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:13.920357+00:00"
+      },
+      {
+        "item_id": "cand_0408_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:14.133023+00:00"
+      },
+      {
+        "item_id": "cand_0512_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:15.270657+00:00"
+      },
+      {
+        "item_id": "cand_0495_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:15.694337+00:00"
+      },
+      {
+        "item_id": "cand_0513_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:16.209071+00:00"
+      },
+      {
+        "item_id": "cand_0508_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:17.051257+00:00"
+      },
+      {
+        "item_id": "cand_0403_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:17.464717+00:00"
+      },
+      {
+        "item_id": "cand_0437_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:17.869591+00:00"
+      },
+      {
+        "item_id": "cand_0332_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:18.288909+00:00"
+      },
+      {
+        "item_id": "cand_0186_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:18.294243+00:00"
+      },
+      {
+        "item_id": "cand_0174_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:19.343331+00:00"
+      },
+      {
+        "item_id": "cand_0509_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:19.754145+00:00"
+      },
+      {
+        "item_id": "cand_0131_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:21.510334+00:00"
+      },
+      {
+        "item_id": "cand_0447_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:21.932261+00:00"
+      },
+      {
+        "item_id": "cand_0311_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:23.608455+00:00"
+      },
+      {
+        "item_id": "cand_0438_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:24.239233+00:00"
+      },
+      {
+        "item_id": "cand_0346_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:25.376881+00:00"
+      },
+      {
+        "item_id": "cand_0336_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:27.356370+00:00"
+      },
+      {
+        "item_id": "cand_0464_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:27.464314+00:00"
+      },
+      {
+        "item_id": "cand_0530_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:27.673669+00:00"
+      },
+      {
+        "item_id": "cand_0520_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:29.014948+00:00"
+      },
+      {
+        "item_id": "cand_0527_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:29.431361+00:00"
+      },
+      {
+        "item_id": "cand_0455_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:29.854515+00:00"
+      },
+      {
+        "item_id": "cand_0477_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:30.474601+00:00"
+      },
+      {
+        "item_id": "cand_0005_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:30.577661+00:00"
+      },
+      {
+        "item_id": "cand_0443_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:31.723727+00:00"
+      },
+      {
+        "item_id": "cand_0532_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:31.728239+00:00"
+      },
+      {
+        "item_id": "cand_0402_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:32.035249+00:00"
+      },
+      {
+        "item_id": "cand_0282_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:33.403676+00:00"
+      },
+      {
+        "item_id": "cand_0534_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:35.267857+00:00"
+      },
+      {
+        "item_id": "cand_0171_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:35.882731+00:00"
+      },
+      {
+        "item_id": "cand_0219_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:36.917994+00:00"
+      },
+      {
+        "item_id": "cand_0409_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:37.442180+00:00"
+      },
+      {
+        "item_id": "cand_0478_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:37.758866+00:00"
+      },
+      {
+        "item_id": "cand_0153_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:37.861826+00:00"
+      },
+      {
+        "item_id": "cand_0467_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:38.585132+00:00"
+      },
+      {
+        "item_id": "cand_0535_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:39.002380+00:00"
+      },
+      {
+        "item_id": "cand_0470_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:39.524314+00:00"
+      },
+      {
+        "item_id": "cand_0485_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:40.140923+00:00"
+      },
+      {
+        "item_id": "cand_0549_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:40.249389+00:00"
+      },
+      {
+        "item_id": "cand_0349_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:40.454235+00:00"
+      },
+      {
+        "item_id": "cand_0350_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:40.774083+00:00"
+      },
+      {
+        "item_id": "cand_0552_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:41.197643+00:00"
+      },
+      {
+        "item_id": "cand_0544_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:41.301746+00:00"
+      },
+      {
+        "item_id": "cand_0545_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:41.404813+00:00"
+      },
+      {
+        "item_id": "cand_0559_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:41.611362+00:00"
+      },
+      {
+        "item_id": "cand_0541_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:41.709464+00:00"
+      },
+      {
+        "item_id": "cand_0281_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:41.925160+00:00"
+      },
+      {
+        "item_id": "cand_0382_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:42.022186+00:00"
+      },
+      {
+        "item_id": "cand_0538_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:42.026904+00:00"
+      },
+      {
+        "item_id": "cand_0557_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:42.126206+00:00"
+      },
+      {
+        "item_id": "cand_0488_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:42.335540+00:00"
+      },
+      {
+        "item_id": "cand_0558_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:42.335618+00:00"
+      },
+      {
+        "item_id": "cand_0261_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:42.953847+00:00"
+      },
+      {
+        "item_id": "cand_0458_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:42.953924+00:00"
+      },
+      {
+        "item_id": "cand_0201_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:43.058254+00:00"
+      },
+      {
+        "item_id": "cand_0494_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:43.058586+00:00"
+      },
+      {
+        "item_id": "cand_0551_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:43.058765+00:00"
+      },
+      {
+        "item_id": "cand_0255_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:43.058839+00:00"
+      },
+      {
+        "item_id": "cand_0537_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:44.010175+00:00"
+      },
+      {
+        "item_id": "cand_0510_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:44.524843+00:00"
+      },
+      {
+        "item_id": "cand_0524_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:45.262005+00:00"
+      },
+      {
+        "item_id": "cand_0339_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:45.361966+00:00"
+      },
+      {
+        "item_id": "cand_0446_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:45.570371+00:00"
+      },
+      {
+        "item_id": "cand_0565_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:45.879474+00:00"
+      },
+      {
+        "item_id": "cand_0572_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:46.824664+00:00"
+      },
+      {
+        "item_id": "cand_0000_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:47.132340+00:00"
+      },
+      {
+        "item_id": "cand_0573_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:47.656859+00:00"
+      },
+      {
+        "item_id": "cand_0435_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:47.859242+00:00"
+      },
+      {
+        "item_id": "cand_0579_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:48.071651+00:00"
+      },
+      {
+        "item_id": "cand_0577_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:48.270493+00:00"
+      },
+      {
+        "item_id": "cand_0071_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:48.483861+00:00"
+      },
+      {
+        "item_id": "cand_0388_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:48.585616+00:00"
+      },
+      {
+        "item_id": "cand_0493_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:48.591120+00:00"
+      },
+      {
+        "item_id": "cand_0574_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:48.696474+00:00"
+      },
+      {
+        "item_id": "cand_0580_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:48.696557+00:00"
+      },
+      {
+        "item_id": "cand_0589_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:49.016156+00:00"
+      },
+      {
+        "item_id": "cand_0397_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:49.737058+00:00"
+      },
+      {
+        "item_id": "cand_0588_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:49.945935+00:00"
+      },
+      {
+        "item_id": "cand_0465_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:50.367613+00:00"
+      },
+      {
+        "item_id": "cand_0193_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:50.477913+00:00"
+      },
+      {
+        "item_id": "cand_0495_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:50.679513+00:00"
+      },
+      {
+        "item_id": "cand_0444_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:50.784384+00:00"
+      },
+      {
+        "item_id": "cand_0436_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:50.791850+00:00"
+      },
+      {
+        "item_id": "cand_0525_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:51.104138+00:00"
+      },
+      {
+        "item_id": "cand_0590_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:51.521816+00:00"
+      },
+      {
+        "item_id": "cand_0600_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:51.630918+00:00"
+      },
+      {
+        "item_id": "cand_0437_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:51.831722+00:00"
+      },
+      {
+        "item_id": "cand_0591_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:51.938544+00:00"
+      },
+      {
+        "item_id": "cand_0601_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:52.153032+00:00"
+      },
+      {
+        "item_id": "cand_0586_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:52.369631+00:00"
+      },
+      {
+        "item_id": "cand_0602_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:52.369713+00:00"
+      },
+      {
+        "item_id": "cand_0598_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:52.579908+00:00"
+      },
+      {
+        "item_id": "cand_0570_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:52.890759+00:00"
+      },
+      {
+        "item_id": "cand_0522_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:53.002490+00:00"
+      },
+      {
+        "item_id": "cand_0514_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:53.099419+00:00"
+      },
+      {
+        "item_id": "cand_0186_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:53.528408+00:00"
+      },
+      {
+        "item_id": "cand_0512_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:56.659450+00:00"
+      },
+      {
+        "item_id": "cand_0587_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:57.497209+00:00"
+      },
+      {
+        "item_id": "cand_0505_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:57.923910+00:00"
+      },
+      {
+        "item_id": "cand_0615_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:58.125005+00:00"
+      },
+      {
+        "item_id": "cand_0620_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:58.435529+00:00"
+      },
+      {
+        "item_id": "cand_0633_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:58.538781+00:00"
+      },
+      {
+        "item_id": "cand_0332_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:58.957541+00:00"
+      },
+      {
+        "item_id": "cand_0624_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:59.071850+00:00"
+      },
+      {
+        "item_id": "cand_0635_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:32:59.373583+00:00"
+      },
+      {
+        "item_id": "cand_0422_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:00.004758+00:00"
+      },
+      {
+        "item_id": "cand_0643_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:02.928013+00:00"
+      },
+      {
+        "item_id": "cand_0442_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:03.462640+00:00"
+      },
+      {
+        "item_id": "cand_0640_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:03.572607+00:00"
+      },
+      {
+        "item_id": "cand_0447_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:03.991423+00:00"
+      },
+      {
+        "item_id": "cand_0625_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:05.555810+00:00"
+      },
+      {
+        "item_id": "cand_0652_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:07.867195+00:00"
+      },
+      {
+        "item_id": "cand_0655_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:07.965630+00:00"
+      },
+      {
+        "item_id": "cand_0656_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:08.069803+00:00"
+      },
+      {
+        "item_id": "cand_0532_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:08.589225+00:00"
+      },
+      {
+        "item_id": "cand_0171_iter1",
+        "attempt": 5,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:08.901284+00:00"
+      },
+      {
+        "item_id": "cand_0659_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:09.326170+00:00"
+      },
+      {
+        "item_id": "cand_0527_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:09.750347+00:00"
+      },
+      {
+        "item_id": "cand_0661_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:12.050295+00:00"
+      },
+      {
+        "item_id": "cand_0555_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:12.902829+00:00"
+      },
+      {
+        "item_id": "cand_0666_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:12.903638+00:00"
+      },
+      {
+        "item_id": "cand_0037_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:15.966138+00:00"
+      },
+      {
+        "item_id": "cand_0456_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:16.480369+00:00"
+      },
+      {
+        "item_id": "cand_0467_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:18.258065+00:00"
+      },
+      {
+        "item_id": "cand_0341_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:18.885924+00:00"
+      },
+      {
+        "item_id": "cand_0350_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:19.712302+00:00"
+      },
+      {
+        "item_id": "cand_0667_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:20.553111+00:00"
+      },
+      {
+        "item_id": "cand_0485_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:20.656770+00:00"
+      },
+      {
+        "item_id": "cand_0219_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:20.758975+00:00"
+      },
+      {
+        "item_id": "cand_0558_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:21.915188+00:00"
+      },
+      {
+        "item_id": "cand_0537_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:22.332626+00:00"
+      },
+      {
+        "item_id": "cand_0201_iter1",
+        "attempt": 5,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:22.751625+00:00"
+      },
+      {
+        "item_id": "cand_0510_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:22.954572+00:00"
+      },
+      {
+        "item_id": "cand_0572_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:24.106531+00:00"
+      },
+      {
+        "item_id": "cand_0525_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:24.211600+00:00"
+      },
+      {
+        "item_id": "cand_0557_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:24.216126+00:00"
+      },
+      {
+        "item_id": "cand_0488_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:26.199025+00:00"
+      },
+      {
+        "item_id": "cand_0435_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:26.728346+00:00"
+      },
+      {
+        "item_id": "cand_0586_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:26.833253+00:00"
+      },
+      {
+        "item_id": "cand_0580_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:26.933490+00:00"
+      },
+      {
+        "item_id": "cand_0397_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:27.140702+00:00"
+      },
+      {
+        "item_id": "cand_0573_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:27.350222+00:00"
+      },
+      {
+        "item_id": "cand_0577_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:27.458826+00:00"
+      },
+      {
+        "item_id": "cand_0436_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:27.877357+00:00"
+      },
+      {
+        "item_id": "cand_0524_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:27.978252+00:00"
+      },
+      {
+        "item_id": "cand_0522_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:29.027533+00:00"
+      },
+      {
+        "item_id": "cand_0588_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:29.343863+00:00"
+      },
+      {
+        "item_id": "cand_0589_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:29.448943+00:00"
+      },
+      {
+        "item_id": "cand_0590_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:31.108299+00:00"
+      },
+      {
+        "item_id": "cand_0631_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:31.836824+00:00"
+      },
+      {
+        "item_id": "cand_0591_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:36.202041+00:00"
+      },
+      {
+        "item_id": "cand_0633_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:37.453960+00:00"
+      },
+      {
+        "item_id": "cand_0635_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:38.389980+00:00"
+      },
+      {
+        "item_id": "cand_0597_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:38.392706+00:00"
+      },
+      {
+        "item_id": "cand_0532_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:42.654852+00:00"
+      },
+      {
+        "item_id": "cand_0625_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:42.967699+00:00"
+      },
+      {
+        "item_id": "cand_0527_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:43.897152+00:00"
+      },
+      {
+        "item_id": "cand_0442_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:44.631446+00:00"
+      },
+      {
+        "item_id": "cand_0652_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:45.366163+00:00"
+      },
+      {
+        "item_id": "cand_0447_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:45.788765+00:00"
+      },
+      {
+        "item_id": "cand_0655_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:48.071777+00:00"
+      },
+      {
+        "item_id": "cand_0037_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:49.619645+00:00"
+      },
+      {
+        "item_id": "cand_0219_iter1",
+        "attempt": 5,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:53.481879+00:00"
+      },
+      {
+        "item_id": "cand_0341_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:56.204894+00:00"
+      },
+      {
+        "item_id": "cand_0350_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:56.307761+00:00"
+      },
+      {
+        "item_id": "cand_0537_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:33:59.845883+00:00"
+      },
+      {
+        "item_id": "cand_0586_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:01.538848+00:00"
+      },
+      {
+        "item_id": "cand_0514_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:04.763745+00:00"
+      },
+      {
+        "item_id": "cand_0186_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:05.699246+00:00"
+      },
+      {
+        "item_id": "cand_0588_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:06.023855+00:00"
+      },
+      {
+        "item_id": "cand_0522_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:07.481899+00:00"
+      },
+      {
+        "item_id": "cand_0635_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:13.215173+00:00"
+      },
+      {
+        "item_id": "cand_0633_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:13.314797+00:00"
+      },
+      {
+        "item_id": "cand_0631_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:17.936121+00:00"
+      },
+      {
+        "item_id": "cand_0447_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:20.560321+00:00"
+      },
+      {
+        "item_id": "cand_0673_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:27.791405+00:00"
+      },
+      {
+        "item_id": "cand_0219_iter1",
+        "attempt": 6,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:27.999608+00:00"
+      },
+      {
+        "item_id": "cand_0282_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:32.501678+00:00"
+      },
+      {
+        "item_id": "cand_0661_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:40.686615+00:00"
+      },
+      {
+        "item_id": "cand_0186_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:41.721650+00:00"
+      },
+      {
+        "item_id": "cand_0524_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:41.722180+00:00"
+      },
+      {
+        "item_id": "cand_0470_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:41.726539+00:00"
+      },
+      {
+        "item_id": "cand_0478_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:42.679421+00:00"
+      },
+      {
+        "item_id": "cand_0651_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:43.934035+00:00"
+      },
+      {
+        "item_id": "cand_0588_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:46.865007+00:00"
+      },
+      {
+        "item_id": "cand_0549_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:48.116061+00:00"
+      },
+      {
+        "item_id": "cand_0037_iter1",
+        "attempt": 5,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:51.234827+00:00"
+      },
+      {
+        "item_id": "cand_0656_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:55.236731+00:00"
+      },
+      {
+        "item_id": "cand_0525_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:58.367636+00:00"
+      },
+      {
+        "item_id": "cand_0557_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:34:59.516318+00:00"
+      },
+      {
+        "item_id": "cand_0673_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:35:03.488370+00:00"
+      },
+      {
+        "item_id": "cand_0282_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:35:16.001216+00:00"
+      },
+      {
+        "item_id": "cand_0524_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:35:23.360601+00:00"
+      },
+      {
+        "item_id": "cand_0037_iter1",
+        "attempt": 6,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:35:28.875149+00:00"
+      },
+      {
+        "item_id": "cand_0549_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:35:29.923378+00:00"
+      },
+      {
+        "item_id": "cand_0470_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:35:37.002991+00:00"
+      },
+      {
+        "item_id": "cand_0525_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:35:39.894782+00:00"
+      },
+      {
+        "item_id": "cand_0549_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:36:09.196756+00:00"
+      },
+      {
+        "item_id": "cand_0633_iter1",
+        "attempt": 4,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:36:19.532792+00:00"
+      },
+      {
+        "item_id": "cand_0661_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-01T22:36:22.171813+00:00"
+      }
+    ]
+  },
+  "usage_stats": {
+    "total_input_tokens": 1207808,
+    "total_output_tokens": 82653,
+    "total_cached_tokens": 0,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 68854,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 1359315,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 1207808,
+        "output_tokens": 82653,
+        "total_tokens": 1359315,
+        "request_count": 1094
+      }
+    }
+  },
+  "results_summary": {},
+  "cost_estimate": {
+    "input_cost_usd": 0.603904,
+    "output_cost_usd": 0.247959,
+    "total_cost_usd": 0.851863,
+    "list_input_cost_usd": 0.603904,
+    "list_output_cost_usd": 0.247959,
+    "list_total_cost_usd": 0.851863,
+    "cost_basis": "list",
+    "pricing_used": {
+      "model": "gemini-3.7-flash",
+      "input_per_1m": 0.5,
+      "output_per_1m": 3.0,
+      "discount": 1.0,
+      "discount_reason": "no discount applied"
+    }
+  }
+}
