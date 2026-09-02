@@ -1,7 +1,7 @@
 # AB+ tail report: 88 sources, complete — corpus build FINISHED
 
-> **Last revised**: 2026-09-02 (original publication; tail complete,
-> corpus 113 deliverables). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-03 (amendments acted on; PI rulings). See
+> [§ Changelog](#changelog).
 
 Companion to `reports/ab-plus-pilot-report-2026-08-30.md` (the first
 25 sources). This report covers the remaining 88, run on the
@@ -251,6 +251,23 @@ final numbers; the beacon (`planning/paper-writeup-continuity.md`
 § STATE AFTER S147) records the close.
 
 ## Changelog
+
+### 2026-09-03 — Amendments 1–4 acted on (PI rulings)
+
+Trigger: the PI's review of this report. Amendment 1 (gate heuristics)
+landed as `gate.content_notes` — cover-sheet, author-manuscript,
+neighbour-contamination, trailing-text, caption-only-table,
+sections-empty — calibrated on all 113 caches (79 PASS / 34 WARN /
+0 FAIL); the caption-only class proved undetectable from text
+statistics, so the publisher signature is the trigger. Amendment 2
+(verdict enum) enforced at render with NOT CHECKABLE admitted as a
+fourth value requiring a note; 51 entries re-rendered with named
+per-point labels. Amendment 3 (word band) is an advisory warning, per
+the PI's ruling that length limits are targets, not gates. Amendment 4
+(overflow home) decided: complete sidecar in `_work/`, paraphrase-only
+appendix in the public entry; conversion of the 88 free-form notes
+awaits PI approval of the agent batch. No numbers in the body changed.
+Commit `5a871e5d8` (pipeline) and the re-render commit that follows it.
 
 ### 2026-09-02 — Original publication
 

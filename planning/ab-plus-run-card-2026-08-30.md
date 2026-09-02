@@ -1,6 +1,6 @@
 # AB+ corpus for the ISPRS paper bibliography — run card
 
-> **Last revised**: 2026-09-02 (S147 — tail run COMPLETE, 88/88). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-03 (PI rulings; overflow sidecar, gate heuristics, verdict enum landed). See [§ Changelog](#changelog).
 
 **Purpose**: per-source Annotated Bibliography Plus (AB+) entries for
 every work the paper may cite — attested quotes with page anchors,
@@ -82,6 +82,34 @@ deliverables (25 pilot + 88 tail), every one model-stamped. Final
 numbers and the catch taxonomy: `reports/ab-plus-tail-report-2026-09-02.md`.
 
 ## Changelog
+
+### 2026-09-03 (S147, later) — PI rulings and the three tail decisions implemented
+
+Rulings confirmed: Gerasimova key point 5 stays `complicates`; Trier's
+six-sentence positioning stands — **length limits are targets, not
+gates**: exceed them only when a verified nuance would otherwise be
+lost, and say so in the report (now in all three briefs and as advisory
+warnings in `cli.py check`/`render`). Decisions (commit `5a871e5d8`):
+(1) **overflow** = a complete gitignored sidecar
+`_work/<citekey>.overflow.json` pairing each paraphrase with its
+verbatim span and `page_index`, byte-checked by `check`, rendered
+paraphrase-and-anchor-only into a public `## Overflow` section; the 88
+free-form `.overflow-notes.md` files stay as working copies and convert
+to the sidecar by an agent pass (PI approval pending — see the beacon).
+(2) **Gate content heuristics** (WARN only), calibrated on all 113
+caches — 79 PASS / 34 WARN / 0 FAIL: cover-sheet 6, author-manuscript 1,
+neighbour-contamination 2 (Nosek 2019, both signals), trailing-text 12
+(incl. MacCoun 2015's Nature neighbour; most hits are appendices and
+IEEE author biographies, labelled as such), caption-only-table 13 (IEEE
+Access publisher signature catches Can 2021 and Uhl 2020; the numeric
+rule is low-recall by design — no text statistic separates a missing
+body from a body elsewhere on the page), sections-empty 3. (3) Verdict
+vocabulary enforced at render (four per-point values incl. NOT
+CHECKABLE-with-note); 51 entries re-rendered so named per-point labels
+replace `KP?`. Automation-cell finding staked in the paper docs
+(`docs/paper/discussion-outline.md` D.9; `methods-draft.md` § M.12) and
+a follow-up methods paper stubbed
+(`planning/llm-assisted-preregistration-methods-paper.md`).
 
 ### 2026-09-02 (S147) — Tail run COMPLETE
 
