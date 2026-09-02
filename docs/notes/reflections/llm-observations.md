@@ -7782,3 +7782,39 @@ remains the missing primitive.
   the same corpus (12,715-candidate union vs 43,909 at comparable
   grain, 49 % unanimous) — the verifier's job shrinks with the
   generation even where headline F1 does not move.
+
+
+## Session 145 — 2026-08-31/09-02 (fresh-context verification beats resident context on specifics; generation gains are modality- and seat-asymmetric; multimodal payloads reshape client resource profiles; the flex storm keeps office hours)
+
+- **The verifying writer beats the commissioning agent on specifics,
+  reliably.** Across four obs-writer dispatches, source-bound
+  verification corrected the primary agent's spec at least six
+  times: a denominator-convention garble (0.143 vs 0.167 — both
+  right, different conventions), a mechanism reframe (the "16 student
+  FPs" were the volunteer's own conscientious non-mound labels), a
+  nominal-vs-realised count (468 vs 470), an unanchorable figure
+  dropped (11,278 calls — metas uncommitted at the time), a
+  contrast miscount (five vs seven), and an oracle-vs-carried
+  qualifier on an economics headline. The pattern: resident context
+  holds NARRATIVE confidently and SPECIFICS badly; a fresh reader
+  bound to committed artefacts is the correct authority for numbers.
+  Write-boundary adversarial verification should be default for any
+  register that will be cited.
+- **A model generation's gains are asymmetric on two axes at once.**
+  By seat: the 3.7 deployment gain lives in the verifier (both grid
+  edges significant) and not the proposer (neither edge). By
+  modality: the same generation moved image +0.084/+0.090 against
+  text's +0.018 on the identical corpus — eliminating a
+  p=0.001 modality gap outright. "Model X is better than model Y"
+  is under-specified without seat and modality qualifiers.
+- **Multimodal prompts change the CLIENT's failure modes, not just
+  the bill.** Seventeen example images per call at 400 workers blew
+  a 1024 fd ulimit into SSL/EOF storms that text runs at the same
+  concurrency never touched. Concurrency defaults are
+  payload-shaped; the text-tuned default was a latent fault.
+- **The flex storm keeps office hours.** Two consecutive days,
+  ~13:00–19:00 UTC, killing whatever ran inside it (a verify, two
+  pass attempts) and sparing whatever ran outside; a 74-minute
+  clear-window round swept 4,288 tiles that six storm-hours could
+  not. Storm-resilient drivers (watchdog + nap) turned the pattern
+  from a blocker into a scheduling fact.

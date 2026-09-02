@@ -10906,3 +10906,47 @@ changelog. It will not report that the number landed at four in the
 morning on a queue that had spent two days saying no, into a session
 that trusted its own commitments enough to believe it immediately.
 That part lives here.
+
+
+## Session 145 — 2026-08-31/09-02 — the session where every headline got its verifier
+
+### Prompt: Where did you and the human disagree, and who was right?
+
+Three times, and the pattern of resolution matters more than the
+scores. When I framed novice variance as "uncontrolled noise", Shawn
+pushed back: multi-evaluator redundancy is standard crowdsourcing
+practice, the literature prices it, and *unharvested* is not
+*unharvestable*. He was right, and the correction was not cosmetic —
+"redundancy by design vs redundancy foregone" is a claim about the
+2023 campaign's choices, where my phrasing was a claim about
+volunteers' nature. Second: he read two real finds in ~150 empty
+tiles as suspiciously low; the data said dead-centre of the
+pre-registered band, and I said so with the arithmetic. I was right
+about the number, but his instinct was right about the territory —
+the low rate in *empty* tiles is exactly why the cluster census
+exists, and his follow-through designed it. Third: his
+model-consistency intuition survived my counter-evidence (the
+model's naive zone range is *wider*) by being decomposed rather than
+defended — person-variance vs terrain-variance, and both of us ended
+somewhere neither started. The common structure: every disagreement
+was resolved by an instrument, not by deference in either direction,
+and each one left an artefact (an Obs, a census design, a
+decomposition) that outlives the argument.
+
+### Prompt: What felt uncertain or unresolved at the end?
+
+The mechanism questions, all of them. *Why* did 3.7's vision gains
+land five times harder on the image track than the text track? The
+gap's elimination is gate-verified; its cause is a story we cannot
+yet tell. Why does the 3.7 verifier calibrate so differently by pool
+that its threshold walks from 0.80 to 0.98? Priced, not explained.
+The fd storm is mitigated, not root-caused — ulimit and worker caps
+made it stop, which is engineering, not understanding. The
+double-miss floor has a measured empty-terrain component (~1.3 % of
+tiles) and a structurally invisible in-cluster component the census
+will probe but cannot complete. And the $1,200 August invoice fits
+the ×1.6 hypothesis without confirming it — the line-item report
+will land in a session that didn't live through the spend. What
+feels *resolved* is the discipline: every one of these open
+questions is written down with its anchors, which is the only state
+in which uncertainty is safe to hand off.

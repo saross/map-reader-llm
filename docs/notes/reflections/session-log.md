@@ -9115,3 +9115,79 @@ launch-week congestion — storm cadence (multi-hour on/off) may not
 persist; the arm-2 sweep and fourth cell were deliberately left unrun
 at close (PI: queue rather than burn context); D-1..D-5 remained
 unanswered throughout — drafting stays gated on them.
+
+
+## Session 145 — 2026-08-31/09-02 (amd-tower + sapphire; ~US$60-70 Gemini API est. this session; Fable 5)
+
+Factual record; interpretation in session-reflection and llm-obs.
+
+**Gemini 3.7 arc CLOSED across all three instruments.** (1) Fourth
+cell harvested through the storm (loop driver, 7 rounds, 5
+storm-killed): carried 0.8656 / P 0.9588 / MCC 0.7268 (grid crowns),
+oracle 0.8758 (0.96,k9), ladder saturates at N=3. Full five-test
+family: verifier axis significant on both edges (+0.0270/+0.0234,
+p=0.0001), proposer axis on neither (+0.0056 p=0.35; +0.0107
+p=0.074). 16-cell grid board: 120 pairs, 89 significant, six tiers;
+all seven carried→oracle contrasts significant; arm-2 N3→N5 ns both
+bases; incumbents Tier 4. (2) REFERENCE-INSTRUMENT CORRECTION:
+S144's interim headlines mixed the canonical and standardised
+chains (gate-caught); conclusions survive on both (std: arm2 0.8825
+vs ceiling 0.8558; fourth 0.8732; arm1 0.8550 vs 0.8502 ns). (3)
+Image-GS screen end-to-end: probe cache-gate failure (16% parallel
+/ 54% sequential) → PI launch ruling at ~$34-36; fd-ulimit failure
+mode found+fixed (17 imgs/call × 400 workers vs 1024; driver now
+ulimit 8192, image cap 150); storm window cost two attempts;
+recovery cleared 4,288 tiles in one 74-min round. Union 674/66%
+unanimous. THE MODALITY GAP IS ELIMINATED: within-3.7 text−image
+−0.0115 p=0.25 / −0.0043 p=0.68 vs G3's +0.0549 p=0.001; I1
+confirmed at ~5× the text gain; I5 informative failure (79.5%
+caching); escalation trigger NOT met. Total proposer $22.50
+token-basis. All data committed (incl. proposer metas after Obs
+447's unanchored-figure catch).
+
+**Student-baseline programme BORN and through Phase 0 + most of 1.**
+Card + audit of both assessments (five weaknesses); Drive scout
+(attribution + assignment polygons CONFIRMED; per-student QA audit
+found); staged anonymised layers (name-leak checks ×2, mapping
+reproduces the paper's tables exactly); per-student GS-4
+decomposition (gate-exact to the committed 539/0/30) + model
+ranking on footprint-intersected ground; significance: the radius
+crossover is statistical BOTH ways (model +0.0706 over the cohort
+@20 adj p=0.0017; cohort +0.0425 @50 adj p=0.0017; the model routs
+Student C @20, adj p<1e-4; A/B/D each beat it @50). Implied 55-map
+cohort F1 0.934 [0.913, 0.952], gap to arm2 +0.057 [+0.037,
++0.075]. Overlap census: effectively no double-marked corpus
+(0.017%); 134 promotions are marked-one-there-was-another, 93%
+hosted by student singletons. GS-4 report corrected per Obs 442
+(random selection; banner+changelog back-filled).
+
+**Audits (PI-executed) in flight.** Empty-tile: 253/470 (shuffled
+prefix = valid subsample; 4 true double-misses incl. an unrecorded
+PAIR, 2 known-in-GT edge artefacts; ~1.3% of tiles, on
+expectation); vigilance fatigue at ~253 tiles/sitting; app gained
+i/j/k/l nudge, revisit display, census overlay mode. Cluster census
+BUILT (2+ GT mounds at ≤125 m → 464 clusters / 739 tiles, overlay
+manifest committed), untouched. Adjudication protocol formalised
+(4-way corpus-wide).
+
+**Register and process.** Obs 442-447 (selection retraction;
+consistency ×2 conventions addendum; campaign; reviewer confidence
+and obscuration mechanisms; preprocessing note with Zotero anchor
+ren_multiscale_2026; image screen). Billing: August actual >$1,200
+recorded + expected-side ledger staged (×1.6 hypothesis spans most
+of the gap; line-item report pending). run_pv cleanup meta-backup
+fix + tier-1 test. Queued and recorded, NOT started: 55-map
+final-board fold-in (std evals banked; membership ruling needed)
+and GS leaderboard refresh (five unboarded 3.7 cells); register
+rows for the whole 3.7 arc await PI sign-off.
+
+**Contextual assumptions:** the daily ~13:00–19:00 UTC flex-storm
+window was observed on two consecutive days and treated as
+schedulable-around — cadence may not persist. The PI holds extra
+Claude usage credit for ~24 h from 2026-09-02, which is why AB+
+resumption (88 remaining sources) is queued as the NEXT SESSION'S
+FIRST ACT with more aggressive batching than the pilot's 25.
+Verifier-round meta overwrites mean only round-7 usage survives for
+the fourth cell (per-invocation stamping still queued). The
+image-GS union crops and tile trees on sapphire remain regenerable
+cleanup riders.

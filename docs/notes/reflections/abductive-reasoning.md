@@ -7834,3 +7834,96 @@ form. The fourth cell (G3 proposer + 3.7 verifier, in flight) also
 bounds the claim: if it reproduces most of arm 2's margin, the
 verifier seat alone carries the gain; if not, the proposer-verifier
 interaction matters.
+
+
+## 2026-09-01 (Session 145, map-reader-llm): The incumbent that was two numbers
+
+**Session:** c6af61d0-0e15-4ef3-b64d-45754ed6ac0e
+**Instance:** primary
+
+### Surprising fact
+
+The campaign sweep's incumbent gate failed on first run: the
+final board's B-N5-carried is 0.8502, but the per-map recomputation
+of the same detection set returned 0.843775 — a 0.006 gap far beyond
+tolerance, on machinery that had just reproduced four other
+committed values to 1e-6.
+
+### Probe
+
+Traced both numbers to their instruments. 0.8502 is the ruling-21
+STANDARDISED reference (4,731 + 279); 0.843775 is the canonical
+adjudicated extended GT — and equals the S143 ladder's committed
+B-N5 value exactly. The machinery was never wrong; the anchor was.
+S144's banked headlines ("dead heat with 0.8502"; "above the entire
+board") had compared canonical-chain arms against
+standardised-chain anchors without noticing. Follow-up probes:
+both arms re-scored on the board's own instrument (conclusions
+survive: 0.8550 vs 0.8502 unresolvable; 0.8825 clears the 0.8558
+ceiling), and — via Obs 442's verification — the discovery that
+Obs 317 had recorded the correct random-selection fact ONE DAY
+after Obs 316's confabulated framing, and the correction never
+propagated to the consuming report.
+
+### Belief revision
+
+Before: a committed anchor cited in a card is a number. After: it is
+a number ON AN INSTRUMENT, and interim headlines written at speed
+will splice instruments silently unless a gate forces the match.
+The deeper revision is about registers: recording a correction
+(Obs 317) is not the same as propagating it — the GS-4 report
+carried the retracted framing for four months with the correction
+sitting eighty lines below it. Registers need consumers to re-read,
+or corrections need write-time propagation to every citing artefact.
+
+### What would change this belief
+
+A survey of the register showing corrections DO usually propagate —
+i.e. that Obs 316/317 was an outlier of timing (one day apart,
+same thread) rather than a structural gap.
+
+### Implications for practice
+
+Every cross-document comparison in a findings artefact should name
+its chain inline (the campaign findings now do); incumbent anchors
+in analysis scripts should gate at 1e-6 against the committed
+ARTEFACT, never against a quoted number in prose.
+
+## 2026-09-01 (Session 145, map-reader-llm): The model that failed only where it never looked
+
+**Session:** c6af61d0-0e15-4ef3-b64d-45754ed6ac0e
+**Instance:** primary
+
+### Surprising fact
+
+Scored inside the student audit polygons, the model's recall
+collapsed to 0.59–0.91 varying wildly by sheet — at healthy,
+stable precision — putting the pooled model ~0.10 below its
+committed corpus-wide GS values.
+
+### Probe
+
+The signature (recall crushed, precision intact, sheet-dependent) is
+not a behaviour pattern; it is an exposure pattern. The GS corpus is
+a 487-tile footprint that does not tile the full sheets; the audit
+polygons do. The model was being charged false negatives in
+territory it was never shown. Re-scored on audit-polygon ∩
+evaluation-footprint: the model's pooled zone values reconciled with
+its committed figures to 0.01, and the student-vs-model ranking
+became real.
+
+### Belief revision
+
+Before: "same reference, same matcher, same polygons" constitutes
+identical ground. After: identical ground also requires identical
+EXPOSURE — comparing agents with different observation fields is a
+category error, and its tell is exactly this signature (recall
+varying with geography while precision holds). Generalises well
+beyond maps: any human-vs-model comparison where the two saw
+different slices of the world will manufacture this artefact.
+
+### What would change this belief
+
+A case where the signature (geography-dependent recall at stable
+precision) arises from genuine model behaviour rather than exposure
+mismatch — it would demote the tell from diagnostic to suggestive.

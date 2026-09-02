@@ -1978,3 +1978,67 @@ signals.
 **How to apply.** Campaign drivers should write pidfiles at launch;
 stop commands read the pidfile. Queue that small driver change with
 the other runner provenance fixes.
+
+
+## claude-obs 83 — 2026-09-02 (Session 145): The live review loop — adjudicate while the PI clicks
+
+**Pattern.** During the empty-tile audit Shawn reviewed tiles while I
+adjudicated his marks in real time — each find classified corpus-wide
+within minutes of the click. That loop caught two app defects (the
+vanishing-marks display, the missing nudge), produced the
+edge-artefact taxonomy from his very first flagged mark, and turned
+his mid-task design instincts (chunked reviewer, stage-asymmetric
+windows) into recorded artefacts before they evaporated.
+
+**Lesson.** When the PI is doing manual labour, active co-presence —
+reading his outputs as they land and answering the question he is
+about to ask — multiplies the value of both sides' time. Waiting for
+a batch handoff would have delivered the same verdicts a day later
+and lost the design conversation entirely.
+
+**How to apply.** Whenever a PI-executed instrument is in flight,
+poll its output between his messages, adjudicate incrementally, and
+treat every "huh, look at this" as a prompt for immediate
+computation, not a note for later.
+
+## claude-obs 84 — 2026-09-02 (Session 145): His calibration remarks are hypothesis generators, not error reports
+
+**Pattern.** Three times this session Shawn said some version of
+"this seems off" — the FN rate seemed low, the model seemed more
+consistent than students, clusters should hide more misses. The
+first was numerically wrong (dead-centre of expectation), the second
+was half-right (right axis, wrong metric), the third was right. All
+three produced instruments: the cluster census, the variance
+decomposition, the mechanism catalogue. The verdict on the instinct
+mattered less than the machinery built to test it.
+
+**Lesson.** Treat every calibration remark as a design prompt with a
+truth-value attached, not a claim to confirm or refute. The
+productive response is an instrument plus an honest verdict — never
+just the verdict.
+
+**How to apply.** When he says "seems high/low/odd", compute the
+answer AND ask what instrument would settle the underlying worry;
+usually the worry is one register deeper than the number he named.
+
+## claude-obs 85 — 2026-09-02 (Session 145): Self-critique — my chat claims need the anchor discipline my documents get
+
+**Pattern.** The obs-writers' source verification corrected my
+dispatched specs at least six times this session (denominator
+conventions, the "student FP" mechanism, 468-vs-470, an unanchored
+call count, five-vs-seven contrasts, an oracle-based economics
+claim). Every one of those errors had already been said to Shawn in
+chat with full confidence before a fresh reader caught it against
+source.
+
+**Lesson.** The anti-confabulation write-side rule works — but I was
+applying it to saved artefacts while exempting fast interactive
+replies, which is exactly where Shawn absorbs numbers into
+decisions. Resident context holds narrative well and specifics
+badly; speed is when the discipline matters most, not when it can
+be waived.
+
+**How to apply.** In rapid loops, quote a number to Shawn only with
+its source freshly read in-turn, or say "about" and flag it for
+verification — and keep dispatching verification-heavy writers,
+because they are demonstrably the layer that catches what I miss.
