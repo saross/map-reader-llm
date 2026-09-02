@@ -9018,7 +9018,6 @@ decisions (D-1..D-5); the symbol-family framing adopted.
 - The standing PI queue (D24 brief, user-obs verdicts, Gould → D.9,
   Obs 433–436 review) remained open throughout.
 
-
 ## Session 143 — 2026-08-27/29 (amd-tower + sapphire; ~US$100 API audited-flex; Fable 5)
 
 One continuous conversation spanning three calendar days. Factual
@@ -9115,7 +9114,6 @@ launch-week congestion — storm cadence (multi-hour on/off) may not
 persist; the arm-2 sweep and fourth cell were deliberately left unrun
 at close (PI: queue rather than burn context); D-1..D-5 remained
 unanswered throughout — drafting stays gated on them.
-
 
 ## Session 145 — 2026-08-31/09-02 (amd-tower + sapphire; ~US$60-70 Gemini API est. this session; Fable 5)
 
