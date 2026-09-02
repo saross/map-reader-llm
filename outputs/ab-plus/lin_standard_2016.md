@@ -1,0 +1,98 @@
+# AB+ — Standard Operating Procedures: A Safety Net for Pre-Analysis Plans
+
+| field | value |
+|---|---|
+| **citekey** | `lin_standard_2016` |
+| **full cite** | Lin, Winston & Green, Donald P. (2016) *Standard Operating Procedures: A Safety Net for Pre-Analysis Plans.* Political Science and Politics. DOI: 10.1017/s1049096516000810 |
+| **register** | Borrowed (political science / experimental methodology; open science) |
+| **primary gap** | D.9 naming and priority: prior occupancy of the lean-upfront layer (standing procedural defaults), not of per-analysis micro-registration |
+| **also touches** | Deviation reporting and the pre-specified / gray-zone / exploratory taxonomy; Registration infrastructure: where standing defaults must live to count; Blinded adjudication for decisions no plan anticipated; Metric hygiene: pre-committed thresholds versus post hoc judgement; Multiple-hypothesis handling under a registered family; Registration cost as a fixed rather than marginal cost (foreword, not the authors) |
+| **page index → printed page** | `page_index N` = printed p.(N+1) (best-effort) |
+
+## Summary (Claude's synthesis — advisory, unverified)
+
+Lin and Green propose a small, practical instrument: a standard operating procedure (SOP), a research group's written set of default practices governing analytic decisions that a pre-analysis plan (PAP) did not make explicit. The piece is five printed pages in PS: Political Science and Politics, opening with a foreword by Eric S. Dickson as editor of the Journal of Experimental Political Science, whose arguments are his and not the authors'. It offers no empirical test: the evidence is one exemplar, their own lab's SOP (Lin, Green, and Coppock 2015), publicly versioned on GitHub, plus a catalogue of scenarios a PAP could easily fail to anticipate.
+
+Three moves matter to us. The division of labour: the SOP "can support and flesh out PAPs, making them easier to write", but "should not replace PAPs, nor should it override the explicit decisions in PAPs". The licensing clause: where the SOP is itself pre-registered — appended to the PAP, or referenced as a document archived and time-stamped in the same registry — an analysis following PAP and SOP together "is clearly pre-specified". That is a published warrant for a lean upfront registration that delegates unenumerated choices to a standing, versioned defaults document, and it makes this source prior art for the standing-defaults half of our recipe. And the residual taxonomy: analysis guided by later amendments falls into the "gray zone" of Humphreys, Sanchez de la Sierra, and van der Windt (2013, 18), with pre-specified, gray-zone, and exploratory analyses all valuable so long as readers can tell which is which — the disclosure discipline our deviations record and errata log implement.
+
+Two details cut across our own hygiene. They defend deliberately arbitrary thresholds — in their SOP, "p-values below 0.05" triggering a change of analysis strategy on noncomparability or asymmetric attrition — on the ground that the SOP exists to constrain discretion, so a crisp arbitrary cut serves better than vague but judicious guidance; the same argument favours carrying a frozen operating point over reporting an oracle one. And they concede a hole exactly where our design is densest: their SOP does not address multiple comparisons, not from thinking it unimportant but from having no off-the-shelf recommendation, a problem they say grows with the number of outcome measures, treatments, or subgroups analysed.
+
+Where the source does not reach: the grain is standing and study-invariant, so it occupies the defaults cell rather than the per-analysis, just-in-time registration cell; the scope is the analysis of randomised experiments, extended in a footnote only to prospective observational studies; and nothing here concerns automated authoring or checking of registrations — the nearest approach is their considered refusal of automated model selection, pending evidence that valid confidence intervals can be constructed and that the gains outweigh the costs, among which they count "possible loss of transparency to non-expert readers".
+
+## Positioning annotation (interpretive)
+
+The strongest prior art for the standing-defaults half of the D.9 recipe, and — read at the level of what its authors actually claim — not prior art for the other half. Lin and Green argue that an analysis following a pre-registered PAP plus a pre-registered, registry-archived SOP counts as pre-specified, which licenses a lean upfront registration that delegates unenumerated choices to a versioned defaults document; but their SOP is standing and study-invariant rather than incremental, scoped to the analysis of randomised experiments, and offered without empirical test. Primary cluster: preregistration and open-science methodology; secondarily methods/metrics, since their defence of deliberately arbitrary thresholds and their admitted silence on multiple comparisons both speak to our operating-point and multiple-hypothesis hygiene.
+
+## Key points (salience-ranked to the citing paper)
+
+### KP1
+- **Quote (verbatim):** "A research group can specify a set of default practices, which we call a "standard operating procedure" (SOP), to guide decisions that have not been made explicit in a PAP."
+- **Locator:** page_index 2 · p.3 · § untitled opening (before 'Benefits of a Standard Operating Procedure'), p.497
+- **Paraphrase:** A research group writes down in advance a set of default practices — the SOP — that decides the analytic questions its PAP left unaddressed. The surrounding paragraph scopes this as a supplement rather than a rival registration: the SOP "can support and flesh out PAPs, making them easier to write", and "should not replace PAPs, nor should it override the explicit decisions in PAPs".
+- **Relevance:** §D.9 preregistration retrospective — naming ruling · D.9 naming: prior occupancy of the standing-defaults layer · **supports**
+
+### KP2
+- **Quote (verbatim):** "If an analysis follows the pre-registered PAP and SOP, it is clearly pre-specified."
+- **Locator:** page_index 2 · p.3 · § Developing and Updating an SOP, p.497
+- **Paraphrase:** Pre-specification is inherited by reference: when the SOP is itself pre-registered, work done under PAP-plus-SOP counts as pre-specified without the PAP having enumerated the decision. The next sentence sets the boundary — analysis guided by later amendments to the SOP falls into the "gray zone" of Humphreys, Sanchez de la Sierra, and van der Windt (2013, 18), where the details of implementation must be defended ex post.
+- **Relevance:** §D.9 preregistration retrospective — the recipe's standing-defaults half · Lean upfront layer plus standing procedural rules that license later choices · **supports**
+
+### KP3
+- **Quote (verbatim):** "Pre-specified, gray-zone, and exploratory analyses can all be valuable, but readers need to know which is which."
+- **Locator:** page_index 2 · p.3 · § Developing and Updating an SOP, p.497
+- **Paraphrase:** The requirement is labelling, not purity: all three categories of analysis have standing, and what readers must be able to recover is which category each reported result belongs to.
+- **Relevance:** §D.9 preregistration retrospective — deviations and errata · Deviation reporting and the analyses register · **supports**
+
+### KP4
+- **Quote (verbatim):** "We suggest that each PAP either include the SOP as an appendix, or reference a specific SOP document that is archived and time-stamped in the same registry as the PAP."
+- **Locator:** page_index 2 · p.3 · § Developing and Updating an SOP, p.497
+- **Paraphrase:** Their governance condition on the licensing clause: the SOP must travel with the PAP, either bound in as an appendix or referenced as a specific document archived and time-stamped in the same registry, so a reader can establish which version of the defaults was in force. Their own SOP is on GitHub, which they describe as publicly archiving previous versions with tracked changes; the article does not say which of the two branches their own PAPs take, so the versioning practice is on the record while compliance with their own appendix-or-registry rule is not.
+- **Relevance:** §D.9 preregistration retrospective — what the recipe must archive · Registration infrastructure: where standing defaults must live · **complicates**
+
+### KP5
+- **Quote (verbatim):** "the purpose of the SOP is to provide a fallback that constrains the analyst's discretion if the PAP does not address the issue, and a specifi c but arbitrary threshold serves this purpose more eff ectively than vague but judicious guidance."
+- **Locator:** page_index 3 · p.4 · § Overview of Our Current SOP, p.498
+- **Paraphrase:** Deliberately arbitrary numbers are defended by function, not by justification: because the SOP exists to constrain the analyst's discretion, a crisp arbitrary cut does the job better than a well-judged but vague instruction. Their worked case is the "p-values below 0.05" trigger for noncomparability or asymmetric attrition; they concede a rule based on substantive rather than statistical significance may be wiser and say they may adopt one in PAPs.
+- **Relevance:** §D.9 retrospective; methods — thresholds and carried operating points · Metric hygiene: pre-committed operating points over post hoc judgement · **supports**
+
+### KP6
+- **Quote (verbatim):** "so far it does not address the multiple comparisons problem"
+- **Locator:** page_index 3 · p.4 · § Overview of Our Current SOP, p.498
+- **Paraphrase:** A hole in the safety net that the authors name themselves. The omission is reasoned, not careless — "not because we think this issue is unimportant, but because we do not have an off -the-shelf recommendation for handling it" — and they note the problem "becomes more important as the number of outcome measures, treatments, or subgroups analyzed grows", which is the direction a many-hypothesis, many-condition design travels. They add that "Other researchers may fi nd it useful to codify their multiple-comparisons practices in SOPs, especially if they typically analyze many outcome measures in a single study", so the gap is delegated rather than declared beyond the instrument's reach.
+- **Relevance:** §D.9 retrospective; analyses register — family-level correction · Multiple-hypothesis hygiene under a registered family · **complicates**
+
+### KP7
+- **Quote (verbatim):** "One possible strategy is to consult a "jury" of colleagues who cannot see the unblinded outcome data"
+- **Locator:** page_index 2 · p.3 · § Developing and Updating an SOP, p.497
+- **Paraphrase:** For situations covered by neither PAP nor SOP they propose an outcome-blind panel: colleagues who cannot see the unblinded outcome data are asked to rule. Continuing overleaf, such a jury "might be invited to make binding decisions on a series of questions that were not anticipated by the PAP or SOP"; the reasoning should be documented, the SOP amended "if appropriate" to cover similar cases, and the rulings can be made public so that "common law" decisions accumulate.
+- **Relevance:** §D.9 retrospective; ground-truth epistemics — blinded adjudication · Blinded adjudication for decisions no plan anticipated · **extends**
+
+## Optional framing hook (not counted in the salience cap)
+
+- **Quote (verbatim):** "The SOP makes recurrent practices explicit and documents them ex ante so that researchers do not have to contend ex post that they were implicit."
+- **Locator:** page_index 2 · p.3
+- **Why:** An epigraph for the retrospective's account of why the project's standing conventions were written down at all: the value of the defaults document is that it converts tacit habit into a dated, citable commitment, so "we always did it that way" never has to be asserted after the results are in.
+
+## Extraction / fidelity notes (auto-generated)
+
+- Deterministic quote check: **8/8 passed**.
+- Generated by: model `claude-opus-5` requested (proposer + verifier); run 2026-09-02; pipeline rev `pre-bootstrap-10k-2026-04-28-1806-g4ab25d004`.
+
+## Independent verifier (advisory — flags only)
+
+- **KP1: SUPPORTED** — Quote exact at p.497 (page_index 2), in the untitled opening before the 'Benefits' heading, as labelled. The scoping sentences quoted in the paraphrase ('can support and flesh out PAPs, making them easier to write'; 'should not replace PAPs, nor should it override the explicit decisions in PAPs') are verbatim and in the authors' voice, not the foreword's. Minor: the paraphrase renders the source's 'to guide decisions' as 'decides the analytic questions its PAP left unaddressed'. Slightly firmer than 'guide', but defensible from p.498: 'Each PAP will include a statement that for any decisions not explicitly specified in the PAP, we plan to follow the SOP.' No edit required.
+- **KP2: SUPPORTED** — Quote exact. The paraphrase's 'when the SOP is itself pre-registered' correctly reads the antecedent condition supplied by the preceding sentence, and the boundary sentence is rendered accurately: later amendments fall into the Humphreys, Sanchez de la Sierra, and van der Windt (2013, 18) 'gray zone', with the page locator matching the source exactly. The 'gray zone' coinage is correctly attributed to Humphreys et al. as the authors' quotation of them, both here and in the summary. Footnote 3 (page_index 4) independently confirms the same taxonomy, and extends it to amendments of the PAP as well as the SOP — an optional enrichment, not a correction.
+- **KP3: SUPPORTED** — Quote exact. 'The requirement is labelling, not purity' is a fair compression of 'can all be valuable, but readers need to know which is which'. No hedge lost.
+- **KP4: OVERREACH** — The quote and the first half of the paraphrase are exact and correct, including both branches of the recommendation (appendix OR same-registry archiving). The closing clause overreaches: 'so version control is what they practise, while the registry is what they recommend' asserts a gap between the authors' practice and their own rule that the source never states. The article says only that their SOP 'can viewed on GitHub' (sic) and that each PAP 'will include a statement that for any decisions not explicitly specified in the PAP, we plan to follow the SOP'; it does not say which of the two branches their PAPs take, and the appendix branch is fully compatible with hosting the document on GitHub. Corrective reading: the source records the recommendation and describes the versioning platform, and is silent on compliance. The 'complicates' stance survives the correction.
+- **KP5: OVERREACH** — Quote exact, with the cache's broken ligatures ('specifi c', 'eff ectively') correctly preserved rather than silently repaired. The threshold case and the concession ('It may be wiser to pre-specify a rule based on substantive rather than statistical signifi cance, and we may do so in PAPs') are both accurate. One firming: the paraphrase says the SOP exists 'to remove the analyst's discretion' where the source, in the very sentence quoted, says 'constrains the analyst's discretion'. The entry's own summary says 'constrain', so this is an internal inconsistency as well as a hedge conversion.
+- **KP6: SUPPORTED** — Quote exact; both inner quotations verbatim, ligatures preserved. The self-named hole is correctly scoped to their SOP, and the growth direction ('as the number of outcome measures, treatments, or subgroups analyzed grows') is quoted accurately. Note that the omitted next sentence would strengthen rather than weaken the point: 'Other researchers may fi nd it useful to codify their multiple-comparisons practices in SOPs, especially if they typically analyze many outcome measures in a single study.' The gap is delegated, not declared out of scope for the instrument — an optional enrichment.
+- **KP7: OVERREACH** — Quote exact, correctly located at the foot of p.497 with the continuation on p.498 flagged as 'overleaf'; the inner quotation from p.498 is verbatim. Two hedges are firmed in the closing list: the source says the SOP 'should be amended' only 'if appropriate', and that jury decisions 'can be made public' (permissive), whereas the entry's parallel list reads all three as prescriptions. 'One possible strategy' is otherwise rendered faithfully as 'they propose'.
+- **requested edits** (applied to the entry by the edit pass before render; kept quotes byte-identical):
+  - key_points[3].paraphrase — REPLACE 'Their own SOP is on GitHub, which they describe as publicly archiving previous versions with tracked changes — so version control is what they practise, while the registry is what they recommend.' WITH 'Their own SOP is on GitHub, which they describe as publicly archiving previous versions with tracked changes; the article does not say which of the two branches their own PAPs take, so the versioning practice is on the record while compliance with their own appendix-or-registry rule is not.'
+  - key_points[4].paraphrase — REPLACE 'because the SOP exists to remove the analyst's discretion' WITH 'because the SOP exists to constrain the analyst's discretion' (matches the quoted sentence and the entry's own summary wording).
+  - key_points[6].paraphrase — REPLACE 'the reasoning should be documented, the SOP amended to cover similar cases, and the rulings made public so that "common law" accumulates' WITH 'the reasoning should be documented, the SOP amended "if appropriate" to cover similar cases, and the rulings can be made public so that "common law" decisions accumulate'.
+  - summary — REPLACE 'they concede a hole exactly where our design is densest: the SOP does not address multiple comparisons' WITH 'they concede a hole exactly where our design is densest: their SOP does not address multiple comparisons' (the source scopes the gap to their own document, and invites others to codify the practice in SOPs).
+  - OPTIONAL (declinable) summary — REPLACE 'That is the cleanest published warrant for a lean upfront registration' WITH 'That is a published warrant for a lean upfront registration'. The superlative is a corpus-level comparative that cannot be checked against this source (NOT CHECKABLE); if it is to be kept, it belongs in the positioning field, where cross-corpus ranking is the point.
+  - OPTIONAL (declinable) positioning — REPLACE 'Lin and Green establish that an analysis following' WITH 'Lin and Green argue that an analysis following'. The clause is asserted inside a 'We suggest...' proposal with, as the same sentence concedes, no empirical test; 'establish' overstates what the genre delivers.
+  - OPTIONAL (declinable, enrichment) key_points[5].paraphrase — APPEND 'They add that "Other researchers may fi nd it useful to codify their multiple-comparisons practices in SOPs, especially if they typically analyze many outcome measures in a single study", so the gap is delegated rather than declared beyond the instrument's reach.' (Quote verified verbatim against page_index 3, broken ligature preserved.)
+- **overall:** PASS-WITH-EDITS
