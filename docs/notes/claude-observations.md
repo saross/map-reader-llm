@@ -1901,7 +1901,6 @@ monitor against a log that an in-flight process may still replace;
 and treat any compound `a && b && c` over ssh as a smell to refactor
 before running, not after debugging.
 
-
 ## claude-obs 79 — 2026-08-29 (Session 143): the follow-up question is his sharpest instrument
 
 **Pattern.** Four times this session a short Shawn question reshaped
@@ -1978,7 +1977,6 @@ signals.
 **How to apply.** Campaign drivers should write pidfiles at launch;
 stop commands read the pidfile. Queue that small driver change with
 the other runner provenance fixes.
-
 
 ## claude-obs 83 — 2026-09-02 (Session 145): The live review loop — adjudicate while the PI clicks
 
