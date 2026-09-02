@@ -1,7 +1,8 @@
 # AB+ corpus for the ISPRS paper bibliography — run card
 
-> **Last revised**: 2026-08-30 (pilot COMPLETE and rendered; build
-> PAUSED at the usage checkpoint). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-02 (tail run of the remaining 88 sources
+> LAUNCHED on the PI's extra-credit window; pilot amendments applied).
+> See [§ Changelog](#changelog).
 
 **Purpose**: per-source Annotated Bibliography Plus (AB+) entries for
 every work the paper may cite — attested quotes with page anchors,
@@ -69,7 +70,36 @@ iterate pattern); two consecutive failures escalate to the PI.
   approval) before the remaining ~88 are authorised. Vendoring and
   scope otherwise as proposed.
 
+## Tail run (2026-09-02)
+
+Manifest: `outputs/ab-plus/manifests/tail-2026-09-02.json` (88
+sources; cluster, wave, gate result, status). Briefs:
+`prompts/ab-plus/` (drafter, verifier, editor). Waves of ~15
+concurrent drafters at the Opus tier, verifiers dispatched as drafts
+land, editors on every PASS-WITH-EDITS; deterministic check + render
+per wave, stamped `--model claude-opus-5 --run-date 2026-09-02`.
+
 ## Changelog
+
+### 2026-09-02 — Tail run LAUNCHED; amendments applied
+
+PI-directed resumption on ~24 h of extra Claude usage credit. Before
+launch: (1) the pilot report's amendment 1 became a CLI step
+(`gate`: chars/page, empty pages, byte-identical-page watermark
+signature) — tail result 85 PASS, 1 WARN (davis_comparison_2019, an
+accepted-manuscript bundle with image-only figure pages), 2 FAIL
+(trier_using_2019, gerasimova_argumentbased_2024 — Wiley watermark-only
+rasterised downloads); (2) the pilot's hand OCR repair became
+`ocr-repair` (preserve original, 300 dpi + tesseract, provenance note)
+and was applied to the two FAILs; (3) amendment 2 (per-citekey scratch
+dirs) and amendment 3 (overflow-notes file) went into the briefs, which
+were promoted from a session scratchpad into `prompts/ab-plus/`;
+(4) the renderer learned the pilot's per-point verdict shape (the
+pilot deliverables had printed "flags: none" beside OVERREACH
+verdicts) and the pilot 25 were re-rendered with a model stamp
+(`claude-opus-5`, verified from the archived S144 subagent
+transcripts). Commits `4f3c0924f`, `fbbfb0a4e`, and the re-render
+commit that follows it. Outcome numbers land in the next entry.
 
 ### 2026-08-30 (later still) — Usage checkpoint MEASURED
 
