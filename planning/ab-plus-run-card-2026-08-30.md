@@ -1,7 +1,7 @@
 # AB+ corpus for the ISPRS paper bibliography — run card
 
-> **Last revised**: 2026-09-02 (tail run of the remaining 88 sources
-> LAUNCHED on the PI's extra-credit window; pilot amendments applied).
+> **Last revised**: 2026-09-02 (tail run PAUSED at the usage limit with
+> 45/88 rendered; resume protocol in the continuity file).
 > See [§ Changelog](#changelog).
 
 **Purpose**: per-source Annotated Bibliography Plus (AB+) entries for
@@ -80,6 +80,21 @@ land, editors on every PASS-WITH-EDITS; deterministic check + render
 per wave, stamped `--model claude-opus-5 --run-date 2026-09-02`.
 
 ## Changelog
+
+### 2026-09-02 (later) — Tail run PAUSED at the usage limit
+
+Interim state (manifest is authoritative): **45/88 rendered**,
+7 editing, 2 verifying,
+2 drafted, 7 drafting,
+25 queued. All verdicts PASS-WITH-EDITS (0 FAIL,
+0 clean); two carried an UNSUPPORTED key point corrected at edit.
+Ran at the harness cap of 20 concurrent Opus-tier agents with rolling
+refill; ~0.35–0.5M reported tokens per source across the three agent
+stages (drafters ~120–170k, verifiers ~85–125k, editors ~90–150k).
+New cache-defect class: IEEE Access PDFs extract table captions
+without bodies (2 sources; verifiers rendered pages). Resume protocol
+in `planning/paper-writeup-continuity.md` § STATE AFTER S146; drivers
+in `scripts/ab_plus/tail/`.
 
 ### 2026-09-02 — Tail run LAUNCHED; amendments applied
 
