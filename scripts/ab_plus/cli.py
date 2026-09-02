@@ -33,6 +33,8 @@ if __package__ in (None, ""):
 from ab_plus.checking import check_entry, format_report
 from ab_plus.config import REPO_ROOT, WORK_DIR
 from ab_plus.extraction import extract_source, load_cached_pages
+from ab_plus.gate import assess_cache, format_table
+from ab_plus.ocr_repair import ocr_repair
 from ab_plus.rendering import write_entry
 from ab_plus.schema import ENTRY_SCHEMA, validate_entry
 from ab_plus.zotero import resolve_collection
@@ -108,6 +110,48 @@ def _cmd_extract(args: argparse.Namespace) -> int:
     return rc
 
 
+def _cmd_gate(args: argparse.Namespace) -> int:
+    """Classify page caches as PASS/WARN/FAIL before any drafter launches.
+
+    Added 2026-09-02 (pilot amendment 1): a watermark-only text layer evaded
+    the pilot's zero-length check. Exit 2 if any cache FAILs.
+    """
+    if args.citekey:
+        citekeys = [args.citekey]
+    else:
+        citekeys = sorted(
+            p.name[: -len(".pages.json")] for p in WORK_DIR.glob("*.pages.json")
+        )
+    results = [
+        assess_cache(ck, load_cached_pages(ck), min_chars_per_page=args.min_chars_per_page)
+        for ck in citekeys
+    ]
+    print(format_table(results))
+    return 2 if any(r.verdict == "FAIL" for r in results) else 0
+
+
+def _cmd_ocr_repair(args: argparse.Namespace) -> int:
+    """Rebuild one FAILed page cache by OCR and write its provenance note."""
+    resolved, _ = resolve_collection(**_resolve_kwargs(args))
+    ref = resolved.get(args.citekey)
+    if ref is None:
+        print(f"  {args.citekey}: NOT RESOLVED (no PDF)")
+        return 1
+    rotate: dict[int, int] = {}
+    for spec in args.rotate or []:
+        idx, deg = spec.split(":")
+        rotate[int(idx)] = int(deg)
+    note = ocr_repair(
+        args.citekey, ref.pdf_path, dpi=args.dpi, rotate=rotate, force=args.force
+    )
+    pages = load_cached_pages(args.citekey)
+    result = assess_cache(args.citekey, pages)
+    print(f"  {args.citekey}: {len(pages)} pages OCR'd, {result.n_chars} chars; "
+          f"gate now {result.verdict} {result.reason}")
+    print(f"  provenance note: {note}")
+    return 0
+
+
 def _cmd_check(args: argparse.Namespace) -> int:
     """Run the deterministic quote check on an entry JSON file."""
     entry = json.loads(Path(args.entry).read_text(encoding="utf-8"))
@@ -176,6 +220,26 @@ def build_parser() -> argparse.ArgumentParser:
     p_extract.add_argument("--collection-key", help="Zotero collection key (default: config)")
     p_extract.add_argument("--bib", help="BibTeX file for citekeys (default: config)")
     p_extract.set_defaults(func=_cmd_extract)
+
+    p_gate = sub.add_parser("gate", help="pre-flight cache-quality gate (PASS/WARN/FAIL)")
+    p_gate.add_argument("--citekey", help="single citekey; omit for every cached source")
+    p_gate.add_argument(
+        "--min-chars-per-page", type=int, default=1000, dest="min_chars_per_page",
+        help="thin-cache threshold (default 1000)",
+    )
+    p_gate.set_defaults(func=_cmd_gate)
+
+    p_ocr = sub.add_parser("ocr-repair", help="rebuild a FAILed page cache by OCR")
+    p_ocr.add_argument("--citekey", required=True, help="citekey whose cache to rebuild")
+    p_ocr.add_argument("--dpi", type=int, default=300, help="render dpi (default 300)")
+    p_ocr.add_argument(
+        "--rotate", action="append", metavar="PAGE:DEG",
+        help="rotate a page before OCR, e.g. --rotate 12:90 (repeatable)",
+    )
+    p_ocr.add_argument("--force", action="store_true", help="OCR even if the gate passes")
+    p_ocr.add_argument("--collection-key", help="Zotero collection key (default: config)")
+    p_ocr.add_argument("--bib", help="BibTeX file for citekeys (default: config)")
+    p_ocr.set_defaults(func=_cmd_ocr_repair)
 
     p_check = sub.add_parser("check", help="deterministic quote check of an entry JSON")
     p_check.add_argument("--entry", required=True, help="path to entry JSON")

@@ -28,6 +28,10 @@ from ab_plus.extraction import extract_source  # noqa: E402
 from ab_plus.zotero import resolve_collection  # noqa: E402
 
 CITEKEY = "Huang2023large"
+# The resolve test joins against THIS repo's Zotero collection, where the
+# paper-b golden fixture (Huang 2023) does not exist; use a pilot citekey
+# (vendoring fix, 2026-09-02).
+RESOLVE_CITEKEY = "caspari_convolutional_2019"
 
 # The six co-design-verified quotes with their authoritative page_index, plus
 # the framing hook — the exact content of the hand-drafted golden entry.
@@ -136,7 +140,9 @@ def test_resolve_finds_pdfs():
     except Exception as exc:
         print(f"SKIP test_resolve_finds_pdfs ({exc})")
         return
-    assert CITEKEY in resolved, f"{CITEKEY} should resolve; unresolved={unresolved}"
+    assert RESOLVE_CITEKEY in resolved, (
+        f"{RESOLVE_CITEKEY} should resolve; unresolved={unresolved}"
+    )
     print(f"PASS test_resolve_finds_pdfs ({len(resolved)} resolved, {len(unresolved)} unresolved)")
 
 

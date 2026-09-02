@@ -173,7 +173,7 @@ def render_entry(
     lines.append(entry.get("positioning", "").strip())
     lines.append("")
 
-    lines.append("## Key points (salience-ranked to Paper B)")
+    lines.append("## Key points (salience-ranked to the citing paper)")
     lines.append("")
     for i, kp in enumerate(entry.get("key_points", [])):
         page, note = _verified_page(report, "key_point", i)
@@ -244,15 +244,37 @@ def render_entry(
         lines.append("")
         lines.append("## Independent verifier (advisory — flags only)")
         lines.append("")
-        for key in ("paraphrase_flags", "summary_flags", "relevance_flags"):
-            flags = verdict.get(key) or []
-            label = key.replace("_", " ")
-            if flags:
-                lines.append(f"- **{label}:**")
-                for fl in flags:
-                    lines.append(f"  - {fl}")
+        if "per_point" in verdict:
+            # Per-point shape (map-reader-llm pilot, 2026-08-30): one verdict
+            # per key point plus the edit list the post-verdict edit pass
+            # applies before render. Rendered since 2026-09-02 — the pilot's
+            # first render used only the flag-list branch below, which
+            # printed "none" for entries carrying OVERREACH verdicts.
+            for pp in verdict.get("per_point") or []:
+                idx = pp.get("index")
+                label = f"KP{idx + 1}" if isinstance(idx, int) else "KP?"
+                note = str(pp.get("note", "")).strip()
+                lines.append(f"- **{label}: {pp.get('verdict', '?')}** — {note}")
+            edits = verdict.get("edits") or []
+            if edits:
+                lines.append(
+                    "- **requested edits** (applied to the entry by the edit pass "
+                    "before render; kept quotes byte-identical):"
+                )
+                for ed in edits:
+                    lines.append(f"  - {ed}")
             else:
-                lines.append(f"- **{label}:** none")
+                lines.append("- **requested edits:** none")
+        else:
+            for key in ("paraphrase_flags", "summary_flags", "relevance_flags"):
+                flags = verdict.get(key) or []
+                label = key.replace("_", " ")
+                if flags:
+                    lines.append(f"- **{label}:**")
+                    for fl in flags:
+                        lines.append(f"  - {fl}")
+                else:
+                    lines.append(f"- **{label}:** none")
         if verdict.get("overall"):
             lines.append(f"- **overall:** {verdict['overall']}")
     lines.append("")
