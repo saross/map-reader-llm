@@ -977,3 +977,28 @@ citations as weaker evidence than my artefact citations.
   flagged 90 % context and forced the wind-down sequencing; Claude
   had not raised it and was mid-launch on new work. Claude should
   track and surface session-scale risk before the human has to.
+
+
+## S145 candidates (pending review, 2026-09-02) — silence never discards
+
+- **S145-C1 — the live adjudication loop.** During the empty-tile
+  audit Claude polled the verdicts file between messages and
+  adjudicated each flagged mark corpus-wide within minutes ("can you
+  confirm it's actually a FN after I continue?" → instant
+  known-in-GT/double-miss verdicts). If that co-presence was what
+  made the audit worth doing in one sitting, it is worth recording
+  as the pattern for future PI-executed instruments.
+- **S145-C2 — decisions arrived pre-axed.** The image-GS launch call
+  (cost over the card's pause line) came to you as one message with
+  both cost bases, the time axis, the failure ceiling, and a
+  recommendation — you ruled in a sentence while mid-Arcadia.
+  If that shape (axes pre-computed, recommendation stated,
+  decision left to you) is what let a $35 call be safe at speed,
+  keep it as the template.
+- **S145-C3 — Claude's fast-loop numbers needed the verifier layer.**
+  Twice you received confident specifics in chat that source-bound
+  obs-writers later corrected (the "Student B FPs" that were his own
+  conscientious labels; the five-vs-seven contrast count). The
+  correction loop worked, but you may have observed that rapid
+  interactive claims deserve visible hedging until anchored — your
+  call whether that's an observation about Claude worth keeping.
