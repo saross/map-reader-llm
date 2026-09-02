@@ -1,5 +1,10 @@
 # Discussion — structural outline (ALL DECISIONS SETTLED)
 
+> **Addendum 2026-09-03**: D.9's lit-scout gate is discharged by the
+> AB+ corpus; the recipe reframes to endorsement-with-citation and the
+> automation cell is staked (PI ruling). See the D.9 bullet "Gate
+> DISCHARGED". No DD decision reopened.
+>
 > **Status**: collaborative structure document, per the outline-first
 > contract (claude-obs 56: the contract re-arms at every major section
 > boundary — an existing seed file does not count as agreement). Built
@@ -457,6 +462,50 @@ references must be verified when D.2 drafts, not assumed here.*
   meta-science literature?). If prior art exists, the recipe
   reframes from proposal to endorsement-with-citation and the
   novelty clause drops.
+- **✅ Gate DISCHARGED by the AB+ corpus (S147, 2026-09-02; PI
+  ruling 2026-09-03)** — 30 preregistration sources verified at
+  `outputs/ab-plus/` (tail report
+  `reports/ab-plus-tail-report-2026-09-02.md` § "What the corpus now
+  attests"). Two findings reshape the subsection:
+  1. **The staged/adaptive cell is occupied; the recipe becomes
+     endorsement-with-citation.** "Adaptive preregistration" occurs in
+     Srivastava 2018 only as a lowercase common noun, never defined;
+     "registered flexibility" nowhere. Antecedents to cite: Nosek 2018
+     (four data-dependent strategies incl. "sequential
+     preregistration"), Crüwell 2021 §6.2 (a registration "for each
+     of the models"), Ioannidis 2022 ("small bites" offered alongside,
+     not instead of, registering the space of approaches), Willroth
+     2022 (analysis-level registration forced by circumstance),
+     Gerasimova 2024 (a living document whose criteria may move with
+     disclosure), Gould 2026 and Vaccaro 2026 (the two occupants of the
+     staged cell). The novelty clause on the RECIPE drops.
+  2. **The AUTOMATION cell is empty — stake it (PI, 2026-09-03).**
+     Across all 30 sources nothing implements or evaluates an LLM that
+     authors or checks a registration. Nearest: Pu 2019's
+     "declaration of match … could even be partially or fully
+     automated" (proposal, unbuilt); Thomas 2026 §6 (autonomous
+     AI-scientist systems should commit before the confirmatory model
+     exists — proposal). Thomas 2026 also cites Goldberg 2024 (an LLM
+     checklist assistant) and dismisses checklists as self-report —
+     **that is the objection the LLM-support claim must answer**, and
+     the concession to make first: our registration was written
+     against Gemini models that already existed, the commitment Thomas
+     et al. argue is unprotected. Territory to stake in Methods
+     (§ M.12: how the LLM assisted authoring, checking, and the errata
+     machinery — described as unreported practice, with the
+     over-specification pitfall named) and here in D.9 (the claim,
+     scoped to implemented-and-evaluated, with the Thomas objection
+     answered). A follow-up methods paper is planned:
+     `planning/llm-assisted-preregistration-methods-paper.md`.
+  3. **Measured base rates now available for the counterweights**:
+     Ofosu 2023 (deviation noted in 1 of 14; median 25 % of registered
+     hypotheses omitted; iterative PAPs "tricky to implement" without
+     a neutral gatekeeper — the objection to just-in-time
+     re-registration); Sarafoglou 2023 (self-report vs coders ICC .43,
+     coded data gave the STRONGER condition effect); Willroth 2024
+     (register schema: type, reason, timing — ours lacks reason and
+     timing; "once results are known, preregistrations should not be
+     updated").
 
 ### D.10 (was D.7) — Future work
 

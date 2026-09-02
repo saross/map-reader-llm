@@ -504,6 +504,23 @@ layers — errata file, classified analysis register, and generated
 hypothesis-outcome table — through which execution is reported against
 the registration.
 
+**LLM assistance in the registration apparatus [PENDING — PI ruling
+2026-09-03: stake this territory].** The registration, its errata log,
+the classified analysis register, and the hypothesis-outcome table were
+authored and checked with a large language model in the loop (Claude
+Code sessions, archived per § M.12 below), with the human investigator
+ruling on every registered commitment. The AB+ corpus (113 verified
+sources; `reports/ab-plus-tail-report-2026-09-02.md`) finds no published
+implementation or evaluation of LLM-assisted authoring or checking of a
+preregistration — the nearest are proposals (Pu 2019; Thomas 2026 §6) —
+so this paragraph describes the practice as unreported rather than
+novel-by-assertion, names the two pitfalls the project met
+(over-specification, and the self-flattering drift a model exhibits when
+drafting toward a thesis it holds), and states the Thomas 2026 objection
+(checklist-style assistance "relies solely on self-report") with the
+machine-checked layers as the answer. Prose slot; sources attested in
+the AB+ entries named in D.9.
+
 **Software and data.** The detection pipeline is Python against the
 google-genai SDK; evaluation uses a custom spatial-matching library
 built on scipy (Hungarian assignment), geopandas, and shapely. Prompt
@@ -542,6 +559,15 @@ rather than the implementation. Session transcripts are archived at
 planned as a separate contribution.
 
 ## Changelog
+
+### 2026-09-03 (S147, later) — M.12 LLM-assistance slot opened (PI ruling)
+
+Trigger: the AB+ tail report's automation-cell finding. Added a
+[PENDING] paragraph to § M.12 describing LLM assistance in the
+registration apparatus as unreported practice, with the two pitfalls
+and the Thomas 2026 objection to answer. No numbers changed. Companion
+planning stub for the follow-up methods paper:
+`planning/llm-assisted-preregistration-methods-paper.md`.
 
 ### 2026-08-24 (S142) — § 4.3 phase table regenerated from the register
 
