@@ -9023,8 +9023,8 @@ decisions (D-1..D-5); the symbol-family framing adopted.
 One continuous conversation spanning three calendar days. Factual
 record; interpretation lives in session-reflection and llm-obs.
 
-**Analyses landed ($0 unless noted):** stride55 sweep-oracle + N-ladder
-+ A5-vs-B5 (transfer taxes +0.0036/+0.0081 vs incumbent +0.0324; P6
+**Analyses landed ($0 unless noted):** stride55 sweep-oracle, N-ladder,
+and A5-vs-B5 (transfer taxes +0.0036/+0.0081 vs incumbent +0.0324; P6
 informative failure, B > A BH-robust; `results/stride55-2026-08-27/`);
 the FINAL 23-cell 55-map board (standardised reference, GS tile-swap
 chain, CLD groups, costs, $/mound; emergent N=3 carried cells
