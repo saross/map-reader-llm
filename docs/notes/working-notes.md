@@ -31087,3 +31087,236 @@ qualifies); **Obs 2** and **Obs 4** (the earliest entries in this
 register: bisected symbols breaking the circle's gestalt, and the
 first "small, heavily obscured mound" lost to strictness — the
 intuition (b) now confirms at corpus scale).
+
+## Observation 447: The modality gap is eliminated at Gemini 3.7 — the vision upgrade lands almost entirely on the image track, and "text beats image" is a Gemini-3-specific claim (Session 145, 2026-09-02)
+
+**Provenance.** A registered-by-card gold-standard (GS) screen
+(`planning/gemini37-image-gs-2026-08-30.md`; expectations I1–I5
+committed at PI go and unchanged through launch), run on the image-B
+campaign machinery: K = 5 proposer passes at T = 0.7 on real-time
+flex over B geometry (384 px / 50 %, stride 192; the 1,398-tile GS
+manifest) with the byte-identical `detect_brief-text-image` config
+and exactly two command-line overrides (`--model gemini-3.7-flash
+--thinking-level low`); then the K = 5 union scored by **both**
+verifier arms — the carried gemini-3-flash verifier and the 3.7
+verifier — and swept at 20 m against the curated GS reference. Every
+head-to-head is a per-tile tile-swap micro-F1 permutation (10,000
+draws, 487 tiles on the common footprint). All gates green: coverage
+1,398/1,398 × 5 after recovery, both arms 674/674 with
+`items_failed` 0, and every replication gate at 1e-3 or better.
+
+| Cell | Best @20 m | Point | P | R | MCC |
+|---|---:|---|---:|---:|---:|
+| 3.7-image + carried G3 verifier (arm 1) | **0.9254** | (0.10, k5) | 0.9233 | 0.9276 | 0.8192 |
+| 3.7-image + 3.7 verifier (arm 2) | **0.9308** | (0.90, k5) | 0.9341 | 0.9276 | 0.8322 |
+| 3.7-text screen best (committed) | 0.9139 | (0.10, k5) | — | — | — |
+| all-3.7 text swap best (committed) | 0.9265 | (0.80, k5) | — | — | — |
+| G3 image anchor (committed) | 0.8412 | (0.15, k9) | 0.8741 | 0.8107 | 0.7985 |
+| G3 text-B anchor (committed) | 0.8961 | — | 0.9275 | 0.8668 | 0.7965 |
+
+**(a) The campaign's question, answered decisively — the modality gap
+is eliminated.** The question the card was written to settle was
+whether 3.7's vision change moved *relative* modality performance,
+and it is answered as a difference-in-differences: (text − image)
+within 3.7 against (text − image) within Gemini 3.
+
+| Family | text − image @20 m | p | Verdict |
+|---|---:|---:|---|
+| Gemini 3 (committed) | **+0.0549** | 0.001 | text significantly ahead |
+| Gemini 3.7, carried-verifier pair | −0.0115 | 0.253 | statistically zero |
+| Gemini 3.7, all-3.7 pair | −0.0043 | 0.677 | statistically zero |
+
+The Gemini-3 text-over-image advantage — **+0.0549, p = 0.001**, the
+headline of **Obs 439** — is **gone at 3.7 on the same geometry**.
+The gap change is **−0.059 to −0.066** depending on which 3.7 pair
+is read, roughly **2.5× the GS verified-set resolution** (MDE80
+≈ 0.024), so this is a resolved change and not a wobble inside the
+instrument's noise floor. **The honest claim is parity, not
+inversion**: image is nominally ahead in both pairs, and neither
+sign flip is remotely significant (p = 0.25 and p = 0.68). I2
+predicted the gap would narrow by more than the resolution — i.e.
+land below ~0.031 — and the outcome **overshot its own prediction
+all the way to zero**.
+
+**(b) I1 confirmed at roughly five times the text-side family gain —
+the vision upgrade concentrated on the image track.** Against the
+committed G3 image anchor of 0.8412, the 3.7-image cell reaches
+**0.9254** on the carried verifier and **0.9308** on the 3.7
+verifier: gains of **+0.0842 and +0.0896**. The same family step
+measured on the *text* track was **+0.018** (the 3.7-text screen's
+0.9139 against the 0.8961 text-B anchor). That is a **4.7–5.0×
+larger family gain on image than on text**, and it is the mechanism
+behind (a): the gap did not close because text regressed, it closed
+because **image caught up**. Read with **Obs 441** — where the 3.7
+gain resolved only in the *verifier* seat on the text track — the
+picture is that the 3 → 3.7 step delivers most of its value where
+pixels are actually being read.
+
+**(c) The lattice and thinking bets, briefly.** I3 confirmed
+**exactly**: the carried-verifier arm optima at (0.10, k5) inside
+its predicted 0.10–0.20 probability band, and the 3.7-verifier arm
+at (0.90, k5), above its predicted ≥ 0.6 floor — **the 3.7
+verifier's high-probability calibration shift replicates on image
+candidates**, which is the second instrument on which that
+non-transferring calibration has now been seen. I4 confirmed and
+then some: thinking on image-example prompts ran **88–157 tokens per
+call (clean passes ~155)**, *lighter* than the text screen's 276,
+against a predicted "nonzero, under 1,000, ≈ 276".
+
+**(d) I5 is an informative failure, and the cost model survived it
+anyway.** The card's cost case rested on implicit caching engaging
+as it does on Gemini 3, where 18,923 of 20,033 input tokens per call
+(**94.5 %**) hit the cache. At scale on 3.7 it engaged at **79.5 %
+of input** — real, load-bearing, and clearly short of the registered
+≥ 90 % bar. The probe measurement was additionally **warm-up
+confounded**: the first parallel probe read **16 %** and failed the
+card's ≥ 80 % abort gate at face value, while a sequential 15-call
+re-probe read **54 %** aggregate and revealed the warm-up dynamic
+that made the parallel figure unrepresentative. The PI ruled on
+2026-09-01 that the implied cost was acceptable, and the outcome
+vindicated the ruling: **$22.50 token-basis for the whole proposer
+side including both storm-lost pass attempts and the recovery
+round**, against a $32–36 projection. The methodological residue is
+that **a cold parallel cache probe under-reads steady-state caching
+by a large factor** and should not be used as a go/no-go gate on its
+own.
+
+**(e) The escalation trigger is NOT met, and that was decided before
+launch.** Under the PI's economics rule, the expensive 55-map image
+extension would only be considered if the image track produced a
+**resolvable new F1 high**. All-3.7 image reads **0.9308** against
+the all-3.7 text swap's **0.9265** — **+0.0043, p = 0.677**, far
+inside the MDE80 of ≈ 0.024 — and arm 2's image MCC of 0.8322 does
+not approach the committed GS MCC crown either. **No new high, so
+the extension does not proceed.** The finding stands where it was
+measured, on the GS instrument, and its shape is the interesting
+part: **modality parity at image-track prices**, which caching keeps
+comparable to text.
+
+**(f) A methods note that mattered to the verdict.** The campaign
+script `scripts/image_b_analysis.py` computes its built-in
+`head_to_head_20m` against the **Gemini-3 text-B anchor** (hard-coded
+`ANCHOR_F1_20 = 0.8961`, line 79) — correct for its original S143
+campaign, and *wrong* as an I2 instrument, because it pairs a 3.7
+image cell against a Gemini-3 text cell and so mixes the family step
+into the modality contrast. Read naively it reports arm 1 at
+−0.0293 (p = 0.024) and arm 2 at −0.0347 (p = 0.007), i.e.
+"image significantly beats text", which is **not** the within-family
+claim. The I2 verdict therefore used the corrected within-family
+pairs computed by `scripts/gemini37_image_gap_test.py`, which
+re-derives each side's per-tile counts and gates them against the
+committed verified-best values at 1e-3 before permuting. **Any
+future reader quoting a modality delta off this campaign must check
+which anchor the number was paired against.**
+
+**(g) Caveats.** Three. First, the difference-in-differences holds
+pass count constant *within* each family but not *across* it: the
+Gemini-3 pair is K = 10 on both sides (the text-B anchor's 400
+detections all carry `vote_count` 10; the image cell's optimum is
+(0.15, k9) of ten passes) while the 3.7 pair is K = 5 on both sides.
+The contrast of interest is the within-family difference, so the
+asymmetry largely nets out, but a residual "ensemble depth" term
+cannot be excluded. Second, the same applies to thinking: both 3.7
+cells carry `low` and both Gemini-3 cells carry MINIMAL, which is
+the card's declared design strength and also the reason no absolute
+3.7-vs-3 statement should be read off this screen. Third, this is
+the four-sheet GS instrument with an MDE80 of ≈ 0.024 — adequate to
+resolve a 0.059–0.066 gap change, **not** adequate to adjudicate the
+nominal 0.004–0.012 image-over-text leads, which is exactly why they
+are reported as parity.
+
+**(h) What this obliges the paper to change.** The study's "text
+examples beat image examples" claim — the **Obs 439** lineage, and
+one of the cleaner modality results in the draft — **must now be
+framed as GEMINI-3-SPECIFIC**. It was true, it was significant, and
+it is model-generation-bounded: the same comparison on the same
+geometry with the same reference at 3.7 returns zero. The
+generalisable statement the study can now make is stronger and more
+interesting than the one it loses: **modality effects in this task
+are a property of the model generation, not of the task**, and a
+vision-side model upgrade can retire a modality preference that a
+reader would otherwise carry forward as a design rule. Any
+recommendation to prefer text examples should be dated and attached
+to a model family.
+
+**Execution notes (runner-fix queue; paper cost section).** Two
+flex-era lessons. **The fd-ulimit failure mode**: image mode attaches
+17 example images per call, and at the standing WORKERS=400 default
+the concurrent open-file load blew the default ulimit of 1024,
+killing passes in file-descriptor/SSL storms — fixed in the
+committed driver with `ulimit -n 8192` plus a 150-worker image cap
+(`scripts/gemini37-image-gs-driver.sh`, lines 19–24, 46), the
+throughput being governor-bound anyway. **The daily flex-storm
+window** (~13:00–19:00 UTC) consumed two pass attempts before a
+storm-resilient recovery driver swept all **4,288 residual tiles in
+a single 74-minute clear-window round**. One proposer-side
+regularity worth carrying: the union is **674 candidates at 66 %
+unanimous** (445 of 674 at 5/5 votes) against the text screen's
+**791 at 59 %** — **the image proposer proposes fewer, more
+consensual candidates** — and per-pass raw detection counts varied
+under 1 % across the five passes.
+
+Sources: `results/gemini37-image-gs-2026-09-01/findings.md`
+(canonical statement of the screen, read 2026-09-02: the headline
+table, the I1–I5 verdicts, the 79.5 % at-scale caching figure, the
+88–157 t/call thinking range, the $22.50 token-basis proposer spend
+against a $32–36 projection, the 4,288-tile 74-minute recovery
+round, and the union's 674/66 % against the text screen's 791/59 %);
+`results/gemini37-image-gs-2026-09-01/gap_test.json` (verified
+2026-09-02: `buffer_m` 20, convention `delta = text - image @20m`,
+carried-verifier pair f1 0.913892/0.925408 → −0.011516 at p 0.2533,
+all-3.7 pair 0.926488/0.930832 → −0.004345 at p 0.6767, both over
+10,000 permutations on 487 tiles, and the committed G3 gap 0.0549 at
+p 0.001); `results/gemini37-image-gs-2026-09-01/arm1/analysis.json`
+and `arm2/analysis.json` (verified 2026-09-02: arm 1 best f1
+0.9254079 at prob_t 0.10 / min_votes 5, P 0.9233 R 0.9276 MCC
+0.8192, 430 detections; arm 2 best f1 0.9308324 at prob_t 0.90 /
+min_votes 5, P 0.9341 R 0.9276 MCC 0.8322, 425 detections; and the
+built-in `head_to_head_20m` blocks pairing each against the 0.8961
+text anchor at −0.029273/p 0.0235 and −0.034697/p 0.0065 — the
+mis-paired numbers described in (f));
+`results/image-b-gs-2026-08-28/analysis.json` (verified 2026-09-02:
+the G3 image best 0.8412121 at (0.15, k9) with MCC 0.7985, the
+0.8961 text anchor with MCC 0.7965, and `head_to_head_20m`
+observed_diff 0.054923 at p 0.001 — the gap this entry supersedes at
+3.7); `planning/gemini37-image-gs-2026-08-30.md` (verified
+2026-09-02: I1–I5 as registered at PI go; the 2026-09-01 changelog
+entry recording the probe gates — stamps PASS, thinking 189 t/call,
+cache gate FAILED at 16.3 % then 54.2 % sequential — and the PI's
+cost ruling "that cost is acceptable, please use caching" over the
+card's $30 pause line; the G3 caching profile 18,923 of 20,033
+(94.5 %); the MDE80 ≈ 0.024; and the 2026-09-02 completion entry);
+`outputs/gemini37-image-gs-2026-09-01/verifier/g384_ov192_g37img/union_k5.geojson`
+(verified 2026-09-02: 674 features, vote_count histogram
+1:115 / 2:50 / 3:34 / 4:30 / 5:445 — the 66.0 % unanimity);
+both `verify_arm1/run.meta.json` and `verify_arm2/run.meta.json` in
+the same directory (verified 2026-09-02: `items_processed` 674,
+`items_failed` 0 on each; arm 1 `gemini-3-flash-preview`, arm 2
+`gemini-3.7-flash`; both `verify_adversarial-text` with identical
+system-instruction hash `2518d5298d…`);
+`scripts/gemini37_image_gap_test.py:94` (verified 2026-09-02: the
+`abs(f1 - committed) > 1e-3` replication gate);
+`scripts/image_b_analysis.py:79` (verified 2026-09-02:
+`ANCHOR_F1_20 = 0.8961  # registered text-B verified best`);
+`scripts/gemini37-image-gs-driver.sh` lines 19–24 and 46 (verified
+2026-09-02: the 17-example/ulimit-1024 diagnosis, `ulimit -n 8192`,
+and the `--workers "${WORKERS:-150}"` image cap);
+`results/grid-2026-08-18/conditions-verified/g384_ov192/detections.geojson`
+(verified 2026-09-02: 400 features, every one at `vote_count` 10 —
+the evidence that the Gemini-3 side of the difference-in-differences
+is a K = 10 pair). Related: **Obs 439** (the S143 Gemini-3 image
+campaign on this exact geometry — text over image by +0.0549 at
+p = 0.001 with tile-MCC at parity; **the finding this entry
+supersedes at 3.7, and the paper claim that must now be dated to
+Gemini 3**); **Obs 441** (the 3.7 screen-and-swap arc: the family
+gain resolving only in the verifier seat on the text track, and
+verifier calibration not transferring across models — the
+calibration shift that (c) replicates on image candidates);
+**Obs 444** (the complete 55-map proposer × verifier 2×2 — the
+deployment grid this screen completes the modality picture for, and
+the campaign whose economics rule sets the escalation trigger in
+(e)); **Obs 443** (model consistency against novice variance — the
+consistency framing this screen's under-1 % per-pass variation sits
+beside); **Obs 445** (image preprocessing as the untouched axis —
+newly more attractive now that the image track is competitive rather
+than 0.055 behind).
