@@ -304,6 +304,12 @@ converged on for the model too, and it reframes audit-app design as
 reviewer ergonomics (single-fixation presence checks over
 scanning). The census overlay (yellow anchors) is the interim
 mitigation; the chunked app is future work if audits recur.
+PI corollary (2026-09-01): the optimum is STAGE-ASYMMETRIC — the
+consensus-P+V pipeline's P-R trade favours a LARGE proposal tile
+(context boosts recall; consensus + verifier absorb the FP cost)
+while assessment, human or machine, wants the small single-glance
+window. The ideal human review size and the model's verifier crop
+coincide; neither matches the proposal tile.
 
 ### 5d. FN image bank (PI-commissioned 2026-09-01)
 
