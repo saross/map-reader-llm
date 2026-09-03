@@ -7720,7 +7720,6 @@ storm, and spend ceilings agreed *before* the degradation so no
 mid-storm judgement call (switch to standard tier at 2× price?) was
 ever needed — the authorised answer already existed and was "no".
 
-
 ## Session 143 — 2026-08-27/29 (the verifier absorbs the thinking dividend in both modalities; a model generation can move the ceiling without moving the protocol; verification sharpens an instrument 2.6×; launch-week endpoints fail loudly then heal)
 
 **The verifier absorbs the thinking dividend — now modality-general.**
@@ -7783,7 +7782,6 @@ remains the missing primitive.
   grain, 49 % unanimous) — the verifier's job shrinks with the
   generation even where headline F1 does not move.
 
-
 ## Session 145 — 2026-08-31/09-02 (fresh-context verification beats resident context on specifics; generation gains are modality- and seat-asymmetric; multimodal payloads reshape client resource profiles; the flex storm keeps office hours)
 
 - **The verifying writer beats the commissioning agent on specifics,
@@ -7818,3 +7816,54 @@ remains the missing primitive.
   clear-window round swept 4,288 tiles that six storm-hours could
   not. Storm-resilient drivers (watchdog + nap) turned the pattern
   from a blocker into a scheduling fact.
+
+## Sessions 146–147 — 2026-09-02/03 (the interpretive check never went redundant at 113 sources; drift has a direction; programmatic span-cutting trades artefacts for zero failures; extraction statistics cannot see layout loss)
+
+- **The two-mechanism design's second run held the pilot's base rate
+  exactly.** 0 of 88 tail entries passed the fresh-context verifier
+  unedited (88 PASS-WITH-EDITS, 0 FAIL); 753 points scored, a quarter
+  OVERREACH, two UNSUPPORTED — both corrected at edit. Across 113
+  sources the interpretive layer has never once been redundant.
+  "Zero unedited" should be read as the expected outcome of an honest
+  check, not as a defect signal about the drafters.
+- **Drift has a direction, and only an independent reader sees it.**
+  The tail's verifiers caught errors that ran toward the citing
+  paper's thesis repeatedly (Fafchamps' "excluded outright";
+  Ross's asymmetric reading of an abduction argument; Ofosu's softened
+  threshold; Sarafoglou's one-way sensitivity claim; Thomas's absence
+  claim). The counter-pattern also showed: verifiers over-corrected
+  and editors declined about one verdict edit in ten on source grounds
+  (Nosek's "retrospectively assembled"; Strobl's "declined" route that
+  the template sanctions). Three fresh contexts disagree in both
+  directions; that, not the catch count, is the design's value.
+- **Programmatic span-cutting is why nothing failed.** Every one of the
+  88 structurers sliced its quotes out of the page cache by anchor
+  rather than transcribing them, and 918 spans verified first time at
+  render. The trade: spans carry the cache's own artefacts, and the
+  checker's normaliser will fail a *repaired* quote. The rule that
+  falls out — never type a quote, always cut it — is cheap and should
+  be in the drafter brief, not just the structurer brief.
+- **Extraction-text statistics cannot see layout loss.** Three
+  caption-only-table heuristics (adjacent captions, digit density,
+  number-poor windows) each either missed an IEEE Access case or
+  flagged a third of the corpus; the structurers' rendered-page checks
+  of the surviving rule found zero true positives. Missing table bodies
+  are a property of the PDF's layout, which the text layer does not
+  carry; the workable triggers are a publisher prior and a rendered
+  page. Neighbour contamination, by contrast, *is* visible in text
+  (sibling DOI on a sparse edge page; a lowercase mid-sentence opening
+  that finishes a sentence), and those rules had true positives on
+  their first run.
+- **The orchestrator's dispatch line is itself an error source.** One
+  characterisation of a source ("a COS working paper") propagated to
+  three agents before a drafter caught it; one dispatch for a source
+  outside the manifest launched an agent that had nothing to do. Both
+  were caught by the artefacts (an overflow note; the manifest tool's
+  UNKNOWN reply), not by me. Keep the dispatch to citekey, cluster,
+  and cache notes, and let the manifest refuse what it does not know.
+- **Concurrent agents' read-only git commands are not lock-free.**
+  Twenty agents running `git status` alongside the orchestrator's
+  commits produced two stale `index.lock` files in one afternoon; the
+  render script now clears a lock no git process holds. Transient
+  "modified" files that agents reported mid-render were the same
+  race, seen from the other side.

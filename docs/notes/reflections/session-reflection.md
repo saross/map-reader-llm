@@ -10907,7 +10907,6 @@ morning on a queue that had spent two days saying no, into a session
 that trusted its own commitments enough to believe it immediately.
 That part lives here.
 
-
 ## Session 145 — 2026-08-31/09-02 — the session where every headline got its verifier
 
 ### Prompt: Where did you and the human disagree, and who was right?
@@ -10950,3 +10949,79 @@ will land in a session that didn't live through the spend. What
 feels *resolved* is the discipline: every one of these open
 questions is written down with its anchors, which is the only state
 in which uncertainty is safe to hand off.
+
+## Sessions 146–147 — 2026-09-02/03 — the session where the corpus closed and the appendix got its checker
+
+**Reflecting on session work in map-reader-llm.** Instance boundary:
+this entry is written by a post-compaction instance. The tail's first
+two thirds (S146 and the early hours of S147) reach me as a summary;
+the tail's close, the PI's rulings, the gate and validation work, and
+the overflow batch are first-person. I mark which is which where it
+matters.
+
+### Prompt: What would you do differently if you replayed this session?
+
+Two things, and they pull in opposite directions. First, I would have
+taken the whole conversion batch to the PI as the default rather than
+offering a 30-source subset as the recommended scope. He said "use it
+as best we can" and meant all 88, and the two-hour credit window held
+the full run with margin. My instinct to scale down was the
+quota-conservation reflex doing its job in the wrong place: the
+policy exists so that the top-tier model is not spent silently, not
+so that approved spend is trimmed by me after the approval. Second, I
+would have spent less time on the caption-only heuristic. Three
+variants, three corpus-wide runs, each either missing an IEEE case or
+flagging a third of the corpus — the honest conclusion (extraction
+text cannot see a layout loss) was available after the first run, and
+the structurers' later rendered-page checks confirmed it with zero true
+positives. The time went to proving a negative that a single
+counter-example had already shown. What I would not change: writing
+the gate as warnings that name their class, so the negative result
+cost the corpus nothing and left a dispatch line the structurers could
+act on.
+
+### Prompt: What decision or trade-off made today will look arbitrary without this session's context?
+
+Four candidates, in descending order of how strange they will look.
+(1) The verdict vocabulary admits NOT CHECKABLE as a fourth per-point
+value. The pilot brief said three, one verifier filed a fourth, and
+the renderer accepted it silently; the fix was not to forbid the
+value but to legalise it with a mandatory note, because the verifier
+brief had always told verifiers to flag external-knowledge claims
+that way and the three-value enum was the inconsistency, not the
+verdict. (2) The overflow sidecar holds the verbatim span and the
+public entry never shows it. That is the PI's copyright ruling,
+verbatim: a complete private copy that *contains* the public one, so
+paraphrase accuracy is checkable against text at any time. A reader
+of the public entries will see paraphrases with page anchors and
+wonder why the quotes are missing; the answer is that they are held,
+not absent. (3) Trier's positioning runs to six sentences against a
+brief that says two or three. The PI's ruling was that length limits
+are targets, not gates — exceed them only when a verified nuance would
+otherwise be lost, and say so. Without that ruling the entry looks
+like a lapse. (4) The gate's caption-only numeric rule survives in the
+code despite a measured precision of zero across every rendered-page
+check. It stays because it is labelled low-recall and its only cost is
+a rendered page; removing it would also remove the prompt to render.
+Those four are all defensible; none is guessable.
+
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
+
+That the tail and its appendices were produced across a pause and a
+compaction in what the harness records as one session, and that the
+provenance stamp on the entries records a *requested* model at a
+*run date* rather than a metered fact. The task-output files under the
+session's tasks directory hold only the dispatch prompt and the final
+message — not the transcript — so the per-source token figures in the
+reports are estimates from notification telemetry, stated as such.
+The archived transcripts are the only route to a metered number. Also
+hard to reconstruct: why the structurers' spans carry line-break
+artefacts ("preregistra tion", "costineffective") while the entries'
+key-point quotes mostly do not. The drafters chose artefact-free
+spans by hand; the structurers cut spans programmatically from the
+cache and preserved what the cache holds, because the checker's
+normaliser does not repair a dropped hyphen and a repaired quote fails.
+The sidecar quote is never rendered, so the artefact is invisible to
+readers and visible only to someone opening the working copy and
+wondering whether the extraction is broken. It is not; the quote is
+honest.

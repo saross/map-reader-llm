@@ -7690,7 +7690,6 @@ two-occupant column would cost. Here it cost ~$30 and one night, and
 it reversed the headline's mechanism while improving its deployment
 advice.
 
-
 ## 2026-08-28 (Session 143, map-reader-llm): The count gates that passed over a −0.05 defect
 
 **Session:** 48517f09-4430-41ae-b4d0-ac1e7b03c491
@@ -7835,7 +7834,6 @@ bounds the claim: if it reproduces most of arm 2's margin, the
 verifier seat alone carries the gain; if not, the proposer-verifier
 interaction matters.
 
-
 ## 2026-09-01 (Session 145, map-reader-llm): The incumbent that was two numbers
 
 **Session:** c6af61d0-0e15-4ef3-b64d-45754ed6ac0e
@@ -7927,3 +7925,63 @@ different slices of the world will manufacture this artefact.
 A case where the signature (geography-dependent recall at stable
 precision) arises from genuine model behaviour rather than exposure
 mismatch — it would demote the tell from diagnostic to suggestive.
+
+## 2026-09-03 (Sessions 146–147, map-reader-llm): Extraction text cannot see a layout loss
+
+**Session:** 1e906894-a6e0-4407-aaff-65f42df6ad55
+**Instance:** primary (the gate work and the structurers' checks were
+experienced directly; the tail's earlier caption-only cases reach this
+instance via summary)
+
+### Surprising fact
+
+Two IEEE Access sources in the tail had extracted every table as a
+caption without a body, and the pilot amendment asked for a gate
+heuristic to catch the class before drafters launch. I expected a text
+statistic to separate "caption with body missing" from "caption with
+body present": adjacent captions, digit density around the caption, a
+number-poor page. Run across all 113 caches, each variant either missed
+one of the two known cases or flagged 32–46 sources — a third of the
+corpus — and the hits were genuine multi-table pages in machine-learning
+preprints where the body sits elsewhere on the page in reading order.
+
+### Probe
+
+Three corpus-wide runs, one per variant, checked against the two known
+positives and read for false positives by source. Then, independently,
+the 88 overflow structurers were briefed to treat the surviving rule's
+flags as binding and to render the flagged page before quoting from it;
+every structurer that did so reported the flag benign — a forward
+reference to a table on another page, a text-only table, or a body
+fully extracted beside its caption.
+
+### Belief revision
+
+Before: a missing table body leaves a statistical trace in the
+extracted text that a cheap rule can find. After: the loss is a
+property of the PDF's layout, and the text layer that survives
+extraction carries no signal about what did not survive; what it does
+carry (captions, digits, number runs) is produced equally by pages
+whose tables extracted fine. The workable triggers are a prior about
+the producer (the publisher whose PDFs did this twice) and a look at
+the rendered page. The contrast case sharpened the belief: neighbour
+contamination *is* in the text — a sibling DOI on a page with few DOIs,
+a first line that opens lowercase and finishes a sentence — and those
+rules found their known positives on the first run with no false
+positives after one refinement.
+
+### What would change this belief
+
+A statistic computed from the text layer alone that separates the two
+IEEE Access caches from the 32-source false-positive set without a
+publisher prior. The obvious candidate is a per-page count of captions
+against a count of tabular number runs anywhere on the page, not
+merely near the caption; I did not test it, and if it works the entry's
+claim narrows from "cannot" to "the local-window family cannot".
+
+### Implications for practice
+
+Keep the numeric rule as a prompt to render, labelled low-recall and,
+now, low-precision; keep the publisher signature as the trigger; and
+budget the time for a negative result at one corpus-wide run, not
+three.

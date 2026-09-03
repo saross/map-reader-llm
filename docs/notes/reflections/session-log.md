@@ -9189,3 +9189,63 @@ Verifier-round meta overwrites mean only round-7 usage survives for
 the fourth cell (per-invocation stamping still queued). The
 image-GS union crops and tile trees on sapphire remain regenerable
 cleanup riders.
+
+## Sessions 146–147 — 2026-09-02/03 (amd-tower; $0 Gemini API; ~353 Opus-tier subagent runs on the PI's extra credit and the 2026-09-03 credit window; Fable 5.1)
+
+Factual record; interpretation in session-reflection and llm-obs.
+S146 and S147 are one harness session with a graceful pause at the
+five-hour usage limit and a compaction in between.
+
+**AB+ tail COMPLETE.** 88 sources drafted, byte-checked, verified in
+fresh context, edited, re-checked, rendered; corpus 113 deliverables
+in `outputs/ab-plus/`, every one stamped `claude-opus-5 / 2026-09-02`
+plus pipeline rev. 88 PASS-WITH-EDITS, 0 FAIL, 0 clean; 753 points
+scored (564 SUPPORTED / 186 OVERREACH / 2 UNSUPPORTED, both corrected
+at edit); 751 edits proposed (median 8, range 3–18); 703 attested
+quotes; summaries 437–500 words. Two OCR-rebuilt Wiley sources drafted
+last under the provenance-note controls (drafter, verifier, editor
+each visually attested). Two orchestrator rulings recorded in commit
+messages: gerasimova KP5 supports→complicates; trier positioning
+accepted at six sentences. Tail report
+`reports/ab-plus-tail-report-2026-09-02.md`; run-card and beacon
+updated; claude-obs 86 filed. Agent count from task transcripts:
+88/88/88 drafters/verifiers/editors across S146+S147.
+
+**PI rulings (2026-09-03) and the three tail decisions implemented**
+(commit `5a871e5d8`): (1) length limits are targets, not gates —
+briefs amended, advisory warnings at check/render; (2) overflow =
+complete gitignored sidecar `_work/<citekey>.overflow.json`
+(paraphrase + verbatim span + page_index, byte-checked) rendered
+paraphrase-only into a public `## Overflow` section; (3) gate content
+heuristics (cover-sheet, author-manuscript, neighbour-contamination,
+trailing-text, caption-only-table, sections-empty), calibrated across
+113 caches at 79 PASS / 34 WARN / 0 FAIL; (4) verdict vocabulary
+enforced at render with NOT CHECKABLE-with-note admitted; 51 entries
+re-rendered with named per-point labels replacing `KP?`. 34 tests
+pass. Automation-cell finding staked in `docs/paper/` (D.9 gate
+discharged; M.12 [PENDING] slot) and a methods-paper stub written
+(`planning/llm-assisted-preregistration-methods-paper.md`).
+
+**Overflow batch COMPLETE** (PI-approved, credit window): 89 structurers
+launched, 88 completed, one mis-dispatch stopped; 918 items across 88
+sidecars (median 11.5; 44 at the cap); every span verified at render,
+zero withheld; all 88 tail entries re-rendered with the appendix.
+Structurers appended corrections to nine `.md` notes and raised three
+candidate items; the caption-only numeric rule's observed precision
+(zero true positives in rendered-page checks) recorded in the gate's
+docstrings. Manifest `outputs/ab-plus/manifests/overflow-2026-09-03.json`.
+
+**Records.** Run-card changelog ×3; tail-report changelog ×2; beacon
+`planning/paper-writeup-continuity.md` § STATE AFTER S147 with two
+addenda; scratchpad entries (length-limits principle;
+paraphrase-only publication with a complete private copy). Interactive
+backlog from S145 carried unchanged. Infra gates relayed at close: one
+unarchived raw session (a personal-assistant worktree); job collector
+failed on rpi-server 2026-08-31.
+
+**Contextual assumptions.** The 20-concurrent-subagent harness cap
+shaped the whole run (rolling refill, manifest as authority, commits
+before renders to keep the provenance stamp clean). Token usage is an
+estimate from notification telemetry because the harness's task-output
+files hold only dispatch and final message. The credit window was the
+reason the full 88 ran rather than the 30-source subset.
