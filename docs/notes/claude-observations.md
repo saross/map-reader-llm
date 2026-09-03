@@ -2088,3 +2088,63 @@ characterised a source (Pu 2019 as "a COS working paper") the error
 propagated to three agents before a drafter caught it; and when the
 PI's own name is on a source, expect the drift to be strongest and
 say so in the dispatch.
+
+
+## claude-obs 87 — 2026-09-03 (Session 147): He batches decisions with rationale and invites the counter-proposal
+
+**Pattern.** Asked three open decisions, Shawn answered all three in
+one message, each with a reason, one as a combination of my two
+options rather than a choice between them ("a gitignored complete
+copy AND a paraphrase-only appendix — ideally the complete copy
+includes the paraphrase"), and closed with "other suggestions
+welcome" and "let me know if I'm underestimating". The combined
+option was better than either of mine: it made the private copy a
+superset of the public one, which is what makes paraphrase accuracy
+checkable later.
+
+**Lesson.** Present decisions as a set with my recommendation on each,
+but expect the answer to recombine them; his design instinct is to
+ask what artefact would make a later check trivial, and to build that
+rather than pick a side.
+
+**How to apply.** When offering options, say which combinations are
+coherent and what each would cost; and when he asks whether he is
+underestimating, answer with the one part that is genuinely hard
+(here: caption-only tables) rather than reassurance.
+
+## claude-obs 88 — 2026-09-03 (Session 147): Self-critique — I trimmed an approved spend before he had asked me to
+
+**Pattern.** For the sidecar conversion I recommended a 30-source
+subset with the full 88 as the alternative, framed by token cost.
+Shawn's reply was "run it, we have credit to spare for the next two
+hours, let's use it as best we can" — the whole batch, on a time
+window, not a token budget. The full run finished with half the
+window unused.
+
+**Lesson.** The subagent-credit policy exists so top-tier spend is
+visible and deliberate, not so I scale down work he has already
+priced. When he names a window, the right proposal fills the window;
+the subset is the fallback for when he does not.
+
+**How to apply.** Lead with the full scope and its wall-clock at the
+cap, then name the smaller cut as the option if credit is short — the
+reverse of what I did.
+
+## claude-obs 89 — 2026-09-03 (Session 147): The manifest tool caught what I did not
+
+**Pattern.** Twice this afternoon my own artefacts corrected me before
+Shawn could: a dispatch line that mis-described a source propagated
+to three agents until a drafter's overflow note flagged it, and an
+agent launched for a source outside the overflow manifest was exposed
+by the state tool's "UNKNOWN" reply, stopped before it wrote anything.
+Both errors were mine as orchestrator, and both were cheap only
+because the manifest refused what it did not know.
+
+**Lesson.** At twenty concurrent agents the orchestrator is the
+least-verified component in the pipeline; the manifest and the
+briefs are its verifier. Keep dispatch lines free of characterisation
+and let the manifest be the only source of what exists.
+
+**How to apply.** Before any batch launch, generate the dispatch list
+from the manifest rather than from memory, and treat a state-tool
+UNKNOWN as a stop, not a typo.
