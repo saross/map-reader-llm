@@ -73,10 +73,28 @@ Historical-map extraction lineage, and the nearest-substrate member of it we hav
 - **Locator:** page_index 0 · p.1
 - **Why:** A 2021 statement, from inside the historical-map extraction literature, that compute cost is not routinely reported — useful for framing our own cost and accuracy trade-space as a reporting practice rather than an eccentricity. Two qualifications must travel with it. The sentence continues across the page break with an exception ('but Uhl et al. [2] reported that 138 million parameters used in their VGGNet-16 models'), so it is not a claim that nobody reports; and the costs this paper does report are training-side (7 days maximum on GPU, 32.8M parameters, of which 9.36M trainable) plus the 1,250 annotation hours, not the inference-side, per-item API cost our trade-space is built on.
 
+## Overflow (paraphrase only; each rests on a byte-checked span)
+
+Verified secondary material that did not fit the summary band. The verbatim spans behind these paraphrases are held in the working copy (`_work/canAutomaticDetectionRoad2021.overflow.json`), not published; page anchors are to the extracted page cache (structured 2026-09-03; model `claude-opus-5` requested).
+
+- **Trainable parameters after pretraining** — The network carries 32.8M parameters but trains only 9.36M of them, because the contracting path arrives with pretrained weights; the authors credit those weights with substantially reducing training time. (page_index 6 · p.7 · §IV.B Training deep learning CNN model)
+- **Pretrained architectures as cost saving** — Pretrained architectures are credited with giving the model a relatively lower parameter count, training time and complexity. The saving is asserted comparatively, without this sentence naming what the model is lower than. (page_index 1 · p.2 · §I Introduction)
+- **Planned remedy for scarce classes** — For the road types with too little data, the authors' stated remedy is data augmentation and deep transfer learning. Both are named as future work, not as something the reported results already include. (page_index 8 · p.9 · §VI Conclusion)
+- **Annotation labour, two accounts** — The introduction prices the ground truth at 1,250 hours with two graduate students, covering 300,000 km of road features in more than 64,000 segments (the source writes '300.000 km', using a full stop as the thousands separator). The dataset section describes the same effort as more than 1,250 hours by two research fellows, so the staffing and the 'more than' differ between the paper's two accounts of it. (page_index 0 · p.1 · §I Introduction)
+- **Weakly supervised settlement extraction** — Uhl and colleagues retrieved human settlement footprints from United States Geological Survey (USGS) maps with a weakly supervised convolutional neural network, reported here as recall of up to 0.96 and F_measure of up to 0.79. Both figures are 'up to' ceilings taken across two of their studies, not one scored condition. (page_index 1 · p.2 · §II Related works)
+- **Road intersection point detection** — A road intersection point detection system built on USGS historical maps is credited with a 0.8 F_measure using a fast convolutional neural network algorithm. The target is intersection points rather than an area or line footprint. (page_index 1 · p.2 · §II Related works)
+- **Railroad extraction IoU benchmark** — The railroad-feature extraction case study on USGS historical topographic maps, reviewed here as prior art, is credited with a 23.09 IoU score obtained with CNN plus ResNet-50 architectures. (page_index 2 · p.3 · §II Related works)
+- **Alignment claim, mis-keyed reference** — The discussion claims the study's results were aligned with the best-reported results in the literature, pointing at its comparison table and at a railroad feature extraction study cited as reference [3]. The reference number contradicts the paper's own list: [3] is a settlement-footprint paper by Uhl and colleagues, while the railroad extraction study is [4]. (page_index 8 · p.9 · §V.C Road type detection results — comparison with the literature)
+- **Planned removal of map noise** — The conclusion's plan for improving performance is to strip the map before detection: detect and remove place names, remove the background — whose colours vary with the land type — and remove the contour lines that complicate road detection. (page_index 8 · p.9 · §VI Conclusion)
+- **Backbone comparison, every road type** — The conclusion states the backbone comparison at full strength: pretrained U-Net achieves better performance than pretrained ResNet-50 for each road type, not merely on average across them. (page_index 8 · p.9 · §VI Conclusion)
+- **Forest extraction scored in Kappa** — Herrault and colleagues are credited with a 0.9 Kappa score for extracting forest features using an unsupervised k-means algorithm and colour-space conversion. The score is a Kappa, a different metric from the F_measure and IoU figures reported for the other studies reviewed alongside it. (page_index 2 · p.3 · §II Related works)
+- **Correctness without completeness** — An automatic ground-truth alignment method is credited with 100% correctness and 20% completeness for river and railroad detection problems — a perfect score on one axis reported alongside a low score on the other. (page_index 2 · p.3 · §II Related works)
+
 ## Extraction / fidelity notes (auto-generated)
 
 - Deterministic quote check: **8/8 passed**.
-- Generated by: model `claude-opus-5` requested (proposer + verifier); run 2026-09-02; pipeline rev `pre-bootstrap-10k-2026-04-28-1734-g275504cf8`.
+- Overflow span check: **12/12 passed**.
+- Generated by: model `claude-opus-5` requested (proposer + verifier); run 2026-09-02; pipeline rev `pre-bootstrap-10k-2026-04-28-1878-g17f85c6e6-dirty`.
 
 ## Independent verifier (advisory — flags only)
 
