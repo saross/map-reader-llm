@@ -2089,7 +2089,6 @@ propagated to three agents before a drafter caught it; and when the
 PI's own name is on a source, expect the drift to be strongest and
 say so in the dispatch.
 
-
 ## claude-obs 87 — 2026-09-03 (Session 147): He batches decisions with rationale and invites the counter-proposal
 
 **Pattern.** Asked three open decisions, Shawn answered all three in
