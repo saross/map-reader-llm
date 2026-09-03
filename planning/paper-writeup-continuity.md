@@ -114,8 +114,11 @@ project state.
 > session-log); claude-obs 86–89 filed. Overflow drivers promoted to
 > `scripts/ab_plus/tail/` (`overflow_state.py`, `overflow_finish.sh`,
 > `overflow_census.py`, `tail_census.py`). **HELD-OVER GATES (silence
-> never discards):** (a) user-obs S146–147 candidates C1–C4 pending in
-> `docs/notes/user-observations.md`; (b) three working-notes candidates
+> never discards):** (a) user-obs S146–147 — RESOLVED 2026-09-03: C1,
+> C2, C4 kept (rulings as rule/reason/check; the three-part
+> end-of-batch report; the pause-and-reconcile pattern for long runs —
+> recorded in `prompts/ab-plus/README.md` and the global scratchpad),
+> C3 dropped; (b) three working-notes candidates
 > pending the PI's verdict before an obs-writer dispatch — WN-C1 the
 > two-mechanism verification base rate at 113 sources (0 unedited,
 > 753 points, a quarter OVERREACH, drift toward the citing thesis);
