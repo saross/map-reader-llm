@@ -73,10 +73,26 @@ Primary cluster: few-shot / in-context learning / annotation budget — this is 
 - **Locator:** page_index 1 · p.2
 - **Why:** The one line that states the phenomenon and its own limit in the same breath, which is why it is the honest hook rather than the 'fantastic permutations' flourish: order sensitivity is universal, scale helps, scale does not cure. Use it when motivating prompt-order control, and let the qualification travel — the largest model the paper tests is GPT-3 175B in 2022 on text classification, so whether the residue persists in a modern vision-language model is an open question this source cannot answer for us, only pose.
 
+## Overflow (paraphrase only; each rests on a byte-checked span)
+
+Verified secondary material that did not fit the summary band. The verbatim spans behind these paraphrases are held in the working copy (`_work/lu_fantastically_2022.overflow.json`), not published; page anchors are to the extracted page cache (structured 2026-09-03; model `claude-opus-5` requested).
+
+- **Labelled holdout, halved** — The labelled-holdout alternative they tested is small: the four training examples are split in half, leaving a two-example development set on which the top four of the twenty-four orderings are chosen. That route beat the all-orderings baseline but lost to entropy probing at every model size in the comparison (Table 5). (page_index 7 · p.8 · §5 Results — Entropy-based probing outperforms using subsets of the training data (Table 5, SST-2))
+- **Baseline is the all-orderings mean** — The baseline every improvement figure is measured against is the average over all twenty-four candidate orderings, not the worst ordering: the authors state that K = 24 in their top-K sweep is equivalent to the baseline performance in the main results table. (page_index 6 · p.7 · §5 Results — Ranking using Entropy-based probing is robust)
+- **Metric targets collapsed predictions** — GlobalE was designed around a specific diagnosed failure mode: prompts whose predictions collapse onto one label. The metric scores an ordering by how far its aggregate predicted-label distribution avoids that extreme imbalance. (page_index 4 · p.5 · §3.2 Probing Metrics — Global Entropy (GlobalE))
+- **Deliberately diverse probing sampling** — The unlabelled probing set is generated with settings chosen for spread rather than for the model's best guesses: generation capped at 128 tokens, sampling temperature 2, and blocked repeated n-grams, explicitly to encourage diverse generation. (page_index 4 · p.5 · §4 Experimental Setup)
+- **How many prompts to keep** — Keeping the single top-ranked ordering already works well in most cases; the authors nonetheless report K = 4 because preliminary experiments showed it gave stable performance across datasets. The size of the kept set was a preliminary-experiment decision, not a tuned parameter. (page_index 6 · p.7 · §5 Results — Ranking using Entropy-based probing is robust (Figure 8 sweep is GPT2-Large 0.8B only))
+- **Capability precondition** — The authors' own scope condition on prompt selection is that the model must already have some classification ability on the task that prompt design can improve. On CB and RTE, where the GPT-2 models sat at chance, selection does help once the model is large enough — GlobalE improves GPT-3 175B on CB by 4.9%. (page_index 6 · p.7 · §5 Results — Sentence-pair tasks remain challenging for smaller-sized models)
+- **Label order is unstable too** — Instability is not confined to the order of the exemplars: running the six possible positive/negative label patterns over the same four samples and correlating their rankings across models, the authors find label ordering behaves just as randomly across sizes of the same model. (page_index 2 · p.3 · §2 Order Sensitivity and Prompt Design — Performant label orderings are not consistent across models)
+- **Templates are not the confound** — The order effect and the probing remedy are not artefacts of one prompt template: across four SST-2 templates borrowed from earlier work, the across-ordering randomness looks the same and entropy-based probing improves every case. (page_index 6 · p.7 · §5 Results — Entropy-based probing is effective across templates)
+- **Scope of the order finding** — The order result is contested, and the disagreement is about regime. Liu et al. (2021), retrieving nearest-neighbour exemplars from a standard-size training set, concluded that order then has little or no effect; Lu and colleagues, who have no such training set, reach the opposite conclusion and say so explicitly. (page_index 7 · p.8 · §6 Related Work — Order Sensitivity of Prompt Design)
+- **Budget set the denominator** — The evaluation denominator was set by cost rather than by statistical reasoning: every reported number rests on a 256-example subsample of the validation set, taken for all eleven datasets to contain the metered GPT-3 inference bill. (page_index 5 · p.6 · §4.1 Evaluation Datasets)
+
 ## Extraction / fidelity notes (auto-generated)
 
 - Deterministic quote check: **8/8 passed**.
-- Generated by: model `claude-opus-5` requested (proposer + verifier); run 2026-09-02; pipeline rev `pre-bootstrap-10k-2026-04-28-1864-g85ca22c40-dirty`.
+- Overflow span check: **10/10 passed**.
+- Generated by: model `claude-opus-5` requested (proposer + verifier); run 2026-09-02; pipeline rev `pre-bootstrap-10k-2026-04-28-1912-g45bd8a014`.
 
 ## Independent verifier (advisory — flags only)
 
