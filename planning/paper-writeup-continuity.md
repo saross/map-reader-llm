@@ -133,6 +133,43 @@ project state.
 > metadata (no change). Legacy lint debt untouched:
 > `scripts/ab_plus/tests/test_audit_fixes.py` E741.
 >
+> **2026-09-03 ADDENDUM 3 (S148, autonomous resume; synced at
+> `db7c7f64c`, three commits past the S147 close):** (1) **D.9 concept
+> skeleton written** from the AB+ preregistration cluster:
+> `docs/paper/d9-drafting-brief-2026-09-03.md` (commit `05618dcbc`) —
+> seven moves at mechanism/instance/boundary with `page_index`
+> anchors; three length envelopes because the ISPRS skeleton routes
+> Seed 7 OUT (D-5 decides); naming inputs the corpus settled
+> (Srivastava's lowercase common-noun use of "adaptive
+> preregistration" ×4, never defined; Gould "sensu Srivastava"; grain
+> is a continuum via Gould Box 1 tip 4) and one it raised (naming
+> option 1 "just-in-time preregistration" reuses the pejorative of
+> Ross & Ballsun-Stanton 2022); seven rulings before prose (home,
+> name, Thomas concession, C1↔C3 bridge, Willroth reason/timing
+> fields, the Sarafoglou "hybrid" claim, the OSF baseline re-run).
+> Prose stays gated (S139 scheduling rule; naming ruling; D-5).
+> (2) **Register rows for the 3.7 arc drafted as a PROPOSAL** (Opus
+> agent, manifests untouched):
+> `planning/gemini37-register-rows-proposal-2026-09-03.md` — 15 Tier A
+> condition rows (9 GS + 6 55-map, three cells × two chains), 11 Tier B
+> cells blocked, 5 analysis rows, 8 PI decisions, gaps (no
+> `evaluation.json` for any 3.7 GS cell → `tile_classification` and
+> CIs missing, $0 fix; three verifier `run.meta.json` overwritten),
+> and 7 cross-check findings (sweep argmax TIES in `swap37` 0.80/0.85
+> and image arm-2 0.90/0.95 that no card mentions; text cells store
+> their best point under a key named `image_best`; `head_to_head_20m`
+> in the image analysis JSONs is mis-anchored and must not be quoted
+> as a modality delta). (3) **Beacon correction**: S145's
+> "reference-instrument correction: Obs 442" was a mis-pointer — Obs
+> 442 is the selection retraction; the correction is Obs 444 § (b)
+> (fixed in place above). (4) **Gate (b) WN-C1..C3 still awaits the
+> PI's verdict** (recommendation: approve all three; obs-writers after
+> the verdict). **Infra relays** (outside this repo): one unarchived
+> raw session in the personal-assistant `claude-phase1-test` worktree
+> (`~/.cache/cc-archive-drift-gate`); the rpi-server job collector
+> failed 2026-08-31 and the log path the hook names does not exist
+> locally.
+>
 > **OPEN DECISIONS FOR THE PI (from the tail — now decided, see the
 > addendum above):**
 >
@@ -272,8 +309,11 @@ project state.
 > (2) **REFERENCE-INSTRUMENT CORRECTION**: S144 headlines mixed the
 > canonical and standardised chains (gate-caught); conclusions
 > survive on both — std: arm2 0.8825 > ceiling 0.8558; fourth
-> 0.8732; arm1 0.8550 ≈ 0.8502 ns. Obs 442 (+ the Obs 317
-> failure-to-propagate lesson); GS-4 report corrected. (3) **The
+> 0.8732; arm1 0.8550 ≈ 0.8502 ns. Obs 444 § (b) [corrected S148
+> 2026-09-03: this line said "Obs 442", which is the GS-sheet
+> random-selection retraction; the instrument correction is Obs 444
+> § (b) and `results/gemini37-55map-2026-08-31/findings.md`] (+ the
+> Obs 317 failure-to-propagate lesson); GS-4 report corrected. (3) **The
 > IMAGE-GS screen ran end-to-end and THE MODALITY GAP IS
 > ELIMINATED**: 3.7-image 0.9254 (carried vf) / 0.9308 (all-3.7,
 > (0.90,k5)); within-3.7 text−image −0.0115 p=0.25 / −0.0043 p=0.68
