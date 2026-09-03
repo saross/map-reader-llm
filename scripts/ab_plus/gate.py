@@ -86,7 +86,13 @@ the heuristic specific."""
 
 MAX_NUMBERS_ON_POOR_PAGE: int = 40
 """The conservative caption rule only looks at pages with fewer numeric
-tokens than this; a page dense with numbers has its tables somewhere."""
+tokens than this; a page dense with numbers has its tables somewhere.
+
+Observed precision (2026-09-03, overflow batch): the numeric rule fired on
+14 of 113 caches and every flag a structurer checked on the rendered page
+was benign — a cross-reference to a table elsewhere, a text-only table, or
+a fully extracted body. Keep it as a prompt to render the page; the IEEE
+Access signature is the only trigger with a true positive so far."""
 
 CAPTION_WINDOW: int = 600
 MIN_NUMBERS_NEAR_TABLE: int = 4
@@ -111,7 +117,7 @@ MIN_MID_SENTENCE_LINE: int = 50
 sensing") and preprint stamps are short lowercase lines on genuine first
 pages."""
 
-MIN_TRAILING_CHARS: int = 600
+MIN_TRAILING_CHARS: int = 600  # observed 2026-09-03: appendices/author bios in all checked cases but MacCoun 2015
 """Non-boilerplate text after the last reference entry on the last page long
 enough to be more than a footer: an appendix, author biographies (IEEE), or
 an adjacent article's opening (MacCoun 2015's Nature neighbour runs ~650
