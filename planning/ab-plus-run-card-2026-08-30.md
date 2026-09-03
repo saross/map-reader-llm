@@ -1,6 +1,6 @@
 # AB+ corpus for the ISPRS paper bibliography — run card
 
-> **Last revised**: 2026-09-03 (PI rulings; overflow sidecar, gate heuristics, verdict enum landed). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-03 (overflow sidecars structured for all 88 tail sources; 918 items, all spans verified). See [§ Changelog](#changelog).
 
 **Purpose**: per-source Annotated Bibliography Plus (AB+) entries for
 every work the paper may cite — attested quotes with page anchors,
@@ -77,11 +77,47 @@ concurrent drafters at the Opus tier, verifiers dispatched as drafts
 land, editors on every PASS-WITH-EDITS; deterministic check + render
 per wave, stamped `--model claude-opus-5 --run-date 2026-09-02`.
 
-**Status (2026-09-02, S147): COMPLETE.** 88/88 rendered; corpus 113
-deliverables (25 pilot + 88 tail), every one model-stamped. Final
-numbers and the catch taxonomy: `reports/ab-plus-tail-report-2026-09-02.md`.
+**Status (2026-09-03, S147): COMPLETE, with overflow appendices.** 88/88
+rendered; corpus 113 deliverables (25 pilot + 88 tail), every one
+model-stamped; every tail entry carries a paraphrase-only `## Overflow`
+section backed by a byte-checked sidecar in `_work/`. Final numbers and
+the catch taxonomy: `reports/ab-plus-tail-report-2026-09-02.md`.
 
 ## Changelog
+
+### 2026-09-03 (S147, later still) — Overflow sidecars STRUCTURED for all 88 tail sources
+
+PI approval 2026-09-03 (credit window). One fresh Opus-tier structurer
+per source (`prompts/ab-plus/overflow-brief.md`) converted each
+free-form `_work/<citekey>.overflow-notes.md` into the checkable sidecar
+`_work/<citekey>.overflow.json` (paraphrase + verbatim span +
+page_index), and every tail entry was re-rendered with a paraphrase-only
+`## Overflow` section. Final: **88/88 rendered**; 918 items
+across 88 sidecars (median 11.5, range 5–12;
+44 at the twelve-item cap); **every span verified first time
+at render** — zero items withheld across the corpus. Both
+OCR-rebuilt sources (trier_using_2019, gerasimova_argumentbased_2024)
+were structured under the provenance-note controls with their spans
+visually attested on rendered pages. Structurers cut every span
+programmatically from the page cache rather than transcribing, which
+is why nothing failed; the cost was that spans carry the cache's own
+artefacts (dropped line-break hyphens, glued words), which the
+paraphrase renders correctly and the public entry never shows.
+Corrections the structurers surfaced against the notes or the sources
+(page-pointer slips, a Kramm 2025 94-of-71 impossibility, Berganzo 2021's
+Table 3 contradicting its own prose, Baldassini 2024's NaN-cell
+misstatement, Huang 2023's "exactly half" that is a factor of two plus
+rounding, three unregistered cache artefacts) were appended to the
+relevant `.md` notes as orchestrator-recorded sections. Gate
+heuristics, observed in use: the caption-only-table numeric rule fired
+on 14 of the 113 caches of the structured sources and every flag a structurer
+checked on the rendered page was benign (a cross-reference, a text
+table, or a fully extracted body); trailing-text flags were appendices,
+acknowledgements, or author biographies in every checked case, with
+MacCoun 2015 the one true neighbour. One mis-dispatch (a source with
+no notes) was stopped before it wrote anything. Agent count from the
+task transcripts: 89 launched (88 completed; one mis-dispatch for a source with no notes was stopped before it wrote anything) structurers. Manifest:
+`outputs/ab-plus/manifests/overflow-2026-09-03.json`.
 
 ### 2026-09-03 (S147, later) — PI rulings and the three tail decisions implemented
 

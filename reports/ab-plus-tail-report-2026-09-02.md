@@ -1,7 +1,7 @@
 # AB+ tail report: 88 sources, complete — corpus build FINISHED
 
-> **Last revised**: 2026-09-03 (amendments acted on; PI rulings). See
-> [§ Changelog](#changelog).
+> **Last revised**: 2026-09-03 (overflow appendices added to all 88
+> entries; amendments acted on). See [§ Changelog](#changelog).
 
 Companion to `reports/ab-plus-pilot-report-2026-08-30.md` (the first
 25 sources). This report covers the remaining 88, run on the
@@ -208,7 +208,8 @@ supplies the D.9 material with page-anchored quotes:
 3. **Enforce the word band at check time**: two entries left the
    band (a pilot exemplar at 620 words; a tail draft at 548 before
    edit). `validate_entry` should warn outside 300–500.
-4. **Overflow notes deserve a committed home**: nearly every tail
+4. **Overflow notes deserve a committed home** (DONE 2026-09-03: sidecar
+   plus paraphrase-only appendix, all 88 sources): nearly every tail
    drafter wrote one, and editors moved verified material there to
    hold the band. They are the drafter's evidence base for the
    summary and carry the cache-defect register per source. They
@@ -251,6 +252,22 @@ final numbers; the beacon (`planning/paper-writeup-continuity.md`
 § STATE AFTER S147) records the close.
 
 ## Changelog
+
+### 2026-09-03 (later) — Overflow appendices added to all 88 tail entries
+
+Trigger: PI approval of the sidecar conversion batch. Each free-form
+note was structured by a fresh Opus-tier agent into
+`_work/<citekey>.overflow.json` (918 items across 88 sidecars, median
+11.5, 44 at the twelve-item cap); every span verified at render and
+none was withheld. The public entries gained a paraphrase-only
+`## Overflow` section with page anchors. Corrections the structurers
+surfaced against the notes and sources were appended to the `.md`
+notes as orchestrator-recorded sections. Observed in use: the
+caption-only numeric gate rule fired on 14 caches and every flag a
+structurer checked on the rendered page was benign; trailing-text
+flags were appendices or author biographies in every checked case bar
+MacCoun 2015. No numbers in the body changed. Run-card changelog
+carries the full entry.
 
 ### 2026-09-03 — Amendments 1–4 acted on (PI rulings)
 
