@@ -39,3 +39,16 @@ overflow-notes convention, before the remaining 88 sources ran.
   so in the verifier dispatch: the self-flattering drift was strongest
   there.
 - Length limits are targets, not gates (PI ruling 2026-09-03).
+
+## Long batch runs (PI ruling 2026-09-03, from user-obs S146–147)
+
+When a run may outlast the parent session's context or the 5-hour
+usage limit: the manifest (`outputs/ab-plus/manifests/<run>.json`) is
+the authority on per-item state and is written by the orchestrator
+only; agents write their outputs at the end, never incrementally; at a
+pause, record an exact census in the manifest, run card, and beacon;
+at resume, reconcile the manifest against disk before dispatching
+anything (the S146→S147 reconcile matched exactly). Report each
+batch's close in three parts — rulings to check, findings worth
+attention, open decisions — and report any judgement the orchestrator
+took alone as rule / reason / what to check.
