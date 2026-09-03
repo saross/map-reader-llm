@@ -1034,4 +1034,3 @@ summary; C1–C3 are first-person.
   manifest matched disk and the run continued at the cap. If that is
   what made a hard usage stop safe mid-batch, record it as the pattern
   for long agent runs.
-
