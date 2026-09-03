@@ -1,28 +1,60 @@
-"""Promoted 2026-09-03 from the S147 scratch driver.
+"""Census of the overflow structuring batch (read-only).
 
-Census of the overflow structuring batch (read-only).
+Promoted 2026-09-03 from the S147 scratch driver. Prints the overflow
+manifest's status counts, sidecar item statistics, and checks every
+rendered entry for an Overflow section and for withheld items.
 
-Usage: python3 ocensus.py — prints manifest status counts, sidecar item
-statistics, and checks every rendered tail entry for an Overflow section.
+Usage (from the repo root)::
+
+    python3 scripts/ab_plus/tail/overflow_census.py
 """
+
+from __future__ import annotations
+
 import json
 import os
-import statistics
 import re
+import statistics
 from collections import Counter
-R='/home/shawn/Code/map-reader-llm'
-m=json.load(open(f'{R}/outputs/ab-plus/manifests/overflow-2026-09-03.json'))
-rows=m['sources']
-print('status:', dict(Counter(r['status'] for r in rows)))
-n_items=[]; missing=[]; noapp=[]; withheld=0
-for r in rows:
-    k=r['citekey']; p=f'{R}/outputs/ab-plus/_work/{k}.overflow.json'
-    if not os.path.exists(p): missing.append(k); continue
-    o=json.load(open(p)); n_items.append(len(o['items']))
-    md=f'{R}/outputs/ab-plus/{k.lower()}.md'
-    t=open(md).read() if os.path.exists(md) else ''
-    if '## Overflow' not in t: noapp.append(k)
-    mm=re.search(r'Overflow span check: \*\*(\d+)/(\d+) passed', t)
-    if mm and mm.group(1)!=mm.group(2): withheld+=int(mm.group(2))-int(mm.group(1))
-print('sidecars:',len(n_items),'items total:',sum(n_items),'median:',statistics.median(n_items) if n_items else None,'min:',min(n_items,default=0),'max:',max(n_items,default=0),'at cap (12):',sum(1 for x in n_items if x==12))
-print('missing sidecar:',missing); print('rendered without Overflow section:',noapp); print('withheld items across corpus:',withheld)
+
+REPO = "/home/shawn/Code/map-reader-llm"
+MANIFEST = f"{REPO}/outputs/ab-plus/manifests/overflow-2026-09-03.json"
+WORK = f"{REPO}/outputs/ab-plus/_work"
+DELIVERABLES = f"{REPO}/outputs/ab-plus"
+
+
+def main() -> None:
+    """Print the census."""
+    rows = json.load(open(MANIFEST))["sources"]
+    print("status:", dict(Counter(r["status"] for r in rows)))
+    n_items: list[int] = []
+    missing: list[str] = []
+    no_appendix: list[str] = []
+    withheld = 0
+    for r in rows:
+        key = r["citekey"]
+        sidecar = f"{WORK}/{key}.overflow.json"
+        if not os.path.exists(sidecar):
+            missing.append(key)
+            continue
+        n_items.append(len(json.load(open(sidecar))["items"]))
+        rendered = f"{DELIVERABLES}/{key.lower()}.md"
+        text = open(rendered).read() if os.path.exists(rendered) else ""
+        if "## Overflow" not in text:
+            no_appendix.append(key)
+        match = re.search(r"Overflow span check: \*\*(\d+)/(\d+) passed", text)
+        if match and match.group(1) != match.group(2):
+            withheld += int(match.group(2)) - int(match.group(1))
+    if n_items:
+        print(
+            f"sidecars: {len(n_items)} items total: {sum(n_items)} "
+            f"median: {statistics.median(n_items)} min: {min(n_items)} max: {max(n_items)} "
+            f"at cap (12): {sum(1 for x in n_items if x == 12)}"
+        )
+    print("missing sidecar:", missing)
+    print("rendered without Overflow section:", no_appendix)
+    print("withheld items across corpus:", withheld)
+
+
+if __name__ == "__main__":
+    main()
