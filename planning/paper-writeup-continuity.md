@@ -108,6 +108,28 @@ project state.
 > render script now clears it when no git process holds it. **The
 > corpus is complete for D.9 drafting.**
 >
+> **SESSION CLOSE (2026-09-03, /reflect + /handoff run):** reflections
+> written for S146–147 (`docs/notes/reflections/`: session-reflection,
+> llm-observations, an abductive entry on the caption-only heuristic,
+> session-log); claude-obs 86–89 filed. Overflow drivers promoted to
+> `scripts/ab_plus/tail/` (`overflow_state.py`, `overflow_finish.sh`,
+> `overflow_census.py`, `tail_census.py`). **HELD-OVER GATES (silence
+> never discards):** (a) user-obs S146–147 candidates C1–C4 pending in
+> `docs/notes/user-observations.md`; (b) three working-notes candidates
+> pending the PI's verdict before an obs-writer dispatch — WN-C1 the
+> two-mechanism verification base rate at 113 sources (0 unedited,
+> 753 points, a quarter OVERREACH, drift toward the citing thesis);
+> WN-C2 extraction-text statistics cannot detect missing table bodies
+> (publisher prior + rendered page are the triggers; zero true
+> positives in rendered-page checks); WN-C3 the automation cell is
+> empty across 30 preregistration sources (Pu 2019 and Thomas 2026 §6
+> are proposals; Thomas's self-report objection must be answered).
+> Residue recorded: Thomas 2026's two dropped high-salience candidates
+> appended to its `_work/` note; `references.bib`'s `publisher = {Center
+> for Open Science}` for pu_designing_2019 is correct OSF-deposit
+> metadata (no change). Legacy lint debt untouched:
+> `scripts/ab_plus/tests/test_audit_fixes.py` E741.
+>
 > **OPEN DECISIONS FOR THE PI (from the tail — now decided, see the
 > addendum above):**
 >
