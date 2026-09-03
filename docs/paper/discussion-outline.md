@@ -3,7 +3,10 @@
 > **Addendum 2026-09-03**: D.9's lit-scout gate is discharged by the
 > AB+ corpus; the recipe reframes to endorsement-with-citation and the
 > automation cell is staked (PI ruling). See the D.9 bullet "Gate
-> DISCHARGED". No DD decision reopened.
+> DISCHARGED". No DD decision reopened. Later the same day (S148) the
+> D.9 concept skeleton was written from the corpus:
+> `docs/paper/d9-drafting-brief-2026-09-03.md` (three length envelopes
+> pending D-5; naming inputs updated; seven rulings listed).
 >
 > **Status**: collaborative structure document, per the outline-first
 > contract (claude-obs 56: the contract re-arms at every major section
@@ -506,6 +509,13 @@ references must be verified when D.2 drafts, not assumed here.*
      (register schema: type, reason, timing — ours lacks reason and
      timing; "once results are known, preregistrations should not be
      updated").
+- **Concept skeleton written (S148, 2026-09-03)**:
+  `docs/paper/d9-drafting-brief-2026-09-03.md` — seven moves at
+  mechanism/instance/boundary with page anchors; three length envelopes
+  pending D-5 (the venue skeleton routes Seed 7 OUT); naming inputs
+  updated (Srivastava's common-noun usage settles occupancy; Gould's
+  grain is a continuum; "just-in-time" collides with Ross 2022's
+  pejorative); seven rulings needed before prose.
 
 ### D.10 (was D.7) — Future work
 
