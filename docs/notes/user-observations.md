@@ -1001,3 +1001,37 @@ citations as weaker evidence than my artefact citations.
   correction loop worked, but you may have observed that rapid
   interactive claims deserve visible hedging until anchored — your
   call whether that's an observation about Claude worth keeping.
+
+## S146–147 candidates (pending review, 2026-09-03) — silence never discards
+
+Drafted at handoff by a post-compaction instance: C4 reaches it via
+summary; C1–C3 are first-person.
+
+- **S146–147-C1 — rulings reported with rationale were delegated, then
+  generalised.** Two orchestrator judgement calls (Gerasimova key point
+  5 "complicates"; Trier's six-sentence positioning) were reported as
+  rule, reason, and what to check; you approved both in a sentence and
+  turned the second into a standing rule ("going longer when nuance
+  requires"). If the rationale-first shape is what made the calls
+  delegable, keep it for every judgement an orchestrator takes alone.
+- **S146–147-C2 — the three-part close-out produced a one-message
+  ruling on everything.** "Walk me through the rulings I should check,
+  findings worth attention, and open decisions" was answered in that
+  structure, and your reply ruled on all three sections at once, with
+  reasons and a recombined option of your own. If that structure is
+  why the reply was decision-dense, it is the end-of-batch report
+  template.
+- **S146–147-C3 — "let me know if I'm underestimating" got a
+  calibrated answer, and the estimate held.** You asked whether the
+  three decisions were bigger than they looked; the answer named one
+  genuinely hard part (caption-only tables, which turned out
+  undetectable from text) and said the rest was as expected, and that
+  is how it went. Data on whether Claude's effort estimates are worth
+  asking for.
+- **S146–147-C4 — the graceful pause and resume lost nothing.** "We've
+  nearly hit our 5-hour limit, can you pause gracefully?" → an exact
+  manifest census and a reconcile protocol; "please resume" → the
+  manifest matched disk and the run continued at the cap. If that is
+  what made a hard usage stop safe mid-batch, record it as the pattern
+  for long agent runs.
+
