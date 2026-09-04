@@ -31320,3 +31320,236 @@ consistency framing this screen's under-1 % per-pass variation sits
 beside); **Obs 445** (image preprocessing as the untouched axis —
 newly more attractive now that the image track is competitive rather
 than 0.055 behind).
+
+## Observation 448: Gemini 3.8 Flash ties the 3.7 stack in the verifier seat — the family ladder stops at 3.7, "newer" bought less thinking rather than more, and threshold insensitivity turns out to be a 3.7/3.8-generation property, not a 3.8 novelty (Session 148, 2026-09-04)
+
+**Provenance, and why the cheapest arm ran first.** A registered-by-card
+screen (`planning/gemini38-screen-2026-09-04.md`; expectations E1–E4
+committed at PI go) of Gemini 3.8 Flash, released 2026-09-02 at pricing
+identical to 3.7 ($0.75 in / $3.75 out per million, thinking billed as
+output, Flex at half) with thinking levels `low, medium, high` and no
+`minimal`. **Obs 444** located the 3.7 family gain in the **verifier
+seat**, so the card tested that seat first and at **zero proposer
+cost**: 3.8 was run as verifier over the *existing* 3.7 K = 5 union of
+**791 candidates** (`verify_adversarial-text`, T = 0.0, thinking `low`,
+n = 1), which makes the two verifier models a comparison on **identical
+candidates** rather than on separately-proposed sets. A 5-tile proposer
+probe gated the arm. Both models sit at their lowest thinking level, so
+the MINIMAL-versus-`low` confound that clouded 3 → 3.7 does not recur.
+The main run processed **790 of 791** (one 503 recovered by `run_pv.py
+cleanup`), consuming 1,415,680 input / 107,091 output / 60,434 thinking
+tokens, ≈ **$0.85 flex token-basis**. Every head-to-head is a paired
+round-robin tile-swap permutation (10,000 draws, seed 42, 487 tiles).
+
+| Cell (same 791-candidate union) | F1@20 m | Point | P | R | MCC |
+|---|---:|---|---:|---:|---:|
+| **3.8 verifier (Arm V)** | **0.9258** | (0.88, k5) | 0.9335 | 0.9182 | **0.8218** |
+| all-3.7 stack (swap37, committed) | **0.9265** | (0.80, k5) | 0.9254 | 0.9276 | 0.8078 |
+| carried Gemini 3 verifier (committed) | 0.9139 | (0.10, k5) | 0.8984 | 0.9299 | 0.7797 |
+
+**(a) E1 confirmed — a tie, and a tight one rather than an
+underpowered one.** Against the all-3.7 stack the 3.8 verifier reads
+**dF1 −0.0007 at p = 0.78** (421 detections against 429). The card's
+registered resolution caveat quotes the GS *screening* MDE80 of
+≈ 0.065, but that figure does not govern this contrast: because both
+arms score the same union, the paired permutation null SD is only
+**0.00379**, so the instrument here would resolve ≈ **0.011** at 80 %
+power (2.8 σ) and the observed difference is **0.18 σ**. This is
+therefore a genuine null — the two verifiers are interchangeable on
+these candidates — and not a difference hidden under a coarse
+instrument. E1 predicted exactly this and was right for its stated
+reason: 3.8 is built on 3.7, and its launch benchmarks are coding and
+agentic, none of them vision.
+
+**(b) The one open comparison, left open.** Against the carried
+Gemini 3 verifier the 3.8 verifier is **+0.0119 at p = 0.097** (null SD
+0.00708, so 1.68 σ) — nominally the same size as the 3.7 verifier's
+committed gain over the same incumbent, but **unresolved on this
+instrument**. It is recorded as unresolved rather than folded into the
+family gain: the resolved verifier-seat gain in this study remains the
+3.7 one (**Obs 441**, +0.0304 at p = 0.0105 against the anchor), and
+nothing here adds a second.
+
+**(c) Finding A — thinking volume ran the *opposite* way to the launch
+framing.** 3.8 was covered at launch as tuned to "work harder", and E3
+registered a bet that thinking at `low` would run **1.5–3× above** 3.7.
+Both measurements fell the other way or barely moved:
+
+| Seat | 3.8-low | 3.7-low | Ratio |
+|---|---:|---:|---:|
+| Verifier (per candidate) | **76** | 106 | **0.72×** |
+| Proposer probe (per tile) | **307** | 276 | 1.11× |
+
+In the verifier seat 3.8 thinks **28 % less** than 3.7 on identical
+candidates; in the proposer seat it thinks 11 % more. **E3 is falsified,
+and in the verifier seat it is falsified in the reverse direction.**
+The generalisable caution for the paper's cost section is that a
+vendor's "works harder" positioning describes the *default* level and
+its target workloads, and predicts nothing about token volume at the
+*lowest* level on an out-of-domain task — which is where a
+cost-controlled study actually operates.
+
+**(d) Finding B, corrected against the sweeps: threshold insensitivity
+is a 3.7/3.8-generation property, not a 3.8 novelty.** The card records
+the 3.8 verifier's F1 surface as flat and contrasts it with a "sharp"
+3.7 optimum. Re-reading the three committed sweeps, **the first half of
+that is right at a looser tolerance and the contrast is wrong**. Over
+the nine k = 5 lattice points spanning prob_t 0.20–0.92:
+
+| Verifier | Best | Worst in 0.20–0.92 | Spread | Argmax |
+|---|---:|---:|---:|---|
+| 3.8 (Arm V) | 0.9258 | 0.9236 | **0.0022** | 0.88 |
+| 3.7 (swap37) | 0.9265 | 0.9243 | **0.0022** | 0.80 |
+| carried Gemini 3 | 0.9139 | 0.8446 | **0.0693** | 0.10 |
+
+The 3.8 spread is **0.0022, not the ≤ 0.001 the card states** (the
+card's own quoted 0.9236 at 3.7's 0.85 is already 0.0022 below its
+0.9258 best, so the claim is internally inconsistent). More
+importantly, **the 3.7 verifier is flat over the same band to the same
+0.0022**: the sharply-peaked surface belongs to the **carried Gemini 3
+verifier**, whose penalty across that band is **31× larger**. The
+correct statement is that **both 3.7-generation verifiers are
+flat-topped and high-calibrated, while the Gemini 3 verifier is
+narrowly peaked and low-calibrated**. This *refines* rather than
+contradicts **Obs 441**: what fails to transfer across verifier models
+is the **argmax location** and the underlying probability calibration
+(mean `mound_probability` 0.687 for 3.7 against the carried verifier's
+0.587), but the **cost** of carrying a stale threshold is wildly
+asymmetric — moving a threshold between 3.7 and 3.8 costs at most
+0.0022, whereas carrying a 3.7/3.8 operating point (0.80–0.88) onto the
+Gemini 3 verifier would cost ≈ 0.069. Obs 441's re-sweep rule stands
+unchanged and remains the safe default; what is new is that within a
+model generation the rule is cheap insurance rather than load-bearing.
+Methodological note: the scorer sweeps only *achievable* operating
+points (`scripts/grid_verifier_analysis.py`, `thresholds = sorted({0.0}
+| distinct observed probabilities)`), so the three lattices differ
+(19 / 19 / 15 points) and the comparison above is of **surface shape
+over a common band**, not of matched grid points.
+
+**(e) F1 and tile-MCC disagree on the ordering, and the ladder is not
+monotone in MCC.** The 3.8 verifier loses on F1 by 0.0007 and **wins on
+tile-MCC by +0.0140** (0.8218 against 0.8078) — the two headline
+metrics rank the arms oppositely, which is the clearest available
+argument for the standing rule that MCC is reported beside F1 rather
+than instead of it. Within Arm V the consensus ladder runs **N = 1
+0.8874 (0.92, k1, union 590) → N = 3 0.9173 (0.88, k3, union 697) →
+N = 5 0.9258** on F1, but tile-MCC runs the other way, **0.8331 →
+0.8293 → 0.8218**: deeper consensus buys detection-level F1 while
+slightly *costing* tile-level discrimination. Any single-number
+comparison off this arm should say which metric it is using.
+
+**(f) The PI's STOP ruling, and what it costs the record.** With E1 a
+tie and the probe showing no vision-relevant change, the PI ruled
+**STOP after Arm V** on 2026-09-04: **Arm P** (3.8 proposer K = 5,
+≈ $9.6 with its carried verifier) and **Arm S** (the all-3.8 stack,
+≈ $1) were **not run**. Total screen spend was **≈ $0.85 flex
+token-basis** against an ≈ $11 all-in projection. The deliberate
+residue is that **E2 is untested** — the 3.8 proposer seat has never
+been measured — so the family record's 3.8 row is a *verifier-seat*
+row only, and any future claim about 3.8 as a proposer needs Arm P.
+The design lesson is the one the card was built around and is worth
+carrying forward: **when a prior campaign has localised an effect to
+one seat, screen that seat first over an existing union**; it bought
+a resolved answer for 8 % of the projected budget.
+
+**(g) Runner gotchas, and a cost-estimator fix with retrospective
+reach.** Four behaviours were recorded on the card: `run_pv.py verify`
+stamps `cost_basis: list` with `discount 1.0` **even under
+`--service-tier flex`** (the verify path does not apply the discount
+the proposer path does, so the meta's $1.69 is list against ≈ $0.85
+billed); the verify path's **`parse_failures` equals `retries_total`**
+(both 803, all server errors, with zero rate-limit retries), so that
+field is not a parse-quality signal on this path; `run_pv.py cleanup`
+**still overwrites `run.meta.json`** — the same loss that cost the
+3.7 swap its meta, now mitigated by `.pre-cleanup-*.backup` copies and
+the preserved `run.meta.main-2026-09-04.json` this entry reads; and
+503 "high demand" storms hit at **≈ 04:00 UTC**, outside the assumed
+13:00–19:00 flex-storm window. Separately, a pre-launch fix
+(`73658c579`) added `gemini-3.7-flash` and `gemini-3.8-flash` pricing
+keys and now bills Gemini thinking tokens at the output rate. **Its
+retrospective implication is the load-bearing one**: before that
+commit, 3.7 runs fell through to the `default` 0.50/3.00 rates *and
+excluded thinking entirely*, so **every `cost_estimate` written for a
+thinking-enabled run before 2026-09-04 is an under-statement** — by
+roughly 40 % on the 3.7 screen metas. Cost figures quoted from older
+metas must be recomputed from token counts, not read off the field.
+
+**(h) What the paper gets.** One row and one caution. The model-family
+record now reads **3 → 3.5 (won in no role, Obs 359) → 3.7 (the first and
+only resolved family gain, in the verifier seat, Obs 441/444) → 3.8
+(tie)**, which is a more useful shape than a monotone ladder: it says
+the study's headline stack is **not** simply tracking whichever model
+is newest, and that the 3.7 gain was a genuine step rather than a point
+on a trend that any subsequent release would extend. The caution is
+that **"newer" did not mean "more thinking" at the lowest level** —
+useful to state plainly, because the cost projections in this study are
+built on per-call thinking volume and a reader planning a replication
+at a later model version cannot extrapolate it from release notes.
+
+Sources: `planning/gemini38-screen-2026-09-04.md` (read 2026-09-04:
+the design and the verifier-seat-first rationale; E1–E4 as registered;
+3.8 status, pricing, and thinking levels fetched from the Gemini API
+documentation dated 2026-09-03; the § Results block, the four gotchas,
+and the PI's STOP ruling — **and the two Finding-B figures corrected in
+(d)**, namely the "within 0.001" flatness claim and the "3.7 optimum
+was sharp" contrast, both of which the committed sweeps contradict);
+`results/gemini38-screen-2026-09-04/armV/analysis.json` (verified
+2026-09-04: `image_best` f1 0.9257950530035335 at prob_t 0.88 /
+min_votes 5, P 0.9334917 / R 0.9182243 / MCC 0.8218228, 421 detections;
+anchor gate 0.8961352657 against registered 0.8961; ladder N = 1
+0.8873874 at (0.92, k1) with union 590 and MCC 0.8330795, N = 3
+0.9173458 at (0.88, k3) with union 697 and MCC 0.8293190, N = 5 union
+791); `results/gemini38-screen-2026-09-04/armV/pair_test.json` (verified
+2026-09-04: 10,000 permutations, seed 42, 487 tiles on the shared
+791-candidate union; all-3.7 pair observed_diff −0.000693 at p 0.7769
+with null_std 0.00379; carried-G3 pair observed_diff +0.011903 at
+p 0.0969 with null_std 0.007083; committed incumbents 0.9265 and
+0.9139); `results/gemini38-screen-2026-09-04/armV/sweep_20m.csv` and
+`results/gemini37-screen-2026-08-28/{swap37/,}sweep_20m.csv` (all three
+recomputed 2026-09-04 — the k = 5 spreads over prob_t 0.20–0.92 in (d):
+3.8 best 0.925795 / worst 0.923619, 3.7 best 0.926488 / worst 0.924300,
+carried-G3 best 0.913892 / worst 0.844595, on 19 / 19 / 15-point
+achievable lattices);
+`outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/run.meta.main-2026-09-04.json`
+(verified 2026-09-04: model `gemini-3.8-flash`, thinking_level `low`,
+temperature 0.0; items_processed 790 / items_failed 1 of an expected
+791; retries_total 803 all server-error with retries_rate_limit 0;
+parse_failures 803; usage 1,415,680 in / 107,091 out / 60,434 thinking
+→ **76.5 thinking tokens per candidate** and 2,004 total tokens per
+candidate; `cost_estimate` total $1.689979 stamped `cost_basis: list`
+with `discount 1.0`);
+`outputs/gemini38-screen-2026-09-04/probe-gate-1/detections-detect_brief-text-3.8-flash-2026-09-04.meta.json`
+(verified 2026-09-04: 5/5 processed, model and thinking stamped, usage
+7,510 in / 403 out / 1,534 thinking → **306.8 thinking tokens per
+tile**); the five `run_1..run_5` metas under
+`outputs/gemini37-screen-2026-08-28/g384_ov192_g37/` (recomputed
+2026-09-04: 6,966 tiles and 1,919,865 thinking tokens → **275.6 per
+tile** for 3.7-low as proposer);
+`planning/gemini37-screen-2026-08-28.md` (verified 2026-09-04: the
+all-3.7 swap at 0.9265 (0.80, k5); the 3.7 verifier's otherwise-lost
+main-run profile — 789 processed / 2 failed, 1,413,888 in / 98,574 out
+/ 83,728 thinking → **106.1 thinking tokens per candidate** — recorded
+in the changelog *because* `cleanup` had overwritten the meta);
+`results/gemini37-screen-2026-08-28/swap37/analysis.json` and
+`results/gemini37-screen-2026-08-28/analysis.json` (verified
+2026-09-04: 0.9264877 at (0.80, k5) with MCC 0.8077722 and 429
+detections; 0.9138921 at (0.10, k5) with MCC 0.7796958 and 443
+detections); `scripts/grid_verifier_analysis.py:298` (verified
+2026-09-04: `thresholds = sorted({0.0} | {float(v) for v in
+gdf["mound_probability"]})` — the achievable-lattice construction
+behind (d)'s caveat); `scripts/lib_llm_metadata.py:1054-1055,1181`
+and commit `73658c579` (verified 2026-09-04: the two new pricing keys
+at 0.75/3.75, `thinking_tokens_billed_as_output`, and the commit
+message's "under-state cost by roughly 40 %"). Screen commits: card
+`5e9782adc` (scoped), `75221a5a4` (probe + Arm V results), `a8ffe11e2`
+(CLOSED, PI stop); data `f04eb6f58`; pair-test script `21a34339f`.
+Related: **Obs 444** (the complete proposer × verifier 2×2 that
+located the family gain in the verifier seat — **the finding that set
+this screen's arm order and made a $0.85 answer possible**);
+**Obs 441** (the 3.7 screen-and-swap arc: the first GS-resolvable
+family gain, and the model-dependent verifier calibration whose
+transfer rule (d) refines rather than overturns); **Obs 447** (the
+modality gap eliminated at 3.7 — the other 3.7-family screen, and the
+entry that dates modality claims to a model generation exactly as (h)
+now dates thinking-volume claims); **Obs 359** (Flash 3.5 "wins in no
+role" — the non-gain rung of the family ladder in (h)).
