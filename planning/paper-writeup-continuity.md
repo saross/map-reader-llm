@@ -168,7 +168,23 @@ project state.
 > raw session in the personal-assistant `claude-phase1-test` worktree
 > (`~/.cache/cc-archive-drift-gate`); the rpi-server job collector
 > failed 2026-08-31 and the log path the hook names does not exist
-> locally.
+> locally. (5) **Gemini 3.8 Flash screen (2026-09-04, PI-directed;
+> card `planning/gemini38-screen-2026-09-04.md`) — CLOSED as a
+> verifier-seat TIE.** Probe (5 tiles) + Arm V only: 3.8 as verifier
+> over the 3.7 K=5 union (791) reaches F1@20 0.9258 at (0.88, k5),
+> MCC 0.8218, vs the all-3.7 stack 0.9265 — dF1 −0.0007, p = 0.78;
+> vs carried-G3 0.9139 +0.0119, p = 0.097. Findings: 3.8 thinks LESS
+> at `low` (76 vs 106 t/cand as verifier; 1.1× as proposer) and its
+> prob_t sweep is flat (0.20–0.92 within 0.001) where 3.7's optimum
+> was sharp. **PI ruled STOP**: Arms P and S not run; spend ≈ $0.85.
+> Side effects: cost estimator now prices 3.7/3.8 and bills thinking
+> as output (`73658c579`); pair-test script + guard test
+> (`21a34339f`); data `f04eb6f58`; results
+> `results/gemini38-screen-2026-09-04/armV/`. Runner gotchas on the
+> card (verify path prices at list with no flex discount;
+> parse_failures = retries on the verify path; cleanup still
+> overwrites run.meta.json, backups kept). Register rows for the 3.8
+> cell join the pending 3.7 proposal.
 >
 > **OPEN DECISIONS FOR THE PI (from the tail — now decided, see the
 > addendum above):**

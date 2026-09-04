@@ -1,8 +1,8 @@
 # Gemini 3.8 Flash text-only screen: proposer seat and verifier seat, probe-first
 
-> **Last revised**: 2026-09-04 (later — probe and Arm V EXECUTED under
-> PI approval; Arm V ties the all-3.7 stack, E1 as predicted; Arms P and
-> S await the PI's decision). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-04 (CLOSED — probe and Arm V executed under
+> PI approval; Arm V ties the all-3.7 stack, E1 as predicted; PI ruled
+> STOP, Arms P and S not run). See [§ Changelog](#changelog).
 
 **Question**: does Gemini 3.8 Flash (released 2 September 2026, model id
 `gemini-3.8-flash`) move the Gold Standard (GS) text-only optimum above
@@ -201,10 +201,12 @@ copies, and the main-run meta is also kept as
 `run.meta.main-2026-09-04.json`. (4) 503 "high demand" storms hit at
 ~04:00 UTC, outside the assumed 13:00–19:00 window.
 
-**Decision pending (PI)**: Arm P (+ ≈ $9.6 with its carried verifier)
-and Arm S (≈ $1) would complete the family record; on this evidence
-both are expected ties, and the paper's 3.7 arc already carries the
-verifier-seat finding.
+**PI ruling 2026-09-04: STOP after Arm V.** Arm P (+ ≈ $9.6 with its
+carried verifier) and Arm S (≈ $1) are not run: on this evidence both
+are expected ties, and the paper's 3.7 arc already carries the
+verifier-seat finding. The screen closes as a tie in the verifier seat
+with two recorded findings (thinking volume; the flat sweep surface).
+Total spend: probe + Arm V ≈ $0.85 flex token-basis.
 
 ## Escalation (not approved; for the record)
 
@@ -221,7 +223,8 @@ Arm V (same day). Pricing source confirmed from the Google blog. Cost
 estimator fixed first (`73658c579`). Probe passed the gate; Arm V ran
 (790/791 + one cleanup), scored and pair-tested: a tie with the all-3.7
 stack (dF1 −0.0007, p = 0.78). Data commit `f04eb6f58`; pair-test
-script `21a34339f`. Arms P and S left for the PI's decision.
+script `21a34339f`. PI ruled STOP the same day: Arms P and S not run;
+the screen is closed as a verifier-seat tie.
 
 ### 2026-09-04 — Original publication
 
