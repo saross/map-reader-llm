@@ -1044,6 +1044,15 @@ PRICING = {
         "gemini-2.5-flash": {"input": 0.30, "output": 2.50},
         "gemini-2.5-pro": {"input": 1.25, "output": 10.00},
         "gemini-3-flash-preview": {"input": 0.50, "output": 3.00},
+        # 3.7 and 3.8 Flash: standard tier, verified 2026-09-04 against
+        # ai.google.dev/gemini-api/docs/pricing (page dated 2026-09-03)
+        # and blog.google (3.8 launch). Introductory rates valid through
+        # 2026-12-31; from 2027-01-01 both double to 1.50 / 7.50. Thinking
+        # tokens are billed at the output rate (see estimate_cost). Without
+        # these keys the fuzzy matcher fell through to ``default`` and the
+        # 3.7 screen metas were priced at Gemini 3 rates.
+        "gemini-3.7-flash": {"input": 0.75, "output": 3.75},
+        "gemini-3.8-flash": {"input": 0.75, "output": 3.75},
         "gemini-3.1-flash-lite": {"input": 0.25, "output": 1.50},
         "gemini-3-pro": {"input": 2.50, "output": 10.00},
         "gemini-3.1-pro": {"input": 2.00, "output": 12.00},
@@ -1106,6 +1115,16 @@ def estimate_cost(
     The ``cost_basis`` field distinguishes them: its absence means the older,
     ambiguous convention.
 
+    Thinking tokens (Gemini ``thoughts_token_count``) are billed at the
+    output rate but are NOT included in ``candidates_token_count``, which is
+    what ``total_output_tokens`` records — so they are added to the billable
+    output here (change of 2026-09-04; metadata written before that date
+    excludes them and under-states thinking runs, e.g. the Gemini 3.7 screen
+    by roughly 40 %). OpenAI ``reasoning_tokens`` are already inside
+    ``completion_tokens`` and are deliberately not added again. The
+    ``pricing_used`` block records the thinking tokens billed so either
+    convention can be reconciled.
+
     Args:
         usage: Aggregated token usage stats.
         provider: The LLM provider.
@@ -1135,8 +1154,12 @@ def estimate_cost(
                 rates = model_rates
                 best_match_len = len(model_key)
 
+    # Gemini thinking tokens are billed as output but sit outside
+    # total_output_tokens (see docstring); OpenAI reasoning tokens are
+    # already counted inside completion_tokens, so only thoughts are added.
+    billable_output_tokens = usage.total_output_tokens + usage.total_thoughts_tokens
     list_input_cost = (usage.total_input_tokens / 1_000_000) * rates["input"]
-    list_output_cost = (usage.total_output_tokens / 1_000_000) * rates["output"]
+    list_output_cost = (billable_output_tokens / 1_000_000) * rates["output"]
     input_cost = list_input_cost * discount
     output_cost = list_output_cost * discount
 
@@ -1155,6 +1178,7 @@ def estimate_cost(
             "model": model,
             "input_per_1m": rates["input"],
             "output_per_1m": rates["output"],
+            "thinking_tokens_billed_as_output": usage.total_thoughts_tokens,
             "discount": discount,
             "discount_reason": discount_reason or (
                 "no discount applied" if discount == 1.0 else "unspecified"

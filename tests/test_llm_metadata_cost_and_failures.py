@@ -125,3 +125,32 @@ def test_non_parse_failures_do_not_inflate_the_parse_counter():
     assert tracker.stats.items_failed == 2
     assert tracker.stats.parse_failures == 0
     assert tracker.stats.failed_items[1]["category"] is None
+
+
+@pytest.mark.tier1
+def test_gemini_38_flash_resolves_to_its_own_rates():
+    """The 3.7/3.8 Flash keys must match, not fall through to ``default``.
+
+    Before 2026-09-04 ``gemini-3.7-flash`` matched no key (the only 3.x
+    Flash key was ``gemini-3-flash-preview``) and was priced at the default
+    0.50 / 3.00, which is what the 3.7 screen metas record.
+    """
+    cost = estimate_cost(_usage(), "google_gemini", "gemini-3.8-flash")
+    assert cost["pricing_used"]["input_per_1m"] == pytest.approx(0.75)
+    assert cost["pricing_used"]["output_per_1m"] == pytest.approx(3.75)
+    assert cost["list_total_cost_usd"] == pytest.approx(4.50)  # 0.75 in + 3.75 out
+
+
+@pytest.mark.tier1
+def test_thinking_tokens_are_billed_at_the_output_rate():
+    """Gemini thoughts tokens sit outside ``total_output_tokens`` but are billed
+    as output; the estimator must add them, and record how many it added."""
+    usage = _usage(input_tokens=0, output_tokens=1_000_000)
+    usage.total_thoughts_tokens = 500_000
+    cost = estimate_cost(usage, "google_gemini", "gemini-3.8-flash")
+    assert cost["list_output_cost_usd"] == pytest.approx(1.5 * 3.75)
+    assert cost["pricing_used"]["thinking_tokens_billed_as_output"] == 500_000
+    # And a run with no thinking is unchanged by the rule.
+    plain = estimate_cost(_usage(), "google_gemini", "gemini-3-flash-preview")
+    assert plain["total_cost_usd"] == pytest.approx(3.50)
+    assert plain["pricing_used"]["thinking_tokens_billed_as_output"] == 0
