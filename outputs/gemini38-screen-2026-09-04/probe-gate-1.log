@@ -1,0 +1,42 @@
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3.8-flash
+Overriding Config Temperature (1.0) with CLI Argument: 0.7
+Overriding Config Thinking Level (minimal) with CLI Argument: low
+Loaded Version: detect_brief-text
+Model: gemini-3.8-flash
+Workers: 5
+System Instruction: detect_brief-text.md
+Text-only modality: skipping example images
+Thinking level: low
+Service tier: flex
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/gemini38-screen-2026-09-04/probe-gate-1/detections-detect_brief-text-3.8-flash-2026-09-04.geojson
+Metadata: outputs/gemini38-screen-2026-09-04/probe-gate-1/detections-detect_brief-text-3.8-flash-2026-09-04.meta.json
+Using Manifest: inputs/image-b-gs-2026-08-28/probe_manifest.json
+Manifest loaded. Found 5 of 5 tiles (5 remaining to process).
+Tile size: 384 (measured from tiles; config default was 512)
+Processing 5 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=1500
+Thread pool size: 60 (governor active)
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:05<00:20,  5.25s/it] 40%|████      | 2/5 [00:06<00:07,  2.63s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=5 429s=0 avg_lat=5.6s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=7 429s=0 avg_lat=5.6s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=9 429s=0 avg_lat=5.6s
+ 60%|██████    | 3/5 [02:07<01:53, 56.82s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=10 429s=0 avg_lat=5.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=11 429s=0 avg_lat=5.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=12 429s=0 avg_lat=5.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=13 429s=0 avg_lat=5.1s
+ 80%|████████  | 4/5 [08:20<03:01, 181.54s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=15 429s=0 avg_lat=5.2s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=16 429s=0 avg_lat=5.2s
+100%|██████████| 5/5 [10:33<00:00, 164.19s/it]100%|██████████| 5/5 [10:33<00:00, 126.70s/it]
+
+Finished. Saved to outputs/gemini38-screen-2026-09-04/probe-gate-1/detections-detect_brief-text-3.8-flash-2026-09-04.geojson
+Tile manifest: outputs/gemini38-screen-2026-09-04/probe-gate-1/detections-detect_brief-text-3.8-flash-2026-09-04.tiles.json
+Metadata saved to outputs/gemini38-screen-2026-09-04/probe-gate-1/detections-detect_brief-text-3.8-flash-2026-09-04.meta.json
+Tiles processed: 5
+Tiles failed: 0
+Total detections: 6
+Tokens used: 9,447
+Estimated cost: $0.0064
