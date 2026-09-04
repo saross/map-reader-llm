@@ -185,10 +185,16 @@ Pair tests (`pair_test.json`; round-robin tile-swap, 10,000, seed 42,
 direction in the verifier seat (3.8 thinks less at `low`) and only 1.1×
 in the proposer probe. E4 partly: the argmax sits at 0.88, not at 3.7's
 0.80/0.85 or G3's 0.15/0.20, but the surface is flat — every k=5 point
-from prob_t 0.20 to 0.92 lies within 0.001 of the best (0.9251 at 0.20;
-0.9236 at 3.7's 0.85) — so the 3.8 verifier is threshold-insensitive on
-this union where the 3.7 verifier's optimum was sharp. E2 untested
-(Arm P not run).
+from prob_t 0.20 to 0.92 lies within 0.0022 of the best (0.9251 at
+0.20; 0.9236 at 3.7's 0.85). **Correction (same day, from the Obs 448
+source check)**: the 3.7 verifier is equally flat on this union (k=5,
+prob_t 0.20–0.92: 0.9243–0.9265, spread 0.0022, `swap37/sweep_20m.csv`);
+the sharply peaked surface belongs to the carried Gemini 3 verifier
+(0.8446–0.8942 over the same band, spread 0.0497,
+`results/gemini37-screen-2026-08-28/sweep_20m.csv`). Threshold
+insensitivity is therefore a 3.7/3.8-generation property, not a 3.8
+novelty; the earlier "where the 3.7 verifier's optimum was sharp" was
+wrong. E2 untested (Arm P not run).
 
 **Gotchas recorded**: (1) `run_pv.py verify` stamps `cost_basis: list`
 with `discount 1.0` even under `--service-tier flex` — the verify path
@@ -215,6 +221,18 @@ If E1/E2 informative outcomes fire: passes 6–10 (+$8.5 expected) and a
 rates, K=5 B geometry, carried points committed before scoring).
 
 ## Changelog
+
+### 2026-09-04 (later still) — Finding B corrected
+
+The obs-writer's source check for Obs 448 (`463c931b3`) caught two
+errors in Finding B as first written: the 3.8 sweep spread over prob_t
+0.20–0.92 is 0.0022, not 0.001, and the 3.7 verifier is equally flat
+(0.0022) — the sharp surface is the carried Gemini 3 verifier's
+(0.0497). Verdict text corrected in place; the finding now reads as a
+generation property refining Obs 441, not a 3.8 novelty. Obs 448 also
+records that tile-MCC ranks the arms the other way (3.8 +0.0140 on
+MCC while −0.0007 on F1) and that Arm V's ladder MCC falls as N rises
+(0.8331 → 0.8293 → 0.8218).
 
 ### 2026-09-04 (later) — Probe and Arm V executed
 

@@ -175,8 +175,12 @@ project state.
 > MCC 0.8218, vs the all-3.7 stack 0.9265 — dF1 −0.0007, p = 0.78;
 > vs carried-G3 0.9139 +0.0119, p = 0.097. Findings: 3.8 thinks LESS
 > at `low` (76 vs 106 t/cand as verifier; 1.1× as proposer) and its
-> prob_t sweep is flat (0.20–0.92 within 0.001) where 3.7's optimum
-> was sharp. **PI ruled STOP**: Arms P and S not run; spend ≈ $0.85.
+> prob_t sweep is flat (k=5, 0.20–0.92 within 0.0022) — as is the 3.7
+> verifier's (0.0022); the sharp surface is the carried Gemini 3
+> verifier's (0.0497), so this is a generation property, not a 3.8
+> novelty (corrected S148 after the Obs 448 source check; MCC ranks the
+> arms the other way, 3.8 +0.0140). **PI ruled STOP**: Arms P and S
+> not run; spend ≈ $0.85. Obs 448 (`463c931b3`).
 > Side effects: cost estimator now prices 3.7/3.8 and bills thinking
 > as output (`73658c579`); pair-test script + guard test
 > (`21a34339f`); data `f04eb6f58`; results
