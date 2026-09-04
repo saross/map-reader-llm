@@ -1,8 +1,8 @@
 # Gemini 3.8 Flash text-only screen: proposer seat and verifier seat, probe-first
 
-> **Last revised**: 2026-09-04 (original publication — scoped and costed,
-> NOT approved; no API call has been made). See
-> [§ Changelog](#changelog).
+> **Last revised**: 2026-09-04 (later — probe and Arm V EXECUTED under
+> PI approval; Arm V ties the all-3.7 stack, E1 as predicted; Arms P and
+> S await the PI's decision). See [§ Changelog](#changelog).
 
 **Question**: does Gemini 3.8 Flash (released 2 September 2026, model id
 `gemini-3.8-flash`) move the Gold Standard (GS) text-only optimum above
@@ -140,6 +140,72 @@ Schedule around the flex-storm window (~13:00–19:00 UTC).
    verdicts, PI-signed, alongside the 3.7 rows still pending in
    `planning/gemini37-register-rows-proposal-2026-09-03.md`.
 
+## Results — probe and Arm V (2026-09-04, PI-approved 2026-09-04)
+
+**Pricing source confirmed** by the PI's pointer
+(`blog.google/.../3-8-flash-and-3-8-flash-cyber/`): $0.75 / $3.75 per
+million tokens through 2026-12-31, then $1.50 / $7.50 — matches the API
+pricing page used above; the blog carries no Flex or thinking-billing
+detail, which the API page supplies.
+
+**Pre-launch fixes landed first**: `scripts/lib_llm_metadata.py` gained
+`gemini-3.7-flash` and `gemini-3.8-flash` pricing keys and now bills
+Gemini thinking tokens at the output rate (commit `73658c579`, two
+tier-1 tests); dry-run on sapphire passed (5/5 tiles, 384 px measured,
+text-only, both overrides applied); `/audit-config` delta: READY.
+
+**Probe** (`outputs/gemini38-screen-2026-09-04/probe-gate-1/`): 5/5
+success, model and thinking stamped `gemini-3.8-flash` / `low`,
+instruction hash `e169b723…` and library hash `8580ecb2…` identical to
+the 3.7 run_1 meta; per tile input 1,502 / output 81 / thinking 307
+tokens (3.7-low: 1,497 / 76 / 275); one tile emitted zero thinking.
+Implied proposer K=5 ≈ $9.0 token-basis; gate passed; the PI's
+condition for Arm V (no surprises, < $25) met.
+
+**Arm V** (`outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/`,
+scored to `results/gemini38-screen-2026-09-04/armV/`): 790/791 in the
+main run (39 min at 30 workers; 803 server-error retries, 0 rate-limit),
+one 503 recovered by `run_pv.py cleanup` at standard tier. Tokens
+1,415,680 in / 107,091 out / 60,434 thinking — **76 thinking tokens per
+candidate against the 3.7 verifier's 106**; ≈ $0.85 flex token-basis.
+Scorer: anchor gate 0.8961 OK, union 791 joined.
+
+| Cell (same 791-candidate union) | F1@20 | P | R | MCC | point |
+|---|---:|---:|---:|---:|---|
+| **3.8 verifier (Arm V)** | **0.9258** | 0.9335 | 0.9182 | 0.8218 | (0.88, k5) |
+| all-3.7 stack (swap37) | 0.9265 | 0.9254 | 0.9276 | 0.8078 | (0.80/0.85 tie, k5) |
+| carried Gemini 3 verifier (screen) | 0.9139 | — | — | — | (0.10, k5) |
+
+Ladder: N=1 0.8874 (0.92, k1), N=3 0.9173 (0.88, k3), N=5 0.9258.
+Pair tests (`pair_test.json`; round-robin tile-swap, 10,000, seed 42,
+487 tiles): 3.8 vs all-3.7 **dF1 −0.0007, p = 0.78**; 3.8 vs carried-G3
++0.0119, p = 0.097.
+
+**Verdicts**: E1 tie — AS PREDICTED. E3 FALSIFIED in the opposite
+direction in the verifier seat (3.8 thinks less at `low`) and only 1.1×
+in the proposer probe. E4 partly: the argmax sits at 0.88, not at 3.7's
+0.80/0.85 or G3's 0.15/0.20, but the surface is flat — every k=5 point
+from prob_t 0.20 to 0.92 lies within 0.001 of the best (0.9251 at 0.20;
+0.9236 at 3.7's 0.85) — so the 3.8 verifier is threshold-insensitive on
+this union where the 3.7 verifier's optimum was sharp. E2 untested
+(Arm P not run).
+
+**Gotchas recorded**: (1) `run_pv.py verify` stamps `cost_basis: list`
+with `discount 1.0` even under `--service-tier flex` — the verify path
+does not apply the flex discount that the proposer path does; the
+$1.69 in the meta is list, ≈ $0.85 billed. (2) The verify meta's
+`parse_failures` (803) equals `retries_total`: the verify path counts
+each retried server error as a parse failure. (3) `cleanup` overwrote
+`run.meta.json` again; the runner now writes `.pre-cleanup-*.backup`
+copies, and the main-run meta is also kept as
+`run.meta.main-2026-09-04.json`. (4) 503 "high demand" storms hit at
+~04:00 UTC, outside the assumed 13:00–19:00 window.
+
+**Decision pending (PI)**: Arm P (+ ≈ $9.6 with its carried verifier)
+and Arm S (≈ $1) would complete the family record; on this evidence
+both are expected ties, and the paper's 3.7 arc already carries the
+verifier-seat finding.
+
 ## Escalation (not approved; for the record)
 
 If E1/E2 informative outcomes fire: passes 6–10 (+$8.5 expected) and a
@@ -147,6 +213,15 @@ If E1/E2 informative outcomes fire: passes 6–10 (+$8.5 expected) and a
 rates, K=5 B geometry, carried points committed before scoring).
 
 ## Changelog
+
+### 2026-09-04 (later) — Probe and Arm V executed
+
+PI approved the probe and, conditional on no surprises under $25,
+Arm V (same day). Pricing source confirmed from the Google blog. Cost
+estimator fixed first (`73658c579`). Probe passed the gate; Arm V ran
+(790/791 + one cleanup), scored and pair-tested: a tie with the all-3.7
+stack (dF1 −0.0007, p = 0.78). Data commit `f04eb6f58`; pair-test
+script `21a34339f`. Arms P and S left for the PI's decision.
 
 ### 2026-09-04 — Original publication
 
