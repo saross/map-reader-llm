@@ -22,6 +22,11 @@ Interaction (keyboard shortcuts via the battle-tested handler from
   otherwise the last added mark (the marking app's mechanism).
 - ``s`` — skip (decide later; skipped tiles resurface at the end).
 - ``b`` — back one tile (re-opens it for editing).
+- ``o`` — cluster-audit mode only: hide/show the yellow known-mound
+  overlay so the symbol beneath can be inspected. To flag a KNOWN
+  mound as a ground-truth error, add a mark on it with the symbol
+  "Known (yellow) mound is NOT a mound — GT error"; adjudication will
+  class it known-in-GT and the symbol carries the flag.
 
 Output (``--output``, default
 ``results/empty-tile-audit/verdicts.csv``): one row per no-mounds
@@ -67,6 +72,7 @@ SYMBOLS = (
     "Hairy black diamond with a dot inside",
     "Hairy black triangle with a dot inside",
     "Hairy black square with a dot inside",
+    "Known (yellow) mound is NOT a mound — GT error",
     "Other / unsure (note below)",
 )
 
@@ -341,10 +347,12 @@ def main() -> None:
     st.markdown(
         f"**Tile {cursor + 1} / {len(manifest)}** ({n_done} saved) · "
         f"`{row.tile_name}` · {tier_note} · 10 % boundary at {n10}")
+    show_overlay = st.session_state.get("show_overlay", True)
     if overlay:
         n_known = len(overlay.get(row.tile_name, []))
-        st.caption(f"Cluster-audit mode: {n_known} known mound(s) shown "
-                   "in YELLOW — mark only additional, unrecorded symbols; "
+        state = "shown in YELLOW" if show_overlay else "HIDDEN (o to show)"
+        st.caption(f"Cluster-audit mode: {n_known} known mound(s) {state} "
+                   "— mark only additional, unrecorded symbols; "
                    "n = no additional mounds.")
     if st.session_state.get("prior_verdict"):
         st.info(f"Previously saved: **{st.session_state.prior_verdict}** "
@@ -363,8 +371,9 @@ def main() -> None:
         click = streamlit_image_coordinates(
             annotated_image(img, st.session_state.marks,
                             st.session_state.get("pending_click"),
-                            overlay.get(row.tile_name)),
-            key=f"tile_{cursor}_{st.session_state.get('nudge_epoch', 0)}",
+                            overlay.get(row.tile_name) if show_overlay else None),
+            key=f"tile_{cursor}_{st.session_state.get('nudge_epoch', 0)}"
+                f"_{int(show_overlay)}",
         )
         # The component re-reports its last click every rerun; only a NEW
         # raw position counts (same guard as mark_mound_centres.py).
@@ -395,6 +404,15 @@ def main() -> None:
                      disabled=not st.session_state.marks):
             st.session_state.marks.pop()
             st.rerun()
+        if overlay:
+            # Hide the yellow circles to inspect the symbol beneath; the
+            # image key carries the state so the click component redraws
+            # without treating the redraw as a stale click re-report.
+            label = "o: hide overlay" if show_overlay else "o: show overlay"
+            if st.button(label):
+                st.session_state.show_overlay = not show_overlay
+                st.session_state.last_click = None
+                st.rerun()
 
         # Nudge (i/j/k/l): pending click if staged, else the last
         # added mark. The nudge_epoch in the image key forces the
