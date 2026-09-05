@@ -1,0 +1,421 @@
+{
+  "generated": "2026-09-05",
+  "protocol": "planning/student-baseline-2026-08-31.md \u00a7 5b",
+  "radius_m": 50.0,
+  "reviewed_tiles": 500,
+  "reviewed_by_tier": {
+    "10pct": 470,
+    "20pct": 30
+  },
+  "marks": 9,
+  "classes": {
+    "true-double-miss": 5,
+    "known-in-GT": 4
+  },
+  "frame_empty_tiles": 4676,
+  "gt_points": 5161,
+  "reference_sets": {
+    "canonical-gt": {
+      "kind": "gt",
+      "n": 5161,
+      "path": "inputs/vectors/references/canonical-gt-55maps-r50.geojson"
+    },
+    "arm2-carried-3.7": {
+      "kind": "deployed",
+      "n": 5003,
+      "path": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/verified_detections.geojson"
+    },
+    "B-N5-carried-G3": {
+      "kind": "deployed",
+      "n": 4736,
+      "path": "results/55map-final-board-2026-08-27/cells/B-N5-carried/detections.geojson"
+    },
+    "union-3.7-K5": {
+      "kind": "union",
+      "n": 12715,
+      "path": "outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/union_k5.geojson"
+    },
+    "union-G3-K10": {
+      "kind": "union",
+      "n": 57482,
+      "path": "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/union_k10.geojson"
+    }
+  },
+  "estimates": [
+    {
+      "stratum": "all reviewed tiles",
+      "tiles_reviewed": 500,
+      "true_double_misses": 5,
+      "rate_per_tile": 0.01,
+      "ci95": [
+        0.0032547214070242523,
+        0.02318138806965964
+      ],
+      "implied_missed_in_frame": 46.76,
+      "implied_missed_ci95": [
+        15.219077299245404,
+        108.39617061372847
+      ],
+      "implied_share_of_gt": 0.009060259639604728,
+      "implied_share_of_gt_ci95": [
+        0.0029488621002219345,
+        0.02100293947175518
+      ]
+    },
+    {
+      "stratum": "10 % tier only (complete SRS)",
+      "tiles_reviewed": 470,
+      "true_double_misses": 5,
+      "rate_per_tile": 0.010638297872340425,
+      "ci95": [
+        0.0034629980801905197,
+        0.0246505317797572
+      ],
+      "implied_missed_in_frame": 49.744680851063826,
+      "implied_missed_ci95": [
+        16.19297902297087,
+        115.26588660214466
+      ],
+      "implied_share_of_gt": 0.00963857408468588,
+      "implied_share_of_gt_ci95": [
+        0.0031375661737978824,
+        0.022334021817892784
+      ]
+    }
+  ],
+  "per_mark": [
+    {
+      "order_index": 122,
+      "tile_name": "K-35-063-4_Skobelevo_4326_x336_y3360.png",
+      "map_name": "K-35-063-4_Skobelevo_4326",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 358176.8,
+      "y_world": 4651904.6,
+      "class": "known-in-GT",
+      "nearest": {
+        "canonical-gt": {
+          "distance_m": 17.8,
+          "gt_id": "student:02506"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 2.9,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 1456.3,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 2.9,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.1
+        },
+        "union-G3-K10": {
+          "distance_m": 6.4,
+          "vote_count": 6,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 2.9
+    },
+    {
+      "order_index": 144,
+      "tile_name": "K-35-077-2_x1680_y1008.png",
+      "map_name": "K-35-077-2",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 447353.8,
+      "y_world": 4644234.8,
+      "class": "true-double-miss",
+      "nearest": {
+        "canonical-gt": {
+          "distance_m": 1291.4,
+          "gt_id": "student:04583"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 1283.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 1293.1,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 1283.6,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.3
+        },
+        "union-G3-K10": {
+          "distance_m": 346.3,
+          "vote_count": 10,
+          "prob_G3-vf": 0.0,
+          "prob_3.7-vf": 0.05
+        }
+      },
+      "nearest_anything_m": 346.3
+    },
+    {
+      "order_index": 146,
+      "tile_name": "K-35-051-3_x1008_y1344.png",
+      "map_name": "K-35-051-3",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 340338.5,
+      "y_world": 4698772.6,
+      "class": "true-double-miss",
+      "nearest": {
+        "canonical-gt": {
+          "distance_m": 571.5,
+          "gt_id": "student:00197"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 585.5,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 583.8,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 585.5,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.95
+        },
+        "union-G3-K10": {
+          "distance_m": 583.8,
+          "vote_count": 10,
+          "prob_G3-vf": 0.95,
+          "prob_3.7-vf": 0.99
+        }
+      },
+      "nearest_anything_m": 571.5
+    },
+    {
+      "order_index": 190,
+      "tile_name": "K-35-067-4_x2352_y2688.png",
+      "map_name": "K-35-067-4",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 533652.5,
+      "y_world": 4654229.5,
+      "class": "true-double-miss",
+      "nearest": {
+        "canonical-gt": {
+          "distance_m": 1211.7,
+          "gt_id": "student:03870"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 1857.4,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 1854.2,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 1857.4,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.95
+        },
+        "union-G3-K10": {
+          "distance_m": 731.0,
+          "vote_count": 6,
+          "prob_G3-vf": 0.0,
+          "prob_3.7-vf": 0.0
+        }
+      },
+      "nearest_anything_m": 731.0
+    },
+    {
+      "order_index": 218,
+      "tile_name": "K-35-054-3_Yambol_x672_y2352.png",
+      "map_name": "K-35-054-3_Yambol",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 463022.0,
+      "y_world": 4693584.8,
+      "class": "known-in-GT",
+      "nearest": {
+        "canonical-gt": {
+          "distance_m": 30.6,
+          "gt_id": "student:01179"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 11.2,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 20.5,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 11.1,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 6.8,
+          "vote_count": 4,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.99
+        }
+      },
+      "nearest_anything_m": 6.8
+    },
+    {
+      "order_index": 349,
+      "tile_name": "K-35-051-3_x1008_y3360.png",
+      "map_name": "K-35-051-3",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 341410.3,
+      "y_world": 4689174.7,
+      "class": "true-double-miss",
+      "nearest": {
+        "canonical-gt": {
+          "distance_m": 1105.2,
+          "gt_id": "student:01839"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 1099.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 1092.4,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 800.5,
+          "vote_count": 3,
+          "prob_3.7-vf": 0.01,
+          "prob_G3-vf": 0.0
+        },
+        "union-G3-K10": {
+          "distance_m": 222.9,
+          "vote_count": 1,
+          "prob_G3-vf": 0.0,
+          "prob_3.7-vf": 0.0
+        }
+      },
+      "nearest_anything_m": 222.9
+    },
+    {
+      "order_index": 381,
+      "tile_name": "K-35-055-2_x2688_y0.png",
+      "map_name": "K-35-055-2",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 534826.9,
+      "y_world": 4722553.1,
+      "class": "true-double-miss",
+      "nearest": {
+        "canonical-gt": {
+          "distance_m": 1518.1,
+          "gt_id": "student:01486"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 496.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 494.4,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 496.6,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.95,
+          "prob_G3-vf": 0.1
+        },
+        "union-G3-K10": {
+          "distance_m": 475.9,
+          "vote_count": 1,
+          "prob_G3-vf": 0.2,
+          "prob_3.7-vf": 0.95
+        }
+      },
+      "nearest_anything_m": 475.9
+    },
+    {
+      "order_index": 413,
+      "tile_name": "K-35-050-4_x1344_y672.png",
+      "map_name": "K-35-050-4",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 321369.0,
+      "y_world": 4702420.1,
+      "class": "known-in-GT",
+      "nearest": {
+        "canonical-gt": {
+          "distance_m": 12.5,
+          "gt_id": "student:00039"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 1.2,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 4.7,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 1.2,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 3.6,
+          "vote_count": 10,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 1.2
+    },
+    {
+      "order_index": 436,
+      "tile_name": "K-35-063-1_Granit_4326_x3696_y336.png",
+      "map_name": "K-35-063-1_Granit_4326",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 354195.7,
+      "y_world": 4685511.9,
+      "class": "known-in-GT",
+      "nearest": {
+        "canonical-gt": {
+          "distance_m": 24.3,
+          "gt_id": "student:01846"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 3.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 957.7,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 3.6,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.99,
+          "prob_G3-vf": 0.95
+        },
+        "union-G3-K10": {
+          "distance_m": 5.2,
+          "vote_count": 1,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 3.6
+    }
+  ]
+}

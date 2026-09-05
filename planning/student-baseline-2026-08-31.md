@@ -1,7 +1,8 @@
 # The novice human baseline: hardening student F1/P/R before the paper claims proximity
 
-> **Last revised**: 2026-08-31 (original publication; PI-approved
-> shape, Session 145). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-05 (Phase 2 empty-tile audit CLOSED at 500
+> tiles and adjudicated: 5 true double-misses, 1.06 % of empty tiles;
+> Phase 2b cluster census starts). See [§ Changelog](#changelog).
 
 **Question**: how good is the n=1 novice human baseline, exactly?
 The model's corrected-F1@50 has drifted to 0.8763–0.8825 on the
@@ -262,6 +263,23 @@ anything 340+ m) — 2/150 ≈ 1.3 % of empty tiles, dead centre of the
 card's 1–3 % expectation and consistent with the GS-anchored ~0.9 %
 double-miss rate.
 
+**Phase 2 CLOSED at 500 tiles (PI, 2026-09-05; the full 10 % tier plus
+30 of the 20 % tier).** Adjudication by `scripts/empty_tile_adjudicate.py`
+(protocol above; deployed sets = arm-2 carried 3.7 and the final board's
+B-N5-carried; unions = 3.7 K=5 under both verifiers, G3 K=10 under both;
+all four union↔probability joins gated) →
+`results/empty-tile-audit/adjudication.{json,md}`: **9 marks → 4
+known-in-GT (edge artefacts, all also arm-2-detected at 1.2–11 m) + 5
+true double-misses (nearest anything 223–731 m)**; the
+proposed-but-filtered class is EMPTY — no double-miss had a union
+candidate within 50 m, so these are proposer blind spots, not verifier
+or threshold kills. All five sit in the 10 % tier (a complete simple
+random sample of the 4,676-tile empty frame): **5/470 = 1.06 % of empty
+tiles (Clopper–Pearson 95 % 0.35–2.47 %) → ≈ 50 missed mounds in the
+frame (16–115) ≈ 0.96 % of the 5,161-point GT (0.31–2.23 %)**. The
+frame is the EMPTY stratum only; misses inside occupied tiles are the
+cluster census's question (§ 5c).
+
 ### 5c. Phase 2b — the cluster audit (PI-commissioned 2026-09-01)
 
 The empty-tile instrument sees only ISOLATED double-misses; Obs 361's
@@ -336,6 +354,20 @@ scriptable within existing machinery (Hungarian matcher,
 bootstrap-by-sheet, Streamlit reviewer).
 
 ## Changelog
+
+### 2026-09-05 — Phase 2 closed at 500 tiles; adjudication run; census tiles staged
+
+The PI closed the empty-tile review at 500 tiles (the full 10 % tier
+plus 30 of the 20 % tier; verdicts committed `953b15c46`). New script
+`scripts/empty_tile_adjudicate.py` (with tier-1 tests) implements § 5b
+end to end and wrote `results/empty-tile-audit/adjudication.{json,md}`:
+9 marks → 4 known-in-GT + 5 true double-misses, none
+proposed-but-filtered; 5/470 = 1.06 % (95 % CI 0.35–2.47 %) → ≈ 50
+missed mounds in the 4,676-tile empty frame (16–115), ≈ 0.96 % of GT.
+§ 5b text updated in place. For Phase 2b the 739 census tiles were
+fetched from sapphire's `inputs/tiles_384_55maps` tree into the
+gitignored `inputs/cluster-audit-tiles/`; every manifest tile and
+overlay key verified present.
 
 ### 2026-08-31 (later) — Drive scout manifest appended
 
