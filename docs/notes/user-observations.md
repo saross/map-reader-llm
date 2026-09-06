@@ -1032,3 +1032,28 @@ session's context or the 5-hour limit is likely to be exhausted:
 manifest as the authority on per-item state, orchestrator-only writes,
 agents that write outputs only at the end, a census at pause, a
 reconcile against disk at resume.
+
+## S148 candidates (pending review, 2026-09-06, drafted at handoff) — silence never discards
+
+- **C1 — Pausing the census the moment the reference looked wrong.** When
+  Shawn flagged one duplicate known mound on tile 1, Claude traced it to a
+  stale instrument (the canonical r50 file) within the hour and proposed
+  pausing to rebuild the frame; Shawn: "not having to mark ~100 duplicates
+  or more will save a lot of time". Candidate: the trace-then-propose-a-pause
+  move was the right shape for a reviewer mid-flow.
+- **C2 — Four wrong saves before the symbol trap was diagnosed.** Claude's
+  first two instructions for turning a mark into a GT-error flag were
+  wrong (the symbol is fixed at `a` time); Shawn: "it's not sticking".
+  Candidate (unhelpful): instructions for a UI Claude built should have
+  been checked against the code path before the second attempt, not the
+  third.
+- **C3 — Rule / reason / check on rulings taken alone.** The cleanup at
+  standard tier, the Arm V output placement, and the census-order
+  migration were each reported as rule / reason / what-to-check and none
+  drew a correction. Candidate: the format from the S146–147 ruling is
+  doing its job; keep it.
+- **C4 — The pre-run review's "looks good" was not the go.** Shawn read
+  the review, said it looked good, and asked about context; the audit
+  then found four blockers. Candidate: Claude should have said explicitly
+  that "looks good" on a draft is not the go/no-go the ritual needs, and
+  scheduled the audit before asking.
