@@ -355,7 +355,13 @@ review of known-cluster neighbourhoods:
   are both small; the larger census signal is the reference itself —
   6 GT errors and 6 GT omissions the model had already found — which
   bears on the precision correction (Obs 220 lineage) more than on
-  recall.
+  recall. **Final check done (PI, 2026-09-06)**: each of the 13
+  edge-safety marks re-reviewed on the evaluation tile where it sits
+  farthest from an edge (`scripts/final_check_manifest.py`; known
+  points yellow, the mark magenta): all 13 confirmed as the known
+  mound, no flags, no additional mounds
+  (`results/cluster-audit/final-check/verdicts.csv`; folded into the
+  census report as `census.final_check`).
 - **Explicit scope boundary (PI, 2026-09-01)**: locations where one
   mound was marked but 2–3 truly exist AND no second known mound
   sits within X — singleton undercounts — are NOT discoverable by

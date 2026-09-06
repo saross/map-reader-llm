@@ -27,6 +27,8 @@ Frame: 334 clusters of 2+ mounds within 125 m, 719 known mounds, 478 tiles (465 
 
 Marks within 50 m of a known point. The reviewer marks a mound that straddles a tile edge to be safe; the adjudication classes it known-in-GT corpus-wide, so it never counts as additional. Anything here far from an edge deserves a second look.
 
+**Final check run**: 13 of 13 marks re-reviewed on the tile where each sits farthest from an edge — verdicts {'no_mounds': 13}, 0 GT-error flag(s), 0 additional mark(s) (`final-check/verdicts.csv`).
+
 | Tile | Pos | Known point | Dist to point (m) | Dist to tile edge (m) |
 |---|---:|---|---:|---:|
 | `K-35-063-2_Chirpan_4326_x3360_y336.png` | 211 | student:02095 | 29.8 | 21.2 |
@@ -91,6 +93,7 @@ Marks within 50 m of a known point. The reviewer marks a mound that straddles a 
 
 Classes now {'known-in-GT': 13, 'gt-error-flag': 7, 'detected': 6, 'true-double-miss': 2, 'proposed-but-filtered': 1} over 478 tiles. Previous runs, newest first:
 
+- 2026-09-06: reference `standardised`, 478 tiles, classes {'known-in-GT': 13, 'gt-error-flag': 7, 'detected': 6, 'true-double-miss': 2, 'proposed-but-filtered': 1}.
 - 2026-09-06: reference `standardised`, 478 tiles, classes {'known-in-GT': 13, 'gt-error-flag': 7, 'detected': 6, 'true-double-miss': 2, 'proposed-but-filtered': 1}.
 
 ### 2026-09-06 — Original publication

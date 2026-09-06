@@ -369,6 +369,19 @@ def main() -> int:
                  "gt_m": r["nearest"]["ground-truth"]["distance_m"], "edge_m": r["edge_m"]}
                 for r in rows if r["class"] == "known-in-GT"],
         }
+        # The reviewer's final check of those marks, if it has been run
+        # (scripts/final_check_manifest.py + the review app): one verdict per
+        # edge-safety mark on the tile where it sits farthest from an edge.
+        fc_path = out_dir / "final-check" / "verdicts.csv"
+        if fc_path.exists():
+            fc = latest_pass(pd.read_csv(fc_path))
+            fc_tiles = fc.drop_duplicates("tile_name")
+            census["final_check"] = {
+                "tiles_reviewed": int(len(fc_tiles)),
+                "verdicts": fc_tiles["verdict"].value_counts().to_dict(),
+                "marks_added": int(fc["x_world"].notna().sum()),
+                "gt_error_flags": int(fc["symbol"].astype(str).str.contains("GT error").sum()),
+            }
 
     # ---- Floor estimate (sampled empty-tile audit only) ----
     n_frame = 0
@@ -495,6 +508,15 @@ def render_md(p: dict) -> str:
             "| Tile | Pos | Known point | Dist to point (m) | Dist to tile edge (m) |",
             "|---|---:|---|---:|---:|",
         ]
+        if c.get("final_check"):
+            fc = c["final_check"]
+            lines.insert(len(lines) - 2, (
+                f"**Final check run**: {fc['tiles_reviewed']} of {len(c['edge_safety_marks'])} "
+                f"marks re-reviewed on the tile where each sits farthest from an edge — "
+                f"verdicts {fc['verdicts']}, {fc['gt_error_flags']} GT-error flag(s), "
+                f"{fc['marks_added']} additional mark(s) "
+                f"(`final-check/verdicts.csv`)."))
+            lines.insert(len(lines) - 2, "")
         for e in sorted(c["edge_safety_marks"], key=lambda r: -r["edge_m"]):
             lines.append(f"| `{e['tile_name']}` | {e['position']} | {e['gt_id']} | "
                          f"{e['gt_m']} | {e['edge_m']} |")

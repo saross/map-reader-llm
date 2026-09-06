@@ -213,10 +213,14 @@ project state.
 > 13 edge-safety marks (all ≤ 21 m from an edge), 6 distinct GT-error
 > points (0.83 % of 719 clustered mounds), 6 model finds the GT lacks
 > (all in arm-2 3.7 at 1.3–5.1 m), 2 true double-misses (0.28 %), 1
-> vote-gate kill at verifier p 0.98; additional sightings 1.25 %. App
-> gained `o` overlay toggle, `r` relabel, `g` go-to-tile, and the
-> GT-error symbol (class `gt-error-flag`). Obs candidate: the census
-> result (PI to rule).
+> vote-gate kill at verifier p 0.98; additional sightings 1.25 %.
+> Final check of the 13 edge-safety marks on their farthest-from-edge
+> tiles: all 13 confirmed (`results/cluster-audit/final-check/`). App
+> gained `o` overlay toggle, `r` relabel, `g` go-to-tile, the GT-error
+> symbol (class `gt-error-flag`), and a two-list overlay (known yellow,
+> review magenta). **Both audits CLOSED.** Obs candidate: the census
+> result (PI to rule); reference-revision question (6 GT errors + 6
+> omissions) sits with § 4c.
 >
 > **OPEN DECISIONS FOR THE PI (from the tail — now decided, see the
 > addendum above):**

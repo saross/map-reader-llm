@@ -111,11 +111,31 @@
         "gt_m": 12.3,
         "edge_m": 5.0
       }
-    ]
+    ],
+    "final_check": {
+      "tiles_reviewed": 13,
+      "verdicts": {
+        "no_mounds": 13
+      },
+      "marks_added": 0,
+      "gt_error_flags": 0
+    }
   },
   "reference": "standardised",
   "reference_path": "inputs/vectors/references/best-available-gt-55maps.geojson",
   "history": [
+    {
+      "generated": "2026-09-06",
+      "reference": "standardised",
+      "reviewed_tiles": 478,
+      "classes": {
+        "known-in-GT": 13,
+        "gt-error-flag": 7,
+        "detected": 6,
+        "true-double-miss": 2,
+        "proposed-but-filtered": 1
+      }
+    },
     {
       "generated": "2026-09-06",
       "reference": "standardised",
