@@ -81,6 +81,11 @@ CRS = "EPSG:32635"
 GT_FILES = {
     "standardised": "inputs/vectors/references/best-available-gt-55maps.geojson",
     "canonical": "inputs/vectors/references/canonical-gt-55maps-r50.geojson",
+    # ``--gt r2`` is the closure check (step 7b of the recompute chain): re-run
+    # against r2 and the audit classes should collapse — the added mounds now
+    # read as known-in-GT and the removed points are gone. Without this entry
+    # the closure check has no reference to run against.
+    "r2": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
 }
 
 #: The reviewer's symbol for "this known (overlay) mound is a GT error".

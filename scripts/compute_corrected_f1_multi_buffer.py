@@ -163,6 +163,41 @@ duplicates deflate F1 ≈ −0.03 and absent joint student+model misses
 inflate it ≈ +0.011–0.012 (net ≈ −0.017, rank-preserving to first
 order) — see the reference README and Obs 396."""
 
+#: Revision r2 of the standardised reference (PI audit, 2026-09; card
+#: ``planning/reference-revision-2026-09-06.md``). Counts are the committed
+#: file's own, read 2026-09-06 from
+#: ``inputs/vectors/references/best-available-gt-55maps-r2.geojson``.
+R2_ATTRIBUTION_NOTE = """\
+**Attribution resolution (55-map deployment corpus, reference r2).**
+Revision r2 applies the PI's cluster- and empty-tile-audit adjudications
+to the ruling-21 standardised reference: 6 records removed (points the
+audit found not to be mounds) and 14 added (mounds the audit confirmed
+that no layer carried). Three positional-quality classes:
+
+1. *Student-digitised mounds* (n = 4,726): 641 reviewed records carry
+   marked centres (±2.5 m); the remainder keep as-digitised positions
+   (median 8.6 m, p90 18.3 m from the true centre on the jitter sample).
+2. *Extension mounds* (n = 278 — model-detected mounds the students
+   missed, human-confirmed): ALL at marked centres (±2.5 m).
+3. *Audit-reviewed mounds* (n = 14 — found by the cluster and empty-tile
+   audits, absent from both layers): at the reviewer's mark (±2.5 m),
+   graded ``directly_reviewed``.
+
+Total 5,018. Every class is exactly localised or better than the legacy
+ring gate required, so the layer enters the extended ground truth WHOLE
+at every buffer radius and tile-level MCC stays buffer-invariant, exactly
+as on the standardised reference it revises.
+
+r2 is a REVISION of a best-possible reference, not a gold standard. It
+narrows two of the standardised reference's known biases — the removed
+points were residual duplicates or GT errors, the added points were
+joint student+model misses — but the empty-tile audit's own estimate is
+that ≈ 50 mounds (≈ 1 % of GT) remain unseen by both channels. The
+estimated-correction column, not the point estimate, carries that
+residual. See the reference README, Obs 396, and the audit adjudications.
+"""
+
+
 def paired_ci_note(ci_method: str) -> str:
     """Render the CI-vs-significance note for a board, naming its CI method.
 

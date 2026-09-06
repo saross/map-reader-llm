@@ -43,6 +43,7 @@ Licence: Apache 2.0
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 import sys
@@ -58,6 +59,8 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
 from scripts.build_55map_leaderboard import (  # noqa: E402
     BOUNDS,
+    board_home,
+    reference_gt,
     standardised_gt,
 )
 from scripts.lib_advanced_metrics import (  # noqa: E402
@@ -75,8 +78,37 @@ from scripts.score_55maps_standardised_reference import (  # noqa: E402
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
+#: The r1 board home. Retained as documentation; the output directory is now
+#: resolved per run through ``board_home(--reference)``.
 OUT = PROJECT_ROOT / "results/55map-final-board-2026-08-27"
 STD_REF_DIR = PROJECT_ROOT / "results/55maps-standardised-ref-2026-08-14"
+
+#: Per-cell scoring home by reference vintage. The hard-coded r1 paths in
+#: COMMITTED_CARRIED and COINCIDENT below are rewritten through this at run
+#: time, so an r2 board reads r2 evaluations for its carried incumbents too.
+#: Without that, the four carried cells would stay on r1 while the other 19
+#: moved to r2 — precisely the mixed-vintage board the count gate exists to
+#: prevent (BLOCKER 1, r2-chain audit, Session 149).
+REF_DIR_BY_VINTAGE = {
+    "standardised": "results/55maps-standardised-ref-2026-08-14",
+    "r2": "results/55maps-r2-ref-2026-09-06",
+}
+
+
+def retarget(path: str, reference: str) -> str:
+    """Point an r1-scoring path at the equivalent artefact for a vintage.
+
+    Args:
+        path: Repo-relative path containing the r1 scoring home.
+        reference: ``standardised`` (identity) or ``r2``.
+
+    Returns:
+        The path with its scoring-home component swapped for the vintage's.
+        Detection sources under ``outputs/`` are unaffected — the detections
+        do not change between references, only the scoring of them does.
+    """
+    return path.replace(REF_DIR_BY_VINTAGE["standardised"],
+                        REF_DIR_BY_VINTAGE[reference])
 COMMITTED_BOARD = (PROJECT_ROOT / "results/55map-leaderboard"
                    / "55map_leaderboard_50m_standardised.json")
 BUFFER_M = 50
@@ -304,8 +336,25 @@ def render_figure(ordered: list[dict], tier_of: dict, sig: dict,
     logger.info("figure -> %s", out_png.relative_to(PROJECT_ROOT))
 
 
-def main() -> int:
-    ref = standardised_gt()
+def main(reference: str = "standardised") -> int:
+    """Build the 50 m final board against one reference vintage.
+
+    Args:
+        reference: ``standardised`` (r1, default) or ``r2``.
+
+    Returns:
+        Process exit code.
+    """
+    out = board_home(reference)
+    # TWO references, deliberately (BLOCKER 4, r2-chain audit; PI ruling,
+    # Session 149). ``gate_ref`` is ALWAYS r1: G3 asks whether this code still
+    # reproduces the committed r1 board, which is a regression test on the
+    # mechanism and must stay live during an r2 build — pointing it at r2 would
+    # compare r2 numbers to the r1 board and fail by construction, switching
+    # the gate off exactly when a new reference makes it most valuable.
+    # ``ref`` is the vintage the new board is actually scored against.
+    gate_ref = standardised_gt()
+    ref = reference_gt(reference) if reference != "standardised" else gate_ref
     bounds = gpd.read_file(BOUNDS)
     if bounds.crs is None:
         bounds = bounds.set_crs("EPSG:4326")
@@ -321,7 +370,7 @@ def main() -> int:
         label = spec["label"]
         det_path = PROJECT_ROOT / spec["det"]
         ev = eval50(STD_REF_DIR / label / "evaluation.json")
-        tp, fp, fn = per_tile_arrays(det_path, ref, bounds, tile_index,
+        tp, fp, fn = per_tile_arrays(det_path, gate_ref, bounds, tile_index,
                                      n_tiles)
         if abs(micro_f1(tp.sum(), fp.sum(), fn.sum()) - ev["f1_50"]) \
                 > GATE_TOL:
@@ -346,8 +395,8 @@ def main() -> int:
 
     # ---- Coincidence gates. ----
     for label, committed_eval in COINCIDENT.items():
-        new = eval50(OUT / "cells" / label / "evaluation.json")
-        old = eval50(PROJECT_ROOT / committed_eval)
+        new = eval50(out / "cells" / label / "evaluation.json")
+        old = eval50(PROJECT_ROOT / retarget(committed_eval, reference))
         # The current evaluate_detections stores f1 rounded to 4 d.p.;
         # the 2026-08-14 committed evaluations stored full precision.
         # Half a 4-d.p. ulp is therefore identity at stored precision.
@@ -359,10 +408,10 @@ def main() -> int:
                     new["f1_50"])
 
     # ---- Assemble the 21 cells. ----
-    manifest = json.loads((OUT / "cells_manifest.json").read_text())["cells"]
+    manifest = json.loads((out / "cells_manifest.json").read_text())["cells"]
     cells = []
     for label, det, ev_path in COMMITTED_CARRIED:
-        ev = eval50(PROJECT_ROOT / ev_path)
+        ev = eval50(PROJECT_ROOT / retarget(ev_path, reference))
         tp, fp, fn = per_tile_arrays(PROJECT_ROOT / det, ref, bounds,
                                      tile_index, n_tiles)
         entry = next(m for m in manifest if m["label"] == label)
@@ -372,7 +421,7 @@ def main() -> int:
     for m in manifest:
         if m["committed_eval"]:
             continue
-        ev = eval50(OUT / "cells" / m["label"] / "evaluation.json")
+        ev = eval50(out / "cells" / m["label"] / "evaluation.json")
         tp, fp, fn = per_tile_arrays(PROJECT_ROOT / m["det"], ref, bounds,
                                      tile_index, n_tiles)
         f1m = micro_f1(tp.sum(), fp.sum(), fn.sum())
@@ -402,7 +451,7 @@ def main() -> int:
                     f"{c['mcc']:.3f}" if c["mcc"] is not None else "—",
                     c["point"])
     render_figure(ordered, tier_of, sig, cld,
-                  OUT / "significance-groups.png")
+                  out / "significance-groups.png")
 
     payload = {
         "buffer_m": BUFFER_M, "reference": "standardised",
@@ -417,7 +466,7 @@ def main() -> int:
                   for c in ordered],
         "pairwise": pairs,
     }
-    (OUT / "final_board_50m.json").write_text(
+    (out / "final_board_50m.json").write_text(
         json.dumps(payload, indent=2, default=float) + "\n")
 
     # ---- Markdown: ranked board + the run x carried/oracle table. ----
@@ -622,11 +671,20 @@ def main() -> int:
         "",
         "Built by Session 143 per the signed card; $0 API, sapphire.",
     ]
-    (OUT / "final-board-50m.md").write_text("\n".join(lines) + "\n")
-    logger.info("FINAL BOARD WRITTEN -> %s", (OUT / "final-board-50m.md"
+    (out / "final-board-50m.md").write_text("\n".join(lines) + "\n")
+    logger.info("FINAL BOARD WRITTEN -> %s", (out / "final-board-50m.md"
                                               ).relative_to(PROJECT_ROOT))
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    _ap = argparse.ArgumentParser(description=__doc__)
+    _ap.add_argument(
+        "--reference", choices=["standardised", "r2"], default="standardised",
+        help="Reference vintage to tier against (default: r1, unchanged "
+             "behaviour). With r2 the board is written to "
+             "55map-final-board-r2-2026-09-06/, cells are read from the r2 "
+             "scoring home, and the G3 regression gate STILL reproduces the "
+             "committed r1 board.",
+    )
+    sys.exit(main(_ap.parse_args().reference))

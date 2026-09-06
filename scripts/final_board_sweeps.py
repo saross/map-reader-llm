@@ -41,7 +41,7 @@ evaluations) and 3 (board build).
 
 Usage::
 
-    python scripts/final_board_sweeps.py [--workers N]
+    python scripts/final_board_sweeps.py [--workers N] [--reference {standardised,r2}]
 
 Zero API. Run on sapphire.
 
@@ -70,6 +70,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 from scripts.build_55map_leaderboard import (  # noqa: E402
     BOUNDS,
+    board_home,
     standardised_gt,
 )
 from scripts.score_55maps_standardised_reference import (  # noqa: E402
@@ -94,6 +95,9 @@ from scripts.stride55_sweep_oracle import (  # noqa: E402
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
+#: The r1 board home. Retained as documentation of where this script's outputs
+#: historically landed; the output directory is now resolved per run through
+#: ``board_home(--reference)`` so an r2 sweep cannot write into the r1 tree.
 OUT = PROJECT_ROOT / "results/55map-final-board-2026-08-27"
 BUFFER_M = 50
 MECHANISM_BOUND = 0.003  # the board's documented micro-vs-eval bound
@@ -220,8 +224,24 @@ def _score(task):
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--workers", type=int, default=12)
+    ap.add_argument(
+        "--reference", choices=["standardised", "r2"], default="standardised",
+        help="Reference vintage this sweep belongs to. Selects the OUTPUT "
+             "home only: the G4 gate below always reproduces the committed r1 "
+             "board, because 'the light scorer still agrees with the engine' "
+             "is a claim about the mechanism, not about the reference under "
+             "test (PI ruling, Session 149). Passing r2 writes to "
+             "55map-final-board-r2-2026-09-06/ and leaves the r1 home "
+             "untouched.",
+    )
     args = ap.parse_args()
+    out = board_home(args.reference)
 
+    # PINNED TO r1, deliberately, whatever --reference says: G4 asks whether
+    # the light scorer still reproduces the COMMITTED r1 board, which is a
+    # regression test on the code. Pointing it at r2 would compare the r2
+    # numbers to the r1 board and fail by construction, disabling the gate
+    # exactly when a new reference makes it most worth having (BLOCKER 4).
     ref = standardised_gt()
     bounds = gpd.read_file(BOUNDS)
     if bounds.crs is None:
@@ -326,13 +346,13 @@ def main() -> int:
               initargs=(ref, bounds, family_gdfs)) as pool:
         rows = pool.map(_score, tasks, chunksize=4)
 
-    OUT.mkdir(parents=True, exist_ok=True)
-    sweeps: dict = {"buffer_m": BUFFER_M, "reference": "standardised",
+    out.mkdir(parents=True, exist_ok=True)
+    sweeps: dict = {"buffer_m": BUFFER_M, "reference": args.reference,
                     "families": {}}
     for name in families:
         frows = sorted((r for r in rows if r["family"] == name),
                        key=lambda r: -r["micro_f1_50"])
-        with (OUT / f"sweep_{name}.csv").open("w", newline="") as fh:
+        with (out / f"sweep_{name}.csv").open("w", newline="") as fh:
             w = csvmod.DictWriter(fh, fieldnames=list(frows[0].keys()))
             w.writeheader()
             w.writerows(sorted(frows, key=lambda r: (r["prob_t"],
@@ -356,7 +376,7 @@ def main() -> int:
                     pt: float, pk: int) -> None:
         g = families[name]["gdf"]
         sub = g[(g["mound_probability"] >= pt) & (g["vote_count"] >= pk)]
-        dest = OUT / "cells" / label / "detections.geojson"
+        dest = out / "cells" / label / "detections.geojson"
         dest.parent.mkdir(parents=True, exist_ok=True)
         sub.to_crs("EPSG:4326").to_file(dest, driver="GeoJSON")
         manifest_cells.append({
@@ -373,8 +393,8 @@ def main() -> int:
             (pt, pk), _ = IDENTITY[name]
             materialise(name, f"{name}-carried", "carried", pt, pk)
 
-    (OUT / "sweeps.json").write_text(json.dumps(sweeps, indent=2) + "\n")
-    (OUT / "cells_manifest.json").write_text(
+    (out / "sweeps.json").write_text(json.dumps(sweeps, indent=2) + "\n")
+    (out / "cells_manifest.json").write_text(
         json.dumps({"cells": manifest_cells}, indent=2) + "\n")
     logger.info("STAGE 1 COMPLETE: %d cells in the manifest",
                 len(manifest_cells))

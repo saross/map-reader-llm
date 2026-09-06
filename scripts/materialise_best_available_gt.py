@@ -48,10 +48,12 @@ from __future__ import annotations
 import argparse
 import csv
 import logging
+import os
 import sys
 from pathlib import Path
 
 import geopandas as gpd
+import numpy as np
 import pandas as pd
 from shapely.geometry import Point
 
@@ -88,6 +90,11 @@ COMMON = ["gt_id", "layer", "source_id_lossy", "source_map", "symbol_type",
 #: Revision r2 (planning/reference-revision-2026-09-06.md): the instruction set
 #: derived from the PI's audits by `derive_audit_revision_instructions.py`.
 R2_INSTRUCTIONS = PROJECT_ROOT / "results/reference-revision-r2/audit-revision-instructions.csv"
+
+#: The channel-duplicate tolerance the engine applies when it builds an
+#: extended GT from layers (``build_extended_gt(dedup_tolerance_m=5.0)``).
+#: Revisions assembled here must satisfy the same invariant.
+DEDUP_TOLERANCE_M = 5.0
 
 #: The review app's symbol vocabulary -> the standardised layer's symbol_type.
 R2_SYMBOL_MAP = {
@@ -138,7 +145,53 @@ def apply_audit_revision(merged: gpd.GeoDataFrame
     }, geometry=[Point(float(x), float(y)) for x, y in zip(adds["x"], adds["y"])], crs=CRS)
     revised = gpd.GeoDataFrame(pd.concat([kept, new], ignore_index=True),
                                geometry="geometry", crs=CRS)
+    _assert_no_channel_duplicates(revised)
     return revised, removed, len(new)
+
+
+def _assert_no_channel_duplicates(gdf: gpd.GeoDataFrame) -> None:
+    """Assert no two reference points sit within the 5 m dedup tolerance.
+
+    When the reference is assembled from LAYERS, the engine's
+    ``build_extended_gt(dedup_tolerance_m=5.0)`` performs this audit: a mound
+    that entered through two channels (a student record and a curator point at
+    the same place) must not become two ground-truth points, because that
+    double-counts one mound and inflates every condition's false negatives.
+
+    :func:`apply_audit_revision` bypasses that path — it concatenates the audit
+    additions straight onto the merged union, and the only duplicate check in
+    this script is ``gt_id`` uniqueness, which is an IDENTIFIER test and cannot
+    see two distinct ids at the same coordinates. The additions come from
+    reviewer marks at ~±2.5 m precision, exactly the regime the tolerance
+    exists for, so the audit is re-asserted here.
+
+    Session 149: not a live correction on r2 as built — the nearest addition
+    sits 68.35 m from any existing point and the whole reference's minimum
+    separation is 15.48 m. This is the guardrail for r3 and later revisions,
+    installed at the point where a revision is constructed.
+
+    Args:
+        gdf: The revised reference, in ``CRS`` (metres).
+
+    Raises:
+        RuntimeError: If any pair lies within :data:`DEDUP_TOLERANCE_M`.
+    """
+    from scipy.spatial import cKDTree
+
+    xy = np.c_[gdf.geometry.x, gdf.geometry.y]
+    # k=2: every point's nearest neighbour is itself, so take the second.
+    dist, _ = cKDTree(xy).query(xy, k=2)
+    close = dist[:, 1] < DEDUP_TOLERANCE_M
+    if close.any():
+        offenders = gdf.loc[close, "gt_id"].tolist()[:10]
+        raise RuntimeError(
+            f"{int(close.sum())} reference points lie within "
+            f"{DEDUP_TOLERANCE_M} m of another — channel duplicates that "
+            f"build_extended_gt would have dropped. First: {offenders}"
+        )
+    logger.info("dedup audit: min separation %.2f m (tolerance %.1f m), "
+                "0 channel duplicates", float(dist[:, 1].min()),
+                DEDUP_TOLERANCE_M)
 
 
 def load_student() -> gpd.GeoDataFrame:
@@ -281,7 +334,7 @@ def main() -> int:
                 removed_by="pi_audit_2026-09_census_gt-error-flag",
             ).to_csv(removed_path, index=False)
             logger.info("r2: removed %d, added %d; removed records -> %s", len(removed),
-                        n_added, removed_path.relative_to(PROJECT_ROOT))
+                        n_added, os.path.relpath(removed_path, PROJECT_ROOT))
     if merged["gt_id"].duplicated().any():
         logger.error("duplicate gt_id in the merged reference")
         return 1
@@ -303,8 +356,8 @@ def main() -> int:
         logger.info("student layer   : %d", len(student))
         logger.info("extension layer : %d", len(extension))
     logger.info("merged          : %d", len(merged))
-    logger.info("wrote %s", geo.relative_to(PROJECT_ROOT))
-    logger.info("wrote %s", table.relative_to(PROJECT_ROOT))
+    logger.info("wrote %s", os.path.relpath(geo, PROJECT_ROOT))
+    logger.info("wrote %s", os.path.relpath(table, PROJECT_ROOT))
 
     counts = merged.groupby(["layer", "confidence_grade"], dropna=False).size()
     for (layer, grade), n in counts.items():

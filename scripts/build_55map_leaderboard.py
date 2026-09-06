@@ -37,6 +37,7 @@ from pathlib import Path
 
 import geopandas as gpd
 import numpy as np
+from scipy.spatial import cKDTree
 from shapely.geometry import Point
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,6 +47,7 @@ from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
 from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
     ATTRIBUTION_RESOLUTION_NOTE,
     PAIRED_CI_NOTE_PERCENTILE,
+    R2_ATTRIBUTION_NOTE,
     STANDARDISED_ATTRIBUTION_NOTE,
     build_extended_gt,
     load_standardised_extension,
@@ -64,6 +66,36 @@ PHANTOMS = BASE_DIR / "results/deployment-oracle-2026-06-06/canonical-gt/canonic
 STD_DIR = BASE_DIR / "results/deployment-oracle-2026-06-06/canonical-gt/standardised"
 STUDENT_STD = STD_DIR / "student-mounds-55maps-standardised.geojson"
 EXTENSION_STD = STD_DIR / "extension-mounds-standardised.csv"
+R2_REFERENCE = BASE_DIR / "inputs/vectors/references/best-available-gt-55maps-r2.geojson"
+
+#: r2's committed census, read from the file itself (2026-09-06). The loader
+#: gates on these so a silently-rebuilt or half-applied reference cannot enter
+#: a board: the whole point of a revision is that its size is a stated fact.
+R2_EXPECTED_LAYERS = {
+    "student_standardised": 4726,
+    "extension_standardised": 278,
+    "audit_reviewed": 14,
+}
+R2_EXPECTED_N = 5018
+
+#: The channel-duplicate tolerance the engine applies when it builds the
+#: extended GT from layers (``build_extended_gt(dedup_tolerance_m=5.0)``).
+#: r2 arrives pre-merged, so :func:`r2_gt` re-asserts the invariant here
+#: rather than trusting that it held upstream.
+DEDUP_TOLERANCE_M = 5.0
+
+#: Final-board home per reference vintage. The r1 home is READ-ONLY during an
+#: r2 build: G3 (final_board_build) and G4 (final_board_sweeps) reproduce the
+#: committed r1 board from those files at 1e-9, so a run that rewrote them
+#: would destroy its own regression evidence (MAJOR 6 of the r2-chain audit,
+#: Session 149 — elevated to a pre-step-3 blocker). Scripts resolve their home
+#: through :func:`board_home` rather than a module constant so the vintage is
+#: always an explicit argument.
+BOARD_HOME_BY_REFERENCE = {
+    "standardised": BASE_DIR / "results/55map-final-board-2026-08-27",
+    "r2": BASE_DIR / "results/55map-final-board-r2-2026-09-06",
+}
+
 RUN_CONDS = BASE_DIR / "results/run-conditions.json"
 OUT_DIR = BASE_DIR / "results/55map-leaderboard"
 BUFFER_M = 50
@@ -85,6 +117,16 @@ NAMES = {
 }
 NAMES_STANDARDISED = {
     (run, label.replace("-canonical-gt", "-standardised-gt")): name
+    for (run, label), name in NAMES.items()
+}
+#: Reference revision r2 (card `planning/reference-revision-2026-09-06.md`).
+#: Same cells, same detections, `-r2-gt` condition rows — written by
+#: ``register_standardised_gt_conditions.py --reference r2`` (step 7a), which
+#: MUST run before this board: :func:`main` resolves each cell's numbers from
+#: its registered ``eval_path``, so the register row is this board's data
+#: pointer, not merely its index.
+NAMES_R2 = {
+    (run, label.replace("-canonical-gt", "-r2-gt")): name
     for (run, label), name in NAMES.items()
 }
 
@@ -124,6 +166,110 @@ def standardised_gt() -> gpd.GeoDataFrame:
     return gdf
 
 
+def board_home(reference: str = "standardised") -> Path:
+    """The final-board results home for one reference vintage.
+
+    Args:
+        reference: ``standardised`` (r1, default) or ``r2``.
+
+    Returns:
+        The directory that vintage's board artefacts are written to.
+
+    Raises:
+        SystemExit: On an unknown vintage. Defaulting to r1 here would let a
+            typo silently overwrite the committed board.
+    """
+    try:
+        return BOARD_HOME_BY_REFERENCE[reference]
+    except KeyError:
+        sys.exit(f"unknown board reference {reference!r}; "
+                 f"expected one of {sorted(BOARD_HOME_BY_REFERENCE)}")
+
+
+def r2_gt() -> gpd.GeoDataFrame:
+    """Reference revision r2, loaded from its committed merged artefact.
+
+    r2 enters the chain as ONE file — the same
+    ``best-available-gt-55maps-r2.geojson`` that step 3 hands to
+    ``evaluate_detections.py --ground-truth``. That is deliberate (PI ruling,
+    Session 149, adjudicating MAJOR 5 of the r2-chain audit): the scorer takes
+    a single path, so building the board's reference by a *second*, in-process
+    route would create two constructions of the same object that could drift
+    apart. One file, one construction, no equivalence gate needed.
+
+    What that costs is the engine's own de-duplication pass, which
+    :func:`standardised_gt` gets for free by calling ``build_extended_gt``.
+    So this function re-asserts the same three invariants directly:
+
+    1. **Census** — total and per-layer counts match the committed revision.
+    2. **Channel duplicates** — no two reference points within
+       ``DEDUP_TOLERANCE_M``, the tolerance ``build_extended_gt`` enforces.
+       Verified on r2 as built: the nearest audit addition sits 68.35 m from
+       any existing point (13.7x tolerance), so this gate is a guardrail for
+       future revisions rather than a live correction.
+    3. **Identity** — ``gt_id`` unique.
+
+    Returns:
+        The r2 reference in EPSG:32635, buffer-invariant (every layer is at a
+        marked centre or better, so no ring gate applies at any radius).
+
+    Raises:
+        SystemExit: On any gate failure. A reference that does not reconcile
+            must never reach a board — a wrong instrument silently rescales
+            every number downstream.
+    """
+    gdf = gpd.read_file(R2_REFERENCE).to_crs("EPSG:32635")
+
+    if len(gdf) != R2_EXPECTED_N:
+        sys.exit(f"GATE FAIL: r2 reference has {len(gdf)} points, "
+                 f"expected {R2_EXPECTED_N}")
+    counts = gdf["layer"].value_counts().to_dict()
+    if counts != R2_EXPECTED_LAYERS:
+        sys.exit(f"GATE FAIL: r2 layer census {counts} != {R2_EXPECTED_LAYERS}")
+    if gdf["gt_id"].duplicated().any():
+        sys.exit("GATE FAIL: duplicate gt_id in the r2 reference")
+
+    # The 5 m channel-duplicate audit, applied to the merged file. k=2 because
+    # every point's nearest neighbour is itself.
+    tree = cKDTree(np.c_[gdf.geometry.x, gdf.geometry.y])
+    dist, _ = tree.query(np.c_[gdf.geometry.x, gdf.geometry.y], k=2)
+    n_close = int((dist[:, 1] < DEDUP_TOLERANCE_M).sum())
+    if n_close:
+        sys.exit(f"GATE FAIL: {n_close} r2 reference points lie within "
+                 f"{DEDUP_TOLERANCE_M} m of another — channel duplicates that "
+                 f"build_extended_gt would have dropped")
+
+    print(f"r2 reference: {len(gdf)} points "
+          f"({counts['student_standardised']} student + "
+          f"{counts['extension_standardised']} extension + "
+          f"{counts['audit_reviewed']} audit-reviewed); "
+          f"min separation {dist[:, 1].min():.2f} m", flush=True)
+    return gdf
+
+
+def reference_gt(reference: str) -> gpd.GeoDataFrame:
+    """Dispatch to the reference a BOARD BUILD is targeting.
+
+    Deliberately NOT used by the G3/G4 regression gates in
+    ``final_board_build.py`` / ``final_board_sweeps.py``, which keep calling
+    :func:`standardised_gt` directly. "The mechanism still reproduces the
+    committed r1 board" is a claim about the *code*, not about the reference
+    under test, so those gates must stay pinned to r1 and stay LIVE during an
+    r2 build (PI ruling, Session 149, adjudicating BLOCKER 4).
+
+    Args:
+        reference: ``canonical``, ``standardised`` or ``r2``.
+
+    Returns:
+        The reference frame in EPSG:32635.
+    """
+    if reference == "r2":
+        return r2_gt()
+    if reference == "standardised":
+        return standardised_gt()
+    return canonical_gt_at(BUFFER_M)
+
+
 def render_md(payload: dict) -> str:
     """Render the F1 board markdown from the results dict (== the committed JSON).
 
@@ -147,16 +293,15 @@ def render_md(payload: dict) -> str:
     tier_of = {n: t for t, members in enumerate(payload["tiers"], 1) for n in members}
     pairs = payload["pairwise"]
     n_sig = sum(1 for p in pairs if p["significant"])
-    standardised = payload.get("reference") == "standardised"
-    title = (
-        "# 55-map generalisation leaderboard — standardised reference @ 50 m"
-        if standardised
-        else "# 55-map generalisation leaderboard — canonical GT @ 50 m"
-    )
-    ref_note = (
-        STANDARDISED_ATTRIBUTION_NOTE if standardised
-        else ATTRIBUTION_RESOLUTION_NOTE
-    )
+    ref = payload.get("reference", "canonical")
+    title = "# 55-map generalisation leaderboard — " + {
+        "r2": "reference r2 @ 50 m",
+        "standardised": "standardised reference @ 50 m",
+    }.get(ref, "canonical GT @ 50 m")
+    ref_note = {
+        "r2": R2_ATTRIBUTION_NOTE,
+        "standardised": STANDARDISED_ATTRIBUTION_NOTE,
+    }.get(ref, ATTRIBUTION_RESOLUTION_NOTE)
     md = [title,
           "",
           f"> Working buffer 50 m per the noise-floor derivation "
@@ -193,8 +338,7 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
             conditions).
     """
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    standardised = reference == "standardised"
-    suffix = "_standardised" if standardised else ""
+    suffix = {"standardised": "_standardised", "r2": "_r2"}.get(reference, "")
     md_name = f"55map-leaderboard-50m{suffix.replace('_', '-')}.md"
     json_name = f"55map_leaderboard_50m{suffix}.json"
 
@@ -212,20 +356,29 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
     gdf_bounds = gdf_bounds.to_crs("EPSG:32635")
     tile_order = sorted(gdf_bounds["tile_name"].tolist())
     tile_index = {t: i for i, t in enumerate(tile_order)}
-    if standardised:
-        gdf_ref = standardised_gt()
-        print(f"standardised reference (buffer-invariant): {len(gdf_ref)} "
-              f"points; {len(tile_order)} tiles", flush=True)
-    else:
-        gdf_ref = canonical_gt_at(BUFFER_M)
+    gdf_ref = reference_gt(reference)
+    if reference == "canonical":
         print(f"canonical GT at {BUFFER_M} m: {len(gdf_ref)} points; "
               f"{len(tile_order)} tiles", flush=True)
+    else:
+        print(f"{reference} reference (buffer-invariant): {len(gdf_ref)} "
+              f"points; {len(tile_order)} tiles", flush=True)
 
     dec = json.loads(RUN_CONDS.read_text())["decomposition"]
-    names = NAMES_STANDARDISED if standardised else NAMES
+    names = {"standardised": NAMES_STANDARDISED,
+             "r2": NAMES_R2}.get(reference, NAMES)
     cells = []
     for (run_id, label), name in names.items():
-        cond = next(c for c in dec[run_id]["conditions"] if c["label"] == label)
+        cond = next(
+            (c for c in dec[run_id]["conditions"] if c["label"] == label), None)
+        if cond is None:
+            # The board reads its numbers from the register row's eval_path,
+            # so a missing row is a sequencing error, not a data gap: step 7a
+            # (register) must precede step 4 (build). Say which row.
+            sys.exit(f"MISSING REGISTER ROW: {run_id}::{label} is not in "
+                     f"{RUN_CONDS.relative_to(BASE_DIR)}. Run "
+                     f"register_standardised_gt_conditions.py "
+                     f"--reference {reference} first (step 7a before step 4).")
         det = gpd.read_file(BASE_DIR / cond["detections"])
         crs = "EPSG:32635" if abs(det.geometry.x.iloc[0]) > 180 else "EPSG:4326"
         det = det.set_crs(crs, allow_override=True).to_crs("EPSG:32635")
@@ -305,10 +458,12 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--reference",
-        choices=["canonical", "standardised"],
+        choices=["canonical", "standardised", "r2"],
         default="canonical",
-        help="Reference to tier against: canonical (legacy, default) or "
-             "standardised (ruling 21; writes *_standardised outputs).",
+        help="Reference to tier against: canonical (legacy, default), "
+             "standardised (ruling 21; writes *_standardised outputs), or "
+             "r2 (the 2026-09 audit revision; writes *_r2 outputs and reads "
+             "-r2-gt register rows, which step 7a must have written).",
     )
     _args = parser.parse_args()
     raise SystemExit(main(

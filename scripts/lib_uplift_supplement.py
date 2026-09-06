@@ -132,7 +132,15 @@ REFERENCE_BY_FILENAME: dict[str, str] = {
     "student-mounds-55maps-reviewed.geojson": "student",
     "canonical-gt-55maps-r50.geojson": "canonical",
     "best-available-gt-55maps.geojson": "standardised",
+    "best-available-gt-55maps-r2.geojson": "r2",
 }
+
+#: Basenames that name a reference in the best-available family. Any such file
+#: MUST resolve to a term: an unrecognised one is a new vintage nobody taught
+#: this module about, and degrading it to "unresolved" would let the supplement
+#: print a reference column that silently omits the run (MAJOR 9 of the
+#: r2-chain audit, Session 149).
+REFERENCE_FAMILY_PREFIX = "best-available-gt-55maps"
 
 #: Reference-mound counts, read from the committed GeoJSONs (2026-08-29).
 #: ``canonical`` is per-buffer gated (notation key § 4), so its count is the
@@ -143,6 +151,10 @@ REFERENCE_N_MOUNDS: dict[str, int] = {
     "student": 4746,
     "canonical": 5161,
     "standardised": 5010,
+    # r2 = 4,726 student + 278 extension + 14 audit-reviewed, read from the
+    # committed file 2026-09-06. NOT derivable from "standardised" by the
+    # +14/-6 instruction set alone, because the removals fall in both layers.
+    "r2": 5018,
 }
 
 #: Path of the reference file each vocabulary term names (the re-verify anchor).
@@ -747,6 +759,10 @@ def resolve_reference(
         return ReferenceResolution(
             "canonical", REFERENCE_PATH["canonical"], "label-suffix"
         )
+    if label.endswith("-r2-gt"):
+        return ReferenceResolution(
+            "r2", REFERENCE_PATH["r2"], "label-suffix"
+        )
 
     schema_class = {"combined": "canonical"}.get(
         run_gt_reference or "", run_gt_reference or ""
@@ -754,6 +770,15 @@ def resolve_reference(
     if schema_class in REFERENCE_N_MOUNDS:
         return ReferenceResolution(
             schema_class, REFERENCE_PATH[schema_class], "run-facts"
+        )
+    # A file in the best-available family that reached here is an unknown
+    # vintage. Fail loudly: a silent "unresolved" is how a new reference gets
+    # dropped from the supplement's reference column without anyone noticing.
+    if gt and Path(str(gt)).name.startswith(REFERENCE_FAMILY_PREFIX):
+        raise ValueError(
+            f"unrecognised reference vintage {Path(str(gt)).name!r} for "
+            f"condition {label!r}: add it to REFERENCE_BY_FILENAME and "
+            f"REFERENCE_N_MOUNDS before registering conditions against it"
         )
     return ReferenceResolution(None, None, "unresolved", str(gt) if gt else None)
 

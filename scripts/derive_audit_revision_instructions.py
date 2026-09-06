@@ -52,6 +52,7 @@ import csv
 import hashlib
 import json
 import logging
+import os
 import sys
 from pathlib import Path
 
@@ -158,7 +159,7 @@ def main() -> int:
     }
     (out / "audit-revision-summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     logger.info("removals %d, additions %d -> %s", len(removals), len(additions),
-                path.relative_to(PROJECT_ROOT))
+                os.path.relpath(path, PROJECT_ROOT))
     return 0
 
 

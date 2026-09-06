@@ -112,6 +112,18 @@ N_STUDENT_STD = 4731
 N_EXTENSION_STD = 279
 MIN_NEAREST_STUDENT_M = 10.32  # observed minimum; must exceed the 5 m dedup
 
+# Reference revision r2 (card planning/reference-revision-2026-09-06.md) ships
+# as ONE merged file rather than as source layers, so its census is asserted on
+# that file. The r1 constants above stay exactly as they are: they describe the
+# standardised SOURCE LAYERS, which r2 does not modify — r2 is derived from
+# their union by the committed instruction set (-6 records, +14).
+R2_REFERENCE = REPO / "inputs/vectors/references/best-available-gt-55maps-r2.geojson"
+R2_CENSUS = {
+    "student_standardised": 4726,
+    "extension_standardised": 278,
+    "audit_reviewed": 14,
+}
+
 # Full 14-buffer sweep — locked decision (headline at 50 m, Obs 260).
 BUFFERS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150]
 
@@ -239,8 +251,43 @@ def crosscheck_feature_counts(cells: list[dict]) -> list[dict]:
     return rows
 
 
-def census_checks() -> None:
-    """Assert the standardised layers match their published census."""
+def r2_census_checks() -> None:
+    """Assert reference revision r2 matches its published census.
+
+    r2 is a merged artefact, so there are no source layers to count; the
+    per-layer census is read back off the ``layer`` column instead.
+
+    Raises:
+        SystemExit: On any mismatch. Scoring against a reference whose size is
+            not the stated one silently rescales every downstream number.
+    """
+    import geopandas as gpd
+
+    gdf = gpd.read_file(R2_REFERENCE)
+    counts = gdf["layer"].value_counts().to_dict()
+    if counts != R2_CENSUS:
+        raise SystemExit(
+            f"r2 reference layer census {counts} != {R2_CENSUS} — stop state"
+        )
+    if len(gdf) != sum(R2_CENSUS.values()):
+        raise SystemExit(
+            f"r2 reference has {len(gdf)} features, census says "
+            f"{sum(R2_CENSUS.values())} — stop state"
+        )
+    print(f"census OK: r2 reference {len(gdf)} features "
+          f"({', '.join(f'{k} {v}' for k, v in sorted(counts.items()))})")
+
+
+def census_checks(reference: str = "standardised") -> None:
+    """Assert the reference layers match their published census.
+
+    Args:
+        reference: ``standardised`` (r1, default — checks the two source
+            layers) or ``r2`` (checks the merged revision file).
+    """
+    if reference == "r2":
+        r2_census_checks()
+        return
     with open(STUDENT_STD, encoding="utf-8") as fh:
         n_student = len(json.load(fh)["features"])
     if n_student != N_STUDENT_STD:

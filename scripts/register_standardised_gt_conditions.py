@@ -36,6 +36,7 @@ Licence: Apache 2.0
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -50,7 +51,20 @@ from score_55maps_standardised_reference import (  # noqa: E402
     REPO,
 )
 
-OUT_BASE = REPO / "results/55maps-standardised-ref-2026-08-14"
+#: Results home per reference vintage. Kept as a mapping rather than a single
+#: module constant so that an r2 run CANNOT reach the r1 tree: the G3
+#: regression gate in ``final_board_build.py`` reads r1's evaluation.json files
+#: and compares them to the committed board at 1e-9, so overwriting them in
+#: place would destroy the very artefacts that prove the mechanism still works
+#: (MAJOR 6 of the r2-chain audit, Session 149 — elevated to a pre-step-3
+#: blocker). ``adapt_one`` reads AND writes inside one vintage's home only.
+OUT_BASE_BY_VINTAGE = {
+    "standardised": REPO / "results/55maps-standardised-ref-2026-08-14",
+    "r2": REPO / "results/55maps-r2-ref-2026-09-06",
+}
+#: Retained for callers that import the r1 home by name. New code should take
+#: the home from :func:`vintage_home` so the vintage is always explicit.
+OUT_BASE = OUT_BASE_BY_VINTAGE["standardised"]
 RUN_CONDITIONS = REPO / "results/run-conditions.json"
 BOUNDS_REL = str(BOUNDS.relative_to(REPO))
 HEADLINE_BUFFER = 50  # the 55-map deployment headline (Obs 260)
@@ -64,6 +78,20 @@ UNDEFINED_DISPLAY = "undefined"
 # buffer-invariant and reproduces every cell exactly (E83 re-tiering gate,
 # gap 0.0000); the two source layers it merges are kept alongside.
 GT_REFERENCE = "inputs/vectors/references/best-available-gt-55maps.geojson"
+#: Reference revision r2 (card ``planning/reference-revision-2026-09-06.md``):
+#: the standardised union with the PI's audit adjudications applied (6 records
+#: removed, 14 added). r2 ships as ONE merged file and enters the chain that
+#: way — the same path the scorer takes (PI ruling, Session 149, adjudicating
+#: MAJOR 5), so there is no second construction to keep in step.
+R2_GT_REFERENCE = "inputs/vectors/references/best-available-gt-55maps-r2.geojson"
+R2_GT_SOURCES = [
+    GT_REFERENCE,
+    "results/reference-revision-r2/audit-revision-instructions.csv",
+]
+R2_GT_NOTE = ("scored against reference revision r2 (4,726 student + 278 "
+              "extension + 14 audit-reviewed marked centres, included whole "
+              "at every R); derived from the standardised reference by the "
+              "committed audit instruction set (-6 records, +14)")
 GT_SOURCES = [
     "results/deployment-oracle-2026-06-06/canonical-gt/standardised/"
     "student-mounds-55maps-standardised.geojson",
@@ -104,10 +132,91 @@ CROSSREF_NOTE = (
     "results/55maps-standardised-ref-2026-08-14/."
 )
 
+R2_CROSSREF_NOTE = (
+    "Reference-revision-r2 track (PI audit, Session 148-149): the -r2-gt "
+    "conditions score the same detection sets against reference revision r2 "
+    "(the standardised layers with the cluster- and empty-tile-audit "
+    "adjudications applied: -6 records, +14; 5,018 total at marked centres). "
+    "They supersede the -standardised-gt cells as the paper reference; see "
+    "results/55maps-r2-ref-2026-09-06/ and "
+    "planning/reference-revision-2026-09-06.md."
+)
 
-def adapt_one(label: str, det_rel: str) -> Path:
-    """Transform one cell's standardised summary.json into evaluation.json."""
-    cell_dir = OUT_BASE / label
+
+#: Per-vintage register facts. ``suffix`` is the condition-label suffix the
+#: boards resolve cells by; ``reference`` the loadable single-file path the
+#: evaluation records as its ground truth.
+VINTAGES: dict[str, dict] = {
+    "standardised": {
+        "suffix": "-standardised-gt",
+        "reference": GT_REFERENCE,
+        "sources": GT_SOURCES,
+        "note": GT_NOTE,
+        "crossref": CROSSREF_NOTE,
+    },
+    "r2": {
+        "suffix": "-r2-gt",
+        "reference": R2_GT_REFERENCE,
+        "sources": R2_GT_SOURCES,
+        "note": R2_GT_NOTE,
+        "crossref": R2_CROSSREF_NOTE,
+    },
+}
+
+
+def vintage_home(vintage: str) -> Path:
+    """The results home for one reference vintage.
+
+    Args:
+        vintage: ``standardised`` (r1) or ``r2``.
+
+    Returns:
+        The directory holding that vintage's per-cell scoring artefacts.
+
+    Raises:
+        KeyError: On an unknown vintage — better than defaulting to r1 and
+            overwriting it.
+    """
+    return OUT_BASE_BY_VINTAGE[vintage]
+
+
+def registration_for(cell_label: str, vintage: str) -> tuple[str, str, str]:
+    """Resolve (run, label to clone, new label) for one cell and vintage.
+
+    Every vintage clones the SAME ``-canonical-gt`` base spec rather than
+    chaining off the previous vintage, so a defect in one vintage's row cannot
+    propagate into the next.
+
+    Args:
+        cell_label: Board cell, e.g. ``TH7-k4``.
+        vintage: ``standardised`` or ``r2``.
+
+    Returns:
+        The run family, the canonical label to clone, and the new label.
+    """
+    run, src_label, std_label = REGISTRATIONS[cell_label]
+    if vintage == "standardised":
+        return run, src_label, std_label
+    return run, src_label, src_label.replace("-canonical-gt",
+                                             VINTAGES[vintage]["suffix"])
+
+
+def adapt_one(label: str, det_rel: str, vintage: str = "standardised") -> Path:
+    """Transform one cell's scored summary.json into evaluation.json.
+
+    Args:
+        label: Board cell label, e.g. ``TH7-k4``.
+        det_rel: Repo-relative path to the cell's detections GeoJSON.
+        vintage: Reference vintage — ``standardised`` (r1, default: unchanged
+            behaviour) or ``r2``. Reads and writes inside that vintage's home
+            ONLY, so an r2 run cannot touch the r1 artefacts the G3 regression
+            gate reads.
+
+    Returns:
+        Path to the written ``evaluation.json``.
+    """
+    v = VINTAGES[vintage]
+    cell_dir = vintage_home(vintage) / label
     summary = json.loads((cell_dir / "summary.json").read_text())
 
     buffers = []
@@ -153,14 +262,14 @@ def adapt_one(label: str, det_rel: str) -> Path:
             "source_summary": str(
                 (cell_dir / "summary.json").relative_to(REPO)
             ),
-            "gt_reference": GT_REFERENCE,
+            "gt_reference": v["reference"],
             "metric": (
-                "corrected-F1 @ R (extended-GT Hungarian, standardised "
-                "reference), tile-MCC on the SAME reference"
+                f"corrected-F1 @ R (extended-GT Hungarian, {vintage} "
+                f"reference), tile-MCC on the SAME reference"
             ),
             "tile_classification_buffer_metres": HEADLINE_BUFFER,
             "tile_classification_note": (
-                "Under the standardised reference the extended GT is "
+                f"Under the {vintage} reference the extended GT is "
                 "identical at every R (marked centres, no ring gate), so "
                 "tile MCC is buffer-invariant by construction — the "
                 "single block is exact at every buffer, not a 50 m pin."
@@ -184,9 +293,9 @@ def adapt_one(label: str, det_rel: str) -> Path:
             "input_files": {
                 "detections": [det_rel],
                 "bounds": BOUNDS_REL,
-                "ground_truth": GT_REFERENCE,
-                "ground_truth_sources": GT_SOURCES,
-                "ground_truth_note": GT_NOTE,
+                "ground_truth": v["reference"],
+                "ground_truth_sources": v["sources"],
+                "ground_truth_note": v["note"],
             },
         },
         "summary": {
@@ -200,9 +309,21 @@ def adapt_one(label: str, det_rel: str) -> Path:
     return out_path
 
 
-def register_one(dec: dict, cell_label: str) -> str:
-    """Clone the run's -canonical-gt spec into a -standardised-gt one."""
-    run, src_label, new_label = REGISTRATIONS[cell_label]
+def register_one(dec: dict, cell_label: str,
+                 vintage: str = "standardised") -> str:
+    """Clone the run's -canonical-gt spec into one for the given vintage.
+
+    Args:
+        dec: The ``decomposition`` block of run-conditions.json, mutated in
+            place.
+        cell_label: Board cell label, e.g. ``TH7-k4``.
+        vintage: ``standardised`` (default) or ``r2``.
+
+    Returns:
+        A one-line status string (registered, or skipped as already present).
+    """
+    v = VINTAGES[vintage]
+    run, src_label, new_label = registration_for(cell_label, vintage)
     run_spec = dec[run]
     conds = run_spec["conditions"]
     if any(c.get("label") == new_label for c in conds):
@@ -211,25 +332,42 @@ def register_one(dec: dict, cell_label: str) -> str:
     new = json.loads(json.dumps(src))  # deep copy
     new["label"] = new_label
     new["eval_path"] = str(
-        (OUT_BASE / cell_label / "evaluation.json").relative_to(REPO)
+        (vintage_home(vintage) / cell_label / "evaluation.json")
+        .relative_to(REPO)
     )
-    new["_note"] = (
-        f"{cell_label} vs the ruling-21 standardised reference "
-        "(student 4,731 + extension 279 at marked centres; F1 and tile "
-        "MCC share the reference — queue items 2-3, Session 132)"
-    )
+    new["_note"] = f"{cell_label} {v['note']}"
     conds.append(new)
     note = run_spec.get("_note", "")
-    if "Standardised-reference track" not in note:
-        run_spec["_note"] = (note + " " + CROSSREF_NOTE).strip()
+    # The crossref is appended once per run per vintage; its opening phrase is
+    # the idempotency key, so re-running never duplicates it.
+    key = v["crossref"].split(":")[0]
+    if key not in note:
+        run_spec["_note"] = (note + " " + v["crossref"]).strip()
     return f"  {run}::{new_label} registered"
 
 
-def main() -> None:
-    """Adapt all 8 cells, then register their conditions."""
-    print("Adapting standardised summaries to generator shape...")
+def main(vintage: str = "standardised") -> None:
+    """Adapt every cell's summary, then register its condition row.
+
+    Args:
+        vintage: ``standardised`` (r1, default) or ``r2``.
+
+    Raises:
+        SystemExit: If the vintage's home does not exist. For r2 that means
+            step 3 has not been run: this script ADAPTS scored summaries, it
+            does not score, so an absent home would otherwise surface as a
+            confusing per-cell FileNotFoundError.
+    """
+    home = vintage_home(vintage)
+    if not home.is_dir():
+        sys.exit(
+            f"{vintage} home {home.relative_to(REPO)} does not exist — "
+            f"score the cells into it first (step 3 precedes step 7a)."
+        )
+    print(f"Adapting {vintage} summaries to generator shape "
+          f"({home.relative_to(REPO)})...")
     for cell in CELLS:
-        p = adapt_one(cell["label"], cell["det"])
+        p = adapt_one(cell["label"], cell["det"], vintage)
         s = json.loads(p.read_text())["summary"]
         b50 = next(
             b for b in s["buffers"] if b["buffer_metres"] == HEADLINE_BUFFER
@@ -248,7 +386,7 @@ def main() -> None:
     print("Registering conditions...")
     rc = json.loads(RUN_CONDITIONS.read_text())
     for cell in CELLS:
-        print(register_one(rc["decomposition"], cell["label"]))
+        print(register_one(rc["decomposition"], cell["label"], vintage))
     # Match the file's canonical serialisation (indent=1, non-ASCII kept) so the
     # diff is only the added conditions. The trailing newline is PRESERVED from
     # what is on disk rather than assumed: this comment used to assert there was
@@ -264,4 +402,15 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    _ap = argparse.ArgumentParser(description=__doc__)
+    _ap.add_argument(
+        "--reference",
+        choices=sorted(VINTAGES),
+        default="standardised",
+        help="Reference vintage to adapt and register: standardised (r1, "
+             "default — unchanged behaviour) or r2 (the 2026-09 audit "
+             "revision; reads and writes results/55maps-r2-ref-2026-09-06/ "
+             "and registers -r2-gt rows). Step 7a: run this BEFORE the "
+             "boards, which resolve cells by registered label.",
+    )
+    main(_ap.parse_args().reference)
