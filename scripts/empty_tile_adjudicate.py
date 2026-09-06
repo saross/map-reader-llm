@@ -166,6 +166,42 @@ def clopper_pearson(k: int, n: int, alpha: float = 0.05) -> tuple[float, float]:
     return lo, hi
 
 
+#: Two marks closer than this are one sighting. Census tiles overlap (a 48 px
+#: strip at 336 px stride on 384 px tiles), so the same symbol can be marked
+#: on two adjacent tiles; Ruling 21's distinct-mound floor is the same 15 m.
+DISTINCT_M = 15.0
+
+
+def distinct_groups(xy: np.ndarray, tol_m: float = DISTINCT_M) -> list[int]:
+    """Single-linkage group labels for points within ``tol_m`` of each other.
+
+    Args:
+        xy: (n, 2) array of coordinates in metres.
+        tol_m: linkage distance.
+
+    Returns:
+        A label per point; points sharing a label are one sighting. Empty
+        input returns an empty list.
+    """
+    n = len(xy)
+    if n == 0:
+        return []
+    labels = list(range(n))
+
+    def root(i: int) -> int:
+        while labels[i] != i:
+            labels[i] = labels[labels[i]]
+            i = labels[i]
+        return i
+
+    tree = cKDTree(xy)
+    for i, j in tree.query_pairs(tol_m):
+        ri, rj = root(i), root(j)
+        if ri != rj:
+            labels[max(ri, rj)] = min(ri, rj)
+    return [root(i) for i in range(n)]
+
+
 def classify(hits: dict[str, tuple[float, str]], radius_m: float,
              symbol: str | None = None) -> str:
     """Apply the § 5b class order to a mark's nearest hits.
@@ -246,15 +282,42 @@ def main() -> int:
                 entry["gt_id"] = str(g["gt_id"])
             detail[name] = entry
         cls = classify(hits, args.radius_m, m.get("symbol"))
+        # A GT-error flag names the reference point it sits on (within the
+        # distinct-mound floor); a flag on a point no longer in the
+        # reference — e.g. a canonical phantom Ruling 21 already removed —
+        # records that instead of borrowing a neighbour.
+        gt_dist, gt_idx = sets["ground-truth"]["tree"].query(mxy[i], k=1)
+        flagged = None
+        if cls == "gt-error-flag":
+            g = sets["ground-truth"]["gdf"].iloc[int(gt_idx)]
+            flagged = (str(g["gt_id"]) if gt_dist <= DISTINCT_M and "gt_id" in g
+                       else f"not-in-reference (nearest {gt_dist:.1f} m)")
         rows.append({
             "order_index": int(m["order_index"]), "tile_name": m["tile_name"],
             "map_name": m["map_name"], "tier": m["tier"], "symbol": m.get("symbol"),
             "x_world": round(float(m["x_world"]), 1), "y_world": round(float(m["y_world"]), 1),
-            "class": cls, "nearest": detail,
+            "class": cls, "flagged_gt_id": flagged, "nearest": detail,
             "nearest_anything_m": round(min(d for d, _ in hits.values()), 1),
         })
         logger.info("mark %s (%s): %s — nearest %s m", m["tile_name"], m["tier"], cls,
                     rows[-1]["nearest_anything_m"])
+
+    # ---- Distinct sightings: collapse marks of one symbol made on adjacent,
+    # overlapping tiles. Flags collapse onto the flagged reference point;
+    # other marks by single linkage at the distinct-mound floor.
+    flag_points = sorted({r["flagged_gt_id"] for r in rows
+                          if r["class"] == "gt-error-flag" and r["flagged_gt_id"]})
+    non_flag = [k for k, r in enumerate(rows) if r["class"] != "gt-error-flag"]
+    groups = distinct_groups(mxy[non_flag]) if non_flag else []
+    for k, g in zip(non_flag, groups):
+        rows[k]["sighting_group"] = int(g)
+    distinct_by_class: dict[str, int] = {}
+    for cls_name in sorted({rows[k]["class"] for k in non_flag}):
+        distinct_by_class[cls_name] = len({rows[k]["sighting_group"] for k in non_flag
+                                           if rows[k]["class"] == cls_name})
+    distinct = {"gt_error_flags": {"marks": sum(1 for r in rows if r["class"] == "gt-error-flag"),
+                                   "distinct_points": len(flag_points), "points": flag_points},
+                "sightings_by_class": distinct_by_class}
 
     # ---- Floor estimate ----
     summary = json.loads((PROJECT_ROOT / SAMPLE_SUMMARY).read_text())
@@ -303,6 +366,7 @@ def main() -> int:
         "reviewed_by_tier": reviewed["tier"].value_counts().to_dict(),
         "marks": int(len(marks)),
         "classes": classes,
+        "distinct": distinct,
         "frame_empty_tiles": n_frame,
         "gt_points": n_gt,
         "reference_sets": {n: {"kind": s["kind"], "n": int(len(s["gdf"])), "path": s["path"]}
@@ -335,6 +399,11 @@ def render_md(p: dict) -> str:
         f"- Tiles reviewed: **{p['reviewed_tiles']}** of a {p['frame_empty_tiles']}-tile empty "
         f"frame (by tier: {p['reviewed_by_tier']}).",
         f"- Marks placed: **{p['marks']}**. Classes: {p['classes']}.",
+        f"- Distinct sightings after collapsing overlap-strip duplicates "
+        f"({DISTINCT_M:.0f} m): {p['distinct']['sightings_by_class']}; GT-error flags "
+        f"{p['distinct']['gt_error_flags']['marks']} marks on "
+        f"{p['distinct']['gt_error_flags']['distinct_points']} distinct reference points "
+        f"{p['distinct']['gt_error_flags']['points']}.",
         f"- GT points: {p['gt_points']}.",
         "",
         "## Double-miss floor",

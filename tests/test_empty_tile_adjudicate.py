@@ -12,11 +12,28 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+import numpy as np
+
 from scripts.empty_tile_adjudicate import (  # noqa: E402
     GT_ERROR_SYMBOL,
     classify,
     clopper_pearson,
+    distinct_groups,
 )
+
+
+@pytest.mark.tier1
+def test_overlap_strip_duplicates_collapse_to_one_sighting():
+    """Two marks of one symbol on adjacent tiles (a few metres apart) are one
+    sighting; a mark 300 m away is another; chains link transitively."""
+    xy = np.array([[0.0, 0.0], [2.5, 1.0],        # same symbol, two tiles
+                   [300.0, 0.0],                  # a different mound
+                   [10.0, 0.0], [20.0, 0.0]])     # chain: 0-10-20 links via 10 m steps
+    labels = distinct_groups(xy, tol_m=15.0)
+    assert labels[0] == labels[1] == labels[3] == labels[4]
+    assert labels[2] != labels[0]
+    assert len(set(labels)) == 2
+    assert distinct_groups(np.empty((0, 2))) == []
 
 
 @pytest.mark.tier1
