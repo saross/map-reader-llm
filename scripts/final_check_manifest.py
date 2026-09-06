@@ -32,6 +32,16 @@ Review with::
 Usage::
 
     python scripts/final_check_manifest.py [--adjudication PATH] [--out-dir DIR]
+                                           [--marks-class CLASS]
+
+``--marks-class`` selects which adjudication class to re-review; the
+default is the census edge-safety marks (known-in-GT). The empty-tile
+double-misses are re-viewed before a reference revision with::
+
+    python scripts/final_check_manifest.py \
+        --adjudication results/empty-tile-audit/adjudication.json \
+        --marks-class true-double-miss \
+        --out-dir results/empty-tile-audit/final-check
 
 Zero API, seconds.
 
@@ -74,19 +84,25 @@ def main() -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--adjudication", default="results/cluster-audit/adjudication.json")
     ap.add_argument("--out-dir", default="results/cluster-audit/final-check")
+    ap.add_argument("--marks-class", default="known-in-GT",
+                    help="Adjudication class to re-review (default known-in-GT, the "
+                         "edge-safety marks; e.g. true-double-miss to re-view the "
+                         "empty-tile double-misses before they enter a reference revision).")
     args = ap.parse_args()
 
     adj = json.loads((PROJECT_ROOT / args.adjudication).read_text())
-    marks = {(r["tile_name"]): r for r in adj["per_mark"] if r["class"] == "known-in-GT"}
-    edge_list = adj["census"]["edge_safety_marks"]
-    logger.info("edge-safety marks: %d (reference %s)", len(edge_list), adj["reference"])
+    rows_of_class = [r for r in adj["per_mark"] if r["class"] == args.marks_class]
+    logger.info("%s marks: %d (reference %s)", args.marks_class, len(rows_of_class),
+                adj["reference"])
 
     bounds = gpd.read_file(BOUNDS)
     gt = gpd.read_file(PROJECT_ROOT / GT_FILES[adj["reference"]]).to_crs(bounds.crs)
 
     rows, overlay, files = [], {}, []
-    for k, e in enumerate(sorted(edge_list, key=lambda r: r["position"])):
-        m = marks[e["tile_name"]]
+    for k, m in enumerate(sorted(rows_of_class, key=lambda r: r["order_index"])):
+        e = {"tile_name": m["tile_name"], "position": int(m["order_index"]) + 1,
+             "gt_id": m["nearest"]["ground-truth"].get("gt_id"),
+             "gt_m": m["nearest"]["ground-truth"]["distance_m"], "edge_m": m["edge_m"]}
         pt = Point(m["x_world"], m["y_world"])
         # Every evaluation tile containing the mark; keep the one where it
         # sits farthest from an edge (the source tile is always a candidate).

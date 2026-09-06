@@ -95,7 +95,59 @@ per-condition split of E_om between conditions is not measured — the
 column is a corpus-level correction applied uniformly, which is why it
 cannot re-order a board and is presented as a column, not a re-tiering.
 
+## 2b. The student baseline, re-estimated (PI request, 2026-09-06)
+
+The novice baseline was measured directly only on the four Gold
+Standard (GS) sheets against the curator GT (Obs 316, 443: P 1.000 /
+R 0.9473 / F1 0.9729 at 50 m; FN 5.27 %, CI 2.9–8.8 %), where the
+students made no false positives. On the 55-map corpus the student
+layer IS the reference's backbone, so student precision was
+unmeasurable there — until the census flagged 5 of the 686 clustered
+student points as not mounds. The audits therefore support a
+corpus-level re-estimate: precision from the flagged share of student
+points; recall from the mounds the students missed — the 279
+reviewer-confirmed extension mounds, the 14 audit additions, the
+estimated unrecovered double-misses in the empty frame, and the
+estimated 3.7-found omissions outside the clusters — with the same
+Monte Carlo propagation as § 2. It reports beside the GS direct figure,
+not in place of it: the two estimate different things (a 4-sheet direct
+measurement on a curated GT versus a 55-sheet model-assisted
+reconstruction), and their agreement or disagreement is itself a
+result for D.7 (Obs 443's person-driven variance).
+
+**Preliminary figure (2026-09-06, on r1 sizes and the audit rates;
+to be recomputed on r2 after the five-tile re-review).** Inputs:
+4,731 student records; 686 of them in clusters, 5 flagged (0.73 %);
+missed by students = 279 extension + 14 audit additions + p_dm(empty)
+× 4,676 (≈ 56) + p_om × 4,291 unaudited points (≈ 40); Beta posteriors
+with a flat prior, 10,000 draws, seed 42:
+
+| | P | R | F1 | Basis |
+|---|---:|---:|---:|---|
+| 55-map corpus-level (this estimate) | 0.992 (0.983–0.997) | 0.923 (0.911–0.931) | 0.956 (0.949–0.962) | r1 + audit rates, two extrapolated terms |
+| — without the extrapolated terms | 0.992 | 0.941 | 0.966 | directly reviewed misses only (279 + 14) |
+| GS-4 direct (Obs 316/443) | 1.000 | 0.947 (FN 5.27 %, CI 2.9–8.8 %) | 0.973 | 4 sheets, curator GT, 50 m |
+
+Reading: the students' corpus-wide false-positive count is small (≈ 39,
+15–81, i.e. under 1 %) but not zero as the GS sheets suggested; their
+recall sits 2–3 points below the GS-4 figure once the model-found and
+estimated unrecovered misses are counted, consistent with the
+55-map-implied F1 of 0.934 in Obs 443 lying below the GS-4 0.973. The
+two extrapolated terms account for 0.018 of recall — that is the part
+the estimator, not the review, supplies.
+
 ## 3. Decisions for the PI (rule / reason / what to check)
+
+**Rulings 2026-09-06 (PI):** (1) re-review the 5 empty-stratum
+double-misses first — YES, run as a final-check pass
+(`final_check_manifest.py --marks-class true-double-miss`); (2) the
+estimator in § 2 — ACCEPTED; (3) standardised chain only — ACCEPTED,
+with the paper framing: the standardised chain is the chain the paper
+discusses; the older canonical chain is mentioned in Methods and
+invoked in Results/Discussion only to draw comparisons and note
+corrections; (4) sequencing behind the 3.7 register rows and the
+membership ruling — AGREED. Item 2 (non-Mound points) was already
+moot. The student re-estimate (§ 2b) joins the queue as item 9.
 
 1. **The change set.** Rule: adopt the 14 additions and 6 removals as
    listed. Reason: every one is a directly reviewed mark with a final
@@ -173,6 +225,10 @@ items).
 8. Disclosure: an erratum entry (the reference changed after the
    registered analyses), Methods § M.x reference paragraph, D.8
    limitations (the estimated column's assumptions), and an Obs.
+9. **Student baseline re-estimate** (§ 2b): a small script over r2 and
+   the audit rates → corpus-level student P / R / F1 with intervals,
+   tabulated beside the GS-4 direct figures; feeds D.7 and the
+   student-baseline card § 4.
 
 Expected wall-clock: the re-score and board chain took ~1 day of
 sapphire time at the final-board build (Session 143); the estimator is
