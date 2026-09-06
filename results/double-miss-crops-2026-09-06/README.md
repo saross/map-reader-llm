@@ -10,7 +10,7 @@ digitisers who built the reference nor by any model run in this study.
 There are seven — five from the sampled empty-tile stratum and two from the
 complete cluster census. All seven carry the classic kurgan symbol, a hairy
 brown circle, and all seven sit far from anything in the reference: the
-nearest reference point is 185–731 m away, so none is a near-miss
+nearest recorded point in any set (GT or union candidate) is 185–731 m away and the nearest GT point 571–1,518 m, so none is a near-miss
 mis-registration.
 
 ## Contents
@@ -61,7 +61,7 @@ the script aborts rather than transform implicitly.
 
 ## The seven
 
-| Crop | Sheet | Review tile | Symbol | Nearest reference point |
+| Crop | Sheet | Review tile | Symbol | Nearest recorded point (GT or any union) |
 |---|---|---|---|---|
 | `empty #145` | K-35-077-2 | `K-35-077-2_x1680_y1008` | hairy brown circle | 346 m |
 | `empty #147` | K-35-051-3 | `K-35-051-3_x1008_y1344` | hairy brown circle | 572 m |
@@ -93,12 +93,12 @@ All three gates passed on the run that produced these files.
 clearly separated question: the census marks that are missing from the
 reference but that a model **did** record — six adjudicated `detected` and one
 `proposed-but-filtered`. These are not double-misses; they are omissions in
-the human reference that the pipeline caught. Nearest reference point is 1–6 m
+the human reference that the pipeline caught. The nearest recorded point — a model detection — is 1–6 m, while the nearest reference point is 68–633 m
 for all seven, which is the signature of a mound the reference records
 slightly off rather than not at all in some cases; read the census
 adjudication for the per-mark reasoning.
 
-| Crop | Sheet | Review tile | Symbol | Nearest reference point |
+| Crop | Sheet | Review tile | Symbol | Nearest recorded point (GT or any union) |
 |---|---|---|---|---|
 | `census #77` | K-35-053-2 | `K-35-053-2_x3360_y2352` | hairy brown circle | 2 m |
 | `census #127` | K-35-054-4_Voynika | `K-35-054-4_Voynika_x672_y336` | hairy brown circle | 4 m |

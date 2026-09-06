@@ -512,7 +512,7 @@ def build_contact_sheet(
             f"{rec.map_name}\n"
             f"{rec.tile_name.removesuffix('.png')}\n"
             f"{rec.symbol.lower()}\n"
-            f"nearest reference point {rec.nearest_anything_m:.0f} m",
+            f"nearest recorded point (GT or any union) {rec.nearest_anything_m:.0f} m",
             ha="center",
             va="top",
             fontsize=6.5,
