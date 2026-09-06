@@ -278,7 +278,10 @@ random sample of the 4,676-tile empty frame): **5/470 = 1.06 % of empty
 tiles (Clopper–Pearson 95 % 0.35–2.47 %) → ≈ 50 missed mounds in the
 frame (16–115) ≈ 0.96 % of the 5,161-point GT (0.31–2.23 %)**. The
 frame is the EMPTY stratum only; misses inside occupied tiles are the
-cluster census's question (§ 5c).
+cluster census's question (§ 5c). Regenerated 2026-09-06 against the
+Ruling-21 standardised reference (§ 5c, reference switch): every class
+unchanged (the four known-in-GT marks sit 2.4–30.6 m from a
+standardised point), share of GT 0.99 % of 5,010.
 
 ### 5c. Phase 2b — the cluster audit (PI-commissioned 2026-09-01)
 
@@ -301,6 +304,32 @@ review of known-cluster neighbourhoods:
 - **Protocol**: the audit app extended with a KNOWN-MOUNDS OVERLAY
   (canonical GT drawn on the tile) so the reviewer marks only
   ADDITIONAL, unrecorded mounds; same adjudication protocol (§ 5b).
+- **REFERENCE SWITCHED to the Ruling-21 standardised GT (PI,
+  2026-09-06, S148, after 10 census tiles).** The first tile's overlay
+  showed two known mounds 52 m apart for one symbol; the reviewer
+  flagged the second (`phantom:745`) as a GT error. It was not a review
+  error: the canonical review had accepted a real mound, and Ruling 21
+  had already removed that phantom as a duplicate of `student:00001` —
+  but the census sampler and § 5b drew from the canonical r50 file
+  (5,161 points), not the standardised reference
+  (`best-available-gt-55maps.geojson`, 4,731 + 279 = 5,010). Of the
+  canonical file's 415 phantoms, 176 have no standardised counterpart
+  within 15 m (71 of the 72 within 50 m of a same-map student point,
+  all 27 at 50–60 m); 151 of the 241 phantoms drawn on the canonical
+  census tiles were already-removed duplicates, on 308 of 739 tiles.
+  Rebuilt on the standardised reference (`cluster_audit_sample.py
+  --gt`, now the default): **334 clusters, 719 mounds, 478 census
+  tiles** (465 with overlay) — 270 of the canonical build's 739 tiles
+  were clusters formed by a student point and its own duplicate. The
+  canonical build is kept under
+  `results/cluster-audit/superseded-canonical-r50-2026-09-01/`; 9 of
+  the 10 reviewed tiles remain in the new frame (positions 1–9), the
+  dropped tile carrying the phantom:745 flag. The app gained an `o`
+  overlay toggle and a "Known (yellow) mound is NOT a mound — GT error"
+  symbol, which `empty_tile_adjudicate.py` classes `gt-error-flag`
+  (never a double-miss). § 5b's class (a) now reads the standardised
+  reference by default; the empty-tile adjudication was regenerated
+  against it (see § 5b and `results/empty-tile-audit/adjudication.md`).
 - **Explicit scope boundary (PI, 2026-09-01)**: locations where one
   mound was marked but 2–3 truly exist AND no second known mound
   sits within X — singleton undercounts — are NOT discoverable by
@@ -354,6 +383,19 @@ scriptable within existing machinery (Hungarian matcher,
 bootstrap-by-sheet, Streamlit reviewer).
 
 ## Changelog
+
+### 2026-09-06 — Census reference switched to the Ruling-21 standardised GT
+
+After 10 census tiles the reviewer flagged a duplicate known mound that
+Ruling 21 had already removed; the census (and § 5b) had been drawing
+from the canonical r50 file. Sampler regenerated with `--gt`
+defaulting to `best-available-gt-55maps.geojson`: 464 → 334 clusters,
+739 → 478 tiles, 2,866 → 1,857 overlay points; canonical artefacts kept
+under `superseded-canonical-r50-2026-09-01/`; verdict indices migrated
+(9/10 reviewed tiles retained). Adjudication script gained `--gt`
+(default standardised) and a `gt-error-flag` class; the empty-tile
+report was regenerated with a carried-forward changelog. § 5c text
+extended in place with the counts.
 
 ### 2026-09-05 — Phase 2 closed at 500 tiles; adjudication run; census tiles staged
 

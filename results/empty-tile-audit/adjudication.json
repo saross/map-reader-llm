@@ -1,5 +1,18 @@
 {
-  "generated": "2026-09-05",
+  "generated": "2026-09-06",
+  "reference": "standardised",
+  "reference_path": "inputs/vectors/references/best-available-gt-55maps.geojson",
+  "history": [
+    {
+      "generated": "2026-09-05",
+      "reference": "canonical",
+      "reviewed_tiles": 500,
+      "classes": {
+        "true-double-miss": 5,
+        "known-in-GT": 4
+      }
+    }
+  ],
   "protocol": "planning/student-baseline-2026-08-31.md \u00a7 5b",
   "radius_m": 50.0,
   "reviewed_tiles": 500,
@@ -13,12 +26,12 @@
     "known-in-GT": 4
   },
   "frame_empty_tiles": 4676,
-  "gt_points": 5161,
+  "gt_points": 5010,
   "reference_sets": {
-    "canonical-gt": {
+    "ground-truth": {
       "kind": "gt",
-      "n": 5161,
-      "path": "inputs/vectors/references/canonical-gt-55maps-r50.geojson"
+      "n": 5010,
+      "path": "inputs/vectors/references/best-available-gt-55maps.geojson"
     },
     "arm2-carried-3.7": {
       "kind": "deployed",
@@ -56,10 +69,10 @@
         15.219077299245404,
         108.39617061372847
       ],
-      "implied_share_of_gt": 0.009060259639604728,
+      "implied_share_of_gt": 0.009333333333333332,
       "implied_share_of_gt_ci95": [
-        0.0029488621002219345,
-        0.02100293947175518
+        0.0030377399798893023,
+        0.021635962198348995
       ]
     },
     {
@@ -76,10 +89,10 @@
         16.19297902297087,
         115.26588660214466
       ],
-      "implied_share_of_gt": 0.00963857408468588,
+      "implied_share_of_gt": 0.009929078014184396,
       "implied_share_of_gt_ci95": [
-        0.0031375661737978824,
-        0.022334021817892784
+        0.003232131541511152,
+        0.023007162994440052
       ]
     }
   ],
@@ -94,9 +107,9 @@
       "y_world": 4651904.6,
       "class": "known-in-GT",
       "nearest": {
-        "canonical-gt": {
-          "distance_m": 17.8,
-          "gt_id": "student:02506"
+        "ground-truth": {
+          "distance_m": 2.4,
+          "gt_id": "student:02501"
         },
         "arm2-carried-3.7": {
           "distance_m": 2.9,
@@ -119,7 +132,7 @@
           "prob_3.7-vf": 0.98
         }
       },
-      "nearest_anything_m": 2.9
+      "nearest_anything_m": 2.4
     },
     {
       "order_index": 144,
@@ -131,9 +144,9 @@
       "y_world": 4644234.8,
       "class": "true-double-miss",
       "nearest": {
-        "canonical-gt": {
+        "ground-truth": {
           "distance_m": 1291.4,
-          "gt_id": "student:04583"
+          "gt_id": "student:04568"
         },
         "arm2-carried-3.7": {
           "distance_m": 1283.6,
@@ -168,7 +181,7 @@
       "y_world": 4698772.6,
       "class": "true-double-miss",
       "nearest": {
-        "canonical-gt": {
+        "ground-truth": {
           "distance_m": 571.5,
           "gt_id": "student:00197"
         },
@@ -205,9 +218,9 @@
       "y_world": 4654229.5,
       "class": "true-double-miss",
       "nearest": {
-        "canonical-gt": {
-          "distance_m": 1211.7,
-          "gt_id": "student:03870"
+        "ground-truth": {
+          "distance_m": 1212.6,
+          "gt_id": "student:03858"
         },
         "arm2-carried-3.7": {
           "distance_m": 1857.4,
@@ -242,9 +255,9 @@
       "y_world": 4693584.8,
       "class": "known-in-GT",
       "nearest": {
-        "canonical-gt": {
+        "ground-truth": {
           "distance_m": 30.6,
-          "gt_id": "student:01179"
+          "gt_id": "student:01176"
         },
         "arm2-carried-3.7": {
           "distance_m": 11.2,
@@ -279,9 +292,9 @@
       "y_world": 4689174.7,
       "class": "true-double-miss",
       "nearest": {
-        "canonical-gt": {
+        "ground-truth": {
           "distance_m": 1105.2,
-          "gt_id": "student:01839"
+          "gt_id": "student:01834"
         },
         "arm2-carried-3.7": {
           "distance_m": 1099.6,
@@ -316,9 +329,9 @@
       "y_world": 4722553.1,
       "class": "true-double-miss",
       "nearest": {
-        "canonical-gt": {
+        "ground-truth": {
           "distance_m": 1518.1,
-          "gt_id": "student:01486"
+          "gt_id": "student:01481"
         },
         "arm2-carried-3.7": {
           "distance_m": 496.6,
@@ -353,7 +366,7 @@
       "y_world": 4702420.1,
       "class": "known-in-GT",
       "nearest": {
-        "canonical-gt": {
+        "ground-truth": {
           "distance_m": 12.5,
           "gt_id": "student:00039"
         },
@@ -390,9 +403,9 @@
       "y_world": 4685511.9,
       "class": "known-in-GT",
       "nearest": {
-        "canonical-gt": {
-          "distance_m": 24.3,
-          "gt_id": "student:01846"
+        "ground-truth": {
+          "distance_m": 4.4,
+          "gt_id": "student:01841"
         },
         "arm2-carried-3.7": {
           "distance_m": 3.6,

@@ -188,7 +188,26 @@ project state.
 > card (verify path prices at list with no flex discount;
 > parse_failures = retries on the verify path; cleanup still
 > overwrites run.meta.json, backups kept). Register rows for the 3.8
-> cell join the pending 3.7 proposal.
+> cell join the pending 3.7 proposal. (6) **The PI's audits (2026-09-05
+> → 06).** Empty-tile Phase 2 CLOSED at 500 tiles (full 10 % tier +
+> 30): `scripts/empty_tile_adjudicate.py` → 9 marks = 4 known-in-GT +
+> 5 true double-misses, none proposed-but-filtered (proposer blind
+> spots); 5/470 = 1.06 % of empty tiles (CI 0.35–2.47 %) ≈ 50 missed
+> mounds in the 4,676-tile frame ≈ 0.96 % of GT
+> (`results/empty-tile-audit/adjudication.md`). Finishing the 20 %
+> sample would narrow the CI to ≈ 0.5–2.0 %; PI deferred it in favour
+> of the cluster census. **Census REBUILT on the Ruling-21 standardised
+> reference** after 10 tiles: the canonical r50 file carries ~150
+> phantoms Ruling 21 already removed as duplicates (151 on the census
+> tiles); frame now 334 clusters / 719 mounds / 478 tiles (was
+> 464/1,006/739; canonical build kept under
+> `results/cluster-audit/superseded-canonical-r50-2026-09-01/`). The
+> review app gained an `o` overlay toggle and a GT-error symbol (class
+> `gt-error-flag`). **Standing caution**: any analysis that reads
+> `canonical-gt-55maps-r50.geojson` as a reference inherits those
+> duplicates — § 5b now defaults to the standardised file; the
+> non-Mound reference ruling (§ 4c) is a sibling question. Obs
+> candidate: the duplicate-phantom finding (PI to rule).
 >
 > **OPEN DECISIONS FOR THE PI (from the tail — now decided, see the
 > addendum above):**

@@ -12,7 +12,20 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from scripts.empty_tile_adjudicate import classify, clopper_pearson  # noqa: E402
+from scripts.empty_tile_adjudicate import (  # noqa: E402
+    GT_ERROR_SYMBOL,
+    classify,
+    clopper_pearson,
+)
+
+
+@pytest.mark.tier1
+def test_gt_error_flag_is_its_own_class_regardless_of_neighbours():
+    """A GT-error flag never becomes a double-miss, even with nothing nearby."""
+    far = {"gt": (591.0, "gt"), "dep": (340.0, "deployed"), "u": (60.0, "union")}
+    assert classify(far, 50.0, GT_ERROR_SYMBOL) == "gt-error-flag"
+    assert classify({"gt": (1.4, "gt")}, 50.0, GT_ERROR_SYMBOL) == "gt-error-flag"
+    assert classify(far, 50.0, "Hairy brown circle") == "true-double-miss"
 
 
 @pytest.mark.tier1

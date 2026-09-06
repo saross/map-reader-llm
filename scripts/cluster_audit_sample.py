@@ -24,9 +24,19 @@ Outputs (``--out-dir``, default ``results/cluster-audit``):
 
 Usage::
 
-    python scripts/cluster_audit_sample.py
+    python scripts/cluster_audit_sample.py [--gt PATH]
 
-Zero API, seconds. Run on sapphire (tile tree lives there).
+Reference (``--gt``): defaults to the Ruling-21 STANDARDISED reference
+(`inputs/vectors/references/best-available-gt-55maps.geojson`, 4,731
+student + 279 extension) since 2026-09-06. The first census build
+(2026-09-01) used the canonical r50 file, whose 415 phantoms include
+~150 that Ruling 21 had already removed as duplicates; 151 of them fell
+on census tiles and the reviewer began flagging them by hand (Session
+148). That build is kept under `results/cluster-audit/
+superseded-canonical-r50-2026-09-01/`.
+
+Zero API, seconds. Reads only the bounds and the reference; the tile
+tree is not needed (fetch tiles afterwards with the file list).
 
 Created: 2026-09-01 (Session 145)
 Author: Shawn Ross, Claude Code
@@ -55,6 +65,7 @@ logger = logging.getLogger(__name__)
 
 BOUNDS = PROJECT_ROOT / "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
 CANONICAL_GT = PROJECT_ROOT / "inputs/vectors/references/canonical-gt-55maps-r50.geojson"
+STANDARDISED_GT = PROJECT_ROOT / "inputs/vectors/references/best-available-gt-55maps.geojson"
 TILE_PX = 384
 CHAIN_M = 125.0   # single-linkage chaining distance (card § 5c)
 BUFFER_M = 50.0   # cluster footprint buffer before tile intersection
@@ -63,10 +74,17 @@ BUFFER_M = 50.0   # cluster footprint buffer before tile intersection
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--out-dir", default="results/cluster-audit")
+    ap.add_argument("--gt", default=str(STANDARDISED_GT.relative_to(PROJECT_ROOT)),
+                    help="Reference point file (default: the Ruling-21 standardised "
+                         "reference; pass the canonical r50 file to reproduce the "
+                         "2026-09-01 build).")
     args = ap.parse_args()
 
     bounds = gpd.read_file(BOUNDS)
-    gt = gpd.read_file(CANONICAL_GT).to_crs(bounds.crs)
+    gt_path = PROJECT_ROOT / args.gt
+    gt = gpd.read_file(gt_path).to_crs(bounds.crs)
+    logger.info("reference: %s (%d points; layers %s)", args.gt, len(gt),
+                gt["layer"].value_counts().to_dict() if "layer" in gt else "n/a")
     xy = np.c_[gt.geometry.x, gt.geometry.y]
     tree = cKDTree(xy)
 
@@ -132,6 +150,7 @@ def main() -> int:
     (out_dir / "tile_filelist.txt").write_text("".join(
         f"{r['map_name']}/{r['tile_name']}\n" for r in rows))
     (out_dir / "census_summary.json").write_text(json.dumps({
+        "reference": args.gt, "n_reference_points": int(len(gt)),
         "chain_m": CHAIN_M, "buffer_m": BUFFER_M,
         "n_clusters": len(clusters),
         "n_mounds_in_clusters": int(sum(len(s) for s in clusters)),

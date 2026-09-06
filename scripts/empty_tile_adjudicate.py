@@ -73,10 +73,25 @@ logger = logging.getLogger(__name__)
 
 CRS = "EPSG:32635"
 
-#: Reference sets, in the protocol's order. ``kind`` drives the class.
+#: Ground-truth references. The Ruling-21 STANDARDISED reference is the
+#: default from 2026-09-06 (PI, Session 148): Ruling 21 requires it for any
+#: reference-tainted analysis, and the canonical r50 file carries ~150
+#: phantoms Ruling 21 removed as duplicates. ``--gt canonical`` reproduces
+#: the first (2026-09-05) run.
+GT_FILES = {
+    "standardised": "inputs/vectors/references/best-available-gt-55maps.geojson",
+    "canonical": "inputs/vectors/references/canonical-gt-55maps-r50.geojson",
+}
+
+#: The reviewer's symbol for "this known (overlay) mound is a GT error".
+#: Such a mark is a flag on the reference, not a mound sighting: it gets
+#: its own class and never counts toward the FN floor.
+GT_ERROR_SYMBOL = "Known (yellow) mound is NOT a mound — GT error"
+
+#: Reference sets, in the protocol's order. ``kind`` drives the class. The
+#: GT entry's path is filled from GT_FILES at run time.
 REFERENCE_SETS = [
-    ("canonical-gt", "gt",
-     "inputs/vectors/references/canonical-gt-55maps-r50.geojson"),
+    ("ground-truth", "gt", None),
     ("arm2-carried-3.7", "deployed",
      "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/"
      "verified_detections.geojson"),
@@ -151,16 +166,21 @@ def clopper_pearson(k: int, n: int, alpha: float = 0.05) -> tuple[float, float]:
     return lo, hi
 
 
-def classify(hits: dict[str, tuple[float, str]], radius_m: float) -> str:
+def classify(hits: dict[str, tuple[float, str]], radius_m: float,
+             symbol: str | None = None) -> str:
     """Apply the § 5b class order to a mark's nearest hits.
 
     Args:
         hits: set name -> (distance in metres, kind).
         radius_m: the adjudication radius.
+        symbol: the reviewer's symbol; the GT-error flag short-circuits to
+            its own class regardless of neighbours.
 
     Returns:
-        One of the four protocol classes.
+        One of the four protocol classes, or ``gt-error-flag``.
     """
+    if symbol == GT_ERROR_SYMBOL:
+        return "gt-error-flag"
     kinds_within = {kind for dist, kind in hits.values() if dist <= radius_m}
     if "gt" in kinds_within:
         return "known-in-GT"
@@ -179,7 +199,10 @@ def main() -> int:
     ap.add_argument("--manifest", default="results/empty-tile-audit/audit_manifest.csv")
     ap.add_argument("--out-dir", default="results/empty-tile-audit")
     ap.add_argument("--radius-m", type=float, default=50.0)
+    ap.add_argument("--gt", choices=sorted(GT_FILES), default="standardised",
+                    help="Ground-truth reference (default: standardised).")
     args = ap.parse_args()
+    REFERENCE_SETS[0] = ("ground-truth", "gt", GT_FILES[args.gt])
 
     out_dir = PROJECT_ROOT / args.out_dir
     verdicts = latest_pass(pd.read_csv(PROJECT_ROOT / args.verdicts))
@@ -222,7 +245,7 @@ def main() -> int:
             if "gt_id" in g:
                 entry["gt_id"] = str(g["gt_id"])
             detail[name] = entry
-        cls = classify(hits, args.radius_m)
+        cls = classify(hits, args.radius_m, m.get("symbol"))
         rows.append({
             "order_index": int(m["order_index"]), "tile_name": m["tile_name"],
             "map_name": m["map_name"], "tier": m["tier"], "symbol": m.get("symbol"),
@@ -236,7 +259,7 @@ def main() -> int:
     # ---- Floor estimate ----
     summary = json.loads((PROJECT_ROOT / SAMPLE_SUMMARY).read_text())
     n_frame = int(summary["n_empty"])
-    n_gt = len(sets["canonical-gt"]["gdf"])
+    n_gt = len(sets["ground-truth"]["gdf"])
     classes = pd.Series([r["class"] for r in rows]).value_counts().to_dict()
 
     def floor(tiles: pd.DataFrame, label: str) -> dict:
@@ -257,8 +280,23 @@ def main() -> int:
     estimates = [floor(reviewed, "all reviewed tiles"),
                  floor(reviewed[reviewed["tier"] == "10pct"], "10 % tier only (complete SRS)")]
 
+    # Revision trail: carry forward the previous run's changelog so the
+    # regenerated report keeps its history (results revision policy).
+    prior_path = out_dir / "adjudication.json"
+    history: list[dict] = []
+    if prior_path.exists():
+        prior = json.loads(prior_path.read_text())
+        history = list(prior.get("history", []))
+        history.append({"generated": prior.get("generated"),
+                        "reference": prior.get("reference", "canonical"),
+                        "reviewed_tiles": prior.get("reviewed_tiles"),
+                        "classes": prior.get("classes")})
+
     payload = {
         "generated": date.today().isoformat(),
+        "reference": args.gt,
+        "reference_path": GT_FILES[args.gt],
+        "history": history,
         "protocol": "planning/student-baseline-2026-08-31.md § 5b",
         "radius_m": args.radius_m,
         "reviewed_tiles": int(len(reviewed)),
@@ -289,7 +327,8 @@ def render_md(p: dict) -> str:
         "regenerate rather than edit). See [§ Changelog](#changelog) for revision history.",
         "",
         f"Protocol: `{p['protocol']}` — nearest neighbour at {p['radius_m']:.0f} m, "
-        "corpus-wide, against the canonical GT, the deployed sets, and the raw unions.",
+        f"corpus-wide, against the **{p['reference']}** ground truth "
+        f"(`{p['reference_path']}`), the deployed sets, and the raw unions.",
         "",
         "## Coverage",
         "",
@@ -323,7 +362,7 @@ def render_md(p: dict) -> str:
         u5, u10 = n["union-3.7-K5"], n["union-G3-K10"]
         lines.append(
             f"| `{r['tile_name']}` | {r['tier']} | **{r['class']}** | {r['nearest_anything_m']} | "
-            f"{n['canonical-gt']['distance_m']} | {n['arm2-carried-3.7']['distance_m']} | "
+            f"{n['ground-truth']['distance_m']} | {n['arm2-carried-3.7']['distance_m']} | "
             f"{n['B-N5-carried-G3']['distance_m']} | "
             f"{u5['distance_m']}; {u5.get('vote_count', '—')}; "
             f"{u5.get('prob_3.7-vf', '—')}/{u5.get('prob_G3-vf', '—')} | "
@@ -332,11 +371,20 @@ def render_md(p: dict) -> str:
     lines += ["", "## Reference sets", ""]
     for name, s in p["reference_sets"].items():
         lines.append(f"- `{name}` ({s['kind']}, {s['n']} points): `{s['path']}`")
-    lines += ["", "## Changelog", "",
-              f"### {today} — Original publication", "",
+    lines += ["", "## Changelog", ""]
+    if p["history"]:
+        lines += [f"### {today} — Regenerated against the {p['reference']} reference", "",
+                  f"Classes now {p['classes']} over {p['reviewed_tiles']} tiles. Previous runs, "
+                  "newest first:", ""]
+        for h in reversed(p["history"]):
+            lines.append(f"- {h['generated']}: reference `{h['reference']}`, "
+                         f"{h['reviewed_tiles']} tiles, classes {h['classes']}.")
+        lines.append("")
+    first = p["history"][0]["generated"] if p["history"] else today
+    lines += [f"### {first} — Original publication", "",
               "Generated at the close of the PI's manual review pass (the full 10 % tier plus "
-              "the first tiles of the 20 % tier). The union-to-probability joins passed the "
-              "count-and-contiguity gate.", ""]
+              "the first tiles of the 20 % tier) against the canonical r50 reference. The "
+              "union-to-probability joins passed the count-and-contiguity gate.", ""]
     return "\n".join(lines)
 
 
