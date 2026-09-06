@@ -206,8 +206,17 @@ project state.
 > `gt-error-flag`). **Standing caution**: any analysis that reads
 > `canonical-gt-55maps-r50.geojson` as a reference inherits those
 > duplicates — § 5b now defaults to the standardised file; the
-> non-Mound reference ruling (§ 4c) is a sibling question. Obs
-> candidate: the duplicate-phantom finding (PI to rule).
+> non-Mound reference ruling (§ 4c) is a sibling question. The
+> duplicate-phantom finding is Obs 449 (`e51ed3430`) with rider Obs
+> 450 (`659c72751`, the 308-tile figure stands). **Census CLOSED
+> 2026-09-06 (478/478)**: `results/cluster-audit/adjudication.md` —
+> 13 edge-safety marks (all ≤ 21 m from an edge), 6 distinct GT-error
+> points (0.83 % of 719 clustered mounds), 6 model finds the GT lacks
+> (all in arm-2 3.7 at 1.3–5.1 m), 2 true double-misses (0.28 %), 1
+> vote-gate kill at verifier p 0.98; additional sightings 1.25 %. App
+> gained `o` overlay toggle, `r` relabel, `g` go-to-tile, and the
+> GT-error symbol (class `gt-error-flag`). Obs candidate: the census
+> result (PI to rule).
 >
 > **OPEN DECISIONS FOR THE PI (from the tail — now decided, see the
 > addendum above):**

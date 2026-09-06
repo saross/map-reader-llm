@@ -335,6 +335,27 @@ review of known-cluster neighbourhoods:
   (never a double-miss). § 5b's class (a) now reads the standardised
   reference by default; the empty-tile adjudication was regenerated
   against it (see § 5b and `results/empty-tile-audit/adjudication.md`).
+- **CENSUS CLOSED (PI, 2026-09-06; 478/478 tiles).** Adjudicated by
+  `empty_tile_adjudicate.py --mode census`
+  (`results/cluster-audit/adjudication.{json,md}`; marks collapsed to
+  distinct sightings at the 15 m floor across overlapping tiles): 29
+  marks → **13 known-in-GT** (the reviewer's edge-safety marks — every
+  one within 21 m of a tile edge; none deep inside a tile), **7 GT-error
+  flag marks on 6 distinct reference points** (0.83 % of the 719
+  clustered mounds; one point flagged from two overlapping tiles),
+  **6 detected** (mounds the standardised GT lacks that the model
+  found — all six in the 3.7 arm-2 carried set at 1.3–5.1 m, five also
+  in B-N5-carried), **2 true double-misses** (positions 46 and 207;
+  0.28 % of clustered mounds), **1 proposed-but-filtered** (position
+  380: a 2-vote 3.7 K=5 candidate at 3.7-verifier p 0.98, killed by the
+  k=5 vote gate; the G3 verifier gave it 0.15 and the G3 union never
+  proposed it). Additional sightings 9 = **1.25 % of clustered
+  mounds**. Read with Phase 2: the empty stratum's double-miss rate
+  (1.06 % of empty tiles) and the cluster stratum's (2 in 719 mounds)
+  are both small; the larger census signal is the reference itself —
+  6 GT errors and 6 GT omissions the model had already found — which
+  bears on the precision correction (Obs 220 lineage) more than on
+  recall.
 - **Explicit scope boundary (PI, 2026-09-01)**: locations where one
   mound was marked but 2–3 truly exist AND no second known mound
   sits within X — singleton undercounts — are NOT discoverable by
