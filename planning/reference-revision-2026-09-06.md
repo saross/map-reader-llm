@@ -297,6 +297,147 @@ minutes. Expected effect: the change set moves 20 of 5,010 points
 band; the estimated column will be wider than the tiers. Both are
 expectations to test, not assume.
 
+## 4a. Pre-run review (2026-09-06, `/pre-run-review`; grounded in the scripts named)
+
+The PI's additions before the review: author the canonical B N = 5
+companion once scored; materialise the N = 1 / N = 3 rungs; full 3.7/3.8
+coverage on both boards, the K = 10 text cell and the fourth cell's GS
+leg included.
+
+**§ 1 Artefact inventory (per step; paths verified from the emitting
+code).** (2) Engine gate: `scripts/evaluate_detections.py` on IM-k4 →
+a scratch `evaluation.json` compared to
+`results/55maps-standardised-ref-2026-08-14/IM-k4/evaluation.json`;
+nothing committed. (3) r2 re-score: one `evaluation.json` per cell
+(14 buffers, MCC, BCa 10,000/42) under a NEW home
+`results/55maps-r2-ref-2026-09-06/<cell>/` — 16 final-board cells
+(`results/55map-final-board-2026-08-27/cells/*/detections.geojson`), the
+three 3.7 carried cells and their oracles, the 3.7 N = 1 / N = 3 rungs
+(materialised by the first-N derivation of `final_board_sweeps.py`, new
+`cells/` entries), and the canonical B N = 5 companion via
+`stride55_score.py --cell g384_ov192_55map --verify-dir verify
+--union-n <ladder.json runs.g384_ov192_55map.N.5.union_n> --prob-t 0.15
+--min-votes 5 --compute-mcc` (canonical chain, tile MCC on). (4) Boards:
+`results/55map-final-board-r2-2026-09-06/` (`final_board_50m.json`,
+`final-board-50m.md`, `sweeps.json`, `cells/`, the significance figure)
+and `results/55map-leaderboard/55map-leaderboard-50m-r2.md` + MCC
+sibling via `build_55map_leaderboard.py --reference r2`; the GS Era-2
+boards under `results/leaderboard/era2/` rebuilt by
+`build_tiered_leaderboard.py` with the seven 3.7/3.8 cells added to the
+inventory (text and image tracks; the 3.8 cell and the K = 10 text cell
+and fourth-cell GS leg included). (5) Re-measured analyses: new rows
+`55map-r2-leaderboard-50m`, `-mcc-50m`, `obs280-shared-reference-r2`,
+`tile-level-f1-r2`; uplift-supplement pairing outputs under a `-r2`
+suffix; the MDE appendix's 55-map rows. (6) The estimated-correction
+column: new `scripts/estimated_correction.py` →
+`results/55map-final-board-r2-2026-09-06/estimated-correction.{json,md}`,
+and the paper results table. (7) Register: `-r2-gt` condition rows for
+every re-scored cell (new suffix beside `-canonical-gt` /
+`-standardised-gt`), the rung rows, the companion row, the r2 analysis
+rows; manifests regenerated. (8) Disclosure: erratum entry, Methods
+§ M.x paragraph, D.8 bullet, an Obs. (9) `scripts/student_baseline_reestimate.py`
+→ `results/student-baseline-2026-09-01/reestimate-r2.{json,md}`, card
+§ 4 table.
+
+**§ 2 Finished states (countable).** (2) |Δ F1@50| = 0 to 4 dp against the
+committed IM-k4 evaluation on r1, and the r2 delta recorded. (3) every
+cell in the membership list has an `evaluation.json` on r2 with
+`tile_classification.confusion` populated: 16 + 3 + 3 + 6 rungs + 1
+companion (canonical) = 29 files; the r2 → r1 drift table has one row per
+cell. (4) both 55-map boards tier all 22 cells (16 + 3 carried + 3
+oracle) with BH q = 0.05 over all pairs; the r1 board reproduces
+first (regression gate); the Era-2 GS text board carries the 3.7 text
+K = 5, K = 10, swap, fourth-cell GS leg, and the 3.8 cell; the image
+board carries image arms 1 and 2; the image-b anchor 0.8961 reproduces.
+(5) each named analysis has an r2 row whose `conditions_compared` are
+all `-r2-gt` ids. (6) every board cell carries P̂ / R̂ / F1̂ with an
+interval; the column's inputs (three rates, intervals, draw count,
+seed) are printed in the JSON. (7) schema-valid manifests; `verify_run_conditions.py`
+green; tier-1 suite green. (8) the erratum id exists and is cited from
+the Methods paragraph and D.8. (9) the table has three rows (55-map
+corpus-level, without extrapolated terms, GS-4 direct). Block finished =
+all nine, plus the PI's signature on the register rows and the board.
+
+**§ 3 Stop states.** Spend: any API call → stop (the chain is $0; a
+missing verified set must be reported, never re-verified). Invariant
+gates red → stop before building on top: the 5 m duplicate audit in
+`standardised_gt()` (expected drops 0 on r2 too), the campaign gates
+8/8, the G4 sweep-scorer gate (0.003 bound), the family identity gates,
+the engine gate, the regression gate. Surprising results → verify the
+pipeline, then escalate: any r1 → r2 delta |Δ F1@50| > 0.005 on a
+board cell; any tier change on the 55-map board between r1 and r2; any
+rank change on the GS boards (the GS reference does not change, so a GS
+rank change means a mechanism error); a 3.7 rung out of monotone order
+with its N = 5 cell; a companion-row canonical F1 that misses the
+ladder's 0.843775 by > 1e-6. Missing or ambiguous inputs → stop, never
+substitute (the 3.7 rungs' first-N derivation must use the committed
+K = 5 pass order; the companion must use the `verify` (Gemini 3)
+probabilities, not `verify_37`). Sequencing: step 4 never starts before
+step 3's count is 29/29; step 6 never before step 4's boards exist.
+Environment: sapphire only for steps 3–4 (the board chain took ~1 day at
+S143); the local machine only for the $0 minute-scale steps 6, 7, 9.
+
+**§ 4 Dependency structure.** Hard: 1 → 2 → 3 → 4 → {5, 6} → 7 → 8;
+9 depends on 1 only (it needs r2's layer sizes and the audit rates) and
+is simultaneous-safe with 2–8. Coherence orderings: (i) the manifests —
+step 7 is the ONLY writer of `results/*-manifest.json` in this block
+(steps 3–6 write results homes only), so rows land once; (ii) the
+student-baseline card § 4 table — written by step 9 only; (iii) the
+r2 board home — written by step 4 only, never by step 3; (iv) the
+r1 board and r1 evaluation homes are read-only throughout (the
+regression gate needs them intact). Simultaneous-safe: step 9 with
+anything; within step 3, cells are independent (workers).
+
+**§ 5 Partial completion.** Every step is deterministic from committed
+inputs and resumable: a cell with an existing `evaluation.json` is
+skipped, so a halted step 3 resumes; boards are rebuilt whole, so a
+halted step 4 leaves no partial board (the JSON is written last).
+Visibility: partial state shows as a missing file against the 29-file
+count, not as a silent number. Mixed-vintage risk: a board built from a
+mix of r1 and r2 evaluations — gated by step 4 reading ONLY from the r2
+home and by the 29/29 count; and a prose document straddling chains —
+one-commit rule: a results `.md` and its changelog entry move together,
+and `results-draft.md` / the paper table move in one commit per document
+with the erratum id in the message.
+
+**§ 6 Verification stack.** Layer 0: every board number traces to an
+`evaluation.json`; the estimated column's inputs print with the output;
+the register rows point at files. Layer 1: ruff, the tier-1 suite, the
+schema validations, `verify_run_conditions.py`. Layer 2: a fresh-context
+Opus verifier after step 6 re-derives, cold, the winner on each 55-map
+board and each GS board from the evaluation files, the r1 → r2 drift
+table, and the estimated column for three cells from the printed inputs;
+it reports its denominator (files opened, claims re-derived) and its
+corrections are claims — a disagreement triggers a third derivation or
+PI adjudication, never "verifier wins". Layer 3: a citation-site sweep
+for every 55-map number that moves (results-draft, methods-draft,
+discussion-outline, the register .md), plus the drift check. Layer 4:
+PI signature on the register rows and both boards; the erratum text.
+
+**Hardenings recorded (H1–H9).** H1: r2 enters the board chain through
+`standardised_gt()` extended with a `reference` switch that loads the
+r2 layers (student, extension, audit) via the same `build_extended_gt`
+path, keeping the 5 m duplicate-audit gate — never by bypassing the
+engine with the merged geojson. H2: new results homes for every r2
+artefact (`55maps-r2-ref-2026-09-06`, `55map-final-board-r2-2026-09-06`,
+`-r2` leaderboard files); r1 homes read-only. H3:
+`build_55map_leaderboard.py --reference` gains `r2`;
+`lib_uplift_supplement.py`'s reference map gains the r2 file;
+`register_standardised_gt_conditions.py` gains an r2 mode with the
+`-r2-gt` suffix. H4: the companion row is scored on the canonical chain
+with `stride55_score.py --compute-mcc` and gated on the ladder's F1 to
+1e-6 before authoring. H5: the 3.7 rungs are materialised by the
+committed first-N derivation with inherited K = 5 verification and their
+oracle points swept on r2 (the board convention), then evaluated; no
+rung is registered from sweep numbers alone. H6: step 7 is the only
+manifest writer; one regeneration at the end. H7: the clean-context
+agent pass runs after this review's amendments are committed and before
+step 3 starts, against the card and the scripts it names, with the
+naive-reviewer stance and a denominator. H8: the GS boards are rebuilt
+with the r1 anchor gate (image-b 0.8961) and must show no rank change
+among pre-existing cells. H9: the estimated column is presented beside
+the r2 point estimate and never used to re-tier.
+
 ## 5. Ties
 
 - `planning/ruling21-application-spec.md` — the pattern this follows.
@@ -312,6 +453,20 @@ expectations to test, not assume.
   § (b) (instrument), 446, 449, 450, and the census Obs.
 
 ## Changelog
+
+### 2026-09-06 (later still) — Register rows landed; pre-run review written
+
+The 3.7/3.8 register rows are in (`f4db3f4fd`, regeneration
+`99d13ca1b`: 3 runs, 13 conditions, 6 analyses; canonical B N = 5
+companion deferred for want of a tile matrix). The PI added: author the
+companion once scored, materialise the N = 1 / N = 3 rungs, and put every
+recent 3.7/3.8 cell on its board (K = 10 text and the fourth cell's GS
+leg included). § 4a records the six-section pre-run review grounded in
+`final_board_sweeps.py`, `final_board_build.py`,
+`build_55map_leaderboard.py`, `stride55_score.py`,
+`register_standardised_gt_conditions.py`, `lib_uplift_supplement.py`,
+and `build_tiered_leaderboard.py`, with hardenings H1–H9. Awaiting the
+PI's go/no-go and the stop conditions stated back.
 
 ### 2026-09-06 (later) — PI confirmations; GO for the sequence
 
