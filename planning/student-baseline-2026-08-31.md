@@ -320,7 +320,12 @@ review of known-cluster neighbourhoods:
   Rebuilt on the standardised reference (`cluster_audit_sample.py
   --gt`, now the default): **334 clusters, 719 mounds, 478 census
   tiles** (465 with overlay) — 270 of the canonical build's 739 tiles
-  were clusters formed by a student point and its own duplicate. The
+  dropped out and 9 entered (469 shared), the dropped ones
+  predominantly "clusters" that existed only through a student point
+  and its own duplicate (the frame lost 130 clusters and 287 mounds).
+  The 308 figure was re-verified S148 two ways (tile bounds on the
+  739 distinct tiles; overlay points mapped back to phantoms), after
+  the Obs 449 source check reported 267. The
   canonical build is kept under
   `results/cluster-audit/superseded-canonical-r50-2026-09-01/`; 9 of
   the 10 reviewed tiles remain in the new frame (positions 1–9), the
