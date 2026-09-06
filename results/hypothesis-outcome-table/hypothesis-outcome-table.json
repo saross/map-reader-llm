@@ -8,11 +8,14 @@
    "family_fdr": "not rejected",
    "analyses": [
     "family-bh-fdr-confirmatory [confirmatory-with-deviation]",
-    "h1-cmt0106-pooled-modality [confirmatory-with-deviation]"
+    "h1-cmt0106-pooled-modality [confirmatory-with-deviation]",
+    "image-b-modality-2026-08-28 [registered-exploratory]",
+    "image-b-thinking-pair-2026-08-28 [registered-exploratory]"
    ],
    "related_post_hoc": [
     "era1-leaderboard [post-hoc]",
     "era1-single-pass-baseline-matrix [post-hoc]",
+    "gemini37-image-gs-2026-09-01 [post-hoc]",
     "n1-baseline-matrix-384 [post-hoc]"
    ],
    "deviations": [
@@ -75,16 +78,19 @@
     "diversity-dividend-384 [confirmatory-with-deviation]",
     "e45-bootstrap-pairings [confirmatory-with-deviation]",
     "family-bh-fdr-confirmatory [confirmatory-with-deviation]",
-    "phase3a-consensus-calibration [registered-exploratory]"
+    "phase3a-consensus-calibration [registered-exploratory]",
+    "stride55-ladder-2026-08-27 [registered-exploratory]"
    ],
    "related_post_hoc": [
+    "55map-final-board-2026-08-27 [post-hoc]",
     "era1-leaderboard [post-hoc]",
     "min-vs-high-thinking-pv [post-hoc]",
     "pass-budget-pareto [post-hoc]",
     "pass-budget-pareto-v2 [post-hoc]",
     "phase3a-high-consensus-calibration [post-hoc]",
     "phase3a-replication-thinking-calibration [post-hoc]",
-    "pv-diag-384-consensus-calibration [post-hoc]"
+    "pv-diag-384-consensus-calibration [post-hoc]",
+    "stride-winner-ladder-exact-2026-08-25 [post-hoc]"
    ],
    "deviations": [
     "E28",
@@ -187,7 +193,8 @@
    "disposition": "executed",
    "family_fdr": "rejected (q=0.05)",
    "analyses": [
-    "family-bh-fdr-confirmatory [confirmatory-with-deviation]"
+    "family-bh-fdr-confirmatory [confirmatory-with-deviation]",
+    "h7-escalation-2026-08-28 [registered-exploratory]"
    ],
    "related_post_hoc": [
     "e43-matched-temperature [post-hoc]",
@@ -221,7 +228,8 @@
    ],
    "related_post_hoc": [
     "era1-leaderboard [post-hoc]",
-    "era1-single-pass-baseline-matrix [post-hoc]"
+    "era1-single-pass-baseline-matrix [post-hoc]",
+    "sensitivity-mde-2026-08-28 [post-hoc]"
    ],
    "deviations": [
     "E28",
@@ -248,7 +256,8 @@
     "phase3c-diversity-calibration [registered-exploratory]"
    ],
    "related_post_hoc": [
-    "era1-leaderboard [post-hoc]"
+    "era1-leaderboard [post-hoc]",
+    "sensitivity-mde-2026-08-28 [post-hoc]"
    ],
    "deviations": [
     "E12",
@@ -265,7 +274,9 @@
    "analyses": [
     "h10-pool-size [registered-exploratory]"
    ],
-   "related_post_hoc": [],
+   "related_post_hoc": [
+    "sensitivity-mde-2026-08-28 [post-hoc]"
+   ],
    "deviations": [
     "E13",
     "E37",
@@ -305,7 +316,9 @@
    "analyses": [
     "h12-v2-hp-hn-ratio [registered-exploratory]"
    ],
-   "related_post_hoc": [],
+   "related_post_hoc": [
+    "sensitivity-mde-2026-08-28 [post-hoc]"
+   ],
    "deviations": [
     "E13",
     "E45",
@@ -322,9 +335,16 @@
    "disposition": "executed",
    "family_fdr": "— (exploratory: not in family)",
    "analyses": [
-    "h13-overlap-2026-08-18 [registered-exploratory]"
+    "h13-overlap-2026-08-18 [registered-exploratory]",
+    "stride55-ladder-2026-08-27 [registered-exploratory]",
+    "stride55-sweep-oracle-2026-08-27 [registered-exploratory]"
    ],
-   "related_post_hoc": [],
+   "related_post_hoc": [
+    "55map-final-board-2026-08-27 [post-hoc]",
+    "stride-plateau-2026-08-25 [post-hoc]",
+    "stride-winner-ladder-exact-2026-08-25 [post-hoc]",
+    "stride55-a5-vs-b5-2026-08-27 [post-hoc]"
+   ],
    "deviations": [
     "E54",
     "E66",

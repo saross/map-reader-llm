@@ -2,9 +2,9 @@
 
 # Runs manifest
 
-> Generated 2026-08-24T08:26:30Z · 33 row(s) · schema v1.0.
+> Generated 2026-09-06T05:11:51Z · 41 row(s) · schema v1.0.
 >
-> **Coverage**: all 33 runs (run-level facts; conditions/passes added as 3b batches land).
+> **Coverage**: all 41 runs (run-level facts; conditions/passes added as 3b batches land).
 
 | run_id | type | tile_px | corpus | gt | scope | headline |
 |---|---|---|---|---|---|---|
@@ -41,3 +41,11 @@
 | 55maps-text-min-n10-uplift | proposer-verifier | 384 | 55-map | combined | 55maps-8541 | — |
 | grid-2026-08-18 | mixed | — | 4-map-gs | curator | grid-common-487 | grid-2026-08-18::g512-ov256-k10-c2-k8 |
 | h13 | single-pass | 512 | 4-map-gs | curator | h13-common-338 | — |
+| stride-phaseb-2026-08-25 | proposer-verifier | — | 4-map-gs | curator | grid-common-487 | stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8 |
+| stride-phasec-2026-08-25 | proposer-verifier | 384 | 4-map-gs | curator | grid-common-487 | stride-phasec-2026-08-25::g384-ov240-k10-verified-p0.15-k10 |
+| stride-55map-2026-08-25 | proposer-verifier | 384 | 55-map | combined | 55maps-8541 | stride-55map-2026-08-25::g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt |
+| image-b-gs-2026-08-28 | proposer-verifier | 384 | 4-map-gs | curator | grid-common-487 | image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9 |
+| h7-escalation-2026-08-28 | single-pass | 512 | 4-map-gs | curator | era-1-340 | h7-escalation-2026-08-28::text-t1.6 |
+| gemini37-screen-2026-08-28 | proposer-verifier | 384 | 4-map-gs | curator | grid-common-487 | gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5 |
+| gemini37-55map-2026-08-29 | proposer-verifier | 384 | 55-map | combined | 55maps-8541 | gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-canonical-gt |
+| gemini37-image-gs-2026-09-01 | proposer-verifier | 384 | 4-map-gs | curator | grid-common-487 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5 |

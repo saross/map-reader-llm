@@ -461,7 +461,10 @@ def test_run_registry_input_valid_and_in_sync(registry):
     # first-class run (run_id "h13"), adding 3 conditions and 6 passes.
     # 38 since Session 143: the three PI-signed registration passes
     # (grid-postverifier, stride programme, 55-map portfolio + image/H7).
-    assert len(reg["registry"]) == 38
+    # 41 since Session 149: the Gemini 3.7 arc (screen, 55-map arms, image-GS);
+    # the fourth cell and the Gemini 3.8 Arm V add conditions to existing runs
+    # rather than runs of their own (PI rulings 6 and 9, 2026-09-06).
+    assert len(reg["registry"]) == 41
     assert "generator_version" not in reg  # run-registry schema is closed; no generator_version
     # registry and facts must describe the same run set (the B1 drift guard)
     assert drift_check(reg["registry"], load_run_facts()) == []
@@ -492,7 +495,8 @@ def test_manifest_envelopes_valid(registry):
     # 29: +verifier-robustness (S111); 31: +flash35-pv-2x2,
     # +55maps-text-min-n10-uplift (S113 second wave)
     # 33: +h13 (S136), +grid-2026-08-18 (S137, D16)
-    assert len(run_rows) == 38  # +5 in the S143 PI-signed registration passes
+    # 38: +5 in the S143 PI-signed registration passes
+    assert len(run_rows) == 41  # +3 for the S149 Gemini 3.7 arc
     assert warnings == []
 
     runs_obj = assemble_manifest("runs", run_rows, at)

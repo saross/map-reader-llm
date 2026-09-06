@@ -2,9 +2,9 @@
 
 # Run registry
 
-> Generated 2026-05-30T08:03:46Z · 33 row(s) · schema v1.0.
+> Generated 2026-05-30T08:03:46Z · 41 row(s) · schema v1.0.
 >
-> **Coverage**: all 33 runs (hand-verified input).
+> **Coverage**: all 41 runs (hand-verified input).
 
 | run_id | directory_path | status |
 |---|---|---|
@@ -41,3 +41,11 @@
 | 55maps-text-min-n10-uplift | outputs/55maps-text-min-n10-uplift | active |
 | grid-2026-08-18 | outputs/grid-2026-08-18 | active |
 | h13 | outputs/h13 | active |
+| stride-phaseb-2026-08-25 | outputs/stride-phaseb-2026-08-25 | active |
+| stride-phasec-2026-08-25 | outputs/stride-phasec-2026-08-25 | active |
+| stride-55map-2026-08-25 | outputs/stride-55map-2026-08-25 | active |
+| image-b-gs-2026-08-28 | outputs/image-b-gs-2026-08-28 | active |
+| h7-escalation-2026-08-28 | outputs/h7-escalation-2026-08-28 | active |
+| gemini37-screen-2026-08-28 | outputs/gemini37-screen-2026-08-28 | active |
+| gemini37-55map-2026-08-29 | outputs/gemini37-55map-2026-08-29 | active |
+| gemini37-image-gs-2026-09-01 | outputs/gemini37-image-gs-2026-09-01 | active |

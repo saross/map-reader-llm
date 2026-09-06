@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-24T08:26:30Z",
+  "generated_at": "2026-09-06T05:11:51Z",
   "generator_version": "0.7.1",
   "runs": [
     {
@@ -1116,6 +1116,268 @@
           "outputs/h13/scoring/bounds/h13_common_bounds.geojson"
         ],
         "last_extracted_at": "2026-08-18T00:48:34Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "run_id": "stride-phaseb-2026-08-25",
+      "directory_path": "outputs/stride-phaseb-2026-08-25",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "H13"
+      ],
+      "purpose": "Stride programme Phase B (post-hoc, E41-class): four iso-stride geometry cells (512/34.4, 384/33.3, 256/25, 512/62.5) at K=10, one configuration, testing whether geometry is a plateau or a winner and where the interior stride optimum sits. Includes the union-k10 verifications and the winner-ladder exact re-verifications (k1/k3/k5).",
+      "run_type": "proposer-verifier",
+      "tile_size_px": null,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "grid-common-487",
+        "bounds_path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+      "headline_rationale": "13-cell board point-leader (verified F1@20 0.8982), one statistical tier with the incumbents (plateau-not-winner, Obs 435).",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "run_id": "stride-phasec-2026-08-25",
+      "directory_path": "outputs/stride-phasec-2026-08-25",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "H13"
+      ],
+      "purpose": "Stride programme Phase C: the 384/62.5% rung-144 cell at K=10 \u2014 the densest-overlap 384 px point, completing the stride ladder.",
+      "run_type": "proposer-verifier",
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "grid-common-487",
+        "bounds_path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": "stride-phasec-2026-08-25::g384-ov240-k10-verified-p0.15-k10",
+      "headline_rationale": "The cell's verified best point (F1@20 0.8860).",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "run_id": "stride-55map-2026-08-25",
+      "directory_path": "outputs/stride-55map-2026-08-25",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "H13"
+      ],
+      "purpose": "55-map deployment portfolio (card planning/55map-portfolio-2026-08-25.md, predictions P1-P8 registered by commit): Runs A (384/33.3%, stride 256) and B (384/50%, stride 192) at K=10 with the carry-forward verifier over the full unions \u2014 the calibrate-on-GS-then-deploy transfer measurement.",
+      "run_type": "proposer-verifier",
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "combined",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": "stride-55map-2026-08-25::g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt",
+      "headline_rationale": "Run B's carried PRIMARY (corrected-F1@50 0.8422) \u2014 the committed deployment claim; B > A BH-robust (final-board Pass 2 registers the standardised cells).",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "run_id": "image-b-gs-2026-08-28",
+      "directory_path": "outputs/image-b-gs-2026-08-28",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "H1"
+      ],
+      "purpose": "Image variant of the leading configuration on the GS corpus: the modality head-to-head under matched everything (vs the committed text-B anchor), plus the first matched MINIMAL-vs-HIGH image thinking pair. Card planning/image-b-gs-2026-08-28.md.",
+      "run_type": "proposer-verifier",
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "grid-common-487",
+        "bounds_path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9",
+      "headline_rationale": "The modality comparison's image side at MINIMAL \u2014 the like-for-like cell the paper claim rests on.",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "run_id": "h7-escalation-2026-08-28",
+      "directory_path": "outputs/h7-escalation-2026-08-28",
+      "primary_hypothesis": "H7",
+      "also_informs": [],
+      "purpose": "Discharge of the H7 temperature-escalation trigger (osf:731): T=1.6 and T=2.0 at the optimal configuration, characterising the upper bound of the temperature-performance curve.",
+      "run_type": "single-pass",
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": "h7-escalation-2026-08-28::text-t1.6",
+      "headline_rationale": "The first registered escalation level; the monotone-decline verdict.",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "run_id": "gemini37-screen-2026-08-28",
+      "directory_path": "outputs/gemini37-screen-2026-08-28",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "H13"
+      ],
+      "purpose": "Gemini 3.7 Flash screen on the leading 384 px / 50 % geometry: does a within-vendor model-family step clear the Gemini-3 GS plateau, and in which seat? Predictions G1-G4 committed at PI go (card planning/gemini37-screen-2026-08-28.md). Escalated to K=10 and to two verifier-role swaps (3.7, then 3.8 under card planning/gemini38-screen-2026-09-04.md).",
+      "run_type": "proposer-verifier",
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "grid-common-487",
+        "bounds_path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5",
+      "headline_rationale": "The all-3.7 stack (F1@20 0.9265, tile-MCC 0.8078) \u2014 the study's first GS-resolvable model-swap margin (+0.0304 vs the anchor, p = 0.0105) and the only cell in the arc beating the anchor on F1 and MCC together.",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "run_id": "gemini37-55map-2026-08-29",
+      "directory_path": "outputs/gemini37-55map-2026-08-29",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "H13"
+      ],
+      "purpose": "Does the 3.7 GS gain transfer to 55-map deployment, and in which seat? One K=5 3.7 proposer pool, two verifier arms (carried Gemini-3; all-3.7), both carried points committed before deployment scoring. With the fourth cell (registered under stride-55map-2026-08-25) this completes the proposer x verifier 2x2. Predictions D1-D7, card planning/gemini37-55map-2026-08-29.md.",
+      "run_type": "proposer-verifier",
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "combined",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-canonical-gt",
+      "headline_rationale": "Arm 2, the all-3.7 stack at its committed carried point (canonical corrected-F1@50 0.8763): the campaign's headline and the diagonal that reads +0.0325 over the canonical B N=5 incumbent (p = 0.0001).",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "run_id": "gemini37-image-gs-2026-09-01",
+      "directory_path": "outputs/gemini37-image-gs-2026-09-01",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "H1"
+      ],
+      "purpose": "Image variant of the 3.7 GS screen under matched everything, for the difference-in-differences against the Gemini-3 modality contrast (image-b-gs-2026-08-28). Predictions I1-I5 committed at PI go (card planning/gemini37-image-gs-2026-08-30.md). The escalation trigger was not met; no 55-map image extension followed.",
+      "run_type": "proposer-verifier",
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "grid-common-487",
+        "bounds_path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5",
+      "headline_rationale": "The all-3.7 image stack (F1@20 0.9308, tile-MCC 0.8322) \u2014 the highest F1@20 anywhere in the 3.7 arc, and the cell that makes the modality gap vanish.",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-09-06T05:11:51Z",
         "extractor_version": "0.7.1"
       }
     }

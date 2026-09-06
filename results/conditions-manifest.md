@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-08-24T08:26:30Z · 342 row(s) · schema v1.0.
+> Generated 2026-09-06T05:11:51Z · 387 row(s) · schema v1.0.
 >
-> **Coverage**: 342 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 387 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -23,11 +23,13 @@
 | 55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6295720650709771 | 0.6903302334580523 | 4905 |
 | 55maps-text-high-t0-3-generalisation::verified-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.6728632478632478 | 0.6689725848962402 | 4350 |
 | 55maps-text-high-t0-3-generalisation::verified-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.6719112455874937 | 0.6887952828707767 | 4905 |
+| 55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.6731 | 0.6954 | 4762 |
 | 55maps-text-min-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.6201 | 0.6264 | 3865 |
 | 55maps-text-min-generalisation::verified-k4-canonical-gt | proposer-verifier | verified | 4 | 5 | 0.6201370340262455 | 0.6411358134707998 | 3865 |
 | 55maps-text-min-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6335734072022161 | 0.6579582748365398 | 4279 |
 | 55maps-text-min-generalisation::verified-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.6548732394366197 | 0.6400648540183066 | 3865 |
 | 55maps-text-min-generalisation::verified-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.6709010657767251 | 0.6569092929260921 | 4279 |
+| 55maps-text-min-generalisation::verified-oracle-p0.20-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.672 | 0.6624 | 4156 |
 | gold-standard-v2::consensus-3of5 | consensus | consensus | 3 | 5 | 0.5925 | 0.2964 | 868 |
 | gold-standard-v2::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6999 | 0.4557 | 608 |
 | gold-standard-v2::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7649 | 0.5791 | 420 |
@@ -347,6 +349,49 @@
 | grid-2026-08-18::g512-ov256-k10-verified-p0.15-k9 | proposer-verifier | verified | 9 | 10 | 0.8815 | 0.8011 | 382 |
 | grid-2026-08-18::g384-ov048-k10-verified-p0.20-k7 | proposer-verifier | verified | 7 | 10 | 0.8677 | 0.7751 | 358 |
 | grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10 | proposer-verifier | verified | 10 | 10 | 0.8961 | 0.7965 | 400 |
+| grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10 | proposer-verifier | verified | 10 | 10 | 0.914 | 0.8239 | 386 |
 | h13::arm-a-overlap-12-5 | single-pass | none | — | 3 | 0.558 | 0.1058 | — |
 | h13::arm-b-overlap-25 | single-pass | none | — | 3 | 0.5198 | 0.2579 | — |
 | h13::arm-c-overlap-50 | single-pass | none | — | 3 | 0.4024 | 0.0593 | — |
+| stride-phaseb-2026-08-25::g512-ov176-k10-verified-p0.15-k6 | proposer-verifier | verified | 6 | 10 | 0.8655 | 0.7964 | 390 |
+| stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8 | proposer-verifier | verified | 8 | 10 | 0.8982 | 0.8022 | 387 |
+| stride-phaseb-2026-08-25::g256-ov064-k10-verified-p0.15-k8 | proposer-verifier | verified | 8 | 10 | 0.8795 | 0.7959 | 427 |
+| stride-phaseb-2026-08-25::g512-ov320-k10-verified-p0.15-k10 | proposer-verifier | verified | 10 | 10 | 0.88 | 0.8023 | 397 |
+| stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1 | proposer-verifier | verified | 1 | 1 | 0.8677 | 0.7894 | 411 |
+| stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.8911 | 0.7814 | 380 |
+| stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4 | proposer-verifier | verified | 4 | 5 | 0.8856 | 0.7805 | 394 |
+| stride-phasec-2026-08-25::g384-ov240-k10-verified-p0.15-k10 | proposer-verifier | verified | 10 | 10 | 0.886 | 0.791 | 423 |
+| stride-55map-2026-08-25::g384-ov128-55map-verified-carried-p0.15-k8-canonical-gt | proposer-verifier | verified | 8 | 10 | 0.6689079275566642 | 0.6934407564418507 | 4475 |
+| stride-55map-2026-08-25::g384-ov128-55map-verified-oracle-p0.15-k7-canonical-gt | proposer-verifier | verified | 7 | 10 | 0.6685135855087907 | 0.6958294935087906 | 4639 |
+| stride-55map-2026-08-25::g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt | proposer-verifier | verified | 10 | 10 | 0.6846827370014053 | 0.6981604573921036 | 4505 |
+| stride-55map-2026-08-25::g384-ov192-55map-verified-oracle-p0.20-k9-canonical-gt | proposer-verifier | verified | 9 | 10 | 0.6883324453915822 | 0.7127495787794123 | 4639 |
+| stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt | proposer-verifier | verified | 7 | 10 | 0.7081 | 0.6958 | 4639 |
+| stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-standardised-gt | proposer-verifier | verified | 8 | 10 | 0.7079 | 0.6934 | 4475 |
+| stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt | proposer-verifier | verified | 1 | 1 | 0.6777 | 0.701 | 4879 |
+| stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt | proposer-verifier | verified | 2 | 3 | 0.6992 | 0.7022 | 4796 |
+| stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.7059 | 0.6911 | 4597 |
+| stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.7059 | 0.6911 | 4597 |
+| stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt | proposer-verifier | verified | 9 | 10 | 0.7292 | 0.7127 | 4639 |
+| stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-standardised-gt | proposer-verifier | verified | 10 | 10 | 0.725 | 0.6982 | 4505 |
+| stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt | proposer-verifier | verified | 1 | 1 | 0.6693 | 0.7097 | 5655 |
+| stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt | proposer-verifier | verified | 3 | 3 | 0.7207 | 0.7132 | 4772 |
+| stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt | proposer-verifier | verified | 5 | 5 | 0.7218 | 0.7102 | 4566 |
+| stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-standardised-gt | proposer-verifier | verified | 5 | 5 | 0.7205 | 0.7014 | 4736 |
+| stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt | proposer-verifier | verified | 3 | 3 | 0.7024 | 0.688 | 4400 |
+| stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt | proposer-verifier | verified | 3 | 3 | 0.7178 | 0.7025 | 4971 |
+| stride-55map-2026-08-25::g384-ov192-55map-k10-verified37-p0.98-k10-canonical-gt | proposer-verifier | verified | 10 | 10 | 0.7084074733096085 | 0.7268024827224564 | 4246 |
+| stride-55map-2026-08-25::g384-ov192-55map-k10-verified37-p0.98-k10-standardised-gt | proposer-verifier | verified | 10 | 10 | 0.7472 | 0.7268 | 4246 |
+| image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9 | proposer-verifier | verified | 9 | 10 | 0.8412 | 0.7985 | 397 |
+| image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8 | proposer-verifier | verified | 8 | 10 | 0.8333 | 0.7993 | 400 |
+| h7-escalation-2026-08-28::text-t1.6 | single-pass | none | — | 3 | 0.4738 | 0.085 | — |
+| h7-escalation-2026-08-28::text-t2.0 | single-pass | none | — | 3 | 0.4744 | 0.0942 | — |
+| gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5 | proposer-verifier | verified | 5 | 5 | 0.9139 | 0.7797 | 443 |
+| gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10 | proposer-verifier | verified | 10 | 10 | 0.9142 | 0.7817 | 423 |
+| gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5 | proposer-verifier | verified | 5 | 5 | 0.9265 | 0.8078 | 429 |
+| gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5 | proposer-verifier | verified | 5 | 5 | 0.9258 | 0.8218 | 421 |
+| gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-canonical-gt | proposer-verifier | verified | 5 | 5 | 0.7220050125313283 | 0.6664686403732362 | 5229 |
+| gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-standardised-gt | proposer-verifier | verified | 5 | 5 | 0.7591 | 0.6665 | 5229 |
+| gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-canonical-gt | proposer-verifier | verified | 5 | 5 | 0.7469484049646118 | 0.7072914415212007 | 5003 |
+| gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-standardised-gt | proposer-verifier | verified | 5 | 5 | 0.784 | 0.7073 | 5003 |
+| gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5 | proposer-verifier | verified | 5 | 5 | 0.9254 | 0.8192 | 430 |
+| gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5 | proposer-verifier | verified | 5 | 5 | 0.9308 | 0.8322 | 425 |
