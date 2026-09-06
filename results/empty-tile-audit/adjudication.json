@@ -1,11 +1,31 @@
 {
   "generated": "2026-09-06",
+  "mode": "empty",
+  "census": {},
   "reference": "standardised",
   "reference_path": "inputs/vectors/references/best-available-gt-55maps.geojson",
   "history": [
     {
       "generated": "2026-09-05",
       "reference": "canonical",
+      "reviewed_tiles": 500,
+      "classes": {
+        "true-double-miss": 5,
+        "known-in-GT": 4
+      }
+    },
+    {
+      "generated": "2026-09-06",
+      "reference": "standardised",
+      "reviewed_tiles": 500,
+      "classes": {
+        "true-double-miss": 5,
+        "known-in-GT": 4
+      }
+    },
+    {
+      "generated": "2026-09-06",
+      "reference": "standardised",
       "reviewed_tiles": 500,
       "classes": {
         "true-double-miss": 5,
@@ -24,6 +44,17 @@
   "classes": {
     "true-double-miss": 5,
     "known-in-GT": 4
+  },
+  "distinct": {
+    "gt_error_flags": {
+      "marks": 0,
+      "distinct_points": 0,
+      "points": []
+    },
+    "sightings_by_class": {
+      "known-in-GT": 4,
+      "true-double-miss": 5
+    }
   },
   "frame_empty_tiles": 4676,
   "gt_points": 5010,
@@ -106,6 +137,7 @@
       "x_world": 358176.8,
       "y_world": 4651904.6,
       "class": "known-in-GT",
+      "flagged_gt_id": null,
       "nearest": {
         "ground-truth": {
           "distance_m": 2.4,
@@ -132,7 +164,9 @@
           "prob_3.7-vf": 0.98
         }
       },
-      "nearest_anything_m": 2.4
+      "nearest_anything_m": 2.4,
+      "edge_m": 10.1,
+      "sighting_group": 0
     },
     {
       "order_index": 144,
@@ -143,6 +177,7 @@
       "x_world": 447353.8,
       "y_world": 4644234.8,
       "class": "true-double-miss",
+      "flagged_gt_id": null,
       "nearest": {
         "ground-truth": {
           "distance_m": 1291.4,
@@ -169,7 +204,9 @@
           "prob_3.7-vf": 0.05
         }
       },
-      "nearest_anything_m": 346.3
+      "nearest_anything_m": 346.3,
+      "edge_m": 626.4,
+      "sighting_group": 1
     },
     {
       "order_index": 146,
@@ -180,6 +217,7 @@
       "x_world": 340338.5,
       "y_world": 4698772.6,
       "class": "true-double-miss",
+      "flagged_gt_id": null,
       "nearest": {
         "ground-truth": {
           "distance_m": 571.5,
@@ -206,7 +244,9 @@
           "prob_3.7-vf": 0.99
         }
       },
-      "nearest_anything_m": 571.5
+      "nearest_anything_m": 571.5,
+      "edge_m": 189.4,
+      "sighting_group": 2
     },
     {
       "order_index": 190,
@@ -217,6 +257,7 @@
       "x_world": 533652.5,
       "y_world": 4654229.5,
       "class": "true-double-miss",
+      "flagged_gt_id": null,
       "nearest": {
         "ground-truth": {
           "distance_m": 1212.6,
@@ -243,7 +284,9 @@
           "prob_3.7-vf": 0.0
         }
       },
-      "nearest_anything_m": 731.0
+      "nearest_anything_m": 731.0,
+      "edge_m": 593.9,
+      "sighting_group": 3
     },
     {
       "order_index": 218,
@@ -254,6 +297,7 @@
       "x_world": 463022.0,
       "y_world": 4693584.8,
       "class": "known-in-GT",
+      "flagged_gt_id": null,
       "nearest": {
         "ground-truth": {
           "distance_m": 30.6,
@@ -280,7 +324,9 @@
           "prob_3.7-vf": 0.99
         }
       },
-      "nearest_anything_m": 6.8
+      "nearest_anything_m": 6.8,
+      "edge_m": 2.5,
+      "sighting_group": 4
     },
     {
       "order_index": 349,
@@ -291,6 +337,7 @@
       "x_world": 341410.3,
       "y_world": 4689174.7,
       "class": "true-double-miss",
+      "flagged_gt_id": null,
       "nearest": {
         "ground-truth": {
           "distance_m": 1105.2,
@@ -317,7 +364,9 @@
           "prob_3.7-vf": 0.0
         }
       },
-      "nearest_anything_m": 222.9
+      "nearest_anything_m": 222.9,
+      "edge_m": 663.0,
+      "sighting_group": 5
     },
     {
       "order_index": 381,
@@ -328,6 +377,7 @@
       "x_world": 534826.9,
       "y_world": 4722553.1,
       "class": "true-double-miss",
+      "flagged_gt_id": null,
       "nearest": {
         "ground-truth": {
           "distance_m": 1518.1,
@@ -354,7 +404,9 @@
           "prob_3.7-vf": 0.95
         }
       },
-      "nearest_anything_m": 475.9
+      "nearest_anything_m": 475.9,
+      "edge_m": 570.3,
+      "sighting_group": 6
     },
     {
       "order_index": 413,
@@ -365,6 +417,7 @@
       "x_world": 321369.0,
       "y_world": 4702420.1,
       "class": "known-in-GT",
+      "flagged_gt_id": null,
       "nearest": {
         "ground-truth": {
           "distance_m": 12.5,
@@ -391,7 +444,9 @@
           "prob_3.7-vf": 0.98
         }
       },
-      "nearest_anything_m": 1.2
+      "nearest_anything_m": 1.2,
+      "edge_m": 10.0,
+      "sighting_group": 7
     },
     {
       "order_index": 436,
@@ -402,6 +457,7 @@
       "x_world": 354195.7,
       "y_world": 4685511.9,
       "class": "known-in-GT",
+      "flagged_gt_id": null,
       "nearest": {
         "ground-truth": {
           "distance_m": 4.4,
@@ -428,7 +484,9 @@
           "prob_3.7-vf": 0.98
         }
       },
-      "nearest_anything_m": 3.6
+      "nearest_anything_m": 3.6,
+      "edge_m": 5.1,
+      "sighting_group": 8
     }
   ]
 }

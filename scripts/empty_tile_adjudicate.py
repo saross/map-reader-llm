@@ -159,6 +159,16 @@ def nearest(tree: cKDTree, xy: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     return dist, idx
 
 
+def edge_distance_m(x: float, y: float, minx: float, miny: float,
+                    maxx: float, maxy: float) -> float:
+    """Distance from a point inside a tile to the nearest tile edge (metres).
+
+    Negative if the point lies outside the bounds (should not happen for a
+    mark placed on the tile image; reported rather than clamped).
+    """
+    return float(min(x - minx, maxx - x, y - miny, maxy - y))
+
+
 def clopper_pearson(k: int, n: int, alpha: float = 0.05) -> tuple[float, float]:
     """Exact binomial interval for k successes in n trials."""
     lo = 0.0 if k == 0 else float(beta.ppf(alpha / 2, k, n - k + 1))
@@ -237,14 +247,25 @@ def main() -> int:
     ap.add_argument("--radius-m", type=float, default=50.0)
     ap.add_argument("--gt", choices=sorted(GT_FILES), default="standardised",
                     help="Ground-truth reference (default: standardised).")
+    ap.add_argument("--mode", choices=["empty", "census"], default="empty",
+                    help="'empty': the sampled empty-tile audit — reports the "
+                         "double-miss floor scaled to the empty frame. 'census': "
+                         "the complete cluster census — reports distinct additional "
+                         "sightings and GT-error flags against the clustered mounds, "
+                         "plus the edge-safety list for a final check.")
     args = ap.parse_args()
     REFERENCE_SETS[0] = ("ground-truth", "gt", GT_FILES[args.gt])
 
     out_dir = PROJECT_ROOT / args.out_dir
     verdicts = latest_pass(pd.read_csv(PROJECT_ROOT / args.verdicts))
     manifest = pd.read_csv(PROJECT_ROOT / args.manifest)
+    # Only tiles in the current manifest count (a rebuilt census can leave
+    # rows for tiles that dropped out of the frame; they are kept in the file
+    # as a record but excluded here).
+    verdicts = verdicts[verdicts["tile_name"].isin(manifest["tile_name"])]
     reviewed = verdicts.drop_duplicates("tile_name")
     marks = verdicts.dropna(subset=["x_world", "y_world"]).copy()
+    bounds_by_tile = manifest.set_index("tile_name")[["minx", "miny", "maxx", "maxy"]]
     logger.info("reviewed tiles %d (of %d in manifest); marks %d",
                 len(reviewed), len(manifest), len(marks))
 
@@ -298,6 +319,8 @@ def main() -> int:
             "x_world": round(float(m["x_world"]), 1), "y_world": round(float(m["y_world"]), 1),
             "class": cls, "flagged_gt_id": flagged, "nearest": detail,
             "nearest_anything_m": round(min(d for d, _ in hits.values()), 1),
+            "edge_m": round(edge_distance_m(float(m["x_world"]), float(m["y_world"]),
+                                            *bounds_by_tile.loc[m["tile_name"]]), 1),
         })
         logger.info("mark %s (%s): %s — nearest %s m", m["tile_name"], m["tier"], cls,
                     rows[-1]["nearest_anything_m"])
@@ -319,11 +342,39 @@ def main() -> int:
                                    "distinct_points": len(flag_points), "points": flag_points},
                 "sightings_by_class": distinct_by_class}
 
-    # ---- Floor estimate ----
-    summary = json.loads((PROJECT_ROOT / SAMPLE_SUMMARY).read_text())
-    n_frame = int(summary["n_empty"])
     n_gt = len(sets["ground-truth"]["gdf"])
     classes = pd.Series([r["class"] for r in rows]).value_counts().to_dict()
+
+    # ---- Census summary (complete enumeration of the cluster stratum) ----
+    census: dict = {}
+    if args.mode == "census":
+        csum = json.loads((out_dir / "census_summary.json").read_text())
+        additional = {c: n for c, n in distinct_by_class.items()
+                      if c in ("true-double-miss", "detected", "proposed-but-filtered")}
+        n_add = sum(additional.values())
+        n_known = int(csum["n_mounds_in_clusters"])
+        census = {
+            "frame": {k: csum[k] for k in ("reference", "n_clusters", "n_mounds_in_clusters",
+                                          "n_census_tiles", "n_overlay_tiles")},
+            "tiles_reviewed": int(len(reviewed)),
+            "distinct_additional_sightings": additional,
+            "additional_total": n_add,
+            "additional_per_known_mound": n_add / n_known if n_known else None,
+            "gt_error_flags_distinct": distinct["gt_error_flags"]["distinct_points"],
+            "gt_error_flags_per_known_mound": (distinct["gt_error_flags"]["distinct_points"]
+                                               / n_known if n_known else None),
+            "edge_safety_marks": [
+                {"tile_name": r["tile_name"], "position": int(r["order_index"]) + 1,
+                 "gt_id": r["nearest"]["ground-truth"].get("gt_id"),
+                 "gt_m": r["nearest"]["ground-truth"]["distance_m"], "edge_m": r["edge_m"]}
+                for r in rows if r["class"] == "known-in-GT"],
+        }
+
+    # ---- Floor estimate (sampled empty-tile audit only) ----
+    n_frame = 0
+    if args.mode == "empty":
+        summary = json.loads((PROJECT_ROOT / SAMPLE_SUMMARY).read_text())
+        n_frame = int(summary["n_empty"])
 
     def floor(tiles: pd.DataFrame, label: str) -> dict:
         names = set(tiles["tile_name"])
@@ -340,8 +391,9 @@ def main() -> int:
             "implied_share_of_gt_ci95": [lo * n_frame / n_gt, hi * n_frame / n_gt],
         }
 
-    estimates = [floor(reviewed, "all reviewed tiles"),
-                 floor(reviewed[reviewed["tier"] == "10pct"], "10 % tier only (complete SRS)")]
+    estimates = ([floor(reviewed, "all reviewed tiles"),
+                  floor(reviewed[reviewed["tier"] == "10pct"], "10 % tier only (complete SRS)")]
+                 if args.mode == "empty" else [])
 
     # Revision trail: carry forward the previous run's changelog so the
     # regenerated report keeps its history (results revision policy).
@@ -357,6 +409,8 @@ def main() -> int:
 
     payload = {
         "generated": date.today().isoformat(),
+        "mode": args.mode,
+        "census": census,
         "reference": args.gt,
         "reference_path": GT_FILES[args.gt],
         "history": history,
@@ -386,8 +440,12 @@ def main() -> int:
 def render_md(p: dict) -> str:
     """Render the report under the results revision policy."""
     today = p["generated"]
+    census_mode = p.get("mode") == "census"
+    title = ("# Cluster census — mark adjudication, additional sightings, and GT-error flags"
+             if census_mode else
+             "# Empty-tile audit — mark adjudication and double-miss floor")
     lines = [
-        "# Empty-tile audit — mark adjudication and double-miss floor",
+        title,
         "",
         f"> **Last revised**: {today} (generated by `scripts/empty_tile_adjudicate.py`; "
         "regenerate rather than edit). See [§ Changelog](#changelog) for revision history.",
@@ -408,12 +466,46 @@ def render_md(p: dict) -> str:
         f"{p['distinct']['gt_error_flags']['points']}.",
         f"- GT points: {p['gt_points']}.",
         "",
-        "## Double-miss floor",
-        "",
-        "| Stratum | Tiles | True double-misses | Rate / tile (95 % CI) | Implied missed mounds "
-        "in frame (95 % CI) | Share of GT (95 % CI) |",
-        "|---|---:|---:|---|---|---|",
     ]
+    if census_mode:
+        c = p["census"]
+        f = c["frame"]
+        lines += [
+            "## Census result (complete enumeration, no sampling error)",
+            "",
+            f"Frame: {f['n_clusters']} clusters of 2+ mounds within 125 m, "
+            f"{f['n_mounds_in_clusters']} known mounds, {f['n_census_tiles']} tiles "
+            f"({f['n_overlay_tiles']} with an overlay); reference `{f['reference']}`. "
+            f"Tiles reviewed: {c['tiles_reviewed']}.",
+            "",
+            "| Quantity | Value |",
+            "|---|---:|",
+            f"| Distinct additional sightings (by class) | {c['distinct_additional_sightings']} |",
+            f"| Additional sightings, total | {c['additional_total']} |",
+            f"| Additional per known mound in clusters | {100 * c['additional_per_known_mound']:.2f} % |",
+            f"| GT-error flags, distinct reference points | {c['gt_error_flags_distinct']} |",
+            f"| Flagged per known mound in clusters | {100 * c['gt_error_flags_per_known_mound']:.2f} % |",
+            "",
+            "## Edge-safety marks (known-in-GT) — the final-check list",
+            "",
+            "Marks within 50 m of a known point. The reviewer marks a mound that straddles a "
+            "tile edge to be safe; the adjudication classes it known-in-GT corpus-wide, so it "
+            "never counts as additional. Anything here far from an edge deserves a second look.",
+            "",
+            "| Tile | Pos | Known point | Dist to point (m) | Dist to tile edge (m) |",
+            "|---|---:|---|---:|---:|",
+        ]
+        for e in sorted(c["edge_safety_marks"], key=lambda r: -r["edge_m"]):
+            lines.append(f"| `{e['tile_name']}` | {e['position']} | {e['gt_id']} | "
+                         f"{e['gt_m']} | {e['edge_m']} |")
+    else:
+        lines += [
+            "## Double-miss floor",
+            "",
+            "| Stratum | Tiles | True double-misses | Rate / tile (95 % CI) | Implied missed "
+            "mounds in frame (95 % CI) | Share of GT (95 % CI) |",
+            "|---|---:|---:|---|---|---|",
+        ]
     for e in p["estimates"]:
         lo, hi = e["ci95"]
         mlo, mhi = e["implied_missed_ci95"]
@@ -424,15 +516,16 @@ def render_md(p: dict) -> str:
             f"{e['implied_missed_in_frame']:.1f} ({mlo:.1f}–{mhi:.1f}) | "
             f"{100 * e['implied_share_of_gt']:.2f} % ({100 * slo:.2f}–{100 * shi:.2f} %) |")
     lines += ["", "## Per-mark adjudication", "",
-              "| Tile | Tier | Class | Nearest anything (m) | GT (m) | arm-2 3.7 (m) | "
-              "B-primary G3 (m) | 3.7 K=5 union (m; votes; p3.7/pG3) | "
+              "| Tile | Tier | Class | Edge (m) | Nearest anything (m) | GT (m) | arm-2 3.7 (m) | "
+              "B-N5-carried G3 (m) | 3.7 K=5 union (m; votes; p3.7/pG3) | "
               "G3 K=10 union (m; votes; pG3/p3.7) |",
-              "|---|---|---|---:|---:|---:|---:|---|---|"]
+              "|---|---|---|---:|---:|---:|---:|---:|---|---|"]
     for r in p["per_mark"]:
         n = r["nearest"]
         u5, u10 = n["union-3.7-K5"], n["union-G3-K10"]
         lines.append(
-            f"| `{r['tile_name']}` | {r['tier']} | **{r['class']}** | {r['nearest_anything_m']} | "
+            f"| `{r['tile_name']}` | {r['tier']} | **{r['class']}** | {r.get('edge_m', '—')} | "
+            f"{r['nearest_anything_m']} | "
             f"{n['ground-truth']['distance_m']} | {n['arm2-carried-3.7']['distance_m']} | "
             f"{n['B-N5-carried-G3']['distance_m']} | "
             f"{u5['distance_m']}; {u5.get('vote_count', '—')}; "

@@ -8,6 +8,7 @@ Protocol: `planning/student-baseline-2026-08-31.md § 5b` — nearest neighbour 
 
 - Tiles reviewed: **500** of a 4676-tile empty frame (by tier: {'10pct': 470, '20pct': 30}).
 - Marks placed: **9**. Classes: {'true-double-miss': 5, 'known-in-GT': 4}.
+- Distinct sightings after collapsing overlap-strip duplicates (15 m): {'known-in-GT': 4, 'true-double-miss': 5}; GT-error flags 0 marks on 0 distinct reference points [].
 - GT points: 5010.
 
 ## Double-miss floor
@@ -19,17 +20,17 @@ Protocol: `planning/student-baseline-2026-08-31.md § 5b` — nearest neighbour 
 
 ## Per-mark adjudication
 
-| Tile | Tier | Class | Nearest anything (m) | GT (m) | arm-2 3.7 (m) | B-primary G3 (m) | 3.7 K=5 union (m; votes; p3.7/pG3) | G3 K=10 union (m; votes; pG3/p3.7) |
-|---|---|---|---:|---:|---:|---:|---|---|
-| `K-35-063-4_Skobelevo_4326_x336_y3360.png` | 10pct | **known-in-GT** | 2.4 | 2.4 | 2.9 | 1456.3 | 2.9; 5; 0.98/0.1 | 6.4; 6; 1.0/0.98 |
-| `K-35-077-2_x1680_y1008.png` | 10pct | **true-double-miss** | 346.3 | 1291.4 | 1283.6 | 1293.1 | 1283.6; 5; 0.98/0.3 | 346.3; 10; 0.0/0.05 |
-| `K-35-051-3_x1008_y1344.png` | 10pct | **true-double-miss** | 571.5 | 571.5 | 585.5 | 583.8 | 585.5; 5; 0.98/0.95 | 583.8; 10; 0.95/0.99 |
-| `K-35-067-4_x2352_y2688.png` | 10pct | **true-double-miss** | 731.0 | 1212.6 | 1857.4 | 1854.2 | 1857.4; 5; 0.98/0.95 | 731.0; 6; 0.0/0.0 |
-| `K-35-054-3_Yambol_x672_y2352.png` | 10pct | **known-in-GT** | 6.8 | 30.6 | 11.2 | 20.5 | 11.1; 5; 0.98/1.0 | 6.8; 4; 1.0/0.99 |
-| `K-35-051-3_x1008_y3360.png` | 10pct | **true-double-miss** | 222.9 | 1105.2 | 1099.6 | 1092.4 | 800.5; 3; 0.01/0.0 | 222.9; 1; 0.0/0.0 |
-| `K-35-055-2_x2688_y0.png` | 10pct | **true-double-miss** | 475.9 | 1518.1 | 496.6 | 494.4 | 496.6; 5; 0.95/0.1 | 475.9; 1; 0.2/0.95 |
-| `K-35-050-4_x1344_y672.png` | 10pct | **known-in-GT** | 1.2 | 12.5 | 1.2 | 4.7 | 1.2; 5; 0.98/1.0 | 3.6; 10; 1.0/0.98 |
-| `K-35-063-1_Granit_4326_x3696_y336.png` | 10pct | **known-in-GT** | 3.6 | 4.4 | 3.6 | 957.7 | 3.6; 5; 0.99/0.95 | 5.2; 1; 1.0/0.98 |
+| Tile | Tier | Class | Edge (m) | Nearest anything (m) | GT (m) | arm-2 3.7 (m) | B-N5-carried G3 (m) | 3.7 K=5 union (m; votes; p3.7/pG3) | G3 K=10 union (m; votes; pG3/p3.7) |
+|---|---|---|---:|---:|---:|---:|---:|---|---|
+| `K-35-063-4_Skobelevo_4326_x336_y3360.png` | 10pct | **known-in-GT** | 10.1 | 2.4 | 2.4 | 2.9 | 1456.3 | 2.9; 5; 0.98/0.1 | 6.4; 6; 1.0/0.98 |
+| `K-35-077-2_x1680_y1008.png` | 10pct | **true-double-miss** | 626.4 | 346.3 | 1291.4 | 1283.6 | 1293.1 | 1283.6; 5; 0.98/0.3 | 346.3; 10; 0.0/0.05 |
+| `K-35-051-3_x1008_y1344.png` | 10pct | **true-double-miss** | 189.4 | 571.5 | 571.5 | 585.5 | 583.8 | 585.5; 5; 0.98/0.95 | 583.8; 10; 0.95/0.99 |
+| `K-35-067-4_x2352_y2688.png` | 10pct | **true-double-miss** | 593.9 | 731.0 | 1212.6 | 1857.4 | 1854.2 | 1857.4; 5; 0.98/0.95 | 731.0; 6; 0.0/0.0 |
+| `K-35-054-3_Yambol_x672_y2352.png` | 10pct | **known-in-GT** | 2.5 | 6.8 | 30.6 | 11.2 | 20.5 | 11.1; 5; 0.98/1.0 | 6.8; 4; 1.0/0.99 |
+| `K-35-051-3_x1008_y3360.png` | 10pct | **true-double-miss** | 663.0 | 222.9 | 1105.2 | 1099.6 | 1092.4 | 800.5; 3; 0.01/0.0 | 222.9; 1; 0.0/0.0 |
+| `K-35-055-2_x2688_y0.png` | 10pct | **true-double-miss** | 570.3 | 475.9 | 1518.1 | 496.6 | 494.4 | 496.6; 5; 0.95/0.1 | 475.9; 1; 0.2/0.95 |
+| `K-35-050-4_x1344_y672.png` | 10pct | **known-in-GT** | 10.0 | 1.2 | 12.5 | 1.2 | 4.7 | 1.2; 5; 0.98/1.0 | 3.6; 10; 1.0/0.98 |
+| `K-35-063-1_Granit_4326_x3696_y336.png` | 10pct | **known-in-GT** | 5.1 | 3.6 | 4.4 | 3.6 | 957.7 | 3.6; 5; 0.99/0.95 | 5.2; 1; 1.0/0.98 |
 
 ## Reference sets
 
@@ -45,6 +46,8 @@ Protocol: `planning/student-baseline-2026-08-31.md § 5b` — nearest neighbour 
 
 Classes now {'true-double-miss': 5, 'known-in-GT': 4} over 500 tiles. Previous runs, newest first:
 
+- 2026-09-06: reference `standardised`, 500 tiles, classes {'true-double-miss': 5, 'known-in-GT': 4}.
+- 2026-09-06: reference `standardised`, 500 tiles, classes {'true-double-miss': 5, 'known-in-GT': 4}.
 - 2026-09-05: reference `canonical`, 500 tiles, classes {'true-double-miss': 5, 'known-in-GT': 4}.
 
 ### 2026-09-05 — Original publication

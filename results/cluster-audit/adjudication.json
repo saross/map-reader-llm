@@ -1,0 +1,1351 @@
+{
+  "generated": "2026-09-06",
+  "mode": "census",
+  "census": {
+    "frame": {
+      "reference": "inputs/vectors/references/best-available-gt-55maps.geojson",
+      "n_clusters": 334,
+      "n_mounds_in_clusters": 719,
+      "n_census_tiles": 478,
+      "n_overlay_tiles": 465
+    },
+    "tiles_reviewed": 478,
+    "distinct_additional_sightings": {
+      "detected": 6,
+      "proposed-but-filtered": 1,
+      "true-double-miss": 2
+    },
+    "additional_total": 9,
+    "additional_per_known_mound": 0.012517385257301807,
+    "gt_error_flags_distinct": 6,
+    "gt_error_flags_per_known_mound": 0.008344923504867872,
+    "edge_safety_marks": [
+      {
+        "tile_name": "K-35-050-4_x1008_y672.png",
+        "position": 3,
+        "gt_id": "student:00039",
+        "gt_m": 12.8,
+        "edge_m": 10.0
+      },
+      {
+        "tile_name": "K-35-052-3_x336_y3360.png",
+        "position": 67,
+        "gt_id": "student:00628",
+        "gt_m": 8.3,
+        "edge_m": 5.0
+      },
+      {
+        "tile_name": "K-35-063-1_Granit_4326_x1680_y3024.png",
+        "position": 180,
+        "gt_id": "student:02042",
+        "gt_m": 10.1,
+        "edge_m": 5.1
+      },
+      {
+        "tile_name": "K-35-063-1_Granit_4326_x3360_y1344.png",
+        "position": 187,
+        "gt_id": "student:01880",
+        "gt_m": 21.6,
+        "edge_m": 0.0
+      },
+      {
+        "tile_name": "K-35-063-1_Granit_4326_x336_y3360.png",
+        "position": 204,
+        "gt_id": "student:02054",
+        "gt_m": 11.3,
+        "edge_m": 9.1
+      },
+      {
+        "tile_name": "K-35-063-2_Chirpan_4326_x3360_y336.png",
+        "position": 211,
+        "gt_id": "student:02095",
+        "gt_m": 29.8,
+        "edge_m": 21.2
+      },
+      {
+        "tile_name": "K-35-063-2_Chirpan_4326_x1344_y1008.png",
+        "position": 218,
+        "gt_id": "student:02177",
+        "gt_m": 7.5,
+        "edge_m": 5.0
+      },
+      {
+        "tile_name": "K-35-065-1_Radetski_4326_x1344_y336.png",
+        "position": 281,
+        "gt_id": "student:02891",
+        "gt_m": 4.1,
+        "edge_m": 2.5
+      },
+      {
+        "tile_name": "K-35-066-1_x1680_y0.png",
+        "position": 302,
+        "gt_id": "student:03231",
+        "gt_m": 19.0,
+        "edge_m": 2.5
+      },
+      {
+        "tile_name": "K-35-067-1_x3696_y2352.png",
+        "position": 352,
+        "gt_id": "student:03625",
+        "gt_m": 8.8,
+        "edge_m": 0.0
+      },
+      {
+        "tile_name": "K-35-075-1_x336_y1008.png",
+        "position": 396,
+        "gt_id": "student:03992",
+        "gt_m": 12.9,
+        "edge_m": 5.0
+      },
+      {
+        "tile_name": "K-35-077-3_x3696_y1008.png",
+        "position": 469,
+        "gt_id": "student:04672",
+        "gt_m": 8.9,
+        "edge_m": 5.0
+      },
+      {
+        "tile_name": "K-35-077-3_x1680_y1008.png",
+        "position": 473,
+        "gt_id": "extension:295",
+        "gt_m": 12.3,
+        "edge_m": 5.0
+      }
+    ]
+  },
+  "reference": "standardised",
+  "reference_path": "inputs/vectors/references/best-available-gt-55maps.geojson",
+  "history": [
+    {
+      "generated": "2026-09-06",
+      "reference": "standardised",
+      "reviewed_tiles": 478,
+      "classes": {
+        "known-in-GT": 13,
+        "gt-error-flag": 7,
+        "detected": 6,
+        "true-double-miss": 2,
+        "proposed-but-filtered": 1
+      }
+    }
+  ],
+  "protocol": "planning/student-baseline-2026-08-31.md \u00a7 5b",
+  "radius_m": 50.0,
+  "reviewed_tiles": 478,
+  "reviewed_by_tier": {
+    "census": 478
+  },
+  "marks": 29,
+  "classes": {
+    "known-in-GT": 13,
+    "gt-error-flag": 7,
+    "detected": 6,
+    "true-double-miss": 2,
+    "proposed-but-filtered": 1
+  },
+  "distinct": {
+    "gt_error_flags": {
+      "marks": 7,
+      "distinct_points": 6,
+      "points": [
+        "extension:40",
+        "student:02949",
+        "student:03283",
+        "student:03286",
+        "student:04047",
+        "student:04237"
+      ]
+    },
+    "sightings_by_class": {
+      "detected": 6,
+      "known-in-GT": 13,
+      "proposed-but-filtered": 1,
+      "true-double-miss": 2
+    }
+  },
+  "frame_empty_tiles": 0,
+  "gt_points": 5010,
+  "reference_sets": {
+    "ground-truth": {
+      "kind": "gt",
+      "n": 5010,
+      "path": "inputs/vectors/references/best-available-gt-55maps.geojson"
+    },
+    "arm2-carried-3.7": {
+      "kind": "deployed",
+      "n": 5003,
+      "path": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/verified_detections.geojson"
+    },
+    "B-N5-carried-G3": {
+      "kind": "deployed",
+      "n": 4736,
+      "path": "results/55map-final-board-2026-08-27/cells/B-N5-carried/detections.geojson"
+    },
+    "union-3.7-K5": {
+      "kind": "union",
+      "n": 12715,
+      "path": "outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/union_k5.geojson"
+    },
+    "union-G3-K10": {
+      "kind": "union",
+      "n": 57482,
+      "path": "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/union_k10.geojson"
+    }
+  },
+  "estimates": [],
+  "per_mark": [
+    {
+      "order_index": 2,
+      "tile_name": "K-35-050-4_x1008_y672.png",
+      "map_name": "K-35-050-4",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 321370.0,
+      "y_world": 4702420.1,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 12.8,
+          "gt_id": "student:00039"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 0.9,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 5.4,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 0.9,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 4.3,
+          "vote_count": 10,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 0.9,
+      "edge_m": 10.0,
+      "sighting_group": 0
+    },
+    {
+      "order_index": 45,
+      "tile_name": "K-35-052-2_x1344_y336.png",
+      "map_name": "K-35-052-2",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 405436.2,
+      "y_world": 4722684.9,
+      "class": "true-double-miss",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 315.3,
+          "gt_id": "student:00449"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 317.1,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 319.9,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 317.1,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.2
+        },
+        "union-G3-K10": {
+          "distance_m": 320.5,
+          "vote_count": 10,
+          "prob_G3-vf": 0.2,
+          "prob_3.7-vf": 0.95
+        }
+      },
+      "nearest_anything_m": 315.3,
+      "edge_m": 147.6,
+      "sighting_group": 1
+    },
+    {
+      "order_index": 66,
+      "tile_name": "K-35-052-3_x336_y3360.png",
+      "map_name": "K-35-052-3",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 379894.7,
+      "y_world": 4687900.7,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 8.3,
+          "gt_id": "student:00628"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 89.1,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 78.8,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 1.1,
+          "vote_count": 4,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 53.0,
+          "vote_count": 7,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 1.1,
+      "edge_m": 5.0,
+      "sighting_group": 2
+    },
+    {
+      "order_index": 76,
+      "tile_name": "K-35-053-2_x3360_y2352.png",
+      "map_name": "K-35-053-2",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 455441.9,
+      "y_world": 4710954.5,
+      "class": "detected",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 93.3,
+          "gt_id": "student:00751"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 2.0,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 3.3,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 2.0,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.95,
+          "prob_G3-vf": 0.1
+        },
+        "union-G3-K10": {
+          "distance_m": 6.0,
+          "vote_count": 10,
+          "prob_G3-vf": 0.2,
+          "prob_3.7-vf": 0.95
+        }
+      },
+      "nearest_anything_m": 2.0,
+      "edge_m": 387.7,
+      "sighting_group": 3
+    },
+    {
+      "order_index": 97,
+      "tile_name": "K-35-054-2_Atolov_4326_x0_y3360.png",
+      "map_name": "K-35-054-2_Atolov_4326",
+      "tier": "census",
+      "symbol": "Known (yellow) mound is NOT a mound \u2014 GT error",
+      "x_world": 480243.0,
+      "y_world": 4705850.2,
+      "class": "gt-error-flag",
+      "flagged_gt_id": "extension:40",
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 1.1,
+          "gt_id": "extension:40"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 11.2,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 3.1,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 11.2,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.95
+        },
+        "union-G3-K10": {
+          "distance_m": 3.2,
+          "vote_count": 10,
+          "prob_G3-vf": 0.95,
+          "prob_3.7-vf": 0.99
+        }
+      },
+      "nearest_anything_m": 1.1,
+      "edge_m": 770.7
+    },
+    {
+      "order_index": 126,
+      "tile_name": "K-35-054-4_Voynika_x672_y336.png",
+      "map_name": "K-35-054-4_Voynika",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 483822.7,
+      "y_world": 4703076.2,
+      "class": "detected",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 68.4,
+          "gt_id": "student:01259"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 4.4,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 4.6,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 4.4,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.2
+        },
+        "union-G3-K10": {
+          "distance_m": 4.3,
+          "vote_count": 10,
+          "prob_G3-vf": 0.95,
+          "prob_3.7-vf": 0.99
+        }
+      },
+      "nearest_anything_m": 4.3,
+      "edge_m": 520.0,
+      "sighting_group": 4
+    },
+    {
+      "order_index": 179,
+      "tile_name": "K-35-063-1_Granit_4326_x1680_y3024.png",
+      "map_name": "K-35-063-1_Granit_4326",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 343670.0,
+      "y_world": 4671931.7,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 10.1,
+          "gt_id": "student:02042"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 10.2,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 11.3,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 10.3,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.2
+        },
+        "union-G3-K10": {
+          "distance_m": 11.1,
+          "vote_count": 10,
+          "prob_G3-vf": 0.2,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 10.1,
+      "edge_m": 5.1,
+      "sighting_group": 5
+    },
+    {
+      "order_index": 186,
+      "tile_name": "K-35-063-1_Granit_4326_x3360_y1344.png",
+      "map_name": "K-35-063-1_Granit_4326",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 351192.1,
+      "y_world": 4681993.0,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 21.6,
+          "gt_id": "student:01880"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 3.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 4.0,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 3.7,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.95
+        },
+        "union-G3-K10": {
+          "distance_m": 4.5,
+          "vote_count": 10,
+          "prob_G3-vf": 0.85,
+          "prob_3.7-vf": 0.99
+        }
+      },
+      "nearest_anything_m": 3.6,
+      "edge_m": 0.0,
+      "sighting_group": 6
+    },
+    {
+      "order_index": 203,
+      "tile_name": "K-35-063-1_Granit_4326_x336_y3360.png",
+      "map_name": "K-35-063-1_Granit_4326",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 335923.5,
+      "y_world": 4671165.3,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 11.3,
+          "gt_id": "student:02054"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 1.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 0.8,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 1.6,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.2
+        },
+        "union-G3-K10": {
+          "distance_m": 0.6,
+          "vote_count": 10,
+          "prob_G3-vf": 0.85,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 0.6,
+      "edge_m": 9.1,
+      "sighting_group": 7
+    },
+    {
+      "order_index": 206,
+      "tile_name": "K-35-063-1_Granit_4326_x3024_y672.png",
+      "map_name": "K-35-063-1_Granit_4326",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 350800.6,
+      "y_world": 4684246.3,
+      "class": "true-double-miss",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 306.6,
+          "gt_id": "extension:95"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 305.8,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 303.9,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 185.2,
+          "vote_count": 1,
+          "prob_3.7-vf": 0.25,
+          "prob_G3-vf": 0.95
+        },
+        "union-G3-K10": {
+          "distance_m": 190.5,
+          "vote_count": 1,
+          "prob_G3-vf": 0.85,
+          "prob_3.7-vf": 0.25
+        }
+      },
+      "nearest_anything_m": 185.2,
+      "edge_m": 437.0,
+      "sighting_group": 8
+    },
+    {
+      "order_index": 210,
+      "tile_name": "K-35-063-2_Chirpan_4326_x3360_y336.png",
+      "map_name": "K-35-063-2_Chirpan_4326",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 372253.8,
+      "y_world": 4685014.6,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 29.8,
+          "gt_id": "student:02095"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 3.1,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 4.1,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 3.2,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 3.7,
+          "vote_count": 10,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 1.0
+        }
+      },
+      "nearest_anything_m": 3.1,
+      "edge_m": 21.2,
+      "sighting_group": 9
+    },
+    {
+      "order_index": 217,
+      "tile_name": "K-35-063-2_Chirpan_4326_x1344_y1008.png",
+      "map_name": "K-35-063-2_Chirpan_4326",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 362778.7,
+      "y_world": 4681606.7,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 7.5,
+          "gt_id": "student:02177"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 8.1,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 6.0,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 8.2,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 5.5,
+          "vote_count": 10,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 5.5,
+      "edge_m": 5.0,
+      "sighting_group": 10
+    },
+    {
+      "order_index": 251,
+      "tile_name": "K-35-063-4_Skobelevo_4326_x1680_y2016.png",
+      "map_name": "K-35-063-4_Skobelevo_4326",
+      "tier": "census",
+      "symbol": "Hairy black square with a dot inside",
+      "x_world": 364876.3,
+      "y_world": 4658323.6,
+      "class": "detected",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 633.1,
+          "gt_id": "student:02477"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 1.3,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 5.3,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 1.4,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 5.9,
+          "vote_count": 10,
+          "prob_G3-vf": 0.95,
+          "prob_3.7-vf": 0.99
+        }
+      },
+      "nearest_anything_m": 1.3,
+      "edge_m": 103.6,
+      "sighting_group": 11
+    },
+    {
+      "order_index": 280,
+      "tile_name": "K-35-065-1_Radetski_4326_x1344_y336.png",
+      "map_name": "K-35-065-1_Radetski_4326",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 424114.4,
+      "y_world": 4683820.4,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 4.1,
+          "gt_id": "student:02891"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 3.3,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 1.5,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 3.3,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.99,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 1.8,
+          "vote_count": 10,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 1.5,
+      "edge_m": 2.5,
+      "sighting_group": 12
+    },
+    {
+      "order_index": 283,
+      "tile_name": "K-35-065-1_Radetski_4326_x336_y2688.png",
+      "map_name": "K-35-065-1_Radetski_4326",
+      "tier": "census",
+      "symbol": "Known (yellow) mound is NOT a mound \u2014 GT error",
+      "x_world": 420493.1,
+      "y_world": 4672439.7,
+      "class": "gt-error-flag",
+      "flagged_gt_id": "student:02949",
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 2.1,
+          "gt_id": "student:02949"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 290.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 295.3,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 290.6,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.1
+        },
+        "union-G3-K10": {
+          "distance_m": 295.2,
+          "vote_count": 10,
+          "prob_G3-vf": 0.95,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 2.1,
+      "edge_m": 178.7
+    },
+    {
+      "order_index": 301,
+      "tile_name": "K-35-066-1_x1680_y0.png",
+      "map_name": "K-35-066-1",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 468109.8,
+      "y_world": 4684939.8,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 19.0,
+          "gt_id": "student:03231"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 7.5,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 4.5,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 7.4,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 5.4,
+          "vote_count": 10,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.99
+        }
+      },
+      "nearest_anything_m": 4.5,
+      "edge_m": 2.5,
+      "sighting_group": 13
+    },
+    {
+      "order_index": 315,
+      "tile_name": "K-35-066-1_x3024_y336.png",
+      "map_name": "K-35-066-1",
+      "tier": "census",
+      "symbol": "Known (yellow) mound is NOT a mound \u2014 GT error",
+      "x_world": 475657.9,
+      "y_world": 4683429.6,
+      "class": "gt-error-flag",
+      "flagged_gt_id": "student:03283",
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 2.9,
+          "gt_id": "student:03283"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 28.8,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 26.6,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 28.8,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.95,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 8.9,
+          "vote_count": 2,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.95
+        }
+      },
+      "nearest_anything_m": 2.9,
+      "edge_m": 10.0
+    },
+    {
+      "order_index": 316,
+      "tile_name": "K-35-066-1_x3024_y672.png",
+      "map_name": "K-35-066-1",
+      "tier": "census",
+      "symbol": "Known (yellow) mound is NOT a mound \u2014 GT error",
+      "x_world": 475657.9,
+      "y_world": 4683430.6,
+      "class": "gt-error-flag",
+      "flagged_gt_id": "student:03283",
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 2.5,
+          "gt_id": "student:03283"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 28.7,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 26.4,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 28.7,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.95,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 8.2,
+          "vote_count": 2,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.95
+        }
+      },
+      "nearest_anything_m": 2.5,
+      "edge_m": 10.0
+    },
+    {
+      "order_index": 318,
+      "tile_name": "K-35-066-1_x3360_y2016.png",
+      "map_name": "K-35-066-1",
+      "tier": "census",
+      "symbol": "Known (yellow) mound is NOT a mound \u2014 GT error",
+      "x_world": 475737.2,
+      "y_world": 4675147.6,
+      "class": "gt-error-flag",
+      "flagged_gt_id": "student:03286",
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 0.5,
+          "gt_id": "student:03286"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 334.8,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 333.4,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 334.8,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 315.8,
+          "vote_count": 1,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 0.5,
+      "edge_m": 310.1
+    },
+    {
+      "order_index": 351,
+      "tile_name": "K-35-067-1_x3696_y2352.png",
+      "map_name": "K-35-067-1",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 519462.1,
+      "y_world": 4674999.8,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 8.8,
+          "gt_id": "student:03625"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 2.7,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 202.7,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 2.6,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.15
+        },
+        "union-G3-K10": {
+          "distance_m": 12.8,
+          "vote_count": 6,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 2.6,
+      "edge_m": 0.0,
+      "sighting_group": 14
+    },
+    {
+      "order_index": 379,
+      "tile_name": "K-35-067-4_x2688_y1344.png",
+      "map_name": "K-35-067-4",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 535303.9,
+      "y_world": 4660566.6,
+      "class": "proposed-but-filtered",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 665.3,
+          "gt_id": "student:03836"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 660.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 658.3,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 6.3,
+          "vote_count": 2,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.15
+        },
+        "union-G3-K10": {
+          "distance_m": 581.3,
+          "vote_count": 10,
+          "prob_G3-vf": 0.05,
+          "prob_3.7-vf": 0.01
+        }
+      },
+      "nearest_anything_m": 6.3,
+      "edge_m": 630.5,
+      "sighting_group": 15
+    },
+    {
+      "order_index": 395,
+      "tile_name": "K-35-075-1_x336_y1008.png",
+      "map_name": "K-35-075-1",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 336336.0,
+      "y_world": 4644665.6,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 12.9,
+          "gt_id": "student:03992"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 7.2,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 5.5,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 7.3,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 5.4,
+          "vote_count": 10,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 5.4,
+      "edge_m": 5.0,
+      "sighting_group": 16
+    },
+    {
+      "order_index": 402,
+      "tile_name": "K-35-075-2_x336_y672.png",
+      "map_name": "K-35-075-2",
+      "tier": "census",
+      "symbol": "Known (yellow) mound is NOT a mound \u2014 GT error",
+      "x_world": 357906.4,
+      "y_world": 4647073.0,
+      "class": "gt-error-flag",
+      "flagged_gt_id": "student:04047",
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 0.4,
+          "gt_id": "student:04047"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 593.0,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 592.8,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 592.9,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 412.1,
+          "vote_count": 1,
+          "prob_G3-vf": 0.0,
+          "prob_3.7-vf": 0.01
+        }
+      },
+      "nearest_anything_m": 0.4,
+      "edge_m": 275.3
+    },
+    {
+      "order_index": 425,
+      "tile_name": "K-35-076-1_x1344_y0.png",
+      "map_name": "K-35-076-1",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 383101.7,
+      "y_world": 4650305.4,
+      "class": "detected",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 108.8,
+          "gt_id": "student:04219"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 2.7,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 9.4,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 2.7,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 9.2,
+          "vote_count": 10,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 2.7,
+      "edge_m": 514.3,
+      "sighting_group": 17
+    },
+    {
+      "order_index": 428,
+      "tile_name": "K-35-076-1_x2688_y3360.png",
+      "map_name": "K-35-076-1",
+      "tier": "census",
+      "symbol": "Known (yellow) mound is NOT a mound \u2014 GT error",
+      "x_world": 389299.9,
+      "y_world": 4633175.3,
+      "class": "gt-error-flag",
+      "flagged_gt_id": "student:04237",
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 1.7,
+          "gt_id": "student:04237"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 470.0,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 469.1,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 470.0,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 470.1,
+          "vote_count": 10,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 1.7,
+      "edge_m": 455.4
+    },
+    {
+      "order_index": 457,
+      "tile_name": "K-35-077-2_x1008_y2688.png",
+      "map_name": "K-35-077-2",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 443012.6,
+      "y_world": 4635000.4,
+      "class": "detected",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 491.6,
+          "gt_id": "student:04616"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 5.1,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 484.8,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 5.0,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.95,
+          "prob_G3-vf": 0.05
+        },
+        "union-G3-K10": {
+          "distance_m": 21.9,
+          "vote_count": 4,
+          "prob_G3-vf": 0.1,
+          "prob_3.7-vf": 0.95
+        }
+      },
+      "nearest_anything_m": 5.0,
+      "edge_m": 345.7,
+      "sighting_group": 18
+    },
+    {
+      "order_index": 461,
+      "tile_name": "K-35-077-2_x2016_y3360.png",
+      "map_name": "K-35-077-2",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 449375.5,
+      "y_world": 4632230.5,
+      "class": "detected",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 96.6,
+          "gt_id": "extension:288"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 3.5,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 7.7,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 3.4,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.05
+        },
+        "union-G3-K10": {
+          "distance_m": 7.8,
+          "vote_count": 9,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 1.0
+        }
+      },
+      "nearest_anything_m": 3.4,
+      "edge_m": 295.3,
+      "sighting_group": 19
+    },
+    {
+      "order_index": 468,
+      "tile_name": "K-35-077-3_x3696_y1008.png",
+      "map_name": "K-35-077-3",
+      "tier": "census",
+      "symbol": "Hairy brown circle",
+      "x_world": 437175.0,
+      "y_world": 4626617.2,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 8.9,
+          "gt_id": "student:04672"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 6.1,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 11.5,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 6.1,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 10.6,
+          "vote_count": 10,
+          "prob_G3-vf": 0.95,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 6.1,
+      "edge_m": 5.0,
+      "sighting_group": 20
+    },
+    {
+      "order_index": 472,
+      "tile_name": "K-35-077-3_x1680_y1008.png",
+      "map_name": "K-35-077-3",
+      "tier": "census",
+      "symbol": "Hairy black triangle with a dot inside",
+      "x_world": 425754.2,
+      "y_world": 4624700.8,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 12.3,
+          "gt_id": "extension:295"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 6.0,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 4.3,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 6.0,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 4.3,
+          "vote_count": 10,
+          "prob_G3-vf": 0.3,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 4.3,
+      "edge_m": 5.0,
+      "sighting_group": 21
+    }
+  ]
+}

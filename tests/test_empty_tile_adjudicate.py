@@ -19,7 +19,19 @@ from scripts.empty_tile_adjudicate import (  # noqa: E402
     classify,
     clopper_pearson,
     distinct_groups,
+    edge_distance_m,
 )
+
+
+@pytest.mark.tier1
+def test_edge_distance_is_the_nearest_side():
+    """A 1,932 m tile: a point 10 m in from the south edge reports 10 m; the
+    centre reports half the side; outside the bounds goes negative."""
+    minx, miny, maxx, maxy = 0.0, 0.0, 1932.0, 1932.0
+    assert edge_distance_m(500.0, 10.0, minx, miny, maxx, maxy) == pytest.approx(10.0)
+    assert edge_distance_m(966.0, 966.0, minx, miny, maxx, maxy) == pytest.approx(966.0)
+    assert edge_distance_m(1930.0, 5.0, minx, miny, maxx, maxy) == pytest.approx(2.0)
+    assert edge_distance_m(-3.0, 500.0, minx, miny, maxx, maxy) < 0
 
 
 @pytest.mark.tier1
