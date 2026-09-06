@@ -31770,3 +31770,96 @@ floor, unchanged by the reference switch per (e)); **Obs 389** (the
 four-layer ground truth, the lineage this entry's two files sit in);
 **Obs 388** (F1 and MCC computed against different ground truths — the
 earliest instance of the mismatched-reference failure mode).
+
+## Observation 450: Rider to Obs 449 — the census overlay does not filter by map sheet, so § (h)'s tile counts are wrong and § 5c's 308 was right all along (Session 148, 2026-09-06)
+
+**What this corrects.** **Obs 449 § (h)** asserted that
+`planning/student-baseline-2026-08-31.md` § 5c overstated the census
+frame's contamination, "recomputed, the count is **267** tiles with at
+least one already-removed phantom (303 carry at least one phantom of
+any kind, and 200 carry at least one of the 98 near-duplicates)". **That
+correction was itself the error.** Re-derived two independent ways this
+session, the corrected counts are:
+
+| Tiles of the 739-tile canonical census frame | Obs 449 § (h) | **Correct** |
+|---|---:|---:|
+| Drawing ≥ 1 canonical phantom of any kind | 303 | **347** |
+| Drawing ≥ 1 Ruling-21-removed phantom | 267 | **308** |
+| Drawing ≥ 1 of the 98 near-duplicates | 200 | **220** |
+
+**§ 5c's "308 of 739 tiles" stands and required no correction**; the
+card now records the re-verification (`6f5aa5b9c`).
+
+**Why Obs 449 got it wrong — a filter borrowed from the wrong
+question.** Obs 449's tile test required a phantom's `source_map` to
+equal the tile's `map_name`. **The census overlay applies no such
+filter**: it draws every canonical GT point falling within a tile's
+world bounds, whatever sheet the point is attributed to. Adjacent
+1:50,000 sheets overlap at their margins, so a phantom belonging to
+sheet A is genuinely rendered on tiles cut from sheet B — **58 of the
+723 overlay tiles draw a phantom attributed to a different sheet**,
+and that is the whole of the gap. The same-map constraint is correct
+for the question **Obs 390** posed and Obs 449 § (b) inherits — *is
+this phantom a duplicate of a student point?*, where the pipeline's
+de-duplication is same-map constrained — and wrong for the question
+§ (d) and § (h) actually ask, *what did the reviewer see on this
+tile?*. **An entry that carries both questions must not reuse one
+question's filter for the other**, which is the generalisable half of
+this rider.
+
+**The two derivations.** *Method A (tile bounds)*: the superseded
+`census_manifest.csv` has **739 rows and 739 distinct `tile_name`s**;
+testing every canonical phantom against every tile's
+`minx`/`maxx`/`miny`/`maxy` in EPSG:32635 (inclusive bounds; the
+strict-interior variant is identical) gives **347 / 308**. *Method B
+(overlay back-projection, independent of the bounds test)*: mapping
+each superseded `overlay.json` point to world coordinates by
+`wx = minx + x_px · px_m`, `wy = maxy − y_px · px_m` and matching to
+the nearest canonical phantom within 3 m matches **483 of the 2,866
+overlay points** to **241 distinct phantoms**, **151** of them
+removed, on **347 / 308** distinct tiles — the same answer from what
+the app actually rendered. Marking a phantom "removed" by the
+same-map or the global 15 m counterpart test makes no difference
+(**176** either way).
+
+**What does not change.** Every other figure in Obs 449 survives:
+**241** phantoms drawn on the census frame and **151** of them already
+removed (both already agreed with § 5c), the **98**-point
+near-duplicate core, the **239 / 176** counterpart split, all of
+§ (b)'s band counts and percentiles, the rebuild table
+(464 → 334 clusters, 1,006 → 719 mounds, 739 → 478 tiles, 2,866 →
+1,857 overlay points), and the § (e) adjudication result. **Obs 449's
+second caveat also stands** — the § 5c percentile set
+(15.2 / 24.8 / 52.6 / 608.3 m) is cross-map unconstrained and must not
+be mixed with same-map band counts.
+
+**A second retraction in the same source check.** Obs 449 dropped
+§ 5c's "270" figure on the grounds that it reconciled with neither
+739 − 478 = 261 nor 464 − 334 = 130. It reconciles perfectly once the
+frames are compared as sets rather than by size: **270 tiles dropped,
+9 entered, 469 shared**, and 469 + 9 = 478. The card's softened
+wording now says exactly this. **The lesson for source checks is that
+a figure failing to match a net difference is not thereby wrong** —
+set differences and net differences are different quantities, and the
+cheap test (compare the sets) should precede the retraction.
+
+Sources: recomputed 2026-09-06 from
+`results/cluster-audit/superseded-canonical-r50-2026-09-01/census_manifest.csv`
+(739 rows, 739 distinct `tile_name`, `minx`/`miny`/`maxx`/`maxy`/`px_m`
+per tile), the same directory's `overlay.json` (2,866 points over 723
+tiles, all 723 present in the manifest),
+`results/cluster-audit/census_manifest.csv` (478 tiles, for the
+dropped/entered/shared decomposition),
+`inputs/vectors/references/canonical-gt-55maps-r50.geojson` (415
+`phantom_canonical`) and
+`inputs/vectors/references/best-available-gt-55maps.geojson` (279
+`extension_standardised`), all in EPSG:32635 as stored, with
+`scipy.spatial.cKDTree` for the counterpart and back-projection
+matches. `planning/student-baseline-2026-08-31.md` § 5c at
+`6f5aa5b9c` (read 2026-09-06: the re-verified 308 and the softened
+270 → 270 dropped / 9 entered / 469 shared wording).
+Related: **Obs 449** (the entry this rider corrects — its § (h) tile
+counts only; the finding, the 98-point core, and every other figure
+stand); **Obs 390** (the same-map de-duplication constraint that
+Obs 449 correctly applies in § (b) and incorrectly imported into
+§ (d)/§ (h)).
