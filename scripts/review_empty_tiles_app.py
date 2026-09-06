@@ -255,12 +255,25 @@ def to_world(row: pd.Series, x_px: float, y_px: float) -> tuple[float, float]:
     return (row.minx + x_px * row.px_m, row.maxy - y_px * row.px_m)
 
 
+def split_overlay(entry) -> tuple[list[list[float]], list[list[float]]]:
+    """An overlay entry is either a plain list of known points (the census
+    format) or a dict {"known": [...], "review": [...]} (the final-check
+    format, where "review" holds the reviewer's own earlier marks)."""
+    if not entry:
+        return [], []
+    if isinstance(entry, dict):
+        return list(entry.get("known", [])), list(entry.get("review", []))
+    return list(entry), []
+
+
 def annotated_image(img: Image.Image, marks: list[dict],
                     pending: dict | None = None,
-                    known: list[list[float]] | None = None) -> Image.Image:
+                    known: list[list[float]] | None = None,
+                    review: list[list[float]] | None = None) -> Image.Image:
     """The display image with added marks (red), the pending,
-    nudgeable click (cyan circle), and any KNOWN mounds (yellow
-    circles — cluster-audit overlay) drawn on."""
+    nudgeable click (cyan circle), any KNOWN mounds (yellow circles —
+    cluster-audit overlay), and any REVIEW points (magenta squares — the
+    reviewer's earlier marks shown on a neighbouring tile) drawn on."""
     out = img.resize((TILE_PX * DISPLAY_SCALE,) * 2, Image.LANCZOS)
     draw = ImageDraw.Draw(out)
     for k in known or []:
@@ -268,6 +281,11 @@ def annotated_image(img: Image.Image, marks: list[dict],
         r = 11
         draw.ellipse([x - r, y - r, x + r, y + r], outline="yellow",
                      width=3)
+    for k in review or []:
+        x, y = k[0] * DISPLAY_SCALE, k[1] * DISPLAY_SCALE
+        r = 14
+        draw.rectangle([x - r, y - r, x + r, y + r], outline="magenta",
+                       width=3)
     for i, m in enumerate(marks):
         x, y = m["x_px"] * DISPLAY_SCALE, m["y_px"] * DISPLAY_SCALE
         r = 12
@@ -347,18 +365,28 @@ def main() -> None:
     n10 = int((manifest["tier"] == "10pct").sum())
     n_done = len(done)
     tier_note = {"10pct": "10 % tier",
-                 "census": "cluster CENSUS"}.get(
+                 "census": "cluster CENSUS",
+                 "final-check": "census FINAL CHECK"}.get(
         row.tier, "20 % ESCALATION tier — stopping here is fine")
     st.markdown(
         f"**Tile {cursor + 1} / {len(manifest)}** ({n_done} saved) · "
         f"`{row.tile_name}` · {tier_note} · 10 % boundary at {n10}")
     show_overlay = st.session_state.get("show_overlay", True)
+    known_pts, review_pts = split_overlay(overlay.get(row.tile_name)) if overlay else ([], [])
     if overlay:
-        n_known = len(overlay.get(row.tile_name, []))
         state = "shown in YELLOW" if show_overlay else "HIDDEN (o to show)"
-        st.caption(f"Cluster-audit mode: {n_known} known mound(s) {state} "
+        extra = (f"; {len(review_pts)} of your earlier mark(s) in MAGENTA"
+                 if review_pts else "")
+        st.caption(f"Cluster-audit mode: {len(known_pts)} known mound(s) {state}{extra} "
                    "— mark only additional, unrecorded symbols; "
                    "n = no additional mounds.")
+        if row.tier == "final-check" and "source_tile" in row:
+            st.caption(f"Final check of the mark made on `{row.source_tile}` (census tile "
+                       f"{int(row.source_position)}): {row.gt_m} m from {row.gt_id}, "
+                       f"{row.edge_m_source} m from that tile's edge; here {row.edge_m_here} m "
+                       "from the edge. n = the yellow point IS this mound (edge-safety "
+                       "confirmed); GT-error symbol = the yellow point is wrong; any other "
+                       "symbol = a genuinely additional mound.")
     if st.session_state.get("prior_verdict"):
         st.info(f"Previously saved: **{st.session_state.prior_verdict}** "
                 "(marks shown below if any) — saving again supersedes.")
@@ -376,7 +404,8 @@ def main() -> None:
         click = streamlit_image_coordinates(
             annotated_image(img, st.session_state.marks,
                             st.session_state.get("pending_click"),
-                            overlay.get(row.tile_name) if show_overlay else None),
+                            known_pts if show_overlay else None,
+                            review_pts if show_overlay else None),
             key=f"tile_{cursor}_{st.session_state.get('nudge_epoch', 0)}"
                 f"_{int(show_overlay)}",
         )
