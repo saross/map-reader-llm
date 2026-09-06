@@ -31863,3 +31863,243 @@ counts only; the finding, the 98-point core, and every other figure
 stand); **Obs 390** (the same-map de-duplication constraint that
 Obs 449 correctly applies in § (b) and incorrectly imported into
 § (d)/§ (h)).
+
+## Observation 451: The cluster census closes — in the mound groups the reference is the larger signal, not recall: 2 double-misses against 12 reference corrections in 719 clustered mounds (Session 148, 2026-09-06)
+
+**The headline.** Phase 2b of `planning/student-baseline-2026-08-31.md`
+§ 5c is a **complete census — no sampling** — of every 55-map
+evaluation tile intersecting a cluster of 2+ known mounds within 125 m
+(50 m buffer), reviewed by the PI with the known mounds drawn on the
+tile so that only **additional, unrecorded** symbols were marked. It
+returns **2 true double-misses in 719 clustered mounds (0.28 %)** and
+**12 points at which the reference itself is wrong or incomplete** —
+6 ground-truth (GT) errors and 6 GT omissions the model had already
+found. In the stratum where **Obs 361** predicted false negatives
+would concentrate, the recall loss is the *smaller* of the two signals
+by a factor of six, and the census's real yield is a correction to the
+ground truth rather than to recall.
+
+**(a) The frame and the instrument.** After the reference switch
+recorded in **Obs 449**, the frame is **334 clusters, 719 known mounds
+of the 5,010-point Ruling-21 standardised reference**
+(`inputs/vectors/references/best-available-gt-55maps.geojson`), **478
+tiles, 465 of them carrying an overlay**
+(`results/cluster-audit/census_summary.json`, which now names its
+reference and point count per Obs 449 § (g)). All **478 were reviewed**
+and **29 marks** placed. Adjudication is
+`scripts/empty_tile_adjudicate.py --mode census` under the § 5b
+protocol: nearest neighbour at **50 m corpus-wide** against the
+standardised GT, the two deployed sets (3.7 arm-2 carried, 5,003
+points; the final board's B-N5-carried, 4,736 points), and both raw
+unions (3.7 K=5, 12,715; G3 K=10, 57,482), with marks collapsed to
+distinct sightings by single linkage at the **15 m distinct-mound
+floor** (`DISTINCT_M`, `scripts/empty_tile_adjudicate.py:182` — the
+same floor Ruling 21 uses) across overlapping tiles, and GT-error flags
+collapsed onto the reference point they sit on.
+
+**(b) The 29 marks.**
+
+| Class | Marks | Distinct |
+|---|---:|---:|
+| known-in-GT (edge-safety) | 13 | 13 |
+| gt-error-flag | 7 | **6 points** |
+| detected | 6 | 6 |
+| true-double-miss | 2 | 2 |
+| proposed-but-filtered | 1 | 1 |
+| **Total** | **29** | — |
+
+Additional sightings — the census estimand — total **9 = 1.25 % of the
+719 clustered mounds**; GT-error flags are **0.83 %**.
+
+**(c) The 13 edge-safety marks are all edge-safety marks.** These are
+the reviewer marking a mound that straddles a tile edge to be safe;
+the adjudication classes them known-in-GT corpus-wide, so they never
+count as additional. Every one sits **within 21.2 m of a tile edge**
+and 4.1–29.8 m from a reference point. Because "near an edge" is the
+whole of the explanation, it was tested rather than assumed: each of
+the 13 was re-cut onto the evaluation tile where it sits **farthest**
+from an edge (**134.3–270.6 m**, `scripts/final_check_manifest.py`),
+known points yellow and the mark magenta, and re-reviewed. **13 of 13
+came back `no_mounds` — 0 flags, 0 additional**
+(`results/cluster-audit/final-check/verdicts.csv`, folded into the
+census report as `census.final_check` at `34655f453`). The edge-safety
+class survives its own falsification test.
+
+**(d) The recall result: 2 misses, and only one filter kill.** The two
+true double-misses (positions 46 and 207) have **nothing within 185 m
+in either union** — nearest anything 315.3 m and 185.2 m — so both are
+**proposer blind spots**, not verifier or threshold kills, exactly as
+in the empty stratum. The single proposed-but-filtered mound (position
+380) is the one exception in either audit: proposed by the **3.7 K=5
+union at 6.3 m with 2 votes** and a **3.7-verifier probability of
+0.98**, killed by the k=5 vote gate; the G3 verifier scored the same
+candidate **0.15**, and the G3 K=10 union never proposed it at all
+(nearest 581.3 m). One vote-gate kill in 719 clustered mounds is the
+measured price of the k=5 gate in this stratum.
+
+**(e) The larger signal: twelve reference corrections.** Six marks land
+on model detections the standardised GT lacks — **model "false
+positives" that are real mounds** — all six within **1.3–5.1 m of the
+3.7 arm-2 carried set**, five also in B-N5-carried:
+
+| Pos | Tile | GT (m) | arm-2 3.7 (m) | B-N5 (m) |
+|---:|---|---:|---:|---:|
+| 77 | `K-35-053-2_x3360_y2352.png` | 93.3 | 2.0 | 3.3 |
+| 127 | `K-35-054-4_Voynika_x672_y336.png` | 68.4 | 4.4 | 4.6 |
+| 252 | `K-35-063-4_Skobelevo_4326_x1680_y2016.png` | 633.1 | 1.3 | 5.3 |
+| 426 | `K-35-076-1_x1344_y0.png` | 108.8 | 2.7 | 9.4 |
+| 458 | `K-35-077-2_x1008_y2688.png` | 491.6 | 5.1 | **484.8** |
+| 462 | `K-35-077-2_x2016_y3360.png` | 96.6 | 3.5 | 7.7 |
+
+Position 252 is the census's one non-circle symbol — "Hairy black
+square with a dot inside". Position 458 is the one the G3-era
+incumbent misses outright. Against these, **7 marks flag 6 distinct
+reference points as not-a-mound**:
+
+| Flagged point | Marks | Mark→point (m) |
+|---|---:|---|
+| `extension:40` | 1 | 1.1 |
+| `student:02949` | 1 | 2.1 |
+| `student:03283` | 2 | 2.9, 2.5 |
+| `student:03286` | 1 | 0.5 |
+| `student:04047` | 1 | 0.4 |
+| `student:04237` | 1 | 1.7 |
+
+`student:03283` is flagged twice because tiles 316 and 317 overlap; the
+15 m floor collapses the pair. **`extension:40` is the one residual
+near-duplicate pair in the standardised reference**: a KD-tree pass
+over all 5,010 points finds **exactly one pair within 15 m**,
+`extension:40` at **10.32 m** from `student:01034` on the same sheet
+(`K-35-054-2_Atolov_4326`). The student point carries
+`confidence_grade` `out_of_scope` — Ruling 21's "untouched, as
+digitised" bucket of 4,090 records, i.e. never in the review queue that
+would have caught the twin. **Twelve corrections against two genuine
+misses: in the mound groups the reference is the larger error source,
+by six to one.**
+
+**(f) Read with Phase 2 — the two strata agree, and both are small.**
+
+| Stratum | Frame | Reviewed | Double-misses | Rate |
+|---|---|---:|---:|---|
+| Empty tiles (10 % tier, complete SRS) | 4,676 tiles | 470 | 5 | **1.06 % per tile** (Clopper–Pearson 0.35–2.47 %) → ≈ **49.7** missed mounds (16.2–115.3) ≈ **0.99 % of GT** (0.32–2.30 %) |
+| Cluster neighbourhoods (census) | 478 tiles / 719 mounds | 478 | 2 | **0.42 % per tile**; **0.28 % per clustered mound**; complete enumeration, no sampling error |
+
+Recall loss is small and **consistent across both strata**, and in both
+the misses are proposer blindness — the census's single vote-gate kill
+is the only filter loss either instrument found. The **double-miss
+floor of Obs 446 stands**, now with the occupied stratum measured
+rather than assumed.
+
+**(g) Obs 361's prediction did not hold, and that is the finding.**
+§ 5c commissioned this census precisely because "the empty-tile
+instrument sees only ISOLATED double-misses; Obs 361's
+miss-correlation predicts FNs concentrate in mound groups". **They do
+not.** The cluster stratum's per-tile miss rate (0.42 %) is *below*
+the empty stratum's (1.06 %), and its per-mound rate (0.28 %) is well
+below Obs 361's transferred P(neither finds a mound) ≈ **2.64 %**. This
+does not overturn Obs 361, which was careful about its own evidence:
+its super-independence was **4 events, Fisher p ≈ 0.28**, an
+unresolved point estimate that this census now replaces with a direct
+measurement in the stratum that mattered. The plausible reading is
+that a neighbourhood already known to contain mounds is a
+neighbourhood both the students and the model attended to, so
+correlated *attention* offsets correlated *difficulty*. Obs 361's
+recall-inflation figure (+2.4–2.7 %) should now be read as an upper
+bound superseded, for clusters, by 0.28 %.
+
+**(h) Caveats.** *(i)* `results/cluster-audit/verdicts.csv` holds **479
+distinct tiles and 30 latest-pass marks**, not 478 / 29: the extra row
+is `K-35-042-3_x672_y0.png`, the pre-switch canonical tile 1 carrying
+the `phantom:745` flag that exposed the fault in Obs 449. It is kept as
+a record and **excluded by design** — the adjudicator intersects
+verdicts with the current manifest
+(`scripts/empty_tile_adjudicate.py:262-265`). Quote 478 / 29, from the
+report, not from a row count. *(ii)* **Positions are 1-based** in
+`adjudication.md`, the final-check manifest, and this entry;
+`adjudication.json`'s `order_index` is 0-based and reads one lower.
+*(iii)* A census removes sampling error, not **reviewer** error: 9
+additional sightings is a floor set by what one reviewer saw on a
+384 px tile, and the § 5c **scope boundary** stands — singleton
+undercounts (one mound marked where 2–3 exist, with no second known
+mound within 125 m) are undiscoverable by this design. *(iv)* The two
+strata's rates share a numerator convention but not a denominator
+(per empty tile against per clustered mound); the per-tile column is
+the like-for-like comparison. *(v)* No confidence interval is reported
+for the census by the adjudicator, correctly — the interval that
+matters for extrapolating its rates to the unaudited remainder belongs
+to the follow-on in (i).
+
+**(i) The follow-on, ruled but NOT done.** The census motivates the
+PI's ruling of **2026-09-06**: build a revised best-available reference
+(**r2**) folding both audits in, re-run the statistics, comparisons,
+and leaderboards against it, and add an **estimated-correction column**
+for the error the reviewers did *not* see, carrying Clopper–Pearson
+intervals on the measured rates. That is scoped in
+`planning/reference-revision-2026-09-06.md` (§ 1 the r2 build as new
+artefacts, never mutating r1; § 2 the three-rate correction column),
+landed at `19c6fc939` while this entry was being written — the card is
+**SCOPED, not approved to run**, and its corpus-wide instruction set is
+**14 additions and 6 removals** against the 5,010-point r1 (the census
+supplies 6 + 2 + 1 of the additions and all 6 removals; the empty
+stratum supplies the other 5). This is where the corrections cash out,
+and it bears on the **corrected-F1 lineage (Obs 220, 267)** — precision
+against a reviewed GT — far more than on recall. Nothing in the current
+board moves until r2 exists; **this entry records a measurement, not a
+re-scoring**.
+
+Sources: `results/cluster-audit/census_summary.json` (read 2026-09-06:
+`reference` `inputs/vectors/references/best-available-gt-55maps.geojson`,
+`n_reference_points` 5010, `chain_m` 125.0, `buffer_m` 50.0,
+`n_clusters` 334, `n_mounds_in_clusters` 719, `n_census_tiles` 478,
+`n_overlay_tiles` 465); `results/cluster-audit/adjudication.md` and
+`adjudication.json` (read 2026-09-06: `reviewed_tiles` 478, `marks` 29,
+`radius_m` 50.0, `gt_points` 5010, classes and distinct sightings as
+tabulated in (b), `additional_per_known_mound` 0.012517,
+`gt_error_flags_per_known_mound` 0.008345, every per-mark distance in
+(d) and (e), and the five reference-set paths and point counts);
+`results/cluster-audit/verdicts.csv` (read 2026-09-06: 491 rows, 479
+distinct tiles, 30 latest-pass marks — the 479/478 gap in (h));
+`results/cluster-audit/final-check/verdicts.csv` and `manifest.csv`
+(read 2026-09-06: 13 rows, all `no_mounds`, `edge_m_source` ≤ 21.2,
+`edge_m_here` 134.3–270.6, `gt_m` 4.1–29.8);
+`results/empty-tile-audit/adjudication.md` (read 2026-09-06: 500 tiles
+of a 4,676-tile empty frame, tiers {'10pct': 470, '20pct': 30}, 9
+marks, 5 true-double-miss / 4 known-in-GT, proposed-but-filtered empty,
+10 % tier row 0.0106 (0.0035–0.0247) / 49.7 (16.2–115.3) / 0.99 %
+(0.32–2.30 %); the all-500 row reads 0.0100 / 46.8 / 0.93 % and is not
+the SRS);
+`inputs/vectors/references/best-available-gt-55maps.geojson` (read
+2026-09-06: 5,010 features; the single sub-15 m pair recomputed this
+session with `scipy.spatial.cKDTree` — `student:01034` ↔
+`extension:40`, 10.32 m, both `source_map` `K-35-054-2_Atolov_4326`,
+the student point `confidence_grade` `out_of_scope`);
+`planning/ruling21-application-spec.md` (verified 2026-09-06: the
+`out_of_scope` grade is "untouched, as digitised (4,090)");
+`planning/student-baseline-2026-08-31.md` § 5b (the adjudication
+protocol and the Phase 2 close) and § 5c (the census commission,
+Obs 361's prediction as the stated motivation, the CENSUS CLOSED and
+final-check entries, and the scope boundary);
+`scripts/empty_tile_adjudicate.py:182,262-265` (the 15 m `DISTINCT_M`
+floor and the current-manifest intersection);
+`scripts/final_check_manifest.py`;
+`planning/reference-revision-2026-09-06.md` (read 2026-09-06 at
+`19c6fc939`: the PI's direction, the r2 artefact rule, and the
+14-addition / 6-removal table). Commits: `130ec28c8` (census
+mode), `9b719f047` (census complete, all 478 tiles reviewed),
+`c4c690505` (final-check pass) and `75efcf607` (its 13 verdicts),
+`34655f453` (final check folded into the census report; both audits
+closed).
+Related: **Obs 446** (the first true double-misses and the empty-tile
+instrument this census extends into the occupied stratum — its floor
+is unchanged); **Obs 449** (the reference switch to the standardised
+GT, which is why the frame is 719 mounds and not 1,006) and **Obs 450**
+(its rider; both are the provenance for the frame this census ran on);
+**Obs 361** (the miss-correlation prediction that motivated the census
+and that (g) reports as not holding in clusters); **Obs 443** (novice
+variance — the human-baseline uncertainty this reference-error count
+sits beside); **Obs 220** and **Obs 267** (the corrected-F1 lineage
+against a reviewed GT, which (i)'s estimated-correction column
+extends to the error review did not see); **Obs 396** (residual
+duplicates deflating F1 by ≈ 0.03 — the census finds exactly one
+surviving near-duplicate pair in the standardised reference, so that
+population is now all but exhausted).
