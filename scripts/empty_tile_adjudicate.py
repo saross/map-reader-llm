@@ -377,7 +377,9 @@ def main() -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "adjudication.json").write_text(json.dumps(payload, indent=2, default=float) + "\n")
     (out_dir / "adjudication.md").write_text(render_md(payload))
-    logger.info("ADJUDICATION COMPLETE -> %s", (out_dir / "adjudication.md").relative_to(PROJECT_ROOT))
+    # --out-dir may sit outside the repository (dry runs into a scratch
+    # directory), so report the path as given rather than repo-relative.
+    logger.info("ADJUDICATION COMPLETE -> %s", out_dir / "adjudication.md")
     return 0
 
 
