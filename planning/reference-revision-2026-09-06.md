@@ -209,7 +209,7 @@ saved were `n` (the pass had no known points to confirm against), read
 as "the mark stands" and written into the instruction `note` column.
 (b) **r2 overrides one Ruling-21 adjudication**: the campaign gates
 report "promoted_phantom:40 marked distinct with unreviewed student
-#1036 at 10.3 m" — the Session-130/131 walk kept the pair as two mounds;
+no. 1036 at 10.3 m" — the Session-130/131 walk kept the pair as two mounds;
 the PI's census inspection of the symbol (tile 98) found one mound, and
 r2 removes `extension:40`. A ruling corrected by direct inspection, to
 be stated as such in the erratum.
