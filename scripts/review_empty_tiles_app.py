@@ -17,6 +17,9 @@ Interaction (keyboard shortcuts via the battle-tested handler from
   and press ``a`` (or the button) to add it. Multiple marks per tile.
 - ``m`` — save this tile's marks and advance (needs ≥ 1 mark).
 - ``u`` — undo the last staged mark.
+- ``r`` — relabel the last mark with the currently selected symbol and
+  note (a mark's symbol is fixed when ``a`` adds it; on a revisited
+  tile the reloaded marks keep their saved symbols until relabelled).
 - ``i``/``j``/``k``/``l`` — nudge north/west/south/east (metres step
   slider, default 2.5 m): moves the pending click if one is staged,
   otherwise the last added mark (the marking app's mechanism).
@@ -403,6 +406,16 @@ def main() -> None:
         if st.button("u: undo last mark",
                      disabled=not st.session_state.marks):
             st.session_state.marks.pop()
+            st.rerun()
+        # A mark's symbol is fixed when it is added; changing the radio
+        # afterwards (e.g. on a revisited tile whose marks reloaded) does
+        # nothing until it is applied. `r` applies the current radio and
+        # note to the last mark, so a reloaded mark can be relabelled
+        # without undoing and re-clicking it.
+        if st.button("r: relabel last mark with selected symbol",
+                     disabled=not st.session_state.marks):
+            st.session_state.marks[-1]["symbol"] = symbol
+            st.session_state.marks[-1]["note"] = note
             st.rerun()
         if overlay:
             # Hide the yellow circles to inspect the symbol beneath; the
