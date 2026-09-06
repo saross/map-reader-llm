@@ -280,6 +280,18 @@ expectations to test, not assume.
 
 ## Changelog
 
+### 2026-09-06 (later) — PI confirmations; GO for the sequence
+
+The PI confirmed that the five `n` verdicts in the empty-stratum
+re-review mean "the mark stands" (so all five double-misses enter r2 as
+built), agreed the sequencing (3.7 register rows and the membership
+ruling first, then the pre-run review, then the recompute chain), and
+said go. The paper crops of the seven double-misses and the seven
+model-found omissions were cut at verifier geometry
+(`results/double-miss-crops-2026-09-06/`, `65e9bdc23`, caption fix
+`df8746abc`). § 3b's disclosure (a) is now a confirmed reading, not an
+inference.
+
 ### 2026-09-06 — Original publication
 
 Scoped in Session 148 at the PI's direction after both audits closed.
