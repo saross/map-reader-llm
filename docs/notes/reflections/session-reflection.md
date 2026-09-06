@@ -11025,3 +11025,45 @@ The sidecar quote is never rendered, so the artefact is invisible to
 readers and visible only to someone opening the working copy and
 wondering whether the extraction is broken. It is not; the quote is
 honest.
+
+## Session 148 — 2026-09-04/06 — the session where the reviewer audited the reference and the auditors audited me
+
+**Instance:** primary (one session id across two workstation crashes and a
+day boundary; this instance did the work).
+
+**What would I do differently if I replayed this session?** Run the
+fresh-context check *before* the message, not after. Three times this
+session a claim I had stated with confidence to Shawn was corrected by a
+clean-context agent working from the same files: the 3.8 "flat sweep
+surface" was not a 3.8 novelty (the 3.7 verifier is equally flat, the
+sharp surface is the carried Gemini 3 verifier's), the "308 tiles"
+figure was right but I could not have proven it until a second method
+agreed, and the pre-run review's countable finish line — "29 of 29
+evaluations" — was wrong by seven cells, which would have let a
+mixed-vintage board through the one gate built to stop it. None was a
+data error; each was a reading I trusted because it was mine. The
+project already knows the synthesis boundary runs at about one in ten;
+this session shows the rate applies to the drafting instance's own
+counts, and that the cheapest remedy is ordering: verifier first,
+message second, when the claim is going into a register or a contract.
+
+**What decision will look arbitrary without this session's context?**
+Stopping the Gemini 3.8 screen after one arm. The card scoped four arms
+and the PI stopped at the cheapest resolving test — a 3.8 verifier over
+the existing 3.7 union, 791 calls, about a dollar — because the 55-map
+2×2 had already located the 3.7 gain in the verifier seat, so the seat
+worth testing first was known. A reader of the family table will see
+"3.8: tie" with a spend two orders of magnitude below the 3.7 arc and
+may read it as under-investment. It was the opposite: the prior work
+told us where to look, and looking there answered the question.
+
+**What felt unresolved at the end?** Two things, both deliberate. The
+reference revision r2 exists and is byte-reproducible, but the chain
+that would re-score everything on it is no-go: the clean-context audit
+returned four blockers against a contract Shawn had already read and
+called good. That is the audit working as designed, and adjudication is
+the next session's first job, but it means the paper's numbers are
+about to move and nothing has moved yet. And the census's main yield
+was not recall but the reference itself — six ground-truth errors and
+six omissions the model had found — which turns a recall audit into a
+precision story the paper has not yet been drafted to tell.

@@ -2147,3 +2147,47 @@ and let the manifest be the only source of what exists.
 **How to apply.** Before any batch launch, generate the dispatch list
 from the manifest rather than from memory, and treat a state-tool
 UNKNOWN as a stop, not a typo.
+
+## claude-obs 90 — 2026-09-06 (Session 148): He found the reference defect by looking at one tile
+
+**Pattern.** The census was built to measure recall. On tile 1 Shawn
+saw two circles for one mound, asked whether it was his own earlier
+error, and the answer was that the instrument was reading a stale
+reference. He then paused the review to let the frame be rebuilt rather
+than push through — "not having to mark ~100 duplicates will save a lot
+of time".
+**Lesson.** A reviewer with domain eyes catches instrument faults that
+no gate in the pipeline was checking for, but only if the pipeline
+surfaces what it is comparing against. The overlay was that surface.
+**How to apply.** Every review instrument should draw its reference on
+the image and name the file it came from in the caption; the first
+"is this me or the tool?" question from the reviewer is a stop-and-check,
+not a reassurance moment.
+
+## claude-obs 91 — 2026-09-06 (Session 148): Self-critique — three confident claims, three fresh-context corrections
+
+**Pattern.** I told Shawn the 3.8 sweep surface was flat "where 3.7's
+was sharp"; that 308 tiles carried a removed phantom; that the recompute
+chain finished at 29 evaluations. The obs-writer, a rider, and the
+pre-run auditor respectively corrected, confirmed-after-dispute, and
+corrected those. Each reached him first in my words.
+**Lesson.** A number that will land in a register or a contract is not
+mine to state until a second derivation agrees; the disagreement rule
+cuts both ways and worked (308 held; 29 did not).
+**How to apply.** For register-bound or gate-bound counts, run the
+independent check before the message that reports them, and label
+unverified specifics as such in the message.
+
+## claude-obs 92 — 2026-09-06 (Session 148): He reverses a recommendation when the paper needs the data
+
+**Pattern.** I recommended leaving the N=1 / N=3 rungs out of the
+register (no materialised detections); Shawn reversed it in one line —
+the rungs illustrate the across-N story and the economical-extraction
+options — and then extended membership to every recent 3.7/3.8 cell on
+both boards. Likewise he stopped the 3.8 screen after one arm once the
+question was answered.
+**Lesson.** His decision rule is the paper's needs against spend; a
+mechanical obstacle (no detections yet) is a scheduling fact, not a
+reason to drop content.
+**How to apply.** When recommending exclusion on mechanical grounds, say
+what it would cost to include instead, and let him rule on that.

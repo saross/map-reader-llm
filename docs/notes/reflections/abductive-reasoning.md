@@ -7985,3 +7985,64 @@ Keep the numeric rule as a prompt to render, labelled low-recall and,
 now, low-precision; keep the publisher signature as the trigger; and
 budget the time for a negative result at one corpus-wide run, not
 three.
+
+## Entry — 2026-09-06 (Session 148, map-reader-llm): The reference the census was checking against was itself stale
+**Session:** ab2810aa-7a27-4990-b4f6-a9e32a25de83
+**Instance:** primary
+
+### Surprising fact
+On the first census tile the overlay drew two known mounds for one
+symbol, 52 m apart. The PI flagged the second as a ground-truth error
+and asked whether he had missed it in an earlier review.
+
+### Probe
+Traced the point: a canonical-review phantom (`phantom:745`) 52.4 m
+from a student point — just outside the r50 merge radius. Checked
+whether Ruling 21's standardised reference still carried it: absent.
+Then counted: of the canonical file's 415 phantoms, 176 have no
+standardised counterpart within 15 m (71 of the 72 within 50 m of a
+same-sheet student point); 151 of the 241 phantoms drawn on the census
+tiles were already-removed duplicates.
+
+### Belief revision
+Not a reviewer error but an instrument error: the census sampler and
+the § 5b adjudication had been reading the pre-Ruling-21 canonical file
+under a canonical-sounding name. Rebuilding on the standardised
+reference shrank the frame from 739 tiles to 478 — 270 "clusters" had
+been a student point chained to its own duplicate. Any analysis reading
+that file as a reference inherits ~150 duplicates (Obs 449, rider 450).
+
+### What would change this belief
+A standardised-reference census that still finds near-duplicate pairs
+at the same rate: it found exactly one in 5,010 points (10.3 m, a pair
+Ruling 21 had adjudicated "distinct"; the PI's inspection overturned it).
+
+## Entry — 2026-09-06 (Session 148, map-reader-llm): A contract the operator had approved failed its own count
+**Session:** ab2810aa-7a27-4990-b4f6-a9e32a25de83
+**Instance:** primary
+
+### Surprising fact
+The pre-run review I wrote for the r2 recompute chain set a countable
+finish line of 29 evaluation files; the PI read the review and called it
+good. The clean-context auditor counted 36.
+
+### Probe
+It opened the r1 board JSON (23 tiered cells, not 16) and the cells
+directory (19 directories; four incumbents' detections live elsewhere),
+then ran probes: the companion command's flag did not exist; the
+leaderboard builder resolves cells by register label, so the step order
+was inverted; the regression gates compare to r1 at 1e-9, so an r2 run
+would halt by design.
+
+### Belief revision
+The review's value was real (nine hardenings, three of them
+load-bearing) and still insufficient: a drafting instance auditing its
+own contract nods at the counts it wrote. The finish-line count is the
+gate the mixed-vintage risk hangs on, and it was the number I checked
+least. Chain marked no-go; adjudication next session.
+
+### Implications for practice
+The clean-context pass is not a complement to the operator dialogue but
+the step that makes the dialogue's numbers trustworthy; schedule it
+before the go, and treat the operator's "looks good" on a draft as
+approval of intent, not of counts.

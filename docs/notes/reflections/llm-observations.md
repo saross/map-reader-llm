@@ -7867,3 +7867,38 @@ remains the missing primitive.
   render script now clears a lock no git process holds. Transient
   "modified" files that agents reported mid-render were the same
   race, seen from the other side.
+
+## Session 148 — 2026-09-04/06 (3.8 Flash ties in the verifier seat and thinks less; threshold insensitivity is a generation property; fresh-context checks corrected the drafting instance three times)
+
+1. **Gemini 3.8 Flash bought nothing in the seat where 3.7's gain
+   lived.** As verifier over the identical 791-candidate 3.7 union,
+   F1@20 0.9258 against the all-3.7 stack's 0.9265 (paired tile-swap
+   p = 0.78). It spent LESS thinking at `low` (76 vs 106 tokens per
+   candidate; 1.1× as proposer), the reverse of its launch framing. The
+   family ladder for this task stops at 3.7 (Obs 448).
+2. **Threshold insensitivity is a 3.7/3.8-generation property, not a
+   3.8 novelty.** Both verifiers' F1 varies by 0.0022 across prob_t
+   0.20–0.92 on the same union; the carried Gemini 3 verifier's varies
+   by 0.05. I first wrote it up as a 3.8 finding; the obs-writer's
+   source check read the 3.7 sweep and corrected it. Verifier
+   calibration still does not transfer across models (Obs 441); what is
+   generation-dependent is the *penalty* for a stale threshold.
+3. **Clean-context agents caught the drafting instance's errors, in
+   both directions.** The obs-writer corrected my Finding B; I
+   corrected its 267-tile count (its loop filtered phantoms by sheet,
+   which the overlay does not — 58 of 723 overlay tiles draw a point
+   from an adjacent sheet), and it concurred and wrote the rider itself
+   (Obs 450). The pre-run auditor then found my contract's cell count
+   wrong (36, not 29) and an inverted step order (the boards read
+   register labels, so registration precedes the rebuild). The
+   disagreement rule — a correction is a claim, re-derive rather than
+   defer — was what resolved 308 vs 267 correctly: two independent
+   methods, not authority.
+4. **A human-in-the-loop tool's symbol trap.** The review app fixed a
+   mark's symbol at `a` time; changing the radio afterwards and pressing
+   save re-saved the old symbol, four times, before the PI said "it's
+   not sticking". The fix (an `r` relabel key, a `g` jump key, an `o`
+   overlay toggle, a two-list overlay) cost minutes each; the lesson is
+   that the state a reviewer *sees* (the radio) and the state that is
+   *saved* (the mark) must be the same widget, or the caption must say
+   which one wins.

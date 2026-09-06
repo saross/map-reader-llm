@@ -9249,3 +9249,48 @@ before renders to keep the provenance stamp clean). Token usage is an
 estimate from notification telemetry because the harness's task-output
 files hold only dispatch and final message. The credit window was the
 reason the full 88 ran rather than the 30-source subset.
+
+## Session 148 — 2026-09-04/06 (amd-tower + sapphire; ≈ US$0.85 Gemini API; five Opus-tier subagents; Fable 5.1; two workstation crashes survived)
+
+**Gemini 3.8 Flash screen** (card `planning/gemini38-screen-2026-09-04.md`):
+scoped and costed; PI approved probe then Arm V. Probe 5/5, thinking 307
+t/tile vs 3.7's 275. Arm V (3.8 verifier over the 3.7 K=5 union, 791):
+F1@20 0.9258 (0.88, k5), MCC 0.8218, vs all-3.7 0.9265 p = 0.78; vs
+carried-G3 0.9139 p = 0.097. PI ruled STOP. Estimator fixed to price
+3.7/3.8 and bill thinking as output (`73658c579`). Obs 448 (`463c931b3`).
+Finding B corrected after the obs-writer's source check (`69a081b2c`).
+
+**PI audits closed.** Empty-tile Phase 2 at 500 tiles: 9 marks → 4
+known-in-GT + 5 true double-misses; 5/470 = 1.06 % (CI 0.35–2.47 %) ≈ 50
+missed mounds ≈ 0.99 % of GT (`scripts/empty_tile_adjudicate.py`,
+`dba5b1bcf`). Cluster census rebuilt on the Ruling-21 standardised
+reference after 10 tiles (canonical r50 file carries ~150 Ruling-21
+duplicates; 739 → 478 tiles; `2d3b454a8`; Obs 449 `e51ed3430`, rider
+Obs 450 `659c72751`), completed 478/478: 13 edge-safety marks (all
+confirmed on a final-check pass), 6 GT-error points, 6 model-found
+omissions, 2 double-misses, 1 vote-gate kill (Obs 451 `ff98691ba`).
+Review app gained `o`, `r`, `g`, the GT-error symbol, and a two-list
+overlay. Paper crops of the seven double-misses and seven omissions cut
+at verifier geometry (`65e9bdc23`, caption fix `df8746abc`).
+
+**Reference revision r2** (card `planning/reference-revision-2026-09-06.md`):
+PI direction to fold the audits in, re-run the comparisons, add an
+estimated-correction column, and re-estimate the student baseline
+(preliminary P 0.992 / R 0.923 / F1 0.956 vs GS-4 1.000 / 0.947 /
+0.973). r2 materialised deterministically: 5,018 points (4,726 + 278 +
+14 audit), 6 removed, gates green (`40361b26f`). Register rows for the
+3.7 arc and 3.8 Arm V authored (3 runs, 13 conditions, 6 analyses;
+`f4db3f4fd`, `99d13ca1b`) after the seven GS best-eval evaluations were
+produced and reproduced their committed F1 (`02e9e2490`). Pre-run
+review written into the card (H1–H9, `3e3caef46`); clean-context audit
+returned 4 blockers / 5 majors / 6 minors (`reports/r2-chain-pre-run-audit-2026-09-06.md`,
+`ffadf9cd8`): chain NO-GO pending adjudication.
+
+**Also this session**: D.9 drafting brief from the AB+ cluster
+(`05618dcbc`); 3.7 register-row proposal (`a2243ecf6`); the S145 beacon's
+Obs 442 mis-pointer corrected to Obs 444 § (b).
+
+**Contextual assumptions.** The user-obs gate had already been resolved
+before this session opened; WN-C1..C3 still await the PI's verdict. The
+session ran at ~85 % context by close, which is why the audit's fifteen
+findings were recorded rather than adjudicated.
