@@ -31553,3 +31553,220 @@ modality gap eliminated at 3.7 — the other 3.7-family screen, and the
 entry that dates modality claims to a model generation exactly as (h)
 now dates thinking-volume claims); **Obs 359** (Flash 3.5 "wins in no
 role" — the non-gain rung of the family ladder in (h)).
+
+## Observation 449: The canonical r50 reference still carries the duplicates Ruling 21 removed — two of the project's own audit instruments read it until Session 148, and the census frame shrank by a third when they stopped (Session 148, 2026-09-06)
+
+**How it surfaced — one symbol, two yellow anchors.** On the first
+tile of the cluster census (`K-35-042-3_x672_y0.png`) the overlay drew
+two known mounds for a single map symbol. The PI flagged the second
+with the audit app's new GT-error symbol (`d52927da8`, which also
+added the `o` overlay toggle). The flagged point was **`phantom:745`**
+— `layer` phantom_canonical, `confidence_grade` directly_reviewed,
+`position_source` detection_centroid, `provenance`
+canonical_review_r50 — sitting **52.4 m** from `student:00001` on the
+same map, and **absent from the standardised reference** (its nearest
+extension point is 21.3 km away). It was **not a reviewer error**: the
+canonical review had accepted a real mound, Ruling 21 later resolved
+it as a duplicate, and the census overlay was simply reading the
+**pre-Ruling-21 file**. The PI's mark sits 1.36 m from it in
+`results/cluster-audit/verdicts.csv`.
+
+**(a) Two references, one of which sounds canonical and is stale.**
+
+| Reference | Composition | n |
+|---|---|---:|
+| `canonical-gt-55maps-r50.geojson` | 4,746 `student_reviewed` + 415 `phantom_canonical` | **5,161** |
+| `best-available-gt-55maps.geojson` | 4,731 `student_standardised` + 279 `extension_standardised` | **5,010** |
+
+Ruling 21 built the second from the first
+(`planning/ruling21-application-spec.md`): `remove_duplicate` **454
+phantoms + 12 students** (466), `keep_phantom_extension` **278**, and
+`remove_fp` **41 phantoms + 4 students** (45). The canonical file was
+frozen *before* that ruling and kept its pre-ruling name, so **any
+analysis reading it as "the" reference inherits the duplicates Ruling
+21 removed**. Two of this project's own instruments did until
+2026-09-06: the cluster-census sampler
+(`scripts/cluster_audit_sample.py`, constant `CANONICAL_GT` at `:67`)
+and the § 5b mark adjudication (`scripts/empty_tile_adjudicate.py`).
+
+**(b) The 415 retained phantoms, enumerated.** Same-map nearest-student
+distance (the constraint that matters, because the pipeline's
+de-duplication is same-map constrained — **Obs 390**'s own reasoning):
+
+| Band | Phantoms |
+|---|---:|
+| < 50 m | **72** |
+| 50–60 m | 27 |
+| 60–100 m | 11 |
+| > 100 m | 305 |
+
+Percentiles p5 / p10 / p25 / p50 = **24.9 / 33.3 / 63.9 / 690.0 m**.
+The distribution is **bimodal**: a long tail of genuinely isolated
+reviewer discoveries, and a near-field cluster of roughly a quarter of
+the set sitting inside or just outside the merge radius.
+
+**(c) Which of them Ruling 21 had already removed.** The two files do
+not share identifiers (`phantom:N` against `extension:N`) and the
+standardised layer re-centres points, so the match must be geometric.
+At a 15 m same-map tolerance, **239 of the 415 have a standardised
+counterpart and 176 do not**. The removals concentrate exactly where
+the near-field cluster is: **71 of the 72 within 50 m have no
+counterpart, and none of the 27 at 50–60 m has one** — a robust core
+of **98 near-duplicate removals** below 60 m. The tolerance is
+calibrated against the student layer's own canonical → standardised
+shift, which is negligible (p50 **0.0** / p90 **5.5** / p99 **22.6 m**
+over 4,746 points), so 15 m is generous for a kept-and-re-centred
+point; it may nonetheless overstate the 176 slightly. **The 98 are the
+figure to quote.**
+
+**(d) The blast radius on the census frame, and the rebuild.** Of the
+canonical build's 739 census tiles, **241 phantoms were drawn**, of
+which **151 had no standardised counterpart** and **98 of those sat
+within 60 m of a same-map student point**. Rebuilding on the
+standardised reference (`cluster_audit_sample.py --gt`, now the
+default; `2d3b454a8`):
+
+| Quantity | Canonical r50 | Standardised | Δ |
+|---|---:|---:|---:|
+| Clusters | 464 | **334** | −130 |
+| Mounds in clusters | 1,006 | **719** | −287 |
+| Census tiles | 739 | **478** | −261 |
+| Overlay tiles | 723 | 465 | −258 |
+| Overlay points | 2,866 | **1,857** | −1,009 |
+
+A third of the frame was **a student point chained to its own
+duplicate**. The canonical build is preserved at
+`results/cluster-audit/superseded-canonical-r50-2026-09-01/`, and **9
+of the PI's first 10 reviewed tiles survive at positions 1–9** — the
+sole casualty is the `phantom:745` tile that exposed the fault.
+
+**(e) The adjudication moved only its denominator.** Regenerated
+against the standardised reference (`dba5b1bcf` for the original
+canonical run), the § 5b adjudication is **unchanged in every class**:
+500 tiles, 9 marks, `{'true-double-miss': 5, 'known-in-GT': 4}`, with
+the four known-in-GT marks at **2.4, 4.4, 12.5, and 30.6 m** from a
+standardised point. The rate per tile (0.0106, 95 % CI 0.0035–0.0247)
+and the implied missed mounds (49.7, 95 % CI 16.2–115.3) are
+byte-identical; only the share-of-GT figure moves, **0.96 %
+(0.31–2.23 %) → 0.99 % (0.32–2.30 %)** on the 10 % tier, and it moves
+*solely* because the denominator fell 5,161 → 5,010. **The
+double-miss floor of Obs 446 is untouched.**
+
+**(f) What this does and does not do to Obs 390 and Obs 396.**
+**Obs 390** is not overturned, and its headline claims stand: the
+promoted set is internally unique (zero pairs within 10 m), and the
+one true twin at 0.98 m is caught by the 5 m tolerance. That entry
+also *already recorded* **84 promoted points within 50 m of a same-map
+student point**, and a 4–6 case grey zone it said "only eyes on a map
+can tell". What is new is the resolution: Ruling 21 provided the eyes,
+and the near-field population it removed is now **enumerated at 98**
+rather than flagged as a grey zone. The two entries measure different
+populations and must not be compared directly — Obs 390's median of
+115.7 m is over the **773 pre-merge** promoted mounds, while the
+690.0 m here is over the **415 that survived the r50 merge**, the
+closest having already been merged away. **Obs 396** priced residual
+duplicates at ≈ 0.03 F1 deflation; this is **the same population, now
+counted rather than estimated**, and **Obs 409** already measured the
+standardisation as fully tier-preserving, so nothing in the board
+moves.
+
+**(g) The lesson is instrument discipline, not another de-duplication
+pass.** The de-duplication was done correctly, once, and ruled on;
+what failed is that **a reference file frozen before a later ruling
+kept circulating under a canonical-sounding name**. No further
+merge pass would have helped — the duplicates were already resolved
+upstream, in a file the instruments were not reading. The fix
+therefore is that **every artefact names the reference it read**: the
+sampler now writes `reference` and `n_reference_points` into
+`census_summary.json` (5,010), and the adjudication report names the
+reference and its path in its protocol header. This generalises the
+correction **Obs 444 § (b)** made for the scoring chain — where an
+incumbent gate caught two instruments being compared across the
+canonical and standardised chains — from the scoring path to the
+**audit** path. **The register's rule after this entry: a reference
+path is part of a result, not context for it.**
+
+**(h) Caveats.** Two figures in the § 5c write-up do not reproduce and
+should be read from here instead. First, that note gives **"308 of
+739 tiles"** carrying an already-removed phantom; recomputed, the
+count is **267** tiles with at least one already-removed phantom (303
+carry at least one phantom of any kind, and 200 carry at least one of
+the 98 near-duplicates). Second, the percentile set quoted there
+(15.2 / 24.8 / 52.6 / 608.3 m) is **cross-map unconstrained**; under
+that same measure the bands read 96 / 27 / 11 / 281 rather than
+72 / 27 / 11 / 305, so the two must not be mixed. The same-map figures
+in (b) are the ones consistent with the pipeline's own de-duplication
+constraint. Neither correction touches the 98-point core, the rebuild
+counts, or the adjudication.
+
+**(i) What the paper gets, and the ruling still queued.** The 55-map
+board already scores on the standardised reference (**Obs 444 § (b)**)
+and the audits now do too, so the instruments are aligned for the
+first time. D.8 (limitations) and the GT-provenance paragraph gain an
+**enumerated** duplicate count — 454 phantoms removed by ruling, 98 of
+them demonstrably near-duplicates of a surviving student point —
+where they previously carried Obs 396's estimate. The **adjacent open
+question is the same class and still queued for the PI**: the 23
+non-Mound `FeatureType` entries in the canonical reference (16
+"Surface feature"), `planning/student-baseline-2026-08-31.md` § 4c —
+again a question about *what the reference contains*, not about how
+it is scored.
+
+Sources: `inputs/vectors/references/canonical-gt-55maps-r50.geojson`
+and `inputs/vectors/references/best-available-gt-55maps.geojson` (both
+read 2026-09-06, EPSG:32635 as stored: layer tallies 4,746 + 415 =
+5,161 and 4,731 + 279 = 5,010 confirmed by direct count; every
+distance figure in (b), (c), and (d) recomputed this session with
+`scipy.spatial.cKDTree` same-map nearest-neighbour queries, with the
+cross-map variant in (h) computed for comparison only);
+`planning/ruling21-application-spec.md` (verified 2026-09-06: the
+disposition table's `remove_duplicate` 454 phantoms + 12 students,
+`keep_phantom_extension` 278, `remove_fp` 41 phantoms + 4 students,
+and the "4,731 / 278 + 1" materialisation note reconciling the
+standardised extension layer at 279);
+`planning/student-baseline-2026-08-31.md` § 5c "REFERENCE SWITCHED"
+and the 2026-09-06 changelog (read 2026-09-06: the PI's switch after
+10 census tiles, the rebuild counts, and the 9-of-10 tile retention —
+**and the two figures corrected in (h)**), plus § 4c for the queued
+non-Mound ruling; `results/cluster-audit/census_summary.json`
+(verified 2026-09-06: `reference`
+`inputs/vectors/references/best-available-gt-55maps.geojson`,
+`n_reference_points` 5010, `n_clusters` 334, `n_mounds_in_clusters`
+719, `n_census_tiles` 478, `n_overlay_tiles` 465, `chain_m` 125.0,
+`buffer_m` 50.0) against
+`results/cluster-audit/superseded-canonical-r50-2026-09-01/census_summary.json`
+(464 / 1,006 / 739 / 723, and **no `reference` field** — the absence
+that (g) is about); the two `overlay.json` files (2,866 points over
+723 tiles → 1,857 over 465) and the two `census_manifest.csv` files
+(739 and 478 rows, the tile bounds behind (d));
+`results/cluster-audit/verdicts.csv` (verified 2026-09-06: the tile-1
+"Known (yellow) mound is NOT a mound — GT error" mark at world
+462557.25 / 4742063.64, **1.36 m** from `phantom:745`);
+`results/empty-tile-audit/adjudication.md` (verified 2026-09-06:
+protocol header naming the standardised reference, GT points 5010,
+500 tiles, 9 marks, 5 true-double-miss / 4 known-in-GT, 10 % tier
+0.0106 (0.0035–0.0247) / 49.7 (16.2–115.3) / 0.99 % (0.32–2.30 %))
+against its state at `dba5b1bcf` (GT points 5161, 10 % tier share
+0.96 % (0.31–2.23 %), all other columns identical);
+`scripts/cluster_audit_sample.py:67-68,77` (verified 2026-09-06:
+`CANONICAL_GT` and `STANDARDISED_GT` constants, `--gt` now defaulting
+to the standardised file) and `scripts/empty_tile_adjudicate.py:76-83,203`
+(the `GT_FILES` mapping, the "~150 already-removed duplicates" comment,
+and the standardised default). Commits: `12b6329db` (first ten census
+verdicts in canonical order), `2d3b454a8` (the rebuild), `d52927da8`
+(app overlay toggle and GT-error symbol), `dba5b1bcf` (adjudication
+script and its canonical-reference first run).
+Related: **Obs 390** (the phantom duplication audit whose 84-within-50 m
+count and 4–6 case grey zone this entry resolves rather than
+contradicts — see (f) for why its 115.7 m median and this entry's
+690.0 m are different populations); **Obs 396** (residual duplicates
+deflating F1 by ≈ 0.03 — the same population, now enumerated at 98);
+**Obs 409** (the ruling-21 standardisation measured as fully
+tier-preserving, which is why (f) can say no board conclusion moves);
+**Obs 444 § (b)** (the reference-instrument correction on the
+*scoring* chain — canonical against standardised — that (g) now
+extends to the audit chain); **Obs 446** (the empty-tile double-miss
+floor, unchanged by the reference switch per (e)); **Obs 389** (the
+four-layer ground truth, the lineage this entry's two files sit in);
+**Obs 388** (F1 and MCC computed against different ground truths — the
+earliest instance of the mismatched-reference failure mode).
