@@ -25,6 +25,8 @@ Interaction (keyboard shortcuts via the battle-tested handler from
   otherwise the last added mark (the marking app's mechanism).
 - ``s`` — skip (decide later; skipped tiles resurface at the end).
 - ``b`` — back one tile (re-opens it for editing).
+- ``g`` — go to the tile number typed in "Go to tile #" (re-check an
+  earlier verdict, then jump back without re-saving the tiles between).
 - ``o`` — cluster-audit mode only: hide/show the yellow known-mound
   overlay so the symbol beneath can be inspected. To flag a KNOWN
   mound as a ground-truth error, add a mark on it with the symbol
@@ -471,6 +473,23 @@ def main() -> None:
                 "reviewed_at": datetime.now(timezone.utc).isoformat(),
                 "pass_id": datetime.now(timezone.utc).strftime(
                     "%Y%m%dT%H%M%S%f")}
+
+    # Jump to an arbitrary tile (1-based position) — for re-checking
+    # earlier verdicts without stepping back one tile at a time, and for
+    # returning afterwards without re-saving every tile on the way.
+    j1, j2 = st.columns([1, 3])
+    with j1:
+        target_pos = st.number_input("Go to tile #", min_value=1,
+                                     max_value=len(manifest),
+                                     value=cursor + 1, step=1,
+                                     key=f"goto_{cursor}")
+    with j2:
+        if st.button("g: go to that tile", disabled=target_pos == cursor + 1):
+            st.session_state.cursor = int(target_pos) - 1
+            st.session_state.marks = []
+            st.session_state.pending_click = None
+            st.session_state.last_click = None
+            st.rerun()
 
     c1, c2, c3, c4 = st.columns(4)
     with c1:
