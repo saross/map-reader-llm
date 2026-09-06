@@ -1,8 +1,8 @@
 # Reference revision r2: fold the PI audits into the best-available ground truth and re-run the comparisons
 
-> **Last revised**: 2026-09-06 (original publication — SCOPED, not
-> approved to run; decisions for the PI listed in § 3). See
-> [§ Changelog](#changelog).
+> **Last revised**: 2026-09-06 (close — r2 built; register rows in;
+> pre-run review written; clean-context audit returned 4 blockers, chain
+> NO-GO until adjudicated next session). See [§ Changelog](#changelog).
 
 **The PI's direction (2026-09-06, Session 148, verbatim in substance)**:
 build a reference revision, establish it as the best-available ground
@@ -453,6 +453,34 @@ the r2 point estimate and never used to re-tier.
   § (b) (instrument), 446, 449, 450, and the census Obs.
 
 ## Changelog
+
+### 2026-09-06 (close) — Clean-context audit received: NO-GO until adjudicated
+
+`reports/r2-chain-pre-run-audit-2026-09-06.md` (fresh-context Opus,
+18 scripts and 8 data files opened, 21 claims, 6 probes): **4 blockers,
+5 majors, 6 minors**. Blockers: (1) step 3's count is 36 cells, not 29
+(the r1 board tiers 23; the 29/29 gate would pass a mixed-vintage
+board); (2) `build_55map_leaderboard.py` reads cells by label from
+`run-conditions.json`, so the boards depend on the register rows —
+step 7 must precede step 4; (3) the companion command as written cannot
+run (`stride55_score.py` has no `--compute-mcc`, MCC is unconditional;
+its count gate assumes the K = 10 union; no first-N path exists there);
+(4) the r1 regression gates (G3 at 1e-9, G4 at 0.003) halt any r2 run
+by design, so the gates need an r2 mode rather than a "red → stop"
+rule. Majors: H1 contradicts the IM-k4 template (the merged geojson IS
+the scorer's input; no r2 layer files exist); r1 homes are written by
+module constants with no override; the 3.7 rungs' derivation lives only
+in the two `gemini37_*_ladder.py` scripts (canonical chain, ladder.json
+only); the Era-2 GS boards do not exist as artefacts and a rank change
+after adding cells is legitimate under BH, so H8's tripwire is wrong;
+`lib_uplift_supplement` resolves an r2 file to "unresolved" silently.
+Clean: the r2 build and the instruction set regenerate byte-identical;
+the stride55 `summary.json` DOES carry a tile matrix and MCC, so the
+companion row's "no matrix" deferral no longer holds. **Disposition
+deferred to the next session** (context budget): every finding is to be
+adjudicated fix / accept / dispute and the contract amended before
+step 2 runs. The PI had said "looks good" to the review text but had
+not yet given the formal go; the chain is NO-GO as written.
 
 ### 2026-09-06 (later still) — Register rows landed; pre-run review written
 
