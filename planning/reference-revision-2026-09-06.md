@@ -187,6 +187,39 @@ moot. The student re-estimate (§ 2b) joins the queue as item 9.
    → rebuild (55-map card § 6). Check: the 3.7 cells' standardised
    evaluations exist for the three carried cells only.
 
+## 3a. Register-row and membership rulings (PI, 2026-09-06)
+
+On the 3.7 register-row proposal's eight decisions: (1) `post-hoc`
+throughout — agreed; (2) image row carries H1 — agreed; (3) both chains
+per 55-map cell plus the canonical B N = 5 companion — agreed, with the
+explanation recorded below; (4) **rungs WANTED** (the across-N story and
+the economical-extraction options), which reverses the proposal's
+recommendation — they need materialised detections and evaluations, so
+they are folded into the r2 recompute chain (steps 3–4) and registered
+there rather than scored twice; (5) image-GS cells register; (6) schema
+pool convention; (7) register both vintages; (8) H14/H15 unchanged,
+cross-vendor comparisons deferred to a later paper. **Membership**: all
+four 3.7 cells and the 3.8 cell on their appropriate boards — the 55-map
+final board gains arm 1, arm 2, and the fourth cell (carried + oracle
+rows, and the N = 1 / N = 3 rungs once materialised) beside the
+incumbent B; the GS board gains the four GS 3.7 cells (text carried-vf,
+text swap, image carried-vf, image swap) and the 3.8 Arm V cell; the
+K = 10 text cell and the fourth cell's GS leg are registered conditions
+whose board membership the PI can add.
+
+*Why a canonical B N = 5 companion row when everything moves to the
+standardised chain*: the register records what was actually scored.
+The 3.7 campaign's committed comparisons — D1's dead heat (arm 1 0.8494
+vs 0.8502) and the 2×2 five-test family (Obs 444) — ran on the
+canonical chain against a canonical B N = 5 value (0.843775) that lives
+only inside `results/stride55-2026-08-27/ladder.json`; an analysis row
+must point its `conditions_compared` at registered conditions, so
+without that row the comparison as executed cannot be registered
+faithfully. The standardised (and, after the chain, r2) rows are the
+paper's instrument going forward; the canonical rows stay as the record
+of what was done, which is also what lets the paper "note corrections"
+across chains (ruling 3 of § 3).
+
 ## 3b. Step 1 DONE (2026-09-06): r2 materialised
 
 `scripts/derive_audit_revision_instructions.py` →
