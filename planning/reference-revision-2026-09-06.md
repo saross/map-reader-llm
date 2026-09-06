@@ -187,6 +187,33 @@ moot. The student re-estimate (§ 2b) joins the queue as item 9.
    → rebuild (55-map card § 6). Check: the 3.7 cells' standardised
    evaluations exist for the three carried cells only.
 
+## 3b. Step 1 DONE (2026-09-06): r2 materialised
+
+`scripts/derive_audit_revision_instructions.py` →
+`results/reference-revision-r2/audit-revision-instructions.csv` (6
+removals, 14 additions; summary JSON carries the adjudication files'
+SHA-256). `scripts/materialise_best_available_gt.py --vintage r2` →
+`inputs/vectors/references/best-available-gt-55maps-r2.{geojson,csv}`
+(**5,018 records**: 4,726 `student_standardised`, 278
+`extension_standardised`, 14 `audit_reviewed`; symbol types burial_mound
+4,840, bench_mark_on_mound 112, trig_point_on_mound 46,
+settlement_mound 20) and `…-r2-removed.csv` (the six removed records
+with `removed_by`). Gates: gt_id unique; no pair within 15 m; the
+campaign gates stay 8/8 green (campaign layers untouched); tier-1 tests
+`tests/test_reference_revision_r2.py` reconcile the instruction set with
+the adjudications and r2 with r1 ± the changes. Deterministic re-run.
+
+**Two things to disclose with r2.** (a) The empty-stratum re-review:
+the PI reported "no errors" on all five double-misses; the app verdicts
+saved were `n` (the pass had no known points to confirm against), read
+as "the mark stands" and written into the instruction `note` column.
+(b) **r2 overrides one Ruling-21 adjudication**: the campaign gates
+report "promoted_phantom:40 marked distinct with unreviewed student
+#1036 at 10.3 m" — the Session-130/131 walk kept the pair as two mounds;
+the PI's census inspection of the symbol (tile 98) found one mound, and
+r2 removes `extension:40`. A ruling corrected by direct inspection, to
+be stated as such in the erratum.
+
 ## 4. The recompute queue ($0, no API; sapphire)
 
 Nothing here runs until § 3 is ruled and a pre-run review has walked

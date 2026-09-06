@@ -85,6 +85,61 @@ CRS = "EPSG:32635"
 COMMON = ["gt_id", "layer", "source_id_lossy", "source_map", "symbol_type",
           "confidence_grade", "position_source", "provenance"]
 
+#: Revision r2 (planning/reference-revision-2026-09-06.md): the instruction set
+#: derived from the PI's audits by `derive_audit_revision_instructions.py`.
+R2_INSTRUCTIONS = PROJECT_ROOT / "results/reference-revision-r2/audit-revision-instructions.csv"
+
+#: The review app's symbol vocabulary -> the standardised layer's symbol_type.
+R2_SYMBOL_MAP = {
+    "Hairy brown circle": "burial_mound",
+    "Hairy black square with a dot inside": "bench_mark_on_mound",
+    "Hairy black triangle with a dot inside": "trig_point_on_mound",
+    "Hairy black diamond with a dot inside": "burial_mound",
+}
+
+
+def apply_audit_revision(merged: gpd.GeoDataFrame
+                         ) -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame, int]:
+    """Apply the r2 instruction set to the standardised union.
+
+    Removals drop the flagged records (every gt_id must exist — a missing one
+    means the instruction set and the reference are out of step, and the run
+    stops). Additions become ``audit_reviewed`` records positioned at the
+    reviewer's mark (the app's ~±2.5 m nudge precision), graded
+    ``directly_reviewed``, with the audit and class in ``provenance``.
+
+    Args:
+        merged: the standardised student + extension union.
+
+    Returns:
+        (revised union, the removed records, number of records added).
+    """
+    instr = pd.read_csv(R2_INSTRUCTIONS, dtype=str).fillna("")
+    remove_ids = set(instr.loc[instr["action"] == "remove", "gt_id"])
+    missing = remove_ids - set(merged["gt_id"])
+    if missing:
+        raise RuntimeError(f"r2 removals not found in the reference: {sorted(missing)}")
+    removed = merged[merged["gt_id"].isin(remove_ids)].copy()
+    kept = merged[~merged["gt_id"].isin(remove_ids)].copy()
+
+    adds = instr[instr["action"] == "add"].reset_index(drop=True)
+    unknown = sorted(set(adds["symbol"]) - set(R2_SYMBOL_MAP))
+    if unknown:
+        raise RuntimeError(f"r2 additions carry symbols without a symbol_type mapping: {unknown}")
+    new = gpd.GeoDataFrame({
+        "gt_id": [f"audit:{i:03d}" for i in range(len(adds))],
+        "layer": "audit_reviewed",
+        "source_id_lossy": "",
+        "source_map": [t.rsplit("_x", 1)[0] for t in adds["tile_name"]],
+        "symbol_type": [R2_SYMBOL_MAP[s] for s in adds["symbol"]],
+        "confidence_grade": "directly_reviewed",
+        "position_source": "reviewer_mark",
+        "provenance": [f"pi_audit_2026-09_{a}_{c}" for a, c in zip(adds["audit"], adds["class"])],
+    }, geometry=[Point(float(x), float(y)) for x, y in zip(adds["x"], adds["y"])], crs=CRS)
+    revised = gpd.GeoDataFrame(pd.concat([kept, new], ignore_index=True),
+                               geometry="geometry", crs=CRS)
+    return revised, removed, len(new)
+
 
 def load_student() -> gpd.GeoDataFrame:
     """Load the standardised student layer, normalised to the common columns."""
@@ -190,8 +245,10 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Merge the 55-map best-available GT.")
     ap.add_argument("--out-dir", type=Path,
                     default=PROJECT_ROOT / "inputs/vectors/references")
-    ap.add_argument("--vintage", choices=("standardised", "canonical"),
-                    default="standardised")
+    ap.add_argument("--vintage", choices=("standardised", "canonical", "r2"),
+                    default="standardised",
+                    help="'r2' = the standardised reference plus the PI-audit instruction "
+                         "set (planning/reference-revision-2026-09-06.md).")
     ap.add_argument("--radius", type=int, default=50,
                     help="Matching radius for the buffer-gated canonical vintage.")
     args = ap.parse_args()
@@ -212,6 +269,19 @@ def main() -> int:
         if len(merged) != len(student) + len(extension):
             logger.error("record count does not reconcile")
             return 1
+        if args.vintage == "r2":
+            merged, removed, n_added = apply_audit_revision(merged)
+            stem = "best-available-gt-55maps-r2"
+            if len(merged) != len(student) + len(extension) - len(removed) + n_added:
+                logger.error("r2 record count does not reconcile")
+                return 1
+            removed_path = args.out_dir / f"{stem}-removed.csv"
+            removed.drop(columns="geometry").assign(
+                x=removed.geometry.x.round(3), y=removed.geometry.y.round(3),
+                removed_by="pi_audit_2026-09_census_gt-error-flag",
+            ).to_csv(removed_path, index=False)
+            logger.info("r2: removed %d, added %d; removed records -> %s", len(removed),
+                        n_added, removed_path.relative_to(PROJECT_ROOT))
     if merged["gt_id"].duplicated().any():
         logger.error("duplicate gt_id in the merged reference")
         return 1

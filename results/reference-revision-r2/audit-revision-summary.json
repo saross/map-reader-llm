@@ -1,0 +1,25 @@
+{
+  "generated_from": {
+    "census": {
+      "path": "results/cluster-audit/adjudication.json",
+      "sha256": "eff78d5046ae7f88923bbb7f343330ec6b3a7bed92feef27cde149696da30f0a",
+      "generated": "2026-09-06",
+      "reference": "standardised"
+    },
+    "empty": {
+      "path": "results/empty-tile-audit/adjudication.json",
+      "sha256": "9f6a6d56c0ba3f7725238bce30f7cc7803895a89b85443b04f23225b34497779",
+      "generated": "2026-09-06",
+      "reference": "standardised"
+    }
+  },
+  "removals": 6,
+  "additions": 14,
+  "additions_by_audit_class": {
+    "census/true-double-miss": 2,
+    "census/detected": 6,
+    "census/proposed-but-filtered": 1,
+    "empty/true-double-miss": 5
+  },
+  "instruction_rows": 20
+}
