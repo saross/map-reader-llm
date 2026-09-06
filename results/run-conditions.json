@@ -7296,6 +7296,10 @@
     "g384_ov192-union-k10-verify": {
      "modality": "text",
      "path": "verifier/g384_ov192/verify"
+    },
+    "g384_ov192-union-k10-verify37": {
+     "modality": "text",
+     "path": "verifier/g384_ov192/verify_37"
     }
    },
    "conditions": [
@@ -7418,6 +7422,27 @@
      },
      "eval_path": "results/grid-2026-08-18/conditions-verified/g384_ov192/eval/evaluation.json",
      "detections": "results/grid-2026-08-18/conditions-verified/g384_ov192/detections.geojson"
+    },
+    {
+     "label": "g384-ov192-k10-verified37-p0.98-k10",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "brief-text",
+     "n_passes": 10,
+     "vote_threshold": 10,
+     "prob_threshold": 0.98,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 3319,
+     "eval_path": "results/gemini37-fourth-cell/gs-leg/best-eval/evaluation.json",
+     "detections": "results/gemini37-fourth-cell/gs-leg/verified_best_20m.geojson",
+     "_note": "A9 \u2014 the fourth cell's GS calibration leg (~$3; card planning/gemini37-55map-2026-08-29.md:201, which commits (0.98, k10) as the 55-map fourth cell's carried point BEFORE any deployment scoring). This run's own Gemini-3 g384_ov192 K=10 union (3,319 candidates) re-verified with gemini-3.7-flash: F1@20 0.914005, P 0.9637 / R 0.8692, tile-MCC 0.8239, 386 detections; +0.0179 over the 0.8961 text-B anchor at p = 0.0563. Registered here rather than under a 3.7 run because the condition belongs to the run that owns its proposer pool (PI ruling 6); the verification lives at outputs/grid-2026-08-18/verifier/g384_ov192/verify_37/. GOTCHA: this is a TEXT cell whose best point sits under the 'image_best' key of results/gemini37-fourth-cell/gs-leg/analysis.json. The verifier_config variant is recorded as 'v1' (the 3.7-arc convention) while this run's Gemini-3 siblings say 'adversarial-text'; same instruction file, same hash."
     }
    ]
   },
@@ -7714,6 +7739,10 @@
     "g384_ov192_55map-union-k10-verify": {
      "modality": "text",
      "path": "verifier/g384_ov192_55map/verify"
+    },
+    "g384_ov192_55map-union-k10-verify37": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map/verify_37"
     }
    },
    "conditions": [
@@ -8058,6 +8087,48 @@
      "eval_path": "results/55map-final-board-2026-08-27/cells/B-N3-carried/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/B-N3-carried/detections.geojson",
      "_note": "Final-board cell B-N3-carried (carried (post-hoc), F1@50 0.8476, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008). EMERGENT post-hoc nomination (PI-directed 2026-08-28): the GS-ladder-selected point, evaluated after the N=3 oracle's frontier position emerged \u2014 see the board's post-hoc section."
+    },
+    {
+     "label": "g384-ov192-55map-k10-verified37-p0.98-k10-canonical-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 10,
+     "vote_threshold": 10,
+     "prob_threshold": 0.98,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 57482,
+     "eval_path": "results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/eval/evaluation.json",
+     "detections": "results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/verified_detections.geojson",
+     "_note": "B5 \u2014 the 2x2 grid's fourth cell (this run's Gemini-3 K=10 union, 57,482 candidates, re-verified with gemini-3.7-flash), CANONICAL chain: corrected-F1@50 0.865618 [0.857387, 0.873612], P 0.9588 / R 0.7890, tile-MCC 0.7268, 4,246 detections \u2014 the grid's precision and tile-MCC crowns. +0.0234 over this run's own K=10 carried incumbent (p = 0.0001, BH-significant), the second verifier-axis test. Carried point (0.98, k10) fixed by the GS calibration leg (grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10) before deployment scoring. Registered here per PI ruling 6."
+    },
+    {
+     "label": "g384-ov192-55map-k10-verified37-p0.98-k10-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 10,
+     "vote_threshold": 10,
+     "prob_threshold": 0.98,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 57482,
+     "eval_path": "results/gemini37-fourth-cell/55map/g384_ov192_55map/standardised-ref/evaluation.json",
+     "detections": "results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/verified_detections.geojson",
+     "_note": "B6 \u2014 the same detections on the ruling-21 STANDARDISED reference: F1@50 0.8732 [0.8649, 0.8810], P 0.9517 / R 0.8066. Tile matrix identical to the canonical 50 m row (2358/4985/32/1166)."
     }
    ]
   },
@@ -8163,6 +8234,287 @@
      "eval_path": "results/h7-escalation-2026-08-28/eval-T20/evaluation.json",
      "detections": "outputs/h7-escalation-2026-08-28/T2.0",
      "_note": "Replicate-mean F1@20 ~0.474; per-run 0.4752/0.4714/0.4765, all significantly below T=1.3 (p=0.0013-0.0064). The degraded plateau."
+    }
+   ]
+  },
+  "gemini37-screen-2026-08-28": {
+   "_note": "GS screen on the 487-tile common footprint, curator reference, 20 m primary. The proposer config is the committed text-B anchor's detect_brief-text, byte-identical but for two command-line overrides (--model gemini-3.7-flash --thinking-level low). Four verifier passes over two unions: verify (K=5, 791 candidates) and verify_k10 (K=10, 913) with the carried gemini-3-flash-preview verifier; verify_swap37 and verify_swap38 re-verify the SAME 791-candidate K=5 union with gemini-3.7-flash and gemini-3.8-flash. Disclosed deviation (card planning/gemini37-screen-2026-08-28.md changelog): the K=10 escalation re-verified the FULL union rather than increment-stitching the new candidates. GOTCHA: these are TEXT cells whose best operating point sits under the JSON key 'image_best' \u2014 the campaign reused scripts/image_b_analysis.py; the key name is not a modality claim. The N=1/3/5 ladder rungs in k10/analysis.json are NOT registered (no materialised detections; deferred to the r2 recompute chain per PI ruling 4).",
+   "proposer_pools": {
+    "g384_ov192_g37": {
+     "modality": "text",
+     "path": "g384_ov192_g37"
+    }
+   },
+   "verifier_passes": {
+    "g384_ov192_g37-union-k5-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_g37/verify"
+    },
+    "g384_ov192_g37-union-k10-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_g37/verify_k10"
+    },
+    "g384_ov192_g37-union-k5-verify-swap37": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_g37/verify_swap37"
+    },
+    "g384_ov192_g37-union-k5-verify-swap38": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_g37/verify_swap38"
+    }
+   },
+   "conditions": [
+    {
+     "label": "g37-text-k5-verified-carried-p0.10-k5",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_g37",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 791,
+     "eval_path": "results/gemini37-screen-2026-08-28/best-eval/evaluation.json",
+     "detections": "results/gemini37-screen-2026-08-28/verified_best_20m.geojson",
+     "_note": "A1 \u2014 the standalone K=5 screen best (F1@20 0.913892, tile-MCC 0.7797, 443 detections) on the K=5 union's own 791-item verification. Distinct from the K=10-vintage ladder N=5 rung (0.913094, 435 detections), which reads the same five passes through the 913-item re-verification and is not registered (PI ruling 4/7)."
+    },
+    {
+     "label": "g37-text-k10-verified-carried-p0.10-k10",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_g37",
+     "n_passes": 10,
+     "vote_threshold": 10,
+     "prob_threshold": 0.1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 913,
+     "eval_path": "results/gemini37-screen-2026-08-28/k10/best-eval/evaluation.json",
+     "detections": "results/gemini37-screen-2026-08-28/k10/verified_best_20m.geojson",
+     "_note": "A2 \u2014 the approved K=10 escalation (F1@20 0.914219, tile-MCC 0.7817, 423 detections). Five extra proposer passes (~$5.4 billed) bought +0.0003; the ladder's own N5-N10 contrast is -0.0011 at p = 0.7928."
+    },
+    {
+     "label": "g37-text-k5-verified-swap37-p0.80-k5",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_g37",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.8,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 791,
+     "eval_path": "results/gemini37-screen-2026-08-28/swap37/best-eval/evaluation.json",
+     "detections": "results/gemini37-screen-2026-08-28/swap37/verified_best_20m.geojson",
+     "_note": "A3 \u2014 the all-3.7 stack: the SAME 791 candidates re-verified with gemini-3.7-flash (F1@20 0.926488, P 0.9254 / R 0.9276, tile-MCC 0.8078, 429 detections) for ~$0.9 token-basis. The study's first GS-resolvable model-swap margin (+0.0304 vs the 0.8961 anchor, p = 0.0105). The sweep argmax is a TIE the analysis JSON does not flag: prob_t 0.80 and 0.85 give identical F1 and 429 detections in swap37/sweep_20m.csv; the card commits (0.80, k5)."
+    },
+    {
+     "label": "g37-text-k5-verified-swap38-p0.88-k5",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_g37",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.88,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.8-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 791,
+     "eval_path": "results/gemini38-screen-2026-09-04/armV/best-eval/evaluation.json",
+     "detections": "results/gemini38-screen-2026-09-04/armV/verified_best_20m.geojson",
+     "_note": "Gemini 3.8 Arm V (card planning/gemini38-screen-2026-09-04.md; PI ruling 9): the SAME 791-candidate K=5 union re-verified with gemini-3.8-flash at thinking=low (F1@20 0.9258, P 0.9335 / R 0.9182, tile-MCC 0.8218, 421 detections) for ~$0.85 flex token-basis. Registered under this run because it re-verifies this run's union; the campaign tree outputs/gemini38-screen-2026-09-04/ holds only the proposer probe, and the verification itself lives at outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/. Obs 448."
+    }
+   ]
+  },
+  "gemini37-image-gs-2026-09-01": {
+   "_note": "Image variant of the 3.7 GS screen on the same geometry, footprint and reference (detect_brief-text-image; K=5; 674-candidate union). Two verifier arms over that one union: arm 1 the carried gemini-3-flash-preview, arm 2 gemini-3.7-flash. GOTCHA: scripts/image_b_analysis.py:79 hard-codes ANCHOR_F1_20 = 0.8961, so the built-in head_to_head_20m blocks in arm{1,2}/analysis.json pair a 3.7 IMAGE cell against a GEMINI-3 TEXT cell and mix the family step into the modality contrast \u2014 never quote them as a modality delta; results/gemini37-image-gs-2026-09-01/gap_test.json is the instrument. Both arms' sweep argmaxes are ties the analysis JSON does not flag (arm 2: prob_t 0.90 and 0.95 give identical F1 0.9308323563892146 and 425 detections in arm2/sweep_20m.csv).",
+   "proposer_pools": {
+    "g384_ov192_g37img": {
+     "modality": "image",
+     "path": "g384_ov192_g37img"
+    }
+   },
+   "verifier_passes": {
+    "g384_ov192_g37img-union-k5-verify-arm1": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_g37img/verify_arm1"
+    },
+    "g384_ov192_g37img-union-k5-verify-arm2": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_g37img/verify_arm2"
+    }
+   },
+   "conditions": [
+    {
+     "label": "g37-image-k5-verified-carried-p0.10-k5",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_g37img",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 674,
+     "eval_path": "results/gemini37-image-gs-2026-09-01/arm1/best-eval/evaluation.json",
+     "detections": "results/gemini37-image-gs-2026-09-01/arm1/verified_best_20m.geojson",
+     "_note": "A7 \u2014 image under the carried Gemini-3 verifier (F1@20 0.925408, tile-MCC 0.8192, 430 detections), +0.0842 over the 0.8412 Gemini-3 image anchor. Its within-family text pair is A1: (text - image) = -0.0115, p = 0.2533 (gap_test.json)."
+    },
+    {
+     "label": "g37-image-k5-verified-swap37-p0.90-k5",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_g37img",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.9,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 674,
+     "eval_path": "results/gemini37-image-gs-2026-09-01/arm2/best-eval/evaluation.json",
+     "detections": "results/gemini37-image-gs-2026-09-01/arm2/verified_best_20m.geojson",
+     "_note": "A8 \u2014 the all-3.7 image stack (F1@20 0.930832, tile-MCC 0.8322, 425 detections), the highest F1@20 in the 3.7 arc, +0.0896 over the Gemini-3 image anchor. Its within-family text pair is A3: (text - image) = -0.0043, p = 0.6767. Sweep argmax tie at prob_t 0.90 / 0.95."
+    }
+   ]
+  },
+  "gemini37-55map-2026-08-29": {
+   "_note": "55-map deployment arms for the Gemini 3.7 proposer (card planning/gemini37-55map-2026-08-29.md). One K=5 proposer pool (union 12,715 candidates), two verifier arms over it, both carried operating points committed on the card at :140-141 before any deployment scoring. TWO INSTRUMENTS, one row each per cell (Obs 444 \u00a7 (b); results/gemini37-55map-2026-08-31/findings.md \u00a7 'Reference instruments'): the canonical adjudicated extended Ground Truth (5,160 references at 50 m, corrected-F1 engine, the campaign's committed primary) and the ruling-21 standardised reference inputs/vectors/references/best-available-gt-55maps.geojson (5,010 references, scripts/evaluate_detections.py). The canonical eval_paths point at evaluation.json files written by this script's adapter from the engine's summary.json (deterministic transform; nothing recomputed). Nothing here is scored against the r2 reference. The 16-cell grid board's oracle and N=1/N=3 rungs are NOT registered (no materialised detections or evaluations; deferred to the r2 recompute chain per PI ruling 4).",
+   "proposer_pools": {
+    "g384_ov192_55map_g37": {
+     "modality": "text",
+     "path": "g384_ov192_55map_g37"
+    }
+   },
+   "verifier_passes": {
+    "g384_ov192_55map_g37-union-k5-verify-arm1": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map_g37/verify_arm1"
+    },
+    "g384_ov192_55map_g37-union-k5-verify-arm2": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map_g37/verify_arm2"
+    }
+   },
+   "conditions": [
+    {
+     "label": "arm1-n5-carried-p0.10-k5-canonical-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "eval_path": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/eval/evaluation.json",
+     "detections": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/verified_detections.geojson",
+     "_note": "B1 \u2014 arm 1 (3.7 proposer + carried Gemini-3 verifier) at its committed carried point, CANONICAL chain: corrected-F1@50 0.849360 [0.841013, 0.857383], P 0.8438 / R 0.8550, tile-MCC 0.6665, 5,229 detections. Against the canonical B N=5 incumbent 0.8438 this is +0.0056, p = 0.3488 \u2014 below the 55-map MDE80 of 0.013, which is D1's pre-named informative failure."
+    },
+    {
+     "label": "arm1-n5-carried-p0.10-k5-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "eval_path": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/standardised-ref/evaluation.json",
+     "detections": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/verified_detections.geojson",
+     "_note": "B2 \u2014 the same detections on the ruling-21 STANDARDISED reference: F1@50 0.8550 [0.8465, 0.8630], P 0.8371 / R 0.8737. The tile confusion matrix is identical to the canonical chain's 50 m row (2533/4632/385/991), so the two rows share one tile-MCC."
+    },
+    {
+     "label": "arm2-n5-carried-p0.80-k5-canonical-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.8,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "eval_path": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/eval/evaluation.json",
+     "detections": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/verified_detections.geojson",
+     "_note": "B3 \u2014 arm 2 (all-3.7) at its committed carried point, CANONICAL chain: corrected-F1@50 0.876316 [0.868574, 0.883690], P 0.8901 / R 0.8630, tile-MCC 0.7073, 5,003 detections. The campaign headline: +0.0270 over arm 1 (p = 0.0001, BH-significant) \u2014 the family gain sits in the verifier seat. Also the model arm of the student-baseline programme (planning/student-baseline-2026-08-31.md)."
+    },
+    {
+     "label": "arm2-n5-carried-p0.80-k5-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.8,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "eval_path": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/standardised-ref/evaluation.json",
+     "detections": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/verified_detections.geojson",
+     "_note": "B4 \u2014 the same detections on the STANDARDISED reference: F1@50 0.8825 [0.8746, 0.8897], P 0.8831 / R 0.8818 \u2014 above the entire 2026-08-27 final board including its oracles (ceiling B-N10-oracle 0.8558). Tile matrix identical to the canonical 50 m row (2516/4798/219/1008)."
     }
    ]
   }

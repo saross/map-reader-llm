@@ -935,6 +935,89 @@
    "_flags": [
     "Real-time flex where the registered H7 ran Batch API \u2014 both bill 50% of list; execution infrastructure, not a parameter."
    ]
+  },
+  "gemini37-screen-2026-08-28": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "H13"
+   ],
+   "purpose": "Gemini 3.7 Flash screen on the leading 384 px / 50 % geometry: does a within-vendor model-family step clear the Gemini-3 GS plateau, and in which seat? Predictions G1-G4 committed at PI go (card planning/gemini37-screen-2026-08-28.md). Escalated to K=10 and to two verifier-role swaps (3.7, then 3.8 under card planning/gemini38-screen-2026-09-04.md).",
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "grid-common-487",
+    "bounds_path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5",
+   "headline_rationale": "The all-3.7 stack (F1@20 0.9265, tile-MCC 0.8078) \u2014 the study's first GS-resolvable model-swap margin (+0.0304 vs the anchor, p = 0.0105) and the only cell in the arc beating the anchor on F1 and MCC together.",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": [
+    "The live cost estimator prices the 3.7 SKU at Gemini-3 list rates and excluded thinking tokens until commit 73658c579, so every cost_estimate on a 3.7 run under-states; any cost figure in this register's rows is token-basis, computed from recorded token counts at the 3.7/3.8 rates.",
+    "Verifier cost provenance is partly lost: run_pv.py cleanup overwrote run.meta.json on the swap passes (verify_swap37 records items_processed 2; the grid and stride verify_37 metas record 1 and 29), so item counts come from probabilities.json total_results instead. The condition rows are unaffected; only cost provenance is.",
+    "Model and thinking level stay confounded: 3.7 at thinking=low emits ~276 thinking tokens per tile against Gemini-3 MINIMAL's zero."
+   ]
+  },
+  "gemini37-image-gs-2026-09-01": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "H1"
+   ],
+   "purpose": "Image variant of the 3.7 GS screen under matched everything, for the difference-in-differences against the Gemini-3 modality contrast (image-b-gs-2026-08-28). Predictions I1-I5 committed at PI go (card planning/gemini37-image-gs-2026-08-30.md). The escalation trigger was not met; no 55-map image extension followed.",
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "grid-common-487",
+    "bounds_path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5",
+   "headline_rationale": "The all-3.7 image stack (F1@20 0.9308, tile-MCC 0.8322) \u2014 the highest F1@20 anywhere in the 3.7 arc, and the cell that makes the modality gap vanish.",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": [
+    "The live cost estimator prices the 3.7 SKU at Gemini-3 list rates and excluded thinking tokens until commit 73658c579, so every cost_estimate on a 3.7 run under-states; any cost figure in this register's rows is token-basis, computed from recorded token counts at the 3.7/3.8 rates.",
+    "Implicit caching engaged at 79.5 % of input against a registered >= 90 % bar (I5, an informative failure); the probe measurement is warm-up-confounded (16 % cold-parallel, 54 % sequential).",
+    "scripts/image_b_analysis.py:79 hard-codes ANCHOR_F1_20 = 0.8961, so the analysis JSONs' head_to_head_20m blocks are mis-anchored for a modality reading \u2014 use gap_test.json."
+   ]
+  },
+  "gemini37-55map-2026-08-29": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "H13"
+   ],
+   "purpose": "Does the 3.7 GS gain transfer to 55-map deployment, and in which seat? One K=5 3.7 proposer pool, two verifier arms (carried Gemini-3; all-3.7), both carried points committed before deployment scoring. With the fourth cell (registered under stride-55map-2026-08-25) this completes the proposer x verifier 2x2. Predictions D1-D7, card planning/gemini37-55map-2026-08-29.md.",
+   "tile_size_px": 384,
+   "corpus": "55-map",
+   "gt_reference": "combined",
+   "scope": {
+    "test_set_id": "55maps-8541",
+    "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "n_test_tiles": 8541,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-canonical-gt",
+   "headline_rationale": "Arm 2, the all-3.7 stack at its committed carried point (canonical corrected-F1@50 0.8763): the campaign's headline and the diagonal that reads +0.0325 over the canonical B N=5 incumbent (p = 0.0001).",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": [
+    "TWO INSTRUMENTS: canonical adjudicated extended GT (5,160 references at 50 m; the committed primary) and the ruling-21 standardised reference (5,010). Every delta must name its chain; Session 144's interim headlines mixed them and were corrected (Obs 444 \u00a7 (b)).",
+    "gt_reference 'combined' = the canonical adjudicated extended GT, the schema's combined class.",
+    "The 2x2 is NOT square in pass count: the Gemini-3 row is K=10, the 3.7 row K=5, which is why the two proposer-axis tests use different comparators.",
+    "The live cost estimator prices the 3.7 SKU at Gemini-3 list rates and excluded thinking tokens until commit 73658c579, so every cost_estimate on a 3.7 run under-states; any cost figure in this register's rows is token-basis, computed from recorded token counts at the 3.7/3.8 rates.",
+    "The proposer tiling is an overlapping custom grid; evaluation is on the standard 8,541-tile frame."
+   ]
   }
  }
 }

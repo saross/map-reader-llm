@@ -1775,6 +1775,161 @@
     "Obs 440 \u2014 the preregistration compliance audit: believe the artefacts; the last obligation discharged with data"
    ],
    "manually_verified_at": "2026-08-28T12:43:12Z"
+  },
+  {
+   "analysis_id": "gemini37-screen-2026-08-28",
+   "type": "comparison",
+   "_note": "The Gemini 3.7 GS screen and its two approved escalations (scripts/image_b_analysis.py over each cell; paired tile-swap permutation, 10,000 draws, seed 42, 487-tile common footprint; anchor gate reproduces the registered 0.8961 exactly). Every cell's best point sits under the JSON key 'image_best' although all three are TEXT cells \u2014 the campaign reused the image harness. The swap37 argmax is a tie (prob_t 0.80 and 0.85, identical F1 and 429 detections) that analysis.json does not flag. The N=1/3/5 ladder rungs are re-derived here and NOT registered as conditions: they have no materialised detections, and their materialisation is folded into the r2 recompute chain (planning/reference-revision-2026-09-06.md), where they will be registered \u2014 re-derived; registration pending materialisation.",
+   "_prereg_rationale": "Post-registration campaign with card-committed predictions: the preregistration registers no hypothesis about model version, so the S134 sorting rule makes this post-hoc (the flash35-model-roles precedent, the direct ancestor of this design). The foresight is evidenced in predicted_outcome, which is write-once. PI ruling 1, 2026-09-06.",
+   "conditions_compared": [
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5",
+    "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10",
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5",
+    "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10"
+   ],
+   "hypothesis_refs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "predicted_outcome": "Committed at PI go, planning/gemini37-screen-2026-08-28.md:38-41 \u2014 \"G1 | Verified best @20 m | 3.7 at-or-below the Gemini 3 plateau (<= 0.8934 + GS resolution)\"; \"G2 | Operating lattice | prob in {0.15, 0.20}, mid-to-high k\"; \"G3 | Cost | proposer $5.5-16 flex (thinking-volume-dependent; 3.7 rates 1.5x/1.25x Gemini 3)\"; \"G4 | Thinking at `low` | nonzero but < HIGH-class volumes (< 1,000 t/tile)\". Pre-named informative outcome, planning/gemini37-screen-2026-08-28.md:43-44: \"3.7 ABOVE the plateau (verified best > 0.8961 + resolution)\".",
+   "tie_set": [],
+   "outcome": "G1's pre-named informative outcome FIRED and G2 is falsified. The carried-verifier K=5 cell reaches 0.9139 @20 m at (0.10, k5) on a 791-candidate union, nominally above every Gemini-3 cell on this corpus, but the paired tile-swap permutation (10,000 draws, 487 tiles) returns +0.0178 at p = 0.1697 against a null SD of 0.0129 \u2014 below the GS instrument's resolution, so the screen can name the direction and not the size. K=10 adds +0.0003 (0.9142, p = 0.2076) and the ladder's own N5-N10 contrast is -0.0011 at p = 0.7928: saturated by N = 5, the Gemini-3 shape exactly (0.8588 / 0.9018 / 0.9131 / 0.9142 at N = 1/3/5/10). The headline is the role swap: re-verifying the SAME 791 candidates with gemini-3.7-flash reaches 0.9265 @20 m at (0.80, k5), P 0.9254 / R 0.9276 / tile-MCC 0.8078 \u2014 +0.0304 vs the anchor, p = 0.0105, the study's first GS-resolvable model-swap margin and the only cell in the arc beating the anchor on F1 and MCC together. The mechanism is calibration, not judgement: the 3.7 verifier's mean mound_probability is 0.687 against the carried verifier's 0.587 on identical candidates (planning/gemini37-screen-2026-08-28.md:110), so its optimum migrates four rungs up a lattice that has sat at 0.10-0.20 across every model the study has run \u2014 G2 falsified, and the portable claim is that a verifier's operating threshold does not transfer across verifier models. Cost ordering is the practitioner lesson: five extra passes cost ~$5.4 and bought +0.0003; the role swap cost ~$0.9 token-basis and bought +0.0126 over the same union. Caveats: both sides of every contrast are sweep-selected argmaxes scored on the same reference; this is a single comparison with no family correction across four GS sheets; and 3.7-`low` emits ~276 thinking tokens per tile against Gemini-3 MINIMAL's zero, so model and thinking stay confounded. The K=10 escalation re-verified the full union rather than increment-stitching \u2014 disclosed on the card, cheaper than the matching-error risk, and it gives single-vintage probabilities. The ladder rungs are re-derived; registration pending materialisation. Obs 441.",
+   "paper_section": "Results",
+   "output_path": "results/gemini37-screen-2026-08-28",
+   "working_notes_obs": [
+    "Obs 441 \u2014 Gemini 3.7 Flash clears the Gemini 3 plateau but resolves only in the verifier role"
+   ],
+   "manually_verified_at": null
+  },
+  {
+   "analysis_id": "gemini37-55map-grid-2026-08-31",
+   "type": "comparison",
+   "_note": "The complete proposer x verifier 2x2 at 55-map deployment and its declared five-test family (scripts/gemini37_sweep_oracle.py; results/gemini37-55map-2026-08-31/sweeps/sweep_oracle.json): per-sheet paired sign-swap permutation, 10,000 draws, seed 42, BH-FDR at q = 0.05 over exactly five tests. CANONICAL chain throughout for the tests; the standardised chain is reported alongside. FOREIGN-KEY GAP: the D1 comparator \u2014 the canonical B N=5 incumbent, corrected-F1@50 0.8437752627324171, source results/stride55-2026-08-27/ladder.json (runs.g384_ov192_55map.N.5.carried) and results/gemini37-55map-2026-08-31/sweeps/sweep_oracle.json (incumbents.BN5), 4,736 detections at results/55map-final-board-2026-08-27/cells/B-N5-carried/detections.geojson \u2014 has NO canonical evaluation with a tile confusion matrix, so no condition row can be authored for it (the schema requires integer tile tp/tn/fp/fn and the ladder records detection-level counts only). Its STANDARDISED sibling is registered and is listed in conditions_compared as the nearest available key; the canonical scoring belongs to the r2 recompute chain. Do NOT read findings.md's 'ladder.json' pointer as the campaign's own ladder/ladder.json \u2014 0.843775 lives in results/stride55-2026-08-27/ladder.json.",
+   "_prereg_rationale": "Post-registration campaign with card-committed predictions D1-D7; PI ruling 1, 2026-09-06.",
+   "conditions_compared": [
+    "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-canonical-gt",
+    "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-standardised-gt",
+    "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-canonical-gt",
+    "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-k10-verified37-p0.98-k10-canonical-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-k10-verified37-p0.98-k10-standardised-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-standardised-gt"
+   ],
+   "hypothesis_refs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "predicted_outcome": "Committed before any deployment scoring, planning/gemini37-55map-2026-08-29.md:41-45 \u2014 \"D1 | Headline vs B-Gemini-3 | 3.7 carried ABOVE B-N5-carried 0.8502 by >= MDE80 0.013 \u2014 a resolvable win\"; \"D2 | Direction of the gain | recall-led (screen: R 0.9299 vs 0.8668 at slight precision cost)\"; \"D3 | Operating lattice | prob_t in {0.10, 0.15}, k4-k5; the carried (0.10, k5) on the 55-map plateau\"; \"D4 | Thinking volume | ~ the GS-measured 276 t/tile on 55-map content (probe gate)\"; \"D5 | Cost | within \u00a7 4's envelope at the probe-measured rate\". Pre-named informative failure, :47-48: \"3.7 ~ Gemini 3 at deployment (|delta| < MDE80 against B-N5-carried)\". Addendum registered at the same commit, :152-153 \u2014 \"D6 | Arm 2 vs arm 1 at deployment | arm 2 ahead by ~ +0.013 \u2014 at the MDE80 boundary, direction positive\"; \"D7 | Arm-2 lattice | oracle prob_t stays high (>= 0.6) \u2014 the calibration shift transfers\". The fourth cell's carried point (0.98, k10) was committed at :201 from a separate ~$3 GS calibration leg.",
+   "tie_set": [],
+   "outcome": "The complete proposer x verifier 2x2, every corner at an operating point committed before any deployment scoring. Canonical chain, corrected-F1 @50 m against the adjudicated extended GT (5,160 references), per-sheet paired sign-swap permutation (10,000 draws, seed 42) with BH-FDR at q = 0.05 over the declared five-test family: arm 1 (3.7 proposer + carried Gemini-3 verifier) 0.8494, arm 2 (all-3.7) 0.8763, fourth cell (Gemini-3 K=10 union + 3.7 verifier) 0.8656, against incumbents B N=5 0.8438 and B K=10 0.8422. The family gain lives in the verifier seat on the complete grid, not on one diagonal: both verifier-axis tests are BH-significant (arm 2 - arm 1 +0.0270, p = 0.0001; fourth - B K=10 +0.0234, p = 0.0001) and neither proposer-axis test is (arm 1 - B N=5 +0.0056, p = 0.3488; arm 2 - fourth +0.0107, p = 0.0738); the all-3.7 diagonal reads +0.0325, p = 0.0001. D1 is the pre-named informative failure \u2014 the GS proposer-seat gain (+0.018) did not transfer as a resolvable deployment win against a 55-map MDE80 of 0.013 \u2014 while D6 is confirmed at twice its predicted magnitude; D2, D3 and D7 are confirmed, D4 is confirmed at 265-277 t/call, and D5 is a provisional token-basis pass (proposer $144 against a $93-150 envelope; verifier arms $12.54 and $14.31), pending billed-versus-token reconciliation. The fourth cell takes the grid's precision (0.9588) and tile-MCC (0.7268) crowns: the discriminating 3.7 verifier trades recall for precision hard on a noisy pool, which is the calibration story pointed the other way. On the board's own standardised instrument arm 2 reads 0.8825 [0.8746, 0.8897] \u2014 above the entire 2026-08-27 final board including its oracles (ceiling B-N10-oracle 0.8558) \u2014 the fourth cell 0.8732, and arm 1 0.8550 against B-N5-carried 0.8502 with overlapping CIs; the instrument offset is a roughly uniform +0.005-0.006, which is why nothing substantive moves between chains, and the tile confusion matrix is byte-identical across the two chains on all three cells. Caveats: the grid is NOT square in pass count (the Gemini-3 row is K=10, the 3.7 row K=5), which is why the two proposer-axis tests use different comparators; and the canonical B N=5 comparator has no condition row of its own (no canonical tile matrix exists on disk \u2014 its standardised sibling stands in as the foreign key, and the canonical scoring is queued with the r2 recompute chain). Obs 444.",
+   "paper_section": "Results",
+   "output_path": "results/gemini37-55map-2026-08-31",
+   "working_notes_obs": [
+    "Obs 444 \u2014 the complete proposer x verifier 2x2: the family gain lives in the verifier seat"
+   ],
+   "manually_verified_at": null
+  },
+  {
+   "analysis_id": "gemini37-55map-gridboard-2026-08-31",
+   "type": "leaderboard",
+   "_note": "The 16-cell grid board on the CANONICAL chain (results/gemini37-55map-2026-08-31/grid-board/grid_board.json): all 120 pairs by per-sheet paired sign-swap permutation (10,000 draws, seed 42), BH q = 0.05 across all pairs, greedy-clique tiers, plus 15 named contrasts of which seven are carried-versus-oracle. Separable from the 2x2 row because it is a leaderboard and because most of its cells cannot yet carry condition rows. The N=1/3/5 ladder rungs are re-derived here and NOT registered as conditions: they have no materialised detections, and their materialisation is folded into the r2 recompute chain (planning/reference-revision-2026-09-06.md), where they will be registered \u2014 re-derived; registration pending materialisation. The tie_set records the only board tier with more than one REGISTERED member (tier 4 of six, which also contains the two unregistered cells BN5-carried and arm2-N1-carried).",
+   "_prereg_rationale": "The board was not pre-registered as a prediction; the card's queued-oracle question is asked, not bet on. PI ruling 1, 2026-09-06.",
+   "conditions_compared": [
+    "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-canonical-gt",
+    "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-canonical-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-k10-verified37-p0.98-k10-canonical-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt"
+   ],
+   "hypothesis_refs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "predicted_outcome": null,
+   "tie_set": [
+    "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-canonical-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt"
+   ],
+   "outcome": "120 pairs, 89 BH-significant, six greedy-clique tiers on the canonical chain. All seven carried-to-oracle contrasts are BH-significant, including arm 2's +0.0043 (adjusted p = 0.000162) \u2014 threshold-transfer costs are sheet-consistent real effects at every scale, even where practically negligible \u2014 and the gap shrinks with N in both arms (arm 1 +0.0544 / +0.0227 / +0.0168, arm 2 +0.0142 / +0.0046 / +0.0043 at N = 1/3/5), so consensus partially substitutes for a correctly calibrated probability threshold, while the cross-model arm pays roughly four times the same-model arm's tax at every rung. Saturation at N = 3 is now tested and arm-specific: arm 2's N3-to-N5 is non-significant on both bases (carried adjusted p = 0.258824, oracle 0.335192) and the fourth cell's independent ladder saturates identically (N = 3 0.8688 against N = 5 0.8697, oracle prob_t pinned at 0.96 on every rung), whereas arm 1's carried N3-to-N5 IS significant at +0.0076 (adjusted p = 0.000162). Tier structure: Tier 1 is arm 2's N5 and N3 oracles alone; Tier 2 holds arm2-N5-carried, fourth-N10-oracle and arm2-N3-carried at 3/5 the proposer spend; both Gemini-3 incumbents sit in Tier 4 of six, tied with arm1-N5-carried. The N = 1 economy is an ORACLE statement \u2014 a single 3.7 pass under the 3.7 verifier reaches 0.8563 at its rung oracle, beating the canonical five-pass incumbent 0.8438 on about one-fifth the proposer spend, but the honest carried N = 1 reads 0.8421, a Tier 4 tie with the very incumbents it is set against, and rung oracles below N = 5 are descriptive by the screening protocol. Eleven of the sixteen cells (every oracle and every N=1/N=3 rung) are re-derived here; registration pending materialisation. Obs 444 \u00a7\u00a7 (c)-(d).",
+   "paper_section": "Results",
+   "output_path": "results/gemini37-55map-2026-08-31/grid-board",
+   "working_notes_obs": [
+    "Obs 444 \u2014 the complete proposer x verifier 2x2: the family gain lives in the verifier seat"
+   ],
+   "manually_verified_at": null
+  },
+  {
+   "analysis_id": "gemini37-image-gs-2026-09-01",
+   "type": "comparison",
+   "_note": "The modality difference-in-differences one model generation on from image-b-modality-2026-08-28: one geometry, one reference, two within-family text/image pairs (results/gemini37-image-gs-2026-09-01/gap_test.json; paired tile-swap, 10,000 draws, seed 42, 487 tiles). WARNING: the head_to_head_20m blocks inside arm1/analysis.json (-0.029273, p = 0.0235) and arm2/analysis.json (-0.034697, p = 0.0065) are mis-anchored for a modality reading \u2014 scripts/image_b_analysis.py:79 hard-codes ANCHOR_F1_20 = 0.8961, a GEMINI-3 TEXT cell, so they mix the family step into the modality contrast. Never quote them as a modality delta.",
+   "_prereg_rationale": "Post-registration campaign with card-committed predictions I1-I5; post-hoc under the S134 sorting rule (PI ruling 1) even though it carries H1, which a post-hoc row may do \u2014 the flash35-model-roles precedent is post-hoc with H2. Its Gemini-3 sibling image-b-modality-2026-08-28 is registered-exploratory; the difference is deliberate.",
+   "conditions_compared": [
+    "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5",
+    "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5",
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5",
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5",
+    "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9",
+    "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10"
+   ],
+   "hypothesis_refs": [
+    "H1"
+   ],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "predicted_outcome": "Committed at PI go, planning/gemini37-image-gs-2026-08-30.md:44-48 \u2014 \"I1 | Family gain on image | 3.7-image verified best ABOVE the G3 image anchor 0.8412\"; \"I2 | The gap | (text - image) within 3.7 NARROWER than 0.0549 by more than the resolution \u2014 i.e. gap < ~0.031\"; \"I3 | Lattices | carried-verifier arm optimum at prob in {0.10-0.20}, mid-to-high k; 3.7-verifier arm optimum at prob_t >= 0.6 (the calibration shift replicates on image candidates)\"; \"I4 | Thinking at `low` on image prompts | nonzero, < 1,000 t/tile, ~ the text screen's 276\"; \"I5 | Cost and caching | implicit caching engages as on G3 (cached fraction >= 90 % of input); all-in within \u00a7 Cost envelope\". I2 names its own informative outcomes at :45: \"gap unchanged (vision gain is modality-neutral) or WIDER (text benefited more)\".",
+   "tie_set": [],
+   "outcome": "The modality gap is eliminated at Gemini 3.7. A difference-in-differences on one geometry and one reference: (text - image) within Gemini 3 was +0.0549 at p = 0.001; within 3.7 it is -0.0115 (p = 0.2533) on the carried-verifier pair and -0.0043 (p = 0.6767) on the all-3.7 pair \u2014 a gap change of -0.059 to -0.066, roughly 2.5x the GS verified-set resolution (MDE80 ~ 0.024), so a resolved change and not instrument noise. The honest claim is PARITY, not inversion: image leads nominally in both pairs and neither sign flip is close to significant. I2 predicted the gap would land below ~0.031 and the outcome overshot to zero. I1 is confirmed at about five times the text-side family gain \u2014 3.7-image reaches 0.9254 (carried verifier) and 0.9308 (3.7 verifier) against the 0.8412 Gemini-3 image anchor, gains of +0.0842 / +0.0896 where the same family step on text was +0.018 \u2014 so the gap closed because image caught up, not because text regressed, and the 3-to-3.7 step delivers most of its value where pixels are read. I3 is confirmed exactly at (0.10, k5) and (0.90, k5): the 3.7 verifier's high-probability calibration shift replicates on image candidates, a second instrument for the non-transferring-threshold claim. I4 is confirmed and lighter than predicted (88-157 t/call). I5 is an informative failure \u2014 implicit caching engaged at 79.5 % of input against a registered >= 90 % bar, with the probe warm-up-confounded (16 % cold-parallel, 54 % sequential), yet the proposer side cost $22.50 token-basis against a $32-36 projection. The escalation trigger is NOT met: all-3.7 image 0.9308 against the all-3.7 text swap 0.9265 is +0.0043 at p = 0.677, far inside MDE80, no resolvable new high, so the 55-map image extension does not proceed \u2014 a registered negative decision, not an absence. Obliges the paper: the study's 'text examples beat image examples' claim must be reframed as Gemini-3-specific. Obs 447.",
+   "paper_section": "Results",
+   "output_path": "results/gemini37-image-gs-2026-09-01",
+   "working_notes_obs": [
+    "Obs 447 \u2014 the modality gap is eliminated at Gemini 3.7"
+   ],
+   "manually_verified_at": null
+  },
+  {
+   "analysis_id": "gemini37-fourth-cell-gs-leg-2026-08-31",
+   "type": "diagnostic",
+   "_note": "The ~$3 GS calibration leg run BEFORE the 55-map fourth cell so that cell's operating point would be a carry-forward rather than an argmax (results/gemini37-fourth-cell/gs-leg/analysis.json; paired tile-swap, 10,000 draws, seed 42, 487 tiles). A TEXT cell whose best point sits under the 'image_best' key. Its outcome fixed the carried point recorded at planning/gemini37-55map-2026-08-29.md:201.",
+   "_prereg_rationale": "A calibration step, not a bet: predicted_outcome is null rather than a retrospective quotation. PI ruling 1, 2026-09-06.",
+   "conditions_compared": [
+    "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10",
+    "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10"
+   ],
+   "hypothesis_refs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "predicted_outcome": null,
+   "tie_set": [],
+   "outcome": "A ~$3 GS calibration leg: the Gemini-3 grid g384_ov192 K=10 union (3,319 candidates) re-verified with the 3.7 verifier reaches 0.9140 @20 m at (0.98, k10), P 0.9637 / R 0.8692 / tile-MCC 0.8239 against the 0.8961 text-B anchor (+0.0179, p = 0.0563 on 10,000 permutations over 487 tiles). The lattice moves the whole way to the top of the scale: the 3.7 verifier's mean probability is 0.209 on the noisy Gemini-3 pool against 0.687 on its own union (planning/gemini37-55map-2026-08-29.md:200), so the same verifier calibrates DIFFERENTLY AGAINST DIFFERENT CANDIDATE POOLS \u2014 the threshold-transfer claim extended from model to pool. (0.98, k10) was committed as the 55-map fourth cell's carried point at planning/gemini37-55map-2026-08-29.md:201 before any deployment scoring. Obs 444 \u00a7 (e).",
+   "paper_section": "Methods",
+   "output_path": "results/gemini37-fourth-cell/gs-leg",
+   "working_notes_obs": [
+    "Obs 444 \u2014 the complete proposer x verifier 2x2: the family gain lives in the verifier seat"
+   ],
+   "manually_verified_at": null
+  },
+  {
+   "analysis_id": "gemini38-screen-armv-2026-09-04",
+   "type": "comparison",
+   "_note": "Gemini 3.8 Arm V \u2014 the verifier seat at zero proposer cost (card planning/gemini38-screen-2026-09-04.md): the 3.7 screen's own 791-candidate K=5 union re-verified with gemini-3.8-flash and scored through the same harness. Round-robin paired tile-swap, 10,000 draws, seed 42, 487 tiles (results/gemini38-screen-2026-09-04/armV/pair_test.json). Arm P (3.8 proposer) and Arm S were NOT run: the PI ruled STOP after Arm V on 2026-09-04. E2 is therefore untested, and the screen closes with the family ladder stopping at 3.7.",
+   "_prereg_rationale": "Post-registration campaign with card-committed predictions E1-E4; PI ruling 1 and ruling 9, 2026-09-06.",
+   "conditions_compared": [
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5",
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5",
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5"
+   ],
+   "hypothesis_refs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "predicted_outcome": "Committed at PI go, planning/gemini38-screen-2026-09-04.md:69-72 \u2014 \"E1 | Arm V, verified best @20 m | tie with 0.9265 (within GS resolution)\"; \"E2 | Arm P, carried-vf best @20 m | tie with 0.9139\"; \"E3 | Thinking volume at `low` | above 3.7's 275 t/tile, 1.5-3x\"; \"E4 | Verifier operating point | 3.8's prob_t optimum differs from 3.7's 0.80/0.85 and G3's 0.15/0.20\". Pre-named informative outcome, :74-76: \"Arm V or Arm S above 0.9265 plus GS resolution\", which would be the second family gain in the verifier seat and would reopen the verifier-model policy for the 55-map board.",
+   "tie_set": [
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5",
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5"
+   ],
+   "outcome": "The family ladder stops at 3.7. On the identical 791-candidate union, the 3.8 verifier reaches 0.9258 @20 m at (0.88, k5), P 0.9335 / R 0.9182 / tile-MCC 0.8218 on 421 detections: against the all-3.7 stack that is dF1 -0.0007 at p = 0.7769, and against the carried Gemini-3 verifier +0.0119 at p = 0.0969. E1 CONFIRMED \u2014 a tie, and the pre-named informative outcome did not fire, so the verifier-model policy stays shut and the 55-map board is untouched. The tie is not flat on every axis: 3.8 buys +0.0140 of tile-MCC over 3.7 (0.8218 vs 0.8078) while losing 0.0007 of F1, precision-led as its point implies. E3 is FALSIFIED in the opposite direction \u2014 76 thinking tokens per candidate in the verifier seat against the 3.7 verifier's 106, and only 1.1x in the proposer probe (307 vs 275 t/tile), so 'newer' bought LESS thinking, not more. E4 is only partly confirmed, and the check that settles it also corrects the campaign's first reading: the argmax does sit at 0.88 rather than at 3.7's 0.80/0.85 or Gemini-3's 0.15/0.20, but the surface is flat \u2014 every k=5 point from prob_t 0.20 to 0.92 lies within 0.0022 of the best \u2014 AND the 3.7 verifier is equally flat on the same union (0.9243-0.9265 over that band, spread 0.0022, swap37/sweep_20m.csv), whereas the carried Gemini-3 verifier is sharply peaked (0.8446-0.8942, spread 0.0497). Threshold insensitivity is therefore a 3.7/3.8-generation property, not a 3.8 novelty. E2 is untested: the PI ruled STOP after Arm V, so Arm P (~$9.6) and Arm S (~$1) were not run; total spend was ~$0.85 flex token-basis. Gotchas recorded on the card: run_pv.py verify stamps cost_basis 'list' with discount 1.0 even under --service-tier flex; the verify path counts each retried server error as a parse failure (803 = retries_total); and cleanup overwrote run.meta.json again, the main-run meta surviving as run.meta.main-2026-09-04.json. Obs 448.",
+   "paper_section": "Results",
+   "output_path": "results/gemini38-screen-2026-09-04/armV",
+   "working_notes_obs": [
+    "Obs 448 \u2014 Gemini 3.8 Flash ties the 3.7 stack in the verifier seat"
+   ],
+   "manually_verified_at": null
   }
  ]
 }

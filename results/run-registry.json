@@ -229,6 +229,24 @@
    "directory_path": "outputs/h7-escalation-2026-08-28",
    "status": "active",
    "notes": "H7 temperature-escalation discharge (prereg osf:731; card planning/run-predictions/h7-escalation-t1.6.md): T=1.6 and T=2.0, three replicates each, era-1-340. Registered S143 (Pass 3)."
+  },
+  {
+   "run_id": "gemini37-screen-2026-08-28",
+   "directory_path": "outputs/gemini37-screen-2026-08-28",
+   "status": "active",
+   "notes": "Gemini 3.7 Flash GS screen (card planning/gemini37-screen-2026-08-28.md; predictions G1-G4 committed at PI go): detect_brief-text on the leading 384/50% geometry, K=5 then an approved escalation to K=10, plus two verifier-role swaps over the same K=5 union (gemini-3.7-flash, and gemini-3.8-flash under card planning/gemini38-screen-2026-09-04.md). Registered S149."
+  },
+  {
+   "run_id": "gemini37-55map-2026-08-29",
+   "directory_path": "outputs/gemini37-55map-2026-08-29",
+   "status": "active",
+   "notes": "Gemini 3.7 Flash 55-map deployment arms (card planning/gemini37-55map-2026-08-29.md; predictions D1-D7 committed before any deployment scoring): one K=5 proposer pool, two verifier arms (carried Gemini-3; all-3.7). Results tree is results/gemini37-55map-2026-08-31/ \u2014 the run-directory/results-directory skew is deliberate and directory_path carries the truth. Registered S149."
+  },
+  {
+   "run_id": "gemini37-image-gs-2026-09-01",
+   "directory_path": "outputs/gemini37-image-gs-2026-09-01",
+   "status": "active",
+   "notes": "Gemini 3.7 Flash image-GS screen (card planning/gemini37-image-gs-2026-08-30.md; predictions I1-I5 committed at PI go): detect_brief-text-image on the same geometry and reference as the text screen, two verifier arms. The escalation trigger was NOT met and no 55-map image extension followed; the negative decision is itself the registered outcome. Registered S149."
   }
  ]
 }

@@ -1,0 +1,66 @@
+{
+ "summary": {
+  "buffers": [
+   {
+    "buffer_metres": 20,
+    "f1": 0.7084074733096085,
+    "precision": 0.7501177578897786,
+    "recall": 0.6710914454277286,
+    "f1_ci_lower": 0.6950353402951783,
+    "f1_ci_upper": 0.7218492222019092,
+    "f1_ci_method": "percentile",
+    "ci_unreliable": false,
+    "ci_excludes_point": false,
+    "ci_flag_basis": "measured-exclusion-only"
+   },
+   {
+    "buffer_metres": 30,
+    "f1": 0.8267348754448399,
+    "precision": 0.8754121526142251,
+    "recall": 0.7831858407079646,
+    "f1_ci_lower": 0.8164993624100412,
+    "f1_ci_upper": 0.8366392556004355,
+    "f1_ci_method": "percentile",
+    "ci_unreliable": false,
+    "ci_excludes_point": false,
+    "ci_flag_basis": "measured-exclusion-only"
+   },
+   {
+    "buffer_metres": 50,
+    "f1": 0.8656176908356368,
+    "precision": 0.9587847385774847,
+    "recall": 0.788953488372093,
+    "f1_ci_lower": 0.8573873651439876,
+    "f1_ci_upper": 0.8736117183516486,
+    "f1_ci_method": "percentile",
+    "ci_unreliable": false,
+    "ci_excludes_point": false,
+    "ci_flag_basis": "measured-exclusion-only"
+   }
+  ],
+  "tile_classification": {
+   "mcc": 0.7268024827224564,
+   "sensitivity": 0.6691259931895573,
+   "specificity": 0.9936216862666932,
+   "confusion": {
+    "tp": 2358,
+    "tn": 4985,
+    "fp": 32,
+    "fn": 1166
+   }
+  },
+  "n_detections": 4246
+ },
+ "_metadata": {
+  "adapted_by": "scripts/register_gemini37_author.py",
+  "source": "results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/eval/summary.json",
+  "input_files": {
+   "detections": [
+    "results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/verified_detections.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+   "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
+  },
+  "note": "Deterministic transform of the corrected-F1 engine summary (S105 adapter pattern, as scripts/register_pass1_adapt.py); tile_classification pinned to the 50 m headline row; nothing recomputed. input_files is copied verbatim from the engine's metadata.input_paths so the register's drift check can link this eval to the detections and bounds it actually scored."
+ }
+}
