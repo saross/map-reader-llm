@@ -1,6 +1,8 @@
 # Fresh-context audit of the r2 recompute block
 
-> **Last revised**: 2026-09-06 (original publication).
+> **Last revised**: 2026-09-06 (disposition of all 15 findings; every claim
+> re-verified against source before adjudication). See [§ Changelog](#changelog)
+> for revision history.
 
 Audit of `planning/reference-revision-2026-09-06.md` §§ 4/4a against the code.
 No step of the block was run; zero API spend.
@@ -123,7 +125,227 @@ enumerates `gt_reference` as `["curator","student","combined"]`.
   matrix" no longer holds. The ladder's B N=5 carried value is 0.8437752627324171 — the
   contract's 0.843775 is accurate.
 
+## Disposition (S149, 2026-09-06)
+
+Every finding was **re-verified against the named file before adjudication** —
+the audit is a claim set, not an authority. All 15 hold. Three carry line-ref
+or framing corrections (recorded below); one is **disputed in part**. The
+re-verification denominator: 13 scripts re-opened at the cited lines, 6 data
+files re-read (`final_board_50m.json`, `cells_manifest.json`, IM-k4
+`evaluation.json`, `ladder.json`, the g384_ov192 crop manifest,
+`condition-inventory.json`), and 5 filesystem probes.
+
+Legend: **FIX** = the contract or the code changes; **ACCEPT** = the finding
+stands and is recorded as a known constraint, no change; **DISPUTE** = the
+finding is wrong in whole or part.
+
+### Blockers
+
+**B1 — cell count 29 → 36. FIX (contract).** Re-verified: `final_board_50m.json`
+tiers **23** cells, `cells_manifest.json` lists **23**, `cells/` holds **19**
+directories; the four carried incumbents (`IM-k4`, `T03-k4`, `TH7-k4`, `TM-k4`)
+are board cells with no `cells/` directory. The contract's "16" matches no
+artefact. Corrected finish line: **23 + 3 + 3 + 6 + 1 = 36**. § 4a § 2's
+separate "all 22 cells (16 + 3 + 3)" is the same error and becomes **32** board
+cells (23 + 3 carried + 3 oracle + 3 rungs on-board). Both numbers are amended,
+and the count gate becomes a *derived* assertion — the re-score set is
+enumerated from `cells_manifest.json` plus the membership ruling at run time,
+never from a literal in prose.
+
+**B2 — step 7 precedes step 4. FIX (contract).** Re-verified and *stronger* than
+the audit stated: `build_55map_leaderboard.py:224` reads
+`results/run-conditions.json`; `:228` resolves each cell with a bare
+`next(c for c in ... if c["label"] == label)` (StopIteration, no default); and
+`:242` reads the board's F1/CI/MCC/`n_detections` from `cond["eval_path"]` — the
+register row is the board's *data pointer*, not just its index. `NAMES_STANDARDISED`
+(`:86–88`) is derived by string replacement from `NAMES`, so an r2 board needs a
+`NAMES_R2` on the same pattern. Declared order becomes **1 → 2 → 3 → 7 → 4 →
+{5, 6} → 8**, with step 7 split: **7a** register the `-r2-gt` condition rows
+(before 4), **7b** the audit-adjudication closure check and the single manifest
+regeneration (after 6). H6 ("step 7 is the only manifest writer") survives
+intact on 7b.
+
+**B3 — the companion command. FIX (contract + code).** Re-verified with two
+line corrections to the audit: `--compute-mcc` at `stride55_score.py:195` is an
+argument *the script passes down to* `evaluate_detections.py`, not a flag of its
+own — the argparse block (`:216–230`) has none, so the contract's command dies
+at argument parsing. The union gate is at `:108–112`, not `:105` (`:105` is
+docstring). The substance is confirmed and the numbers are exact: the crop
+manifest for `g384_ov192_55map` holds **57,482** candidates (the K=10 union)
+while ladder B N=5 `union_n` is **43,909**, so `--union-n 43909` raises. And
+`--min-votes 5` filters the K=10 union, which is not the first-5 rung.
+Disposition: drop `--compute-mcc` (MCC is already unconditional), and route the
+companion through the first-N derivation rather than the union path — the same
+code the rung fix (M7) needs. **Confirmed clean:** the ladder's B N=5 carried
+value is `0.8437752627324171`, so the contract's 1e-6 gate against `0.843775`
+is sound.
+
+**B4 — the regression gates. FIX in the main, DISPUTE in part.**
+*Confirmed:* G3 (`final_board_build.py:316–345`) reads the hard-wired r1 home
+`STD_REF_DIR` (`:79`) and demands F1, every pairwise p-value and tier
+membership reproduce the committed board to **1e-9**; G4
+(`final_board_sweeps.py:236–253`) checks the same board at `MECHANISM_BOUND =
+0.003` (`:99`); and both scripts take their reference from `standardised_gt()`
+(`:308` and `:225` respectively), so switching that function to r2 fails both by
+construction.
+*Disputed:* "G4's bound is tighter than the contract's band" is a category
+error. `MECHANISM_BOUND` bounds *micro-F1 recomputed by the light scorer against
+the committed evaluation's F1, under one reference* — a mechanism-agreement
+tolerance. The contract's 0.005 bounds *r1 → r2 movement of the point estimate* —
+a scientific drift band. They measure different quantities and do not conflict;
+0.003 is not "tighter than" 0.005 in any comparable sense.
+*Fix:* the regression gates are pinned to r1 and made reference-independent —
+G3/G4 always build their gate reference from the r1 layers regardless of the
+run's target vintage, so "the mechanism still reproduces the committed r1 board"
+stays a live check *during* the r2 build instead of being disabled by it. See
+PI fork 3.
+
+### Majors
+
+**M5 — H1 contradicts the template. FIX (H1 re-specified).** Confirmed exactly:
+IM-k4's `_metadata.cli_args.ground_truth` is the single merged path
+`inputs/vectors/references/best-available-gt-55maps.geojson`;
+`build_extended_gt` (`compute_corrected_f1_multi_buffer.py:386–389`) takes **two**
+frames; `materialise_best_available_gt.py --vintage r2` writes one merged
+geojson + csv (stem `best-available-gt-55maps-r2`, `:274`) and no layer files.
+H1 as written is unbuildable. Its *intent* — the 5 m channel-duplicate audit must
+apply to the r2 reference, and the engine must never be handed a reference built
+by an unaudited path — is correct and survives; only the mechanism is
+re-specified. See PI fork 1.
+
+**M6 — r1 homes are not read-only. FIX (code).** Confirmed: `OUT` is a module
+constant in `final_board_sweeps.py` (writes `cells/<label>/detections.geojson`
+at `:359`, rewrites `sweeps.json` and `cells_manifest.json` at `:376–378`) and in
+`final_board_n3_carried.py` (`:98`, `:74`); `OUT_BASE`
+(`register_standardised_gt_conditions.py:53`) is a constant and `adapt_one`
+overwrites `<cell>/evaluation.json` in place (`:110`, `:214`). No override flag
+exists on any of them. H2 is therefore not merely a convention to follow — it is
+code that must be written *before* step 3, or the first r2 run destroys the
+artefacts G3 reads. Elevated to a **pre-step-3 blocker** in the amended
+contract.
+
+**M7 — the 3.7 rungs. FIX (contract).** Confirmed. Amplification: a first-N
+derivation *does* exist in the script the contract names —
+`final_board_sweeps.py:196` calls `cluster_first_n(passes, n, index)` for
+n ∈ (1, 3, 5) — but it is bound to the stride A/B cells (`:187`), and its pass
+loader `stride55_ladder.load_deduped_passes` hard-codes `range(1, 11)`
+(`:122`). The 3.7 arms are K=5 with their own loaders
+(`gemini37_arm_ladder.py:93` `K_TOTAL = 5`, `:153` `cluster_first_n(passes,
+K_TOTAL, ...)`), score against `build_extended_gt(student, phantoms)` (`:140`) —
+the canonical extended GT — and emit only `ladder.json` (`:227`). So the
+contract names a real derivation that cannot reach the 3.7 passes. H5's "no rung
+registered from sweep numbers alone" is right and currently unsatisfiable; the
+3.7 rung materialisation is promoted to its own contract sub-step with named
+inputs.
+
+**M8 — H8's tripwire is false. FIX (H8 replaced) + scope escalation.** Confirmed
+on both legs. BH is applied across the whole pair family
+(`build_tiered_leaderboard.py:1512`) and a top-N filter (default 20) at `:1040`,
+so adding seven cells moves adjusted p-values and tier membership *legitimately*
+— a rank change is not evidence of a mechanism error, and gating on it would
+halt a correct run. Replacement gate: the pre-existing cells' **raw** F1, MCC
+and **raw** pairwise p-values must reproduce to 1e-9 (these are invariant to the
+cell set), while BH-adjusted p-values and tiers are **reported as a diff table,
+not gated**. The r1 anchor (image-b 0.8961) is retained.
+*Scope escalation:* `results/leaderboard/era2/` holds only a `.cache` directory
+and git-tracks **zero** files; no leaderboard spec YAML exists anywhere in the
+repo; `planning/condition-inventory.json` has 190 entries and **zero** 3.7/3.8
+ones. The GS reference is untouched by r2 (`DEFAULT_GROUND_TRUTH:114` is
+`mounds-reference.geojson`). The GS leg is therefore a **build from scratch that
+r2 does not require** — it is riding inside a recompute chain it has no
+data dependency on. See PI fork 2.
+
+**M9 — silent "unresolved". FIX (code).** Confirmed:
+`lib_uplift_supplement.py:733` resolves by basename against
+`REFERENCE_BY_FILENAME` (`:130–135`, four entries, no r2); the label-suffix
+fallbacks (`:742–749`) know only `-standardised-gt` / `-canonical-gt`; `:760`
+returns `ReferenceResolution(None, None, "unresolved")` without raising. And
+`REFERENCE_N_MOUNDS` (`:141–146`) is a separate literal — note it records
+`standardised: 5010` against r2's 5,018, so a one-line filename fix would leave
+the supplement quoting the wrong mound count. Fix is three-part: both dict
+entries, plus an `-r2-gt` label-suffix fallback, plus **"unresolved" raises** for
+any `best-available-gt-*` basename instead of degrading silently.
+
+### Minors
+
+**M10 — ACCEPT → FIX (one-line).** Confirmed: `N_STUDENT_STD = 4731`,
+`N_EXTENSION_STD = 279` (`score_55maps_standardised_reference.py:111–112`)
+against r2's 4,726 / 278 / 14. The gate becomes vintage-aware rather than
+literal.
+
+**M11 — FIX (one-line).** Confirmed: `empty_tile_adjudicate.py` `GT_FILES`
+(`:81–84`) has `standardised` and `canonical` only. Step 7b's closure check
+needs an `r2` entry.
+
+**M12 — FIX (two-line).** Confirmed and the ordering matters:
+`materialise_best_available_gt.py:283–284` calls
+`removed_path.relative_to(PROJECT_ROOT)` inside a logger call that runs
+*before* the geojson write at `:290`, so an out-of-repo `--out-dir` loses the
+artefact, not just the log line. Same pattern at
+`derive_audit_revision_instructions.py:160–161`. Both become `os.path.relpath`.
+
+**M13 — ACCEPT.** Confirmed: IM-k4's `_metadata` carries `script_git_commit:
+4ac0eeedf`, `script_git_status: "dirty"`. The engine gate's target was built
+from an uncommitted tree, so an exact reproduction is not guaranteed by
+provenance alone. Recorded as a stop-state caveat: if step 2 misses at 4 dp, the
+dirty stamp is the **first** hypothesis to test, not a mechanism failure.
+
+**M14 — ACCEPT.** Pass order is carried only by `run_<i>` naming and
+`load_deduped_passes` gates on tile-set equality, not order. No change; recorded
+in stop states (the first-N derivation must read the committed `run_<i>`
+sequence).
+
+**M15 — ACCEPT (deferred).** Confirmed:
+`docs/manifest-schemas/runs-manifest.schema.json:65–67` enumerates
+`gt_reference` as `["curator", "student", "combined"]`. The r2 rows register at
+condition level with a `-r2-gt` label, not at run level, so no schema change is
+required by this block. Flagged for the schema's next revision.
+
+### Tally
+
+**FIX 11** (B1, B2, B3, B4-main, M5, M6, M7, M8, M9, M10, M11, M12 — 12 items,
+B4 counted once) · **ACCEPT 3** (M13, M14, M15) · **DISPUTE 1, in part**
+(B4's 0.003-vs-0.005 comparison).
+
+### Open to the PI (three forks the adjudication cannot settle)
+
+1. **How r2 enters the board chain** (H1's replacement mechanism).
+2. **Whether the GS Era-2 board leg stays inside this block** (M8's scope
+   escalation).
+3. **How the r1 regression gates behave during an r2 build** (B4's fix).
+
+The chain stays **NO-GO** until these are ruled, H1–H3 land as code, and the PI
+gives a formal go with stop conditions in his own words.
+
 ## Changelog
+
+### 2026-09-06 (later) — Disposition of all 15 findings
+
+Every finding re-verified against the named source file before adjudication
+(13 scripts re-opened at the cited lines, 6 data files re-read, 5 filesystem
+probes). **All 15 hold.** Disposition: 11 FIX, 3 ACCEPT, 1 DISPUTE-in-part.
+
+| Finding | Disposition | Note |
+| --- | --- | --- |
+| B1 count | FIX | 29 → **36**; § 4a's "22" → **32**; count derived, not literal |
+| B2 order | FIX | step 7 splits 7a/7b; order → 1→2→3→**7a**→4→{5,6}→**7b**→8 |
+| B3 companion | FIX | drop `--compute-mcc`; route via first-N, not the K=10 union |
+| B4 gates | FIX + **DISPUTE in part** | gates pin to r1; 0.003-vs-0.005 is a category error |
+| M5 H1 | FIX | H1 re-specified; intent survives, mechanism does not |
+| M6 r1 homes | FIX | **elevated to a pre-step-3 blocker** (code, not convention) |
+| M7 3.7 rungs | FIX | own sub-step; the named derivation cannot reach K=5 passes |
+| M8 H8 | FIX + scope | gate raw stats, report BH/tier diffs; GS leg is a new build |
+| M9 unresolved | FIX | 3-part: both dicts + `-r2-gt` suffix + raise, not degrade |
+| M10–M12 | FIX | vintage-aware gate; r2 `GT_FILES` entry; `relpath` (before write) |
+| M13–M15 | ACCEPT | dirty-stamp caveat; pass-order note; schema deferred |
+
+Corrections to the audit's own references, recorded so the report stays
+citable: B3's `--compute-mcc` is at `:195` (a pass-through argument, not a CLI
+flag) and the union gate at `:108–112`, not `:105`; M7's named derivation
+*does* exist (`final_board_sweeps.py:196`) but is bound to the stride A/B cells.
+Three forks referred to the PI: H1's replacement mechanism, whether the GS
+Era-2 leg belongs in this block, and how G3/G4 behave during an r2 build.
+Chain remains **NO-GO**.
 
 ### 2026-09-06 — Original publication
 
