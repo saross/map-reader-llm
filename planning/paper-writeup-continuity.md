@@ -8,6 +8,86 @@ project state.
 
 ---
 
+## 🔍 STATE AFTER S148 (2026-09-04→06 — the PI's audits CLOSED; reference r2 BUILT; the recompute chain is NO-GO until the audit is adjudicated)
+
+> **HEADLINES, all committed and pushed (tree clean, synced):** (1)
+> **Gemini 3.8 Flash screen CLOSED as a verifier-seat TIE** (card
+> `planning/gemini38-screen-2026-09-04.md`; Obs 448 `463c931b3`): probe +
+> Arm V only, 3.8 verifier over the 3.7 K=5 union F1@20 0.9258 vs the
+> all-3.7 stack 0.9265 (p = 0.78); 3.8 thinks LESS at `low`; threshold
+> insensitivity is a 3.7/3.8-generation property (corrected S148); spend
+> ≈ $0.85; estimator now prices 3.7/3.8 and bills thinking as output
+> (`73658c579`). (2) **Empty-tile audit CLOSED at 500 tiles**: 5 true
+> double-misses / 470 = 1.06 % (CI 0.35–2.47 %) ≈ 50 missed mounds ≈
+> 0.99 % of GT, proposer blind spots (`scripts/empty_tile_adjudicate.py`,
+> `results/empty-tile-audit/adjudication.md`). (3) **Cluster census
+> CLOSED** (478/478) after a REBUILD on the Ruling-21 standardised
+> reference — the canonical r50 file carries ~150 phantoms Ruling 21 had
+> removed (Obs 449 `e51ed3430`, rider 450 `659c72751`; frame 739 → 478):
+> 13 edge-safety marks (all confirmed), 6 GT-error points, 6 model-found
+> omissions, 2 double-misses, 1 vote-gate kill; **the reference, not
+> recall, is the census's signal** (Obs 451 `ff98691ba`;
+> `results/cluster-audit/adjudication.md`). Paper crops of the 7
+> double-misses + 7 omissions at verifier geometry
+> (`results/double-miss-crops-2026-09-06/`, `65e9bdc23`/`df8746abc`).
+> (4) **Reference revision r2 BUILT** (card
+> `planning/reference-revision-2026-09-06.md`; `40361b26f`):
+> `inputs/vectors/references/best-available-gt-55maps-r2.geojson` =
+> 5,018 points (4,726 student + 278 extension + 14 `audit_reviewed`), 6
+> removed (one overriding a Ruling-21 "distinct" adjudication on the
+> PI's inspection); deterministic from the two adjudication files; PI
+> rulings on the estimator, the standardised-chain scope, and the paper
+> framing recorded (§ 3, § 3a). Preliminary student re-estimate P 0.992
+> / R 0.923 / F1 0.956 vs GS-4 1.000 / 0.947 / 0.973 (§ 2b). (5) **3.7 +
+> 3.8 register rows AUTHORED** (`f4db3f4fd`, `99d13ca1b`: 3 runs, 13
+> conditions, 6 analyses, `post-hoc`, PI-ruled; canonical B N=5
+> companion deferred to the chain) after the seven GS best-eval
+> evaluations reproduced their committed F1 (`02e9e2490`). (6)
+> **Pre-run review of the r2 recompute chain written** (card § 4a,
+> H1–H9, `3e3caef46`) and the **clean-context audit returned 4
+> blockers / 5 majors / 6 minors**
+> (`reports/r2-chain-pre-run-audit-2026-09-06.md`, `ffadf9cd8`): the
+> chain is **NO-GO as written**. Also: D.9 drafting brief from the AB+
+> cluster (`docs/paper/d9-drafting-brief-2026-09-03.md`, `05618dcbc`;
+> naming option 1 collides with Ross & Ballsun-Stanton 2022's
+> "just-in-time" pejorative); the S145 beacon's "Obs 442" mis-pointer
+> corrected to Obs 444 § (b); review app gained `o`/`r`/`g` keys, the
+> GT-error symbol, and a two-list overlay.
+>
+> **NEXT SESSION, FIRST ACT — adjudicate the audit, then amend the
+> contract:** walk the 15 findings in
+> `reports/r2-chain-pre-run-audit-2026-09-06.md` (fix / accept /
+> dispute each; blockers: the step-3 count is 36 cells not 29; the
+> boards read register labels so step 7 precedes step 4; the companion
+> command as written cannot run — but `stride55_score.py`'s summary
+> already carries a tile matrix + MCC; the r1 regression gates (G3 1e-9,
+> G4 0.003) need an r2 mode; majors: r2 must enter via
+> `standardised_gt()` yet the IM-k4 template scored the MERGED geojson
+> and no r2 layer files exist; r1 homes are written by module constants;
+> the 3.7 rungs' derivation lives only in `gemini37_*_ladder.py` on the
+> canonical chain; the Era-2 GS boards do not exist as artefacts and a
+> BH rank change after adding cells is legitimate; `lib_uplift_supplement`
+> resolves r2 to "unresolved" silently). Then land H1–H3 as code, re-run
+> the review's counts, get the PI's formal go + stop conditions in his
+> words, and start step 2 (engine gate) → step 3 on sapphire. **THEN
+> the standing interactive backlog**: WN-C1..C3 verdict (still pending —
+> silence never discards); board membership as ruled (all 3.7 cells +
+> 3.8 on their boards, incl. K=10 text and the fourth cell's GS leg);
+> D-1..D-5 (D-5 now decides D.9's home); the D.9 naming ruling; billing
+> line-items when the report lands.
+>
+> **Standing gotchas:** the canonical r50 GT is a STALE instrument for
+> any new analysis (§ 5b and the census sampler now default to the
+> standardised file; r2 is the paper's instrument once the chain runs);
+> `run_pv.py verify` stamps list cost with no flex discount and counts
+> retries as parse failures; `cleanup` overwrites `run.meta.json`
+> (backups now kept); 503 storms at ~04:00 UTC too; obs-writer commits
+> carry the session's Fable trailer though Opus executed them (PI to
+> rule on agent-commit attribution); census/final-check tiles live in
+> the gitignored `inputs/cluster-audit-tiles/`; the empty-tile app
+> resumes by tile_name, the `n` key means "no additional mounds / the
+> mark stands" in the census and final-check passes.
+
 ## 🔍 STATE AFTER S147 (2026-09-02 — the AB+ TAIL RUN COMPLETE; corpus 113; the two-mechanism design held at scale)
 
 > **HEADLINES, all committed and pushed:** (1) **AB+ tail COMPLETE —
