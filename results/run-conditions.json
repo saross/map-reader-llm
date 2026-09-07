@@ -4857,6 +4857,25 @@
      "eval_path": "results/55maps-r2-ref-2026-09-06/T03-k3/evaluation.json",
      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
      "_note": "T03-k3 Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "verified-oracle-p0.20-k3-r2-gt",
+     "proposer_pool": null,
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/T03-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/T03-oracle/detections.geojson",
+     "_note": "r2 board cell T03-oracle (oracle (r2-reference argmax), F1@50 0.8399, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
     }
    ],
    "_ignored_evals": [
@@ -5036,6 +5055,25 @@
      "eval_path": "results/55maps-r2-ref-2026-09-06/TM-k3/evaluation.json",
      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
      "_note": "TM-k3 Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "verified-oracle-p0.20-k3-r2-gt",
+     "proposer_pool": null,
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/TM-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/TM-oracle/detections.geojson",
+     "_note": "r2 board cell TM-oracle (oracle (r2-reference argmax), F1@50 0.8103, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
     }
    ],
    "_ignored_evals": [
@@ -8306,7 +8344,7 @@
    ]
   },
   "stride-55map-2026-08-25": {
-   "_note": "55-map deployment portfolio (card planning/55map-portfolio-2026-08-25.md; predictions P1-P8 registered by commit before launch). Runs A (384/33.3%, 141,600 calls) and B (384/50%, 245,610) + the 96,195-call carry-forward verifier. Canonical extended-GT evaluations; the standardised-reference final-board cells register in Pass 2. Sweeps/ladders live under their analyses (PI ruling 2026-08-28).",
+   "_note": "55-map deployment portfolio (card planning/55map-portfolio-2026-08-25.md; predictions P1-P8 registered by commit before launch). Runs A (384/33.3%, 141,600 calls) and B (384/50%, 245,610) + the 96,195-call carry-forward verifier. Canonical extended-GT evaluations; the standardised-reference final-board cells register in Pass 2. Sweeps/ladders live under their analyses (PI ruling 2026-08-28). Reference-revision-r2 track (Session 149): the -r2-gt conditions score the same detection sets against reference revision r2 and supersede the -standardised-gt cells as the paper reference; see results/55maps-r2-ref-2026-09-06/, results/55map-final-board-r2-2026-09-06/ and planning/reference-revision-2026-09-06.md.",
    "proposer_pools": {
     "g384_ov128_55map": {
      "modality": "text",
@@ -8715,6 +8753,375 @@
      "eval_path": "results/gemini37-fourth-cell/55map/g384_ov192_55map/standardised-ref/evaluation.json",
      "detections": "results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/verified_detections.geojson",
      "_note": "B6 — the same detections on the ruling-21 STANDARDISED reference: F1@50 0.8732 [0.8649, 0.8810], P 0.9517 / R 0.8066. Tile matrix identical to the canonical 50 m row (2358/4985/32/1166)."
+    },
+    {
+     "label": "g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 10,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 7,
+     "prob_threshold": 0.15,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N10-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/A-N10-oracle/detections.geojson",
+     "_note": "r2 board cell A-N10-oracle (oracle (r2-reference argmax), F1@50 0.8419, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov128-55map-n10-carried-p0.15-k8-r2-gt",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 10,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 8,
+     "prob_threshold": 0.15,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N10-carried/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/A-N10-carried/detections.geojson",
+     "_note": "r2 board cell A-N10-carried (carried, F1@50 0.8391, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 1,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N1-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/A-N1-oracle/detections.geojson",
+     "_note": "r2 board cell A-N1-oracle (oracle (r2-reference argmax), F1@50 0.8227, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 2,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N3-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/A-N3-oracle/detections.geojson",
+     "_note": "r2 board cell A-N3-oracle (oracle (r2-reference argmax), F1@50 0.8321, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N5-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/A-N5-oracle/detections.geojson",
+     "_note": "r2 board cell A-N5-oracle (oracle (r2-reference argmax), F1@50 0.8383, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov128-55map-n5-carried-p0.15-k4-r2-gt",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N5-carried/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/A-N5-carried/detections.geojson",
+     "_note": "r2 board cell A-N5-carried (carried, F1@50 0.8383, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 10,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 9,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N10-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/B-N10-oracle/detections.geojson",
+     "_note": "r2 board cell B-N10-oracle (oracle (r2-reference argmax), F1@50 0.8560, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n10-carried-p0.15-k10-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 10,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 10,
+     "prob_threshold": 0.15,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N10-carried/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/B-N10-carried/detections.geojson",
+     "_note": "r2 board cell B-N10-carried (carried, F1@50 0.8497, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 1,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N1-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/B-N1-oracle/detections.geojson",
+     "_note": "r2 board cell B-N1-oracle (oracle (r2-reference argmax), F1@50 0.8013, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N3-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/B-N3-oracle/detections.geojson",
+     "_note": "r2 board cell B-N3-oracle (oracle (r2-reference argmax), F1@50 0.8507, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 5,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N5-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/B-N5-oracle/detections.geojson",
+     "_note": "r2 board cell B-N5-oracle (oracle (r2-reference argmax), F1@50 0.8516, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n5-carried-p0.15-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N5-carried/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/B-N5-carried/detections.geojson",
+     "_note": "r2 board cell B-N5-carried (carried, F1@50 0.8503, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 10,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 57482,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 9,
+     "prob_threshold": 0.96,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N10-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N10-oracle/detections.geojson",
+     "_note": "r2 board cell FOURTH-N10-oracle (oracle (r2-reference argmax), F1@50 0.8813, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 10,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 57482,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 10,
+     "prob_threshold": 0.98,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N10-carried/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N10-carried/detections.geojson",
+     "_note": "r2 board cell FOURTH-N10-carried (carried, F1@50 0.8728, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 57482,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 1,
+     "prob_threshold": 0.96,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-oracle/detections.geojson",
+     "_note": "r2 board cell FOURTH-N1-oracle (oracle (r2-reference argmax), F1@50 0.8352, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 57482,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.96,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N3-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N3-oracle/detections.geojson",
+     "_note": "r2 board cell FOURTH-N3-oracle (oracle (r2-reference argmax), F1@50 0.8747, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+     "proposer_pool": "g384_ov128_55map",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N3-carried/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/A-N3-carried/detections.geojson",
+     "_note": "r2 board cell A-N3-carried (carried (post-hoc), F1@50 0.8307, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N3-carried/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/B-N3-carried/detections.geojson",
+     "_note": "r2 board cell B-N3-carried (carried (post-hoc), F1@50 0.8477, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n5-carried-p0.15-k5-canonical-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/stride55-2026-08-27/g384_ov192_55map/n5-companion/eval/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/B-N5-carried/detections.geojson",
+     "_note": "Canonical-chain companion of the B N=5 carried cell (PI ruling 2026-09-06, planning/reference-revision-2026-09-06.md section 3a): the same first-5 union with inherited K=10 Gemini-3 verification at (0.15, k5), materialised by the r2 sweep (pass-pinned, geometry-gated to the committed primary) and scored on the canonical chain by the Track-2 engine (canonical review, buffers 20/30/50, B=10,000, seed 42). corrected-F1@50 0.8437752627 == results/stride55-2026-08-27/ladder.json N=5 carried, |d| 0 (gate 1e-6). Registered so the 3.7 campaign's canonical-chain comparisons (D1 dead heat; the Obs 444 five-test family) cite a registered condition."
     }
    ],
    "_ignored_evals": [
@@ -9060,7 +9467,7 @@
    ]
   },
   "gemini37-55map-2026-08-29": {
-   "_note": "55-map deployment arms for the Gemini 3.7 proposer (card planning/gemini37-55map-2026-08-29.md). One K=5 proposer pool (union 12,715 candidates), two verifier arms over it, both carried operating points committed on the card at :140-141 before any deployment scoring. TWO INSTRUMENTS, one row each per cell (Obs 444 § (b); results/gemini37-55map-2026-08-31/findings.md § 'Reference instruments'): the canonical adjudicated extended Ground Truth (5,160 references at 50 m, corrected-F1 engine, the campaign's committed primary) and the ruling-21 standardised reference inputs/vectors/references/best-available-gt-55maps.geojson (5,010 references, scripts/evaluate_detections.py). The canonical eval_paths point at evaluation.json files written by this script's adapter from the engine's summary.json (deterministic transform; nothing recomputed). Nothing here is scored against the r2 reference. The 16-cell grid board's oracle and N=1/N=3 rungs are NOT registered (no materialised detections or evaluations; deferred to the r2 recompute chain per PI ruling 4).",
+   "_note": "55-map deployment arms for the Gemini 3.7 proposer (card planning/gemini37-55map-2026-08-29.md). One K=5 proposer pool (union 12,715 candidates), two verifier arms over it, both carried operating points committed on the card at :140-141 before any deployment scoring. TWO INSTRUMENTS, one row each per cell (Obs 444 § (b); results/gemini37-55map-2026-08-31/findings.md § 'Reference instruments'): the canonical adjudicated extended Ground Truth (5,160 references at 50 m, corrected-F1 engine, the campaign's committed primary) and the ruling-21 standardised reference inputs/vectors/references/best-available-gt-55maps.geojson (5,010 references, scripts/evaluate_detections.py). The canonical eval_paths point at evaluation.json files written by this script's adapter from the engine's summary.json (deterministic transform; nothing recomputed). Nothing here is scored against the r2 reference. The 16-cell grid board's oracle and N=1/N=3 rungs are NOT registered (no materialised detections or evaluations; deferred to the r2 recompute chain per PI ruling 4). Reference-revision-r2 track (Session 149): the -r2-gt conditions score the same detection sets against reference revision r2 and supersede the -standardised-gt cells as the paper reference; see results/55maps-r2-ref-2026-09-06/, results/55map-final-board-r2-2026-09-06/ and planning/reference-revision-2026-09-06.md.",
    "proposer_pools": {
     "g384_ov192_55map_g37": {
      "modality": "text",
@@ -9161,6 +9568,174 @@
      "eval_path": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/standardised-ref/evaluation.json",
      "detections": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/verified_detections.geojson",
      "_note": "B4 — the same detections on the STANDARDISED reference: F1@50 0.8825 [0.8746, 0.8897], P 0.8831 / R 0.8818 — above the entire 2026-08-27 final board including its oracles (ceiling B-N10-oracle 0.8558). Tile matrix identical to the canonical 50 m row (2516/4798/219/1008)."
+    },
+    {
+     "label": "arm1-n5-oracle-p0.15-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N5-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N5-oracle/detections.geojson",
+     "_note": "r2 board cell ARM1-N5-oracle (oracle (r2-reference argmax), F1@50 0.8727, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm1-n5-carried-p0.10-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 5,
+     "prob_threshold": 0.1,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N5-carried/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N5-carried/detections.geojson",
+     "_note": "r2 board cell ARM1-N5-carried (carried, F1@50 0.8551, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm1-n1-oracle-p0.20-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 1,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N1-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N1-oracle/detections.geojson",
+     "_note": "r2 board cell ARM1-N1-oracle (oracle (r2-reference argmax), F1@50 0.8413, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm1-n3-oracle-p0.15-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N3-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N3-oracle/detections.geojson",
+     "_note": "r2 board cell ARM1-N3-oracle (oracle (r2-reference argmax), F1@50 0.8705, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm2-n5-oracle-p0.95-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 5,
+     "prob_threshold": 0.95,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-oracle/detections.geojson",
+     "_note": "r2 board cell ARM2-N5-oracle (oracle (r2-reference argmax), F1@50 0.8871, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm2-n5-carried-p0.80-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 5,
+     "prob_threshold": 0.8,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-carried/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-carried/detections.geojson",
+     "_note": "r2 board cell ARM2-N5-carried (carried, F1@50 0.8827, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm2-n1-oracle-p0.98-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 1,
+     "prob_threshold": 0.98,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N1-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N1-oracle/detections.geojson",
+     "_note": "r2 board cell ARM2-N1-oracle (oracle (r2-reference argmax), F1@50 0.8610, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm2-n3-oracle-p0.95-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.95,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N3-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N3-oracle/detections.geojson",
+     "_note": "r2 board cell ARM2-N3-oracle (oracle (r2-reference argmax), F1@50 0.8848, tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
     }
    ]
   }

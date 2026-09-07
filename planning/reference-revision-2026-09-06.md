@@ -788,6 +788,38 @@ tree-wide `script_git_status`.
 
 ## Changelog
 
+### 2026-09-07 (S149-c) — Steps 4e, 4f and 7a-ii DONE; the r2 boards exist
+
+**4e** (`22353e660`): G3 reproduced the committed 8-cell r1 board
+exactly (f1, 28 pairwise p-values, 5 tiers); coincidence enforced and
+passed 3/3; the r2 final board tiers **35 cells, 512/595 pairs
+significant, 12 tiers**. The 23 r1 cells keep their tier structure
+intact — each r1 tier maps to exactly one r2 tier, shifted by the three
+3.7 tiers above — and max |ΔF1@50| over them is 0.0009 (band 0.005).
+The r2 leaderboard (8 cells, 24/28 significant) has the **same five
+tiers as r1's standardised board**, member for member; the r2 MCC
+board: 20/28 significant, 5 tiers. **4f**: the companion reproduced
+the ladder's canonical B N = 5 value to zero (0.8437752627; gate 1e-6),
+adapted with the engine's inputs recorded. **7a-ii**: 28 board-home
+rows authored from the r2 manifest (3 coincident oracles excluded by
+design) plus the companion's `-canonical-gt` row; the verifier PASSES
+every touched run except the two with pre-existing debt (stride's four
+canonical rows — ruling 2's re-score is running; uplift's PARTIAL).
+
+**The r2 board's top** — a result the paper must now carry: T1
+ARM2-N5-oracle 0.8871 and **ARM2-N3-oracle 0.8848**; T2 ARM2-N5-carried
+0.8827, FOURTH-N10-oracle 0.8813; T3 FOURTH-N3-oracle 0.8747,
+FOURTH-N10-carried 0.8728, ARM1-N5-oracle 0.8727, ARM1-N3-oracle
+0.8705; T4 ARM2-N1-oracle 0.8610, B-N10-oracle 0.8560 (r1's T1),
+ARM1-N5-carried 0.8551. Two things worth flagging as findings rather
+than confirmations: (i) the all-3.7 stack's **N = 3 oracle sits in T1
+with its N = 5 oracle** — the "B saturates at N = 3" pattern of Obs 438
+repeats for the 3.7 proposer, at 60 % of the pass spend; (ii) the
+fourth cell's N = 3 oracle (0.8747) is statistically level with its own
+N = 10 carried point (0.8728). Both are oracle claims (best within the
+verified sweep space), not carried ones, and are read against Obs 444's
+prediction that the 3.7 cells lead.
+
 ### 2026-09-07 (S149-c) — Step 4a DONE (sweep on r2, gates on r1); inspection before 4c
 
 Every r1-pinned gate passed on the first execution of the 3.7 legs: G4
