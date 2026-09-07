@@ -1,0 +1,562 @@
+{
+  "schema_version": "1.0.0",
+  "generator": "scripts/derive_tile_level_f1.py",
+  "generator_version": "0.1.0",
+  "generated_at": "2026-09-07T04:32:40Z",
+  "metric_definition": {
+    "unit": "tile",
+    "positive_class": "tile the reference populates with at least one mound",
+    "prediction": "tile in which the model returned at least one detection",
+    "tile_precision": "TP / (TP + FP)",
+    "tile_recall": "TP / (TP + FN)",
+    "tile_f1": "2*TP / (2*TP + FP + FN)",
+    "undefined_discipline": "a statistic whose denominator marginal vanishes is null, never 0.0 (docs/methodology/tile-mcc-explained.md, trap 2; erratum E81)",
+    "booking_rules": "unchanged from the committed evaluations: detections booked to one tile (E79 nearest-centroid rule), references booked to every tile they intersect (tile-mcc-explained.md, trap 1)",
+    "comparability": "tile-level statistics are carrier-specific and are not comparable across tilings or footprints (tile-mcc-explained.md, trap 3)"
+  },
+  "validation_gate": {
+    "rule": "MCC recomputed from each committed confusion matrix must reproduce the committed point estimate to at least four decimal places",
+    "tolerance": 0.0001,
+    "n_cells": 10,
+    "n_passed": 10,
+    "n_failed": 0
+  },
+  "cells": [
+    {
+      "key": "gs-verified-adv-text-consensus-16of30",
+      "display_name": "verified-adv-text-consensus-16of30",
+      "board": "gold-standard headline",
+      "condition_id": "pv-diag-384::verified-adv-text-consensus-16of30",
+      "evaluation_path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+      "carrier": "Era-2 gold standard: 384 px tiles, 336 px stride, 4 map sheets, 487 tiles",
+      "object_level_f1": 0.8902,
+      "object_level_f1_buffer_m": 20,
+      "committed_mcc_field": "summary.tile_classification.mcc.point",
+      "confusion": {
+        "tp": 188,
+        "fp": 11,
+        "fn": 41,
+        "tn": 247
+      },
+      "n_tiles": 487,
+      "marginals": {
+        "tp_plus_fp": 199,
+        "tp_plus_fn": 229,
+        "tn_plus_fp": 258,
+        "tn_plus_fn": 288
+      },
+      "vanishing_marginals": [],
+      "gate": {
+        "passed": true,
+        "committed_mcc": 0.7903,
+        "recomputed_mcc": 0.7902523838362319,
+        "abs_delta": 4.7616163768138264e-05,
+        "tolerance": 0.0001,
+        "reason": null
+      },
+      "status": "ok",
+      "prevalence_reference_positive_tile_share": 0.4702258726899384,
+      "tile_precision": 0.9447236180904522,
+      "tile_recall": 0.8209606986899564,
+      "tile_f1": 0.8785046728971962,
+      "undefined_metrics": [],
+      "undefined_reason": null
+    },
+    {
+      "key": "gs-verified-adv-image-baseline-pro-vf",
+      "display_name": "verified-adv-image-baseline-pro-vf",
+      "board": "gold-standard MCC crown",
+      "condition_id": "pv-diag-384::verified-adv-image-baseline-pro-vf",
+      "evaluation_path": "results/verifier-robustness/evals/verified-adv-image-baseline-pro-vf/evaluation.json",
+      "carrier": "Era-2 gold standard: 384 px tiles, 336 px stride, 4 map sheets, 487 tiles",
+      "object_level_f1": 0.7309,
+      "object_level_f1_buffer_m": 20,
+      "committed_mcc_field": "summary.tile_classification.mcc.point",
+      "confusion": {
+        "tp": 215,
+        "fp": 13,
+        "fn": 14,
+        "tn": 245
+      },
+      "n_tiles": 487,
+      "marginals": {
+        "tp_plus_fp": 228,
+        "tp_plus_fn": 229,
+        "tn_plus_fp": 258,
+        "tn_plus_fn": 259
+      },
+      "vanishing_marginals": [],
+      "gate": {
+        "passed": true,
+        "committed_mcc": 0.8887,
+        "recomputed_mcc": 0.8887026883477761,
+        "abs_delta": 2.6883477760586416e-06,
+        "tolerance": 0.0001,
+        "reason": null
+      },
+      "status": "ok",
+      "prevalence_reference_positive_tile_share": 0.4702258726899384,
+      "tile_precision": 0.9429824561403509,
+      "tile_recall": 0.9388646288209607,
+      "tile_f1": 0.9409190371991247,
+      "undefined_metrics": [],
+      "undefined_reason": null
+    },
+    {
+      "key": "55map-T03-k3",
+      "display_name": "T03-k3 (oracle)",
+      "board": "55map-r2-leaderboard-50m",
+      "condition_id": "55maps-text-high-t0-3-generalisation::verified-k3-r2-gt",
+      "evaluation_path": "results/55maps-r2-ref-2026-09-06/T03-k3/evaluation.json",
+      "carrier": "55-map generalisation: 384 px tiles, Era-2-style bounds, 55 map sheets, 8,541 tiles",
+      "object_level_f1": 0.8387,
+      "object_level_f1_buffer_m": 50,
+      "committed_mcc_field": "summary.tile_classification.mcc.point",
+      "confusion": {
+        "tp": 2461,
+        "fp": 236,
+        "fn": 1068,
+        "tn": 4776
+      },
+      "n_tiles": 8541,
+      "marginals": {
+        "tp_plus_fp": 2697,
+        "tp_plus_fn": 3529,
+        "tn_plus_fp": 5012,
+        "tn_plus_fn": 5844
+      },
+      "vanishing_marginals": [],
+      "gate": {
+        "passed": true,
+        "committed_mcc": 0.6889,
+        "recomputed_mcc": 0.6888658339581711,
+        "abs_delta": 3.4166041828820326e-05,
+        "tolerance": 0.0001,
+        "reason": null
+      },
+      "status": "ok",
+      "prevalence_reference_positive_tile_share": 0.41318346797798855,
+      "tile_precision": 0.9124953652206155,
+      "tile_recall": 0.6973646925474639,
+      "tile_f1": 0.7905557340186316,
+      "undefined_metrics": [],
+      "undefined_reason": null
+    },
+    {
+      "key": "55map-TH7-k3",
+      "display_name": "TH7-k3",
+      "board": "55map-r2-leaderboard-50m",
+      "condition_id": "55maps-text-high-generalisation::verified-k3-r2-gt",
+      "evaluation_path": "results/55maps-r2-ref-2026-09-06/TH7-k3/evaluation.json",
+      "carrier": "55-map generalisation: 384 px tiles, Era-2-style bounds, 55 map sheets, 8,541 tiles",
+      "object_level_f1": 0.838,
+      "object_level_f1_buffer_m": 50,
+      "committed_mcc_field": "summary.tile_classification.mcc.point",
+      "confusion": {
+        "tp": 2424,
+        "fp": 240,
+        "fn": 1105,
+        "tn": 4772
+      },
+      "n_tiles": 8541,
+      "marginals": {
+        "tp_plus_fp": 2664,
+        "tp_plus_fn": 3529,
+        "tn_plus_fp": 5012,
+        "tn_plus_fn": 5877
+      },
+      "vanishing_marginals": [],
+      "gate": {
+        "passed": true,
+        "committed_mcc": 0.6792,
+        "recomputed_mcc": 0.6791784625969423,
+        "abs_delta": 2.1537403057769744e-05,
+        "tolerance": 0.0001,
+        "reason": null
+      },
+      "status": "ok",
+      "prevalence_reference_positive_tile_share": 0.41318346797798855,
+      "tile_precision": 0.9099099099099099,
+      "tile_recall": 0.6868801360158685,
+      "tile_f1": 0.7828193121265945,
+      "undefined_metrics": [],
+      "undefined_reason": null
+    },
+    {
+      "key": "55map-T03-k4",
+      "display_name": "T03-k4",
+      "board": "55map-r2-leaderboard-50m",
+      "condition_id": "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+      "evaluation_path": "results/55maps-r2-ref-2026-09-06/T03-k4/evaluation.json",
+      "carrier": "55-map generalisation: 384 px tiles, Era-2-style bounds, 55 map sheets, 8,541 tiles",
+      "object_level_f1": 0.8294,
+      "object_level_f1_buffer_m": 50,
+      "committed_mcc_field": "summary.tile_classification.mcc.point",
+      "confusion": {
+        "tp": 2297,
+        "fp": 174,
+        "fn": 1232,
+        "tn": 4838
+      },
+      "n_tiles": 8541,
+      "marginals": {
+        "tp_plus_fp": 2471,
+        "tp_plus_fn": 3529,
+        "tn_plus_fp": 5012,
+        "tn_plus_fn": 6070
+      },
+      "vanishing_marginals": [],
+      "gate": {
+        "passed": true,
+        "committed_mcc": 0.6691,
+        "recomputed_mcc": 0.6691220893491632,
+        "abs_delta": 2.2089349163145755e-05,
+        "tolerance": 0.0001,
+        "reason": null
+      },
+      "status": "ok",
+      "prevalence_reference_positive_tile_share": 0.41318346797798855,
+      "tile_precision": 0.9295831647106435,
+      "tile_recall": 0.6508926041371493,
+      "tile_f1": 0.7656666666666667,
+      "undefined_metrics": [],
+      "undefined_reason": null
+    },
+    {
+      "key": "55map-TM-n10-k5",
+      "display_name": "TM-n10-k5 (uplift)",
+      "board": "55map-r2-leaderboard-50m",
+      "condition_id": "55maps-text-min-n10-uplift::verified-5of10-r2-gt",
+      "evaluation_path": "results/55maps-r2-ref-2026-09-06/TM-n10-k5/evaluation.json",
+      "carrier": "55-map generalisation: 384 px tiles, Era-2-style bounds, 55 map sheets, 8,541 tiles",
+      "object_level_f1": 0.8274,
+      "object_level_f1_buffer_m": 50,
+      "committed_mcc_field": "summary.tile_classification.mcc.point",
+      "confusion": {
+        "tp": 2305,
+        "fp": 179,
+        "fn": 1224,
+        "tn": 4833
+      },
+      "n_tiles": 8541,
+      "marginals": {
+        "tp_plus_fp": 2484,
+        "tp_plus_fn": 3529,
+        "tn_plus_fp": 5012,
+        "tn_plus_fn": 6057
+      },
+      "vanishing_marginals": [],
+      "gate": {
+        "passed": true,
+        "committed_mcc": 0.6695,
+        "recomputed_mcc": 0.6694609221550795,
+        "abs_delta": 3.907784492052091e-05,
+        "tolerance": 0.0001,
+        "reason": null
+      },
+      "status": "ok",
+      "prevalence_reference_positive_tile_share": 0.41318346797798855,
+      "tile_precision": 0.927938808373591,
+      "tile_recall": 0.6531595352791159,
+      "tile_f1": 0.766672210211209,
+      "undefined_metrics": [],
+      "undefined_reason": null
+    },
+    {
+      "key": "55map-TH7-k4",
+      "display_name": "TH7-k4 (carry-forward)",
+      "board": "55map-r2-leaderboard-50m",
+      "condition_id": "55maps-text-high-generalisation::verified-k4-r2-gt",
+      "evaluation_path": "results/55maps-r2-ref-2026-09-06/TH7-k4/evaluation.json",
+      "carrier": "55-map generalisation: 384 px tiles, Era-2-style bounds, 55 map sheets, 8,541 tiles",
+      "object_level_f1": 0.8162,
+      "object_level_f1_buffer_m": 50,
+      "committed_mcc_field": "summary.tile_classification.mcc.point",
+      "confusion": {
+        "tp": 2259,
+        "fp": 160,
+        "fn": 1270,
+        "tn": 4852
+      },
+      "n_tiles": 8541,
+      "marginals": {
+        "tp_plus_fp": 2419,
+        "tp_plus_fn": 3529,
+        "tn_plus_fp": 5012,
+        "tn_plus_fn": 6122
+      },
+      "vanishing_marginals": [],
+      "gate": {
+        "passed": true,
+        "committed_mcc": 0.6647,
+        "recomputed_mcc": 0.6646822873455835,
+        "abs_delta": 1.771265441641301e-05,
+        "tolerance": 0.0001,
+        "reason": null
+      },
+      "status": "ok",
+      "prevalence_reference_positive_tile_share": 0.41318346797798855,
+      "tile_precision": 0.9338569656883009,
+      "tile_recall": 0.6401246812128082,
+      "tile_f1": 0.7595830531271015,
+      "undefined_metrics": [],
+      "undefined_reason": null
+    },
+    {
+      "key": "55map-TM-k3",
+      "display_name": "TM-k3",
+      "board": "55map-r2-leaderboard-50m",
+      "condition_id": "55maps-text-min-generalisation::verified-k3-r2-gt",
+      "evaluation_path": "results/55maps-r2-ref-2026-09-06/TM-k3/evaluation.json",
+      "carrier": "55-map generalisation: 384 px tiles, Era-2-style bounds, 55 map sheets, 8,541 tiles",
+      "object_level_f1": 0.8102,
+      "object_level_f1_buffer_m": 50,
+      "committed_mcc_field": "summary.tile_classification.mcc.point",
+      "confusion": {
+        "tp": 2273,
+        "fp": 198,
+        "fn": 1256,
+        "tn": 4814
+      },
+      "n_tiles": 8541,
+      "marginals": {
+        "tp_plus_fp": 2471,
+        "tp_plus_fn": 3529,
+        "tn_plus_fp": 5012,
+        "tn_plus_fn": 6070
+      },
+      "vanishing_marginals": [],
+      "gate": {
+        "passed": true,
+        "committed_mcc": 0.6565,
+        "recomputed_mcc": 0.6565369541626039,
+        "abs_delta": 3.695416260396378e-05,
+        "tolerance": 0.0001,
+        "reason": null
+      },
+      "status": "ok",
+      "prevalence_reference_positive_tile_share": 0.41318346797798855,
+      "tile_precision": 0.9198704977741805,
+      "tile_recall": 0.6440918107112497,
+      "tile_f1": 0.7576666666666667,
+      "undefined_metrics": [],
+      "undefined_reason": null
+    },
+    {
+      "key": "55map-IM-k3",
+      "display_name": "IM-k3",
+      "board": "55map-r2-leaderboard-50m",
+      "condition_id": "55maps-image-generalisation::verified-k3-r2-gt",
+      "evaluation_path": "results/55maps-r2-ref-2026-09-06/IM-k3/evaluation.json",
+      "carrier": "55-map generalisation: 384 px tiles, Era-2-style bounds, 55 map sheets, 8,541 tiles",
+      "object_level_f1": 0.8008,
+      "object_level_f1_buffer_m": 50,
+      "committed_mcc_field": "summary.tile_classification.mcc.point",
+      "confusion": {
+        "tp": 2486,
+        "fp": 178,
+        "fn": 1043,
+        "tn": 4834
+      },
+      "n_tiles": 8541,
+      "marginals": {
+        "tp_plus_fp": 2664,
+        "tp_plus_fn": 3529,
+        "tn_plus_fp": 5012,
+        "tn_plus_fn": 5877
+      },
+      "vanishing_marginals": [],
+      "gate": {
+        "passed": true,
+        "committed_mcc": 0.711,
+        "recomputed_mcc": 0.711000215229766,
+        "abs_delta": 2.1522976600962807e-07,
+        "tolerance": 0.0001,
+        "reason": null
+      },
+      "status": "ok",
+      "prevalence_reference_positive_tile_share": 0.41318346797798855,
+      "tile_precision": 0.9331831831831832,
+      "tile_recall": 0.7044488523661094,
+      "tile_f1": 0.8028419182948491,
+      "undefined_metrics": [],
+      "undefined_reason": null
+    },
+    {
+      "key": "55map-TM-k4",
+      "display_name": "TM-k4",
+      "board": "55map-r2-leaderboard-50m",
+      "condition_id": "55maps-text-min-generalisation::verified-k4-r2-gt",
+      "evaluation_path": "results/55maps-r2-ref-2026-09-06/TM-k4/evaluation.json",
+      "carrier": "55-map generalisation: 384 px tiles, Era-2-style bounds, 55 map sheets, 8,541 tiles",
+      "object_level_f1": 0.7826,
+      "object_level_f1_buffer_m": 50,
+      "committed_mcc_field": "summary.tile_classification.mcc.point",
+      "confusion": {
+        "tp": 2149,
+        "fp": 160,
+        "fn": 1380,
+        "tn": 4852
+      },
+      "n_tiles": 8541,
+      "marginals": {
+        "tp_plus_fp": 2309,
+        "tp_plus_fn": 3529,
+        "tn_plus_fp": 5012,
+        "tn_plus_fn": 6232
+      },
+      "vanishing_marginals": [],
+      "gate": {
+        "passed": true,
+        "committed_mcc": 0.6397,
+        "recomputed_mcc": 0.6397419247546148,
+        "abs_delta": 4.192475461473055e-05,
+        "tolerance": 0.0001,
+        "reason": null
+      },
+      "status": "ok",
+      "prevalence_reference_positive_tile_share": 0.41318346797798855,
+      "tile_precision": 0.9307059333044608,
+      "tile_recall": 0.6089543780107679,
+      "tile_f1": 0.7362110311750599,
+      "undefined_metrics": [],
+      "undefined_reason": null
+    }
+  ],
+  "comparators": [
+    {
+      "key": "lk2025-castles-gpt41",
+      "study": "Landauer & Klassen 2025",
+      "doi": "10.3390/geomatics5040052",
+      "experiment": "Bavarian castles (Bing satellite imagery)",
+      "model": "GPT-4.1",
+      "tile_footprint": "150 x 150 m",
+      "confusion": {
+        "tp": 244,
+        "fp": 101,
+        "fn": 135,
+        "tn": 899
+      },
+      "n_tiles": 1379,
+      "prevalence_reference_positive_tile_share": 0.27483683828861494,
+      "prevalence_basis": "constructed (fixed positive:negative ratio by design)",
+      "tile_precision": 0.7072463768115942,
+      "tile_recall": 0.6437994722955145,
+      "tile_f1": 0.6740331491712708,
+      "tile_mcc": 0.5594859757493991,
+      "reported_f1_as_published": 0.67
+    },
+    {
+      "key": "lk2025-castles-gemini",
+      "study": "Landauer & Klassen 2025",
+      "doi": "10.3390/geomatics5040052",
+      "experiment": "Bavarian castles (Bing satellite imagery)",
+      "model": "Gemini 2.0 Flash",
+      "tile_footprint": "150 x 150 m",
+      "confusion": {
+        "tp": 144,
+        "fp": 2,
+        "fn": 235,
+        "tn": 998
+      },
+      "n_tiles": 1379,
+      "prevalence_reference_positive_tile_share": 0.27483683828861494,
+      "prevalence_basis": "constructed (fixed positive:negative ratio by design)",
+      "tile_precision": 0.9863013698630136,
+      "tile_recall": 0.37994722955145116,
+      "tile_f1": 0.5485714285714286,
+      "tile_mcc": 0.5483941395111349,
+      "reported_f1_as_published": 0.55
+    },
+    {
+      "key": "lk2025-temples-gpt41",
+      "study": "Landauer & Klassen 2025",
+      "doi": "10.3390/geomatics5040052",
+      "experiment": "Angkorian temples (satellite imagery)",
+      "model": "GPT-4.1",
+      "tile_footprint": "140 x 140 m",
+      "confusion": {
+        "tp": 57,
+        "fp": 98,
+        "fn": 43,
+        "tn": 902
+      },
+      "n_tiles": 1100,
+      "prevalence_reference_positive_tile_share": 0.09090909090909091,
+      "prevalence_basis": "constructed (fixed positive:negative ratio by design)",
+      "tile_precision": 0.36774193548387096,
+      "tile_recall": 0.57,
+      "tile_f1": 0.4470588235294118,
+      "tile_mcc": 0.3899960831484573,
+      "reported_f1_as_published": 0.45
+    },
+    {
+      "key": "lk2025-temples-gemini",
+      "study": "Landauer & Klassen 2025",
+      "doi": "10.3390/geomatics5040052",
+      "experiment": "Angkorian temples (satellite imagery)",
+      "model": "Gemini 2.0 Flash",
+      "tile_footprint": "140 x 140 m",
+      "confusion": {
+        "tp": 32,
+        "fp": 23,
+        "fn": 68,
+        "tn": 977
+      },
+      "n_tiles": 1100,
+      "prevalence_reference_positive_tile_share": 0.09090909090909091,
+      "prevalence_basis": "constructed (fixed positive:negative ratio by design)",
+      "tile_precision": 0.5818181818181818,
+      "tile_recall": 0.32,
+      "tile_f1": 0.4129032258064516,
+      "tile_mcc": 0.3917571750594063,
+      "reported_f1_as_published": 0.41
+    },
+    {
+      "key": "lk2025-hillforts-gpt41",
+      "study": "Landauer & Klassen 2025",
+      "doi": "10.3390/geomatics5040052",
+      "experiment": "English hillforts (LiDAR hillshade)",
+      "model": "GPT-4.1",
+      "tile_footprint": "768 x 768 m",
+      "confusion": {
+        "tp": 286,
+        "fp": 813,
+        "fn": 14,
+        "tn": 187
+      },
+      "n_tiles": 1300,
+      "prevalence_reference_positive_tile_share": 0.23076923076923078,
+      "prevalence_basis": "constructed (fixed positive:negative ratio by design)",
+      "tile_precision": 0.2602365787079163,
+      "tile_recall": 0.9533333333333334,
+      "tile_f1": 0.40886347390993566,
+      "tile_mcc": 0.16354022599089155,
+      "reported_f1_as_published": 0.42
+    },
+    {
+      "key": "lk2025-hillforts-gemini",
+      "study": "Landauer & Klassen 2025",
+      "doi": "10.3390/geomatics5040052",
+      "experiment": "English hillforts (LiDAR hillshade)",
+      "model": "Gemini 2.0 Flash",
+      "tile_footprint": "768 x 768 m",
+      "confusion": {
+        "tp": 149,
+        "fp": 66,
+        "fn": 151,
+        "tn": 934
+      },
+      "n_tiles": 1300,
+      "prevalence_reference_positive_tile_share": 0.23076923076923078,
+      "prevalence_basis": "constructed (fixed positive:negative ratio by design)",
+      "tile_precision": 0.6930232558139535,
+      "tile_recall": 0.49666666666666665,
+      "tile_f1": 0.5786407766990291,
+      "tile_mcc": 0.4883911518379342,
+      "reported_f1_as_published": 0.58
+    }
+  ],
+  "registration": "Registered as first-class analysis 'tile-level-f1' in results/analyses-manifest.md (Principal Investigator ruling 2026-08-22; spec in results/run-analyses.json). Type comparison, class post-hoc, destination Results.",
+  "reference": "r2"
+}

@@ -1,0 +1,166 @@
+{
+  "reference": "r2",
+  "board_home": "results/55maps-r2-ref-2026-09-06",
+  "generated_at_note": "Deterministic lift from committed artefacts; regenerate by re-running scripts/analyse_obs280_shared_reference.py",
+  "question": "Does the Obs 280/292 F1-vs-MCC divergence survive when both metrics share the standardised reference (ruling 20a)?",
+  "carried_cells": [
+    "T03-k4",
+    "TH7-k4",
+    "IM-k3",
+    "TM-k4"
+  ],
+  "standardised_values": {
+    "TH7-k4": {
+      "f1_50m": 0.8162,
+      "f1_ci": [
+        0.8059,
+        0.8261
+      ],
+      "mcc": 0.6647
+    },
+    "TH7-k3": {
+      "f1_50m": 0.838,
+      "f1_ci": [
+        0.8287,
+        0.8467
+      ],
+      "mcc": 0.6792
+    },
+    "T03-k4": {
+      "f1_50m": 0.8294,
+      "f1_ci": [
+        0.8199,
+        0.8384
+      ],
+      "mcc": 0.6691
+    },
+    "T03-k3": {
+      "f1_50m": 0.8387,
+      "f1_ci": [
+        0.8297,
+        0.8472
+      ],
+      "mcc": 0.6889
+    },
+    "TM-k4": {
+      "f1_50m": 0.7826,
+      "f1_ci": [
+        0.7713,
+        0.7936
+      ],
+      "mcc": 0.6397
+    },
+    "TM-k3": {
+      "f1_50m": 0.8102,
+      "f1_ci": [
+        0.7998,
+        0.8202
+      ],
+      "mcc": 0.6565
+    },
+    "IM-k3": {
+      "f1_50m": 0.8008,
+      "f1_ci": [
+        0.7907,
+        0.8102
+      ],
+      "mcc": 0.711
+    },
+    "TM-n10-k5": {
+      "f1_50m": 0.8274,
+      "f1_ci": [
+        0.8174,
+        0.8367
+      ],
+      "mcc": 0.6695
+    }
+  },
+  "student_only_mcc_legacy": {
+    "T03-k4": 0.6538,
+    "TH7-k4": 0.6476,
+    "IM-k3": 0.6924,
+    "TM-k4": 0.626
+  },
+  "extended_legacy_50m": {
+    "T03-k4": {
+      "f1": 0.8358742508674167,
+      "mcc": 0.6710705487171356
+    },
+    "TH7-k4": {
+      "f1": 0.8152278820375335,
+      "mcc": 0.6666252946918438
+    },
+    "IM-k3": {
+      "f1": 0.7986993191748807,
+      "mcc": 0.7104103204864493
+    },
+    "TM-k4": {
+      "f1": 0.7830711278528694,
+      "mcc": 0.6411358134707998
+    }
+  },
+  "legacy_a1_f1_50m": {
+    "T03-k4": 0.83596214511041,
+    "TH7-k4": 0.8153153153153153,
+    "IM-k3": 0.7987804878048781,
+    "TM-k4": 0.7831578947368422
+  },
+  "comparison": {
+    "f1_rank_standardised": [
+      "T03-k4",
+      "TH7-k4",
+      "IM-k3",
+      "TM-k4"
+    ],
+    "mcc_rank_standardised": [
+      "IM-k3",
+      "T03-k4",
+      "TH7-k4",
+      "TM-k4"
+    ],
+    "f1_rank_legacy_extended_a1": [
+      "T03-k4",
+      "TH7-k4",
+      "IM-k3",
+      "TM-k4"
+    ],
+    "mcc_rank_student_only": [
+      "IM-k3",
+      "T03-k4",
+      "TH7-k4",
+      "TM-k4"
+    ],
+    "mcc_rank_legacy_extended": [
+      "IM-k3",
+      "T03-k4",
+      "TH7-k4",
+      "TM-k4"
+    ],
+    "mcc_undefined_standardised": [],
+    "mcc_undefined_legacy_extended": [],
+    "divergence_survives": true,
+    "f1_leader_standardised": "T03-k4",
+    "mcc_leader_standardised": "IM-k3"
+  },
+  "mcc_gap_image_minus_f1_leader": {
+    "student_only_legacy": 0.03859999999999997,
+    "extended_legacy": 0.03933977176931369,
+    "standardised": 0.04189999999999994
+  },
+  "f1_gap_f1_leader_minus_image": {
+    "extended_legacy_a1": 0.03718165730553191,
+    "standardised": 0.02860000000000007
+  },
+  "full_board_spearman": {
+    "rho": 0.4761904761904762,
+    "p": 0.23293553465009798,
+    "n": 8,
+    "n_board_cells": 8,
+    "excluded_mcc_undefined": []
+  },
+  "strongest_contrast": {
+    "best_text_cell": "T03-k3",
+    "f1_deficit_image": -0.037900000000000045,
+    "mcc_lead_image": 0.02210000000000001
+  }
+}

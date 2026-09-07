@@ -1,8 +1,8 @@
 # K = 1 gap-fill — worklist and verifier-coverage disclosure
 
-> **Last revised**: 2026-08-29 (regenerated from committed artefacts by `scripts/build_k1_gapfill_worklist.py`; original publication; the K = 1 plan and its disclosure). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-07 (regenerated from committed artefacts by `scripts/build_k1_gapfill_worklist.py`; original publication; the K = 1 plan and its disclosure). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-08-29T09:52:27Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-07T04:32:42Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 Build order step 2 of `planning/uplift-supplement-2026-08-28.md`. No
 scoring has been run: this document and its worklist are the plan.
@@ -19,15 +19,15 @@ candidates.
 | Status | Cells |
 |---|---:|
 | `already-registered` | 26 |
-| `blocked` | 51 |
-| `ready` | 115 |
+| `blocked` | 64 |
+| `ready` | 148 |
 
 ## With-verifier N = 1 anchors
 
 | Verdict | Verified cells |
 |---|---:|
-| `blocked` | 50 |
-| `derivable` | 37 |
+| `blocked` | 61 |
+| `derivable` | 72 |
 
 ## The disclosure: K = 1 WITH verifier
 
@@ -98,6 +98,10 @@ floor was measured on.
 | `e47-propose-brief` | `outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/candidate_manifest.json` | `flash-high-text-1of5.geojson` | 5 | 487 |
 | `flash35-pv-2x2` | `outputs/flash35-pv-2x2/crops/candidate_manifest.json` | `flash35-min-text-1of10.geojson` | 1 | 1132 |
 | `flash35-pv-2x2` | `outputs/flash35-pv-2x2/min-f3-crops/candidate_manifest.json` | `f3-min-text-1of10-with-passes.geojson` | 1 | 1939 |
+| `gemini37-55map-2026-08-29` | `outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/crops/candidate_manifest.json` | `union_k5.geojson` | 1 | 12715 |
+| `gemini37-image-gs-2026-09-01` | `outputs/gemini37-image-gs-2026-09-01/verifier/g384_ov192_g37img/crops/candidate_manifest.json` | `union_k5.geojson` | 1 | 674 |
+| `gemini37-screen-2026-08-28` | `outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/crops/candidate_manifest.json` | `union_k5.geojson` | 1 | 791 |
+| `gemini37-screen-2026-08-28` | `outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/crops_k10/candidate_manifest.json` | `union_k10.geojson` | 1 | 913 |
 | `gold-standard-v2` | `outputs/gs/gold-standard-v2/crops/candidate_manifest.json` | `consensus-4of5.geojson` | 4 | 608 |
 | `grid-2026-08-18` | `outputs/grid-2026-08-18/verifier/g384_ov048/crops/candidate_manifest.json` | `union_k10.geojson` | 1 | 1827 |
 | `grid-2026-08-18` | `outputs/grid-2026-08-18/verifier/g384_ov192/crops/candidate_manifest.json` | `union_k10.geojson` | 1 | 3319 |
@@ -290,7 +294,7 @@ and flip a verdict, so every exclusion is listed with its ground:
 | `outputs/verifier-robustness/_smoke/384-flash-high-text-1of5-union/crops/candidate_manifest.json` | smoke-test tree (path segment '_smoke'), excluded by design |
 | `outputs/verifier-robustness/_smoke/384-flash-high-text-ge3of5/crops/candidate_manifest.json` | smoke-test tree (path segment '_smoke'), excluded by design |
 
-**50 verified cell(s) have no derivable
+**61 verified cell(s) have no derivable
 with-verifier N = 1 anchor.** They are disclosed, not approximated: no
 substitute is computed, and the supplement's verified-cell uplift column
 is left empty rather than filled with a number the corpus cannot
@@ -308,7 +312,7 @@ uniform:
 
 | Measured floor | Verifier stages |
 |---:|---:|
-| vote_count >= 1 | 73 |
+| vote_count >= 1 | 77 |
 | vote_count >= 2 | 17 |
 | vote_count >= 3 | 21 |
 | vote_count >= 4 | 22 |
