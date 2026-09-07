@@ -53,10 +53,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 sys.path.insert(0, str(BASE_DIR / "scripts"))
 from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
+from scripts.build_55map_leaderboard import r2_gt  # noqa: E402
 from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
     ATTRIBUTION_RESOLUTION_NOTE,
     DEFAULT_CRS,
     PAIRED_CI_NOTE,
+    R2_ATTRIBUTION_NOTE,
     STANDARDISED_ATTRIBUTION_NOTE,
     build_extended_gt,
     build_phantom_gdf,
@@ -68,6 +70,12 @@ BOUNDS = BASE_DIR / "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
 STUDENT_GT = BASE_DIR / "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
 TRACK2 = BASE_DIR / "results/55maps-extended-gt-2026-06-07"
 TRACK2_STD = BASE_DIR / "results/55maps-standardised-ref-2026-08-14"
+#: Reference revision r2 scoring home (card planning/reference-revision-
+#: 2026-09-06.md). Its cells are scored by evaluate_detections.py (the IM-k4
+#: template, one engine for the whole r2 chain), so they carry an
+#: evaluation.json rather than a Track-2 summary.json; _load_cell_inputs
+#: reads either.
+TRACK2_R2 = BASE_DIR / "results/55maps-r2-ref-2026-09-06"
 REVIEW_YESTERDAY = TRACK2 / "empty-yesterday-review.csv"
 CANONICAL_REVIEW = (
     BASE_DIR / "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv"
@@ -241,17 +249,31 @@ def _load_cell_inputs(track2_dir: Path) -> tuple[gpd.GeoDataFrame, dict]:
     Returns:
         (gdf_det reprojected to the engine CRS, tile_classification dict).
     """
-    summary = json.loads((track2_dir / "summary.json").read_text())
-    det_path = summary["metadata"]["input_paths"]["detections"]
-    # Provenance paths were recorded absolute on the scoring host;
-    # relativise against this repo checkout.
-    rel = det_path.split("map-reader-llm/", 1)[1]
+    if (track2_dir / "summary.json").exists():
+        summary = json.loads((track2_dir / "summary.json").read_text())
+        det_path = summary["metadata"]["input_paths"]["detections"]
+        # Provenance paths were recorded absolute on the scoring host;
+        # relativise against this repo checkout.
+        rel = det_path.split("map-reader-llm/", 1)[1]
+        row50 = next(r for r in summary["results"] if r["R_m"] == BUFFER_M)
+        tile = row50["tile_classification"]
+    else:
+        # evaluate_detections.py shape (the r2 chain's single engine): the
+        # tile block nests point + BCa interval per metric; flatten it to
+        # the Track-2 keys the gate and the board read.
+        ev = json.loads((track2_dir / "evaluation.json").read_text())
+        rel = ev["_metadata"]["input_files"]["detections"][0]
+        tc = ev["summary"]["tile_classification"]
+        tile = {**tc["confusion"],
+                "mcc": tc["mcc"]["point"],
+                "mcc_CI": [tc["mcc"]["ci_lower"], tc["mcc"]["ci_upper"]],
+                "sensitivity": tc["sensitivity"]["point"],
+                "specificity": tc["specificity"]["point"]}
     gdf_det = gpd.read_file(BASE_DIR / rel)
     if gdf_det.crs is None:
         gdf_det = gdf_det.set_crs("EPSG:4326")
     gdf_det = gdf_det.to_crs(DEFAULT_CRS)
-    row50 = next(r for r in summary["results"] if r["R_m"] == BUFFER_M)
-    return gdf_det, row50["tile_classification"]
+    return gdf_det, tile
 
 
 #: Cardinal numbers spelled out for the board's prose. Anything larger
@@ -299,7 +321,9 @@ def render_md(out: dict) -> str:
         '# 55-map canonical board — tile-MCC permutation tiering @ 50 m'
     """
     n_sig, n_pairs = out["n_significant"], out["n_pairs"]
-    standardised = out.get("reference") == "standardised"
+    reference = out.get("reference", "canonical")
+    standardised = reference == "standardised"
+    is_r2 = reference == "r2"
     # Board size and gate tally are DERIVED, never asserted. Both used to
     # be the fixed strings "the eight" and "(8/8)", so adding or removing
     # a cell in CELLS would have left the committed board claiming a
@@ -311,15 +335,18 @@ def render_md(out: dict) -> str:
     n_cells = len(out["cells"])
     gate_verified = out.get("gate_cells_verified", n_cells)
     gate_total = out.get("gate_cells_total", n_cells)
-    title = (
-        "# 55-map standardised board — tile-MCC permutation tiering"
-        if standardised else
-        "# 55-map canonical board — tile-MCC permutation tiering @ 50 m"
-    )
-    cells_desc = (
-        "standardised-reference cells (MCC is buffer-invariant on this "
-        "reference)" if standardised else "canonical-GT cells"
-    )
+    title = {
+        "r2": "# 55-map board, reference r2 — tile-MCC permutation tiering",
+        "standardised": "# 55-map standardised board — tile-MCC permutation tiering",
+    }.get(reference, "# 55-map canonical board — tile-MCC permutation tiering @ 50 m")
+    cells_desc = {
+        "r2": ("reference-r2 cells (MCC is buffer-invariant on this "
+               "reference)"),
+        "standardised": ("standardised-reference cells (MCC is buffer-invariant "
+                         "on this reference)"),
+    }.get(reference, "canonical-GT cells")
+    ci_engine = "scoring" if (standardised or is_r2) else "Track-2"
+    ci_file = "`evaluation.json`" if is_r2 else "`summary.json`"
     md = [
         title,
         "",
@@ -330,8 +357,8 @@ def render_md(out: dict) -> str:
         " two-sided) + BH-FDR q=0.05 + greedy-clique tiers — the same machinery"
         f" as the F1-led board. {n_sig}/{n_pairs} pairs significant ->"
         f" {len(out['tiers'])} tier(s). 95% CIs are the "
-        f"{'scoring' if standardised else 'Track-2'} engine's BCa"
-        " bootstrap CIs, carried from `summary.json`. Gate: rebuilt"
+        f"{ci_engine} engine's BCa"
+        f" bootstrap CIs, carried from {ci_file}. Gate: rebuilt"
         " per-tile confusion matrices reproduce the committed evaluations"
         f" exactly ({gate_verified}/{gate_total}).",
         "",
@@ -347,7 +374,8 @@ def render_md(out: dict) -> str:
             f"| {c['sensitivity']:.3f} | {c['specificity']:.3f} "
             f"| {cf['tp']}/{cf['fp']}/{cf['fn']}/{cf['tn']} |")
     md += ["", "## Reading this board", "", PAIRED_CI_NOTE, "",
-           (STANDARDISED_ATTRIBUTION_NOTE if standardised
+           (R2_ATTRIBUTION_NOTE if is_r2
+            else STANDARDISED_ATTRIBUTION_NOTE if standardised
             else ATTRIBUTION_RESOLUTION_NOTE), "",
            "## Pairwise (BH-adjusted)", "",
            "| pair | ΔMCC | p | BH p | sig |", "|---|---:|---:|---:|---|"]
@@ -368,12 +396,15 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
         reference: ``canonical`` (legacy ring-gated pairing, default —
             unchanged behaviour) or ``standardised`` (ruling-21 layers,
             queue item 5; separate ``-standardised`` output files, cells
-            read from ``results/55maps-standardised-ref-2026-08-14/``).
+            read from ``results/55maps-standardised-ref-2026-08-14/``), or
+            ``r2`` (reference revision r2; ``-r2`` outputs, cells read from
+            ``results/55maps-r2-ref-2026-09-06/``).
     """
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     standardised = reference == "standardised"
-    stem = ("55map-mcc-tiering-standardised" if standardised
-            else "55map-mcc-tiering")
+    is_r2 = reference == "r2"
+    stem = {"standardised": "55map-mcc-tiering-standardised",
+            "r2": "55map-mcc-tiering-r2"}.get(reference, "55map-mcc-tiering")
 
     if rebuild_md_only:
         src = OUT_DIR / f"{stem}.json"
@@ -388,7 +419,11 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
         gdf_bounds = gdf_bounds.set_crs("EPSG:4326")
     gdf_bounds = gdf_bounds.to_crs(DEFAULT_CRS)
 
-    if standardised:
+    if is_r2:
+        gdf_ref = r2_gt()
+        print(f"r2 reference (buffer-invariant): {len(gdf_ref)} points; "
+              f"{len(gdf_bounds)} tiles", flush=True)
+    elif standardised:
         gdf_student = gpd.read_file(STUDENT_STD).to_crs(DEFAULT_CRS)
         gdf_phantoms = load_standardised_extension(
             EXTENSION_STD, crs=DEFAULT_CRS,
@@ -413,7 +448,7 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
               f"({len(gdf_student)} students + {len(gdf_phantoms)} phantoms); "
               f"{len(gdf_bounds)} tiles", flush=True)
 
-    cell_base = TRACK2_STD if standardised else TRACK2
+    cell_base = {"standardised": TRACK2_STD, "r2": TRACK2_R2}.get(reference, TRACK2)
     cells: list[dict] = []
     # Names whose rebuilt confusion matrix matched the committed one.
     # Counted rather than assumed: the gate verdict published in the JSON
@@ -473,13 +508,18 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
     print(f"{n_sig}/{len(pairs)} pairs significant -> {len(tiers)} tier(s)", flush=True)
 
     out = {
-        "track": ("55map-standardised" if standardised else "55map-canonical"),
+        "track": {"standardised": "55map-standardised",
+                  "r2": "55map-r2"}.get(reference, "55map-canonical"),
         "reference": reference,
         "metric": "tile_mcc", "buffer_m": BUFFER_M,
         "n_tiles": int(len(truth)), "n_populated_tiles": int(truth.sum()),
         "n_permutations": N_PERMUTATIONS, "seed": SEED,
         "bh_q": 0.05, "n_significant": n_sig, "n_pairs": len(pairs),
         "ci_source": (
+            ("r2-scoring evaluation.json tile_classification.mcc ci_lower/"
+             "ci_upper (BCa, 10k bootstrap, seed 42 — evaluate_detections.py "
+             "at scoring time)")
+            if is_r2 else
             ("standardised-scoring summary.json tile_classification.mcc_CI "
              "(BCa, 10k bootstrap, seed 42 — computed by the engine at "
              "scoring time)")
@@ -516,10 +556,12 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--reference",
-        choices=["canonical", "standardised"],
+        choices=["canonical", "standardised", "r2"],
         default="canonical",
-        help="Reference to tier against: canonical (legacy, default) or "
-             "standardised (ruling 21; writes -standardised outputs).",
+        help="Reference to tier against: canonical (legacy, default), "
+             "standardised (ruling 21; writes -standardised outputs), or r2 "
+             "(the 2026-09 audit revision; writes -r2 outputs, reads the r2 "
+             "scoring home).",
     )
     _args = parser.parse_args()
     raise SystemExit(main(

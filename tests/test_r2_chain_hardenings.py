@@ -197,3 +197,176 @@ def test_a_reference_outside_the_family_still_resolves_unresolved():
     meta = {"input_files": {"ground_truth": "inputs/vectors/references/something-else.geojson"}}
     res = lus.resolve_reference(meta, "some-label", None)
     assert res.basis == "unresolved"
+
+
+# ------------------------------------------------ Session 149 (Fable) ---
+# Pass pins (MINOR 14), the build's r2 tolerances, the MCC board's engine
+# shape, and the single r2 registrar.
+
+import json  # noqa: E402
+
+from scripts import final_board_build as fbb  # noqa: E402
+from scripts import final_board_sweeps as fbs  # noqa: E402
+from scripts import pin_pass_provenance as pin  # noqa: E402
+from scripts import register_r2_conditions as r2reg  # noqa: E402
+from scripts.mcc_tiering_55map import _load_cell_inputs  # noqa: E402
+
+
+def _fake_cell(tmp_path: Path, k: int = 2) -> Path:
+    """A minimal pass tree: run_1..run_k each with one detections file + meta."""
+    cell = tmp_path / "cell"
+    for i in range(1, k + 1):
+        d = cell / f"run_{i}"
+        d.mkdir(parents=True)
+        (d / "detections-x.geojson").write_text(json.dumps(
+            {"type": "FeatureCollection", "features": [], "run": i}))
+        (d / "detections-x.meta.json").write_text(json.dumps(
+            {"run_id": f"id-{i}", "timestamp": {"start": f"2026-01-0{i}T00:00", "end": ""}}))
+    return cell
+
+
+def _spec(cell: Path, tmp_path: Path, k: int = 2) -> dict:
+    return {"cell_dir": cell, "k": k, "pin": tmp_path / "pin.json"}
+
+
+@pytest.mark.tier1
+def test_pass_pin_round_trips_and_gates(tmp_path, monkeypatch):
+    """MINOR 14: a matching tree passes; a swapped, edited or extra pass fails."""
+    monkeypatch.setattr(pin, "PROJECT_ROOT", tmp_path)
+    cell = _fake_cell(tmp_path)
+    spec = _spec(cell, tmp_path)
+    p = pin.build_pin("t", spec)
+    assert [e["run_id"] for e in p["passes"]] == ["id-1", "id-2"]
+    assert p["start_times_monotone"] is True
+    spec["pin"].write_text(json.dumps(p))
+    pin.verify_pin("t", spec)  # matches
+
+    # Swap the two passes' contents: union unchanged, rungs would differ.
+    a, b = cell / "run_1/detections-x.geojson", cell / "run_2/detections-x.geojson"
+    ta, tb = a.read_text(), b.read_text()
+    a.write_text(tb)
+    b.write_text(ta)
+    with pytest.raises(pin.PassPinError, match="sha256"):
+        pin.verify_pin("t", spec)
+    a.write_text(ta)
+    b.write_text(tb)
+
+    # A stray pass beyond K is flagged even though the loaders ignore it.
+    (cell / "run_3").mkdir()
+    (cell / "run_3/detections-x.geojson").write_text("{}")
+    with pytest.raises(pin.PassPinError, match="beyond K"):
+        pin.verify_pin("t", spec)
+
+
+@pytest.mark.tier1
+def test_pass_pin_missing_is_a_hard_stop(tmp_path, monkeypatch):
+    """Deriving a rung without a committed pin must refuse, not proceed."""
+    monkeypatch.setattr(pin, "PROJECT_ROOT", tmp_path)
+    cell = _fake_cell(tmp_path)
+    with pytest.raises(pin.PassPinError, match="no pass pin"):
+        pin.verify_pin("t", _spec(cell, tmp_path))
+
+
+@pytest.mark.tier1
+def test_committed_pins_match_the_tree():
+    """The three committed pins verify against the current pass trees."""
+    for tag, spec in pin.PINNED_CELLS.items():
+        if not spec["cell_dir"].exists():
+            pytest.skip(f"{tag}: pass tree not on this machine")
+        pin.verify_pin(tag, spec, check_hashes=False)
+
+
+@pytest.mark.tier1
+def test_build_tolerates_unaudited_3_7_costs():
+    """family_of must not KeyError on a 3.7 label; cost renders as a dash."""
+    assert fbb.family_of("ARM1-N3-oracle") == "ARM1-N3"
+    assert fbb.cost_of("FOURTH-N10-carried") is None
+    assert fbb.fmt_cost(None) == "—"
+    assert fbb.fmt_cost(97.22) == "$97"
+
+
+@pytest.mark.tier1
+def test_coincident_points_are_the_committed_identity_points():
+    """The coincidence gate's r1 points must be the sweep's identity points."""
+    for cell, fam in (("TH7-oracle", "TH7"), ("IM-oracle", "IM"), ("UPL-oracle", "UPL")):
+        assert fbb.COINCIDENT_POINTS[cell] == fbs.IDENTITY[fam][0]
+    assert r2reg.COINCIDENT_POINTS == fbb.COINCIDENT_POINTS
+
+
+@pytest.mark.tier1
+def test_g37_identity_counts_match_the_committed_primaries():
+    """The 3.7 identity gates are the committed primaries' own feature counts."""
+    for label, det, _f1 in fbs.G37_COMMITTED:
+        fam = label.removesuffix("-carried")
+        n = len(json.loads((ROOT / det).read_text())["features"])
+        assert n == fbs.G37_IDENTITY[fam][1], (fam, n)
+
+
+@pytest.mark.tier1
+def test_mcc_board_reads_the_engine_evaluation_shape(tmp_path):
+    """r2 cells carry evaluate_detections' nested tile block, not summary.json."""
+    cell = tmp_path / "X-k4"
+    cell.mkdir()
+    det = tmp_path / "det.geojson"
+    gpd.GeoDataFrame({"a": [1]}, geometry=[Point(25.0, 42.0)], crs="EPSG:4326").to_file(
+        det, driver="GeoJSON")
+    ev = {"_metadata": {"input_files": {"detections": [str(det.relative_to(tmp_path))]}},
+          "summary": {"tile_classification": {
+              "confusion": {"tp": 1, "tn": 2, "fp": 3, "fn": 4},
+              "mcc": {"point": 0.5, "ci_lower": 0.4, "ci_upper": 0.6},
+              "sensitivity": {"point": 0.2}, "specificity": {"point": 0.9}}}}
+    (cell / "evaluation.json").write_text(json.dumps(ev))
+    import scripts.mcc_tiering_55map as m
+    old = m.BASE_DIR
+    m.BASE_DIR = tmp_path
+    try:
+        gdf, tile = _load_cell_inputs(cell)
+    finally:
+        m.BASE_DIR = old
+    assert len(gdf) == 1 and gdf.crs.to_epsg() == 32635
+    assert tile == {"tp": 1, "tn": 2, "fp": 3, "fn": 4, "mcc": 0.5,
+                    "mcc_CI": [0.4, 0.6], "sensitivity": 0.2, "specificity": 0.9}
+
+
+@pytest.mark.tier1
+def test_r2_registrar_clones_scoring_rows_and_retargets_eval_paths():
+    """7a-i: every r1 scoring-home row gains an -r2-gt twin in the r2 home."""
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    plan = r2reg.clone_scoring_rows(dec)
+    assert plan, "no scoring-home rows found to clone"
+    for run_id, row, status in plan:
+        assert row["label"].endswith("-r2-gt")
+        assert row["eval_path"].startswith(r2reg.R2_SCORING)
+        assert status in ("add", "skip")
+        src = next(c for c in dec[run_id]["conditions"]
+                   if c["label"] == row["label"].replace("-r2-gt", "-standardised-gt"))
+        assert row["detections"] == src["detections"]  # detections never move
+    assert {Path(r["eval_path"]).parent.name for _, r, _ in plan} >= {
+        "IM-k4", "TH7-k4", "T03-k4", "TM-k4", "TM-n10-k5"}
+
+
+@pytest.mark.tier1
+def test_r2_registrar_authors_every_board_family_and_skips_coincidence():
+    """7a-ii: stride, incumbent, 3.7-arm and fourth-cell schemes; coincidence skipped."""
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+
+    def cell(label, point, basis="oracle (r2-reference argmax)"):
+        return {"label": label, "det": f"x/cells/{label}/detections.geojson",
+                "basis": basis, "point": point, "committed_eval": False}
+
+    manifest = [cell("B-N1-oracle", "(0.20, k1)"), cell("A-N3-carried", "(0.15, k3)", "carried (post-hoc)"),
+                cell("TH7-oracle", "(0.15, k3)"), cell("T03-oracle", "(0.20, k3)"),
+                cell("ARM2-N3-oracle", "(0.95, k3)"), cell("FOURTH-N10-carried", "(0.98, k10)", "carried"),
+                {"label": "TH7-k4", "det": "d", "basis": "carried", "point": "(0.15, k4)", "committed_eval": True}]
+    plan = author_board_rows = r2reg.author_board_rows(dec, manifest, None)
+    by = {row["label"]: (run, status) for run, row, status in plan}
+    assert by["TH7-oracle"] == (None, "coincident")  # argmax on the committed set
+    assert by["g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt"] == ("stride-55map-2026-08-25", "add")
+    assert by["g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt"][1] == "add"
+    assert by["verified-oracle-p0.20-k3-r2-gt"] == ("55maps-text-high-t0-3-generalisation", "add")
+    assert by["arm2-n3-oracle-p0.95-k3-r2-gt"] == ("gemini37-55map-2026-08-29", "add")
+    assert by["g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt"][1] == "add"
+    assert "TH7-k4" not in {r["label"] for _, r, _ in plan}  # committed_eval: cloned in 7a-i
+    arm = next(r for _, r, _ in plan if r["label"].startswith("arm2-"))
+    assert arm["verifier_config"]["model"].startswith("gemini-3.7"), arm["verifier_config"]
+    assert author_board_rows is plan

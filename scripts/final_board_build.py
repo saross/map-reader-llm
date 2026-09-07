@@ -113,6 +113,7 @@ COMMITTED_BOARD = (PROJECT_ROOT / "results/55map-leaderboard"
                    / "55map_leaderboard_50m_standardised.json")
 BUFFER_M = 50
 GATE_TOL = 0.003
+BUILD_DATE_R2 = "2026-09-07"  # the r2 board's original-publication date
 N_PERMS = 10_000
 SEED = 42
 
@@ -156,12 +157,35 @@ FAMILY_COST = {
 }
 
 
+#: 3.7 campaign families (on the board from reference r2). Their audited
+#: all-in flex costs are NOT yet in the cost table -- the campaign card
+#: prices B-geometry K=5 at ~$125-195 all-in (planning/gemini37-55map-
+#: 2026-08-29.md § cost) but no per-cell audited line-item has landed.
+#: Rendered as "--" and excluded from the efficiency table until the PI
+#: supplies the figures; never guessed.
+FAMILY_COST.update({
+    "ARM1-N1": None, "ARM1-N3": None, "ARM1-N5": None,
+    "ARM2-N1": None, "ARM2-N3": None, "ARM2-N5": None,
+    "FOURTH-N1": None, "FOURTH-N3": None, "FOURTH-N10": None,
+})
+
+
 def family_of(label: str) -> str:
     """Cost family for a board cell label."""
     for fam in sorted(FAMILY_COST, key=len, reverse=True):
         if label == fam or label.startswith(fam + "-"):
             return fam
     raise KeyError(label)
+
+
+def cost_of(label: str) -> float | None:
+    """Audited all-in cost for a cell's family, or None if not yet audited."""
+    return FAMILY_COST.get(family_of(label))
+
+
+def fmt_cost(cost: float | None) -> str:
+    """Render a cost cell: ``$123`` or ``--`` when unaudited."""
+    return f"${cost:.0f}" if cost is not None else "—"
 
 
 def compact_letters(ordered_labels: list[str],
@@ -221,7 +245,25 @@ PAPER_ROWS = [
     # the same cell. IM-k4 (E82) stays as the comparability derivation.
     ("image (HIGH, K = 5) — as shipped (k3)", "IM-oracle", "IM-oracle"),
     ("image comparability (k4, E82)", "IM-k4", None),
+    # 3.7 campaign (membership ruling 2026-09-06; on the board from r2).
+    # Rendered only when the cells are present, so r1 rebuilds are unchanged.
+    ("3.7 arm 1: 3.7 proposer + G3 verifier, N = 5", "ARM1-N5-carried", "ARM1-N5-oracle"),
+    ("3.7 arm 1, N = 3", None, "ARM1-N3-oracle"),
+    ("3.7 arm 1, N = 1", None, "ARM1-N1-oracle"),
+    ("3.7 arm 2: all-3.7 stack, N = 5", "ARM2-N5-carried", "ARM2-N5-oracle"),
+    ("3.7 arm 2, N = 3", None, "ARM2-N3-oracle"),
+    ("3.7 arm 2, N = 1", None, "ARM2-N1-oracle"),
+    ("fourth cell: B K = 10 union + 3.7 verifier", "FOURTH-N10-carried", "FOURTH-N10-oracle"),
+    ("fourth cell, N = 3", None, "FOURTH-N3-oracle"),
+    ("fourth cell, N = 1", None, "FOURTH-N1-oracle"),
 ]
+
+#: Committed r1 operating points of the three oracle cells whose r1 argmax
+#: landed on a committed detection set (the COINCIDENT gate). On another
+#: reference the argmax may move; the gate then has nothing to coincide
+#: with and is reported rather than enforced.
+COINCIDENT_POINTS = {"TH7-oracle": (0.15, 3), "IM-oracle": (0.15, 3),
+                     "UPL-oracle": (0.15, 5)}
 DISPLAY_BASIS = {
     "image (HIGH, K = 5) — as shipped (k3)": "as-shipped (k3)",
     "image comparability (k4, E82)": "comparability (k4)",
@@ -336,16 +378,25 @@ def render_figure(ordered: list[dict], tier_of: dict, sig: dict,
     logger.info("figure -> %s", out_png.relative_to(PROJECT_ROOT))
 
 
-def main(reference: str = "standardised") -> int:
+def main(reference: str = "standardised", force_r1: bool = False) -> int:
     """Build the 50 m final board against one reference vintage.
 
     Args:
         reference: ``standardised`` (r1, default) or ``r2``.
+        force_r1: Permit rewriting the committed r1 board (read-only by
+            policy, H2 -- G3 reproduces it, so rewriting it destroys the
+            regression evidence). Deliberate regenerations only.
 
     Returns:
         Process exit code.
     """
     out = board_home(reference)
+    if reference == "standardised" and (out / "final_board_50m.json").exists() \
+            and not force_r1:
+        raise SystemExit(
+            f"{out.relative_to(PROJECT_ROOT)} is the committed r1 board and is "
+            "read-only (H2). Use --reference r2, or --force-r1 to regenerate "
+            "r1 deliberately.")
     # TWO references, deliberately (BLOCKER 4, r2-chain audit; PI ruling,
     # Session 149). ``gate_ref`` is ALWAYS r1: G3 asks whether this code still
     # reproduces the committed r1 board, which is a regression test on the
@@ -394,7 +445,17 @@ def main(reference: str = "standardised") -> int:
                 "%d tiers)", len(pairs), len(tiers))
 
     # ---- Coincidence gates. ----
+    manifest_points = {m["label"]: m["point"] for m in json.loads(
+        (out / "cells_manifest.json").read_text())["cells"]}
     for label, committed_eval in COINCIDENT.items():
+        pt, pk = COINCIDENT_POINTS[label]
+        if manifest_points.get(label) != f"({pt:.2f}, k{pk})":
+            # The argmax moved off the committed set on this reference:
+            # there is no coincidence to check. Report, never enforce.
+            logger.info("coincidence n/a  %-11s argmax %s != committed (%.2f, k%d) "
+                        "on %s -- oracle and committed rows are distinct cells",
+                        label, manifest_points.get(label), pt, pk, reference)
+            continue
         new = eval50(out / "cells" / label / "evaluation.json")
         old = eval50(PROJECT_ROOT / retarget(committed_eval, reference))
         # The current evaluate_detections stores f1 rounded to 4 d.p.;
@@ -454,7 +515,7 @@ def main(reference: str = "standardised") -> int:
                   out / "significance-groups.png")
 
     payload = {
-        "buffer_m": BUFFER_M, "reference": "standardised",
+        "buffer_m": BUFFER_M, "reference": reference,
         "instrument": ("round-robin tile-swap micro-F1 permutation "
                        f"({N_PERMS}, seed {SEED}) + BH q=0.05 + "
                        "greedy-clique tiers (the GS chain)"),
@@ -462,7 +523,7 @@ def main(reference: str = "standardised") -> int:
         "cells": [{**{k: v for k, v in c.items()
                       if k not in ("tp", "fp", "fn")},
                    "group": cld[c["label"]],
-                   "cost_usd": FAMILY_COST[family_of(c["label"])]}
+                   "cost_usd": cost_of(c["label"])}
                   for c in ordered],
         "pairwise": pairs,
     }
@@ -470,12 +531,20 @@ def main(reference: str = "standardised") -> int:
         json.dumps(payload, indent=2, default=float) + "\n")
 
     # ---- Markdown: ranked board + the run x carried/oracle table. ----
+    ref_desc = {
+        "standardised": "ruling-21 standardised (4,731 student + 279 extension)",
+        "r2": ("revision r2 (4,726 student + 278 extension + 14 audit-reviewed; "
+               "card `planning/reference-revision-2026-09-06.md`)"),
+    }[reference]
+    revised = ("2026-08-27 (original publication)" if reference == "standardised"
+               else f"{BUILD_DATE_R2} (original publication, reference r2)")
     lines = [
-        "# The final 55-map board @ 50 m — every run, carried and oracle",
+        "# The final 55-map board @ 50 m — every run, carried and oracle"
+        + ("" if reference == "standardised" else " (reference r2)"),
         "",
-        "> **Last revised**: 2026-08-27 (original publication). Card:",
+        f"> **Last revised**: {revised}. Card:",
         "> `planning/55map-final-board-2026-08-27.md`. Reference:",
-        "> ruling-21 standardised (4,731 student + 279 extension).",
+        f"> {ref_desc}.",
         "> Instrument: " + payload["instrument"] + ".",
         f"> {n_sig}/{len(pairs)} pairs significant.",
         "",
@@ -485,10 +554,9 @@ def main(reference: str = "standardised") -> int:
     ]
     for i, c in enumerate(ordered, 1):
         mcc = f"{c['mcc']:.3f}" if c["mcc"] is not None else "—"
-        cost = FAMILY_COST[family_of(c["label"])]
         lines.append(
             f"| {i} | {c['label']} | {c['basis']} | "
-            f"{tier_of[c['label']]} | {cld[c['label']]} | ${cost:.0f} | "
+            f"{tier_of[c['label']]} | {cld[c['label']]} | {fmt_cost(cost_of(c['label']))} | "
             f"{c['point']} | {c['f1_50']:.4f} | "
             f"[{c['ci'][0]:.4f}, {c['ci'][1]:.4f}] | "
             f"{c['precision_50']:.4f} | {c['recall_50']:.4f} | {mcc} | "
@@ -516,7 +584,10 @@ def main(reference: str = "standardised") -> int:
         "|---|---|---|---|",
     ]
     by_label = {c["label"]: c for c in ordered}
-    for row_name, carried, oracle in PAPER_ROWS:
+    # Rows whose cells are not on this board (e.g. the 3.7 rows on r1) drop out.
+    paper_rows = [(n, c, o) for n, c, o in PAPER_ROWS
+                  if (c is None or c in by_label) and (o is None or o in by_label)]
+    for row_name, carried, oracle in paper_rows:
         def fmt(lbl):
             if lbl is None:
                 return "—"
@@ -535,10 +606,12 @@ def main(reference: str = "standardised") -> int:
     ]
     # ---- Cost-efficiency table: one row per run, deployment basis. ----
     eff_rows = []
-    for row_name, carried, oracle in PAPER_ROWS:
+    for row_name, carried, oracle in paper_rows:
         lbl = carried or oracle
         c = by_label[lbl]
-        cost = FAMILY_COST[family_of(lbl)]
+        cost = cost_of(lbl)
+        if cost is None:
+            continue  # unaudited family: no $/mound claim
         tp = round(c["precision_50"] * c["n_detections"])
         eff_rows.append({
             "name": row_name, "label": lbl,
@@ -563,7 +636,9 @@ def main(reference: str = "standardised") -> int:
     # only — outside the deployment-basis frontier computation.
     for lbl in tiers[0]:
         c = by_label[lbl]
-        cost = FAMILY_COST[family_of(lbl)]
+        cost = cost_of(lbl)
+        if cost is None:
+            continue
         tp = round(c["precision_50"] * c["n_detections"])
         eff_rows.append({
             "name": f"{lbl} (T1 ceiling)", "label": lbl,
@@ -687,4 +762,9 @@ if __name__ == "__main__":
              "scoring home, and the G3 regression gate STILL reproduces the "
              "committed r1 board.",
     )
-    sys.exit(main(_ap.parse_args().reference))
+    _ap.add_argument(
+        "--force-r1", action="store_true",
+        help="Permit rewriting the committed r1 board (read-only by policy).",
+    )
+    _a = _ap.parse_args()
+    sys.exit(main(_a.reference, force_r1=_a.force_r1))
