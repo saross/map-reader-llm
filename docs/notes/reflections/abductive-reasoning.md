@@ -8052,6 +8052,7 @@ approval of intent, not of counts.
 **Instance:** primary
 
 ### Surprising fact
+
 The PI's ruling on register debt was "re-score the nine legacy replay-copy
 conditions against current inputs; swap only on identity". None
 reproduced: every detection GeoJSON on disk carried 4–8 % more features
@@ -8061,6 +8062,7 @@ than its committed evaluation had scored (692 → 750, 1,026 → 1,090,
 −0.009. `n1-outstanding-384` feeds four registered analyses.
 
 ### Probe
+
 Git archaeology on the inputs versus the evaluations' `generated_at_utc`.
 The evaluations were scored on 2026-08-21 (the E82 replay campaign, at
 `349cdd1b6`, from `cc-scratch/…/frozen/` copies). The detection files were
@@ -8073,6 +8075,7 @@ post-recovery sets had never been scored. Recall rising 0.08 is what
 recovering dead tiles does.
 
 ### Belief revision
+
 From "the register's legacy evaluations are stale in some ambiguous way"
 to "the register's legacy evaluations are a faithful pre-recovery record
 whose nominal inputs were rewritten by a later recovery, by a documented
@@ -8082,12 +8085,14 @@ taken. The verifier's `eval-detections-mismatch` had been saying exactly
 this for weeks; it took a re-score to price it.
 
 ### What would change this belief
+
 A pre-recovery copy of any of the nine GeoJSONs reproducing the committed
 evaluation with *fewer* features than the recovery added — if the frozen
 snapshot turned out to be post-recovery, the drift would be something
 else (a scoring-side change), and the diagnosis fails.
 
 ### Implications for practice
+
 A reproduction gate ("regenerate the published number from its pinned
 inputs") and a currency gate ("the number the current inputs give") are
 different tests; the register had the first and the paper cites the
