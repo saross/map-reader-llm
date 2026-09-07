@@ -1,6 +1,9 @@
 # Reference revision r2: fold the PI audits into the best-available ground truth and re-run the comparisons
 
-> **Last revised**: 2026-09-06 (S149: audit adjudicated, H1–H3 landed as code, § 4/§ 4a amended). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-07 (S149-b, fresh-eyes review: engine gate
+> reproduced, pass pins, single registrar, 3.7 families, steps 3/4
+> restructured, counts corrected). See [§ Changelog](#changelog) for
+> revision history.
 
 **The PI's direction (2026-09-06, Session 148, verbatim in substance)**:
 build a reference revision, establish it as the best-available ground
@@ -257,22 +260,42 @@ items).
 2. **Engine gate**: re-score IM-k4 against r1 through the same driver
    and reproduce its committed `evaluation.json` @ 50 m exactly (final
    board card § 5 gate 1); then score it against r2 and record the
-   delta as the first data point of the band.
-3. Standardised re-score against r2 of every board cell: the **23**
-   final-board cells the r1 board actually tiers, the 3.7 cells per the
-   membership ruling, at 14 buffers with MCC and tile-level bootstrap
-   (the IM-k4 template). **Amended S149** — this step said "the 16
-   final-board cells (`.../cells/`)", which matches no artefact:
-   `final_board_50m.json` tiers 23, `cells_manifest.json` lists 23, and
-   `cells/` holds 19 directories because the four carried incumbents
-   (IM-k4, T03-k4, TH7-k4, TM-k4) have no cell directory. The re-score
-   set is **enumerated from `cells_manifest.json` plus the membership
-   ruling at run time**, never from a literal in this document.
-4. **(Runs after 7a — see the amended order below.)** Rebuild the
-   55-map boards on r2 through the unbroken chain
-   (`build_55map_leaderboard.py`, `final_board_build.py`,
-   `final_board_sweeps.py`, `final_board_n3_carried.py`): F1 and MCC
-   boards, round-robin tile-swap permutation + BH + tiers. **Band
+   delta as the first data point of the band. **r1 half DONE as a
+   pre-flight (S149-b, 2026-09-07, sapphire, scratch, $0)**: the current
+   scorer at `176e4b267` reproduces the committed IM-k4 evaluation with
+   max |Δ| = 0 across 14 buffers × 5 fields, tile MCC 0.6548 = 0.6548,
+   n = 3,541. The "dirty" caveat is closed: the next commit after
+   `4ac0eeedf` (`c5dc6ebd4`) contains only the three IM-k4 outputs, and
+   the scorer diff since is provenance plumbing only. Step 2 proper
+   re-runs the r1 half for the record, then scores r2.
+3. r2 re-score of the **fixed-detection cells** (**restructured
+   S149-b**; S149's "every board cell" was wrong for 15 of the 23 — see
+   § 4a § 1): the nine r1 scoring-home cells (IM-k3, IM-k4, TH7-k3/k4,
+   T03-k3/k4, TM-k3/k4, TM-n10-k5) with `evaluate_detections.py` — the
+   IM-k4 template, **one engine for the whole chain** — at 14 buffers,
+   `--mcc`, BCa 10,000/42, `--require-clean-inputs`, into the r2
+   scoring home `results/55maps-r2-ref-2026-09-06/<cell>/`. These feed
+   the r2 leaderboard, the MCC board, and the final board's four carried
+   incumbents. Every other board cell is a product of step 4's sweep on
+   r2 and is scored there (4b).
+4. Rebuild the 55-map boards on r2 through the unbroken chain, in
+   four sub-steps (**restructured S149-b**): **4a**
+   `final_board_sweeps.py --reference r2` — the sweep runs on r2 while
+   every gate (G4, identity, mechanism, geometry) stays pinned to r1;
+   the 3.7 families ARM1-N5 / ARM2-N5 / FOURTH-N10 and their N = 1 /
+   N = 3 rungs join under the membership ruling, gated like A/B; oracle
+   = argmax on r2 for every family, uniformly; **4b** stage-2 scoring
+   of every materialised cell (`cells/<label>/detections.geojson`, 31
+   cells: 19 r1-pattern + 12 3.7) with `evaluate_detections.py` into the
+   r2 board home's `cells/<label>/evaluation.json` — the r1 pattern
+   (A-N1-oracle's `cli_args.output_dir` IS the board home) and where
+   `final_board_build.py --reference r2` reads; **4c**
+   `final_board_n3_carried.py --reference r2`; **4d**
+   `final_board_build.py --reference r2` (G3 pinned to r1; coincidence
+   gate conditional on the r2 argmax still landing on a committed set),
+   then `build_55map_leaderboard.py --reference r2` and
+   `mcc_tiering_55map.py --reference r2` (after 7a-i). Round-robin
+   tile-swap permutation + BH + tiers throughout. **Band
    gate**: r1→r2 deltas within the incumbent band (|Δ| ≲ 0.005 at
    50 m); larger drift halts for diagnosis. **Regression gate**: the
    r1 board reproduces before the r2 board is trusted.
@@ -321,13 +344,14 @@ leg included.
 code).** (2) Engine gate: `scripts/evaluate_detections.py` on IM-k4 →
 a scratch `evaluation.json` compared to
 `results/55maps-standardised-ref-2026-08-14/IM-k4/evaluation.json`;
-nothing committed. (3) r2 re-score: one `evaluation.json` per cell
-(14 buffers, MCC, BCa 10,000/42) under a NEW home
-`results/55maps-r2-ref-2026-09-06/<cell>/` — 16 final-board cells
-(`results/55map-final-board-2026-08-27/cells/*/detections.geojson`), the
-three 3.7 carried cells and their oracles, the 3.7 N = 1 / N = 3 rungs
-(materialised by the first-N derivation of `final_board_sweeps.py`, new
-`cells/` entries), and the canonical B N = 5 companion. **Amended S149 — the command
+nothing committed. (3) r2 re-score — **two homes, one engine (S149-b)**: the nine
+fixed-detection cells → `results/55maps-r2-ref-2026-09-06/<cell>/evaluation.json`
+(step 3); the 31 sweep-derived cells → `results/55map-final-board-r2-2026-09-06/cells/<label>/evaluation.json`
+(step 4b). S149's text put all cells in the scoring home, which
+`final_board_build.py` never reads for manifest cells; and it named
+`final_board_sweeps.py`'s first-N derivation for the 3.7 rungs, which
+could not reach the 3.7 passes — `build_g37_families` now can (H13).
+The canonical B N = 5 companion is its own sub-step (below). **Amended S149 — the command
 previously given here cannot run and would score the wrong set.**
 `stride55_score.py` has no `--compute-mcc` flag (argparse `:216-230`);
 `:195` passes `--compute-mcc` DOWN to `evaluate_detections.py`, so tile
@@ -336,9 +360,19 @@ MCC is already unconditional and the flag must simply be dropped. Worse,
 `spec["union_n"]` (`:108-112`): that manifest holds the **K = 10** union
 of **57,482** candidates, so `--union-n 43909` (ladder B N = 5) raises,
 and `--min-votes 5` would filter the K = 10 union rather than build the
-first-5 rung. The companion must be materialised by the SAME first-N
-derivation the 3.7 rungs need (see the amended H5), then scored; the
-gate against the ladder's `0.8437752627324171` at 1e-6 stands. (4) Boards — **the GS Era-2 leg is SPLIT OUT of this
+first-5 rung. **Companion sub-step (S149-b)**: the r2 sweep materialises
+`cells/B-N5-carried/detections.geojson` at (0.15, k5) from the first-5
+union with inherited K = 10 `verify` probabilities — the SAME detection
+set the ladder's 0.843775 was computed on (`cluster_first_n(passes,
+5)`, pass-pinned, geometry-gated to the committed primary at 0.01 m).
+Score THAT file on the canonical chain with the Track-2 engine exactly
+as `stride55_score.py` scores a primary (`compute_corrected_f1_multi_buffer.py`
+with the canonical review, buffers 20/30/50, B = 10,000, seed 42, MCC)
+into `results/stride55-2026-08-27/g384_ov192_55map/n5-companion/`; gate
+corrected-F1 @ 50 against `0.8437752627324171` at 1e-6; register
+`g384-ov192-55map-n5-carried-p0.15-k5-canonical-gt` pointing at that
+summary. Its evaluation is the 41st file of the chain and the only one
+not on r2. (4) Boards — **the GS Era-2 leg is SPLIT OUT of this
 block (PI ruling, S149)**: `results/leaderboard/era2/` git-tracks zero
 files, no leaderboard spec YAML exists in the repo, and
 `planning/condition-inventory.json` carries zero 3.7/3.8 entries, so
@@ -349,12 +383,10 @@ and gets its own card, spec, inventory rows and gates. What remains in
 step 4 is the two 55-map boards:
 `results/55map-final-board-r2-2026-09-06/` (`final_board_50m.json`,
 `final-board-50m.md`, `sweeps.json`, `cells/`, the significance figure)
-and `results/55map-leaderboard/55map-leaderboard-50m-r2.md` + MCC
-sibling via `build_55map_leaderboard.py --reference r2`; the GS Era-2
-boards under `results/leaderboard/era2/` rebuilt by
-`build_tiered_leaderboard.py` with the seven 3.7/3.8 cells added to the
-inventory (text and image tracks; the 3.8 cell and the K = 10 text cell
-and fourth-cell GS leg included). (5) Re-measured analyses: new rows
+and `results/55map-leaderboard/55map-leaderboard-50m-r2.md` via
+`build_55map_leaderboard.py --reference r2` + the MCC sibling
+`results/metric-leaderboards/55map-mcc-tiering-r2.{json,md}` via
+`mcc_tiering_55map.py --reference r2`. (5) Re-measured analyses: new rows
 `55map-r2-leaderboard-50m`, `-mcc-50m`, `obs280-shared-reference-r2`,
 `tile-level-f1-r2`; uplift-supplement pairing outputs under a `-r2`
 suffix; the MDE appendix's 55-map rows. (6) The estimated-correction
@@ -371,15 +403,16 @@ rows; manifests regenerated. (8) Disclosure: erratum entry, Methods
 **§ 2 Finished states (countable).** (2) |Δ F1@50| = 0 to 4 dp against the
 committed IM-k4 evaluation on r1, and the r2 delta recorded. (3) every
 cell in the membership list has an `evaluation.json` on r2 with
-`tile_classification.confusion` populated: **23 + 3 + 3 + 6 rungs + 1
-companion = 36 files** (amended S149 from "16 + 3 + 3 + 6 + 1 = 29" —
-the r1 board tiers 23 cells, not 16, so the old gate would have read
-green with seven cells still on r1: exactly the mixed-vintage board it
-exists to prevent). The count is DERIVED from `cells_manifest.json`
-plus the membership ruling at run time, not asserted from this
-document. The r2 → r1 drift table has one row per cell. (4) both 55-map boards tier all **32** cells (23 + 3 carried +
-3 oracle + 3 on-board rungs; amended S149 from "22 cells (16 + 3 + 3)")
-with BH q = 0.05 over all pairs; the r1 board reproduces first
+`tile_classification.confusion` populated: **41 evaluation files —
+9 in the r2 scoring home (step 3), 31 in the r2 board home (step 4b),
+and 1 canonical companion** (corrected S149-b: S149's "36 on r2" omitted
+the five leaderboard-only scoring cells and put the companion on r2;
+S148's "29" had the board at 16 cells). The count is DERIVED — the
+scoring set from `NAMES` + `COMMITTED_CARRIED`, the board set from the
+r2 `cells_manifest.json` — never asserted from this document. The r2 → r1 drift table has one row per cell. (4) the r2 final board tiers **35** cells (23 + 3 carried + 3 oracle +
+6 rung oracles — the 3.7 rungs are oracle-only, as the ladders record;
+S149's "32" was a slip), the r2 leaderboard and MCC board their 8, with
+BH q = 0.05 over all pairs; the r1 board reproduces first
 (regression gate, pinned to r1 — see the amended H-block). **The Era-2
 GS board finish states move to that block's own card** (PI ruling,
 S149): the 3.7 text K = 5, K = 10, swap, fourth-cell GS leg, the 3.8
@@ -396,14 +429,18 @@ all nine, plus the PI's signature on the register rows and the board.
 
 **§ 3 Stop states.** Spend: any API call → stop (the chain is $0; a
 missing verified set must be reported, never re-verified). Invariant
-gates red → stop before building on top: the 5 m duplicate audit in
-`standardised_gt()` (expected drops 0 on r2 too), the campaign gates
-8/8, the G4 sweep-scorer gate (0.003 bound), the family identity gates,
-the engine gate, the regression gate. Surprising results → verify the
+gates red → stop before building on top: the r2 census, `gt_id` and
+5 m channel-duplicate gates in `r2_gt()` (verified 2026-09-06: minimum
+separation 15.48 m), the pass pins (H11), the campaign gates 8/8, the
+G4 sweep-scorer gate (0.003, pinned to r1), the family identity /
+mechanism / geometry gates (r1), the engine gate, the G3 regression
+gate (r1), and `input_git_state.inputs` all `clean` or `ignored` on
+every evaluation written (steps 3 and 4b run `--require-clean-inputs`).
+`script_git_status` is tree-wide and is NOT a stop signal — a
+clean-input run on sapphire stamps `dirty` from untracked tile
+directories (verified S149-b). Surprising results → verify the
 pipeline, then escalate: any r1 → r2 delta |Δ F1@50| > 0.005 on a
-board cell; any tier change on the 55-map board between r1 and r2; any
-rank change on the GS boards (the GS reference does not change, so a GS
-rank change means a mechanism error); a 3.7 rung out of monotone order
+board cell; any tier change on the 55-map board between r1 and r2; a 3.7 rung out of monotone order
 with its N = 5 cell; a companion-row canonical F1 that misses the
 ladder's 0.843775 by > 1e-6. Missing or ambiguous inputs → stop, never
 substitute (the 3.7 rungs' first-N derivation must use the committed
@@ -413,26 +450,24 @@ probabilities, not `verify_37`). Sequencing: step 4 never starts before step 3's
 before step 4's boards exist. (Amended S149: the count was 29/29, and
 step 7 followed step 4.)
 Environment: sapphire only for steps 3–4 (the board chain took ~1 day at
-S143); the local machine only for the $0 minute-scale steps 6, 7, 9.
-**Added S149** — two accepted caveats from the audit, recorded so they
-are not re-diagnosed as failures: (a) the engine gate's target, IM-k4's
-committed `evaluation.json`, was built at `4ac0eeedf` with
-`script_git_status: "dirty"`, so if step 2 misses at 4 dp the
-uncommitted-tree provenance is the FIRST hypothesis to test, not a
-mechanism failure; (b) pass order is carried only by `run_<i>` naming
-and `load_deduped_passes` gates on tile-set equality, not order — so the
-first-N derivation must read the committed `run_<i>` sequence, and a
-re-ordered set would pass the union gate while producing a different
-rung.
+S143); the local machine only for the $0 minute-scale steps 6, 7a, 7b, 9.
+**S149's two caveats, both CLOSED in S149-b**: (a) the engine gate's
+"dirty" target reproduced exactly (step 2 above); (b) pass order is now
+pinned and gated (H11) — the loaders refuse a tree that does not match
+its committed pin.
 
-**§ 4 Dependency structure.** Hard (**amended S149**):
-**1 → 2 → 3 → 7a → 4 → {5, 6} → 7b → 8**; the old order put step 4
-before step 7, but the boards resolve their cells — and their NUMBERS —
-through the registered `-r2-gt` rows, so registration must precede the
-build. Formerly: 1 → 2 → 3 → 4 → {5, 6} → 7 → 8;
+**§ 4 Dependency structure.** Hard (**amended S149-b**):
+**1 → 2 → 3 → 7a-i → 4a → 4b → 4c → 4d → 7a-ii → {5, 6} → 7b → 8**.
+7a-i (clone the nine scoring-home rows) must precede the r2
+leaderboard and MCC board, which resolve cells by registered label and
+read their numbers from the row's `eval_path`; the final board reads
+files directly, so 7a-ii (author the 31 board-home rows from the r2
+manifest) follows 4d and precedes the analyses that cite them. Both
+halves are one command: `register_r2_conditions.py` (H12). Formerly
+(S148): 1 → 2 → 3 → 4 → {5, 6} → 7 → 8;
 9 depends on 1 only (it needs r2's layer sizes and the audit rates) and
 is simultaneous-safe with 2–8. Coherence orderings: (i) the manifests —
-step 7 is the ONLY writer of `results/*-manifest.json` in this block
+step 7b is the ONLY writer of `results/*-manifest.json` in this block
 (steps 3–6 write results homes only), so rows land once; (ii) the
 student-baseline card § 4 table — written by step 9 only; (iii) the
 r2 board home — written by step 4 only, never by step 3; (iv) the
@@ -444,10 +479,10 @@ anything; within step 3, cells are independent (workers).
 inputs and resumable: a cell with an existing `evaluation.json` is
 skipped, so a halted step 3 resumes; boards are rebuilt whole, so a
 halted step 4 leaves no partial board (the JSON is written last).
-Visibility: partial state shows as a missing file against the 29-file
-count, not as a silent number. Mixed-vintage risk: a board built from a
-mix of r1 and r2 evaluations — gated by step 4 reading ONLY from the r2
-home and by the 29/29 count; and a prose document straddling chains —
+Visibility: partial state shows as a missing file against the derived
+count (41 evaluation files), not as a silent number. Mixed-vintage risk: a board built from a
+mix of r1 and r2 evaluations — gated by every tool resolving its home from `--reference` (the r1
+homes are REFUSED without `--force-r1`) and by the derived count; and a prose document straddling chains —
 one-commit rule: a results `.md` and its changelog entry move together,
 and `results-draft.md` / the paper table move in one commit per document
 with the erratum id in the message.
@@ -457,7 +492,7 @@ with the erratum id in the message.
 the register rows point at files. Layer 1: ruff, the tier-1 suite, the
 schema validations, `verify_run_conditions.py`. Layer 2: a fresh-context
 Opus verifier after step 6 re-derives, cold, the winner on each 55-map
-board and each GS board from the evaluation files, the r1 → r2 drift
+board from the evaluation files, the r1 → r2 drift
 table, and the estimated column for three cells from the printed inputs;
 it reports its denominator (files opened, claims re-derived) and its
 corrections are claims — a disagreement triggers a third derivation or
@@ -487,11 +522,13 @@ three invariants `build_extended_gt` would have enforced — census
 (5,018 = 4,726 + 278 + 14), `gt_id` uniqueness, and the 5 m
 channel-duplicate audit — and exits on any failure.
 
-**H1a (new, S149).** `materialise_best_available_gt.apply_audit_revision`
-had **no spatial de-duplication at all** — it concatenates the 14
-`audit_reviewed` additions onto the union, and the script's only
-duplicate check is `gt_id` uniqueness, an IDENTIFIER test that cannot
-see two ids at the same coordinates. The additions are reviewer marks at
+**H1a (new, S149; wording corrected S149-b).** `materialise_best_available_gt.apply_audit_revision`
+had **no spatial de-duplication enforced in code or tests** — it
+concatenates the 14 `audit_reviewed` additions onto the union, and the
+script's only duplicate check is `gt_id` uniqueness, an IDENTIFIER test
+that cannot see two ids at the same coordinates. (§ 3b's "no pair
+within 15 m" was a one-off check by hand in S148, not a gate; S149's
+"unguarded" overstated it — *unenforced* is the accurate word.) The additions are reviewer marks at
 ~±2.5 m, exactly the regime the 5 m tolerance exists for. Measured on r2
 as built: nearest addition **68.35 m** from any existing point (13.7×
 tolerance), whole-reference minimum separation **15.48 m**, so r2 is
@@ -546,10 +583,14 @@ inputs, not a by-product of the sweep.
 **H6.** Step **7b** is the only manifest writer; one regeneration at the
 end (7a writes register rows only).
 
-**H7.** Satisfied — the clean-context pass ran
-(`reports/r2-chain-pre-run-audit-2026-09-06.md`) and this amendment is
-its disposition. A second pass runs against the amended card before
-step 3.
+**H7.** The first clean-context pass ran
+(`reports/r2-chain-pre-run-audit-2026-09-06.md`); S149 adjudicated it.
+S149-b's fresh-eyes review (Fable) then found and fixed the defects the
+adjudication left (steps 3/4 structure, registrar coverage, counts, the
+sweep's reference split, the build's payload label and cost table, the
+MCC board); the **second clean-context pass runs against THIS card
+after S149-b's commits, before step 3**, with the naive-reviewer stance
+and a denominator.
 
 **H8 (replaced).** *The original tripwire — "the GS boards must show no
 rank change among pre-existing cells" — is false by construction*:
@@ -584,6 +625,68 @@ different things — `MECHANISM_BOUND` bounds micro-F1 recomputed by the
 light scorer against the committed evaluation UNDER ONE REFERENCE, while
 0.005 bounds r1 → r2 movement of the estimate. No conflict; both stand.
 
+**H11 (new, S149-b; PI ruling) — pass-provenance pins.** The first-N
+rungs are `passes[:n]` over `run_1..run_K` in directory order and
+nothing on disk said which pass sat at which position; the union gate
+(count + votes at N = K) cannot see a swap. Verified from every pass's
+`meta.json` that directory order equals execution order on stride A,
+stride B and the 3.7 arm (run_1 08-29 02:39 → run_5 08-31 01:24;
+run_3's meta is gzipped). `scripts/pin_pass_provenance.py` writes
+`<cell>_passes.json` under `inputs/` (position, run dir, `run_id`,
+start/end, every detection file incl. recovery fragments, SHA-256, any
+`run_<j>` beyond K) and both `load_deduped_passes` loaders refuse a
+tree that does not match its pin. Three pins committed (`7caccb4be`),
+all monotone, no stray directories. Rung rows cite the pin.
+
+**H12 (new, S149-b; PI ruling) — one r2 registrar.** On r1 the
+`-standardised-gt` rows were written by three scripts and S149's H3
+gave only one an r2 mode (9 of 28 rows). `scripts/register_r2_conditions.py`
+does step 7a in one command: 7a-i clones every r1 scoring-home row to
+`-r2-gt` with `eval_path` retargeted (detections never move); 7a-ii
+authors a row for every materialised r2 board cell from the r2
+manifest, label schemes per family mirroring the r1 registrars, and
+skips coincident oracles exactly as pass 2 did. Dry-run by default,
+idempotent `--write`.
+
+**H13 (new, S149-b; PI ruling) — the 3.7 cells enter through the
+sweep.** `final_board_sweeps.build_g37_families` adds ARM1-N5, ARM2-N5,
+FOURTH-N10 and their N = 1 / N = 3 rungs by the same derivation as A/B
+(`cluster_first_n` over the pinned passes; probabilities inherited from
+the cell's own K-union verification within 10 m), through the
+campaign's own loaders, and gates them like A/B on r1: identity counts
+5,229 / 5,003 / 4,246 (the committed primaries' feature counts),
+committed F1@50 0.8550 / 0.8825 / 0.8732 within 0.003, exact (TP, FP,
+FN) reconstruction, geometry against the committed primaries at
+0.01 m. Oracle = argmax on r2 for every family, uniformly (the r1
+convention); the 3.7 rungs are oracle-only, as the ladders record.
+Joined only under `--reference r2`; the r1 board's membership is
+closed. Rejected alternative: freezing the 3.7 oracles at their
+canonical-ladder points would have mixed two oracle conventions on one
+board.
+
+**H14 (new, S149-b) — one engine on r2.** Every r2 evaluation is
+`evaluate_detections.py` (the IM-k4 template) against the merged r2
+file; the r1 chain used the Track-2 scorer for the nine leaderboard
+cells and the engine for the rest. Consumers that read Track-2
+`summary.json` were taught the engine's `evaluation.json` shape
+(`mcc_tiering_55map._load_cell_inputs`); the register adapter is not
+needed on r2 (the engine's output IS the register shape). Costs: the
+3.7 families have no audited all-in line-item yet — the build renders
+"—" and excludes them from the efficiency table until the PI supplies
+figures; never guessed.
+
+**H15 (new, S149-b) — r1 homes refused at tool level.**
+`final_board_sweeps.py`, `final_board_build.py` and
+`final_board_n3_carried.py` refuse `--reference standardised` when the
+committed r1 home exists unless `--force-r1`. H2's "read-only" is now a
+property of the tools, not a convention.
+
+**Engine-gate pre-flight (S149-b).** Step 2's r1 half was run as a
+scratch pre-flight on sapphire: max |Δ| = 0 across 14 buffers × 5
+fields, tile MCC 0.6548 = 0.6548, n = 3,541. The provenance signal for
+the chain is `input_git_state.inputs` (every input `clean`), not the
+tree-wide `script_git_status`.
+
 ## 5. Ties
 
 - `planning/ruling21-application-spec.md` — the pattern this follows.
@@ -599,6 +702,52 @@ light scorer against the committed evaluation UNDER ONE REFERENCE, while
   § (b) (instrument), 446, 449, 450, and the census Obs.
 
 ## Changelog
+
+### 2026-09-07 (S149-b, Fable) — Fresh-eyes review: loose ends closed, contract restructured
+
+The PI switched the session to Fable and asked for a review of the
+S149 (Opus) work, the engine-gate target, run naming, and the H7 pass.
+Findings and dispositions:
+
+**Engine gate — resolved empirically.** r1 half run as a scratch
+pre-flight on sapphire: Δ = 0 over 14 buffers × 5 fields, MCC and n
+identical. The "dirty" stamp was tree-wide (the next commit after the
+scorer's contained only the IM-k4 outputs; the scorer diff since is
+provenance plumbing), so the caveat is closed and `input_git_state`
+becomes the chain's provenance signal.
+
+**Run naming — verified, then pinned (H11).** Directory order equals
+execution order on all three cells; nothing pinned it. Pins committed;
+loaders gated.
+
+**Defects the S149 adjudication left, fixed:**
+
+| Claim | S149 | S149-b |
+| --- | --- | --- |
+| Where board cells are scored | all 36 in the scoring home | 9 scoring home (step 3) + 31 board home (4b); `final_board_build` only ever read the board home for manifest cells |
+| Step 4 | one step | 4a sweep (r2; gates r1; 3.7 families) → 4b stage-2 → 4c n3 → 4d build + boards |
+| Registrar coverage (7a) | `register_standardised_gt_conditions --reference r2` (9 of 28 rows) | `register_r2_conditions.py`: 7a-i clone (9) + 7a-ii author from the r2 manifest (31) |
+| Sweep under `--reference r2` | swept on r1, wrote to the r2 home | `gate_ref` (r1) / `ref` (r2) split |
+| Board JSON `reference` field | always `"standardised"` | the actual vintage |
+| 3.7 labels in the build | `KeyError` (no cost family) | tolerated; cost "—" until audited |
+| Coincidence gate on r2 | enforced unconditionally | enforced only if the r2 argmax still lands on the committed set |
+| MCC board | no r2 mode | `--reference r2`, reads the engine's `evaluation.json` shape |
+| Final-board cells on r2 | 32 | **35** (23 + 3 + 3 + 6 rung oracles) |
+| Evaluation files | "36 on r2" | **41**: 9 + 31 on r2 + 1 canonical companion |
+| Companion | "same first-N derivation, then scored" | the r2 sweep's `B-N5-carried` file, Track-2-scored on the canonical chain, gated 1e-6, registered `-canonical-gt` |
+| H1a wording | "no spatial dedup at all / unguarded" | unenforced in code or tests (§ 3b's 15 m check was by hand) |
+| § 1 (3), § 1 (4), § 3, § 5, § 6 | stale text from S148 (16 cells, GS boards, GS tripwire, 29/29) | removed or corrected |
+
+**What did NOT change**: the r2 artefact; the 0.005 band; the 1e-6
+companion gate against `0.8437752627324171`; G3 1e-9 / G4 0.003; the
+three PI rulings of S149 (single merged path; GS leg split out; gates
+pinned to r1); H9.
+
+**Code**: `7caccb4be` (pins, sweep), `e0e656ca8` (build, MCC board,
+registrar, tests); 25 tests in `tests/test_r2_chain_hardenings.py`.
+
+**Still NO-GO**: the second clean-context pass (H7) runs against this
+card next; then the PI's formal go with stop conditions in his words.
 
 ### 2026-09-06 (S149) — Audit adjudicated; H1–H3 landed as code; contract amended
 

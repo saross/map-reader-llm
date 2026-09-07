@@ -1,7 +1,6 @@
 # Fresh-context audit of the r2 recompute block
 
-> **Last revised**: 2026-09-06 (disposition of all 15 findings; every claim
-> re-verified against source before adjudication). See [§ Changelog](#changelog)
+> **Last revised**: 2026-09-07 (wording correction; MINOR 13/14 closed). See [§ Changelog](#changelog)
 > for revision history.
 
 Audit of `planning/reference-revision-2026-09-06.md` §§ 4/4a against the code.
@@ -318,6 +317,17 @@ The chain stays **NO-GO** until these are ruled, H1–H3 land as code, and the P
 gives a formal go with stop conditions in his own words.
 
 ## Changelog
+
+### 2026-09-07 (S149-b) — Wording correction to the disposition
+
+The disposition's "16th finding" said `apply_audit_revision` had no
+spatial de-duplication "at all"; the card's § 3b shows a "no pair
+within 15 m" check was run by hand in S148. Accurate wording:
+*unenforced in code or tests*, not *unguarded*. The gate landed in
+`fc54feac6` stands. Also recorded: the engine-gate target (MINOR 13)
+reproduced exactly in a scratch pre-flight (Δ = 0 over 14 buffers × 5
+fields), closing that caveat; and MINOR 14 is closed by committed pass
+pins (`7caccb4be`).
 
 ### 2026-09-06 (later) — Disposition of all 15 findings
 
