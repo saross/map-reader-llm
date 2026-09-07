@@ -796,6 +796,21 @@ tree-wide `script_git_status`.
 
 ## Changelog
 
+### 2026-09-07 (S149-c) — Step 7b closure check DONE: the audit classes collapse on r2
+
+Both adjudications re-run against r2 from their saved verdicts
+(`empty_tile_adjudicate.py --gt r2 --mode empty|census`; outputs in
+`results/empty-tile-audit/closure-r2/` and
+`results/cluster-audit/closure-r2/`): **empty-tile** 4 known-in-GT +
+5 true-double-miss (r1) → **9 known-in-GT** (r2); **census** 13
+known-in-GT + 2 true-double-miss + 6 detected + 1 proposed-but-filtered
++ 7 gt-error-flag (r1) → **22 known-in-GT + 7 gt-error-flag** (r2) —
+the nine additions are now reference points, and all seven flagged
+targets are absent from r2 (six removed by the instruction set, one
+never in the reference). Exactly the collapse § 4 step 7 predicted. The
+single manifest regeneration waits for the r2 analysis rows (step 6's
+"new analysis rows, PI-signed"), so that rows land once.
+
 ### 2026-09-07 (S149-c) — Step 5d DONE: the r2 K = 1 anchors; the supplement's r2 stratum exists
 
 The 24 ready r2 anchor jobs scored on sapphire (`89b31e846`; 2 h 49 min

@@ -1,0 +1,462 @@
+{
+  "generated": "2026-09-07",
+  "mode": "empty",
+  "census": {},
+  "reference": "r2",
+  "reference_path": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+  "history": [],
+  "protocol": "planning/student-baseline-2026-08-31.md \u00a7 5b",
+  "radius_m": 50.0,
+  "reviewed_tiles": 500,
+  "reviewed_by_tier": {
+    "10pct": 470,
+    "20pct": 30
+  },
+  "marks": 9,
+  "classes": {
+    "known-in-GT": 9
+  },
+  "distinct": {
+    "gt_error_flags": {
+      "marks": 0,
+      "distinct_points": 0,
+      "points": []
+    },
+    "sightings_by_class": {
+      "known-in-GT": 9
+    }
+  },
+  "frame_empty_tiles": 4676,
+  "gt_points": 5018,
+  "reference_sets": {
+    "ground-truth": {
+      "kind": "gt",
+      "n": 5018,
+      "path": "inputs/vectors/references/best-available-gt-55maps-r2.geojson"
+    },
+    "arm2-carried-3.7": {
+      "kind": "deployed",
+      "n": 5003,
+      "path": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/verified_detections.geojson"
+    },
+    "B-N5-carried-G3": {
+      "kind": "deployed",
+      "n": 4736,
+      "path": "results/55map-final-board-2026-08-27/cells/B-N5-carried/detections.geojson"
+    },
+    "union-3.7-K5": {
+      "kind": "union",
+      "n": 12715,
+      "path": "outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/union_k5.geojson"
+    },
+    "union-G3-K10": {
+      "kind": "union",
+      "n": 57482,
+      "path": "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/union_k10.geojson"
+    }
+  },
+  "estimates": [
+    {
+      "stratum": "all reviewed tiles",
+      "tiles_reviewed": 500,
+      "true_double_misses": 0,
+      "rate_per_tile": 0.0,
+      "ci95": [
+        0.0,
+        0.007350610051907784
+      ],
+      "implied_missed_in_frame": 0.0,
+      "implied_missed_ci95": [
+        0.0,
+        34.3714526027208
+      ],
+      "implied_share_of_gt": 0.0,
+      "implied_share_of_gt_ci95": [
+        0.0,
+        0.006849631845898924
+      ]
+    },
+    {
+      "stratum": "10 % tier only (complete SRS)",
+      "tiles_reviewed": 470,
+      "true_double_misses": 0,
+      "rate_per_tile": 0.0,
+      "ci95": [
+        0.0,
+        0.007817959227398485
+      ],
+      "implied_missed_in_frame": 0.0,
+      "implied_missed_ci95": [
+        0.0,
+        36.55677734731532
+      ],
+      "implied_share_of_gt": 0.0,
+      "implied_share_of_gt_ci95": [
+        0.0,
+        0.0072851290050449016
+      ]
+    }
+  ],
+  "per_mark": [
+    {
+      "order_index": 122,
+      "tile_name": "K-35-063-4_Skobelevo_4326_x336_y3360.png",
+      "map_name": "K-35-063-4_Skobelevo_4326",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 358176.8,
+      "y_world": 4651904.6,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 2.4,
+          "gt_id": "student:02501"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 2.9,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 1456.3,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 2.9,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.1
+        },
+        "union-G3-K10": {
+          "distance_m": 6.4,
+          "vote_count": 6,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 2.4,
+      "edge_m": 10.1,
+      "sighting_group": 0
+    },
+    {
+      "order_index": 144,
+      "tile_name": "K-35-077-2_x1680_y1008.png",
+      "map_name": "K-35-077-2",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 447353.8,
+      "y_world": 4644234.8,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 0.1,
+          "gt_id": "audit:009"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 1283.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 1293.1,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 1283.6,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.3
+        },
+        "union-G3-K10": {
+          "distance_m": 346.3,
+          "vote_count": 10,
+          "prob_G3-vf": 0.0,
+          "prob_3.7-vf": 0.05
+        }
+      },
+      "nearest_anything_m": 0.1,
+      "edge_m": 626.4,
+      "sighting_group": 1
+    },
+    {
+      "order_index": 146,
+      "tile_name": "K-35-051-3_x1008_y1344.png",
+      "map_name": "K-35-051-3",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 340338.5,
+      "y_world": 4698772.6,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 0.0,
+          "gt_id": "audit:010"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 585.5,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 583.8,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 585.5,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.95
+        },
+        "union-G3-K10": {
+          "distance_m": 583.8,
+          "vote_count": 10,
+          "prob_G3-vf": 0.95,
+          "prob_3.7-vf": 0.99
+        }
+      },
+      "nearest_anything_m": 0.0,
+      "edge_m": 189.4,
+      "sighting_group": 2
+    },
+    {
+      "order_index": 190,
+      "tile_name": "K-35-067-4_x2352_y2688.png",
+      "map_name": "K-35-067-4",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 533652.5,
+      "y_world": 4654229.5,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 0.1,
+          "gt_id": "audit:011"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 1857.4,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 1854.2,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 1857.4,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 0.95
+        },
+        "union-G3-K10": {
+          "distance_m": 731.0,
+          "vote_count": 6,
+          "prob_G3-vf": 0.0,
+          "prob_3.7-vf": 0.0
+        }
+      },
+      "nearest_anything_m": 0.1,
+      "edge_m": 593.9,
+      "sighting_group": 3
+    },
+    {
+      "order_index": 218,
+      "tile_name": "K-35-054-3_Yambol_x672_y2352.png",
+      "map_name": "K-35-054-3_Yambol",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 463022.0,
+      "y_world": 4693584.8,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 30.6,
+          "gt_id": "student:01176"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 11.2,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 20.5,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 11.1,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 6.8,
+          "vote_count": 4,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.99
+        }
+      },
+      "nearest_anything_m": 6.8,
+      "edge_m": 2.5,
+      "sighting_group": 4
+    },
+    {
+      "order_index": 349,
+      "tile_name": "K-35-051-3_x1008_y3360.png",
+      "map_name": "K-35-051-3",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 341410.3,
+      "y_world": 4689174.7,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 0.0,
+          "gt_id": "audit:012"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 1099.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 1092.4,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 800.5,
+          "vote_count": 3,
+          "prob_3.7-vf": 0.01,
+          "prob_G3-vf": 0.0
+        },
+        "union-G3-K10": {
+          "distance_m": 222.9,
+          "vote_count": 1,
+          "prob_G3-vf": 0.0,
+          "prob_3.7-vf": 0.0
+        }
+      },
+      "nearest_anything_m": 0.0,
+      "edge_m": 663.0,
+      "sighting_group": 5
+    },
+    {
+      "order_index": 381,
+      "tile_name": "K-35-055-2_x2688_y0.png",
+      "map_name": "K-35-055-2",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 534826.9,
+      "y_world": 4722553.1,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 0.0,
+          "gt_id": "audit:013"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 496.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 494.4,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 496.6,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.95,
+          "prob_G3-vf": 0.1
+        },
+        "union-G3-K10": {
+          "distance_m": 475.9,
+          "vote_count": 1,
+          "prob_G3-vf": 0.2,
+          "prob_3.7-vf": 0.95
+        }
+      },
+      "nearest_anything_m": 0.0,
+      "edge_m": 570.3,
+      "sighting_group": 6
+    },
+    {
+      "order_index": 413,
+      "tile_name": "K-35-050-4_x1344_y672.png",
+      "map_name": "K-35-050-4",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 321369.0,
+      "y_world": 4702420.1,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 12.5,
+          "gt_id": "student:00039"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 1.2,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 4.7,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 1.2,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.98,
+          "prob_G3-vf": 1.0
+        },
+        "union-G3-K10": {
+          "distance_m": 3.6,
+          "vote_count": 10,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 1.2,
+      "edge_m": 10.0,
+      "sighting_group": 7
+    },
+    {
+      "order_index": 436,
+      "tile_name": "K-35-063-1_Granit_4326_x3696_y336.png",
+      "map_name": "K-35-063-1_Granit_4326",
+      "tier": "10pct",
+      "symbol": "Hairy brown circle",
+      "x_world": 354195.7,
+      "y_world": 4685511.9,
+      "class": "known-in-GT",
+      "flagged_gt_id": null,
+      "nearest": {
+        "ground-truth": {
+          "distance_m": 4.4,
+          "gt_id": "student:01841"
+        },
+        "arm2-carried-3.7": {
+          "distance_m": 3.6,
+          "vote_count": 5
+        },
+        "B-N5-carried-G3": {
+          "distance_m": 957.7,
+          "vote_count": 5
+        },
+        "union-3.7-K5": {
+          "distance_m": 3.6,
+          "vote_count": 5,
+          "prob_3.7-vf": 0.99,
+          "prob_G3-vf": 0.95
+        },
+        "union-G3-K10": {
+          "distance_m": 5.2,
+          "vote_count": 1,
+          "prob_G3-vf": 1.0,
+          "prob_3.7-vf": 0.98
+        }
+      },
+      "nearest_anything_m": 3.6,
+      "edge_m": 5.1,
+      "sighting_group": 8
+    }
+  ]
+}
