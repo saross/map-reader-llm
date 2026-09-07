@@ -5075,8 +5075,11 @@ T4).
 carries the error the audits did NOT see — expected unseen double-misses
 M ≈ 50, GT errors E_err ≈ 36 and model-found omissions E_om ≈ 36 outside the
 audited clusters — as P̂ / R̂ / F1̂ with Monte Carlo intervals beside every r2
-point estimate (F1̂ 0.0005–0.0007 below the point, ±0.005), never as a
-re-tiering.
+point estimate (F1̂ within 0.0007 of the point — below it for 32 of the 35
+cells, by 0.0007 at the top of the board, marginally above it for the two
+lowest-recall cells — with ≈ ±0.005 intervals) [corrected 2026-09-07, S150:
+the first landing said "0.0005–0.0007 below", which described the top
+tier only], never as a re-tiering.
 
 **Correction**: the paper's 55-map figures cite the `-r2-gt` conditions and
 the r2 boards; the `-standardised-gt` rows and r1 boards remain in the

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-07T08:45:10Z",
+  "generated_at": "2026-09-07T08:51:10Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -2575,7 +2575,7 @@
       "predicted_outcome": "card \u00a7 4: r1 \u2192 r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
       "predicted_outcome_amended": null,
       "tie_set": [],
-      "outcome": "Expected terms M 49.7, E_err 35.8, E_om 35.8; F1-hat sits 0.0005\u20130.0007 below the r2 point with \u00b10.005 intervals.",
+      "outcome": "Expected terms M 49.7, E_err 35.8, E_om 35.8; F1-hat sits within 0.0007 of the r2 point \u2014 below it for 32 of 35 cells (by 0.0007 at the top of the board), at it for one, marginally above it for the two lowest-recall cells (TM-k4 +0.0003, IM-k4 +0.0007) \u2014 with \u2248 \u00b10.005 intervals, wider than the tier gaps.",
       "paper_section": "Results",
       "output_path": "results/55map-final-board-r2-2026-09-06/estimated-correction.json",
       "working_notes_obs": [],
@@ -2585,7 +2585,7 @@
           "results/run-analyses.json",
           "results/55map-final-board-r2-2026-09-06/estimated-correction.json"
         ],
-        "last_extracted_at": "2026-09-07T08:45:10Z",
+        "last_extracted_at": "2026-09-07T08:51:10Z",
         "extractor_version": "0.7.1"
       }
     },

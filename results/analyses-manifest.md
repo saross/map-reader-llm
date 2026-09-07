@@ -2,7 +2,7 @@
 
 # Analyses manifest
 
-> Generated 2026-09-07T08:45:10Z · 62 row(s) · schema v1.0.
+> Generated 2026-09-07T08:51:10Z · 62 row(s) · schema v1.0.
 >
 > **Coverage**: 62 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
 
@@ -68,5 +68,5 @@
 | 55map-r2-leaderboard-mcc-50m | leaderboard | 8 | post-hoc | Results | 20/28 pairs significant, 5 tiers; leader IM-k3 MCC 0.7110. |
 | obs280-shared-reference-r2 | comparison | 8 | post-hoc | Results | F1 rank ['T03-k4', 'TH7-k4', 'IM-k3', 'TM-k4']; MCC rank ['IM-k3', 'T03-k4', 'TH7-k4', 'TM-k4']; the divergence holds on r2. |
 | tile-level-f1-r2 | comparison | 10 | post-hoc | Appendix | MCC reproduction gate 10/10. |
-| estimated-correction-r2 | diagnostic | 35 | post-hoc | Results | Expected terms M 49.7, E_err 35.8, E_om 35.8; F1-hat sits 0.0005–0.0007 below the r2 point with ±0.005 intervals. |
+| estimated-correction-r2 | diagnostic | 35 | post-hoc | Results | Expected terms M 49.7, E_err 35.8, E_om 35.8; F1-hat sits within 0.0007 of the r2 point — below it for 32 of 35 cells (by 0.0007 at the top of the board), at it for one, marginally above it for the two lowest-recall cells (TM-k4 +0.0003, IM-k4 +0.0007) — with ≈ ±0.005 intervals, wider than the tier gaps. |
 | sensitivity-mde-r2 | diagnostic | 35 | post-hoc | Appendix | 55-map r2 board null SD 0.0045 over 595 pairs; MDE80 0.013 — resolution unchanged by r2. |
