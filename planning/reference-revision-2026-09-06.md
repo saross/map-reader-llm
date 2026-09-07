@@ -788,6 +788,35 @@ tree-wide `script_git_status`.
 
 ## Changelog
 
+### 2026-09-07 (S149-c) — Step 4a DONE (sweep on r2, gates on r1); inspection before 4c
+
+Every r1-pinned gate passed on the first execution of the 3.7 legs: G4
+12/12 exact (the 3.7 cells to four places), identity 9/9 (ARM1-N5
+5,229; ARM2-N5 5,003; FOURTH-N10 4,246), mechanism triples 8/8 exact,
+geometry 5/5 at 0.0000 m. Grid: 1,913 points across 22 families on 22
+workers, ~55 minutes after ~50 of family construction. Inspection of
+`sweeps.json` before the 4c commit:
+
+- **Argmax unchanged on r2 for all 13 r1 families** (same
+  `(prob_t, k)` point, same detection count); micro-F1@50 deltas
+  within ±0.0007 (incumbents −0.0002 to −0.0007, B +0.0001). The
+  oracle column moves with the reference by a hair and re-selects
+  nothing.
+- **Coincidence 3/3**: TH7 (0.15, k3), IM (0.15, k3), UPL (0.15, k5)
+  land on the committed sets on r2 too, so the coincidence gate is
+  *enforced* at 4e, not reported.
+- **3.7 rungs monotone 6/6** under their family's N = K r2 oracle.
+- **3.7 oracle points (r2)**: ARM1-N5 (0.15, k5) 0.8727 [carried
+  (0.10, k5) 0.8550]; ARM2-N5 (0.95, k5) **0.8871** [carried (0.80, k5)
+  0.8825]; FOURTH-N10 (0.96, k9) 0.8813 [carried (0.98, k10) 0.8732].
+  The r2 board's top cells will be 3.7 cells, above B-N10-oracle
+  (0.8560) — expected from Obs 444's campaign result, not a surprise
+  under the PI's stop conditions; recorded here so the 4e board is read
+  against a prediction, not after the fact.
+- Manifest after 4a: 33 cells (29 materialised + 4 committed
+  incumbents); 4b adds A/B-N3-carried → 35 (31 non-committed), as the
+  finish line states.
+
 ### 2026-09-07 (S149-c) — Register-verifier debt: PI rulings
 
 The verifier stood at 8 PASS / 29 PARTIAL / 4 FAIL across 41 runs
