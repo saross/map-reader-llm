@@ -434,17 +434,19 @@ moves thinking level, temperature, and threshold together) trades
 precision for recall (+282 mounds at +262 false positives for ~$203 at
 the audited production rate).
 
-## R7. Deployment: the 55-map standardised board
+## R7. Deployment: the 55-map board (reference r2)
 
 *Registration status: post-hoc. The 55-map corpus appears nowhere in the registration. The registration anticipated transfer testing on out-of-sample maps as Stage 2 future work but registered no analysis plan for it, so deployment results are reported as pre-planned characterisation, not registered claims.*
 
-The deployment board (ruling-21 standardised reference, 50 m, eight
-cells, 24/28 pairs significant, five tiers; analysis
-`55map-standardised-leaderboard-50m` — tier structure identical to its
-canonical-reference predecessor, so the reference standardisation moved
-magnitudes, never conclusions) is ordered by F1 because it is the board;
+The deployment board (reference r2 — the ruling-21 standardised
+reference revised by two PI audits, erratum E84 — 50 m, eight cells,
+24/28 pairs significant, five tiers; analysis `55map-r2-leaderboard-50m`
+— tier structure identical to its standardised and canonical
+predecessors, so neither the reference standardisation nor its revision
+moved a conclusion, and r2 moved no cell by more than 0.0009 F1) is
+ordered by F1 because it is the board;
 **the study's primary deployment claim is the carry-forward row**
-(0.8169) — the operating point actually committed to before deployment,
+(0.8162) — the operating point actually committed to before deployment,
 per the calibrate-then-deploy protocol. Every row above it relaxes at
 least one carried-forward setting (vote threshold, temperature, or pass
 count) after seeing deployment results; those rows are reported not as
@@ -454,19 +456,28 @@ oracle (+0.022) as its upper bound:
 
 | rank | cell | tier | F1@50 | tile-MCC |
 |---:|---|---:|---:|---:|
-| 1 | text HIGH T0.3, vote 3-of-5 (oracle) | 1 | 0.8393 | 0.689 |
-| 2 | text HIGH T0.7, vote 3-of-5 | 1 | 0.8387 | 0.680 |
-| 3 | text HIGH T0.3, vote 4-of-5 | 2 | 0.8303 | 0.669 |
-| 4 | text MIN, 10 passes, vote 5-of-10 (uplift) | 2 | 0.8279 | 0.671 |
-| 5 | text HIGH T0.7, vote 4-of-5 (carry-forward) | 3 | 0.8169 | 0.665 |
-| 6 | text MIN, vote 3-of-5 | 3 | 0.8109 | 0.657 |
-| 7 | image, vote 3-of-5 | 4 | 0.8010 | **0.712** |
-| 8 | text MIN, vote 4-of-5 | 5 | 0.7833 | 0.640 |
+| 1 | text HIGH T0.3, vote 3-of-5 (oracle) | 1 | 0.8387 | 0.689 |
+| 2 | text HIGH T0.7, vote 3-of-5 | 1 | 0.8380 | 0.679 |
+| 3 | text HIGH T0.3, vote 4-of-5 | 2 | 0.8294 | 0.669 |
+| 4 | text MIN, 10 passes, vote 5-of-10 (uplift) | 2 | 0.8274 | 0.669 |
+| 5 | text HIGH T0.7, vote 4-of-5 (carry-forward) | 3 | 0.8162 | 0.665 |
+| 6 | text MIN, vote 3-of-5 | 3 | 0.8102 | 0.656 |
+| 7 | image, vote 3-of-5 | 4 | 0.8008 | **0.711** |
+| 8 | text MIN, vote 4-of-5 | 5 | 0.7826 | 0.640 |
+
+Every figure in this table also carries the reference's residual error:
+the estimated correction (§ M.3; E84) puts F1̂ within 0.0007 of each r2
+point with an interval of about ±0.005 — wider than the gaps between
+tiers, uniform across cells, and therefore unable to re-order the board
+— and is reported beside the point estimates in the results artefact
+rather than as a column here. The r2 final board (35 cells) now also
+carries the A/B stride rungs and the Gemini 3.7 campaign's cells, whose
+results are reported in their own home.
 
 Three deployment lessons sit in this table. **(i) The calibrate→deploy gap
 is a threshold-transfer failure, not a model failure** (Obs 358): the
 configuration carried forward from GS calibration (T0.7 × 4-of-5) left
-+0.022 F1 on the table against the joint oracle (T0.3 × 3-of-5, 0.8393,
++0.022 F1 on the table against the joint oracle (T0.3 × 3-of-5, 0.8387,
 p < 0.001), and the threshold axis alone accounts for most of it — vote
 3-of-5 beats the carried 4-of-5 for all three text configurations
 (+0.009 to +0.028, all BH p ≤ 0.001). On the GS sheets those thresholds
@@ -476,19 +487,21 @@ uplift cell's best deployment threshold (5-of-10) again sat looser than
 its GS optimum (6-of-10). **(ii) Thinking level is a priced trade**
 (§ R6). **(iii) The F1/MCC trade-off recurs at deployment, and it is
 statistically resolved**: the image configuration ranks seventh on F1
-but carries the board's best tile-MCC (0.712), and re-tiering the same
+but carries the board's best tile-MCC (0.711), and re-tiering the same
 eight cells on the MCC statistic — the identical permutation machinery,
 applied to the present/not-present tile signal rather than coordinate
 F1 — makes the image cell the **sole Tier-1 cell** on that axis,
 statistically clear of all seven others including the F1 co-leaders
-(ΔMCC +0.023 vs the MCC runner-up, BH p = 0.0014; analysis
-`55map-standardised-leaderboard-mcc-50m`, 20/28 pairs significant, five
-tiers — tier structure and significant-pair set identical to the
-canonical-reference board). The MCC tier order inverts the F1 board's
-top while the six text-only cells keep their F1 ordering, so the
-reversal is a modality effect rather than noise; the item-4 re-measurement
-(`results/55maps-standardised-ref-2026-08-14/obs280-remeasurement.md`)
-shows it is ≈90 % metric behaviour, not reference effect. For survey
+(ΔMCC +0.022 vs the MCC runner-up, BH p = 0.002; analysis
+`55map-r2-leaderboard-mcc-50m`, 20/28 pairs significant, five tiers —
+tier structure identical to the standardised and canonical boards). The
+MCC tier order inverts the F1 board's top while the six text-only cells
+keep their F1 ordering, so the reversal is a modality effect rather than
+noise; the shared-reference re-measurement
+(`results/55maps-standardised-ref-2026-08-14/obs280-remeasurement.md`,
+reproduced on r2 in `results/55maps-r2-ref-2026-09-06/obs280-shared-reference-r2.json`,
+where the reference axis moves the MCC gap by +0.003 of 0.042) shows it
+is ≈ 90 % metric behaviour, not reference effect. For survey
 prioritisation, where tile-level discrimination matters more than exact
 counts, the image pipeline is not the loser the F1 column suggests — it
 is the resolved best instrument, at two calls per tile.
@@ -601,6 +614,39 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-09-07 — Erratum E84: § R7 refreshed to reference r2 (Session 150)
+
+**Refresh trigger**: reference revision r2 (card
+`planning/reference-revision-2026-09-06.md`; erratum E84) re-measured
+every 55-map figure. PI ruling 5 (2026-09-07): refresh the eight-cell
+table in place; the 35-cell final board and the Gemini 3.7 campaign's
+cells wait for their own structural home. Every value re-read from
+`results/55map-leaderboard/55map-leaderboard-50m-r2.md`,
+`results/metric-leaderboards/55map-mcc-tiering-r2.md`, and the r2
+leaderboard's pairwise table.
+
+**Before → after**:
+
+| Claim | Before (standardised) | After (r2) |
+|---|---|---|
+| analysis ids | `55map-standardised-leaderboard-50m` / `-mcc-50m` | `55map-r2-leaderboard-50m` / `-mcc-50m` |
+| carry-forward TH7-k4 | 0.8169 | 0.8162 |
+| joint oracle T03-k3 | 0.8393 | 0.8387 |
+| Tier-1 pair Δ, p | +0.0006, p = 0.857 | +0.0006, p = 0.855 |
+| deployment gap | +0.022 | +0.022 (0.0225) |
+| 3-of-5 over 4-of-5, three text configs | +0.009 to +0.028, BH p ≤ 0.001 | +0.009 to +0.028, BH p ≤ 0.001 |
+| image tile-MCC | 0.712 | 0.711 |
+| ΔMCC vs runner-up, BH p | +0.023, 0.0014 | +0.022, 0.002 |
+| reference-effect share of the MCC gap | ≈ 10 % (r1) | ≈ 8 % (+0.003 of 0.042 on r2); "≈ 90 % metric behaviour" stands |
+
+**What did NOT change**: the eight cells, the five F1 tiers and five MCC
+tiers (member-for-member), 24/28 and 20/28 significant pairs, the
+carry-forward-primary framing, the three deployment lessons, and the
+image cell's sole-Tier-1 MCC status. New in the section: one paragraph
+stating the estimated-correction column (within 0.0007 of each point,
+≈ ±0.005 intervals, not a re-tiering) and one sentence noting the final
+board's grown membership.
 
 ### 2026-08-21 — Erratum E83: the eight flagged tie-set sentences rewritten (Session 139)
 
