@@ -1,8 +1,7 @@
 # Reference revision r2: fold the PI audits into the best-available ground truth and re-run the comparisons
 
-> **Last revised**: 2026-09-07 (S149-c: second clean-context audit
-> adjudicated — step 4 re-ordered, scoring driver, every r1 writer
-> guarded, companion slotted). See [§ Changelog](#changelog) for
+> **Last revised**: 2026-09-07 (S149-c: PI GO recorded with stop
+> conditions in his words; steps 2–3 launched on sapphire). See [§ Changelog](#changelog) for
 > revision history.
 
 **The PI's direction (2026-09-06, Session 148, verbatim in substance)**:
@@ -765,6 +764,30 @@ tree-wide `script_git_status`.
   § (b) (instrument), 446, 449, 450, and the census Obs.
 
 ## Changelog
+
+### 2026-09-07 (S149-c) — PI GO; steps 2–3 launched on sapphire
+
+**The PI's formal go, stop conditions in his own words** (2026-09-07,
+after the second audit's adjudication and the 3.7 family validation):
+
+> - spend: none expected, stop if any
+> - failed flags or gates
+> - surprise / unexpected developments
+> - sequencing deviations or other problems
+> - environment failure or unavailability
+> - ambiguity — everything *should* be settled, if you find yourself in
+>   an ambiguous situation, stop.
+
+These supersede § 3's proposed list where they differ: the PI's list is
+the contract; § 3 is its detail. Launched at HEAD `e62e6864f` on
+sapphire (`/tmp/run_step2_3.sh`, log `/tmp/r2-chain/runner.log`):
+step 2's r1 half re-run for the record with `--require-clean-inputs`
+and gated exact against the committed IM-k4 evaluation, then step 3
+(`r2_score_cells.py --stage fixed --jobs 3 --workers 4`, nine cells
+into the r2 scoring home). The runner stops after step 3; the operator
+reports, commits, and runs 7a-i before any board. Step 2's r2 half is
+IM-k4's step-3 evaluation; the r1 → r2 delta is recorded from it as
+the band's first data point.
 
 ### 2026-09-07 (S149-c, Fable) — Second clean-context audit adjudicated
 
