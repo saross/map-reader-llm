@@ -1083,4 +1083,3 @@ The S148 candidates C1–C4 above are also still pending.
   nearly spent, he chose reflect-and-handoff over quick rulings from a tired
   instance, having earlier switched models mid-session and asked the new
   instance to *review* the old one's work rather than continue it.
-
