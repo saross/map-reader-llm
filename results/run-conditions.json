@@ -997,7 +997,7 @@
      "verifier_config": null,
      "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t1/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t1.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "consensus-2of30",
@@ -1010,7 +1010,7 @@
      "verifier_config": null,
      "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t2/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t2.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "consensus-3of30",
@@ -1023,7 +1023,7 @@
      "verifier_config": null,
      "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t3/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t3.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "consensus-4of30",
@@ -1036,7 +1036,7 @@
      "verifier_config": null,
      "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t4/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t4.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "consensus-5of30",
@@ -1049,7 +1049,7 @@
      "verifier_config": null,
      "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t5/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t5.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_1",
@@ -1062,7 +1062,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_1/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_2",
@@ -1075,7 +1075,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_2/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_2/detections_384_run02.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_3",
@@ -1088,7 +1088,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_3/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_3/detections_384_run03.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_4",
@@ -1101,7 +1101,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_4/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_4/detections_384_run04.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_5",
@@ -1114,7 +1114,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_5/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_5/detections_384_run05.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_6",
@@ -1127,7 +1127,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_6/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_6/detections_384_run06.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_7",
@@ -1140,7 +1140,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_7/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_7/detections_384_run07.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_8",
@@ -1153,7 +1153,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_8/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_8/detections_384_run08.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_9",
@@ -1166,7 +1166,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_9/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_9/detections_384_run09.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_10",
@@ -1179,7 +1179,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_10/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_10/detections_384_run10.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_11",
@@ -1192,7 +1192,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_11/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_11/detections_384_run11.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_12",
@@ -1205,7 +1205,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_12/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_12/detections_384_run12.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_13",
@@ -1218,7 +1218,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_13/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_13/detections_384_run13.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_14",
@@ -1231,7 +1231,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_14/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_14/detections_384_run14.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_15",
@@ -1244,7 +1244,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_15/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_15/detections_384_run15.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_16",
@@ -1257,7 +1257,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_16/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_16/detections_384_run16.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_17",
@@ -1270,7 +1270,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_17/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_17/detections_384_run17.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_18",
@@ -1283,7 +1283,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_18/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_18/detections_384_run18.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_19",
@@ -1296,7 +1296,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_19/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_19/detections_384_run19.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_20",
@@ -1309,7 +1309,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_20/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_20/detections_384_run20.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_21",
@@ -1322,7 +1322,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_21/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_21/detections_384_run21.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_22",
@@ -1335,7 +1335,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_22/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_22/detections_384_run22.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_23",
@@ -1348,7 +1348,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_23/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_23/detections_384_run23.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_24",
@@ -1361,7 +1361,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_24/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_24/detections_384_run24.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_25",
@@ -1374,7 +1374,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_25/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_25/detections_384_run25.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_26",
@@ -1387,7 +1387,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_26/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_26/detections_384_run26.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_27",
@@ -1400,7 +1400,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_27/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_27/detections_384_run27.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_28",
@@ -1413,7 +1413,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_28/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_28/detections_384_run28.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_29",
@@ -1426,7 +1426,7 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_29/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_29/detections_384_run29.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     },
     {
      "label": "single-pass-run_30",
@@ -1439,12 +1439,12 @@
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_30/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_30/detections_384_run30.geojson",
-     "_note": "E72 COVERAGE CONFOUND \u2014 do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md \u00a7 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 \u2014 that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
     }
    ]
   },
   "pv-diag-384": {
-   "_note": "GAP-7 (Session 102): proposer_pools (24 = pool x temp) + verifier_passes (88 metas across the pools' verified-v1-nN / session-78-matrix subdirs) now populated. The 10 N1 single-pass baseline conditions (Session 96) are kept verbatim; they reference their pool by relative path-string (benign pool-unresolved). Era-2 487-tile, 384px. Consensus operating-point conditions + the consensus 3c analysis (the buffer-harmonised sweep at results/rescore-2026-06-05/pv-diag-384/consensus-sweep/) are the next authoring step. Model of record: gemini-3-flash (flash pools) / gemini-3.1-pro (pro pools). | E72 remediation (2026-08-02): the four MATCHED-temperature consensus cells (text-t0.7 / text-t1.0 x N=5/N=10, both arms 487/487 tiles) are filed as the 'e43-matched-temperature' analysis over the EXISTING conditions listed above \u2014 no parallel 'matched-temp-*' conditions were minted, because that would duplicate them (same GeoJSONs, same 14-buffer + MCC metrics). Their independent house-grain re-score lives at results/e43-matched-temperature/paper-eval/ and is waived into _ignored_evals below.",
+   "_note": "GAP-7 (Session 102): proposer_pools (24 = pool x temp) + verifier_passes (88 metas across the pools' verified-v1-nN / session-78-matrix subdirs) now populated. The 10 N1 single-pass baseline conditions (Session 96) are kept verbatim; they reference their pool by relative path-string (benign pool-unresolved). Era-2 487-tile, 384px. Consensus operating-point conditions + the consensus 3c analysis (the buffer-harmonised sweep at results/rescore-2026-06-05/pv-diag-384/consensus-sweep/) are the next authoring step. Model of record: gemini-3-flash (flash pools) / gemini-3.1-pro (pro pools). | E72 remediation (2026-08-02): the four MATCHED-temperature consensus cells (text-t0.7 / text-t1.0 x N=5/N=10, both arms 487/487 tiles) are filed as the 'e43-matched-temperature' analysis over the EXISTING conditions listed above — no parallel 'matched-temp-*' conditions were minted, because that would duplicate them (same GeoJSONs, same 14-buffer + MCC metrics). Their independent house-grain re-score lives at results/e43-matched-temperature/paper-eval/ and is waived into _ignored_evals below.",
    "proposer_pools": {
     "flash-high-image-n5-image-t0.0": {
      "modality": "image",
@@ -2577,7 +2577,7 @@
      },
      "eval_path": "results/verifier-robustness/evals/verified-adv-text-t03-4of5/evaluation.json",
      "detections": "results/verifier-robustness/condition-sets/t03-4of5-n1-pt0.2.geojson",
-     "_note": "Run A ($2.06, S112): GS characterisation of the deployment champion's proposer (text HIGH T=0.3) \u2014 completes the GS-vs-55map transfer table (0.9045 @ 50 m; results/working-precision/gs-t03-pv-cell.json)."
+     "_note": "Run A ($2.06, S112): GS characterisation of the deployment champion's proposer (text HIGH T=0.3) — completes the GS-vs-55map transfer table (0.9045 @ 50 m; results/working-precision/gs-t03-pv-cell.json)."
     },
     {
      "label": "verified-adv-image-3of5",
@@ -2617,7 +2617,7 @@
      },
      "eval_path": "results/verifier-robustness/evals/verified-adv-text-pro-vf-4of5/evaluation.json",
      "detections": "results/verifier-robustness/min-thinking-sets/high6-PRO-vf-4of5-pt0.25.geojson",
-     "_note": "Completeness-sweep discovery (Obs 363): the Pro verifier over the Flash-HIGH 5-pass union \u2014 +0.015 vs the Flash verifier on the same pool (raw p=0.019, post-hoc), ns vs the headline (p=0.41) and min11 (p=0.76). Refines Obs 359's 'verifier model barely matters' to high-recall pools; dominated by min11 on cost."
+     "_note": "Completeness-sweep discovery (Obs 363): the Pro verifier over the Flash-HIGH 5-pass union — +0.015 vs the Flash verifier on the same pool (raw p=0.019, post-hoc), ns vs the headline (p=0.41) and min11 (p=0.76). Refines Obs 359's 'verifier model barely matters' to high-recall pools; dominated by min11 on cost."
     },
     {
      "label": "verified-adv-image-min-3of5",
@@ -4249,7 +4249,7 @@
    ]
   },
   "55maps-image-generalisation": {
-   "_note": "Batch B. Image-track out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). Image proposer (library_plus-hp, detect_brief-text-image.md) x text adversarial verifier (cross-modal). 1 verified condition at the 14-buffer+MCC re-score (consensus operating point 3of5). Consensus-3of5 + non-canonical mcc/backfill/cleaned-gt sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/.",
+   "_note": "Batch B. Image-track out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). Image proposer (library_plus-hp, detect_brief-text-image.md) x text adversarial verifier (cross-modal). 1 verified condition at the 14-buffer+MCC re-score (consensus operating point 3of5). Consensus-3of5 + non-canonical mcc/backfill/cleaned-gt sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/. Reference-revision-r2 track (Session 149): the -r2-gt conditions score the same detection sets against reference revision r2 and supersede the -standardised-gt cells as the paper reference; see results/55maps-r2-ref-2026-09-06/, results/55map-final-board-r2-2026-09-06/ and planning/reference-revision-2026-09-06.md.",
    "proposer_pools": {
     "library_plus-hp": {
      "modality": "image",
@@ -4314,7 +4314,7 @@
      },
      "eval_path": "results/55maps-standardised-ref-2026-08-14/IM-k3/evaluation.json",
      "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
-     "_note": "IM-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference \u2014 queue items 2-3, Session 132)"
+     "_note": "IM-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     },
     {
      "label": "verified-k4-standardised-gt",
@@ -4334,11 +4334,49 @@
      "eval_path": "results/55maps-standardised-ref-2026-08-14/IM-k4/evaluation.json",
      "detections": "results/55maps-standardised-ref-2026-08-14/IM-k4/k4_verified_detections.geojson",
      "_note": "Genuine IM-k4 (PI ruling 2026-08-23): 4-of-5 re-vote of the verified image pool (vote_count >= 4 filter, scripts/derive_im_k4_verified.py; 3,541 of 4,680 candidates), scored against the ruling-21 standardised reference with sibling parameters. Fills the image track's k4 gap; replaces the mislabelled Session-138 cell archived at archive/superseded-mislabelled-im-k4/."
+    },
+    {
+     "label": "verified-k3-r2-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "library_plus-hp",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-r2-ref-2026-09-06/IM-k3/evaluation.json",
+     "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+     "_note": "IM-k3 Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "verified-k4-r2-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "library_plus-hp",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-r2-ref-2026-09-06/IM-k4/evaluation.json",
+     "detections": "results/55maps-standardised-ref-2026-08-14/IM-k4/k4_verified_detections.geojson",
+     "_note": "IM-k4 Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
     }
    ]
   },
   "55maps-text-high-generalisation": {
-   "_note": "Batch B. text HIGH thinking, T=0.7 (the publishable recovered successor of 55maps-generalisation). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/.",
+   "_note": "Batch B. text HIGH thinking, T=0.7 (the publishable recovered successor of 55maps-generalisation). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/. Reference-revision-r2 track (Session 149): the -r2-gt conditions score the same detection sets against reference revision r2 and supersede the -standardised-gt cells as the paper reference; see results/55maps-r2-ref-2026-09-06/, results/55map-final-board-r2-2026-09-06/ and planning/reference-revision-2026-09-06.md.",
    "proposer_pools": {
     "detect_brief-text": {
      "modality": "text",
@@ -4422,7 +4460,7 @@
      },
      "eval_path": "results/55maps-standardised-ref-2026-08-14/TH7-k4/evaluation.json",
      "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
-     "_note": "TH7-k4 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference \u2014 queue items 2-3, Session 132)"
+     "_note": "TH7-k4 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     },
     {
      "label": "verified-k3-standardised-gt",
@@ -4441,12 +4479,50 @@
      },
      "eval_path": "results/55maps-standardised-ref-2026-08-14/TH7-k3/evaluation.json",
      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3_verified.geojson",
-     "_note": "TH7-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference \u2014 queue items 2-3, Session 132)"
+     "_note": "TH7-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
+    },
+    {
+     "label": "verified-k4-r2-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-r2-ref-2026-09-06/TH7-k4/evaluation.json",
+     "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+     "_note": "TH7-k4 Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "verified-k3-r2-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-r2-ref-2026-09-06/TH7-k3/evaluation.json",
+     "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3_verified.geojson",
+     "_note": "TH7-k3 Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
     }
    ]
   },
   "55maps-text-high-t0-3-generalisation": {
-   "_note": "Batch B. text HIGH thinking, T=0.3 (re-scored vs the reviewed student GT 2026-06-01 to match the other four runs, per protocol-errata E56). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/.",
+   "_note": "Batch B. text HIGH thinking, T=0.3 (re-scored vs the reviewed student GT 2026-06-01 to match the other four runs, per protocol-errata E56). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/. Reference-revision-r2 track (Session 149): the -r2-gt conditions score the same detection sets against reference revision r2 and supersede the -standardised-gt cells as the paper reference; see results/55maps-r2-ref-2026-09-06/, results/55map-final-board-r2-2026-09-06/ and planning/reference-revision-2026-09-06.md.",
    "proposer_pools": {
     "detect_brief-text": {
      "modality": "text",
@@ -4511,7 +4587,7 @@
      },
      "eval_path": "results/55maps-extended-gt-2026-06-07/T03-k3/evaluation.json",
      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
-     "_note": "DEPLOYMENT ORACLE \u2014 text HIGH T0.3, vote 3-of-5 (vote=3 shell, prob>=0.15)"
+     "_note": "DEPLOYMENT ORACLE — text HIGH T0.3, vote 3-of-5 (vote=3 shell, prob>=0.15)"
     },
     {
      "label": "verified-k4-standardised-gt",
@@ -4530,7 +4606,7 @@
      },
      "eval_path": "results/55maps-standardised-ref-2026-08-14/T03-k4/evaluation.json",
      "detections": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
-     "_note": "T03-k4 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference \u2014 queue items 2-3, Session 132)"
+     "_note": "T03-k4 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     },
     {
      "label": "verified-k3-standardised-gt",
@@ -4549,7 +4625,7 @@
      },
      "eval_path": "results/55maps-standardised-ref-2026-08-14/T03-k3/evaluation.json",
      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
-     "_note": "T03-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference \u2014 queue items 2-3, Session 132)"
+     "_note": "T03-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     },
     {
      "label": "verified-oracle-p0.20-k3-standardised-gt",
@@ -4568,12 +4644,50 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/T03-oracle/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/T03-oracle/detections.geojson",
-     "_note": "Standardised-reference deployment ORACLE re-derived by the final-board argmax sweep (moved from the S104 point; F1@50 0.8406). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Standardised-reference deployment ORACLE re-derived by the final-board argmax sweep (moved from the S104 point; F1@50 0.8406). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
+    },
+    {
+     "label": "verified-k4-r2-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-r2-ref-2026-09-06/T03-k4/evaluation.json",
+     "detections": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+     "_note": "T03-k4 Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "verified-k3-r2-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-r2-ref-2026-09-06/T03-k3/evaluation.json",
+     "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
+     "_note": "T03-k3 Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
     }
    ]
   },
   "55maps-text-min-generalisation": {
-   "_note": "Batch B. text MINIMAL thinking. Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/.",
+   "_note": "Batch B. text MINIMAL thinking. Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/. Reference-revision-r2 track (Session 149): the -r2-gt conditions score the same detection sets against reference revision r2 and supersede the -standardised-gt cells as the paper reference; see results/55maps-r2-ref-2026-09-06/, results/55map-final-board-r2-2026-09-06/ and planning/reference-revision-2026-09-06.md.",
    "proposer_pools": {
     "detect_brief-text": {
      "modality": "text",
@@ -4657,7 +4771,7 @@
      },
      "eval_path": "results/55maps-standardised-ref-2026-08-14/TM-k4/evaluation.json",
      "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
-     "_note": "TM-k4 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference \u2014 queue items 2-3, Session 132)"
+     "_note": "TM-k4 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     },
     {
      "label": "verified-k3-standardised-gt",
@@ -4676,7 +4790,7 @@
      },
      "eval_path": "results/55maps-standardised-ref-2026-08-14/TM-k3/evaluation.json",
      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
-     "_note": "TM-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference \u2014 queue items 2-3, Session 132)"
+     "_note": "TM-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     },
     {
      "label": "verified-oracle-p0.20-k3-standardised-gt",
@@ -4695,7 +4809,45 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/TM-oracle/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/TM-oracle/detections.geojson",
-     "_note": "Standardised-reference deployment ORACLE re-derived by the final-board argmax sweep (moved from the S104 point; F1@50 0.8110). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Standardised-reference deployment ORACLE re-derived by the final-board argmax sweep (moved from the S104 point; F1@50 0.8110). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
+    },
+    {
+     "label": "verified-k4-r2-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-r2-ref-2026-09-06/TM-k4/evaluation.json",
+     "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+     "_note": "TM-k4 Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "verified-k3-r2-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-r2-ref-2026-09-06/TM-k3/evaluation.json",
+     "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
+     "_note": "TM-k3 Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
     }
    ]
   },
@@ -5541,7 +5693,7 @@
    ]
   },
   "retest-phase3a": {
-   "_note": "H3 consensus vote-threshold x N sweep, MINIMAL thinking (the original phase3a accidentally ran minimal \u2014 see retest-phase3a-replication). 2 tracks x 3 temps; N in {5,10,30} (first-N sub-pools). One citable condition per (cell x N) at best-F1@20m; non-headline thresholds -> deferred _ignored_evals. 14-buf+MCC re-score, Era-1 340-tile, curator GT, gemini-3-flash.",
+   "_note": "H3 consensus vote-threshold x N sweep, MINIMAL thinking (the original phase3a accidentally ran minimal — see retest-phase3a-replication). 2 tracks x 3 temps; N in {5,10,30} (first-N sub-pools). One citable condition per (cell x N) at best-F1@20m; non-headline thresholds -> deferred _ignored_evals. 14-buf+MCC re-score, Era-1 340-tile, curator GT, gemini-3-flash.",
    "proposer_pools": {
     "track1-image-t0.3": {
      "modality": "image",
@@ -6511,7 +6663,7 @@
    ]
   },
   "retest-phase3c": {
-   "_note": "H9 diversity study (REJECTED \u2014 no diversity mechanism gives a significant gain). One condition per (track x H9 condition) cross-variant diversity pool (N=5, replicate-mean over 5 replications). 45 physical pass-variant pools registered as passes; the condition's proposer_pool names the diversity grouping (GAP-6: not a single physical pool -> benign pool-unresolved). 14-buf+MCC, Era-1 340, curator GT.",
+   "_note": "H9 diversity study (REJECTED — no diversity mechanism gives a significant gain). One condition per (track x H9 condition) cross-variant diversity pool (N=5, replicate-mean over 5 replications). 45 physical pass-variant pools registered as passes; the condition's proposer_pool names the diversity grouping (GAP-6: not a single physical pool -> benign pool-unresolved). 14-buf+MCC, Era-1 340, curator GT.",
    "proposer_pools": {
     "track1-image-h9-a-p1": {
      "modality": "image",
@@ -7123,7 +7275,7 @@
    ]
   },
   "flash35-pv-2x2": {
-   "_note": "Flash 3.5 2x2x2 at the n=10 grain: one citable condition per registered corner at its best (k, prob_t) operating point (the settled decomposition pattern). The F3-proposer x F3-verifier corner is NOT duplicated here \u2014 it is pv-diag-384::verified-adv-text-min-6of10 (min11, 0.8835), which the tranche reproduced exactly (harness self-validation). The n=5 cells are method-matched first-5 derivations, analysis-internal (results/flash35-2x2/analysis-full.json). The f3prop pool is cross-run (pv-diag-384 text-n10 minimal lineage).",
+   "_note": "Flash 3.5 2x2x2 at the n=10 grain: one citable condition per registered corner at its best (k, prob_t) operating point (the settled decomposition pattern). The F3-proposer x F3-verifier corner is NOT duplicated here — it is pv-diag-384::verified-adv-text-min-6of10 (min11, 0.8835), which the tranche reproduced exactly (harness self-validation). The n=5 cells are method-matched first-5 derivations, analysis-internal (results/flash35-2x2/analysis-full.json). The f3prop pool is cross-run (pv-diag-384 text-n10 minimal lineage).",
    "proposer_pools": {
     "flash35-min-text-1of10": {
      "modality": "text",
@@ -7222,7 +7374,7 @@
    ]
   },
   "55maps-text-min-n10-uplift": {
-   "_note": "Run B uplift: one citable condition at the best deployment operating point (5of10/pt0.15) vs the canonical extended GT. MIXED-PROVENANCE POOL (the n-passes-over WARN is the honest by-design signal, per the S106 settled position): passes 1-5 are the 55maps-text-min-generalisation deployment passes; passes 6-10 are this run's (proposer/run_6..run_10; uplift-full.log Stage P). The k(3..10) x prob_t sweep lives in results/55map-leaderboard/min11-uplift-score.log and min11_uplift_cell.json. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/.",
+   "_note": "Run B uplift: one citable condition at the best deployment operating point (5of10/pt0.15) vs the canonical extended GT. MIXED-PROVENANCE POOL (the n-passes-over WARN is the honest by-design signal, per the S106 settled position): passes 1-5 are the 55maps-text-min-generalisation deployment passes; passes 6-10 are this run's (proposer/run_6..run_10; uplift-full.log Stage P). The k(3..10) x prob_t sweep lives in results/55map-leaderboard/min11-uplift-score.log and min11_uplift_cell.json. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/. Reference-revision-r2 track (Session 149): the -r2-gt conditions score the same detection sets against reference revision r2 and supersede the -standardised-gt cells as the paper reference; see results/55maps-r2-ref-2026-09-06/, results/55map-final-board-r2-2026-09-06/ and planning/reference-revision-2026-09-06.md.",
    "proposer_pools": {
     "detect_brief-text-min-n10": {
      "modality": "text",
@@ -7254,7 +7406,7 @@
      },
      "eval_path": "results/55maps-extended-gt-2026-06-07/TM-n10-k5/evaluation.json",
      "detections": "results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson",
-     "_note": "min11 uplift, vote 5-of-10 (prob>=0.15), vs canonical extended GT; best deployment op sat looser than the GS-best 6of10 \u2014 the k3 lesson recurring at n=10 (Obs 364)"
+     "_note": "min11 uplift, vote 5-of-10 (prob>=0.15), vs canonical extended GT; best deployment op sat looser than the GS-best 6of10 — the k3 lesson recurring at n=10 (Obs 364)"
     },
     {
      "label": "verified-5of10-standardised-gt",
@@ -7274,7 +7426,27 @@
      },
      "eval_path": "results/55maps-standardised-ref-2026-08-14/TM-n10-k5/evaluation.json",
      "detections": "results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson",
-     "_note": "TM-n10-k5 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference \u2014 queue items 2-3, Session 132)"
+     "_note": "TM-n10-k5 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
+    },
+    {
+     "label": "verified-5of10-r2-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text-min-n10",
+     "n_passes": 10,
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/55maps-r2-ref-2026-09-06/TM-n10-k5/evaluation.json",
+     "detections": "results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson",
+     "_note": "TM-n10-k5 Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
     }
    ]
   },
@@ -7442,7 +7614,7 @@
      "n_candidates": 3319,
      "eval_path": "results/gemini37-fourth-cell/gs-leg/best-eval/evaluation.json",
      "detections": "results/gemini37-fourth-cell/gs-leg/verified_best_20m.geojson",
-     "_note": "A9 \u2014 the fourth cell's GS calibration leg (~$3; card planning/gemini37-55map-2026-08-29.md:201, which commits (0.98, k10) as the 55-map fourth cell's carried point BEFORE any deployment scoring). This run's own Gemini-3 g384_ov192 K=10 union (3,319 candidates) re-verified with gemini-3.7-flash: F1@20 0.914005, P 0.9637 / R 0.8692, tile-MCC 0.8239, 386 detections; +0.0179 over the 0.8961 text-B anchor at p = 0.0563. Registered here rather than under a 3.7 run because the condition belongs to the run that owns its proposer pool (PI ruling 6); the verification lives at outputs/grid-2026-08-18/verifier/g384_ov192/verify_37/. GOTCHA: this is a TEXT cell whose best point sits under the 'image_best' key of results/gemini37-fourth-cell/gs-leg/analysis.json. The verifier_config variant is recorded as 'v1' (the 3.7-arc convention) while this run's Gemini-3 siblings say 'adversarial-text'; same instruction file, same hash."
+     "_note": "A9 — the fourth cell's GS calibration leg (~$3; card planning/gemini37-55map-2026-08-29.md:201, which commits (0.98, k10) as the 55-map fourth cell's carried point BEFORE any deployment scoring). This run's own Gemini-3 g384_ov192 K=10 union (3,319 candidates) re-verified with gemini-3.7-flash: F1@20 0.914005, P 0.9637 / R 0.8692, tile-MCC 0.8239, 386 detections; +0.0179 over the 0.8961 text-B anchor at p = 0.0563. Registered here rather than under a 3.7 run because the condition belongs to the run that owns its proposer pool (PI ruling 6); the verification lives at outputs/grid-2026-08-18/verifier/g384_ov192/verify_37/. GOTCHA: this is a TEXT cell whose best point sits under the 'image_best' key of results/gemini37-fourth-cell/gs-leg/analysis.json. The verifier_config variant is recorded as 'v1' (the 3.7-arc convention) while this run's Gemini-3 siblings say 'adversarial-text'; same instruction file, same hash."
     }
    ]
   },
@@ -7839,7 +8011,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/A-N10-oracle/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/A-N10-oracle/detections.geojson",
-     "_note": "Final-board cell A-N10-oracle (oracle (standardised-reference argmax), F1@50 0.8420, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell A-N10-oracle (oracle (standardised-reference argmax), F1@50 0.8420, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov128-55map-n10-carried-p0.15-k8-standardised-gt",
@@ -7858,7 +8030,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/A-N10-carried/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/A-N10-carried/detections.geojson",
-     "_note": "Final-board cell A-N10-carried (carried, F1@50 0.8392, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell A-N10-carried (carried, F1@50 0.8392, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt",
@@ -7877,7 +8049,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/A-N1-oracle/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/A-N1-oracle/detections.geojson",
-     "_note": "Final-board cell A-N1-oracle (oracle (standardised-reference argmax), F1@50 0.8231, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell A-N1-oracle (oracle (standardised-reference argmax), F1@50 0.8231, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt",
@@ -7896,7 +8068,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/A-N3-oracle/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/A-N3-oracle/detections.geojson",
-     "_note": "Final-board cell A-N3-oracle (oracle (standardised-reference argmax), F1@50 0.8326, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell A-N3-oracle (oracle (standardised-reference argmax), F1@50 0.8326, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt",
@@ -7915,7 +8087,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/A-N5-oracle/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/A-N5-oracle/detections.geojson",
-     "_note": "Final-board cell A-N5-oracle (oracle (standardised-reference argmax), F1@50 0.8383, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell A-N5-oracle (oracle (standardised-reference argmax), F1@50 0.8383, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov128-55map-n5-carried-p0.15-k4-standardised-gt",
@@ -7934,7 +8106,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/A-N5-carried/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/A-N5-carried/detections.geojson",
-     "_note": "Final-board cell A-N5-carried (carried, F1@50 0.8383, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell A-N5-carried (carried, F1@50 0.8383, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt",
@@ -7953,7 +8125,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/B-N10-oracle/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/B-N10-oracle/detections.geojson",
-     "_note": "Final-board cell B-N10-oracle (oracle (standardised-reference argmax), F1@50 0.8558, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell B-N10-oracle (oracle (standardised-reference argmax), F1@50 0.8558, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov192-55map-n10-carried-p0.15-k10-standardised-gt",
@@ -7972,7 +8144,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/B-N10-carried/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/B-N10-carried/detections.geojson",
-     "_note": "Final-board cell B-N10-carried (carried, F1@50 0.8498, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell B-N10-carried (carried, F1@50 0.8498, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt",
@@ -7991,7 +8163,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/B-N1-oracle/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/B-N1-oracle/detections.geojson",
-     "_note": "Final-board cell B-N1-oracle (oracle (standardised-reference argmax), F1@50 0.8013, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell B-N1-oracle (oracle (standardised-reference argmax), F1@50 0.8013, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt",
@@ -8010,7 +8182,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/B-N3-oracle/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/B-N3-oracle/detections.geojson",
-     "_note": "Final-board cell B-N3-oracle (oracle (standardised-reference argmax), F1@50 0.8505, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell B-N3-oracle (oracle (standardised-reference argmax), F1@50 0.8505, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt",
@@ -8029,7 +8201,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/B-N5-oracle/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/B-N5-oracle/detections.geojson",
-     "_note": "Final-board cell B-N5-oracle (oracle (standardised-reference argmax), F1@50 0.8515, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell B-N5-oracle (oracle (standardised-reference argmax), F1@50 0.8515, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov192-55map-n5-carried-p0.15-k5-standardised-gt",
@@ -8048,7 +8220,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/B-N5-carried/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/B-N5-carried/detections.geojson",
-     "_note": "Final-board cell B-N5-carried (carried, F1@50 0.8502, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008)."
+     "_note": "Final-board cell B-N5-carried (carried, F1@50 0.8502, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008)."
     },
     {
      "label": "g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
@@ -8067,7 +8239,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/A-N3-carried/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/A-N3-carried/detections.geojson",
-     "_note": "Final-board cell A-N3-carried (carried (post-hoc), F1@50 0.8308, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008). EMERGENT post-hoc nomination (PI-directed 2026-08-28): the GS-ladder-selected point, evaluated after the N=3 oracle's frontier position emerged \u2014 see the board's post-hoc section."
+     "_note": "Final-board cell A-N3-carried (carried (post-hoc), F1@50 0.8308, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008). EMERGENT post-hoc nomination (PI-directed 2026-08-28): the GS-ladder-selected point, evaluated after the N=3 oracle's frontier position emerged — see the board's post-hoc section."
     },
     {
      "label": "g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
@@ -8086,7 +8258,7 @@
      },
      "eval_path": "results/55map-final-board-2026-08-27/cells/B-N3-carried/evaluation.json",
      "detections": "results/55map-final-board-2026-08-27/cells/B-N3-carried/detections.geojson",
-     "_note": "Final-board cell B-N3-carried (carried (post-hoc), F1@50 0.8476, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated \u00b10.008). EMERGENT post-hoc nomination (PI-directed 2026-08-28): the GS-ladder-selected point, evaluated after the N=3 oracle's frontier position emerged \u2014 see the board's post-hoc section."
+     "_note": "Final-board cell B-N3-carried (carried (post-hoc), F1@50 0.8476, tier via final_board_50m.json). Standardised-reference (ruling 21) evaluation on the shared 8,541-tile frame; final-board cell (results/55map-final-board-2026-08-27/). Carry-forward verifier; probabilities inherited from K=10 for N<10 rungs (GS-validated ±0.008). EMERGENT post-hoc nomination (PI-directed 2026-08-28): the GS-ladder-selected point, evaluated after the N=3 oracle's frontier position emerged — see the board's post-hoc section."
     },
     {
      "label": "g384-ov192-55map-k10-verified37-p0.98-k10-canonical-gt",
@@ -8107,7 +8279,7 @@
      "n_candidates": 57482,
      "eval_path": "results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/eval/evaluation.json",
      "detections": "results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/verified_detections.geojson",
-     "_note": "B5 \u2014 the 2x2 grid's fourth cell (this run's Gemini-3 K=10 union, 57,482 candidates, re-verified with gemini-3.7-flash), CANONICAL chain: corrected-F1@50 0.865618 [0.857387, 0.873612], P 0.9588 / R 0.7890, tile-MCC 0.7268, 4,246 detections \u2014 the grid's precision and tile-MCC crowns. +0.0234 over this run's own K=10 carried incumbent (p = 0.0001, BH-significant), the second verifier-axis test. Carried point (0.98, k10) fixed by the GS calibration leg (grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10) before deployment scoring. Registered here per PI ruling 6."
+     "_note": "B5 — the 2x2 grid's fourth cell (this run's Gemini-3 K=10 union, 57,482 candidates, re-verified with gemini-3.7-flash), CANONICAL chain: corrected-F1@50 0.865618 [0.857387, 0.873612], P 0.9588 / R 0.7890, tile-MCC 0.7268, 4,246 detections — the grid's precision and tile-MCC crowns. +0.0234 over this run's own K=10 carried incumbent (p = 0.0001, BH-significant), the second verifier-axis test. Carried point (0.98, k10) fixed by the GS calibration leg (grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10) before deployment scoring. Registered here per PI ruling 6."
     },
     {
      "label": "g384-ov192-55map-k10-verified37-p0.98-k10-standardised-gt",
@@ -8128,7 +8300,7 @@
      "n_candidates": 57482,
      "eval_path": "results/gemini37-fourth-cell/55map/g384_ov192_55map/standardised-ref/evaluation.json",
      "detections": "results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/verified_detections.geojson",
-     "_note": "B6 \u2014 the same detections on the ruling-21 STANDARDISED reference: F1@50 0.8732 [0.8649, 0.8810], P 0.9517 / R 0.8066. Tile matrix identical to the canonical 50 m row (2358/4985/32/1166)."
+     "_note": "B6 — the same detections on the ruling-21 STANDARDISED reference: F1@50 0.8732 [0.8649, 0.8810], P 0.9517 / R 0.8066. Tile matrix identical to the canonical 50 m row (2358/4985/32/1166)."
     }
    ]
   },
@@ -8172,7 +8344,7 @@
      },
      "eval_path": "results/image-b-gs-2026-08-28/best-eval/evaluation.json",
      "detections": "results/image-b-gs-2026-08-28/verified_best_20m.geojson",
-     "_note": "Image-MINIMAL verified best (F1@20 0.8412, tile-MCC 0.7985; union 4,065). Text beats it +0.0549 @20m p=0.0010 with MCC parity \u2014 the modality verdict (IP1-IP4 confirmed)."
+     "_note": "Image-MINIMAL verified best (F1@20 0.8412, tile-MCC 0.7985; union 4,065). Text beats it +0.0549 @20m p=0.0010 with MCC parity — the modality verdict (IP1-IP4 confirmed)."
     },
     {
      "label": "g384-ov192-image-high-k10-verified-p0.20-k8",
@@ -8238,7 +8410,7 @@
    ]
   },
   "gemini37-screen-2026-08-28": {
-   "_note": "GS screen on the 487-tile common footprint, curator reference, 20 m primary. The proposer config is the committed text-B anchor's detect_brief-text, byte-identical but for two command-line overrides (--model gemini-3.7-flash --thinking-level low). Four verifier passes over two unions: verify (K=5, 791 candidates) and verify_k10 (K=10, 913) with the carried gemini-3-flash-preview verifier; verify_swap37 and verify_swap38 re-verify the SAME 791-candidate K=5 union with gemini-3.7-flash and gemini-3.8-flash. Disclosed deviation (card planning/gemini37-screen-2026-08-28.md changelog): the K=10 escalation re-verified the FULL union rather than increment-stitching the new candidates. GOTCHA: these are TEXT cells whose best operating point sits under the JSON key 'image_best' \u2014 the campaign reused scripts/image_b_analysis.py; the key name is not a modality claim. The N=1/3/5 ladder rungs in k10/analysis.json are NOT registered (no materialised detections; deferred to the r2 recompute chain per PI ruling 4).",
+   "_note": "GS screen on the 487-tile common footprint, curator reference, 20 m primary. The proposer config is the committed text-B anchor's detect_brief-text, byte-identical but for two command-line overrides (--model gemini-3.7-flash --thinking-level low). Four verifier passes over two unions: verify (K=5, 791 candidates) and verify_k10 (K=10, 913) with the carried gemini-3-flash-preview verifier; verify_swap37 and verify_swap38 re-verify the SAME 791-candidate K=5 union with gemini-3.7-flash and gemini-3.8-flash. Disclosed deviation (card planning/gemini37-screen-2026-08-28.md changelog): the K=10 escalation re-verified the FULL union rather than increment-stitching the new candidates. GOTCHA: these are TEXT cells whose best operating point sits under the JSON key 'image_best' — the campaign reused scripts/image_b_analysis.py; the key name is not a modality claim. The N=1/3/5 ladder rungs in k10/analysis.json are NOT registered (no materialised detections; deferred to the r2 recompute chain per PI ruling 4).",
    "proposer_pools": {
     "g384_ov192_g37": {
      "modality": "text",
@@ -8283,7 +8455,7 @@
      "n_candidates": 791,
      "eval_path": "results/gemini37-screen-2026-08-28/best-eval/evaluation.json",
      "detections": "results/gemini37-screen-2026-08-28/verified_best_20m.geojson",
-     "_note": "A1 \u2014 the standalone K=5 screen best (F1@20 0.913892, tile-MCC 0.7797, 443 detections) on the K=5 union's own 791-item verification. Distinct from the K=10-vintage ladder N=5 rung (0.913094, 435 detections), which reads the same five passes through the 913-item re-verification and is not registered (PI ruling 4/7)."
+     "_note": "A1 — the standalone K=5 screen best (F1@20 0.913892, tile-MCC 0.7797, 443 detections) on the K=5 union's own 791-item verification. Distinct from the K=10-vintage ladder N=5 rung (0.913094, 435 detections), which reads the same five passes through the 913-item re-verification and is not registered (PI ruling 4/7)."
     },
     {
      "label": "g37-text-k10-verified-carried-p0.10-k10",
@@ -8304,7 +8476,7 @@
      "n_candidates": 913,
      "eval_path": "results/gemini37-screen-2026-08-28/k10/best-eval/evaluation.json",
      "detections": "results/gemini37-screen-2026-08-28/k10/verified_best_20m.geojson",
-     "_note": "A2 \u2014 the approved K=10 escalation (F1@20 0.914219, tile-MCC 0.7817, 423 detections). Five extra proposer passes (~$5.4 billed) bought +0.0003; the ladder's own N5-N10 contrast is -0.0011 at p = 0.7928."
+     "_note": "A2 — the approved K=10 escalation (F1@20 0.914219, tile-MCC 0.7817, 423 detections). Five extra proposer passes (~$5.4 billed) bought +0.0003; the ladder's own N5-N10 contrast is -0.0011 at p = 0.7928."
     },
     {
      "label": "g37-text-k5-verified-swap37-p0.80-k5",
@@ -8325,7 +8497,7 @@
      "n_candidates": 791,
      "eval_path": "results/gemini37-screen-2026-08-28/swap37/best-eval/evaluation.json",
      "detections": "results/gemini37-screen-2026-08-28/swap37/verified_best_20m.geojson",
-     "_note": "A3 \u2014 the all-3.7 stack: the SAME 791 candidates re-verified with gemini-3.7-flash (F1@20 0.926488, P 0.9254 / R 0.9276, tile-MCC 0.8078, 429 detections) for ~$0.9 token-basis. The study's first GS-resolvable model-swap margin (+0.0304 vs the 0.8961 anchor, p = 0.0105). The sweep argmax is a TIE the analysis JSON does not flag: prob_t 0.80 and 0.85 give identical F1 and 429 detections in swap37/sweep_20m.csv; the card commits (0.80, k5)."
+     "_note": "A3 — the all-3.7 stack: the SAME 791 candidates re-verified with gemini-3.7-flash (F1@20 0.926488, P 0.9254 / R 0.9276, tile-MCC 0.8078, 429 detections) for ~$0.9 token-basis. The study's first GS-resolvable model-swap margin (+0.0304 vs the 0.8961 anchor, p = 0.0105). The sweep argmax is a TIE the analysis JSON does not flag: prob_t 0.80 and 0.85 give identical F1 and 429 detections in swap37/sweep_20m.csv; the card commits (0.80, k5)."
     },
     {
      "label": "g37-text-k5-verified-swap38-p0.88-k5",
@@ -8351,7 +8523,7 @@
    ]
   },
   "gemini37-image-gs-2026-09-01": {
-   "_note": "Image variant of the 3.7 GS screen on the same geometry, footprint and reference (detect_brief-text-image; K=5; 674-candidate union). Two verifier arms over that one union: arm 1 the carried gemini-3-flash-preview, arm 2 gemini-3.7-flash. GOTCHA: scripts/image_b_analysis.py:79 hard-codes ANCHOR_F1_20 = 0.8961, so the built-in head_to_head_20m blocks in arm{1,2}/analysis.json pair a 3.7 IMAGE cell against a GEMINI-3 TEXT cell and mix the family step into the modality contrast \u2014 never quote them as a modality delta; results/gemini37-image-gs-2026-09-01/gap_test.json is the instrument. Both arms' sweep argmaxes are ties the analysis JSON does not flag (arm 2: prob_t 0.90 and 0.95 give identical F1 0.9308323563892146 and 425 detections in arm2/sweep_20m.csv).",
+   "_note": "Image variant of the 3.7 GS screen on the same geometry, footprint and reference (detect_brief-text-image; K=5; 674-candidate union). Two verifier arms over that one union: arm 1 the carried gemini-3-flash-preview, arm 2 gemini-3.7-flash. GOTCHA: scripts/image_b_analysis.py:79 hard-codes ANCHOR_F1_20 = 0.8961, so the built-in head_to_head_20m blocks in arm{1,2}/analysis.json pair a 3.7 IMAGE cell against a GEMINI-3 TEXT cell and mix the family step into the modality contrast — never quote them as a modality delta; results/gemini37-image-gs-2026-09-01/gap_test.json is the instrument. Both arms' sweep argmaxes are ties the analysis JSON does not flag (arm 2: prob_t 0.90 and 0.95 give identical F1 0.9308323563892146 and 425 detections in arm2/sweep_20m.csv).",
    "proposer_pools": {
     "g384_ov192_g37img": {
      "modality": "image",
@@ -8388,7 +8560,7 @@
      "n_candidates": 674,
      "eval_path": "results/gemini37-image-gs-2026-09-01/arm1/best-eval/evaluation.json",
      "detections": "results/gemini37-image-gs-2026-09-01/arm1/verified_best_20m.geojson",
-     "_note": "A7 \u2014 image under the carried Gemini-3 verifier (F1@20 0.925408, tile-MCC 0.8192, 430 detections), +0.0842 over the 0.8412 Gemini-3 image anchor. Its within-family text pair is A1: (text - image) = -0.0115, p = 0.2533 (gap_test.json)."
+     "_note": "A7 — image under the carried Gemini-3 verifier (F1@20 0.925408, tile-MCC 0.8192, 430 detections), +0.0842 over the 0.8412 Gemini-3 image anchor. Its within-family text pair is A1: (text - image) = -0.0115, p = 0.2533 (gap_test.json)."
     },
     {
      "label": "g37-image-k5-verified-swap37-p0.90-k5",
@@ -8409,12 +8581,12 @@
      "n_candidates": 674,
      "eval_path": "results/gemini37-image-gs-2026-09-01/arm2/best-eval/evaluation.json",
      "detections": "results/gemini37-image-gs-2026-09-01/arm2/verified_best_20m.geojson",
-     "_note": "A8 \u2014 the all-3.7 image stack (F1@20 0.930832, tile-MCC 0.8322, 425 detections), the highest F1@20 in the 3.7 arc, +0.0896 over the Gemini-3 image anchor. Its within-family text pair is A3: (text - image) = -0.0043, p = 0.6767. Sweep argmax tie at prob_t 0.90 / 0.95."
+     "_note": "A8 — the all-3.7 image stack (F1@20 0.930832, tile-MCC 0.8322, 425 detections), the highest F1@20 in the 3.7 arc, +0.0896 over the Gemini-3 image anchor. Its within-family text pair is A3: (text - image) = -0.0043, p = 0.6767. Sweep argmax tie at prob_t 0.90 / 0.95."
     }
    ]
   },
   "gemini37-55map-2026-08-29": {
-   "_note": "55-map deployment arms for the Gemini 3.7 proposer (card planning/gemini37-55map-2026-08-29.md). One K=5 proposer pool (union 12,715 candidates), two verifier arms over it, both carried operating points committed on the card at :140-141 before any deployment scoring. TWO INSTRUMENTS, one row each per cell (Obs 444 \u00a7 (b); results/gemini37-55map-2026-08-31/findings.md \u00a7 'Reference instruments'): the canonical adjudicated extended Ground Truth (5,160 references at 50 m, corrected-F1 engine, the campaign's committed primary) and the ruling-21 standardised reference inputs/vectors/references/best-available-gt-55maps.geojson (5,010 references, scripts/evaluate_detections.py). The canonical eval_paths point at evaluation.json files written by this script's adapter from the engine's summary.json (deterministic transform; nothing recomputed). Nothing here is scored against the r2 reference. The 16-cell grid board's oracle and N=1/N=3 rungs are NOT registered (no materialised detections or evaluations; deferred to the r2 recompute chain per PI ruling 4).",
+   "_note": "55-map deployment arms for the Gemini 3.7 proposer (card planning/gemini37-55map-2026-08-29.md). One K=5 proposer pool (union 12,715 candidates), two verifier arms over it, both carried operating points committed on the card at :140-141 before any deployment scoring. TWO INSTRUMENTS, one row each per cell (Obs 444 § (b); results/gemini37-55map-2026-08-31/findings.md § 'Reference instruments'): the canonical adjudicated extended Ground Truth (5,160 references at 50 m, corrected-F1 engine, the campaign's committed primary) and the ruling-21 standardised reference inputs/vectors/references/best-available-gt-55maps.geojson (5,010 references, scripts/evaluate_detections.py). The canonical eval_paths point at evaluation.json files written by this script's adapter from the engine's summary.json (deterministic transform; nothing recomputed). Nothing here is scored against the r2 reference. The 16-cell grid board's oracle and N=1/N=3 rungs are NOT registered (no materialised detections or evaluations; deferred to the r2 recompute chain per PI ruling 4).",
    "proposer_pools": {
     "g384_ov192_55map_g37": {
      "modality": "text",
@@ -8451,7 +8623,7 @@
      "n_candidates": 12715,
      "eval_path": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/eval/evaluation.json",
      "detections": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/verified_detections.geojson",
-     "_note": "B1 \u2014 arm 1 (3.7 proposer + carried Gemini-3 verifier) at its committed carried point, CANONICAL chain: corrected-F1@50 0.849360 [0.841013, 0.857383], P 0.8438 / R 0.8550, tile-MCC 0.6665, 5,229 detections. Against the canonical B N=5 incumbent 0.8438 this is +0.0056, p = 0.3488 \u2014 below the 55-map MDE80 of 0.013, which is D1's pre-named informative failure."
+     "_note": "B1 — arm 1 (3.7 proposer + carried Gemini-3 verifier) at its committed carried point, CANONICAL chain: corrected-F1@50 0.849360 [0.841013, 0.857383], P 0.8438 / R 0.8550, tile-MCC 0.6665, 5,229 detections. Against the canonical B N=5 incumbent 0.8438 this is +0.0056, p = 0.3488 — below the 55-map MDE80 of 0.013, which is D1's pre-named informative failure."
     },
     {
      "label": "arm1-n5-carried-p0.10-k5-standardised-gt",
@@ -8472,7 +8644,7 @@
      "n_candidates": 12715,
      "eval_path": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/standardised-ref/evaluation.json",
      "detections": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/verified_detections.geojson",
-     "_note": "B2 \u2014 the same detections on the ruling-21 STANDARDISED reference: F1@50 0.8550 [0.8465, 0.8630], P 0.8371 / R 0.8737. The tile confusion matrix is identical to the canonical chain's 50 m row (2533/4632/385/991), so the two rows share one tile-MCC."
+     "_note": "B2 — the same detections on the ruling-21 STANDARDISED reference: F1@50 0.8550 [0.8465, 0.8630], P 0.8371 / R 0.8737. The tile confusion matrix is identical to the canonical chain's 50 m row (2533/4632/385/991), so the two rows share one tile-MCC."
     },
     {
      "label": "arm2-n5-carried-p0.80-k5-canonical-gt",
@@ -8493,7 +8665,7 @@
      "n_candidates": 12715,
      "eval_path": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/eval/evaluation.json",
      "detections": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/verified_detections.geojson",
-     "_note": "B3 \u2014 arm 2 (all-3.7) at its committed carried point, CANONICAL chain: corrected-F1@50 0.876316 [0.868574, 0.883690], P 0.8901 / R 0.8630, tile-MCC 0.7073, 5,003 detections. The campaign headline: +0.0270 over arm 1 (p = 0.0001, BH-significant) \u2014 the family gain sits in the verifier seat. Also the model arm of the student-baseline programme (planning/student-baseline-2026-08-31.md)."
+     "_note": "B3 — arm 2 (all-3.7) at its committed carried point, CANONICAL chain: corrected-F1@50 0.876316 [0.868574, 0.883690], P 0.8901 / R 0.8630, tile-MCC 0.7073, 5,003 detections. The campaign headline: +0.0270 over arm 1 (p = 0.0001, BH-significant) — the family gain sits in the verifier seat. Also the model arm of the student-baseline programme (planning/student-baseline-2026-08-31.md)."
     },
     {
      "label": "arm2-n5-carried-p0.80-k5-standardised-gt",
@@ -8514,7 +8686,7 @@
      "n_candidates": 12715,
      "eval_path": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/standardised-ref/evaluation.json",
      "detections": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/verified_detections.geojson",
-     "_note": "B4 \u2014 the same detections on the STANDARDISED reference: F1@50 0.8825 [0.8746, 0.8897], P 0.8831 / R 0.8818 \u2014 above the entire 2026-08-27 final board including its oracles (ceiling B-N10-oracle 0.8558). Tile matrix identical to the canonical 50 m row (2516/4798/219/1008)."
+     "_note": "B4 — the same detections on the STANDARDISED reference: F1@50 0.8825 [0.8746, 0.8897], P 0.8831 / R 0.8818 — above the entire 2026-08-27 final board including its oracles (ceiling B-N10-oracle 0.8558). Tile matrix identical to the canonical 50 m row (2516/4798/219/1008)."
     }
    ]
   }

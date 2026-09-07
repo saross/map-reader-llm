@@ -1,7 +1,7 @@
 # Reference revision r2: fold the PI audits into the best-available ground truth and re-run the comparisons
 
-> **Last revised**: 2026-09-07 (S149-c: PI GO recorded with stop
-> conditions in his words; steps 2–3 launched on sapphire). See [§ Changelog](#changelog) for
+> **Last revised**: 2026-09-07 (S149-c: steps 2, 3, 7a-i done — max
+> |ΔF1@50| 0.0009 over nine cells; 4a–4b launched). See [§ Changelog](#changelog) for
 > revision history.
 
 **The PI's direction (2026-09-06, Session 148, verbatim in substance)**:
@@ -764,6 +764,38 @@ tree-wide `script_git_status`.
   § (b) (instrument), 446, 449, 450, and the census Obs.
 
 ## Changelog
+
+### 2026-09-07 (S149-c) — Steps 2, 3 and 7a-i DONE; 4a–4b launched
+
+**Step 2** (sapphire, for the record): r1 half exact — max |Δ| 0.0 over
+14 buffers × 5 fields, MCC 0.6548 = 0.6548, n 3,541, every input
+`clean`. r2 half: IM-k4 F1@50 **0.7400 → 0.7398 (Δ −0.0002)**, the
+band's first data point. **Step 3** (8 minutes, `4d92997bd`): nine
+evaluations in the r2 scoring home, all inputs `clean`, ground truth
+r2. r1 → r2 @ 50 m:
+
+| cell | F1 r1 | F1 r2 | ΔF1 | ΔP | ΔR | MCC r1 | MCC r2 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| IM-k3 | 0.8010 | 0.8008 | −0.0002 | +0.0004 | −0.0009 | 0.7120 | 0.7110 |
+| IM-k4 | 0.7400 | 0.7398 | −0.0002 | +0.0006 | −0.0006 | 0.6548 | 0.6540 |
+| TH7-k3 | 0.8387 | 0.8380 | −0.0007 | 0.0000 | −0.0013 | 0.6796 | 0.6792 |
+| TH7-k4 | 0.8169 | 0.8162 | −0.0007 | 0.0000 | −0.0012 | 0.6650 | 0.6647 |
+| T03-k3 | 0.8393 | 0.8387 | −0.0006 | 0.0000 | −0.0013 | 0.6888 | 0.6889 |
+| T03-k4 | 0.8303 | 0.8294 | −0.0009 | −0.0002 | −0.0014 | 0.6690 | 0.6691 |
+| TM-k3 | 0.8109 | 0.8102 | −0.0007 | 0.0000 | −0.0012 | 0.6569 | 0.6565 |
+| TM-k4 | 0.7833 | 0.7826 | −0.0007 | 0.0000 | −0.0011 | 0.6401 | 0.6397 |
+| TM-n10-k5 | 0.8279 | 0.8274 | −0.0005 | +0.0002 | −0.0011 | 0.6709 | 0.6695 |
+
+max |ΔF1@50| **0.0009**, all inside the 0.005 band; recall down
+0.0006–0.0014 everywhere with precision flat — the expected direction
+for +14 reference mounds no channel had detected. Not a surprise under
+the PI's stop conditions. **7a-i**: `register_r2_conditions.py --write
+--only clone` registered the nine `-r2-gt` rows (this commit);
+`verify_run_conditions.py` passes on all five touched runs. **4a–4b
+launched** on sapphire (`/tmp/run_step4ab.sh`, log
+`/tmp/r2-chain/step4ab.log`): the sweep on r2 with every gate on r1,
+then the N = 3 carried cells; the runner stops before 4c (the commit),
+which follows inspection of `sweeps.json`.
 
 ### 2026-09-07 (S149-c) — PI GO; steps 2–3 launched on sapphire
 
