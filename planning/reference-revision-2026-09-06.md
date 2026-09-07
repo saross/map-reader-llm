@@ -801,15 +801,21 @@ tree-wide `script_git_status`.
 Both adjudications re-run against r2 from their saved verdicts
 (`empty_tile_adjudicate.py --gt r2 --mode empty|census`; outputs in
 `results/empty-tile-audit/closure-r2/` and
-`results/cluster-audit/closure-r2/`): **empty-tile** 4 known-in-GT +
-5 true-double-miss (r1) → **9 known-in-GT** (r2); **census** 13
-known-in-GT + 2 true-double-miss + 6 detected + 1 proposed-but-filtered
-+ 7 gt-error-flag (r1) → **22 known-in-GT + 7 gt-error-flag** (r2) —
-the nine additions are now reference points, and all seven flagged
-targets are absent from r2 (six removed by the instruction set, one
-never in the reference). Exactly the collapse § 4 step 7 predicted. The
-single manifest regeneration waits for the r2 analysis rows (step 6's
-"new analysis rows, PI-signed"), so that rows land once.
+`results/cluster-audit/closure-r2/`): **empty-tile** — 4 known-in-GT
+and 5 true-double-miss on r1 become **9 known-in-GT** on r2;
+**census** — 13 known-in-GT, 2 true-double-miss, 6 detected, 1
+proposed-but-filtered and 7 gt-error-flag on r1 become **22 known-in-GT
+and 7 gt-error-flag** on r2. The nine additions are now reference
+points. The seven flags target six distinct r1 ids (`student:03283` is
+flagged from two tiles), and all six are absent from r2 — exactly the
+instruction set's removals. One reading caveat: re-run on r2, the flag
+placed at `extension:40` re-attaches to its 10.3 m neighbour
+`student:01034`, the pair the PI's inspection adjudicated as one mound
+(§ 3b (b)); r2 keeps the student record and drops the extension one, so
+the re-attachment is a property of the closure tool's nearest-point
+matching, not a surviving GT error. Exactly the collapse § 4 step 7
+predicted. The single manifest regeneration waits for the r2 analysis
+rows (step 6's "new analysis rows, PI-signed"), so that rows land once.
 
 ### 2026-09-07 (S149-c) — Step 5d DONE: the r2 K = 1 anchors; the supplement's r2 stratum exists
 
