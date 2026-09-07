@@ -32103,3 +32103,104 @@ extends to the error review did not see); **Obs 396** (residual
 duplicates deflating F1 by ≈ 0.03 — the census finds exactly one
 surviving near-duplicate pair in the standardised reference, so that
 population is now all but exhausted).
+
+## Observation 452: Reference revision r2 — a −6 / +14 change set moved no tier and every recall; the residual, not the revision, is the larger uncertainty (Sessions 149–150, 2026-09-07)
+
+**The headline.** Re-measuring all 55-map figures on reference revision
+**r2** (two PI audits' adjudications applied as one deterministic
+instruction set; card `planning/reference-revision-2026-09-06.md`;
+erratum **E84**) moved **F1@50 by at most 0.0009 on the 23 r1 board
+cells**, always through **recall** (−0.0005 to −0.0014 over the cells
+the card tabulates; E84 rounds the envelope to 0.0005–0.0015) with
+**precision moving by no more than 0.001** and upward on every A/B
+cell — the signature of adding **14 mounds absent from every reference
+layer**, seven of which the model had found (**6 detected**, **1
+proposed-but-filtered**; the other **7 true double-misses**) — and
+**preserved every tier structure**: the 8-cell leaderboard's five tiers
+are member-for-member identical on F1 **and** on MCC, and **0 of 253
+pairwise tier relations changed** among the 23 r1 cells on the 35-cell
+r2 board. **The reference's residual error is the larger uncertainty.**
+The estimated-correction column (expected unseen double-misses
+**M ≈ 50**, GT errors **E_err ≈ 36**, model-found omissions
+**E_om ≈ 36**;
+`results/55map-final-board-r2-2026-09-06/estimated-correction.md`)
+sits **within 0.0007 of each r2 point** — below it for the top of the
+board, by 0.0007 at the T1 cells, and marginally *above* it for the
+lowest-recall cells (**TM-k4 +0.0003**, **IM-k4 +0.0007**) — and
+**widens every interval by ≈ ±0.005**, wider than the tier gaps. That
+is why it is a column beside the point estimate, never a re-tiering.
+
+**Two findings the r2 board now carries that are not confirmations.**
+The all-3.7 stack's **N = 3 oracle** (`ARM2-N3-oracle`, **0.8848**)
+sits in **Tier 1** with its N = 5 oracle (`ARM2-N5-oracle`, **0.8871**)
+— the **Obs 438** "saturates at N = 3" pattern repeats for the 3.7
+proposer at **60 % of the pass spend** — and the fourth cell's N = 3
+oracle (**0.8747**) is level with its own N = 10 carried point
+(**0.8728**), same tier and a shared group letter. Both are **oracle**
+claims (argmax on r2 within the verified sweep space), reported as
+such.
+
+**Method notes for the record.** The sweep's oracle argmax landed on
+the **same operating point on r2 as on r1 for all 13 r1 families**; the
+companion canonical **B N = 5** set, re-materialised from pass-pinned
+inputs, reproduced the ladder's canonical F1 (**0.8437752627**) to the
+last digit; every evaluation ran through the one **IM-k4 scoring
+template** and every board through the **GS tile-swap permutation +
+BH + greedy-clique** chain, with the r1 regression gates **pinned and
+live**; the whole chain ran on **sapphire at $0**. Boards:
+`results/55map-final-board-r2-2026-09-06/final-board-50m.md`,
+`results/55map-leaderboard/55map-leaderboard-50m-r2.md`,
+`results/metric-leaderboards/55map-mcc-tiering-r2.md`.
+
+Sources: `docs/methodology/preregistration/protocol-errata.md` § **E84**
+(read 2026-09-07: the −6 / +14 framing, the 0.0009 band over 23 r1
+cells, the five-tier identity on F1 and MCC, 0 of 253 pairs changed,
+and the recall/precision signature — its recall envelope is the rounded
+0.0005–0.0015);
+`results/reference-revision-r2/audit-revision-instructions.csv` (read
+2026-09-07: 20 instruction rows — 6 `remove`/`gt-error-flag`, 6
+`add`/`detected`, 1 `add`/`proposed-but-filtered`, 7
+`add`/`true-double-miss` split 2 census + 5 empty-tile);
+`inputs/vectors/references/best-available-gt-55maps-r2.geojson` (read
+2026-09-07: **5,018** features — 4,726 `student_standardised`, 278
+`extension_standardised`, 14 `audit_reviewed`);
+`results/55map-final-board-r2-2026-09-06/final-board-50m.md` (read
+2026-09-07: 35 cells, 512/595 pairs significant; `ARM2-N5-oracle`
+0.8871 at (0.95, k5) T1, `ARM2-N3-oracle` 0.8848 at (0.95, k3) T1,
+`FOURTH-N3-oracle` 0.8747 T3 group `cd`, `FOURTH-N10-carried` 0.8728 T3
+group `d`);
+`results/55map-final-board-r2-2026-09-06/estimated-correction.md` and
+`estimated-correction.json` (read 2026-09-07: rates 5/470, 2/719,
+6/719, 6/719; expected terms M 49.7, E_err 35.8, E_om 35.8; 10,000
+draws, seed 42; `delta_f1_hat_minus_r2` from **−0.00074**
+(`ARM2-N3-oracle`, `ARM2-N5-oracle`) to **+0.00073** (`IM-k4`),
+negative on **33 of 35** cells; F1̂ interval half-widths
+**0.0051–0.0062**);
+`results/55map-leaderboard/55map-leaderboard-50m-r2.md` against
+`55map-leaderboard-50m.md` and
+`results/metric-leaderboards/55map-mcc-tiering-r2.md` against
+`55map-mcc-tiering.md` (read 2026-09-07: tier membership identical
+cell-for-cell across all five tiers on both metrics);
+`planning/reference-revision-2026-09-06.md` (read 2026-09-07: "Argmax
+unchanged on r2 for all 13 r1 families"; the step-3 nine-cell r1 → r2
+table, ΔF1 −0.0002 to −0.0009, ΔP −0.0002 to +0.0006, ΔR −0.0006 to
+−0.0014; the step-4d band check on the 19 sweep-derived r1 cells, max
+|ΔF1@50| 0.0007, recall −0.0005 to −0.0013, precision 0 to +0.0009);
+`results/run-conditions.json` (read 2026-09-07: the canonical B N = 5
+companion registered at corrected-F1@50 0.8437752627, gate 1e-6,
+against `results/stride55-2026-08-27/ladder.json`).
+Commits: `4d92997bd` (step 3), `7894b5b5a` (steps 4a–4b), `cd4905ec3`
+(step 4d), `22353e660` (the r2 boards and the canonical companion),
+`232c6dc8c` and `777c4588c` (the register's r2 rows).
+Related: **Obs 396** (the two opposing reference biases — r2 narrows
+both, and the estimated-correction column is what remains of the
+joint-false-negative side); **Obs 438** (the r1 final board, its 23
+cells and 253 pairs, and the "saturates at N = 3" asymmetry this entry
+finds repeating in the 3.7 proposer); **Obs 444** (the proposer ×
+verifier 2×2 whose 3.7 cells now sit at the top of the r2 board, and
+its statistical N = 3 saturation); **Obs 449** (the reference switch to
+the standardised GT that r2 revises) and **Obs 451** (the cluster
+census, which supplies 6 + 2 + 1 of the additions and all 6 removals —
+this entry is the re-scoring its § (i) said had not happened yet);
+erratum **E84** (the disclosure this entry is the working-notes half
+of).
