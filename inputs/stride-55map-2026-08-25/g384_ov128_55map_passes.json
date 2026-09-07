@@ -1,0 +1,197 @@
+{
+  "_README": "Pass-provenance pin (scripts/pin_pass_provenance.py). Positions are the first-N order the rung derivations use; run_id and sha256 are the identity the loaders verify. Regenerate only by a deliberate `pin` run, and record why in the commit.",
+  "tag": "stride:g384_ov128_55map",
+  "cell_dir": "outputs/stride-55map-2026-08-25/g384_ov128_55map",
+  "k": 10,
+  "pinned_at_utc": "2026-09-07T00:20:37.332920+00:00",
+  "order_rule": "directory index run_<i>, i = 1..K",
+  "start_times_monotone": true,
+  "passes": [
+    {
+      "position": 1,
+      "run_dir": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_1",
+      "run_id": "cf5dac0e-f864-4d57-94f7-57f8ad663f68",
+      "start": "2026-08-25T05:36:04.704068+00:00",
+      "end": "2026-08-25T06:17:53.785779+00:00",
+      "files": [
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_1/detections-detect_brief-text-3-flash-2026-08-25.geojson",
+          "sha256": "25bfa438e2180883419d9f58163cde3c5bf62ce0d4092a4ff3b708803825ccb6",
+          "role": "main"
+        },
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_1_recovery/detections-detect_brief-text-3-flash-2026-08-26.geojson",
+          "sha256": "91216ca4fe5579e9f2e0444c2b54009140c7aa5d530fb1ea1908ba895a30d197",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 2,
+      "run_dir": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_2",
+      "run_id": "8390057b-0ed4-4dca-9af9-e62ca448e4de",
+      "start": "2026-08-25T06:17:55.721524+00:00",
+      "end": "2026-08-25T07:00:07.395179+00:00",
+      "files": [
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_2/detections-detect_brief-text-3-flash-2026-08-25.geojson",
+          "sha256": "d4fb485f44192dbde29870ad3d8515cec95fa906d3bffb5187913e2583a68860",
+          "role": "main"
+        },
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_2_recovery/detections-detect_brief-text-3-flash-2026-08-26.geojson",
+          "sha256": "e286543495b46ecd350af14bd3c00262e50a1c3cca9e8c104d2483d3237eb0b3",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 3,
+      "run_dir": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_3",
+      "run_id": "500796f7-d5a2-4779-b2c7-480461579338",
+      "start": "2026-08-25T07:00:09.299754+00:00",
+      "end": "2026-08-25T07:42:47.532180+00:00",
+      "files": [
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_3/detections-detect_brief-text-3-flash-2026-08-25.geojson",
+          "sha256": "673675549a42a9abc21abf9f001b8a17d41146f6503fb6701ae802de376b7b14",
+          "role": "main"
+        },
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_3_recovery/detections-detect_brief-text-3-flash-2026-08-26.geojson",
+          "sha256": "31e41aac00cfee74f920469b2814b1dc3c90c74039f1b72311669d80549ce727",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 4,
+      "run_dir": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_4",
+      "run_id": "f4029e3b-313a-44dc-a61b-49f099b5434e",
+      "start": "2026-08-25T07:42:49.239347+00:00",
+      "end": "2026-08-25T08:23:38.384053+00:00",
+      "files": [
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_4/detections-detect_brief-text-3-flash-2026-08-25.geojson",
+          "sha256": "c94f6d5a2dd1fad00ae51d25ad57990253cf49d3d4317ae84075028b8794b30c",
+          "role": "main"
+        },
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_4_recovery/detections-detect_brief-text-3-flash-2026-08-26.geojson",
+          "sha256": "cfddbe04fcf1fb6dd565299515625e41fe0db530b7bb0b12d720d03e2e8880c4",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 5,
+      "run_dir": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_5",
+      "run_id": "9f4dd36f-7ffb-4540-9fd4-151fade43490",
+      "start": "2026-08-25T08:23:40.992954+00:00",
+      "end": "2026-08-25T09:04:54.865222+00:00",
+      "files": [
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_5/detections-detect_brief-text-3-flash-2026-08-25.geojson",
+          "sha256": "adb2778d78a28f9543d9f8e2235dfac32e0a26824587089f27a1d98f57744c46",
+          "role": "main"
+        },
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_5_recovery/detections-detect_brief-text-3-flash-2026-08-26.geojson",
+          "sha256": "1f87f4150b8a4b626432fbc42618bc210bed3bb0ea3abc52e6855b114d6e534d",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 6,
+      "run_dir": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_6",
+      "run_id": "8b91365d-d7b1-4d54-b08f-169ffbd395ba",
+      "start": "2026-08-25T09:04:56.775249+00:00",
+      "end": "2026-08-25T09:47:30.221160+00:00",
+      "files": [
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_6/detections-detect_brief-text-3-flash-2026-08-25.geojson",
+          "sha256": "9450fbfea40e72346f99acf22d60872299cf2ad148a370bb9838d45afa48e39d",
+          "role": "main"
+        }
+      ]
+    },
+    {
+      "position": 7,
+      "run_dir": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_7",
+      "run_id": "5ca9064b-65e3-4201-b236-4f8365003eb6",
+      "start": "2026-08-25T09:47:31.956822+00:00",
+      "end": "2026-08-25T10:31:01.553120+00:00",
+      "files": [
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_7/detections-detect_brief-text-3-flash-2026-08-25.geojson",
+          "sha256": "cca471112d441de10771b458b5746752cea11c76f05b5b7374ced6fbc15675f7",
+          "role": "main"
+        },
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_7_recovery/detections-detect_brief-text-3-flash-2026-08-26.geojson",
+          "sha256": "28965a55b9ec7bbfad294bd38bd85baa08f3367b7424436da2fd4fd3df5bf919",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 8,
+      "run_dir": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_8",
+      "run_id": "1aa0434d-876f-4b3b-af05-f3dbf4cc9882",
+      "start": "2026-08-25T10:31:03.439868+00:00",
+      "end": "2026-08-25T11:12:38.481235+00:00",
+      "files": [
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_8/detections-detect_brief-text-3-flash-2026-08-25.geojson",
+          "sha256": "cf1323692cae5ced5f9a09c858af9b9e59c946269dc6147387a520aa9ebddeb9",
+          "role": "main"
+        },
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_8_recovery/detections-detect_brief-text-3-flash-2026-08-26.geojson",
+          "sha256": "9ff169742bbc7eefdb781366160d21d6b17576211dda2c9436dd62a632ac1eba",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 9,
+      "run_dir": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_9",
+      "run_id": "9fa219d6-7704-4152-a08c-1c7e178d2199",
+      "start": "2026-08-25T11:12:40.439287+00:00",
+      "end": "2026-08-25T11:54:43.234679+00:00",
+      "files": [
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_9/detections-detect_brief-text-3-flash-2026-08-25.geojson",
+          "sha256": "393cb1bbf594a68cb2c857314347d4c710c285ac6670e9f18c449104524da0cc",
+          "role": "main"
+        },
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_9_recovery/detections-detect_brief-text-3-flash-2026-08-26.geojson",
+          "sha256": "b2b92f92fdfaeb4d27a7e114a8df9353c9a8d0e8ba4b5c6426d741e576ca4612",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 10,
+      "run_dir": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_10",
+      "run_id": "23594511-60a9-4148-9cdb-3d305ae4009f",
+      "start": "2026-08-25T11:54:45.146352+00:00",
+      "end": "2026-08-25T12:37:09.305210+00:00",
+      "files": [
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_10/detections-detect_brief-text-3-flash-2026-08-25.geojson",
+          "sha256": "80b9ff203ad921562289397be1c2c843677c763df3633f535cd51676617bd6f3",
+          "role": "main"
+        },
+        {
+          "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_10_recovery/detections-detect_brief-text-3-flash-2026-08-26.geojson",
+          "sha256": "658cc050bc6fd1e4275553cd94bf6018c8978ec82e9f53651a416ae16988912f",
+          "role": "recovery"
+        }
+      ]
+    }
+  ],
+  "extra_run_dirs_beyond_k": []
+}

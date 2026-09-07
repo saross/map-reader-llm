@@ -71,6 +71,11 @@ from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
 from scripts.grid_prepare_scoring import CoverageError, load_pass  # noqa: E402
 from scripts.h13_k_sensitivity import cluster_votes  # noqa: E402
 from scripts.merge_passes import deduplicate_within_pass  # noqa: E402
+from scripts.pin_pass_provenance import (  # noqa: E402
+    PINNED_CELLS,
+    tag_for_cell_dir,
+    verify_pin,
+)
 from scripts.stride55_prepare_and_union import (  # noqa: E402
     CELLS,
     DEDUP_METRES,
@@ -115,9 +120,19 @@ CARRIED_N5 = {"g384_ov128_55map": (0.15, 4), "g384_ov192_55map": (0.15, 5)}
 
 
 def load_deduped_passes(cell: str) -> list[list[dict]]:
-    """The ten deduped passes, coverage-gated exactly as the union build."""
+    """The ten deduped passes, coverage-gated exactly as the union build.
+
+    Gated first on the cell's committed pass pin
+    (``inputs/stride-55map-2026-08-25/<cell>_passes.json``): every
+    ``run_<i>`` must carry the pinned ``run_id`` and file hashes, and no
+    unpinned pass may exist beyond K. The first-N rungs are ``passes[:n]``
+    in this order, so a re-run, a rename or a stray extra pass would
+    otherwise change a rung silently (Session 149, MINOR 14).
+    """
     manifest = set(json.loads((MANDIR / CELLS[cell]).read_text()))
     cell_dir = OUTROOT / cell
+    tag = tag_for_cell_dir(cell_dir)
+    verify_pin(tag, PINNED_CELLS[tag])
     passes: list[list[dict]] = []
     for i in range(1, 11):
         run = f"run_{i}"

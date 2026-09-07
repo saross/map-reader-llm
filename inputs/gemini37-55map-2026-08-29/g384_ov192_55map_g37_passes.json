@@ -1,0 +1,112 @@
+{
+  "_README": "Pass-provenance pin (scripts/pin_pass_provenance.py). Positions are the first-N order the rung derivations use; run_id and sha256 are the identity the loaders verify. Regenerate only by a deliberate `pin` run, and record why in the commit.",
+  "tag": "g37:g384_ov192_55map_g37",
+  "cell_dir": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37",
+  "k": 5,
+  "pinned_at_utc": "2026-09-07T00:20:35.788021+00:00",
+  "order_rule": "directory index run_<i>, i = 1..K",
+  "start_times_monotone": true,
+  "passes": [
+    {
+      "position": 1,
+      "run_dir": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_1",
+      "run_id": "09ed508c-a2f9-4511-8571-22dd0f239b98",
+      "start": "2026-08-29T02:39:12.062467+00:00",
+      "end": "2026-08-30T00:00:17.020473+00:00",
+      "files": [
+        {
+          "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_1/detections-detect_brief-text-3.7-flash-2026-08-29.geojson",
+          "sha256": "1f535e853fc81d77db744eb65368d6482cab91bf548171424458787bf6db78a8",
+          "role": "main"
+        },
+        {
+          "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_1_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.geojson",
+          "sha256": "78f69f92e533edf1dc447616999dac5697fa58f482467042268878edd4240ef4",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 2,
+      "run_dir": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2",
+      "run_id": "b6d58e9e-4c9a-430f-b3b9-385a2933a9d7",
+      "start": "2026-08-30T00:10:53.493168+00:00",
+      "end": "2026-08-30T07:13:15.676459+00:00",
+      "files": [
+        {
+          "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2/detections-detect_brief-text-3.7-flash-2026-08-30.geojson",
+          "sha256": "f11edb6a5252df8a3ecd3af3351347174bbb492b92240bfa487133ea902c4795",
+          "role": "main"
+        },
+        {
+          "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.geojson",
+          "sha256": "7035d02a8c5a7dc4b214b2bbf904af92bc4e8a7251c535de5e243320a4f74a1c",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 3,
+      "run_dir": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_3",
+      "run_id": "9db27a93-e2fd-4fb7-b65d-df32d1181685",
+      "start": "2026-08-30T08:33:37.326128+00:00",
+      "end": "2026-08-30T19:59:58.010142+00:00",
+      "files": [
+        {
+          "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_3/detections-detect_brief-text-3.7-flash-2026-08-30.geojson",
+          "sha256": "6ea681f045f23dbc170b55f44a12b2697de3dcb2ac5dcdd2a53e5afcc60556d2",
+          "role": "main"
+        },
+        {
+          "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_3_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.geojson",
+          "sha256": "9d6b768c272dc33a2aa8eeeaa822d6f913fde46c2f8df232f56dfb17e8a529a6",
+          "role": "recovery"
+        },
+        {
+          "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_3_recovery2/detections-detect_brief-text-3.7-flash-2026-08-31.geojson",
+          "sha256": "e1395da800e20646f0c895fbf083c725271baceed1a291048a666582cff3946f",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 4,
+      "run_dir": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_4",
+      "run_id": "00042597-d88e-4e75-95da-e63917104fd4",
+      "start": "2026-08-30T20:00:01.580556+00:00",
+      "end": "2026-08-31T01:24:18.160224+00:00",
+      "files": [
+        {
+          "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_4/detections-detect_brief-text-3.7-flash-2026-08-30.geojson",
+          "sha256": "4bc7715a25a63d07eccdb6054d202042b613c9fe6aa5fd5f9fd2820287c04b08",
+          "role": "main"
+        },
+        {
+          "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_4_recovery/detections-detect_brief-text-3.7-flash-2026-08-31.geojson",
+          "sha256": "9a1f5abc9bd8b9535a02c01469042bd003e19a56889856caf7135d7fea1b2d67",
+          "role": "recovery"
+        }
+      ]
+    },
+    {
+      "position": 5,
+      "run_dir": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_5",
+      "run_id": "0edd8052-df01-4083-a905-e7eaec6c5fca",
+      "start": "2026-08-31T01:24:20.906859+00:00",
+      "end": "2026-08-31T03:30:07.507721+00:00",
+      "files": [
+        {
+          "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_5/detections-detect_brief-text-3.7-flash-2026-08-31.geojson",
+          "sha256": "37dcc069e4561a146933ab8d591f5d1fe38f9a31f3cf2264176bd75697ec405c",
+          "role": "main"
+        },
+        {
+          "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_5_recovery/detections-detect_brief-text-3.7-flash-2026-08-31.geojson",
+          "sha256": "2c635a09a602721dfe23123c5620a0b67b8ae9ffd87819d65af439f73caec261",
+          "role": "recovery"
+        }
+      ]
+    }
+  ],
+  "extra_run_dirs_beyond_k": []
+}

@@ -34,7 +34,16 @@ GATES (card § 5; nothing is written unless all pass):
   EXACTLY (TH7-k3 4,786; T03-k3 4,905; TM-k3 4,279; IM-k3 4,680;
   uplift 4,361; A-N10 4,475; B-N10 4,505; A-N5 4,597; B-N5 4,736).
 
-Outputs (results/55map-final-board-2026-08-27/): sweeps.json,
+Reference r2 (``--reference r2``; Session 149): the sweep runs on r2
+(``reference_gt``) while EVERY gate above stays pinned to r1
+(``standardised_gt``), and the 3.7 campaign families join under the
+membership ruling — ARM1-N5 / ARM2-N5 / FOURTH-N10 with their N = 1 /
+N = 3 rungs (``build_g37_families``), gated exactly as A/B: identity
+counts (5,229 / 5,003 / 4,246), committed F1@50 within 0.003, exact
+(TP, FP, FN) reconstruction, geometry vs the committed primaries. The
+committed r1 home is read-only (``--force-r1`` to override, deliberately).
+
+Outputs (<board home>/): sweeps.json,
 per-family sweep CSVs, cells/<label>/detections.geojson for every
 non-committed cell, and cells_manifest.json for stages 2 (full
 evaluations) and 3 (board build).
@@ -71,6 +80,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 from scripts.build_55map_leaderboard import (  # noqa: E402
     BOUNDS,
     board_home,
+    reference_gt,
     standardised_gt,
 )
 from scripts.score_55maps_standardised_reference import (  # noqa: E402
@@ -81,6 +91,13 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
 )
 from scripts.n1_baseline_leaderboard_tiering import micro_f1  # noqa: E402
 from scripts.pairwise_permutation_test import assign_source_tiles  # noqa: E402
+from scripts.gemini37_arm_ladder import (  # noqa: E402
+    load_deduped_passes as load_g37_passes,
+)
+from scripts.gemini37_sweep_oracle import (  # noqa: E402
+    CELLS as G37_CELLS,
+    load_candidates as load_g37_candidates,
+)
 from scripts.stride55_ladder import (  # noqa: E402
     INHERIT_TOL_M,
     cluster_first_n,
@@ -114,6 +131,30 @@ IDENTITY = {
     "A-N10": ((0.15, 8), 4475), "B-N10": ((0.15, 10), 4505),
     "A-N5": ((0.15, 4), 4597), "B-N5": ((0.15, 5), 4736),
 }
+#: The 3.7 campaign cells (membership ruling, PI 2026-09-06; on the board
+#: from reference r2). Identity counts are the committed primaries' own
+#: feature counts; committed F1@50 values are their standardised-ref
+#: evaluations (results/gemini37-55map-2026-08-31/<arm>/.../standardised-ref
+#: and results/gemini37-fourth-cell/55map/.../standardised-ref, read
+#: 2026-09-07). Family names follow the campaign's own tags
+#: (gemini37_sweep_oracle.CELLS) so every cell traces to its loader.
+G37_IDENTITY = {
+    "ARM1-N5": ((0.10, 5), 5229),
+    "ARM2-N5": ((0.80, 5), 5003),
+    "FOURTH-N10": ((0.98, 10), 4246),
+}
+G37_COMMITTED = [
+    ("ARM1-N5-carried", "results/gemini37-55map-2026-08-31/arm1/"
+                        "g384_ov192_55map_g37/primary/verified_detections.geojson",
+     0.8550),
+    ("ARM2-N5-carried", "results/gemini37-55map-2026-08-31/arm2/"
+                        "g384_ov192_55map_g37/primary/verified_detections.geojson",
+     0.8825),
+    ("FOURTH-N10-carried", "results/gemini37-fourth-cell/55map/"
+                           "g384_ov192_55map/primary/verified_detections.geojson",
+     0.8732),
+]
+G37_FAMILY_OF_CELL = {"ARM1-N5": "arm1", "ARM2-N5": "arm2", "FOURTH-N10": "fourth"}
 
 # Carried cells whose full evaluations are already committed.
 COMMITTED_CARRIED = [
@@ -162,8 +203,17 @@ def load_manifest_probs(cdir: Path, vdir: Path) -> gpd.GeoDataFrame:
         crs="EPSG:32635")
 
 
-def build_families(bounds: gpd.GeoDataFrame) -> dict[str, dict]:
-    """Every run's verified sweep space, per the card § 2."""
+def build_families(bounds: gpd.GeoDataFrame,
+                   include_g37: bool = False) -> dict[str, dict]:
+    """Every run's verified sweep space, per the card § 2.
+
+    Args:
+        bounds: The 55-map evaluation bounds (EPSG:32635).
+        include_g37: Add the 3.7 campaign families (arm 1, arm 2, the
+            fourth cell, each with its N = 1 / N = 3 first-N rungs) per the
+            membership ruling. Off for the committed r1 board, whose
+            membership is closed; on for reference r2 and later.
+    """
     fam: dict[str, dict] = {}
     for label, run in (("TH7", "55maps-text-high-generalisation"),
                        ("T03", "55maps-text-high-t0.3-generalisation"),
@@ -201,6 +251,50 @@ def build_families(bounds: gpd.GeoDataFrame) -> dict[str, dict]:
             gdf["mound_probability"] = probs10[idx]
             gdf = gdf[d <= INHERIT_TOL_M].copy()
             fam[f"{key}-N{n}"] = {"gdf": gdf, "ks": tuple(range(1, n + 1))}
+    if include_g37:
+        fam.update(build_g37_families(index))
+    return fam
+
+
+def build_g37_families(index: dict) -> dict[str, dict]:
+    """The 3.7 campaign's sweep spaces: three N = K unions + six rungs.
+
+    Mirrors the A/B branch of :func:`build_families` exactly — the rungs
+    are the committed first-N derivation (``cluster_first_n`` over the
+    pass-pinned passes) with probabilities inherited from the cell's own
+    K-union verification within ``INHERIT_TOL_M`` — using the campaign's
+    loaders (``gemini37_sweep_oracle.load_candidates`` for the unions,
+    ``gemini37_arm_ladder.load_deduped_passes`` for the arms' five passes;
+    the fourth cell re-verified stride B's ten passes, so it shares B's
+    loader and pin).
+
+    Args:
+        index: The map-constrained tile index (``build_map_constrained_index``).
+
+    Returns:
+        Family name -> {"gdf", "ks"}: ``ARM1-N5``/``ARM2-N5`` (ks 1..5),
+        ``FOURTH-N10`` (ks 1..10), and ``<family>-N1`` / ``-N3`` rungs.
+    """
+    from scipy.spatial import cKDTree
+
+    fam: dict[str, dict] = {}
+    arm_passes = load_g37_passes()  # pin-gated, five passes
+    b_passes = load_deduped_passes("g384_ov192_55map")  # pin-gated, ten passes
+    for family, tag in G37_FAMILY_OF_CELL.items():
+        spec = G37_CELLS[tag]
+        union = load_g37_candidates(tag, spec)
+        k_max = spec["k_max"]
+        fam[family] = {"gdf": union, "ks": tuple(range(1, k_max + 1))}
+        passes = arm_passes if tag != "fourth" else b_passes
+        tree = cKDTree(np.c_[union.geometry.x, union.geometry.y])
+        probs = union["mound_probability"].to_numpy()
+        stem = family.rsplit("-N", 1)[0]
+        for n in (1, 3):
+            gdf = cluster_first_n(passes, n, index)
+            d, idx = tree.query(np.c_[gdf.geometry.x, gdf.geometry.y], k=1)
+            gdf["mound_probability"] = probs[idx]
+            gdf = gdf[d <= INHERIT_TOL_M].copy()
+            fam[f"{stem}-N{n}"] = {"gdf": gdf, "ks": tuple(range(1, n + 1))}
     return fam
 
 
@@ -234,15 +328,30 @@ def main() -> int:
              "55map-final-board-r2-2026-09-06/ and leaves the r1 home "
              "untouched.",
     )
+    ap.add_argument(
+        "--force-r1", action="store_true",
+        help="Permit writing into the COMMITTED r1 board home. The r1 home "
+             "is read-only by policy (H2): G3/G4 reproduce it, so rewriting "
+             "it destroys the regression evidence. Only for a deliberate, "
+             "recorded regeneration.",
+    )
     args = ap.parse_args()
     out = board_home(args.reference)
+    include_g37 = args.reference == "r2"
+    if args.reference == "standardised" and out.exists() and not args.force_r1:
+        ap.error(f"{out.relative_to(PROJECT_ROOT)} is the committed r1 board "
+                 "home and is read-only (H2). Pass --reference r2 for the "
+                 "r2 board, or --force-r1 to regenerate r1 deliberately.")
 
     # PINNED TO r1, deliberately, whatever --reference says: G4 asks whether
     # the light scorer still reproduces the COMMITTED r1 board, which is a
     # regression test on the code. Pointing it at r2 would compare the r2
     # numbers to the r1 board and fail by construction, disabling the gate
     # exactly when a new reference makes it most worth having (BLOCKER 4).
-    ref = standardised_gt()
+    # ``ref`` is the vintage the SWEEP runs on — the oracle column claims
+    # the argmax on the board's own reference, uniformly (card § 1).
+    gate_ref = standardised_gt()
+    ref = reference_gt(args.reference) if args.reference != "standardised" else gate_ref
     bounds = gpd.read_file(BOUNDS)
     if bounds.crs is None:
         bounds = bounds.set_crs("EPSG:4326")
@@ -256,11 +365,13 @@ def main() -> int:
     checks = [(c["label"], PROJECT_ROOT / c["det"], committed[c["label"]])
               for c in BOARD_CELLS if c["label"] in committed]
     checks.append(("IM-k4", IMK4_DET, IMK4_F1_50))
+    if include_g37:
+        checks += [(label, PROJECT_ROOT / det, f1) for label, det, f1 in G37_COMMITTED]
     committed_counts: dict[str, tuple[int, int, int]] = {}
     for label, det_path, f1_committed in checks:
         det = gpd.read_file(det_path).to_crs("EPSG:32635")
         det = assign_source_tiles(det, bounds)
-        tm = compute_per_tile_tp_fp_fn(det, ref, bounds,
+        tm = compute_per_tile_tp_fp_fn(det, gate_ref, bounds,
                                        buffer_metres=BUFFER_M)
         tp, fp, fn = (int(tm["tp"].sum()), int(tm["fp"].sum()),
                       int(tm["fn"].sum()))
@@ -273,12 +384,13 @@ def main() -> int:
         logger.info("G4 OK %-8s micro %.4f vs committed %.4f (d %+.4f)",
                     label, f1, f1_committed, f1 - f1_committed)
 
-    families = build_families(bounds)
+    families = build_families(bounds, include_g37=include_g37)
     for name, spec in families.items():
         spec["gdf"] = assign_source_tiles(spec["gdf"], bounds)
 
+    identity = {**IDENTITY, **(G37_IDENTITY if include_g37 else {})}
     # Family identity gates.
-    for name, ((pt, pk), expected) in IDENTITY.items():
+    for name, ((pt, pk), expected) in identity.items():
         g = families[name]["gdf"]
         n = int(((g["mound_probability"] >= pt)
                  & (g["vote_count"] >= pk)).sum())
@@ -292,13 +404,16 @@ def main() -> int:
     # −0.05 map-attribution defect): each incumbent family's
     # reconstruction at its committed point must reproduce the committed
     # file's EXACT integer (TP, FP, FN) triple.
-    for name, committed_label in (("TH7", "TH7-k3"), ("T03", "T03-k3"),
-                                  ("TM", "TM-k3"), ("IM", "IM-k3"),
-                                  ("UPL", "TM-n10-k5")):
-        (pt, pk), _ = IDENTITY[name]
+    mechanism_pairs = [("TH7", "TH7-k3"), ("T03", "T03-k3"),
+                       ("TM", "TM-k3"), ("IM", "IM-k3"),
+                       ("UPL", "TM-n10-k5")]
+    if include_g37:
+        mechanism_pairs += [(f, f"{f}-carried") for f in G37_IDENTITY]
+    for name, committed_label in mechanism_pairs:
+        (pt, pk), _ = identity[name]
         g = families[name]["gdf"]
         sub = g[(g["mound_probability"] >= pt) & (g["vote_count"] >= pk)]
-        tm = compute_per_tile_tp_fp_fn(sub, ref, bounds,
+        tm = compute_per_tile_tp_fp_fn(sub, gate_ref, bounds,
                                        buffer_metres=BUFFER_M)
         triple = (int(tm["tp"].sum()), int(tm["fp"].sum()),
                   int(tm["fn"].sum()))
@@ -312,12 +427,16 @@ def main() -> int:
     # Geometry-identity gates for the A/B carried cells vs the committed
     # S142 primary detection sets (0.01 m = 4326 round-trip tolerance).
     from scipy.spatial import cKDTree
-    for name, committed_det in (
-            ("A-N10", "results/stride55-2026-08-27/g384_ov128_55map/"
-                      "primary/verified_detections.geojson"),
-            ("B-N10", "results/stride55-2026-08-27/g384_ov192_55map/"
-                      "primary/verified_detections.geojson")):
-        (pt, pk), _ = IDENTITY[name]
+    geometry_checks = [
+        ("A-N10", "results/stride55-2026-08-27/g384_ov128_55map/"
+                  "primary/verified_detections.geojson"),
+        ("B-N10", "results/stride55-2026-08-27/g384_ov192_55map/"
+                  "primary/verified_detections.geojson")]
+    if include_g37:
+        geometry_checks += [(label.removesuffix("-carried"), det)
+                            for label, det, _f1 in G37_COMMITTED]
+    for name, committed_det in geometry_checks:
+        (pt, pk), _ = identity[name]
         g = families[name]["gdf"]
         sub = g[(g["mound_probability"] >= pt) & (g["vote_count"] >= pk)]
         com = gpd.read_file(PROJECT_ROOT / committed_det).to_crs("EPSG:32635")
@@ -387,10 +506,10 @@ def main() -> int:
     for name in families:
         best = sweeps["families"][name]["argmax"]
         materialise(name, f"{name}-oracle",
-                    "oracle (standardised-reference argmax)",
+                    f"oracle ({args.reference}-reference argmax)",
                     best["prob_t"], best["min_votes"])
-        if name in ("A-N10", "B-N10", "A-N5", "B-N5"):
-            (pt, pk), _ = IDENTITY[name]
+        if name in ("A-N10", "B-N10", "A-N5", "B-N5") or name in G37_IDENTITY:
+            (pt, pk), _ = identity[name]
             materialise(name, f"{name}-carried", "carried", pt, pk)
 
     (out / "sweeps.json").write_text(json.dumps(sweeps, indent=2) + "\n")

@@ -63,6 +63,11 @@ from scripts.gemini37_sweep_oracle import (  # noqa: E402
     load_candidates,
 )
 from scripts.grid_prepare_scoring import CoverageError, load_pass  # noqa: E402
+from scripts.pin_pass_provenance import (  # noqa: E402
+    PINNED_CELLS,
+    tag_for_cell_dir,
+    verify_pin,
+)
 from scripts.h13_k_sensitivity import cluster_votes  # noqa: E402
 from scripts.merge_passes import deduplicate_within_pass  # noqa: E402
 from scripts.stride55_ladder import (  # noqa: E402
@@ -96,7 +101,14 @@ ARMS = ("arm1", "arm2")
 
 
 def load_deduped_passes() -> list[list[dict]]:
-    """The five deduped 3.7 passes, coverage-gated as the union build."""
+    """The five deduped 3.7 passes, coverage-gated as the union build.
+
+    Gated first on the committed pass pin
+    (``inputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37_passes.json``)
+    — see ``stride55_ladder.load_deduped_passes`` for why (Session 149).
+    """
+    tag = tag_for_cell_dir(CELL_DIR)
+    verify_pin(tag, PINNED_CELLS[tag])
     manifest = set(json.loads(MANIFEST.read_text()))
     passes: list[list[dict]] = []
     for i in range(1, K_TOTAL + 1):
