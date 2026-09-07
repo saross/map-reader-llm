@@ -91,3 +91,25 @@ def test_real_artefacts_reproduce_registered_finding(tmp_path: Path):
 
     # And the run left the tracked tree untouched.
     assert committed_path.read_text(encoding="utf-8") == committed_before
+
+
+@pytest.mark.tier1
+def test_r2_mode_reads_the_r2_home_and_flattens_the_engine_mcc(tmp_path: Path):
+    """Step 5 of the r2 chain: the same re-measurement on the r2 scoring home.
+
+    The r2 evaluations are evaluate_detections.py output, whose MCC is a
+    nested {"point", ...} block; the ranking must see floats.
+    """
+    r2_home = mod.R2_BASE
+    if not (r2_home / "TH7-k4" / "evaluation.json").exists():
+        pytest.skip("r2 scoring home not present")
+    out_path = tmp_path / "obs280-r2.json"
+    mod.main(["--reference", "r2", "--out", str(out_path)])
+    payload = json.loads(out_path.read_text())
+    assert payload["reference"] == "r2"
+    assert payload["board_home"] == "results/55maps-r2-ref-2026-09-06"
+    assert payload["comparison"]["f1_rank_standardised"]
+    assert payload["comparison"]["mcc_rank_standardised"]
+    # The r2 default output lives in the r2 home, never the r1 artefact.
+    assert mod.OUT_BY_REFERENCE["r2"] == r2_home / "obs280-shared-reference-r2.json"
+    assert not mod.OUT_BY_REFERENCE["r2"].exists()

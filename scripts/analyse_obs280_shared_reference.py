@@ -64,6 +64,14 @@ LEGACY_BASE = REPO / "results/55maps-extended-gt-2026-06-07"
 #: probable mechanism of the flaky tier-2 failure the Session 137 audit
 #: observed. Callers that must not touch the tree pass ``--out``.
 DEFAULT_OUT = STD_BASE / "obs280-shared-reference.json"
+#: Reference revision r2 (planning/reference-revision-2026-09-06.md, step 5):
+#: the same re-measurement with the board cells read from the r2 scoring
+#: home. The legacy, A1 and student-only anchors are unchanged -- they are
+#: the comparison's fixed points, not the reference under revision.
+R2_BASE = REPO / "results/55maps-r2-ref-2026-09-06"
+R2_OUT = R2_BASE / "obs280-shared-reference-r2.json"
+BASE_BY_REFERENCE = {"standardised": STD_BASE, "r2": R2_BASE}
+OUT_BY_REFERENCE = {"standardised": DEFAULT_OUT, "r2": R2_OUT}
 
 # The four config cells Obs 292 / mcc-v2 compared (deployment operating
 # points, one per configuration), in mcc-v2 § 2 row order.
@@ -80,16 +88,28 @@ STUDENT_ONLY_MCC = {
 }
 
 
-def std_cell(label: str) -> dict:
-    """F1 @ 50 m + MCC (buffer-invariant) from the standardised board."""
-    with open(STD_BASE / label / "evaluation.json", encoding="utf-8") as fh:
+def std_cell(label: str, base: Path = STD_BASE) -> dict:
+    """F1 @ 50 m + MCC (buffer-invariant) from a shared-reference board.
+
+    Args:
+        label: Board cell label (e.g. ``TH7-k4``).
+        base: The scoring home holding ``<label>/evaluation.json`` -- the r1
+            home (default) or the r2 home.
+
+    Returns:
+        ``{"f1", "f1_ci", "mcc"}`` at 50 m. The r1 evaluations were adapted
+        from Track-2 summaries and carry ``mcc`` as a float; the r2 ones are
+        ``evaluate_detections.py`` output and nest it as ``{"point", ...}``
+        -- both shapes are read.
+    """
+    with open(base / label / "evaluation.json", encoding="utf-8") as fh:
         ev = json.load(fh)["summary"]
     b50 = next(b for b in ev["buffers"] if b["buffer_metres"] == 50)
-    tc = ev["tile_classification"]
+    mcc = ev["tile_classification"]["mcc"]
     return {
         "f1": b50["f1"],
         "f1_ci": [b50["f1_ci_lower"], b50["f1_ci_upper"]],
-        "mcc": tc["mcc"],
+        "mcc": mcc.get("point") if isinstance(mcc, dict) else mcc,
     }
 
 
@@ -221,9 +241,15 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--out", type=Path, default=DEFAULT_OUT,
         help=(
-            "Where to write obs280-shared-reference.json "
-            f"(default: {DEFAULT_OUT.relative_to(REPO)})"
+            "Where to write the JSON (default: the committed artefact for the "
+            f"chosen reference -- {DEFAULT_OUT.relative_to(REPO)}, or "
+            f"{R2_OUT.relative_to(REPO)} under --reference r2)"
         ),
+    )
+    parser.add_argument(
+        "--reference", choices=sorted(BASE_BY_REFERENCE), default="standardised",
+        help=("Which shared-reference board to re-measure on: the ruling-21 "
+              "standardised home (default) or reference revision r2."),
     )
     return parser
 
@@ -235,7 +261,8 @@ def main(argv: list[str] | None = None) -> None:
         argv: Optional argument vector (``None`` reads ``sys.argv``).
     """
     args = build_arg_parser().parse_args(argv)
-    std = {c["label"]: std_cell(c["label"]) for c in CELLS}
+    base = BASE_BY_REFERENCE[args.reference]
+    std = {c["label"]: std_cell(c["label"], base) for c in CELLS}
     legacy = {lb: legacy_cell(lb) for lb in CARRIED}
     a1 = {lb: a1_cell(lb) for lb in CARRIED}
 
@@ -347,6 +374,14 @@ def main(argv: list[str] | None = None) -> None:
         },
         "strongest_contrast": strongest,
     }
+    if args.reference != "standardised":
+        # The r1 payload and its default path are byte-for-byte the committed
+        # artefact (the tier-2 test regenerates and diffs it); other vintages
+        # declare themselves and default to their own home.
+        payload = {"reference": args.reference,
+                   "board_home": str(base.relative_to(REPO)), **payload}
+        if args.out == DEFAULT_OUT:
+            args.out = OUT_BY_REFERENCE[args.reference]
     out = args.out
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(payload, indent=2))

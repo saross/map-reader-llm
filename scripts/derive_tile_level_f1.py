@@ -53,6 +53,7 @@ Programming Interface (API) calls and no geometry work are performed.
 from __future__ import annotations
 
 import argparse
+import dataclasses
 import json
 import math
 import sys
@@ -63,6 +64,13 @@ from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "results" / "tile-level-f1"
+#: Reference revision r2 (planning/reference-revision-2026-09-06.md, step 5):
+#: the eight 55-map cells re-derived from their r2 evaluations
+#: (results/55maps-r2-ref-2026-09-06/<cell>/evaluation.json, -r2-gt rows).
+#: The GS cells are unchanged -- r2 does not touch the GS reference.
+R2_SCORING_HOME = "results/55maps-r2-ref-2026-09-06"
+R2_OUTPUT_DIR = PROJECT_ROOT / "results" / "tile-level-f1-r2"
+R2_BOARD_ID = "55map-r2-leaderboard-50m"
 OUTPUT_FILENAME = "tile_level_f1.json"
 
 #: Tolerance for the MCC reproduction gate (four decimal places).
@@ -644,16 +652,53 @@ def derive_comparator(spec: ComparatorSpec) -> dict[str, Any]:
 # =============================================================================
 
 
-def build_report(project_root: Path) -> dict[str, Any]:
+def cells_for(reference: str, project_root: Path) -> tuple[CellSpec, ...]:
+    """The registered cells for a reference vintage.
+
+    Args:
+        reference: ``canonical`` (the committed r1 specs, default) or ``r2``
+            -- every 55-map spec is re-pointed at its r2 evaluation
+            (``-r2-gt`` condition, r2 scoring home, r2 leaderboard id) with
+            ``object_f1`` read from that evaluation at 50 m rather than the
+            hard-coded r1 value. GS specs pass through unchanged.
+        project_root: Repository root, to read the r2 evaluations.
+
+    Returns:
+        The specs to derive.
+    """
+    if reference != "r2":
+        return CELLS
+    out = []
+    for spec in CELLS:
+        if spec.carrier != M55_CARRIER:
+            out.append(spec)
+            continue
+        cell = spec.key.removeprefix("55map-")
+        ev_path = f"{R2_SCORING_HOME}/{cell}/evaluation.json"
+        with (project_root / ev_path).open(encoding="utf-8") as handle:
+            summary = json.load(handle)["summary"]
+        f1_50 = next(b for b in summary["buffers"] if b["buffer_metres"] == 50)["f1"]
+        out.append(dataclasses.replace(
+            spec,
+            board=R2_BOARD_ID,
+            condition_id=spec.condition_id.replace("-canonical-gt", "-r2-gt"),
+            evaluation_path=ev_path,
+            object_f1=f1_50,
+        ))
+    return tuple(out)
+
+
+def build_report(project_root: Path, reference: str = "canonical") -> dict[str, Any]:
     """Assemble the full supplemental-metric report.
 
     Args:
         project_root: Repository root used to resolve committed artefact paths.
+        reference: ``canonical`` (default) or ``r2`` -- see :func:`cells_for`.
 
     Returns:
         The serialisable report payload.
     """
-    cells = [derive_cell(spec, project_root) for spec in CELLS]
+    cells = [derive_cell(spec, project_root) for spec in cells_for(reference, project_root)]
     comparators = [derive_comparator(spec) for spec in COMPARATORS]
     return {
         "schema_version": SCHEMA_VERSION,
@@ -791,8 +836,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=DEFAULT_OUTPUT_DIR,
-        help=f"output directory (default: {DEFAULT_OUTPUT_DIR})",
+        default=None,
+        help=(f"output directory (default: {DEFAULT_OUTPUT_DIR}, or "
+              f"{R2_OUTPUT_DIR} under --reference r2)"),
+    )
+    parser.add_argument(
+        "--reference",
+        choices=("canonical", "r2"),
+        default="canonical",
+        help=("canonical = the committed r1 cells (default); r2 = the 55-map cells "
+              "re-derived from reference revision r2 (GS cells unchanged)."),
     )
     parser.add_argument(
         "--project-root",
@@ -813,7 +866,10 @@ def main(argv: list[str] | None = None) -> int:
         ``0`` when every registered cell passed the MCC gate, ``1`` otherwise.
     """
     args = parse_args(argv)
-    report = build_report(args.project_root)
+    if args.output_dir is None:
+        args.output_dir = DEFAULT_OUTPUT_DIR if args.reference == "canonical" else R2_OUTPUT_DIR
+    report = build_report(args.project_root, args.reference)
+    report["reference"] = args.reference
 
     print(render_table(report))
     print()

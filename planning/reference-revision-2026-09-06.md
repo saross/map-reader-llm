@@ -743,6 +743,29 @@ a post-run gate (r2 ground truth; every input `clean`/`ignored`),
 `--dry-run` printing the derived plan and counts. § 5's "a cell with an
 existing `evaluation.json` is skipped" is now true of a real tool.
 
+**H17 (new, S149-c) — step-5 tooling exists before step 5.** Audit-2
+MINOR 19 found step 5 named no tooling. Three analysis scripts gained a
+`--reference r2` mode with the r1 default byte-for-byte unchanged (the
+obs280 tier-2 regeneration test still diffs clean):
+`analyse_obs280_shared_reference.py --reference r2` (reads the r2
+scoring home, flattens the engine's nested MCC, writes
+`obs280-shared-reference-r2.json` in the r2 home; the legacy / A1 /
+student-only anchors are the comparison's fixed points and stay);
+`derive_tile_level_f1.py --reference r2` (the eight 55-map cells
+re-pointed at their `-r2-gt` rows and r2 evaluations, `object_f1` read
+from the file, output `results/tile-level-f1-r2/`; GS cells unchanged;
+10/10 MCC gate on r2 already); `sensitivity_mde.py --reference r2`
+(adds the r2 final board's instrument as a group beside the r1 rows,
+writes `sensitivity-r2.json`, refuses before step 4e). Verified on the
+step-3 evaluations: the Obs 280 divergence holds on r2 — text leads F1
+(T03-k4 0.8294), image leads MCC (IM-k3 0.7110), MCC gap image − T03-k4
+0.0419 (legacy-extended 0.0393). **Open for step 5 (PI decision, not
+a stop)**: the uplift supplement is one document over the whole
+register, so "pairing outputs under a `-r2` suffix" (§ 1 (5)) would
+mean a second copy of the master tables; regenerating in place after
+7a-ii (its changelog records the refresh) is the natural operation.
+The `-r2` analysis rows themselves are register rows (step 7b).
+
 **Engine-gate pre-flight (S149-b).** Step 2's r1 half was run as a
 scratch pre-flight on sapphire: max |Δ| = 0 across 14 buffers × 5
 fields, tile MCC 0.6548 = 0.6548, n = 3,541. The provenance signal for

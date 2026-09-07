@@ -42,6 +42,11 @@ from statistics import median
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 OUT = PROJECT_ROOT / "results/sensitivity-mde-2026-08-28"
+#: Reference revision r2 (planning/reference-revision-2026-09-06.md, step 5):
+#: the 55-map deployment instrument re-measured on the r2 final board. Its
+#: permutation nulls are harvested beside the r1 rows into sensitivity-r2.json;
+#: the committed r1 artefact is never rewritten by the r2 mode.
+R2_BOARD = PROJECT_ROOT / "results/55map-final-board-r2-2026-09-06/final_board_50m.json"
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -55,8 +60,14 @@ def phi(x: float) -> float:
     return 0.5 * (1.0 + erf(x / sqrt(2.0)))
 
 
-def harvest() -> dict[str, dict]:
-    """Committed null SDs, grouped by (corpus, instrument)."""
+def harvest(reference: str = "standardised") -> dict[str, dict]:
+    """Committed null SDs, grouped by (corpus, instrument).
+
+    Args:
+        reference: ``standardised`` (the committed r1 rows, default) or
+            ``r2`` -- adds the r2 final board's 55-map instrument as a
+            further group; the r1 groups stay, so the two can be compared.
+    """
     groups: dict[str, dict] = {}
 
     def add(group: str, n_tiles, sd: float, meta: str) -> None:
@@ -102,6 +113,16 @@ def harvest() -> dict[str, dict]:
             add("55-map 8,541-tile tile-swap (final board, 50 m)",
                 p.get("n_tiles"), p["null_std"],
                 "results/55map-final-board-2026-08-27/final_board_50m.json")
+    if reference == "r2":
+        if not R2_BOARD.exists():
+            raise SystemExit(f"{R2_BOARD} does not exist: "
+                             "build the r2 final board (step 4e) first")
+        fb2 = json.loads(R2_BOARD.read_text())
+        for p in fb2["pairwise"]:
+            if "null_std" in p:
+                add("55-map 8,541-tile tile-swap (final board r2, 50 m)",
+                    p.get("n_tiles"), p["null_std"],
+                    str(R2_BOARD.relative_to(PROJECT_ROOT)))
     return groups
 
 
@@ -130,8 +151,9 @@ def h8_tost() -> tuple[list[dict], float | None]:
     return rows, passing
 
 
-def main() -> int:
-    groups = harvest()
+def main(reference: str = "standardised") -> int:
+    out_name = "sensitivity.json" if reference == "standardised" else "sensitivity-r2.json"
+    groups = harvest(reference)
     tost_rows, tost_margin = h8_tost()
     OUT.mkdir(parents=True, exist_ok=True)
 
@@ -174,12 +196,19 @@ def main() -> int:
                    "The cross-scale calibration (Obs 362; P6) is the "
                    "empirical anchor: a real ~0.010 effect invisible "
                    "at GS scale was resolved at 55-map scale."]}
-    (OUT / "sensitivity.json").write_text(
+    payload["reference"] = reference
+    (OUT / out_name).write_text(
         json.dumps(payload, indent=2) + "\n")
     logger.info("SENSITIVITY TABLE -> %s",
-                (OUT / "sensitivity.json").relative_to(PROJECT_ROOT))
+                (OUT / out_name).relative_to(PROJECT_ROOT))
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    import argparse
+
+    _ap = argparse.ArgumentParser(description=__doc__)
+    _ap.add_argument("--reference", choices=("standardised", "r2"), default="standardised",
+                     help="standardised = the committed rows (default); r2 = add the r2 "
+                          "final board's instrument, written to sensitivity-r2.json.")
+    sys.exit(main(_ap.parse_args().reference))
