@@ -1,0 +1,23 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: inputs/vectors/references/best-available-gt-55maps-r2.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
+INFO: Reference: 5018 mounds, 8541 evaluation tiles
+INFO: Evaluating: detections.geojson
+INFO:   5m: F1=0.220 [0.208, 0.232], P=0.220 [0.208, 0.233], R=0.220 [0.207, 0.233] [sparse coverage: 64.0% zero-tiles]
+INFO:   10m: F1=0.485 [0.470, 0.500], P=0.486 [0.471, 0.501], R=0.484 [0.469, 0.501] [sparse coverage: 64.3% zero-tiles]
+INFO:   15m: F1=0.674 [0.660, 0.688], P=0.675 [0.661, 0.689], R=0.673 [0.658, 0.688] [sparse coverage: 64.7% zero-tiles]
+INFO:   20m: F1=0.785 [0.773, 0.796], P=0.786 [0.773, 0.798], R=0.783 [0.770, 0.797] [sparse coverage: 64.9% zero-tiles]
+INFO:   25m: F1=0.841 [0.831, 0.850], P=0.842 [0.831, 0.852], R=0.839 [0.827, 0.851] [sparse coverage: 65.1% zero-tiles]
+INFO:   30m: F1=0.863 [0.854, 0.871], P=0.864 [0.853, 0.874], R=0.861 [0.849, 0.872] [sparse coverage: 65.1% zero-tiles]
+INFO:   35m: F1=0.876 [0.868, 0.884], P=0.878 [0.868, 0.887], R=0.875 [0.864, 0.886] [sparse coverage: 65.2% zero-tiles]
+INFO:   40m: F1=0.880 [0.872, 0.887], P=0.881 [0.871, 0.891], R=0.879 [0.868, 0.889] [sparse coverage: 65.2% zero-tiles]
+INFO:   45m: F1=0.882 [0.874, 0.889], P=0.883 [0.874, 0.893], R=0.881 [0.870, 0.891] [sparse coverage: 65.2% zero-tiles]
+INFO:   50m: F1=0.883 [0.875, 0.890], P=0.884 [0.874, 0.893], R=0.881 [0.871, 0.891] [sparse coverage: 65.2% zero-tiles]
+INFO:   75m: F1=0.885 [0.877, 0.892], P=0.886 [0.876, 0.895], R=0.883 [0.873, 0.893] [sparse coverage: 65.2% zero-tiles]
+INFO:   100m: F1=0.885 [0.877, 0.892], P=0.886 [0.877, 0.895], R=0.884 [0.873, 0.893] [sparse coverage: 65.2% zero-tiles]
+INFO:   125m: F1=0.885 [0.877, 0.892], P=0.886 [0.877, 0.896], R=0.884 [0.873, 0.894] [sparse coverage: 65.2% zero-tiles]
+INFO:   150m: F1=0.886 [0.878, 0.893], P=0.887 [0.877, 0.896], R=0.884 [0.873, 0.894] [sparse coverage: 65.2% zero-tiles]
+INFO:   MCC=0.706 [0.692, 0.721], Sens=0.713, Spec=0.956
+INFO: JSON written: results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-carried/evaluation.json
+INFO: CSV written: results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-carried/evaluation.csv
+INFO: Markdown written: results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-carried/evaluation.md
