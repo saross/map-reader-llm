@@ -255,3 +255,71 @@ def test_directory_detections_match_when_every_scored_file_lies_under_it():
     bad = verify_condition({**base, "detections": "outputs/h13/scoring/native/armA"},
                            None, {}, "results/h13-overlap-2026-08-18", index)
     assert [d for d in bad if "eval-detections-mismatch" in str(d)], bad
+
+
+# ------------------------------------------------ Session 150 (ruling 3a) ---
+# The E82 replay scored nine legacy rows against VINTAGE-FROZEN detections
+# (D40); the E71 recovery then rewrote the files. A row stamped
+# ``input_vintage`` is checked against the commit it names, not the tree.
+
+_PINNED_SPEC = {
+    "label": "pro-image-high-t0-single-pass-run_1",
+    "architecture": "single-pass",
+    "aggregation": "none",
+    "proposer_pool": "pro-image-high-t0",
+    "n_passes": 1,
+    "eval_path": ("results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/"
+                  "run_1/evaluation.json"),
+    "detections": ("outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/"
+                   "detections_pro-image-high-t0_run01.geojson"),
+}
+_SCOPE = "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+
+
+def _n1_pools() -> dict:
+    return _g.load_run_conditions()["n1-outstanding-384"]["proposer_pools"]
+
+
+@pytest.mark.tier1
+def test_pinned_vintage_row_is_disclosed_not_failed():
+    """A correctly pinned row: one WARN naming the vintage, no wrong-source ERROR."""
+    spec = dict(_PINNED_SPEC, input_vintage={
+        "detections_commit": "c3852ebad",
+        "superseded_measurement": "pro-image-high-t0-single-pass-run_1-post-e71",
+        "erratum": "E71"})
+    discs = verify_condition(spec, _SCOPE, _n1_pools(), "outputs/h11/n1-outstanding-384",
+                             _g._build_eval_index())
+    codes = {d["code"] for d in discs}
+    assert "pinned-vintage" in codes
+    assert not codes & {"eval-detections-mismatch", "scope-mismatch", "feature-count-drift"}
+    assert not [d for d in discs if d["severity"] == "ERROR"], discs
+
+
+@pytest.mark.tier1
+def test_pinned_vintage_wrong_commit_is_an_error():
+    """A pin the evaluation does not record cannot be checked — that is an ERROR."""
+    spec = dict(_PINNED_SPEC, input_vintage={"detections_commit": "deadbeef0"})
+    discs = verify_condition(spec, _SCOPE, _n1_pools(), "outputs/h11/n1-outstanding-384",
+                             _g._build_eval_index())
+    assert [d for d in discs if d["code"] == "pinned-vintage-mismatch"
+            and d["severity"] == "ERROR"], discs
+
+
+@pytest.mark.tier1
+def test_unpinned_frozen_replay_still_fails():
+    """Regression guard: without the stamp, the frozen-copy eval is still wrong-source."""
+    discs = verify_condition(dict(_PINNED_SPEC), _SCOPE, _n1_pools(),
+                             "outputs/h11/n1-outstanding-384", _g._build_eval_index())
+    codes = {d["code"] for d in discs}
+    assert {"eval-detections-mismatch", "scope-mismatch"} <= codes
+
+
+@pytest.mark.tier1
+def test_malformed_vintage_stamp_surfaces():
+    """A stamp without detections_commit disables nothing and says so."""
+    spec = dict(_PINNED_SPEC, input_vintage={"pinned": "pre-e71"})
+    discs = verify_condition(spec, _SCOPE, _n1_pools(), "outputs/h11/n1-outstanding-384",
+                             _g._build_eval_index())
+    codes = {d["code"] for d in discs}
+    assert "input-vintage-malformed" in codes
+    assert "eval-detections-mismatch" in codes

@@ -17,7 +17,14 @@ schema-valid but wrong:
   files on disk (either direction of disagreement is reported: an undercount is
   as much a signal as an overcount);
 * **completeness** — every scored evaluation under the run is either claimed by a
-  condition or explicitly waived in ``_ignored_evals`` (catches silent omissions).
+  condition or explicitly waived in ``_ignored_evals`` (catches silent omissions);
+* **pinned vintage** — a row stamped ``input_vintage`` (ruling 3a, 2026-09-07:
+  the E82 replay scored a VINTAGE-FROZEN copy of its detections, D40) is checked
+  against the commit it names — the eval must record that commit for the path
+  and the feature count at ``<commit>:<path>`` must equal ``n_detections`` — and
+  reported as a disclosed WARN, not a wrong-source ERROR. A reproduction gate
+  is not a currency gate: drift against the working tree is the row's stated
+  condition, and a claimed vintage that does not reproduce IS an error.
 
 This is Tier 1 of the Batch verification loop (the deterministic backbone). A
 fresh-context LLM adversarial pass (Tier 2) handles the judgment calls. The
@@ -42,7 +49,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
+from pathlib import Path
 from typing import Any
 
 # Reuse the generator's loaders + path helpers. The import path differs between
@@ -83,6 +92,25 @@ def _geojson_feature_count(rel_path: str) -> int | None:
     try:
         doc = g._load_json(path)
     except (json.JSONDecodeError, OSError):
+        return None
+    feats = doc.get("features")
+    return len(feats) if isinstance(feats, list) else None
+
+
+def _geojson_feature_count_at(commit: str, rel_path: str) -> int | None:
+    """Feature count of a geojson AS COMMITTED at ``commit``, or ``None`` if unreadable.
+
+    The pinned-vintage check's instrument: a row whose evaluation scored a
+    vintage-frozen copy reproduces against ``git show <commit>:<path>``, never
+    against the working tree the E71 recovery rewrote.
+    """
+    try:
+        out = subprocess.run(
+            ["git", "show", f"{commit}:{rel_path}"], cwd=g.REPO_ROOT,
+            capture_output=True, text=True, check=True,
+        ).stdout
+        doc = json.loads(out)
+    except (subprocess.CalledProcessError, OSError, json.JSONDecodeError):
         return None
     feats = doc.get("features")
     return len(feats) if isinstance(feats, list) else None
@@ -177,10 +205,28 @@ def verify_condition(spec: dict, scope_bounds: str | None,
     override_bounds = so.get("bounds_path") if isinstance(so, dict) else None
     effective_scope = override_bounds or scope_bounds
 
+    # A pinned row (ruling 3a): its evaluation scored a vintage-frozen copy of
+    # the detections at ``input_vintage.detections_commit`` (E82/D40). Malformed
+    # stamps surface rather than silently disabling the check.
+    vintage = spec.get("input_vintage")
+    pinned: dict | None = None
+    if vintage is not None:
+        if isinstance(vintage, dict) and vintage.get("detections_commit"):
+            pinned = vintage
+        else:
+            discs.append(_disc(WARN, "input-vintage-malformed",
+                               f"{label}: input_vintage lacks detections_commit ({vintage!r})"))
+    pinned_ok = False
+
     # eval ↔ detections, scope, and feature-count checks (need both the eval and the geojson)
     if eval_doc is not None and detections:
         eval_dets, eval_bounds = _eval_inputs(eval_doc)
         det_norm = g._normalise_detections_path(detections)
+        # The E82 replay records each input's commit at the cell's scoring time
+        # under in-repo keys — the only place a frozen copy names what it was.
+        eval_vintage = {
+            g._normalise_detections_path(k): v for k, v in
+            ((eval_doc.get("_metadata") or {}).get("e82_input_vintage") or {}).items()}
         # A directory-valued ``detections`` names an aggregated multi-pass
         # cell; the evaluation records the per-pass files it scored. The row
         # matches when every scored file lies under that directory (the h13
@@ -188,13 +234,35 @@ def verify_condition(spec: dict, scope_bounds: str | None,
         under_dir = bool(eval_dets) and all(
             d.startswith(det_norm.rstrip("/") + "/") for d in eval_dets)
         if det_norm not in eval_dets and not under_dir:
-            # the eval scored a different named file — unambiguous wrong-source
-            discs.append(_disc(ERROR, "eval-detections-mismatch",
-                               f"{label}: eval scored {eval_dets}, not {det_norm}"))
+            if pinned and eval_vintage.get(det_norm) == pinned["detections_commit"]:
+                # the eval itself declares it scored this path's frozen copy at
+                # the commit the register pins — disclosed, not wrong-source
+                pinned_ok = True
+                discs.append(_disc(
+                    WARN, "pinned-vintage",
+                    f"{label}: eval scored the vintage-frozen copy of {det_norm} at "
+                    f"{pinned['detections_commit']} (E82/D40, {pinned.get('erratum', 'E71')}); "
+                    f"superseded measurement: {pinned.get('superseded_measurement')}"))
+            elif pinned:
+                # the register claims a vintage the eval does not record — a
+                # pin that cannot be checked is an error, not a disclosure
+                discs.append(_disc(
+                    ERROR, "pinned-vintage-mismatch",
+                    f"{label}: input_vintage pins {pinned['detections_commit']} but the "
+                    f"eval records {eval_vintage.get(det_norm)!r} for {det_norm}"))
+            else:
+                # the eval scored a different named file — unambiguous wrong-source
+                discs.append(_disc(ERROR, "eval-detections-mismatch",
+                                   f"{label}: eval scored {eval_dets}, not {det_norm}"))
         if eval_bounds and effective_scope and eval_bounds != effective_scope:
-            # a real scope leak, both bounds known — hard error
-            discs.append(_disc(ERROR, "scope-mismatch",
-                               f"{label}: eval bounds {eval_bounds} != scope {effective_scope}"))
+            if (pinned_ok and Path(eval_bounds).name == Path(effective_scope).name
+                    and effective_scope in eval_vintage):
+                pass  # the frozen copy of the SAME bounds file, named in the vintage
+            else:
+                # a real scope leak, both bounds known — hard error
+                discs.append(_disc(ERROR, "scope-mismatch",
+                                   f"{label}: eval bounds {eval_bounds} != scope "
+                                   f"{effective_scope}"))
         elif effective_scope and not eval_bounds:
             # cannot confirm scope (bounds-less eval) — surface, don't skip silently
             discs.append(_disc(WARN, "scope-uncheckable",
@@ -202,7 +270,18 @@ def verify_condition(spec: dict, scope_bounds: str | None,
                                f"({effective_scope})"))
         n_det = (eval_doc.get("summary") or {}).get("n_detections")
         fc = _geojson_feature_count(detections)
-        if fc is None:
+        if pinned_ok and fc is not None:
+            # reproduction against the vintage, never currency against the tree
+            fc_v = _geojson_feature_count_at(pinned["detections_commit"], det_norm)
+            if fc_v is None:
+                discs.append(_disc(WARN, "pinned-vintage-uncheckable",
+                                   f"{label}: {det_norm} unreadable at "
+                                   f"{pinned['detections_commit']} — vintage count unconfirmed"))
+            elif n_det is not None and n_det != fc_v:
+                discs.append(_disc(ERROR, "pinned-vintage-mismatch",
+                                   f"{label}: geojson has {fc_v} features at "
+                                   f"{pinned['detections_commit']} but eval n_detections={n_det}"))
+        elif fc is None:
             discs.append(_disc(WARN, "geojson-missing",
                                f"{label}: detections missing/unreadable — feature check skipped "
                                f"({detections})"))
