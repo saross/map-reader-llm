@@ -796,6 +796,50 @@ tree-wide `script_git_status`.
 
 ## Changelog
 
+### 2026-09-07 (S149-c) — Steps 5, 6, 9 DONE; register rulings 2 and 3a executed — 3a is a SURPRISE
+
+**Step 5** (`a45bd4af0`): obs280 on r2 (divergence holds: text leads
+F1, image leads MCC, gap 0.0419), tile-level F1 on r2 (10/10 gate),
+the MDE appendix's r2 row (null SD 0.0045 over 595 pairs vs 0.0046
+over 253 — resolution unchanged), and the K = 1 worklist regenerated
+from the register: 32 r2 anchor jobs, 24 ready (scoring on sapphire,
+5d), 8 blocked (six for the 3.7 arm pool, whose per-pass layout the
+resolver does not know; two incumbents without a proposer pool).
+**Step 6** (`42dbc1147`): `scripts/estimated_correction.py` → the
+column for all 35 r2 cells (M 49.7, E_err 35.8, E_om 35.8; F1̂ sits
+0.0005–0.0007 below the r2 point with ±0.005 intervals — wider than
+the tier gaps, as § 4 anticipated). **Step 9** (`81c1f3fff`): the
+student baseline on r2 — P 0.991 / R 0.923 / F1 0.956 (§ 2b).
+
+**Ruling 2 CLOSED**: the four stride canonical rows re-scored on the
+canonical chain reproduce to the last digit (A/B primaries
+0.8325895174 / 0.8422141749, A/B oracles 0.8362077763 / 0.8502908460;
+`26cc430ad`), and their committed evaluations are re-adapted in place
+with the engine's inputs recorded (numbers unchanged, asserted) so the
+verifier can confirm them.
+
+**Ruling 3a — a SURPRISE under the PI's stop conditions, reported, not
+acted on.** None of the nine legacy conditions reproduces from its
+current inputs (`results/rescore-2026-09-07/`, `26cc430ad`): every
+GeoJSON on disk carries 4–8 % more features than its committed
+evaluation scored (692 → 750, 1,026 → 1,090, 1,619 → 1,641 …);
+pro-image-high-t0 moves **+0.028 to +0.036 F1** (recall 0.81 → 0.90),
+pro-text-high-t0 −0.005 to −0.009, the two three-run aggregates
++0.032 / −0.004. **Cause established**: the committed evaluations are
+the E82 replay's (2026-08-21) scorings of *frozen* pre-recovery inputs
+(the D40 pinned population), while the E71 dead-tile recovery
+(2026-07-30, `99ae28ec4`, `d01ea4412`) rewrote the files on disk; the
+register's numbers are the pre-recovery record, and today's re-score
+is the first scoring of the post-recovery sets. Not a mechanism error;
+a known class (D40) whose consequence had not been measured.
+`n1-outstanding-384` is cited by four registered analyses
+(`n1-baseline-matrix-384`, `diversity-dividend-384`,
+`h6-a07-voting-thresholds`, `h6-a09-cost-gate`). **PI decision
+needed**: (a) keep the pinned pre-recovery evaluations as the record
+and register the post-recovery re-scores as new `-post-e71`
+conditions, or (b) promote the re-scores and refresh the four
+analyses (their numbers move). Nothing is swapped until ruled.
+
 ### 2026-09-07 (S149-c) — Steps 4e, 4f and 7a-ii DONE; the r2 boards exist
 
 **4e** (`22353e660`): G3 reproduced the committed 8-cell r1 board

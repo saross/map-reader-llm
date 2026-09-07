@@ -54,6 +54,17 @@
  "_metadata": {
   "adapted_by": "scripts/register_pass1_adapt.py",
   "source": "results/stride55-2026-08-27/g384_ov128_55map/primary/eval/summary.json",
+  "script_path": "scripts/compute_corrected_f1_multi_buffer.py",
+  "input_files": {
+   "detections": [
+    "results/stride55-2026-08-27/g384_ov128_55map/primary/verified_detections.geojson"
+   ],
+   "engine_detections": "results/stride55-2026-08-27/g384_ov128_55map/primary/verified_detections.geojson",
+   "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+   "review_today": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+   "review_yesterday": "results/stride55-2026-08-27/empty-yesterday-review.csv",
+   "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+  },
   "note": "Deterministic transform of the corrected-F1 engine summary (S105 adapter pattern); tile_classification pinned to the 50 m headline row; nothing recomputed."
  }
 }
