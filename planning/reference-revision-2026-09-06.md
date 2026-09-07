@@ -796,6 +796,21 @@ tree-wide `script_git_status`.
 
 ## Changelog
 
+### 2026-09-07 (S149-c) — Step 5d DONE: the r2 K = 1 anchors; the supplement's r2 stratum exists
+
+The 24 ready r2 anchor jobs scored on sapphire (`89b31e846`; 2 h 49 min
+sequential, 0 failed) and waived under ruling 1 (126 anchors waived in
+all; register 22 PASS / 17 PARTIAL / 2 FAIL, the two being ruling 3a's
+open decision). `build_uplift_supplement.py` regenerated to SCRATCH
+shows the mechanism end to end: a **`55-map | r2` stratum at every
+buffer — 37 conditions, n_refs 5,018** — beside the canonical /
+standardised / student strata (14 each). Whether the regeneration
+lands in place (its changelog records the refresh) or the older 55-map
+strata are dropped from the tables is the presentation ruling still
+with the PI; nothing under `results/uplift-supplement/` other than the
+anchors and the worklist has been rewritten. Tier-1 suite green after
+the schema/waiver-format fixes (`675c8d5db`): 2,144 passed.
+
 ### 2026-09-07 (S149-c) — Steps 5, 6, 9 DONE; register rulings 2 and 3a executed — 3a is a SURPRISE
 
 **Step 5** (`a45bd4af0`): obs280 on r2 (divergence holds: text leads
