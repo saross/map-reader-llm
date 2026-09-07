@@ -237,3 +237,21 @@ def test_classify_all_skips_planned_runs_on_evidence_not_label(tmp_path, monkeyp
     assert "active-run" in ids
     assert "truly-planned" not in ids   # no directory -> genuinely not executed
     assert "has-run" in ids             # mis-marked but materialised -> still visible
+
+
+@pytest.mark.tier1
+def test_directory_detections_match_when_every_scored_file_lies_under_it():
+    """An aggregated multi-pass cell registers its pass DIRECTORY; the evaluation
+    records the per-pass files it scored. The row matches when all of them lie
+    under that directory (the h13 overlap arms), and mismatches otherwise
+    (Session 149-c, register-verifier debt ruling 3c)."""
+    from scripts.verify_run_conditions import verify_condition
+    index = _g._build_eval_index()
+    base = {"label": "arm-a", "architecture": "consensus", "aggregation": "consensus",
+            "eval_path": "results/h13-overlap-2026-08-18/common/armA/evaluation.json"}
+    ok = verify_condition({**base, "detections": "outputs/h13/scoring/common/armA"},
+                          None, {}, "results/h13-overlap-2026-08-18", index)
+    assert not [d for d in ok if "eval-detections-mismatch" in str(d)], ok
+    bad = verify_condition({**base, "detections": "outputs/h13/scoring/native/armA"},
+                           None, {}, "results/h13-overlap-2026-08-18", index)
+    assert [d for d in bad if "eval-detections-mismatch" in str(d)], bad

@@ -181,7 +181,13 @@ def verify_condition(spec: dict, scope_bounds: str | None,
     if eval_doc is not None and detections:
         eval_dets, eval_bounds = _eval_inputs(eval_doc)
         det_norm = g._normalise_detections_path(detections)
-        if det_norm not in eval_dets:
+        # A directory-valued ``detections`` names an aggregated multi-pass
+        # cell; the evaluation records the per-pass files it scored. The row
+        # matches when every scored file lies under that directory (the h13
+        # overlap arms: three run_*/detections_dedup.geojson per arm).
+        under_dir = bool(eval_dets) and all(
+            d.startswith(det_norm.rstrip("/") + "/") for d in eval_dets)
+        if det_norm not in eval_dets and not under_dir:
             # the eval scored a different named file — unambiguous wrong-source
             discs.append(_disc(ERROR, "eval-detections-mismatch",
                                f"{label}: eval scored {eval_dets}, not {det_norm}"))
