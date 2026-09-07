@@ -189,7 +189,29 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/evaluation.json",
-     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.geojson"
+     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.geojson",
+     "input_vintage": {
+      "pinned": "pre-e71",
+      "detections_commit": "52b0215a6",
+      "recovery_commit": "99ae28ec4",
+      "basis": "E82 vintage-frozen replay (D40): the evaluation scored the detections as committed at 52b0215a6; the E71 dead-tile recovery (99ae28ec4, 2026-07-30) rewrote the file on disk afterwards, so this row reproduces against its vintage, not against the working tree",
+      "superseded_measurement": "single-pass-run_4-post-e71",
+      "erratum": "E71",
+      "ruling": "3a (PI, 2026-09-07): the pinned evaluation stays the record; the post-recovery re-score registers beside it"
+     }
+    },
+    {
+     "label": "single-pass-run_4-post-e71",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "propose_brief-text",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.geojson",
+     "eval_path": "results/rescore-2026-09-07/e47-propose-brief/single-pass-run_4/evaluation.json",
+     "notes": "Post-E71 re-score (S149, 2026-09-07, 26cc430ad) of the pinned row 'single-pass-run_4' against the recovered detections (IM-k4 recipe, GS reference, 14 buffers, BCa 10,000/42). Registered BESIDE the pinned record under D40's 'new conditions beside the historical ones' ruling (PI 2026-08-20) and ruling 3a (PI 2026-09-07). Same detections path; the pinned row's input_vintage names the commit it scored."
     },
     {
      "label": "single-pass-run_5",
@@ -548,7 +570,29 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_1/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson"
+     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+     "input_vintage": {
+      "pinned": "pre-e71",
+      "detections_commit": "c3852ebad",
+      "recovery_commit": "99ae28ec4",
+      "basis": "E82 vintage-frozen replay (D40): the evaluation scored the detections as committed at c3852ebad; the E71 dead-tile recovery (99ae28ec4, 2026-07-30) rewrote the file on disk afterwards, so this row reproduces against its vintage, not against the working tree",
+      "superseded_measurement": "pro-image-high-t0-single-pass-run_1-post-e71",
+      "erratum": "E71",
+      "ruling": "3a (PI, 2026-09-07): the pinned evaluation stays the record; the post-recovery re-score registers beside it"
+     }
+    },
+    {
+     "label": "pro-image-high-t0-single-pass-run_1-post-e71",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "pro-image-high-t0",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+     "eval_path": "results/rescore-2026-09-07/n1-outstanding-384/pro-image-high-t0-single-pass-run_1/evaluation.json",
+     "notes": "Post-E71 re-score (S149, 2026-09-07, 26cc430ad) of the pinned row 'pro-image-high-t0-single-pass-run_1' against the recovered detections (IM-k4 recipe, GS reference, 14 buffers, BCa 10,000/42). Registered BESIDE the pinned record under D40's 'new conditions beside the historical ones' ruling (PI 2026-08-20) and ruling 3a (PI 2026-09-07). Same detections path; the pinned row's input_vintage names the commit it scored."
     },
     {
      "label": "pro-image-high-t0-single-pass-run_2",
@@ -560,7 +604,29 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_2/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson"
+     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+     "input_vintage": {
+      "pinned": "pre-e71",
+      "detections_commit": "c3852ebad",
+      "recovery_commit": "99ae28ec4",
+      "basis": "E82 vintage-frozen replay (D40): the evaluation scored the detections as committed at c3852ebad; the E71 dead-tile recovery (99ae28ec4, 2026-07-30) rewrote the file on disk afterwards, so this row reproduces against its vintage, not against the working tree",
+      "superseded_measurement": "pro-image-high-t0-single-pass-run_2-post-e71",
+      "erratum": "E71",
+      "ruling": "3a (PI, 2026-09-07): the pinned evaluation stays the record; the post-recovery re-score registers beside it"
+     }
+    },
+    {
+     "label": "pro-image-high-t0-single-pass-run_2-post-e71",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "pro-image-high-t0",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+     "eval_path": "results/rescore-2026-09-07/n1-outstanding-384/pro-image-high-t0-single-pass-run_2/evaluation.json",
+     "notes": "Post-E71 re-score (S149, 2026-09-07, 26cc430ad) of the pinned row 'pro-image-high-t0-single-pass-run_2' against the recovered detections (IM-k4 recipe, GS reference, 14 buffers, BCa 10,000/42). Registered BESIDE the pinned record under D40's 'new conditions beside the historical ones' ruling (PI 2026-08-20) and ruling 3a (PI 2026-09-07). Same detections path; the pinned row's input_vintage names the commit it scored."
     },
     {
      "label": "pro-image-high-t0-single-pass-run_3",
@@ -572,7 +638,29 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_3/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson"
+     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+     "input_vintage": {
+      "pinned": "pre-e71",
+      "detections_commit": "c3852ebad",
+      "recovery_commit": "99ae28ec4",
+      "basis": "E82 vintage-frozen replay (D40): the evaluation scored the detections as committed at c3852ebad; the E71 dead-tile recovery (99ae28ec4, 2026-07-30) rewrote the file on disk afterwards, so this row reproduces against its vintage, not against the working tree",
+      "superseded_measurement": "pro-image-high-t0-single-pass-run_3-post-e71",
+      "erratum": "E71",
+      "ruling": "3a (PI, 2026-09-07): the pinned evaluation stays the record; the post-recovery re-score registers beside it"
+     }
+    },
+    {
+     "label": "pro-image-high-t0-single-pass-run_3-post-e71",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "pro-image-high-t0",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+     "eval_path": "results/rescore-2026-09-07/n1-outstanding-384/pro-image-high-t0-single-pass-run_3/evaluation.json",
+     "notes": "Post-E71 re-score (S149, 2026-09-07, 26cc430ad) of the pinned row 'pro-image-high-t0-single-pass-run_3' against the recovered detections (IM-k4 recipe, GS reference, 14 buffers, BCa 10,000/42). Registered BESIDE the pinned record under D40's 'new conditions beside the historical ones' ruling (PI 2026-08-20) and ruling 3a (PI 2026-09-07). Same detections path; the pinned row's input_vintage names the commit it scored."
     },
     {
      "label": "pro-text-high-t0-single-pass-run_1",
@@ -584,7 +672,29 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_1/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson"
+     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+     "input_vintage": {
+      "pinned": "pre-e71",
+      "detections_commit": "c3852ebad",
+      "recovery_commit": "99ae28ec4",
+      "basis": "E82 vintage-frozen replay (D40): the evaluation scored the detections as committed at c3852ebad; the E71 dead-tile recovery (99ae28ec4, 2026-07-30) rewrote the file on disk afterwards, so this row reproduces against its vintage, not against the working tree",
+      "superseded_measurement": "pro-text-high-t0-single-pass-run_1-post-e71",
+      "erratum": "E71",
+      "ruling": "3a (PI, 2026-09-07): the pinned evaluation stays the record; the post-recovery re-score registers beside it"
+     }
+    },
+    {
+     "label": "pro-text-high-t0-single-pass-run_1-post-e71",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "pro-text-high-t0",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+     "eval_path": "results/rescore-2026-09-07/n1-outstanding-384/pro-text-high-t0-single-pass-run_1/evaluation.json",
+     "notes": "Post-E71 re-score (S149, 2026-09-07, 26cc430ad) of the pinned row 'pro-text-high-t0-single-pass-run_1' against the recovered detections (IM-k4 recipe, GS reference, 14 buffers, BCa 10,000/42). Registered BESIDE the pinned record under D40's 'new conditions beside the historical ones' ruling (PI 2026-08-20) and ruling 3a (PI 2026-09-07). Same detections path; the pinned row's input_vintage names the commit it scored."
     },
     {
      "label": "pro-text-high-t0-single-pass-run_2",
@@ -596,7 +706,29 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_2/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson"
+     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+     "input_vintage": {
+      "pinned": "pre-e71",
+      "detections_commit": "c3852ebad",
+      "recovery_commit": "99ae28ec4",
+      "basis": "E82 vintage-frozen replay (D40): the evaluation scored the detections as committed at c3852ebad; the E71 dead-tile recovery (99ae28ec4, 2026-07-30) rewrote the file on disk afterwards, so this row reproduces against its vintage, not against the working tree",
+      "superseded_measurement": "pro-text-high-t0-single-pass-run_2-post-e71",
+      "erratum": "E71",
+      "ruling": "3a (PI, 2026-09-07): the pinned evaluation stays the record; the post-recovery re-score registers beside it"
+     }
+    },
+    {
+     "label": "pro-text-high-t0-single-pass-run_2-post-e71",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "pro-text-high-t0",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+     "eval_path": "results/rescore-2026-09-07/n1-outstanding-384/pro-text-high-t0-single-pass-run_2/evaluation.json",
+     "notes": "Post-E71 re-score (S149, 2026-09-07, 26cc430ad) of the pinned row 'pro-text-high-t0-single-pass-run_2' against the recovered detections (IM-k4 recipe, GS reference, 14 buffers, BCa 10,000/42). Registered BESIDE the pinned record under D40's 'new conditions beside the historical ones' ruling (PI 2026-08-20) and ruling 3a (PI 2026-09-07). Same detections path; the pinned row's input_vintage names the commit it scored."
     },
     {
      "label": "pro-text-high-t0-single-pass-run_3",
@@ -608,7 +740,29 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_3/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson"
+     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+     "input_vintage": {
+      "pinned": "pre-e71",
+      "detections_commit": "c3852ebad",
+      "recovery_commit": "99ae28ec4",
+      "basis": "E82 vintage-frozen replay (D40): the evaluation scored the detections as committed at c3852ebad; the E71 dead-tile recovery (99ae28ec4, 2026-07-30) rewrote the file on disk afterwards, so this row reproduces against its vintage, not against the working tree",
+      "superseded_measurement": "pro-text-high-t0-single-pass-run_3-post-e71",
+      "erratum": "E71",
+      "ruling": "3a (PI, 2026-09-07): the pinned evaluation stays the record; the post-recovery re-score registers beside it"
+     }
+    },
+    {
+     "label": "pro-text-high-t0-single-pass-run_3-post-e71",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "pro-text-high-t0",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+     "eval_path": "results/rescore-2026-09-07/n1-outstanding-384/pro-text-high-t0-single-pass-run_3/evaluation.json",
+     "notes": "Post-E71 re-score (S149, 2026-09-07, 26cc430ad) of the pinned row 'pro-text-high-t0-single-pass-run_3' against the recovered detections (IM-k4 recipe, GS reference, 14 buffers, BCa 10,000/42). Registered BESIDE the pinned record under D40's 'new conditions beside the historical ones' ruling (PI 2026-08-20) and ruling 3a (PI 2026-09-07). Same detections path; the pinned row's input_vintage names the commit it scored."
     },
     {
      "label": "pro-image-medium-t07-single-pass-run_1",
@@ -680,7 +834,29 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-0/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0"
+     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0",
+     "input_vintage": {
+      "pinned": "pre-e71",
+      "detections_commit": "1f443fd69",
+      "recovery_commit": "99ae28ec4",
+      "basis": "E82 vintage-frozen replay (D40): the evaluation scored the detections as committed at 1f443fd69; the E71 dead-tile recovery (99ae28ec4, 2026-07-30) rewrote the file on disk afterwards, so this row reproduces against its vintage, not against the working tree",
+      "superseded_measurement": "baseline-pro-image-high-t-0-0-post-e71",
+      "erratum": "E71",
+      "ruling": "3a (PI, 2026-09-07): the pinned evaluation stays the record; the post-recovery re-score registers beside it"
+     }
+    },
+    {
+     "label": "baseline-pro-image-high-t-0-0-post-e71",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "pro-image-high-t0",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0",
+     "eval_path": "results/rescore-2026-09-07/n1-outstanding-384/baseline-pro-image-high-t-0-0/evaluation.json",
+     "notes": "Post-E71 re-score (S149, 2026-09-07, 26cc430ad) of the pinned row 'baseline-pro-image-high-t-0-0' against the recovered detections (IM-k4 recipe, GS reference, 14 buffers, BCa 10,000/42). Registered BESIDE the pinned record under D40's 'new conditions beside the historical ones' ruling (PI 2026-08-20) and ruling 3a (PI 2026-09-07). Same detections path; the pinned row's input_vintage names the commit it scored."
     },
     {
      "label": "baseline-pro-image-medium-t-0-7",
@@ -704,7 +880,29 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-0/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0"
+     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0",
+     "input_vintage": {
+      "pinned": "pre-e71",
+      "detections_commit": "1f443fd69",
+      "recovery_commit": "99ae28ec4",
+      "basis": "E82 vintage-frozen replay (D40): the evaluation scored the detections as committed at 1f443fd69; the E71 dead-tile recovery (99ae28ec4, 2026-07-30) rewrote the file on disk afterwards, so this row reproduces against its vintage, not against the working tree",
+      "superseded_measurement": "baseline-pro-text-high-t-0-0-post-e71",
+      "erratum": "E71",
+      "ruling": "3a (PI, 2026-09-07): the pinned evaluation stays the record; the post-recovery re-score registers beside it"
+     }
+    },
+    {
+     "label": "baseline-pro-text-high-t-0-0-post-e71",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "pro-text-high-t0",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0",
+     "eval_path": "results/rescore-2026-09-07/n1-outstanding-384/baseline-pro-text-high-t-0-0/evaluation.json",
+     "notes": "Post-E71 re-score (S149, 2026-09-07, 26cc430ad) of the pinned row 'baseline-pro-text-high-t-0-0' against the recovered detections (IM-k4 recipe, GS reference, 14 buffers, BCa 10,000/42). Registered BESIDE the pinned record under D40's 'new conditions beside the historical ones' ruling (PI 2026-08-20) and ruling 3a (PI 2026-09-07). Same detections path; the pinned row's input_vintage names the commit it scored."
     },
     {
      "label": "baseline-pro-text-medium-t-0-7",

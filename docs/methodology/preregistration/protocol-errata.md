@@ -3289,6 +3289,44 @@ passes: image run_1/2/3 → 484/483/485, text run_1/2/3 → 485/486/486
 describes the pre-recovery state; residual F1 deflation is now bounded
 by 1–4 tiles per pass, not 19–34.
 
+**Rider (2026-09-07, Session 150 — the measured consequence for the nine
+pre-recovery scorings, and a register decision)**: the six
+`n1-outstanding-384` `pro-*-high-t0` single passes, their two three-run
+aggregates (`baseline-pro-image-high-t-0-0`, `baseline-pro-text-high-t-0-0`),
+and `e47-propose-brief::single-pass-run_4` keep evaluations the E82 replay
+scored (2026-08-21) against vintage-frozen copies of the PRE-recovery
+detections (D40; `_metadata.e82_input_vintage` pins them at `c3852ebad`,
+`1f443fd69`, and `52b0215a6`), three weeks after the recovery rerun had
+rewritten the files on disk. Re-scored against the recovered files with the
+same recipe (`results/rescore-2026-09-07/`, commit `26cc430ad`): the pinned
+evaluations had scored 458–472 of 487 tiles (text 458/458/460, image
+472/468/470; e47 480), the recovered files score 484–487. At the 20 m
+headline buffer F1 moves +0.011 to +0.023 on the image passes (recall
+0.669–0.685 → 0.736–0.743), −0.008 to +0.003 on the text passes (recall
+0.818–0.841 → 0.855–0.864), +0.017 / −0.002 on the two aggregates, and
++0.007 on the e47 pass; the deltas widen with the buffer (image run_1: +0.028 at 50 m, recall 0.825 → 0.906 — the 40–50 m figures Session 149's changelog quotes). **Register decision (PI ruling 3a, 2026-09-07,
+following D40's 2026-08-20 rule that re-scores to current inputs land as
+new conditions beside the historical ones)**: the pinned evaluations remain
+the record of what the signed analyses consumed, stamped `input_vintage` in
+`results/run-conditions.json` so that `verify_run_conditions.py` checks each
+against the commit it names — a reproduction gate, not a currency gate —
+and reports it as disclosed rather than as a wrong-source failure; the nine
+post-recovery re-scores register beside them as `<label>-post-e71`
+conditions (`scripts/register_post_e71_conditions.py`). No analysis row
+moves. **One disclosure corrected**: the H6 A-07 and A-09 artefacts
+(`results/h6-registered-analyses/`, signed 2026-08-17) describe the Flash
+comparator passes as `status: partial` at 485–486 of 487 tiles — the
+post-recovery manifest count — while the F1 values they consume were scored
+at the pre-recovery vintage, 458–472 of 487. The one-sided coverage gap that
+"slightly depresses the Flash curve" is 15–29 tiles per pass, not 1–2.
+A-09's verdict is unaffected (the Flash-optimal frontier decides the gate,
+not the matched-configuration comparator). A-07's image "transfers" verdict
+was already flagged fragile (0.0015 F1 over its runner-up) and its
+comparator curve is the pre-recovery vintage; the consensus cells have not
+been rebuilt on the recovered passes, so whether that optimum survives is
+not measured. `findings.md` is corrected in place and both register rows
+now cite E71.
+
 ---
 
 ### E72: Temperature comparison (group_4/group_12) scored a 240-tile arm against 487-tile bounds — coverage confound in an unregistered exploratory analysis

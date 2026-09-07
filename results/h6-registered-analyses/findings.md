@@ -1,9 +1,9 @@
 # H6 registered $0 analyses — A-06, A-07, A-09 on the existing genuine-Pro data
 
-> **Last revised**: 2026-08-17 (verification round: A-06 rebuilt on
-> the full Pro 2×2 — temperature identified as the driver; A-09 limb
-> arithmetic corrected; fragility flags added). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-07 (E71 rider: the Flash comparator's
+> coverage as scored corrected from 485–486 to 458–472 of 487 tiles;
+> no number and no verdict changes). See [§ Changelog](#changelog) for
+> revision history.
 
 **What this is.** The S134 walk (Group E) ruled that H6's three
 registered analysis components run first, on the Pro data that
@@ -114,8 +114,14 @@ the artefact's 0.005 fragility threshold. Had the Flash image
 optimum landed on k = 1, the image verdict would flip from
 "transfers" to flagged at 200 % relative (the registered metric
 divides by the Flash threshold). The Flash comparator passes are
-also `status: partial` (485–486 of 487 tiles, a one-sided coverage
-gap that slightly depresses the Flash curve). The image "transfers"
+also `status: partial` — and the gap is larger than this document
+first stated: the manifest's 485–486 of 487 tiles is the
+post-recovery count, while the evaluations these curves consume were
+scored at the pre-recovery vintage, 458–472 of 487 tiles (15–29 short
+per pass; E71 rider 2026-09-07), a one-sided coverage gap that
+depresses the Flash curve by more than "slightly". The consensus
+cells have not been rebuilt on the recovered passes, so whether the
+fragile image optimum survives a rebuild is not measured. The image "transfers"
 verdict is therefore not robust at these margins; the text
 "flagged" verdict is (67 % against a 10 % rule). The matched-N form
 is itself post-hoc; the library's "run extended N = 30 test"
@@ -141,6 +147,12 @@ corrected at the verification round):**
 |---|---|---|---:|---:|---|
 | Text | 0.8045 @ $1.85/pass | 0.5665 @ $1.79 (3 × $0.60) | 1.42 | 1.03 | fires (cost within the declared 10 % window) |
 | Image | 0.6658 @ $15.74/pass | 0.5525 @ $11.92 (3 × $3.97) | 1.21 | 1.32 | **does not fire** — a 32 % cost premium is not "comparable cost" (the original run mislabelled this "within ~5 %") |
+
+Coverage caveat (2026-09-07, E71 rider): the artefact's
+`coverage_disclosure` reports the comparator at 485–486 of 487 tiles
+from the post-recovery manifest; the Flash F1 values in this table
+were scored at the pre-recovery vintage (458–472 tiles). The gate
+verdict does not rest on this basis.
 
 **Flash-optimal frontier basis (the registered gate's yardstick):**
 the audited frontier offers min6 **F1 0.8784 at $2.43** and min11
@@ -206,6 +218,28 @@ Report, not decision. Inputs the walk asked for:
    ~US$48 (`studies/phase4-transfer.yaml:165` estimate vintage).
 
 ## Changelog
+
+### 2026-09-07 — The Flash comparator's coverage as scored (E71 rider)
+
+**Refresh trigger**: ruling 3a's re-score of the nine pre-recovery
+scorings (`results/rescore-2026-09-07/`, `26cc430ad`) showed that the
+A-07/A-09 comparator evaluations were scored at the pre-recovery
+vintage, while this document and the A-09 artefact's
+`coverage_disclosure` quoted the post-recovery manifest count.
+
+**Before → after**:
+
+| Claim | Before | After |
+|---|---|---|
+| Flash comparator coverage as scored | 485–486 of 487 tiles (1–2 short) | 458–472 of 487 (15–29 short per pass); the 485–486 is the post-recovery count |
+| Size of the one-sided gap | "slightly depresses the Flash curve" | 15–29 tiles per pass; not measured on the consensus curves (never rebuilt) |
+
+**What did NOT change**: every number in every table; the A-09
+CLOSED verdict (decided by the frontier); the A-07 verdicts and their
+fragility flags; the A-08 disposition. The `a09_cost_gate.json`
+artefact is left as generated (its note is corrected here, not
+edited in place); both register rows gain `E71` in `deviations`.
+Commit: the one landing this entry with the `-post-e71` rows.
 
 ### 2026-08-17 (later) — Verification round: A-06 rebuilt on the full 2×2
 
