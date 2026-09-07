@@ -5061,7 +5061,7 @@ evaluation; the GS tile-swap permutation + BH + greedy-clique tiering for
 every board), with the r1 regression gates pinned to r1 and live during the
 r2 build (G3: the committed 8-cell board reproduced exactly; G4 and the
 family identity, mechanism and geometry gates: all exact). Recall falls by
-0.0005–0.0015 on every r1 cell and precision moves by no more than 0.001,
+0.0005–0.0014 on every r1 cell (T03-k4 −0.00145, on the rounding boundary) and precision moves by no more than 0.001,
 upward on every A/B cell — the signature of a reference that gained 14
 mounds absent from every reference layer, seven of which the model had
 found — so no tier moves among the r1 cells and no ranking claim reverses.
