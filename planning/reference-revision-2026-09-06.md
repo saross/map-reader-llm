@@ -820,10 +820,19 @@ workers, ~55 minutes after ~50 of family construction. Inspection of
 **4b DONE** (A-N3-carried 4,400 and B-N3-carried 4,971 — the r1 counts
 exactly). **4c DONE**: the r2 board home committed from sapphire
 (`7894b5b5a`, 30 MB: `sweeps.json`, `cells_manifest.json`, 22 sweep
-CSVs, 31 detection sets). **4d LAUNCHED** at that HEAD:
-`r2_score_cells.py --stage board --jobs 4 --workers 5` — the derived
-plan printed 31 cells, 0 scored; `--require-clean-inputs` on, every
-input now tracked.
+CSVs, 31 detection sets). **4d DONE** (`cd4905ec3`, 23 minutes):
+`r2_score_cells.py --stage board --jobs 4 --workers 5` scored 31/31,
+every input `clean`, every evaluation carrying its tile confusion; the
+engine's F1@50 agrees with the sweep's light scorer to ≤ 0.0001 on all
+31. **Band check on the 19 sweep-derived r1 cells: max |ΔF1@50|
+0.0007** (recall −0.0005 to −0.0013, precision 0 to +0.0009 — the
+same signature as step 3); with step 3's nine, the r1 → r2 drift over
+every r1 board cell is ≤ 0.0009, inside the 0.005 band. The 3.7
+carried cells reproduce their standardised-ref values to ≤ 0.0004
+(ARM1 0.8551, ARM2 0.8827, FOURTH 0.8728). **4e–4f LAUNCHED** at
+`cd4905ec3` (`/tmp/run_step4ef.sh`): the final board (G3 on r1;
+coincidence enforced 3/3), the r2 leaderboard, the r2 MCC board, then
+the companion on the canonical chain gated at 1e-6.
 
 ### 2026-09-07 (S149-c) — Register-verifier debt: PI rulings
 
