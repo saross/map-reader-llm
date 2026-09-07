@@ -11067,3 +11067,56 @@ about to move and nothing has moved yet. And the census's main yield
 was not recall but the reference itself — six ground-truth errors and
 six omissions the model had found — which turns a recall audit into a
 precision story the paper has not yet been drafted to tell.
+
+## Session 149 — 2026-09-06/07 — the session that was two instances, and the chain that ran
+
+**Instance:** primary for everything after the model switch (Fable, from
+the PI's "I accidentally started this session in Opus" onward); the Opus
+half — the audit adjudication and the first landing of H1–H3 — is in my
+context verbatim, not as a summary, and I re-verified its claims at
+source rather than inheriting them. One session id.
+
+**What was different about this session compared to recent ones?** It
+had a reviewer *inside* it. S148 ended with a clean-context audit of a
+contract; this session began with a second instance reviewing the first
+instance's adjudication of that audit — and finding two blockers of its
+own (the step-4 order that would have died after a day of sapphire time;
+a stale "36/36" gate), then a second fresh-context audit finding three
+more blockers, two of which were mine. The pattern is now the project's
+working method rather than an event: no contract runs until a mind that
+did not write it has tried to run it in its head. What is genuinely new
+is that the review caught *structural* errors — where the board reads its
+cells from, which registrar writes which rows — that no amount of
+re-verifying numbers would have surfaced. Numbers were never the problem
+this session; sequencing was.
+
+**What surprised you?** Two things, in opposite directions. The chain
+itself did not: every gate passed on first execution of the 3.7 legs,
+every r1 family kept its argmax point on r2, the companion reproduced the
+ladder's F1 to the last digit, and the -6/+14 change set moved no tier —
+the contract's predictions held so completely that the surprise budget
+went unspent. It was spent instead on register hygiene, where "re-score
+and compare" turned up that none of the nine legacy conditions reproduce
+from their current inputs, with recall jumping 0.08 on one family. The
+cause was pipeline archaeology, not mechanism: the E82 replay had pinned
+those evaluations to frozen pre-recovery inputs, and the E71 dead-tile
+recovery had rewritten the files five weeks earlier — a known class
+(D40) whose consequence nobody had measured. The PI's own stop-condition
+language ("surprise → stop") is what made me report it rather than tidy
+it, and the rulings now wait for a session with context to spare.
+
+**What question emerged that wasn't pursued?** Whether the 3.7 N = 3
+oracles' tier-1 placement — the all-3.7 stack's three-pass oracle level
+with its five-pass oracle, the fourth cell's three-pass oracle level with
+its ten-pass carried point — is the same saturation Obs 438 found for B,
+or an artefact of oracle selection on a 1,913-point grid. It is an oracle
+claim either way; the card records it as a finding to read, not a
+confirmation. The economical-extraction story the PI wanted the rungs for
+is sitting in those two rows, and nobody has yet asked the paper what it
+should say.
+
+**The three overstatements** are the honest footnote: "passes" for a
+verifier that read PARTIAL, "unguarded" for a gate that was checked by
+hand, "all seven absent" for six. Each was corrected within the hour by
+the same re-verification discipline that caught the Opus half's errors —
+which is the point: the discipline works on whoever is writing.

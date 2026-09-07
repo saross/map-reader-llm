@@ -7902,3 +7902,35 @@ remains the missing primitive.
    that the state a reviewer *sees* (the radio) and the state that is
    *saved* (the mark) must be the same widget, or the caption must say
    which one wins.
+
+## Session 149 — 2026-09-06/07 (a second instance reviewing the first; two fresh-context audits; the register drift a pinned vintage hides)
+
+1. **A fresh instance found what the same instance could not.** The Opus
+   half adjudicated a 15-finding audit correctly on every number and
+   still left the chain unrunnable: step 3 scored cells into a home the
+   board never reads, one registrar covered 9 of 28 rows, the sweep under
+   `--reference r2` swept on r1. The Fable half found those by asking a
+   different question — not "is each finding right?" but "would this run
+   as written?" — and the second clean-context audit found three more
+   (order, `--require-clean-inputs` on untracked inputs, a stale gate)
+   with the same question. Verification of claims and verification of
+   executability are different tests; a contract needs both.
+2. **Disputing from the parser is a trap.** I marked audit-2's MINOR 14
+   "disputed" because `--review-yesterday` defaults to None in argparse;
+   the auditor was right — the legacy engine needs the header-only CSV
+   and the real yesterday review would change the phantom set. The
+   default told me the flag was optional, not that omitting it was
+   correct. Read the caller, not the signature.
+3. **Overstatement has a signature: the conclusion written before the
+   check finishes.** "Passes", "unguarded", "all seven absent" — each a
+   claim slightly stronger than the evidence, each caught by re-reading
+   the output I had already produced. Same class as claude-obs 91 from
+   S148, different instance, same fix.
+4. **Pinned vintages hide drift until something re-scores.** The E82
+   replay's frozen inputs make the register's legacy numbers *reproduce*
+   (by replay) while their nominal inputs on disk have moved 4–8 %. The
+   register's verifier flagged "eval-detections-mismatch" for weeks; only
+   a re-score priced it (recall +0.08 on pro-image-high-t0). A reproduction
+   gate answers "can we regenerate the published number?"; it does not
+   answer "is the published number what the current inputs give?" — and
+   the paper cites the second.

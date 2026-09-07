@@ -8046,3 +8046,58 @@ The clean-context pass is not a complement to the operator dialogue but
 the step that makes the dialogue's numbers trustworthy; schedule it
 before the go, and treat the operator's "looks good" on a draft as
 approval of intent, not of counts.
+
+## Entry — 2026-09-07 (Session 149, map-reader-llm): Nine registered conditions do not reproduce — and the cause was a deliberate pin, not a defect
+**Session:** b77b0d73-7388-4ead-934e-5f7bfbb1b598
+**Instance:** primary
+
+### Surprising fact
+The PI's ruling on register debt was "re-score the nine legacy replay-copy
+conditions against current inputs; swap only on identity". None
+reproduced: every detection GeoJSON on disk carried 4–8 % more features
+than its committed evaluation had scored (692 → 750, 1,026 → 1,090,
+1,619 → 1,641), and the numbers moved materially — pro-image-high-t0
++0.028 to +0.036 F1 with recall 0.81 → 0.90; pro-text-high-t0 −0.005 to
+−0.009. `n1-outstanding-384` feeds four registered analyses.
+
+### Probe
+Git archaeology on the inputs versus the evaluations' `generated_at_utc`.
+The evaluations were scored on 2026-08-21 (the E82 replay campaign, at
+`349cdd1b6`, from `cc-scratch/…/frozen/` copies). The detection files were
+last changed on 2026-07-30 (`99ae28ec4` "E71 dead-tile rerun executed —
+255/288 recovered"; `d01ea4412` "deep sweeps A+B"). So the current files
+predate the evaluations, yet hold *more* features: the replay had scored
+frozen snapshots of the pre-recovery files — the D40 pinned population —
+deliberately, to reproduce the originally published numbers. The
+post-recovery sets had never been scored. Recall rising 0.08 is what
+recovering dead tiles does.
+
+### Belief revision
+From "the register's legacy evaluations are stale in some ambiguous way"
+to "the register's legacy evaluations are a faithful pre-recovery record
+whose nominal inputs were rewritten by a later recovery, by a documented
+policy (D40 pins), and the post-recovery numbers are new information the
+paper has not seen". Not a mechanism defect; a measurement nobody had
+taken. The verifier's `eval-detections-mismatch` had been saying exactly
+this for weeks; it took a re-score to price it.
+
+### What would change this belief
+A pre-recovery copy of any of the nine GeoJSONs reproducing the committed
+evaluation with *fewer* features than the recovery added — if the frozen
+snapshot turned out to be post-recovery, the drift would be something
+else (a scoring-side change), and the diagnosis fails.
+
+### Implications for practice
+A reproduction gate ("regenerate the published number from its pinned
+inputs") and a currency gate ("the number the current inputs give") are
+different tests; the register had the first and the paper cites the
+second. The ruling is the PI's — keep the pinned record and register the
+post-recovery re-scores beside it, or promote them — and it is a
+paper-level decision because four analyses move with it.
+
+### What this is not
+Not the `student:01034` episode of the same session (a GT-error flag
+re-attaching to its 10.3 m neighbour when the closure check was re-run
+on r2, because the tool matches marks to the nearest reference point and
+the flagged point is gone): that was an artefact of the check's
+mechanism, resolved by reading the tool, not a belief revision.

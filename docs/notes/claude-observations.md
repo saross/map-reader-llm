@@ -2191,3 +2191,58 @@ mechanical obstacle (no detections yet) is a scheduling fact, not a
 reason to drop content.
 **How to apply.** When recommending exclusion on mechanical grounds, say
 what it would cost to include instead, and let him rule on that.
+
+## claude-obs 93 — 2026-09-07 (Session 149): He asked for the definition, not the decision
+
+**Pattern.** After confirming stop conditions in his own words, Shawn's
+one question was "how do you define/differentiate ambiguity versus
+surprise" — and "launch first, then explain". He wanted the operating
+distinction on record before the run needed it, not a ruling on any case.
+**Lesson.** The stop-condition vocabulary only works if both parties mean
+the same thing by each word; he audits the vocabulary, not the list.
+**How to apply.** When a contract's stop states use judgement words
+(surprise, ambiguity, deviation), state the test for each in one sentence
+at launch — "if two reasonable readings give different outputs, stop
+before running" — so the operator's later stop is checkable against it.
+
+## claude-obs 94 — 2026-09-07 (Session 149): A domain question reshaped a hygiene ruling into a paper step
+
+**Pattern.** Asked to waive 102 unclaimed evaluations, Shawn's first
+question was "are these against the 55-map set? I'm uncomfortable with a
+mix of GT" — which turned a register-hygiene waiver into step 5d (the
+paper's 55-map uplift on one reference, r2) and surfaced that the
+supplement reports 55-map uplift on three references by design.
+**Lesson.** He reads every bookkeeping question as "what does the paper
+cite?"; the tidy answer and the paper answer differ more often than I
+expect.
+**How to apply.** Before proposing a waiver or a re-registration, state
+which paper number, if any, the artefact touches — that is the field he
+decides on.
+
+## claude-obs 95 — 2026-09-07 (Session 149): Self-critique — three claims one notch stronger than the evidence
+
+**Pattern.** "Passes" (verifier read PARTIAL), "unguarded" (checked by
+hand, unenforced), "all seven absent" (six) — each written before the
+check I had already run was read to the end; each corrected within the
+hour by my own re-verification. Same class as claude-obs 91, different
+instance.
+**Lesson.** The overstatement is not confabulation of facts but rounding
+a verdict up: PARTIAL → passes, unenforced → unguarded. The fix that
+worked was reading the tool's own summary line before writing the
+sentence.
+**How to apply.** Quote the tool's verdict word verbatim in the first
+draft ("1 partial", "6 of 7") and only then paraphrase.
+
+## claude-obs 96 — 2026-09-07 (Session 149): He manages the session boundary as a resource
+
+**Pattern.** With five rulings queued and the context near its limit, he
+chose to hold all five to the next session and close with reflection and
+handoff — rather than rule quickly with a tired instance. Earlier he had
+switched the model mid-session and asked the new instance to review the
+old one's work rather than continue it.
+**Lesson.** He treats "which instance decides, with how much context" as
+part of the decision's quality; rulings are cheap to defer and expensive
+to take badly.
+**How to apply.** When rulings stack up late in a session, offer the
+deferral explicitly with the state fully recorded, rather than pressing
+for answers; the recorded state is the deliverable.

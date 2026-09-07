@@ -9294,3 +9294,56 @@ Obs 442 mis-pointer corrected to Obs 444 § (b).
 before this session opened; WN-C1..C3 still await the PI's verdict. The
 session ran at ~85 % context by close, which is why the audit's fifteen
 findings were recorded rather than adjudicated.
+
+## Session 149 — 2026-09-06/07 (amd-tower + sapphire; US$0 API; Opus then Fable 5.1 in one session; two Opus-tier clean-context audits; the r2 chain ran end to end)
+
+**Opus half (S149).** Adjudicated the 15-finding r2-chain audit (11 fix / 3
+accept / 1 dispute-in-part; `6ab0ba4c6`); landed H1–H3 + H10 as code
+(`fc54feac6`: `r2_gt()`, `board_home()`, `--reference r2` on the leaderboard
+and register scripts, the dedup gate in `apply_audit_revision`); amended the
+contract (`176e4b267`). Three PI forks ruled: r2 enters as one merged file;
+the GS Era-2 leg split out; G3/G4 pinned to r1.
+
+**Fable half (S149-b/c).** Fresh-eyes review found the step-3/4 structure
+wrong for 15 of 23 cells, one registrar covering 9 of 28 rows, the sweep
+sweeping on r1 under `--reference r2`, the board mislabelled, `KeyError` on
+3.7 labels, no MCC r2 mode. Engine-gate target reproduced Δ = 0 (dirty stamp
+was tree-wide). Pass-provenance pins (`7caccb4be`); sweep reference split +
+3.7 families; build/MCC/registrar fixes (`e0e656ca8`); contract restructured
+(`1e457d83f`). Second clean-context audit (Opus): 3 blockers / 6 majors / 11
+minors; all fixed — step 4 re-ordered with a commit before scoring, a
+scoring driver (`r2_score_cells.py`), every r1 writer guarded, the r2
+board's provenance derived (`882c72a31`, `27353a0dc`). 3.7 family
+validation on sapphire: identity exact, rungs = ladders' union_n −
+unmatched. Step-5 tooling (`d85cd6e3b`). **PI GO** with stop conditions in
+his words (`df5cd4ab6`).
+
+**The chain.** Step 2 exact; step 3 nine cells (`4d92997bd`, 8 min); 7a-i
+(`232c6dc8c`); 4a sweep (all gates on r1 exact incl. the 3.7 legs; 1,913
+points × 22 families; every r1 argmax unchanged); 4b; 4c (`7894b5b5a`); 4d
+31/31 (`cd4905ec3`); 4e/4f (`22353e660`: 35-cell board, 512/595, 12 tiers,
+r1 structure intact; leaderboard tiers identical to r1; companion
+0.8437752627 == ladder); 7a-ii 28 rows + companion row (`777c4588c`); step
+5 (`a45bd4af0`) + 5d 24 r2 anchors (`89b31e846`); step 6 (`42dbc1147`);
+step 9 (`81c1f3fff`); 7b closure check (`b21fac72d`, `f7e26af79`). Max
+|ΔF1@50| over all r1 cells 0.0009.
+
+**Register debt** (PI rulings): 126 uplift anchors waived (`361af5b87`,
+`05a6fbfd3`); h13 registered as scored + verifier directory match
+(`c6df0fd57`); stride canonical rows reproduced to zero and given provenance
+(`26cc430ad`, `0ac49a736`); nine legacy re-scores do NOT reproduce (E71
+recovery vs E82 pins) — reported, unswapped. Register 8/29/4 → 22/17/2.
+Schema/waiver fixes after five suite failures (`675c8d5db`); tier-1 2,144
+green.
+
+**Prepared, not landed**: `register_r2_analyses.py` (8 rows, dry-run,
+`4f2698a0b`); step-8 drafts (E84, M.3, D.8, Obs; `8a221ad96`).
+
+**Held to the next session (PI's call, context limit)**: ruling 3a (a)/(b);
+signing the 8 analysis rows → manifests; the supplement in place / older
+strata; the step-8 texts; the § R7 table.
+
+**Contextual assumptions.** The model switched mid-session and the
+transcript stayed intact; sapphire's clock is UTC and my elapsed-time
+estimates were off by an hour until checked; `outputs/` paths on sapphire
+are gitignored-or-untracked residue from S145–S148, not today's.
