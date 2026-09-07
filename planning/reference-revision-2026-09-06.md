@@ -822,6 +822,19 @@ The verifier stood at 8 PASS / 29 PARTIAL / 4 FAIL across 41 runs
 
 Execution: on sapphire after the sweep, under explicit pathspecs,
 before 7b. These are register-hygiene items; none blocks steps 4–6.
+**Progress (same day)**: ruling 1 done (`361af5b87`: 102 waivers;
+register 8/29/4 → 21/16/4); ruling 3c done (`c6df0fd57`: the verifier
+now matches a directory-valued cell when every scored file lies under
+it — tier-1 test — and the three h13 native-tiling arms are registered
+as scored; h13 FAIL → PARTIAL on two true warnings; register
+21/17/3); ruling 2's prerequisite landed (`register_pass1_adapt.py`
+now records `_metadata.input_files` and the engine from the Track-2
+summary's `input_paths` — the four stride canonical rows had no
+provenance at all). The three remaining FAILs are exactly the
+re-scores of rulings 2 and 3a, runner prepared for the moment the
+sweep releases sapphire; the paper-cited `n1-outstanding-384` rows
+show feature-count drift (e.g. 750 vs 692), so their re-score will
+move numbers — reported, never swapped silently.
 
 ### 2026-09-07 (S149-c) — Steps 2, 3 and 7a-i DONE; 4a–4b launched
 

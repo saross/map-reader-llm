@@ -33,6 +33,27 @@ BASE = REPO / "results/stride55-2026-08-27"
 HEADLINE_BUFFER = 50
 
 
+def _rel(path: str | Path | None) -> str | None:
+    """Repo-relative form of a recorded path (absolute scoring-host paths included)."""
+    if not path:
+        return None
+    s = str(path)
+    return s.split("map-reader-llm/", 1)[1] if "map-reader-llm/" in s else s
+
+
+def _input_files(summary: dict, det: Path) -> dict:
+    """The engine's recorded inputs, repo-relative, from ``metadata.input_paths``."""
+    paths = (summary.get("metadata") or {}).get("input_paths") or {}
+    return {
+        "detections": [str(det.relative_to(REPO))],
+        "engine_detections": _rel(paths.get("detections")),
+        "ground_truth": _rel(paths.get("student_gt")),
+        "review_today": _rel(paths.get("review_today")),
+        "review_yesterday": _rel(paths.get("review_yesterday")),
+        "bounds": _rel(paths.get("bounds")),
+    }
+
+
 def adapt(eval_dir: Path, det: Path) -> None:
     summary = json.loads((eval_dir / "summary.json").read_text())
     buffers = []
@@ -65,7 +86,13 @@ def adapt(eval_dir: Path, det: Path) -> None:
                     "n_detections": n_det},
         "_metadata": {
             "adapted_by": "scripts/register_pass1_adapt.py",
-            "source": str((eval_dir / "summary.json").relative_to(REPO)),
+            "source": _rel(eval_dir / "summary.json"),
+            # The inputs the Track-2 engine actually scored, carried through
+            # so the register verifier can cross-check eval <-> detections and
+            # scope (Session 149-c: the four stride canonical rows had no
+            # provenance at all and read as wrong-source ERRORs).
+            "script_path": "scripts/compute_corrected_f1_multi_buffer.py",
+            "input_files": _input_files(summary, det),
             "note": ("Deterministic transform of the corrected-F1 engine "
                      "summary (S105 adapter pattern); tile_classification "
                      "pinned to the 50 m headline row; nothing "
