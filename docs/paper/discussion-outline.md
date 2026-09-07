@@ -30,6 +30,7 @@
 | v0 | 2026-08-17 | Strawman; 10 decisions DD1–DD10 raised, all OPEN (Session 135). |
 | v1 | 2026-08-21 | DD1–DD10 ALL SETTLED at the Session 139 walk (PI): nine as recommended; DD8a inventory extended with two PI additions (cross-model-family tests; benchmark/eval development), parked doors OUT. Detection-baseline lit pass ruled WANTED as a D.4 gate. |
 | v2 | 2026-08-21 | **Foregrounding amendment** (PI, same session): five headline outcomes must lead the Discussion. Seeds 8–11 drafted; spine reorganised to a two-part core (Part I what-the-study-shows, Part II lessons-for-survey-practice); old D.4 dissolved into new D.1; sections renumbered D.0–D.11. DD11–DD13 raised and settled; student-GT lineage to the 2023 campaign confirmed by the PI. |
+| v3 | 2026-09-07 | D.8 inventory gains the reference-error-no-audit-saw item (reference revision r2's estimated-correction column; erratum E84). No DD decision reopened. |
 
 *Brief by design — consult `git log docs/paper/discussion-outline.md`
 for full history.*
@@ -438,6 +439,19 @@ references must be verified when D.2 drafts, not assumed here.*
     restatement here — at most a pointer clause.
   - **B**: fully distributed limitations, no dedicated subsection
     (risks reading as evasive; see DD1).
+- **Reference error that no audit saw** (added 2026-09-07, erratum
+  E84). r2 removes the error two PI audits found; the
+  estimated-correction column carries what they did not (≈ 50 unseen
+  double-misses in the empty frame, ≈ 36 GT errors and ≈ 36
+  model-found omissions outside the audited clusters, each with a
+  Clopper–Pearson interval). Two assumptions are stated with it: the
+  cluster census's error rates are extrapolated to the 4,291
+  non-clustered, non-audited points, where errors may be rarer
+  (reviewed less hard) or commoner (duplicates concentrate in
+  clusters, Obs 396); and the correction is corpus-level and uniform,
+  so it widens every interval by ≈ ±0.005 and cannot re-order a board
+  — which is why it is a column, not a re-tiering. Source:
+  `results/55map-final-board-r2-2026-09-06/estimated-correction.md`.
 
 ### D.9 (was D.6) — Preregistration in practice: deviations and the retrospective (Seed 7)
 
