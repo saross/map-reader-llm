@@ -707,7 +707,13 @@ convention); the 3.7 rungs are oracle-only, as the ladders record.
 Joined only under `--reference r2`; the r1 board's membership is
 closed. Rejected alternative: freezing the 3.7 oracles at their
 canonical-ladder points would have mixed two oracle conventions on one
-board.
+board. **Validated on sapphire (S149-c, 2,487 s, $0)**: all 22
+families build; identity counts exact (ARM1-N5 5,229; ARM2-N5 5,003;
+FOURTH-N10 4,246); and every rung's candidate count equals the
+committed ladder's `union_n − unmatched` — ARM N1 8,372 (8,426 − 54),
+ARM N3 11,076 (11,079 − 3), FOURTH N1 24,923 (25,586 − 663), FOURTH N3
+36,472 (36,757 − 285) — so the r2 chain's first-N derivation is the
+ladders' derivation, on the pinned passes.
 
 **H14 (new, S149-b) — one engine on r2.** Every r2 evaluation is
 `evaluate_detections.py` (the IM-k4 template) against the merged r2
@@ -785,9 +791,10 @@ board cells; 41 evaluation files; the three S149 rulings; H11–H14.
 
 **Code**: `882c72a31`. Tier-1 file: 29 tests.
 
-**Still NO-GO**: the 3.7 family validation on sapphire (identity
-counts before the chain depends on them) and the PI's formal go with
-stop conditions in his own words.
+**3.7 family validation passed** (sapphire, 2,487 s): identity counts
+exact and every rung's candidate count equals the ladders'
+`union_n − unmatched`. **Still NO-GO** for one reason only: the PI's
+formal go with stop conditions in his own words.
 
 ### 2026-09-07 (S149-b, Fable) — Fresh-eyes review: loose ends closed, contract restructured
 
