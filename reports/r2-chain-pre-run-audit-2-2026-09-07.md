@@ -413,7 +413,6 @@ argparse default and corrected on re-reading `stride55_score.py`, which
 passes a header-only yesterday review because the engine's legacy mode
 needs one.
 
-
 ### 2026-09-07 — Original publication
 
 Second fresh-context audit (H7), run against `planning/reference-revision-2026-09-06.md`
