@@ -704,6 +704,23 @@ class ReferenceResolution:
     consumed_path: str | None = None
 
 
+def _explicit_reference_suffix(label: str) -> str | None:
+    """Return the reference term an explicit label suffix names, else ``None``.
+
+    Only the exact ``-canonical-gt`` / ``-standardised-gt`` / ``-r2-gt``
+    suffixes count; a label merely containing the word (``greedy-canonical``)
+    names a config and returns ``None``.
+    """
+    for suffix, term in (
+        ("-standardised-gt", "standardised"),
+        ("-canonical-gt", "canonical"),
+        ("-r2-gt", "r2"),
+    ):
+        if label.endswith(suffix):
+            return term
+    return None
+
+
 def resolve_reference(
     eval_metadata: Mapping[str, Any] | None,
     label: str,
@@ -714,11 +731,24 @@ def resolve_reference(
     Three rules, tried in order of authority:
 
     1. **eval-ground-truth** — the path the evaluation itself recorded. This is
-       the only rule that reads what actually happened, so it wins.
+       the only rule that reads what actually happened, so it wins — with one
+       documented exception. The canonical chain's corrected-F1 engine
+       (``compute_corrected_f1_multi_buffer.py``) records the STUDENT layer as
+       its ``ground_truth`` because that file is its base layer; the reference
+       it actually scored against is that layer plus the adjudicated review
+       extension, i.e. the canonical extended GT. The filename therefore
+       under-describes the engine, and a bare ``student`` resolution on a
+       label that carries an explicit reference suffix is taken as the base
+       layer, not the reference: the suffix wins and the consumed path is
+       kept. Without this, ruling 2's re-adapted stride evaluations (Session
+       149, ``0ac49a736``) and the 3.7 campaign's canonical rows dropped from
+       the ``canonical`` stratum into ``student`` the moment their metadata
+       was attached.
     2. **label-suffix** — an explicit ``-canonical-gt`` / ``-standardised-gt``
-       suffix on the registered label. Applied only to those exact suffixes:
-       labels such as ``greedy-canonical`` and ``canonical-first`` use the word
-       for a CONFIG, not a reference, and must not be caught.
+       / ``-r2-gt`` suffix on the registered label. Applied only to those
+       exact suffixes: labels such as ``greedy-canonical`` and
+       ``canonical-first`` use the word for a CONFIG, not a reference, and
+       must not be caught.
     3. **run-facts** — the run's nominal ``gt_reference``, mapped from the
        manifest's schema classes (``combined`` is the canonical extended GT,
        notation key § 4).
@@ -741,8 +771,15 @@ def resolve_reference(
         or (meta.get("cli_args") or {}).get("ground_truth")
         or meta.get("gt_reference")
     )
+    suffix_term = _explicit_reference_suffix(label)
     if gt:
         term = REFERENCE_BY_FILENAME.get(Path(str(gt)).name)
+        if term == "student" and suffix_term is not None:
+            # The student file is the corrected-F1 engine's BASE layer, not
+            # the reference it assembled (rule 1's documented exception).
+            return ReferenceResolution(
+                suffix_term, REFERENCE_PATH[suffix_term], "label-suffix", str(gt)
+            )
         if term:
             canonical = REFERENCE_PATH[term]
             consumed = str(gt)

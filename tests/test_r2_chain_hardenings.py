@@ -435,3 +435,40 @@ def test_driver_board_stage_refuses_without_the_r2_manifest(monkeypatch, tmp_pat
     monkeypatch.setattr(drv, "BOARD_HOME", tmp_path / "no-such-board")
     with pytest.raises(SystemExit, match="does not exist"):
         drv.board_jobs()
+
+
+# ------------------------------------------------ Session 150 (Fable) ---
+# The corrected-F1 engine records its BASE layer (the student file) as
+# ``ground_truth``; the reference it scored against is canonical. Ruling 2's
+# re-adaptation (0ac49a736) attached that metadata to the stride canonical
+# rows and they fell out of the ``canonical`` stratum into ``student``.
+
+
+@pytest.mark.tier1
+def test_student_base_layer_under_a_canonical_label_resolves_canonical():
+    """A ``-canonical-gt`` row scored by the corrected-F1 engine stays canonical."""
+    meta = {"input_files": {
+        "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "review_today": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    }}
+    res = lus.resolve_reference(meta, "g384-ov128-55map-verified-carried-p0.15-k8-canonical-gt", None)
+    assert (res.term, res.basis) == ("canonical", "label-suffix")
+    assert res.path.endswith("canonical-gt-55maps-r50.geojson")
+    assert res.consumed_path.endswith("student-mounds-55maps-reviewed.geojson")
+
+
+@pytest.mark.tier1
+def test_student_base_layer_without_a_suffix_still_resolves_student():
+    """The exception is narrow: no explicit suffix, the filename rule stands."""
+    meta = {"input_files": {
+        "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"}}
+    res = lus.resolve_reference(meta, "verified-k4", None)
+    assert (res.term, res.basis) == ("student", "eval-ground-truth")
+
+
+@pytest.mark.tier1
+def test_a_real_reference_file_still_outranks_the_label_suffix():
+    """Rule 1 keeps its authority when the file names a reference, not a base layer."""
+    meta = {"input_files": {"ground_truth": lus.REFERENCE_PATH["r2"]}}
+    res = lus.resolve_reference(meta, "verified-k4-canonical-gt", None)
+    assert (res.term, res.basis) == ("r2", "eval-ground-truth")
