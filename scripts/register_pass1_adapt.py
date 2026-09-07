@@ -102,7 +102,7 @@ def adapt(eval_dir: Path, det: Path) -> None:
     (eval_dir / "evaluation.json").write_text(
         json.dumps(out, indent=1) + "\n")
     b50 = next(b for b in buffers if b["buffer_metres"] == 50)
-    print(f"  {eval_dir.relative_to(REPO)}: F1@50 {b50['f1']:.6f} "
+    print(f"  {_rel(eval_dir)}: F1@50 {b50['f1']:.6f} "
           f"n={n_det} tc={'ok' if headline_tc and headline_tc['confusion']['tp'] is not None else 'MISSING'}")
 
 
