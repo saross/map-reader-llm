@@ -115,8 +115,16 @@ measurement on a curated GT versus a 55-sheet model-assisted
 reconstruction), and their agreement or disagreement is itself a
 result for D.7 (Obs 443's person-driven variance).
 
-**Preliminary figure (2026-09-06, on r1 sizes and the audit rates;
-to be recomputed on r2 after the five-tile re-review).** Inputs:
+**Recomputed on r2 (2026-09-07, step 9, `scripts/student_baseline_reestimate.py`
+→ `results/student-baseline-2026-09-01/reestimate-r2.{json,md}`)**: 55-map
+corpus-level **P 0.991 (0.983–0.997) / R 0.923 (0.911–0.932) / F1 0.956
+(0.949–0.961)**; without the extrapolated terms R 0.941 / F1 0.966;
+GS-4 direct 1.000 / 0.947 / 0.973 — the preliminary figure below stands
+to three places (the r2 sizes differ from r1's by −5 student and −1
+extension record). The preliminary is retained as the record of the
+estimate's first statement:
+
+**Preliminary figure (2026-09-06, on r1 sizes and the audit rates).** Inputs:
 4,731 student records; 686 of them in clusters, 5 flagged (0.73 %);
 missed by students = 279 extension + 14 audit additions + p_dm(empty)
 × 4,676 (≈ 56) + p_om × 4,291 unaudited points (≈ 40); Beta posteriors

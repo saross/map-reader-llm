@@ -1,0 +1,96 @@
+{
+  "generated_at_utc": "2026-09-07T04:38:59.191597+00:00",
+  "reference": "r2",
+  "method": "Beta(k+1, n-k+1) posteriors (flat prior) on the flagged share and the audit rates; Monte Carlo propagation; same machinery as scripts/estimated_correction.py",
+  "draws": 10000,
+  "seed": 42,
+  "inputs": {
+    "student_records": 4731,
+    "student_clustered": 686,
+    "student_flagged": 5,
+    "extension_mounds_r2": 278,
+    "audit_additions": 14
+  },
+  "extrapolated_terms_point": {
+    "unseen_double_misses_M": 49.744680851063826,
+    "model_found_omissions_E_om": 35.80806675938804
+  },
+  "rows": [
+    {
+      "row": "55-map corpus-level (this estimate)",
+      "basis": "r2 + audit rates, two extrapolated terms",
+      "precision": {
+        "mean": 0.9912692905625583,
+        "ci_lower": 0.9832464904921858,
+        "ci_upper": 0.9968283256473449
+      },
+      "recall": {
+        "mean": 0.9226888095457431,
+        "ci_lower": 0.911091072209196,
+        "ci_upper": 0.9315411662137033
+      },
+      "f1": {
+        "mean": 0.95573988598493,
+        "ci_lower": 0.9486521085060745,
+        "ci_upper": 0.96146199355963
+      },
+      "expected_student_fp": {
+        "mean": 41.30498634853615,
+        "ci_lower": 15.00519136241088,
+        "ci_upper": 79.26085348146849
+      },
+      "expected_missed": {
+        "mean": 393.106399115141,
+        "ci_lower": 344.82492161070104,
+        "ci_upper": 457.9663856172162
+      }
+    },
+    {
+      "row": "\u2014 without the extrapolated terms",
+      "basis": "directly reviewed misses only (278 + 14)",
+      "precision": {
+        "mean": 0.9912692905625583,
+        "ci_lower": 0.9832464904921858,
+        "ci_upper": 0.9968283256473449
+      },
+      "recall": {
+        "mean": 0.9413847411574072,
+        "ci_lower": 0.940935394982107,
+        "ci_upper": 0.9416932302932096
+      },
+      "f1": {
+        "mean": 0.9656804628341784,
+        "ci_lower": 0.9616257505381353,
+        "ci_upper": 0.9684767065395258
+      },
+      "expected_student_fp": {
+        "mean": 41.30498634853615,
+        "ci_lower": 15.00519136241088,
+        "ci_upper": 79.26085348146849
+      },
+      "expected_missed": {
+        "mean": 292.0,
+        "ci_lower": 292.0,
+        "ci_upper": 292.0
+      }
+    },
+    {
+      "row": "GS-4 direct (Obs 316/443)",
+      "basis": "4 sheets, curator GT, 50 m (Obs 316/443)",
+      "precision": {
+        "mean": 1.0
+      },
+      "recall": {
+        "mean": 0.9473,
+        "fn_pct": 5.27,
+        "fn_ci_pct": [
+          2.9,
+          8.8
+        ]
+      },
+      "f1": {
+        "mean": 0.9729
+      }
+    }
+  ]
+}
