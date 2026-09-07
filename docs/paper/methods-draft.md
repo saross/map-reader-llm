@@ -174,6 +174,25 @@ compensating precision and recall differences. What the reference can and cannot
 support (its precision and recall epistemics) is characterised in
 Results § R8 rather than assumed here.
 
+Two targeted audits then examined the standardised reference directly.
+A 500-tile empty-tile audit (tiles no channel had marked) found five
+mounds missed by both students and every model — 1.06 % of the 470
+empty tiles reviewed (95 % CI 0.35–2.47 %), extrapolating to ≈ 50
+unseen mounds across the 4,676-tile empty frame — and a complete census
+of the 719 mounds in clusters found six reference points that are not
+mounds, six model-found mounds the reference lacked, one mound the
+model had proposed but the vote gate removed, and two further
+double-misses. Applied as a single deterministic instruction set, the
+adjudications remove six records and add fourteen, giving revision r2
+(5,018 records: 4,726 student, 278 extension, and 14 audit-reviewed,
+the last two classes at marked centres). Every 55-map figure in this
+paper is measured against r2; re-measurement moved no cell's F1 by
+more than 0.0009 and changed no tier among the previously reported
+cells. Because the audits sample the reference rather than exhaust it,
+we also report an estimated correction for the error they did not see
+(§ R7), propagated from the audit rates by Monte Carlo and shown
+beside — never in place of — each point estimate.
+
 ## M.4 Statistical analysis (outline target: § 5.3 rewrite; MD4)
 
 The registered inference is bootstrap estimation with family-level
@@ -559,6 +578,18 @@ rather than the implementation. Session transcripts are archived at
 planned as a separate contribution.
 
 ## Changelog
+
+### 2026-09-07 (S150) — M.3: the r2 audit paragraph (erratum E84)
+
+Trigger: reference revision r2 (card
+`planning/reference-revision-2026-09-06.md`; erratum E84). Added one
+paragraph to § M.3 after the ruling-21 paragraph: the two PI audits,
+the −6 / +14 instruction set, the r2 record counts, the re-measurement
+bound (max |ΔF1@50| 0.0009, no tier moves among the r1 cells), and the
+estimated-correction column's existence. Numbers read from
+`results/reference-revision-r2/audit-revision-instructions.csv`,
+`results/55map-final-board-r2-2026-09-06/`, and
+`results/empty-tile-audit/adjudication.md`. No other section changed.
 
 ### 2026-09-03 (S147, later) — M.12 LLM-assistance slot opened (PI ruling)
 
