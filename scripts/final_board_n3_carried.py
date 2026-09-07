@@ -74,18 +74,26 @@ EXPECTED = {"A-N3-carried": 4400, "B-N3-carried": 4971}
 CELLS = {"g384_ov128_55map": "A-N3", "g384_ov192_55map": "B-N3"}
 
 
-def main(reference: str = "standardised") -> int:
+def main(reference: str = "standardised", force_r1: bool = False) -> int:
     """Append the two N=3 carried cells to a board's manifest.
 
     Args:
         reference: Board vintage to append to — ``standardised`` (r1,
             default) or ``r2``. Selects the home; the cells themselves are
             derived identically either way.
+        force_r1: Permit rewriting the committed r1 board home (read-only by
+            policy, H2/H15: G3 reproduces it).
 
     Returns:
         Process exit code.
     """
     out = board_home(reference)
+    if reference == "standardised" and (out / "cells_manifest.json").exists() \
+            and not force_r1:
+        raise SystemExit(
+            f"{out.relative_to(PROJECT_ROOT)} is the committed r1 board home and "
+            "is read-only (H2/H15). Use --reference r2, or --force-r1 to "
+            "regenerate r1 deliberately.")
     bounds = gpd.read_file(BOUNDS).to_crs("EPSG:32635")
     index = build_map_constrained_index()
     manifest_path = out / "cells_manifest.json"
@@ -137,4 +145,7 @@ if __name__ == "__main__":
         help="Board vintage to append the carried cells to (default: the r1 "
              "board, unchanged behaviour).",
     )
-    sys.exit(main(_ap.parse_args().reference))
+    _ap.add_argument("--force-r1", action="store_true",
+                     help="Permit rewriting the committed r1 board (read-only by policy).")
+    _a = _ap.parse_args()
+    sys.exit(main(_a.reference, force_r1=_a.force_r1))

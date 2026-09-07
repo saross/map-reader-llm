@@ -346,7 +346,7 @@ def register_one(dec: dict, cell_label: str,
     return f"  {run}::{new_label} registered"
 
 
-def main(vintage: str = "standardised") -> None:
+def main(vintage: str = "standardised", force_r1: bool = False) -> None:
     """Adapt every cell's summary, then register its condition row.
 
     Args:
@@ -359,6 +359,12 @@ def main(vintage: str = "standardised") -> None:
             confusing per-cell FileNotFoundError.
     """
     home = vintage_home(vintage)
+    if vintage == "standardised" and not force_r1 and any(
+            (home / c["label"] / "evaluation.json").exists() for c in CELLS):
+        sys.exit(
+            f"{home.relative_to(REPO)} holds the committed r1 evaluations that the "
+            "G3 regression gate reads; adapt_one would overwrite them in place. "
+            "Refusing (H2/H15). Use --reference r2, or --force-r1 deliberately.")
     if not home.is_dir():
         sys.exit(
             f"{vintage} home {home.relative_to(REPO)} does not exist — "
@@ -413,4 +419,7 @@ if __name__ == "__main__":
              "and registers -r2-gt rows). Step 7a: run this BEFORE the "
              "boards, which resolve cells by registered label.",
     )
-    main(_ap.parse_args().reference)
+    _ap.add_argument("--force-r1", action="store_true",
+                     help="Permit overwriting the committed r1 evaluations.")
+    _a = _ap.parse_args()
+    main(_a.reference, force_r1=_a.force_r1)

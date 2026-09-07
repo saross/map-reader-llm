@@ -325,7 +325,8 @@ def render_md(payload: dict) -> str:
     return "\n".join(md)
 
 
-def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
+def main(rebuild_md_only: bool = False, reference: str = "canonical",
+         force_r1: bool = False) -> int:
     """Build the 50 m board with round-robin tiers.
 
     Args:
@@ -339,6 +340,16 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
     """
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     suffix = {"standardised": "_standardised", "r2": "_r2"}.get(reference, "")
+    # The committed canonical and standardised boards are the G3/G4 gate
+    # targets (final_board_build / final_board_sweeps compare against
+    # 55map_leaderboard_50m_standardised.json at 1e-9 / 0.003). Rewriting
+    # them is a deliberate act, never a side effect of a default invocation
+    # (H15; audit-2 MAJOR 5).
+    if reference != "r2" and not rebuild_md_only and not force_r1 \
+            and (OUT_DIR / f"55map_leaderboard_50m{suffix}.json").exists():
+        sys.exit(f"{OUT_DIR.relative_to(BASE_DIR)}/55map_leaderboard_50m{suffix}.json "
+                 f"is a committed r1 board and a regression-gate target; refusing "
+                 f"to rewrite it. Use --reference r2, --rebuild-md, or --force-r1.")
     md_name = f"55map-leaderboard-50m{suffix.replace('_', '-')}.md"
     json_name = f"55map_leaderboard_50m{suffix}.json"
 
@@ -375,10 +386,11 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
             # The board reads its numbers from the register row's eval_path,
             # so a missing row is a sequencing error, not a data gap: step 7a
             # (register) must precede step 4 (build). Say which row.
+            registrar = ("register_r2_conditions.py --write" if reference == "r2"
+                         else "register_standardised_gt_conditions.py")
             sys.exit(f"MISSING REGISTER ROW: {run_id}::{label} is not in "
-                     f"{RUN_CONDS.relative_to(BASE_DIR)}. Run "
-                     f"register_standardised_gt_conditions.py "
-                     f"--reference {reference} first (step 7a before step 4).")
+                     f"{RUN_CONDS.relative_to(BASE_DIR)}. Run {registrar} "
+                     f"first (step 7a-i before the board).")
         det = gpd.read_file(BASE_DIR / cond["detections"])
         crs = "EPSG:32635" if abs(det.geometry.x.iloc[0]) > 180 else "EPSG:4326"
         det = det.set_crs(crs, allow_override=True).to_crs("EPSG:32635")
@@ -465,7 +477,12 @@ if __name__ == "__main__":
              "r2 (the 2026-09 audit revision; writes *_r2 outputs and reads "
              "-r2-gt register rows, which step 7a must have written).",
     )
+    parser.add_argument(
+        "--force-r1", action="store_true",
+        help="Permit rewriting a committed r1 board (a regression-gate target).",
+    )
     _args = parser.parse_args()
     raise SystemExit(main(
         rebuild_md_only=_args.rebuild_md, reference=_args.reference,
+        force_r1=_args.force_r1,
     ))

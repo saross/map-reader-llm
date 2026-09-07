@@ -370,3 +370,64 @@ def test_r2_registrar_authors_every_board_family_and_skips_coincidence():
     arm = next(r for _, r, _ in plan if r["label"].startswith("arm2-"))
     assert arm["verifier_config"]["model"].startswith("gemini-3.7"), arm["verifier_config"]
     assert author_board_rows is plan
+
+
+# ------------------------------------------ audit-2 fixes (S149-b) ---
+# r1 homes refused at tool level (MAJOR 4/5), and the scoring driver
+# (MAJOR 7): its derived cell set, its recipe, and its refusal to run
+# without the r2 board manifest.
+
+from scripts import r2_score_cells as drv  # noqa: E402
+
+
+@pytest.mark.tier1
+def test_every_r1_writing_tool_refuses_without_force_r1():
+    """H15: default invocations must not touch a committed r1 artefact."""
+    import scripts.final_board_n3_carried as n3
+    import scripts.mcc_tiering_55map as mcc
+    import scripts.register_standardised_gt_conditions as reg
+    with pytest.raises(SystemExit, match="read-only"):
+        n3.main("standardised")
+    with pytest.raises(SystemExit, match="regression-gate target"):
+        bl.main(reference="standardised")
+    with pytest.raises(SystemExit, match="committed r1 board"):
+        mcc.main(reference="standardised")
+    with pytest.raises(SystemExit, match="Refusing"):
+        reg.main("standardised")
+    with pytest.raises(SystemExit, match="read-only"):
+        fbb.main("standardised")
+
+
+@pytest.mark.tier1
+def test_driver_derives_the_contract_s_nine_fixed_cells():
+    """Step 3's set is NAMES ∪ COMMITTED_CARRIED and every input exists."""
+    jobs = drv.fixed_jobs()
+    assert {j.label for j in jobs} == drv.CONTRACT_FIXED
+    assert len(jobs) == 9
+    for j in jobs:
+        assert j.detections.exists(), j.label
+        assert j.out_dir.parent == drv.SCORING_HOME
+        assert j.eval_label.endswith("-r2-gt")
+
+
+@pytest.mark.tier1
+def test_driver_command_is_the_im_k4_recipe_against_r2():
+    """The engine invocation must match the committed template exactly."""
+    job = drv.fixed_jobs()[0]
+    cmd = drv.engine_command(job, workers=2, require_clean=True)
+    s = " ".join(cmd)
+    assert "--buffers 5 10 15 20 25 30 35 40 45 50 75 100 125 150" in s
+    assert "--bootstrap 10000" in s and "--seed 42" in s and "--mcc" in s
+    assert "best-available-gt-55maps-r2.geojson" in s
+    assert "55maps_evaluation_bounds.geojson" in s
+    assert "--require-clean-inputs" in s
+    assert "--require-clean-inputs" not in " ".join(
+        drv.engine_command(job, workers=2, require_clean=False))
+
+
+@pytest.mark.tier1
+def test_driver_board_stage_refuses_without_the_r2_manifest(monkeypatch, tmp_path):
+    """4b cannot run before 4a/4c have written the r2 board manifest."""
+    monkeypatch.setattr(drv, "BOARD_HOME", tmp_path / "no-such-board")
+    with pytest.raises(SystemExit, match="does not exist"):
+        drv.board_jobs()

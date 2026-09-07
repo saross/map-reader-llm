@@ -386,7 +386,8 @@ def render_md(out: dict) -> str:
     return "\n".join(md)
 
 
-def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
+def main(rebuild_md_only: bool = False, reference: str = "canonical",
+         force_r1: bool = False) -> int:
     """Build the 55-map tile-MCC permutation tiering.
 
     Args:
@@ -405,6 +406,11 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
     is_r2 = reference == "r2"
     stem = {"standardised": "55map-mcc-tiering-standardised",
             "r2": "55map-mcc-tiering-r2"}.get(reference, "55map-mcc-tiering")
+    if reference != "r2" and not rebuild_md_only and not force_r1 \
+            and (OUT_DIR / f"{stem}.json").exists():
+        sys.exit(f"{OUT_DIR.relative_to(BASE_DIR)}/{stem}.json is a committed r1 "
+                 f"board; refusing to rewrite it (H15). Use --reference r2, "
+                 f"--rebuild-md, or --force-r1.")
 
     if rebuild_md_only:
         src = OUT_DIR / f"{stem}.json"
@@ -563,7 +569,12 @@ if __name__ == "__main__":
              "(the 2026-09 audit revision; writes -r2 outputs, reads the r2 "
              "scoring home).",
     )
+    parser.add_argument(
+        "--force-r1", action="store_true",
+        help="Permit rewriting a committed r1 board.",
+    )
     _args = parser.parse_args()
     raise SystemExit(main(
         rebuild_md_only=_args.rebuild_md, reference=_args.reference,
+        force_r1=_args.force_r1,
     ))

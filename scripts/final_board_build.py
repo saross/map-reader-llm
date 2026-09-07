@@ -447,6 +447,7 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
     # ---- Coincidence gates. ----
     manifest_points = {m["label"]: m["point"] for m in json.loads(
         (out / "cells_manifest.json").read_text())["cells"]}
+    coincidence_log: list[str] = []
     for label, committed_eval in COINCIDENT.items():
         pt, pk = COINCIDENT_POINTS[label]
         if manifest_points.get(label) != f"({pt:.2f}, k{pk})":
@@ -455,6 +456,8 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
             logger.info("coincidence n/a  %-11s argmax %s != committed (%.2f, k%d) "
                         "on %s -- oracle and committed rows are distinct cells",
                         label, manifest_points.get(label), pt, pk, reference)
+            coincidence_log.append(f"{label}: argmax {manifest_points.get(label)} "
+                                   f"moved off the committed point ({pt:.2f}, k{pk}) — distinct cells")
             continue
         new = eval50(out / "cells" / label / "evaluation.json")
         old = eval50(PROJECT_ROOT / retarget(committed_eval, reference))
@@ -467,6 +470,8 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
                 f"{old['f1_50']}")
         logger.info("coincidence OK %-11s F1@50 %.6f == committed", label,
                     new["f1_50"])
+        coincidence_log.append(f"{label}: coincides with the committed set; "
+                               f"evaluation reproduced ({new['f1_50']:.4f})")
 
     # ---- Assemble the 21 cells. ----
     manifest = json.loads((out / "cells_manifest.json").read_text())["cells"]
@@ -578,7 +583,7 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
         "",
         "One row per run: the carried (\"as run / GS-chosen\") result and",
         "the oracle (standardised-reference argmax within the verified",
-        "sweep space). Tiers from the 21-cell board above.",
+        f"sweep space). Tiers from the {len(ordered)}-cell board above.",
         "",
         "| run | carried F1@50 (tier) | oracle F1@50 (tier) | oracle point |",
         "|---|---|---|---|",
@@ -699,6 +704,9 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
         "",
         "## Provenance and gates",
         "",
+    ]
+    if reference == "standardised":
+        lines += [
         "- Stage 1 (`final_board_sweeps.py`): G4 scorer gate ×9 exact;",
         "  identity gates ×9 exact counts; mechanism gates ×5 exact",
         "  (TP, FP, FN) triples; A/B geometry gates 0.0000 m. Oracle",
@@ -712,6 +720,27 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
         "  pairwise p-values, tiers); coincidence gates — TH7/IM/uplift",
         "  oracles landed on committed detection sets and reproduce the",
         "  committed evaluations exactly; per-cell mechanism bound 0.003.",
+        ]
+    else:
+        # Derived from THIS run, never copied from the r1 board's text.
+        sweeps_meta = json.loads((out / "sweeps.json").read_text())
+        n_fam = len(sweeps_meta["families"])
+        n_pairs_g3 = len(json.loads(COMMITTED_BOARD.read_text())["pairwise"])
+        lines += [
+        f"- Stage 1 (`final_board_sweeps.py --reference {reference}`): sweep on",
+        f"  reference {reference} across {n_fam} families; every gate (G4",
+        "  scorer, family identity, mechanism triples, A/B and 3.7 geometry)",
+        "  pinned to the r1 reference and passed — the sweep does not run",
+        "  otherwise. Oracle argmaxes are this reference's own.",
+        "- Stage 2: `evaluate_detections.py`, 14 buffers, tile-level BCa",
+        "  bootstrap 10,000 / seed 42, `--mcc`, `--require-clean-inputs`,",
+        "  per cell (`r2_score_cells.py --stage board`).",
+        f"- Stage 3 (this build): G3 board-regression gate — the {len(LEGACY_CELLS)}-cell",
+        f"  committed r1 board reproduced exactly on r1 (f1, all {n_pairs_g3}",
+        "  pairwise p-values, tiers) before this board was assembled;",
+        "  per-cell mechanism bound 0.003. Coincidence gates:",
+        ] + [f"  - {entry}" for entry in coincidence_log]
+    lines += [
         "- Incumbent oracles are best-within-VERIFIED-space (vote ≥ 3",
         "  shells / the ≥ 3-of-10 band); A/B oracles search the full",
         "  vote ≥ 1 unions. N = 1/3 rungs are oracle-only (no carried",
@@ -719,6 +748,21 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
         "",
         "## Changelog",
         "",
+    ]
+    if reference != "standardised":
+        lines += [
+        f"### {BUILD_DATE_R2} — Original publication (reference {reference})",
+        "",
+        "Built per `planning/reference-revision-2026-09-06.md` § 4 step 4d on",
+        f"reference {reference}; $0 API, sapphire. Membership per the PI's",
+        "2026-09-06 ruling (incumbents, A/B rungs, and the 3.7 campaign's",
+        "arm 1, arm 2 and fourth cell with their N = 1 / N = 3 rungs).",
+        ]
+        (out / "final-board-50m.md").write_text("\n".join(lines) + "\n")
+        logger.info("FINAL BOARD WRITTEN -> %s", (out / "final-board-50m.md"
+                                                  ).relative_to(PROJECT_ROOT))
+        return 0
+    lines += [
         "### 2026-08-28 (later) — Image rows per the as-shipped ruling",
         "",
         "PI ruling: image's real-world entry is the shipped k3 cell;",
