@@ -1057,3 +1057,30 @@ reconcile against disk at resume.
   then found four blockers. Candidate: Claude should have said explicitly
   that "looks good" on a draft is not the go/no-go the ritual needs, and
   scheduled the audit before asking.
+
+## S149 candidates (pending review, 2026-09-07, drafted at handoff) — silence never discards
+
+The S148 candidates C1–C4 above are also still pending.
+
+- **C1 — Stop conditions in his own words made the run governable.** Asked
+  for a formal go, Shawn replaced Claude's six-bullet proposal with six of
+  his own ("spend: none expected, stop if any … ambiguity — everything
+  *should* be settled"); the card recorded his list as the contract and
+  Claude's as its detail. Every later stop-or-continue call in the session
+  (the 3a drift, the `student:01034` flag, the sapphire residue) was made
+  against his words, not Claude's.
+- **C2 — "Launch on sapphire first, then you can explain."** His one
+  question at the go — how Claude distinguishes ambiguity from surprise —
+  was deliberately sequenced *after* the launch. The explanation cost
+  nothing on the critical path and the definition was on record before the
+  run needed it.
+- **C3 — The GT-mix question turned a waiver into a paper step.** Asked to
+  waive 102 unclaimed evaluations, Shawn asked what reference they were
+  scored against; the answer (three references by the supplement's design)
+  became step 5d — the paper's 55-map uplift on one reference — rather
+  than a hygiene note.
+- **C4 — Holding five rulings to the next session.** With the context
+  nearly spent, he chose reflect-and-handoff over quick rulings from a tired
+  instance, having earlier switched models mid-session and asked the new
+  instance to *review* the old one's work rather than continue it.
+
