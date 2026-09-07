@@ -817,6 +817,14 @@ workers, ~55 minutes after ~50 of family construction. Inspection of
   incumbents); 4b adds A/B-N3-carried → 35 (31 non-committed), as the
   finish line states.
 
+**4b DONE** (A-N3-carried 4,400 and B-N3-carried 4,971 — the r1 counts
+exactly). **4c DONE**: the r2 board home committed from sapphire
+(`7894b5b5a`, 30 MB: `sweeps.json`, `cells_manifest.json`, 22 sweep
+CSVs, 31 detection sets). **4d LAUNCHED** at that HEAD:
+`r2_score_cells.py --stage board --jobs 4 --workers 5` — the derived
+plan printed 31 cells, 0 scored; `--require-clean-inputs` on, every
+input now tracked.
+
 ### 2026-09-07 (S149-c) — Register-verifier debt: PI rulings
 
 The verifier stood at 8 PASS / 29 PARTIAL / 4 FAIL across 41 runs
