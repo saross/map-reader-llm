@@ -790,8 +790,11 @@ max |ΔF1@50| **0.0009**, all inside the 0.005 band; recall down
 0.0006–0.0014 everywhere with precision flat — the expected direction
 for +14 reference mounds no channel had detected. Not a surprise under
 the PI's stop conditions. **7a-i**: `register_r2_conditions.py --write
---only clone` registered the nine `-r2-gt` rows (this commit);
-`verify_run_conditions.py` passes on all five touched runs. **4a–4b
+--only clone` registered the nine `-r2-gt` rows (`232c6dc8c`);
+`verify_run_conditions.py` raises no warning on any new row — the five
+touched runs read PARTIAL, exactly as they did before 7a-i, from the
+unclaimed `uplift-supplement` evaluations of audit-2 MINOR 12 (the
+commit message's "passes" overstated this; corrected here). **4a–4b
 launched** on sapphire (`/tmp/run_step4ab.sh`, log
 `/tmp/r2-chain/step4ab.log`): the sweep on r2 with every gate on r1,
 then the N = 3 carried cells; the runner stops before 4c (the commit),
