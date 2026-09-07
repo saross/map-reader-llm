@@ -796,6 +796,58 @@ tree-wide `script_git_status`.
 
 ## Changelog
 
+### 2026-09-07/08 (S150) — The five held rulings executed; step 8 landed; one row on PR #12
+
+**Rulings (PI, 2026-09-07).** (1) **3a → (a)**: the nine legacy conditions
+keep their D40-pinned evaluations, stamped `input_vintage` (the detections
+commit read from each evaluation's `e82_input_vintage`), and the
+post-recovery re-scores register beside them as `<label>-post-e71`
+(`scripts/register_post_e71_conditions.py`; `cf8a93c5d`);
+`verify_run_conditions.py` gained the pinned-vintage state — WARN
+`pinned-vintage`, feature count checked at `git show <commit>:<path>`, a
+pin the eval does not record is ERROR (`5448158af`) — so the register
+reads **22 PASS / 19 PARTIAL / 0 FAIL**. E71 gained a dated rider with the
+measured consequence (the pinned scorings covered 458–472 of 487 tiles;
+at 20 m the image passes move +0.011..+0.023 F1, text −0.008..+0.003, the
+aggregates +0.017 / −0.002, e47 +0.007). **Found on the way**: the H6
+A-07/A-09 artefacts describe the Flash comparator at 485–486/487 tiles
+(the post-recovery manifest count) while the F1 they consume was scored
+at 458–472/487; corrected in `results/h6-registered-analyses/findings.md`
+with a changelog entry, both rows cite E71, no number and no verdict
+changes. (2) **The eight r2 analysis rows** written and PI-signed
+2026-09-07T08:36:56Z (`60bac9fb8`). The ONE manifest regeneration
+(`506c02874`: conditions 387 → 437, none removed, no pre-existing row's
+content changed) REFUSED on first run — two rows carried prose in
+`conditions_compared`, which the S149 dry-run registrar never validated:
+`sensitivity-mde-r2` now cites the 35 board conditions (precedent: the r1
+row cites its boards' 17); `student-baseline-r2` consumes only
+reference-layer counts and audit rates, cannot truthfully cite a
+condition, and is on **PR #12** (schema `reference_scope`, PI-ruled;
+returns with its signature). (3) **Uplift supplement** regenerated in
+place with all four 55-map strata kept (`232f6e8d0`: canonical 16 / r2
+37 / standardised 28 / student 5; nine `-post-e71` rows on the 4-map
+corpus) after a resolver fix (`bb545f5f1`: the corrected-F1 engine records
+its student BASE layer as `ground_truth`, and ruling 2's re-adapted
+metadata had moved eight `-canonical-gt` rows into the student stratum);
+the generator now renders dated revision entries. (4) **Step 8 landed
+under E84**: erratum (`9cdd064dc`), Methods § M.3 (`4cdc16d95`),
+Discussion D.8 (`e157d3be9`), Obs 452 (`eeeddd911`, obs-writer). Three
+draft claims corrected against the boards before landing: recall falls
+0.0005–0.0014 (T03-k4 −0.00145, on the rounding boundary), precision
+moves ≤ 0.001 and upward on every A/B cell (not "flat"), and seven of
+the 14 additions were model-found (not "no channel had detected"). The
+S149 phrase "F1̂ 0.0005–0.0007 below" described the top tier only: the
+column sits within 0.0007 of the point — below for 32 of 35, at it for
+one, above for TM-k4 (+0.0003) and IM-k4 (+0.0007) — corrected in E84,
+the signed row's outcome, and the registrar (`6844fb182`). (5) **§ R7**
+refreshed in place to r2 (`ceefd8df0`; option A): eight cells, tiers
+identical, carry-forward 0.8162, gap +0.022, lesson (iii) +0.022 at BH
+p = 0.002, the ≈ 90 % metric-behaviour reading reproduced on r2 (+0.003
+of 0.042); the final board's and the 3.7 campaign's Results home is a
+separate structural ruling. Hypothesis-outcome table regenerated
+(`db9728d66`). Tier-1 on sapphire: 2,153 passed with that table the one
+failure before the regeneration; re-run launched.
+
 ### 2026-09-07 (S149-c) — Step 7b closure check DONE: the audit classes collapse on r2
 
 Both adjudications re-run against r2 from their saved verdicts
