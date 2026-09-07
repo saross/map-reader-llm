@@ -2153,31 +2153,45 @@
    "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
   },
   {
-   "analysis_id": "student-baseline-r2",
-   "type": "diagnostic",
-   "_note": "The student (novice) baseline re-estimated at 55-map corpus level on r2 (card § 2b).",
-   "conditions_compared": [
-    "(corpus-level; the reference layers and the audit rates, not a condition)"
-   ],
-   "hypothesis_refs": [
-    "H13"
-   ],
-   "outcome": "P 0.991 / R 0.923 / F1 0.956 (without extrapolated terms R 0.941 / F1 0.966); GS-4 direct 1.000 / 0.947 / 0.973.",
-   "paper_section": "Discussion",
-   "output_path": "results/student-baseline-2026-09-01/reestimate-r2.json",
-   "working_notes_obs": [],
-   "preregistered": "post-hoc",
-   "deviations": [],
-   "manually_verified_at": "2026-09-07T08:36:56Z",
-   "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
-   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
-  },
-  {
    "analysis_id": "sensitivity-mde-r2",
    "type": "diagnostic",
    "_note": "The MDE appendix with the r2 final board's tile-swap instrument added (sensitivity_mde.py --reference r2).",
    "conditions_compared": [
-    "(instrument-level; harvests the r2 board's committed pairwise records)"
+    "55maps-image-generalisation::verified-k3-r2-gt",
+    "55maps-image-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-r2-gt",
+    "55maps-text-min-generalisation::verified-k4-r2-gt",
+    "55maps-text-min-generalisation::verified-oracle-p0.20-k3-r2-gt",
+    "55maps-text-min-n10-uplift::verified-5of10-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt"
    ],
    "hypothesis_refs": [
     "H8",
@@ -2193,7 +2207,8 @@
    "deviations": [],
    "manually_verified_at": "2026-09-07T08:36:56Z",
    "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
-   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+   "_conditions_note": "instrument-level: harvests the r2 board's committed pairwise records over these 35 conditions (precedent: sensitivity-mde-2026-08-28 cites the 17 conditions of the boards it harvested)"
   }
  ]
 }

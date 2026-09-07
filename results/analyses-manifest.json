@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-06T05:11:51Z",
+  "generated_at": "2026-09-07T08:45:10Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -1562,7 +1562,8 @@
       "preregistered": "post-hoc",
       "deviations": [
         "E74",
-        "E57"
+        "E57",
+        "E71"
       ],
       "predicted_outcome": "Registered: 'Compare Pro optimal threshold to Flash optimal threshold; Note any differences >10% relative'. Under the registered transfer prediction the relative difference is <=10%. The registered >20% extended-test trigger (preregistration.md:689) cannot fire an N=30 Pro run in a $0 block. [Authored before computation.]",
       "predicted_outcome_amended": null,
@@ -1579,7 +1580,7 @@
           "results/run-analyses.json",
           "results/h6-registered-analyses"
         ],
-        "last_extracted_at": "2026-08-17T13:02:34Z",
+        "last_extracted_at": "2026-09-07T08:45:10Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1598,7 +1599,8 @@
       "preregistered": "post-hoc",
       "deviations": [
         "E74",
-        "E57"
+        "E57",
+        "E71"
       ],
       "predicted_outcome": "Registered gate: 'Full per-model optimisation only if Pro demonstrates substantially superior cost-effectiveness (>=20% higher F1 at comparable cost, OR comparable F1 at <=50% cost)'. Expectation from the standing record (all-Flash-3 conclusion; Pro competitive on F1 but dearer per call): gate CLOSED against the Flash frontier. An OPEN verdict is a flagged surprise feeding the PI's ~US$48 re-run decision. [Authored before computation.]",
       "predicted_outcome_amended": null,
@@ -1613,7 +1615,7 @@
           "results/run-analyses.json",
           "results/h6-registered-analyses"
         ],
-        "last_extracted_at": "2026-08-17T13:02:34Z",
+        "last_extracted_at": "2026-09-07T08:45:10Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -2317,6 +2319,338 @@
           "results/gemini38-screen-2026-09-04/armV"
         ],
         "last_extracted_at": "2026-09-06T05:11:51Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "55map-final-board-r2-2026-09-06",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "55maps-image-generalisation::verified-k3-r2-gt",
+        "55maps-image-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-r2-gt",
+        "55maps-text-min-generalisation::verified-k4-r2-gt",
+        "55maps-text-min-generalisation::verified-oracle-p0.20-k3-r2-gt",
+        "55maps-text-min-n10-uplift::verified-5of10-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt"
+      ],
+      "hypothesis_refs": [
+        "H13",
+        "H3"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [],
+      "predicted_outcome": "card \u00a7 4: r1 \u2192 r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "512/595 pairs significant, 12 tiers. Top: ARM2-N5-oracle 0.8871; ARM2-N3-oracle 0.8848; ARM2-N5-carried 0.8827; FOURTH-N10-oracle 0.8813. The 23 r1 cells keep their tier structure (each r1 tier maps to one r2 tier); max |dF1@50| over them 0.0009.",
+      "paper_section": "Results",
+      "output_path": "results/55map-final-board-r2-2026-09-06/final_board_50m.json",
+      "working_notes_obs": [],
+      "manually_verified_at": "2026-09-07T08:36:56Z",
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/55map-final-board-r2-2026-09-06/final_board_50m.json"
+        ],
+        "last_extracted_at": "2026-09-07T08:45:10Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "55map-r2-leaderboard-50m",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "55maps-image-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+        "55maps-text-min-generalisation::verified-k3-r2-gt",
+        "55maps-text-min-generalisation::verified-k4-r2-gt",
+        "55maps-text-min-n10-uplift::verified-5of10-r2-gt"
+      ],
+      "hypothesis_refs": [
+        "H13"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [],
+      "predicted_outcome": "card \u00a7 4: r1 \u2192 r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "24/28 pairs significant, 5 tiers, identical tier structure to the r1 standardised board; leader T03-k3 (oracle) 0.8387.",
+      "paper_section": "Results",
+      "output_path": "results/55map-leaderboard/55map_leaderboard_50m_r2.json",
+      "working_notes_obs": [],
+      "manually_verified_at": "2026-09-07T08:36:56Z",
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/55map-leaderboard/55map_leaderboard_50m_r2.json"
+        ],
+        "last_extracted_at": "2026-09-07T08:45:10Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "55map-r2-leaderboard-mcc-50m",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "55maps-image-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+        "55maps-text-min-generalisation::verified-k3-r2-gt",
+        "55maps-text-min-generalisation::verified-k4-r2-gt",
+        "55maps-text-min-n10-uplift::verified-5of10-r2-gt"
+      ],
+      "hypothesis_refs": [
+        "H13"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [],
+      "predicted_outcome": "card \u00a7 4: r1 \u2192 r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "20/28 pairs significant, 5 tiers; leader IM-k3 MCC 0.7110.",
+      "paper_section": "Results",
+      "output_path": "results/metric-leaderboards/55map-mcc-tiering-r2.json",
+      "working_notes_obs": [],
+      "manually_verified_at": "2026-09-07T08:36:56Z",
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/metric-leaderboards/55map-mcc-tiering-r2.json"
+        ],
+        "last_extracted_at": "2026-09-07T08:45:10Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "obs280-shared-reference-r2",
+      "type": "comparison",
+      "conditions_compared": [
+        "55maps-image-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+        "55maps-text-min-generalisation::verified-k3-r2-gt",
+        "55maps-text-min-generalisation::verified-k4-r2-gt",
+        "55maps-text-min-n10-uplift::verified-5of10-r2-gt"
+      ],
+      "hypothesis_refs": [
+        "H13"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [],
+      "predicted_outcome": "card \u00a7 4: r1 \u2192 r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "F1 rank ['T03-k4', 'TH7-k4', 'IM-k3', 'TM-k4']; MCC rank ['IM-k3', 'T03-k4', 'TH7-k4', 'TM-k4']; the divergence holds on r2.",
+      "paper_section": "Results",
+      "output_path": "results/55maps-r2-ref-2026-09-06/obs280-shared-reference-r2.json",
+      "working_notes_obs": [],
+      "manually_verified_at": "2026-09-07T08:36:56Z",
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/55maps-r2-ref-2026-09-06/obs280-shared-reference-r2.json"
+        ],
+        "last_extracted_at": "2026-09-07T08:45:10Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "tile-level-f1-r2",
+      "type": "comparison",
+      "conditions_compared": [
+        "pv-diag-384::verified-adv-text-consensus-16of30",
+        "pv-diag-384::verified-adv-image-baseline-pro-vf",
+        "55maps-image-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+        "55maps-text-min-generalisation::verified-k3-r2-gt",
+        "55maps-text-min-generalisation::verified-k4-r2-gt",
+        "55maps-text-min-n10-uplift::verified-5of10-r2-gt"
+      ],
+      "hypothesis_refs": [
+        "H13"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [],
+      "predicted_outcome": "card \u00a7 4: r1 \u2192 r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "MCC reproduction gate 10/10.",
+      "paper_section": "Appendix",
+      "output_path": "results/tile-level-f1-r2/tile_level_f1.json",
+      "working_notes_obs": [],
+      "manually_verified_at": "2026-09-07T08:36:56Z",
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/tile-level-f1-r2/tile_level_f1.json"
+        ],
+        "last_extracted_at": "2026-09-07T08:45:10Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "estimated-correction-r2",
+      "type": "diagnostic",
+      "conditions_compared": [
+        "55maps-image-generalisation::verified-k3-r2-gt",
+        "55maps-image-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-r2-gt",
+        "55maps-text-min-generalisation::verified-k4-r2-gt",
+        "55maps-text-min-generalisation::verified-oracle-p0.20-k3-r2-gt",
+        "55maps-text-min-n10-uplift::verified-5of10-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt"
+      ],
+      "hypothesis_refs": [
+        "H13"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [],
+      "predicted_outcome": "card \u00a7 4: r1 \u2192 r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "Expected terms M 49.7, E_err 35.8, E_om 35.8; F1-hat sits 0.0005\u20130.0007 below the r2 point with \u00b10.005 intervals.",
+      "paper_section": "Results",
+      "output_path": "results/55map-final-board-r2-2026-09-06/estimated-correction.json",
+      "working_notes_obs": [],
+      "manually_verified_at": "2026-09-07T08:36:56Z",
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/55map-final-board-r2-2026-09-06/estimated-correction.json"
+        ],
+        "last_extracted_at": "2026-09-07T08:45:10Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "sensitivity-mde-r2",
+      "type": "diagnostic",
+      "conditions_compared": [
+        "55maps-image-generalisation::verified-k3-r2-gt",
+        "55maps-image-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-generalisation::verified-k3-r2-gt",
+        "55maps-text-high-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+        "55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-r2-gt",
+        "55maps-text-min-generalisation::verified-k4-r2-gt",
+        "55maps-text-min-generalisation::verified-oracle-p0.20-k3-r2-gt",
+        "55maps-text-min-n10-uplift::verified-5of10-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt"
+      ],
+      "hypothesis_refs": [
+        "H8",
+        "H9",
+        "H10",
+        "H12"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [],
+      "predicted_outcome": "card \u00a7 4: r1 \u2192 r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "55-map r2 board null SD 0.0045 over 595 pairs; MDE80 0.013 \u2014 resolution unchanged by r2.",
+      "paper_section": "Appendix",
+      "output_path": "results/sensitivity-mde-2026-08-28/sensitivity-r2.json",
+      "working_notes_obs": [],
+      "manually_verified_at": "2026-09-07T08:36:56Z",
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/sensitivity-mde-2026-08-28/sensitivity-r2.json"
+        ],
+        "last_extracted_at": "2026-09-07T08:45:10Z",
         "extractor_version": "0.7.1"
       }
     }

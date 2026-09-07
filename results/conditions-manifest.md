@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-09-06T05:11:51Z · 387 row(s) · schema v1.0.
+> Generated 2026-09-07T08:45:10Z · 437 row(s) · schema v1.0.
 >
-> **Coverage**: 387 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 437 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -13,23 +13,33 @@
 | 55maps-image-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.5081688945469975 | 0.7104103204864493 | 4680 |
 | 55maps-image-generalisation::verified-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.5461300309597523 | 0.7119504066553468 | 4680 |
 | 55maps-image-generalisation::verified-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.5251 | 0.6548 | 3541 |
+| 55maps-image-generalisation::verified-k3-r2-gt | proposer-verifier | verified | 3 | 5 | 0.5459 | 0.711 | 4680 |
+| 55maps-image-generalisation::verified-k4-r2-gt | proposer-verifier | verified | 4 | 5 | 0.5248 | 0.654 | 3541 |
 | 55maps-text-high-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.626 | 0.648 | 4164 |
 | 55maps-text-high-generalisation::verified-k4-canonical-gt | proposer-verifier | verified | 4 | 5 | 0.6260381593714928 | 0.6666252946918438 | 4164 |
 | 55maps-text-high-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6307175828787243 | 0.679608597108498 | 4786 |
 | 55maps-text-high-generalisation::verified-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.6657946370176586 | 0.6650417680321745 | 4164 |
 | 55maps-text-high-generalisation::verified-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.6725193956717027 | 0.679608597108498 | 4786 |
+| 55maps-text-high-generalisation::verified-k4-r2-gt | proposer-verifier | verified | 4 | 5 | 0.6652 | 0.6647 | 4164 |
+| 55maps-text-high-generalisation::verified-k3-r2-gt | proposer-verifier | verified | 3 | 5 | 0.672 | 0.6792 | 4786 |
 | 55maps-text-high-t0-3-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.6308 | 0.6541 | 4350 |
 | 55maps-text-high-t0-3-generalisation::verified-k4-canonical-gt | proposer-verifier | verified | 4 | 5 | 0.6308267370272647 | 0.6710705487171356 | 4350 |
 | 55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6295720650709771 | 0.6903302334580523 | 4905 |
 | 55maps-text-high-t0-3-generalisation::verified-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.6728632478632478 | 0.6689725848962402 | 4350 |
 | 55maps-text-high-t0-3-generalisation::verified-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.6719112455874937 | 0.6887952828707767 | 4905 |
 | 55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.6731 | 0.6954 | 4762 |
+| 55maps-text-high-t0-3-generalisation::verified-k4-r2-gt | proposer-verifier | verified | 4 | 5 | 0.6721 | 0.6691 | 4350 |
+| 55maps-text-high-t0-3-generalisation::verified-k3-r2-gt | proposer-verifier | verified | 3 | 5 | 0.6714 | 0.6889 | 4905 |
+| 55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-r2-gt | proposer-verifier | verified | 3 | 5 | 0.6726 | 0.6955 | 4762 |
 | 55maps-text-min-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.6201 | 0.6264 | 3865 |
 | 55maps-text-min-generalisation::verified-k4-canonical-gt | proposer-verifier | verified | 4 | 5 | 0.6201370340262455 | 0.6411358134707998 | 3865 |
 | 55maps-text-min-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6335734072022161 | 0.6579582748365398 | 4279 |
 | 55maps-text-min-generalisation::verified-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.6548732394366197 | 0.6400648540183066 | 3865 |
 | 55maps-text-min-generalisation::verified-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.6709010657767251 | 0.6569092929260921 | 4279 |
 | 55maps-text-min-generalisation::verified-oracle-p0.20-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.672 | 0.6624 | 4156 |
+| 55maps-text-min-generalisation::verified-k4-r2-gt | proposer-verifier | verified | 4 | 5 | 0.6545 | 0.6397 | 3865 |
+| 55maps-text-min-generalisation::verified-k3-r2-gt | proposer-verifier | verified | 3 | 5 | 0.6703 | 0.6565 | 4279 |
+| 55maps-text-min-generalisation::verified-oracle-p0.20-k3-r2-gt | proposer-verifier | verified | 3 | 5 | 0.6715 | 0.662 | 4156 |
 | gold-standard-v2::consensus-3of5 | consensus | consensus | 3 | 5 | 0.5925 | 0.2964 | 868 |
 | gold-standard-v2::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6999 | 0.4557 | 608 |
 | gold-standard-v2::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7649 | 0.5791 | 420 |
@@ -84,6 +94,7 @@
 | e47-propose-brief::single-pass-run_2 | single-pass | none | — | 1 | 0.3416 | 0.2347 | 1755 |
 | e47-propose-brief::single-pass-run_3 | single-pass | none | — | 1 | 0.3683 | 0.2864 | 1645 |
 | e47-propose-brief::single-pass-run_4 | single-pass | none | — | 1 | 0.3544 | 0.2287 | 1619 |
+| e47-propose-brief::single-pass-run_4-post-e71 | single-pass | none | — | 1 | 0.3613 | 0.256 | 1641 |
 | e47-propose-brief::single-pass-run_5 | single-pass | none | — | 1 | 0.3579 | 0.2977 | 1694 |
 | n1-outstanding-384::brief-text-t03-consensus-1of3 | consensus | consensus | 1 | 3 | 0.4663 | 0.0651 | 1229 |
 | n1-outstanding-384::brief-text-t03-consensus-2of3 | consensus | consensus | 2 | 3 | 0.5537 | 0.0938 | 952 |
@@ -110,19 +121,27 @@
 | n1-outstanding-384::image-t03-single-pass-run_2 | single-pass | none | — | 1 | 0.5944 | 0.2934 | 746 |
 | n1-outstanding-384::image-t03-single-pass-run_3 | single-pass | none | — | 1 | 0.5905 | 0.316 | 747 |
 | n1-outstanding-384::pro-image-high-t0-single-pass-run_1 | single-pass | none | — | 1 | 0.5288 | 0.6093 | 692 |
+| n1-outstanding-384::pro-image-high-t0-single-pass-run_1-post-e71 | single-pass | none | — | 1 | 0.5401 | 0.6508 | 750 |
 | n1-outstanding-384::pro-image-high-t0-single-pass-run_2 | single-pass | none | — | 1 | 0.5305 | 0.6073 | 681 |
+| n1-outstanding-384::pro-image-high-t0-single-pass-run_2-post-e71 | single-pass | none | — | 1 | 0.5479 | 0.6508 | 744 |
 | n1-outstanding-384::pro-image-high-t0-single-pass-run_3 | single-pass | none | — | 1 | 0.5234 | 0.6021 | 677 |
+| n1-outstanding-384::pro-image-high-t0-single-pass-run_3-post-e71 | single-pass | none | — | 1 | 0.5459 | 0.6428 | 741 |
 | n1-outstanding-384::pro-text-high-t0-single-pass-run_1 | single-pass | none | — | 1 | 0.501 | 0.3916 | 1026 |
+| n1-outstanding-384::pro-text-high-t0-single-pass-run_1-post-e71 | single-pass | none | — | 1 | 0.4931 | 0.397 | 1090 |
 | n1-outstanding-384::pro-text-high-t0-single-pass-run_2 | single-pass | none | — | 1 | 0.4867 | 0.3704 | 1028 |
+| n1-outstanding-384::pro-text-high-t0-single-pass-run_2-post-e71 | single-pass | none | — | 1 | 0.4848 | 0.3922 | 1112 |
 | n1-outstanding-384::pro-text-high-t0-single-pass-run_3 | single-pass | none | — | 1 | 0.4948 | 0.3805 | 1004 |
+| n1-outstanding-384::pro-text-high-t0-single-pass-run_3-post-e71 | single-pass | none | — | 1 | 0.4977 | 0.4083 | 1060 |
 | n1-outstanding-384::pro-image-medium-t07-single-pass-run_1 | single-pass | none | — | 1 | 0.452 | 0.5984 | 941 |
 | n1-outstanding-384::pro-text-medium-t07-single-pass-run_1 | single-pass | none | — | 1 | 0.416 | 0.3105 | 1445 |
 | n1-outstanding-384::baseline-flash-image-minimal-t-0-0-487-tiles | single-pass | none | — | 1 | 0.5984 | 0.3136 | — |
 | n1-outstanding-384::baseline-flash-image-minimal-t-0-3 | single-pass | none | — | 1 | 0.5931 | 0.3053 | — |
 | n1-outstanding-384::baseline-flash-text-minimal-t-0-3 | single-pass | none | — | 1 | 0.4992 | 0.0392 | — |
 | n1-outstanding-384::baseline-pro-image-high-t-0-0 | single-pass | none | — | 1 | 0.5276 | 0.6062 | — |
+| n1-outstanding-384::baseline-pro-image-high-t-0-0-post-e71 | single-pass | none | — | 1 | 0.5446 | 0.6481 | — |
 | n1-outstanding-384::baseline-pro-image-medium-t-0-7 | single-pass | none | — | 1 | 0.452 | 0.5984 | 941 |
 | n1-outstanding-384::baseline-pro-text-high-t-0-0 | single-pass | none | — | 1 | 0.4942 | 0.3808 | — |
+| n1-outstanding-384::baseline-pro-text-high-t-0-0-post-e71 | single-pass | none | — | 1 | 0.4919 | 0.3992 | — |
 | n1-outstanding-384::baseline-pro-text-medium-t-0-7 | single-pass | none | — | 1 | 0.416 | 0.3105 | 1445 |
 | n1-pro-rerun-384::baseline-pro-text-high-t-0-0 | single-pass | none | — | 1 | 0.8045 | 0.79 | — |
 | n1-pro-rerun-384::baseline-pro-text-medium-t-0-7 | single-pass | none | — | 1 | 0.7555 | 0.768 | — |
@@ -341,6 +360,7 @@
 | flash35-pv-2x2::f3prop-f35vf-6of10 | proposer-verifier | verified | 6 | 10 | 0.8689 | 0.7666 | 389 |
 | 55maps-text-min-n10-uplift::verified-5of10-canonical-gt | proposer-verifier | verified | 5 | 10 | 0.647194465795542 | 0.6724579910368705 | 4361 |
 | 55maps-text-min-n10-uplift::verified-5of10-standardised-gt | proposer-verifier | verified | 5 | 10 | 0.6878668231778892 | 0.670886957725763 | 4361 |
+| 55maps-text-min-n10-uplift::verified-5of10-r2-gt | proposer-verifier | verified | 5 | 10 | 0.6877 | 0.6695 | 4361 |
 | grid-2026-08-18::g512-ov064-k10-c1-k8 | consensus | consensus | 8 | 10 | 0.6759 | 0.5383 | 507 |
 | grid-2026-08-18::g512-ov256-k10-c2-k8 | consensus | consensus | 8 | 10 | 0.7518 | 0.5897 | 426 |
 | grid-2026-08-18::g384-ov048-k10-c1-k10 | consensus | consensus | 10 | 10 | 0.6475 | 0.3137 | 582 |
@@ -353,6 +373,9 @@
 | h13::arm-a-overlap-12-5 | single-pass | none | — | 3 | 0.558 | 0.1058 | — |
 | h13::arm-b-overlap-25 | single-pass | none | — | 3 | 0.5198 | 0.2579 | — |
 | h13::arm-c-overlap-50 | single-pass | none | — | 3 | 0.4024 | 0.0593 | — |
+| h13::arm-a-native-12-5 | single-pass | none | — | 3 | 0.5576 | 0.1477 | — |
+| h13::arm-b-native-25 | single-pass | none | — | 3 | 0.5222 | 0.0123 | — |
+| h13::arm-c-native-50 | single-pass | none | — | 3 | 0.4067 | 0.0342 | — |
 | stride-phaseb-2026-08-25::g512-ov176-k10-verified-p0.15-k6 | proposer-verifier | verified | 6 | 10 | 0.8655 | 0.7964 | 390 |
 | stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8 | proposer-verifier | verified | 8 | 10 | 0.8982 | 0.8022 | 387 |
 | stride-phaseb-2026-08-25::g256-ov064-k10-verified-p0.15-k8 | proposer-verifier | verified | 8 | 10 | 0.8795 | 0.7959 | 427 |
@@ -381,6 +404,25 @@
 | stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt | proposer-verifier | verified | 3 | 3 | 0.7178 | 0.7025 | 4971 |
 | stride-55map-2026-08-25::g384-ov192-55map-k10-verified37-p0.98-k10-canonical-gt | proposer-verifier | verified | 10 | 10 | 0.7084074733096085 | 0.7268024827224564 | 4246 |
 | stride-55map-2026-08-25::g384-ov192-55map-k10-verified37-p0.98-k10-standardised-gt | proposer-verifier | verified | 10 | 10 | 0.7472 | 0.7268 | 4246 |
+| stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt | proposer-verifier | verified | 7 | 10 | 0.7083 | 0.6954 | 4639 |
+| stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt | proposer-verifier | verified | 8 | 10 | 0.7081 | 0.693 | 4475 |
+| stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.6776 | 0.7006 | 4879 |
+| stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt | proposer-verifier | verified | 2 | 3 | 0.699 | 0.7018 | 4796 |
+| stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt | proposer-verifier | verified | 4 | 5 | 0.7062 | 0.6907 | 4597 |
+| stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt | proposer-verifier | verified | 4 | 5 | 0.7062 | 0.6907 | 4597 |
+| stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt | proposer-verifier | verified | 9 | 10 | 0.7296 | 0.7123 | 4639 |
+| stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt | proposer-verifier | verified | 10 | 10 | 0.7252 | 0.6977 | 4505 |
+| stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.6695 | 0.7092 | 5655 |
+| stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7211 | 0.7128 | 4772 |
+| stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7222 | 0.7098 | 4566 |
+| stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7209 | 0.701 | 4736 |
+| stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt | proposer-verifier | verified | 9 | 10 | 0.7533 | 0.7359 | 4495 |
+| stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt | proposer-verifier | verified | 10 | 10 | 0.7472 | 0.7264 | 4246 |
+| stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7023 | 0.7471 | 5337 |
+| stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7445 | 0.7376 | 4626 |
+| stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7027 | 0.6876 | 4400 |
+| stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7182 | 0.702 | 4971 |
+| stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-canonical-gt | proposer-verifier | verified | 5 | 5 | 0.6796034591858258 | 0.7013882811101221 | 4736 |
 | image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9 | proposer-verifier | verified | 9 | 10 | 0.8412 | 0.7985 | 397 |
 | image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8 | proposer-verifier | verified | 8 | 10 | 0.8333 | 0.7993 | 400 |
 | h7-escalation-2026-08-28::text-t1.6 | single-pass | none | — | 3 | 0.4738 | 0.085 | — |
@@ -393,5 +435,13 @@
 | gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-standardised-gt | proposer-verifier | verified | 5 | 5 | 0.7591 | 0.6665 | 5229 |
 | gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-canonical-gt | proposer-verifier | verified | 5 | 5 | 0.7469484049646118 | 0.7072914415212007 | 5003 |
 | gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-standardised-gt | proposer-verifier | verified | 5 | 5 | 0.784 | 0.7073 | 5003 |
+| gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7754 | 0.7147 | 4616 |
+| gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7592 | 0.6655 | 5229 |
+| gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7481 | 0.7246 | 5219 |
+| gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7739 | 0.7179 | 4772 |
+| gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7888 | 0.7147 | 4924 |
+| gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7846 | 0.7063 | 5003 |
+| gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7664 | 0.7422 | 5021 |
+| gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.787 | 0.7163 | 5097 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5 | proposer-verifier | verified | 5 | 5 | 0.9254 | 0.8192 | 430 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5 | proposer-verifier | verified | 5 | 5 | 0.9308 | 0.8322 | 425 |
