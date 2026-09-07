@@ -145,6 +145,42 @@ TRANSFER_PAIR_COLUMNS: tuple[str, ...] = (
 # --------------------------------------------------------------------------- #
 
 
+#: Dated revision entries for the generated documents, newest first. The
+#: original-publication date is pinned (decision 8 in the build report); a
+#: real revision — an upstream change that moves rows or strata — lands as an
+#: entry here, so the changelog is regenerated with the document rather than
+#: restamped on every build.
+REVISION_ENTRIES: tuple[tuple[str, str, str], ...] = (
+    (
+        "2026-09-07",
+        "Reference r2 stratum; eight canonical rows re-stratified; post-E71 rows",
+        "**Refresh trigger**: the r2 recompute chain (card "
+        "`planning/reference-revision-2026-09-06.md`, step 7a) registered 37 "
+        "`-r2-gt` conditions, which join as the `55-map|r2|50m|55maps-8541` "
+        "stratum (n_refs 5,018) beside the canonical, standardised, and student "
+        "strata — all four kept (PI ruling 3, 2026-09-07: the supplement is the "
+        "register's flatten; the stratum column separates the chains). Ruling 3a "
+        "registered nine `-post-e71` conditions on the 4-map corpus (curator "
+        "reference), which join their runs' strata. **Also fixed**: the "
+        "corrected-F1 engine records its student BASE layer as `ground_truth`, "
+        "and once ruling 2 attached that metadata to the stride canonical rows, "
+        "eight `-canonical-gt` rows had dropped into the student stratum on "
+        "regeneration; the explicit label suffix now outranks a bare base-layer "
+        "resolution (`bb545f5f1`), restoring canonical 16 / student 5. **What did "
+        "not change**: every pre-existing row's metrics and CIs; the MDE joins.",
+    ),
+)
+
+
+def _changelog_lines(original_note: str) -> list[str]:
+    """Render the changelog block: dated revisions, then the pinned original entry."""
+    lines = ["## Changelog", ""]
+    for date, title, body in REVISION_ENTRIES:
+        lines += [f"### {date} — {title}", "", body, ""]
+    lines += [f"### {ORIGINAL_PUBLICATION_DATE} — Original publication", "", original_note, ""]
+    return lines
+
+
 def _load_eval(repo_root: Path, eval_path: str | None) -> dict[str, Any] | None:
     """Read a condition's evaluation artefact, or return ``None`` if absent.
 
@@ -677,13 +713,9 @@ def render_extension_proposal(sanctioned: int) -> str:
         "gap is visible in the data; closing it in the key would make the",
         "vocabulary checkable rather than merely observable.",
         "",
-        "## Changelog",
-        "",
-        f"### {ORIGINAL_PUBLICATION_DATE} — Original publication",
-        "",
-        "Generated with the first build of the uplift-supplement dataset",
-        "(card `planning/uplift-supplement-2026-08-28.md`, Build order step 1).",
-        "",
+        *_changelog_lines(
+            "Generated with the first build of the uplift-supplement dataset\n"
+            "(card `planning/uplift-supplement-2026-08-28.md`, Build order step 1)."),
     ]
     return "\n".join(lines)
 
@@ -963,13 +995,9 @@ def render_build_report(
         "  decision 3; `cost_usd` states its basis on every row.",
         *_unmatched_lineage_note(out_dir),
         "",
-        "## Changelog",
-        "",
-        f"### {ORIGINAL_PUBLICATION_DATE} — Original publication",
-        "",
-        "First build of the uplift-supplement flatten (card",
-        "`planning/uplift-supplement-2026-08-28.md`, Build order step 1).",
-        "",
+        *_changelog_lines(
+            "First build of the uplift-supplement flatten (card\n"
+            "`planning/uplift-supplement-2026-08-28.md`, Build order step 1)."),
     ]
     return "\n".join(lines)
 

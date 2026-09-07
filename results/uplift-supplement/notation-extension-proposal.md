@@ -1,8 +1,8 @@
 # Notation-key extension proposal — uplift supplement
 
-> **Last revised**: 2026-08-29 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-07 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-08-29T09:52:32Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-07T08:45:55Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 The canonical key `docs/methodology/notation-key.md` requires that
 "new tables and dataset builders must conform to it or extend it here
@@ -116,6 +116,10 @@ gap is visible in the data; closing it in the key would make the
 vocabulary checkable rather than merely observable.
 
 ## Changelog
+
+### 2026-09-07 — Reference r2 stratum; eight canonical rows re-stratified; post-E71 rows
+
+**Refresh trigger**: the r2 recompute chain (card `planning/reference-revision-2026-09-06.md`, step 7a) registered 37 `-r2-gt` conditions, which join as the `55-map|r2|50m|55maps-8541` stratum (n_refs 5,018) beside the canonical, standardised, and student strata — all four kept (PI ruling 3, 2026-09-07: the supplement is the register's flatten; the stratum column separates the chains). Ruling 3a registered nine `-post-e71` conditions on the 4-map corpus (curator reference), which join their runs' strata. **Also fixed**: the corrected-F1 engine records its student BASE layer as `ground_truth`, and once ruling 2 attached that metadata to the stride canonical rows, eight `-canonical-gt` rows had dropped into the student stratum on regeneration; the explicit label suffix now outranks a bare base-layer resolution (`bb545f5f1`), restoring canonical 16 / student 5. **What did not change**: every pre-existing row's metrics and CIs; the MDE joins.
 
 ### 2026-08-29 — Original publication
 
