@@ -1932,6 +1932,268 @@
     "Obs 448 — Gemini 3.8 Flash ties the 3.7 stack in the verifier seat"
    ],
    "manually_verified_at": null
+  },
+  {
+   "analysis_id": "55map-final-board-r2-2026-09-06",
+   "type": "leaderboard",
+   "_note": "The final 55-map board on reference r2: 35 cells (the 23 r1 cells + the 3.7 campaign's arm 1, arm 2 and fourth cell with their N=1/N=3 rungs, per the membership ruling 2026-09-06), the GS tile-swap chain verbatim (10k / seed 42, BH q=0.05, greedy cliques + compact letters). Gates: G3 exact r1 reproduction on r1; coincidence 3/3 enforced; per-cell mechanism bound 0.003; all sweep gates pinned to r1.",
+   "conditions_compared": [
+    "55maps-image-generalisation::verified-k3-r2-gt",
+    "55maps-image-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-r2-gt",
+    "55maps-text-min-generalisation::verified-k4-r2-gt",
+    "55maps-text-min-generalisation::verified-oracle-p0.20-k3-r2-gt",
+    "55maps-text-min-n10-uplift::verified-5of10-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt"
+   ],
+   "hypothesis_refs": [
+    "H13",
+    "H3"
+   ],
+   "outcome": "512/595 pairs significant, 12 tiers. Top: ARM2-N5-oracle 0.8871; ARM2-N3-oracle 0.8848; ARM2-N5-carried 0.8827; FOURTH-N10-oracle 0.8813. The 23 r1 cells keep their tier structure (each r1 tier maps to one r2 tier); max |dF1@50| over them 0.0009.",
+   "paper_section": "Results",
+   "output_path": "results/55map-final-board-r2-2026-09-06/final_board_50m.json",
+   "working_notes_obs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "manually_verified_at": "2026-09-07T08:36:56Z",
+   "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+  },
+  {
+   "analysis_id": "55map-r2-leaderboard-50m",
+   "type": "leaderboard",
+   "_note": "The 8-cell 55-map leaderboard on reference r2 (build_55map_leaderboard.py --reference r2).",
+   "conditions_compared": [
+    "55maps-image-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+    "55maps-text-min-generalisation::verified-k3-r2-gt",
+    "55maps-text-min-generalisation::verified-k4-r2-gt",
+    "55maps-text-min-n10-uplift::verified-5of10-r2-gt"
+   ],
+   "hypothesis_refs": [
+    "H13"
+   ],
+   "outcome": "24/28 pairs significant, 5 tiers, identical tier structure to the r1 standardised board; leader T03-k3 (oracle) 0.8387.",
+   "paper_section": "Results",
+   "output_path": "results/55map-leaderboard/55map_leaderboard_50m_r2.json",
+   "working_notes_obs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "manually_verified_at": "2026-09-07T08:36:56Z",
+   "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+  },
+  {
+   "analysis_id": "55map-r2-leaderboard-mcc-50m",
+   "type": "leaderboard",
+   "_note": "The 8-cell 55-map tile-MCC board on reference r2 (mcc_tiering_55map.py --reference r2).",
+   "conditions_compared": [
+    "55maps-image-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+    "55maps-text-min-generalisation::verified-k3-r2-gt",
+    "55maps-text-min-generalisation::verified-k4-r2-gt",
+    "55maps-text-min-n10-uplift::verified-5of10-r2-gt"
+   ],
+   "hypothesis_refs": [
+    "H13"
+   ],
+   "outcome": "20/28 pairs significant, 5 tiers; leader IM-k3 MCC 0.7110.",
+   "paper_section": "Results",
+   "output_path": "results/metric-leaderboards/55map-mcc-tiering-r2.json",
+   "working_notes_obs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "manually_verified_at": "2026-09-07T08:36:56Z",
+   "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+  },
+  {
+   "analysis_id": "obs280-shared-reference-r2",
+   "type": "comparison",
+   "_note": "The Obs 280/292 F1-vs-MCC divergence re-measured on reference r2 (analyse_obs280_shared_reference.py --reference r2).",
+   "conditions_compared": [
+    "55maps-image-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+    "55maps-text-min-generalisation::verified-k3-r2-gt",
+    "55maps-text-min-generalisation::verified-k4-r2-gt",
+    "55maps-text-min-n10-uplift::verified-5of10-r2-gt"
+   ],
+   "hypothesis_refs": [
+    "H13"
+   ],
+   "outcome": "F1 rank ['T03-k4', 'TH7-k4', 'IM-k3', 'TM-k4']; MCC rank ['IM-k3', 'T03-k4', 'TH7-k4', 'TM-k4']; the divergence holds on r2.",
+   "paper_section": "Results",
+   "output_path": "results/55maps-r2-ref-2026-09-06/obs280-shared-reference-r2.json",
+   "working_notes_obs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "manually_verified_at": "2026-09-07T08:36:56Z",
+   "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+  },
+  {
+   "analysis_id": "tile-level-f1-r2",
+   "type": "comparison",
+   "_note": "Tile-level P/R/F1 beside MCC for the eight 55-map cells on reference r2 (derive_tile_level_f1.py --reference r2); GS cells unchanged.",
+   "conditions_compared": [
+    "pv-diag-384::verified-adv-text-consensus-16of30",
+    "pv-diag-384::verified-adv-image-baseline-pro-vf",
+    "55maps-image-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+    "55maps-text-min-generalisation::verified-k3-r2-gt",
+    "55maps-text-min-generalisation::verified-k4-r2-gt",
+    "55maps-text-min-n10-uplift::verified-5of10-r2-gt"
+   ],
+   "hypothesis_refs": [
+    "H13"
+   ],
+   "outcome": "MCC reproduction gate 10/10.",
+   "paper_section": "Appendix",
+   "output_path": "results/tile-level-f1-r2/tile_level_f1.json",
+   "working_notes_obs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "manually_verified_at": "2026-09-07T08:36:56Z",
+   "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+  },
+  {
+   "analysis_id": "estimated-correction-r2",
+   "type": "diagnostic",
+   "_note": "The estimated-correction column (card § 2): the reference error the audits did not see, propagated by Monte Carlo through the r2 board; beside the point estimate, never a re-tiering.",
+   "conditions_compared": [
+    "55maps-image-generalisation::verified-k3-r2-gt",
+    "55maps-image-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-generalisation::verified-k3-r2-gt",
+    "55maps-text-high-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-k4-r2-gt",
+    "55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-r2-gt",
+    "55maps-text-min-generalisation::verified-k4-r2-gt",
+    "55maps-text-min-generalisation::verified-oracle-p0.20-k3-r2-gt",
+    "55maps-text-min-n10-uplift::verified-5of10-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-r2-gt",
+    "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt",
+    "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt",
+    "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt"
+   ],
+   "hypothesis_refs": [
+    "H13"
+   ],
+   "outcome": "Expected terms M 49.7, E_err 35.8, E_om 35.8; F1-hat sits 0.0005–0.0007 below the r2 point with ±0.005 intervals.",
+   "paper_section": "Results",
+   "output_path": "results/55map-final-board-r2-2026-09-06/estimated-correction.json",
+   "working_notes_obs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "manually_verified_at": "2026-09-07T08:36:56Z",
+   "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+  },
+  {
+   "analysis_id": "student-baseline-r2",
+   "type": "diagnostic",
+   "_note": "The student (novice) baseline re-estimated at 55-map corpus level on r2 (card § 2b).",
+   "conditions_compared": [
+    "(corpus-level; the reference layers and the audit rates, not a condition)"
+   ],
+   "hypothesis_refs": [
+    "H13"
+   ],
+   "outcome": "P 0.991 / R 0.923 / F1 0.956 (without extrapolated terms R 0.941 / F1 0.966); GS-4 direct 1.000 / 0.947 / 0.973.",
+   "paper_section": "Discussion",
+   "output_path": "results/student-baseline-2026-09-01/reestimate-r2.json",
+   "working_notes_obs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "manually_verified_at": "2026-09-07T08:36:56Z",
+   "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+  },
+  {
+   "analysis_id": "sensitivity-mde-r2",
+   "type": "diagnostic",
+   "_note": "The MDE appendix with the r2 final board's tile-swap instrument added (sensitivity_mde.py --reference r2).",
+   "conditions_compared": [
+    "(instrument-level; harvests the r2 board's committed pairwise records)"
+   ],
+   "hypothesis_refs": [
+    "H8",
+    "H9",
+    "H10",
+    "H12"
+   ],
+   "outcome": "55-map r2 board null SD 0.0045 over 595 pairs; MDE80 0.013 — resolution unchanged by r2.",
+   "paper_section": "Appendix",
+   "output_path": "results/sensitivity-mde-2026-08-28/sensitivity-r2.json",
+   "working_notes_obs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "manually_verified_at": "2026-09-07T08:36:56Z",
+   "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
   }
  ]
 }
