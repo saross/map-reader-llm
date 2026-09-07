@@ -110,7 +110,7 @@ def build_rows(dec: dict) -> list[dict]:
     obs = json.loads((REPO / R2_SCORING / "obs280-shared-reference-r2.json").read_text())
     tlf = json.loads((REPO / "results/tile-level-f1-r2/tile_level_f1.json").read_text())
     est = json.loads((R2_BOARD / "estimated-correction.json").read_text())
-    # student-baseline-r2 is HELD (see the comment in the rows below); its artefact is not read.
+    sb = json.loads((REPO / "results/student-baseline-2026-09-01/reestimate-r2.json").read_text())
     mde = json.loads((REPO / "results/sensitivity-mde-2026-08-28/sensitivity-r2.json").read_text())
     mde_r2 = next(r for r in mde["mde_table"] if "final board r2" in r["instrument"])
     common = {"preregistered": "post-hoc", "deviations": [], "manually_verified_at": None,
@@ -174,12 +174,19 @@ def build_rows(dec: dict) -> list[dict]:
                      "wider than the tier gaps."),
          "paper_section": "Results", "output_path": str((R2_BOARD / "estimated-correction.json").relative_to(REPO)),
          "working_notes_obs": [], **common},
-        # HELD (S150, 2026-09-07): ``student-baseline-r2`` — the corpus-level student
-        # baseline on r2 (card § 2b; results/student-baseline-2026-09-01/reestimate-r2.json)
-        # consumes only reference-layer counts and the audit rates, so it cannot truthfully
-        # cite a condition, and the analyses schema allows an empty conditions_compared
-        # only on a not-executed disposition row. It registers once the PI rules how a
-        # reference-level diagnostic is registered (schema relaxation or a convention).
+        {"analysis_id": "student-baseline-r2", "type": "diagnostic",
+         "_note": "The student (novice) baseline re-estimated at 55-map corpus level on r2 (card § 2b).",
+         "conditions_compared": [],
+         "reference_scope": ["r2"],
+         "_conditions_note": ("reference-level diagnostic: the reference layers and the audit rates, not a "
+                              "condition (schema reference_scope, S150; PI ruling 2026-09-07)"),
+         "hypothesis_refs": ["H13"],
+         "outcome": (f"P {sb['rows'][0]['precision']['mean']:.3f} / R {sb['rows'][0]['recall']['mean']:.3f} / "
+                     f"F1 {sb['rows'][0]['f1']['mean']:.3f} (without extrapolated terms R "
+                     f"{sb['rows'][1]['recall']['mean']:.3f} / F1 {sb['rows'][1]['f1']['mean']:.3f}); "
+                     "GS-4 direct 1.000 / 0.947 / 0.973."),
+         "paper_section": "Discussion", "output_path": "results/student-baseline-2026-09-01/reestimate-r2.json",
+         "working_notes_obs": [], **common},
         {"analysis_id": "sensitivity-mde-r2", "type": "diagnostic",
          "_note": "The MDE appendix with the r2 final board's tile-swap instrument added (sensitivity_mde.py --reference r2).",
          "conditions_compared": board_all,

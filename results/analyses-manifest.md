@@ -2,9 +2,9 @@
 
 # Analyses manifest
 
-> Generated 2026-09-07T08:51:10Z · 62 row(s) · schema v1.0.
+> Generated 2026-09-07T23:26:42Z · 63 row(s) · schema v1.0.
 >
-> **Coverage**: 62 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
+> **Coverage**: 63 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
 
 | analysis_id | type | #conditions | preregistered | paper_section | outcome |
 |---|---|---|---|---|---|
@@ -69,4 +69,5 @@
 | obs280-shared-reference-r2 | comparison | 8 | post-hoc | Results | F1 rank ['T03-k4', 'TH7-k4', 'IM-k3', 'TM-k4']; MCC rank ['IM-k3', 'T03-k4', 'TH7-k4', 'TM-k4']; the divergence holds on r2. |
 | tile-level-f1-r2 | comparison | 10 | post-hoc | Appendix | MCC reproduction gate 10/10. |
 | estimated-correction-r2 | diagnostic | 35 | post-hoc | Results | Expected terms M 49.7, E_err 35.8, E_om 35.8; F1-hat sits within 0.0007 of the r2 point — below it for 32 of 35 cells (by 0.0007 at the top of the board), at it for one, marginally above it for the two lowest-recall cells (TM-k4 +0.0003, IM-k4 +0.0007) — with ≈ ±0.005 intervals, wider than the tier gaps. |
+| student-baseline-r2 | diagnostic | 0 | post-hoc | Discussion | P 0.991 / R 0.923 / F1 0.956 (without extrapolated terms R 0.941 / F1 0.966); GS-4 direct 1.000 / 0.947 / 0.973. |
 | sensitivity-mde-r2 | diagnostic | 35 | post-hoc | Appendix | 55-map r2 board null SD 0.0045 over 595 pairs; MDE80 0.013 — resolution unchanged by r2. |

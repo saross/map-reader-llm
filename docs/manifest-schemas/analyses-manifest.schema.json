@@ -31,11 +31,20 @@
         },
         "conditions_compared": {
           "type": "array",
-          "description": "Foreign keys to condition_id. CHANGED from the brief's runs_compared — studies compare conditions; the run/study are derivable from the conditions. Must be non-empty except on a not-executed disposition row, where it must be empty (enforced by the conditional below).",
+          "description": "Foreign keys to condition_id. CHANGED from the brief's runs_compared — studies compare conditions; the run/study are derivable from the conditions. Must be non-empty except on a not-executed disposition row, where it must be empty, and on a reference-level diagnostic carrying reference_scope, where it may be empty (both enforced by the conditional below).",
           "items": {
             "type": "string",
             "pattern": "^[a-z0-9-]+::[a-z0-9._-]+$"
           }
+        },
+        "reference_scope": {
+          "type": "array",
+          "description": "Reference-level diagnostic marker (Session 150, PI ruling 2026-09-07). A row whose subject is a reference layer's own quality — the student baseline estimated from the reference layers and the audit rates, not a comparison over conditions — names the reference vintage(s) it characterises here and may leave conditions_compared empty (enforced by the conditional below). Diagnostic rows only; absent on every other row.",
+          "items": {
+            "type": "string",
+            "enum": ["curator", "student", "canonical", "standardised", "r2"]
+          },
+          "minItems": 1
         },
         "hypothesis_refs": {
           "type": "array",
@@ -126,7 +135,13 @@
             }
           },
           "else": {
-            "properties": { "conditions_compared": { "minItems": 1 } }
+            "if": { "required": ["reference_scope"] },
+            "then": {
+              "properties": { "type": { "const": "diagnostic" } }
+            },
+            "else": {
+              "properties": { "conditions_compared": { "minItems": 1 } }
+            }
           }
         },
         {
