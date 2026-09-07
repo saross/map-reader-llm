@@ -8048,6 +8048,7 @@ before the go, and treat the operator's "looks good" on a draft as
 approval of intent, not of counts.
 
 ## Entry — 2026-09-07 (Session 149, map-reader-llm): Nine registered conditions do not reproduce — and the cause was a deliberate pin, not a defect
+
 **Session:** b77b0d73-7388-4ead-934e-5f7bfbb1b598
 **Instance:** primary
 
