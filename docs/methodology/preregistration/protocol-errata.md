@@ -5030,3 +5030,59 @@ clarifications; reproducibility metadata added.** Found by the Session 137 audit
    not close D24, which remains open pending external statistical review.
 
 ---
+
+### E84: The 55-map deployment reference changed after the registered analyses ran — revision r2 (−6 / +14 records) re-measures every 55-map figure; no tier moves, no claim reverses
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-09-07 |
+| Type | Correction of the instrument (reference revision); disclosure of re-measurement |
+| Commit | `4d92997bd` (step 3), `7894b5b5a` / `cd4905ec3` (step 4), `22353e660` (boards), `232c6dc8c` / `777c4588c` (register rows); this entry's commit |
+| Files | `inputs/vectors/references/best-available-gt-55maps-r2.geojson` (5,018 records: 4,726 student + 278 extension + 14 audit-reviewed); `results/reference-revision-r2/audit-revision-instructions.csv`; `results/55maps-r2-ref-2026-09-06/`; `results/55map-final-board-r2-2026-09-06/`; `results/55map-leaderboard/55map_leaderboard_50m_r2.json`; `results/metric-leaderboards/55map-mcc-tiering-r2.json`; the register's `-r2-gt` condition rows and eight `-r2` analysis rows |
+| Impact | Low on every number, nil on every claim: max \|ΔF1@50\| over the 23 r1 board cells 0.0009 (band 0.005); the 8-cell leaderboard's five tiers are member-for-member identical on F1 and on MCC; the 23 r1 cells' tier relations are preserved on the 35-cell r2 board (0 of 253 pairs change). What changes is the reference the paper cites and the board's membership (the 3.7 campaign's cells join). |
+
+**Description**: the standardised reference (ruling 21, E83) was frozen before
+the registered 55-map analyses re-ran. Two PI audits then examined it
+directly: an empty-tile audit (500 tiles; 5 true double-misses in 470 empty
+tiles, 1.06 %, CI 0.35–2.47 %) and a complete census of the 719 clustered
+mounds (13 edge-safety marks confirmed, 6 GT-error points, 6 model-found
+omissions, 2 double-misses, 1 vote-gate kill). Their adjudications, applied
+as a single deterministic instruction set
+(`results/reference-revision-r2/audit-revision-instructions.csv`: 6
+removals, 14 additions — 7 true double-misses, 6 model-detected, 1
+proposed-but-filtered), produce revision r2. One removal overrides a
+Ruling-21 "distinct" adjudication on the PI's inspection of the symbol
+(`extension:40` and its 10.3 m student neighbour are one mound; r2 keeps the
+student record).
+
+**Protocol impact**: every 55-map figure cited by the paper was re-measured
+on r2 through the unbroken chain (the IM-k4 scoring template for every
+evaluation; the GS tile-swap permutation + BH + greedy-clique tiering for
+every board), with the r1 regression gates pinned to r1 and live during the
+r2 build (G3: the committed 8-cell board reproduced exactly; G4 and the
+family identity, mechanism and geometry gates: all exact). Recall falls by
+0.0005–0.0015 on every r1 cell and precision moves by no more than 0.001,
+upward on every A/B cell — the signature of a reference that gained 14
+mounds absent from every reference layer, seven of which the model had
+found — so no tier moves among the r1 cells and no ranking claim reverses.
+The r2 board additionally carries the 3.7 campaign's cells (membership
+ruling 2026-09-06): its top tier is `ARM2-N5-oracle` 0.8871 and
+`ARM2-N3-oracle` 0.8848, above the r1 leader `B-N10-oracle` (0.8560, now
+T4).
+
+**What the revision does not fix**: the estimated-correction column
+(`results/55map-final-board-r2-2026-09-06/estimated-correction.json`)
+carries the error the audits did NOT see — expected unseen double-misses
+M ≈ 50, GT errors E_err ≈ 36 and model-found omissions E_om ≈ 36 outside the
+audited clusters — as P̂ / R̂ / F1̂ with Monte Carlo intervals beside every r2
+point estimate (F1̂ 0.0005–0.0007 below the point, ±0.005), never as a
+re-tiering.
+
+**Correction**: the paper's 55-map figures cite the `-r2-gt` conditions and
+the r2 boards; the `-standardised-gt` rows and r1 boards remain in the
+register as the record of what the registered analyses measured. Disclosure
+texts landed under this erratum: Methods § M.3 (one paragraph), Discussion
+outline D.8 (one bullet), Results § R7 (table), and a working-notes
+observation.
+
+---
