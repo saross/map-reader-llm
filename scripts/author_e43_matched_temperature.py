@@ -445,7 +445,10 @@ def plan(repo: Path | None = None) -> dict:
     existing_ids = {a["analysis_id"] for a in analyses.get("analyses", [])}
     conds = json.loads((root / "results/run-conditions.json").read_text())
     entry = conds.get("decomposition", {}).get(RUN_ID, {})
-    already = set(entry.get("_ignored_evals", []))
+    # Waivers are either bare paths or reasoned {"eval_path", "reason"} entries
+    # (the register verifier accepts both); compare on the path.
+    already = {e["eval_path"] if isinstance(e, dict) else e
+               for e in entry.get("_ignored_evals", [])}
     return {
         "analysis": "skip" if ANALYSIS_ID in existing_ids else "add",
         "ignored_evals_added": [p for p in ignored_eval_paths() if p not in already],
@@ -466,9 +469,10 @@ def apply(repo: Path | None = None) -> dict:
     conds = json.loads(conds_raw)
     entry = conds["decomposition"][RUN_ID]
     if todo["ignored_evals_added"]:
-        entry["_ignored_evals"] = sorted(
-            set(entry.get("_ignored_evals", [])) | set(ignored_eval_paths())
-        )
+        # Append the missing paths; keep existing entries (bare paths or
+        # reasoned dicts) exactly as they are, so no waiver loses its reason.
+        entry["_ignored_evals"] = list(entry.get("_ignored_evals", [])) + sorted(
+            todo["ignored_evals_added"])
     if "E72 remediation (2026-08-02)" not in entry.get("_note", ""):
         entry["_note"] = entry.get("_note", "") + CROSSREF_NOTE
     _write_json_in_place(conds_path, conds, conds_raw)

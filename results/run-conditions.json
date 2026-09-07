@@ -4860,7 +4860,7 @@
     },
     {
      "label": "verified-oracle-p0.20-k3-r2-gt",
-     "proposer_pool": null,
+     "proposer_pool": "detect_brief-text",
      "n_passes": 5,
      "verifier_config": {
       "variant": "v1",
@@ -5058,7 +5058,7 @@
     },
     {
      "label": "verified-oracle-p0.20-k3-r2-gt",
-     "proposer_pool": null,
+     "proposer_pool": "detect_brief-text",
      "n_passes": 5,
      "verifier_config": {
       "variant": "v1",
@@ -8051,7 +8051,11 @@
      "detections": "outputs/h13/scoring/native/armA",
      "eval_path": "results/h13-overlap-2026-08-18/native/armA/evaluation.json",
      "scope_override": {
-      "bounds_path": "outputs/h13/scoring/bounds/h13_armA_bounds.geojson"
+      "test_set_id": "h13-native-a",
+      "bounds_path": "outputs/h13/scoring/bounds/h13_armA_bounds.geojson",
+      "n_test_tiles": 340,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
      },
      "_note": "h13 overlap experiment, NATIVE-tiling arm (scored 2026-08-18 as the common-frame arm's comparator; results/h13-overlap-2026-08-18/native/). Registered 2026-09-07 under the PI's 'register what was scored' ruling (planning/reference-revision-2026-09-06.md, register-verifier debt 3); the per-pass inputs are gitignored outputs and are recorded in the evaluation's _metadata."
     },
@@ -8067,7 +8071,11 @@
      "detections": "outputs/h13/scoring/native/armB",
      "eval_path": "results/h13-overlap-2026-08-18/native/armB/evaluation.json",
      "scope_override": {
-      "bounds_path": "outputs/h13/scoring/bounds/h13_armB_bounds.geojson"
+      "test_set_id": "h13-native-b",
+      "bounds_path": "outputs/h13/scoring/bounds/h13_armB_bounds.geojson",
+      "n_test_tiles": 430,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
      },
      "_note": "h13 overlap experiment, NATIVE-tiling arm (scored 2026-08-18 as the common-frame arm's comparator; results/h13-overlap-2026-08-18/native/). Registered 2026-09-07 under the PI's 'register what was scored' ruling (planning/reference-revision-2026-09-06.md, register-verifier debt 3); the per-pass inputs are gitignored outputs and are recorded in the evaluation's _metadata."
     },
@@ -8083,7 +8091,11 @@
      "detections": "outputs/h13/scoring/native/armC",
      "eval_path": "results/h13-overlap-2026-08-18/native/armC/evaluation.json",
      "scope_override": {
-      "bounds_path": "outputs/h13/scoring/bounds/h13_armC_bounds.geojson"
+      "test_set_id": "h13-native-c",
+      "bounds_path": "outputs/h13/scoring/bounds/h13_armC_bounds.geojson",
+      "n_test_tiles": 999,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
      },
      "_note": "h13 overlap experiment, NATIVE-tiling arm (scored 2026-08-18 as the common-frame arm's comparator; results/h13-overlap-2026-08-18/native/). Registered 2026-09-07 under the PI's 'register what was scored' ruling (planning/reference-revision-2026-09-06.md, register-verifier debt 3); the per-pass inputs are gitignored outputs and are recorded in the evaluation's _metadata."
     }

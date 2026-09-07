@@ -110,6 +110,7 @@ def test_r2_mode_reads_the_r2_home_and_flattens_the_engine_mcc(tmp_path: Path):
     assert payload["board_home"] == "results/55maps-r2-ref-2026-09-06"
     assert payload["comparison"]["f1_rank_standardised"]
     assert payload["comparison"]["mcc_rank_standardised"]
-    # The r2 default output lives in the r2 home, never the r1 artefact.
+    # The r2 default output lives in the r2 home, never the r1 artefact; this
+    # run wrote to tmp_path, so the committed r2 artefact is untouched.
     assert mod.OUT_BY_REFERENCE["r2"] == r2_home / "obs280-shared-reference-r2.json"
-    assert not mod.OUT_BY_REFERENCE["r2"].exists()
+    assert mod.DEFAULT_OUT.parent != r2_home

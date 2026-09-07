@@ -361,11 +361,15 @@ def test_r2_registrar_authors_every_board_family_and_skips_coincidence():
     plan = author_board_rows = r2reg.author_board_rows(dec, manifest, None)
     by = {row["label"]: (run, status) for run, row, status in plan}
     assert by["TH7-oracle"] == (None, "coincident")  # argmax on the committed set
-    assert by["g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt"] == ("stride-55map-2026-08-25", "add")
-    assert by["g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt"][1] == "add"
-    assert by["verified-oracle-p0.20-k3-r2-gt"] == ("55maps-text-high-t0-3-generalisation", "add")
-    assert by["arm2-n3-oracle-p0.95-k3-r2-gt"] == ("gemini37-55map-2026-08-29", "add")
-    assert by["g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt"][1] == "add"
+    # "add" before 7a-ii ran, "skip" once the rows are in the register: both
+    # are the idempotent plan; the run assignment is what the test pins.
+    ok = {"add", "skip"}
+    assert by["g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt"][0] == "stride-55map-2026-08-25"
+    assert by["g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt"][1] in ok
+    assert by["verified-oracle-p0.20-k3-r2-gt"][0] == "55maps-text-high-t0-3-generalisation"
+    assert by["arm2-n3-oracle-p0.95-k3-r2-gt"][0] == "gemini37-55map-2026-08-29"
+    assert by["g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt"][1] in ok
+    assert all(s in ok | {"coincident"} for _r, _row, s in plan)
     assert "TH7-k4" not in {r["label"] for _, r, _ in plan}  # committed_eval: cloned in 7a-i
     arm = next(r for _, r, _ in plan if r["label"].startswith("arm2-"))
     assert arm["verifier_config"]["model"].startswith("gemini-3.7"), arm["verifier_config"]

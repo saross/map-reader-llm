@@ -198,8 +198,13 @@ def author_board_rows(dec: dict, manifest: list[dict],
                    "verifier_config": dict(VF_CONFIG), **common}
         elif fam in INCUMBENT_RUN:  # the five incumbent oracles
             run_id, n_passes = INCUMBENT_RUN[fam]
+            # The manifest schema requires a string: the incumbent runs each
+            # own exactly one proposer pool, which is the oracle's pool.
+            pools = list(dec[run_id].get("proposer_pools", {}))
+            if len(pools) != 1:
+                raise ValueError(f"{run_id}: expected one proposer pool, found {pools}")
             row = {"label": f"verified-oracle-p{pt:.2f}-k{pk}{SUFFIX_R2}",
-                   "proposer_pool": None, "n_passes": n_passes,
+                   "proposer_pool": pools[0], "n_passes": n_passes,
                    "verifier_config": dict(VF_CONFIG), **common}
         elif fam in G37_TEMPLATE:  # 3.7 arms and their rungs
             run_id = G37_RUN

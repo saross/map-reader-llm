@@ -171,7 +171,8 @@ def test_apply_is_idempotent(tmp_path: Path) -> None:
     entry = json.loads(
         (tmp_path / "results/run-conditions.json").read_text()
     )["decomposition"][RUN_ID]
-    assert set(ignored_eval_paths()) <= set(entry["_ignored_evals"])
+    waived = {e["eval_path"] if isinstance(e, dict) else e for e in entry["_ignored_evals"]}
+    assert set(ignored_eval_paths()) <= waived
     assert entry["_note"].count("E72 remediation (2026-08-02)") == 1
     # The first apply is the one that did the work (unless the tree already
     # carried the filing, in which case both runs are no-ops).
