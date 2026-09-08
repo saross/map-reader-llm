@@ -32942,3 +32942,209 @@ this consensus-level question explicitly unmeasured); **Obs 457**
 (WN-C7, the recovery-consistency audit that found this comparator stale
 and triggered the rebuild); **Obs 459** (WN-C9, the sibling e47
 remediation from the same audit and the same day's work).
+
+## Observation 461: A verifier stage's `sweep_2d.json` can predate its own `probabilities.json` — the pv-diag image t0.0 stage's committed sweep (F1 0.2739) was a 342-of-802 partial-verification artefact; refreshed it scores 0.6872, and a corpus survey found four more of the same class (Session 151, 2026-09-08)
+
+**The finding.** A verifier stage's in-directory `sweep_2d.json` records
+the vote/probability threshold sweep over whatever candidates carried a
+`mound_probability` **at sweep time** — nothing in the pipeline keeps it
+current if the stage's `probabilities.json` is later completed by a
+separate pass. The discovered case is `pv-diag-384`'s image t0.0 stage
+(`outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10`):
+its committed sweep was run on 2026-04-17 (`b8961e56f`) against **342 of
+802** candidates; the 2026-05-06 Tier-2 verifier-completeness cleanup
+pass (`c6b5e6b10`, "cleanup Tier-2 cells (6 cells, 474 cands)") filled
+the remaining 460 probabilities, but the sweep was never re-run. The
+committed sweep's best 20 m F1 reads **0.2739** (precision 0.633, recall
+0.175, n = 120 kept, vote ≥ 1/p ≥ 0.15) — a number that looks like a
+genuine verifier result but is scored on 43 % of the candidate pool.
+Re-swept complete on the same 802 probabilities (S151, sapphire, $0),
+the stage scores **0.6589** (0.665/0.653; n = 427); the E71-recovered
+comparator stage (889 candidates, `verified-v1-n10-recovery-2026-09-08`)
+scores **0.6872** (0.658/0.720; n = 476) at the same operating point — a
++0.028 F1 recovery effect, the same size as the pv-diag **text** t0.0
+stage's recovery effect found the same day (0.8234 → 0.8508, +0.027).
+
+A corpus-wide survey run the same day
+(`reports/sweep-staleness-survey-2026-09-08.md`, sapphire) enumerated
+all **265** verifier stages carrying a `probabilities.json` with
+`mound_probability` entries and compared each of the **33** with an
+in-directory sweep against its own probability count. **Five stages are
+STALE** (sweep n < candidates with a probability), all five `pv-diag-384`
+image stages amended by the same 2026-05-06 cleanup commit, gaps **460 /
+11 / 1 / 1 / 1** (`image-t0.0/verified-v1-n10`,
+`image-t0.3/verified-v1-n5`, `image-t0.7/verified-v1-n5`,
+`image-t1.0/verified-v1-n5`, `scale-4-optimal-487/verified-v1-n10`).
+None is cited by a registered condition or analysis. On the PI's ruling
+the four small ones were re-swept complete: the gap-11 stage moves
+**0.7460 → 0.7475** F1 at 20 m (same operating point, n 372 → 373); the
+three gap-1 stages are identical to four decimal places. The class is
+real across the corpus, but only materially matters at the one large
+gap.
+
+**Why this matters.** A `sweep_2d.json` sitting inside a verified
+stage's own directory looks authoritative — it is the artefact any
+downstream "what's the F1 here" question would reach for. The pv-diag
+image t0.0 case shows a stale sweep can under-report F1 by more than
+half (0.2739 committed vs 0.6872 true) with no error, warning, or
+content-level defect: the sweep file is well-formed, the schema is
+standard, and the stage's own `probabilities.json` and
+`cleanup_history` are separately complete and consistent. The only
+available signal is a **cross-artefact** one — the sweep's own vote ≥ 1
+/ p ≥ 0 row against `probabilities.json`'s own `total_results` — which
+nothing in the pipeline checks routinely. This extends **Obs 457**'s "a
+recovery completes passes, not derived artefacts" lesson one layer
+further: even artefacts with no recovery involvement at all (this
+cleanup pass predates E71 by roughly ten weeks) can silently decouple
+from their own sibling inputs, and the failure mode (sweep older than
+its own probabilities) is one the original recovery-consistency audit's
+vintage rule did not test for, because that rule compared artefacts
+against the E71 recovery commit specifically, not against a stage's own
+files.
+
+**Caveats.** Discovery method matters: this class was found by
+"preserve and compare" — comparing the April sweep against the S151
+verifier-stage-refresh sweep side by side (audit § 6.1) — not by the
+audit that had motivated the refresh in the first place; §§ 1–5 of that
+same report explicitly did not look for a sweep-older-than-its-own-probabilities
+failure. The survey's scope is the in-directory sweep only: a sweep
+computed over a stage but written to `results/` elsewhere (the survey
+names three such locations) would not be caught. Related but
+distinct: the April `e47-propose-brief`
+`verified/flash-high-text-1of5` stage was never swept **at all** until
+the PI's ruling on 2026-09-08 gave it its first sweep (0.7953 at 20 m,
+against the refreshed stage's 0.8735). That comparison is **not**
+like-for-like — the two candidate sets are different constructions (the
+April set has 209 more vote ≥ 1 clusters despite being built from
+passes with fewer detections; see the audit § 6.1 e47 reading and
+`results/recovery-reeval-2026-09-08/e47-propose-brief/verified-flash-high-text-1of5-april-complete-sweep/README.md`)
+— and belongs to a different failure class (never-swept, not
+stale-sweep). It is noted here only so it is not mistaken for a sixth
+instance of this Obs's class.
+
+**Findable later**: sweep_2d.json predates probabilities.json, sweep
+older than its own probabilities, partial-verification artefact,
+pv-diag image t0.0 verified-v1-n10, 342 of 802 candidates, F1 0.2739
+partial vs 0.6589 complete vs 0.6872 refreshed, sweep-staleness-survey-2026-09-08,
+265 verifier stages 33 with in-directory sweep, 5 stale stages gaps 460
+11 1 1 1, Tier-2 cleanup c6b5e6b10, b8961e56f April sweep commit,
+preserve and compare discovery, WN-C11, e47 never-swept vs stale-sweep
+distinction, gap-11 0.7460 to 0.7475.
+
+Sources: `reports/recovery-consistency-audit-2026-09-08.md` § 6.1 (read
+2026-09-08: the comparison table and readings paragraphs, the 0.2739 /
+0.6589 / 0.6872 figures, "a recovery effect of the text stage's size:
++0.028 F1", and the Changelog "(later still)" and "(S151, third
+revision)" entries); `reports/sweep-staleness-survey-2026-09-08.md`
+(read 2026-09-08: the Summary counts table — 265 stages, 33 with an
+in-directory sweep, 5 STALE; the "Detector validation against the known
+case" section; the STALE-stages table with the five gaps and commits;
+the "Remediation status of the five" section with the gap-11
+0.7460 → 0.7475 figure); `results/recovery-reeval-2026-09-08/pv-diag-384/README-april-complete-resweeps.md`
+(read 2026-09-08: the four-stage table, gap-11 0.7460 → 0.7475 at n 372
+→ 373, the three gap-1 stages identical); `results/recovery-reeval-2026-09-08/e47-propose-brief/verified-flash-high-text-1of5-april-complete-sweep/README.md`
+(read 2026-09-08: the "Not a like-for-like" paragraph and the
+209-more-clusters detail); `docs/methodology/preregistration/protocol-errata.md`
+E71 "Addendum (2026-09-08, later; Session 151 — the three uncited
+verifier stages refreshed)" (read 2026-09-08: the same figures restated
+in the errata's disclosure copy); `planning/paper-writeup-continuity.md`
+"STATE AFTER S151" (read 2026-09-08: headline (2) and the "Standing
+gotchas (new)" line naming the check); `reports/phase3a-verifier-completeness-audit-2026-05-03.md`
+(read 2026-09-08: the line recording gap 460 for
+`outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json`,
+corroborating the May cleanup's scope).
+Related: **Obs 457** (WN-C7, "a recovery completes passes, not derived
+artefacts" — the sibling staleness-class lesson this Obs extends to a
+non-recovery cleanup pass); **Obs 459** (WN-C9, the e47 double-read
+finding from the same audit, and the source this entry's e47 caveat
+draws its "not a like-for-like" framing from); **Obs 462** (WN-C12, the
+companion S151 finding from the same day's bookkeeping).
+
+## Observation 462: Regenerate derived documents after the session's LAST register write — the uplift supplement and GS plateau doc sat one row stale (437 → 438 conditions) for five hours until S151 swept it up (Session 151, 2026-09-08)
+
+**The finding.** `results/uplift-supplement/build-report.md` and
+`results/working-precision/gs-plateau-characterisation.md` are both
+documents generated in full from `results/conditions-manifest.json`
+(`scripts/build_uplift_supplement.py`,
+`scripts/characterise_gs_plateau.py`) — their currency depends on the
+state of that manifest **at build time**, not on the corpus as a whole.
+In Session 150-b both were regenerated within a minute of each other as
+part of that session's recovery-consistency refresh bookkeeping: the
+plateau doc at 11:55:15 (`27458268d`, "regenerated from the refreshed
+conditions manifest") and the uplift supplement at 11:56:20
+(`01f0a129c`, "supplement regenerated after the recovery-consistency
+refresh"). Roughly five hours later, the same session registered one
+more condition — `pv-diag-384::flash-high-image-n5-image-t0.0-consensus-3of3`,
+the consensus-calibration closure — at 16:59:08 (`8e98f8edf`), **after**
+both documents had already been rebuilt. Neither was rebuilt a second
+time within S150-b, so both sat **one row stale** until Session 151's
+regeneration at 18:19:41 (`001a98c97`, "supplement and plateau doc
+regenerated; S150-b row swept up") caught it up: conditions **437 →
+438**, condition × buffer rows **5,416 → 5,430**
+(`results/uplift-supplement/build-report.md` changelog, "the
+consensus-calibration closure; ... the 4-map-gs strata's condition
+counts move by one"), and the plateau doc's own "Conditions analysed"
+line **305 → 306** (verified by diffing the file at `27458268d` against
+`001a98c97`: `Conditions analysed: **305**` vs `Conditions analysed:
+**306**`, both with the unchanged `skipped: {'non-gs-corpus': 86,
+'lt10-buffers': 46}` breakdown).
+
+**Why this matters.** A derived artefact is current **relative to its
+own inputs at the moment it was built**, not relative to the corpus as
+a whole or to "the session's work" as a bundle. Regenerating a document
+mid-session, then continuing to register conditions in the same
+session, reopens exactly the staleness gap the regeneration was meant
+to close — the six-hour window here happened to be caught only because
+S151 re-ran the same build the next session and diffed the counts.
+Nothing about `8e98f8edf` looked unusual at registration time; only a
+build/register-order check catches it. The operational fix is
+mechanical: **regenerate derived documents after the session's LAST
+register write**, not mid-session, or — if a mid-session regeneration
+is unavoidable — regenerate a second time as the session's closing
+step. This is the same family of lesson as **Obs 457**'s
+"derived-artefact currency is not free" but at a much shorter, single-session
+timescale (hours, not five weeks), and with a mechanical rather than
+campaign-level trigger.
+
+**Caveats.** The gap here was small (one condition, one plateau row)
+and produced no wrong number anyone could have cited before S151 closed
+it — no PI-facing headline was drawn from either document in the
+intervening five hours. `gs-plateau-characterisation.md` does not carry
+this project's `results/**.md` revision-policy banner/changelog
+apparatus (no "Last revised" banner, no `## Changelog` section); its
+staleness window is reconstructed here from git history, not from an
+in-document trail. That is a separate, pre-existing documentation gap,
+noted for the record but out of this Obs's scope to fix.
+
+**Findable later**: regenerate derived documents after last register
+write, build-order staleness, uplift supplement one row stale, GS
+plateau characterisation one row stale, 437 to 438 conditions, 5416 to
+5430 condition buffer rows, plateau n 305 to 306, 27458268d plateau
+regenerated, 01f0a129c uplift supplement regenerated, 8e98f8edf
+consensus-3of3 registered after regeneration, 001a98c97 swept up row,
+derived artefact currency relative to own inputs not corpus, WN-C12,
+build_uplift_supplement.py REVISION_ENTRIES, characterise_gs_plateau.py.
+
+Sources: `git log --format='%h %ci %s' -1 <hash>` on `27458268d`
+(2026-09-08 11:55:15 +1000), `01f0a129c` (11:56:20 +1000), `8e98f8edf`
+(16:59:08 +1000), and `001a98c97` (18:19:41 +1000) (read 2026-09-08:
+verified commit order and timestamps directly); `results/uplift-supplement/build-report.md`
+(read 2026-09-08: the "First published 2026-08-29. Regenerated
+2026-09-08T08:19:07Z" banner line and the "2026-09-08 — Verifier-stage
+refresh bookkeeping (S151): one late S150-b row swept up" changelog
+entry with the 437→438 / 5,416→5,430 figures); `scripts/build_uplift_supplement.py`
+lines 153–167 (`REVISION_ENTRIES`, read 2026-09-08: the changelog
+prose source verbatim); `results/working-precision/gs-plateau-characterisation.md`
+at commits `27458268d` and `001a98c97` (read 2026-09-08 via `git show
+<hash>:<path>`: "Conditions analysed: **305**" vs "**306**", both
+`skipped: {'non-gs-corpus': 86, 'lt10-buffers': 46}`);
+`planning/paper-writeup-continuity.md` "STATE AFTER S151" finding (3)
+(read 2026-09-08: "the rebuild swept up the S150-b image 3-of-3 row
+(`8e98f8edf`) registered AFTER that session's last regeneration (437 →
+438 conditions) — regenerate derived docs after the session's LAST
+register write").
+Related: **Obs 457** (WN-C7, "a recovery completes passes, not derived
+artefacts" — the longer-timescale sibling of this entry's build-order
+lesson); **Obs 461** (WN-C11, the companion S151 finding from the same
+day's verifier-stage-refresh bookkeeping, discovered and disclosed
+together).
