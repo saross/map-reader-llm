@@ -72,7 +72,60 @@ No registered condition or analysis cites these stages, so nothing in
 the paper moves; the value is corpus consistency and a usable e47 PV
 cell.
 
+## 6. Pre-launch audit (`/audit-config`, 2026-09-08)
+
+```text
+=== PRE-LAUNCH AUDIT: verifier-stage refresh (reproduction of three stages' configuration) ===
+
+1. REQUIREMENTS (14; source = the originals' run.meta.json unless stated):
+   1 config version verify_adversarial-text (HARD)  2 model gemini-3-flash-preview
+   (HARD; pricing_used.model on all three originals)  3 thinking minimal (HARD)
+   4 temperature 0.0 (HARD)  5 instruction verify_adversarial.md, sha256 2518d529…
+   (HARD)  6 example_count 0, text-only labels (HARD)  7 max_output_tokens 8192
+   8 one iteration per candidate (HARD)  9 crop padding 75, rasters inputs/rasters
+   (HARD; candidate_manifest.json)  10 candidates = the pool's vote>=1 consensus on
+   the recovered passes (HARD; the manipulated variable)  11 sweep on
+   full_evaluation_bounds (487), buffers 20/30/40/50, GT mounds-reference (HARD)
+   12 real-time, flex (cost-only)  13 new stage dirs, originals untouched (HARD;
+   archive policy)  14 spend <= US$20 (HARD; PI 2026-09-08).
+   Preregistration: H2 Condition B "crop candidate regions, verify with focused
+   prompt" (osf/preregistration.md:451ff); E56 (verifier thresholds in-sample);
+   E80 (merge_passes-built candidates are within-pass deduplicated).
+
+2. CONFIG DIFF (3 stages): identical — verifier config, model pin, thinking, T,
+   instruction, padding, bounds, buffers, workers, tier. Differ — candidate file,
+   stage directory, expected count (all EXPECTED). Confounds: NONE.
+
+3. TRANSMISSION: image flag n/a (text-only verifier; originals record
+   include_example_images True / example_count 0, same code path) PASS; temperature
+   shadowed — no CLI override, config 0.0 PASS; thinking — config minimal, no
+   override PASS; model drift — pinned gemini-3-flash-preview on verify and cleanup
+   PASS; tile size n/a; candidate set — dry-run 889/1,319/4,149, 0 failed PASS;
+   instruction file — sha256 equals the recorded hash PASS; example paths — list
+   empty PASS; example dimensions n/a; agent model n/a. Blockers: NONE.
+
+4. ALIGNMENT: matches 14; deliberate deviations 0; undocumented deviations 0.
+
+5. DRY-RUN: PASS (extract, all three). `verify --dry-run` exists for batch mode
+   only — real-time cannot be dry-run (WARNING).
+
+6. EVALUATION SCOPE: PASS — 487-tile era-2 frame, curator reference; no
+   calibration/holdout split applies to these GS inventory stages.
+
+7. COMPLETENESS: not verifiable before launch — the flex tier (not recorded in the
+   originals' metas; cost-only), the sweep's vote-threshold default (inherits the
+   script's default as the originals did).
+
+BLOCKERS: NONE.   WARNINGS: real-time verify has no dry-run; flex tier unrecorded.
+OVERALL: READY TO LAUNCH
+```
+
 ## Changelog
+
+### 2026-09-08 (later) — Audit READY; launched on sapphire
+
+`scripts/run_verifier_stage_refresh.sh` under `setsid -f`, log
+`/tmp/vsr.log` on sapphire.
 
 ### 2026-09-08 — Original publication
 
