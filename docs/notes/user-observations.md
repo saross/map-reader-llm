@@ -1083,3 +1083,29 @@ The S148 candidates C1–C4 above are also still pending.
   nearly spent, he chose reflect-and-handoff over quick rulings from a tired
   instance, having earlier switched models mid-session and asked the new
   instance to *review* the old one's work rather than continue it.
+
+## S150 candidates (pending review, 2026-09-08, drafted at handoff) — silence never discards
+
+The S148 (C1–C4) and S149 (C1–C4) candidates above are also still pending.
+
+- **C1 — "Can you present pros and cons?" produced a better decision than
+  the recommendation.** Offered ruling 3a as "(a) recommended / (b)", Shawn
+  asked for the trade-off instead. Writing the cons of (a) meant re-reading
+  the cost-gate artefact, where the false coverage note (485–486 of 487
+  claimed, 458–472 scored) surfaced — a fact the recommendation did not
+  contain. He then chose (a) with the rider attached.
+- **C2 — One question turned a row correction into the session's finding.**
+  "How widespread is this problem, particularly in runs cited in the paper?"
+  reframed a single stale comparator into a corpus-wide survey; the answer
+  (22 genuinely incomplete passes; 48 false "partials"; four derived
+  artefacts never rebuilt after the July recovery) became the afternoon's
+  work and two register fixes.
+- **C3 — Delegation with a ceiling and an interrupt.** "Finish what you can
+  while I do the website, use agents, spend up to $20, ask if you need
+  anything." The budget let the verifier refresh go from audit to launch
+  without a round-trip; the interrupt kept the one register-changing ruling
+  (3a) his. Claude did not have to guess which decisions were his.
+- **C4 — In-the-moment reaction, relayed.** On the uncommitted-script slip
+  and its repair: "Your recovery from the 'process slip' seems fine to me."
+  The slip was reported unprompted in the recap; the reaction is data that
+  reporting one's own process errors plainly costs nothing here.

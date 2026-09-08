@@ -45,7 +45,30 @@ project state.
 > hypothesis table, uplift supplement regenerated; manifests regenerated
 > twice (extractor fix; H6 rows).
 >
-> **NEXT SESSION**: merge PR #12 (then regenerate the hypothesis table).
+> **NEXT SESSION, FIRST ACT — the verifier-stage refresh was RUNNING at
+> close** (card `planning/verifier-stage-refresh-2026-09-08.md`; sapphire
+> log `/tmp/vsr.log`; at 07:10 UTC the two pv-diag stages were complete
+> (889/889, 1,319/1,319; cumulative US$3.06) and the e47 stage (4,149) was
+> verifying; the driver stops itself above US$20 and prints `ALL DONE` or
+> `STOP`). On sapphire: `tail /tmp/vsr.log`; then commit the three new
+> stage directories from sapphire (`git add outputs/h11/pv-diag-384/…/
+> verified-v1-n10-recovery-2026-09-08 …/verified-v1-n3-recovery-2026-09-08
+> outputs/h11/e47-propose-brief/verified/flash-high-text-1of5-recovery-2026-09-08`),
+> then the card § 5 after-run steps: register the three stages as
+> `verifier_passes` inventory rows, compare each `sweep_2d.json` to the old
+> stage's in the audit report § 6, E71 rider addendum with the billed cost,
+> manifests + supplement regenerated, tier-1 on sapphire. Then merge PR #12
+> (and regenerate the hypothesis table).
+> **Working-notes candidates held over from S150 (pending; silence never
+> discards):** WN-C7 the recovery-completeness finding (a recovery
+> completes passes, not derived artefacts; the audit report is the
+> source); WN-C8 the 48 false "partial" passes and the two register
+> defects; WN-C9 the e47 pre-D6 double read (4,491 vs 4,146); WN-C10 the
+> H6 image fragility flag retired on the recovered comparator (margin
+> 0.0015 → 0.0094). The S147 WN-C1..C3 and WN-C5 remain pending too.
+> User-observation candidates S148, S149 and S150 pending in
+> `docs/notes/user-observations.md`. Reflection and claude-obs 97–99
+> written (`fa9ef6e2d`).
 > h12-v2 r3-hp-heavy was CLOSED later in S150-b: sweeps rebuilt, the t = 4
 > and vote ≥ 4 sets identical, analysis unchanged (was: rebuild (greedy: `merge_passes.py --sweep` into
 > `outputs/h12-v2/greedy/r3-hp-heavy/`; WBF: `fuse_detections_wbf.py
