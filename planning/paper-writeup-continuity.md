@@ -45,16 +45,14 @@ project state.
 > hypothesis table, uplift supplement regenerated; manifests regenerated
 > twice (extractor fix; H6 rows).
 >
-> **NEXT SESSION, FIRST ACT — the verifier-stage refresh was RUNNING at
-> close** (card `planning/verifier-stage-refresh-2026-09-08.md`; sapphire
+> **NEXT SESSION, FIRST ACT — the verifier-stage refresh FINISHED at
+> close: ALL DONE 07:23 UTC, US$8.73, all three stages complete and
+> COMMITTED from sapphire (`43516df9a`; crop PNGs gitignored as for the
+> originals). What remains is the card § 5 after-run bookkeeping** (was
+> running: (card `planning/verifier-stage-refresh-2026-09-08.md`; sapphire
 > log `/tmp/vsr.log`; at 07:10 UTC the two pv-diag stages were complete
 > (889/889, 1,319/1,319; cumulative US$3.06) and the e47 stage (4,149) was
-> verifying; the driver stops itself above US$20 and prints `ALL DONE` or
-> `STOP`). On sapphire: `tail /tmp/vsr.log`; then commit the three new
-> stage directories from sapphire (`git add outputs/h11/pv-diag-384/…/
-> verified-v1-n10-recovery-2026-09-08 …/verified-v1-n3-recovery-2026-09-08
-> outputs/h11/e47-propose-brief/verified/flash-high-text-1of5-recovery-2026-09-08`),
-> then the card § 5 after-run steps: register the three stages as
+> verifying). The card § 5 after-run steps: register the three stages as
 > `verifier_passes` inventory rows, compare each `sweep_2d.json` to the old
 > stage's in the audit report § 6, E71 rider addendum with the billed cost,
 > manifests + supplement regenerated, tier-1 on sapphire. Then merge PR #12
