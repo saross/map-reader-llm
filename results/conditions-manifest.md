@@ -2,7 +2,7 @@
 
 # Conditions manifest
 
-> Generated 2026-09-07T08:45:10Z · 437 row(s) · schema v1.0.
+> Generated 2026-09-08T01:41:50Z · 437 row(s) · schema v1.0.
 >
 > **Coverage**: 437 condition(s) across the decomposed runs (sub-step 3b in progress).
 
@@ -105,12 +105,12 @@
 | n1-outstanding-384::image-t03-consensus-1of3 | consensus | consensus | 1 | 3 | 0.5822 | 0.1689 | 812 |
 | n1-outstanding-384::image-t03-consensus-2of3 | consensus | consensus | 2 | 3 | 0.6424 | 0.2216 | 664 |
 | n1-outstanding-384::image-t03-consensus-3of3 | consensus | consensus | 3 | 3 | 0.6766 | 0.3489 | 567 |
-| n1-outstanding-384::pro-image-high-t0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.5509 | 0.5446 | 665 |
-| n1-outstanding-384::pro-image-high-t0-consensus-2of3 | consensus | consensus | 2 | 3 | 0.5499 | 0.5537 | 627 |
-| n1-outstanding-384::pro-image-high-t0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5525 | 0.5664 | 604 |
-| n1-outstanding-384::pro-text-high-t0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.4726 | 0.2706 | 1118 |
-| n1-outstanding-384::pro-text-high-t0-consensus-2of3 | consensus | consensus | 2 | 3 | 0.5199 | 0.348 | 946 |
-| n1-outstanding-384::pro-text-high-t0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5665 | 0.3941 | 783 |
+| n1-outstanding-384::pro-image-high-t0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.5614 | 0.5577 | 730 |
+| n1-outstanding-384::pro-image-high-t0-consensus-2of3 | consensus | consensus | 2 | 3 | 0.576 | 0.5678 | 690 |
+| n1-outstanding-384::pro-image-high-t0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5854 | 0.5921 | 648 |
+| n1-outstanding-384::pro-text-high-t0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.4634 | 0.2629 | 1192 |
+| n1-outstanding-384::pro-text-high-t0-consensus-2of3 | consensus | consensus | 2 | 3 | 0.5203 | 0.3333 | 991 |
+| n1-outstanding-384::pro-text-high-t0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5748 | 0.3894 | 842 |
 | n1-outstanding-384::brief-text-t03-single-pass-run_1 | single-pass | none | — | 1 | 0.501 | 0.0427 | 1078 |
 | n1-outstanding-384::brief-text-t03-single-pass-run_2 | single-pass | none | — | 1 | 0.499 | 0.0143 | 1052 |
 | n1-outstanding-384::brief-text-t03-single-pass-run_3 | single-pass | none | — | 1 | 0.4977 | 0.0605 | 1096 |
