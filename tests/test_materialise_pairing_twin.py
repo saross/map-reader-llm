@@ -205,3 +205,27 @@ class TestUnionMode:
         manifest.write_text(json.dumps({"candidates": [{}, {}]}), encoding="utf-8")
         assert main(["--union", str(union_path), "--min-votes", "7",
                      "--expect-manifest", str(manifest), "--output", str(out)]) == 2
+
+
+class TestConsensusCopyMode:
+    """S151-c: a projected consensus file without a crs member gets one declared."""
+
+    def test_copies_features_and_declares_the_crs(self, tmp_path: Path) -> None:
+        src = tmp_path / "consensus-4of5.geojson"
+        src.write_text(json.dumps({"type": "FeatureCollection", "features": [
+            {"type": "Feature", "geometry": {"type": "Point", "coordinates": [460316.9, 4725503.1]},
+             "properties": {"vote_count": 4}}]}), encoding="utf-8")
+        out = tmp_path / "twin.geojson"
+        assert main(["--consensus", str(src), "--declare-crs", "EPSG:32635", "--output", str(out)]) == 0
+        written = json.loads(out.read_text(encoding="utf-8"))
+        assert written["crs"]["properties"]["name"] == "EPSG:32635"
+        assert written["features"][0]["geometry"]["coordinates"] == [460316.9, 4725503.1]
+        assert written["_materialised"]["mode"] == "consensus-copy"
+
+    def test_refuses_without_crs_or_when_one_is_already_declared(self, tmp_path: Path) -> None:
+        src = tmp_path / "c.geojson"
+        src.write_text(json.dumps({"type": "FeatureCollection", "crs": {"type": "name", "properties": {"name": "EPSG:4326"}},
+                                   "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [25.0, 42.0]}, "properties": {}}]}), encoding="utf-8")
+        out = tmp_path / "t.geojson"
+        assert main(["--consensus", str(src), "--output", str(out)]) == 2
+        assert main(["--consensus", str(src), "--declare-crs", "EPSG:32635", "--output", str(out)]) == 2

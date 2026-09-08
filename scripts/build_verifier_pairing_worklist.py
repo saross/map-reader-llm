@@ -297,6 +297,27 @@ def _render_command(
     return " ".join(shlex.quote(p) for p in parts)
 
 
+def _projected_without_crs(path: Path) -> bool:
+    """Whether a GeoJSON has no crs member and coordinates outside the degree range.
+
+    Such a file is read as WGS84 by RFC 7946 readers, so projected metre
+    coordinates land in the wrong hemisphere and every match fails.
+    """
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    if document.get("crs"):
+        return False
+    for feature in document.get("features") or []:
+        coords = (feature.get("geometry") or {}).get("coordinates")
+        while isinstance(coords, list) and coords and isinstance(coords[0], list):
+            coords = coords[0]
+        if isinstance(coords, list) and len(coords) >= 2:
+            return abs(float(coords[0])) > 180 or abs(float(coords[1])) > 90
+    return False
+
+
 def _has_source_tile(path: Path) -> bool:
     """Whether a detection GeoJSON carries a singular per-feature ``source_tile``.
 
@@ -574,6 +595,27 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
         # from that same manifest — same candidates, same tiles, differing only
         # in the probability filter.
         materialise_command = None
+        if (
+            basis == "consensus-file" and recipe is not None and scoreable
+            and recipe.engine == "evaluate_detections"
+            and _projected_without_crs(sources.repo_root / scoreable)
+        ):
+            # S151-c: a committed consensus file with projected (metre)
+            # coordinates and no crs member is read as WGS84 by RFC 7946
+            # readers and scores F1 = 0 (the 55maps-generalisation
+            # consensus-4of5 twin, 2026-08-29). Copy it with the CRS declared.
+            materialised = f"{output_dir}/twin-{int(votes)}of{n_passes}-crs32635.geojson"
+            materialise_command = " ".join(shlex.quote(part) for part in [
+                "python", "scripts/materialise_pairing_twin.py",
+                "--consensus", scoreable,
+                "--declare-crs", "EPSG:32635",
+                "--output", materialised,
+            ])
+            notes.append(
+                "committed consensus file carries projected coordinates and no "
+                "crs member; twin copied with EPSG:32635 declared"
+            )
+            scoreable = materialised  # status stays "ready": the prelude runs first
         if basis == "union" and recipe is not None and union_path:
             # S151: the union mode of the materialiser. The twin is the vote
             # shell of the committed union (which already carries source_tile

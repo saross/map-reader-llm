@@ -256,6 +256,15 @@ def main(argv: list[str] | None = None) -> int:
                         help="The verifier stage's candidate_manifest.json (manifest mode).")
     source.add_argument("--union", type=Path,
                         help="The committed vote >= 1 union GeoJSON (union mode).")
+    source.add_argument("--consensus", type=Path,
+                        help=("A committed consensus GeoJSON to copy verbatim with a "
+                              "declared CRS (consensus-copy mode; no filtering)."))
+    parser.add_argument(
+        "--declare-crs", default=None,
+        help=("Consensus-copy mode: the CRS the file's coordinates are in "
+              "(e.g. EPSG:32635). GeoJSON without a crs member is read as WGS84 "
+              "by RFC 7946, so a projected file without one scores F1 = 0."),
+    )
     parser.add_argument(
         "--expect-manifest", type=Path, default=None,
         help=(
@@ -263,8 +272,9 @@ def main(argv: list[str] | None = None) -> int:
             "union's feature count must equal its candidate count, else refused."
         ),
     )
-    parser.add_argument("--min-votes", type=int, required=True,
-                        help="Vote threshold k, matching the verified cell.")
+    parser.add_argument("--min-votes", type=int, default=None,
+                        help=("Vote threshold k, matching the verified cell "
+                              "(required in manifest and union modes)."))
     parser.add_argument("--output", type=Path, required=True,
                         help="Destination GeoJSON.")
     parser.add_argument(
@@ -275,6 +285,40 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     args = parser.parse_args(argv)
+
+    if args.consensus is None and args.min_votes is None:
+        print("REFUSED: --min-votes is required in manifest and union modes", file=sys.stderr)
+        return 2
+    if args.consensus is not None:
+        if not args.declare_crs:
+            print("REFUSED: --consensus requires --declare-crs", file=sys.stderr)
+            return 2
+        committed = json.loads(args.consensus.read_text(encoding="utf-8"))
+        feats = committed.get("features") or []
+        if not feats:
+            print("REFUSED: the consensus GeoJSON holds no features", file=sys.stderr)
+            return 2
+        if committed.get("crs"):
+            print("REFUSED: the consensus GeoJSON already declares a crs member; "
+                  "copying it with another would change its meaning", file=sys.stderr)
+            return 2
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(json.dumps({
+            "type": "FeatureCollection",
+            "name": committed.get("name"),
+            "crs": {"type": "name", "properties": {"name": args.declare_crs}},
+            "_materialised": {
+                "mode": "consensus-copy",
+                "source_consensus": str(args.consensus),
+                "declared_crs": args.declare_crs,
+                "n_features": len(feats),
+                "why": ("the committed file carries projected coordinates and no "
+                        "crs member; RFC 7946 readers treat it as WGS84"),
+            },
+            "features": feats,
+        }, indent=1), encoding="utf-8")
+        print(f"wrote {len(feats)} features with crs {args.declare_crs} to {args.output}")
+        return 0
 
     if args.union is not None:
         union = json.loads(args.union.read_text(encoding="utf-8"))
