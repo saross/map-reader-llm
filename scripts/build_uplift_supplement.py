@@ -153,6 +153,19 @@ TRANSFER_PAIR_COLUMNS: tuple[str, ...] = (
 REVISION_ENTRIES: tuple[tuple[str, str, str], ...] = (
     (
         "2026-09-08",
+        "Gemini 3.7 pool pass count corrected (S151): K 4 -> 5 on twelve rows",
+        "**Refresh trigger**: the passes extractor could not read the Gemini 3.7 "
+        "55-map pool's gzipped `run_3` meta, so the passes manifest counted four "
+        "passes and this supplement summed the pool's runner-estimator cost over "
+        "four (`edc832c06` fixed the reader). The twelve "
+        "`gemini37-55map-2026-08-29` rows now carry K = 5 and the five-pass "
+        "cost (US$48.62, was US$44.59). The same session scored the eight r2 "
+        "K = 1 anchors that pool's missing pass had blocked (`a0f08475e`), "
+        "waived under ruling 1. **What did not change**: every metric on every "
+        "row; the strata and MDE joins.",
+    ),
+    (
+        "2026-09-08",
         "Verifier-stage refresh bookkeeping (S151): one late S150-b row swept up",
         "**Refresh trigger**: the after-run bookkeeping of the verifier-stage "
         "refresh (`planning/verifier-stage-refresh-2026-09-08.md` § 5). The "

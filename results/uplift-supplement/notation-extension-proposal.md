@@ -2,7 +2,7 @@
 
 > **Last revised**: 2026-09-08 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-08T08:19:07Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-08T13:11:32Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 The canonical key `docs/methodology/notation-key.md` requires that
 "new tables and dataset builders must conform to it or extend it here
@@ -116,6 +116,10 @@ gap is visible in the data; closing it in the key would make the
 vocabulary checkable rather than merely observable.
 
 ## Changelog
+
+### 2026-09-08 — Gemini 3.7 pool pass count corrected (S151): K 4 -> 5 on twelve rows
+
+**Refresh trigger**: the passes extractor could not read the Gemini 3.7 55-map pool's gzipped `run_3` meta, so the passes manifest counted four passes and this supplement summed the pool's runner-estimator cost over four (`edc832c06` fixed the reader). The twelve `gemini37-55map-2026-08-29` rows now carry K = 5 and the five-pass cost (US$48.62, was US$44.59). The same session scored the eight r2 K = 1 anchors that pool's missing pass had blocked (`a0f08475e`), waived under ruling 1. **What did not change**: every metric on every row; the strata and MDE joins.
 
 ### 2026-09-08 — Verifier-stage refresh bookkeeping (S151): one late S150-b row swept up
 
