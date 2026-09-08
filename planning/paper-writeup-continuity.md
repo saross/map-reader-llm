@@ -72,8 +72,8 @@ project state.
 > (shared Obs numbering and one file); April-era crop manifests record
 > `proposer_votes` where `sweep_f1_greedy_pv.py` reads `vote_count`
 > (default 1 — a silent all-vote-1 sweep if unmapped); `git pull --rebase`
-> refuses with the disk-damaged files present — push after a fetch shows
-> `0 behind` instead; the sweep of a stage on a different candidate-set
+> refuses while the working tree carries any uncommitted file, including a
+> transiently mis-sized one — push after a fetch shows `0 behind` instead; the sweep of a stage on a different candidate-set
 > construction is not a recovery comparator (check cluster counts per vote
 > tier first).
 
