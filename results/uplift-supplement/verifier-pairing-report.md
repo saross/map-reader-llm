@@ -1,8 +1,8 @@
 # With/without-verifier pairing — worklist
 
-> **Last revised**: 2026-08-29 (regenerated from committed artefacts by `scripts/build_verifier_pairing_worklist.py`; original publication; the with/without-verifier pairing plan). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-08 (regenerated from committed artefacts by `scripts/build_verifier_pairing_worklist.py`; original publication; the with/without-verifier pairing plan). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-08-29T09:52:28Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-08T13:05:55Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 Build order step 3 of `planning/uplift-supplement-2026-08-28.md`. No
 scoring has been run: this document and its worklist are the plan.
@@ -27,16 +27,16 @@ two cells of the same run at different geometries share a stratum. What
 protects against that is the lineage matching in this builder, not the
 guard downstream.
 
-118 verified cell(s) in the registry.
+169 verified cell(s) in the registry.
 
 ## Status
 
 | Status | Cells |
 |---|---:|
-| `already-registered` | 6 |
-| `blocked` | 76 |
-| `ready` | 15 |
-| `ready-after-materialise` | 21 |
+| `already-registered` | 7 |
+| `blocked` | 100 |
+| `ready` | 19 |
+| `ready-after-materialise` | 43 |
 
 `already-registered` pairs need nothing: the twin is scored. `ready`
 pairs have a committed consensus GeoJSON and one scoring invocation.
@@ -49,28 +49,34 @@ re-aggregation — and the row records the exact predicate in
 
 | `pairing_basis` | Cells |
 |---|---:|
-| `consensus-file` | 15 |
-| `registered` | 6 |
-| `union` | 21 |
-| `unresolved` | 76 |
+| `consensus-file` | 19 |
+| `registered` | 7 |
+| `union` | 43 |
+| `unresolved` | 100 |
 
 ## Blocked pairs
 
-76 verified cell(s) have no locatable pre-verifier twin.
+100 verified cell(s) have no locatable pre-verifier twin.
 They are recorded with the reason and left empty in the uplift column;
 no substitute set is constructed.
 
 | Verified cell | Reason |
 |---|---|
 | `55maps-image-generalisation::verified-k4-standardised-gt` | no committed pre-verifier set was found for (run=55maps-image-generalisation, pool='library_plus-hp', N=5, k=4): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `55maps-image-generalisation::verified-k4-r2-gt` | no committed pre-verifier set was found for (run=55maps-image-generalisation, pool='library_plus-hp', N=5, k=4): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `55maps-text-high-generalisation::verified-k3-canonical-gt` | no committed pre-verifier set was found for (run=55maps-text-high-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `55maps-text-high-generalisation::verified-k3-standardised-gt` | no committed pre-verifier set was found for (run=55maps-text-high-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `55maps-text-high-generalisation::verified-k3-r2-gt` | no committed pre-verifier set was found for (run=55maps-text-high-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt` | no committed pre-verifier set was found for (run=55maps-text-high-t0-3-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `55maps-text-high-t0-3-generalisation::verified-k3-standardised-gt` | no committed pre-verifier set was found for (run=55maps-text-high-t0-3-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-standardised-gt` | no committed pre-verifier set was found for (run=55maps-text-high-t0-3-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `55maps-text-high-t0-3-generalisation::verified-k3-r2-gt` | no committed pre-verifier set was found for (run=55maps-text-high-t0-3-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-r2-gt` | no committed pre-verifier set was found for (run=55maps-text-high-t0-3-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `55maps-text-min-generalisation::verified-k3-canonical-gt` | no committed pre-verifier set was found for (run=55maps-text-min-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `55maps-text-min-generalisation::verified-k3-standardised-gt` | no committed pre-verifier set was found for (run=55maps-text-min-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `55maps-text-min-generalisation::verified-oracle-p0.20-k3-standardised-gt` | no committed pre-verifier set was found for (run=55maps-text-min-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `55maps-text-min-generalisation::verified-k3-r2-gt` | no committed pre-verifier set was found for (run=55maps-text-min-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `55maps-text-min-generalisation::verified-oracle-p0.20-k3-r2-gt` | no committed pre-verifier set was found for (run=55maps-text-min-generalisation, pool='detect_brief-text', N=5, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `proposer-verifier-384::verified-adversarial-text` | the verified cell records no vote threshold, so there is no 'same vote threshold' pre-verifier set to pair it with |
 | `proposer-verifier-384::verified-adversarial-image` | the verified cell records no vote threshold, so there is no 'same vote threshold' pre-verifier set to pair it with |
 | `proposer-verifier-384::verified-brief-text` | the verified cell records no vote threshold, so there is no 'same vote threshold' pre-verifier set to pair it with |
@@ -128,6 +134,7 @@ no substitute set is constructed.
 | `flash35-pv-2x2::f3prop-f35vf-6of10` | no committed pre-verifier set was found for (run=flash35-pv-2x2, pool='f3-min-text-1of10', N=10, k=6): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `55maps-text-min-n10-uplift::verified-5of10-canonical-gt` | no committed pre-verifier set was found for (run=55maps-text-min-n10-uplift, pool='detect_brief-text-min-n10', N=10, k=5): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `55maps-text-min-n10-uplift::verified-5of10-standardised-gt` | no committed pre-verifier set was found for (run=55maps-text-min-n10-uplift, pool='detect_brief-text-min-n10', N=10, k=5): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `55maps-text-min-n10-uplift::verified-5of10-r2-gt` | no committed pre-verifier set was found for (run=55maps-text-min-n10-uplift, pool='detect_brief-text-min-n10', N=10, k=5): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov128_55map', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov128_55map', N=3, k=2): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov128_55map', N=5, k=4): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
@@ -138,6 +145,23 @@ no substitute set is constructed.
 | `stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-standardised-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov192_55map', N=5, k=5): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov128_55map', N=3, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov192_55map', N=3, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov128_55map', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov128_55map', N=3, k=2): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov128_55map', N=5, k=4): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov128_55map', N=5, k=4): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov192_55map', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov192_55map', N=3, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov192_55map', N=5, k=5): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov192_55map', N=5, k=5): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov192_55map', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov192_55map', N=3, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov128_55map', N=3, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov192_55map', N=3, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-canonical-gt` | no committed pre-verifier set was found for (run=stride-55map-2026-08-25, pool='g384_ov192_55map', N=5, k=5): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt` | no committed pre-verifier set was found for (run=gemini37-55map-2026-08-29, pool='g384_ov192_55map_g37', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt` | no committed pre-verifier set was found for (run=gemini37-55map-2026-08-29, pool='g384_ov192_55map_g37', N=3, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt` | no committed pre-verifier set was found for (run=gemini37-55map-2026-08-29, pool='g384_ov192_55map_g37', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
+| `gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt` | no committed pre-verifier set was found for (run=gemini37-55map-2026-08-29, pool='g384_ov192_55map_g37', N=3, k=3): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 
 ## Producing the uplift column
 
@@ -153,12 +177,12 @@ stands:
 
 | Status | Pairs | Computable | Why |
 |---|---:|---:|---|
-| `already-registered` | 6 | 6 | Both sides are registered conditions, so both are already in `conditions.csv`. No scoring needed. |
-| `ready` | 15 | 15 | Once the emitted job writes its score. |
-| `ready-after-materialise` | 21 | 0 | The vote shell has to be filtered out of the committed union first, and no job is emitted for that yet. |
-| `blocked` | 76 | 0 | No twin located. |
+| `already-registered` | 7 | 7 | Both sides are registered conditions, so both are already in `conditions.csv`. No scoring needed. |
+| `ready` | 19 | 19 | Once the emitted job writes its score. |
+| `ready-after-materialise` | 43 | 0 | The vote shell has to be filtered out of the committed union first, and no job is emitted for that yet. |
+| `blocked` | 100 | 0 | No twin located. |
 
-So the ceiling after a clean run of `verifier-pairing-commands.sh` is **21 computed, 97 pending**.
+So the ceiling after a clean run of `verifier-pairing-commands.sh` is **26 computed, 143 pending**.
 
 The 2026-08-29 run produced 8, which is the 6 already-registered pairs
 plus 2 scored twins. Two defects, both now fixed, account for the gap:

@@ -155,3 +155,53 @@ class TestMain:
         assert main(["--crop-manifest", str(manifest_path), "--min-votes", "3",
                      "--output", str(out)]) == 2
         assert not out.exists()
+
+
+class TestUnionMode:
+    """S151: the vote shell of a committed union, geometry and CRS copied."""
+
+    @staticmethod
+    def _union(votes: list[int], tiles: list[str | None] | None = None) -> dict:
+        tiles = tiles or ["K-35-052-4_x0_y0"] * len(votes)
+        return {
+            "type": "FeatureCollection",
+            "name": "union_k10",
+            "crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}},
+            "features": [
+                {"type": "Feature", "geometry": {"type": "Point", "coordinates": [25.0 + i, 42.0]},
+                 "properties": {"vote_count": v, "source_tile": t}}
+                for i, (v, t) in enumerate(zip(votes, tiles))
+            ],
+        }
+
+    def test_keeps_the_shell_and_copies_geometry(self) -> None:
+        from scripts.materialise_pairing_twin import build_twin_from_union
+        features, stats = build_twin_from_union(self._union([1, 5, 9, 10]), min_votes=5)
+        assert stats == {"n_candidates": 4, "n_kept": 3, "min_votes": 5, "source_geojson": "union_k10"}
+        assert [f["properties"]["vote_count"] for f in features] == [5, 9, 10]
+        assert features[0]["geometry"]["coordinates"] == [26.0, 42.0]
+
+    def test_refuses_missing_vote_count_and_empty_shell(self) -> None:
+        from scripts.materialise_pairing_twin import build_twin_from_union
+        broken = self._union([1, 2])
+        del broken["features"][1]["properties"]["vote_count"]
+        with pytest.raises(TwinMaterialisationError, match="no integer vote_count"):
+            build_twin_from_union(broken, min_votes=1)
+        with pytest.raises(TwinMaterialisationError, match="shell is empty"):
+            build_twin_from_union(self._union([1, 2]), min_votes=3)
+
+    def test_cli_union_mode_gates_on_the_manifest_universe(self, tmp_path: Path) -> None:
+        union_path = tmp_path / "union_k10.geojson"
+        union_path.write_text(json.dumps(self._union([3, 7, 10])), encoding="utf-8")
+        manifest = tmp_path / "candidate_manifest.json"
+        manifest.write_text(json.dumps({"candidates": [{}, {}, {}]}), encoding="utf-8")
+        out = tmp_path / "twin-7of10.geojson"
+        assert main(["--union", str(union_path), "--min-votes", "7",
+                     "--expect-manifest", str(manifest), "--output", str(out)]) == 0
+        written = json.loads(out.read_text(encoding="utf-8"))
+        assert written["crs"]["properties"]["name"].endswith("CRS84")
+        assert len(written["features"]) == 2 and written["_materialised"]["n_union"] == 3
+        # a universe mismatch is a refusal, not a note
+        manifest.write_text(json.dumps({"candidates": [{}, {}]}), encoding="utf-8")
+        assert main(["--union", str(union_path), "--min-votes", "7",
+                     "--expect-manifest", str(manifest), "--output", str(out)]) == 2

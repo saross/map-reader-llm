@@ -46,12 +46,31 @@ Gates, all fatal
   GeoJSON's feature count, and any difference is reported (it is a real
   difference in candidate universe, not something to paper over).
 
+The union mode (S151, 2026-09-08)
+---------------------------------
+Twenty-one pairing rows resolve their twin by the ``union`` rule: the committed
+vote >= 1 union over the N passes (``union_k<N>.geojson`` under the run's
+verifier tree), from which the paired vote shell must be filtered before
+scoring. Those unions already carry a singular ``source_tile`` and a
+``vote_count`` per Point feature (they are the file the verifier's crop
+manifest was extracted from), so the twin is the shell ``vote_count >= k`` of
+the union, geometry and CRS copied verbatim. The gate is the candidate
+universe: ``--expect-manifest`` compares the union's feature count with the
+verifier stage's crop-manifest candidate count and refuses on any difference,
+so a union that is not the set the verifier consumed cannot be paired.
+
 Usage::
 
     python scripts/materialise_pairing_twin.py \\
         --crop-manifest outputs/55maps-image-generalisation/crops/candidate_manifest.json \\
         --min-votes 3 \\
         --output results/uplift-supplement/verifier-pairing/<cell>/twin.geojson
+
+    python scripts/materialise_pairing_twin.py \\
+        --union outputs/grid-2026-08-18/verifier/g512_ov064/union_k10.geojson \\
+        --min-votes 5 \\
+        --expect-manifest outputs/grid-2026-08-18/verifier/g512_ov064/crops/candidate_manifest.json \\
+        --output results/uplift-supplement/verifier-pairing/<cell>/twin-5of10.geojson
 
 Zero API. Pure local transform.
 
@@ -159,8 +178,71 @@ def build_twin(
     }
 
 
+def build_twin_from_union(
+    union: dict[str, Any], min_votes: int
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Select the vote shell ``vote_count >= k`` from a committed union GeoJSON.
+
+    Args:
+        union: A parsed ``union_k<N>.geojson`` (Point features carrying
+            ``vote_count`` and a singular ``source_tile``).
+        min_votes: The vote threshold k of the verified cell.
+
+    Returns:
+        ``(features, stats)`` — copies of the kept features (geometry and
+        properties verbatim) and a selection summary.
+
+    Raises:
+        TwinMaterialisationError: If the union has no features, a feature lacks
+            an integer ``vote_count`` or a non-empty ``source_tile``, or the
+            shell is empty.
+    """
+    all_features = union.get("features") or []
+    if not all_features:
+        raise TwinMaterialisationError("the union GeoJSON holds no features")
+    kept: list[dict[str, Any]] = []
+    bad_votes: list[int] = []
+    missing_tile: list[int] = []
+    for index, feature in enumerate(all_features):
+        properties = feature.get("properties") or {}
+        votes = properties.get("vote_count")
+        if not isinstance(votes, int):
+            bad_votes.append(index)
+            continue
+        if votes < min_votes:
+            continue
+        if not properties.get("source_tile"):
+            missing_tile.append(index)
+            continue
+        kept.append({
+            "type": "Feature",
+            "geometry": feature.get("geometry"),
+            "properties": dict(properties),
+        })
+    if bad_votes:
+        raise TwinMaterialisationError(
+            f"{len(bad_votes)} union feature(s) carry no integer vote_count "
+            f"(first index {bad_votes[0]}); the shell cannot be selected"
+        )
+    if missing_tile:
+        raise TwinMaterialisationError(
+            f"{len(missing_tile)} kept feature(s) carry no source_tile (first "
+            f"index {missing_tile[0]}); the corrected-F1 engine scopes by it"
+        )
+    if not kept:
+        raise TwinMaterialisationError(
+            f"no union feature reaches vote_count >= {min_votes}; the shell is empty"
+        )
+    return kept, {
+        "n_candidates": len(all_features),
+        "n_kept": len(kept),
+        "min_votes": min_votes,
+        "source_geojson": union.get("name"),
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
-    """Materialise one pre-verifier twin.
+    """Materialise one pre-verifier twin (crop-manifest mode or union mode).
 
     Args:
         argv: Command-line arguments.
@@ -169,8 +251,18 @@ def main(argv: list[str] | None = None) -> int:
         Process exit code: 0 on success, 2 on a failed gate.
     """
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--crop-manifest", type=Path, required=True,
-                        help="The verifier stage's candidate_manifest.json.")
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--crop-manifest", type=Path,
+                        help="The verifier stage's candidate_manifest.json (manifest mode).")
+    source.add_argument("--union", type=Path,
+                        help="The committed vote >= 1 union GeoJSON (union mode).")
+    parser.add_argument(
+        "--expect-manifest", type=Path, default=None,
+        help=(
+            "Union mode gate: the verifier stage's candidate_manifest.json; the "
+            "union's feature count must equal its candidate count, else refused."
+        ),
+    )
     parser.add_argument("--min-votes", type=int, required=True,
                         help="Vote threshold k, matching the verified cell.")
     parser.add_argument("--output", type=Path, required=True,
@@ -183,6 +275,47 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     args = parser.parse_args(argv)
+
+    if args.union is not None:
+        union = json.loads(args.union.read_text(encoding="utf-8"))
+        try:
+            features, stats = build_twin_from_union(union, args.min_votes)
+        except TwinMaterialisationError as error:
+            print(f"REFUSED: {error}", file=sys.stderr)
+            return 2
+        if args.expect_manifest is not None:
+            manifest = json.loads(args.expect_manifest.read_text(encoding="utf-8"))
+            n_manifest = len(manifest.get("candidates") or [])
+            if n_manifest != stats["n_candidates"]:
+                print(
+                    f"REFUSED: the union holds {stats['n_candidates']} features but "
+                    f"the verifier stage's crop manifest lists {n_manifest} "
+                    "candidates; they are not the same candidate universe, so the "
+                    "pair would differ in membership as well as in the verifier",
+                    file=sys.stderr,
+                )
+                return 2
+            stats["n_manifest_candidates"] = n_manifest
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(json.dumps({
+            "type": "FeatureCollection",
+            "name": f"twin-{args.min_votes}of-union",
+            "crs": union.get("crs"),
+            "_materialised": {
+                "mode": "union",
+                "source_union": str(args.union),
+                "filter": f"vote_count >= {args.min_votes}",
+                "n_union": stats["n_candidates"],
+                "n_kept": stats["n_kept"],
+                "expect_manifest": str(args.expect_manifest) if args.expect_manifest else None,
+            },
+            "features": features,
+        }, indent=1), encoding="utf-8")
+        print(
+            f"wrote {stats['n_kept']} of {stats['n_candidates']} union features "
+            f"at vote_count >= {args.min_votes} to {args.output}"
+        )
+        return 0
 
     manifest = json.loads(args.crop_manifest.read_text(encoding="utf-8"))
     try:
