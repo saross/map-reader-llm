@@ -156,7 +156,9 @@ def fragility_caveat(image_curve: dict[int, float]) -> str:
     """The A-07 image fragility caveat, computed from the comparator curve.
 
     The 2026-08-17 artefact carried the margin as a literal ("k=3 beats k=1 by
-    0.0016"); it is now read from the curve so a rebuilt comparator (the
+    0.0016", a rounding of the recorded 0.001545 that the archived pre-recovery
+    artefact and findings.md give as 0.0015; the retired-flag sentence below
+    now says 0.0015 — S151, PI instruction); it is now read from the curve so a rebuilt comparator (the
     post-E71 consensus sweeps, S150) cannot leave a stale number behind.
     """
     best_k = max(image_curve, key=image_curve.get)
@@ -173,7 +175,7 @@ def fragility_caveat(image_curve: dict[int, float]) -> str:
                 "flip from 'transfers' to flagged (S135 blind verification, "
                 "MEDIUM-3).")
     return (head + " — above the 0.005 fragility threshold, so the 'transfers' "
-            "verdict is robust to it; the S135 MEDIUM-3 flag (0.0016 on the "
+            "verdict is robust to it; the S135 MEDIUM-3 flag (0.0015 on the "
             "pre-recovery comparator) is retired on the recovered sweeps (S150).")
 
 
