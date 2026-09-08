@@ -54,9 +54,10 @@ project state.
 > permutation contrasts under `results/h12-v2/permutation-t4/`,
 > `apply_fdr_h12v2.py`, `summarise_h12v2.py`, and refresh the
 > registered-exploratory row `h12-v2-hp-hn-ratio`). The three uncited
-> verifier stages (≈ 6,600 crops, ≈ US$9) and the
-> `pv-diag-384-consensus-calibration` output-directory mismatch are the
-> PI's call. Then the standing backlog listed under STATE AFTER S150.
+> verifier stages are RUNNING on sapphire (card
+> `planning/verifier-stage-refresh-2026-09-08.md`, PI ceiling US$20, audit
+> READY); the calibration mismatch was CLOSED (image t = 0.0 headline
+> moved to 3-of-3 on the recovered consensus). Then the standing backlog listed under STATE AFTER S150.
 >
 > **Standing gotchas (new):** the consensus builder's canonical resolver
 > (D6) makes some April sweeps unreproducible — control-rebuild from the

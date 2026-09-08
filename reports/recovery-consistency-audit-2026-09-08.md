@@ -255,7 +255,7 @@ spend is optional under the current register.
 | h12-v2 run_3 residue (§ 2.4) | meta rebuilt from the GeoJSON (326 of 327; `_correction` block; sidecars archived); the recovered tile's output is not preserved anywhere — residue 34 tiles, not 33 | `c053f5a41` |
 | h12-v2 greedy + WBF sweeps stale (§ 2.4) | rebuilt at the original protocols (greedy: only the vote-1 layer changes, 1,518 → 1,521; WBF: 1,097 → 1,099 clusters); the t = 4 greedy set and the vote ≥ 4 WBF set are feature-identical to the archived ones, so both registered cells and `h12-v2-hp-hn-ratio` stand unchanged — no re-score, no permutation re-run | `e7ebc1695` |
 | three uncited verifier stages (§ 3) | **open** — ≈ 6,600 crops at ≈ US$0.0013 each (≈ US$9) if a strict refresh is wanted; none is cited | — |
-| `pv-diag-384-consensus-calibration` output-directory mismatch (§ 5) | **open** — noted for the PI | — |
+| `pv-diag-384-consensus-calibration` output-directory mismatch (§ 5) | the six t = 0.0 sweep cells re-scored on the post-recovery consensus (`results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/`, `275c43fc0`); the image t = 0.0 best threshold moved 1-of-3 → 3-of-3 (0.497 → 0.5127), so a 3-of-3 row is registered and becomes the config's headline; text t = 0.0 stays 3-of-3 (0.6109); the analysis row's range reads 0.513–0.814 and names both directories | `8e98f8edf` |
 
 Disclosure: E71 rider (2026-09-08) in `docs/methodology/preregistration/protocol-errata.md`.
 
