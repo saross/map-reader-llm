@@ -110,17 +110,21 @@ def summary(consensus_dir: Path) -> dict | None:
     return json.loads(p.read_text()) if p.exists() else None
 
 
-def process(run_id: str, pool: str, write: bool) -> None:
+def process(run_id: str, pool: str, write: bool, consensus_dir: Path | None = None,
+            accept: set[str] | None = None) -> None:
     pool_dir = pool_dir_for(run_id, pool)
-    consensus = pool_dir / "consensus"
+    consensus = consensus_dir or pool_dir / "consensus"
     passes = pass_files(pool_dir)
     rewritten = recovered_passes()
     print(f"== {run_id}::{pool}  pool {pool_dir.relative_to(REPO)}  passes {len(passes)}")
     # Gate: a pass the rerun rewrote must be committed at or after the
     # recovery; a pass it never touched was never dead and is complete as is.
+    accept = accept or set()
     stale = [(d, f) for d, files in passes for f in files
              if f"{run_id}::{pool}::{d.replace('_', '')}" in rewritten
-             and not is_post_recovery(f)]
+             and not is_post_recovery(f) and d not in accept]
+    for d in sorted(accept):
+        print(f"  {d}: vintage gate exempted on request — its GeoJSON is taken as the truth")
     n_rewritten = sum(1 for d, _ in passes
                       if f"{run_id}::{pool}::{d.replace('_', '')}" in rewritten)
     print(f"  passes the E71 rerun rewrote: {n_rewritten}")
@@ -156,9 +160,20 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--run", required=True)
     ap.add_argument("--pool", action="append", required=True)
     ap.add_argument("--write", action="store_true")
+    ap.add_argument("--accept-pass", action="append", default=[],
+                    help="exempt a run_N directory from the vintage gate — for a pass the "
+                         "rerun recorded as rewritten whose GeoJSON was never updated (h12-v2 "
+                         "run_3, S150: the recovered tile is lost; the GeoJSON is the truth)")
+    ap.add_argument("--consensus-dir", default=None,
+                    help="the sweep's directory when it is not <pool>/consensus "
+                         "(h12-v2 keeps its greedy sweeps under outputs/h12-v2/greedy/<pool>)")
     args = ap.parse_args(argv)
+    if args.consensus_dir and len(args.pool) != 1:
+        ap.error("--consensus-dir applies to exactly one --pool")
     for pool in args.pool:
-        process(args.run, pool, args.write)
+        process(args.run, pool, args.write,
+                REPO / args.consensus_dir if args.consensus_dir else None,
+                set(args.accept_pass))
     return 0
 
 
