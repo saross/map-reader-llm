@@ -1,9 +1,10 @@
 # Verifier-stage refresh on the recovered candidate sets — 2026-09-08 (S150)
 
-> **Last revised**: 2026-09-08 (original publication). Controls one
-> API-spending block; the PI approved a ceiling of **US$20** on
-> 2026-09-08 ("set up the run to clear the uncited verifier stages, spend
-> up to $20"). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-08 (later still, S151 — run complete, US$8.73
+> at list; § 5 after-run steps done). Controls one API-spending block; the
+> PI approved a ceiling of **US$20** on 2026-09-08 ("set up the run to
+> clear the uncited verifier stages, spend up to $20"). See
+> [§ Changelog](#changelog).
 
 ## 1. What and why
 
@@ -121,6 +122,35 @@ OVERALL: READY TO LAUNCH
 ```
 
 ## Changelog
+
+### 2026-09-08 (later still, S151) — Run complete; § 5 after-run steps done
+
+- **Run**: all three stages complete (889 / 1,319 / 4,149 candidates with a
+  probability; 0 failed, 3 retries; verify calls 06:56–07:22 UTC), committed
+  from sapphire at `43516df9a`. **Cost as recorded**: US$1.24 + US$1.82 +
+  US$5.67 = **US$8.73** — `cost_basis: "list"` in each `run.meta.json`
+  (11.39 M input / 1.01 M output tokens); the flex tier bills at half of
+  list, so the invoice is expected at ≈ US$4.37. Against the § 3 estimate of
+  ≈ US$8.9 and the US$20 ceiling.
+- **§ 5.1** rows registered by `scripts/register_verifier_stage_refresh.py`
+  (idempotent; tier-1 tests) — `34fc71b9f`; passes manifest 1,279 → 1,282,
+  `verify_run_conditions` unchanged (22 pass / 19 partial / 0 fail).
+- **§ 5.2** comparison in `reports/recovery-consistency-audit-2026-09-08.md`
+  § 6.1 — `d79ab6957`. Text stage +0.027 F1 at 20 m, unchanged operating
+  point. The image stage's committed April sweep turned out to be a
+  342-of-802 partial-verification artefact (sweep older than its own
+  probabilities; the 2026-05-06 cleanup never re-swept), so it was re-swept
+  complete at $0 (sapphire; preserved under
+  `results/recovery-reeval-2026-09-08/pv-diag-384/`): 0.6589 → 0.6872, a
+  recovery effect of the text stage's size. e47: first usable PV cell,
+  0.8735 at 20 m.
+- **§ 5.3** E71 rider addendum (same commit).
+- **Regenerated**: uplift supplement and plateau doc — `001a98c97` (the
+  refreshed stages add no condition row; the rebuild swept up the S150-b
+  image 3-of-3 row registered after the previous build, 437 → 438).
+- **PR #12 merged** (`459556ba4`) with the analyses manifests regenerated
+  from the merged sources (63 analyses) and the hypothesis-outcome table
+  regenerated (H13 gains `student-baseline-r2` as related post-hoc).
 
 ### 2026-09-08 (later) — Audit READY; launched on sapphire
 

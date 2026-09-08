@@ -1109,3 +1109,24 @@ The S148 (C1–C4) and S149 (C1–C4) candidates above are also still pending.
   and its repair: "Your recovery from the 'process slip' seems fine to me."
   The slip was reported unprompted in the recap; the reaction is data that
   reporting one's own process errors plainly costs nothing here.
+
+## S151 candidates (pending review, 2026-09-08, drafted at close) — silence never discards
+
+The S148–S150 candidates above are also still pending. This session ran
+without in-session interaction: a resume brief, then the card's after-run
+steps and the PR merge.
+
+- **C1 — A resume brief that names the beacon, the card section, and the
+  next two steps ran a whole session without a round-trip.** "Do the card
+  § 5 after-run steps … then merge PR #12" left one judgement call to the
+  session — whether to spend $0 of sapphire time re-sweeping the April
+  image stage once its committed sweep proved to be a 342-of-802 partial —
+  and the "preserve and compare" policy already answered it. The call was
+  reported as a call, the two register decisions it surfaced (two more
+  unregistered e47 verifier directories; a corpus survey for the staleness
+  class) were left as PI calls.
+- **C2 — "Preserve and compare" caught a staleness class the audit that
+  motivated the run had not looked for.** Comparing old and new sweeps
+  side by side is what exposed that the old image sweep predated its own
+  probabilities; a "refresh and move on" would have recorded a +0.41
+  recovery effect that was really a partial-verification artefact.
