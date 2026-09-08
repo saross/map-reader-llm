@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-09-08T09:07:47Z · 1284 row(s) · schema v1.0.
+> Generated 2026-09-08T12:54:53Z · 1285 row(s) · schema v1.0.
 >
-> **Coverage**: 1284 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 1285 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cands | cost_usd |
 |---|---|---|---|---|---|---|---|---|
@@ -1281,6 +1281,7 @@
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap38::run1 | gemini-3.8-flash | text | low | 0.0 | ok | — | 1 | 0.003871 |
 | gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 11.042451 |
 | gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 11.149652 |
+| gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 4.033745 |
 | gemini37-55map-2026-08-29::g384_ov192_55map_g37::run4 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 11.198634 |
 | gemini37-55map-2026-08-29::g384_ov192_55map_g37::run5 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 11.195205 |
 | gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 12715 | 17.780444 |

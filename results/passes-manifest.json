@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-08T09:07:47Z",
+  "generated_at": "2026-09-08T12:54:53Z",
   "generator_version": "0.7.1",
   "passes": [
     {
@@ -50983,6 +50983,48 @@
           "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json"
         ],
         "last_extracted_at": "2026-09-08T01:41:50Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3",
+      "run_id": "gemini37-55map-2026-08-29",
+      "proposer_pool": "g384_ov192_55map_g37",
+      "pass_n": 3,
+      "model_used": "gemini-3.7-flash",
+      "model_requested": "gemini-3.7-flash",
+      "model_version": "gemini-3.7-flash",
+      "modality": "text",
+      "thinking_level": "low",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 24561,
+      "n_tiles_null_reason": null,
+      "n_candidates_verified": null,
+      "n_tiles_dispatched": 24561,
+      "tokens": {
+        "input_billed": 13797372,
+        "input_cached": 0,
+        "output": 389601,
+        "thinking": 2460525,
+        "total": 16647498
+      },
+      "cost_usd": 4.033745,
+      "wall_clock_s": 41180.684014,
+      "timestamps": {
+        "start": "2026-08-30T08:33:37.326128+00:00",
+        "end": "2026-08-30T19:59:58.010142+00:00"
+      },
+      "retries": 241834,
+      "provenance": {
+        "source_files": [
+          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_3/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json.gz",
+          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_3_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json",
+          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_3_recovery2/detections-detect_brief-text-3.7-flash-2026-08-31.meta.json"
+        ],
+        "last_extracted_at": "2026-09-08T12:54:53Z",
         "extractor_version": "0.7.1"
       }
     },

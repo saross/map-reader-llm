@@ -1,8 +1,8 @@
 # K = 1 gap-fill — worklist and verifier-coverage disclosure
 
-> **Last revised**: 2026-09-07 (regenerated from committed artefacts by `scripts/build_k1_gapfill_worklist.py`; original publication; the K = 1 plan and its disclosure). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-08 (regenerated from committed artefacts by `scripts/build_k1_gapfill_worklist.py`; original publication; the K = 1 plan and its disclosure). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-07T04:32:42Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-08T12:55:27Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 Build order step 2 of `planning/uplift-supplement-2026-08-28.md`. No
 scoring has been run: this document and its worklist are the plan.
@@ -19,8 +19,8 @@ candidates.
 | Status | Cells |
 |---|---:|
 | `already-registered` | 26 |
-| `blocked` | 64 |
-| `ready` | 148 |
+| `blocked` | 52 |
+| `ready` | 161 |
 
 ## With-verifier N = 1 anchors
 
@@ -92,6 +92,7 @@ floor was measured on.
 | `e47-propose-brief` | `outputs/h11/e47-propose-brief/crops/flash-high-text-1of5-v2-failed/candidate_manifest.json` | `flash-high-text-1of5.geojson` | 1 | 66 |
 | `e47-propose-brief` | `outputs/h11/e47-propose-brief/crops/flash-high-text-1of5-v2-final-retry/candidate_manifest.json` | `flash-high-text-1of5.geojson` | 1 | 1 |
 | `e47-propose-brief` | `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/candidate_manifest.json` | `flash-high-text-1of5.geojson` | 1 | 4358 |
+| `e47-propose-brief` | `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5-recovery-2026-09-08/crops/candidate_manifest.json` | `flash-high-text-1of5-recovery-2026-09-08.geojson` | 1 | 4149 |
 | `e47-propose-brief` | `outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/candidate_manifest.json` | `flash-high-text-1of5.geojson` | 2 | 1654 |
 | `e47-propose-brief` | `outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/candidate_manifest.json` | `flash-high-text-1of5.geojson` | 3 | 1072 |
 | `e47-propose-brief` | `outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/candidate_manifest.json` | `flash-high-text-1of5.geojson` | 4 | 753 |
@@ -146,6 +147,7 @@ floor was measured on.
 | `pv-diag-384` | `outputs/h11/pv-diag-384/crops/text-9of10/candidate_manifest.json` | `text-9of10.geojson` | 9 | 708 |
 | `pv-diag-384` | `outputs/h11/pv-diag-384/crops/text-min-t07-true-1of5/candidate_manifest.json` | `text-min-t07-true-1of5.geojson` | 1 | 1586 |
 | `pv-diag-384` | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 802 |
+| `pv-diag-384` | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10-recovery-2026-09-08/crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 889 |
 | `pv-diag-384` | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n10/crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 3412 |
 | `pv-diag-384` | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 2190 |
 | `pv-diag-384` | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 2017 |
@@ -153,6 +155,7 @@ floor was measured on.
 | `pv-diag-384` | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 2017 |
 | `pv-diag-384` | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n10/crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 4638 |
 | `pv-diag-384` | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 2840 |
+| `pv-diag-384` | `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3-recovery-2026-09-08/crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 1319 |
 | `pv-diag-384` | `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 3736 |
 | `pv-diag-384` | `outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n10/crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 1114 |
 | `pv-diag-384` | `outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n5/crops/candidate_manifest.json` | `consensus_t1.geojson` | 1 | 987 |
@@ -312,7 +315,7 @@ uniform:
 
 | Measured floor | Verifier stages |
 |---:|---:|
-| vote_count >= 1 | 77 |
+| vote_count >= 1 | 80 |
 | vote_count >= 2 | 17 |
 | vote_count >= 3 | 21 |
 | vote_count >= 4 | 22 |

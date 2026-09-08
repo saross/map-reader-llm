@@ -1735,3 +1735,20 @@ def test_per_buffer_coverage_is_filled_from_eval_or_pool_union():
     screen = [c for c in extract_conditions(extraction_context("gemini37-screen-2026-08-28"))
               if c["label"] == "g37-text-k5-verified-carried-p0.10-k5"][0]
     assert screen["metrics"]["per_buffer"]["20"]["coverage"] == 1.0
+
+
+@pytest.mark.tier1
+def test_load_json_reads_gzipped_metas_and_meta_files_finds_both(tmp_path):
+    """S151: a pass meta committed as ``.meta.json.gz`` is read like a plain one."""
+    import gzip as _gzip
+
+    from scripts import generate_post_run_report as g
+
+    plain = tmp_path / "a.meta.json"
+    plain.write_text('{"x": 1}', encoding="utf-8")
+    packed = tmp_path / "b.meta.json.gz"
+    with _gzip.open(packed, "wt", encoding="utf-8") as fh:
+        fh.write('{"x": 2}')
+    assert g._load_json(plain) == {"x": 1}
+    assert g._load_json(packed) == {"x": 2}
+    assert [p.name for p in g._meta_files(tmp_path)] == ["a.meta.json", "b.meta.json.gz"]

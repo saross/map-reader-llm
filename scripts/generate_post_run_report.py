@@ -41,6 +41,7 @@ from __future__ import annotations
 
 import argparse
 import functools
+import gzip
 import json
 import re
 import sys
@@ -287,8 +288,30 @@ def build_provenance(source_files: list[str], extracted_at: str | None = None) -
 
 
 def _load_json(path: Path) -> dict:
-    """Load a JSON file (UTF-8)."""
+    """Load a JSON file (UTF-8), transparently decompressing a ``.gz`` one.
+
+    A pass meta can be committed gzipped when its per-item record is too large
+    for the repository as plain text (the first case: the Gemini 3.7 55-map
+    pool's ``run_3`` meta, 24,561 per-item entries). Until S151 (2026-09-08)
+    the extractor globbed ``*.meta.json`` only, so that pass was absent from
+    the passes manifest and every consumer that asserts the manifest's pass
+    count against the disk (the K = 1 anchor worklist) blocked on the pool.
+    """
+    if path.suffix == ".gz":
+        with gzip.open(path, "rt", encoding="utf-8") as fh:
+            return json.load(fh)
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _meta_files(directory: Path) -> list[Path]:
+    """Pass metas in one directory, plain or gzipped, sorted by filename.
+
+    Sorted for determinism (the earliest-dated meta is the row's identity and
+    cost record); a ``.meta.json.gz`` sorts after a ``.meta.json`` of the same
+    stem, which never changes which file is primary because a pass is written
+    in one form or the other, not both.
+    """
+    return sorted([*directory.glob("*.meta.json"), *directory.glob("*.meta.json.gz")])
 
 
 def _repo_rel(path: Path) -> str:
@@ -405,7 +428,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             # meta stays the row's identity/cost record; completed counts
             # union across ALL metas below, per the C3-validated rule the
             # pim branch already documents.
-            meta_files = sorted(run_n_dir.glob("*.meta.json"))
+            meta_files = _meta_files(run_n_dir)
             if not meta_files:
                 continue
             pass_n = int(suffix)
@@ -443,7 +466,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 # join the union here, and are cited in the row's provenance.
                 recovery_metas = sorted(
                     m for frag in pool_dir.glob(f"run_{pass_n}_recovery*")
-                    for m in frag.glob("*.meta.json"))
+                    for m in _meta_files(frag))
                 if completed:
                     completed_union = set(completed)
                     # Union completed items across sibling metas (recovery
@@ -1043,7 +1066,8 @@ def build_run_row(run_id: str, directory_path: str, facts: dict,
         sources.append(bounds_path)
     proposer_dir = run_dir / "proposer"
     if proposer_dir.exists():
-        metas = sorted(proposer_dir.rglob("*.meta.json"))
+        metas = sorted([*proposer_dir.rglob("*.meta.json"),
+                        *proposer_dir.rglob("*.meta.json.gz")])
         if metas:
             sources.append(_repo_rel(metas[0]))
 
