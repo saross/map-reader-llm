@@ -2251,6 +2251,19 @@
      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t1.geojson"
     },
     {
+     "label": "flash-high-image-n5-image-t0.0-consensus-3of3",
+     "architecture": "consensus",
+     "aggregation": "consensus",
+     "proposer_pool": "flash-high-image-n5-image-t0.0",
+     "n_passes": 3,
+     "vote_threshold": 3,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t3/evaluation.json",
+     "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t3.geojson",
+     "notes": "Registered 2026-09-08 (S150): on the E71-recovered consensus this pool's best-F1@20 threshold is 3-of-3 (0.5127), not 1-of-3 (0.497); it becomes pv-diag-384-consensus-calibration's headline for the config. Scored at the sweep's protocol (recovery-reeval-2026-09-08)."
+    },
+    {
      "label": "flash-high-image-n5-image-t0.3-consensus-9of10",
      "architecture": "consensus",
      "aggregation": "consensus",
@@ -3811,6 +3824,26 @@
     {
      "eval_path": "results/uplift-supplement/verifier-pairing/pv-diag-384__verified-adv-text-min-6of10/evaluation.json",
      "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+     "reason": "non-headline threshold of the post-recovery t=0.0 sweep (S150, 2026-09-08); the calibration cites one condition per config at best F1@20"
+    },
+    {
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t2/evaluation.json",
+     "reason": "non-headline threshold of the post-recovery t=0.0 sweep (S150, 2026-09-08); the calibration cites one condition per config at best F1@20"
+    },
+    {
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t1/evaluation.json",
+     "reason": "non-headline threshold of the post-recovery t=0.0 sweep (S150, 2026-09-08); the calibration cites one condition per config at best F1@20"
+    },
+    {
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t2/evaluation.json",
+     "reason": "non-headline threshold of the post-recovery t=0.0 sweep (S150, 2026-09-08); the calibration cites one condition per config at best F1@20"
+    },
+    {
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+     "reason": "duplicate scoring of the registered text 3of3 row's evaluation (recovery-reeval-2026-07-30; identical inputs and protocol, F1 0.6109 both)"
     }
    ]
   },

@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-09-08T01:53:36Z · 437 row(s) · schema v1.0.
+> Generated 2026-09-08T06:58:10Z · 438 row(s) · schema v1.0.
 >
-> **Coverage**: 437 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 438 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -170,6 +170,7 @@
 | pv-diag-384::baseline-pro-text-high-t-0-7 | single-pass | none | — | 1 | 0.745 | 0.7465 | — |
 | pv-diag-384::baseline-pro-text-medium-t-0-0 | single-pass | none | — | 1 | 0.7921 | 0.7903 | — |
 | pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.497 | 0.4671 | 889 |
+| pv-diag-384::flash-high-image-n5-image-t0.0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5127 | 0.4993 | 782 |
 | pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10 | consensus | consensus | 9 | 10 | 0.7312 | 0.6834 | 361 |
 | pv-diag-384::flash-high-image-n5-image-t0.3-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.7119 | 0.6803 | 346 |
 | pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10 | consensus | consensus | 7 | 10 | 0.75 | 0.6784 | 405 |
