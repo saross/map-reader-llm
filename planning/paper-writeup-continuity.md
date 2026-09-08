@@ -111,16 +111,30 @@ project state.
 > (`b504a062f`): `materialise_pairing_twin.py --union` mode + the pairing
 > builder emits materialise-and-score commands; worklist 118 → 169 rows on
 > the grown register (19 ready, 43 ready-after-materialise, 100 blocked);
-> 47 pairing jobs (40 evaluate, 7 corrected-F1) RUNNING on sapphire
-> 4-parallel at the last write — then `compute_verifier_uplift.py` (F1
-> and MCC), supplement rebuild, commit; **registration of the supplement
-> waits on the PI**. **Gotcha (new)**: never overwrite a driver script
+> 47 pairing jobs (40 evaluate, 7 corrected-F1) scored on sapphire
+> 4-parallel, 0 failed (`51392bc59`); `compute_verifier_uplift.py`: **69
+> of 169 pairs on F1 (was 21 of 118), 68 on MCC** (`ba8656352`; the 40
+> twin evaluations waived under ruling 1; verify 22/19/0); the 100
+> pending are the unresolved twins. **Registration of the supplement
+> waits on the PI.** **FLAG, not fixed**: the pre-existing pair
+> `55maps-generalisation::verified-paired` reads uplift 0.7921 because
+> its twin (`outputs/55maps-generalisation/consensus/consensus-4of5.geojson`,
+> projected coordinates, no `crs` member) scored F1 0 on 2026-08-29 — a
+> scoring artefact; re-score with the CRS declared before any use. One
+> genuinely negative pair, `h8-v2::verified-wbf-scale-4` at −0.0003
+> (a wash). Tier-1 on sapphire at the final state (`ba8656352`): 2171 passed, 1 skipped, 27 deselected, 3 xfailed, 4 warnings in 185.73s.
+> **Gotcha (new)**: never overwrite a driver script
 > that a remote `bash` is still reading — the anchors driver was
 > clobbered by the pairing driver's `scp` after its last job and bash
 > read the new bytes (all eight jobs had completed; the exit code lied).
 >
-> **NEXT SESSION**: S150 + S151 user-obs review (PI); D-1..D-5 and D.9
-> rulings; review of §§ R7.2–R7.3.
+> **NEXT SESSION (PI calls queued by the overnight run)**: (a) sign off
+> or amend the Era-2 board card, the frame fork first
+> (`planning/gs-era2-verified-board-2026-09-08.md` § 9); (b) whether to
+> register the uplift supplement now that 69 of 169 pairs compute, and
+> whether to re-score the CRS-less `verified-paired` twin first; (c)
+> re-sign A-07 if the prose correction warrants it; (d) review §§ R7.2–R7.3;
+> (e) S150 + S151 user-obs review; (f) D-1..D-5 and D.9 rulings.
 > **Standing gotchas (new):** obs-writer dispatches must run SEQUENTIALLY
 > (shared Obs numbering and one file); April-era crop manifests record
 > `proposer_votes` where `sweep_f1_greedy_pv.py` reads `vote_count`
