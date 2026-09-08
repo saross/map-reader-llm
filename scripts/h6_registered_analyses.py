@@ -142,11 +142,13 @@ def coverage_note(pro: dict, flash: dict) -> str:
     if f_lo >= p_lo:
         return (f"tile coverage: Pro {pro_txt}, Flash comparator {flash_txt}; "
                 "no one-sided gap")
+    gap_lo, gap_hi = sorted((p_hi - f_hi, p_lo - f_lo))
+    gap_txt = f"{gap_lo}" if gap_lo == gap_hi else f"{gap_lo}-{gap_hi}"
     return (f"tile coverage: Pro {pro_txt} ({', '.join(pro['statuses'])}), Flash "
             f"comparator {flash_txt} ({', '.join(flash['statuses'])}) — the "
-            f"{p_lo - f_lo}-{p_hi - f_hi} tiles the comparator lacks are the E71 "
-            "residue that failed both recovery tiers (deterministic truncation); "
-            "a one-sided gap of that size depresses Flash F1 by well under the "
+            f"{gap_txt} tile(s) per pass the comparator lacks are the E71 residue "
+            "that failed both recovery tiers (deterministic truncation); a "
+            "one-sided gap of that size depresses Flash F1 by well under the "
             "declared comparability windows")
 
 
@@ -160,14 +162,19 @@ def fragility_caveat(image_curve: dict[int, float]) -> str:
     best_k = max(image_curve, key=image_curve.get)
     ordered = sorted(image_curve.values(), reverse=True)
     margin = ordered[0] - ordered[1] if len(ordered) > 1 else 0.0
-    return (f"FRAGILITY (image): the Flash comparator image curve is nearly flat — "
-            f"k={best_k} leads its runner-up by {margin:.4f} F1"
-            + ("; had k=1 won, the relative difference would read 200% and the "
-               "image verdict would flip from 'transfers' to flagged. The image "
-               "'transfers' verdict is not robust to that margin (S135 blind "
-               "verification, MEDIUM-3)." if best_k != 1 else
-               "; with k=1 the winner, the registered metric reads 200% relative "
-               "and the image verdict is FLAGGED (S135 MEDIUM-3 realised)."))
+    head = (f"FRAGILITY (image): the Flash comparator image optimum k={best_k} "
+            f"leads its runner-up by {margin:.4f} F1")
+    if best_k == 1:
+        return (head + "; with k=1 the winner the registered metric reads 200% "
+                "relative and the image verdict is FLAGGED (S135 MEDIUM-3 realised).")
+    if margin < 0.005:
+        return (head + " — under the 0.005 fragility threshold; had k=1 won, the "
+                "relative difference would read 200% and the image verdict would "
+                "flip from 'transfers' to flagged (S135 blind verification, "
+                "MEDIUM-3).")
+    return (head + " — above the 0.005 fragility threshold, so the 'transfers' "
+            "verdict is robust to it; the S135 MEDIUM-3 flag (0.0016 on the "
+            "pre-recovery comparator) is retired on the recovered sweeps (S150).")
 
 
 def limbs(pro_f1: float, pro_cost: float,
