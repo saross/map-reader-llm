@@ -74,7 +74,22 @@ project state.
 > The planned upgrade in the next few weeks stands; the migration should
 > be a fresh filesystem plus `git clone`/`rsync`, not a block clone.
 >
-> **NEXT SESSION**: S150 + S151 user-obs review (PI); nothing else blocks.
+> **S151-c (evening, PI present) — the Results home SETTLED**: PI ruling
+> 2026-09-08: § R7 restructured into three blocks (R7.1 the Gemini 3
+> board and its lessons, unchanged; R7.2 the portfolio transfer and the
+> final board; R7.3 the Gemini 3.7 leg), main-text table = best carried
+> and best oracle per run family (rendered by
+> `scripts/render_r7_family_table.py` from the r2 board JSON; the full
+> 35 cells go to S2). §§ R7.2–R7.3 drafted as zero-draft evidence prose
+> (~1,700 words; register exit checks: 0 em-dashes, 1 semicolon, mean
+> sentence 20.3 words) with a closing [DRAFT NOTE] (chains, the
+> unsupplied 3.7 costs, the 3.8 leg, the 2,200-word budget). Skeleton
+> changelog notes exhibit (iii)'s source. **Overnight run (PI asleep)**:
+> the four 'mine' tasks follow — r2 anchors, Era-2 board card, a07
+> prose, vote-shell materialiser — each closed in this beacon as it lands.
+>
+> **NEXT SESSION**: S150 + S151 user-obs review (PI); D-1..D-5 and D.9
+> rulings; review of §§ R7.2–R7.3.
 > **Standing gotchas (new):** obs-writer dispatches must run SEQUENTIALLY
 > (shared Obs numbering and one file); April-era crop manifests record
 > `proposer_votes` where `sweep_f1_greedy_pv.py` reads `vote_count`

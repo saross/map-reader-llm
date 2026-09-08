@@ -134,6 +134,15 @@ funding; acknowledgements.
 
 ## Changelog
 
+### 2026-09-08 — Exhibit (iii)'s home settled (PI ruling, Session 151)
+
+The 55-map portfolio transfer and the Gemini 3.7 campaign (not yet run
+when this skeleton was written) are reported inside § R7 of the Results
+draft as blocks R7.2 and R7.3, with the 35-cell r2 final board compressed
+to one row per run family (best carried and best oracle) in the main text
+and the full board in S2. D-1 to D-5 remain open; D-4's exhibit (iii) now
+has a drafted source.
+
 ### 2026-08-25 — Original publication
 
 S142, on the PI's "start planning for the usual sections" direction,

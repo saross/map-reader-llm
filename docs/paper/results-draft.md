@@ -10,7 +10,11 @@
 
 ---
 
-> **Last revised**: 2026-08-21 (Session 139: the eight E83-flagged
+> **Last revised**: 2026-09-08 (Session 151: § R7 restructured into
+> three blocks on the PI's ruling, giving the 35-cell final board and
+> the Gemini 3.7 campaign their Results home in §§ R7.2–R7.3). Prior:
+> 2026-09-07 (Session 150: erratum E84, § R7 refreshed to reference
+> r2). Prior: 2026-08-21 (Session 139: the eight E83-flagged
 > tie-set sentences rewritten — MCB admissible sets replace
 > greedy-clique Tier-1 claims). Prior: 2026-08-18 (Session 136:
 > erratum E81 — the § R2
@@ -436,7 +440,9 @@ the audited production rate).
 
 ## R7. Deployment: the 55-map board (reference r2)
 
-*Registration status: post-hoc. The 55-map corpus appears nowhere in the registration. The registration anticipated transfer testing on out-of-sample maps as Stage 2 future work but registered no analysis plan for it, so deployment results are reported as pre-planned characterisation, not registered claims.*
+*Registration status: post-hoc. The 55-map corpus appears nowhere in the registration. The registration anticipated transfer testing on out-of-sample maps as Stage 2 future work but registered no analysis plan for it, so deployment results are reported as pre-planned characterisation, not registered claims. Three blocks (PI ruling 2026-09-08): § R7.1 the calibrate-then-deploy result on the Gemini 3 board, § R7.2 the portfolio transfer and the final board, § R7.3 the model-generation leg.*
+
+### R7.1 Calibrate, then deploy: the Gemini 3 board
 
 The deployment board (reference r2 — the ruling-21 standardised
 reference revised by two PI audits, erratum E84 — 50 m, eight cells,
@@ -470,9 +476,9 @@ the estimated correction (§ M.3; E84) puts F1̂ within 0.0007 of each r2
 point with an interval of about ±0.005 — wider than the gaps between
 tiers, uniform across cells, and therefore unable to re-order the board
 — and is reported beside the point estimates in the results artefact
-rather than as a column here. The r2 final board (35 cells) now also
-carries the A/B stride rungs and the Gemini 3.7 campaign's cells, whose
-results are reported in their own home.
+rather than as a column here. The r2 final board (35 cells) also
+carries the A/B stride rungs and the Gemini 3.7 campaign's cells; those
+are reported in §§ R7.2 and R7.3.
 
 Three deployment lessons sit in this table. **(i) The calibrate→deploy gap
 is a threshold-transfer failure, not a model failure** (Obs 358): the
@@ -509,6 +515,188 @@ is the resolved best instrument, at two calls per tile.
 [Resolved 2026-06-13: carry-forward primary, oracle as the measured
 deployment gap, table F1-ordered as the board — implemented in the
 subsection lead; see Changelog.]
+
+### R7.2 The portfolio transfer: stride geometry at deployment, and the final board
+
+*Registration status: registered by card (`planning/stride-55map-2026-08-25.md`; bets P1–P8 and both carried operating points committed before any deployment scoring), with two post-hoc additions marked in the text (the N = 3 carried cells, the A-versus-B test at N = 5). Post-hoc to the preregistration; characterisation, not registered claims. Analyses `stride55-sweep-oracle-2026-08-27`, `stride55-ladder-2026-08-27`, `stride55-a5-vs-b5-2026-08-27`, `55map-final-board-r2-2026-09-06`.*
+
+The portfolio ran two Gemini 3 text-MINIMAL geometries at ten passes each
+over the full 8,541-tile corpus: A at 384 px with 33 % overlap (stride
+256) and B at 384 px with 50 % overlap (stride 192). Each carried one
+operating point selected on the GS stride ladder and declared before
+launch, A at prob ≥ 0.15 with k ≥ 8 of 10 and B at prob ≥ 0.15 with
+k ≥ 10 of 10. The design froze the configuration axis (one carrier
+configuration per run), so overlap is the only lever between the two
+runs, and eight bets (P1–P8) were named in advance, one of them
+expected to fail informatively.
+
+Both carried points landed above the carried incumbent on the campaign's
+committed instrument, the canonical adjudicated extended reference
+(5,160 mounds at 50 m). A scored 0.8326 and B 0.8422 corrected F1
+against 0.8152 for text HIGH T0.7 × 4-of-5, at MINIMAL thinking where
+the incumbent ran HIGH. The transfer tax, the gap between a carried
+point and the run's own deployment oracle, collapsed from the
+incumbent's +0.0324 to +0.0036 for A and +0.0081 for B. Four features
+of the sweep surface explain the collapse (Obs 437). The k lattice is
+finer at K = 10, so a one-step k error near the top costs 0.004–0.007
+where the same step cost +0.027 at K = 5. The top is flat (A's k5–k8
+all lie within 0.008 of its oracle). The verifier threshold transfers
+exactly (both probability curves peak at 0.15–0.20, and 0.10 collapses
+the board by about 0.12). Finally, the frozen configuration axis left
+no temperature loss to pay. Each committed evaluation was reproduced to
+1e-6 by the sweep before any oracle was read.
+
+The P5 overshoot, B's +0.0270 margin over the incumbent's carried
+point, decomposes additively into the incumbent's transfer tax
+(+0.0324), the oracle-to-oracle geometry gap (+0.0027), and B's own
+tax (−0.0081). The geometry therefore found few additional mounds. The calibration
+transferred instead. On this reading, what GS calibration
+could not see was worth about 0.010 and what it protected was worth
+about 0.03.
+
+P6 failed, as its pre-naming allowed for. B beats A at the carried
+primaries (ΔF1 −0.0096, p = 0.0147, per-sheet sign-swap permutation,
+10,000 draws), at the oracles (−0.0141, p = 0.0001), and at the N = 5
+rung (−0.0116, p = 0.0042, a post-hoc test outside the declared
+family). Every non-tie result survives Benjamini–Hochberg at q = 0.05
+over the seven tests. On the GS geometry grid the two
+geometries had tied (§ R1, Obs 435). A GS tie is bounded ignorance at
+roughly ±0.03 resolution (Obs 362), and a real effect of about 0.01
+sat inside the bound. The effect is one overlap step on one corpus,
+although its sign held at every rung tested.
+
+Pass count saturates at the carried points (P7), where N = 5 is within
+noise of N = 10 for both runs (p = 0.82 and 0.32). The oracles keep a
+small BH-significant residue (−0.004 and −0.005), so saturation is
+real but not complete. The N = 3 carried cells are emergent post-hoc
+nominations. The GS ladder had selected (0.15, k3) for both geometries
+before launch, but the decision to evaluate that rung at deployment
+was taken afterwards (2026-08-28), motivated by the N = 3 oracle's
+position on the cost frontier.
+
+The final board scores every run on reference r2 (35 cells, 512 of 595
+pairs significant, 12 tiers, in `results/55map-final-board-r2-2026-09-06/`).
+One row per run family, its best carried and its best oracle cell:
+
+| run family | carried: F1@50 (tier) | tile-MCC | cost (flex, full) | oracle: F1@50 (tier) at (prob, k) | note |
+|---|---:|---:|---:|---|---|
+| Gemini 3 text HIGH T0.7, K = 5 (the carry-forward) | 0.8162 (T9) | 0.665 | $207 | 0.8380 (T7) at (0.15, k3) |  |
+| Gemini 3 text HIGH T0.3, K = 5 | 0.8294 (T8) | 0.669 | $261 | 0.8399 (T6) at (0.20, k3) |  |
+| Gemini 3 text MIN, K = 5 | 0.7826 (T11) | 0.640 | $23 | 0.8103 (T10) at (0.20, k3) |  |
+| Gemini 3 text MIN uplift, K = 10 | none | none | none | 0.8274 (T8) at (0.15, k5) |  |
+| Gemini 3 image HIGH, K = 5 | 0.8008 (T10) | 0.711 | $195 | 0.8008 (T10) at (0.15, k3) | as shipped (k3); the E82 k4 comparability cell (0.7398, T12) is not tabled |
+| A: Gemini 3 text MIN, 384 px / 33 % overlap, K = 10 | 0.8391 (T7) | 0.693 | $104 | 0.8419 (T6) at (0.15, k7) |  |
+| B: Gemini 3 text MIN, 384 px / 50 % overlap, K = 10 | 0.8503 (T5) | 0.701 | $97 | 0.8560 (T4) at (0.20, k9) |  |
+| 3.7 arm 1: 3.7 proposer + Gemini 3 verifier, K = 5 | 0.8551 (T4) | 0.665 | not supplied | 0.8727 (T3) at (0.15, k5) |  |
+| 3.7 arm 2: all-3.7 stack, K = 5 | 0.8827 (T2) | 0.706 | not supplied | 0.8871 (T1) at (0.95, k5) |  |
+| fourth cell: B K = 10 union + 3.7 verifier | 0.8728 (T3) | 0.726 | not supplied | 0.8813 (T2) at (0.96, k9) |  |
+
+Among the Gemini 3 families B holds the top, B N = 10 oracle 0.8560
+(T4) and B N = 5 carried 0.8503 (T5), above every incumbent cell,
+whose carried points sit in tiers 8–11. The image cell keeps the
+highest tile-MCC among Gemini 3 cells (0.711) but the board's MCC
+crown now belongs to the fourth cell of § R7.3. The practitioner
+recommendation (pre-declared question 4) is B at N = 5 with the
+GS-carried (0.15, k5). That cell scores 0.8503 on r2 (0.8438 on the
+canonical chain) for about $97 full or $77 lean-deploy over 55 sheets,
+above its own N = 10 carried point (0.8497, $174) and the HIGH
+incumbent (0.8162, $207). A budget floor exists at A with N = 3–5 ($35–48 lean),
+holding 0.827–0.832 on the canonical chain. Costs are flex-tier
+estimates rather than billing figures, and the N < 10 rungs' costs
+are simulated from audited per-call rates because those passes ran
+inside the K = 10 campaign. The estimated-correction column (§ M.3)
+moves every cell by −0.0004 to −0.0007 with intervals of about
+±0.005 and re-tiers nothing.
+
+The bets were assessed on the canonical chain, and the board is scored
+on r2. The offset between the two is roughly uniform for these cells
+(B N = 5 carried 0.8438 → 0.8503, B N = 10 carried 0.8422 → 0.8497,
+A N = 10 carried 0.8326 → 0.8391), and no verdict depends on the
+chain.
+
+### R7.3 The model-generation leg: Gemini 3.7 Flash in the proposer and verifier seats
+
+*Registration status: registered by card (`planning/gemini37-screen-2026-08-28.md`, `planning/gemini37-55map-2026-08-29.md`, `planning/gemini37-image-gs-2026-08-30.md`; predictions G1–G4, D1–D7, and I1–I5 with every carried point committed before scoring). Post-hoc to the preregistration, which fixed the model family; characterisation, not registered claims. Analyses `gemini37-screen-2026-08-28`, `gemini37-55map-grid-2026-08-31`, `gemini37-55map-gridboard-2026-08-31`, `gemini37-image-gs-2026-09-01`.*
+
+A GS screen came first. The Gemini 3.7 Flash text proposer under the
+carried Gemini 3 verifier reached 0.9139 F1 at 20 m at (0.10, k5), on
+a 791-candidate union at 59 % unanimity, for about $7.4 all-in.
+Every earlier family step (the 3.5 precedent) had landed at or below
+the Gemini 3 plateau (≤ 0.8934 plus the GS resolution), so the screen's
+pre-named informative outcome G1 fired. The escalation rule then sent
+the family to the 55-map corpus.
+
+At deployment the campaign completed a 2 × 2 grid, proposer (the
+Gemini 3 run B K = 10 union or five 3.7 passes) by verifier (Gemini 3
+or 3.7). Each cell's operating point was committed before scoring.
+Arm 1 (3.7 proposer, Gemini 3 verifier) ran at (0.10, k5), arm 2
+(all-3.7) at (0.80, k5), and the fourth cell (Gemini 3 pool, 3.7
+verifier) at (0.98, k10). On the canonical chain, arm 1 scored 0.8494 against the
+incumbent B N = 5's 0.8438 (+0.0056, p = 0.35), below the corpus's
+MDE80 of 0.013. D1's pre-named informative failure therefore stands,
+because the GS proposer gain of +0.018 did not transfer as a resolvable
+deployment win. Arm 2 scored 0.8763 (+0.0325 over the incumbent, p = 0.0001) and
+the fourth cell 0.8656 against B K = 10's 0.8422 (+0.0234,
+p = 0.0001). Both verifier-axis contrasts are significant (+0.0270 on
+the 3.7 pool, +0.0234 on the Gemini 3 pool), and both proposer-axis
+contrasts are not (+0.0056 and +0.0107, p = 0.35 and 0.074), with BH
+at q = 0.05 over the declared five-test family. The family gain
+therefore lives in the verifier seat (Obs 444). Two mechanisms are visible in
+the sweeps. The 3.7 verifier's probability scale sits at the top of
+the lattice (D7 confirmed, oracle at (0.95, k5)), and its carried
+threshold transferred with a tax of only +0.0043. The 3.7 proposer
+proposes about 3.5 × tighter (12,715 candidates in the K = 5 union
+against roughly 44,000 projected from the Gemini 3 profile) and
+recall-led (D2 confirmed, recall 0.855 against 0.809). The proposer
+seat's gain partly exists, since arm 1's oracle 0.8662 would have
+cleared the incumbent by +0.0224, but its GS-selected threshold
+re-opened a transfer tax of +0.0168 that the all-3.7 arm did not pay.
+
+On the r2 board the all-3.7 stack takes tier 1: arm 2 N = 5 oracle
+0.8871 and carried 0.8827 (T2), which on the board's own instrument
+is +0.0267 above the entire Gemini 3 board including its oracles. The
+fourth cell scores 0.8728 carried (T3) and 0.8813 oracle (T2) and
+holds the board's highest carried tile-MCC, 0.726 at precision 0.952
+and recall 0.806, the discriminating verifier on the noisier Gemini 3
+pool trading recall for precision. Arm 1 carried sits at 0.8551 (T4).
+Saturation by N = 3 replicates for the all-3.7 stack, whose N = 3
+oracle 0.8848 is within 0.0023 of N = 5 on r2 and whose canonical
+N = 3 → 5 step is not significant. It does not replicate for arm 1
+(+0.0076 at the carried points, significant). A single 3.7 pass under the 3.7
+verifier reaches 0.8563 at its rung oracle on the canonical chain,
+above the Gemini 3 five-pass incumbent, but only 0.8421 at the carried
+threshold. The one-pass economy therefore requires a rung-tuned
+threshold that the carry-forward discipline does not supply.
+
+The image screen on GS (I1–I5) moves the modality result of §§ R2 and
+R4. The 3.7 image proposer scored 0.9254 at 20 m under the Gemini 3
+verifier and 0.9308 under the 3.7 verifier, +0.084 and +0.090 over
+the Gemini 3 image anchor of 0.8412 (I1), about five times the
+text-side gain. The within-family text − image gap moved from +0.0549
+(p = 0.001) in Gemini 3 to −0.0115 (p = 0.25) and −0.0043 (p = 0.68)
+in 3.7, which supports parity rather than inversion (I2 overshot its
+prediction to zero). "Text beats image" is therefore a property of the
+Gemini 3 family, not of the task (Obs 447). The pre-agreed trigger for
+a 55-map image extension was not met (all-3.7 image 0.9308 against
+the all-3.7 text swap's 0.9265, +0.0043, not significant and under
+MDE80 ≈ 0.024), so the deployment table carries text cells only.
+
+Cost for this leg is provisional. The campaign's token-basis spend was
+about $171 before the fourth cell (proposer $144, verifier arms
+$12.54 and $14.31). The billed reconciliation is pending (the 3.7 SKU
+has billed at roughly 0.6 × the token basis) and the board's cost
+column for the 3.7 cells is unsupplied, so § R6's frontier is not
+extended to this family here. Thinking volume was 265–277 tokens per
+call on the text arms (D4) and 88–157 on image (I4).
+
+[DRAFT NOTE, S151: (a) chains are named per sentence, canonical for
+the bets and r2 for the board, as the findings documents do; (b) the
+3.7 cost column stays "not supplied" until the audited all-in costs land
+(`FAMILY_COST`); (c) the Gemini 3.8 verifier-seat leg (Obs 448) is not
+drafted here pending its register rows; (d) §§ R7.2–R7.3 run to about
+1,700 words of prose against the skeleton's 2,200-word Results budget, so the
+compression pass will cut the mechanism lists to one clause each and
+keep the table.]
 
 ## R8. What the ground truth can and cannot support
 
@@ -614,6 +802,12 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-09-08 — § R7 restructured into three blocks; §§ R7.2–R7.3 added (Session 151)
+
+**Refresh trigger**: PI ruling 2026-09-08 on the Results home that ruling 5 (2026-09-07) left open. The 35-cell r2 final board and the Gemini 3.7 campaign are reported inside § R7 as its second and third blocks; the eight-cell Gemini 3 board and its three lessons become § R7.1 unchanged. The main-text table is family-compressed (best carried and best oracle per run family, rendered by `scripts/render_r7_family_table.py` from `results/55map-final-board-r2-2026-09-06/final_board_50m.json`); the full board goes to supplement S2. Sources re-read at drafting: `results/stride55-2026-08-27/findings.md`, `results/55map-final-board-r2-2026-09-06/{final-board-50m,estimated-correction}.md`, `results/gemini37-55map-2026-08-31/findings.md`, `results/gemini37-image-gs-2026-09-01/findings.md`, `planning/gemini37-screen-2026-08-28.md`.
+
+**What did NOT change**: every figure in § R7.1 (the E84 values), the registration-status markers, and §§ R8–R9. New: the § R7.1 heading, the pointer sentence, §§ R7.2–R7.3 as zero-draft evidence prose with a closing [DRAFT NOTE] on chains, costs, the 3.8 leg, and the word budget.
 
 ### 2026-09-07 — Erratum E84: § R7 refreshed to reference r2 (Session 150)
 
