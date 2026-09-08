@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-09-08T01:53:36Z · 1279 row(s) · schema v1.0.
+> Generated 2026-09-08T08:12:07Z · 1282 row(s) · schema v1.0.
 >
-> **Coverage**: 1279 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 1282 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cands | cost_usd |
 |---|---|---|---|---|---|---|---|---|
@@ -102,6 +102,7 @@
 | e47-propose-brief::propose_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
 | e47-propose-brief::propose_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.689781 |
 | e47-propose-brief::propose_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.703235 |
+| e47-propose-brief::verified-flash-high-text-1of5-recovery-2026-09-08::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 4149 | 5.670534 |
 | n1-outstanding-384::brief-text-t03::run1 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.576124 |
 | n1-outstanding-384::brief-text-t03::run2 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.57241 |
 | n1-outstanding-384::brief-text-t03::run3 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.579769 |
@@ -440,6 +441,8 @@
 | pv-diag-384::verified-text-9of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
 | pv-diag-384::verified-text-baseline::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
 | pv-diag-384::verified-text-baseline-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 21 | 0.111588 |
+| pv-diag-384::flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 889 | 1.240619 |
+| pv-diag-384::flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1319 | 1.819798 |
 | h12-v2::r1-hn-heavy::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.395056 |
 | h12-v2::r1-hn-heavy::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.400733 |
 | h12-v2::r1-hn-heavy::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.392723 |

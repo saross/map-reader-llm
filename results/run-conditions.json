@@ -69,7 +69,12 @@
      "path": "flash-high-text-n5/propose_brief-text"
     }
    },
-   "verifier_passes": {},
+   "verifier_passes": {
+    "verified-flash-high-text-1of5-recovery-2026-09-08": {
+     "modality": "text",
+     "path": "verified/flash-high-text-1of5-recovery-2026-09-08"
+    }
+   },
    "conditions": [
     {
      "label": "consensus-1of5",
@@ -239,7 +244,8 @@
    "_ignored_evals": [
     "results/rescore-2026-05-31/e47-propose-brief/consensus/flash-high-text-1of5/evaluation.json",
     "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections_propose_brief-text_run05/evaluation.json"
-   ]
+   ],
+   "_note": "Verifier-stage refresh (2026-09-08, S151; card planning/verifier-stage-refresh-2026-09-08.md): first verifier_passes row. The text-only adversarial v1 stage on the pool's rebuilt vote>=1 consensus (4,149 candidates) at verified/flash-high-text-1of5-recovery-2026-09-08 is complete; the pre-recovery verified/flash-high-text-1of5 attempt (57 of 4,358 verified, crops gone) stays unregistered as an abandoned stage. No condition cites it. Comparison: reports/recovery-consistency-audit-2026-09-08.md § 6.1."
   },
   "n1-outstanding-384": {
    "proposer_pools": {
@@ -1664,7 +1670,7 @@
    ]
   },
   "pv-diag-384": {
-   "_note": "GAP-7 (Session 102): proposer_pools (24 = pool x temp) + verifier_passes (88 metas across the pools' verified-v1-nN / session-78-matrix subdirs) now populated. The 10 N1 single-pass baseline conditions (Session 96) are kept verbatim; they reference their pool by relative path-string (benign pool-unresolved). Era-2 487-tile, 384px. Consensus operating-point conditions + the consensus 3c analysis (the buffer-harmonised sweep at results/rescore-2026-06-05/pv-diag-384/consensus-sweep/) are the next authoring step. Model of record: gemini-3-flash (flash pools) / gemini-3.1-pro (pro pools). | E72 remediation (2026-08-02): the four MATCHED-temperature consensus cells (text-t0.7 / text-t1.0 x N=5/N=10, both arms 487/487 tiles) are filed as the 'e43-matched-temperature' analysis over the EXISTING conditions listed above — no parallel 'matched-temp-*' conditions were minted, because that would duplicate them (same GeoJSONs, same 14-buffer + MCC metrics). Their independent house-grain re-score lives at results/e43-matched-temperature/paper-eval/ and is waived into _ignored_evals below.",
+   "_note": "GAP-7 (Session 102): proposer_pools (24 = pool x temp) + verifier_passes (88 metas across the pools' verified-v1-nN / session-78-matrix subdirs) now populated. The 10 N1 single-pass baseline conditions (Session 96) are kept verbatim; they reference their pool by relative path-string (benign pool-unresolved). Era-2 487-tile, 384px. Consensus operating-point conditions + the consensus 3c analysis (the buffer-harmonised sweep at results/rescore-2026-06-05/pv-diag-384/consensus-sweep/) are the next authoring step. Model of record: gemini-3-flash (flash pools) / gemini-3.1-pro (pro pools). | E72 remediation (2026-08-02): the four MATCHED-temperature consensus cells (text-t0.7 / text-t1.0 x N=5/N=10, both arms 487/487 tiles) are filed as the 'e43-matched-temperature' analysis over the EXISTING conditions listed above — no parallel 'matched-temp-*' conditions were minted, because that would duplicate them (same GeoJSONs, same 14-buffer + MCC metrics). Their independent house-grain re-score lives at results/e43-matched-temperature/paper-eval/ and is waived into _ignored_evals below. | Verifier-stage refresh (2026-09-08, S151; card planning/verifier-stage-refresh-2026-09-08.md): the two text-only adversarial v1 stages on the t0.0 pools (image verified-v1-n10, text verified-v1-n3) were re-run on candidate sets rebuilt from the E71-recovered passes (889 and 1,319 candidates) into the '-recovery-2026-09-08' directories registered here as inventory rows beside the originals, which stay as the pre-recovery record. No condition cites either. Comparison: reports/recovery-consistency-audit-2026-09-08.md § 6.1.",
    "proposer_pools": {
     "flash-high-image-n5-image-t0.0": {
      "modality": "image",
@@ -2115,6 +2121,14 @@
     "verified-text-baseline-pro-verifier": {
      "modality": "text",
      "path": "verified/text-baseline-pro-verifier"
+    },
+    "flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08": {
+     "modality": "image",
+     "path": "flash-high-image-n5/image-t0.0/verified-v1-n10-recovery-2026-09-08"
+    },
+    "flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08": {
+     "modality": "text",
+     "path": "flash-high-text-n5/text-t0.0/verified-v1-n3-recovery-2026-09-08"
     }
    },
    "conditions": [

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-08T01:53:36Z",
+  "generated_at": "2026-09-08T08:12:07Z",
   "generator_version": "0.7.1",
   "passes": [
     {
@@ -3760,6 +3760,46 @@
           "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections-propose_brief-text-3-flash-2026-04-09.meta.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "e47-propose-brief::verified-flash-high-text-1of5-recovery-2026-09-08::run1",
+      "run_id": "e47-propose-brief",
+      "proposer_pool": "verified-flash-high-text-1of5-recovery-2026-09-08",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": null,
+      "n_tiles_null_reason": "verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand_NNNN) in execution_stats.completed_items and candidate API items in per_item_metadata, so no tile-scale record exists to report. Completed crop count is in n_candidates_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)",
+      "n_candidates_verified": 4149,
+      "n_tiles_dispatched": null,
+      "tokens": {
+        "input_billed": 7435008,
+        "input_cached": 0,
+        "output": 651010,
+        "thinking": 0,
+        "total": 8086018
+      },
+      "cost_usd": 5.670534,
+      "wall_clock_s": 901.690068,
+      "timestamps": {
+        "start": "2026-09-08T07:07:04.005474+00:00",
+        "end": "2026-09-08T07:22:05.695542+00:00"
+      },
+      "retries": 2,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5-recovery-2026-09-08/run.meta.json"
+        ],
+        "last_extracted_at": "2026-09-08T08:12:07Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -17300,6 +17340,86 @@
           "outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/run.meta.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "pv-diag-384::flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08::run1",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "image",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": null,
+      "n_tiles_null_reason": "verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand_NNNN) in execution_stats.completed_items and candidate API items in per_item_metadata, so no tile-scale record exists to report. Completed crop count is in n_candidates_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)",
+      "n_candidates_verified": 889,
+      "n_tiles_dispatched": null,
+      "tokens": {
+        "input_billed": 1593088,
+        "input_cached": 0,
+        "output": 148025,
+        "thinking": 0,
+        "total": 1741113
+      },
+      "cost_usd": 1.240619,
+      "wall_clock_s": 210.496185,
+      "timestamps": {
+        "start": "2026-09-08T06:56:40.531362+00:00",
+        "end": "2026-09-08T07:00:11.027547+00:00"
+      },
+      "retries": 1,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10-recovery-2026-09-08/run.meta.json"
+        ],
+        "last_extracted_at": "2026-09-08T08:12:07Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "pv-diag-384::flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08::run1",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": null,
+      "n_tiles_null_reason": "verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand_NNNN) in execution_stats.completed_items and candidate API items in per_item_metadata, so no tile-scale record exists to report. Completed crop count is in n_candidates_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)",
+      "n_candidates_verified": 1319,
+      "n_tiles_dispatched": null,
+      "tokens": {
+        "input_billed": 2363648,
+        "input_cached": 0,
+        "output": 212658,
+        "thinking": 0,
+        "total": 2576306
+      },
+      "cost_usd": 1.819798,
+      "wall_clock_s": 291.108169,
+      "timestamps": {
+        "start": "2026-09-08T07:01:05.472758+00:00",
+        "end": "2026-09-08T07:05:56.580927+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3-recovery-2026-09-08/run.meta.json"
+        ],
+        "last_extracted_at": "2026-09-08T08:12:07Z",
         "extractor_version": "0.7.1"
       }
     },
