@@ -3327,6 +3327,38 @@ been rebuilt on the recovered passes, so whether that optimum survives is
 not measured. `findings.md` is corrected in place and both register rows
 now cite E71.
 
+**Rider (2026-09-08, Session 150 — the derived artefacts that never saw the
+recovery, and their refresh)**: a recovery-consistency audit
+(`reports/recovery-consistency-audit-2026-09-08.md`) found that, beyond the
+nine pinned scorings above, the consensus sweeps built from the recovered
+passes had never been rebuilt: `n1-outstanding-384`'s two `pro-*-high-t0`
+pools (the H6 A-07/A-09 comparator), `e47-propose-brief`'s
+`propose_brief-text` pool, and `h12-v2`'s `r3-hp-heavy` pool (greedy and
+WBF), plus three verifier stages no registered condition cites. On the PI's
+instruction the n1 and e47 sweeps were rebuilt at the original protocol
+(`scripts/rebuild_recovered_consensus.py`; pre-recovery sweeps archived
+under `archive/pre-recovery-2026-09-08/`), the eleven cells re-scored at
+their committed protocol (`results/recovery-reeval-2026-09-08/`), the rows
+re-pointed, and H6 recomputed: no verdict moved; the Flash image curve rose
+by up to +0.033 F1 and its optimum's margin from 0.0015 to 0.0094, retiring
+the S135 fragility flag (`results/h6-registered-analyses/findings.md`
+changelog 2026-09-08). A control rebuild of the archived pre-recovery n1
+passes with today's builder reproduces the April sweeps exactly, so those
+deltas are recovery effects alone. Two further findings: (i) `e47`'s April
+sweep is not reproducible at any vintage — `run_5` then held both filename
+conventions' files and the pre-D6 resolver read both (4,491 vs 4,146 t1
+clusters from the same passes) — so its five re-pointed rows also shed a
+D6-class double read; (ii) `h12-v2::r3-hp-heavy::run3`'s recovered tile
+(`K-35-053-3_Elenovo_x672_y3360`) was recorded in the meta and tiles sidecar
+but never reached the pass GeoJSON and is not preserved anywhere; the meta
+is rebuilt from the GeoJSON (326 of 327, an `execution_stats._correction`
+block) and the residue is 34 tiles, not 33. The register now counts
+`run_N_recovery*` fragments towards their pass (48 complete passes had read
+as partial) and fills the conditions manifest's per-buffer coverage. Still
+open: the `h12-v2` greedy and WBF sweeps (cited by `h12-v2-hp-hn-ratio`,
+registered-exploratory) and the three uncited verifier stages (a refresh
+would re-verify ≈ 6,600 crops at ≈ US$0.0013 each).
+
 ---
 
 ### E72: Temperature comparison (group_4/group_12) scored a 240-tile arm against 487-tile bounds — coverage confound in an unregistered exploratory analysis
