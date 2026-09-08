@@ -32510,3 +32510,435 @@ Related: **Obs 453** (the two-mechanism verification base rate, WN-C1
 pattern it quantifies); **Obs 454** (the cache-defect finding, WN-C2,
 whose text-statistic caveat this entry's caveat echoes but
 distinguishes).
+
+## Observation 456: The D40 pinned-vintage drift reaches nine legacy conditions three weeks after the E71 recovery rewrote their inputs — the register keeps both, stamped `input_vintage` and `-post-e71` (Session 150, 2026-09-07; PI ruling 2026-09-08)
+
+**The finding.** Nine `n1-outstanding-384` / `e47-propose-brief` conditions
+— the six `pro-*-high-t0` single passes (`n1-outstanding-384`, image
+run_1–3 and text run_1–3), their two three-run aggregates
+(`baseline-pro-image-high-t-0-0`, `baseline-pro-text-high-t-0-0`), and
+`e47-propose-brief::single-pass-run_4` — carry evaluations the E82 replay
+scored on 2026-08-21 against vintage-frozen copies of the **pre-recovery**
+detections (D40; **Obs 431**), pinned by `_metadata.e82_input_vintage` at
+`c3852ebad`, `1f443fd69`, and `52b0215a6`. The E71 dead-tile recovery
+rerun (`99ae28ec4`, 2026-07-30) had rewritten the underlying files on disk
+**three weeks earlier**; the pins simply outlived the rewrite unnoticed.
+Re-scored against the recovered files with the same recipe
+(`results/rescore-2026-09-07/`, commit `26cc430ad`): the pinned
+evaluations had scored **458–472 of 487 tiles** (text 458/458/460, image
+472/468/470; e47 480), the recovered files score **484–487**. At the 20 m
+headline buffer, F1 moves **+0.011 to +0.023 on the image passes** (recall
+0.669–0.685 → 0.736–0.743), −0.008 to +0.003 on the text passes (recall
+0.818–0.841 → 0.855–0.864), +0.017 / −0.002 on the two aggregates, and
++0.007 on the e47 pass. The deltas **widen with buffer**: image run_1
+alone moves +0.028 F1 at 50 m, recall 0.825 → 0.906 (+0.081) — this is
+the "recall +0.08" figure Session 149's changelog and the continuity
+handoff use as shorthand; the 20 m headline rise is smaller, 0.058–0.074.
+
+**Register decision (PI ruling 3a, 2026-09-07, following D40's own
+2026-08-20 precedent that re-scores to current inputs land as new
+conditions beside the historical ones).** The pinned evaluations **stay
+the record** of what the signed analyses actually consumed — stamped
+`input_vintage` in `results/run-conditions.json` so
+`verify_run_conditions.py` checks each against the commit it names (a
+**reproduction gate**, not a currency gate) and reports it as disclosed
+rather than as a wrong-source failure. The nine post-recovery re-scores
+register **beside** them as `<label>-post-e71` conditions
+(`scripts/register_post_e71_conditions.py`, commits `5448158af` +
+`cf8a93c5d`). Nothing is swapped; no analysis row moves; the register
+reads 22 PASS / 19 PARTIAL / 0 FAIL after the write.
+
+**One disclosure corrected in the same rider.** The H6 A-07 and A-09
+artefacts (`results/h6-registered-analyses/`, signed 2026-08-17) had
+described the Flash comparator passes as `status: partial` at 485–486 of
+487 tiles — the **post-recovery** manifest count — while the F1 values
+they actually consumed were scored at the **pre-recovery** vintage,
+458–472 of 487. The one-sided coverage gap "slightly depresses the Flash
+curve" is therefore 15–29 tiles per pass, not 1–2. A-09's CLOSED verdict
+is unaffected (the Flash-optimal frontier decides that gate, not this
+comparator). A-07's image "transfers" verdict was already flagged
+fragile at S135 (**Obs 415**, 0.0015 F1 margin over its runner-up) and
+its comparator curve was the pre-recovery vintage; at the point this
+rider landed, the consensus cells downstream of the recovered passes had
+**not yet been rebuilt**, so whether the fragile optimum survives was
+explicitly left unmeasured — the gap **Obs 460** closes the next day.
+
+**Why this matters.** This is the concrete, register-level instance of
+the disclosure policy Obs 431 designed in the abstract: a pinned
+evaluation "honestly records scoring against the then-current input, but
+does not reproduce from current inputs," and the fix is to disclose the
+vintage rather than silently treat the artefact as either current or
+broken. Nine conditions, three weeks stale, only surfaced because Session
+149 re-checked reproducibility rather than trusting the pin.
+
+**Caveats.** This nine-condition population is distinct from the two
+**live** `pv-diag-384` t0.0 consensus conditions the original E71
+disclosure (**Obs 373/374**) already re-materialised correctly on
+2026-07-30 (`recovery-reeval-2026-07-30/`) — those were never stale. The
+"+0.08" recall figure is a rounded single-pass, 50 m-buffer maximum
+(image run_1), not the 20 m headline population statistic, which is
+smaller; a reader citing "+0.08" without qualification would overstate
+the paper-facing headline delta.
+
+**Findable later**: D40 pinned-vintage drift, nine legacy conditions,
+E71 recovery rerun three weeks stale, ruling 3a, register_post_e71_conditions.py,
+`-post-e71` conditions, `input_vintage` stamp, reproduction gate not
+currency gate, rescore-2026-09-07, 458–472 of 487 pre-recovery, 484–487
+post-recovery, recall +0.08 shorthand, H6 A-07 A-09 coverage disclosure
+corrected, 22 PASS 19 PARTIAL 0 FAIL, WN-C5.
+
+Sources: `docs/methodology/preregistration/protocol-errata.md` E71
+"Rider (2026-09-07, Session 150)" (read 2026-09-08: the nine-condition
+population, the three pins, the 458–472/487 vs 484–487 tile counts, the
++0.011 to +0.023 / −0.008 to +0.003 F1 deltas, the recall ranges, the
+image run_1 +0.028-at-50 m/+0.081-recall figure, the register decision
+verbatim, the H6 coverage-disclosure correction); `results/rescore-2026-09-07/`
+(read 2026-09-08: `e47-propose-brief/single-pass-run_4/evaluation.json`
+and the eight `n1-outstanding-384/*/evaluation.json` files, confirming
+the rescore home); `scripts/register_post_e71_conditions.py` (read
+2026-09-08: docstring, the nine-row `EXPECTED` set, the stamp/clone
+mechanics; commits `5448158af`, `cf8a93c5d` verified in `git log`);
+`planning/paper-writeup-continuity.md` STATE AFTER S149 and STATE AFTER
+S150 sections (read 2026-09-08: "recall +0.08 on pro-image-high-t0", the
+WN-C5 candidate wording, "22 PASS / 19 PARTIAL / 0 FAIL"); commit
+`99ae28ec4` and `26cc430ad` (verified in `git log`).
+Related: **Obs 431** (the D40 disclosure-at-scoring-time policy this
+rider applies as a concrete register decision); **Obs 373** and **Obs
+374** (the original E71 dead-tile recovery disclosure and rerun this
+rider is downstream of, and whose two live consensus conditions this
+entry's caveat distinguishes from the nine stale ones); **Obs 415** (the
+S135 A-07 image fragility flag, 0.0015 margin, that this rider notes as
+unmeasured on the recovered comparator); **Obs 460** (WN-C10, the next
+day's rebuild of that same comparator, which measures whether the
+fragile optimum survives).
+
+## Observation 457: A recovery completes passes, not derived artefacts — five weeks after E71 rewrote 15 passes, three consensus/union artefact groups and three verifier stages were still voting on the pre-recovery files (Session 150, 2026-09-08)
+
+**The finding.** The E71 dead-tile recovery rerun (`99ae28ec4`,
+2026-07-30 15:25:26 +1000) rewrote the raw pass files for **15** passes
+across six pools (not 16 — the audit brief's `flash35-pv-2x2` entry is
+`n_dead: 0` and was correctly dropped at registration). A
+recovery-consistency audit five weeks later
+(`reports/recovery-consistency-audit-2026-09-08.md`) asked a question
+nobody had asked at recovery time: which **derived** artefacts —
+consensus sweeps, union chains, verifier candidate sets, and the
+evaluations scored against them — were built from those 15 passes and
+never rebuilt? The vintage rule: an artefact is STALE if the last commit
+touching it is an ancestor of `99ae28ec4`
+(`git merge-base --is-ancestor <commit> 99ae28ec4`) **and** it consumes
+one of the 15 passes; where an evaluation carries
+`_metadata.e82_input_vintage`, the pinned commit — not the file date —
+is the vintage. At audit-start state, the answer was: **three stale
+consensus/union artefact groups** (`n1-outstanding-384`'s two
+`pro-*-high-t0` pools, feeding the H6 A-07/A-09 comparator; `e47-propose-brief`'s
+`propose_brief-text` consensus and its `union-input/run_4.geojson`
+chain; `h12-v2`'s `r3-hp-heavy` greedy and WBF sweeps), **three stale
+verifier stages**, **20 stale `evaluation.json` files**, and **two
+registered analyses** whose registered cells cite the stale artefacts
+(`h6-a07-voting-thresholds`, `h12-v2-hp-hn-ratio`), plus one
+output-directory/registered-eval mismatch in
+`pv-diag-384-consensus-calibration`. Mid-audit, one of these groups
+changed under the auditor: commit `185681674` (the n1-outstanding
+consensus rebuild) landed **during** the audit, so the n1-outstanding
+pools are recorded as STALE-at-start, CURRENT-at-end — an explicit
+"in-flight change" note in the report rather than a silent inconsistency.
+
+**Why this matters.** The recovery rerun did its one job — it filled in
+265 (later 275, with the deep sweeps) of 288 dead tiles in the raw pass
+files — but "the passes are complete" and "everything built on the
+passes is complete" are different claims, and nothing in the recovery
+workflow checked the second. Five weeks elapsed between the rerun and
+this audit, during which a signed, `manually_verified_at`-stamped
+analysis (`h6-a07-voting-thresholds`) kept citing evaluations scored
+against consensus sweeps that had never seen the recovered tiles. This
+generalises Obs 431's "disclosure at creation time is cheaper than
+discovery by audit" lesson from *inputs* to *artefact chains*: fixing an
+input file does not propagate downstream by itself, and a recovery
+campaign needs an explicit "what consumes this pool" sweep as a closing
+step, not an assumption.
+
+**Caveats.** The nine `-post-e71` conditions (**Obs 456**) were the one
+population already handled correctly at recovery/disclosure time — the
+audit's own § 4 lists them as unaffected. This audit's scope is the
+specific 15 passes from the 2026-07-30 E71 rerun; it does not cover the
+March 2026 E70 out-of-band `--patch-tiles` campaign or any future
+recovery, so its "check what consumes the pool" rule is a lesson drawn
+from one instance, not a proven general law yet. The rebuild cost for
+the three consensus/union artefact groups was US$0 (committed passes,
+re-scored on-disk); the three verifier stages needed genuine
+re-verification (estimated ≥ 172 new candidates, up to 6,566 crops for a
+strict full re-verify) — as of this audit none was cited by any
+registered condition or analysis, so the spend was optional; it was in
+fact run the same day at US$8.73 list price (Session 151 addendum, out
+of this entry's scope).
+
+**Findable later**: recovery-consistency audit, derived artefacts not
+rebuilt, recovery completes passes not derived artefacts, consensus
+sweeps stale, union chains stale, verifier stages stale, STALE vintage
+rule, git merge-base is-ancestor, 15 recovered passes not 16,
+flash35-pv-2x2 dropped n_dead 0, in-flight change 185681674, 20 stale
+evaluation.json files, h6-a07-voting-thresholds affected,
+h12-v2-hp-hn-ratio affected, pv-diag-384-consensus-calibration
+output-path mismatch, WN-C7.
+
+Sources: `reports/recovery-consistency-audit-2026-09-08.md` §§ 1–4 and
+the "Original publication" changelog entry (read 2026-09-08: the 15-not-16
+scope correction, the vintage rule verbatim, the per-pool findings
+tables in §§ 2.1–2.4, the in-flight-change note, the 20-stale-evaluations
+and 2-affected-analyses summary, the § 3 rebuild-cost table); `docs/methodology/preregistration/protocol-errata.md`
+E71 "Rider (2026-09-08, Session 150)" (read 2026-09-08: the disclosure
+paragraph naming the same three artefact groups and the audit as its
+source); commit `99ae28ec4` and `185681674` (verified in `git log`).
+Related: **Obs 373** and **Obs 374** (the original E71 recovery
+disclosure and rerun this audit is downstream of); **Obs 431** (the D40
+disclosure-at-creation-time policy this audit extends to
+disclosure-at-consumption-time); **Obs 456** (WN-C5, the one population
+this audit's § 4 confirms was already handled correctly); **Obs 458**,
+**Obs 459**, and **Obs 460** (WN-C8/C9/C10, the three specific
+remediation threads this same audit produced).
+
+## Observation 458: The passes manifest miscounted 48 complete passes as "partial" because it never unioned recovery-fragment metas, and the conditions manifest's coverage scalar had been null since its first build (Session 150, 2026-09-08)
+
+**The finding.** Two register defects, both surfaced by the same S150
+tile-coverage question and fixed in one commit (`dd9bc22fb`). **(1)** The
+passes-manifest extractor unioned completed tiles only across the metas
+inside a pass's `run_N` directory, never the additive `run_N_recovery*`
+fragment metas the in-run recovery mechanism (recovery kind 2, distinct
+from the E71 out-of-band rerun) writes alongside them. The effect: **48
+complete passes read as `partial`** — stride 55-map A/B 18, phases B/C
+4, the 3.7 campaigns 15, image-B 10, h13 1 — with 1–322 tiles reported
+"missing" from pools whose fragment-unioned coverage was in fact
+complete. Fragment metas now join the union and are cited in the row's
+provenance; **partial passes fall from 70 to 22**, and every one of the
+22 remaining is a genuine residue (n1-outstanding 6, pv-diag 11,
+retest-phase3c 5). **(2)** `results/conditions-manifest.json`'s
+per-buffer `coverage` scalar had been **null on every row since the
+manifest's first build** — an unnoticed defect, not a regression. It is
+now filled from the evaluation's own `n_processed`/`n_tiles` where the
+scorer recorded a coverage block, else from the proposer pool's
+pass-union coverage (first `n_passes` passes over the pool's dispatched
+frame, fragments included); **355 of 437 rows** now carry a value (the
+remaining 82 are cross-run/verifier-stage rows without a resolvable
+pool, and stay null by design). The combined tile-coverage answer this
+fix enabled: after the E71 recovery and the in-run recovery legs, **22
+passes of 1,279 are genuinely incomplete, none by more than 5 tiles**
+(≤ 1.5 % of frame); the residue is **34 tiles**, of which one tile
+(`K-35-053-3_Elenovo_x672_y3360`) fails in 10 of 12 passes — a
+deterministic, tile-intrinsic truncation, consistent with **Obs 374**'s
+mechanism.
+
+**Why this matters.** This is a sibling silent-undercount defect to
+**Obs 419**'s D6 finding — a different module (the passes-manifest
+extractor rather than the detection-path resolver), the same shape (a
+completeness signal that quietly reports less coverage than the corpus
+actually has, with no error and no warning), and the same discovery
+mechanism (a targeted question — "is the tile coverage actually
+complete?" — rather than a routine run). 48 passes carried a false
+`partial` flag for an unstated period before this fix; any downstream
+process gating on pass status (a rebuild, a coverage report, a
+completeness claim in the paper) would have undercounted.
+
+**Caveats.** The coverage-scalar fill is a best-available heuristic
+(evaluation coverage block preferred, pool pass-union coverage as
+fallback), not a universal solve — the 82 still-null rows are rows
+without a resolvable pool, expected to stay null rather than a residual
+bug. The 48→22 count is specific to this manifest and this fix; it does
+not itself certify that every fragment meta is correctly attributed
+(that is a code-path claim the commit's own tests, not this Obs, verify).
+
+**Findable later**: passes manifest partial passes, run_N_recovery
+fragment metas, 70 to 22 partial passes, dd9bc22fb, conditions manifest
+coverage scalar null since first build, 355 of 437 rows filled, 22
+passes of 1,279 genuinely incomplete, residue 34 tiles,
+K-35-053-3_Elenovo_x672_y3360 deterministic truncation, tile-coverage
+question S150, WN-C8.
+
+Sources: commit `dd9bc22fb` (read 2026-09-08 via `git show --stat` and
+the commit message: the two-defect description, the 48-pass breakdown
+by campaign family, the 70→22 count, the 22-genuine-residue breakdown,
+the coverage-fill rule and 355/437 figure); `reports/recovery-consistency-audit-2026-09-08.md`
+§ 6 actions-taken table (read 2026-09-08: the defect descriptions
+cross-referenced to `dd9bc22fb`); `results/passes-manifest.md` (read
+2026-09-08: header banner "1284 row(s)", spot-checked `partial` rows for
+`n1-outstanding-384`, `pv-diag-384`, `h12-v2::r3-hp-heavy::run3`,
+`retest-phase3c`); `planning/paper-writeup-continuity.md` STATE AFTER
+S150-b section (read 2026-09-08: the "22 passes of 1,279... residue is
+34 tiles... `K-35-053-3_Elenovo_x672_y3360` fails in 10 of 12 passes"
+headline).
+Related: **Obs 419** (the D6 detection-path resolver defect — a sibling
+silent-undercount mechanism in a different module, found the same way:
+a targeted audit rather than routine use); **Obs 374** (the
+tile-intrinsic truncation mechanism this entry's 34-tile residue and
+its one deterministic tile are consistent with); **Obs 457** (WN-C7, the
+same recovery-consistency audit that raised the tile-coverage question
+this fix answers).
+
+## Observation 459: The e47 April consensus sweep is not reproducible at any vintage — `run_5` held both detection-filename conventions and the pre-D6 resolver double-counted it, 4,491 vs 4,146 t1 clusters from the same passes (Session 150, 2026-09-08)
+
+**The finding.** Rebuilding `e47-propose-brief`'s `propose_brief-text`
+consensus on the recovered passes (§ **Obs 457**'s stale-artefact list)
+surfaced a second, independent defect in the same pool, layered on top
+of the recovery staleness: the **committed April sweep itself
+(`1f443fd69`, 2026-04-16) is not reproducible at any vintage**. `run_5`
+of that pool, at the time the sweep was built, held detection files
+under **both** of the project's two coexisting filename conventions
+(Convention A `detections_<config>_run<NN>.geojson` from the Batch API
+engine, Convention B `detections-<config>-<model>-<date>.geojson` from
+the real-time engine — `scripts/lib_detection_paths.py`'s own
+docstring), and the resolver in use at build time read **both**,
+double-counting `run_5`'s detections into the vote. Rebuilt with the
+canonical D6 resolver (landed 2026-08-18, Session 136, per that same
+docstring), the pool's t1 (vote ≥ 1, union) cluster count is **4,146**;
+the pre-D6-era sweep's t1 count was **4,491** — a **345-cluster (≈ 8.3 %
+relative) inflation**, confirmed identically in all five re-pointed
+`e47-propose-brief::consensus-{1..5}of5` rows' notes in
+`results/run-conditions.json`. Because `e47-propose-brief` is one of the
+three pools `lib_detection_paths.py`'s docstring names as genuinely
+mixed-convention in the committed corpus (the other two are
+`pv-diag-384` baseline pools, where the historical failure mode was the
+opposite — an under-count from an A-only glob), this is a **D6-class**
+defect confirmed to have reached a committed, previously-cited artefact,
+not merely a hypothetical risk.
+
+**Why this matters.** Obs 419's audit register (C2) found **0
+under-reads** across 156 glob-based evaluations audited for the D6
+defect class — but that check was for the under-count failure mode (a
+tolerant glob missing passes). This is the opposite direction — an
+**over**-count from a resolver reading two files as if they were two
+different passes' worth of votes — on a pool the C2 audit did not
+independently re-verify at this granularity. It shows that fixing a
+defect class for future runs (D6 landed 2026-08-18) does not
+retroactively validate historical artefacts built before the fix: each
+pre-fix artefact needs its own vintage check, which this
+recovery-consistency audit is the first to have run against this pool.
+Practically: the e47 consensus numbers anyone might have cited before
+2026-09-08 carried **two stacked defects** — pre-recovery vintage
+(missing the 7 recovered tiles' 22 detections) and the D6-class double
+read — both are corrected together in the 2026-09-08 rebuild
+(`results/recovery-reeval-2026-09-08/e47-propose-brief/`).
+
+**Caveats.** The 4,491-vs-4,146 pair is the **t1 (vote ≥ 1, union)**
+cluster count specifically; it is quoted identically across all five
+re-pointed condition rows' notes because it documents the shared
+upstream defect in `run_5`'s file set, not five independent counts.
+`e47-propose-brief::consensus-{1..5}of5` is cited by **no analysis** in
+`results/run-analyses.json` (a `conditions_compared` search returns 0
+for all five), so this defect never reached a signed, paper-facing
+number — it is corrected in the register, not retracted from a claim.
+
+**Findable later**: e47 pre-D6 double read, run_5 both filename
+conventions, 4,491 vs 4,146 t1 clusters, pre-D6 resolver, D6-class
+double read, not reproducible at any vintage, lib_detection_paths.py
+convention A convention B, canonical resolver, recovery-reeval-2026-09-08,
+Obs 419 C2 register 0 under-reads, WN-C9.
+
+Sources: `docs/methodology/preregistration/protocol-errata.md` E71
+"Rider (2026-09-08, Session 150)" (read 2026-09-08: "`run_5` then held
+both filename conventions' files and the pre-D6 resolver read both
+(4,491 vs 4,146 t1 clusters from the same passes)"); `results/run-conditions.json`
+lines 99, 113, 127, 141, 155 (read 2026-09-08: the identical note on all
+five `e47-propose-brief::consensus-Nof5` rows, "t1 4,491 clusters vs
+4,146 from the same passes with the canonical resolver"); `reports/recovery-consistency-audit-2026-09-08.md`
+§ 2.3 (read 2026-09-08: the per-artefact STALE table for the e47 pool
+consensus, union chain, and verified sets, and the "e47's April sweep is
+... a pre-D6 double read" summary in § 6); `scripts/lib_detection_paths.py:1-70`
+(read 2026-09-08: the Convention A / Convention B docstring table, the
+three named mixed pools including `e47-propose-brief/flash-high-text-n5/propose_brief-text`,
+"Created: 2026-08-18 (Session 136, defect D6)").
+Related: **Obs 419** (the D6 resolver defect this entry's over-count is
+a sibling instance of — opposite direction, over-read here vs the
+under-reads that register found none of, both from the same
+two-filename-convention structural cause); **Obs 456** (WN-C5, the same
+pool's `single-pass-run_4` row, whose pinned-vintage treatment is a
+sibling register decision on the single-pass rather than consensus
+rows); **Obs 457** (WN-C7, the same recovery-consistency audit).
+
+## Observation 460: The H6 A-07 image fragility flag retires on the recovered comparator — margin 0.0015 to 0.0094, no verdict moves, and a control rebuild confirms the delta is a recovery effect (Session 150, 2026-09-08)
+
+**The finding.** With the `n1-outstanding-384` `pro-*-high-t0` consensus
+pools rebuilt from the recovered passes (`185681674`) and their six
+comparator cells re-scored at the committed protocol (`10e933ded`), H6's
+A-07 matched-N = 3 voting-curve analysis was re-run
+(`scripts/h6_registered_analyses.py`, `93ff7f4e9`, re-signed
+`38aa9ed1b`, 2026-09-08T01:53:31Z on the PI's instruction). The **Flash
+comparator's image curve** (k = 1/2/3, F1@20 m) moved
+**0.5509 / 0.5499 / 0.5525 → 0.5614 / 0.5760 / 0.5854**; its optimum
+(k = 3) is unchanged, but the **margin over its runner-up moved 0.0015
+→ 0.0094** — crossing the artefact's own 0.005 fragility threshold. The
+0.0015 figure is the one **Obs 415** flagged at discovery (S135,
+2026-08-17): "a k = 1 win there would have flipped the verdict to
+flagged at 200 % relative"; that flag is now **retired** — the "transfers"
+verdict was always correct but previously rested on a margin measured
+against a coverage-shortfall-tainted comparator. **No verdict moves**:
+image still "transfers" (now robustly), text still "flagged" at 67 %
+relative (the Pro text optimum's own margin, 0.0045, is untouched and
+remains fragile, but the 67 %-vs-10 % rule that drives "flagged" does
+not depend on that margin). A-09's Flash same-configuration single-pass
+F1 (text/image) moved 0.4942/0.5276 (scored at 458–472 tiles) →
+0.4919/0.5446 (484–486 tiles); the matched-config F1 ratio moved
+1.42/1.21 → 1.40/1.14; the image matched-config limb still does not
+fire (F1 ratio under 1.20 on the recovered comparator, cost premium
+32 %) — A-09's CLOSED verdict is unaffected, decided by the frontier,
+not this comparator. A **control rebuild** of the archived
+pre-recovery `n1-outstanding-384` passes with today's builder reproduces
+the April sweeps exactly (665/627/604 image, 1118/946/783 text, t1/t2/t3
+feature counts) — every delta above is a recovery effect, not a
+protocol change.
+
+**Why this matters.** This closes the gap **Obs 456** (WN-C5) explicitly
+left open the day before: "the consensus cells have not been rebuilt on
+the recovered passes, so whether that optimum survives is not measured."
+It now is measured, and the answer strengthens the existing verdict
+rather than overturning it — the paper's A-07 "image transfers"
+conclusion is unchanged, but its supporting margin is no longer one
+coin-flip vote from flipping.
+
+**Caveats.** This is the **consensus-level** companion to Obs 456's
+**single-pass-level** fix on the same underlying pool: Obs 456 covers
+the six `pro-*-high-t0` single-pass rows and the two baseline
+aggregates; this entry covers the three-run voting curves those same
+passes feed into via `n1-outstanding-384::pro-{image,text}-high-t0-consensus-{1,2,3}of3`.
+The genuine-**Pro**-side numbers — the actual headline A-06/A-07
+comparison target — are unchanged throughout this refresh; only the
+Flash E57 mis-dispatch comparator moved, because only it consumed the
+recovered `n1-outstanding-384` pool. One internal inconsistency worth
+flagging for the record: the current (post-recovery)
+`a07_voting_thresholds.json`'s own `scope_caveats` prose states the
+pre-recovery margin as "0.0016", while the table in `findings.md`, Obs
+415, and the archived pre-recovery JSON's own field
+(`flash_optimal_margin_over_runner_up: 0.001545`) all give **0.0015** —
+a minor rounding slip in one string within that artefact, immaterial to
+the retirement verdict, not corrected here per this project's no-edit
+policy on existing artefacts outside this Obs's scope.
+
+**Findable later**: H6 A-07 fragility flag retired, S135 MEDIUM-3 flag,
+Flash image consensus curve, 0.5509 0.5499 0.5525 to 0.5614 0.5760
+0.5854, margin 0.0015 to 0.0094, a07_voting_thresholds.json, A-09
+matched-config F1 ratio 1.21 to 1.14, control rebuild reproduces April
+sweeps exactly, 665 627 604, 1118 946 783, 185681674, 10e933ded,
+93ff7f4e9, 38aa9ed1b, WN-C10.
+
+Sources: `results/h6-registered-analyses/findings.md` (read 2026-09-08:
+the A-07 table, "0.6909 / 0.7149 / 0.7223", "0.5614 / 0.5760 / 0.5854",
+the pre-recovery curve restatement "0.4726 / 0.5199 / 0.5665... 0.5509 /
+0.5499 / 0.5525", the § "Fragility" paragraph, and the Changelog
+"2026-09-08 — A-07 and A-09 refreshed on the recovered comparator"
+entry with its before/after table and the "control rebuild ... reproduces
+the April sweeps exactly (665/627/604; 1118/946/783)" sentence);
+`results/h6-registered-analyses/a07_voting_thresholds.json` (read
+2026-09-08: `results.image.flash_curve_f1_at_20m` = 0.561373/0.576/0.585411,
+`flash_optimal_margin_over_runner_up` = 0.009411, the `scope_caveats`
+FRAGILITY string with "0.0016"); `archive/pre-recovery-2026-09-08/h6-registered-analyses/a07_voting_thresholds.json`
+(read 2026-09-08: `flash_optimal_margin_over_runner_up` = 0.001545,
+`flash_curve_f1_at_20m` = 0.550909/0.549906/0.552454); `reports/recovery-consistency-audit-2026-09-08.md`
+§ 2.2 and § 6 (read 2026-09-08: the feature-count table 665/627/604 →
+730/690/648 and 1118/946/783 → 1192/991/842, the `h6-a07-voting-thresholds`
+analysis identification); commits `185681674`, `10e933ded`, `93ff7f4e9`,
+`38aa9ed1b` (verified in `git log`).
+Related: **Obs 415** (the original S135 A-07 finding and the 0.0015
+fragility flag this entry retires); **Obs 456** (WN-C5, the
+single-pass-level register decision on the same pool, whose rider left
+this consensus-level question explicitly unmeasured); **Obs 457**
+(WN-C7, the recovery-consistency audit that found this comparator stale
+and triggered the rebuild); **Obs 459** (WN-C9, the sibling e47
+remediation from the same audit and the same day's work).
