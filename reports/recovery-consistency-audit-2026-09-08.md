@@ -1,6 +1,7 @@
 # Recovery consistency audit — E71 dead-tile rerun (2026-09-08)
 
-> **Last revised**: 2026-09-08 (original publication). See [§ Changelog](#changelog)
+> **Last revised**: 2026-09-08 (later still — § 6.1: the three verifier stages
+> refreshed and compared; the § 6 open item closed). See [§ Changelog](#changelog)
 > for revision history.
 
 Which derived artefacts were built from the **pre-recovery** versions of the passes
@@ -254,12 +255,78 @@ spend is optional under the current register.
 | e47 sweep stale (§ 2.3) | rebuilt and five cells re-scored; the April sweep is additionally a pre-D6 double read of `run_5` (4,491 vs 4,146 t1 clusters at the pre-recovery vintage) — noted on the rows | `e01b8617a`, `93ff7f4e9`, `38aa9ed1b` |
 | h12-v2 run_3 residue (§ 2.4) | meta rebuilt from the GeoJSON (326 of 327; `_correction` block; sidecars archived); the recovered tile's output is not preserved anywhere — residue 34 tiles, not 33 | `c053f5a41` |
 | h12-v2 greedy + WBF sweeps stale (§ 2.4) | rebuilt at the original protocols (greedy: only the vote-1 layer changes, 1,518 → 1,521; WBF: 1,097 → 1,099 clusters); the t = 4 greedy set and the vote ≥ 4 WBF set are feature-identical to the archived ones, so both registered cells and `h12-v2-hp-hn-ratio` stand unchanged — no re-score, no permutation re-run | `e7ebc1695` |
-| three uncited verifier stages (§ 3) | **open** — ≈ 6,600 crops at ≈ US$0.0013 each (≈ US$9) if a strict refresh is wanted; none is cited | — |
+| three uncited verifier stages (§ 3) | **refreshed** (S151, PI ceiling US$20; card `planning/verifier-stage-refresh-2026-09-08.md`): re-run at the recorded configuration on candidate sets rebuilt from the recovered passes (889 / 1,319 / 4,149 crops, 0 failed) into new dated directories beside the untouched originals; US$8.73 at list price (`cost_basis: "list"`; flex bills half); registered as `verifier_passes` inventory rows (e47's first; passes manifest 1,279 → 1,282); compared in § 6.1 — none is cited, nothing in the paper moves | `43516df9a` (outputs), `scripts/register_verifier_stage_refresh.py` |
 | `pv-diag-384-consensus-calibration` output-directory mismatch (§ 5) | the six t = 0.0 sweep cells re-scored on the post-recovery consensus (`results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/`, `275c43fc0`); the image t = 0.0 best threshold moved 1-of-3 → 3-of-3 (0.497 → 0.5127), so a 3-of-3 row is registered and becomes the config's headline; text t = 0.0 stays 3-of-3 (0.6109); the analysis row's range reads 0.513–0.814 and names both directories | `8e98f8edf` |
 
 Disclosure: E71 rider (2026-09-08) in `docs/methodology/preregistration/protocol-errata.md`.
 
+### 6.1 Verifier-stage refresh — preserve and compare (2026-09-08, later; Session 151)
+
+The three stages of § 3 were re-run on 2026-09-08 (card
+`planning/verifier-stage-refresh-2026-09-08.md`; sapphire; commit `43516df9a`;
+US$8.73 at list price — `cost_basis: "list"` in each `run.meta.json`, the flex
+tier bills at half of list). Each refreshed stage sits in a new dated directory
+beside its original, which is untouched. Registered as `verifier_passes`
+inventory rows by `scripts/register_verifier_stage_refresh.py` (passes manifest
+1,279 → 1,282; e47's first). Each `sweep_2d.json` is compared on
+`full_evaluation_bounds` (487 tiles, curator reference): the best F1 over
+vote threshold × probability threshold at 20 m, the operating point that gives
+it, and the best at 50 m.
+
+| stage | candidates | best F1 at 20 m (P / R; n kept) | operating point | best F1 at 50 m |
+| --- | ---: | --- | --- | ---: |
+| pv-diag image t0.0 `verified-v1-n10`, April sweep as committed (`b8961e56f`) | 802 (342 swept) | 0.2739 (0.633 / 0.175; 120) | vote ≥ 1, p ≥ 0.15 | 0.3423 |
+| … the same stage, complete 802 probabilities re-swept (S151, $0; `results/recovery-reeval-2026-09-08/pv-diag-384/image-t0.0-verified-v1-n10-april-complete-resweep/`) | 802 | 0.6589 (0.665 / 0.653; 427) | vote ≥ 1, p ≥ 0.20 | 0.7981 |
+| pv-diag image t0.0 `verified-v1-n10-recovery-2026-09-08` | 889 | **0.6872** (0.658 / 0.720; 476) | vote ≥ 1, p ≥ 0.20 | 0.8241 |
+| pv-diag text t0.0 `verified-v1-n3`, April (`857d5f714`) | 1,256 | 0.8234 (0.856 / 0.793; 403) | vote ≥ 3, p ≥ 0.15 | 0.8568 |
+| pv-diag text t0.0 `verified-v1-n3-recovery-2026-09-08` | 1,319 | **0.8508** (0.863 / 0.839; 423) | vote ≥ 3, p ≥ 0.15 | 0.8884 |
+| e47 `verified/flash-high-text-1of5` (abandoned: 57 of 4,358 verified, no sweep) | 4,358 | — | — | — |
+| e47 `verified/flash-high-text-1of5-recovery-2026-09-08` | 4,149 | **0.8735** (0.928 / 0.825; 387) | vote ≥ 4, p ≥ 0.15 | 0.9028 |
+
+Readings:
+
+- **Text — like-for-like** (both stages complete; the April sweep post-dates
+  its probabilities). +0.027 F1 at an unchanged operating point, almost all
+  of it recall (0.793 → 0.839; precision 0.856 → 0.863). The unverified
+  vote ≥ 1 candidate set's recall rises 0.848 → 0.894 — the recovered tiles'
+  candidates. Verifier uplift over the within-sweep vote ≥ 3, p ≥ 0 row is
+  preserved: 0.6125 → 0.8508 (April: 0.6051 → 0.8234).
+- **Image — the committed April sweep is NOT a comparator.** It was computed
+  on 2026-04-17 (`b8961e56f`) when 342 of the 802 candidates carried a
+  probability; the remaining 460 were verified in the 2026-05-06 cleanup pass
+  (`c6b5e6b10`; `cleanup_history` in `probabilities.json`;
+  `reports/phase3a-verifier-completeness-audit-2026-05-03.md` records the
+  gap) and the sweep was never re-run — its vote ≥ 1, p ≥ 0 row has n = 342
+  and recall 0.186. This is a staleness class § 1 did not look for (a sweep
+  older than its own probabilities). Re-swept on the complete 802
+  probabilities (row 2), the April stage scores 0.6589 and the refreshed
+  stage's 0.6872 at the same operating point is a recovery effect of the
+  text stage's size: +0.028 F1, recall 0.653 → 0.720, precision 0.665 →
+  0.658; unverified vote ≥ 1 recall 0.697 → 0.759. Verifier uplift on the
+  refreshed set: 0.4985 → 0.6872 at vote ≥ 1. The committed April
+  `sweep_2d.json` stays as it is (preserve, do not swap); the re-sweep is
+  preserved beside the other recovery re-evaluations.
+- **e47 — first usable proposer-verifier cell for this pool.** Verifier
+  uplift over the within-sweep vote ≥ 4, p ≥ 0 row: 0.6561 → 0.8735; over
+  vote ≥ 3: 0.5485 → 0.8727. The verifier flattens the vote-threshold curve
+  (0.8489–0.8735 across vote ≥ 2–4) — the same pattern as the registered
+  pv-diag text cells, on a five-pass pool.
+
+None of the six stages is cited by a registered condition or analysis; the
+refreshed directories are inventory, and these readings are the only place
+they are compared. Disclosure: E71 rider addendum (2026-09-08, later) in
+`docs/methodology/preregistration/protocol-errata.md`.
+
 ## Changelog
+
+### 2026-09-08 (later still) — § 6.1 verifier-stage refresh compared; § 6 open item closed
+
+Refresh trigger: the card's § 5 after-run steps (`43516df9a` landed the
+outputs). Numerical claims moved: none in §§ 1–5 (the § 3 cost estimate was
+≈ US$9; recorded US$8.73 at list). New: the § 6.1 comparison table, and the
+finding that the image stage's committed April sweep is a 342-of-802
+partial-verification artefact (re-swept complete at $0). What did not change:
+every finding of §§ 2–5; no registered condition or analysis cites the stages.
 
 ### 2026-09-08 (later) — § 6 actions taken
 

@@ -3360,6 +3360,49 @@ vote ≥ 4 sets are feature-identical to the archived ones, so that analysis
 stands unchanged. Still open: the three uncited verifier stages (a refresh
 would re-verify ≈ 6,600 crops at ≈ US$0.0013 each).
 
+**Addendum (2026-09-08, later; Session 151 — the three uncited verifier
+stages refreshed)**: on the PI's instruction (ceiling US$20; card
+`planning/verifier-stage-refresh-2026-09-08.md`, pre-launch audit READY)
+the three stages were re-run on sapphire at their recorded configuration
+(`verify_adversarial-text` v1, `gemini-3-flash-preview`, thinking minimal,
+T 0.0, one iteration per candidate, 75 px crop padding, real-time flex
+tier, 20 workers) on candidate sets rebuilt from the recovered passes, into
+new dated directories beside the originals, which stay untouched as the
+pre-recovery record (commit `43516df9a`): `pv-diag-384` image t0.0
+`verified-v1-n10-recovery-2026-09-08` (889 candidates; the original
+verified 802), text t0.0 `verified-v1-n3-recovery-2026-09-08` (1,319; was
+1,256), and `e47-propose-brief`
+`verified/flash-high-text-1of5-recovery-2026-09-08` (4,149; the
+pre-recovery attempt had verified 57 of 4,358 and its crops are gone). All
+6,357 candidates carry a probability (0 failed, 3 retries; verify calls
+06:56–07:22 UTC, ≈ 26 min). **Cost as recorded** in each stage's `run.meta.json`
+(`cost_basis: "list"`, `discount: 1.0`; 11.39 M input and 1.01 M output
+tokens): US$1.24 + US$1.82 + US$5.67 = **US$8.73 at list price**, against
+the card's US$8.9 estimate and the US$20 ceiling. The stages ran on the
+flex tier, which the API bills at half of list, so the invoiced figure is
+expected to be ≈ US$4.37; the verify path's estimator records list price
+and the tier is not written to the meta (the pre-launch audit's standing
+warning), so the invoice is the only record of the discount. The three
+directories are registered as `verifier_passes` inventory rows
+(`scripts/register_verifier_stage_refresh.py`; e47's first; passes
+manifest 1,279 → 1,282 rows). No registered condition or analysis cites
+them and nothing in the paper moves. **Preserve-and-compare** (audit
+§ 6.1): the text stage's best 20 m F1 moves 0.8234 → 0.8508 at the same
+operating point (vote ≥ 3, p ≥ 0.15), almost all of it recall (0.793 →
+0.839; precision 0.856 → 0.863). The image stage's April `sweep_2d.json` is not a comparator: it was
+computed on 2026-04-17 when 342 of the 802 candidates had been verified
+(the remaining 460 were verified in the 2026-05-06 cleanup pass,
+`c6b5e6b10`, and the sweep was never re-run), so its best 20 m F1 of
+0.2739 is a partial-verification artefact — a class of staleness the
+2026-09-08 audit did not look for (sweep older than its own
+probabilities). Re-swept on the complete 802 probabilities ($0; preserved
+at `results/recovery-reeval-2026-09-08/pv-diag-384/image-t0.0-verified-v1-n10-april-complete-resweep/`)
+the April stage's best 20 m F1 is 0.6589 (vote ≥ 1, p ≥ 0.20), and the
+refreshed stage's 0.6872 at the same operating point is a recovery effect
+of the same size as the text stage's (+0.028; recall 0.653 → 0.720). The
+e47 stage gives that pool its first usable proposer-verifier cell, best
+20 m F1 0.8735 (vote ≥ 4, p ≥ 0.15).
+
 ---
 
 ### E72: Temperature comparison (group_4/group_12) scored a 240-tile arm against 487-tile bounds — coverage confound in an unregistered exploratory analysis
