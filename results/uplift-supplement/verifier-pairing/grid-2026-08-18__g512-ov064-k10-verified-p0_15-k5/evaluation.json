@@ -1,0 +1,134 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-09-08T13:13:47.618774+00:00",
+  "summary": {
+    "label": "grid-2026-08-18__g512-ov064-k10-verified-p0_15-k5-unverified",
+    "n_detections": 658,
+    "buffers": [
+      {
+        "buffer_metres": 20,
+        "f1": 0.6464,
+        "f1_point": 0.6464,
+        "f1_ci_lower": 0.5885,
+        "f1_ci_upper": 0.6968,
+        "f1_ci_method": "BCa",
+        "precision": 0.5334,
+        "p_point": 0.5334,
+        "p_ci_lower": 0.4657,
+        "p_ci_upper": 0.5959,
+        "p_ci_method": "BCa",
+        "recall": 0.8201,
+        "r_point": 0.8201,
+        "r_ci_lower": 0.7731,
+        "r_ci_upper": 0.8602,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 167,
+          "zero_fraction": 0.34291581108829566,
+          "threshold": 0.5,
+          "coverage_status": "normal",
+          "coverage_source": "zero_fraction_heuristic",
+          "n_processed_tiles": null,
+          "n_unprocessed_tiles": null,
+          "coverage_detail": null
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false,
+        "ci_excludes_point": false,
+        "sparse_coverage": false,
+        "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+      }
+    ],
+    "ci_unreliable_any_buffer": false,
+    "coverage_status": "normal",
+    "tile_classification": {
+      "confusion": {
+        "tp": 198,
+        "tn": 147,
+        "fp": 115,
+        "fn": 27
+      },
+      "mcc": {
+        "point": 0.4589,
+        "mean": 0.4592,
+        "ci_lower": 0.382,
+        "ci_upper": 0.5296,
+        "method": "BCa"
+      },
+      "sensitivity": {
+        "point": 0.88,
+        "mean": 0.88,
+        "ci_lower": 0.8326,
+        "ci_upper": 0.9183,
+        "method": "BCa"
+      },
+      "specificity": {
+        "point": 0.5611,
+        "mean": 0.5615,
+        "ci_lower": 0.5,
+        "ci_upper": 0.6198,
+        "method": "BCa"
+      }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.3",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "c1d6424b7",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-09-08T13:13:45.220334+00:00",
+    "cli_args": {
+      "detections": [
+        "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov064-k10-verified-p0_15-k5/twin-5of10.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": null,
+      "buffers": [
+        20
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov064-k10-verified-p0_15-k5",
+      "label": "grid-2026-08-18__g512-ov064-k10-verified-p0_15-k5-unverified",
+      "mcc": true,
+      "require_clean_inputs": false,
+      "workers": 1
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level",
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
+      "method": "BCa",
+      "methods_measured": [
+        "BCa"
+      ]
+    },
+    "input_files": {
+      "detections": [
+        "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov064-k10-verified-p0_15-k5/twin-5of10.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+    },
+    "input_git_state": {
+      "head": "c1d6424b7",
+      "inputs": {
+        "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov064-k10-verified-p0_15-k5/twin-5of10.geojson": "untracked",
+        "inputs/vectors/references/mounds-reference.geojson": "clean",
+        "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "clean"
+      }
+    },
+    "spatial": {
+      "evaluation_crs": "EPSG:32635",
+      "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
+      "geojson_storage_crs": "EPSG:4326",
+      "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
+    }
+  }
+}

@@ -1,0 +1,10002 @@
+{
+ "type": "FeatureCollection",
+ "name": "twin-9of-union",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+  }
+ },
+ "_materialised": {
+  "mode": "union",
+  "source_union": "outputs/grid-2026-08-18/verifier/g512_ov256/union_k10.geojson",
+  "filter": "vote_count >= 9",
+  "n_union": 2585,
+  "n_kept": 713,
+  "expect_manifest": "outputs/grid-2026-08-18/verifier/g512_ov256/crops/candidate_manifest.json"
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.824388350941902,
+     42.338266524381226
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1008_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.772595435956163,
+     42.40530174777971
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.75193367606898,
+     42.40117179867693
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.87993377400221,
+     42.45028015084367
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2016_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.872876998046365,
+     42.451365752845
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2016_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.86230735609158,
+     42.336249203113596
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.84636419335632,
+     42.34662320160598
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1344_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.83474247082332,
+     42.3461408451638
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1344_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.766469709564603,
+     42.48913527745404
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.82694455843975,
+     42.47914924986877
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1008_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.826057435860456,
+     42.48195954424697
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1008_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.83595150114645,
+     42.472694716629526
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1344_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.864832477349974,
+     42.485789371673796
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1680_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.870740370733007,
+     42.483654357014565
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.863745891474146,
+     42.496027986402645
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1680_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.863827296851223,
+     42.49489392060906
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1680_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.87085967055099,
+     42.496803481668216
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2016_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.87104825728037,
+     42.49612499345879
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2016_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.86958422278886,
+     42.494705846690955
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-052-4_32635_x1680_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.870439115341433,
+     42.4934588247285
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2016_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.76791691464329,
+     42.471060461460866
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.764301143203692,
+     42.46991842204351
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.762264083293367,
+     42.466853358858735
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.769978295063535,
+     42.347817063903236
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.893692074842885,
+     42.42298613696028
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2352_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.88201551024718,
+     42.427191252095895
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-052-4_32635_x2016_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.852441306251936,
+     42.33462294517829
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.824742304357564,
+     42.352289667248485
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1008_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.764853149761453,
+     42.39367449401182
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.764816884272246,
+     42.39264327006428
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.76392507363909,
+     42.38952182589024
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.766096247886228,
+     42.39049575410485
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.767124840897942,
+     42.39062752989412
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.77386963264824,
+     42.39322810682957
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.776009051908368,
+     42.392761496170884
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.772420978472486,
+     42.387627963797854
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.775498597450017,
+     42.38711596015685
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.769049518047304,
+     42.38583114129528
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.769389752073046,
+     42.38474553061639
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.879376227943865,
+     42.44221257236128
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-052-4_32635_x2016_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.75714764222988,
+     42.3549635841312
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.751763233271504,
+     42.35257086346742
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-052-4_32635_x0_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.921057863180113,
+     42.414176450019035
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2688_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.926826203813704,
+     42.42491945159937
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2688_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.78879511325584,
+     42.497485577057034
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.90442563699976,
+     42.45369166885604
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2352_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.915900601238125,
+     42.46898056673148
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2688_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.86934045397415,
+     42.43090198092641
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2016_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.82590416490157,
+     42.466530403657245
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1008_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.83432116824263,
+     42.46306110838153
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1344_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.913444295518445,
+     42.41707574917164
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2688_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.763027902204733,
+     42.44661228875462
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.77222890541442,
+     42.4467372145308
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.786435107615784,
+     42.437409237149524
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.77500386378622,
+     42.44642956578433
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.788355729767076,
+     42.36927430552489
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.944081770748927,
+     42.40818158313316
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3024_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.939960129388695,
+     42.381989944548714
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3024_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.9367117855038,
+     42.364833477654464
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3024_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.902503468669018,
+     42.35126308310381
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2352_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.90657066448667,
+     42.35272581903588
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2352_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.945870694104023,
+     42.354300518181
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3024_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.94656596501066,
+     42.34632043060793
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3024_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.94572353704972,
+     42.333581040236346
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3024_y3696.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.946200933809674,
+     42.35074380511255
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3024_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.96317155009667,
+     42.49563944264065
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3360_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.91694114919287,
+     42.49269028662504
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2688_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.90704976696887,
+     42.492335641810094
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2352_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.924629179997815,
+     42.48451649741968
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2688_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.885724607775334,
+     42.48169430369065
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.93228245059388,
+     42.47569846664468
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3024_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.953389829074013,
+     42.475170081852006
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3360_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.948758891064134,
+     42.39450602500695
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3024_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.95913250591116,
+     42.37076109495743
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3360_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.946097042841448,
+     42.35732101628981
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3024_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.94628062008277,
+     42.351778814398784
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3024_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.77518500072994,
+     42.42151411574254
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.764847062697637,
+     42.42027956574082
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.765738222057514,
+     42.420799333742025
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.862741276974354,
+     42.351305829699264
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x1680_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.967443461644596,
+     42.39963252106648
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3360_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.974133485831445,
+     42.40598042190707
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.77943826919113,
+     42.47493653371139
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.779987683179087,
+     42.46980021957535
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.974342444485412,
+     42.479224457651156
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.984643420738134,
+     42.405610189664955
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-052-4_32635_x3696_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.992899957786918,
+     42.47753896009356
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.987019486168137,
+     42.39721049513532
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.970281372821354,
+     42.385120516286236
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3360_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.98922737281583,
+     42.384672950728245
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.984818441703727,
+     42.37608154693938
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.979517198015575,
+     42.362408631367146
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.99439532904637,
+     42.35213710333306
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.976105339986205,
+     42.34907471546243
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.91826416295297,
+     42.43971628549729
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2688_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.98432091834097,
+     42.4269492091787
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.98648989511772,
+     42.48673216230553
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.76940284557816,
+     42.36688194865162
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.75178455652181,
+     42.365205999580766
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.769766993990217,
+     42.38369492460041
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.786271795876804,
+     42.4136950867379
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.78823327800467,
+     42.4137928817243
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.991196095900893,
+     42.414504619973016
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-052-4_32635_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.997168715991265,
+     42.38010713588684
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.750844953576568,
+     42.42493533381461
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x0_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.996884953949277,
+     42.436824154601865
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.78573894929212,
+     42.384956361110596
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.768677651947563,
+     42.393711308522896
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-052-4_32635_x0_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.963539138735335,
+     42.49559194383607
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3360_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.988589252164545,
+     42.33469404787304
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.972416336245693,
+     42.43341448662293
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.996381719399874,
+     42.44872464779119
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.996334403092575,
+     42.448491113159555
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.996496231797106,
+     42.467706179875975
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.99584936343056,
+     42.464056760057346
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.98453219478599,
+     42.45505008492667
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.789210754978733,
+     42.34125591145455
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x336_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.959617368529447,
+     42.37161803485468
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-052-4_32635_x3360_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.794579853977815,
+     42.38650192573042
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.80051227256324,
+     42.38757891544137
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.802683057309096,
+     42.38537900844743
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.795419403546898,
+     42.422821767266996
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.793190664371714,
+     42.410734112848765
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.79368670525044,
+     42.409569374683564
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.880216730850083,
+     42.472507312382476
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.80368572511997,
+     42.448877988126185
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.80042599225233,
+     42.44041855224973
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.805774154837046,
+     42.43896891488949
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.799468833762646,
+     42.432956630005066
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.01044876363135,
+     42.41773386705736
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x0_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.00738290940925,
+     42.41525940387367
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x0_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.004866372519892,
+     42.41296789244054
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x0_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.00544182513123,
+     42.410473407151976
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x0_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.00206007236543,
+     42.40532221502935
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.002964727575968,
+     42.39646960703807
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x0_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.798255692553376,
+     42.38822641436063
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.074511381087785,
+     42.369589923608416
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.02517153936551,
+     42.4800903825799
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.003609337643205,
+     42.461914932492306
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.999828131335274,
+     42.46004315776178
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.089335822994208,
+     42.40224188583891
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.099183911472192,
+     42.37772838994243
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.09940896090813,
+     42.37654363908425
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.099548353610942,
+     42.37540121488575
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.08306443206721,
+     42.40450436641058
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.096673748911034,
+     42.396023127868176
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.10016516682685,
+     42.38820679178057
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.97276832755344,
+     42.33577118178819
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x3360_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.09093443615994,
+     42.49417368532531
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.094314823882993,
+     42.49300093425012
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.097648993923755,
+     42.49036600705265
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.112716927656667,
+     42.49232769000778
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.11812647779105,
+     42.480851877972405
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.08019474704778,
+     42.34692385245998
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.063293310374224,
+     42.36047078057958
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.075462725749293,
+     42.34695403766092
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.076628447633425,
+     42.48394928248932
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.090484145314417,
+     42.46668398974546
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.09111270758662,
+     42.46568812370552
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.103357759224863,
+     42.45803153825419
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.109247435727358,
+     42.41372617020108
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.115162096333872,
+     42.3489187615673
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.11451219187852,
+     42.34739027933623
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.113358210475603,
+     42.34195877467009
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.1142945337788,
+     42.34200172267218
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.111104433123863,
+     42.340505475540155
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.117815642601855,
+     42.33852683846551
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.004095313558373,
+     42.45251184412354
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.025666683580173,
+     42.43995065641383
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.12089662912607,
+     42.496232991455784
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2016_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.122193830316334,
+     42.491478942660066
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2016_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.129311904405338,
+     42.47932004248291
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.805422658373843,
+     42.47817265660189
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.026282185045208,
+     42.38052931886863
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.075390680521647,
+     42.405645627108676
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.07500030864219,
+     42.39744360843938
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.113311164189756,
+     42.41767103338078
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.13317844663612,
+     42.41160092296303
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2016_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.13719627097689,
+     42.450664282915525
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2016_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.144959932981664,
+     42.498567675982464
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2352_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.801236573678544,
+     42.341949446138294
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x672_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.144908216309396,
+     42.351757636774195
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2352_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.158995240149316,
+     42.46823980950385
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2352_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.149517298460207,
+     42.47983127365157
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2352_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.130531024273562,
+     42.43810800570232
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2016_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.109602887387933,
+     42.427125595877584
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.133394575094908,
+     42.4220360463462
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2016_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.009710317881712,
+     42.34245990869726
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x0_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.14824295702755,
+     42.43433111613805
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2352_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.0352469633071,
+     42.41578239653325
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.157194863753798,
+     42.35537217281087
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2352_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.107618170624896,
+     42.46516810912948
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.11353527769958,
+     42.34131522581011
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.170185143528194,
+     42.45346246512637
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2688_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.034199831763896,
+     42.39027652158962
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.03965763853404,
+     42.38997290177282
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.041223156888304,
+     42.384303755642755
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.14959085744814,
+     42.44942515820466
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x2352_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.034414367913545,
+     42.34028943669204
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.066768454445484,
+     42.38377146327097
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.175900013165784,
+     42.47371223607013
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2688_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.02776964866622,
+     42.47449589554952
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.033952520114383,
+     42.47137126996124
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.17763309607258,
+     42.493757306350126
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2688_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.19619487503597,
+     42.489889061083225
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.173335264542644,
+     42.41814673409407
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2688_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.186307596622513,
+     42.419339268582135
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.196312237815437,
+     42.4114433682013
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.194146918780245,
+     42.41200730946281
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.191800538666676,
+     42.38115680380907
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.10327409271689,
+     42.36213727901795
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.18916995147503,
+     42.38767635505194
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.186250220160943,
+     42.39838484545886
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.197035689300453,
+     42.407324275118256
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.199349659498896,
+     42.40513255037609
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.203953116241824,
+     42.42306119008393
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.20394576370013,
+     42.49285677448158
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.209732302704765,
+     42.48156667212322
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.1300214829739,
+     42.47533501966383
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.040514245443756,
+     42.37155588826175
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.03652437295374,
+     42.365709084721466
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.03868035921622,
+     42.35702735602006
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.04212079127625,
+     42.35834723361832
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.202954913502154,
+     42.46876378237737
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.206281603837766,
+     42.38337179875623
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.189500613001748,
+     42.45308422862471
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.03687910278035,
+     42.48499105029774
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x336_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.041749288072037,
+     42.49620318710018
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.20431475768986,
+     42.42305138029061
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.212494184818844,
+     42.41727538627278
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.210096252795516,
+     42.41091364106422
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.121193441472116,
+     42.45690810513718
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2016_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.119542623866703,
+     42.44385947674433
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1680_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.20300249801303,
+     42.45902738229004
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.228096459067913,
+     42.42995417168566
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.217526342031128,
+     42.38415167171643
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.228867920467753,
+     42.372538500593926
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.227167706921065,
+     42.36380679083379
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.241464993928318,
+     42.43087859733597
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.216331938373187,
+     42.48113758347917
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.225663411709593,
+     42.48179435406046
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.2218222784492,
+     42.480800516079185
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.22172095108074,
+     42.48946994505298
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.99742449582244,
+     42.40823633305191
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.998049097730952,
+     42.40738239345297
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-052-4_32635_x4032_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.21490186448038,
+     42.408764323017344
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.230111444550893,
+     42.408226418620366
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.221507376035778,
+     42.40089808569771
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.20556124112713,
+     42.40179401771837
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.200312406457662,
+     42.41648663633684
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.23210127088727,
+     42.468255103456954
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.24558642071589,
+     42.358726457457834
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.239659270893902,
+     42.35913508818482
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.243441334455547,
+     42.351444861237184
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.24228869227513,
+     42.35090668348437
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.242909068747903,
+     42.35024529876702
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.24043216281676,
+     42.34721441378685
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.221518920668643,
+     42.452984615640176
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.198598511300098,
+     42.407340409223195
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3024_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.233907788577675,
+     42.46451172210825
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.229930155494092,
+     42.44732938170914
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.226857413130038,
+     42.42813699281407
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.040040550120114,
+     42.40377565738021
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.040355891223296,
+     42.39942111135134
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.231926841573358,
+     42.38453724611069
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.227354738084987,
+     42.392560832097026
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.231143538212773,
+     42.39018250747054
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.241778490140646,
+     42.39192395666214
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.236272229841145,
+     42.381787333554435
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.233864248488484,
+     42.46499058675453
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.243547322339648,
+     42.49570539035104
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.23758634003636,
+     42.37274505392253
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.233001497286548,
+     42.370019972667194
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.241185999780946,
+     42.36820090357559
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.24517192102941,
+     42.39056103552596
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.24639260521533,
+     42.48011149589435
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.247738918731,
+     42.40979485363465
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.238078426036203,
+     42.335113862853255
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.246475640086363,
+     42.35176901398903
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.24794472562137,
+     42.35152280969198
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.243137145698824,
+     42.362919799668305
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.247724311956183,
+     42.350548787356985
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.247207100206406,
+     42.40306210083819
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.2473436699007,
+     42.40242065114342
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.247869173144583,
+     42.35374526266132
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.048240554811706,
+     42.47351671885609
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.058258970623424,
+     42.461131862602265
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.0438058813737,
+     42.45432444211377
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.050558552741222,
+     42.4010545641185
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.07456611499379,
+     42.3974740122145
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.05762391867071,
+     42.46108422670608
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x672_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.049544828878954,
+     42.48624980153575
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.054242166729452,
+     42.48425204176326
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.052775850635037,
+     42.477395118591225
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.047615503153573,
+     42.33638981538552
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.244855842433438,
+     42.479051822367886
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.770757580998882,
+     42.3019295745583
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-062-2_Rakovski_x336_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.750699753724366,
+     42.21599177186805
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.762062775426887,
+     42.289942003589466
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.761990643791854,
+     42.283117165324335
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.77132868578317,
+     42.27825085879311
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.764895246408095,
+     42.22669570719589
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.761142522552294,
+     42.225881963748094
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.767659819850454,
+     42.22378979710364
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.768551429226683,
+     42.22079646877196
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.759724896910022,
+     42.27181272002778
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.765774422114006,
+     42.26999069237034
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.769077243784054,
+     42.27492353820916
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.773471128664706,
+     42.266686626553
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.764345281455597,
+     42.26188743149173
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.763440888261144,
+     42.26127727085061
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.751289882867212,
+     42.25830900539285
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.771050888355024,
+     42.255880965429355
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.775070903306933,
+     42.25672156067533
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.82326294978595,
+     42.250978011099065
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.83190714260768,
+     42.241847677646675
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.995775673812826,
+     42.461379111083495
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-052-4_32635_x4032_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.99609318181155,
+     42.44464963161064
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-052-4_32635_x4032_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.8423767544453,
+     42.271789295382554
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.847110451102516,
+     42.28077436789508
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.84809439273096,
+     42.28006582241319
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.823660573983137,
+     42.27378054528049
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.824172460436305,
+     42.272759925614594
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.825652853232306,
+     42.271526817715895
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.834511133989533,
+     42.26594418284368
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.053598485076407,
+     42.37816421912194
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.058724083238193,
+     42.37285498491141
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.84806224297218,
+     42.24974762232252
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.240224040518513,
+     42.43922718173233
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.238174284297898,
+     42.43902645679388
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.238019591797496,
+     42.43840862589798
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.23720632867269,
+     42.43789049785258
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.2377044513411,
+     42.437391231626066
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.238660476555776,
+     42.43738025967047
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.23963747915354,
+     42.437439877644564
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.237938603621096,
+     42.43582652510847
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.831114757524688,
+     42.29164887700357
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.81107172699461,
+     42.304621180359966
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.8197171268972,
+     42.30667641683792
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.823654763228095,
+     42.30789680417927
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.824714903670245,
+     42.30909083108977
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.815593574085234,
+     42.28902286810514
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.05894598533588,
+     42.49907563833753
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.071025780111754,
+     42.4926071866787
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.166506313801218,
+     42.41071959943297
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x2688_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.82906526271428,
+     42.31812479302631
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.81384390665248,
+     42.32081238248622
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.810810769361222,
+     42.31621826486808
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.80638324496406,
+     42.31720996182577
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.81617461439872,
+     42.313396810703836
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.810517196246334,
+     42.31112454762531
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1008_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.833599520046377,
+     42.31208060564673
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.833563102692246,
+     42.31525468328317
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.84446614921834,
+     42.320432303072614
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.848487755697647,
+     42.32144748883898
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.849162737049372,
+     42.326617919361546
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.846205999029795,
+     42.32756440447754
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.841154350191374,
+     42.31222796901534
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.84183736987366,
+     42.312738751126446
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.849931351161167,
+     42.31482285939482
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.866223830592123,
+     42.24660324971444
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.871127107902762,
+     42.23974446328997
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.868937164817446,
+     42.325637586945064
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.852242535228662,
+     42.3261764034954
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.873149559984814,
+     42.32326984603761
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.87258925239768,
+     42.32143068808317
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.880971580483884,
+     42.31896416846519
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.206348824219436,
+     42.383147763181434
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.860014304958067,
+     42.23734540895351
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.873806017615333,
+     42.22046287005267
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.843055675070822,
+     42.305938811571565
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.8547497352411,
+     42.30338364520575
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.855638767278098,
+     42.30012239761395
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.86554178997286,
+     42.29985311666399
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.86690953719446,
+     42.298816782092665
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.866399635833528,
+     42.30278788389078
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.855988175483724,
+     42.31125340314094
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.8478349009472,
+     42.30870911346093
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.874527353045014,
+     42.16905277552476
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.85965794510929,
+     42.280641387025334
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.875090349883752,
+     42.278529317858144
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.04324425531288,
+     42.405586146597855
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.045069015190283,
+     42.39263423297627
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.05047020780877,
+     42.3906481888558
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.052090298137497,
+     42.391022634724386
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.047375736563097,
+     42.388581732149206
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.04818709105258,
+     42.388572997759375
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.047392452691184,
+     42.38772737025739
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.04588062121648,
+     42.387147517058224
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.04685795279073,
+     42.38703911235035
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.87948187259003,
+     42.18944414790624
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.88327442780295,
+     42.18411065266076
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.88294235016061,
+     42.226727783596715
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.892526517574446,
+     42.22760968490968
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.892403789898722,
+     42.22101287389645
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.897061076536406,
+     42.234607330089034
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.89192859311282,
+     42.247802238249044
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.891182981501935,
+     42.22746098156922
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.885040805927716,
+     42.29718873687204
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.88407970000462,
+     42.29642459874975
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.755450878318463,
+     42.32150896475835
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.762255609646243,
+     42.31344317538849
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x0_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.90259373265841,
+     42.259812982234514
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.90431075428285,
+     42.25803848612632
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.90799152961528,
+     42.256839877008005
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.902936480403127,
+     42.18281458382862
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.900141073704596,
+     42.174917772382734
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.868852530645803,
+     42.304666472213334
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.87102759599556,
+     42.30647468464138
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.805938671319083,
+     42.31254402590677
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x672_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.931325560879067,
+     42.24787625503285
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.900560437478923,
+     42.29507023402712
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.927905103078977,
+     42.33190339371816
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.92678714333518,
+     42.32856548974599
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.918778864228866,
+     42.32718346135929
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.91207245909943,
+     42.32189946755443
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.921713968005303,
+     42.31713085380431
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.917067614088094,
+     42.31648059173369
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.92856516747866,
+     42.319732822630456
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.902025184661312,
+     42.231628942381654
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.926422402794188,
+     42.20466018484226
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.90723068311951,
+     42.20289212521254
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.931088876260617,
+     42.20087995095824
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.927529272192835,
+     42.197230574862814
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.86626584709857,
+     42.26170656136005
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.866582892629054,
+     42.2600190950175
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.077575556983742,
+     42.49753438553786
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1008_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.094671976876448,
+     42.49301877183133
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.098019131525263,
+     42.49034812995927
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x1344_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.929661118111458,
+     42.3117330306445
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.916537918015234,
+     42.31256553139662
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.921613102718894,
+     42.31141165289792
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.83499695699966,
+     42.236988529299325
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1344_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.917135981472843,
+     42.18566151674281
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.920390375038195,
+     42.26840222047687
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.92882442335943,
+     42.261647985317694
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.915613197752382,
+     42.267623937650086
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.9393601891884,
+     42.22017474441893
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.898320049469923,
+     42.20326371890342
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.901589182520922,
+     42.20583030753068
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.940228853349463,
+     42.28637114152307
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.943485697254506,
+     42.24975432800797
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.950712471020672,
+     42.24447366890485
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.955886770005243,
+     42.249592180780034
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3360_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.942733846579113,
+     42.263697999703915
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.930882823830864,
+     42.32306179596605
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.94361422426878,
+     42.316740594531126
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.945405781589624,
+     42.31609535796461
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.945656252900896,
+     42.31685113139985
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.9440437786675,
+     42.22936030403265
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.77800068258554,
+     42.27976181360904
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.77813812223259,
+     42.267401753537676
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.779817663401666,
+     42.26805645038912
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.788562041252188,
+     42.285352729490256
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x672_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.972279190824924,
+     42.27047409917398
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.9651263247047,
+     42.26135467193263
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3360_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.949409428420836,
+     42.18792641698135
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.938652913742327,
+     42.17473048935281
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.93770636139479,
+     42.29666890379591
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.936763407944127,
+     42.33220221945715
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.934345822232206,
+     42.33026341238697
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.937269336301437,
+     42.32643297021406
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.976201665414635,
+     42.22208559199854
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.969708964452536,
+     42.216217030039935
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3360_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.970990388700613,
+     42.21591399410431
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3360_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.77500134612111,
+     42.30596900666553
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.776578652030288,
+     42.30044576224031
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.975719744788936,
+     42.179076081621794
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.978407520646886,
+     42.31791808436411
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.98396562184341,
+     42.316795850369296
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.984254221550867,
+     42.32788617722871
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.215428262317204,
+     42.493160615016016
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-053-3_Elenovo_x3360_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.983726806311964,
+     42.28742768663835
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.97596380864336,
+     42.29057397271944
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.984951225906805,
+     42.282215110054125
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.990010197653593,
+     42.27691370232774
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.983017047546493,
+     42.27491584293325
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.92605328166935,
+     42.17486869648074
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2688_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.941245684351816,
+     42.19583633821843
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.99496081552647,
+     42.170945713520055
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.97066886446874,
+     42.253324754569846
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3360_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.94238104702037,
+     42.171673821241285
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.982740376457325,
+     42.252573077629606
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.990566774163362,
+     42.20921084125857
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.983655034423045,
+     42.24200923876032
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.986919457303074,
+     42.24183531473411
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.986842890774348,
+     42.22259931283676
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.984945939375585,
+     42.219151442327714
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.994860563642426,
+     42.21348429408136
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.99496610321169,
+     42.303062678660794
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.997822440802743,
+     42.17073738872534
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.995799701403293,
+     42.27345873460623
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.995523306086163,
+     42.27201514559879
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.995206171288203,
+     42.268651771596716
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.99742134792088,
+     42.26860602081939
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.997751538823042,
+     42.26752587360338
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.99765899503652,
+     42.27394762530296
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.995910801443245,
+     42.26317955691734
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.982378021589152,
+     42.252556287726286
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.77785959689664,
+     42.26324245967191
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.78914276016673,
+     42.26055957414825
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x672_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.998117144544686,
+     42.28766706157111
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.980343119495394,
+     42.30379492743548
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3696_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.94909895602629,
+     42.320815972893
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3360_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.776753496306704,
+     42.329145309974976
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.795430996809866,
+     42.27259290721279
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x672_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.791199233436096,
+     42.25014430159837
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x672_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.790734049296972,
+     42.291353837079164
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x672_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.798731036519335,
+     42.28435187181838
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x672_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.88477970310965,
+     42.296639200202996
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-062-2_Rakovski_x2016_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.997250051447253,
+     42.187639811588525
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x4032_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.962774787529444,
+     42.29301259188627
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3360_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.511757360508454,
+     41.87810445516636
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x0_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.515016887297637,
+     41.87658655748626
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x0_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.5035107311017,
+     41.86502711508808
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x0_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.506884464876716,
+     41.84223165758114
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x0_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.509566685976385,
+     41.838184400053606
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x0_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.806588415331824,
+     42.24736366570468
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x672_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.799898302724742,
+     42.231100954273735
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-062-2_Rakovski_x672_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.517093113464895,
+     41.90089589630046
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x0_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.894477497172538,
+     42.264126923385376
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x2352_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.780589307106986,
+     42.33254153857584
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x336_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.58583582472234,
+     41.87256488583961
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1344_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.5879480981321,
+     41.87260612761765
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1344_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.582417737424628,
+     41.894126097818344
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1344_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.616162784423427,
+     41.91191576832994
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.63304193369952,
+     41.935209016684446
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.601906165488256,
+     41.91205526531913
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.60133363678211,
+     41.90727420745403
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x1344_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.603291656020986,
+     41.90331851306791
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.61663825799806,
+     41.84153358944713
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.615254813887734,
+     41.84055270643335
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.614825784564136,
+     41.83927653296925
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.617743139072914,
+     41.83940590224064
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.616220543477894,
+     41.83562437572923
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.619415747198953,
+     41.8355746797981
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.510105601562145,
+     41.961343322696074
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x0_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.933804622528815,
+     42.17587122741056
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.610026969872976,
+     41.89334418324016
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.650272693591734,
+     41.98569269976645
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.65199064134804,
+     41.97125751301472
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.630442621298496,
+     41.8782607147914
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.627944006880128,
+     41.87091330383737
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.63400443242004,
+     41.87135099150892
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.650872834310675,
+     41.867528309353894
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.571556362157633,
+     41.91996461790814
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1008_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.579893968281574,
+     41.92214339175929
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x1008_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.57279323920937,
+     41.91542433824927
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1008_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.641545992146042,
+     41.94843829620802
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.63919339863095,
+     41.94308671235091
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.650366651943315,
+     41.94261675696262
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.512835573322043,
+     41.86343532068401
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x0_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.52506831634062,
+     41.859939416694274
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.519571837312444,
+     41.942475185097855
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.63118759849704,
+     41.90041933329577
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.651984158164776,
+     41.896957129722026
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.648397680093588,
+     41.904736204741695
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.566555840496868,
+     41.878332681657
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1008_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.64491859455762,
+     41.95399226858985
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.93083718311271,
+     42.27640129318303
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x3024_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.678370873984907,
+     41.91634295879815
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.520635645149977,
+     41.8529956275131
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x336_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.65946055700658,
+     41.98416635352853
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.68243568793894,
+     41.973954437521016
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.526258681036197,
+     41.92623801692349
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.636248381797685,
+     41.965229979232376
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.635161259925724,
+     41.968628757970784
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.632598847469247,
+     41.967883269577754
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.63447532240916,
+     41.955612790889816
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.625881328732284,
+     41.95420830826868
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.634336656096725,
+     41.851566940915376
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.653591392755985,
+     41.97573611367198
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.51913925736209,
+     41.97910928626147
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x0_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.54349547615942,
+     41.89166090385931
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.66867675987709,
+     41.86238610595928
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.667890046693444,
+     41.95965870606544
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.680089741631317,
+     41.942890682594076
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.679720483111645,
+     41.98498743703523
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.6709559155314,
+     41.97823748276814
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.52231409286629,
+     41.95924443262039
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x336_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.51901326700141,
+     41.96598579146333
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x0_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.53088385916391,
+     41.876084164094706
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x336_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.534620402472743,
+     41.88304992738055
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.53932687659387,
+     41.8790747414261
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x336_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.533581827845246,
+     41.87048282376468
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.53394737144207,
+     41.86584124654937
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.54248748357717,
+     41.868781928115496
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.541613560278677,
+     41.865650048546485
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.69874780141984,
+     41.93828478393186
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3024_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.61800135919256,
+     41.855692779339655
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.62078314202729,
+     41.83952967280873
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.709901542823612,
+     41.97848867532534
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3360_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.530157898485104,
+     41.890883673389546
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.54159825599934,
+     41.87403829180705
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.596763878198182,
+     41.876613449991325
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x1344_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.604799997825225,
+     41.8675871919649
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x1680_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.661373314471945,
+     41.85950911254903
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y3024.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.62293612335842,
+     41.980254575494385
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.622192232641165,
+     41.976659908385486
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.620920885915577,
+     41.97425944109033
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.53904494192054,
+     41.841656963231735
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.536981822331487,
+     41.83709512194024
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.71003791989224,
+     41.98081388543707
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3360_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.68156670620295,
+     41.9584551622349
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.723206159459096,
+     41.95807088786739
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x3360_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.654218884212064,
+     41.84096858276323
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.704385374588103,
+     41.927669432821034
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x3360_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.72406834430383,
+     41.921862372282526
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.723878438454744,
+     41.92025849472316
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.718778429175856,
+     41.9309505780569
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3360_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.71416387718953,
+     41.921246246662896
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3360_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.707492172893357,
+     41.92330675288041
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3360_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.526649891743176,
+     41.9321673484192
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x336_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.53201666308526,
+     41.950668059336415
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.53325582511576,
+     41.945941663220246
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x336_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.535725200136923,
+     41.981587132276005
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x336_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.52324066386269,
+     41.97634666269646
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.732986841263823,
+     41.932359137531456
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.73898518352836,
+     41.93236085382779
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.74120161354933,
+     41.9198421067136
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.74420600239242,
+     41.97769608920048
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.73591506142593,
+     41.99186490406221
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.73189699689233,
+     41.94841857510128
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.73120017509772,
+     41.96118159329365
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.70038408114111,
+     41.97582497398244
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3024_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.73449082694945,
+     41.96018007777089
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.738006208538632,
+     41.96011158582865
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.746467433855397,
+     41.96226345668877
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.74621060199815,
+     41.960591547895945
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.747618715475475,
+     41.958614630978644
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.732736263770118,
+     41.95360626191436
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.741488925068328,
+     41.946778121181545
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.739390072647456,
+     41.944723444840754
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.735283475687204,
+     41.94268590259647
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.735554992841113,
+     41.94583651185425
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.740812278993086,
+     41.89396809788124
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.731152873919967,
+     41.928424854382634
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.746293908399377,
+     41.92782446173832
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.747545625577093,
+     41.92479405362863
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.742494421218044,
+     41.92278316081141
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.73862158961574,
+     41.917400228445544
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.73948891925144,
+     41.91614235575969
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.735954854941696,
+     41.915391557143494
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.743084500423002,
+     41.914138780694806
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.740732589690335,
+     41.91314562948692
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.736916439784824,
+     41.912365158229164
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.734379318324116,
+     41.91227897877016
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.74288164588453,
+     41.91110050034295
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.739920153265803,
+     41.910636741142966
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.746519711340706,
+     41.91040664745907
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.739361180481264,
+     41.90843618927294
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.740767399776647,
+     41.883015302158604
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.74665845348909,
+     41.92553853398656
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.747645255523857,
+     41.923343502164336
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.747285494544457,
+     41.88965021046804
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.74717587603159,
+     41.87838378380909
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.746717535025102,
+     41.97361747720991
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.746477380388356,
+     41.966946673531034
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.733973314594873,
+     41.90663237744513
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.551879117620807,
+     41.95151958172608
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.550844447386012,
+     41.93297975539859
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y1344.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.746771643239402,
+     41.915770532157154
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.731162959979475,
+     41.96148906593188
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.736356023418622,
+     41.89037121685277
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.731452281223856,
+     41.873784944239254
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.666955353977663,
+     41.844114233354986
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.67033996146053,
+     41.84255458630895
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.666306564918802,
+     41.836831181696375
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.551056485831822,
+     41.984211894910985
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.745154879747613,
+     41.87009300527234
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.733317152553788,
+     41.8678725054423
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.740165753118408,
+     41.86219074333617
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     24.86178169681911,
+     42.20433758168886
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-062-2_Rakovski_x1680_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.7154818529273,
+     41.89453537776149
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3360_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.54604359875308,
+     41.878508661181385
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.553659539121313,
+     41.8712463132296
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x672_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.54301563748389,
+     41.95343660408603
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x672_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.554574687379358,
+     41.94817578779283
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.553287526984683,
+     41.878603967532726
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.558659454699892,
+     41.872968452219915
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x672_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.573376685917708,
+     41.89767553339861
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x1008_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.545380154772435,
+     41.99913051460776
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y0.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.747066559802064,
+     41.89345891045467
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.732206319133333,
+     41.86633680154613
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.5225477546069,
+     41.95952215619652
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.547447293313994,
+     41.91318189444002
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x672_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.557629938298994,
+     41.89745828163989
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.561682483446614,
+     41.91414587801487
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x1008_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.552051717563575,
+     41.91353599778825
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.7321407106623,
+     41.94856557674229
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.670393379102666,
+     41.840207518500975
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.684682867558397,
+     41.83938100987811
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3024_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.690050823052648,
+     41.837747060346175
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3024_y3360.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.62717791445187,
+     41.89057023589725
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2016_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.5265024055912,
+     41.91233233691714
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x336_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.547738857981717,
+     41.88665482067981
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.72443343931048,
+     41.911126158670264
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.723689659268132,
+     41.904243656540814
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3360_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.728782648200863,
+     41.91057398077968
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.731113229013836,
+     41.90433436698981
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.730888275679874,
+     41.91481906752712
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y1680.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.724287294124426,
+     41.899249579773404
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.548145572619255,
+     41.88671958425307
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-078-1_Lesovo_x672_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.693188476919495,
+     41.958584063845834
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3024_y672.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.706514093891222,
+     41.94842784577931
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3360_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.642601477480948,
+     41.93989905104071
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2352_y1008.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.734543810939584,
+     41.894660975012
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2016.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.73951376531637,
+     41.97960494564054
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y336.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.666243934238246,
+     41.88515717473454
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x2688_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.7360558580572,
+     41.86125619505283
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x3696_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.744825148451596,
+     41.86141638963592
+    ]
+   },
+   "properties": {
+    "vote_count": 10,
+    "source_tile": "K-35-078-1_Lesovo_x4032_y2688.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.24800745493037,
+     42.38005706076928
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y2352.png"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.248010882717157,
+     42.37904446912268
+    ]
+   },
+   "properties": {
+    "vote_count": 9,
+    "source_tile": "K-35-053-3_Elenovo_x4032_y2688.png"
+   }
+  }
+ ]
+}
