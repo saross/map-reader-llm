@@ -229,6 +229,19 @@ Report, not decision. Inputs the walk asked for:
 
 ## Changelog
 
+### 2026-09-08 (later, S151) — A-07's retired-flag prose corrected: 0.0015, not 0.0016
+
+**Trigger**: PI instruction (2026-09-08). The A-07 artefact's retired-flag
+sentence gave the pre-recovery image margin as 0.0016 where the archived
+pre-recovery artefact's field (0.001545) and this document say 0.0015. The
+literal lived in `scripts/h6_registered_analyses.py`; corrected there and the
+three artefacts regenerated on sapphire from the committed script. **Before →
+after**: the one word; the three `generated_at` stamps. **What did not
+change**: every figure, verdict, and gate in A-06, A-07, and A-09; the
+register rows and their 2026-09-08T01:53:31Z signatures (the PI may wish to
+re-sign A-07, since its artefact post-dates the signature by this prose
+correction).
+
 ### 2026-09-08 — A-07 and A-09 refreshed on the recovered comparator (S150, PI instruction)
 
 **Refresh trigger**: the recovery-consistency audit
