@@ -2,7 +2,7 @@
 
 # Passes manifest
 
-> Generated 2026-09-08T01:41:50Z · 1279 row(s) · schema v1.0.
+> Generated 2026-09-08T01:53:36Z · 1279 row(s) · schema v1.0.
 >
 > **Coverage**: 1279 pass(es) across the decomposed runs (sub-step 3b in progress).
 
@@ -447,7 +447,7 @@
 | h12-v2::r1-hn-heavy::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.398324 |
 | h12-v2::r3-hp-heavy::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.397736 |
 | h12-v2::r3-hp-heavy::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.382915 |
-| h12-v2::r3-hp-heavy::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.397642 |
+| h12-v2::r3-hp-heavy::run3 | gemini-3-flash-preview | image | high | 0.7 | partial | 326 | — | 3.397642 |
 | h12-v2::r3-hp-heavy::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.382294 |
 | h12-v2::r3-hp-heavy::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.391195 |
 | h8-v2::pure-positive-canon::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.629811 |

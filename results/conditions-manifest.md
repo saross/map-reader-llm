@@ -2,7 +2,7 @@
 
 # Conditions manifest
 
-> Generated 2026-09-08T01:41:50Z · 437 row(s) · schema v1.0.
+> Generated 2026-09-08T01:53:36Z · 437 row(s) · schema v1.0.
 >
 > **Coverage**: 437 condition(s) across the decomposed runs (sub-step 3b in progress).
 
@@ -84,11 +84,11 @@
 | consensus-384-t1-0::single-pass-run_28 | single-pass | none | — | 1 | 0.3957 | 0.0298 | 586 |
 | consensus-384-t1-0::single-pass-run_29 | single-pass | none | — | 1 | 0.3901 | 0.0298 | 580 |
 | consensus-384-t1-0::single-pass-run_30 | single-pass | none | — | 1 | 0.4044 | 0.0341 | 564 |
-| e47-propose-brief::consensus-1of5 | consensus | consensus | 1 | 5 | 0.1669 | 0.0882 | 4491 |
-| e47-propose-brief::consensus-2of5 | consensus | consensus | 2 | 5 | 0.3868 | 0.1728 | 1659 |
-| e47-propose-brief::consensus-3of5 | consensus | consensus | 3 | 5 | 0.5188 | 0.3081 | 1080 |
-| e47-propose-brief::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6394 | 0.3879 | 738 |
-| e47-propose-brief::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7143 | 0.5028 | 461 |
+| e47-propose-brief::consensus-1of5 | consensus | consensus | 1 | 5 | 0.1798 | 0.0882 | 4149 |
+| e47-propose-brief::consensus-2of5 | consensus | consensus | 2 | 5 | 0.4128 | 0.1971 | 1537 |
+| e47-propose-brief::consensus-3of5 | consensus | consensus | 3 | 5 | 0.5471 | 0.3374 | 998 |
+| e47-propose-brief::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6543 | 0.4049 | 699 |
+| e47-propose-brief::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7326 | 0.5262 | 455 |
 | e47-propose-brief::baseline-single-pass | single-pass | none | — | 1 | 0.4706 | 0.0101 | 1180 |
 | e47-propose-brief::single-pass-run_1 | single-pass | none | — | 1 | 0.3709 | 0.294 | 1614 |
 | e47-propose-brief::single-pass-run_2 | single-pass | none | — | 1 | 0.3416 | 0.2347 | 1755 |
