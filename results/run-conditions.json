@@ -73,6 +73,14 @@
     "verified-flash-high-text-1of5-recovery-2026-09-08": {
      "modality": "text",
      "path": "verified/flash-high-text-1of5-recovery-2026-09-08"
+    },
+    "verified-flash-high-text-1of5": {
+     "modality": "text",
+     "path": "verified/flash-high-text-1of5"
+    },
+    "verified-text-baseline": {
+     "modality": "text",
+     "path": "verified/text-baseline"
     }
    },
    "conditions": [
@@ -245,7 +253,7 @@
     "results/rescore-2026-05-31/e47-propose-brief/consensus/flash-high-text-1of5/evaluation.json",
     "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections_propose_brief-text_run05/evaluation.json"
    ],
-   "_note": "Verifier-stage refresh (2026-09-08, S151; card planning/verifier-stage-refresh-2026-09-08.md): first verifier_passes row. The text-only adversarial v1 stage on the pool's rebuilt vote>=1 consensus (4,149 candidates) at verified/flash-high-text-1of5-recovery-2026-09-08 is complete; the pre-recovery verified/flash-high-text-1of5 stage (4,358 of 4,358 verified, complete after the 2026-05-06 cleanup 6683952ac, never swept) stays unregistered pending a PI call. No condition cites either. Comparison: reports/recovery-consistency-audit-2026-09-08.md § 6.1."
+   "_note": "Verifier-stage refresh (2026-09-08, S151; card planning/verifier-stage-refresh-2026-09-08.md): first verifier_passes row. The text-only adversarial v1 stage on the pool's rebuilt vote>=1 consensus (4,149 candidates) at verified/flash-high-text-1of5-recovery-2026-09-08 is complete; the pre-recovery verified/flash-high-text-1of5 stage (4,358 of 4,358 verified, complete after the 2026-05-06 cleanup 6683952ac, never swept) stays unregistered pending a PI call. No condition cites either. Comparison: reports/recovery-consistency-audit-2026-09-08.md § 6.1. | PI ruling 2026-09-08 (S151, 'yes, register'): the April stages verified/flash-high-text-1of5 (4,358 of 4,358, complete after the 2026-05-06 cleanup; the pre-recovery record of the refreshed stage) and verified/text-baseline (the same text-only adversarial v1 verifier on the N=1 propose_brief pass's 1,180 detections, 2026-04-08) are registered as inventory rows. The 2of5-5of5 directories are CPU-derived vote-threshold subsets of the 1of5 probabilities, not verifier runs, and stay unregistered. No condition cites either. Like-for-like sweep of the April 1of5 stage: results/recovery-reeval-2026-09-08/e47-propose-brief/."
   },
   "n1-outstanding-384": {
    "proposer_pools": {

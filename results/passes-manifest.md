@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-09-08T08:12:07Z · 1282 row(s) · schema v1.0.
+> Generated 2026-09-08T09:07:47Z · 1284 row(s) · schema v1.0.
 >
-> **Coverage**: 1282 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 1284 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cands | cost_usd |
 |---|---|---|---|---|---|---|---|---|
@@ -103,6 +103,8 @@
 | e47-propose-brief::propose_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.689781 |
 | e47-propose-brief::propose_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.703235 |
 | e47-propose-brief::verified-flash-high-text-1of5-recovery-2026-09-08::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 4149 | 5.670534 |
+| e47-propose-brief::verified-flash-high-text-1of5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 57 | 0.077856 |
+| e47-propose-brief::verified-text-baseline::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1180 | 1.636178 |
 | n1-outstanding-384::brief-text-t03::run1 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.576124 |
 | n1-outstanding-384::brief-text-t03::run2 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.57241 |
 | n1-outstanding-384::brief-text-t03::run3 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.579769 |

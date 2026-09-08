@@ -128,7 +128,10 @@ def check_stage_on_disk(stage: dict[str, Any], outputs: Path = OUTPUTS) -> list[
     stage_dir = outputs / stage["run_id"] / stage["path"]
     if not stage_dir.is_dir():
         return [f"{stage['key']}: directory missing: {stage_dir}"]
-    for name in ("run.meta.json", "probabilities.json", "sweep_2d.json"):
+    required = ["run.meta.json", "probabilities.json"]
+    if stage.get("has_sweep", True):  # April stages registered by ruling were never swept
+        required.append("sweep_2d.json")
+    for name in required:
         if not (stage_dir / name).is_file():
             problems.append(f"{stage['key']}: {name} missing")
     probs = stage_dir / "probabilities.json"
@@ -147,11 +150,14 @@ def check_stage_on_disk(stage: dict[str, Any], outputs: Path = OUTPUTS) -> list[
     return problems
 
 
-def plan(rc: dict[str, Any]) -> list[dict[str, Any]]:
+def plan(rc: dict[str, Any], stages: tuple[dict[str, Any], ...] = STAGES,
+         notes: dict[str, str] | None = None) -> list[dict[str, Any]]:
     """Compute the register edits still needed; empty when already applied.
 
     Args:
         rc: The parsed ``results/run-conditions.json``.
+        stages: The rows to ensure (default: this refresh's three stages).
+        notes: Per-run ``_note`` text to ensure (default: :data:`NOTES`).
 
     Returns:
         A list of actions, each ``{"kind": "row"|"note", "run_id": ..., ...}``.
@@ -160,8 +166,9 @@ def plan(rc: dict[str, Any]) -> list[dict[str, Any]]:
         ValueError: A row key already exists with a different path (a collision
             is never silently overwritten).
     """
+    notes = NOTES if notes is None else notes
     actions: list[dict[str, Any]] = []
-    for stage in STAGES:
+    for stage in stages:
         run = rc["decomposition"][stage["run_id"]]
         existing = run.setdefault("verifier_passes", {}).get(stage["key"])
         if existing is None:
@@ -170,7 +177,7 @@ def plan(rc: dict[str, Any]) -> list[dict[str, Any]]:
             raise ValueError(
                 f"{stage['run_id']}::{stage['key']} already registered with path "
                 f"{existing.get('path')!r}, expected {stage['path']!r}")
-    for run_id, note in NOTES.items():
+    for run_id, note in notes.items():
         current = rc["decomposition"][run_id].get("_note") or ""
         if note not in current:
             actions.append({"kind": "note", "run_id": run_id, "note": note})
@@ -217,11 +224,15 @@ def main(argv: list[str] | None = None) -> int:
         print("dry run — nothing written")
         return 0
     apply(rc, actions)
-    # ensure_ascii=False keeps the register's existing em-dashes literal (no escape churn).
-    RUN_CONDITIONS.write_text(
-        json.dumps(rc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    write_register(rc)
     print(f"wrote {RUN_CONDITIONS.relative_to(REPO_ROOT)}")
     return 0
+
+
+def write_register(rc: dict[str, Any]) -> None:
+    """Write the register back; ``ensure_ascii=False`` keeps its em-dashes literal."""
+    RUN_CONDITIONS.write_text(
+        json.dumps(rc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":
