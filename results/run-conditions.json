@@ -4299,7 +4299,8 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/h12-v2/with-mcc/r3-hp-heavy/evaluation.json",
-     "detections": "outputs/h12-v2/greedy/r3-hp-heavy/consensus_t4.geojson"
+     "detections": "outputs/h12-v2/greedy/r3-hp-heavy/consensus_t4.geojson",
+     "notes": "Sweep rebuilt 2026-09-08 on the E71-recovered run_5 (S150): the t=4 / vote>=4 set is identical to the pre-rebuild set, so the committed evaluation stands; run_3's recovered tile never reached its GeoJSON (meta corrected, c053f5a41)."
     },
     {
      "label": "wbf-r1-hn-heavy",
@@ -4336,7 +4337,8 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/h12-v2/wbf-mcc/r3-hp-heavy/evaluation.json",
-     "detections": "outputs/h12-v2/wbf/r3-hp-heavy/wbf_vote4.geojson"
+     "detections": "outputs/h12-v2/wbf/r3-hp-heavy/wbf_vote4.geojson",
+     "notes": "Sweep rebuilt 2026-09-08 on the E71-recovered run_5 (S150): the t=4 / vote>=4 set is identical to the pre-rebuild set, so the committed evaluation stands; run_3's recovered tile never reached its GeoJSON (meta corrected, c053f5a41)."
     }
    ],
    "_ignored_evals": [

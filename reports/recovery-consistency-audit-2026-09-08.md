@@ -253,7 +253,7 @@ spend is optional under the current register.
 | control: is the rebuild a protocol change? | today's builder on the archived pre-recovery n1 passes reproduces the April sweeps exactly (665/627/604; 1118/946/783) — deltas are recovery effects | scratch only |
 | e47 sweep stale (§ 2.3) | rebuilt and five cells re-scored; the April sweep is additionally a pre-D6 double read of `run_5` (4,491 vs 4,146 t1 clusters at the pre-recovery vintage) — noted on the rows | `e01b8617a`, `93ff7f4e9`, `38aa9ed1b` |
 | h12-v2 run_3 residue (§ 2.4) | meta rebuilt from the GeoJSON (326 of 327; `_correction` block; sidecars archived); the recovered tile's output is not preserved anywhere — residue 34 tiles, not 33 | `c053f5a41` |
-| h12-v2 greedy + WBF sweeps stale (§ 2.4) | **open** — needs the greedy sweep into `outputs/h12-v2/greedy/r3-hp-heavy/`, the WBF variant at `wbf_diagnostics.json`'s parameters, two re-scores, and a re-run of `h12-v2-hp-hn-ratio` (registered-exploratory, signed) | — |
+| h12-v2 greedy + WBF sweeps stale (§ 2.4) | rebuilt at the original protocols (greedy: only the vote-1 layer changes, 1,518 → 1,521; WBF: 1,097 → 1,099 clusters); the t = 4 greedy set and the vote ≥ 4 WBF set are feature-identical to the archived ones, so both registered cells and `h12-v2-hp-hn-ratio` stand unchanged — no re-score, no permutation re-run | `e7ebc1695` |
 | three uncited verifier stages (§ 3) | **open** — ≈ 6,600 crops at ≈ US$0.0013 each (≈ US$9) if a strict refresh is wanted; none is cited | — |
 | `pv-diag-384-consensus-calibration` output-directory mismatch (§ 5) | **open** — noted for the PI | — |
 

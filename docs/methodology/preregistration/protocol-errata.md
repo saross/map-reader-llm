@@ -3354,9 +3354,10 @@ but never reached the pass GeoJSON and is not preserved anywhere; the meta
 is rebuilt from the GeoJSON (326 of 327, an `execution_stats._correction`
 block) and the residue is 34 tiles, not 33. The register now counts
 `run_N_recovery*` fragments towards their pass (48 complete passes had read
-as partial) and fills the conditions manifest's per-buffer coverage. Still
-open: the `h12-v2` greedy and WBF sweeps (cited by `h12-v2-hp-hn-ratio`,
-registered-exploratory) and the three uncited verifier stages (a refresh
+as partial) and fills the conditions manifest's per-buffer coverage. The `h12-v2` greedy and WBF sweeps (cited by `h12-v2-hp-hn-ratio`,
+registered-exploratory) were rebuilt later the same day: their t = 4 and
+vote ≥ 4 sets are feature-identical to the archived ones, so that analysis
+stands unchanged. Still open: the three uncited verifier stages (a refresh
 would re-verify ≈ 6,600 crops at ≈ US$0.0013 each).
 
 ---

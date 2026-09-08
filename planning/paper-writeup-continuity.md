@@ -45,16 +45,15 @@ project state.
 > hypothesis table, uplift supplement regenerated; manifests regenerated
 > twice (extractor fix; H6 rows).
 >
-> **NEXT SESSION**: merge PR #12 (then regenerate the hypothesis table);
-> **h12-v2 r3-hp-heavy** greedy + WBF sweeps still vote over the
-> pre-recovery `run_5` — rebuild (greedy: `merge_passes.py --sweep` into
+> **NEXT SESSION**: merge PR #12 (then regenerate the hypothesis table).
+> h12-v2 r3-hp-heavy was CLOSED later in S150-b: sweeps rebuilt, the t = 4
+> and vote ≥ 4 sets identical, analysis unchanged (was: rebuild (greedy: `merge_passes.py --sweep` into
 > `outputs/h12-v2/greedy/r3-hp-heavy/`; WBF: `fuse_detections_wbf.py
 > --config h12v2-r3-hp-heavy` at `wbf_diagnostics.json`'s parameters),
 > re-score `greedy-r3-hp-heavy` and `wbf-r3-hp-heavy`, re-run the three
 > permutation contrasts under `results/h12-v2/permutation-t4/`,
 > `apply_fdr_h12v2.py`, `summarise_h12v2.py`, and refresh the
-> registered-exploratory row `h12-v2-hp-hn-ratio` (expect the three-way
-> NULL to stand; one tile in one of five passes). The three uncited
+> registered-exploratory row `h12-v2-hp-hn-ratio`). The three uncited
 > verifier stages (≈ 6,600 crops, ≈ US$9) and the
 > `pv-diag-384-consensus-calibration` output-directory mismatch are the
 > PI's call. Then the standing backlog listed under STATE AFTER S150.
