@@ -31,7 +31,9 @@ Per stage: `run_pv.py extract --padding 75` → `run_pv.py verify
 --verifier-config prompts/configs/verify_adversarial-text.json --mode
 realtime --workers 20 --service-tier flex` (Gemini 3 Flash, thinking
 minimal, T 0.0, one iteration per candidate — the stages' recorded
-configuration, `run.meta.json`) → completeness (every candidate carries
+configuration, `run.meta.json`; the model is pinned on the command line as
+`gemini-3-flash-preview` because the config's `gemini-3-flash` alias is
+resolved against the live model list) → completeness (every candidate carries
 a probability; one `cleanup` pass if not) → `sweep_f1_greedy_pv.py`
 at 20/30/40/50 m on `full_evaluation_bounds`.
 

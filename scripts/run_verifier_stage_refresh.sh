@@ -26,6 +26,10 @@ SWEEP="scripts/sweep_f1_greedy_pv.py"
 VERIFIER_CONFIG="prompts/configs/verify_adversarial-text.json"
 BOUNDS="inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
 BUDGET_USD="${BUDGET_USD:-20}"
+# Pinned explicitly: the config's alias "gemini-3-flash" is resolved against the live
+# model list (run_pv._resolve_model_name), and the originals ran on the -preview
+# model (run.meta.json pricing_used.model). Never let an alias drift the model.
+MODEL="gemini-3-flash-preview"
 export PYTHONUNBUFFERED=1
 
 # label | candidate geojson | new stage directory | expected candidates
@@ -51,14 +55,14 @@ for spec in "${STAGES[@]}"; do
   if [ -f "$stage/probabilities.json" ]; then echo "  [verify] cached"; else
     rc=0
     $PYTHON $PV verify --crops-dir "$crops" --verifier-config "$VERIFIER_CONFIG" --output-dir "$stage" \
-      --mode realtime --workers 20 --service-tier flex --no-strict || rc=$?
+      --mode realtime --workers 20 --service-tier flex --model "$MODEL" --no-strict || rc=$?
     echo "  [verify] exit $rc"
   fi
   # completeness: every candidate verified, else one cleanup pass, then stop if still short
   got=$($PYTHON -c "import json,sys;print(json.load(open(sys.argv[1])).get('total_results') or 0)" "$stage/probabilities.json")
   if [ "$got" != "$expected" ]; then
     echo "  [verify] $got/$expected verified — running cleanup"
-    $PYTHON $PV cleanup --crops-dir "$crops" --verified-dir "$stage" --verifier-config "$VERIFIER_CONFIG" --service-tier flex --workers 10 || true
+    $PYTHON $PV cleanup --crops-dir "$crops" --verified-dir "$stage" --verifier-config "$VERIFIER_CONFIG" --service-tier flex --workers 10 --model "$MODEL" || true
     got=$($PYTHON -c "import json,sys;print(json.load(open(sys.argv[1])).get('total_results') or 0)" "$stage/probabilities.json")
     [ "$got" != "$expected" ] && { echo "STOP: $label incomplete after cleanup ($got/$expected)"; exit 3; }
   fi
