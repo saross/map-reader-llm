@@ -1033,34 +1033,43 @@ manifest as the authority on per-item state, orchestrator-only writes,
 agents that write outputs only at the end, a census at pause, a
 reconcile against disk at resume.
 
-## S148 candidates (pending review, 2026-09-06, drafted at handoff) — silence never discards
+## S148 — 2026-09-06 (reviewed 2026-09-08; all four kept)
+
+Drafted at handoff; reviewed by the PI on 2026-09-08 together with S149.
 
 - **C1 — Pausing the census the moment the reference looked wrong.** When
   Shawn flagged one duplicate known mound on tile 1, Claude traced it to a
   stale instrument (the canonical r50 file) within the hour and proposed
   pausing to rebuild the frame; Shawn: "not having to mark ~100 duplicates
   or more will save a lot of time". Candidate: the trace-then-propose-a-pause
-  move was the right shape for a reviewer mid-flow.
+  move was the right shape for a reviewer mid-flow. **Ruling: keep.**
 - **C2 — Four wrong saves before the symbol trap was diagnosed.** Claude's
   first two instructions for turning a mark into a GT-error flag were
   wrong (the symbol is fixed at `a` time); Shawn: "it's not sticking".
   Candidate (unhelpful): instructions for a UI Claude built should have
   been checked against the code path before the second attempt, not the
-  third.
+  third. **Ruling: keep, and generalise** — after a first instruction fails,
+  the second is checked against the source (the code path, the file, the
+  data) before it is given, never guessed again; recorded in the global
+  scratchpad as a working rule.
 - **C3 — Rule / reason / check on rulings taken alone.** The cleanup at
   standard tier, the Arm V output placement, and the census-order
   migration were each reported as rule / reason / what-to-check and none
   drew a correction. Candidate: the format from the S146–147 ruling is
-  doing its job; keep it.
+  doing its job; keep it. **Ruling: keep; the prior ruling is confirmed to
+  be doing its job.**
 - **C4 — The pre-run review's "looks good" was not the go.** Shawn read
   the review, said it looked good, and asked about context; the audit
   then found four blockers. Candidate: Claude should have said explicitly
   that "looks good" on a draft is not the go/no-go the ritual needs, and
-  scheduled the audit before asking.
+  scheduled the audit before asking. **Ruling: keep — "keep me in line,
+  don't let me be too lazy"**: Claude says explicitly when an approval is
+  not the gate the ritual needs, and schedules the gate rather than
+  proceeding on the softer signal.
 
-## S149 candidates (pending review, 2026-09-07, drafted at handoff) — silence never discards
+## S149 — 2026-09-07 (reviewed 2026-09-08; all four kept)
 
-The S148 candidates C1–C4 above are also still pending.
+Drafted at handoff; reviewed by the PI on 2026-09-08 together with S148.
 
 - **C1 — Stop conditions in his own words made the run governable.** Asked
   for a formal go, Shawn replaced Claude's six-bullet proposal with six of
@@ -1068,25 +1077,28 @@ The S148 candidates C1–C4 above are also still pending.
   *should* be settled"); the card recorded his list as the contract and
   Claude's as its detail. Every later stop-or-continue call in the session
   (the 3a drift, the `student:01034` flag, the sapphire residue) was made
-  against his words, not Claude's.
+  against his words, not Claude's. **Ruling: keep.**
 - **C2 — "Launch on sapphire first, then you can explain."** His one
   question at the go — how Claude distinguishes ambiguity from surprise —
   was deliberately sequenced *after* the launch. The explanation cost
   nothing on the critical path and the definition was on record before the
-  run needed it.
+  run needed it. **Ruling: keep, and generalised as a standing rule** —
+  "whenever we can advance part of a set of tasks while we settle the
+  others, do so"; recorded in the global scratchpad.
 - **C3 — The GT-mix question turned a waiver into a paper step.** Asked to
   waive 102 unclaimed evaluations, Shawn asked what reference they were
   scored against; the answer (three references by the supplement's design)
   became step 5d — the paper's 55-map uplift on one reference — rather
-  than a hygiene note.
+  than a hygiene note. **Ruling: keep.**
 - **C4 — Holding five rulings to the next session.** With the context
   nearly spent, he chose reflect-and-handoff over quick rulings from a tired
   instance, having earlier switched models mid-session and asked the new
   instance to *review* the old one's work rather than continue it.
+  **Ruling: keep.**
 
 ## S150 candidates (pending review, 2026-09-08, drafted at handoff) — silence never discards
 
-The S148 (C1–C4) and S149 (C1–C4) candidates above are also still pending.
+S148 and S149 above were reviewed on 2026-09-08; S150 is still pending.
 
 - **C1 — "Can you present pros and cons?" produced a better decision than
   the recommendation.** Offered ruling 3a as "(a) recommended / (b)", Shawn
@@ -1112,7 +1124,7 @@ The S148 (C1–C4) and S149 (C1–C4) candidates above are also still pending.
 
 ## S151 candidates (pending review, 2026-09-08, drafted at close) — silence never discards
 
-The S148–S150 candidates above are also still pending. This session ran
+S150 above is still pending (S148–S149 reviewed 2026-09-08). This session ran
 without in-session interaction: a resume brief, then the card's after-run
 steps and the PR merge.
 
