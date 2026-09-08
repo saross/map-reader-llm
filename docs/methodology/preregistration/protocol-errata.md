@@ -3373,7 +3373,9 @@ pre-recovery record (commit `43516df9a`): `pv-diag-384` image t0.0
 verified 802), text t0.0 `verified-v1-n3-recovery-2026-09-08` (1,319; was
 1,256), and `e47-propose-brief`
 `verified/flash-high-text-1of5-recovery-2026-09-08` (4,149; the
-pre-recovery attempt had verified 57 of 4,358 and its crops are gone). All
+pre-recovery stage had verified all 4,358 of its candidates but was never
+swept or registered — the "57 of 4,358, abandoned" description in the card
+misread its cleanup-overwritten meta; corrected S151). All
 6,357 candidates carry a probability (0 failed, 3 retries; verify calls
 06:56–07:22 UTC, ≈ 26 min). **Cost as recorded** in each stage's `run.meta.json`
 (`cost_basis: "list"`, `discount: 1.0`; 11.39 M input and 1.01 M output
@@ -3400,7 +3402,7 @@ at `results/recovery-reeval-2026-09-08/pv-diag-384/image-t0.0-verified-v1-n10-ap
 the April stage's best 20 m F1 is 0.6589 (vote ≥ 1, p ≥ 0.20), and the
 refreshed stage's 0.6872 at the same operating point is a recovery effect
 of the same size as the text stage's (+0.028; recall 0.653 → 0.720). The
-e47 stage gives that pool its first usable proposer-verifier cell, best
+e47 stage gives that pool its first swept proposer-verifier cell, best
 20 m F1 0.8735 (vote ≥ 4, p ≥ 0.15).
 
 ---

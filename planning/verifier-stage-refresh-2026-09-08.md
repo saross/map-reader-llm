@@ -13,8 +13,14 @@ The recovery-consistency audit
 text-only adversarial verifier stages whose candidate sets were built
 from passes the E71 recovery (`99ae28ec4`, 2026-07-30) later rewrote.
 None is cited by a registered condition or analysis; two are inventory
-rows in `verifier_passes`, one (e47) is an abandoned attempt (57 of
-4,358 candidates verified, crops gone). This block re-runs all three on
+rows in `verifier_passes`, one (e47) was never registered. (Corrected
+S151: this card originally called the e47 stage "an abandoned attempt
+(57 of 4,358 candidates verified, crops gone)". That misread a
+cleanup-overwritten `run.meta.json`: the stage's `probabilities.json`
+holds 4,358 of 4,358 candidates with a probability — verified 2026-04-09
+(`52b0215a6`) with a 57-crop gap that the 2026-05-06 cleanup closed
+(`6683952ac`), whose 57-crop meta overwrote the original. Only the crop
+PNGs are absent locally, as for every stage.) This block re-runs all three on
 the candidate sets rebuilt today from the recovered passes, into NEW
 dated stage directories beside the originals (archive, never delete: the
 originals stay as the pre-recovery record).
@@ -23,7 +29,7 @@ originals stay as the pre-recovery record).
 |---|---|---:|---|
 | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10-recovery-2026-09-08/` | `…/image-t0.0/consensus/consensus_t1.geojson` | 889 | `verified-v1-n10` (802 candidates, pre-recovery; `c6b5e6b10`) |
 | `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3-recovery-2026-09-08/` | `…/text-t0.0/consensus/consensus_t1.geojson` | 1,319 | `verified-v1-n3` (1,256; `857d5f714`) |
-| `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5-recovery-2026-09-08/` | `…/consensus/flash-high-text-1of5-recovery-2026-09-08.geojson` (a copy of the pool's rebuilt `consensus_t1`) | 4,149 | `verified/flash-high-text-1of5` (57 of 4,358 verified; abandoned) |
+| `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5-recovery-2026-09-08/` | `…/consensus/flash-high-text-1of5-recovery-2026-09-08.geojson` (a copy of the pool's rebuilt `consensus_t1`) | 4,149 | `verified/flash-high-text-1of5` (4,358 verified, complete after the 2026-05-06 cleanup; never registered or swept — corrected S151, see § 1) |
 
 ## 2. Recipe (= `scripts/run_verifier_matrix.sh`, the stages' original pipeline)
 
@@ -151,6 +157,14 @@ OVERALL: READY TO LAUNCH
 - **PR #12 merged** (`459556ba4`) with the analyses manifests regenerated
   from the merged sources (63 analyses) and the hypothesis-outcome table
   regenerated (H13 gains `student-baseline-r2` as related post-hoc).
+- **Correction (S151, on the PI's question about the unregistered e47
+  directories)**: § 1's "abandoned attempt (57 of 4,358 verified, crops
+  gone)" was wrong — the April stage is complete at 4,358 (the 57 is the
+  2026-05-06 cleanup whose meta overwrote the original); it was never
+  swept or registered. Fixed in § 1, the audit § 6.1, the E71 addendum,
+  and the register note. `verified/text-baseline` (the same verifier on
+  the N=1 propose_brief pass, 1,180 candidates, 2026-04-08, `42f07bc3b`)
+  is the other unregistered directory the generator's draft proposes.
 
 ### 2026-09-08 (later) — Audit READY; launched on sapphire
 

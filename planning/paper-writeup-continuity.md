@@ -55,8 +55,11 @@ project state.
 > and C5; user-obs candidates S148–S151 pending in
 > `docs/notes/user-observations.md`. **PI calls surfaced, not taken**: the
 > e47 draft decomposition also proposes two unregistered verifier
-> directories (`verified/flash-high-text-1of5`, the abandoned 57-of-4,358
-> attempt, and `verified/text-baseline`) — left unregistered; whether to
+> directories (`verified/flash-high-text-1of5`, the April pre-recovery
+> stage — complete at 4,358, never swept or registered; the card's
+> "abandoned, 57 of 4,358" was a misread cleanup-overwritten meta,
+> corrected S151 — and `verified/text-baseline`, the same verifier on the
+> N=1 propose_brief pass, 1,180 candidates) — left unregistered; whether to
 > survey the other stages for the sweep-staleness class. **amd-tower disk**
 > (S150 carry-forward): the kernel log for this boot shows no I/O, ATA, or
 > NVMe errors; root is 81 % full; a SMART read needs root — `sudo smartctl

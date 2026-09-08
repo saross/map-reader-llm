@@ -280,7 +280,7 @@ it, and the best at 50 m.
 | pv-diag image t0.0 `verified-v1-n10-recovery-2026-09-08` | 889 | **0.6872** (0.658 / 0.720; 476) | vote ≥ 1, p ≥ 0.20 | 0.8241 |
 | pv-diag text t0.0 `verified-v1-n3`, April (`857d5f714`) | 1,256 | 0.8234 (0.856 / 0.793; 403) | vote ≥ 3, p ≥ 0.15 | 0.8568 |
 | pv-diag text t0.0 `verified-v1-n3-recovery-2026-09-08` | 1,319 | **0.8508** (0.863 / 0.839; 423) | vote ≥ 3, p ≥ 0.15 | 0.8884 |
-| e47 `verified/flash-high-text-1of5` (abandoned: 57 of 4,358 verified, no sweep) | 4,358 | — | — | — |
+| e47 `verified/flash-high-text-1of5`, April (`52b0215a6`; complete after the 2026-05-06 57-crop cleanup, `6683952ac`; never swept, never registered — see the e47 reading) | 4,358 | — (no sweep) | — | — |
 | e47 `verified/flash-high-text-1of5-recovery-2026-09-08` | 4,149 | **0.8735** (0.928 / 0.825; 387) | vote ≥ 4, p ≥ 0.15 | 0.9028 |
 
 Readings:
@@ -306,11 +306,20 @@ Readings:
   refreshed set: 0.4985 → 0.6872 at vote ≥ 1. The committed April
   `sweep_2d.json` stays as it is (preserve, do not swap); the re-sweep is
   preserved beside the other recovery re-evaluations.
-- **e47 — first usable proposer-verifier cell for this pool.** Verifier
-  uplift over the within-sweep vote ≥ 4, p ≥ 0 row: 0.6561 → 0.8735; over
-  vote ≥ 3: 0.5485 → 0.8727. The verifier flattens the vote-threshold curve
-  (0.8489–0.8735 across vote ≥ 2–4) — the same pattern as the registered
-  pv-diag text cells, on a five-pass pool.
+- **e47 — first SWEPT proposer-verifier cell for this pool.** Correction
+  (S151): the card and § 3 called the April stage "abandoned (57 of 4,358
+  verified)"; that misread a cleanup-overwritten `run.meta.json`. The
+  April stage verified all 4,358 candidates (2026-04-09, `52b0215a6`, a
+  57-crop gap closed by the 2026-05-06 cleanup, `6683952ac`, whose meta
+  overwrote the original — the image stage's pattern), but was never swept,
+  never evaluated as a verified set (the one evaluation under its name,
+  waived in `_ignored_evals`, scores the unverified candidate GeoJSON), and
+  never registered; its `2of5`–`5of5` siblings are CPU-derived vote-threshold
+  subsets of the same probabilities, not verifier runs. Verifier uplift on
+  the refreshed set over the within-sweep vote ≥ 4, p ≥ 0 row: 0.6561 →
+  0.8735; over vote ≥ 3: 0.5485 → 0.8727. The verifier flattens the
+  vote-threshold curve (0.8489–0.8735 across vote ≥ 2–4) — the same pattern
+  as the registered pv-diag text cells, on a five-pass pool.
 
 None of the six stages is cited by a registered condition or analysis; the
 refreshed directories are inventory, and these readings are the only place
@@ -318,6 +327,14 @@ they are compared. Disclosure: E71 rider addendum (2026-09-08, later) in
 `docs/methodology/preregistration/protocol-errata.md`.
 
 ## Changelog
+
+### 2026-09-08 (S151, second revision) — e47 April stage description corrected
+
+The § 6.1 table and e47 reading called the April `verified/flash-high-text-1of5`
+stage "abandoned (57 of 4,358 verified)", repeating the card § 1. Wrong: all
+4,358 carry a probability (the 57 is the 2026-05-06 cleanup pass whose meta
+overwrote the original). The stage was never swept or registered, which is
+the accurate description. No number in the comparison moves.
 
 ### 2026-09-08 (later still) — § 6.1 verifier-stage refresh compared; § 6 open item closed
 

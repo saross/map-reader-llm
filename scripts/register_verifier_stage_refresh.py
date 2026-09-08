@@ -101,9 +101,10 @@ NOTES: dict[str, str] = {
         "verifier_passes row. The text-only adversarial v1 stage on the pool's "
         "rebuilt vote>=1 consensus (4,149 candidates) at "
         "verified/flash-high-text-1of5-recovery-2026-09-08 is complete; the "
-        "pre-recovery verified/flash-high-text-1of5 attempt (57 of 4,358 "
-        "verified, crops gone) stays unregistered as an abandoned stage. No "
-        "condition cites it. Comparison: "
+        "pre-recovery verified/flash-high-text-1of5 stage (4,358 of 4,358 "
+        "verified, complete after the 2026-05-06 cleanup 6683952ac, never "
+        "swept) stays unregistered pending a PI call. No condition cites "
+        "either. Comparison: "
         "reports/recovery-consistency-audit-2026-09-08.md § 6.1."
     ),
 }
