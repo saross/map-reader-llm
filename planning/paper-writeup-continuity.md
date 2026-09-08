@@ -101,7 +101,11 @@ project state.
 > new cells enumerated with register ids and re-read scores, incumbents
 > by rule, the archived board's instrument, gates G1–G5, $0; **PI fork —
 > the frame**: the nine cells sit on `grid_common_bounds`, the incumbents
-> on `full_evaluation_bounds`, both 487 tiles and NO polygon shared.
+> on `full_evaluation_bounds` — the SAME 487 carrier tiles (407
+> identical, 80 edge tiles clipped to the grid campaign's four-way
+> footprint intersection; grid-common ⊂ Era-2 frame: 1,364.5 vs 1,415.8
+> km², 428 vs 435 reference mounds). The overnight beacon's "no polygon
+> shared" was a faulty comparison, corrected 2026-09-09 in the card.
 > **(3) a07 prose DONE**: the 0.0016 literal lived in
 > `scripts/h6_registered_analyses.py` (`6b7fdd739`); artefacts
 > regenerated on sapphire from the committed script (`cd8dc5591`, only

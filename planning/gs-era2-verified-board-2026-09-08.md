@@ -1,7 +1,9 @@
 # The GS Era-2 verified board: the Gemini 3.7 and 3.8 GS cells on one frame with the incumbents
 
-> **Last revised**: 2026-09-08 (original publication, drafted overnight in
-> Session 151 on the PI's instruction; **DRAFT — awaits PI sign-off, § 9**).
+> **Last revised**: 2026-09-09 (§ 2 frame description corrected: same
+> carrier tiles, 80 clipped; prior: 2026-09-08 original publication, drafted
+> overnight in Session 151 on the PI's instruction; **DRAFT — awaits PI
+> sign-off, § 9**).
 > Controls one $0 API block (re-scoring and tiering on sapphire). Split out
 > of the r2 recompute chain by PI ruling (S149; `planning/reference-revision-2026-09-06.md`
 > § 4 step 4 and its pre-run audit fork 2). See [§ Changelog](#changelog).
@@ -34,23 +36,36 @@ with its spec, inventory rows, gates, and register row.
   (curator GS, 569 mounds), unchanged by r2.
 - **Metric**: F1 at 20 m (the preregistered GS buffer), tile-level MCC
   alongside (`feedback_mcc_with_f1`), bootstrap 95 % CIs; tiering on F1.
-- **Frame — a PI fork, because the two candidate frames are NOT the same
-  487 tiles.** `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`
-  (the pv-diag / verifier-robustness Era-2 frame) and
-  `outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson` (the
-  grid campaign's common frame, on which every grid, stride, image-B, 3.7,
-  and 3.8 GS cell is scored) both hold 487 polygons, but no polygon is
-  shared (checked 2026-09-08: 0 of 487 bounding boxes coincide). A board
-  that mixes them differs in frame as well as in cell (the 327-versus-487
-  leakage trap of `verify_run_conditions.py`, in a new coat).
+- **Frame — a PI fork, because the two candidate frames are the same 487
+  carrier tiles but not the same footprint** (corrected 2026-09-09; the
+  original draft's "no polygon is shared" came from a faulty comparison).
+  `inputs/vectors/bounds/384/full_evaluation_bounds.geojson` is the Era-2
+  frame of pv-diag and verifier-robustness (487 tiles, union 1,415.8 km²,
+  435 of the 569 reference mounds inside).
+  `outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson` is
+  the same 487 tiles, by name and geometry (407 identical, 0 m
+  displacement), with the 80 edge tiles CLIPPED to the grid campaign's
+  four-way footprint intersection (union 1,364.5 km², 428 reference
+  mounds; `results/grid-2026-08-18/findings.md` § Scope, built 2026-08-18
+  after verifying that the four grid geometries' tile unions diverge —
+  a majority-rule tile hanging off the footprint is kept whole, so denser
+  tilings accrete area). Grid-common is therefore a strict subset of the
+  Era-2 frame: 51.4 km² of edge and 7 reference mounds lie in the Era-2
+  frame only. Every grid, stride, image-B, 3.7, and 3.8 GS cell is scored
+  on grid-common. A board that mixes the two differs in frame as well as
+  in cell (the 327-versus-487 leakage trap of `verify_run_conditions.py`,
+  at the edge rather than the interior).
   - **(a) Proposed default — grid-common.** The nine new cells already sit
     on it; the incumbents' detection sets are point sets and re-score on it
-    at $0 (`evaluate_detections.py`, bootstrap 10,000, seed 42). Every cell
-    on the board is then scored by one command on one frame, and the
-    incumbents' committed 487-frame evaluations stay as their register
-    record (nothing is re-pointed).
+    at $0 (`evaluate_detections.py`, bootstrap 10,000, seed 42), losing
+    only the 7 edge mounds and any detections in the 51.4 km² of clipped
+    edge. Every cell on the board is then scored by one command on one
+    frame, and the incumbents' committed Era-2-frame evaluations stay as
+    their register record (nothing is re-pointed).
   - **(b) Alternative — full_evaluation_bounds.** The historical frame of
-    § R4; the nine new cells would be re-scored on it instead (also $0), but
+    § R4; the nine new cells would be re-scored on it instead (also $0),
+    but their passes were dispatched on the grid tilings, so the clipped
+    edge holds detections only where a grid tile happened to cover it, and
     their register rows and the 3.7 / 3.8 campaign findings are written on
     grid-common, so the board's numbers would not match the campaign
     documents the paper cites.
@@ -174,6 +189,14 @@ until § 9 is signed.
 - [ ] Go.
 
 ## Changelog
+
+### 2026-09-09 — § 2 frame description corrected
+
+The original draft said the two 487-tile frames share no polygon; a
+proper one-CRS comparison shows they are the same carrier tiles, 407
+identical and 80 clipped, grid-common a strict subset (1,364.5 vs
+1,415.8 km²; 428 vs 435 reference mounds). The fork stands, its cost now
+stated: 7 edge mounds and 51.4 km² under option (a).
 
 ### 2026-09-08 — Original publication (draft for sign-off)
 
