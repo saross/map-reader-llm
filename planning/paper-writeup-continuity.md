@@ -84,9 +84,40 @@ project state.
 > (~1,700 words; register exit checks: 0 em-dashes, 1 semicolon, mean
 > sentence 20.3 words) with a closing [DRAFT NOTE] (chains, the
 > unsupplied 3.7 costs, the 3.8 leg, the 2,200-word budget). Skeleton
-> changelog notes exhibit (iii)'s source. **Overnight run (PI asleep)**:
-> the four 'mine' tasks follow — r2 anchors, Era-2 board card, a07
-> prose, vote-shell materialiser — each closed in this beacon as it lands.
+> changelog notes exhibit (iii)'s source. **Overnight run (PI asleep) —
+> the four 'mine' tasks, status at the last beacon write:**
+> **(1) r2 anchors DONE**: the block was not a layout the resolver did
+> not know but a gzipped meta — the 3.7 55-map pool's `run_3` is
+> committed as `.meta.json.gz`, the passes extractor read `*.meta.json`
+> only, so the manifest counted 4 passes and the worklist's pass-count
+> guard fired; `_load_json` now reads `.gz` (`edc832c06`, test), passes
+> 1,284 → 1,285, worklist blocked 64 → 52; the two incumbent rows had
+> gained their pool since the last build. All eight scored on sapphire
+> 4-parallel (`a0f08475e`; its trailer's session URL has a one-letter
+> typo, harmless), waived under ruling 1 (`c1d6424b7`); the supplement
+> rebuild moved the twelve 3.7 rows K 4 → 5 and cost US$44.59 → 48.62
+> (revision entry). **(2) Era-2 board card DRAFTED** for sign-off
+> (`planning/gs-era2-verified-board-2026-09-08.md`, `4ce9c54ec`): nine
+> new cells enumerated with register ids and re-read scores, incumbents
+> by rule, the archived board's instrument, gates G1–G5, $0; **PI fork —
+> the frame**: the nine cells sit on `grid_common_bounds`, the incumbents
+> on `full_evaluation_bounds`, both 487 tiles and NO polygon shared.
+> **(3) a07 prose DONE**: the 0.0016 literal lived in
+> `scripts/h6_registered_analyses.py` (`6b7fdd739`); artefacts
+> regenerated on sapphire from the committed script (`cd8dc5591`, only
+> the word and three `generated_at` stamps); findings changelog
+> (`9069e0605`). The PI may wish to re-sign A-07 (artefact post-dates the
+> 01:53:31Z signature). **(4) vote-shell materialiser BUILT**
+> (`b504a062f`): `materialise_pairing_twin.py --union` mode + the pairing
+> builder emits materialise-and-score commands; worklist 118 → 169 rows on
+> the grown register (19 ready, 43 ready-after-materialise, 100 blocked);
+> 47 pairing jobs (40 evaluate, 7 corrected-F1) RUNNING on sapphire
+> 4-parallel at the last write — then `compute_verifier_uplift.py` (F1
+> and MCC), supplement rebuild, commit; **registration of the supplement
+> waits on the PI**. **Gotcha (new)**: never overwrite a driver script
+> that a remote `bash` is still reading — the anchors driver was
+> clobbered by the pairing driver's `scp` after its last job and bash
+> read the new bytes (all eight jobs had completed; the exit code lied).
 >
 > **NEXT SESSION**: S150 + S151 user-obs review (PI); D-1..D-5 and D.9
 > rulings; review of §§ R7.2–R7.3.
