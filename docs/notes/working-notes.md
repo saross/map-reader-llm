@@ -32204,3 +32204,309 @@ census, which supplies 6 + 2 + 1 of the additions and all 6 removals —
 this entry is the re-scoring its § (i) said had not happened yet);
 erratum **E84** (the disclosure this entry is the working-notes half
 of).
+
+## Observation 453: The two-mechanism verification base rate holds at the full 113-source AB+ corpus — 0 unedited, 955 points scored, 26.7% OVERREACH, drift toward the citing thesis (Session 147, 2026-09-02; PI ruling 2026-09-08)
+
+**The finding.** The Annotated Bibliography Plus (AB+) pipeline runs
+each source through two independent verification mechanisms — a
+deterministic byte-level quote-checker (catches fabrication) and a
+fresh-context LLM verifier that scores every claim SUPPORTED /
+OVERREACH / UNSUPPORTED (catches interpretive overreach a byte-perfect
+quote cannot). Across the full 113-source corpus — the 25-source pilot
+(2026-08-30) plus the 88-source tail (2026-09-02) — the base rate
+holds at scale: **0 of 113 entries passed the fresh-context check
+unedited**; every one is PASS-WITH-EDITS, none FAIL. Re-summing every
+`_work/<citekey>.verdict.json` on disk (113 files, gitignored but
+present in the working tree) gives a corpus-wide total of **955 points
+scored: 697 SUPPORTED (73.0%), 255 OVERREACH (26.7% — "about a
+quarter"), 2 UNSUPPORTED (0.2%, both corrected at edit), 1 NOT
+CHECKABLE (0.1%)**, with **1,012 edits proposed** in total.
+
+**(a) A discrepancy from the S147 candidate wording, resolved.** The
+candidate note in `planning/paper-writeup-continuity.md` describes
+"113 sources ... 753 points scored", but **753 is the tail's 88-source
+figure alone** (`reports/ab-plus-tail-report-2026-09-02.md`: "Across
+the 88 verdicts the verifiers scored 753 points: 564 SUPPORTED, 186
+OVERREACH, 2 UNSUPPORTED"), not a 113-source total — neither published
+report states a corpus-wide points count. Splitting the 113 local
+verdict files against the tail manifest
+(`outputs/ab-plus/manifests/tail-2026-09-02.json`, 88 citekeys)
+reproduces the published tail figures exactly (753 points, 564/186/2/1,
+751 edits), which validates the method; the residual 25 pilot sources —
+never previously broken down at this granularity — total **202
+points: 133 SUPPORTED, 69 OVERREACH, 0 UNSUPPORTED, 261 edits
+proposed**. 955 = 753 + 202; 1,012 = 751 + 261.
+
+**(b) Drift direction.** The tail report's catch taxonomy names the
+pattern directly: "**self-flattering direction** — errors that ran
+toward the citing paper's own thesis"
+(`reports/ab-plus-tail-report-2026-09-02.md`), with three named
+instances — fafchamps_using_2017 ("excluded outright" for the source's
+"not yet implementable"), ross_introducing_2022 (co-authored by the
+PI — took the permissive half of an abduction argument, rejected the
+restrictive half resting on the same premise), and
+ofosu_pre-analysis_2023 (softened a five-hypothesis threshold to "the
+high-count tail"). Verifiers were briefed to hunt this direction
+specifically and found it repeatedly. This class was named at tail
+scale; the pilot's five catch classes (hedge inflation, salience
+drift, dropped denominators/baselines/scope, silently repaired source
+errors, bidirectional correction) do not include it by name, though
+some pilot catches (e.g. hedge inflation) share the same directional
+bias.
+
+**Why this matters.** This is the paper-citable base rate for the
+two-mechanism design: at 113 independent test cases, a deterministic
+quote-checker alone would have missed the entire 26.7% OVERREACH
+population, and the dominant failure direction is self-serving — the
+error tends to make the citing paper's own argument look better, not
+worse, which is precisely what a citing author's own self-review is
+poorly placed to catch. **Obs 455** documents a concrete within-corpus
+instance: the verifier caught the drafter's automation-cell claim for
+Thomas 2026 drifting toward the stronger, cleaner version of the
+paper's own D.9 novelty argument.
+
+**Caveats.** *(i)* "Two-mechanism" is also the name of an unrelated
+causal account of settlement-mound false positives in **Obs 313**
+(colour-veto Mechanism A / central-glyph Mechanism B) — same phrase,
+different pipeline, different corpus; do not conflate on a future
+grep. *(ii)* The 955/1,012 corpus totals are computed here, not
+published in either committed report — they are exactly reproducible
+from the 113 `_work/*.verdict.json` files, which are gitignored
+(`outputs/ab-plus/_work/`) but present in the current working tree; a
+reader without that working tree can verify only the published
+753/751 tail subtotal and the 202/261 pilot subtotal recorded here.
+*(iii)* "About a quarter" (26.7%) is corpus-wide; the tail alone runs
+slightly lower at 24.7% (186/753) and the pilot-derived rate is higher
+at 34.2% (69/202) — the pilot is a smaller sample whose per-point
+count was never separately published before this entry, so the split
+should be read as informative, not as evidence of a real pilot/tail
+difference.
+
+**Findable later**: two-mechanism verification base rate, AB+ 113
+sources, PASS-WITH-EDITS 0 FAIL, 955 points scored, 697 SUPPORTED 255
+OVERREACH, about a quarter OVERREACH 26.7%, self-flattering direction,
+drift toward citing thesis, fresh-context verifier, deterministic
+quote-checker fabrication, corpus-wide verdict recomputation, _work
+verdict.json, tail-2026-09-02.json manifest, WN-C1.
+
+Sources: `reports/ab-plus-tail-report-2026-09-02.md` (read 2026-09-08:
+"0 of 88 entries passed the fresh-context check without edits"; "753
+points: 564 SUPPORTED, 186 OVERREACH, 2 UNSUPPORTED"; "751 edits
+proposed ... median 8 per entry, range 3–18"; catch-taxonomy class 2
+"self-flattering direction" with the fafchamps/ross/ofosu instances);
+`reports/ab-plus-pilot-report-2026-08-30.md` (read 2026-09-08: "0 of
+25 entries passed the fresh-context check without edits"; "The
+two-mechanism design (code catches fabrication, an independent LLM
+catches overreach)"; five-class catch taxonomy, no self-flattering-
+direction class named); `outputs/ab-plus/_work/*.verdict.json` (113
+files, read/summed 2026-09-08: `overall` PASS-WITH-EDITS ×113,
+`per_point[].verdict` totals 697/255/2/1 = 955, `edits` totals 1,012;
+the 88-key subset keyed by `outputs/ab-plus/manifests/tail-2026-09-02.json`
+reproduces 753/564/186/2/1/751 exactly); `planning/paper-writeup-
+continuity.md` (read 2026-09-08: the S147 WN-C1 candidate wording this
+entry resolves, around the "held-over gates" note).
+Related: **Obs 313** (an unrelated "two-mechanism framework" for
+settlement-mound false positives — namesake only, flagged in the
+caveats to prevent confusion); **Obs 454** (the same S147 tail run's
+cache-defect finding, WN-C2); **Obs 455** (the automation-cell
+finding, WN-C3, whose Thomas 2026 claim was itself caught drifting by
+the mechanism this entry quantifies).
+
+## Observation 454: Extraction-text statistics cannot see a missing table body — the publisher prior and the rendered page are the only signals that survive calibration (Session 147, 2026-09-02; PI ruling 2026-09-08)
+
+**The finding.** The AB+ pipeline's "caption-only-table" cache defect
+— a page whose extracted text carries a numeric-results table caption
+("Table N...") but no table body, because the source PDF's text layer
+never captured it — cannot be detected from text statistics. The
+gate module's own calibration comment records the negative result
+verbatim: "no text statistic separates a caption whose body is missing
+from a caption whose body sits elsewhere on the page (adjacent-caption
+and digit-density rules each flagged a third of the corpus)"
+(`scripts/ab_plus/gate.py:282-286`, commit `e5abc1178`, calibrated
+across all 113 cached sources on 2026-09-03). Two signals survive
+calibration: **the publisher** — both confirmed caption-only-table
+sources in the corpus are IEEE Access papers,
+`canAutomaticDetectionRoad2021` and `uhlAutomatedExtractionHuman2020`
+(`gate.py:287-292`) — and **a conservative "number-poor page" numeric
+rule** that the code documents in its own output string as "(low-recall
+signal)" (`gate.py:293-314`). In production use that numeric rule
+fired on **14 caches**, and **every one checked on the rendered page
+was benign — zero true positives**
+(`reports/ab-plus-tail-report-2026-09-02.md` § Changelog, 2026-09-03
+later entry: "the caption-only numeric gate rule fired on 14 caches
+and every flag a structurer checked on the rendered page was benign";
+restated in `planning/paper-writeup-continuity.md`: "the caption-only
+numeric rule had no true positive in any rendered-page check — keep
+the IEEE signature, treat the numeric rule as noise").
+
+**(a) How the two real instances were actually caught.** Neither of
+the corpus's two confirmed caption-only-table sources was caught by a
+text-statistic rule at all — both were found by a verifier or drafter
+**rendering the page and reading it**, per the tail report's catch
+taxonomy: "captions extract, bodies do not. A drafter quoting 'Table
+3' numbers from prose is safe; one inferring them is not. Verifiers
+rendered the pages." (`reports/ab-plus-tail-report-2026-09-02.md`).
+The numeric heuristic was added afterwards, as a proposed automatic
+flag (pipeline amendment 1); calibration then showed it does no
+useful detection work — it is noise dressed as a signal, kept only
+because a false-positive flag costs nothing more than one page render.
+
+**(b) Scope of the calibration.** The gate's `content_notes` function
+was calibrated across **all 113 cached sources** (pilot + tail) on
+2026-09-03, alongside five other content-defect classes (cover-sheet
+offset, author-manuscript, neighbour-contamination, trailing-text,
+sections-empty); across the corpus the gate scored **79 PASS / 34
+WARN / 0 FAIL** (`reports/ab-plus-tail-report-2026-09-02.md` §
+Changelog).
+
+**Why this matters.** This is a concrete, small negative result about
+what can and cannot be automated in an LLM-assisted literature-
+verification pipeline: a plausible, cheap, purely textual heuristic
+for a real extraction defect fails outright, and the working
+substitute is a **domain/publisher prior plus a visual render-and-read
+step** — i.e. more human- or agent-in-the-loop inspection, not more
+text-statistic engineering. It is a directly citable worked example
+for the paper's D.9/automation discussion (**Obs 455**) and for the
+stubbed companion methods paper
+(`planning/llm-assisted-preregistration-methods-paper.md`).
+
+**Caveats.** The "publisher signature" rule rests on **n = 2**
+confirmed positive cases in a 113-source corpus, both IEEE Access; it
+is an empirical convenience tied to this specific pull, not a general
+claim that IEEE Access always drops table bodies or that other
+publishers do not. The "zero true positives" figure covers the 14
+numeric-rule flags checked during the 2026-09-03 overflow-structuring
+pass (89 Opus-tier agents rendering pages); it is a report of what was
+checked, not a formal precision/recall study against a labelled
+negative set.
+
+**Findable later**: caption-only tables, missing table body,
+extraction-text statistics, text-statistic heuristic fails, publisher
+signature IEEE Access, canAutomaticDetectionRoad2021,
+uhlAutomatedExtractionHuman2020, gate.py content_notes, low-recall
+signal, zero true positives rendered-page check, numeric gate rule 14
+caches, digit-density rule adjacent-caption rule, cache-defect
+detection, WN-C2.
+
+Sources: `scripts/ab_plus/gate.py:282-314` (read 2026-09-08: the
+calibration comment, `IEEE_ACCESS_SIGNATURES` publisher check, and the
+"low-recall signal" numeric rule; commit `e5abc1178` "gate — record
+observed precision of the caption-only and trailing-text rules");
+`reports/ab-plus-tail-report-2026-09-02.md` § "New cache-defect
+classes" item 1 and § Changelog (read 2026-09-08: the caption-only-
+table defect description, the "14 caches"/"every flag ... benign"
+sentence, the 79/34/0 gate calibration count); `planning/paper-
+writeup-continuity.md` (read 2026-09-08: "Gate observed in use: the
+caption-only numeric rule had no true positive in any rendered-page
+check — keep the IEEE signature, treat the numeric rule as noise");
+`outputs/ab-plus/canautomaticdetectionroad2021.md` and
+`outputs/ab-plus/uhlautomatedextractionhuman2020.md` (read 2026-09-08:
+both stamp `full cite` as IEEE Access publications, confirming the
+publisher-signature basis).
+Related: **Obs 453** (the same S147 tail run's two-mechanism base
+rate, WN-C1); **Obs 455** (the automation-cell finding, WN-C3, which
+this entry's "domain prior plus human render" pattern directly
+informs).
+
+## Observation 455: The automation cell is empty across the AB+ corpus's 30 preregistration sources — Pu 2019 and Thomas 2026 §6 are proposals, not systems, and Thomas's self-report objection is the bar D.9 must clear (Session 147, 2026-09-02; PI ruling 2026-09-08)
+
+**The finding.** Across the AB+ corpus's 30-source preregistration-
+and-open-science cluster, an `automat*` search of the extracted text
+"returns zero or proposal-only hits in every source"
+(`reports/ab-plus-tail-report-2026-09-02.md`) — no source implements
+or evaluates an LLM, or any other automated system, that authors or
+checks a preregistration. The two nearest sources are both proposals,
+not implementations:
+
+- **Pu et al. (2019)** proposes an author-generated "declaration of
+  match", worked question by question against the registration, whose
+  generation "could even be partially or fully automated" — the word
+  "automated" occurs exactly once in the whole paper, and nothing
+  about machine learning or language models appears anywhere in its
+  extracted text (`outputs/ab-plus/pu_designing_2019.md`).
+- **Thomas, Gligorić & Shah (2026) §6** proposes that "autonomous
+  research frameworks... should commit to the procedure and
+  eligible-model set before the confirmatory model is available" —
+  again a design proposal, not a built or evaluated system
+  (`outputs/ab-plus/thomas_mitigating_2026.md`).
+
+Thomas 2026 also supplies the nearest prior art to an LLM-support
+claim and a qualified objection to it: an LLM author-checklist
+assistant (Goldberg et al. 2024), which Thomas et al. credit —
+"Checklists help to make these disclosures more principled" — before
+qualifying: they have "limited effectiveness, since they rely solely
+on self-report" (`outputs/ab-plus/thomas_mitigating_2026.md`, §6
+Discussion — Limitations, page_index 13). **This self-report objection
+is the one the paper's D.9 LLM-support claim must answer.**
+
+**(a) The claim was itself caught drifting by the mechanism Obs 453
+quantifies.** Thomas 2026's drafter first wrote the automation-absence
+claim flatly — "nothing here has an LLM authoring or checking a
+preregistration" — which the fresh-context verifier scored
+**OVERREACH twice** (KP9 on the summary, KP10 on the positioning) for
+omitting the §6 proposal: "This does not contradict the claim (nothing
+is implemented or evaluated), but the absence must be qualified
+because the D.9 novelty ruling rests on it." The editor's correction
+(edits E4 and E6) narrowed the claim to "implements or evaluates" and
+named the §6 proposal explicitly, correcting the positioning field in
+its "load-bearing form" (KP10) on the same ground — "the absence claim
+is load-bearing for the D.9 novelty ruling" (edit E4's stated reason)
+(`outputs/ab-plus/thomas_mitigating_2026.md`). This is a concrete,
+within-corpus instance of the "self-flattering direction" drift **Obs
+453** documents at 26.7% of scored points corpus-wide: the drafter's
+uncorrected version was the cleaner, stronger claim for the citing
+paper's own novelty argument.
+
+**Why this matters.** This is the evidentiary basis for the D.9
+discussion section's LLM-support novelty claim
+(`docs/paper/discussion-outline.md` § D.9; drafting brief
+`docs/paper/d9-drafting-brief-2026-09-03.md`): the claim survives
+contact with its two nearest neighbours in a 30-source cluster, but
+only in its narrowed, edit-corrected form, and it sets a specific bar
+— the paper must engage Thomas's self-report objection to
+checklist-style automation aids, not simply assert novelty by
+absence. The 2026-09-03 PI ruling already stakes the automation cell
+"in D.9 and M.12" and stubs a companion methods paper
+(`planning/llm-assisted-preregistration-methods-paper.md`) to work the
+territory this cell only stakes.
+
+**Caveats.** "Empty" is measured by a keyword search (`automat*`) over
+each source's extracted text, the same category of instrument **Obs
+454** shows to be unreliable for a different kind of detection
+(missing table bodies); here the search is a presence/absence check
+supplemented by a full drafter read of the entry, not a stand-alone
+automated trigger, so the failure mode Obs 454 documents does not
+directly transfer — but it is a reason to treat "empty across 30
+sources" as corpus-scoped rather than as a literature-wide claim, and
+to keep reading rather than trusting the grep alone if the cluster
+grows.
+
+**Findable later**: automation cell empty, preregistration
+automation, 30-source preregistration cluster, Pu 2019 declaration of
+match, could even be partially or fully automated, Thomas 2026 §6
+autonomous research frameworks, self-report objection, Goldberg
+checklist assistant, D.9 novelty claim, LLM-support claim, KP9 KP10
+OVERREACH, edits E4 E6, WN-C3.
+
+Sources: `reports/ab-plus-tail-report-2026-09-02.md` § "What the
+corpus now attests for the paper (selection, tail)" (read 2026-09-08:
+"The automation cell is empty across the cluster... Thomas 2026 cites
+and dismisses an LLM checklist assistant as self-report — the
+objection the LLM-support claim must answer"; "The preregistration and
+open-science cluster (30 sources)"); `outputs/ab-plus/pu_designing_2019.md`
+(read 2026-09-08: "generating this declaration could even be
+partially or fully automated"; "'automated' occurs once in the whole
+paper, and nothing about machine learning or language models appears
+anywhere in the extracted text"); `outputs/ab-plus/thomas_mitigating_2026.md`
+(read 2026-09-08: the §6 autonomous-AI-scientist proposal quote; the
+Goldberg et al. 2024 self-report objection quote, page_index 13; KP9
+and KP10 OVERREACH verdicts and edits E4/E6); `docs/paper/d9-drafting-
+brief-2026-09-03.md` (read 2026-09-08: the D.9/M.12 automation-cell
+staking and the companion methods-paper stub); `planning/paper-writeup-
+continuity.md` (read 2026-09-08: the S147 headline naming the
+automation cell finding, around the STATE AFTER S147 section).
+Related: **Obs 453** (the two-mechanism verification base rate, WN-C1
+— this entry's KP9/KP10 catch is a concrete instance of the drift
+pattern it quantifies); **Obs 454** (the cache-defect finding, WN-C2,
+whose text-statistic caveat this entry's caveat echoes but
+distinguishes).
