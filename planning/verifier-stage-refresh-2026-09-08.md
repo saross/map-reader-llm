@@ -165,6 +165,20 @@ OVERALL: READY TO LAUNCH
   and the register note. `verified/text-baseline` (the same verifier on
   the N=1 propose_brief pass, 1,180 candidates, 2026-04-08, `42f07bc3b`)
   is the other unregistered directory the generator's draft proposes.
+- **PI rulings executed (S151, 2026-09-08)**: (1) both April e47 directories
+  registered as inventory rows (`scripts/register_e47_april_verifier_stages.py`,
+  `952f30a22`; passes manifest 1,282 → 1,284); (2) the sweep-staleness
+  class surveyed corpus-wide (`reports/sweep-staleness-survey-2026-09-08.md`,
+  `107f5d06c`: 5 stale of 265 stages, all the one May cleanup's pv-diag
+  image stages, none cited) and the four small ones re-swept complete
+  (`88232c536`; gap-11 stage 0.7460 → 0.7475 at 20 m, gap-1 stages
+  identical); (3) the April e47 stage swept for the first time
+  (`proposer_votes` → `vote_count`, exact): 0.7953 at 20 m against the
+  refreshed 0.8735 — NOT a like-for-like (different candidate-set
+  construction: 4,358 vs 4,149 clusters, more at every vote tier; the April
+  e47 consensus is irreproducible at any vintage), so the refreshed stage
+  remains the pool's only sweep on a reproducible candidate set. Audit
+  § 6.1 carries all of it.
 
 ### 2026-09-08 (later) — Audit READY; launched on sapphire
 
