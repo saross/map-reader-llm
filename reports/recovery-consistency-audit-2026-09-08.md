@@ -280,7 +280,7 @@ it, and the best at 50 m.
 | pv-diag image t0.0 `verified-v1-n10-recovery-2026-09-08` | 889 | **0.6872** (0.658 / 0.720; 476) | vote ≥ 1, p ≥ 0.20 | 0.8241 |
 | pv-diag text t0.0 `verified-v1-n3`, April (`857d5f714`) | 1,256 | 0.8234 (0.856 / 0.793; 403) | vote ≥ 3, p ≥ 0.15 | 0.8568 |
 | pv-diag text t0.0 `verified-v1-n3-recovery-2026-09-08` | 1,319 | **0.8508** (0.863 / 0.839; 423) | vote ≥ 3, p ≥ 0.15 | 0.8884 |
-| e47 `verified/flash-high-text-1of5`, April (`52b0215a6`; complete after the 2026-05-06 57-crop cleanup, `6683952ac`; never swept, never registered — see the e47 reading) | 4,358 | — (no sweep) | — | — |
+| e47 `verified/flash-high-text-1of5`, April (`52b0215a6`; complete after the 2026-05-06 57-crop cleanup, `6683952ac`; swept for the first time S151 on the PI's ruling — `results/recovery-reeval-2026-09-08/e47-propose-brief/verified-flash-high-text-1of5-april-complete-sweep/`; NOT a like-for-like, see the e47 reading) | 4,358 | 0.7953 (0.745 / 0.853; 498) | vote ≥ 3, p ≥ 0.20 | 0.8189 |
 | e47 `verified/flash-high-text-1of5-recovery-2026-09-08` | 4,149 | **0.8735** (0.928 / 0.825; 387) | vote ≥ 4, p ≥ 0.15 | 0.9028 |
 
 Readings:
@@ -305,8 +305,13 @@ Readings:
   (`c6b5e6b10`) — this one (gap 460) and four with gaps of 11, 1, 1, and 1
   (`image-t0.3/verified-v1-n5`, `image-t0.7/verified-v1-n5`,
   `image-t1.0/verified-v1-n5`, `scale-4-optimal-487/verified-v1-n10`);
-  none is cited by a registered condition or analysis, and the four small
-  ones are not re-swept. Re-swept on the complete 802
+  none is cited by a registered condition or analysis. On the PI's ruling
+  the four small ones were re-swept on their complete probabilities
+  (S151, sapphire, $0; `results/recovery-reeval-2026-09-08/pv-diag-384/README-april-complete-resweeps.md`):
+  the gap-11 stage moves 0.7460 → 0.7475 at 20 m at the same operating
+  point and the three gap-1 stages are identical to four decimals — the
+  committed sweeps were materially sound, and the class matters only where
+  the gap is large. Re-swept on the complete 802
   probabilities (row 2), the April stage scores 0.6589 and the refreshed
   stage's 0.6872 at the same operating point is a recovery effect of the
   text stage's size: +0.028 F1, recall 0.653 → 0.720, precision 0.665 →
@@ -319,15 +324,29 @@ Readings:
   verified)"; that misread a cleanup-overwritten `run.meta.json`. The
   April stage verified all 4,358 candidates (2026-04-09, `52b0215a6`, a
   57-crop gap closed by the 2026-05-06 cleanup, `6683952ac`, whose meta
-  overwrote the original — the image stage's pattern), but was never swept,
-  never evaluated as a verified set (the one evaluation under its name,
-  waived in `_ignored_evals`, scores the unverified candidate GeoJSON), and
-  never registered; its `2of5`–`5of5` siblings are CPU-derived vote-threshold
-  subsets of the same probabilities, not verifier runs. Verifier uplift on
-  the refreshed set over the within-sweep vote ≥ 4, p ≥ 0 row: 0.6561 →
-  0.8735; over vote ≥ 3: 0.5485 → 0.8727. The verifier flattens the
-  vote-threshold curve (0.8489–0.8735 across vote ≥ 2–4) — the same pattern
-  as the registered pv-diag text cells, on a five-pass pool.
+  overwrote the original — the image stage's pattern), but was never swept
+  in place, never evaluated as a verified set (the one evaluation under its
+  name, waived in `_ignored_evals`, scores the unverified candidate
+  GeoJSON), and until S151 never registered (PI ruling 2026-09-08: it and
+  `verified/text-baseline` are now inventory rows,
+  `scripts/register_e47_april_verifier_stages.py`); its `2of5`–`5of5`
+  siblings are CPU-derived vote-threshold subsets of the same
+  probabilities, not verifier runs. **Swept for the first time on the PI's
+  ruling** (table row above; `proposer_votes` mapped to `vote_count`,
+  exact): best 20 m F1 0.7953 at vote ≥ 3, p ≥ 0.20, against the refreshed
+  stage's 0.8735 at vote ≥ 4, p ≥ 0.15. **Not a like-for-like**: the April
+  candidate set has 209 more vote ≥ 1 clusters and more at every vote tier
+  (≥ 2: 1,654 vs 1,537; ≥ 3: 1,072 vs 998; ≥ 4: 753 vs 699; ≥ 5: 487 vs
+  455) despite being built from pre-recovery passes with fewer detections,
+  and § 2.3 had already found the April e47 consensus irreproducible at any
+  vintage (pre-D6 resolver). The 0.078 gap is almost all precision (0.745 →
+  0.928) at a looser vote tier — what looser April vote counts would
+  produce — and is a construction difference, not a recovery effect; the
+  refreshed stage is the pool's only sweep on a reproducible candidate set.
+  Verifier uplift on the refreshed set over the within-sweep vote ≥ 4,
+  p ≥ 0 row: 0.6561 → 0.8735; over vote ≥ 3: 0.5485 → 0.8727. The verifier
+  flattens the vote-threshold curve (0.8489–0.8735 across vote ≥ 2–4) — the
+  same pattern as the registered pv-diag text cells, on a five-pass pool.
 
 None of the six stages is cited by a registered condition or analysis; the
 refreshed directories are inventory, and these readings are the only place
@@ -335,6 +354,15 @@ they are compared. Disclosure: E71 rider addendum (2026-09-08, later) in
 `docs/methodology/preregistration/protocol-errata.md`.
 
 ## Changelog
+
+### 2026-09-08 (S151, fourth revision) — PI rulings executed: April e47 stages registered, five sweeps preserved
+
+The two April e47 verifier directories are inventory rows; the four small
+stale stages are re-swept complete (gap-11 stage 0.7460 → 0.7475, the
+gap-1 stages identical); the April e47 stage carries its first sweep
+(0.7953 at 20 m) with the finding that it is not a like-for-like against
+the refreshed 0.8735 (different candidate-set construction). No registered
+number moves.
 
 ### 2026-09-08 (S151, third revision) — sweep-staleness class surveyed corpus-wide
 
