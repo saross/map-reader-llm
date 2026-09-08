@@ -9347,3 +9347,53 @@ strata; the step-8 texts; the § R7 table.
 transcript stayed intact; sapphire's clock is UTC and my elapsed-time
 estimates were off by an hour until checked; `outputs/` paths on sapphire
 are gitignored-or-untracked residue from S145–S148, not today's.
+
+## Session 150 — 2026-09-07/08 (amd-tower + sapphire; US$0 API until the verifier refresh, ≈ US$9 at flex, PI ceiling US$20; Fable 5.1; one Opus-tier inventory agent; one obs-writer agent)
+
+**The five held rulings (PI, 2026-09-07).** 3a → (a): nine pinned
+rows stamped `input_vintage`, nine `-post-e71` rows registered
+(`register_post_e71_conditions.py`, `cf8a93c5d`); the verifier's
+pinned-vintage state checks a pinned row at `git show <commit>:<path>`
+(`5448158af`); register 22 pass / 19 partial / 0 fail; E71 rider 1 with
+the measured consequence. Eight r2 analysis rows PI-signed
+(`60bac9fb8`); the single manifest regeneration refused two rows with
+prose in `conditions_compared` — the sensitivity row now cites its 35
+board conditions, the student-baseline row returns via PR #12 (schema
+`reference_scope`, `506c02874`). Uplift supplement regenerated with all
+four 55-map strata after a resolver fix (`bb545f5f1`, `232f6e8d0`). Step
+8 under E84: erratum `9cdd064dc`, M.3 `4cdc16d95`, D.8 `e157d3be9`, Obs
+452 `eeeddd911`; three draft claims corrected against the boards and the
+estimated column restated (`6844fb182`). § R7 refreshed to r2
+(`ceefd8df0`). Hypothesis table regenerated (`db9728d66`). Tier-1 2,154.
+
+**Tile-coverage question → recovery-consistency audit (PI, 2026-09-08).**
+Survey: 22 of 1,279 passes genuinely incomplete, ≤ 5 tiles each; every
+55-map and 3.7 pool complete after fragment union (code gates + a
+CRS-corrected spatial test). Register defects fixed (`dd9bc22fb`):
+fragment metas count towards their pass (70 → 22 partial); per-buffer
+coverage filled (355 of 437). H6 corrected on the recovered files: n1
+comparator sweeps rebuilt (`rebuild_recovered_consensus.py`,
+`185681674`), six cells re-scored (`recovery_reeval.py`, `10e933ded`),
+rows re-pointed (`0100d6b5c`), script re-run thrice on sapphire (the
+first on the uncommitted script; `93ff7f4e9` final) — no verdict moved,
+image fragility flag retired, A-09 image matched-config ratio 1.21 →
+1.14; findings and rows refreshed and re-signed (`38aa9ed1b`). e47
+sweep rebuilt and five cells re-scored (`e01b8617a`); its April sweep
+was a pre-D6 double read of run 5. h12-v2 run 3 meta rebuilt from its
+GeoJSON (`c053f5a41`); greedy and WBF sweeps rebuilt, operating-point
+sets identical (`e7ebc1695`). Calibration analysis refreshed: image
+t = 0.0 headline moved 1-of-3 → 3-of-3 (`8e98f8edf`). Audit report
+`reports/recovery-consistency-audit-2026-09-08.md` (Opus agent + § 6
+actions); E71 rider 2 (`f5c750b18`). Plateau document and supplement
+regenerated. Tier-1 2,156 on `ac668b293`.
+
+**Verifier-stage refresh (running at close).** Card
+`planning/verifier-stage-refresh-2026-09-08.md`, driver
+`run_verifier_stage_refresh.sh`; 6,357 real-time Flash calls at flex,
+model pinned `gemini-3-flash-preview`; audit READY; launched 06:56 UTC
+on sapphire (`/tmp/vsr.log`). After-run steps on the card § 5.
+
+**Contextual assumptions.** The PI worked on another project all
+afternoon and delegated with "finish what you can, ask if you need
+me"; API spend was pre-approved to a ceiling, which is why the refresh
+launched without a further round-trip. Sapphire's clock is UTC.

@@ -1,6 +1,6 @@
 {
  "_README": "A-09 (registered: preregistration.md:691). Cost bases: audited per-pass cost_usd from results/passes-manifest.json (per-pass extractor) on both sides of the matched-configuration comparison; the all-Flash pareto_v2 frontier (results/verifier-robustness/pareto/, modelled token-load-audit flex dollars) as the Flash-optimal yardstick. The two bases are not identically constructed (audit M-8); if the Pro passes were billed above flex rates the Pro side is over-costed, which makes the CLOSED verdict conservative. Comparability windows are operational choices declared in the limb blocks, not registered.",
- "generated_at": "2026-08-17T09:46:16.123539+00:00",
+ "generated_at": "2026-09-08T01:49:24.530663+00:00",
  "registered_gate_verdict": "CLOSED",
  "verdict_basis": "the Flash-optimal frontier (min6, min11) \u2014 the yardstick the registered scope limitation implies. The matched-configuration comparison measures the pure model effect at Pro's preferred corner (Flash never optimised there) and does not decide the gate.",
  "matched_configuration_comparison": {
@@ -10,15 +10,15 @@
     "cost_per_pass_usd": 1.8533
    },
    "flash_same_config_single_pass": {
-    "f1_at_20m": 0.4942,
+    "f1_at_20m": 0.4919,
     "cost_per_pass_usd": 0.5971
    },
    "flash_same_config_n3_consensus_best": {
-    "f1_at_20m": 0.566502,
+    "f1_at_20m": 0.574785,
     "cost_usd": 1.7913
    },
    "limbs_vs_flash_same_config_n3": {
-    "f1_ratio_pro_over_other": 1.4201,
+    "f1_ratio_pro_over_other": 1.3997,
     "cost_ratio_pro_over_other": 1.0346,
     "cost_comparable_within_10pct": true,
     "f1_comparable_within_0.02": false,
@@ -46,7 +46,7 @@
       485
      ]
     },
-    "note": "the Flash comparator passes are status=partial (485-486/487 tiles) while all Pro passes are ok at 487/487 \u2014 a one-sided gap that slightly depresses Flash F1 and cost (audit M-2); the matched-config limb results sit within that uncertainty where margins are thin"
+    "note": "tile coverage: Pro 487/487 (ok), Flash comparator 485/487 (partial) \u2014 the 2 tile(s) per pass the comparator lacks are the E71 residue that failed both recovery tiers (deterministic truncation); a one-sided gap of that size depresses Flash F1 by well under the declared comparability windows"
    }
   },
   "image": {
@@ -55,15 +55,15 @@
     "cost_per_pass_usd": 15.7365
    },
    "flash_same_config_single_pass": {
-    "f1_at_20m": 0.5276,
+    "f1_at_20m": 0.5446,
     "cost_per_pass_usd": 3.9717
    },
    "flash_same_config_n3_consensus_best": {
-    "f1_at_20m": 0.552454,
+    "f1_at_20m": 0.585411,
     "cost_usd": 11.9151
    },
    "limbs_vs_flash_same_config_n3": {
-    "f1_ratio_pro_over_other": 1.2052,
+    "f1_ratio_pro_over_other": 1.1373,
     "cost_ratio_pro_over_other": 1.3207,
     "cost_comparable_within_10pct": false,
     "f1_comparable_within_0.02": false,
@@ -91,7 +91,7 @@
       486
      ]
     },
-    "note": "the Flash comparator passes are status=partial (485-486/487 tiles) while all Pro passes are ok at 487/487 \u2014 a one-sided gap that slightly depresses Flash F1 and cost (audit M-2); the matched-config limb results sit within that uncertainty where margins are thin"
+    "note": "tile coverage: Pro 487/487 (ok), Flash comparator 485-486/487 (partial) \u2014 the 1-2 tile(s) per pass the comparator lacks are the E71 residue that failed both recovery tiers (deterministic truncation); a one-sided gap of that size depresses Flash F1 by well under the declared comparability windows"
    }
   }
  },

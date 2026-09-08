@@ -1,12 +1,12 @@
 {
  "_README": "A-07 (registered: preregistration.md:679-683) computed in the only commensurable form the data support: matched-N (N=3) Pro-vs-Flash voting curves at matched configuration and corpus. The REGISTERED form \u2014 Pro optimal threshold vs the Flash production optimum (26-of-30, an N=30 pool) \u2014 is NOT-COMPUTABLE-AS-REGISTERED: a raw vote-count comparison across N=3 and N=30 pools is data-independent (any k in 1..3 differs from 26 by >88% relative), so the >10%-relative rule presupposes matched N. Fraction-form (k/N) reported descriptively below, carrying no registered verdict.",
- "generated_at": "2026-08-17T09:46:16.123539+00:00",
+ "generated_at": "2026-09-08T01:49:24.530663+00:00",
  "scope_caveats": [
   "384 px / 487 tiles (Era 2), not the registered Phase-4 scope",
   "Pro pools exist only at N=3 (three runs per corner)",
   "Flash comparator = the E57 mis-dispatch pools (Flash executing the Pro-corner configuration) \u2014 matched config, matched N",
   "the registered >20% extended-test trigger cannot fire an N=30 Pro run inside this $0 block",
-  "FRAGILITY (image): the Flash comparator image curve is nearly flat \u2014 k=3 beats k=1 by 0.0016 F1; had k=1 won, the relative difference would read 200% and the image verdict would flip from 'transfers' to flagged. The image 'transfers' verdict is not robust to that margin (S135 blind verification, MEDIUM-3)."
+  "FRAGILITY (image): the Flash comparator image optimum k=3 leads its runner-up by 0.0094 F1 \u2014 above the 0.005 fragility threshold, so the 'transfers' verdict is robust to it; the S135 MEDIUM-3 flag (0.0016 on the pre-recovery comparator) is retired on the recovered sweeps (S150)."
  ],
  "results": {
   "text": {
@@ -16,14 +16,14 @@
     "3": 0.849449
    },
    "flash_curve_f1_at_20m (E57 mis-dispatch pools)": {
-    "1": 0.472634,
-    "2": 0.519913,
-    "3": 0.566502
+    "1": 0.46343,
+    "2": 0.520337,
+    "3": 0.574785
    },
    "pro_optimal_k": 1,
    "pro_optimal_margin_over_runner_up": 0.004457,
    "flash_optimal_k": 3,
-   "flash_optimal_margin_over_runner_up": 0.046589,
+   "flash_optimal_margin_over_runner_up": 0.054448,
    "optimum_fragile (margin < 0.005)": true,
    "matched_n3_comparison": {
     "flash_optimal_n": 3,
@@ -44,15 +44,15 @@
     "3": 0.722286
    },
    "flash_curve_f1_at_20m (E57 mis-dispatch pools)": {
-    "1": 0.550909,
-    "2": 0.549906,
-    "3": 0.552454
+    "1": 0.561373,
+    "2": 0.576,
+    "3": 0.585411
    },
    "pro_optimal_k": 3,
    "pro_optimal_margin_over_runner_up": 0.007374,
    "flash_optimal_k": 3,
-   "flash_optimal_margin_over_runner_up": 0.001545,
-   "optimum_fragile (margin < 0.005)": true,
+   "flash_optimal_margin_over_runner_up": 0.009411,
+   "optimum_fragile (margin < 0.005)": false,
    "matched_n3_comparison": {
     "flash_optimal_n": 3,
     "flash_optimal_threshold": 3,
@@ -110,33 +110,33 @@
  },
  "comparator_gate": {
   "pro-text-high-t0-k1": {
-   "recomputed": 0.472634,
-   "committed": 0.4726,
+   "recomputed": 0.46343,
+   "committed": 0.4634,
    "pass": true
   },
   "pro-text-high-t0-k2": {
-   "recomputed": 0.519913,
-   "committed": 0.5199,
+   "recomputed": 0.520337,
+   "committed": 0.5203,
    "pass": true
   },
   "pro-text-high-t0-k3": {
-   "recomputed": 0.566502,
-   "committed": 0.5665,
+   "recomputed": 0.574785,
+   "committed": 0.5748,
    "pass": true
   },
   "pro-image-high-t0-k1": {
-   "recomputed": 0.550909,
-   "committed": 0.5509,
+   "recomputed": 0.561373,
+   "committed": 0.5614,
    "pass": true
   },
   "pro-image-high-t0-k2": {
-   "recomputed": 0.549906,
-   "committed": 0.5499,
+   "recomputed": 0.576,
+   "committed": 0.576,
    "pass": true
   },
   "pro-image-high-t0-k3": {
-   "recomputed": 0.552454,
-   "committed": 0.5525,
+   "recomputed": 0.585411,
+   "committed": 0.5854,
    "pass": true
   }
  }

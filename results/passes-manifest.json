@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-06T05:11:51Z",
+  "generated_at": "2026-09-08T08:12:07Z",
   "generator_version": "0.7.1",
   "passes": [
     {
@@ -3760,6 +3760,46 @@
           "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections-propose_brief-text-3-flash-2026-04-09.meta.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "e47-propose-brief::verified-flash-high-text-1of5-recovery-2026-09-08::run1",
+      "run_id": "e47-propose-brief",
+      "proposer_pool": "verified-flash-high-text-1of5-recovery-2026-09-08",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": null,
+      "n_tiles_null_reason": "verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand_NNNN) in execution_stats.completed_items and candidate API items in per_item_metadata, so no tile-scale record exists to report. Completed crop count is in n_candidates_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)",
+      "n_candidates_verified": 4149,
+      "n_tiles_dispatched": null,
+      "tokens": {
+        "input_billed": 7435008,
+        "input_cached": 0,
+        "output": 651010,
+        "thinking": 0,
+        "total": 8086018
+      },
+      "cost_usd": 5.670534,
+      "wall_clock_s": 901.690068,
+      "timestamps": {
+        "start": "2026-09-08T07:07:04.005474+00:00",
+        "end": "2026-09-08T07:22:05.695542+00:00"
+      },
+      "retries": 2,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5-recovery-2026-09-08/run.meta.json"
+        ],
+        "last_extracted_at": "2026-09-08T08:12:07Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -17304,6 +17344,86 @@
       }
     },
     {
+      "pass_id": "pv-diag-384::flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08::run1",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "image",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": null,
+      "n_tiles_null_reason": "verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand_NNNN) in execution_stats.completed_items and candidate API items in per_item_metadata, so no tile-scale record exists to report. Completed crop count is in n_candidates_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)",
+      "n_candidates_verified": 889,
+      "n_tiles_dispatched": null,
+      "tokens": {
+        "input_billed": 1593088,
+        "input_cached": 0,
+        "output": 148025,
+        "thinking": 0,
+        "total": 1741113
+      },
+      "cost_usd": 1.240619,
+      "wall_clock_s": 210.496185,
+      "timestamps": {
+        "start": "2026-09-08T06:56:40.531362+00:00",
+        "end": "2026-09-08T07:00:11.027547+00:00"
+      },
+      "retries": 1,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10-recovery-2026-09-08/run.meta.json"
+        ],
+        "last_extracted_at": "2026-09-08T08:12:07Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "pv-diag-384::flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08::run1",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": null,
+      "n_tiles_null_reason": "verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand_NNNN) in execution_stats.completed_items and candidate API items in per_item_metadata, so no tile-scale record exists to report. Completed crop count is in n_candidates_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)",
+      "n_candidates_verified": 1319,
+      "n_tiles_dispatched": null,
+      "tokens": {
+        "input_billed": 2363648,
+        "input_cached": 0,
+        "output": 212658,
+        "thinking": 0,
+        "total": 2576306
+      },
+      "cost_usd": 1.819798,
+      "wall_clock_s": 291.108169,
+      "timestamps": {
+        "start": "2026-09-08T07:01:05.472758+00:00",
+        "end": "2026-09-08T07:05:56.580927+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3-recovery-2026-09-08/run.meta.json"
+        ],
+        "last_extracted_at": "2026-09-08T08:12:07Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
       "pass_id": "h12-v2::r1-hn-heavy::run1",
       "run_id": "h12-v2",
       "proposer_pool": "r1-hn-heavy",
@@ -17596,8 +17716,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "3c89f3a83b9d6df85d71e60352fb432d28f97a18f2afd42a530f69750b02151c",
-      "status": "ok",
-      "n_tiles_processed": 327,
+      "status": "partial",
+      "n_tiles_processed": 326,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 327,
@@ -17619,7 +17739,7 @@
         "source_files": [
           "outputs/h12-v2/r3-hp-heavy/run_3/detections-detect_h12_r3-hp-heavy_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-09-08T01:53:36Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -45518,8 +45638,8 @@
       "temperature": 1.0,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 429,
+      "status": "ok",
+      "n_tiles_processed": 430,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 430,
@@ -45539,9 +45659,10 @@
       "retries": 2,
       "provenance": {
         "source_files": [
-          "outputs/h13/armB/run_1/detections-detect_brief-text-3-flash-2026-08-17.meta.json"
+          "outputs/h13/armB/run_1/detections-detect_brief-text-3-flash-2026-08-17.meta.json",
+          "outputs/h13/armB/run_1_recovery/detections-detect_brief-text-3-flash-2026-08-17.meta.json"
         ],
-        "last_extracted_at": "2026-08-18T00:49:03Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -45958,8 +46079,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 493,
+      "status": "ok",
+      "n_tiles_processed": 494,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 494,
@@ -45979,9 +46100,10 @@
       "retries": 7,
       "provenance": {
         "source_files": [
-          "outputs/stride-phaseb-2026-08-25/g512_ov176/run_5/detections-detect_brief-text-3-flash-2026-08-24.meta.json"
+          "outputs/stride-phaseb-2026-08-25/g512_ov176/run_5/detections-detect_brief-text-3-flash-2026-08-24.meta.json",
+          "outputs/stride-phaseb-2026-08-25/g512_ov176/run_5_recovery/detections-detect_brief-text-3-flash-2026-08-24.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -46998,8 +47120,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1407,
+      "status": "ok",
+      "n_tiles_processed": 1408,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1408,
@@ -47019,9 +47141,10 @@
       "retries": 14,
       "provenance": {
         "source_files": [
-          "outputs/stride-phaseb-2026-08-25/g512_ov320/run_10/detections-detect_brief-text-3-flash-2026-08-24.meta.json"
+          "outputs/stride-phaseb-2026-08-25/g512_ov320/run_10/detections-detect_brief-text-3-flash-2026-08-24.meta.json",
+          "outputs/stride-phaseb-2026-08-25/g512_ov320/run_10_recovery/detections-detect_brief-text-3-flash-2026-08-24.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -47198,8 +47321,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1407,
+      "status": "ok",
+      "n_tiles_processed": 1408,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1408,
@@ -47219,9 +47342,10 @@
       "retries": 34,
       "provenance": {
         "source_files": [
-          "outputs/stride-phaseb-2026-08-25/g512_ov320/run_6/detections-detect_brief-text-3-flash-2026-08-24.meta.json"
+          "outputs/stride-phaseb-2026-08-25/g512_ov320/run_6/detections-detect_brief-text-3-flash-2026-08-24.meta.json",
+          "outputs/stride-phaseb-2026-08-25/g512_ov320/run_6_recovery/detections-detect_brief-text-3-flash-2026-08-24.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -47638,8 +47762,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 2482,
+      "status": "ok",
+      "n_tiles_processed": 2483,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 2483,
@@ -47659,9 +47783,10 @@
       "retries": 37,
       "provenance": {
         "source_files": [
-          "outputs/stride-phasec-2026-08-25/g384_ov240/run_1/detections-detect_brief-text-3-flash-2026-08-24.meta.json"
+          "outputs/stride-phasec-2026-08-25/g384_ov240/run_1/detections-detect_brief-text-3-flash-2026-08-24.meta.json",
+          "outputs/stride-phasec-2026-08-25/g384_ov240/run_1_recovery/detections-detect_brief-text-3-flash-2026-08-24.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48078,8 +48203,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 14159,
+      "status": "ok",
+      "n_tiles_processed": 14160,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 14160,
@@ -48099,9 +48224,10 @@
       "retries": 7,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_1/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_1/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_1_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48118,8 +48244,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 14159,
+      "status": "ok",
+      "n_tiles_processed": 14160,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 14160,
@@ -48139,9 +48265,10 @@
       "retries": 64,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_10/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_10/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_10_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48158,8 +48285,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 14159,
+      "status": "ok",
+      "n_tiles_processed": 14160,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 14160,
@@ -48179,9 +48306,10 @@
       "retries": 37,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_2/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_2/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_2_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48198,8 +48326,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 14156,
+      "status": "ok",
+      "n_tiles_processed": 14160,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 14160,
@@ -48219,9 +48347,10 @@
       "retries": 9,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_3/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_3/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_3_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48238,8 +48367,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 14159,
+      "status": "ok",
+      "n_tiles_processed": 14160,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 14160,
@@ -48259,9 +48388,10 @@
       "retries": 2,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_4/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_4/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_4_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48278,8 +48408,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 14159,
+      "status": "ok",
+      "n_tiles_processed": 14160,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 14160,
@@ -48299,9 +48429,10 @@
       "retries": 1,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_5/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_5/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_5_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48358,8 +48489,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 14158,
+      "status": "ok",
+      "n_tiles_processed": 14160,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 14160,
@@ -48379,9 +48510,10 @@
       "retries": 24,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_7/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_7/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_7_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48398,8 +48530,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 14159,
+      "status": "ok",
+      "n_tiles_processed": 14160,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 14160,
@@ -48419,9 +48551,10 @@
       "retries": 6,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_8/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_8/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_8_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48438,8 +48571,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 14158,
+      "status": "ok",
+      "n_tiles_processed": 14160,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 14160,
@@ -48459,9 +48592,10 @@
       "retries": 48,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_9/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_9/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_9_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48478,8 +48612,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24492,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -48499,9 +48633,10 @@
       "retries": 5300,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_1/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_1/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_1_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48518,8 +48653,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24557,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -48539,9 +48674,10 @@
       "retries": 30,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_10/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_10/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_10_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48558,8 +48694,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24556,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -48579,9 +48715,10 @@
       "retries": 655,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_2/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_2/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_2_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48598,8 +48735,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24558,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -48619,9 +48756,10 @@
       "retries": 279,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_3/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_3/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_3_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48638,8 +48776,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24558,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -48659,9 +48797,10 @@
       "retries": 1851,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_4/detections-detect_brief-text-3-flash-2026-08-25.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_4/detections-detect_brief-text-3-flash-2026-08-25.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_4_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48678,8 +48817,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24560,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -48699,9 +48838,10 @@
       "retries": 441,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_5/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_5/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_5_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48718,8 +48858,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24559,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -48739,9 +48879,10 @@
       "retries": 233,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_6/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_6/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_6_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48758,8 +48899,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24559,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -48779,9 +48920,10 @@
       "retries": 282,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_7/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_7/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_7_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48798,8 +48940,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24556,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -48819,9 +48961,10 @@
       "retries": 104,
       "provenance": {
         "source_files": [
-          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_8/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_8/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+          "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_8_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -48998,8 +49141,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1397,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -49019,9 +49162,10 @@
       "retries": 0,
       "provenance": {
         "source_files": [
-          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_1/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_1/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json",
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_1_recovery/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -49118,8 +49262,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1397,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -49139,9 +49283,10 @@
       "retries": 0,
       "provenance": {
         "source_files": [
-          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_3/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_3/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json",
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_3_recovery/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -49238,8 +49383,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1397,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -49259,9 +49404,10 @@
       "retries": 0,
       "provenance": {
         "source_files": [
-          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_6/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_6/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json",
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_6_recovery/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -49318,8 +49464,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1397,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -49339,9 +49485,10 @@
       "retries": 0,
       "provenance": {
         "source_files": [
-          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_8/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_8/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json",
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_8_recovery/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -49358,8 +49505,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1396,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -49379,9 +49526,10 @@
       "retries": 0,
       "provenance": {
         "source_files": [
-          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_9/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_9/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json",
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_9_recovery/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -49398,8 +49546,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1397,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -49419,9 +49567,10 @@
       "retries": 33,
       "provenance": {
         "source_files": [
-          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_1/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_1/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json",
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_1_recovery/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -49478,8 +49627,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1397,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -49499,9 +49648,10 @@
       "retries": 27,
       "provenance": {
         "source_files": [
-          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_2/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_2/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json",
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_2_recovery/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -49598,8 +49748,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1397,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -49619,9 +49769,10 @@
       "retries": 35,
       "provenance": {
         "source_files": [
-          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_5/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_5/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json",
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_5_recovery/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -49678,8 +49829,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1397,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -49699,9 +49850,10 @@
       "retries": 37,
       "provenance": {
         "source_files": [
-          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_7/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_7/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json",
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_7_recovery/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -49718,8 +49870,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1397,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -49739,9 +49891,10 @@
       "retries": 22,
       "provenance": {
         "source_files": [
-          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_8/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_8/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json",
+          "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_8_recovery/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50118,8 +50271,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1392,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -50139,9 +50292,10 @@
       "retries": 2773,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_1/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json"
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_1/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_1_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50158,8 +50312,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1397,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -50179,9 +50333,10 @@
       "retries": 1650,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_10/detections-detect_brief-text-3.7-flash-2026-08-29.meta.json"
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_10/detections-detect_brief-text-3.7-flash-2026-08-29.meta.json",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_10_recovery/detections-detect_brief-text-3.7-flash-2026-08-29.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50198,8 +50353,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1389,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -50219,9 +50374,10 @@
       "retries": 2967,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_2/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json"
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_2/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50238,8 +50394,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1391,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -50259,9 +50415,10 @@
       "retries": 2819,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_3/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json"
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_3/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_3_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50278,8 +50435,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1396,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -50299,9 +50456,10 @@
       "retries": 2243,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_4/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json"
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_4/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_4_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50358,8 +50516,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1397,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -50379,9 +50537,10 @@
       "retries": 1016,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_6/detections-detect_brief-text-3.7-flash-2026-08-29.meta.json"
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_6/detections-detect_brief-text-3.7-flash-2026-08-29.meta.json",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_6_recovery/detections-detect_brief-text-3.7-flash-2026-08-29.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50678,8 +50837,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24239,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -50699,9 +50858,10 @@
       "retries": 38045,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_1/detections-detect_brief-text-3.7-flash-2026-08-29.meta.json"
+          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_1/detections-detect_brief-text-3.7-flash-2026-08-29.meta.json",
+          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_1_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50718,8 +50878,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24466,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -50739,9 +50899,10 @@
       "retries": 30550,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json"
+          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json",
+          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50758,8 +50919,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24555,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -50779,9 +50940,10 @@
       "retries": 21241,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_4/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json"
+          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_4/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json",
+          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_4_recovery/detections-detect_brief-text-3.7-flash-2026-08-31.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50798,8 +50960,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 24560,
+      "status": "ok",
+      "n_tiles_processed": 24561,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 24561,
@@ -50819,9 +50981,10 @@
       "retries": 10568,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_5/detections-detect_brief-text-3.7-flash-2026-08-31.meta.json"
+          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_5/detections-detect_brief-text-3.7-flash-2026-08-31.meta.json",
+          "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_5_recovery/detections-detect_brief-text-3.7-flash-2026-08-31.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50918,8 +51081,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1292,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -50939,9 +51102,10 @@
       "retries": 3001,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_1/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json"
+          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_1/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
+          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_1_recovery/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50958,8 +51122,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 4,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -50979,9 +51143,10 @@
       "retries": 20932,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_2/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json"
+          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_2/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
+          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_2_recovery/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -50998,8 +51163,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -51019,9 +51184,10 @@
       "retries": 20896,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_3/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json"
+          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_3/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
+          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_3_recovery/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -51038,8 +51204,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 132,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -51059,9 +51225,10 @@
       "retries": 19976,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_4/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json"
+          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_4/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
+          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_4_recovery/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -51078,8 +51245,8 @@
       "temperature": 0.7,
       "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
       "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
-      "status": "partial",
-      "n_tiles_processed": 1273,
+      "status": "ok",
+      "n_tiles_processed": 1398,
       "n_tiles_null_reason": null,
       "n_candidates_verified": null,
       "n_tiles_dispatched": 1398,
@@ -51099,9 +51266,10 @@
       "retries": 5238,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_5/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json"
+          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_5/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
+          "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_5_recovery/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-08T01:41:50Z",
         "extractor_version": "0.7.1"
       }
     },

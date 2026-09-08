@@ -11120,3 +11120,61 @@ verifier that read PARTIAL, "unguarded" for a gate that was checked by
 hand, "all seven absent" for six. Each was corrected within the hour by
 the same re-verification discipline that caught the Opus half's errors —
 which is the point: the discipline works on whoever is writing.
+
+## Session 150 — 2026-09-07/08 — the session that executed the held rulings and then found the recovery had never finished
+
+**Instance:** primary (Fable 5.1 throughout; one session id
+`d7ec7e62…`; no compaction). Project: map-reader-llm.
+
+**What context from this session will be hardest to reconstruct in six
+months?** Three kinds of "stale" that look identical in a directory
+listing, and why they were treated differently. A D40-pinned evaluation
+is frozen on purpose: the E82 replay scored the file as committed at a
+named hash, and ruling 3a keeps that record and registers the current
+scoring beside it. A derived artefact — the H6 comparator's consensus
+sweeps, e47's, h12-v2's, three verifier stages — was never pinned by
+anyone; it simply kept voting over the dead-tile files because the
+2026-07-30 recovery rebuilt only the two cells that were "live" that
+day. And a bookkeeping row — 48 passes the manifest called partial —
+was complete all along, because the extractor never looked in the
+`run_N_recovery` fragments the union builders had been reading for
+weeks. All three present as "the numbers do not match the files". The
+sorting rule is written down (E71's second rider, the audit report),
+but the intuition behind it — *a recovery completes the passes, and
+every consumer of those passes inherits the gap until it is rebuilt* —
+is what a reader will have to rebuild. So is the e47 number: 4,491
+clusters in April, 4,146 today from the same pre-recovery pass, because
+the April run read two copies of run 5. Without the control rebuild
+that number looks like a recovery effect, and someone will "correct"
+the wrong thing.
+
+**What would I do differently if I replayed this session?** Commit
+before dispatching. The first H6 recompute on sapphire ran the script
+as git had it, not as my editor had it; the A-07 curves updated (they
+are read from disk) while A-09's comparator quietly stayed on the pinned
+row. The fix was a commit and a second run, but the log should have
+printed the script's commit, and I should have known the machine runs
+what is pushed. Second, I inherited S149's "dry-run clean" as if it
+meant schema-valid; the manifest generator refused two rows an hour
+later, for free, and I could have run that validation before pressing
+`--write`. Third, and smallest, I carried "0.0005–0.0007 below" from
+S149's summary into E84 and an observation draft before opening the
+artefact, which says 32 below, one at, two above. The re-verification
+rule exists for exactly this and I skipped it once; the obs-writer
+agent, working cold, did not.
+
+**What is the single most important thing a future reader should know?**
+Shawn's question — "how widespread is this?" — turned a one-row
+correction into the finding of the session: the July recovery had never
+been carried through, and the register could not see it. The two
+register fixes (fragment metas count towards their pass; the coverage
+scalar is filled from the evaluation or the pool union) make the next
+recovery visible; the two drivers make the rebuild mechanical. The
+verdicts did not move — H6's A-07 and A-09 stand, h12-v2's sets came
+out identical — but the image fragility flag retired, the cost gate's
+coverage note is no longer false, and a "dozen missing tiles" is now a
+residue of 34 with one tile that fails deterministically in ten of
+twelve passes. The other thing to know is how the 3a ruling was made:
+he asked for pros and cons instead of taking my one-line
+recommendation, and writing the cons is what surfaced the cost-gate
+coverage error. The request changed the evidence.

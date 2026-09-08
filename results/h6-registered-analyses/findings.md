@@ -1,9 +1,9 @@
 # H6 registered $0 analyses — A-06, A-07, A-09 on the existing genuine-Pro data
 
-> **Last revised**: 2026-09-07 (E71 rider: the Flash comparator's
-> coverage as scored corrected from 485–486 to 458–472 of 487 tiles;
-> no number and no verdict changes). See [§ Changelog](#changelog) for
-> revision history.
+> **Last revised**: 2026-09-08 (A-07 and A-09 refreshed on the Flash
+> comparator rebuilt from the E71-recovered passes, PI instruction S150;
+> no verdict changes, the image fragility flag retired). See
+> [§ Changelog](#changelog) for revision history.
 
 **What this is.** The S134 walk (Group E) ruled that H6's three
 registered analysis components run first, on the Pro data that
@@ -89,8 +89,15 @@ Flash-comparator N = 3 curves at the same configuration and corpus.
 
 | Modality | Pro curve (k = 1/2/3, F1@20 m) | Flash curve (E57 pools) | Pro optimal | Flash optimal | Relative diff | Verdict |
 |---|---|---|---|---|---|---|
-| Text | 0.8602 / 0.8558 / 0.8494 | 0.4726 / 0.5199 / 0.5665 | **k = 1** | k = 3 | 67 % | **flagged**; > 20 % ⇒ the registered extended N = 30 test is indicated but cannot execute in a $0 block |
-| Image | 0.6909 / 0.7149 / 0.7223 | 0.5509 / 0.5499 / 0.5525 | k = 3 | k = 3 | 0 % | transfers |
+| Text | 0.8602 / 0.8558 / 0.8494 | 0.4634 / 0.5203 / 0.5748 | **k = 1** | k = 3 | 67 % | **flagged**; > 20 % ⇒ the registered extended N = 30 test is indicated but cannot execute in a $0 block |
+| Image | 0.6909 / 0.7149 / 0.7223 | 0.5614 / 0.5760 / 0.5854 | k = 3 | k = 3 | 0 % | transfers (robust: margin 0.0094 > 0.005 on the recovered sweeps) |
+
+Flash curves refreshed 2026-09-08 on the comparator sweeps rebuilt from
+the E71-recovered passes (`185681674`, re-scored `10e933ded`); the
+pre-recovery curves were 0.4726 / 0.5199 / 0.5665 (text) and 0.5509 /
+0.5499 / 0.5525 (image). Every recovered image cell rises (k = 3 by
++0.033); text moves within ±0.01. Neither optimum nor either verdict
+moves.
 
 Descriptive fraction-form only (no registered verdict attaches): the
 Flash production optimum is 26/30 = 0.867 of the pool; Pro text's
@@ -107,21 +114,22 @@ Pro text N = 3 union (0.8602) clearly beats Pro single-pass
 volume helps Pro text even at tiny N; both are small-N observations
 on 487 tiles and neither carries a registered verdict.
 
-**Fragility (verification round).** Both optima sit on near-flat
-curves: the Flash image winner (k = 3) leads its runner-up by
-0.0015 F1, and the Pro text winner (k = 1) by 0.0045 — both under
-the artefact's 0.005 fragility threshold. Had the Flash image
-optimum landed on k = 1, the image verdict would flip from
-"transfers" to flagged at 200 % relative (the registered metric
-divides by the Flash threshold). The Flash comparator passes are
-also `status: partial` — and the gap is larger than this document
-first stated: the manifest's 485–486 of 487 tiles is the
-post-recovery count, while the evaluations these curves consume were
-scored at the pre-recovery vintage, 458–472 of 487 tiles (15–29 short
-per pass; E71 rider 2026-09-07), a one-sided coverage gap that
-depresses the Flash curve by more than "slightly". The consensus
-cells have not been rebuilt on the recovered passes, so whether the
-fragile image optimum survives a rebuild is not measured. The image "transfers"
+**Fragility (verification round; refreshed 2026-09-08).** On the
+pre-recovery comparator both optima sat on near-flat curves — the Flash
+image winner (k = 3) led its runner-up by 0.0015 F1 and the Pro text
+winner (k = 1) by 0.0045, both under the artefact's 0.005 fragility
+threshold — and had the Flash image optimum landed on k = 1 the image
+verdict would have flipped from "transfers" to flagged at 200 %
+relative. On the sweeps rebuilt from the recovered passes the Flash
+image winner leads by 0.0094 F1, above the threshold, so the
+image "transfers" verdict is robust to that margin and the S135
+MEDIUM-3 flag is retired; the Pro text winner still leads by 0.0045
+(fragile), and the text "flagged" verdict remains robust (67 % against
+a 10 % rule). The Flash comparator passes are 485–486 of 487 tiles
+after recovery — the E71 residue that failed both recovery tiers — and
+the curves now consume the post-recovery detections; the earlier
+one-sided gap (the pre-recovery scoring at 458–472 tiles, E71 rider
+2026-09-07) no longer applies. The image "transfers"
 verdict is therefore not robust at these margins; the text
 "flagged" verdict is (67 % against a 10 % rule). The matched-N form
 is itself post-hoc; the library's "run extended N = 30 test"
@@ -145,14 +153,16 @@ corrected at the verification round):**
 
 | Modality | Pro single pass | Flash same-config N = 3 best | F1 ratio | Cost ratio | Limb 1 |
 |---|---|---|---:|---:|---|
-| Text | 0.8045 @ $1.85/pass | 0.5665 @ $1.79 (3 × $0.60) | 1.42 | 1.03 | fires (cost within the declared 10 % window) |
-| Image | 0.6658 @ $15.74/pass | 0.5525 @ $11.92 (3 × $3.97) | 1.21 | 1.32 | **does not fire** — a 32 % cost premium is not "comparable cost" (the original run mislabelled this "within ~5 %") |
+| Text | 0.8045 @ $1.85/pass | 0.5748 @ $1.79 (3 × $0.60) | 1.40 | 1.03 | fires (cost within the declared 10 % window) |
+| Image | 0.6658 @ $15.74/pass | 0.5854 @ $11.92 (3 × $3.97) | 1.14 | 1.32 | **does not fire** on either count — the F1 ratio is under 1.20 on the recovered comparator (1.21 on the pre-recovery sweeps) and a 32 % cost premium is not "comparable cost" (the original run mislabelled this "within ~5 %") |
 
-Coverage caveat (2026-09-07, E71 rider): the artefact's
-`coverage_disclosure` reports the comparator at 485–486 of 487 tiles
-from the post-recovery manifest; the Flash F1 values in this table
-were scored at the pre-recovery vintage (458–472 tiles). The gate
-verdict does not rest on this basis.
+Comparator basis (refreshed 2026-09-08): the Flash same-configuration
+single-pass aggregates are the `-post-e71` rows (text F1
+0.4919, image 0.5446, scored at 484–486 of 487 tiles) and the
+N = 3 curves the rebuilt sweeps; the 2026-08-17 artefact had consumed
+values scored at 458–472 tiles (E71 rider 2026-09-07). The artefact's
+`coverage_disclosure` now renders both sides' ranges from the passes
+manifest. The gate verdict does not rest on this basis.
 
 **Flash-optimal frontier basis (the registered gate's yardstick):**
 the audited frontier offers min6 **F1 0.8784 at $2.43** and min11
@@ -218,6 +228,38 @@ Report, not decision. Inputs the walk asked for:
    ~US$48 (`studies/phase4-transfer.yaml:165` estimate vintage).
 
 ## Changelog
+
+### 2026-09-08 — A-07 and A-09 refreshed on the recovered comparator (S150, PI instruction)
+
+**Refresh trigger**: the recovery-consistency audit
+(`reports/recovery-consistency-audit-2026-09-08.md`) found the Flash
+comparator's consensus sweeps still voting over the pre-recovery
+detections; the PI instructed the refresh. Sweeps rebuilt
+(`scripts/rebuild_recovered_consensus.py`, `185681674`; pre-recovery
+sweeps archived under `archive/pre-recovery-2026-09-08/`), the six
+cells re-scored at their committed protocol (`10e933ded`), the rows
+re-pointed, and `scripts/h6_registered_analyses.py` re-run on sapphire
+with the comparator aggregates taken from the `-post-e71` rows. A
+control rebuild of the archived pre-recovery passes with today's
+builder reproduces the April sweeps exactly (665/627/604; 1118/946/783),
+so every delta below is a recovery effect. Pre-refresh artefacts:
+`archive/pre-recovery-2026-09-08/h6-registered-analyses/`.
+
+**Before → after**:
+
+| Claim | Before | After |
+|---|---|---|
+| A-07 Flash text curve (k = 1/2/3) | 0.4726 / 0.5199 / 0.5665 | 0.4634 / 0.5203 / 0.5748 |
+| A-07 Flash image curve | 0.5509 / 0.5499 / 0.5525 | 0.5614 / 0.5760 / 0.5854 |
+| A-07 image optimum margin | 0.0015 (fragile) | 0.0094 (robust; S135 MEDIUM-3 retired) |
+| A-09 Flash same-config single pass (text / image) | 0.4942 / 0.5276 (scored at 458–472 tiles) | 0.4919 / 0.5446 (484–486 tiles) |
+| A-09 matched-config F1 ratio (text / image) | 1.42 / 1.21 | 1.40 / 1.14 |
+| A-09 image matched-config limb | not fired (cost) | not fired (F1 ratio and cost) |
+
+**What did NOT change**: the A-09 CLOSED verdict (decided by the
+frontier); both A-07 verdicts (text flagged at 67 %, image transfers);
+every Pro-side number; A-06 (its artefact carries only a new
+`generated_at`); the text-track optimum reversal.
 
 ### 2026-09-07 — The Flash comparator's coverage as scored (E71 rider)
 

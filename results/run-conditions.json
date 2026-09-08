@@ -69,7 +69,12 @@
      "path": "flash-high-text-n5/propose_brief-text"
     }
    },
-   "verifier_passes": {},
+   "verifier_passes": {
+    "verified-flash-high-text-1of5-recovery-2026-09-08": {
+     "modality": "text",
+     "path": "verified/flash-high-text-1of5-recovery-2026-09-08"
+    }
+   },
    "conditions": [
     {
      "label": "consensus-1of5",
@@ -80,8 +85,10 @@
      "vote_threshold": 1,
      "prob_threshold": null,
      "verifier_config": null,
-     "eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t1/evaluation.json",
-     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t1.geojson"
+     "eval_path": "results/recovery-reeval-2026-09-08/e47-propose-brief/consensus-1of5/evaluation.json",
+     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t1.geojson",
+     "_pre_recovery_eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t1/evaluation.json",
+     "notes": "Re-scored recovery-reeval-2026-09-08 on the consensus rebuilt from the recovered passes (S150; the E71 pattern, f6116cba0); the previous evaluation stands as the pre-recovery record at _pre_recovery_eval_path. The April sweep (1f443fd69) is not reproducible at any vintage: run_5 then held both filename conventions' files and the pre-D6 resolver read both (t1 4,491 clusters vs 4,146 from the same passes with the canonical resolver), so this row's previous numbers carried a D6-class double read as well as the pre-recovery run_4."
     },
     {
      "label": "consensus-2of5",
@@ -92,8 +99,10 @@
      "vote_threshold": 2,
      "prob_threshold": null,
      "verifier_config": null,
-     "eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t2/evaluation.json",
-     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t2.geojson"
+     "eval_path": "results/recovery-reeval-2026-09-08/e47-propose-brief/consensus-2of5/evaluation.json",
+     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t2.geojson",
+     "_pre_recovery_eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t2/evaluation.json",
+     "notes": "Re-scored recovery-reeval-2026-09-08 on the consensus rebuilt from the recovered passes (S150; the E71 pattern, f6116cba0); the previous evaluation stands as the pre-recovery record at _pre_recovery_eval_path. The April sweep (1f443fd69) is not reproducible at any vintage: run_5 then held both filename conventions' files and the pre-D6 resolver read both (t1 4,491 clusters vs 4,146 from the same passes with the canonical resolver), so this row's previous numbers carried a D6-class double read as well as the pre-recovery run_4."
     },
     {
      "label": "consensus-3of5",
@@ -104,8 +113,10 @@
      "vote_threshold": 3,
      "prob_threshold": null,
      "verifier_config": null,
-     "eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t3/evaluation.json",
-     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t3.geojson"
+     "eval_path": "results/recovery-reeval-2026-09-08/e47-propose-brief/consensus-3of5/evaluation.json",
+     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t3.geojson",
+     "_pre_recovery_eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t3/evaluation.json",
+     "notes": "Re-scored recovery-reeval-2026-09-08 on the consensus rebuilt from the recovered passes (S150; the E71 pattern, f6116cba0); the previous evaluation stands as the pre-recovery record at _pre_recovery_eval_path. The April sweep (1f443fd69) is not reproducible at any vintage: run_5 then held both filename conventions' files and the pre-D6 resolver read both (t1 4,491 clusters vs 4,146 from the same passes with the canonical resolver), so this row's previous numbers carried a D6-class double read as well as the pre-recovery run_4."
     },
     {
      "label": "consensus-4of5",
@@ -116,8 +127,10 @@
      "vote_threshold": 4,
      "prob_threshold": null,
      "verifier_config": null,
-     "eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t4/evaluation.json",
-     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t4.geojson"
+     "eval_path": "results/recovery-reeval-2026-09-08/e47-propose-brief/consensus-4of5/evaluation.json",
+     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t4.geojson",
+     "_pre_recovery_eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t4/evaluation.json",
+     "notes": "Re-scored recovery-reeval-2026-09-08 on the consensus rebuilt from the recovered passes (S150; the E71 pattern, f6116cba0); the previous evaluation stands as the pre-recovery record at _pre_recovery_eval_path. The April sweep (1f443fd69) is not reproducible at any vintage: run_5 then held both filename conventions' files and the pre-D6 resolver read both (t1 4,491 clusters vs 4,146 from the same passes with the canonical resolver), so this row's previous numbers carried a D6-class double read as well as the pre-recovery run_4."
     },
     {
      "label": "consensus-5of5",
@@ -128,8 +141,10 @@
      "vote_threshold": 5,
      "prob_threshold": null,
      "verifier_config": null,
-     "eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t5/evaluation.json",
-     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t5.geojson"
+     "eval_path": "results/recovery-reeval-2026-09-08/e47-propose-brief/consensus-5of5/evaluation.json",
+     "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t5.geojson",
+     "_pre_recovery_eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t5/evaluation.json",
+     "notes": "Re-scored recovery-reeval-2026-09-08 on the consensus rebuilt from the recovered passes (S150; the E71 pattern, f6116cba0); the previous evaluation stands as the pre-recovery record at _pre_recovery_eval_path. The April sweep (1f443fd69) is not reproducible at any vintage: run_5 then held both filename conventions' files and the pre-D6 resolver read both (t1 4,491 clusters vs 4,146 from the same passes with the canonical resolver), so this row's previous numbers carried a D6-class double read as well as the pre-recovery run_4."
     },
     {
      "label": "baseline-single-pass",
@@ -229,7 +244,8 @@
    "_ignored_evals": [
     "results/rescore-2026-05-31/e47-propose-brief/consensus/flash-high-text-1of5/evaluation.json",
     "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections_propose_brief-text_run05/evaluation.json"
-   ]
+   ],
+   "_note": "Verifier-stage refresh (2026-09-08, S151; card planning/verifier-stage-refresh-2026-09-08.md): first verifier_passes row. The text-only adversarial v1 stage on the pool's rebuilt vote>=1 consensus (4,149 candidates) at verified/flash-high-text-1of5-recovery-2026-09-08 is complete; the pre-recovery verified/flash-high-text-1of5 attempt (57 of 4,358 verified, crops gone) stays unregistered as an abandoned stage. No condition cites it. Comparison: reports/recovery-consistency-audit-2026-09-08.md § 6.1."
   },
   "n1-outstanding-384": {
    "proposer_pools": {
@@ -389,8 +405,10 @@
      "vote_threshold": 1,
      "prob_threshold": null,
      "verifier_config": null,
-     "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t1/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t1.geojson"
+     "eval_path": "results/recovery-reeval-2026-09-08/n1-outstanding-384/pro-image-high-t0-consensus-1of3/evaluation.json",
+     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t1.geojson",
+     "_pre_recovery_eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t1/evaluation.json",
+     "notes": "Re-scored recovery-reeval-2026-09-08 on the consensus rebuilt from the recovered passes (S150; the E71 pattern, f6116cba0); the previous evaluation stands as the pre-recovery record at _pre_recovery_eval_path."
     },
     {
      "label": "pro-image-high-t0-consensus-2of3",
@@ -401,8 +419,10 @@
      "vote_threshold": 2,
      "prob_threshold": null,
      "verifier_config": null,
-     "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t2/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t2.geojson"
+     "eval_path": "results/recovery-reeval-2026-09-08/n1-outstanding-384/pro-image-high-t0-consensus-2of3/evaluation.json",
+     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t2.geojson",
+     "_pre_recovery_eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t2/evaluation.json",
+     "notes": "Re-scored recovery-reeval-2026-09-08 on the consensus rebuilt from the recovered passes (S150; the E71 pattern, f6116cba0); the previous evaluation stands as the pre-recovery record at _pre_recovery_eval_path."
     },
     {
      "label": "pro-image-high-t0-consensus-3of3",
@@ -413,8 +433,10 @@
      "vote_threshold": 3,
      "prob_threshold": null,
      "verifier_config": null,
-     "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t3/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t3.geojson"
+     "eval_path": "results/recovery-reeval-2026-09-08/n1-outstanding-384/pro-image-high-t0-consensus-3of3/evaluation.json",
+     "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t3.geojson",
+     "_pre_recovery_eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t3/evaluation.json",
+     "notes": "Re-scored recovery-reeval-2026-09-08 on the consensus rebuilt from the recovered passes (S150; the E71 pattern, f6116cba0); the previous evaluation stands as the pre-recovery record at _pre_recovery_eval_path."
     },
     {
      "label": "pro-text-high-t0-consensus-1of3",
@@ -425,8 +447,10 @@
      "vote_threshold": 1,
      "prob_threshold": null,
      "verifier_config": null,
-     "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t1/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t1.geojson"
+     "eval_path": "results/recovery-reeval-2026-09-08/n1-outstanding-384/pro-text-high-t0-consensus-1of3/evaluation.json",
+     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t1.geojson",
+     "_pre_recovery_eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t1/evaluation.json",
+     "notes": "Re-scored recovery-reeval-2026-09-08 on the consensus rebuilt from the recovered passes (S150; the E71 pattern, f6116cba0); the previous evaluation stands as the pre-recovery record at _pre_recovery_eval_path."
     },
     {
      "label": "pro-text-high-t0-consensus-2of3",
@@ -437,8 +461,10 @@
      "vote_threshold": 2,
      "prob_threshold": null,
      "verifier_config": null,
-     "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t2/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t2.geojson"
+     "eval_path": "results/recovery-reeval-2026-09-08/n1-outstanding-384/pro-text-high-t0-consensus-2of3/evaluation.json",
+     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t2.geojson",
+     "_pre_recovery_eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t2/evaluation.json",
+     "notes": "Re-scored recovery-reeval-2026-09-08 on the consensus rebuilt from the recovered passes (S150; the E71 pattern, f6116cba0); the previous evaluation stands as the pre-recovery record at _pre_recovery_eval_path."
     },
     {
      "label": "pro-text-high-t0-consensus-3of3",
@@ -449,8 +475,10 @@
      "vote_threshold": 3,
      "prob_threshold": null,
      "verifier_config": null,
-     "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t3/evaluation.json",
-     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t3.geojson"
+     "eval_path": "results/recovery-reeval-2026-09-08/n1-outstanding-384/pro-text-high-t0-consensus-3of3/evaluation.json",
+     "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t3.geojson",
+     "_pre_recovery_eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t3/evaluation.json",
+     "notes": "Re-scored recovery-reeval-2026-09-08 on the consensus rebuilt from the recovered passes (S150; the E71 pattern, f6116cba0); the previous evaluation stands as the pre-recovery record at _pre_recovery_eval_path."
     },
     {
      "label": "brief-text-t03-single-pass-run_1",
@@ -1642,7 +1670,7 @@
    ]
   },
   "pv-diag-384": {
-   "_note": "GAP-7 (Session 102): proposer_pools (24 = pool x temp) + verifier_passes (88 metas across the pools' verified-v1-nN / session-78-matrix subdirs) now populated. The 10 N1 single-pass baseline conditions (Session 96) are kept verbatim; they reference their pool by relative path-string (benign pool-unresolved). Era-2 487-tile, 384px. Consensus operating-point conditions + the consensus 3c analysis (the buffer-harmonised sweep at results/rescore-2026-06-05/pv-diag-384/consensus-sweep/) are the next authoring step. Model of record: gemini-3-flash (flash pools) / gemini-3.1-pro (pro pools). | E72 remediation (2026-08-02): the four MATCHED-temperature consensus cells (text-t0.7 / text-t1.0 x N=5/N=10, both arms 487/487 tiles) are filed as the 'e43-matched-temperature' analysis over the EXISTING conditions listed above — no parallel 'matched-temp-*' conditions were minted, because that would duplicate them (same GeoJSONs, same 14-buffer + MCC metrics). Their independent house-grain re-score lives at results/e43-matched-temperature/paper-eval/ and is waived into _ignored_evals below.",
+   "_note": "GAP-7 (Session 102): proposer_pools (24 = pool x temp) + verifier_passes (88 metas across the pools' verified-v1-nN / session-78-matrix subdirs) now populated. The 10 N1 single-pass baseline conditions (Session 96) are kept verbatim; they reference their pool by relative path-string (benign pool-unresolved). Era-2 487-tile, 384px. Consensus operating-point conditions + the consensus 3c analysis (the buffer-harmonised sweep at results/rescore-2026-06-05/pv-diag-384/consensus-sweep/) are the next authoring step. Model of record: gemini-3-flash (flash pools) / gemini-3.1-pro (pro pools). | E72 remediation (2026-08-02): the four MATCHED-temperature consensus cells (text-t0.7 / text-t1.0 x N=5/N=10, both arms 487/487 tiles) are filed as the 'e43-matched-temperature' analysis over the EXISTING conditions listed above — no parallel 'matched-temp-*' conditions were minted, because that would duplicate them (same GeoJSONs, same 14-buffer + MCC metrics). Their independent house-grain re-score lives at results/e43-matched-temperature/paper-eval/ and is waived into _ignored_evals below. | Verifier-stage refresh (2026-09-08, S151; card planning/verifier-stage-refresh-2026-09-08.md): the two text-only adversarial v1 stages on the t0.0 pools (image verified-v1-n10, text verified-v1-n3) were re-run on candidate sets rebuilt from the E71-recovered passes (889 and 1,319 candidates) into the '-recovery-2026-09-08' directories registered here as inventory rows beside the originals, which stay as the pre-recovery record. No condition cites either. Comparison: reports/recovery-consistency-audit-2026-09-08.md § 6.1.",
    "proposer_pools": {
     "flash-high-image-n5-image-t0.0": {
      "modality": "image",
@@ -2093,6 +2121,14 @@
     "verified-text-baseline-pro-verifier": {
      "modality": "text",
      "path": "verified/text-baseline-pro-verifier"
+    },
+    "flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08": {
+     "modality": "image",
+     "path": "flash-high-image-n5/image-t0.0/verified-v1-n10-recovery-2026-09-08"
+    },
+    "flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08": {
+     "modality": "text",
+     "path": "flash-high-text-n5/text-t0.0/verified-v1-n3-recovery-2026-09-08"
     }
    },
    "conditions": [
@@ -2227,6 +2263,19 @@
      "verifier_config": null,
      "eval_path": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t1.geojson"
+    },
+    {
+     "label": "flash-high-image-n5-image-t0.0-consensus-3of3",
+     "architecture": "consensus",
+     "aggregation": "consensus",
+     "proposer_pool": "flash-high-image-n5-image-t0.0",
+     "n_passes": 3,
+     "vote_threshold": 3,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t3/evaluation.json",
+     "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t3.geojson",
+     "notes": "Registered 2026-09-08 (S150): on the E71-recovered consensus this pool's best-F1@20 threshold is 3-of-3 (0.5127), not 1-of-3 (0.497); it becomes pv-diag-384-consensus-calibration's headline for the config. Scored at the sweep's protocol (recovery-reeval-2026-09-08)."
     },
     {
      "label": "flash-high-image-n5-image-t0.3-consensus-9of10",
@@ -3789,6 +3838,26 @@
     {
      "eval_path": "results/uplift-supplement/verifier-pairing/pv-diag-384__verified-adv-text-min-6of10/evaluation.json",
      "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+     "reason": "non-headline threshold of the post-recovery t=0.0 sweep (S150, 2026-09-08); the calibration cites one condition per config at best F1@20"
+    },
+    {
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t2/evaluation.json",
+     "reason": "non-headline threshold of the post-recovery t=0.0 sweep (S150, 2026-09-08); the calibration cites one condition per config at best F1@20"
+    },
+    {
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t1/evaluation.json",
+     "reason": "non-headline threshold of the post-recovery t=0.0 sweep (S150, 2026-09-08); the calibration cites one condition per config at best F1@20"
+    },
+    {
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t2/evaluation.json",
+     "reason": "non-headline threshold of the post-recovery t=0.0 sweep (S150, 2026-09-08); the calibration cites one condition per config at best F1@20"
+    },
+    {
+     "eval_path": "results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+     "reason": "duplicate scoring of the registered text 3of3 row's evaluation (recovery-reeval-2026-07-30; identical inputs and protocol, F1 0.6109 both)"
     }
    ]
   },
@@ -4277,7 +4346,8 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/h12-v2/with-mcc/r3-hp-heavy/evaluation.json",
-     "detections": "outputs/h12-v2/greedy/r3-hp-heavy/consensus_t4.geojson"
+     "detections": "outputs/h12-v2/greedy/r3-hp-heavy/consensus_t4.geojson",
+     "notes": "Sweep rebuilt 2026-09-08 on the E71-recovered run_5 (S150): the t=4 / vote>=4 set is identical to the pre-rebuild set, so the committed evaluation stands; run_3's recovered tile never reached its GeoJSON (meta corrected, c053f5a41)."
     },
     {
      "label": "wbf-r1-hn-heavy",
@@ -4314,7 +4384,8 @@
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "results/h12-v2/wbf-mcc/r3-hp-heavy/evaluation.json",
-     "detections": "outputs/h12-v2/wbf/r3-hp-heavy/wbf_vote4.geojson"
+     "detections": "outputs/h12-v2/wbf/r3-hp-heavy/wbf_vote4.geojson",
+     "notes": "Sweep rebuilt 2026-09-08 on the E71-recovered run_5 (S150): the t=4 / vote>=4 set is identical to the pre-rebuild set, so the committed evaluation stands; run_3's recovered tile never reached its GeoJSON (meta corrected, c053f5a41)."
     }
    ],
    "_ignored_evals": [

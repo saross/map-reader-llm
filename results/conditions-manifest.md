@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-09-07T08:45:10Z · 437 row(s) · schema v1.0.
+> Generated 2026-09-08T06:58:10Z · 438 row(s) · schema v1.0.
 >
-> **Coverage**: 437 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 438 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -84,11 +84,11 @@
 | consensus-384-t1-0::single-pass-run_28 | single-pass | none | — | 1 | 0.3957 | 0.0298 | 586 |
 | consensus-384-t1-0::single-pass-run_29 | single-pass | none | — | 1 | 0.3901 | 0.0298 | 580 |
 | consensus-384-t1-0::single-pass-run_30 | single-pass | none | — | 1 | 0.4044 | 0.0341 | 564 |
-| e47-propose-brief::consensus-1of5 | consensus | consensus | 1 | 5 | 0.1669 | 0.0882 | 4491 |
-| e47-propose-brief::consensus-2of5 | consensus | consensus | 2 | 5 | 0.3868 | 0.1728 | 1659 |
-| e47-propose-brief::consensus-3of5 | consensus | consensus | 3 | 5 | 0.5188 | 0.3081 | 1080 |
-| e47-propose-brief::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6394 | 0.3879 | 738 |
-| e47-propose-brief::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7143 | 0.5028 | 461 |
+| e47-propose-brief::consensus-1of5 | consensus | consensus | 1 | 5 | 0.1798 | 0.0882 | 4149 |
+| e47-propose-brief::consensus-2of5 | consensus | consensus | 2 | 5 | 0.4128 | 0.1971 | 1537 |
+| e47-propose-brief::consensus-3of5 | consensus | consensus | 3 | 5 | 0.5471 | 0.3374 | 998 |
+| e47-propose-brief::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6543 | 0.4049 | 699 |
+| e47-propose-brief::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7326 | 0.5262 | 455 |
 | e47-propose-brief::baseline-single-pass | single-pass | none | — | 1 | 0.4706 | 0.0101 | 1180 |
 | e47-propose-brief::single-pass-run_1 | single-pass | none | — | 1 | 0.3709 | 0.294 | 1614 |
 | e47-propose-brief::single-pass-run_2 | single-pass | none | — | 1 | 0.3416 | 0.2347 | 1755 |
@@ -105,12 +105,12 @@
 | n1-outstanding-384::image-t03-consensus-1of3 | consensus | consensus | 1 | 3 | 0.5822 | 0.1689 | 812 |
 | n1-outstanding-384::image-t03-consensus-2of3 | consensus | consensus | 2 | 3 | 0.6424 | 0.2216 | 664 |
 | n1-outstanding-384::image-t03-consensus-3of3 | consensus | consensus | 3 | 3 | 0.6766 | 0.3489 | 567 |
-| n1-outstanding-384::pro-image-high-t0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.5509 | 0.5446 | 665 |
-| n1-outstanding-384::pro-image-high-t0-consensus-2of3 | consensus | consensus | 2 | 3 | 0.5499 | 0.5537 | 627 |
-| n1-outstanding-384::pro-image-high-t0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5525 | 0.5664 | 604 |
-| n1-outstanding-384::pro-text-high-t0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.4726 | 0.2706 | 1118 |
-| n1-outstanding-384::pro-text-high-t0-consensus-2of3 | consensus | consensus | 2 | 3 | 0.5199 | 0.348 | 946 |
-| n1-outstanding-384::pro-text-high-t0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5665 | 0.3941 | 783 |
+| n1-outstanding-384::pro-image-high-t0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.5614 | 0.5577 | 730 |
+| n1-outstanding-384::pro-image-high-t0-consensus-2of3 | consensus | consensus | 2 | 3 | 0.576 | 0.5678 | 690 |
+| n1-outstanding-384::pro-image-high-t0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5854 | 0.5921 | 648 |
+| n1-outstanding-384::pro-text-high-t0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.4634 | 0.2629 | 1192 |
+| n1-outstanding-384::pro-text-high-t0-consensus-2of3 | consensus | consensus | 2 | 3 | 0.5203 | 0.3333 | 991 |
+| n1-outstanding-384::pro-text-high-t0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5748 | 0.3894 | 842 |
 | n1-outstanding-384::brief-text-t03-single-pass-run_1 | single-pass | none | — | 1 | 0.501 | 0.0427 | 1078 |
 | n1-outstanding-384::brief-text-t03-single-pass-run_2 | single-pass | none | — | 1 | 0.499 | 0.0143 | 1052 |
 | n1-outstanding-384::brief-text-t03-single-pass-run_3 | single-pass | none | — | 1 | 0.4977 | 0.0605 | 1096 |
@@ -170,6 +170,7 @@
 | pv-diag-384::baseline-pro-text-high-t-0-7 | single-pass | none | — | 1 | 0.745 | 0.7465 | — |
 | pv-diag-384::baseline-pro-text-medium-t-0-0 | single-pass | none | — | 1 | 0.7921 | 0.7903 | — |
 | pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.497 | 0.4671 | 889 |
+| pv-diag-384::flash-high-image-n5-image-t0.0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5127 | 0.4993 | 782 |
 | pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10 | consensus | consensus | 9 | 10 | 0.7312 | 0.6834 | 361 |
 | pv-diag-384::flash-high-image-n5-image-t0.3-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.7119 | 0.6803 | 346 |
 | pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10 | consensus | consensus | 7 | 10 | 0.75 | 0.6784 | 405 |

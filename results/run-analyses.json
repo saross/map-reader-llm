@@ -50,9 +50,9 @@
   {
    "analysis_id": "pv-diag-384-consensus-calibration",
    "type": "sweep",
-   "_note": "Consensus vote-threshold x N calibration sweep for pv-diag-384 (GAP-7, Session 102). One citable condition per config at best-F1@20m (29 conditions); the full t1..N sweep (249 evals) is this analysis. Non-headline thresholds remain unclaimed (deferred to the _ignored_evals close-out, consistent with Batch C). Buffer-harmonised from the phase3a-{text,image}-matrix [20,30,40,50] to the 14-buffer standard. Registers the per-(N, threshold) calibration material (the diversity-dividend curve). Per the registered H3 analysis plan (osf/preregistration.md:519-521) the best (N, threshold) combination against the test tiles is the preregistered characterisation output; the statistical FINDING (tiering vs the single-pass baseline) is the sibling diversity-dividend-384. [Session 103, 2026-06-06: the diversity-dividend statistical test is now authored as the sibling FINDING analysis diversity-dividend-384 -- the round-robin tile-swap permutation + BH-FDR + tiering against the single-pass baseline. This calibration sweep remains the registered underlying material.]",
+   "_note": "Consensus vote-threshold x N calibration sweep for pv-diag-384 (GAP-7, Session 102). One citable condition per config at best-F1@20m (29 conditions); the full t1..N sweep (249 evals) is this analysis. Non-headline thresholds remain unclaimed (deferred to the _ignored_evals close-out, consistent with Batch C). Buffer-harmonised from the phase3a-{text,image}-matrix [20,30,40,50] to the 14-buffer standard. Registers the per-(N, threshold) calibration material (the diversity-dividend curve). Per the registered H3 analysis plan (osf/preregistration.md:519-521) the best (N, threshold) combination against the test tiles is the preregistered characterisation output; the statistical FINDING (tiering vs the single-pass baseline) is the sibling diversity-dividend-384. [Session 103, 2026-06-06: the diversity-dividend statistical test is now authored as the sibling FINDING analysis diversity-dividend-384 -- the round-robin tile-swap permutation + BH-FDR + tiering against the single-pass baseline. This calibration sweep remains the registered underlying material.] S150 (2026-09-08): output_path is the 2026-06-05 sweep home; its two t=0.0 pools are E82-pinned pre-recovery, the post-recovery counterparts live in results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/ and the headline rows cite them.",
    "conditions_compared": [
-    "pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3",
+    "pv-diag-384::flash-high-image-n5-image-t0.0-consensus-3of3",
     "pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10",
     "pv-diag-384::flash-high-image-n5-image-t0.3-consensus-n5-5of5",
     "pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10",
@@ -86,10 +86,12 @@
     "H3"
    ],
    "preregistered": "post-hoc",
-   "deviations": [],
+   "deviations": [
+    "E71"
+   ],
    "predicted_outcome": "H3: consensus voting over K proposer passes improves localisation F1 over single-pass; the diversity dividend predicts HIGH-thinking (more diverse) pools recover or exceed minimal-thinking under consensus. Vote threshold trades precision (high k) for recall (low k); the best-F1 threshold is config-dependent.",
    "tie_set": [],
-   "outcome": "Consensus vote-threshold x N-aggregation calibration over 29 configs (4 proposer pools x temperature x consensus/consensus-n5/consensus-n10), re-scored at the 14-buffer+MCC standard (Era-2 487-tile, 384px). Each config's headline operating point is its best-F1@20m vote threshold; best-F1@20m ranges 0.488-0.814. Top operating points: flash-high-text-n5-text-t0.7-consensus-26of30 (F1=0.814); flash-high-text-n5-text-t0.7-consensus-n10-9of10 (F1=0.797); flash-high-text-n5-text-t0.3-consensus-10of10 (F1=0.789). This registers the consensus calibration material (the diversity-dividend curve); the full statistical comparison against the single-pass baseline (n1-baseline-matrix-384) is cross-referenced, not asserted here.",
+   "outcome": "Consensus vote-threshold x N-aggregation calibration over 29 configs (4 proposer pools x temperature x consensus/consensus-n5/consensus-n10), re-scored at the 14-buffer+MCC standard (Era-2 487-tile, 384px). Each config's headline operating point is its best-F1@20m vote threshold; best-F1@20m ranges 0.513-0.814. Top operating points: flash-high-text-n5-text-t0.7-consensus-26of30 (F1=0.814); flash-high-text-n5-text-t0.7-consensus-n10-9of10 (F1=0.797); flash-high-text-n5-text-t0.3-consensus-10of10 (F1=0.789). This registers the consensus calibration material (the diversity-dividend curve); the full statistical comparison against the single-pass baseline (n1-baseline-matrix-384) is cross-referenced, not asserted here. [REFRESHED 2026-09-08, S150: the two t=0.0 pools' sweeps were re-scored on the E71-recovered consensus (results/recovery-reeval-2026-09-08/pv-diag-384/consensus-sweep/); the image t=0.0 headline moves from 1of3 (0.488 pre-recovery, 0.497 post-recovery) to 3of3 (0.513) - the only config whose best threshold changed; text t=0.0 stays 3of3 (0.605 -> 0.611). The output_path directory's t=0.0 evaluations are the E82-pinned pre-recovery scorings (D40) and remain the record of the 2026-06-05 sweep.]",
    "paper_section": "Results",
    "output_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep",
    "working_notes_obs": [],
@@ -1321,7 +1323,7 @@
   {
    "analysis_id": "h6-a07-voting-thresholds",
    "type": "sweep",
-   "_note": "S135 block item 5. The genuine-Pro N=3 consensus sets (outputs/h11/n1-pro-rerun-384/*/consensus/) are analysis artefacts materialised for this row, not first-class conditions - promotable via the generated-manifest flow if the PI wants them citable. Matched-N Flash comparator = the E57 mis-dispatch pools (preserve-and-compare). Classification RATIFIED post-hoc by the PI (2026-08-17 S135 L4 walk), rationale as for h6-a06.",
+   "_note": "S135 block item 5. The genuine-Pro N=3 consensus sets (outputs/h11/n1-pro-rerun-384/*/consensus/) are analysis artefacts materialised for this row, not first-class conditions - promotable via the generated-manifest flow if the PI wants them citable. Matched-N Flash comparator = the E57 mis-dispatch pools (preserve-and-compare). Classification RATIFIED post-hoc by the PI (2026-08-17 S135 L4 walk), rationale as for h6-a06. REFRESHED 2026-09-08 (S150, PI instruction): the six comparator consensus rows now cite results/recovery-reeval-2026-09-08/ (sweeps rebuilt from the E71-recovered passes, 185681674 / 10e933ded); verdicts unchanged, the image fragility flag retired.",
    "_prereg_rationale": "post-hoc per the discharge principle: A-07 is registered (osf/preregistration.md:679-683) over Phase 1-2 runs that never executed (E74); this computation substitutes existing N=3 pools at 384px/487 tiles. The REGISTERED comparison form (Pro optimum vs the Flash production 26-of-30, N=30) is additionally not-computable-as-registered: a raw vote-count comparison across N=3 and N=30 pools is data-independent (relative difference >88% for any k in 1..3).",
    "conditions_compared": [
     "n1-outstanding-384::pro-text-high-t0-consensus-1of3",
@@ -1343,24 +1345,24 @@
    "predicted_outcome": "Registered: 'Compare Pro optimal threshold to Flash optimal threshold; Note any differences >10% relative'. Under the registered transfer prediction the relative difference is <=10%. The registered >20% extended-test trigger (preregistration.md:689) cannot fire an N=30 Pro run in a $0 block. [Authored before computation.]",
    "predicted_outcome_amended": null,
    "tie_set": [],
-   "outcome": "SPLIT VERDICT at matched N=3. Text: Pro optimal k=1 (F1@20 0.8602 > 0.8558 > 0.8494) vs Flash-comparator optimal k=3 (0.5665 > 0.5199 > 0.4726) - 67% relative, FLAGGED, robust (well clear of the 10% rule); the >20% level indicates the registered extended N=30 test (cannot execute here; the matched-N form is itself post-hoc and the message is operational wording, not a registered trigger). Image: both optimal at k=3 (Pro 0.7223; Flash 0.5525), 0% relative - transfers, but FRAGILE: the Flash winner leads its runner-up by 0.0015 (and the Pro text winner by 0.0045), under the artefact's 0.005 fragility threshold, and the Flash comparator passes are status=partial (485-486/487, one-sided). The text-track optimum REVERSES between models at matched N (Pro prefers the union, Flash the intersection) - the vote threshold again behaves as a property of the pipeline-corpus-model encounter (cf. Obs 358). Also notable: Pro text N=3 union 0.8602 beats Pro single-pass 0.8045 (+0.056). Gates: model provenance 12 pools; comparator 6/6 at 5e-5; materialisation gates (merge stats, pool size 3, feature counts). Artefact: results/h6-registered-analyses/a07_voting_thresholds.json.",
+   "outcome": "SPLIT VERDICT at matched N=3 (refreshed 2026-09-08 on the comparator sweeps rebuilt from the recovered passes; the 2026-08-17 verdicts stand unchanged). Text: Pro optimal k=1 (F1@20 0.8602 > 0.8558 > 0.8494) vs Flash-comparator optimal k=3 (0.5748 > 0.5203 > 0.4634) - 67% relative, FLAGGED, robust (well clear of the 10% rule); the >20% level indicates the registered extended N=30 test (cannot execute here; the matched-N form is itself post-hoc and the message is operational wording, not a registered trigger). Image: both optimal at k=3 (Pro 0.7223; Flash 0.5854), 0% relative - transfers, and on the recovered comparator the Flash winner leads its runner-up by 0.0094 (was 0.0015 on the pre-recovery sweeps), above the artefact's 0.005 fragility threshold: the S135 MEDIUM-3 fragility flag is retired. The Pro text winner still leads by 0.0045 (fragile). Flash comparator passes are 485-486/487 after recovery (the E71 residue). The text-track optimum REVERSES between models at matched N (Pro prefers the union, Flash the intersection) - the vote threshold again behaves as a property of the pipeline-corpus-model encounter (cf. Obs 358). Also notable: Pro text N=3 union 0.8602 beats Pro single-pass 0.8045 (+0.056). Gates: model provenance 12 pools; comparator 6/6 at 5e-5 against the regenerated manifest; materialisation gates. Artefact: results/h6-registered-analyses/a07_voting_thresholds.json (pre-refresh copy: archive/pre-recovery-2026-09-08/h6-registered-analyses/).",
    "paper_section": "Methods",
    "output_path": "results/h6-registered-analyses",
    "working_notes_obs": [
     "Obs 415 — temperature, not thinking, drives the genuine-Pro corner gap (2x2 decomposition; fires all four cells, thinking null); rider: the optimal vote threshold reverses between models at matched N"
    ],
-   "manually_verified_at": "2026-08-17T13:02:16Z"
+   "manually_verified_at": "2026-09-08T01:53:31Z"
   },
   {
    "analysis_id": "h6-a09-cost-gate",
    "type": "diagnostic",
-   "_note": "S135 block item 6. Cost basis per audit HIGH-7: audited per-pass cost_usd from results/passes-manifest.json on both sides for the matched-configuration comparison; the audited all-Flash pareto_v2 frontier as the Flash-optimal yardstick. Comparability windows operational, stated in the artefact. Classification RATIFIED post-hoc by the PI (2026-08-17 S135 L4 walk), rationale as for h6-a06.",
+   "_note": "S135 block item 6. Cost basis per audit HIGH-7: audited per-pass cost_usd from results/passes-manifest.json on both sides for the matched-configuration comparison; the audited all-Flash pareto_v2 frontier as the Flash-optimal yardstick. Comparability windows operational, stated in the artefact. Classification RATIFIED post-hoc by the PI (2026-08-17 S135 L4 walk), rationale as for h6-a06. REFRESHED 2026-09-08 (S150, PI instruction): comparator aggregates are the -post-e71 rows and the N=3 curves the rebuilt sweeps; the 2026-08-17 coverage note (485-486/487 for F1 scored at 458-472/487) is superseded.",
    "_prereg_rationale": "post-hoc per the discharge principle: A-09 is registered (osf/preregistration.md:691) as the Phase-4 scope-limitation gate; Phase 4 never executed (E74). This computation evaluates the registered criterion on existing audited costs and F1s.",
    "conditions_compared": [
     "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
     "n1-pro-rerun-384::baseline-pro-image-high-t-0-0",
-    "n1-outstanding-384::baseline-pro-text-high-t-0-0",
-    "n1-outstanding-384::baseline-pro-image-high-t-0-0"
+    "n1-outstanding-384::baseline-pro-text-high-t-0-0-post-e71",
+    "n1-outstanding-384::baseline-pro-image-high-t-0-0-post-e71"
    ],
    "hypothesis_refs": [
     "H6"
@@ -1374,11 +1376,11 @@
    "predicted_outcome": "Registered gate: 'Full per-model optimisation only if Pro demonstrates substantially superior cost-effectiveness (>=20% higher F1 at comparable cost, OR comparable F1 at <=50% cost)'. Expectation from the standing record (all-Flash-3 conclusion; Pro competitive on F1 but dearer per call): gate CLOSED against the Flash frontier. An OPEN verdict is a flagged surprise feeding the PI's ~US$48 re-run decision. [Authored before computation.]",
    "predicted_outcome_amended": null,
    "tie_set": [],
-   "outcome": "GATE CLOSED on the Flash-optimal basis, AS PREDICTED - and the artefact now carries registered_gate_verdict=CLOSED itself, with both limbs computed in code against the min6/min11 frontier rungs under declared operational windows (cost +/-10%, F1 +/-0.02), so machine readers and prose cannot diverge. Limb 1 never fires (Pro F1 below every frontier F1); limb 2 never fires (nearest case: Pro single-pass text at 76% of min6's cost gives up 0.0739 F1). Verification-round corrections: Pro single-pass text is CHEAPER than min6 absolutely and per F1 point, so the earlier 'dearer per unit of F1 throughout' wording was wrong (verdict rests on the limbs, not dominance); the image matched-config limb does NOT fire (cost ratio 1.32 - the original 'within ~5%' label was false); the text matched-config limb fires (ratio 1.42 F1 at 1.03 cost) and is reported as the pure model effect, not the gate's verdict. Cost bases disclosed as non-identical (per-pass extractor vs modelled token-load flex; conservative direction for CLOSED). Artefact: results/h6-registered-analyses/a09_cost_gate.json.",
+   "outcome": "GATE CLOSED on the Flash-optimal basis, AS PREDICTED (refreshed 2026-09-08 on the recovered comparator: the -post-e71 single-pass aggregates and the rebuilt N=3 sweeps; verdict unchanged) - the artefact carries registered_gate_verdict itself, with both limbs computed in code against the min6/min11 frontier rungs under declared operational windows (cost +/-10%, F1 +/-0.02). Limb 1 never fires (Pro F1 below every frontier F1); limb 2 never fires (nearest case: Pro single-pass text at 76% of min6's cost gives up 0.0739 F1). Matched-configuration basis (the pure model effect, not the gate's verdict): text limb fires (F1 ratio 1.40 at cost ratio 1.03); image limb does NOT fire on either count (F1 ratio 1.14 < 1.20 on the recovered comparator, was 1.21 on the pre-recovery sweeps; cost ratio 1.32). Comparator coverage as scored: Flash single-pass aggregates at 484-486/487 (post-E71 rows; F1 text 0.4919, image 0.5446), the E71 residue only. Verification-round corrections retained: Pro single-pass text is CHEAPER than min6 absolutely and per F1 point (verdict rests on the limbs, not dominance). Cost bases disclosed as non-identical (per-pass extractor vs modelled token-load flex; conservative direction for CLOSED). Artefact: results/h6-registered-analyses/a09_cost_gate.json (pre-refresh copy: archive/pre-recovery-2026-09-08/h6-registered-analyses/).",
    "paper_section": "Methods",
    "output_path": "results/h6-registered-analyses",
    "working_notes_obs": [],
-   "manually_verified_at": "2026-08-17T13:02:16Z"
+   "manually_verified_at": "2026-09-08T01:53:31Z"
   },
   {
    "analysis_id": "grid-tilesize-overlap-2026-08-18",

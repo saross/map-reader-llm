@@ -40,6 +40,7 @@ Usage
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import re
 import sys
@@ -390,8 +391,11 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         for run_n_dir in sorted(pool_dir.glob("run_*")):
             suffix = run_n_dir.name.split("_", 1)[1] if "_" in run_n_dir.name else ""
             if not suffix.isdigit():
-                print(f"WARNING: skipping non-numeric pass dir {_repo_rel(run_n_dir)}",
-                      file=sys.stderr)
+                # ``run_N_recovery*`` fragments are consumed by their pass's row
+                # (completed-tile union below), so they are not "skipped".
+                if "_recovery" not in run_n_dir.name:
+                    print(f"WARNING: skipping non-numeric pass dir {_repo_rel(run_n_dir)}",
+                          file=sys.stderr)
                 continue
             # Sorted for determinism: an unsorted glob made meta_files[0] a
             # filesystem-order lottery, so a multi-meta pass (primary run +
@@ -426,12 +430,26 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 # for recovery/meta repair.)
                 n_dispatched = len(pim)
                 completed = es.get("completed_items")
+                # Recovery-fragment directories (``run_N_recovery``,
+                # ``run_N_recovery2``, ...) are ADDITIVE segments of the same
+                # pass: the E71 recovery rerun and every later run with an
+                # in-run recovery leg (stride A/B, the 3.7 campaigns, image-B,
+                # h13) wrote the recovered tiles there, and the union builders
+                # merge them (``stride55_prepare_and_union.resolve_pass_paths``).
+                # Until S150 (2026-09-08) this extractor unioned only the metas
+                # INSIDE ``run_N`` and reported 48 complete passes as
+                # ``partial`` — the manifest's counts said 1-322 tiles were
+                # missing from pools whose unions were complete. Their metas
+                # join the union here, and are cited in the row's provenance.
+                recovery_metas = sorted(
+                    m for frag in pool_dir.glob(f"run_{pass_n}_recovery*")
+                    for m in frag.glob("*.meta.json"))
                 if completed:
                     completed_union = set(completed)
                     # Union completed items across sibling metas (recovery
                     # fragments and resume-merges) so the count is the
                     # pass's cumulative coverage, machine-independently.
-                    for sibling_path in meta_files[1:]:
+                    for sibling_path in meta_files[1:] + recovery_metas:
                         sibling_es = (_load_json(sibling_path)
                                       .get("execution_stats") or {})
                         completed_union.update(
@@ -447,6 +465,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 model_version = next(
                     (it.get("model_version") for it in pim if it.get("model_version")), None)
             else:
+                recovery_metas = []
                 # Era-1 batch-API shape (GAP-9): no per-item record. The tile count is
                 # in execution_stats; `or 0` guards an explicit-null items_processed
                 # (which would break the n_proc==0 status test and the schema's integer
@@ -495,6 +514,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 model_used = model_of_record
                 model_requested = model_of_record
             prov_sources = [_repo_rel(meta_path)]
+            prov_sources.extend(_repo_rel(m) for m in recovery_metas)
             if model_of_record:
                 prov_sources.append("results/run-conditions.json")
             failed = es.get("items_failed", 0)
@@ -736,12 +756,24 @@ def _metrics_from_eval(summary: dict, bootstrap: dict | None = None) -> dict:
                 ci["resampling"] = (
                     "tile-level" if resampling_unit == "tile_level" else resampling_unit
                 )
+        # The scalar the schema wants (fraction of the scope evaluated), from
+        # the eval's coverage block where the scorer recorded one (S150; the
+        # field had been left null on every row since the manifest's first
+        # build). Rows whose evaluation carries no block — the adapted 55-map
+        # and 3.7 evaluations, whose verified sets have no processed-tile
+        # list — are filled from the proposer pool's pass unions by
+        # ``_pool_union_coverage`` in ``extract_conditions``.
+        cov = b.get("coverage") or {}
+        n_tiles = cov.get("n_tiles")
+        n_proc = cov.get("n_processed_tiles")
+        coverage = (round(n_proc / n_tiles, 4)
+                    if n_tiles and n_proc is not None else None)
         per_buffer[str(b["buffer_metres"])] = {
             "f1": b.get("f1"),
             "precision": b.get("precision"),
             "recall": b.get("recall"),
             "ci": ci,
-            "coverage": None,  # eval records a coverage dict, not the scalar this field wants
+            "coverage": coverage,
             "ci_unreliable": bool(b.get("ci_unreliable", False)),
         }
         # Vintage marker for the flag (defect D28): copied, never assumed —
@@ -835,6 +867,60 @@ def _require_condition_keys(spec: dict, run_id: str) -> None:
         )
 
 
+@functools.lru_cache(maxsize=None)
+def _pool_pass_tiles(pool_dir: str) -> tuple[tuple[int, frozenset], ...]:
+    """Per pass: ``(pass_n, union of processed tiles over base + recovery fragments)``.
+
+    Read once per pool (the stride 55-map pools are ten 10 MB files each).
+    A pass whose files carry no ``processed_tiles`` contributes an empty set.
+    """
+    root = Path(pool_dir)
+    out: list[tuple[int, frozenset]] = []
+    for run_n_dir in sorted(root.glob("run_*")):
+        suffix = run_n_dir.name.split("_", 1)[1] if "_" in run_n_dir.name else ""
+        if not suffix.isdigit():
+            continue
+        files = list(run_n_dir.glob("*.geojson"))
+        for frag in root.glob(f"run_{suffix}_recovery*"):
+            files.extend(frag.glob("*.geojson"))
+        tiles: set[str] = set()
+        for gj in files:
+            try:
+                tiles.update(map(str, _load_json(gj).get("processed_tiles") or []))
+            except (OSError, ValueError):
+                continue
+        out.append((int(suffix), frozenset(tiles)))
+    return tuple(sorted(out))
+
+
+def _pool_union_coverage(facts: dict, spec: dict) -> float | None:
+    """Fraction of the pool's dispatched frame covered by the condition's passes.
+
+    The denominator is the union of processed tiles over EVERY pass and
+    fragment of the pool (its dispatched grid: 24,561 overlap tiles for the
+    stride B 55-map pool, 487 for a GS pool); the numerator is the union over
+    the condition's first ``n_passes`` passes (the schema's prefix rule).
+    ``None`` when the pool is not this run's (cross-run rows), has no
+    directory, or records no processed tiles.
+    """
+    pool = spec.get("proposer_pool")
+    pool_spec = (facts.get("proposer_pools") or {}).get(pool) if pool else None
+    if pool_spec is None:
+        return None
+    _modality, path = _pool_spec(pool_spec)
+    pool_dir = REPO_ROOT / facts["directory_path"] / (path or f"proposer/{pool}")
+    if not pool_dir.is_dir():
+        return None
+    passes = _pool_pass_tiles(str(pool_dir))
+    frame: set[str] = set().union(*(t for _, t in passes)) if passes else set()
+    if not frame:
+        return None
+    n = spec.get("n_passes")
+    used = [t for i, (_, t) in enumerate(passes) if not isinstance(n, int) or i < n]
+    covered: set[str] = set().union(*used) if used else set()
+    return round(len(covered) / len(frame), 4)
+
+
 def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
     """Extract condition rows (the evaluable scored results) for one run.
 
@@ -915,6 +1001,15 @@ def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
             "n_reference_mounds": spec.get("n_reference_mounds"),
             "provenance": build_provenance(eval_sources, at),
         })
+        # Coverage fallback (S150): an evaluation with no coverage block leaves
+        # every per-buffer ``coverage`` null; fill it from the pool's pass
+        # unions so the 55-map and 3.7 cells state their coverage too.
+        per_buffer = rows[-1]["metrics"].get("per_buffer") or {}
+        if per_buffer and all(v.get("coverage") is None for v in per_buffer.values()):
+            pool_cov = _pool_union_coverage(facts, spec)
+            if pool_cov is not None:
+                for v in per_buffer.values():
+                    v["coverage"] = pool_cov
         # E81 correction stamp, derived from the row rather than hand-applied
         # (D18). The tile-MCC fields above are the signature: their presence
         # means the source evaluation carries the E81 re-derivation.

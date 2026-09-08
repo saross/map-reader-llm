@@ -479,8 +479,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          25.870666,
-          42.483655
+          25.870684,
+          42.483671
         ]
       },
       "properties": {
@@ -1402,8 +1402,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          25.773527,
-          42.393215
+          25.773526,
+          42.393236
         ]
       },
       "properties": {
@@ -1417,7 +1417,8 @@
           "run_3"
         ],
         "source_tiles": [
-          "K-35-052-4_32635_x336_y2016.png"
+          "K-35-052-4_32635_x336_y2016.png",
+          "K-35-052-4_32635_x336_y2352.png"
         ],
         "cluster_size": 3
       }
@@ -7446,8 +7447,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          26.227224,
-          42.363829
+          26.227271,
+          42.363846
         ]
       },
       "properties": {
@@ -7461,6 +7462,7 @@
           "run_3"
         ],
         "source_tiles": [
+          "K-35-053-3_Elenovo_x3696_y2688.png",
           "K-35-053-3_Elenovo_x3696_y3024.png"
         ],
         "cluster_size": 3
@@ -9633,8 +9635,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          24.928598,
-          42.319849
+          24.928572,
+          42.319734
         ]
       },
       "properties": {
@@ -9648,9 +9650,11 @@
           "run_3"
         ],
         "source_tiles": [
-          "K-35-062-2_Rakovski_x2688_y0.png"
+          "K-35-062-2_Rakovski_x2688_y0.png",
+          "K-35-062-2_Rakovski_x3024_y0.png",
+          "K-35-062-2_Rakovski_x3024_y336.png"
         ],
-        "cluster_size": 3
+        "cluster_size": 6
       }
     },
     {
@@ -10304,31 +10308,6 @@
         ],
         "source_tiles": [
           "K-35-062-2_Rakovski_x2688_y3360.png"
-        ],
-        "cluster_size": 3
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          24.928535,
-          42.31964
-        ]
-      },
-      "properties": {
-        "subtype": "triangulation_mound",
-        "confidence": 1.0,
-        "vote_count": 3,
-        "total_passes": 3,
-        "contributing_passes": [
-          "run_1",
-          "run_2",
-          "run_3"
-        ],
-        "source_tiles": [
-          "K-35-062-2_Rakovski_x3024_y336.png"
         ],
         "cluster_size": 3
       }
@@ -13921,8 +13900,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          24.880954,
-          42.318952
+          24.880975,
+          42.318966
         ]
       },
       "properties": {
@@ -13936,6 +13915,7 @@
           "run_3"
         ],
         "source_tiles": [
+          "K-35-062-2_Rakovski_x2016_y0.png",
           "K-35-062-2_Rakovski_x2016_y336.png"
         ],
         "cluster_size": 3
@@ -15397,6 +15377,81 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          24.914524,
+          42.268018
+        ]
+      },
+      "properties": {
+        "subtype": "benchmark_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x2688_y1344.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.92036,
+          42.268436
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x2688_y1344.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.918198,
+          42.263696
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x2688_y1344.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           26.665563,
           41.99303
         ]
@@ -15542,23 +15597,25 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          25.769449,
-          42.384794
+          25.769474,
+          42.384719
         ]
       },
       "properties": {
         "subtype": "burial_mound",
-        "confidence": 0.6666666666666666,
-        "vote_count": 2,
+        "confidence": 1.0,
+        "vote_count": 3,
         "total_passes": 3,
         "contributing_passes": [
           "run_1",
-          "run_2"
+          "run_2",
+          "run_3"
         ],
         "source_tiles": [
-          "K-35-052-4_32635_x0_y2352.png"
+          "K-35-052-4_32635_x0_y2352.png",
+          "K-35-052-4_32635_x336_y2352.png"
         ],
-        "cluster_size": 2
+        "cluster_size": 3
       }
     },
     {
@@ -15590,23 +15647,99 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          24.87155,
-          42.186742
+          25.780586,
+          42.477242
         ]
       },
       "properties": {
         "subtype": "burial_mound",
-        "confidence": 0.6666666666666666,
-        "vote_count": 2,
+        "confidence": 1.0,
+        "vote_count": 3,
         "total_passes": 3,
         "contributing_passes": [
           "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x336_y336.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.779367,
+          42.474925
+        ]
+      },
+      "properties": {
+        "subtype": "triangulation_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x336_y336.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.780076,
+          42.469792
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x336_y336.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.871612,
+          42.186755
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
           "run_3"
         ],
         "source_tiles": [
           "K-35-062-2_Rakovski_x1680_y3024.png"
         ],
-        "cluster_size": 2
+        "cluster_size": 3
       }
     },
     {
@@ -15662,6 +15795,1195 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          26.203665,
+          42.423136
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-053-3_Elenovo_x3024_y1680.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.186253,
+          42.419358
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-053-3_Elenovo_x3024_y1680.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.197636,
+          42.417873
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2"
+        ],
+        "source_tiles": [
+          "K-35-053-3_Elenovo_x3024_y1680.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.20036,
+          42.416368
+        ]
+      },
+      "properties": {
+        "subtype": "triangulation_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-053-3_Elenovo_x3024_y1680.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.194274,
+          42.411994
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2"
+        ],
+        "source_tiles": [
+          "K-35-053-3_Elenovo_x3024_y1680.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.196268,
+          42.411476
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-053-3_Elenovo_x3024_y1680.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.927532,
+          42.332017
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x3024_y0.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.871012,
+          42.496771
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x2016_y0.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.871182,
+          42.49617
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x2016_y0.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.869634,
+          42.494638
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x2016_y0.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.86981,
+          42.493918
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x2016_y0.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.870594,
+          42.493524
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x2016_y0.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.228683,
+          42.372507
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-053-3_Elenovo_x3696_y2688.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.237482,
+          42.372742
+        ]
+      },
+      "properties": {
+        "subtype": "benchmark_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-053-3_Elenovo_x3696_y2688.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.232895,
+          42.370139
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-053-3_Elenovo_x3696_y2688.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.233223,
+          42.368772
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-053-3_Elenovo_x3696_y2688.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.240977,
+          42.368391
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-053-3_Elenovo_x3696_y2688.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.962777,
+          42.359399
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x3360_y3024.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.774455,
+          42.26845
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x336_y1344.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.77593,
+          42.268375
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x336_y1344.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.779914,
+          42.268035
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x336_y1344.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.778236,
+          42.267257
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x336_y1344.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.773497,
+          42.26647
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x336_y1344.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.778029,
+          42.263174
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x336_y1344.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.775454,
+          42.256668
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x336_y1344.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.771429,
+          42.255843
+        ]
+      },
+      "properties": {
+        "subtype": "triangulation_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x336_y1344.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.776924,
+          42.392818
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x336_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.772351,
+          42.387571
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x336_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.775518,
+          42.386998
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x336_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.76929,
+          42.385719
+        ]
+      },
+      "properties": {
+        "subtype": "triangulation_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x336_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.769738,
+          42.383731
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x336_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.785691,
+          42.386673
+        ]
+      },
+      "properties": {
+        "subtype": "benchmark_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x336_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.86889,
+          42.325662
+        ]
+      },
+      "properties": {
+        "subtype": "benchmark_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x2016_y0.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.873101,
+          42.323339
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x2016_y0.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.872659,
+          42.321422
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x2016_y0.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.8812,
+          42.318948
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x2016_y0.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.765078,
+          42.226622
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x0_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.761426,
+          42.2259
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x0_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.767689,
+          42.223766
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x0_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.768434,
+          42.220873
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x0_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.750686,
+          42.215971
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x0_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.748796,
+          42.21333
+        ]
+      },
+      "properties": {
+        "subtype": "benchmark_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x0_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.743994,
+          41.96819
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-078-1_Lesovo_x4032_y672.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.752377,
+          42.208124
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x0_y2688.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.749701,
+          42.204601
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x0_y2688.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.552024,
+          41.91361
+        ]
+      },
+      "properties": {
+        "subtype": "benchmark_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-078-1_Lesovo_x672_y1680.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.931413,
+          42.200976
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x3024_y2688.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.976056,
+          42.22208
+        ]
+      },
+      "properties": {
+        "subtype": "benchmark_mound",
+        "confidence": 1.0,
+        "vote_count": 3,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x3696_y2352.png"
+        ],
+        "cluster_size": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           25.764218,
           42.483957
         ]
@@ -15701,6 +17023,246 @@
         ],
         "source_tiles": [
           "K-35-052-4_32635_x1680_y672.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.928831,
+          42.261589
+        ]
+      },
+      "properties": {
+        "subtype": "benchmark_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x2688_y1344.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.936702,
+          42.33237
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x3024_y0.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.934193,
+          42.330416
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x3024_y0.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.937362,
+          42.326481
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x3024_y0.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.930925,
+          42.323067
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x3024_y0.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.928685,
+          42.320042
+        ]
+      },
+      "properties": {
+        "subtype": "triangulation_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x3024_y0.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.947671,
+          42.325937
+        ]
+      },
+      "properties": {
+        "subtype": "benchmark_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-062-2_Rakovski_x3024_y0.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.731172,
+          41.961948
+        ]
+      },
+      "properties": {
+        "subtype": "triangulation_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-078-1_Lesovo_x3696_y672.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.731222,
+          41.961183
+        ]
+      },
+      "properties": {
+        "subtype": "benchmark_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-078-1_Lesovo_x3696_y672.png"
+        ],
+        "cluster_size": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.767597,
+          42.469249
+        ]
+      },
+      "properties": {
+        "subtype": "burial_mound",
+        "confidence": 0.6666666666666666,
+        "vote_count": 2,
+        "total_passes": 3,
+        "contributing_passes": [
+          "run_2",
+          "run_3"
+        ],
+        "source_tiles": [
+          "K-35-052-4_32635_x336_y336.png"
         ],
         "cluster_size": 2
       }

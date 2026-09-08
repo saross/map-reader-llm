@@ -161,7 +161,6 @@
     "K-35-053-3_Elenovo_x672_y2016.png",
     "K-35-053-3_Elenovo_x672_y2688.png",
     "K-35-053-3_Elenovo_x672_y336.png",
-    "K-35-053-3_Elenovo_x672_y3360.png",
     "K-35-053-3_Elenovo_x672_y672.png",
     "K-35-062-2_Rakovski_x0_y0.png",
     "K-35-062-2_Rakovski_x0_y1008.png",
@@ -329,10 +328,13 @@
     "K-35-078-1_Lesovo_x672_y2352.png",
     "K-35-078-1_Lesovo_x672_y672.png"
   ],
-  "failed": [],
+  "failed": [
+    "K-35-053-3_Elenovo_x672_y3360.png"
+  ],
   "timestamp": "2026-04-15T13:56:47.878612+00:00",
   "patched": [
     "K-35-053-3_Elenovo_x672_y3360.png"
   ],
-  "patch_timestamp": "2026-07-30T05:07:39.134508+00:00"
+  "patch_timestamp": "2026-07-30T05:07:39.134508+00:00",
+  "_correction": "S150 recovery-consistency audit: the 2026-07-30 recovery rerun recorded K-35-053-3_Elenovo_x672_y3360.png as recovered in this meta and in the .tiles.json, but the pass GeoJSON (git: unchanged since 2"
 }

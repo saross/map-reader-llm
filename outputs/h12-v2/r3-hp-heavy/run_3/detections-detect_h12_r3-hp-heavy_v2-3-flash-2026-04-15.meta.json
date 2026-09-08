@@ -15,7 +15,7 @@
     "model": "gemini-3-flash-preview",
     "instruction_file": "detect_brief-text-image.md",
     "system_instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
-    "system_instruction_text": "# Mound Detection\n\nDetect all burial mound symbols in this Soviet topographic map tile.\n\n## Target Symbols\n\nAll mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a \"sunburst\" or \"gear\" pattern. This indicates elevated terrain.\n\n**Subtypes to detect:**\n\n- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or \"\u043a\u0443\u0440\u0433.\" label.\n- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).\n- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.\n- **Benchmark on mound**: Black square with central dot, surrounded by black rays.\n\nThe **rays pointing outward** are essential. Symbols without visible rays are not mounds.\n\n## Guidelines\n\n1. Provide individual bounding boxes for each symbol, even in clusters.\n2. Symbols may be partially occluded by lines, shapes, or text. Include if the sunburst pattern remains discernible.\n3. If reference examples are provided, compare uncertain cases against them. Each reference image is centred on the feature being labelled \u2014 the target symbol for Positive examples, the confusable feature for Negative examples.\n\n## Output Format\n\nReturn JSON with normalised coordinates (0-1000):\n\n{\n    \"detections\": [\n        {\n            \"box_2d\": [ymin, xmin, ymax, xmax],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\" | \"settlement_mound\" | \"triangulation_mound\" | \"benchmark_mound\"\n        }\n    ]\n}\n",
+    "system_instruction_text": "# Mound Detection\n\nDetect all burial mound symbols in this Soviet topographic map tile.\n\n## Target Symbols\n\nAll mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a \"sunburst\" or \"gear\" pattern. This indicates elevated terrain.\n\n**Subtypes to detect:**\n\n- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or \"кург.\" label.\n- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).\n- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.\n- **Benchmark on mound**: Black square with central dot, surrounded by black rays.\n\nThe **rays pointing outward** are essential. Symbols without visible rays are not mounds.\n\n## Guidelines\n\n1. Provide individual bounding boxes for each symbol, even in clusters.\n2. Symbols may be partially occluded by lines, shapes, or text. Include if the sunburst pattern remains discernible.\n3. If reference examples are provided, compare uncertain cases against them. Each reference image is centred on the feature being labelled — the target symbol for Positive examples, the confusable feature for Negative examples.\n\n## Output Format\n\nReturn JSON with normalised coordinates (0-1000):\n\n{\n    \"detections\": [\n        {\n            \"box_2d\": [ymin, xmin, ymax, xmax],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\" | \"settlement_mound\" | \"triangulation_mound\" | \"benchmark_mound\"\n        }\n    ]\n}\n",
     "library_hash": "3c89f3a83b9d6df85d71e60352fb432d28f97a18f2afd42a530f69750b02151c",
     "temperature": 0.7,
     "max_output_tokens": 8192,
@@ -31,7 +31,7 @@
       "include_example_images": true,
       "thinking_level": "high",
       "version": "detect_h12_r3-hp-heavy_v2",
-      "description": "H12 R3 \u2014 HP-heavy (3:1). 6 HP + 2 HN from v2 pool_160 hard-case mining. Hard crops reference h10-v2/pool_160_hp8hn8 (prefix-nested, byte-identical to dedicated hp6hn2). Canonical-first ordering. Production carry-forward: T=0.7, thinking=high, 384 px tiles, 150 px crops.",
+      "description": "H12 R3 — HP-heavy (3:1). 6 HP + 2 HN from v2 pool_160 hard-case mining. Hard crops reference h10-v2/pool_160_hp8hn8 (prefix-nested, byte-identical to dedicated hp6hn2). Canonical-first ordering. Production carry-forward: T=0.7, thinking=high, 384 px tiles, 150 px crops.",
       "hypothesis": "H12",
       "examples": [
         {
@@ -126,8 +126,8 @@
     }
   },
   "execution_stats": {
-    "items_processed": 327,
-    "items_failed": 0,
+    "items_processed": 326,
+    "items_failed": 1,
     "items_skipped": 0,
     "retries_total": 3,
     "retries_rate_limit": 0,
@@ -466,10 +466,14 @@
       "K-35-053-3_Elenovo_x336_y1344.png",
       "K-35-078-1_Lesovo_x1344_y2352.png",
       "K-35-078-1_Lesovo_x672_y672.png",
-      "K-35-078-1_Lesovo_x672_y2352.png",
-      "K-35-053-3_Elenovo_x672_y3360.png"
+      "K-35-078-1_Lesovo_x672_y2352.png"
     ],
-    "failed_items": [],
+    "failed_items": [
+      {
+        "item": "K-35-053-3_Elenovo_x672_y3360.png",
+        "reason": "E71 recovery patched this meta and the tiles sidecar but the recovered detections never reached the pass GeoJSON (S150 audit, 2026-09-08); counted as failed until they do"
+      }
+    ],
     "retry_details": [
       {
         "item_id": "K-35-052-4_32635_x2352_y1680.png",
@@ -492,7 +496,14 @@
         "error_type": "other",
         "timestamp": "2026-04-15T13:56:00.594409+00:00"
       }
-    ]
+    ],
+    "_correction": {
+      "date": "2026-09-08",
+      "reason": "S150 recovery-consistency audit: the 2026-07-30 recovery rerun recorded K-35-053-3_Elenovo_x672_y3360.png as recovered in this meta and in the .tiles.json, but the pass GeoJSON (git: unchanged since 2026-04-15) has 326 processed tiles and no detections for it — the merge into the GeoJSON did not happen and the recovered output is not preserved anywhere. Rebuilt completed_items from the GeoJSON's processed_tiles (charter § 4 authority 1; the E71 defect-3 precedent) so the register counts what was scored: 326 of 327, the tile failed. Pre-repair meta and tiles sidecar archived under archive/pre-recovery-2026-09-08/h12-v2__r3-hp-heavy__run3-meta/.",
+      "source": "outputs/h12-v2/r3-hp-heavy/run_3/detections-detect_h12_r3-hp-heavy_v2-3-flash-2026-04-15.geojson",
+      "completed_before": 327,
+      "completed_after": 326
+    }
   },
   "usage_stats": {
     "total_input_tokens": 6546213,

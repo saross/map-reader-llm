@@ -1700,3 +1700,38 @@ def test_committed_manifest_validates_against_its_schema(registry, manifest):
     assert errors == [], (
         f"committed {path.name} fails its schema:\n  " + "\n  ".join(errors[:10])
     )
+
+
+@pytest.mark.tier1
+def test_recovery_fragments_count_towards_the_pass(registry):
+    """S150: a ``run_N_recovery*`` fragment is part of its pass, not a skipped dir.
+
+    Before the fix the extractor unioned completed tiles only across the metas
+    inside ``run_N`` and reported 48 complete passes as partial (h13 arm B pass
+    1: 429 of 430, with the 430th tile sitting in ``run_1_recovery``).
+    """
+    passes = extract_passes(extraction_context("h13"))
+    armb = [p for p in passes if p["proposer_pool"] == "armb" and p["pass_n"] == 1]
+    assert len(armb) == 1
+    row = armb[0]
+    assert validate_row("passes", row, registry) == []
+    assert (row["n_tiles_processed"], row["n_tiles_dispatched"]) == (430, 430)
+    assert row["status"] == "ok"
+    assert any("run_1_recovery" in str(src) for src in row["provenance"]["source_files"])
+
+
+@pytest.mark.tier1
+def test_per_buffer_coverage_is_filled_from_eval_or_pool_union():
+    """S150: the coverage scalar is no longer null on every row.
+
+    A modern evaluation records a coverage block (n1-outstanding run_1: 472 of
+    487 tiles at its pinned vintage); an adapted evaluation records none, so
+    the row takes the proposer pool's pass-union coverage (the 3.7 screen pool
+    is complete once its recovery fragments are unioned).
+    """
+    pinned = [c for c in extract_conditions(extraction_context("n1-outstanding-384"))
+              if c["label"] == "pro-image-high-t0-single-pass-run_1"][0]
+    assert pinned["metrics"]["per_buffer"]["20"]["coverage"] == round(472 / 487, 4)
+    screen = [c for c in extract_conditions(extraction_context("gemini37-screen-2026-08-28"))
+              if c["label"] == "g37-text-k5-verified-carried-p0.10-k5"][0]
+    assert screen["metrics"]["per_buffer"]["20"]["coverage"] == 1.0

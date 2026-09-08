@@ -86,6 +86,10 @@ from pairwise_permutation_test import assign_source_tiles  # noqa: E402
 
 PRO_RUN = "n1-pro-rerun-384"
 FLASH_COMPARATOR_RUN = "n1-outstanding-384"
+#: The comparator aggregates are cited at their post-E71 re-score (S150,
+#: 2026-09-08): ``baseline-pro-*-high-t-0-0-post-e71``. The pinned rows remain
+#: the record of what the 2026-08-17 run consumed.
+FLASH_COMPARATOR_SUFFIX = "-post-e71"
 PRO_DIR = BASE_DIR / "outputs/h11/n1-pro-rerun-384"
 FLASH_DIR = BASE_DIR / "outputs/h11/n1-outstanding-384"
 OUT_DIR = BASE_DIR / "results/h6-registered-analyses"
@@ -121,6 +125,56 @@ A08_STATEMENT = (
 # "comparable cost" = within +/-10 %; "comparable F1" = within 0.02.
 COST_WINDOW = 0.10
 F1_WINDOW = 0.02
+
+
+def coverage_note(pro: dict, flash: dict) -> str:
+    """State the comparator's tile coverage from the manifest counts, not a literal.
+
+    The 2026-08-17 artefact hard-coded "485-486/487" — the post-recovery
+    manifest count — while the F1 it consumed had been scored at 458-472/487
+    (E71 rider, 2026-09-07). The note now reads both sides' ranges from the
+    passes manifest and says whether a one-sided gap exists at all.
+    """
+    p_lo, p_hi = pro["n_tiles_processed_range"]
+    f_lo, f_hi = flash["n_tiles_processed_range"]
+    pro_txt = f"{p_lo}/487" if p_lo == p_hi else f"{p_lo}-{p_hi}/487"
+    flash_txt = f"{f_lo}/487" if f_lo == f_hi else f"{f_lo}-{f_hi}/487"
+    if f_lo >= p_lo:
+        return (f"tile coverage: Pro {pro_txt}, Flash comparator {flash_txt}; "
+                "no one-sided gap")
+    gap_lo, gap_hi = sorted((p_hi - f_hi, p_lo - f_lo))
+    gap_txt = f"{gap_lo}" if gap_lo == gap_hi else f"{gap_lo}-{gap_hi}"
+    return (f"tile coverage: Pro {pro_txt} ({', '.join(pro['statuses'])}), Flash "
+            f"comparator {flash_txt} ({', '.join(flash['statuses'])}) — the "
+            f"{gap_txt} tile(s) per pass the comparator lacks are the E71 residue "
+            "that failed both recovery tiers (deterministic truncation); a "
+            "one-sided gap of that size depresses Flash F1 by well under the "
+            "declared comparability windows")
+
+
+def fragility_caveat(image_curve: dict[int, float]) -> str:
+    """The A-07 image fragility caveat, computed from the comparator curve.
+
+    The 2026-08-17 artefact carried the margin as a literal ("k=3 beats k=1 by
+    0.0016"); it is now read from the curve so a rebuilt comparator (the
+    post-E71 consensus sweeps, S150) cannot leave a stale number behind.
+    """
+    best_k = max(image_curve, key=image_curve.get)
+    ordered = sorted(image_curve.values(), reverse=True)
+    margin = ordered[0] - ordered[1] if len(ordered) > 1 else 0.0
+    head = (f"FRAGILITY (image): the Flash comparator image optimum k={best_k} "
+            f"leads its runner-up by {margin:.4f} F1")
+    if best_k == 1:
+        return (head + "; with k=1 the winner the registered metric reads 200% "
+                "relative and the image verdict is FLAGGED (S135 MEDIUM-3 realised).")
+    if margin < 0.005:
+        return (head + " — under the 0.005 fragility threshold; had k=1 won, the "
+                "relative difference would read 200% and the image verdict would "
+                "flip from 'transfers' to flagged (S135 blind verification, "
+                "MEDIUM-3).")
+    return (head + " — above the 0.005 fragility threshold, so the 'transfers' "
+            "verdict is robust to it; the S135 MEDIUM-3 flag (0.0016 on the "
+            "pre-recovery comparator) is retired on the recovered sweeps (S150).")
 
 
 def limbs(pro_f1: float, pro_cost: float,
@@ -406,12 +460,7 @@ def main() -> int:
             "the Pro-corner configuration) — matched config, matched N",
             "the registered >20% extended-test trigger cannot fire an N=30 "
             "Pro run inside this $0 block",
-            "FRAGILITY (image): the Flash comparator image curve is nearly "
-            "flat — k=3 beats k=1 by 0.0016 F1; had k=1 won, the relative "
-            "difference would read 200% and the image verdict would flip "
-            "from 'transfers' to flagged. The image 'transfers' verdict "
-            "is not robust to that margin (S135 blind verification, "
-            "MEDIUM-3).",
+            fragility_caveat(flash_curves["pro-image-high-t0"]),
         ],
         "results": a07_results,
         "fraction_form_descriptive": {
@@ -613,9 +662,11 @@ def main() -> int:
         pro_f1 = committed_f1(
             conditions, PRO_RUN,
             f"baseline-pro-{modality}-high-t-0-0")
+        # The comparator's single-pass aggregate is the POST-E71 row (ruling
+        # 3a, S150): the pinned pre-recovery row scored 458-472 of 487 tiles.
         flash_single_f1 = committed_f1(
             conditions, FLASH_COMPARATOR_RUN,
-            f"baseline-pro-{modality}-high-t-0-0")
+            f"baseline-pro-{modality}-high-t-0-0{FLASH_COMPARATOR_SUFFIX}")
         flash_n3_best = max(flash_curves[pool].values())
         matched_config[modality] = {
             "pro_single_pass": {"f1_at_20m": pro_f1, "cost_per_pass_usd":
@@ -631,13 +682,8 @@ def main() -> int:
             "coverage_disclosure": {
                 "pro": coverage(PRO_RUN, pool),
                 "flash_comparator": coverage(FLASH_COMPARATOR_RUN, pool),
-                "note": (
-                    "the Flash comparator passes are status=partial "
-                    "(485-486/487 tiles) while all Pro passes are ok at "
-                    "487/487 — a one-sided gap that slightly depresses "
-                    "Flash F1 and cost (audit M-2); the matched-config "
-                    "limb results sit within that uncertainty where "
-                    "margins are thin"),
+                "note": coverage_note(coverage(PRO_RUN, pool),
+                                      coverage(FLASH_COMPARATOR_RUN, pool)),
             },
         }
         # The registered gate's yardstick: Flash as actually optimised

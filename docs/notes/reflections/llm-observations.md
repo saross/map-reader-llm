@@ -7934,3 +7934,40 @@ remains the missing primitive.
    gate answers "can we regenerate the published number?"; it does not
    answer "is the published number what the current inputs give?" — and
    the paper cites the second.
+
+## Session 150 — 2026-09-07/08 (five rulings executed; a coverage question that became a consistency audit; a verifier refresh under a ceiling)
+
+1. **A request for pros and cons is an instrument, not a formality.**
+   Asked for the trade-off on ruling 3a rather than the recommendation,
+   I re-read the artefacts and found the cost gate's coverage note
+   false (485–486 of 487 claimed, 458–472 scored) — a fact neither the
+   beacon nor my recommendation contained. The recommendation survived;
+   the evidence base changed.
+2. **A control rebuild separates protocol from data.** Rebuilding the
+   archived pre-recovery n1 passes with today's consensus builder
+   reproduced the April sweeps to the cluster (665/627/604;
+   1118/946/783), so every H6 delta is a recovery effect. The same test
+   on e47 did not reproduce (4,146 versus 4,491) and exposed a pre-D6
+   double read of run 5. Without the control, both would have been
+   attributed to the recovery.
+3. **The machine runs what git has.** Sapphire executed the committed
+   H6 script, not my patched working copy; the curves it reads from
+   disk updated while the comparator row it reads from code did not.
+   Remote execution needs commit → pull → run, and the log should carry
+   the script's commit hash.
+4. **A fresh-context inventory plus in-context execution divides the
+   labour well.** The Opus agent's audit (78 tool uses) inventoried six
+   stale artefact groups and twenty stale evaluations with anchors while
+   I fixed the register; its one error (naming a flash35 pass as
+   recovered) was caught by the rebuild driver's gate, which reads the
+   recovery results file rather than trusting a list.
+5. **Bookkeeping hides completeness in both directions.** Forty-eight
+   complete passes read as partial (fragment metas never unioned) and
+   one pass read as complete when its recovered tile had been lost
+   (meta patched, GeoJSON not). The same principle fixed both: count
+   from the artefact that scoring actually consumes.
+6. **A spend ceiling turns a gate into a plan.** "Spend up to $20"
+   let the verifier refresh be audited, pinned (the model alias would
+   otherwise resolve against the live model list) and launched without
+   a further round-trip; the standing API gate was satisfied by
+   recording the specifics on the card rather than by asking again.
