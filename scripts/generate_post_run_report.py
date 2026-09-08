@@ -1312,6 +1312,10 @@ def build_analyses(specs: list[dict], at: str | None = None) -> list[dict]:
             "manually_verified_at": spec.get("manually_verified_at"),
             "provenance": build_provenance(sources, at),
         })
+        # Reference-level diagnostic marker (schema ``reference_scope``, S150):
+        # carried only when authored, so every other row keeps its exact shape.
+        if spec.get("reference_scope"):
+            rows[-1]["reference_scope"] = list(spec["reference_scope"])
     return rows
 
 

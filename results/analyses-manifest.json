@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-08T06:58:10Z",
+  "generated_at": "2026-09-08T08:20:32Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -2590,6 +2590,35 @@
         "last_extracted_at": "2026-09-07T08:51:10Z",
         "extractor_version": "0.7.1"
       }
+    },
+    {
+      "analysis_id": "student-baseline-r2",
+      "type": "diagnostic",
+      "conditions_compared": [],
+      "hypothesis_refs": [
+        "H13"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [],
+      "predicted_outcome": "card \u00a7 4: r1 \u2192 r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "P 0.991 / R 0.923 / F1 0.956 (without extrapolated terms R 0.941 / F1 0.966); GS-4 direct 1.000 / 0.947 / 0.973.",
+      "paper_section": "Discussion",
+      "output_path": "results/student-baseline-2026-09-01/reestimate-r2.json",
+      "working_notes_obs": [],
+      "manually_verified_at": "2026-09-07T08:36:56Z",
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/student-baseline-2026-09-01/reestimate-r2.json"
+        ],
+        "last_extracted_at": "2026-09-08T08:20:32Z",
+        "extractor_version": "0.7.1"
+      },
+      "reference_scope": [
+        "r2"
+      ]
     },
     {
       "analysis_id": "sensitivity-mde-r2",

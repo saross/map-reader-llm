@@ -899,6 +899,53 @@ def test_amendment_survives_build_and_validates(registry):
     assert validate_row("analyses", row, registry) == []
 
 
+_REFERENCE_LEVEL_SPEC = {
+    "analysis_id": "reference-level-test",
+    "type": "diagnostic",
+    "conditions_compared": [],
+    "reference_scope": ["r2"],
+    "output_path": "results/nowhere",
+}
+
+
+@pytest.mark.tier1
+def test_reference_level_diagnostic_validates_with_empty_conditions(registry):
+    """S150: a reference-level diagnostic names its reference and compares no condition.
+
+    The student baseline on r2 consumes reference-layer counts and audit rates;
+    forcing a condition id onto it would be a false citation, and the schema's
+    only empty-list exemption was the not-executed disposition row.
+    """
+    row = build_analyses([_REFERENCE_LEVEL_SPEC], "2026-09-08T00:00:00Z")[0]
+    assert row["reference_scope"] == ["r2"]
+    assert validate_row("analyses", row, registry) == []
+
+
+@pytest.mark.tier1
+def test_empty_conditions_without_reference_scope_still_fails(registry):
+    """The exemption is opt-in: no marker, no empty list (the S149 defect stays caught)."""
+    bare = {k: v for k, v in _REFERENCE_LEVEL_SPEC.items() if k != "reference_scope"}
+    row = build_analyses([bare], "2026-09-08T00:00:00Z")[0]
+    assert "reference_scope" not in row
+    assert validate_row("analyses", row, registry) != []
+
+
+@pytest.mark.tier1
+def test_reference_scope_is_for_diagnostics_only(registry):
+    """A leaderboard or comparison cannot use the marker to dodge its conditions."""
+    row = build_analyses([dict(_REFERENCE_LEVEL_SPEC, type="leaderboard")],
+                         "2026-09-08T00:00:00Z")[0]
+    assert validate_row("analyses", row, registry) != []
+
+
+@pytest.mark.tier1
+def test_reference_scope_terms_are_the_known_vintages(registry):
+    """An unknown vintage is a new reference nobody taught the schema about."""
+    row = build_analyses([dict(_REFERENCE_LEVEL_SPEC, reference_scope=["r9"])],
+                         "2026-09-08T00:00:00Z")[0]
+    assert validate_row("analyses", row, registry) != []
+
+
 @pytest.mark.tier1
 def test_amendment_unblocks_the_write_once_guard(tmp_path):
     """The escape hatch must actually release the guard on a real built row."""

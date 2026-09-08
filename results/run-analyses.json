@@ -2155,6 +2155,28 @@
    "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
   },
   {
+   "analysis_id": "student-baseline-r2",
+   "type": "diagnostic",
+   "_note": "The student (novice) baseline re-estimated at 55-map corpus level on r2 (card § 2b).",
+   "conditions_compared": [],
+   "reference_scope": [
+    "r2"
+   ],
+   "hypothesis_refs": [
+    "H13"
+   ],
+   "outcome": "P 0.991 / R 0.923 / F1 0.956 (without extrapolated terms R 0.941 / F1 0.966); GS-4 direct 1.000 / 0.947 / 0.973.",
+   "paper_section": "Discussion",
+   "output_path": "results/student-baseline-2026-09-01/reestimate-r2.json",
+   "working_notes_obs": [],
+   "preregistered": "post-hoc",
+   "deviations": [],
+   "manually_verified_at": "2026-09-07T08:36:56Z",
+   "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+   "_conditions_note": "reference-level diagnostic: the reference layers and the audit rates, not a condition (schema reference_scope, S150; PI ruling 2026-09-07)"
+  },
+  {
    "analysis_id": "sensitivity-mde-r2",
    "type": "diagnostic",
    "_note": "The MDE appendix with the r2 final board's tile-swap instrument added (sensitivity_mde.py --reference r2).",

@@ -2,7 +2,7 @@
 
 > **GENERATED FILE — do not hand-edit.** Produced by
 > `scripts/generate_hypothesis_outcome_table.py` from
-> `results/analyses-manifest.json` at commit `94ca95c18`; re-run the
+> `results/analyses-manifest.json` at commit `8a04f8a36`; re-run the
 > script after any manifest regeneration. Pure projection per the
 > D17 ruling (`docs/paper/results-outline.md` § D17): no cell is
 > hand-maintained.
@@ -53,7 +53,7 @@ themselves.
 | H10 | sensitivity-mde-2026-08-28 [post-hoc]; sensitivity-mde-r2 [post-hoc] |
 | H11 | unswept-pools-completeness [post-hoc] |
 | H12 | sensitivity-mde-2026-08-28 [post-hoc]; sensitivity-mde-r2 [post-hoc] |
-| H13 | 55map-final-board-2026-08-27 [post-hoc]; 55map-final-board-r2-2026-09-06 [post-hoc]; 55map-r2-leaderboard-50m [post-hoc]; 55map-r2-leaderboard-mcc-50m [post-hoc]; estimated-correction-r2 [post-hoc]; obs280-shared-reference-r2 [post-hoc]; stride-plateau-2026-08-25 [post-hoc]; stride-winner-ladder-exact-2026-08-25 [post-hoc]; stride55-a5-vs-b5-2026-08-27 [post-hoc]; tile-level-f1-r2 [post-hoc] |
+| H13 | 55map-final-board-2026-08-27 [post-hoc]; 55map-final-board-r2-2026-09-06 [post-hoc]; 55map-r2-leaderboard-50m [post-hoc]; 55map-r2-leaderboard-mcc-50m [post-hoc]; estimated-correction-r2 [post-hoc]; obs280-shared-reference-r2 [post-hoc]; stride-plateau-2026-08-25 [post-hoc]; stride-winner-ladder-exact-2026-08-25 [post-hoc]; stride55-a5-vs-b5-2026-08-27 [post-hoc]; student-baseline-r2 [post-hoc]; tile-level-f1-r2 [post-hoc] |
 | H14 | — |
 | H15 | — |
 
