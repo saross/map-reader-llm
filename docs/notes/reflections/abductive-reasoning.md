@@ -8118,3 +8118,95 @@ re-attaching to its 10.3 m neighbour when the closure check was re-run
 on r2, because the tool matches marks to the nearest reference point and
 the flagged point is gone): that was an artefact of the check's
 mechanism, resolved by reading the tool, not a belief revision.
+
+## Entry — 2026-09-08 (Session 150, map-reader-llm): Adding recovered detections made the e47 consensus smaller
+
+**Session:** d7ec7e62-d31f-4aae-8042-8979f4dafc0d
+**Instance:** primary
+
+### Surprising fact
+
+Rebuilding e47's five-pass consensus on the recovered run 4 (22
+detections added on 7 tiles) gave 4,149 vote-1 clusters against the
+committed April sweep's 4,491 — fewer, after adding detections. The n1
+rebuilds the same hour had gone the expected way (665 → 730).
+
+### Probe
+
+Rebuild in scratch with the *archived pre-recovery* run 4 and today's
+builder: 4,146. The recovery therefore accounts for +3 clusters; the
+−345 is the builder or the pass set. `git ls-tree` at the April build
+commit (`1f443fd69`): run 5 then held both filename conventions' files
+(`detections_…_run05.geojson` and `detections-…-2026-04-09.geojson`),
+and the pre-D6 resolver read both. The same control on the n1 pools
+reproduced the April sweeps exactly.
+
+### Belief revision
+
+From "the committed sweep is the original protocol on these passes" to
+"the committed sweep is a double read of run 5": e47's registered
+consensus numbers carried a D6-class defect since April, independent of
+the recovery, and the rebuilt sweep is the first correct one. The n1
+control established that the builder is protocol-stable, so the H6
+deltas are recovery effects alone.
+
+### What would change this belief
+
+A rebuild from the April tree with both run-5 files present that gave
+4,146 rather than 4,491 — that would make the difference a builder
+change, not a double read. Not run: the canonical resolver refuses the
+duplicate by design, which is the point of D6.
+
+### Implications for practice
+
+Control-rebuild from the archived inputs before attributing a delta to
+a data change. The rebuild driver now prints before/after counts; the
+control is a scratch run of the same command on the archive.
+
+## Entry — 2026-09-08 (Session 150, map-reader-llm): Forty-eight "partial" passes were complete
+
+**Session:** d7ec7e62-d31f-4aae-8042-8979f4dafc0d
+**Instance:** primary
+
+### Surprising fact
+
+The passes manifest listed 70 partial passes, including the 3.7 image
+GS run at 1 of 1,398 tiles for one pass — yet that run's committed
+results were sensible (F1 ≈ 0.92), and the PI had chased dead tiles
+aggressively.
+
+### Probe
+
+Union the pass GeoJSONs' `processed_tiles` across `run_N` and every
+`run_N_recovery*` sibling: 24,561 of 24,561 for every stride and 3.7
+55-map pass, 1,398 of 1,398 for the GS ones. Read the union builders:
+`resolve_pass_paths` and `load_deduped_passes` merge the fragments and
+raise on incomplete coverage. Then a spatial containment test — which
+first returned 0 for the *control* as well, because the pass files are
+UTM and the unions WGS84; after a CRS transform, recovered detections
+sit in the unions at the same rate as base detections (275 of 276,
+120 of 123, 35 of 36).
+
+### Belief revision
+
+From "1–322 tiles are missing from the deployment pools" to "the pass
+extractor unions completed tiles only across the metas inside `run_N`"
+— E71's defect 3 recurring on every run with an in-run recovery leg.
+Twenty-two genuinely incomplete passes remain, none by more than five
+tiles.
+
+### What would change this belief
+
+A pool whose fragments the union builder did not merge. The 3.7 arm
+ladder and the stride union builder are the only consumers checked in
+code; the spatial test covered four pools. A consumer that globs
+`run_*` without the fragment rule would reintroduce the gap silently.
+
+### What this is not
+
+Not evidence that coverage is complete everywhere: the E71 residue is
+34 tiles, one of which fails deterministically in ten of twelve passes,
+and h12-v2 run 3's recovered tile was lost between its meta and its
+GeoJSON. And the first spatial test's zero for both arms would have
+"confirmed" the missing-tiles reading had the control not been run: a
+test without a positive control is not a test.
