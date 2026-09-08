@@ -298,7 +298,15 @@ Readings:
   `reports/phase3a-verifier-completeness-audit-2026-05-03.md` records the
   gap) and the sweep was never re-run — its vote ≥ 1, p ≥ 0 row has n = 342
   and recall 0.186. This is a staleness class § 1 did not look for (a sweep
-  older than its own probabilities). Re-swept on the complete 802
+  older than its own probabilities). **Surveyed corpus-wide the same day**
+  (`reports/sweep-staleness-survey-2026-09-08.md`; sapphire; 265 verifier
+  stages, 33 with an in-directory sweep): five stages are stale, all
+  `pv-diag-384` image stages amended by the same 2026-05-06 cleanup
+  (`c6b5e6b10`) — this one (gap 460) and four with gaps of 11, 1, 1, and 1
+  (`image-t0.3/verified-v1-n5`, `image-t0.7/verified-v1-n5`,
+  `image-t1.0/verified-v1-n5`, `scale-4-optimal-487/verified-v1-n10`);
+  none is cited by a registered condition or analysis, and the four small
+  ones are not re-swept. Re-swept on the complete 802
   probabilities (row 2), the April stage scores 0.6589 and the refreshed
   stage's 0.6872 at the same operating point is a recovery effect of the
   text stage's size: +0.028 F1, recall 0.653 → 0.720, precision 0.665 →
@@ -327,6 +335,12 @@ they are compared. Disclosure: E71 rider addendum (2026-09-08, later) in
 `docs/methodology/preregistration/protocol-errata.md`.
 
 ## Changelog
+
+### 2026-09-08 (S151, third revision) — sweep-staleness class surveyed corpus-wide
+
+The § 6.1 image reading now cites `reports/sweep-staleness-survey-2026-09-08.md`:
+five stale stages of 265, all the one May cleanup's pv-diag image stages, none
+cited. No number in this report moves.
 
 ### 2026-09-08 (S151, second revision) — e47 April stage description corrected
 

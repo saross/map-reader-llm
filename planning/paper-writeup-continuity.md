@@ -31,10 +31,16 @@ project state.
 > preserved at `results/recovery-reeval-2026-09-08/pv-diag-384/image-t0.0-verified-v1-n10-april-complete-resweep/`):
 > 0.6589 → refreshed 0.6872 at the same operating point — a recovery effect
 > of the text stage's size (0.8234 → 0.8508, +0.027, almost all recall).
-> Other verifier stages whose sweep predates a cleanup pass may share the
-> class — NOT surveyed (`reports/phase3a-verifier-completeness-audit-2026-05-03.md`
-> lists the cleanup gaps; the registered PV conditions cite evaluations,
-> not stage sweeps). (3) **Supplement + plateau regenerated**
+> SURVEYED corpus-wide on the PI's instruction
+> (`reports/sweep-staleness-survey-2026-09-08.md`, agent-run on sapphire;
+> `scripts/survey_sweep_staleness.py` + renderer): 265 verifier stages, 33
+> with an in-directory sweep, **5 stale** — all pv-diag image stages amended
+> by the same 2026-05-06 cleanup `c6b5e6b10` (gaps 460 / 11 / 1 / 1 / 1),
+> none cited by a condition or analysis; the four small ones are NOT
+> re-swept ($0 if wanted); one archived superseded leaderboard cell
+> (`scale4-optimal-greedy-v1-487tile.json`) records the pre-cleanup 3,600.
+> Caveat: only in-directory sweeps were checked; sweeps written under
+> `results/` for a stage were out of scope. (3) **Supplement + plateau regenerated**
 > (`001a98c97`): the refreshed stages add no condition row; the rebuild
 > swept up the S150-b image 3-of-3 row (`8e98f8edf`) registered AFTER that
 > session's last regeneration (437 → 438 conditions) — regenerate derived
@@ -60,7 +66,9 @@ project state.
 > "abandoned, 57 of 4,358" was a misread cleanup-overwritten meta,
 > corrected S151 — and `verified/text-baseline`, the same verifier on the
 > N=1 propose_brief pass, 1,180 candidates) — left unregistered; whether to
-> survey the other stages for the sweep-staleness class. **amd-tower disk**
+> re-sweep the four small stale stages the survey found ($0) and sweep the
+> April e47 stage for a like-for-like (needs `proposer_votes` →
+> `vote_count` in its manifest). **amd-tower disk**
 > (S150 carry-forward): the kernel log for this boot shows no I/O, ATA, or
 > NVMe errors; root is 81 % full; a SMART read needs root — `sudo smartctl
 > -a /dev/nvme0` in Shawn's own terminal.
