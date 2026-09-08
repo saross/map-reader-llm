@@ -76,17 +76,23 @@ def pool_dir_for(run_id: str, pool: str) -> Path:
     sys.exit(f"{run_id}::{pool}: no pool directory found under {base}")
 
 
-def pass_files(pool_dir: Path) -> list[Path]:
-    """The base pass files (``run_N/*.geojson``), sorted by pass number."""
+def pass_files(pool_dir: Path) -> list[tuple[str, list[Path]]]:
+    """The base pass files per ``run_N`` directory (chunked passes hold several)."""
     dirs = sorted((d for d in pool_dir.glob("run_*") if d.name[4:].isdigit()),
                   key=lambda d: int(d.name[4:]))
-    files = []
+    out = []
     for d in dirs:
         gj = sorted(d.glob("*.geojson"))
-        if len(gj) != 1:
-            sys.exit(f"{d}: expected one detections geojson, found {len(gj)}")
-        files.append(gj[0])
-    return files
+        if not gj:
+            sys.exit(f"{d}: no detections geojson")
+        out.append((d.name, gj))
+    return out
+
+
+def recovered_passes() -> set[str]:
+    """``run_id::pool::runN`` ids the E71 rerun rewrote (its own results file)."""
+    doc = json.loads((REPO / "reports/verification/recovery-rerun-results.json").read_text())
+    return {r["pass_id"] for r in doc["results"]}
 
 
 def is_post_recovery(path: Path) -> bool:
@@ -107,12 +113,22 @@ def summary(consensus_dir: Path) -> dict | None:
 def process(run_id: str, pool: str, write: bool) -> None:
     pool_dir = pool_dir_for(run_id, pool)
     consensus = pool_dir / "consensus"
-    files = pass_files(pool_dir)
-    stale = [f for f in files if not is_post_recovery(f)]
-    print(f"== {run_id}::{pool}  pool {pool_dir.relative_to(REPO)}  passes {len(files)}")
+    passes = pass_files(pool_dir)
+    rewritten = recovered_passes()
+    print(f"== {run_id}::{pool}  pool {pool_dir.relative_to(REPO)}  passes {len(passes)}")
+    # Gate: a pass the rerun rewrote must be committed at or after the
+    # recovery; a pass it never touched was never dead and is complete as is.
+    stale = [(d, f) for d, files in passes for f in files
+             if f"{run_id}::{pool}::{d.replace('_', '')}" in rewritten
+             and not is_post_recovery(f)]
+    n_rewritten = sum(1 for d, _ in passes
+                      if f"{run_id}::{pool}::{d.replace('_', '')}" in rewritten)
+    print(f"  passes the E71 rerun rewrote: {n_rewritten}")
     if stale:
-        sys.exit("  passes NOT at post-recovery vintage: "
-                 + ", ".join(str(f.relative_to(REPO)) for f in stale))
+        sys.exit("  rewritten passes NOT at post-recovery vintage: "
+                 + ", ".join(str(f.relative_to(REPO)) for _, f in stale))
+    if n_rewritten == 0:
+        sys.exit("  no pass of this pool was in the recovery population — nothing to rebuild")
     if not consensus.is_dir():
         sys.exit(f"  no consensus directory at {consensus}")
     tracked = git("ls-files", str(consensus.relative_to(REPO))).splitlines()
