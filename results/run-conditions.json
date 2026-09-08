@@ -4821,6 +4821,10 @@
     {
      "eval_path": "results/uplift-supplement/k1-gapfill/55maps-image-generalisation__verified-k4-r2-gt/evaluation.json",
      "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/55maps-image-generalisation__verified-k3-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
     }
    ]
   },
@@ -4984,6 +4988,10 @@
     },
     {
      "eval_path": "results/uplift-supplement/k1-gapfill/55maps-text-high-generalisation__verified-k4-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/55maps-text-high-generalisation__verified-k4-r2-gt/evaluation.json",
      "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
     }
    ]
@@ -5195,6 +5203,10 @@
     {
      "eval_path": "results/uplift-supplement/k1-gapfill/55maps-text-high-t0-3-generalisation__verified-oracle-p0_20-k3-r2-gt/evaluation.json",
      "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/55maps-text-high-t0-3-generalisation__verified-k4-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
     }
    ]
   },
@@ -5404,6 +5416,10 @@
     },
     {
      "eval_path": "results/uplift-supplement/k1-gapfill/55maps-text-min-generalisation__verified-oracle-p0_20-k3-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/55maps-text-min-generalisation__verified-k4-r2-gt/evaluation.json",
      "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
     }
    ]
@@ -8311,6 +8327,20 @@
      "detections": "results/gemini37-fourth-cell/gs-leg/verified_best_20m.geojson",
      "_note": "A9 — the fourth cell's GS calibration leg (~$3; card planning/gemini37-55map-2026-08-29.md:201, which commits (0.98, k10) as the 55-map fourth cell's carried point BEFORE any deployment scoring). This run's own Gemini-3 g384_ov192 K=10 union (3,319 candidates) re-verified with gemini-3.7-flash: F1@20 0.914005, P 0.9637 / R 0.8692, tile-MCC 0.8239, 386 detections; +0.0179 over the 0.8961 text-B anchor at p = 0.0563. Registered here rather than under a 3.7 run because the condition belongs to the run that owns its proposer pool (PI ruling 6); the verification lives at outputs/grid-2026-08-18/verifier/g384_ov192/verify_37/. GOTCHA: this is a TEXT cell whose best point sits under the 'image_best' key of results/gemini37-fourth-cell/gs-leg/analysis.json. The verifier_config variant is recorded as 'v1' (the 3.7-arc convention) while this run's Gemini-3 siblings say 'adversarial-text'; same instruction file, same hash."
     }
+   ],
+   "_ignored_evals": [
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g384-ov048-k10-verified-p0_20-k7/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov064-k10-verified-p0_15-k5/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov256-k10-verified-p0_15-k9/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    }
    ]
   },
   "h13": {
@@ -8633,6 +8663,34 @@
     {
      "eval_path": "results/uplift-supplement/k1-gapfill/stride-phaseb-2026-08-25__g512-ov320-k10-verified-p0_15-k10/evaluation.json",
      "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g256-ov064-k10-verified-p0_15-k8/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g384-ov128-k10-verified-p0_15-k8/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g384-ov128-ladder-n1-verified-p0_15-k1/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g384-ov128-ladder-n3-verified-p0_15-k3/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g384-ov128-ladder-n5-verified-p0_15-k4/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g512-ov176-k10-verified-p0_15-k6/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g512-ov320-k10-verified-p0_15-k10/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
     }
    ]
   },
@@ -8674,6 +8732,10 @@
    "_ignored_evals": [
     {
      "eval_path": "results/uplift-supplement/k1-gapfill/stride-phasec-2026-08-25__g384-ov240-k10-verified-p0_15-k10/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-phasec-2026-08-25__g384-ov240-k10-verified-p0_15-k10/evaluation.json",
      "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
     }
    ]
@@ -9567,6 +9629,50 @@
     {
      "eval_path": "results/uplift-supplement/k1-gapfill/stride-55map-2026-08-25__g384-ov192-55map-n5-oracle-p0_20-k5-r2-gt/evaluation.json",
      "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov128-55map-n10-carried-p0_15-k8-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov128-55map-n10-carried-p0_15-k8-standardised-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov128-55map-n10-oracle-p0_15-k7-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov128-55map-n10-oracle-p0_15-k7-standardised-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov192-55map-k10-verified37-p0_98-k10-standardised-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov192-55map-n10-carried-p0_15-k10-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov192-55map-n10-carried-p0_15-k10-standardised-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov192-55map-n10-oracle-p0_20-k9-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov192-55map-n10-oracle-p0_20-k9-standardised-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov192-55map-n10-verified37-carried-p0_98-k10-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov192-55map-n10-verified37-oracle-p0_96-k9-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
     }
    ]
   },
@@ -9639,6 +9745,14 @@
     },
     {
      "eval_path": "results/uplift-supplement/k1-gapfill/image-b-gs-2026-08-28__g384-ov192-image-min-k10-verified-p0_15-k9/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/image-b-gs-2026-08-28__g384-ov192-image-high-k10-verified-p0_20-k8/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/image-b-gs-2026-08-28__g384-ov192-image-min-k10-verified-p0_15-k9/evaluation.json",
      "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
     }
    ]
@@ -9796,6 +9910,24 @@
      "detections": "results/gemini38-screen-2026-09-04/armV/verified_best_20m.geojson",
      "_note": "Gemini 3.8 Arm V (card planning/gemini38-screen-2026-09-04.md; PI ruling 9): the SAME 791-candidate K=5 union re-verified with gemini-3.8-flash at thinking=low (F1@20 0.9258, P 0.9335 / R 0.9182, tile-MCC 0.8218, 421 detections) for ~$0.85 flex token-basis. Registered under this run because it re-verifies this run's union; the campaign tree outputs/gemini38-screen-2026-09-04/ holds only the proposer probe, and the verification itself lives at outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/. Obs 448."
     }
+   ],
+   "_ignored_evals": [
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-screen-2026-08-28__g37-text-k10-verified-carried-p0_10-k10/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-screen-2026-08-28__g37-text-k5-verified-carried-p0_10-k5/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-screen-2026-08-28__g37-text-k5-verified-swap37-p0_80-k5/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-screen-2026-08-28__g37-text-k5-verified-swap38-p0_88-k5/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    }
    ]
   },
   "gemini37-image-gs-2026-09-01": {
@@ -9858,6 +9990,16 @@
      "eval_path": "results/gemini37-image-gs-2026-09-01/arm2/best-eval/evaluation.json",
      "detections": "results/gemini37-image-gs-2026-09-01/arm2/verified_best_20m.geojson",
      "_note": "A8 — the all-3.7 image stack (F1@20 0.930832, tile-MCC 0.8322, 425 detections), the highest F1@20 in the 3.7 arc, +0.0896 over the Gemini-3 image anchor. Its within-family text pair is A3: (text - image) = -0.0043, p = 0.6767. Sweep argmax tie at prob_t 0.90 / 0.95."
+    }
+   ],
+   "_ignored_evals": [
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-image-gs-2026-09-01__g37-image-k5-verified-carried-p0_10-k5/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-image-gs-2026-09-01__g37-image-k5-verified-swap37-p0_90-k5/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
     }
    ]
   },
@@ -10156,6 +10298,30 @@
     },
     {
      "eval_path": "results/uplift-supplement/k1-gapfill/gemini37-55map-2026-08-29__arm2-n5-oracle-p0_95-k5-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-55map-2026-08-29__arm1-n5-carried-p0_10-k5-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-55map-2026-08-29__arm1-n5-carried-p0_10-k5-standardised-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-55map-2026-08-29__arm1-n5-oracle-p0_15-k5-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-55map-2026-08-29__arm2-n5-carried-p0_80-k5-r2-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-55map-2026-08-29__arm2-n5-carried-p0_80-k5-standardised-gt/evaluation.json",
+     "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/uplift-supplement/verifier-pairing/gemini37-55map-2026-08-29__arm2-n5-oracle-p0_95-k5-r2-gt/evaluation.json",
      "reason": "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; scored 5bd514542): an input to the supplement's pairing tables, on the reference of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
     }
    ]
