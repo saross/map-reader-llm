@@ -1,8 +1,8 @@
 # Notation-key extension proposal — uplift supplement
 
-> **Last revised**: 2026-09-07 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-08 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-07T08:45:55Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-08T01:55:22Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 The canonical key `docs/methodology/notation-key.md` requires that
 "new tables and dataset builders must conform to it or extend it here
@@ -116,6 +116,10 @@ gap is visible in the data; closing it in the key would make the
 vocabulary checkable rather than merely observable.
 
 ## Changelog
+
+### 2026-09-08 — Recovery-consistency refresh: eleven GS rows re-scored on rebuilt sweeps
+
+**Refresh trigger**: the S150 recovery-consistency audit (`reports/recovery-consistency-audit-2026-09-08.md`). The six `n1-outstanding-384` pro-*-high-t0 consensus rows and the five `e47-propose-brief` consensus rows now cite evaluations scored on consensus sweeps rebuilt from the E71-recovered passes (`results/recovery-reeval-2026-09-08/`); the passes manifest counts recovery fragments towards their pass (70 -> 22 partial passes) and the conditions manifest's per-buffer coverage is filled (355 of 437 rows). **What did not change**: every other row's metrics; the strata and MDE joins.
 
 ### 2026-09-07 — Reference r2 stratum; eight canonical rows re-stratified; post-E71 rows
 

@@ -152,6 +152,20 @@ TRANSFER_PAIR_COLUMNS: tuple[str, ...] = (
 #: restamped on every build.
 REVISION_ENTRIES: tuple[tuple[str, str, str], ...] = (
     (
+        "2026-09-08",
+        "Recovery-consistency refresh: eleven GS rows re-scored on rebuilt sweeps",
+        "**Refresh trigger**: the S150 recovery-consistency audit "
+        "(`reports/recovery-consistency-audit-2026-09-08.md`). The six "
+        "`n1-outstanding-384` pro-*-high-t0 consensus rows and the five "
+        "`e47-propose-brief` consensus rows now cite evaluations scored on "
+        "consensus sweeps rebuilt from the E71-recovered passes "
+        "(`results/recovery-reeval-2026-09-08/`); the passes manifest counts "
+        "recovery fragments towards their pass (70 -> 22 partial passes) and "
+        "the conditions manifest's per-buffer coverage is filled (355 of 437 "
+        "rows). **What did not change**: every other row's metrics; the strata "
+        "and MDE joins.",
+    ),
+    (
         "2026-09-07",
         "Reference r2 stratum; eight canonical rows re-stratified; post-E71 rows",
         "**Refresh trigger**: the r2 recompute chain (card "
