@@ -2,7 +2,7 @@
 
 > **Last revised**: 2026-09-08 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-08T01:55:22Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-08T08:19:07Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 The canonical key `docs/methodology/notation-key.md` requires that
 "new tables and dataset builders must conform to it or extend it here
@@ -116,6 +116,10 @@ gap is visible in the data; closing it in the key would make the
 vocabulary checkable rather than merely observable.
 
 ## Changelog
+
+### 2026-09-08 — Verifier-stage refresh bookkeeping (S151): one late S150-b row swept up
+
+**Refresh trigger**: the after-run bookkeeping of the verifier-stage refresh (`planning/verifier-stage-refresh-2026-09-08.md` § 5). The three refreshed stages are `verifier_passes` inventory rows, not conditions, so they add no row here. The rebuild does pick up one condition registered after the previous build: `pv-diag-384::flash-high-image-n5-image-t0.0-consensus-3of3` (`8e98f8edf`, the consensus-calibration closure; 437 -> 438 conditions, 5,416 -> 5,430 condition x buffer rows; the 4-map-gs strata's condition counts move by one). **What did not change**: every other row's metrics; the MDE joins.
 
 ### 2026-09-08 — Recovery-consistency refresh: eleven GS rows re-scored on rebuilt sweeps
 

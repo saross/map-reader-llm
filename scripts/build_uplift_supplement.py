@@ -153,6 +153,20 @@ TRANSFER_PAIR_COLUMNS: tuple[str, ...] = (
 REVISION_ENTRIES: tuple[tuple[str, str, str], ...] = (
     (
         "2026-09-08",
+        "Verifier-stage refresh bookkeeping (S151): one late S150-b row swept up",
+        "**Refresh trigger**: the after-run bookkeeping of the verifier-stage "
+        "refresh (`planning/verifier-stage-refresh-2026-09-08.md` § 5). The "
+        "three refreshed stages are `verifier_passes` inventory rows, not "
+        "conditions, so they add no row here. The rebuild does pick up one "
+        "condition registered after the previous build: "
+        "`pv-diag-384::flash-high-image-n5-image-t0.0-consensus-3of3` "
+        "(`8e98f8edf`, the consensus-calibration closure; 437 -> 438 "
+        "conditions, 5,416 -> 5,430 condition x buffer rows; the 4-map-gs "
+        "strata's condition counts move by one). **What did not change**: "
+        "every other row's metrics; the MDE joins.",
+    ),
+    (
+        "2026-09-08",
         "Recovery-consistency refresh: eleven GS rows re-scored on rebuilt sweeps",
         "**Refresh trigger**: the S150 recovery-consistency audit "
         "(`reports/recovery-consistency-audit-2026-09-08.md`). The six "

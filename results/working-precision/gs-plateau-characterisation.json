@@ -3,7 +3,7 @@
     "step_noise": 0.005,
     "definition": "smallest buffer with all later step gains <= noise"
   },
-  "n_analysed": 305,
+  "n_analysed": 306,
   "skipped": {
     "non-gs-corpus": 86,
     "lt10-buffers": 46
@@ -12,11 +12,11 @@
     "overall": [
       {
         "group": "ALL-GS",
-        "n": 305,
-        "onset_median": 35,
+        "n": 306,
+        "onset_median": 35.0,
         "onset_p90": 75,
         "onset_max": 150,
-        "tail_drift_median": 0.007
+        "tail_drift_median": 0.0071
       }
     ],
     "by_architecture": [
@@ -30,11 +30,11 @@
       },
       {
         "group": "consensus/consensus",
-        "n": 101,
-        "onset_median": 35,
+        "n": 102,
+        "onset_median": 35.0,
         "onset_p90": 75,
         "onset_max": 100,
-        "tail_drift_median": 0.0064
+        "tail_drift_median": 0.0066
       },
       {
         "group": "proposer-verifier/verified",
@@ -48,8 +48,8 @@
     "by_tile_size": [
       {
         "group": "384px",
-        "n": 216,
-        "onset_median": 35.0,
+        "n": 217,
+        "onset_median": 35,
         "onset_p90": 75,
         "onset_max": 150,
         "tail_drift_median": 0.0068
@@ -90,8 +90,8 @@
       },
       {
         "group": "image",
-        "n": 98,
-        "onset_median": 75.0,
+        "n": 99,
+        "onset_median": 75,
         "onset_p90": 100,
         "onset_max": 150,
         "tail_drift_median": 0.0064
@@ -116,11 +116,11 @@
       },
       {
         "group": "high",
-        "n": 75,
-        "onset_median": 35,
+        "n": 76,
+        "onset_median": 35.0,
         "onset_p90": 75,
         "onset_max": 125,
-        "tail_drift_median": 0.0048
+        "tail_drift_median": 0.0049
       },
       {
         "group": "minimal",
@@ -166,11 +166,11 @@
       },
       {
         "group": "T0.0",
-        "n": 22,
-        "onset_median": 75.0,
+        "n": 23,
+        "onset_median": 75,
         "onset_p90": 100,
         "onset_max": 150,
-        "tail_drift_median": 0.006
+        "tail_drift_median": 0.0067
       }
     ]
   },
@@ -2190,6 +2190,22 @@
       "f1_50": 0.5997,
       "f1_last": 0.6148,
       "tail_drift": 0.003
+    },
+    {
+      "condition_id": "pv-diag-384::flash-high-image-n5-image-t0.0-consensus-3of3",
+      "architecture": "consensus",
+      "aggregation": "consensus",
+      "tile_size": 384,
+      "test_set": "era-2-487",
+      "modality": "image",
+      "thinking": "high",
+      "temperature": "0.0",
+      "onset_m": 75,
+      "f1_20": 0.5127,
+      "f1_onset": 0.6245,
+      "f1_50": 0.6179,
+      "f1_last": 0.6327,
+      "tail_drift": 0.0082
     },
     {
       "condition_id": "pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10",
