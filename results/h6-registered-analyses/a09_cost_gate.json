@@ -1,6 +1,6 @@
 {
  "_README": "A-09 (registered: preregistration.md:691). Cost bases: audited per-pass cost_usd from results/passes-manifest.json (per-pass extractor) on both sides of the matched-configuration comparison; the all-Flash pareto_v2 frontier (results/verifier-robustness/pareto/, modelled token-load-audit flex dollars) as the Flash-optimal yardstick. The two bases are not identically constructed (audit M-8); if the Pro passes were billed above flex rates the Pro side is over-costed, which makes the CLOSED verdict conservative. Comparability windows are operational choices declared in the limb blocks, not registered.",
- "generated_at": "2026-09-08T01:45:37.609517+00:00",
+ "generated_at": "2026-09-08T01:49:24.530663+00:00",
  "registered_gate_verdict": "CLOSED",
  "verdict_basis": "the Flash-optimal frontier (min6, min11) \u2014 the yardstick the registered scope limitation implies. The matched-configuration comparison measures the pure model effect at Pro's preferred corner (Flash never optimised there) and does not decide the gate.",
  "matched_configuration_comparison": {
@@ -46,7 +46,7 @@
       485
      ]
     },
-    "note": "tile coverage: Pro 487/487 (ok), Flash comparator 485/487 (partial) \u2014 the 2-2 tiles the comparator lacks are the E71 residue that failed both recovery tiers (deterministic truncation); a one-sided gap of that size depresses Flash F1 by well under the declared comparability windows"
+    "note": "tile coverage: Pro 487/487 (ok), Flash comparator 485/487 (partial) \u2014 the 2 tile(s) per pass the comparator lacks are the E71 residue that failed both recovery tiers (deterministic truncation); a one-sided gap of that size depresses Flash F1 by well under the declared comparability windows"
    }
   },
   "image": {
@@ -91,7 +91,7 @@
       486
      ]
     },
-    "note": "tile coverage: Pro 487/487 (ok), Flash comparator 485-486/487 (partial) \u2014 the 2-1 tiles the comparator lacks are the E71 residue that failed both recovery tiers (deterministic truncation); a one-sided gap of that size depresses Flash F1 by well under the declared comparability windows"
+    "note": "tile coverage: Pro 487/487 (ok), Flash comparator 485-486/487 (partial) \u2014 the 1-2 tile(s) per pass the comparator lacks are the E71 residue that failed both recovery tiers (deterministic truncation); a one-sided gap of that size depresses Flash F1 by well under the declared comparability windows"
    }
   }
  },
