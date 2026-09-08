@@ -43,18 +43,29 @@ project state.
 > `feedback` records, 2026-09-08). **S150 and S151 candidates remain
 > pending — the PI will continue the review later.**
 >
-> **amd-tower disk — evidence, no action taken**: 15 tracked files (13 under
-> `archive/superseded-leaderboards/…/.cache/` and `archive/…`, one log, one
-> `outputs/retest/…tiles.json`) show as modified because their inode size is
-> inflated to a 4 KB multiple (12,288 / 24,576 / 57,344) while the readable
-> bytes are the true content, which hashes identically to git's index;
-> `git diff --stat` fails on one ("cannot hash
-> archive/outputs-pre-retest-60-tile/…/detections_T1.0_run24.meta.json").
-> Kernel log this boot: no I/O, ATA, or NVMe errors; sapphire's tree is
-> clean. This is filesystem metadata, not content loss — the S150 "restore
-> from git" could not fix it. Recommend `sudo smartctl -a /dev/nvme0` and a
-> forced `fsck` at the next reboot (`sudo touch /forcefsck`); do NOT
-> `git checkout` the files (their content is right).
+> **amd-tower disk — RESOLVED as transient, no action needed**: earlier in
+> S151-b, 15 tracked files (13 under `archive/…`, one log, one
+> `outputs/retest/…tiles.json`) reported an inode size inflated to a 4 KB
+> multiple (12,288 / 24,576 / 57,344) while their readable bytes were the
+> true content, hashing identically to git's index; `git diff --stat`
+> failed on one ("cannot hash …detections_T1.0_run24.meta.json"). About an
+> hour later the same inodes report their true sizes, `git status` is
+> clean, and the "cannot hash" file hashes to its index blob. ext4's own
+> error counters (`/sys/fs/ext4/nvme0n1p2/errors_count` and
+> first/last_error_*) are ZERO; the previous boot ended with a clean
+> systemd shutdown; the kernel log this boot has no I/O, ATA, or NVMe
+> errors and no EXT4 error or remount. The one kernel WARNING (Sep 06
+> 13:57, `mm/page_alloc.c:4295` in `kswapd0`, stack through
+> `ext4_read_inode_bitmap` → `ext4_free_inode` → `ext4_evict_inode`) is a
+> memory-pressure allocation warning during inode eviction (30 GB RAM, 18 GB
+> used, 1.9 GB free at the check), not a storage fault. Reading: a
+> transient in-memory inode-size inconsistency, the same phenomenon S150
+> read as "thirteen unreadable archive files" (their content was never
+> wrong). Drive: Intel SSDPEKKW512G8 (760p 512 GB, fw 004C), root 81 % full.
+> No forced fsck is indicated; a SMART read before the planned upgrade
+> (`sudo smartctl -a /dev/nvme0` or `sudo nvme smart-log /dev/nvme0`) is
+> still the cheap sanity check, and the migration should be a fresh
+> filesystem plus `git clone`/`rsync`, not a block clone.
 >
 > **NEXT SESSION**: S150 + S151 user-obs review (PI); nothing else blocks.
 > **Standing gotchas (new):** obs-writer dispatches must run SEQUENTIALLY
