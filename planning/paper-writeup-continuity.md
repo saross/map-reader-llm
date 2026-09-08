@@ -62,10 +62,17 @@ project state.
 > transient in-memory inode-size inconsistency, the same phenomenon S150
 > read as "thirteen unreadable archive files" (their content was never
 > wrong). Drive: Intel SSDPEKKW512G8 (760p 512 GB, fw 004C), root 81 % full.
-> No forced fsck is indicated; a SMART read before the planned upgrade
-> (`sudo smartctl -a /dev/nvme0` or `sudo nvme smart-log /dev/nvme0`) is
-> still the cheap sanity check, and the migration should be a fresh
-> filesystem plus `git clone`/`rsync`, not a block clone.
+> No forced fsck is indicated. **SMART read by the PI 2026-09-08 22:19
+> AEST** (`smartmontools` + `nvme-cli` installed for it): overall PASSED,
+> critical warning 0, available spare 100 %, percentage used 6 % (19.1 TB
+> written, 37.0 TB read, 22,735 power-on hours), temperature 34 °C, no
+> thermal events, error log empty; two lifetime **media and data integrity
+> errors** (undated — the error log holds no entries) and **105 unsafe
+> shutdowns** of 885 power cycles. No self-test has ever been run —
+> recommended before the upgrade (`sudo smartctl -t short /dev/nvme0`,
+> then `-t long`; read back with `sudo smartctl -l selftest /dev/nvme0`).
+> The planned upgrade in the next few weeks stands; the migration should
+> be a fresh filesystem plus `git clone`/`rsync`, not a block clone.
 >
 > **NEXT SESSION**: S150 + S151 user-obs review (PI); nothing else blocks.
 > **Standing gotchas (new):** obs-writer dispatches must run SEQUENTIALLY
