@@ -120,11 +120,18 @@ project state.
 > of 169 pairs on F1 (was 21 of 118), 68 on MCC** (`ba8656352`; the 40
 > twin evaluations waived under ruling 1; verify 22/19/0); the 100
 > pending are the unresolved twins. **Registration of the supplement
-> waits on the PI.** **FLAG, not fixed**: the pre-existing pair
-> `55maps-generalisation::verified-paired` reads uplift 0.7921 because
-> its twin (`outputs/55maps-generalisation/consensus/consensus-4of5.geojson`,
-> projected coordinates, no `crs` member) scored F1 0 on 2026-08-29 — a
-> scoring artefact; re-score with the CRS declared before any use. One
+> waits on the PI.** **Artefact RESOLVED (2026-09-09, PI's call)**: the
+> pre-existing pair `55maps-generalisation::verified-paired` had read
+> uplift 0.7921 because its twin
+> (`outputs/55maps-generalisation/consensus/consensus-4of5.geojson`,
+> projected coordinates, no `crs` member — RFC 7946 readers take it as
+> WGS84) scored F1 0 on 2026-08-29. The materialiser gained a
+> `--consensus --declare-crs` copy mode and the builder routes projected
+> CRS-less evaluate-engine twins through it (`73ffb3929`); re-scored on
+> sapphire (`4ad6053b2`): twin 0.5063 at 50 m, uplift **0.2858**, in line
+> with its siblings; the zero-scored evaluation archived under
+> `archive/uplift-supplement-pairing/`. No other twin has the defect
+> (audited: the other CRS-less consensus files are in degrees). One
 > genuinely negative pair, `h8-v2::verified-wbf-scale-4` at −0.0003
 > (a wash). Tier-1 on sapphire at the final state (`ba8656352`): 2171 passed, 1 skipped, 27 deselected, 3 xfailed, 4 warnings in 185.73s.
 > **Gotcha (new)**: never overwrite a driver script

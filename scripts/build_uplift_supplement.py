@@ -160,14 +160,20 @@ REVISION_ENTRIES: tuple[tuple[str, str, str], ...] = (
         "and scored on sapphire (`51392bc59`), their evaluations waived under "
         "ruling 1. `verifier-uplift.csv` now computes 69 of 169 pairs on F1 "
         "(was 21 of 118) and 68 on MCC; the 100 pending pairs are the "
-        "unresolved twins the pairing report lists. **Flag, not fixed**: the "
-        "pre-existing pair `55maps-generalisation::verified-paired` reads an "
-        "uplift of 0.7921 because its consensus-file twin scored F1 0 on "
-        "2026-08-29 — the committed `consensus-4of5.geojson` carries projected "
-        "coordinates and no `crs` member, so the evaluator read them as "
-        "degrees; that row is a scoring artefact awaiting a re-score, not a "
-        "verifier effect. **What did not change**: every condition row; the "
-        "strata and MDE joins; the supplement remains unregistered.",
+        "unresolved twins the pairing report lists. **One artefact resolved "
+        "(2026-09-09)**: the pre-existing pair "
+        "`55maps-generalisation::verified-paired` had read an uplift of 0.7921 "
+        "because its consensus-file twin scored F1 0 on 2026-08-29 — the "
+        "committed `consensus-4of5.geojson` carries projected coordinates and "
+        "no `crs` member, which RFC 7946 readers take as WGS84. The twin is "
+        "now copied with EPSG:32635 declared "
+        "(`materialise_pairing_twin.py --consensus --declare-crs`; the pairing "
+        "builder routes such files through it) and re-scored: twin 0.5063 at "
+        "50 m, uplift 0.2858, in line with its siblings (0.28–0.31); the "
+        "zero-scored evaluation is archived under "
+        "`archive/uplift-supplement-pairing/`. **What did not change**: every "
+        "condition row; the strata and MDE joins; the supplement remains "
+        "unregistered.",
     ),
     (
         "2026-09-08",
