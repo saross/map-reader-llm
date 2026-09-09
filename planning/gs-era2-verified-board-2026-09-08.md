@@ -1,7 +1,8 @@
 # The GS Era-2 verified board: the Gemini 3.7 and 3.8 GS cells on one frame with the incumbents
 
-> **Last revised**: 2026-09-09 (§ 2 frame description corrected: same
-> carrier tiles, 80 clipped; prior: 2026-09-08 original publication, drafted
+> **Last revised**: 2026-09-09 (later: § 2 frame rule and recommendation —
+> Era-2 ∩ B-union, 435 mounds; § 3 membership and G6 follow; earlier the
+> same day: frame description corrected, same carrier tiles, 80 clipped; prior: 2026-09-08 original publication, drafted
 > overnight in Session 151 on the PI's instruction; **DRAFT — awaits PI
 > sign-off, § 9**).
 > Controls one $0 API block (re-scoring and tiering on sapphire). Split out
@@ -55,20 +56,44 @@ with its spec, inventory rows, gates, and register row.
   on grid-common. A board that mixes the two differs in frame as well as
   in cell (the 327-versus-487 leakage trap of `verify_run_conditions.py`,
   at the edge rather than the interior).
-  - **(a) Proposed default — grid-common.** The nine new cells already sit
-    on it; the incumbents' detection sets are point sets and re-score on it
-    at $0 (`evaluate_detections.py`, bootstrap 10,000, seed 42), losing
-    only the 7 edge mounds and any detections in the 51.4 km² of clipped
-    edge. Every cell on the board is then scored by one command on one
-    frame, and the incumbents' committed Era-2-frame evaluations stay as
-    their register record (nothing is re-pointed).
-  - **(b) Alternative — full_evaluation_bounds.** The historical frame of
-    § R4; the nine new cells would be re-scored on it instead (also $0),
-    but their passes were dispatched on the grid tilings, so the clipped
-    edge holds detections only where a grid tile happened to cover it, and
-    their register rows and the 3.7 / 3.8 campaign findings are written on
-    grid-common, so the board's numbers would not match the campaign
-    documents the paper cites.
+  - **The rule that decides it (proposed, 2026-09-09)**: a board's frame is
+    the intersection of its members' DISPATCHED coverage — no cell is scored
+    on ground its proposer never saw (the E72 partial-coverage discipline),
+    and no ground every member saw is thrown away. Measured on 2026-09-09
+    against the curator reference (569 mounds):
+
+    | frame | area | reference mounds | who saw it |
+    |---|---:|---:|---|
+    | Era-2 frame (`full_evaluation_bounds`) | 1,415.8 km² | 435 | the incumbents' tiling; the B tiling misses 13.4 km² of it, which holds **0** mounds |
+    | **Era-2 ∩ B-union (recommended)** | 1,402.4 km² | **435** | every incumbent and every B-geometry cell |
+    | grid-common (four-way intersection) | 1,364.5 km² | 428 | everyone, including the 512 px and 384/12.5 % geometries |
+
+  - **(a) Recommended — Era-2 ∩ B-union.** The nine new cells and the grid
+    and stride B cells were all dispatched on the B tiling (384 px / 50 %,
+    `grid_g384_ov192_bounds.geojson`, 1,398 tiles, 1,508 km²), which covers
+    the Era-2 frame except a 13.4 km² edge strip containing no reference
+    mound. Intersecting the two frames keeps all 435 mounds of the paper's
+    GS instrument, scores no cell on unseen ground, and changes the
+    incumbents' committed figures only through false positives in that
+    mound-free strip (≈ 1 % of area), so § R4's cited numbers survive within
+    rounding. The new cells gain the 7 mounds and 37.9 km² that grid-common
+    had clipped from ground they did cover; the change from their campaign
+    figures is reported per cell (§ 6, G6). Cost: one new bounds artefact
+    (`Era-2 ∩ B`, materialised and committed with its construction) and a
+    re-score of every member at $0.
+  - **(b) Grid-common.** Reproduces the nine new cells' committed figures
+    exactly (G5) and admits the 11 verified cells of the other grid and
+    stride geometries, at the price of 7 mounds (1.6 %) and 51.4 km² that
+    every proposed member actually covered. Those 11 cells answer the
+    geometry question, which the stride plateau (Obs 435) and the grid
+    boards already answer on grid-common; this board's question is
+    architecture and model generation at the paper's GS instrument. Not
+    recommended, but the fallback if the PI wants the geometry cells on
+    the same board.
+  - **(c) Full Era-2 frame — rejected.** Scores the B-geometry cells on
+    13.4 km² their proposers never saw. The strip is mound-free, so no false
+    negative is manufactured, but the rule would not hold for any future
+    member, and the numbers would still differ from the campaign documents.
 
 ## 3. Membership
 
@@ -96,13 +121,17 @@ rule below.)
 
 **The incumbents (by rule):** every registered condition with
 `aggregation: verified` whose run is a 4-map-GS, 384 px, curator-reference
-run at N ≥ 5 and whose committed evaluation covers 487 tiles — the members
+run at N ≥ 5 dispatched on the Era-2 tiling or the B tiling — the members
 of the archived per-architecture Era-2 PV board (44 conditions at
-`ef3ec4fe`) plus the grid campaign's verified cells
-(`grid-2026-08-18::*-verified-*`) and the stride Phase B/C verified cells.
-The spec's `--dry-run` listing is the membership; the PI confirms it at
-sign-off (§ 9). Smoke-test and quarantined v2-verifier cells are excluded
-by the inventory builder's existing rules.
+`ef3ec4fe`) plus the B-geometry verified cells of the grid and stride
+campaigns (`grid-2026-08-18::g384-ov192-*-verified-*`, the stride B cells).
+Under the frame rule of § 2 the 11 verified cells of the other grid and
+stride geometries (512 px; 384 px at 12.5 % and 33 %; 256 px) are
+excluded — their tilings fall short of the Era-2 frame by up to 38 km² —
+and stay on the grid and stride boards. The spec's `--dry-run` listing is
+the membership; the PI confirms it at sign-off (§ 9). Smoke-test and
+quarantined v2-verifier cells are excluded by the inventory builder's
+existing rules.
 
 ## 4. Prerequisites ($0)
 
@@ -148,9 +177,13 @@ Identical to the archived Era-2 PV board's instrument
   a guessed frame.
 - **G4 membership count derived**: the board's cell count equals the spec's
   `--dry-run` listing; no count is typed into a document.
-- **G5 coincidence**: where a new cell's grid-common score coincides with a
-  committed evaluation (the nine new cells, on option (a)), the board's
-  stage-2 evaluation reproduces the committed value exactly.
+- **G5 coincidence**: where a member's board-frame score coincides with a
+  committed evaluation (every cell under option (b); none under (a)), the
+  board's stage-2 evaluation reproduces the committed value exactly.
+- **G6 frame delta, reported not gated**: every cell carries the difference
+  between its committed-frame score and its board-frame score (incumbents:
+  Era-2 frame → board frame; new cells: grid-common → board frame), so the
+  edge effect is visible per cell and a tier that depends on it is flagged.
 - **Stop states**: any gate failing; a re-score whose n_detections differs
   from the committed GeoJSON's feature count (`feedback_feature_count_crosscheck`).
 
@@ -182,13 +215,24 @@ until § 9 is signed.
 
 ## 9. Sign-off (PI)
 
-- [ ] Frame: option (a) grid-common (proposed) or (b) `full_evaluation_bounds`.
+- [ ] Frame: (a) Era-2 ∩ B-union (recommended), (b) grid-common, or (c) the full Era-2 frame (rejected).
 - [ ] Membership: the enumerated nine plus the incumbent rule as listed by
       `--dry-run`, or an amended list.
 - [ ] Buffers / tiering as § 5, or amended.
 - [ ] Go.
 
 ## Changelog
+
+### 2026-09-09 (later) — Frame rule and recommendation added
+
+On the PI's request for a principled decision: the frame is the
+intersection of the members' dispatched coverage. Measured: the B tiling
+(1,398 tiles) covers the Era-2 frame except a mound-free 13.4 km² strip, so
+Era-2 ∩ B-union keeps all 435 reference mounds while grid-common keeps
+428. Recommended (a) Era-2 ∩ B-union; (b) grid-common retained as the
+fallback that admits the 11 other-geometry cells; (c) the full frame
+rejected. § 3 membership restated under the rule; G6 (per-cell frame
+delta) added; § 9 options renumbered.
 
 ### 2026-09-09 — § 2 frame description corrected
 
