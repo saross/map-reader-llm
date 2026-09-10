@@ -8,7 +8,7 @@ project state.
 
 ---
 
-## 🔍 S152 IN PROGRESS (2026-09-10 — scheduled item (1) DONE: the G1 drift bisect; $0)
+## 🔍 S152 IN PROGRESS (2026-09-10 — items (1) and (3) DONE, (2) in flight; $0)
 
 > **(1) G1 bisected — a stale label-keyed cache, not instrument drift**
 > (`scripts/g1_drift_bisect_rescore.py`, sapphire; record in
@@ -42,7 +42,39 @@ project state.
 > archived board 44/44 cells, 946/946 pairs (max |Δp| 0.0), tiers
 > identical — G1 PASSES from the inputs actually scored
 > (`g1-confirmatory-rebuild.json`).
-> **Next**: items (2)–(5) of the scheduled block below, unchanged.
+> **(2) Symmetry fix — IN FLIGHT** (`scripts/build_gs_era2_board_opmax.py`,
+> `8c4b0aa9e`…`ff8049f4a`): the archived board's 44 cells have ONE true
+> registered twin (the 16of30 set, 412/412 points identical; the card's
+> "4 by committed F1" were (F1, n) coincidences sharing < 60 points), so
+> **43 `-opmax` rows** minted (pools/stages resolve 43/43; the n1 stage
+> registered), **40 join** under K ≥ 5 (three K = 3 rows off-board);
+> gates PASS (40/40 archived F1 reproduce on the Era-2 frame, the
+> bisected cell at 0.7475; opmax cells score IDENTICALLY on both
+> frames); analysis row 39 → 79 conditions; manifests 520; verify
+> 22/19/0. Finding: 9 of 29 pv registry cells have a `sweep_2d` best
+> point that differs from the materialised file (sweep-staleness class,
+> Obs 461) — flagged in the rows' notes; the row is the file the
+> archived board scored. Top Gemini 3 sweep optimum on the board frame:
+> `pv-high-text-t0.3-n5` 0.8863 — below every 3.7 cell. **(2b) sweep
+> optimism** (`selection_aware_intervals.py --sweep-union`, new; gates:
+> the committed `sweep_20m.csv` reproduced row for row to 1e-16, the
+> argmax equals the committed eval to 4 dp): the 3.7/3.8 cells'
+> Efron–Gong optimism is **+0.0006 to +0.0021** on both frames (corrected
+> board-frame F1 0.905–0.922); image-B and grid-B cells also run.
+> Summariser `scripts/summarise_sweep_optimism.py` → `<board>/optimism/`.
+> **(2a/c) re-tier RUNNING on sapphire** (79 cells, 3,081 pairs;
+> `/tmp/tiering-79.log`); then MCB (`--board`) LAST, then
+> `build_gs_era2_board.py finalise` (patched: opmax deltas, README
+> changelog preserved). 39-cell artefacts snapshotted under
+> `archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-39cell/`.
+> **(3) Uplift supplement rule DONE** (`300473765`; card changelog
+> 2026-09-10): board-frame rows excluded from flatten and pairing (79);
+> conditions 438 → 441 (the three K = 3 opmax rows enter as ordinary
+> Era-2 rows), pairs 169 → 172, computed 69 → 71, blocked 100 unchanged.
+> Registration prerequisites still the PI's walk-through (notation § 7
+> proposal; strata presentation; the 100 unresolved pairs).
+> **Next**: finish (2) when the tiering lands; (4) cost the 3.7/3.8
+> image run; (5) pending items unchanged.
 
 ## 🔍 STATE AFTER S151-b (2026-09-08 — the PI's rulings EXECUTED: two e47 stages registered, five sweeps preserved, ten Obs written, S148–S149 user-obs reviewed; $0)
 

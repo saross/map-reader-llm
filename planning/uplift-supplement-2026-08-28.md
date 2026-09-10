@@ -74,6 +74,41 @@ promoted on citation as usual.
 
 ## Changelog
 
+### 2026-09-10 — Board-frame exclusion rule implemented and the supplement rebuilt (S152)
+
+**Trigger**: the GS Era-2 verified board (`planning/gs-era2-verified-board-2026-09-08.md`)
+registered 39 `-era2b` rows (S151-d) and, for its symmetry fix, 43 `-opmax`
+rows (S152), all but three with `scope_override.test_set_id = era2-b-487`.
+**Rule (PI, 2026-09-10)**: a condition whose `scope_override` names a
+leaderboard scoring frame is a board artefact, not a measurement of its own
+(the `-era2b` rows re-score registered cells that already carry their
+committed-frame row here; the `-opmax` rows are in-sample optima registered
+for the board), and is excluded from the flatten and from the pairing on
+both sides. Implemented as `lib_uplift_supplement.BOARD_FRAMES` and
+`is_board_frame_condition` (read from the hand-authored spec, so a row that
+post-dates the manifest is still recognised); the build and pairing reports
+list the exclusions. Landed at `300473765`.
+
+| Quantity | Before | After |
+|---|---:|---:|
+| Board-frame rows excluded | — | 79 (39 `-era2b` + 40 on-board `-opmax`) |
+| `conditions.csv` rows | 438 | 441 |
+| Pairing worklist rows | 169 | 172 |
+| Uplift computed (F1 and MCC) | 69 | 71 |
+| Blocked pairs | 100 | 100 |
+| Strata | 130 | 130 |
+
+The three new rows are the archived board's K = 3 `-opmax` cells
+(`pv-min-text-t0.0-n3`, `pv-high-text-t0.0-n3`, `pv-n1-image-t0-n3`): off
+the board by its K ≥ 5 rule, they carry no override and enter the supplement
+as ordinary registered conditions on the Era-2 frame (two paired to
+already-registered twins, one ready). **Not decided by the rule**: whether
+the archived board's 40 sweep-optimal Gemini 3 cells should also enter the
+supplement, with pre-verifier twins materialised at their vote thresholds;
+they are E56-class in-sample optima and the rule keeps them out with the
+other board-frame rows. What did NOT change: the 100 blocked pairs, the
+130 strata, every previously computed uplift.
+
 ### 2026-08-29 — Build executed (S144)
 
 Steps 1–3 built by a background worktree agent, hardened through a
