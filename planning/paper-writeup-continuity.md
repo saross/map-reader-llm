@@ -193,8 +193,11 @@ project state.
 > board frame, and re-tier with both families at both levels; (b) run
 > `selection_aware_intervals.py --cell` (Efron–Gong optimism) on the
 > seven 3.7/3.8 screen cells and report the corrected F1 beside the
-> point; (c) THEN the E83 wording (Hsu set vs greedy Tier 1) and the
-> analysis-row signature.
+> point; (c) recompute the Hsu MCB set as the LAST step of the re-tier
+> (PI rule 2026-09-10: the admissible set is a property of the candidate
+> set, so it is recomputed after every membership change and only the
+> final one is cited); (d) THEN the E83 wording and the analysis-row
+> signature.
 > **(3) Uplift supplement**: implement the agreed rule — rows whose
 > `scope_override.test_set_id` is a board frame (`era2-b-487`) are
 > excluded from the flatten and the pairing (they duplicate rows already
@@ -205,7 +208,14 @@ project state.
 > instead of canonical/standardised/student), and on accepting the 100
 > unresolved pairs as disclosed; then mint and sign the analysis row(s)
 > (card § Registration: derivations registered as analyses, not
-> conditions).
+> conditions). The PI asked to WALK THROUGH these registration tasks
+> together next session.
+> **Working-notes candidates held over (S151-d; silence never discards):**
+> WN-C13 the in-sample-optima asymmetry on boards — the 3.7 GS cells are
+> sweep-best points, the incumbents committed points; apply the E56 lens
+> to every board membership as a standing check; WN-C14 the retired
+> builder's silent top-N drop (now loud, `c5a7f43e5`). S150–S151 user-obs
+> candidates still pending.
 > **(4) Cost a 3.7/3.8 image run at 55-map scale** (the PI "may" fund it
 > in a later session): proposer at the image-B rate with caching
 > (~$22.50 per 1,398-tile GS pass ⇒ estimate for 24,561 tiles × N), both
