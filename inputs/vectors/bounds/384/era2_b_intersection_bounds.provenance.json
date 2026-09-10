@@ -1,0 +1,26 @@
+{
+ "test_set_id": "era2-b-487",
+ "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+ "construction": "Era-2 carrier tiles clipped to the union of the B tiling (384 px / 50 % overlap), tile by tile; the same operation the grid campaign used for grid_common_bounds.geojson",
+ "inputs": {
+  "era2_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "b_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson",
+  "reference": "inputs/vectors/references/mounds-reference.geojson"
+ },
+ "crs": "EPSG:32635",
+ "card": "planning/gs-era2-verified-board-2026-09-08.md",
+ "ruling": "PI, 2026-09-09: frame option (a)",
+ "generated_at_utc": "2026-09-10T02:34:00+00:00",
+ "git_commit": "edf8a54c8",
+ "n_era2_tiles": 487,
+ "n_frame_tiles": 487,
+ "n_dropped_empty": 0,
+ "n_clipped": 34,
+ "n_identical": 453,
+ "area_km2_era2_union": 1415.82,
+ "area_km2_frame_union": 1402.41,
+ "area_km2_era2_outside_b": 13.42,
+ "reference_total": 569,
+ "reference_in_era2_frame": 435,
+ "reference_in_frame": 435
+}
