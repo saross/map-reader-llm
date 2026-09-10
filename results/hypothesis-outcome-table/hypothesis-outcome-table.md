@@ -2,7 +2,7 @@
 
 > **GENERATED FILE — do not hand-edit.** Produced by
 > `scripts/generate_hypothesis_outcome_table.py` from
-> `results/analyses-manifest.json` at commit `8a04f8a36`; re-run the
+> `results/analyses-manifest.json` at commit `97f166355`; re-run the
 > script after any manifest regeneration. Pure projection per the
 > D17 ruling (`docs/paper/results-outline.md` § D17): no cell is
 > hand-maintained.
@@ -41,8 +41,8 @@ themselves.
 
 | Hyp | Post-hoc rows referencing the hypothesis |
 |-----|------------------------------------------|
-| H1 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc]; gemini37-image-gs-2026-09-01 [post-hoc]; n1-baseline-matrix-384 [post-hoc] |
-| H2 | era1-leaderboard [post-hoc]; flash35-model-roles [post-hoc]; min-vs-high-thinking-pv [post-hoc]; pass-budget-pareto [post-hoc]; pass-budget-pareto-v2 [post-hoc]; unswept-pools-completeness [post-hoc]; verifier-robustness-matrix [post-hoc] |
+| H1 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc]; gemini37-image-gs-2026-09-01 [post-hoc]; gs-era2-verified-board-2026-09-10 [post-hoc]; n1-baseline-matrix-384 [post-hoc] |
+| H2 | era1-leaderboard [post-hoc]; flash35-model-roles [post-hoc]; gs-era2-verified-board-2026-09-10 [post-hoc]; min-vs-high-thinking-pv [post-hoc]; pass-budget-pareto [post-hoc]; pass-budget-pareto-v2 [post-hoc]; unswept-pools-completeness [post-hoc]; verifier-robustness-matrix [post-hoc] |
 | H3 | 55map-final-board-2026-08-27 [post-hoc]; 55map-final-board-r2-2026-09-06 [post-hoc]; era1-leaderboard [post-hoc]; min-vs-high-thinking-pv [post-hoc]; pass-budget-pareto [post-hoc]; pass-budget-pareto-v2 [post-hoc]; phase3a-high-consensus-calibration [post-hoc]; phase3a-replication-thinking-calibration [post-hoc]; pv-diag-384-consensus-calibration [post-hoc]; stride-winner-ladder-exact-2026-08-25 [post-hoc] |
 | H4 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc] |
 | H5 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc] |

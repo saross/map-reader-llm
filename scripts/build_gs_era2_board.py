@@ -361,19 +361,20 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
 
 
 def _mcb_admissible(board: Path) -> tuple[list[str], str | None]:
-    """The MCB admissible set written by selection_aware_intervals --board, if present."""
+    """The Hsu-constrained MCB admissible set from selection_aware_intervals --board.
+
+    The tool writes ``hsu_not_ruled_out`` (and the two-sided ``mcb_not_ruled_out``)
+    as indices into ``candidates``; E83 reports Tier-1 membership as the Hsu set.
+    """
     for path in sorted((board / "mcb").glob("*.json")):
         try:
             doc = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue
-        for key in ("admissible", "mcb_admissible", "admissible_set", "hsu_admissible"):
-            if isinstance(doc.get(key), list):
-                return [str(x) for x in doc[key]], str(path.relative_to(REPO_ROOT))
-        mcb = doc.get("mcb") or {}
-        for key in ("admissible", "constrained_admissible", "two_sided_admissible"):
-            if isinstance(mcb.get(key), list):
-                return [str(x) for x in mcb[key]], str(path.relative_to(REPO_ROOT))
+        cands = doc.get("candidates") or []
+        idx = doc.get("hsu_not_ruled_out")
+        if isinstance(idx, list) and cands:
+            return [str(cands[i]["ref"]) for i in idx if i < len(cands)], str(path.relative_to(REPO_ROOT))
     return [], None
 
 
@@ -412,7 +413,9 @@ def finalise(board: Path, membership: dict[str, Any]) -> None:
                         "mcb": mcb_path or "scripts/selection_aware_intervals.py --board (not found in board/mcb)"},
         "gates": {"G1": g1, "G2_G3_G4_G6": {k: v for k, v in gates.items() if k != "cells"}},
         "tiering": {"n_pairs": len(tiering["pairwise"]), "n_significant": n_sig, "n_tiers": len(tiers),
-                    "tie_set": tiers[0]["members"], "mcb_admissible": admissible,
+                    "tie_set": tiers[0]["members"], "mcb_admissible_hsu": admissible,
+                    "mcb_two_sided_band_n": (lambda d: len(d.get("mcb_not_ruled_out") or []))(
+                        json.loads((REPO_ROOT / mcb_path).read_text(encoding="utf-8")) if mcb_path else {}),
                     "git_commit": tiering.get("git_commit"), "generated_at_utc": tiering.get("generated_at_utc")},
         "finalised_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }

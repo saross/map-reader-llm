@@ -139,9 +139,43 @@ project state.
 > clobbered by the pairing driver's `scp` after its last job and bash
 > read the new bytes (all eight jobs had completed; the exit code lied).
 >
-> **NEXT SESSION (PI calls queued by the overnight run)**: (a) sign off
-> or amend the Era-2 board card, the frame fork first
-> (`planning/gs-era2-verified-board-2026-09-08.md` § 9); (b) whether to
+> **S151-d (2026-09-09→10, PI present) — the GS Era-2 verified board
+> BUILT on the PI's frame ruling** (card § 9 signed: "maintaining
+> discipline is important for a large, complex project like this, I
+> accept your proposal, please proceed"). Frame = Era-2 ∩ B-union
+> (`inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson`,
+> `era2-b-487`; the rule: a board's frame is the intersection of its
+> members' dispatched coverage; 487 tiles, 34 clipped, 1,402.4 km², all
+> 435 mounds; `f9b87da22`). Membership by the card's rule from the
+> register: **39 cells** (`scripts/build_gs_era2_board.py`, `be01df377`).
+> Gates: G2 every committed evaluation reproduces exactly under today's
+> evaluator; G3, G4 clean; G6 the 29 incumbents unchanged to 4 dp on the
+> new frame, the 10 B-geometry cells −0.007 (`77cc55617`); G1 (the
+> RETIRED builder rebuilding its archived 44-cell board) FAILS marginally
+> — 43/44 exact, one image PV cell +0.0015, one pair crosses q = 0.05,
+> tiers 5–6 re-cut (`g1-regression.json`) — **PI publication ruling
+> needed** (card § 6). **Result** (`97f166355`, canonical chain
+> `era1_leaderboard_tiering.py` + MCB): 375/741 pairs significant, 6
+> tiers; **Tier 1 (greedy clique) = five Gemini 3.7 / 3.8 cells** — image
+> all-3.7 0.9233, text all-3.7 0.9190, text 3.8-verifier 0.9182, image
+> carried-verifier 0.9179, text K = 10 carried 0.9068; Tier 2 (13) holds
+> the 3.7 text K = 5 carried 0.9066, the fourth cell 0.9062, and every
+> Gemini 3 incumbent from the 16of30 opmax 0.8951 down. The Hsu MCB
+> admissible set is 11 cells (two-sided band 22). **Three deviations
+> from the signed card, disclosed in its changelog**: the archived board
+> is NOT register-backed (4 of its 44 cells match a registered condition;
+> it was built from sweep-optimal cells E56/E83 retired) so membership is
+> the register's; the instrument is the canonical register-driven chain,
+> not the retired builder; the members are new `-era2b` rows (39; scope
+> `era2-b-487`; G2 evals waived; verify 22/19/0). The analysis row
+> `gs-era2-verified-board-2026-09-10` is UNSIGNED. Gotcha: the retired
+> builder defaults to `--top-n 20` and silently drops cells; the archived
+> metadata recorded `top_n: 0`.
+>
+> **NEXT SESSION (PI calls queued by the overnight run)**: (a) the Era-2
+> board: rule on G1's marginal failure (publish as is with the drift
+> disclosed, or hold), sign the analysis row, and decide whether the
+> archived board's sweep-optimal cells should ever join; (b) whether to
 > register the uplift supplement now that 69 of 169 pairs compute, and
 > whether to re-score the CRS-less `verified-paired` twin first; (c)
 > re-sign A-07 if the prose correction warrants it; (d) review §§ R7.2–R7.3;

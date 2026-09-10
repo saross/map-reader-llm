@@ -226,6 +226,59 @@ until § 9 is signed.
 
 ## Changelog
 
+### 2026-09-10 — Built (S151-d, PI go 2026-09-09); three deviations disclosed
+
+**Executed**: frame materialised (`scripts/materialise_era2_b_frame.py`,
+`f9b87da22`: 487 tiles, 34 clipped, 453 identical, 1,402.41 km², 435
+mounds; sidecar records the construction); membership derived by the
+§ 3 rule (`scripts/build_gs_era2_board.py membership`, `be01df377`):
+**39 members**, 77 exclusions each with its reason
+(`membership.json`); every member scored on the frame with its own
+committed recipe and reproduced on its committed frame (`e8f4c9d85`);
+gates (`77cc55617`): G2 0 failures (every committed evaluation
+reproduces exactly under the current evaluator), G3 0, G4 39/39, G6 the
+29 Era-2-frame incumbents unchanged to four decimals and the 10
+B-geometry cells −0.0070 to −0.0078; register rows minted and the G2
+evaluations waived (`d15e6fe7e`); tiering and MCB via the canonical
+chain (recorded below when landed).
+
+**Deviation 1 — the archived board is not register-backed.** The card's
+§ 3 named "the members of the archived per-architecture Era-2 PV board
+(44 conditions)". Only 4 of those 44 match any registered condition by
+committed F1: the archived board was built from sweep-optimal
+"pv-materialised" cells, the in-sample optima E56 / E83 retired, not
+from the register's operating-point cells. Membership is therefore the
+register's cells by the rule (39), and the archived board's cells are
+NOT on this board.
+
+**Deviation 2 — instrument.** § 5 named `build_tiered_leaderboard.py`
+as "identical to the archived board's instrument". The archived board is
+the retired instrument; the current canonical one is the register-driven
+chain (`scripts/era1_leaderboard_tiering.py`, the definitive Era-1, the
+n1 and the final 55-map boards; round-robin tile-swap micro-F1
+permutation 10,000, seed 42, BH q = 0.05, greedy clique, 20 m) with the
+MCB admissible set from `selection_aware_intervals.py --board`. The
+board uses the canonical chain; both need the members as register rows
+scored on the board frame, hence **deviation 3 — the `-era2b` rows**:
+one new condition per member (scope_override `era2-b-487`, eval_path the
+board cell), the r2 chain's pattern; § 7's "conditions already exist for
+every member" was wrong under a one-frame board.
+
+**G1 as specified — FAIL, marginal and localised.** Rebuilding the
+archived 44-cell board from its archived inputs with the retired
+builder (`gs-era2-regression-archived-board-2026-09-10.yaml`;
+`--top-n 0`, which the archived metadata records and the builder does
+not default to — the first attempt silently kept 26 cells): 43 of 44
+cells reproduce F1@20 exactly; `pv-high-image-t0.3-n5` moves
+0.7460 → 0.7475; one of 946 pairs crosses BH q = 0.05 (adjusted p
+0.046 → 0.059); tiers 5–6 (the bottom of the image block) re-cut,
+tiers 1–4 identical. Instrument drift in the RETIRED builder on one
+archived input between `005e6c71` (2026-08-20) and today
+(`g1-regression.json`). **Publication ruling (§ 6: nothing published
+unless all gates pass) is the PI's**; the analysis row is unsigned.
+
+**The dry-run listing (39):** `flash35-pv-2x2::f35prop-f35vf-4of10`, `flash35-pv-2x2::f35prop-f3vf-4of10`, `flash35-pv-2x2::f3prop-f35vf-6of10`, `gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5`, `gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5`, `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10`, `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5`, `gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5`, `gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5`, `grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10`, `grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10`, `image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8`, `image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9`, `pv-diag-384::verified-adv-image-3of5`, `pv-diag-384::verified-adv-image-min-3of5`, `pv-diag-384::verified-adv-image-min-6of10`, `pv-diag-384::verified-adv-pro-image-pro-vf-3of5`, `pv-diag-384::verified-adv-pro-text-flash-vf-3of5`, `pv-diag-384::verified-adv-pro-text-medium-vf-3of5`, `pv-diag-384::verified-adv-pro-text-pro-vf-3of5`, `pv-diag-384::verified-adv-text-4of5`, `pv-diag-384::verified-adv-text-6of10`, `pv-diag-384::verified-adv-text-consensus-16of30`, `pv-diag-384::verified-adv-text-high-vf-4of5`, `pv-diag-384::verified-adv-text-medium-vf-4of5`, `pv-diag-384::verified-adv-text-min-6of10`, `pv-diag-384::verified-adv-text-min-n30lineage-4of5`, `pv-diag-384::verified-adv-text-min-true-3of5`, `pv-diag-384::verified-adv-text-pro-vf-4of5`, `pv-diag-384::verified-adv-text-t03-4of5`, `verifier-robustness::verified-384-16of30-t0-3-n5-opmax`, `verifier-robustness::verified-384-ge3of5-t0-3-high-n5`, `verifier-robustness::verified-384-ge3of5-t0-3-n5`, `verifier-robustness::verified-384-ge3of5-t0-7-high-n5`, `verifier-robustness::verified-384-ge3of5-t0-7-n5`, `verifier-robustness::verified-384-union-t0-0-n5`, `verifier-t-pilot::verified-t0-0`, `verifier-t-pilot::verified-t0-5`, `verifier-t-pilot::verified-t1-0`.
+
 ### 2026-09-09 (later) — Frame rule and recommendation added
 
 On the PI's request for a principled decision: the frame is the
