@@ -538,8 +538,8 @@ def build_sweep_tile_counts(
       the candidate with that operating point — the candidate set IS the sweep
       as performed. Meaningful on the committed (grid-common) bounds.
     * ``anchor_eval``: the argmax candidate's micro-F1 at ``buffer_metres``
-      equals the named committed ``evaluation.json``'s F1 to 1e-6 — the
-      apparent point IS the board's point. Meaningful on the board frame.
+      equals the named committed ``evaluation.json``'s F1 to the four
+      decimals it publishes — the apparent point IS the board's point.
 
     Args:
         union_path: The pool union geojson (``vote_count``, ``source_tile``).
@@ -588,7 +588,10 @@ def build_sweep_tile_counts(
                 tm = tm.set_index("tile_name").reindex(tile_order).fillna(0)
                 arr[:, 2] = tm["fn"].to_numpy(dtype=float)
             else:
-                booked = assign_source_tiles(sub.drop(columns=["source_tile"]), bounds)
+                # The union carries the screen's own source_tile; the evaluator
+                # keeps an existing column (it assigns only when missing), and so
+                # must this path, or the per-map booking drifts from the eval.
+                booked = sub if "source_tile" in sub.columns else assign_source_tiles(sub, bounds)
                 tp, fp, fn = _per_tile_one_set(booked, gdf_ref, bounds, tile_order, buffer_metres)
                 arr[:, 0], arr[:, 1], arr[:, 2] = tp, fp, fn
             specs.append({"prob_t": prob_t, "min_votes": k, "n_detections": int(len(sub)),
@@ -623,7 +626,8 @@ def build_sweep_tile_counts(
         apparent = float(f1s.max())
         meta["gate_anchor_eval"] = {"path": str(anchor_eval), "anchor_f1": float(brow["f1"]),
                                     "argmax_f1": apparent, "delta": apparent - float(brow["f1"])}
-        if abs(apparent - float(brow["f1"])) > 1e-6:
+        # evaluation.json publishes F1 to four decimals; the gate is that precision.
+        if abs(apparent - float(brow["f1"])) > 5e-5:
             raise ValueError(f"anchor gate FAILED: argmax {apparent:.6f} vs {brow['f1']:.6f} in {anchor_eval}")
         logger.info("anchor gate OK: argmax %.4f == %s", apparent, anchor_eval)
     logger.info("sweep %s / %s K=%d: %d candidates over %d tiles", union_path.name,

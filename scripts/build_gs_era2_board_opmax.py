@@ -195,6 +195,14 @@ def derive_membership() -> dict[str, Any]:
                    "probabilities_path": f"outputs/h11/pv-diag-384/{pool_id.replace('-n5-', '-n5/')}/session-78-matrix/verified-{s['variant']}/probabilities.json",
                    "n_candidates": int(s["candidates_input_total"]), "source": "session-78-matrix-registry.json"}
         row.update(arch)
+        # The registries' sweep best point (sweep_2d.json) versus the file the
+        # archived board scored: nine pv cells differ (the S151 sweep-staleness
+        # class inside the archived board's own registry). The row IS the file.
+        reg_f1, reg_n = row.get("registry_f1_20"), row.get("registry_n")
+        row["registry_vs_archived"] = (
+            "n/a" if reg_f1 is None else
+            "match" if abs(reg_f1 - arch["archived_f1_20"]) < 5e-5 and reg_n == arch["archived_n"] else
+            f"differs: registry F1 {reg_f1} n {reg_n} vs archived board F1 {arch['archived_f1_20']} n {arch['archived_n']}")
         row["detections"] = f"{MATERIALISED}/{label}.geojson"
         row["condition_id"] = f"{row['run_id']}::{label}{SUFFIX}"
         row["on_board"] = row["k"] >= MIN_K
@@ -334,6 +342,10 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
             eval_path = f"{OPMAX_DIR}/era2/{s}/evaluation.json"
         if m["label"] in BISECTED:
             note += f" NOTE: {BISECTED[m['label']]['why']}; the archived 0.7460 is not this file's score (G1 bisect)."
+        if str(m.get("registry_vs_archived", "")).startswith("differs"):
+            note += (f" NOTE: the materialisation registry's sweep best point {m['registry_vs_archived']} — the "
+                     "sweep_2d.json predates or differs from the materialised file (sweep-staleness class, Obs 461); "
+                     "the row is the file the archived board scored.")
         row: dict[str, Any] = {
             "label": new_label, "architecture": "proposer-verifier", "aggregation": "verified",
             "proposer_pool": m["proposer_pool"], "n_passes": m["k"],
