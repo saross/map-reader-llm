@@ -170,7 +170,10 @@ project state.
 > `era2-b-487`; G2 evals waived; verify 22/19/0). The analysis row
 > `gs-era2-verified-board-2026-09-10` is UNSIGNED. Gotcha: the retired
 > builder defaults to `--top-n 20` and silently drops cells; the archived
-> metadata recorded `top_n: 0`.
+> metadata recorded `top_n: 0`. Tier-1 on sapphire at `4652ab434`:
+> 2,188 passed / 1 skipped / 3 xfailed. § R4 gains the board paragraph
+> (unsigned, ruling pending). Obs dispatched (obs-writer): see the
+> working-notes commit after `4652ab434`.
 >
 > **NEXT SESSION (PI calls queued by the overnight run)**: (a) the Era-2
 > board: rule on G1's marginal failure (publish as is with the drift
