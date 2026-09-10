@@ -1,8 +1,8 @@
 # With/without-verifier pairing — worklist
 
-> **Last revised**: 2026-09-08 (regenerated from committed artefacts by `scripts/build_verifier_pairing_worklist.py`; original publication; the with/without-verifier pairing plan). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-10 (regenerated from committed artefacts by `scripts/build_verifier_pairing_worklist.py`; original publication; the with/without-verifier pairing plan). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-08T21:45:40Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-10T05:57:13Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 Build order step 3 of `planning/uplift-supplement-2026-08-28.md`. No
 scoring has been run: this document and its worklist are the plan.
@@ -27,15 +27,21 @@ two cells of the same run at different geometries share a stratum. What
 protects against that is the lineage matching in this builder, not the
 guard downstream.
 
-169 verified cell(s) in the registry.
+172 verified cell(s) in the registry.
+
+79 board-frame row(s) excluded by rule (PI, 2026-09-10): rows whose
+`scope_override.test_set_id` names a leaderboard scoring frame are board
+artefacts (the GS Era-2 board's `-era2b` and `-opmax` rows), not
+measurements of their own, and are neither paired nor offered as twins
+(`lib_uplift_supplement.is_board_frame_condition`).
 
 ## Status
 
 | Status | Cells |
 |---|---:|
-| `already-registered` | 7 |
+| `already-registered` | 9 |
 | `blocked` | 100 |
-| `ready` | 19 |
+| `ready` | 20 |
 | `ready-after-materialise` | 43 |
 
 `already-registered` pairs need nothing: the twin is scored. `ready`
@@ -49,8 +55,8 @@ re-aggregation — and the row records the exact predicate in
 
 | `pairing_basis` | Cells |
 |---|---:|
-| `consensus-file` | 19 |
-| `registered` | 7 |
+| `consensus-file` | 20 |
+| `registered` | 9 |
 | `union` | 43 |
 | `unresolved` | 100 |
 
@@ -177,12 +183,12 @@ stands:
 
 | Status | Pairs | Computable | Why |
 |---|---:|---:|---|
-| `already-registered` | 7 | 7 | Both sides are registered conditions, so both are already in `conditions.csv`. No scoring needed. |
-| `ready` | 19 | 19 | Once the emitted job writes its score. |
+| `already-registered` | 9 | 9 | Both sides are registered conditions, so both are already in `conditions.csv`. No scoring needed. |
+| `ready` | 20 | 20 | Once the emitted job writes its score. |
 | `ready-after-materialise` | 43 | 0 | The vote shell has to be filtered out of the committed union first, and no job is emitted for that yet. |
 | `blocked` | 100 | 0 | No twin located. |
 
-So the ceiling after a clean run of `verifier-pairing-commands.sh` is **26 computed, 143 pending**.
+So the ceiling after a clean run of `verifier-pairing-commands.sh` is **29 computed, 143 pending**.
 
 The 2026-08-29 run produced 8, which is the 6 already-registered pairs
 plus 2 scored twins. Two defects, both now fixed, account for the gap:

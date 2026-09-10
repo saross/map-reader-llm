@@ -72,7 +72,8 @@ from scripts.lib_detection_paths import (  # noqa: E402
     PassCountMismatch,
     resolve_pool_passes,
 )
-from scripts.lib_uplift_supplement import (  # noqa: E402
+from scripts.lib_uplift_supplement import (
+    is_board_frame_condition,  # noqa: E402
     ORIGINAL_PUBLICATION_DATE,
     SHELL_EPILOGUE,
     SHELL_PREAMBLE,
@@ -399,6 +400,13 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
         One row per verified condition in the registry.
     """
     specs = list(iter_condition_specs(sources))
+    # Board-frame rows (the GS Era-2 board's -era2b and -opmax rows) are board
+    # artefacts, not measurements of their own: excluded by rule, both as
+    # verified cells to pair and as candidate registered twins.
+    sources.excluded_board_frame = [
+        condition_id for _, condition_id, spec in specs if is_board_frame_condition(spec)
+    ]
+    specs = [s for s in specs if not is_board_frame_condition(s[2])]
 
     def _pair_key(
         run: str, condition: str, spec: dict[str, Any]
@@ -708,7 +716,7 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
     return rows
 
 
-def render_report(rows: list[dict[str, Any]]) -> str:
+def render_report(rows: list[dict[str, Any]], excluded: Sequence[str] = ()) -> str:
     """Render the pairing report.
 
     Args:
@@ -751,6 +759,12 @@ def render_report(rows: list[dict[str, Any]]) -> str:
         "guard downstream.",
         "",
         f"{len(rows)} verified cell(s) in the registry.",
+        "",
+        f"{len(excluded)} board-frame row(s) excluded by rule (PI, 2026-09-10): rows whose",
+        "`scope_override.test_set_id` names a leaderboard scoring frame are board",
+        "artefacts (the GS Era-2 board's `-era2b` and `-opmax` rows), not",
+        "measurements of their own, and are neither paired nor offered as twins",
+        "(`lib_uplift_supplement.is_board_frame_condition`).",
         "",
         "## Status",
         "",
@@ -914,7 +928,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     (out_dir / "verifier-pairing-commands.sh").chmod(0o755)
     (out_dir / "verifier-pairing-report.md").write_text(
-        render_report(rows), encoding="utf-8"
+        render_report(rows, sources.excluded_board_frame), encoding="utf-8"
     )
 
     counts = Counter(r["status"] for r in rows)

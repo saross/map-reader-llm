@@ -84,7 +84,9 @@ from scripts.lib_detection_paths import (  # noqa: E402
     PassCountMismatch,
     resolve_pool_passes,
 )
-from scripts.lib_uplift_supplement import (  # noqa: E402
+from scripts.lib_uplift_supplement import (
+    BOARD_FRAMES,
+    is_board_frame_condition,  # noqa: E402
     COLUMN_EXTENSIONS,
     ORIGINAL_PUBLICATION_DATE,
     PRIMARY_BUFFER_BY_CORPUS,
@@ -490,8 +492,14 @@ def build_condition_rows(sources: CorpusSources) -> tuple[list[dict], list[dict]
     """
     master: list[dict[str, Any]] = []
     by_buffer: list[dict[str, Any]] = []
+    sources.excluded_board_frame = []
 
     for run_id, condition_id, spec in iter_condition_specs(sources):
+        # Board-frame rows (the GS Era-2 board's -era2b and -opmax rows) are
+        # board artefacts, not measurements of their own: excluded by rule.
+        if is_board_frame_condition(spec):
+            sources.excluded_board_frame.append(condition_id)
+            continue
         facts = sources.facts.get(run_id, {})
         manifest_row = sources.conditions.get(condition_id)
         document = _load_eval(sources.repo_root, spec.get("eval_path"))
@@ -876,6 +884,23 @@ def render_build_report(
         f"| …of those, with a bootstrap CI on F1 | {with_ci} |",
         f"| Conditions with a tile-level MCC | {with_mcc} |",
         f"| Conditions with a proposer cost | {with_cost} |",
+        f"| Board-frame rows excluded by rule (see below) | {len(sources.excluded_board_frame)} |",
+        "",
+        "### Board-frame rows excluded",
+        "",
+        "Rows whose `scope_override.test_set_id` names a leaderboard scoring",
+        f"frame ({', '.join(sorted(BOARD_FRAMES))}) are board artefacts, not",
+        "measurements of their own — the `-era2b` rows re-score registered cells",
+        "that already carry their committed-frame row here, and the `-opmax`",
+        "rows are in-sample optima registered for the GS Era-2 board's symmetry",
+        "fix — and are excluded from the flatten and the pairing (PI rule,",
+        "2026-09-10; `lib_uplift_supplement.is_board_frame_condition`). Whether",
+        "the archived board's sweep-optimal Gemini 3 cells should ALSO enter the",
+        "supplement, with pre-verifier twins materialised at their vote",
+        "thresholds, is a separate decision the rule does not take.",
+        "",
+        f"Excluded ({len(sources.excluded_board_frame)}): "
+        + ", ".join(f"`{c}`" for c in sources.excluded_board_frame),
         "",
         "### Factor coverage",
         "",

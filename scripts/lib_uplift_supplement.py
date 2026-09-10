@@ -929,6 +929,9 @@ class CorpusSources:
     sensitivity: dict[str, Any]
     notation: NotationKey
     vintages: dict[str, str | None] = field(default_factory=dict)
+    #: Condition ids the builders excluded under the board-frame rule
+    #: (:func:`is_board_frame_condition`); filled during a build for the reports.
+    excluded_board_frame: list[str] = field(default_factory=list)
 
     @classmethod
     def load(cls, repo_root: Path = REPO_ROOT) -> CorpusSources:
@@ -1197,6 +1200,33 @@ def resolve_scope(
     if override:
         return dict(override)
     return dict(sources.facts.get(run_id, {}).get("scope") or {})
+
+
+#: Frames that exist only as leaderboard scoring frames — a board's members
+#: re-scored on one frame (``era2-b-487``: the GS Era-2 verified board,
+#: ``planning/gs-era2-verified-board-2026-09-08.md``). A condition whose
+#: ``scope_override`` names one is a board artefact, not a new measurement:
+#: the ``-era2b`` rows duplicate registered cells that already carry their own
+#: committed-frame row here, and the ``-opmax`` rows are in-sample optima
+#: registered for the board's symmetry fix. Both are excluded from the
+#: supplement's flatten and pairing (PI rule, 2026-09-10).
+BOARD_FRAMES: frozenset[str] = frozenset({"era2-b-487"})
+
+
+def is_board_frame_condition(spec: Mapping[str, Any]) -> bool:
+    """Whether a condition spec's ``scope_override`` names a board frame.
+
+    Read from the hand-authored spec rather than the generated manifest so a
+    row that post-dates the last manifest regeneration is still recognised.
+
+    Args:
+        spec: The condition spec from ``run-conditions.json``.
+
+    Returns:
+        ``True`` when the row is scored on a frame in :data:`BOARD_FRAMES`.
+    """
+    override = spec.get("scope_override") or {}
+    return override.get("test_set_id") in BOARD_FRAMES
 
 
 def condition_stratum(
