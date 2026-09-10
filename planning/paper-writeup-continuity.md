@@ -37,6 +37,11 @@ project state.
 > class. Gotcha: the builder's `DEFAULT_BOUNDS` is the 340-tile Era-1
 > file; the archived board used `384/full_evaluation_bounds.geojson`
 > (487) — always pin bounds explicitly when reproducing a board.
+> **Confirmatory rebuild** (sapphire, `817de06a0`): the retired builder
+> on the archived inputs with the 372 blob substituted reproduces the
+> archived board 44/44 cells, 946/946 pairs (max |Δp| 0.0), tiers
+> identical — G1 PASSES from the inputs actually scored
+> (`g1-confirmatory-rebuild.json`).
 > **Next**: items (2)–(5) of the scheduled block below, unchanged.
 
 ## 🔍 STATE AFTER S151-b (2026-09-08 — the PI's rulings EXECUTED: two e47 stages registered, five sweeps preserved, ten Obs written, S148–S149 user-obs reviewed; $0)

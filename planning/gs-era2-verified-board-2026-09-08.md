@@ -290,6 +290,15 @@ on 2026-05-06 had its cache been invalidated. The
 feature count) would have caught it; the retired builder never ran it.
 Publication ruling remains the PI's.
 
+**Confirmatory rebuild (same day, sapphire, `817de06a0`)**: the archived
+44-cell board rebuilt with the retired builder from its archived inputs
+with the one blob substituted (`456dd9bf` for `pv-high-image-t0.3-n5`)
+reproduces the archived board exactly: 44 of 44 cells, 946 of 946
+pairs (largest p-value difference 0.0, no significance flips), tiers
+identical member for member (`g1-confirmatory-rebuild.json` and
+`g1-confirmatory-rebuild-tiers_20m.json`). G1 passes from the inputs
+the archived board actually scored.
+
 **Date correction**: the build entry's "`005e6c71` (2026-08-20)" was wrong
 (`005e6c71` is 2026-05-06; 2026-08-20 is `b69d8af4b`, the archive move),
 corrected in place below.

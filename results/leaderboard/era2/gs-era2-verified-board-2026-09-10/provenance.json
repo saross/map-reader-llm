@@ -72,7 +72,7 @@
     "tiers_changed": "tiers 5 and 6 (the bottom of the image block) re-cut: archived 6 + 4 cells, rebuilt 9 + 1; tiers 1-4 identical member-for-member",
     "reading": "43 of 44 cells reproduce F1@20 exactly and 945 of 946 pairs keep their verdict; one image PV cell moves +0.0015 F1 under the current evaluator (builder git 005e6c71 on 2026-08-20 vs be01df377 today), enough to lift one BH-adjusted p across 0.05 and merge the two bottom image tiers. Instrument drift in the RETIRED builder on one archived input; the new board is scored and tiered by the register-driven chain, whose reproduction gate is G2. Publication decision (card § 6: nothing published unless all gates pass) is the PI's."
    },
-   "verdict": "FAIL as specified (marginal, localised: one cell, one pair, bottom two tiers); BISECTED 2026-09-10: stale label-keyed cache at the 2026-05-06 build, no evaluator drift - see bisect",
+   "verdict": "FAIL as specified (archived inputs are not, for one cell, the inputs the archived board scored); PASS from the inputs actually scored (confirmatory rebuild 817de06a0: 44/44, 946/946, tiers identical); no evaluator drift - see bisect",
    "bisect": {
     "bisected_at_utc": "2026-09-10T05:30:00+00:00",
     "method": "scripts/g1_drift_bisect_rescore.py on sapphire: the moved cell's input scored under today's evaluator (builder worker _evaluate_single_threshold, GT mounds-reference.geojson, bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson, buffers 20/30/40/50/100, bootstrap 1000, seed 42) as two blobs: the content the archived cache entry was computed from, and the content that survives under archive/ today",
@@ -137,7 +137,36 @@
     "date_correction": "the original reading's '005e6c71 on 2026-08-20' was wrong: 005e6c71 is dated 2026-05-06; 2026-08-20 is b69d8af4b, the archive move",
     "reading": "G1's premise (archived inputs = the inputs the archived board scored) is false for one cell. From the blob it actually scored, the archived board reproduces 44 of 44 under today's evaluator; the retired builder has not drifted. The +0.0015, the one BH flip and the Tier 5-6 re-cut are what the archived board WOULD have shown on 2026-05-06 had its cache been invalidated. Publication ruling remains the PI's under card § 6.",
     "sidecar": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g1-bisect-rescore.json",
-    "script": "scripts/g1_drift_bisect_rescore.py"
+    "script": "scripts/g1_drift_bisect_rescore.py",
+    "confirmatory_rebuild": {
+     "what": "the archived 44-cell board rebuilt with the retired builder from its archived inputs with ONE substitution: pv-high-image-t0.3-n5.geojson replaced by the 372-feature blob 456dd9bf its cache entry was computed from (git show 005e6c71:results/leaderboard/era2/pv-materialised/pv-high-image-t0.3-n5.geojson); spec = the G1 spec with that one path swapped; --top-n 0; fresh cache; sapphire",
+     "n_cells_common": 44,
+     "cells_moved": [],
+     "n_pairs_shared": 946,
+     "max_abs_delta_p_value": 0.0,
+     "n_pairs_significance_differs": 0,
+     "tier_sizes_archived": [
+      8,
+      11,
+      3,
+      12,
+      6,
+      4
+     ],
+     "tier_sizes_rebuilt": [
+      8,
+      11,
+      3,
+      12,
+      6,
+      4
+     ],
+     "tiers_identical": true,
+     "rebuilt_git_commit": "817de06a0",
+     "rebuilt_timestamp": "2026-09-10T05:32:16.114268+00:00",
+     "verdict": "PASS from the inputs the archived board actually scored: 44/44 cells, 946/946 pairs (max |dp| 0.0, 0 significance flips), tiers identical member-for-member",
+     "tiers_file": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g1-confirmatory-rebuild-tiers_20m.json"
+    }
    }
   },
   "G2_G3_G4_G6": {
