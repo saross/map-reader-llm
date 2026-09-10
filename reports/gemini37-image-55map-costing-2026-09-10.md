@@ -23,7 +23,7 @@ later session.
 | GS text K = 5 union / GS image K = 5 union | 791 / 674 candidates | the two `union_k5.geojson` under `outputs/gemini37-screen-2026-08-28/verifier/…` and `outputs/gemini37-image-gs-2026-09-01/verifier/…` |
 | Gemini 3 verifier (carried), list | US$0.956 for 674 (GS image); US$17.78 for 12,715 (55-map text) | `verify_arm1/run.meta.json` under the two runs |
 | Gemini 3.7 verifier, list | US$0.852 for 674 (GS image); US$16.22 for 12,715 (55-map text) | `verify_arm2/run.meta.json` under the two runs |
-| Gemini 3.8 verifier | US$0.0039 for one probe call (1,792 in, 144 out, 530 thinking) | `outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/run.meta.json` — the Arm V production run's meta is not on disk; weak basis |
+| Gemini 3.8 verifier | ≈ US$0.9–1.3 token basis for the 791-candidate Arm V (2,023 tokens per candidate) | `planning/gemini38-screen-2026-09-04.md` § Arm V (projection; the production run's meta is not on disk); the single probe call in `…/verify_swap38/run.meta.json` cost US$0.0039 with 530 thinking tokens, an upper bound |
 | 55-map instrument resolution | MDE80 ≈ 0.013 F1 | continuity (S146 block: "55-map 0.013") |
 | GS image gain the run would test at scale | +0.084 to +0.090 F1 over the Gemini 3 image anchor | findings I1 |
 
@@ -57,14 +57,14 @@ verifier bill should be budgeted at up to 4× the K = 5 figure).
 |---|---:|---:|
 | Gemini 3 (carried) | US$0.00140–0.00142 | ≈ US$16 |
 | Gemini 3.7 | US$0.00126–0.00128 | ≈ US$14–15 |
-| Gemini 3.8 (probe basis only) | ≈ US$0.0039 | ≈ US$44 |
+| Gemini 3.8 (card projection; probe upper bound US$0.0039) | US$0.0011–0.0016 | ≈ US$13–18 (upper bound ≈ US$44) |
 
 ## The estimate
 
 | Configuration | Token basis | Runner ceiling |
 |---|---:|---:|
 | K = 5, proposer + Gemini 3 and 3.7 verifier arms | ≈ US$425 | ≈ US$660 |
-| … plus the 3.8 arm | ≈ US$470 | ≈ US$705 |
+| … plus the 3.8 arm | ≈ US$440 (upper bound US$470) | ≈ US$675 (upper bound US$705) |
 | K = 10, proposer + Gemini 3 and 3.7 arms (verifier ×4) | ≈ US$910 | ≈ US$1,380 |
 
 The verifier arms are a rounding error beside the proposer; the decision
