@@ -2,9 +2,9 @@
 
 # Analyses manifest
 
-> Generated 2026-09-08T08:20:32Z · 63 row(s) · schema v1.0.
+> Generated 2026-09-10T02:46:09Z · 64 row(s) · schema v1.0.
 >
-> **Coverage**: 63 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
+> **Coverage**: 64 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
 
 | analysis_id | type | #conditions | preregistered | paper_section | outcome |
 |---|---|---|---|---|---|
@@ -71,3 +71,4 @@
 | estimated-correction-r2 | diagnostic | 35 | post-hoc | Results | Expected terms M 49.7, E_err 35.8, E_om 35.8; F1-hat sits within 0.0007 of the r2 point — below it for 32 of 35 cells (by 0.0007 at the top of the board), at it for one, marginally above it for the two lowest-recall cells (TM-k4 +0.0003, IM-k4 +0.0007) — with ≈ ±0.005 intervals, wider than the tier gaps. |
 | student-baseline-r2 | diagnostic | 0 | post-hoc | Discussion | P 0.991 / R 0.923 / F1 0.956 (without extrapolated terms R 0.941 / F1 0.966); GS-4 direct 1.000 / 0.947 / 0.973. |
 | sensitivity-mde-r2 | diagnostic | 35 | post-hoc | Appendix | 55-map r2 board null SD 0.0045 over 595 pairs; MDE80 0.013 — resolution unchanged by r2. |
+| gs-era2-verified-board-2026-09-10 | leaderboard | 39 | post-hoc | Results | PENDING: tiering not yet run (filled by build_gs_era2_board finalise) |

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-08T08:20:32Z",
+  "generated_at": "2026-09-10T02:46:09Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -2682,6 +2682,72 @@
           "results/sensitivity-mde-2026-08-28/sensitivity-r2.json"
         ],
         "last_extracted_at": "2026-09-07T08:45:10Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "gs-era2-verified-board-2026-09-10",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "flash35-pv-2x2::f35prop-f35vf-4of10-era2b",
+        "flash35-pv-2x2::f35prop-f3vf-4of10-era2b",
+        "flash35-pv-2x2::f3prop-f35vf-6of10-era2b",
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+        "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b",
+        "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+        "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b",
+        "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b",
+        "pv-diag-384::verified-adv-image-3of5-era2b",
+        "pv-diag-384::verified-adv-image-min-3of5-era2b",
+        "pv-diag-384::verified-adv-image-min-6of10-era2b",
+        "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b",
+        "pv-diag-384::verified-adv-pro-text-flash-vf-3of5-era2b",
+        "pv-diag-384::verified-adv-pro-text-medium-vf-3of5-era2b",
+        "pv-diag-384::verified-adv-pro-text-pro-vf-3of5-era2b",
+        "pv-diag-384::verified-adv-text-4of5-era2b",
+        "pv-diag-384::verified-adv-text-6of10-era2b",
+        "pv-diag-384::verified-adv-text-consensus-16of30-era2b",
+        "pv-diag-384::verified-adv-text-high-vf-4of5-era2b",
+        "pv-diag-384::verified-adv-text-medium-vf-4of5-era2b",
+        "pv-diag-384::verified-adv-text-min-6of10-era2b",
+        "pv-diag-384::verified-adv-text-min-n30lineage-4of5-era2b",
+        "pv-diag-384::verified-adv-text-min-true-3of5-era2b",
+        "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b",
+        "pv-diag-384::verified-adv-text-t03-4of5-era2b",
+        "verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-3-high-n5-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-3-n5-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-7-high-n5-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-7-n5-era2b",
+        "verifier-robustness::verified-384-union-t0-0-n5-era2b",
+        "verifier-t-pilot::verified-t0-0-era2b",
+        "verifier-t-pilot::verified-t0-5-era2b",
+        "verifier-t-pilot::verified-t1-0-era2b"
+      ],
+      "hypothesis_refs": [
+        "H2",
+        "H1"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [],
+      "predicted_outcome": null,
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "PENDING: tiering not yet run (filled by build_gs_era2_board finalise)",
+      "paper_section": "Results",
+      "output_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json"
+        ],
+        "last_extracted_at": "2026-09-10T02:46:09Z",
         "extractor_version": "0.7.1"
       }
     }

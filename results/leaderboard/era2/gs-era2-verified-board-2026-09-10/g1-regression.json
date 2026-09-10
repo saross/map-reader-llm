@@ -1,0 +1,60 @@
+{
+ "gate": "G1",
+ "archived_board": "archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json",
+ "archived_git_commit": "005e6c71",
+ "rebuilt_git_commit": "be01df377",
+ "spec": "planning/leaderboard-specs/gs-era2-regression-archived-board-2026-09-10.yaml",
+ "n_cells_archived": 44,
+ "n_cells_rebuilt": 44,
+ "n_cells_common": 44,
+ "max_abs_delta_f1_20": 0.0015000000000000568,
+ "n_pairs_archived": 946,
+ "n_pairs_rebuilt": 946,
+ "n_pairs_shared": 946,
+ "max_abs_delta_p_value": 0.05699999999999994,
+ "n_pairs_significance_differs": 1,
+ "tiers_identical": false,
+ "tier_sizes_archived": [
+  8,
+  11,
+  3,
+  12,
+  6,
+  4
+ ],
+ "tier_sizes_rebuilt": [
+  8,
+  11,
+  3,
+  12,
+  9,
+  1
+ ],
+ "note": "first attempt ran with the builder default --top-n 20 and rebuilt 26 cells (F1 exact on those); rerun with --top-n 0 as the archived metadata records",
+ "checked_at_utc": "2026-09-10T02:40:54+00:00",
+ "passed": false,
+ "detail": {
+  "cells_moved": [
+   {
+    "label": "pv-high-image-t0.3-n5",
+    "archived_f1_20": 0.746,
+    "rebuilt_f1_20": 0.7475
+   }
+  ],
+  "pair_significance_flipped": [
+   {
+    "pair": [
+     "pv-high-image-t0.3-n10",
+     "pv-high-image-t0.3-n5"
+    ],
+    "archived_p": 0.0253,
+    "archived_bh_adjusted_p": 0.045675,
+    "rebuilt_p": 0.0339,
+    "rebuilt_bh_adjusted_p": 0.059498
+   }
+  ],
+  "tiers_changed": "tiers 5 and 6 (the bottom of the image block) re-cut: archived 6 + 4 cells, rebuilt 9 + 1; tiers 1-4 identical member-for-member",
+  "reading": "43 of 44 cells reproduce F1@20 exactly and 945 of 946 pairs keep their verdict; one image PV cell moves +0.0015 F1 under the current evaluator (builder git 005e6c71 on 2026-08-20 vs be01df377 today), enough to lift one BH-adjusted p across 0.05 and merge the two bottom image tiers. Instrument drift in the RETIRED builder on one archived input; the new board is scored and tiered by the register-driven chain, whose reproduction gate is G2. Publication decision (card \u00a7 6: nothing published unless all gates pass) is the PI's."
+ },
+ "verdict": "FAIL (marginal, localised: one cell, one pair, bottom two tiers)"
+}

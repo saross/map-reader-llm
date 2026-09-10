@@ -35,6 +35,13 @@ Subcommands (run in this order)
     ``gs-era2-verified-board-2026-09-10`` (unsigned — the PI signs) into
     ``results/run-conditions.json`` / ``results/run-analyses.json``.
     Idempotent. Then regenerate the manifests.
+``finalise``
+    After the tiering chain and the MCB tool have written into the board
+    directory: fill the analysis row's ``outcome`` from ``tiering_20m.json``
+    and the MCB admissible set, write ``<board>/provenance.json`` (frame,
+    membership, gates G1-G6, instruments, commits) and ``<board>/README.md``
+    (the board table with tiers, MCB membership, and the G6 frame delta per
+    cell).
 
 The membership rule (card § 3, restated under the frame rule of § 2)
 -------------------------------------------------------------------
@@ -338,9 +345,91 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
     return new_ids
 
 
+def _mcb_admissible(board: Path) -> tuple[list[str], str | None]:
+    """The MCB admissible set written by selection_aware_intervals --board, if present."""
+    for path in sorted((board / "mcb").glob("*.json")):
+        try:
+            doc = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        for key in ("admissible", "mcb_admissible", "admissible_set", "hsu_admissible"):
+            if isinstance(doc.get(key), list):
+                return [str(x) for x in doc[key]], str(path.relative_to(REPO_ROOT))
+        mcb = doc.get("mcb") or {}
+        for key in ("admissible", "constrained_admissible", "two_sided_admissible"):
+            if isinstance(mcb.get(key), list):
+                return [str(x) for x in mcb[key]], str(path.relative_to(REPO_ROOT))
+    return [], None
+
+
+def finalise(board: Path, membership: dict[str, Any]) -> None:
+    tiering = json.loads((board / "tiering_20m.json").read_text(encoding="utf-8"))
+    gates = json.loads((board / "gates.json").read_text(encoding="utf-8"))
+    g1 = _eval_meta(f"{BOARD_DIR}/g1-regression.json") or {}
+    deltas = {r["condition_id"]: r for r in gates["cells"]}
+    admissible, mcb_path = _mcb_admissible(board)
+    ranking = tiering["ranking"]
+    n_sig = sum(1 for r in tiering["pairwise"] if r["significant"])
+    top = ranking[0]
+    tiers = tiering["tiers"]
+    outcome = (
+        f"{n_sig}/{len(tiering['pairwise'])} pairs significant at BH q = 0.05, {len(tiers)} tiers on the "
+        f"{FRAME_ID} frame ({tiering['n_tiles']} tiles, 435 reference mounds). Tier 1 (greedy clique) = "
+        f"{len(tiers[0]['members'])} cell(s); MCB admissible set = {len(admissible) if admissible else 'not computed'}. "
+        f"Top: {top['label']} F1@20 {top['eval_f1']:.4f}. "
+        + "; ".join(f"{r['label']} {r['eval_f1']:.4f} (T{r['tier']})" for r in ranking[1:5])
+        + ". Gates: G1 " + ("PASS" if g1.get("passed") else "see provenance") + f", G2 {gates['G2_reproduction_failures']} failures, "
+        f"G3 {gates['G3_frame_failures']} failures, G4 {gates['G4_cells']}/{gates['G4_members']}; G6 max |delta| "
+        f"{max(abs(r['delta_board_minus_committed']) for r in gates['cells'] if r.get('delta_board_minus_committed') is not None):.4f}."
+    )
+    ra = json.loads(RUN_ANALYSES.read_text(encoding="utf-8"))
+    rows = ra["analyses"] if isinstance(ra, dict) else ra
+    row = next(r for r in rows if r["analysis_id"] == BOARD_ID)
+    row["outcome"] = outcome
+    row["output_path"] = f"{BOARD_DIR}/tiering_20m.json"
+    RUN_ANALYSES.write_text(json.dumps(ra, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    provenance = {
+        "board_id": BOARD_ID, "card": CARD, "frame": FRAME, "frame_id": FRAME_ID,
+        "frame_provenance": "inputs/vectors/bounds/384/era2_b_intersection_bounds.provenance.json",
+        "membership": {"n": membership["n_members"], "rule": "card § 3 under the § 2 frame rule; see membership.json"},
+        "instruments": {"per_cell_scoring": "scripts/evaluate_detections.py (each member's committed recipe, bounds swapped)",
+                        "tiering": "scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m)",
+                        "mcb": mcb_path or "scripts/selection_aware_intervals.py --board (not found in board/mcb)"},
+        "gates": {"G1": g1, "G2_G3_G4_G6": {k: v for k, v in gates.items() if k != "cells"}},
+        "tiering": {"n_pairs": len(tiering["pairwise"]), "n_significant": n_sig, "n_tiers": len(tiers),
+                    "tie_set": tiers[0]["members"], "mcb_admissible": admissible,
+                    "git_commit": tiering.get("git_commit"), "generated_at_utc": tiering.get("generated_at_utc")},
+        "finalised_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    (board / "provenance.json").write_text(json.dumps(provenance, indent=1) + "\n", encoding="utf-8")
+    lines = [f"# The GS Era-2 verified board on one frame — `{BOARD_ID}`", "",
+             f"> **Last revised**: {provenance['finalised_at_utc'][:10]} (original publication). Card: `{CARD}`. "
+             f"Frame: `{FRAME}` (`{FRAME_ID}`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, "
+             f"1,402.4 km², 435 curator reference mounds). Instrument: {provenance['instruments']['tiering']}; "
+             f"Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).", "",
+             f"{len(ranking)} cells; {n_sig}/{len(tiering['pairwise'])} pairs significant; {len(tiers)} tiers; "
+             f"tie set {len(tiers[0]['members'])}; MCB admissible {len(admissible) if admissible else 'n/a'}.", "",
+             "| rank | cell | tier | MCB | F1@20 (board frame) | committed F1@20 | Δ frame | tile-MCC |",
+             "|---:|---|---:|:---:|---:|---:|---:|---:|"]
+    for r in ranking:
+        src = r["ref"].replace(SUFFIX, "")
+        d = deltas.get(src, {})
+        lines.append(f"| {r['rank']} | `{src}` | {r['tier']} | {'●' if r['ref'] in admissible else ''} | {r['eval_f1']:.4f} | "
+                     f"{d.get('committed_f1_20', float('nan')):.4f} | {d.get('delta_board_minus_committed', 0.0):+.4f} | "
+                     f"{r['mcc'] if r['mcc'] is not None else '—'} |")
+    lines += ["", "Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 "
+              "frame for the incumbents and grid-common for the B-geometry cells). Full pairwise table: `tiering_20m.json`; "
+              "gates: `gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; "
+              "reproduction evaluations: `g2/`.", "", "## Changelog", "",
+              f"### {provenance['finalised_at_utc'][:10]} — Original publication", "",
+              "Built on sapphire per the card; all gates recorded in `provenance.json`."]
+    (board / "README.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(outcome)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    parser.add_argument("command", choices=["membership", "jobs", "gates", "register"])
+    parser.add_argument("command", choices=["membership", "jobs", "gates", "register", "finalise"])
     parser.add_argument("--write", action="store_true", help="register: persist to the register files")
     args = parser.parse_args(argv)
     board = REPO_ROOT / BOARD_DIR
@@ -366,6 +455,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if ok else 2
     if args.command == "register":
         register(membership, args.write)
+        return 0
+    if args.command == "finalise":
+        finalise(board, membership)
         return 0
     return 1
 
