@@ -90,9 +90,11 @@ sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 from materialise_opmax_cells import (  # noqa: E402
     OUTPUT_CRS_URN,
+    classify_vintage as classify,
     filter_pv_union,
     git_blob_hash,
     git_last_commit,
+    sweep_universe,
 )
 
 PV_REGISTRY = ("archive/superseded-leaderboards/leaderboard/era2/pv-materialised/"
@@ -104,61 +106,6 @@ MANIFEST_CRS = "EPSG:32635"
 def _load(rel: str | Path) -> Any:
     """Load a repository-relative JSON file."""
     return json.loads((REPO_ROOT / rel).read_text(encoding="utf-8"))
-
-
-def sweep_universe(sweep_rel: str | None) -> int | None:
-    """The candidate count a committed 2-D sweep saw.
-
-    The sweep's ``(vote_t 1, prob_t 0.0)`` cell keeps every candidate, so its
-    ``n`` IS the universe the sweep was run over.
-
-    Args:
-        sweep_rel: Repository-relative ``sweep_2d.json``, or ``None``.
-
-    Returns:
-        The universe size, or ``None`` when there is no sweep or no such row.
-    """
-    if not sweep_rel or not (REPO_ROOT / sweep_rel).is_file():
-        return None
-    rows = _load(sweep_rel)
-    at_20 = [r for r in rows if r.get("buffer_m", 20) == 20]
-    for row in at_20:
-        if row.get("vote_t") == 1 and float(row.get("prob_t", -1)) == 0.0:
-            return int(row["n"])
-    return None
-
-
-def classify(n_union: int, n_probabilities: int, n_sweep: int | None) -> tuple[str, str]:
-    """Classify one cell's join by the three universe sizes.
-
-    Args:
-        n_union: Features in the union GeoJSON as committed today.
-        n_probabilities: Keys in the verifier stage's ``probabilities.json``.
-        n_sweep: The sweep's own universe size, or ``None``.
-
-    Returns:
-        ``(verdict, explanation)``.  ``verdict`` is ``same-vintage``,
-        ``probabilities-grew``, ``union-rebuilt`` or ``unknown``.
-    """
-    if n_probabilities < n_union:
-        return "union-rebuilt", (
-            f"the union holds {n_union} features but the stage verified only "
-            f"{n_probabilities}: the union at this path was re-materialised after the "
-            "verifier ran, so feature order no longer matches the probability keys and "
-            "the index join is invalid"
-        )
-    if n_sweep is None:
-        return "unknown", "no committed sweep records a (vote_t 1, prob_t 0.0) row"
-    if n_sweep == n_union == n_probabilities:
-        return "same-vintage", "sweep, union and probabilities agree on the universe size"
-    if n_sweep < n_union == n_probabilities:
-        return "probabilities-grew", (
-            f"the sweep saw {n_sweep} of the {n_union} candidates now verified: the "
-            "probabilities were completed after the sweep ran (Obs 461 class). The index "
-            "join stays sound; the sweep is stale"
-        )
-    return "unknown", (f"unexpected shape: sweep {n_sweep}, union {n_union}, "
-                       f"probabilities {n_probabilities}")
 
 
 def survey() -> dict[str, Any]:

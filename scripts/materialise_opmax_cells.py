@@ -170,6 +170,78 @@ def era2_tile_allowlist() -> set[str]:
 
 
 # ---------------------------------------------------------------------------
+# the vintage guard
+# ---------------------------------------------------------------------------
+
+
+def sweep_universe(sweep_rel: str | None) -> int | None:
+    """The candidate count a committed 2-D sweep saw.
+
+    A sweep's ``(vote_t 1, prob_t 0.0)`` cell keeps every candidate, so its
+    ``n`` IS the universe the sweep ran over — the cheapest available witness
+    of the vintage the stage's inputs had when it was swept.
+
+    Args:
+        sweep_rel: Repository-relative ``sweep_2d.json``, or ``None``.
+
+    Returns:
+        The universe size, or ``None`` when there is no sweep or no such row.
+    """
+    if not sweep_rel or not (REPO_ROOT / sweep_rel).is_file():
+        return None
+    for row in _load(sweep_rel):
+        if row.get("buffer_m", 20) == 20 and row.get("vote_t") == 1 \
+                and float(row.get("prob_t", -1)) == 0.0:
+            return int(row["n"])
+    return None
+
+
+def classify_vintage(n_union: int, n_probabilities: int,
+                     n_sweep: int | None) -> tuple[str, str]:
+    """Classify a cell's index join by its three universe sizes.
+
+    The join union feature *i* <-> results key ``candidate_{i:05d}`` is only
+    meaningful while the union still holds the features, in the order, the
+    verifier cropped. Two ways it stops being so:
+
+    ``probabilities-grew``
+        ``n_sweep < n_union == n_probabilities``. The probabilities were
+        completed after the sweep ran (Obs 461). The join stays SOUND; only
+        the sweep is stale.
+    ``union-rebuilt``
+        ``n_probabilities < n_union``. The union file was re-materialised
+        after the verifier ran, so its feature order no longer matches the
+        keys and the join is INVALID — any count it produces is noise.
+
+    Args:
+        n_union: Features in the union GeoJSON as committed today.
+        n_probabilities: Keys in the verifier stage's ``probabilities.json``.
+        n_sweep: The sweep's own universe size, or ``None``.
+
+    Returns:
+        ``(verdict, explanation)``; ``verdict`` is ``same-vintage``,
+        ``probabilities-grew``, ``union-rebuilt`` or ``unknown``.
+    """
+    if n_probabilities < n_union:
+        return "union-rebuilt", (
+            f"the union holds {n_union} features but the stage verified only "
+            f"{n_probabilities}: the union at this path was re-materialised after the "
+            "verifier ran, so feature order no longer matches the probability keys and "
+            "the index join is invalid")
+    if n_sweep is None:
+        return "unknown", "no committed sweep records a (vote_t 1, prob_t 0.0) row"
+    if n_sweep == n_union == n_probabilities:
+        return "same-vintage", "sweep, union and probabilities agree on the universe size"
+    if n_sweep < n_union == n_probabilities:
+        return "probabilities-grew", (
+            f"the sweep saw {n_sweep} of the {n_union} candidates now verified: the "
+            "probabilities were completed after the sweep ran (Obs 461 class). The index "
+            "join stays sound; the sweep is stale")
+    return "unknown", (f"unexpected shape: sweep {n_sweep}, union {n_union}, "
+                       f"probabilities {n_probabilities}")
+
+
+# ---------------------------------------------------------------------------
 # the filter
 # ---------------------------------------------------------------------------
 
@@ -350,13 +422,30 @@ def build_rows() -> list[dict[str, Any]]:
         vote_t = int(member["vote_threshold"])
         prob_t = float(member["prob_threshold"])
         stage = member["stage_id"]
+        vintage: dict[str, Any] | None = None
         if label in pv:
             entry = pv[label]
             inputs = {"union": entry["consensus_path"],
                       "probabilities": entry["probabilities_path"],
                       "sweep": entry.get("sweep_path")}
-            features, stats = filter_pv_union(entry["consensus_path"], entry["probabilities_path"],
-                                              vote_t, prob_t, stage)
+            # Vintage guard (2026-09-11): the index join is only meaningful
+            # while the union still holds what the verifier cropped. Classify
+            # BEFORE filtering, and refuse to publish a count for a rebuilt
+            # union — a soft-failing join there returns a plausible number that
+            # is not an operating point (pv-high-text-t0.0-n3: 410 vs 403).
+            n_union = len(_load(entry["consensus_path"]).get("features", []))
+            n_prob = len(_load(entry["probabilities_path"]).get("results", {}))
+            n_sweep = sweep_universe(entry.get("sweep_path"))
+            verdict, why = classify_vintage(n_union, n_prob, n_sweep)
+            vintage = {"verdict": verdict, "why": why, "n_union": n_union,
+                       "n_probabilities": n_prob, "n_sweep": n_sweep}
+            if verdict == "union-rebuilt":
+                features, stats = [], {"n_union": n_union, "n_probabilities": n_prob,
+                                       "n_kept": None, "n_missing_probability": None}
+            else:
+                features, stats = filter_pv_union(entry["consensus_path"],
+                                                  entry["probabilities_path"],
+                                                  vote_t, prob_t, stage)
             pool_shape = "pv-consensus-union"
         elif label in s78:
             cell = s78[label]
@@ -386,6 +475,7 @@ def build_rows() -> list[dict[str, Any]]:
             "n_registry": member.get("registry_n"),
             "n_archived": archived_n,
             "registry_vs_archived": member.get("registry_vs_archived"),
+            "vintage": vintage,
             "matches_registry": member.get("registry_n") is None or stats["n_kept"] == member["registry_n"],
             "matches_archived": archived_n is not None and stats["n_kept"] == archived_n,
             "re_materialise": _is_resolved_target(member),
@@ -469,18 +559,32 @@ def main(argv: list[str] | None = None) -> int:
     for r in sorted(targets, key=lambda r: r["label"]):
         ok = r["matches_registry"]
         gate_a_fail += not ok
-        print(f"  {'ok  ' if ok else 'FAIL'} {r['label']:<26} computed {r['n_computed']:<5} "
-              f"registry {str(r['n_registry']):<5} archived {str(r['n_archived']):<5} "
-              f"(archived -> computed {r['n_computed'] - (r['n_archived'] or 0):+d})")
+        moved = (f"(archived -> computed {r['n_computed'] - (r['n_archived'] or 0):+d})"
+                 if r["n_computed"] is not None
+                 else f"(no count: {(r.get('vintage') or {}).get('verdict')})")
+        print(f"  {'ok  ' if ok else 'FAIL'} {r['label']:<26} computed {str(r['n_computed']):<5} "
+              f"registry {str(r['n_registry']):<5} archived {str(r['n_archived']):<5} {moved}")
+
+    print("\n-- Vintage guard: is the union still the set the verifier cropped? --")
+    unrebuilt = [r for r in rows if (r.get("vintage") or {}).get("verdict") == "union-rebuilt"]
+    grew = [r for r in rows if (r.get("vintage") or {}).get("verdict") == "probabilities-grew"]
+    for r in sorted(unrebuilt + grew, key=lambda r: r["label"]):
+        v = r["vintage"]
+        print(f"  {v['verdict']:<18} {r['label']:<26} union {v['n_union']:<6}"
+              f"probs {v['n_probabilities']:<6}sweep {str(v['n_sweep']):<6}")
+    print(f"  {len(unrebuilt)} union-rebuilt (join invalid, no count published), "
+          f"{len(grew)} probabilities-grew (join sound, sweep stale)")
 
     print("\n-- Check: every other row (rewritten by nobody; a mismatch is a finding) --")
-    mismatches = [r for r in others if not r["matches_archived"]]
-    for r in sorted(others, key=lambda r: r["label"]):
+    checkable = [r for r in others if r["n_computed"] is not None]
+    mismatches = [r for r in checkable if not r["matches_archived"]]
+    for r in sorted(checkable, key=lambda r: r["label"]):
         if r["matches_archived"]:
             continue
         print(f"  MISMATCH {r['label']:<26} on_board={r['on_board']} computed {r['n_computed']:<5} "
               f"registry {str(r['n_registry']):<5} archived {str(r['n_archived']):<5}")
-    print(f"  {len(others) - len(mismatches)}/{len(others)} reproduce their archived file exactly")
+    print(f"  {len(checkable) - len(mismatches)}/{len(checkable)} reproduce their archived file "
+          f"exactly ({len(others) - len(checkable)} not checkable: the union was rebuilt)")
 
     report = {
         "board_id": Path(BOARD_DIR).name,
@@ -491,6 +595,8 @@ def main(argv: list[str] | None = None) -> int:
         "gate_a_passed": gate_a_fail == 0,
         "n_other_rows": len(others),
         "n_other_mismatches": len(mismatches),
+        "n_union_rebuilt": len(unrebuilt),
+        "n_probabilities_grew": len(grew),
         "written": bool(args.write),
         "rows": [{k: v for k, v in r.items() if k != "_features"} for r in rows],
     }

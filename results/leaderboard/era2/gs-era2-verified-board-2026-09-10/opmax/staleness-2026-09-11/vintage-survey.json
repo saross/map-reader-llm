@@ -1,0 +1,1064 @@
+{
+ "checked_at_utc": "2026-09-10T23:16:03+00:00",
+ "registry": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv_registry.json",
+ "n_cells": 30,
+ "counts": {
+  "union-rebuilt": 1,
+  "same-vintage": 24,
+  "probabilities-grew": 4,
+  "manifest-mode": 1
+ },
+ "cells": [
+  {
+   "id": "pv-high-text-t0.0-n3",
+   "K": 3,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 3,
+    "prob_t": 0.15,
+    "f1": 0.8234,
+    "p": 0.8561,
+    "r": 0.7931,
+    "n": 403
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3/sweep_2d.json",
+   "n_union": 1319,
+   "n_probabilities": 1256,
+   "n_sweep": 1256,
+   "verdict": "union-rebuilt",
+   "why": "the union holds 1319 features but the stage verified only 1256: the union at this path was re-materialised after the verifier ran, so feature order no longer matches the probability keys and the index join is invalid",
+   "union_last_commit": {
+    "commit": "77bb342b4",
+    "date": "2026-07-30",
+    "subject": "data(recovery): final consensus + re-eval after deep sweeps (both live cells)"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-high-text-t0.3-n10",
+   "K": 10,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 8,
+    "prob_t": 0.15,
+    "f1": 0.8722,
+    "p": 0.908,
+    "r": 0.8391,
+    "n": 402
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/verified-v1-n10/sweep_2d.json",
+   "n_union": 4313,
+   "n_probabilities": 4313,
+   "n_sweep": 4313,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-high-text-t0.3-n5",
+   "K": 5,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 4,
+    "prob_t": 0.2,
+    "f1": 0.8873,
+    "p": 0.9167,
+    "r": 0.8598,
+    "n": 408
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/verified-v1-n5/sweep_2d.json",
+   "n_union": 2954,
+   "n_probabilities": 2954,
+   "n_sweep": 2954,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-high-text-t0.7-n10",
+   "K": 10,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 8,
+    "prob_t": 0.2,
+    "f1": 0.8744,
+    "p": 0.9416,
+    "r": 0.8161,
+    "n": 377
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/verified-v1-n10/sweep_2d.json",
+   "n_union": 5866,
+   "n_probabilities": 5866,
+   "n_sweep": 5866,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-high-text-t0.7-n5",
+   "K": 5,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 4,
+    "prob_t": 0.15,
+    "f1": 0.8634,
+    "p": 0.9107,
+    "r": 0.8207,
+    "n": 392
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/verified-v1-n5/sweep_2d.json",
+   "n_union": 3736,
+   "n_probabilities": 3736,
+   "n_sweep": 3736,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-high-text-t1.0-n10",
+   "K": 10,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 5,
+    "prob_t": 0.2,
+    "f1": 0.8804,
+    "p": 0.8897,
+    "r": 0.8713,
+    "n": 426
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/verified-v1-n10/sweep_2d.json",
+   "n_union": 5920,
+   "n_probabilities": 5920,
+   "n_sweep": 5920,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-high-text-t1.0-n5",
+   "K": 5,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 3,
+    "prob_t": 0.2,
+    "f1": 0.8688,
+    "p": 0.8779,
+    "r": 0.8598,
+    "n": 426
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/verified-v1-n5/sweep_2d.json",
+   "n_union": 3760,
+   "n_probabilities": 3760,
+   "n_sweep": 3760,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-min-text-t0.0-n3",
+   "K": 3,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 2,
+    "prob_t": 0.2,
+    "f1": 0.8623,
+    "p": 0.9084,
+    "r": 0.8207,
+    "n": 393
+   },
+   "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/verified-v1-n3/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/verified-v1-n3/sweep_2d.json",
+   "n_union": 1087,
+   "n_probabilities": 1087,
+   "n_sweep": 1087,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-min-text-t0.3-n10",
+   "K": 10,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 3,
+    "prob_t": 0.15,
+    "f1": 0.873,
+    "p": 0.877,
+    "r": 0.869,
+    "n": 431
+   },
+   "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/verified-v1-n10/sweep_2d.json",
+   "n_union": 1575,
+   "n_probabilities": 1575,
+   "n_sweep": 1575,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-min-text-t0.3-n5",
+   "K": 5,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 3,
+    "prob_t": 0.15,
+    "f1": 0.8778,
+    "p": 0.9069,
+    "r": 0.8506,
+    "n": 408
+   },
+   "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/verified-v1-n5/sweep_2d.json",
+   "n_union": 1388,
+   "n_probabilities": 1388,
+   "n_sweep": 1388,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-min-text-t0.7-n10",
+   "K": 10,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 6,
+    "prob_t": 0.15,
+    "f1": 0.8726,
+    "p": 0.9144,
+    "r": 0.8345,
+    "n": 397
+   },
+   "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/verified-v1-n10/sweep_2d.json",
+   "n_union": 1953,
+   "n_probabilities": 1953,
+   "n_sweep": 1953,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-min-text-t0.7-n5",
+   "K": 5,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 4,
+    "prob_t": 0.2,
+    "f1": 0.8739,
+    "p": 0.9346,
+    "r": 0.8207,
+    "n": 382
+   },
+   "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/verified-v1-n5/sweep_2d.json",
+   "n_union": 1593,
+   "n_probabilities": 1593,
+   "n_sweep": 1593,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-min-text-t1.0-n10",
+   "K": 10,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 5,
+    "prob_t": 0.15,
+    "f1": 0.8781,
+    "p": 0.9049,
+    "r": 0.8529,
+    "n": 410
+   },
+   "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n10/sweep_2d.json",
+   "n_union": 2472,
+   "n_probabilities": 2472,
+   "n_sweep": 2472,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-min-text-t1.0-n5",
+   "K": 5,
+   "track": "text",
+   "registered_point": {
+    "vote_t": 3,
+    "prob_t": 0.15,
+    "f1": 0.8714,
+    "p": 0.9037,
+    "r": 0.8414,
+    "n": 405
+   },
+   "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n5/sweep_2d.json",
+   "n_union": 1926,
+   "n_probabilities": 1926,
+   "n_sweep": 1926,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   },
+   "probabilities_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   },
+   "sweep_last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  {
+   "id": "pv-high-image-t0.3-n10",
+   "K": 10,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 5,
+    "prob_t": 0.15,
+    "f1": 0.7705,
+    "p": 0.7731,
+    "r": 0.7678,
+    "n": 432
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n10/sweep_2d.json",
+   "n_union": 3412,
+   "n_probabilities": 3412,
+   "n_sweep": 3412,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-high-image-t0.3-n5",
+   "K": 5,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 4,
+    "prob_t": 0.15,
+    "f1": 0.746,
+    "p": 0.8091,
+    "r": 0.692,
+    "n": 372
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/sweep_2d.json",
+   "n_union": 2190,
+   "n_probabilities": 2190,
+   "n_sweep": 2179,
+   "verdict": "probabilities-grew",
+   "why": "the sweep saw 2179 of the 2190 candidates now verified: the probabilities were completed after the sweep ran (Obs 461 class). The index join stays sound; the sweep is stale",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "c6b5e6b10",
+    "date": "2026-05-06",
+    "subject": "data(p3a-recovery): cleanup Tier-2 cells (6 cells, 474 cands)"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-high-image-t0.7-n10",
+   "K": 10,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 7,
+    "prob_t": 0.2,
+    "f1": 0.7765,
+    "p": 0.8736,
+    "r": 0.6989,
+    "n": 348
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n10/sweep_2d.json",
+   "n_union": 3211,
+   "n_probabilities": 3211,
+   "n_sweep": 3211,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-high-image-t0.7-n5",
+   "K": 5,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 3,
+    "prob_t": 0.15,
+    "f1": 0.7868,
+    "p": 0.8068,
+    "r": 0.7678,
+    "n": 414
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/sweep_2d.json",
+   "n_union": 2017,
+   "n_probabilities": 2017,
+   "n_sweep": 2016,
+   "verdict": "probabilities-grew",
+   "why": "the sweep saw 2016 of the 2017 candidates now verified: the probabilities were completed after the sweep ran (Obs 461 class). The index join stays sound; the sweep is stale",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "c6b5e6b10",
+    "date": "2026-05-06",
+    "subject": "data(p3a-recovery): cleanup Tier-2 cells (6 cells, 474 cands)"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-high-image-t1.0-n10",
+   "K": 10,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 5,
+    "prob_t": 0.2,
+    "f1": 0.7633,
+    "p": 0.7826,
+    "r": 0.7448,
+    "n": 414
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n10/sweep_2d.json",
+   "n_union": 4638,
+   "n_probabilities": 4638,
+   "n_sweep": 4638,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-high-image-t1.0-n5",
+   "K": 5,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 3,
+    "prob_t": 0.15,
+    "f1": 0.7337,
+    "p": 0.7561,
+    "r": 0.7126,
+    "n": 410
+   },
+   "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/sweep_2d.json",
+   "n_union": 2840,
+   "n_probabilities": 2840,
+   "n_sweep": 2839,
+   "verdict": "probabilities-grew",
+   "why": "the sweep saw 2839 of the 2840 candidates now verified: the probabilities were completed after the sweep ran (Obs 461 class). The index join stays sound; the sweep is stale",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "c6b5e6b10",
+    "date": "2026-05-06",
+    "subject": "data(p3a-recovery): cleanup Tier-2 cells (6 cells, 474 cands)"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-min-image-t0.3-n10",
+   "K": 10,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 7,
+    "prob_t": 0.15,
+    "f1": 0.7819,
+    "p": 0.8119,
+    "r": 0.754,
+    "n": 404
+   },
+   "union": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n10/sweep_2d.json",
+   "n_union": 1114,
+   "n_probabilities": 1114,
+   "n_sweep": 1114,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-min-image-t0.3-n5",
+   "K": 5,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 4,
+    "prob_t": 0.15,
+    "f1": 0.7767,
+    "p": 0.8034,
+    "r": 0.7517,
+    "n": 407
+   },
+   "union": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n5/sweep_2d.json",
+   "n_union": 987,
+   "n_probabilities": 987,
+   "n_sweep": 987,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-min-image-t0.7-n10",
+   "K": 10,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 6,
+    "prob_t": 0.15,
+    "f1": 0.7881,
+    "p": 0.8173,
+    "r": 0.7609,
+    "n": 405
+   },
+   "union": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t0.7/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/image-n5/image-t0.7/verified-v1-n10/sweep_2d.json",
+   "n_union": 1450,
+   "n_probabilities": 1450,
+   "n_sweep": 1450,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-min-image-t0.7-n5",
+   "K": 5,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 3,
+    "prob_t": 0.15,
+    "f1": 0.7734,
+    "p": 0.7862,
+    "r": 0.7609,
+    "n": 421
+   },
+   "union": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t0.7/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/image-n5/image-t0.7/verified-v1-n5/sweep_2d.json",
+   "n_union": 1123,
+   "n_probabilities": 1123,
+   "n_sweep": 1123,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-min-image-t1.0-n10",
+   "K": 10,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 6,
+    "prob_t": 0.2,
+    "f1": 0.7428,
+    "p": 0.7783,
+    "r": 0.7103,
+    "n": 397
+   },
+   "union": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n10/sweep_2d.json",
+   "n_union": 1975,
+   "n_probabilities": 1975,
+   "n_sweep": 1975,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-min-image-t1.0-n5",
+   "K": 5,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 4,
+    "prob_t": 0.15,
+    "f1": 0.7384,
+    "p": 0.8104,
+    "r": 0.6782,
+    "n": 364
+   },
+   "union": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n5/sweep_2d.json",
+   "n_union": 1443,
+   "n_probabilities": 1443,
+   "n_sweep": 1443,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   },
+   "probabilities_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-scale4-optimal-n10",
+   "K": 10,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 5,
+    "prob_t": 0.15,
+    "f1": 0.7683,
+    "p": 0.7908,
+    "r": 0.7471,
+    "n": 411
+   },
+   "union": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/sweep_2d.json",
+   "n_union": 3601,
+   "n_probabilities": 3601,
+   "n_sweep": 3600,
+   "verdict": "probabilities-grew",
+   "why": "the sweep saw 3600 of the 3601 candidates now verified: the probabilities were completed after the sweep ran (Obs 461 class). The index join stays sound; the sweep is stale",
+   "union_last_commit": {
+    "commit": "c3e8e0701",
+    "date": "2026-04-17",
+    "subject": "data(scale-4): optimal library run at 487 tiles (K=10, HIGH T=0.7)"
+   },
+   "probabilities_last_commit": {
+    "commit": "c6b5e6b10",
+    "date": "2026-05-06",
+    "subject": "data(p3a-recovery): cleanup Tier-2 cells (6 cells, 474 cands)"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-scale4-optimal-n5",
+   "K": 5,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 3,
+    "prob_t": 0.15,
+    "f1": 0.7635,
+    "p": 0.799,
+    "r": 0.731,
+    "n": 398
+   },
+   "union": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n5/consensus_t1.geojson",
+   "probabilities": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n5/probabilities.json",
+   "sweep": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n5/sweep_2d.json",
+   "n_union": 2198,
+   "n_probabilities": 2198,
+   "n_sweep": 2198,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "c3e8e0701",
+    "date": "2026-04-17",
+    "subject": "data(scale-4): optimal library run at 487 tiles (K=10, HIGH T=0.7)"
+   },
+   "probabilities_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-n1-image-t0-n3",
+   "K": 3,
+   "track": "image",
+   "registered_point": {
+    "vote_t": 2,
+    "prob_t": 0.15,
+    "f1": 0.7673,
+    "p": 0.7578,
+    "r": 0.777,
+    "n": 446
+   },
+   "union": "outputs/h11/n1-outstanding-384/image-t0/consensus/consensus_t1.geojson",
+   "probabilities": "outputs/h11/n1-outstanding-384/image-t0/verified-v1-n3/probabilities.json",
+   "sweep": "outputs/h11/n1-outstanding-384/image-t0/verified-v1-n3/sweep_2d.json",
+   "n_union": 690,
+   "n_probabilities": 690,
+   "n_sweep": 690,
+   "verdict": "same-vintage",
+   "why": "sweep, union and probabilities agree on the universe size",
+   "union_last_commit": {
+    "commit": "1f443fd69",
+    "date": "2026-04-16",
+    "subject": "data(consensus): greedy consensus sweeps for 78 conditions"
+   },
+   "probabilities_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   },
+   "sweep_last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  {
+   "id": "pv-flash-high-text-16of30",
+   "K": 30,
+   "track": "text",
+   "verdict": "manifest-mode",
+   "why": "the cell's universe is a candidate manifest keyed by candidate_id; there is no index join to go stale"
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 # The GS Era-2 verified board on one frame — `gs-era2-verified-board-2026-09-10`
 
-> **Last revised**: 2026-09-10 (later still: nine `-opmax` cells re-materialised from their registered stage and the board re-tiered — Tier 1, the tie set and the Hsu admissible set all unchanged; later: the symmetry fix — the archived Era-2 PV board's 40 sweep-optimal Gemini 3 cells joined as `-opmax` rows, 39 → 79 cells, re-tiered, MCB recomputed last; earlier the same day: original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-11 (off-board `pv-high-text-t0.0-n3` re-examined: the union under it was rebuilt, the sweep was never stale, the argmax holds on both vintages — nothing on this board changed; prior: 2026-09-10 later still: nine `-opmax` cells re-materialised from their registered stage and the board re-tiered — Tier 1, the tie set and the Hsu admissible set all unchanged; later: the symmetry fix — the archived Era-2 PV board's 40 sweep-optimal Gemini 3 cells joined as `-opmax` rows, 39 → 79 cells, re-tiered, MCB recomputed last; earlier the same day: original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
 
 79 cells; 1845/3081 pairs significant; 7 tiers; tie set 5; MCB admissible 28.
 
@@ -89,6 +89,39 @@
 Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the Era-2-frame reproduction of the archived board's score, or — for the nine re-materialised on 2026-09-10 — of the materialisation registry's registered point). Full pairwise table: `tiering_20m.json`; gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.
 
 ## Changelog
+
+### 2026-09-11 — Off-board `pv-high-text-t0.0-n3`: a rebuilt union, not a stale sweep; board untouched
+
+**Nothing on this board changed.** The row is off-board (K = 3 < 5), so no
+cell, rank, tier, tie set or MCB member moved; the 79-cell table above stands
+as published.
+
+The 2026-09-10 entry below reported one `-opmax` row whose filter gave 410
+detections against a registered 403, and classed it as a stale sweep (Obs 461).
+It is not. The union at its `consensus_path` was re-materialised on 2026-07-30
+from 1,256 features to 1,319 **in a different order** — only 994 of the 1,256
+original positions still hold the same point — so joining union index *i* to
+probability key `candidate_{i:05d}` pairs 262 probabilities with the wrong
+geometry. The 410 is a cross-vintage join artefact.
+
+The sweep itself reproduces exactly: rebuilt from the union blob at `09fe46a7f`
+and swept against the stage's own probabilities with the stage's own tool, it
+matches the committed `sweep_2d.json` in all 240 rows, at the registered
+(vote_t 3, prob_t 0.15), n 403, F1@20 0.8234. The argmax also holds on the
+current vintage — the complete 2026-09-08 re-verification of the rebuilt union
+gives (3, 0.15) at n 423, Era-2-frame F1@20 0.8508, tile-MCC 0.7857 (against
+0.8234 / 0.7750). The row was **not** repointed: on its own vintage it is
+correct, and repointing would change it from the archived board's April cell to
+a September re-verification. That call is the PI's; both sweeps, the comparison
+cell and its score are at `opmax/staleness-2026-09-11/`.
+
+A vintage guard now runs before the filter
+(`scripts/materialise_opmax_cells.py`, `check.json` field `vintage`;
+`scripts/check_pv_sweep_vintage.py survey`): over the 30 registry cells, 24
+`same-vintage`, 4 `probabilities-grew` (join sound, sweep stale — the true
+Obs 461 class, all four already re-swept 2026-09-08), 1 `union-rebuilt` (this
+cell, join invalid, no count published), 1 `manifest-mode`. `opmax/gates.json`
+re-run: G2 0 / G3 0 / G4 40/40 PASS, unchanged.
 
 ### 2026-09-10 (later still) — Nine `-opmax` cells re-materialised; re-tiered; Tier 1 and the admissible set unchanged
 

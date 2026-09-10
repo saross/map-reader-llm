@@ -1,0 +1,39 @@
+{
+ "cell": "pv-high-text-t0.0-n3",
+ "written_at_utc": "2026-09-10T23:18:14+00:00",
+ "written_by": "scripts/check_pv_sweep_vintage.py materialise",
+ "why": "current-vintage comparison cell (S153, 2026-09-11): the union at consensus_path was re-materialised 2026-07-30, so the registered April stage cannot be joined to it; this is the same operating point applied to the union as committed today against the complete 2026-09-08 re-verification of that union. NOT the registered row: kept as the comparison the PI ruling asked for.",
+ "operating_point": {
+  "vote_t": 3,
+  "prob_t": 0.15,
+  "filter": "vote_count >= vote_t AND mound_probability >= prob_t"
+ },
+ "stage_id": "flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08",
+ "inputs": {
+  "union": {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t1.geojson",
+   "git_blob_sha1": "5d85b7c8aa602003babc07b48807b9570e98661d",
+   "last_commit": {
+    "commit": "77bb342b4",
+    "date": "2026-07-30",
+    "subject": "data(recovery): final consensus + re-eval after deep sweeps (both live cells)"
+   }
+  },
+  "probabilities": {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3-recovery-2026-09-08/probabilities.json",
+   "git_blob_sha1": "b40fc6504fe29bac4dd088545310897f8a55150c",
+   "last_commit": {
+    "commit": "43516df9a",
+    "date": "2026-09-08",
+    "subject": "outputs(verifier): three stages re-run on the recovered candidate sets (sapphire, US$8.73 at flex)"
+   }
+  }
+ },
+ "counts": {
+  "n_union": 1319,
+  "n_probabilities": 1319,
+  "n_kept": 423,
+  "n_missing_probability": 0
+ },
+ "output_crs": "EPSG:4326"
+}

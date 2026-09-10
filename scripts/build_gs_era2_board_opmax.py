@@ -55,6 +55,14 @@ What it does (subcommands, in order)
     blob; the surviving 373-feature file scores 0.7475), whose expected value
     is the bisect's; G3 every board evaluation names the board frame; G4 the
     count; G6 the per-cell frame delta. Writes ``<board>/opmax/gates.json``.
+``notes [--write]``
+    Narrow amendment path (2026-09-11): append the vintage sentence to any
+    registered ``-opmax`` row whose membership entry carries
+    ``vintage.verdict`` = ``union-rebuilt`` — the union at its
+    ``consensus_path`` was re-materialised after its verifier ran, so the
+    index join that defines the cell cannot be re-run against today's file.
+    Touches ``_note`` and nothing else: no new rows, no waivers, and no write
+    to the board's analysis row, which is signed. Idempotent.
 ``register --write``
     Idempotently repoint any already-registered row whose member is now
     ``resolved`` at its re-materialised file, dropping the superseded
@@ -93,6 +101,10 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
+from materialise_opmax_cells import (  # noqa: E402
+    classify_vintage,
+    sweep_universe,
+)
 from build_gs_era2_board import (  # noqa: E402
     BOARD_DIR,
     BOARD_ID,
@@ -241,6 +253,22 @@ def derive_membership() -> dict[str, Any]:
                 f"from stage {row['stage_id']} at (vote_t {row['vote_threshold']}, prob_t "
                 f"{row['prob_threshold']}) to n {reg_n}, the registry's count, expected F1@20 {reg_f1} "
                 f"(scripts/materialise_opmax_cells.py; superseded file kept at archived_detections)")
+        # Vintage guard (2026-09-11): record whether the union at this cell's
+        # consensus_path is still the set its verifier cropped. A rebuilt union
+        # makes the index join — and so any count derived from it today —
+        # meaningless, and the row must be read on its own vintage.
+        if label in pv and "consensus_path" in pv[label]:
+            e = pv[label]
+            n_union = len(_load(e["consensus_path"]).get("features", []))
+            n_prob = len(_load(e["probabilities_path"]).get("results", {}))
+            verdict, why = classify_vintage(n_union, n_prob,
+                                            sweep_universe(e.get("sweep_path")))
+            row["vintage"] = {"verdict": verdict, "why": why, "n_union": n_union,
+                              "n_probabilities": n_prob,
+                              "n_sweep": sweep_universe(e.get("sweep_path")),
+                              "union": e["consensus_path"],
+                              "probabilities": e["probabilities_path"],
+                              "sweep": e.get("sweep_path")}
         row["condition_id"] = f"{row['run_id']}::{label}{SUFFIX}"
         row["on_board"] = row["k"] >= MIN_K
         if not row["on_board"]:
@@ -427,6 +455,90 @@ def _resolve_existing_row(row: dict[str, Any], m: dict[str, Any]) -> int:
     return 1
 
 
+#: Marker that makes the vintage sentence idempotent in a row's ``_note``.
+VINTAGE_MARKER = " VINTAGE 2026-09-11:"
+#: The comparison built for the one ``union-rebuilt`` cell (S153, 2026-09-11).
+VINTAGE_COMPARISON = f"{OPMAX_DIR}/staleness-2026-09-11"
+
+
+def _vintage_sentence(m: dict[str, Any]) -> str | None:
+    """The ``_note`` sentence recording a rebuilt union, or ``None``.
+
+    Only the ``union-rebuilt`` class needs one: the union at the cell's
+    ``consensus_path`` no longer holds the set its verifier cropped, so the
+    index join that defines the cell cannot be re-run against today's file and
+    a reader must not take a count derived from it at face value.
+
+    Args:
+        m: A member row from ``opmax/membership.json``.
+
+    Returns:
+        The sentence to append, or ``None`` when the cell's inputs are still
+        the vintage its verifier saw.
+    """
+    vintage = m.get("vintage") or {}
+    if vintage.get("verdict") != "union-rebuilt":
+        return None
+    return (
+        f"{VINTAGE_MARKER} the proposer union at {vintage['union']} was re-materialised on "
+        f"2026-07-30 (f6116cba0, 77bb342b4) from {vintage['n_probabilities']} features to "
+        f"{vintage['n_union']}, in a different order, so this row's stage probabilities — the "
+        f"{vintage['n_probabilities']} the verifier actually returned — can no longer be joined to "
+        "it by candidate index. An index join against today's file yields a plausible but "
+        "meaningless count; it is not an operating point. THE ROW IS UNCHANGED AND CORRECT ON ITS "
+        "OWN VINTAGE: sweeping the union blob at 09fe46a7f against this stage's own probabilities "
+        f"reproduces the committed {vintage['sweep']} in all 240 rows, its 20 m argmax is the "
+        f"registered (vote_t {m['vote_threshold']}, prob_t {m['prob_threshold']}) at n "
+        f"{m['registry_n']}, and re-applying the registry filter to that blob yields exactly the "
+        f"{m['archived_n']} features this row's detection file holds. For comparison, the same "
+        "operating point applied to the union as committed today, against the complete 2026-09-08 "
+        "re-verification of that union (stage verified-v1-n3-recovery-2026-09-08, 43516df9a), "
+        f"gives a different cell — see {VINTAGE_COMPARISON}/ for both sweeps, the comparison cell "
+        "and its Era-2-frame score. Whether this row should be repointed at that vintage is the "
+        "PI's call: it would change the row from the archived board's cell to a September "
+        "re-verification. No repoint has been made.")
+
+
+def sync_notes(membership: dict[str, Any], write: bool) -> int:
+    """Append the vintage sentence to any registered ``-opmax`` row that needs it.
+
+    Deliberately narrow: it touches ``_note`` on existing condition rows and
+    nothing else — no new rows, no waivers, and above all no write to the
+    board's analysis row, which is signed. Idempotent via
+    :data:`VINTAGE_MARKER`.
+
+    Args:
+        membership: The parsed ``opmax/membership.json``.
+        write: Persist to ``results/run-conditions.json``.
+
+    Returns:
+        The number of rows changed.
+    """
+    rc = _load(RUN_CONDITIONS.relative_to(REPO_ROOT).as_posix())
+    dec = rc["decomposition"]
+    changed = 0
+    for m in membership["members"]:
+        sentence = _vintage_sentence(m)
+        if sentence is None:
+            continue
+        label = m["label"] + SUFFIX
+        run = dec.get(m["run_id"])
+        row = next((c for c in (run or {}).get("conditions", []) if c["label"] == label), None)
+        if row is None:
+            print(f"  {label}: not registered — skipped")
+            continue
+        if VINTAGE_MARKER in str(row.get("_note", "")):
+            continue
+        row["_note"] = str(row.get("_note", "")).rstrip() + sentence
+        changed += 1
+        print(f"  {label}: vintage sentence appended ({m['vintage']['verdict']})")
+    if write and changed:
+        RUN_CONDITIONS.write_text(json.dumps(rc, indent=1, ensure_ascii=False) + "\n",
+                                  encoding="utf-8")
+    print(f"{'wrote' if write else 'would write'} {changed} row note(s)")
+    return changed
+
+
 def register(membership: dict[str, Any], write: bool) -> list[str]:
     rc = _load(RUN_CONDITIONS.relative_to(REPO_ROOT).as_posix())
     ra = _load(RUN_ANALYSES.relative_to(REPO_ROOT).as_posix())
@@ -522,7 +634,7 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    parser.add_argument("command", choices=["membership", "jobs", "gates", "register"])
+    parser.add_argument("command", choices=["membership", "jobs", "gates", "register", "notes"])
     parser.add_argument("--write", action="store_true", help="register: persist to the register files")
     parser.add_argument("--only-resolved", action="store_true",
                         help="jobs: emit only the re-materialised rows' jobs (rescore-commands.sh + "
@@ -554,6 +666,9 @@ def main(argv: list[str] | None = None) -> int:
             if r["status"] != "ok":
                 print("  ", r)
         return 0 if report["passed"] else 1
+    if args.command == "notes":
+        sync_notes(membership, args.write)
+        return 0
     register(membership, args.write)
     return 0
 
