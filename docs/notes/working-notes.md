@@ -33148,3 +33148,180 @@ artefacts" — the longer-timescale sibling of this entry's build-order
 lesson); **Obs 461** (WN-C11, the companion S151 finding from the same
 day's verifier-stage-refresh bookkeeping, discovered and disclosed
 together).
+
+## Observation 463: The GS Era-2 verified board puts the 3.7/3.8 gain in Tier 1 against all 39 incumbents at once — the frame is chosen by rule, not inherited, and G1's marginal failure leaves publication to the PI (Session 151-d, 2026-09-10)
+
+**The finding.** `planning/gs-era2-verified-board-2026-09-08.md` split a
+tiered gold-standard (GS) Era-2 board off the r2 recompute chain
+(PI ruling, S149) with one deliverable: whether the Gemini 3.7 / 3.8
+gain that four prior Obs established pairwise (**Obs 441, 444, 447,
+448**) is a tier move when the new cells sit on the same board as
+every Gemini 3 incumbent at once. Session 151-d built it on the PI's
+frame ruling of 2026-09-09.
+
+**(a) The frame is a parameter, and two candidate frames sharing the
+same 487 carrier tiles are not the same board.** The Era-2 tiling
+(`full_evaluation_bounds.geojson`) and the B tiling (384 px / 50 %,
+1,398 tiles) cover almost the same ground but not identically.
+Intersecting them (`era2_b_intersection_bounds.provenance.json`)
+clips 34 of the 487 carrier tiles (453 stay identical, 0 m
+displacement), taking the area from 1,415.82 km² to **1,402.41 km²**
+— a loss of 13.42 km² that holds **0** of the 569 curator reference
+mounds, so all **435** reference mounds inside the Era-2 frame
+survive. Grid-common (`grid_common_bounds.geojson`, the four-way
+intersection the grid campaign built on 2026-08-18 for the 512 px,
+384 px-12.5 %, 384 px-33 %, and 256 px geometries as well as B;
+`results/grid-2026-08-18/findings.md` line 504) clips 80 of the same
+tiles down to **1,364.47 km²** and **428** reference mounds — it
+drops 7 mounds and ~51 km² of edge that the B tiling itself covered,
+because it also excludes the other three geometries' tiles even
+though none of those geometries' cells are members of this board.
+The PI's ruling (card § 2, 2026-09-09, "the rule that decides it"):
+**a board's frame is the intersection of its members' dispatched
+coverage** — no cell scored on ground its proposer never saw, no
+ground every member saw thrown away. Every member here was dispatched
+on the Era-2 or the B tiling, and the B tiling covers the Era-2 frame
+except a mound-free 13.4 km² strip, so Era-2 ∩ B-union is the frame
+that satisfies the rule; the PI signed option (a) over grid-common
+(b) and the unclipped Era-2 frame (c).
+
+**(b) The result: Tier 1 is five Gemini 3.7 / 3.8 cells, clear of
+every Gemini 3 incumbent.** 39 board cells (each a new `-era2b`
+register row scored on the frame with its own committed recipe),
+tiered by the canonical chain (`scripts/era1_leaderboard_tiering.py`,
+round-robin tile-swap micro-F1 permutation, 10,000 draws, seed 42,
+BH q = 0.05, greedy clique): **375 of 741 pairs significant, 6
+tiers**.
+
+| rank | cell | F1@20 (board frame) | tile-MCC | MCB |
+|---:|---|---:|---:|:---:|
+| 1 | all-3.7 image, swap verifier (`g37-image-k5-verified-swap37-p0.90-k5`) | 0.9233 | 0.8264 | ● |
+| 2 | all-3.7 text, swap verifier (`g37-text-k5-verified-swap37-p0.80-k5`) | 0.9190 | 0.7937 | ● |
+| 3 | 3.7 text, 3.8-verifier swap (`g37-text-k5-verified-swap38-p0.88-k5`) | 0.9182 | 0.8079 | ● |
+| 4 | 3.7 image, carried G3 verifier (`g37-image-k5-verified-carried-p0.10-k5`) | 0.9179 | 0.8133 | ● |
+| 5 | 3.7 text K = 10, carried G3 verifier (`g37-text-k10-verified-carried-p0.10-k10`) | 0.9068 | 0.7675 | ● |
+
+Tier 1 (the greedy-clique tie set) holds exactly these five, all
+Gemini 3.7 / 3.8. **Every Gemini 3 incumbent sits in Tier 2 or
+below** — the strongest, `verifier-robustness::verified-384-16of30-t0-3-n5-opmax`,
+reads 0.8951. Two cells land numerically close to Tier 1's floor but
+outside the greedy clique, in Tier 2: the 3.7 text K = 5 carried-verifier
+cell (0.9066) and the "fourth cell" — Gemini 3 grid-B K = 10 union
+re-verified by the 3.7 verifier (0.9062). Because a sequential greedy
+clique is order-dependent and has produced a spuriously narrow Tier 1
+elsewhere in this study (**erratum E83**), the board reports the Hsu
+minimum-cost-buffer (MCB) admissible set alongside: **11 cells** — the
+five above plus the two just named, the 16of30-opmax incumbent
+(0.8951), the grid-B K = 10 union with the carried verifier (0.8886),
+and two `pv-diag-384` text-consensus cells (0.8902, 0.8835) — all
+still confined to Tiers 1–2.
+
+**(c) The frame deltas (G6).** The 29 incumbents already dispatched
+on the Era-2 tiling are **unchanged to four decimal places** moving
+onto the new frame. The 10 B-geometry cells (the nine new 3.7/3.8/image-B
+cells plus the grid text-B anchor) move **−0.0070 to −0.0078**,
+gaining the 7 mounds and ~38 km² grid-common had clipped from ground
+they actually covered; `n_features` is identical across each cell's
+committed, G2-reproduction, and board evaluation, so the delta is
+edge-effect false positives/negatives on the newly-included ground,
+not a re-detection artefact.
+
+**Why this matters.** Obs 441, 444, 447, and 448 each resolved one
+head-to-head margin — a single 3.7/3.8 cell against a single named
+Gemini 3 anchor. None of them put the new cells on the same
+instrument as the whole prior corpus simultaneously. This board does:
+Tier 1 is a clean line, held by construction (the greedy clique) and
+corroborated by the independent MCB procedure (which only adds cells
+still confined to Tier 2), against 34 other conditions spanning every
+architecture family the project has scored on this frame. The
+campaigns' pairwise tests said the 3.7 stack cleared its named
+anchors; the board says it clears everyone at once.
+
+**Caveats.** Three disclosed deviations and one failed gate bound
+what can be cited from this board. **Post-hoc**: the register row
+(`results/run-analyses.json`, `gs-era2-verified-board-2026-09-10`)
+is marked `"preregistered": "post-hoc"` — the preregistration fixed
+the model family, and this board extends the GS instrument to
+Gemini 3.7/3.8 after the fact (H-refs H1, H2). **Unsigned**: the row
+carries no `manually_verified_at` field; the analysis is not
+PI-signed. **The archived Era-2 PV board is not this board's
+incumbent set** — only 4 of its 44 cells match a registered condition
+by committed F1, because it was built from sweep-optimal
+"pv-materialised" cells (the in-sample optima of erratum E56/E83,
+now retired); this board's 29 incumbents are the register's cells
+under the card's rule. **G1 (regression) FAILED, marginally**:
+rebuilding the archived 44-cell board from its own archived inputs
+with the retired builder reproduces 43 of 44 cells' F1@20 exactly;
+one image PV cell, `pv-high-image-t0.3-n5`, moves **0.7460 → 0.7475**
+under the current evaluator (retired-builder commits `005e6c71` vs
+`be01df377`); one of 946 pairs crosses BH q = 0.05 (adjusted p 0.046
+→ 0.059); Tiers 5–6 (the bottom of the image block) re-cut
+6 + 4 → 9 + 1 cells, Tiers 1–4 identical member-for-member
+(`g1-regression.json`). This is instrument drift in a **retired**
+builder scoring an **archived** input, not a defect in the canonical
+chain that scored this board — but the card's own rule (§ 6:
+"nothing published unless all gates pass") makes the publication
+call the PI's, and it had not been made as of this Obs.
+
+**Findable later**: gs-era2-verified-board-2026-09-10, era2-b-487
+frame, Era-2 ∩ B-union, a board's frame is the intersection of its
+members' dispatched coverage, frame is a parameter not inherited, 34
+tiles clipped 453 identical, 1402.41 km² vs 1415.82 km² vs 1364.47
+km², 435 vs 428 reference mounds, grid-common strict subset, Tier 1
+five Gemini 3.7/3.8 cells, 375 of 741 pairs significant, 6 tiers,
+greedy clique tie set 5, Hsu MCB admissible 11, erratum E83
+sequential-tiering sole-leader trap, G1 regression FAIL marginal,
+pv-high-image-t0.3-n5 0.7460 to 0.7475, G6 frame delta −0.0070 to
+−0.0078, 29 incumbents unchanged four decimals, -era2b register rows,
+post-hoc H1 H2 unsigned analysis row, archived board not
+register-backed, sweep-optimal pv-materialised cells retired,
+scripts/era1_leaderboard_tiering.py, selection_aware_intervals.py.
+
+Sources: `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`
+(read 2026-09-10: the 39-row board table — rank, tier, MCB marker,
+board-frame and committed F1@20, Δ frame, tile-MCC — and the "39
+cells; 375/741 pairs significant; 6 tiers; tie set 5; MCB admissible
+11" summary line); `tiering_20m.json` (read 2026-09-10: n_pairs 741,
+n_significant 375, n_tiers 6, the tie_set and mcb_admissible_hsu id
+lists, git_commit `77cc55617`); `provenance.json` (read 2026-09-10:
+frame_id era2-b-487; the G1 gate block — archived/rebuilt commits
+`005e6c71`/`be01df377`, max_abs_delta_f1_20 0.0015, tier_sizes_archived
+[8,11,3,12,6,4] vs tier_sizes_rebuilt [8,11,3,12,9,1], verdict "FAIL
+(marginal, localised...)"; the G2/G3/G4/G6 block, all passed, 39/39);
+`gates.json` and `frame-deltas.md` (read 2026-09-10: the per-cell
+`delta_board_minus_committed` values, confirming 29 cells at exactly
+0.0 and 10 cells from −0.0070 to −0.0078, n_features identical across
+committed/G2/board for every cell); `g1-regression.json` (read
+2026-09-10: the `pv-high-image-t0.3-n5` 0.7460→0.7475 move and the one
+pair-significance flip, `pair_significance_flipped` block); `membership.txt`
+(read 2026-09-10: the 39-member list with K and committed frame per
+cell, and the 77-exclusion breakdown); `inputs/vectors/bounds/384/era2_b_intersection_bounds.provenance.json`
+(read 2026-09-10: construction note, n_clipped 34, n_identical 453,
+area_km2_era2_union 1415.82, area_km2_frame_union 1402.41,
+area_km2_era2_outside_b 13.42, reference_in_era2_frame 435, ruling
+"PI, 2026-09-09: frame option (a)"); `planning/gs-era2-verified-board-2026-09-08.md`
+(read 2026-09-10: § 2's frame rule and three-option table with areas
+and mound counts, § 3 membership, § 6 gates G1–G6, § 9 the PI's
+sign-off quote, and the 2026-09-10 changelog's three disclosed
+deviations and the G1 finding verbatim); `results/grid-2026-08-18/findings.md`
+line 504 (read 2026-09-10: the 1,364.47 km² / 428-reference-mound
+grid-common figure); `planning/paper-writeup-continuity.md` "S151-d"
+paragraph (read 2026-09-10: the one-paragraph summary corroborating
+the tier and gate figures); `results/run-analyses.json` (read
+2026-09-10: the `gs-era2-verified-board-2026-09-10` row —
+`"preregistered": "post-hoc"`, `hypothesis_refs` H2/H1, the absence of
+a `manually_verified_at` field, and the outcome string);
+`docs/methodology/preregistration/protocol-errata.md` E83 (read
+2026-09-10: the order-dependent sequential-tiering defect and the Hsu
+MCB replacement this board's dual reporting implements).
+Related: **Obs 441** (the all-3.7 verifier-seat text gain, +0.0304
+at p = 0.0105 against a single anchor — the comparator this board
+re-tests against 34 more conditions at once); **Obs 444** (the
+proposer × verifier 2×2 that first located the family gain in the
+verifier seat); **Obs 447** (the modality gap closing at 3.7, the
+image-track gain ≈ 5× the text-track gain — both tracks' cells are
+this board's Tier 1); **Obs 448** (Gemini 3.8 ties 3.7 in the
+verifier seat; the 3.8-verifier cell is this board's rank 3, also
+Tier 1); **Obs 435** (the stride/geometry plateau on grid-common —
+the fallback frame this Obs's § (a) explains why the board did not
+adopt as primary).
