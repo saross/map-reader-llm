@@ -8210,3 +8210,46 @@ and h12-v2 run 3's recovered tile was lost between its meta and its
 GeoJSON. And the first spatial test's zero for both arms would have
 "confirmed" the missing-tiles reading had the control not been run: a
 test without a positive control is not a test.
+
+## Entry — 2026-09-10 (Session 151, map-reader-llm): The two 487-tile frames were the same tiles, and the "no polygon shared" claim was my comparison, not the data
+
+**Session:** 47d8b588-0c33-45a3-9bf4-a93fe803f88a
+**Instance:** primary
+
+### Surprising fact
+
+Two bounds files both held 487 polygons and, by my first comparison, no
+polygon coincided — a claim I put into the card's frame fork and the
+beacon. The PI asked for the backstory.
+
+### Probe
+
+Re-run the comparison in one CRS with the tile names as keys: 487 of
+487 names shared; 407 polygons identical to the metre; 80 clipped in
+the grid campaign's file; the grid file's union a strict subset of the
+Era-2 frame (1,364.5 vs 1,415.8 km²; 428 vs 435 reference mounds). The
+grid campaign's own findings document said as much — the Era-2 carrier
+tiles clipped to a four-way footprint intersection. My earlier check had
+rounded coordinates into set keys and compared sets that could never
+match.
+
+### Belief revision
+
+From "two unrelated frames, a hard fork" to "one frame family, a small
+clipping choice" — which changed the decision's cost from qualitative
+to seven mounds and 51 km², and made a third option (Era-2 ∩ B-union,
+all 435 mounds) visible. The rule the PI then accepted (frame =
+intersection of dispatched coverage) only makes sense once the frames
+are seen as the same tiles.
+
+### What would change this belief
+
+A tile whose clipped geometry in the grid file is not a subset of its
+Era-2 polygon; none exists (0.0000 km² of grid-common lies outside the
+Era-2 union).
+
+### Implications for practice
+
+When a spatial comparison returns "nothing coincides", the boring
+hypothesis (same objects, different CRS or precision) must be tested
+before the surprising one is reported.

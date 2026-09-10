@@ -9397,3 +9397,41 @@ on sapphire (`/tmp/vsr.log`). After-run steps on the card § 5.
 afternoon and delegated with "finish what you can, ask if you need
 me"; API spend was pre-approved to a ceiling, which is why the refresh
 launched without a further round-trip. Sapphire's clock is UTC.
+
+## Session 151 — 2026-09-08/10 (amd-tower + sapphire; US$0 API this session — the verifier refresh's US$8.73 at list was spent in S150-b)
+
+**S151 (2026-09-08, autonomous resume)**: card § 5 after-run steps for
+the verifier-stage refresh — three stages registered as inventory rows
+(`34fc71b9f`), compared in the audit § 6.1 (`d79ab6957`) with the
+finding that the image stage's April sweep was a 342-of-802 partial
+(re-swept complete, $0), E71 addendum, supplement + plateau regenerated
+(`001a98c97`); PR #12 merged (`459556ba4`); tier-1 green twice.
+**S151-b (PI present)**: the "57 of 4,358 abandoned" description of the
+April e47 stage corrected (`8a67c8881`); sweep-staleness class surveyed
+by agent — 5 stale of 265, none cited (`107f5d06c`); PI rulings executed
+— two April e47 stages registered, four stale stages re-swept, the
+April e47 stage swept (not a like-for-like), Obs 453–462 written by
+three sequential obs-writer dispatches, S148–S149 user-obs reviewed,
+three feedback memories saved. amd-tower disk anomaly resolved as
+transient; SMART read by the PI (PASSED, 6 % used, 2 lifetime media
+errors, 105 unsafe shutdowns).
+**S151-c (overnight)**: § R7 restructured into three blocks with §§
+R7.2–R7.3 drafted (`1ed9cab48`); the eight blocked r2 anchors (a gzipped
+meta; `edc832c06`, `a0f08475e`); the Era-2 board card drafted; a07
+prose corrected (`6b7fdd739`, `cd8dc5591`); the vote-shell materialiser
+(union mode) built and 47 pairing twins scored, uplift 69/169
+(`b504a062f`, `ba8656352`); the CRS-less twin artefact resolved
+(`73ffb3929`, `4ad6053b2`).
+**S151-d (2026-09-09/10, PI present)**: frame rule recommended and
+accepted; frame materialised (`f9b87da22`); board built — 39 register
+cells, gates G2–G6 pass, G1 marginal fail, `-era2b` rows, tiering
+(375/741, 6 tiers, Tier 1 five 3.7/3.8 cells; Hsu set 11), Obs 463
+(`872bd6806`); top-N drop made loud (`c5a7f43e5`); card body revised;
+next session scheduled (`573bf88ba`). Tier-1 green at the final state:
+2,188 passed.
+
+**Contextual assumptions**: the board's analysis row is unsigned pending
+the symmetry fix (sweep-optimal Gemini 3 cells to be registered as
+opmax rows) and the G1 bisect; the supplement's board-frame exclusion
+rule is agreed but unimplemented; the transient ENOSPC on amd-tower
+(90 GB free minutes later) is unexplained.

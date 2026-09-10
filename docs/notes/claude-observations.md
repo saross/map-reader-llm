@@ -2290,3 +2290,51 @@ gates worked; I should not be relying on them for the first catch.
 **How to apply.** Before a number enters an erratum, open the artefact.
 Before a remote run, `git log -1` on the remote. Before `--write`,
 validate the plan against the schema that will refuse it.
+
+## claude-obs 100 — 2026-09-10 (Session 151): A ruling on the principle, not the numbers
+
+**Pattern.** Asked for "a principled decision that conveys as much useful
+information as possible" on the board's frame, Shawn accepted the rule
+(frame = intersection of dispatched coverage) explicitly on discipline
+grounds, while the numerical differences between options were inside the
+instrument's resolution. The same move appeared in "not 'text beats image'
+but 'text matches image at a lower cost'": he wants the claim shaped by
+the evidence's structure, not its point estimates.
+
+**Lesson.** When the numbers cannot decide, Shawn decides on the rule and
+wants the rule stated once, so it can be applied again.
+
+**How to apply.** Offer decisions as rules with their measured cost, and
+say plainly when the numbers are below resolution.
+
+## claude-obs 101 — 2026-09-10 (Session 151): Self-critique — three confident claims from the wrong check
+
+**Pattern.** "No polygon shared" (a faulty set comparison), "abandoned at
+57 of 4,358" (a cleanup-overwritten meta read as a run total), and
+"verify unchanged 22/19/0" (written before the verifier ran). Each was
+corrected within the session; each cost a commit and, in the first case,
+mis-stated a fork the PI was asked to rule on.
+
+**Lesson.** A surprising comparison result is a prompt to test the boring
+hypothesis first; a number in a commit message is a claim that must have
+been produced in that command.
+
+**How to apply.** Before reporting "nothing matches" or "X of N", re-run
+the check by a second route; never write a verifier result into a message
+before its output is in front of me.
+
+## claude-obs 102 — 2026-09-10 (Session 151): Shawn's questions find the asymmetry the build missed
+
+**Pattern.** "What are we losing from the exclusion of the sweep-optimal
+cells?" surfaced that the 3.7 GS cells on the board are in-sample optima
+while the incumbents are committed points — a parameter-control gap
+(E56) that my gates did not look for. His earlier "why are there two
+487-tile frames?" did the same for the frame.
+
+**Lesson.** His questions about exclusions and provenance are where the
+next defect is; the build's gates check what I thought of, his questions
+check what I did not.
+
+**How to apply.** Before asking for a signature, run the E56 lens over
+every board membership as a standing check: which cells are in-sample
+optima, which are committed points, and is the comparison symmetric.

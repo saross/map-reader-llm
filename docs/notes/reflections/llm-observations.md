@@ -7971,3 +7971,32 @@ remains the missing primitive.
    otherwise resolve against the live model list) and launched without
    a further round-trip; the standing API gate was satisfied by
    recording the specifics on the card rather than by asking again.
+
+## Session 151 — 2026-09-08/10 (verifier-refresh bookkeeping; four overnight tasks; the GS Era-2 board)
+
+- **A "preserve and compare" that found a class the audit had missed.**
+  Comparing the refreshed verifier stage with its April sweep side by
+  side exposed a sweep computed on 342 of 802 candidates; a refresh-and-
+  move-on would have recorded a +0.41 "recovery effect". The agent-run
+  survey then found the class was small (5 of 265 stages, one cleanup
+  commit) — the comparison instinct paid, the survey bounded it.
+- **The autonomous overnight run held its scope.** Four tasks, each
+  with a root cause that was not the one the brief assumed (a gzipped
+  meta, not a layout; a literal in a script, not the artefact; a union
+  mode missing, not a materialiser missing), and one process slip (a
+  driver script overwritten under a running bash). Reporting the slip
+  plainly cost nothing.
+- **The frame recommendation was a rule, and the PI accepted it as
+  one.** "Maintaining discipline is important for a large, complex
+  project like this" — the ruling was on the principle, not the numbers,
+  which were within the instrument's resolution either way.
+- **The build surfaced what the card had assumed.** The archived board
+  was not register-backed; the instrument named was the retired one; the
+  members needed new rows. Three deviations disclosed in the changelog
+  and the body revised before signature. The card was still worth
+  writing: it made the deviations visible as deviations.
+- **Caught late: asymmetry between in-sample optima and committed
+  points.** Only the PI's question about the exclusion's cost surfaced
+  that the 3.7 GS cells are sweep-best points. The E56 lens should be
+  applied to every board membership as a standing check, not recalled on
+  demand.

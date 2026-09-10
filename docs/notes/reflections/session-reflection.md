@@ -11178,3 +11178,43 @@ twelve passes. The other thing to know is how the 3a ruling was made:
 he asked for pros and cons instead of taking my one-line
 recommendation, and writing the cons is what surfaced the cost-gate
 coverage error. The request changed the evidence.
+
+## Session 151 — 2026-09-08/10 — the session that bookkept a refresh, ran overnight on four tasks, and then built a board on a frame chosen by rule
+
+*Project map-reader-llm; primary instance throughout (no compaction).*
+
+**What would I do differently if I replayed this session?** Three
+things, all of the same shape: I stated a fact confidently from a check
+that was not the right check. I said the two 487-tile frames "share no
+polygon" from a bounding-box comparison that I had not sanity-checked
+against the obvious alternative (same tiles, some clipped); the truth
+was 407 identical, 80 clipped. I repeated the card's "abandoned, 57 of
+4,358" about the April e47 stage until the PI asked what the directory
+was and I read its files. And I wrote "verify unchanged 22/19/0" into a
+commit message before running the verifier. Each was cheap to check and
+each cost a correction commit. The replay is not "check more" but "when
+a comparison gives a surprising answer, test the boring hypothesis
+before reporting the surprising one".
+
+**What felt uncertain or unresolved at the end?** The board's
+comparison is not yet symmetric: the 3.7 cells on it are sweep-best
+points and the incumbents are committed points, an asymmetry I found
+only when the PI asked what the sweep-optimal exclusion costs. The fix
+is scheduled and the margin probably survives it, but I do not know
+that, and the signed card described the archived board as the incumbent
+set when only four of its 44 cells are registered conditions. The G1
+gate's marginal drift is unbisected. And the uplift supplement's
+downstream obligations from 39 new register rows are deferred by a rule
+the PI agreed to but that is not yet implemented.
+
+**What decision will look arbitrary without this session's context?**
+The frame. A reader will find a third 487-tile bounds file in
+`inputs/vectors/bounds/384/` and wonder why the board is not on the
+Era-2 frame every earlier GS board used. The answer is one rule stated
+once in the card: a board's frame is the intersection of its members'
+dispatched coverage, because scoring a cell on ground its proposer never
+saw manufactures false negatives, and discarding ground every member saw
+throws away evidence. The B tiling misses a 13.4 km² strip of the Era-2
+frame that holds no mound; grid-common throws away 51 km² and seven
+mounds that everyone covered. The PI accepted the rule on discipline
+grounds explicitly, and that sentence is the thing to keep.
