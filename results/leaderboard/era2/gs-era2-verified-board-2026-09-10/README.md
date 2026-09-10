@@ -1,8 +1,8 @@
 # The GS Era-2 verified board on one frame — `gs-era2-verified-board-2026-09-10`
 
-> **Last revised**: 2026-09-10 (later: the symmetry fix — the archived Era-2 PV board's 40 sweep-optimal Gemini 3 cells joined as `-opmax` rows, 39 → 79 cells, re-tiered, MCB recomputed last; earlier the same day: original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-10 (later still: nine `-opmax` cells re-materialised from their registered stage and the board re-tiered — Tier 1, the tie set and the Hsu admissible set all unchanged; later: the symmetry fix — the archived Era-2 PV board's 40 sweep-optimal Gemini 3 cells joined as `-opmax` rows, 39 → 79 cells, re-tiered, MCB recomputed last; earlier the same day: original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
 
-79 cells; 1853/3081 pairs significant; 7 tiers; tie set 5; MCB admissible 28.
+79 cells; 1845/3081 pairs significant; 7 tiers; tie set 5; MCB admissible 28.
 
 | rank | cell | tier | MCB | F1@20 (board frame) | committed F1@20 | Δ frame | tile-MCC |
 |---:|---|---:|:---:|---:|---:|---:|---:|
@@ -16,7 +16,7 @@
 | 8 | `verifier-robustness::verified-384-16of30-t0-3-n5-opmax` | 2 | ● | 0.8951 | 0.8951 | +0.0000 | 0.7941 |
 | 9 | `pv-diag-384::verified-adv-text-consensus-16of30` | 2 | ● | 0.8902 | 0.8902 | +0.0000 | 0.7903 |
 | 10 | `grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10` | 2 | ● | 0.8886 | 0.8961 | -0.0075 | 0.7903 |
-| 11 | `pv-diag-384::pv-high-text-t0.3-n5-opmax` | 2 | ● | 0.8863 | 0.8863 | +0.0000 | 0.7759 |
+| 11 | `pv-diag-384::pv-high-text-t0.3-n5-opmax` | 2 | ● | 0.8873 | 0.8873 | +0.0000 | 0.7805 |
 | 12 | `pv-diag-384::session-78-text-comparative-opmax` | 2 | ● | 0.8846 | 0.8846 | +0.0000 | 0.7947 |
 | 13 | `pv-diag-384::verified-adv-text-min-6of10` | 2 | ● | 0.8835 | 0.8835 | +0.0000 | 0.8068 |
 | 14 | `pv-diag-384::session-78-text-adversarial-opmax` | 2 | ● | 0.8833 | 0.8833 | +0.0000 | 0.7947 |
@@ -25,27 +25,27 @@
 | 17 | `pv-diag-384::verified-adv-text-min-true-3of5` | 2 | ● | 0.8784 | 0.8784 | +0.0000 | 0.7903 |
 | 18 | `pv-diag-384::verified-adv-text-t03-4of5` | 2 | ● | 0.8783 | 0.8783 | +0.0000 | 0.7834 |
 | 19 | `pv-diag-384::session-78-text-checklist-opmax` | 2 | ● | 0.8783 | 0.8783 | +0.0000 | 0.7759 |
-| 20 | `pv-diag-384::pv-min-text-t0.3-n5-opmax` | 2 | ● | 0.8778 | 0.8778 | +0.0000 | 0.7735 |
-| 21 | `pv-diag-384::pv-min-text-t1.0-n10-opmax` | 2 | ● | 0.8771 | 0.8771 | +0.0000 | 0.7815 |
+| 20 | `pv-diag-384::pv-min-text-t1.0-n10-opmax` | 2 | ● | 0.8781 | 0.8781 | +0.0000 | 0.7881 |
+| 21 | `pv-diag-384::pv-min-text-t0.3-n5-opmax` | 2 | ● | 0.8778 | 0.8778 | +0.0000 | 0.7735 |
 | 22 | `pv-diag-384::verified-adv-text-6of10` | 3 | ● | 0.8769 | 0.8769 | +0.0000 | 0.7903 |
 | 23 | `verifier-robustness::verified-384-ge3of5-t0-3-high-n5` | 3 | ● | 0.8764 | 0.8764 | +0.0000 | 0.789 |
 | 24 | `pv-diag-384::session-78-text-brief-opmax` | 3 | ● | 0.8762 | 0.8762 | +0.0000 | 0.7659 |
 | 25 | `pv-diag-384::pv-high-text-t0.7-n10-opmax` | 3 | ● | 0.8744 | 0.8744 | +0.0000 | 0.7641 |
 | 26 | `verifier-robustness::verified-384-ge3of5-t0-3-n5` | 3 | ● | 0.8739 | 0.8739 | +0.0000 | 0.7713 |
 | 27 | `verifier-robustness::verified-384-ge3of5-t0-7-high-n5` | 3 | ● | 0.8739 | 0.8739 | +0.0000 | 0.7927 |
-| 28 | `pv-diag-384::pv-min-text-t0.7-n5-opmax` | 3 | ● | 0.8732 | 0.8732 | +0.0000 | 0.7862 |
-| 29 | `pv-diag-384::pv-min-text-t0.7-n10-opmax` | 3 |  | 0.8726 | 0.8726 | +0.0000 | 0.7768 |
-| 30 | `verifier-robustness::verified-384-union-t0-0-n5` | 3 |  | 0.8722 | 0.8722 | +0.0000 | 0.7621 |
-| 31 | `pv-diag-384::pv-high-text-t0.3-n10-opmax` | 3 |  | 0.8722 | 0.8722 | +0.0000 | 0.7872 |
-| 32 | `pv-diag-384::pv-min-text-t1.0-n5-opmax` | 3 |  | 0.8714 | 0.8714 | +0.0000 | 0.7797 |
-| 33 | `verifier-robustness::verified-384-ge3of5-t0-7-n5` | 3 |  | 0.8709 | 0.8709 | +0.0000 | 0.7713 |
-| 34 | `pv-diag-384::verified-adv-text-min-n30lineage-4of5` | 3 |  | 0.8708 | 0.8708 | +0.0000 | 0.7873 |
-| 35 | `flash35-pv-2x2::f3prop-f35vf-6of10` | 3 |  | 0.8689 | 0.8689 | +0.0000 | 0.7666 |
-| 36 | `pv-diag-384::pv-min-text-t0.3-n10-opmax` | 3 |  | 0.8682 | 0.8682 | +0.0000 | 0.7731 |
-| 37 | `pv-diag-384::verified-adv-text-4of5` | 4 |  | 0.8641 | 0.8641 | +0.0000 | 0.7693 |
-| 38 | `pv-diag-384::session-78-text-checklist-text-opmax` | 4 |  | 0.8639 | 0.8639 | +0.0000 | 0.7561 |
-| 39 | `pv-diag-384::pv-high-text-t0.7-n5-opmax` | 4 |  | 0.8634 | 0.8634 | +0.0000 | 0.7684 |
-| 40 | `pv-diag-384::pv-high-text-t1.0-n5-opmax` | 4 |  | 0.8607 | 0.8607 | +0.0000 | 0.7567 |
+| 28 | `pv-diag-384::pv-min-text-t0.7-n5-opmax` | 3 | ● | 0.8739 | 0.8739 | +0.0000 | 0.7957 |
+| 29 | `pv-diag-384::pv-min-text-t0.3-n10-opmax` | 3 |  | 0.8730 | 0.8730 | +0.0000 | 0.791 |
+| 30 | `pv-diag-384::pv-min-text-t0.7-n10-opmax` | 3 |  | 0.8726 | 0.8726 | +0.0000 | 0.7768 |
+| 31 | `verifier-robustness::verified-384-union-t0-0-n5` | 3 |  | 0.8722 | 0.8722 | +0.0000 | 0.7621 |
+| 32 | `pv-diag-384::pv-high-text-t0.3-n10-opmax` | 3 |  | 0.8722 | 0.8722 | +0.0000 | 0.7872 |
+| 33 | `pv-diag-384::pv-min-text-t1.0-n5-opmax` | 3 |  | 0.8714 | 0.8714 | +0.0000 | 0.7797 |
+| 34 | `verifier-robustness::verified-384-ge3of5-t0-7-n5` | 3 |  | 0.8709 | 0.8709 | +0.0000 | 0.7713 |
+| 35 | `pv-diag-384::verified-adv-text-min-n30lineage-4of5` | 3 |  | 0.8708 | 0.8708 | +0.0000 | 0.7873 |
+| 36 | `flash35-pv-2x2::f3prop-f35vf-6of10` | 3 |  | 0.8689 | 0.8689 | +0.0000 | 0.7666 |
+| 37 | `pv-diag-384::pv-high-text-t1.0-n5-opmax` | 3 |  | 0.8688 | 0.8688 | +0.0000 | 0.7857 |
+| 38 | `pv-diag-384::verified-adv-text-4of5` | 4 |  | 0.8641 | 0.8641 | +0.0000 | 0.7693 |
+| 39 | `pv-diag-384::session-78-text-checklist-text-opmax` | 4 |  | 0.8639 | 0.8639 | +0.0000 | 0.7561 |
+| 40 | `pv-diag-384::pv-high-text-t0.7-n5-opmax` | 4 |  | 0.8634 | 0.8634 | +0.0000 | 0.7684 |
 | 41 | `pv-diag-384::session-78-text-adversarial-text-opmax` | 4 |  | 0.8603 | 0.8603 | +0.0000 | 0.7534 |
 | 42 | `verifier-t-pilot::verified-t0-5` | 4 |  | 0.8561 | 0.8561 | +0.0000 | 0.7714 |
 | 43 | `pv-diag-384::verified-adv-text-medium-vf-4of5` | 4 |  | 0.8545 | 0.8545 | +0.0000 | 0.7208 |
@@ -72,23 +72,99 @@
 | 64 | `pv-diag-384::session-78-image-brief-text-opmax` | 6 |  | 0.7782 | 0.7782 | +0.0000 | 0.8199 |
 | 65 | `pv-diag-384::verified-adv-image-3of5` | 6 |  | 0.7778 | 0.7778 | +0.0000 | 0.8268 |
 | 66 | `pv-diag-384::pv-min-image-t0.3-n5-opmax` | 6 |  | 0.7767 | 0.7767 | +0.0000 | 0.8416 |
-| 67 | `pv-diag-384::pv-high-image-t0.7-n10-opmax` | 6 |  | 0.7761 | 0.7761 | +0.0000 | 0.7969 |
+| 67 | `pv-diag-384::pv-high-image-t0.7-n10-opmax` | 6 |  | 0.7765 | 0.7765 | +0.0000 | 0.798 |
 | 68 | `pv-diag-384::pv-min-image-t0.7-n5-opmax` | 6 |  | 0.7734 | 0.7734 | +0.0000 | 0.8383 |
 | 69 | `pv-diag-384::session-78-image-adversarial-text-opmax` | 6 |  | 0.7718 | 0.7718 | +0.0000 | 0.7973 |
-| 70 | `pv-diag-384::pv-high-image-t0.3-n10-opmax` | 6 |  | 0.7689 | 0.7689 | +0.0000 | 0.8154 |
+| 70 | `pv-diag-384::pv-high-image-t0.3-n10-opmax` | 6 |  | 0.7705 | 0.7705 | +0.0000 | 0.8294 |
 | 71 | `pv-diag-384::pv-scale4-optimal-n10-opmax` | 6 |  | 0.7683 | 0.7683 | +0.0000 | 0.8154 |
 | 72 | `pv-diag-384::verified-adv-image-min-3of5` | 6 |  | 0.7673 | 0.7673 | +0.0000 | 0.8461 |
-| 73 | `pv-diag-384::pv-high-image-t1.0-n10-opmax` | 6 |  | 0.7633 | 0.7633 | +0.0000 | 0.8002 |
-| 74 | `pv-diag-384::pv-scale4-optimal-n5-opmax` | 6 |  | 0.7629 | 0.7629 | +0.0000 | 0.8352 |
+| 73 | `pv-diag-384::pv-scale4-optimal-n5-opmax` | 6 |  | 0.7635 | 0.7635 | +0.0000 | 0.8306 |
+| 74 | `pv-diag-384::pv-high-image-t1.0-n10-opmax` | 6 |  | 0.7633 | 0.7633 | +0.0000 | 0.8002 |
 | 75 | `pv-diag-384::pv-high-image-t0.3-n5-opmax` | 6 |  | 0.7475 | 0.7475 | +0.0000 | 0.8049 |
-| 76 | `pv-diag-384::pv-min-image-t1.0-n10-opmax` | 7 |  | 0.7409 | 0.7409 | +0.0000 | 0.8105 |
-| 77 | `pv-diag-384::pv-min-image-t1.0-n5-opmax` | 7 |  | 0.7384 | 0.7384 | +0.0000 | 0.8021 |
+| 76 | `pv-diag-384::pv-min-image-t1.0-n10-opmax` | 6 |  | 0.7428 | 0.7428 | +0.0000 | 0.8078 |
+| 77 | `pv-diag-384::pv-min-image-t1.0-n5-opmax` | 6 |  | 0.7384 | 0.7384 | +0.0000 | 0.8021 |
 | 78 | `pv-diag-384::pv-high-image-t1.0-n5-opmax` | 7 |  | 0.7337 | 0.7337 | +0.0000 | 0.823 |
 | 79 | `pv-diag-384::verified-adv-pro-image-pro-vf-3of5` | 7 |  | 0.7112 | 0.7112 | +0.0000 | 0.8499 |
 
-Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the Era-2-frame reproduction of the archived board's score). Full pairwise table: `tiering_20m.json`; gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.
+Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the Era-2-frame reproduction of the archived board's score, or — for the nine re-materialised on 2026-09-10 — of the materialisation registry's registered point). Full pairwise table: `tiering_20m.json`; gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.
 
 ## Changelog
+
+### 2026-09-10 (later still) — Nine `-opmax` cells re-materialised; re-tiered; Tier 1 and the admissible set unchanged
+
+**Trigger**: the nine `-opmax` rows flagged in the entry below as carrying a
+`sweep_2d.json` best point that "differs from the materialised file" were
+re-examined. The diagnosis reverses that reading: the sweep is right and the
+2026-04-19 materialisation (`bd24293d4`) is wrong. Re-applying the
+materialisation registry's own filter — join the proposer pool union
+(`consensus_path`) to the verifier stage's `probabilities.json` by candidate
+index (union feature *i* ↔ key `candidate_{i:05d}`), keep
+`vote_count >= vote_t AND mound_probability >= prob_t` at the registered point
+— reproduces the registry's detection count **exactly for all nine**, while
+the archived file holds a different set (up to 50 detections apart). The
+unions, probabilities and sweeps are unchanged since 2026-04-17/18; only the
+materialisation moved. The nine were rebuilt from their registered stage
+(`scripts/materialise_opmax_cells.py`, provenance sidecar per cell recording
+every input's git blob hash) and re-scored on both frames with the board's
+recipe. Running the same filter over the other 34 rows: 33 reproduce their
+archived file exactly; the one that does not is off-board (see below).
+
+| cell | rank | tier | n | F1@20 |
+|---|---|---|---|---|
+| `pv-high-text-t0.3-n5-opmax` | 11 → 11 | 2 → 2 | 409 → 408 | 0.8863 → 0.8873 |
+| `pv-min-text-t1.0-n10-opmax` | 21 → 20 | 2 → 2 | 395 → 410 | 0.8771 → 0.8781 |
+| `pv-min-text-t0.7-n5-opmax` | 28 → 28 | 3 → 3 | 385 → 382 | 0.8732 → 0.8739 |
+| `pv-min-text-t0.3-n10-opmax` | 36 → 29 | 3 → 3 | 392 → 431 | 0.8682 → 0.8730 |
+| `pv-high-text-t1.0-n5-opmax` | 40 → 37 | 4 → **3** | 376 → 426 | 0.8607 → 0.8688 |
+| `pv-high-image-t0.7-n10-opmax` | 67 → 67 | 6 → 6 | 351 → 348 | 0.7761 → 0.7765 |
+| `pv-high-image-t0.3-n10-opmax` | 70 → 70 | 6 → 6 | 400 → 432 | 0.7689 → 0.7705 |
+| `pv-scale4-optimal-n5-opmax` | 74 → 73 | 6 → 6 | 396 → 398 | 0.7629 → 0.7635 |
+| `pv-min-image-t1.0-n10-opmax` | 76 → 76 | 7 → **6** | 364 → 397 | 0.7409 → 0.7428 |
+
+All nine move up, by +0.0004 to +0.0081 — the direction the diagnosis
+predicts, since the registered point is its sweep's F1@20 argmax while the
+superseded file held some other set. Each cell's Era-2-frame F1@20 now equals
+the registry's `best_at_20m.f1` exactly (`opmax/gates.json`: G2 0 failures, G3
+0, G4 40/40), and board-frame equals Era-2-frame as for every `-opmax` cell.
+
+**Board effects** (re-tiered by the same chain, MCB recomputed last):
+
+| Quantity | before | after |
+|---|---:|---:|
+| Cells | 79 | 79 |
+| Pairs significant at BH q = 0.05 | 1,853 / 3,081 | 1,845 / 3,081 |
+| Tiers (sizes) | 7 (5/16/15/17/10/12/4) | 7 (5/16/16/16/10/14/2) |
+| Tier 1 (greedy clique) | the five 3.7/3.8 cells | **the same five** |
+| Tie set | 5 | 5 |
+| Best Gemini 3 sweep optimum | `pv-high-text-t0.3-n5-opmax` 0.8863, rank 11, Tier 2 | **the same cell** 0.8873, rank 11, Tier 2 |
+| `-opmax` cells significantly below the lowest Tier-1 cell | 31 of 40 | 30 of 40 |
+| `-opmax` cells significantly below the top cell | 40 of 40 | 40 of 40 |
+| Hsu MCB admissible set | 28 (w_upper 0.05012) | 28, **the same members** (w_upper 0.05011) |
+| Two-sided MCB band | 39 | 40 (`pv-high-text-t1.0-n5-opmax` joins) |
+| Board argmax optimism (Efron–Gong) | +0.0051 → corrected 0.9181 | +0.0051 → corrected 0.9181 |
+
+**What did NOT change**: Tier 1 and its five members; the tie set; the top
+five cells and their F1; the Hsu admissible set's size AND membership; the
+board argmax's optimism and corrected F1; every `-era2b` incumbent's tier
+(no incumbent moved). Three cells changed tier, all `-opmax`: two of the nine
+moved up (`pv-high-text-t1.0-n5-opmax` 4 → 3, `pv-min-image-t1.0-n10-opmax`
+7 → 6) and `pv-min-image-t1.0-n5-opmax` followed them up 7 → 6 as Tier 7
+shrank to two members. The sweep-optimism analysis (`optimism/`) covers the
+3.7/3.8 screen cells and the three Gemini 3 B-geometry sweep cells, none of
+them among the nine, and is unaffected.
+
+**One row deliberately left alone**: the same filter over
+`pv-high-text-t0.0-n3` (off-board, K = 3) yields 410 against 403 in both its
+registry row and its archived file. Its proposer consensus union was
+re-materialised on 2026-07-30 (`f6116cba0`, `77bb342b4`) — the union is newer
+than both the sweep and the materialisation, the opposite direction from the
+nine. It is reported in `opmax/materialised/check.json`, not rewritten: it is
+off-board, its registry and its file agree with one another, and the call is
+the PI's. The superseded evaluations and a note on the diagnosis are under
+`archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-opmax-stale-materialisation/`;
+the 79-cell artefacts built on the stale materialisation are under
+`archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-79cell-stale-materialisation/`.
+The analysis row remains UNSIGNED; the publication ruling is the PI's.
 
 ### 2026-09-10 (later) — Symmetry fix: both families at both levels; 79 cells
 

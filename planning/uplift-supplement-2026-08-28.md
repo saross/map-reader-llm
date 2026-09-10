@@ -1,8 +1,11 @@
 # Uplift supplement + corpus dataset: consensus and verifier, quantified
 
-> **Last revised**: 2026-08-29 (build steps 1–3 EXECUTED and merged;
-> scoring worklists running on sapphire). See
-> [§ Changelog](#changelog).
+> **Last revised**: 2026-09-10 (the 14 ambiguous verifier-pairing twins
+> resolved by the new `crop-manifest` rule — blocked 100 → 86, uplift
+> computed 71 → 85 on both metrics; earlier the same day: the board-frame
+> exclusion rule implemented and the supplement rebuilt; prior:
+> 2026-08-29, build steps 1–3 EXECUTED and merged, scoring worklists
+> running on sapphire). See [§ Changelog](#changelog).
 
 **PI concept (2026-08-28, in-session)**: anchor every consensus run
 with K = 1 metrics (with and without verifier) so consensus uplift is
@@ -73,6 +76,106 @@ sweep-interior ruling; any cell the supplement headline-cites gets
 promoted on citation as usual.
 
 ## Changelog
+
+### 2026-09-10 (later) — The 14 ambiguous verifier-pairing twins resolved by crop manifest
+
+**Trigger**: PI, 2026-09-10 — resolve the 14 ambiguous pairings rather
+than accept them as disclosed. All 14 are `pv-diag-384` verified cells on
+the Era-2 frame, blocked with "N committed `<k>`-of-`<N>` consensus
+set(s) sit under the run tree, which serves 41 distinct pool/geometry
+lineages, and none carries this cell's tokens".
+
+**Why they were answerable after all.** The `consensus-file` rule asks
+which committed consensus set belongs to a cell; in a 41-lineage run tree
+that question has no answer, and refusing was right. A different question
+does have one: the cell's REGISTERED `proposer_pool` names its lineage at
+the vote >= 1 shell (`<lineage>-1of<N>`), and `pv-diag-384` records one
+candidate manifest per lineage under a directory of exactly that name.
+The twin is then the shell `vote_count >= k` of the universe the cell's
+own verifier cropped — an attribution the registry already made, not a
+guess about which file belongs to whom.
+
+**Implementation** (`scripts/build_verifier_pairing_worklist.py`, new
+`crop-manifest` rule; `5a0ab3d2a`). It fires ONLY on an ambiguity refusal
+— where nothing was found at all, the run holds no pre-verifier set and
+blocking stays the right answer — and is ranked below both `registered`
+and an unambiguous `consensus-file`, never overriding either. It refuses
+unless the pool names a vote >= 1 shell whose N equals the cell's, so a
+manifest that is already vote-filtered, or one from another rung of the
+pass ladder, cannot be filtered a second time. The stage path, universe
+size, vote range and count at threshold go into the row's notes, and the
+path into a new `crop_manifest_path` column declared through
+`COLUMN_EXTENSIONS` (the builder's proposal channel; the canonical
+notation key stays the PI's to amend). Twins built by
+`scripts/materialise_pairing_twin.py --crop-manifest`, scored on sapphire
+with each cell's own recorded recipe (curator reference, 487-tile Era-2
+frame, 14 buffers, 10,000-draw bootstrap, seed 42, `--mcc`).
+
+**Evidence the manifest is the right universe**, checked before the rule
+was written. For 12 of the 14 the run also holds a per-`k` stage manifest
+(`flash-high-text-4of5`, `flash-high-text-6of10`,
+`pro-high-text-pro-vf-3of5`, `image-6of10`, …), and the base manifest
+filtered at `vote >= k` reproduces its candidate count exactly in all 12.
+The remaining two lineages (`flash-high-text-t03`, `text-min-t07-true`)
+have no per-`k` stage anywhere; for them the base manifest's candidate
+count equals its verifier stage's `probabilities.json` entry count
+exactly — 2,954 and 1,586 — so the verifier demonstrably consumed that
+whole universe.
+
+| Quantity | Before | After |
+|---|---:|---:|
+| Blocked pairs | 100 | 86 |
+| `ready-after-materialise` | 43 | 57 |
+| `pairing_basis` = `crop-manifest` | — | 14 |
+| Uplift computed (F1) | 71 | 85 |
+| Uplift computed (MCC) | 71 | 85 |
+| Pairing worklist rows | 172 | 172 |
+
+**The 14, F1@20 m** (verified − twin; twin = the same candidate universe
+at the same vote threshold, unfiltered by probability):
+
+| cell | twin n | verified | twin | uplift F1 | uplift MCC |
+|---|---:|---:|---:|---:|---:|
+| `verified-adv-text-min-true-3of5` | 985 | 0.8784 | 0.5465 | +0.3319 | +0.7121 |
+| `verified-adv-text-min-n30lineage-4of5` | 807 | 0.8708 | 0.6039 | +0.2669 | +0.5750 |
+| `verified-adv-text-6of10` | 727 | 0.8769 | 0.6678 | +0.2091 | +0.3433 |
+| `verified-adv-text-t03-4of5` | 659 | 0.8783 | 0.7002 | +0.1781 | +0.2768 |
+| `verified-adv-text-pro-vf-4of5` | 584 | 0.8792 | 0.7223 | +0.1569 | +0.2907 |
+| `verified-adv-text-4of5` | 584 | 0.8641 | 0.7223 | +0.1418 | +0.2653 |
+| `verified-adv-text-medium-vf-4of5` | 584 | 0.8545 | 0.7223 | +0.1322 | +0.2168 |
+| `verified-adv-text-high-vf-4of5` | 584 | 0.8519 | 0.7223 | +0.1296 | +0.1952 |
+| `verified-adv-image-min-6of10` | 577 | 0.7890 | 0.6759 | +0.1131 | +0.4473 |
+| `verified-adv-image-3of5` | 506 | 0.7778 | 0.7290 | +0.0488 | +0.1475 |
+| `verified-adv-pro-image-pro-vf-3of5` | 471 | 0.7112 | 0.6998 | +0.0114 | +0.0437 |
+| `verified-adv-pro-text-pro-vf-3of5` | 367 | 0.8506 | 0.8429 | +0.0077 | +0.0147 |
+| `verified-adv-pro-text-medium-vf-3of5` | 367 | 0.8495 | 0.8429 | +0.0066 | +0.0147 |
+| `verified-adv-pro-text-flash-vf-3of5` | 367 | 0.8491 | 0.8429 | +0.0062 | +0.0147 |
+
+Every uplift is positive, and the spread is the story the corpus already
+tells from the other direction: the four `pro-high-text-1of5` cells share
+one twin at 0.8429 and gain 0.006–0.008, because a Pro proposer's 3-of-5
+shell is already precise, while the minimal-thinking text pools gain
+0.27–0.33 from a shell whose precision the verifier has to supply. The
+three flash-verifier-variant rows over `flash-high-text-1of5` also share
+a twin (0.7223) and separate only by their probability threshold, which
+is the parameter control an uplift number is supposed to isolate.
+
+**Gates**: every materialised twin's candidate count equals its
+manifest's count at `vote >= k` (584/727/584/584/584/659/985/807/367/367/
+367/506/577/471, all matching the pre-computed shells); blocked dropped
+by exactly 14, the number of pairs resolved; no previously computed
+uplift changed on either metric; no other worklist row changed in any
+field. The 14 twin evaluations waived into `pv-diag-384`'s
+`_ignored_evals` by `scripts/waive_uplift_anchor_evals.py` (whose reason
+text now states the class rather than the 2026-09-07 batch's scoring
+commit, which is not these rows'); manifests regenerated;
+`verify_run_conditions.py` 22 pass / 19 partial / 0 fail, unchanged.
+
+**Still blocked: 86.** The largest remaining classes are 23 stride-55map
+rows and 16 rows whose verified cell records no vote threshold at all, so
+there is no "same vote threshold" set to pair with. Those are not this
+rule's shape: 14 of the 86 were ambiguous attributions, and this rule
+resolves ambiguity, not absence.
 
 ### 2026-09-10 (later) — Registration walk-through rulings 2(i)–2(iv) (S152, PI present)
 

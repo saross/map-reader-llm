@@ -13,7 +13,7 @@
  },
  "gates_opmax": {
   "board_id": "gs-era2-verified-board-2026-09-10",
-  "checked_at_utc": "2026-09-10T05:49:23+00:00",
+  "checked_at_utc": "2026-09-10T07:11:53+00:00",
   "G2_reproduction_failures": 0,
   "G3_frame_failures": 0,
   "G4_cells": 40,
@@ -28,6 +28,89 @@
     "archived_n": 372,
     "expected_n": 373,
     "why": "g1-regression.json bisect: archived cache from blob 456dd9bf (372), file re-materialised to 373 features at d6cdb648b"
+   }
+  },
+  "resolved": {
+   "pv-high-text-t0.3-n5": {
+    "resolved_at": "2026-09-10",
+    "detections": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/materialised/pv-high-text-t0.3-n5.geojson",
+    "superseded_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.3-n5.geojson",
+    "expected_f1_20": 0.8873,
+    "expected_n": 408,
+    "archived_f1_20": 0.8863,
+    "archived_n": 409
+   },
+   "pv-min-text-t1.0-n10": {
+    "resolved_at": "2026-09-10",
+    "detections": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/materialised/pv-min-text-t1.0-n10.geojson",
+    "superseded_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t1.0-n10.geojson",
+    "expected_f1_20": 0.8781,
+    "expected_n": 410,
+    "archived_f1_20": 0.8771,
+    "archived_n": 395
+   },
+   "pv-min-text-t0.7-n5": {
+    "resolved_at": "2026-09-10",
+    "detections": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/materialised/pv-min-text-t0.7-n5.geojson",
+    "superseded_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.7-n5.geojson",
+    "expected_f1_20": 0.8739,
+    "expected_n": 382,
+    "archived_f1_20": 0.8732,
+    "archived_n": 385
+   },
+   "pv-min-text-t0.3-n10": {
+    "resolved_at": "2026-09-10",
+    "detections": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/materialised/pv-min-text-t0.3-n10.geojson",
+    "superseded_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.3-n10.geojson",
+    "expected_f1_20": 0.873,
+    "expected_n": 431,
+    "archived_f1_20": 0.8682,
+    "archived_n": 392
+   },
+   "pv-high-text-t1.0-n5": {
+    "resolved_at": "2026-09-10",
+    "detections": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/materialised/pv-high-text-t1.0-n5.geojson",
+    "superseded_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t1.0-n5.geojson",
+    "expected_f1_20": 0.8688,
+    "expected_n": 426,
+    "archived_f1_20": 0.8607,
+    "archived_n": 376
+   },
+   "pv-high-image-t0.7-n10": {
+    "resolved_at": "2026-09-10",
+    "detections": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/materialised/pv-high-image-t0.7-n10.geojson",
+    "superseded_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.7-n10.geojson",
+    "expected_f1_20": 0.7765,
+    "expected_n": 348,
+    "archived_f1_20": 0.7761,
+    "archived_n": 351
+   },
+   "pv-high-image-t0.3-n10": {
+    "resolved_at": "2026-09-10",
+    "detections": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/materialised/pv-high-image-t0.3-n10.geojson",
+    "superseded_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.3-n10.geojson",
+    "expected_f1_20": 0.7705,
+    "expected_n": 432,
+    "archived_f1_20": 0.7689,
+    "archived_n": 400
+   },
+   "pv-scale4-optimal-n5": {
+    "resolved_at": "2026-09-10",
+    "detections": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/materialised/pv-scale4-optimal-n5.geojson",
+    "superseded_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-scale4-optimal-n5.geojson",
+    "expected_f1_20": 0.7635,
+    "expected_n": 398,
+    "archived_f1_20": 0.7629,
+    "archived_n": 396
+   },
+   "pv-min-image-t1.0-n10": {
+    "resolved_at": "2026-09-10",
+    "detections": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/materialised/pv-min-image-t1.0-n10.geojson",
+    "superseded_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t1.0-n10.geojson",
+    "expected_f1_20": 0.7428,
+    "expected_n": 397,
+    "archived_f1_20": 0.7409,
+    "archived_n": 364
    }
   }
  },
@@ -206,7 +289,7 @@
  },
  "tiering": {
   "n_pairs": 3081,
-  "n_significant": 1853,
+  "n_significant": 1845,
   "n_tiers": 7,
   "tie_set": [
    "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
@@ -245,9 +328,9 @@
    "pv-diag-384::pv-high-text-t0.7-n10-opmax",
    "pv-diag-384::pv-min-text-t0.7-n5-opmax"
   ],
-  "mcb_two_sided_band_n": 39,
-  "git_commit": "ff8049f4a",
-  "generated_at_utc": "2026-09-10T05:58:16.408311+00:00"
+  "mcb_two_sided_band_n": 40,
+  "git_commit": "2fd3146ec",
+  "generated_at_utc": "2026-09-10T07:19:45.005910+00:00"
  },
- "finalised_at_utc": "2026-09-10T06:09:29+00:00"
+ "finalised_at_utc": "2026-09-10T07:22:22+00:00"
 }

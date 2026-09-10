@@ -1,6 +1,9 @@
 # The GS Era-2 verified board: the Gemini 3.7 and 3.8 GS cells on one frame with the incumbents
 
-> **Last revised**: 2026-09-10 (later still: the symmetry fix built — 40
+> **Last revised**: 2026-09-10 (later still ×2: nine `-opmax` cells
+> re-materialised from their registered stage — the sweep was right, the
+> 2026-04-19 materialisation was wrong; re-tiered, Tier 1 / tie set / Hsu
+> admissible set all unchanged; later still: the symmetry fix built — 40
 > `-opmax` rows, 79 cells, Tier 1 unchanged, MCB 28 recomputed last;
 > later: G1 bisected — a stale label-keyed
 > cache at the 2026-05-06 build, no instrument drift; earlier: built,
@@ -244,6 +247,101 @@ until § 9 is signed.
 - [x] Go — 2026-09-09.
 
 ## Changelog
+
+### 2026-09-10 (later still ×2) — Nine `-opmax` cells re-materialised: the sweep was right, the materialisation was wrong
+
+**Trigger**: the entry below disclosed that "nine of the 29 pv registry cells
+carry a `sweep_2d.json` best point that differs from the materialised file (up
+to 50 detections apart)" and treated the file as authoritative — "the row is
+the file the archived board scored". Re-examined 2026-09-10 (Obs 464–465): that
+reading is backwards.
+
+**The diagnosis.** Each `-opmax` row's operating point is a `(vote_t, prob_t)`
+pair the materialisation registry records
+(`archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv_registry.json`,
+`best_at_20m`). Re-applying the registry's own filter — join the proposer pool
+union (`consensus_path`) to the verifier stage's `probabilities.json` by
+candidate index (union feature *i* ↔ key `candidate_{i:05d}`), keep
+`vote_count >= vote_t AND mound_probability >= prob_t` — reproduces the
+registry's detection count **exactly for all nine**, while the archived file
+holds a different set. The three inputs are unchanged since 2026-04-17/18
+(`09fe46a7f`, `2e8cc6481`, `c3e8e0701`, `857d5f714`, `b8961e56f`); the
+materialisation is from 2026-04-19 (`bd24293d4`). Only the materialisation
+moved, so the materialisation is the defective side — not the sweep, and not
+the sweep-staleness class of Obs 461 the earlier entry assigned it to.
+
+**The check that makes this safe to act on.** The same filter run over the
+other 34 `-opmax` rows reproduces the archived file exactly for 33
+(`opmax/materialised/check.json`), including all 14 session-78 cells via their
+shared-crops manifest. The one exception is `pv-high-text-t0.0-n3` (off-board,
+K = 3): 410 computed against 403 in both its registry row and its file,
+because its proposer consensus union was re-materialised on 2026-07-30
+(`f6116cba0`, `77bb342b4`) — the union is newer than both the sweep and the
+materialisation, the opposite direction from the nine. Reported, not rewritten:
+it is off-board, registry and file agree with one another, and the call is the
+PI's.
+
+**Fix** (`scripts/materialise_opmax_cells.py`, new; derives the nine from
+`registry_vs_archived` rather than hard-coding them). The nine rebuilt from
+their registered stage into `<board>/opmax/materialised/`, EPSG:4326, each
+with a provenance sidecar recording every input's git blob hash and last
+commit. `build_gs_era2_board_opmax.py` extended: a rebuilt row's `detections`
+points at the new file, `registry_vs_archived` becomes `resolved …`, the
+superseded path is kept as `archived_detections`, `archived_n` /
+`archived_f1_20` stay as history, and the row's EXPECTED gate value becomes
+the REGISTRY's F1 and count. `register --write` repoints the nine registered
+rows, drops the now-false "registry differs" sentence from `_note`, and
+records the replacement with counts before → after. Gate A (rebuilt count =
+registry count) 9/9; Gate B (Era-2-frame F1@20 = registry F1@20) 9/9;
+`opmax/gates.json` G2 0 / G3 0 / G4 40/40; manifests regenerated; verifier
+22/19/0.
+
+| cell | n | F1@20 | rank | tier |
+|---|---|---|---|---|
+| `pv-high-text-t0.3-n5-opmax` | 409 → 408 | 0.8863 → 0.8873 | 11 → 11 | 2 → 2 |
+| `pv-min-text-t1.0-n10-opmax` | 395 → 410 | 0.8771 → 0.8781 | 21 → 20 | 2 → 2 |
+| `pv-min-text-t0.7-n5-opmax` | 385 → 382 | 0.8732 → 0.8739 | 28 → 28 | 3 → 3 |
+| `pv-min-text-t0.3-n10-opmax` | 392 → 431 | 0.8682 → 0.8730 | 36 → 29 | 3 → 3 |
+| `pv-high-text-t1.0-n5-opmax` | 376 → 426 | 0.8607 → 0.8688 | 40 → 37 | 4 → **3** |
+| `pv-high-image-t0.7-n10-opmax` | 351 → 348 | 0.7761 → 0.7765 | 67 → 67 | 6 → 6 |
+| `pv-high-image-t0.3-n10-opmax` | 400 → 432 | 0.7689 → 0.7705 | 70 → 70 | 6 → 6 |
+| `pv-scale4-optimal-n5-opmax` | 396 → 398 | 0.7629 → 0.7635 | 74 → 73 | 6 → 6 |
+| `pv-min-image-t1.0-n10-opmax` | 364 → 397 | 0.7409 → 0.7428 | 76 → 76 | 7 → **6** |
+
+All nine move up (+0.0004 to +0.0081), the direction the diagnosis predicts:
+the registered point is its sweep's F1@20 argmax, so any other set scores no
+better.
+
+**Re-tier + MCB last** (sapphire, same chain, MCB recomputed on the final
+membership per the PI's rule):
+
+| Quantity | before | after |
+|---|---:|---:|
+| Pairs significant | 1,853 / 3,081 | 1,845 / 3,081 |
+| Tiers (sizes) | 7 (5/16/15/17/10/12/4) | 7 (5/16/16/16/10/14/2) |
+| Tier 1 (greedy clique) | five 3.7/3.8 cells | **the same five** |
+| Tie set | 5 | 5 |
+| Best Gemini 3 sweep optimum | `pv-high-text-t0.3-n5-opmax` 0.8863, rank 11, T2 | **the same cell** 0.8873, rank 11, T2 |
+| opmax below the lowest Tier-1 cell | 31 / 40 | 30 / 40 |
+| opmax below the top cell | 40 / 40 | 40 / 40 |
+| Hsu MCB admissible | 28 (w_upper 0.05012) | 28, **same members** (w_upper 0.05011) |
+| Two-sided MCB band | 39 | 40 |
+| Board argmax optimism | +0.0051 → 0.9181 | +0.0051 → 0.9181 |
+
+**Reading**: the correction does not touch the board's finding. Tier 1, its
+five members, the tie set and the Hsu admissible set (size AND membership) are
+unchanged; no `-era2b` incumbent moved tier; the best Gemini 3 sweep optimum is
+still `pv-high-text-t0.3-n5-opmax` in Tier 2, still 0.0195 below the lowest
+Tier-1 cell and not separable from it. Three cells changed tier, all `-opmax`:
+two of the nine moved up, and `pv-min-image-t1.0-n5-opmax` followed them as
+Tier 7 shrank to two. The sweep-optimism analysis (`optimism/`) covers the
+3.7/3.8 screen cells and the three Gemini 3 B-geometry sweep cells, none of
+them among the nine, and is unaffected. The 79-cell artefacts built on the
+stale materialisation are snapshotted under
+`archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-79cell-stale-materialisation/`,
+the nine cells' superseded evaluations under
+`…-2026-09-10-opmax-stale-materialisation/`. The analysis row remains
+UNSIGNED.
 
 ### 2026-09-10 (later still) — Symmetry fix built: both families at both levels, Tier 1 unchanged
 

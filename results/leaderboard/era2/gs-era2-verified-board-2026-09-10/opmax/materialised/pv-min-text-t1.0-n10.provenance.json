@@ -1,0 +1,69 @@
+{
+ "label": "pv-min-text-t1.0-n10",
+ "condition_id": "pv-diag-384::pv-min-text-t1.0-n10-opmax",
+ "board_id": "gs-era2-verified-board-2026-09-10",
+ "written_at_utc": "2026-09-10T07:00:51+00:00",
+ "written_by": "scripts/materialise_opmax_cells.py",
+ "why": "the 2026-04-19 materialisation (bd24293d4) does not hold the point the materialisation registry registered; rebuilt from the registered stage at the registered (vote_t, prob_t) \u2014 the union, probabilities and sweep are unchanged since 2026-04-17/18",
+ "operating_point": {
+  "vote_t": 5,
+  "prob_t": 0.15,
+  "filter": "vote_count >= vote_t AND mound_probability >= prob_t"
+ },
+ "stage_id": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10",
+ "pool_shape": "pv-consensus-union",
+ "inputs": {
+  "union": {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t1.geojson",
+   "git_blob_sha1": "978ccef1593ec75bf0c975e794e3ab77617d5961",
+   "last_commit": {
+    "commit": "09fe46a7f",
+    "date": "2026-04-17",
+    "subject": "feat(phase3a): text-track 2\u00d74 matrix + secondary effects analysis"
+   }
+  },
+  "probabilities": {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n10/probabilities.json",
+   "git_blob_sha1": "71a1a463a035a6a6d12b5a41f47c7fdaa20d3d1c",
+   "last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  },
+  "sweep": {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n10/sweep_2d.json",
+   "git_blob_sha1": "262b9e4b67a5a2064e2835ab968f92ddd5ef7fa2",
+   "last_commit": {
+    "commit": "857d5f714",
+    "date": "2026-04-18",
+    "subject": "analysis(phase3a): text verifier matrix + observations (Obs 253\u2013255)"
+   }
+  }
+ },
+ "membership": {
+  "path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/membership.json",
+  "git_blob_sha1": "46e0fc7eb9cbcea73a0741f08bca2e40ab0129d4"
+ },
+ "superseded_detections": {
+  "path": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t1.0-n10.geojson",
+  "n_features": 395,
+  "git_blob_sha1": "9267f03ddb38fd3eb6afebad6959e11eb9e746ee",
+  "registry_vs_archived": "differs: registry F1 0.8781 n 410 vs archived board F1 0.8771 n 395"
+ },
+ "counts": {
+  "n_computed": 410,
+  "n_registry": 410,
+  "n_archived": 395,
+  "n_union": 2472,
+  "n_probabilities": 2472,
+  "n_kept": 410,
+  "n_missing_probability": 0
+ },
+ "gate_a": {
+  "expected_n": 410,
+  "observed_n": 410,
+  "passed": true
+ },
+ "output_crs": "EPSG:4326"
+}

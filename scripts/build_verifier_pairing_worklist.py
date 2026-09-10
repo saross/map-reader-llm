@@ -15,7 +15,7 @@ scores, and the scoring itself runs on sapphire.
 
 How a twin is located
 ---------------------
-Four rules, in descending order of authority, each recorded in ``pairing_basis``:
+Five rules, in descending order of authority, each recorded in ``pairing_basis``:
 
 ``registered``
     A sibling condition already in the registry sharing the verified cell's run,
@@ -31,6 +31,20 @@ Four rules, in descending order of authority, each recorded in ``pairing_basis``
 ``union``
     The committed vote >= 1 union over the N passes. The paired shell has to be
     filtered out of it first; ``materialise_filter`` records the predicate.
+``crop-manifest``
+    The candidate universe the cell's verifier actually cropped, recorded by
+    the run under a directory named for the cell's own registered
+    ``proposer_pool``. Used only when the consensus-file route was AMBIGUOUS —
+    several committed consensus sets at that vote threshold sit under a run
+    tree serving many lineages and none carries the cell's tokens — because in
+    that case the run's consensus files cannot be attributed but the pool's
+    crop manifest can: the pool is named for its vote >= 1 shell
+    (``<lineage>-1of<N>``) and the manifest under that exact name is that
+    lineage's candidate universe, not a guess about which consensus file
+    belongs to whom. The twin is the shell ``vote_count >= k`` of it, built by
+    ``scripts/materialise_pairing_twin.py --crop-manifest``. Ranked BELOW a
+    registered twin and below an unambiguous consensus file, and never used to
+    override either. PI ruling 2026-09-10.
 ``unresolved``
     Nothing committed matches. Recorded as blocked with the reason, never
     substituted.
@@ -57,6 +71,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shlex
 import sys
 from collections import Counter
@@ -102,7 +117,7 @@ WORKLIST_COLUMNS: tuple[str, ...] = (
     "N", "min_votes", "prob_t",
     "status", "pairing_basis", "blocked_reason",
     "unverified_condition_id", "unverified_detections_path",
-    "unverified_eval_path", "union_path", "materialise_filter",
+    "unverified_eval_path", "union_path", "crop_manifest_path", "materialise_filter",
     "reference_path", "bounds_path", "engine", "output_dir",
     "materialise_command", "command",
     "notes",
@@ -319,6 +334,87 @@ def _projected_without_crs(path: Path) -> bool:
     return False
 
 
+#: Directories, in order of preference, under a run tree that hold one
+#: candidate manifest per proposer-pool lineage.
+_POOL_MANIFEST_DIRS: tuple[str, ...] = ("crops", "verified")
+_POOL_SHELL_RE = re.compile(r"^(?P<stem>.+)-(?P<k>\d+)of(?P<n>\d+)$")
+
+
+def _find_pool_crop_manifest(
+    run_dir: Path | None, pool: str, n_passes: int, votes: int, repo_root: Path
+) -> tuple[str | None, dict[str, Any] | None, str | None]:
+    """Locate the candidate universe the cell's own verifier lineage cropped.
+
+    The consensus-file route asks "which committed consensus set at vote >= k
+    belongs to this cell?" and refuses when a run tree serving many lineages
+    offers several and none carries the cell's tokens. This route asks a
+    different, answerable question: the cell's REGISTERED ``proposer_pool``
+    names its lineage at the vote >= 1 shell (``<lineage>-1of<N>``), and the
+    run records one candidate manifest per lineage under a directory of exactly
+    that name. That is an attribution the registry already made, not one this
+    script infers, so it resolves the ambiguity without guessing.
+
+    Only a vote >= 1 pool qualifies. A pool named for a higher shell has
+    already had the vote filter applied, so filtering it again at k would
+    silently compare two different universes; and N must equal the cell's, or
+    the manifest belongs to a different rung of the ladder.
+
+    Args:
+        run_dir: The run's output directory, if the registry records one.
+        pool: The cell's registered ``proposer_pool``.
+        n_passes: The cell's N.
+        votes: The cell's vote threshold k.
+        repo_root: Repository root, so the path is recorded relative.
+
+    Returns:
+        ``(path, stats, refusal)``. ``path`` is the repo-relative manifest and
+        ``stats`` summarises it (``n_candidates``, ``n_at_threshold``,
+        ``min_vote``, ``max_vote``); on failure both are ``None`` and
+        ``refusal`` says why.
+    """
+    if run_dir is None or not run_dir.is_dir() or not pool:
+        return None, None, "the registry records no output directory for this run"
+    shell = _POOL_SHELL_RE.match(pool)
+    if shell is None or int(shell.group("k")) != 1:
+        return None, None, (
+            f"the pool {pool!r} does not name a vote >= 1 shell, so its crop manifest "
+            "is already vote-filtered and cannot be filtered again at this cell's k"
+        )
+    if int(shell.group("n")) != n_passes:
+        return None, None, (
+            f"the pool {pool!r} names an N of {shell.group('n')} but the cell records "
+            f"{n_passes}; they are different rungs of the pass ladder"
+        )
+    for sub in _POOL_MANIFEST_DIRS:
+        path = run_dir / sub / pool / "candidate_manifest.json"
+        if not path.is_file():
+            continue
+        try:
+            document = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            return None, None, f"{path} is unreadable ({type(error).__name__})"
+        candidates = document.get("candidates") or []
+        vote_counts = [
+            (c.get("properties") or {}).get("vote_count") for c in candidates
+        ]
+        vote_counts = [v for v in vote_counts if isinstance(v, int)]
+        if not vote_counts:
+            return None, None, f"{path} records no integer vote_count"
+        at_threshold = sum(1 for v in vote_counts if v >= votes)
+        if not at_threshold:
+            return None, None, (
+                f"no candidate in {path} reaches vote_count >= {votes}; the shell is empty"
+            )
+        return (
+            str(path.relative_to(repo_root)),
+            {"n_candidates": len(candidates), "n_at_threshold": at_threshold,
+             "min_vote": min(vote_counts), "max_vote": max(vote_counts)},
+            None,
+        )
+    tried = ", ".join(f"{sub}/{pool}/candidate_manifest.json" for sub in _POOL_MANIFEST_DIRS)
+    return None, None, f"the run records no crop manifest for this pool (tried {tried})"
+
+
 def _has_source_tile(path: Path) -> bool:
     """Whether a detection GeoJSON carries a singular per-feature ``source_tile``.
 
@@ -494,6 +590,7 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
         twin_id = twin_detections = twin_eval = union_path = None
         materialise_filter = None
         matched_stage = None
+        crop_manifest_path: str | None = None
         notes: list[str] = []
 
         # The twin's stratum is keyed INDEPENDENTLY, so the cross-stratum guard
@@ -577,8 +674,33 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
                                  "not be cross-checked against a recorded source"
                         )
 
+            if basis == "unresolved" and refusal:
+                # The consensus-file route was AMBIGUOUS, not empty: committed
+                # sets at this vote threshold exist but cannot be attributed to
+                # this cell. The pool's own crop manifest can be, so ask that
+                # instead of blocking (PI ruling 2026-09-10). Only for an
+                # ambiguity — where nothing was found at all, the run has no
+                # pre-verifier set and blocking is still the right answer.
+                crop_path, crop_stats, crop_refusal = _find_pool_crop_manifest(
+                    run_dir, pool, n_passes, int(votes), sources.repo_root,
+                )
+                if crop_path is not None:
+                    basis = "crop-manifest"
+                    crop_manifest_path = crop_path
+                    materialise_filter = f"vote_count >= {int(votes)}"
+                    notes.append(
+                        "consensus-file route ambiguous, so the twin is the vote shell of "
+                        f"the candidate universe this cell's own pool cropped ({crop_path}: "
+                        f"{crop_stats['n_candidates']} candidates, votes "
+                        f"{crop_stats['min_vote']}-{crop_stats['max_vote']}, "
+                        f"{crop_stats['n_at_threshold']} at vote >= {int(votes)})"
+                    )
+                    notes.append(f"consensus-file route refused because: {refusal}")
+                else:
+                    blocked = f"{refusal} — and {crop_refusal}"
+
             if basis == "unresolved":
-                blocked = refusal or (
+                blocked = blocked or refusal or (
                     "no committed pre-verifier set was found for "
                     f"(run={run_id}, pool={pool!r}, N={n_passes}, k={votes}): "
                     "the registry holds no consensus sibling, no consensus "
@@ -640,6 +762,20 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
             parts += ["--output", materialised]
             materialise_command = " ".join(shlex.quote(part) for part in parts)
             scoreable = materialised
+        if basis == "crop-manifest" and recipe is not None and crop_manifest_path:
+            # The twin is the vote shell of the pool's own crop manifest. The
+            # materialiser's manifest mode copies each candidate's recorded
+            # source_tile and centroid verbatim, so the twin shares the verified
+            # side's candidate universe exactly and differs from it in the
+            # probability filter alone.
+            materialised = f"{output_dir}/twin-{int(votes)}of{n_passes}.geojson"
+            materialise_command = " ".join(shlex.quote(part) for part in [
+                "python", "scripts/materialise_pairing_twin.py",
+                "--crop-manifest", crop_manifest_path,
+                "--min-votes", str(int(votes)),
+                "--output", materialised,
+            ])
+            scoreable = materialised
         if (
             scoreable
             and recipe is not None
@@ -699,6 +835,7 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
             "unverified_detections_path": twin_detections,
             "unverified_eval_path": twin_eval,
             "union_path": union_path,
+            "crop_manifest_path": crop_manifest_path,
             "materialise_filter": materialise_filter,
             "reference_path": reference.path,
             "bounds_path": recipe.bounds if recipe else None,

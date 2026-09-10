@@ -2,7 +2,7 @@
 
 # Conditions manifest
 
-> Generated 2026-09-10T05:50:26Z · 520 row(s) · schema v1.0.
+> Generated 2026-09-10T07:11:53Z · 520 row(s) · schema v1.0.
 >
 > **Coverage**: 520 condition(s) across the decomposed runs (sub-step 3b in progress).
 
@@ -246,24 +246,24 @@
 | pv-diag-384::verified-adv-text-min-true-3of5-era2b | proposer-verifier | verified | 3 | 5 | 0.8784 | 0.7903 | 412 |
 | pv-diag-384::verified-adv-text-pro-vf-4of5-era2b | proposer-verifier | verified | 4 | 5 | 0.8792 | 0.7947 | 393 |
 | pv-diag-384::verified-adv-text-t03-4of5-era2b | proposer-verifier | verified | 4 | 5 | 0.8783 | 0.7834 | 403 |
-| pv-diag-384::pv-high-text-t0.3-n5-opmax | proposer-verifier | verified | 4 | 5 | 0.8863 | 0.7759 | 409 |
+| pv-diag-384::pv-high-text-t0.3-n5-opmax | proposer-verifier | verified | 4 | 5 | 0.8873 | 0.7805 | 408 |
 | pv-diag-384::session-78-text-comparative-opmax | proposer-verifier | verified | 4 | 5 | 0.8846 | 0.7947 | 397 |
 | pv-diag-384::session-78-text-adversarial-opmax | proposer-verifier | verified | 4 | 5 | 0.8833 | 0.7947 | 396 |
 | pv-diag-384::pv-high-text-t1.0-n10-opmax | proposer-verifier | verified | 5 | 10 | 0.8804 | 0.791 | 426 |
 | pv-diag-384::session-78-text-checklist-opmax | proposer-verifier | verified | 4 | 5 | 0.8783 | 0.7759 | 403 |
 | pv-diag-384::pv-min-text-t0.3-n5-opmax | proposer-verifier | verified | 3 | 5 | 0.8778 | 0.7735 | 408 |
-| pv-diag-384::pv-min-text-t1.0-n10-opmax | proposer-verifier | verified | 5 | 10 | 0.8771 | 0.7815 | 395 |
+| pv-diag-384::pv-min-text-t1.0-n10-opmax | proposer-verifier | verified | 5 | 10 | 0.8781 | 0.7881 | 410 |
 | pv-diag-384::session-78-text-brief-opmax | proposer-verifier | verified | 4 | 5 | 0.8762 | 0.7659 | 405 |
 | pv-diag-384::pv-high-text-t0.7-n10-opmax | proposer-verifier | verified | 8 | 10 | 0.8744 | 0.7641 | 377 |
-| pv-diag-384::pv-min-text-t0.7-n5-opmax | proposer-verifier | verified | 4 | 5 | 0.8732 | 0.7862 | 385 |
+| pv-diag-384::pv-min-text-t0.7-n5-opmax | proposer-verifier | verified | 4 | 5 | 0.8739 | 0.7957 | 382 |
 | pv-diag-384::pv-min-text-t0.7-n10-opmax | proposer-verifier | verified | 6 | 10 | 0.8726 | 0.7768 | 397 |
 | pv-diag-384::pv-high-text-t0.3-n10-opmax | proposer-verifier | verified | 8 | 10 | 0.8722 | 0.7872 | 402 |
 | pv-diag-384::pv-min-text-t1.0-n5-opmax | proposer-verifier | verified | 3 | 5 | 0.8714 | 0.7797 | 405 |
-| pv-diag-384::pv-min-text-t0.3-n10-opmax | proposer-verifier | verified | 3 | 10 | 0.8682 | 0.7731 | 392 |
+| pv-diag-384::pv-min-text-t0.3-n10-opmax | proposer-verifier | verified | 3 | 10 | 0.873 | 0.791 | 431 |
 | pv-diag-384::session-78-text-checklist-text-opmax | proposer-verifier | verified | 4 | 5 | 0.8639 | 0.7561 | 410 |
 | pv-diag-384::pv-high-text-t0.7-n5-opmax | proposer-verifier | verified | 4 | 5 | 0.8634 | 0.7684 | 392 |
 | pv-diag-384::pv-min-text-t0.0-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.8623 | 0.7834 | 393 |
-| pv-diag-384::pv-high-text-t1.0-n5-opmax | proposer-verifier | verified | 3 | 5 | 0.8607 | 0.7567 | 376 |
+| pv-diag-384::pv-high-text-t1.0-n5-opmax | proposer-verifier | verified | 3 | 5 | 0.8688 | 0.7857 | 426 |
 | pv-diag-384::session-78-text-adversarial-text-opmax | proposer-verifier | verified | 4 | 5 | 0.8603 | 0.7534 | 388 |
 | pv-diag-384::session-78-text-brief-text-opmax | proposer-verifier | verified | 4 | 5 | 0.8519 | 0.7582 | 389 |
 | pv-diag-384::pv-high-text-t0.0-n3-opmax | proposer-verifier | verified | 3 | 3 | 0.8234 | 0.775 | 403 |
@@ -277,15 +277,15 @@
 | pv-diag-384::pv-min-image-t0.3-n10-opmax | proposer-verifier | verified | 7 | 10 | 0.7819 | 0.8377 | 404 |
 | pv-diag-384::session-78-image-brief-text-opmax | proposer-verifier | verified | 3 | 5 | 0.7782 | 0.8199 | 408 |
 | pv-diag-384::pv-min-image-t0.3-n5-opmax | proposer-verifier | verified | 4 | 5 | 0.7767 | 0.8416 | 407 |
-| pv-diag-384::pv-high-image-t0.7-n10-opmax | proposer-verifier | verified | 7 | 10 | 0.7761 | 0.7969 | 351 |
+| pv-diag-384::pv-high-image-t0.7-n10-opmax | proposer-verifier | verified | 7 | 10 | 0.7765 | 0.798 | 348 |
 | pv-diag-384::pv-min-image-t0.7-n5-opmax | proposer-verifier | verified | 3 | 5 | 0.7734 | 0.8383 | 421 |
 | pv-diag-384::session-78-image-adversarial-text-opmax | proposer-verifier | verified | 3 | 5 | 0.7718 | 0.7973 | 415 |
-| pv-diag-384::pv-high-image-t0.3-n10-opmax | proposer-verifier | verified | 5 | 10 | 0.7689 | 0.8154 | 400 |
+| pv-diag-384::pv-high-image-t0.3-n10-opmax | proposer-verifier | verified | 5 | 10 | 0.7705 | 0.8294 | 432 |
 | pv-diag-384::pv-scale4-optimal-n10-opmax | proposer-verifier | verified | 5 | 10 | 0.7683 | 0.8154 | 411 |
 | pv-diag-384::pv-high-image-t1.0-n10-opmax | proposer-verifier | verified | 5 | 10 | 0.7633 | 0.8002 | 414 |
-| pv-diag-384::pv-scale4-optimal-n5-opmax | proposer-verifier | verified | 3 | 5 | 0.7629 | 0.8352 | 396 |
+| pv-diag-384::pv-scale4-optimal-n5-opmax | proposer-verifier | verified | 3 | 5 | 0.7635 | 0.8306 | 398 |
 | pv-diag-384::pv-high-image-t0.3-n5-opmax | proposer-verifier | verified | 4 | 5 | 0.7475 | 0.8049 | 373 |
-| pv-diag-384::pv-min-image-t1.0-n10-opmax | proposer-verifier | verified | 6 | 10 | 0.7409 | 0.8105 | 364 |
+| pv-diag-384::pv-min-image-t1.0-n10-opmax | proposer-verifier | verified | 6 | 10 | 0.7428 | 0.8078 | 397 |
 | pv-diag-384::pv-min-image-t1.0-n5-opmax | proposer-verifier | verified | 4 | 5 | 0.7384 | 0.8021 | 364 |
 | pv-diag-384::pv-high-image-t1.0-n5-opmax | proposer-verifier | verified | 3 | 5 | 0.7337 | 0.823 | 410 |
 | h12-v2::greedy-r1-hn-heavy | consensus | greedy | 4 | 5 | 0.7084 | 0.6956 | 240 |

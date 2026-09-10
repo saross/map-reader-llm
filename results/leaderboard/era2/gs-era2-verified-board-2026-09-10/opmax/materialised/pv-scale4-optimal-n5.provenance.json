@@ -1,0 +1,69 @@
+{
+ "label": "pv-scale4-optimal-n5",
+ "condition_id": "pv-diag-384::pv-scale4-optimal-n5-opmax",
+ "board_id": "gs-era2-verified-board-2026-09-10",
+ "written_at_utc": "2026-09-10T07:00:53+00:00",
+ "written_by": "scripts/materialise_opmax_cells.py",
+ "why": "the 2026-04-19 materialisation (bd24293d4) does not hold the point the materialisation registry registered; rebuilt from the registered stage at the registered (vote_t, prob_t) \u2014 the union, probabilities and sweep are unchanged since 2026-04-17/18",
+ "operating_point": {
+  "vote_t": 3,
+  "prob_t": 0.15,
+  "filter": "vote_count >= vote_t AND mound_probability >= prob_t"
+ },
+ "stage_id": "scale-4-optimal-487-verified-v1-n5",
+ "pool_shape": "pv-consensus-union",
+ "inputs": {
+  "union": {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n5/consensus_t1.geojson",
+   "git_blob_sha1": "7e0981712c4737820c59852c576cc6ab34b177ab",
+   "last_commit": {
+    "commit": "c3e8e0701",
+    "date": "2026-04-17",
+    "subject": "data(scale-4): optimal library run at 487 tiles (K=10, HIGH T=0.7)"
+   }
+  },
+  "probabilities": {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n5/probabilities.json",
+   "git_blob_sha1": "89a106164be9b8a9530e26facc45f71921e1267e",
+   "last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  "sweep": {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n5/sweep_2d.json",
+   "git_blob_sha1": "370d779b2984c908a5094f4d0dbdd93e8fb657ae",
+   "last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  }
+ },
+ "membership": {
+  "path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/membership.json",
+  "git_blob_sha1": "46e0fc7eb9cbcea73a0741f08bca2e40ab0129d4"
+ },
+ "superseded_detections": {
+  "path": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-scale4-optimal-n5.geojson",
+  "n_features": 396,
+  "git_blob_sha1": "32a87c9c5efd5403b2dd3db4bb92f64722a1f142",
+  "registry_vs_archived": "differs: registry F1 0.7635 n 398 vs archived board F1 0.7629 n 396"
+ },
+ "counts": {
+  "n_computed": 398,
+  "n_registry": 398,
+  "n_archived": 396,
+  "n_union": 2198,
+  "n_probabilities": 2198,
+  "n_kept": 398,
+  "n_missing_probability": 0
+ },
+ "gate_a": {
+  "expected_n": 398,
+  "observed_n": 398,
+  "passed": true
+ },
+ "output_crs": "EPSG:4326"
+}
