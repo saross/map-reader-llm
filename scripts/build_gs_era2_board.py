@@ -316,6 +316,21 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
                         f"{os.path.basename(m['committed_bounds'])} stays the row's record.")
         run["conditions"].append(row)
         added += 1
+    # The G2 reproduction evaluations are gate artefacts, not conditions: waive
+    # them in each run's _ignored_evals so the register verifier reads them as
+    # disclosed rather than unclaimed.
+    waived = 0
+    for m in membership["members"]:
+        run = dec[m["run_id"]]
+        g2_path = f"{BOARD_DIR}/g2/{slug(m['condition_id'])}/evaluation.json"
+        ignored = run.setdefault("_ignored_evals", [])
+        if any((e.get("eval_path") if isinstance(e, dict) else e) == g2_path for e in ignored):
+            continue
+        ignored.append({"eval_path": g2_path,
+                        "reason": (f"GS Era-2 board gate G2 ({CARD}): {m['label']}'s committed recipe re-run on "
+                                   "its committed frame with a 200-draw bootstrap to prove the evaluator reproduces "
+                                   "the committed evaluation; a gate artefact, not a condition.")})
+        waived += 1
     rows = ra["analyses"] if isinstance(ra, dict) else ra
     if not any(r["analysis_id"] == BOARD_ID for r in rows):
         rows.append({
@@ -340,7 +355,7 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
     if write:
         RUN_CONDITIONS.write_text(json.dumps(rc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
         RUN_ANALYSES.write_text(json.dumps(ra, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"{'wrote' if write else 'would write'} {added} new condition rows; analysis row {BOARD_ID} "
+    print(f"{'wrote' if write else 'would write'} {added} new condition rows and {waived} G2 waivers; analysis row {BOARD_ID} "
           f"{'present' if not write else 'ensured'} with {len(new_ids)} conditions_compared")
     return new_ids
 
