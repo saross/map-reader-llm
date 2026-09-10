@@ -74,6 +74,27 @@ promoted on citation as usual.
 
 ## Changelog
 
+### 2026-09-10 (later) — Registration walk-through rulings 2(i)–2(iv) (S152, PI present)
+
+- **2(i)** The notation key sanctions the supplement's columns (§ 7.1) and
+  names every frame in use (§ 6); the proposal now reports 0 pending
+  (`f97bede45`).
+- **2(ii)** r2 is the 55-map headline reference; canonical, standardised
+  and student stay as disclosed strata (`headline_reference` column,
+  `3dfa12c00`).
+- **2(iii)** The 14 pairs blocked as "ambiguous consensus set under the
+  `pv-diag-384` tree" are to be RESOLVED, not accepted as disclosed: the
+  twin is the verifier stage's own candidate manifest at vote ≥ k (the
+  crop-manifest basis), an exact construction; queued to the background
+  agent with the board's re-materialisation. The remaining blocked pairs
+  (16 with no vote threshold, and those with no committed pre-verifier
+  set) are accepted as disclosed. Standing preference recorded: close a
+  gap that can be closed exactly at modest cost rather than defer it.
+- **2(iv)** The board's 40 `-opmax` rows (Gemini 3 sweep optima) stay
+  OUT of the supplement by design: an uplift at an in-sample argmax is
+  the maximum over the sweep, an optimistically biased quantity (E56),
+  and the same pools are in the supplement at their committed points.
+
 ### 2026-09-10 — Board-frame exclusion rule implemented and the supplement rebuilt (S152)
 
 **Trigger**: the GS Era-2 verified board (`planning/gs-era2-verified-board-2026-09-08.md`)
