@@ -42,11 +42,18 @@ REPO = Path(__file__).resolve().parent.parent
 RUN_CONDITIONS = REPO / "results/run-conditions.json"
 ANCHOR_ROOT = REPO / "results/uplift-supplement"
 ANCHOR_DIRS = ("k1-gapfill", "verifier-pairing")
+#: The reason written on every NEW waiver. Entries already in the register keep
+#: the text they were written with — the 2026-09-07 batch names the commit that
+#: scored it (``5bd514542``), which is true of that batch and of nothing since,
+#: so this text states the class rather than a commit. Amended 2026-09-10, when
+#: the ``crop-manifest`` pairing rule resolved fourteen previously blocked
+#: pv-diag-384 twins and scored them under the same directory.
 REASON = (
-    "uplift-supplement K=1 anchor (planning/uplift-supplement-2026-08-28.md; "
-    "scored 5bd514542): an input to the supplement's pairing tables, on the "
-    "reference of the stratum it pairs with; not a registered condition and "
-    "not cited by the paper. Waived by PI ruling 2026-09-07 "
+    "uplift-supplement pairing/gap-fill anchor "
+    "(planning/uplift-supplement-2026-08-28.md): an input to the supplement's "
+    "pairing tables, scored on the reference, buffer, and frame of the stratum "
+    "it pairs with; not a registered condition and not cited by the paper. "
+    "Waived by PI ruling 2026-09-07 "
     "(planning/reference-revision-2026-09-06.md, register-verifier debt)."
 )
 
