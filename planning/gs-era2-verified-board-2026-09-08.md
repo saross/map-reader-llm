@@ -353,6 +353,10 @@ the nine cells' superseded evaluations under
 `…-2026-09-10-opmax-stale-materialisation/`. The analysis row remains
 UNSIGNED.
 
+### 2026-09-11 — The nine mis-materialised cells: mechanism diagnosed
+
+Brute-forcing the sweep grid against each archived set: all nine archived files are exactly the set at the **327-tile (Era-3) frame's** sweep optimum (`pv_registry_327.json`, `best_at_327`), e.g. `pv-high-text-t1.0-n5` at (4, 0.15) where the 487-frame optimum is (3, 0.20); for the other twenty pv cells the two frames' optima coincide, which is why only nine differed. The 2026-04-19 materialiser (`scripts/materialise_pv_geojson.py`, index join, vote ≥ vote_t and probability ≥ prob_t) was correct; it was fed the Era-3 operating points and the result was scored and boarded on the Era-2 frame. The rebuild at the 487-frame optima (merge `aec214e0f`) is therefore the correct cell, not merely a repaired file. Recorded in the nine rows' notes.
+
 ### 2026-09-10 (evening) — G1 ruled satisfied; the analysis row signed
 
 **For a later reader**: gate G1 asked whether the archived 44-cell Era-2 PV board could be rebuilt from its archived inputs with the retired builder. It could not, for one cell of 44: the archived board had scored that cell from a 372-feature file served by a cache keyed on the cell's name (never on its content), and the file that survives in the archive is the 373-feature re-materialisation committed seventy seconds after the board was built (entry "G1 bisected" below; Obs 464). Substituting the file the board actually scored reproduces the archived board exactly (entry "Confirmatory rebuild"). The PI ruled the gate satisfied on that true-input reproduction, and signed the analysis row on the 79-cell board (39 register cells on the board frame plus the 40 sweep-optimal Gemini 3 cells, the nine mis-materialised ones corrected the same day). Recorded in `provenance.json` (`gates.G1.pi_ruling`), the analysis row's `_signature_note`, and § 9.
