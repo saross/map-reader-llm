@@ -2,7 +2,7 @@
 
 # Analyses manifest
 
-> Generated 2026-09-10T07:39:18Z · 64 row(s) · schema v1.0.
+> Generated 2026-09-10T12:34:57Z · 64 row(s) · schema v1.0.
 >
 > **Coverage**: 64 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
 

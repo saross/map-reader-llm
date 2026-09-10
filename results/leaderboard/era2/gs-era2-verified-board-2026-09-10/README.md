@@ -166,6 +166,10 @@ the 79-cell artefacts built on the stale materialisation are under
 `archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-79cell-stale-materialisation/`.
 The analysis row remains UNSIGNED; the publication ruling is the PI's.
 
+### 2026-09-10 (evening) — Signed
+
+The PI ruled G1 satisfied on the true-input reproduction and signed the analysis row at 2026-09-10T12:34:56Z; the ruling text is in `provenance.json` under `gates.G1.pi_ruling` and in the card's § 9.
+
 ### 2026-09-10 (later) — Symmetry fix: both families at both levels; 79 cells
 
 **Trigger**: PI, 2026-09-10 — the 3.7/3.8 cells are the screens' sweep-best

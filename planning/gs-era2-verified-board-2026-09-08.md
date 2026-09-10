@@ -183,6 +183,10 @@ inputs (changelog, 2026-09-10, deviation 2).
   reproduces on `full_evaluation_bounds` from the same inputs before any
   new cell is added — F1 per cell to 1e-6, the 20 m pairwise p-values, the
   tiers.
+  *Outcome (2026-09-10)*: FAILED as specified on one cell, because the
+  archived input file for that cell is not the input the archived board
+  scored (a stale cache; see the changelog); PASSES from the true inputs
+  (44/44 cells, 946/946 pairs). PI ruling: satisfied — § 9.
 - **G2 committed-evaluation reproduction**: every member's F1@20 on its OWN
   committed frame reproduces its `evaluation.json` to 1e-6 before the
   one-frame re-score is read.
@@ -245,6 +249,12 @@ until § 9 is signed.
       the `--dry-run` listing is recorded in § Changelog when built.
 - [x] Buffers / tiering as § 5.
 - [x] Go — 2026-09-09.
+- [x] **G1 publication ruling — 2026-09-10 (S152)**: G1 satisfied on the
+      true-input reproduction (the as-specified failure was a stale cache in
+      the archived board's inputs, not instrument drift; changelog entries
+      "G1 bisected" and the confirmatory rebuild; Obs 464). The analysis
+      row `gs-era2-verified-board-2026-09-10` signed 2026-09-10T12:34:56Z on the
+      79-cell board with the nine opmax cells corrected.
 
 ## Changelog
 
@@ -342,6 +352,10 @@ stale materialisation are snapshotted under
 the nine cells' superseded evaluations under
 `…-2026-09-10-opmax-stale-materialisation/`. The analysis row remains
 UNSIGNED.
+
+### 2026-09-10 (evening) — G1 ruled satisfied; the analysis row signed
+
+**For a later reader**: gate G1 asked whether the archived 44-cell Era-2 PV board could be rebuilt from its archived inputs with the retired builder. It could not, for one cell of 44: the archived board had scored that cell from a 372-feature file served by a cache keyed on the cell's name (never on its content), and the file that survives in the archive is the 373-feature re-materialisation committed seventy seconds after the board was built (entry "G1 bisected" below; Obs 464). Substituting the file the board actually scored reproduces the archived board exactly (entry "Confirmatory rebuild"). The PI ruled the gate satisfied on that true-input reproduction, and signed the analysis row on the 79-cell board (39 register cells on the board frame plus the 40 sweep-optimal Gemini 3 cells, the nine mis-materialised ones corrected the same day). Recorded in `provenance.json` (`gates.G1.pi_ruling`), the analysis row's `_signature_note`, and § 9.
 
 ### 2026-09-10 (later still) — Symmetry fix built: both families at both levels, Tier 1 unchanged
 

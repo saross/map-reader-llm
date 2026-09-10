@@ -2331,7 +2331,9 @@
    "preregistered": "post-hoc",
    "deviations": [],
    "_prereg_rationale": "Post-hoc: the preregistration fixed the model family; this board extends § R4's GS instrument to the Gemini 3.7 / 3.8 cells on one frame. Split out of the r2 chain by PI ruling (S149); card signed 2026-09-09.",
-   "_conditions_note": "39 '-era2b' rows (the registered cells re-scored on the board frame; the committed rows remain the members' records) plus 40 '-opmax' rows (the archived Era-2 PV board's sweep-optimal Gemini 3 cells, in-sample optima of the E56 class, registered 2026-09-10 for the symmetry fix; three K = 3 archived cells are registered but off-board by the K >= 5 rule). Both families at both levels: committed operating points and sweep optima."
+   "_conditions_note": "39 '-era2b' rows (the registered cells re-scored on the board frame; the committed rows remain the members' records) plus 40 '-opmax' rows (the archived Era-2 PV board's sweep-optimal Gemini 3 cells, in-sample optima of the E56 class, registered 2026-09-10 for the symmetry fix; three K = 3 archived cells are registered but off-board by the K >= 5 rule). Both families at both levels: committed operating points and sweep optima.",
+   "manually_verified_at": "2026-09-10T12:34:56Z",
+   "_signature_note": "Signed 2026-09-10T12:34:56Z by the PI on the 79-cell board (39 -era2b rows + 40 -opmax rows, the nine mis-materialised opmax cells corrected the same day; merge aec214e0f). PI ruling 2026-09-10 (S152, in session): G1 is SATISFIED on the true-input reproduction. As specified, the gate rebuilt the archived 44-cell board from its ARCHIVED inputs and one cell differed (0.7460 -> 0.7475) because the archived board had scored a 372-feature blob served from a stale label-keyed cache while the archived file holds 373 features; from the inputs the archived board actually scored it reproduces 44/44 cells and 946/946 pairs with tiers identical (g1-regression.json 'bisect' and g1-confirmatory-rebuild.json; Obs 464). The clause 'nothing published unless all gates pass' is read as reproduction from the true inputs, which passes; the as-specified failure and its cause stay on record."
   }
  ]
 }
