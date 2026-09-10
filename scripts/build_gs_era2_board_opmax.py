@@ -28,13 +28,26 @@ What it does (subcommands, in order)
     twins). Apply the card's K >= 5 rule for board membership (the three
     K = 3 cells are registered but stay off the board). Write
     ``<board>/opmax/membership.json``.
-``jobs``
+    **Re-materialisation (2026-09-10)**: nine cells' 2026-04-19 detection
+    files did NOT hold the point the registry registered
+    (``registry_vs_archived`` = ``differs …``). They were rebuilt from their
+    registered stage by ``scripts/materialise_opmax_cells.py`` into
+    ``<board>/opmax/materialised/``; where a rebuilt file exists, the member's
+    ``detections`` points at it, ``registry_vs_archived`` becomes
+    ``resolved …``, the superseded path is kept as ``archived_detections``,
+    and ``archived_n`` / ``archived_f1_20`` stay as history. A resolved row's
+    EXPECTED score in ``gates`` is then the REGISTRY's F1 and count, not the
+    archived board's.
+``jobs [--only-resolved]``
     ``<board>/opmax/score-commands.sh``: per cell, the archived geojson scored
     on the Era-2 frame (``384/full_evaluation_bounds.geojson``, the frame the
     archived board used; 200-draw bootstrap; the G2-analogue reproduction of
     the archived F1) into ``<board>/opmax/g2/<slug>/``, and on the board frame
     (10,000-draw bootstrap, 14 buffers, MCC) into ``<board>/cells/<slug>/``.
     K < 5 cells get one full Era-2-frame evaluation only (their row's record).
+    ``--only-resolved`` restricts the sweep to the re-materialised rows and
+    additionally writes ``rescore-jobs.txt``, one command per line, for
+    ``xargs -P`` on sapphire.
 ``gates``
     G2-analogue: the Era-2-frame re-score reproduces the archived F1@20 to
     1e-6 and the archived detection count — except the one cell the G1 bisect
@@ -43,7 +56,10 @@ What it does (subcommands, in order)
     is the bisect's; G3 every board evaluation names the board frame; G4 the
     count; G6 the per-cell frame delta. Writes ``<board>/opmax/gates.json``.
 ``register --write``
-    Mint one ``<label>-opmax`` row per cell into its parent run
+    Idempotently repoint any already-registered row whose member is now
+    ``resolved`` at its re-materialised file, dropping the superseded
+    "registry differs" sentence from ``_note`` and recording the replacement
+    (counts before -> after). Otherwise, mint one ``<label>-opmax`` row per cell into its parent run
     (``pv-diag-384``; ``n1-outstanding-384`` for the n1 cell), waive the
     G2-analogue evaluations, and extend the board analysis row's
     ``conditions_compared`` with the K >= 5 rows. Idempotent. Then run
@@ -106,6 +122,10 @@ SEED = 42
 SUFFIX = "-opmax"
 MIN_K = 5
 OPMAX_DIR = f"{BOARD_DIR}/opmax"
+# Cells re-materialised from their registered stage because the 2026-04-19
+# materialisation did not hold the registered point (scripts/materialise_opmax_cells.py).
+RESOLVED_DIR = f"{OPMAX_DIR}/materialised"
+RESOLVED_ON = "2026-09-10"
 # The one archived cell that is a registered condition (coordinate-identical).
 TWINS = {"pv-flash-high-text-16of30": "pv-diag-384::verified-adv-text-consensus-16of30"}
 # The one cell whose archived F1 came from a stale cache (G1 bisect, 2026-09-10).
@@ -204,6 +224,23 @@ def derive_membership() -> dict[str, Any]:
             "match" if abs(reg_f1 - arch["archived_f1_20"]) < 5e-5 and reg_n == arch["archived_n"] else
             f"differs: registry F1 {reg_f1} n {reg_n} vs archived board F1 {arch['archived_f1_20']} n {arch['archived_n']}")
         row["detections"] = f"{MATERIALISED}/{label}.geojson"
+        # Resolution (2026-09-10): where the archived file did NOT hold the
+        # registered point, the cell was rebuilt from its stage at that point
+        # (scripts/materialise_opmax_cells.py; Gate A: the rebuilt count equals
+        # the registry's). The row then IS the registered point, and its
+        # expected score becomes the REGISTRY's, not the archived board's.
+        # ``archived_n`` / ``archived_f1_20`` stay as history.
+        rebuilt = f"{RESOLVED_DIR}/{label}.geojson"
+        if row["registry_vs_archived"].startswith("differs") and (REPO_ROOT / rebuilt).is_file():
+            row["archived_detections"] = row["detections"]
+            row["detections"] = rebuilt
+            row["resolved_at"] = RESOLVED_ON
+            row["registry_vs_archived"] = (
+                f"resolved {RESOLVED_ON}: the 2026-04-19 materialisation (bd24293d4) held F1 "
+                f"{arch['archived_f1_20']} n {arch['archived_n']}, not the registered point; re-materialised "
+                f"from stage {row['stage_id']} at (vote_t {row['vote_threshold']}, prob_t "
+                f"{row['prob_threshold']}) to n {reg_n}, the registry's count, expected F1@20 {reg_f1} "
+                f"(scripts/materialise_opmax_cells.py; superseded file kept at archived_detections)")
         row["condition_id"] = f"{row['run_id']}::{label}{SUFFIX}"
         row["on_board"] = row["k"] >= MIN_K
         if not row["on_board"]:
@@ -228,30 +265,54 @@ def _cmd(detections: str, bounds: str, out_dir: str, bootstrap: int, label: str)
     return " ".join(shlex.quote(p) for p in parts)
 
 
-def write_jobs(membership: dict[str, Any]) -> Path:
+def write_jobs(membership: dict[str, Any], only_resolved: bool = False) -> Path:
+    """Write the scoring jobs for the ``-opmax`` rows.
+
+    Args:
+        membership: The parsed ``opmax/membership.json``.
+        only_resolved: Emit jobs for the re-materialised rows only, into
+            ``opmax/rescore-commands.sh`` plus a one-command-per-line
+            ``opmax/rescore-jobs.txt`` for ``xargs -P``. The full sweep goes
+            to ``opmax/score-commands.sh`` as before.
+
+    Returns:
+        Path of the shell script written.
+    """
+    members = [m for m in membership["members"] if m.get("resolved_at")] if only_resolved \
+        else membership["members"]
+    what = "re-materialised rows only" if only_resolved else "all rows"
     lines = ["#!/usr/bin/env bash",
-             f"# GS Era-2 board symmetry fix — {SUFFIX} rows scoring jobs. GENERATED by scripts/build_gs_era2_board_opmax.py.",
+             f"# GS Era-2 board symmetry fix — {SUFFIX} rows scoring jobs ({what}). "
+             "GENERATED by scripts/build_gs_era2_board_opmax.py.",
              "# Run on sapphire from the repository root. Each job is independent; failures are collected.",
              "set -uo pipefail", "FAILED=()",
              'run() { echo "+ ${*:1:6} …"; if ! "$@"; then echo "FAILED: $1 $2 $3 $4" >&2; FAILED+=("$4"); fi; }', ""]
+    bare: list[str] = []
     n = 0
-    for m in membership["members"]:
+    for m in members:
         s = slug(m["condition_id"])
         lines.append(f"# {m['condition_id']}")
         if m["on_board"]:
-            lines.append("run " + _cmd(m["detections"], ERA2_FRAME, f"{OPMAX_DIR}/g2/{s}", G2_BOOTSTRAP, f"{s}-g2"))
-            lines.append("run " + _cmd(m["detections"], FRAME, f"{BOARD_DIR}/cells/{s}", BOARD_BOOTSTRAP, s))
-            n += 2
+            jobs = [_cmd(m["detections"], ERA2_FRAME, f"{OPMAX_DIR}/g2/{s}", G2_BOOTSTRAP, f"{s}-g2"),
+                    _cmd(m["detections"], FRAME, f"{BOARD_DIR}/cells/{s}", BOARD_BOOTSTRAP, s)]
         else:
-            lines.append("run " + _cmd(m["detections"], ERA2_FRAME, f"{OPMAX_DIR}/era2/{s}", BOARD_BOOTSTRAP, s))
-            n += 1
+            jobs = [_cmd(m["detections"], ERA2_FRAME, f"{OPMAX_DIR}/era2/{s}", BOARD_BOOTSTRAP, s)]
+        lines += ["run " + j for j in jobs]
+        bare += jobs
+        n += len(jobs)
         lines.append("")
     lines += ['if [ ${#FAILED[@]} -gt 0 ]; then echo "FAILED jobs: ${FAILED[*]}" >&2; exit 1; fi',
               'echo "ALL DONE $(date -u +%FT%TZ)"']
-    path = REPO_ROOT / OPMAX_DIR / "score-commands.sh"
+    name = "rescore-commands.sh" if only_resolved else "score-commands.sh"
+    path = REPO_ROOT / OPMAX_DIR / name
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     path.chmod(0o755)
-    print(f"wrote {path.relative_to(REPO_ROOT)} ({n} jobs)")
+    print(f"wrote {path.relative_to(REPO_ROOT)} ({n} jobs, {len(members)} rows)")
+    if only_resolved:
+        # One command per line, for `xargs -P4 -I{} bash -c '{}'` on sapphire.
+        bare_path = REPO_ROOT / OPMAX_DIR / "rescore-jobs.txt"
+        bare_path.write_text("\n".join(bare) + "\n", encoding="utf-8")
+        print(f"wrote {bare_path.relative_to(REPO_ROOT)}")
     return path
 
 
@@ -285,6 +346,14 @@ def run_gates(membership: dict[str, Any]) -> dict[str, Any]:
         if m["label"] in BISECTED:
             b = BISECTED[m["label"]]
             exp_f1, exp_n, note = b["expected_f1_20"], b["expected_n"], b["why"]
+        # A resolved row is the REGISTERED point, so the G2-analogue reproduces
+        # the materialisation registry's F1 and count, not the archived board's
+        # (which came from a file that never held that point).
+        if m.get("resolved_at"):
+            exp_f1, exp_n = m["registry_f1_20"], m["registry_n"]
+            note = (f"re-materialised {m['resolved_at']}: expected value is the registry's "
+                    f"({m['registry_f1_20']} / n {m['registry_n']}), not the archived board's "
+                    f"({m['archived_f1_20']} / n {m['archived_n']}) — see {m['registry_vs_archived']}")
         g2_f1, cell_f1 = f1_at(g2), f1_at(cell)
         n_g2, n_cell = g2.get("summary", {}).get("n_detections"), cell.get("summary", {}).get("n_detections")
         g2_ok = g2_f1 is not None and abs(g2_f1 - exp_f1) < 1e-6 and n_g2 == exp_n == n_geo
@@ -304,14 +373,60 @@ def run_gates(membership: dict[str, Any]) -> dict[str, Any]:
     return {"board_id": BOARD_ID, "checked_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "G2_reproduction_failures": g2_fail, "G3_frame_failures": g3_fail,
             "G4_cells": n_cells, "G4_members": membership["n_members"], "G4_ok": g4_ok, "missing": missing,
-            "passed": g2_fail == 0 and g3_fail == 0 and g4_ok, "bisected": BISECTED, "cells": rows}
+            "passed": g2_fail == 0 and g3_fail == 0 and g4_ok, "bisected": BISECTED,
+            "resolved": {m["label"]: {"resolved_at": m["resolved_at"], "detections": m["detections"],
+                                      "superseded_detections": m.get("archived_detections"),
+                                      "expected_f1_20": m["registry_f1_20"], "expected_n": m["registry_n"],
+                                      "archived_f1_20": m["archived_f1_20"], "archived_n": m["archived_n"]}
+                         for m in membership["members"] if m.get("resolved_at")},
+            "cells": rows}
+
+
+def _resolve_existing_row(row: dict[str, Any], m: dict[str, Any]) -> int:
+    """Point an already-registered ``-opmax`` row at its re-materialised file.
+
+    Idempotent: returns 1 the first time it rewrites ``row``, 0 thereafter and
+    0 for rows that were never mis-materialised. The old "registry differs"
+    sentence is dropped from ``_note`` (it described a discrepancy that no
+    longer exists) and replaced with the resolution record.
+
+    Args:
+        row: The condition row in ``results/run-conditions.json``.
+        m: The matching ``opmax/membership.json`` member.
+
+    Returns:
+        1 if the row was changed, else 0.
+    """
+    if not m.get("resolved_at") or row.get("detections") == m["detections"]:
+        return 0
+    old_n, new_n = m["archived_n"], m["registry_n"]
+    row["detections"] = m["detections"]
+    note = str(row.get("_note", ""))
+    marker = " NOTE: the materialisation registry's sweep best point differs"
+    idx = note.find(marker)
+    if idx != -1:  # drop the superseded discrepancy sentence
+        end = note.find(". ", note.find("Obs 461", idx)) if "Obs 461" in note[idx:] else -1
+        note = note[:idx] + (note[end + 2:] if end != -1 else "")
+    row["_note"] = note.rstrip() + (
+        f" RE-MATERIALISED {m['resolved_at']}: the detection file this row pointed at "
+        f"({m['archived_detections']}, materialised 2026-04-19 at bd24293d4) did not hold the operating point the "
+        f"materialisation registry registered — it held {old_n} features scoring F1@20 {m['archived_f1_20']}, while "
+        f"re-applying the registry's own filter (union feature i <-> probabilities key candidate_i, "
+        f"vote_count >= {m['vote_threshold']} AND mound_probability >= {m['prob_threshold']}) to stage "
+        f"{m['stage_id']} yields {new_n} features, the registry's count, at F1@20 {m['registry_f1_20']}. The union, "
+        f"the probabilities and the sweep are unchanged since 2026-04-17/18, so the 2026-04-19 materialisation was "
+        f"the defective side. Replaced from the registered stage by scripts/materialise_opmax_cells.py "
+        f"(counts {old_n} -> {new_n}); provenance sidecar beside the file; the superseded file and this row's "
+        f"superseded evaluations are archived under "
+        f"archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-opmax-stale-materialisation/.")
+    return 1
 
 
 def register(membership: dict[str, Any], write: bool) -> list[str]:
     rc = _load(RUN_CONDITIONS.relative_to(REPO_ROOT).as_posix())
     ra = _load(RUN_ANALYSES.relative_to(REPO_ROOT).as_posix())
     dec = rc["decomposition"]
-    added = waived = 0
+    added = waived = resolved = 0
     board_ids: list[str] = []
     for m in membership["members"]:
         run = dec[m["run_id"]]
@@ -325,7 +440,9 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
         if m["stage_id"] not in stages:
             stages[m["stage_id"]] = {"modality": m["modality"],
                                      "path": "/".join(Path(m["probabilities_path"]).parts[3:-1])}
-        if any(c["label"] == new_label for c in run["conditions"]):
+        existing = next((c for c in run["conditions"] if c["label"] == new_label), None)
+        if existing is not None:
+            resolved += _resolve_existing_row(existing, m)
             continue
         note = (f"IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell "
                 f"{m['label']} (archived at {ARCHIVED_COMMIT}, retired instrument build_tiered_leaderboard.py; "
@@ -389,7 +506,8 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
     if write:
         RUN_CONDITIONS.write_text(json.dumps(rc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
         RUN_ANALYSES.write_text(json.dumps(ra, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"{'wrote' if write else 'would write'} {added} new {SUFFIX} rows and {waived} g2 waivers; analysis row "
+    print(f"{'wrote' if write else 'would write'} {added} new {SUFFIX} rows, {resolved} re-materialised rows "
+          f"repointed and {waived} g2 waivers; analysis row "
           f"{BOARD_ID} conditions_compared {before} -> {len(arow['conditions_compared'])}")
     return board_ids
 
@@ -398,6 +516,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("command", choices=["membership", "jobs", "gates", "register"])
     parser.add_argument("--write", action="store_true", help="register: persist to the register files")
+    parser.add_argument("--only-resolved", action="store_true",
+                        help="jobs: emit only the re-materialised rows' jobs (rescore-commands.sh + "
+                             "rescore-jobs.txt for xargs -P)")
     args = parser.parse_args(argv)
     opmax = REPO_ROOT / OPMAX_DIR
     opmax.mkdir(parents=True, exist_ok=True)
@@ -413,7 +534,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     membership = json.loads(mpath.read_text(encoding="utf-8"))
     if args.command == "jobs":
-        write_jobs(membership)
+        write_jobs(membership, only_resolved=args.only_resolved)
         return 0
     if args.command == "gates":
         report = run_gates(membership)
