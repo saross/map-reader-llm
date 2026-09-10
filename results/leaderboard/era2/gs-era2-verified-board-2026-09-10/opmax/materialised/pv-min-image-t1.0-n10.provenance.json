@@ -1,0 +1,69 @@
+{
+ "label": "pv-min-image-t1.0-n10",
+ "condition_id": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+ "board_id": "gs-era2-verified-board-2026-09-10",
+ "written_at_utc": "2026-09-10T07:00:53+00:00",
+ "written_by": "scripts/materialise_opmax_cells.py",
+ "why": "the 2026-04-19 materialisation (bd24293d4) does not hold the point the materialisation registry registered; rebuilt from the registered stage at the registered (vote_t, prob_t) \u2014 the union, probabilities and sweep are unchanged since 2026-04-17/18",
+ "operating_point": {
+  "vote_t": 6,
+  "prob_t": 0.2,
+  "filter": "vote_count >= vote_t AND mound_probability >= prob_t"
+ },
+ "stage_id": "image-n5-image-t1.0-verified-v1-n10",
+ "pool_shape": "pv-consensus-union",
+ "inputs": {
+  "union": {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t1.geojson",
+   "git_blob_sha1": "d925a1de3824d8f819773cb9f71a33cabc6765aa",
+   "last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   }
+  },
+  "probabilities": {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n10/probabilities.json",
+   "git_blob_sha1": "eca869640eafb62e2590c85bc4228d4f8191e099",
+   "last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  "sweep": {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n10/sweep_2d.json",
+   "git_blob_sha1": "678c953baf5aca21d92d94be8bbd7b4294f13b88",
+   "last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  }
+ },
+ "membership": {
+  "path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/membership.json",
+  "git_blob_sha1": "46e0fc7eb9cbcea73a0741f08bca2e40ab0129d4"
+ },
+ "superseded_detections": {
+  "path": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t1.0-n10.geojson",
+  "n_features": 364,
+  "git_blob_sha1": "2876ee301f81abe3621759161df0227efa2daa9e",
+  "registry_vs_archived": "differs: registry F1 0.7428 n 397 vs archived board F1 0.7409 n 364"
+ },
+ "counts": {
+  "n_computed": 397,
+  "n_registry": 397,
+  "n_archived": 364,
+  "n_union": 1975,
+  "n_probabilities": 1975,
+  "n_kept": 397,
+  "n_missing_probability": 0
+ },
+ "gate_a": {
+  "expected_n": 397,
+  "observed_n": 397,
+  "passed": true
+ },
+ "output_crs": "EPSG:4326"
+}

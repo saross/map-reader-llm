@@ -1,0 +1,69 @@
+{
+ "label": "pv-high-image-t0.7-n10",
+ "condition_id": "pv-diag-384::pv-high-image-t0.7-n10-opmax",
+ "board_id": "gs-era2-verified-board-2026-09-10",
+ "written_at_utc": "2026-09-10T07:00:52+00:00",
+ "written_by": "scripts/materialise_opmax_cells.py",
+ "why": "the 2026-04-19 materialisation (bd24293d4) does not hold the point the materialisation registry registered; rebuilt from the registered stage at the registered (vote_t, prob_t) \u2014 the union, probabilities and sweep are unchanged since 2026-04-17/18",
+ "operating_point": {
+  "vote_t": 7,
+  "prob_t": 0.2,
+  "filter": "vote_count >= vote_t AND mound_probability >= prob_t"
+ },
+ "stage_id": "flash-high-image-n5-image-t0.7-verified-v1-n10",
+ "pool_shape": "pv-consensus-union",
+ "inputs": {
+  "union": {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t1.geojson",
+   "git_blob_sha1": "1f06dcc00d2903b4c5a5500b7228c5d4e4a4beea",
+   "last_commit": {
+    "commit": "2e8cc6481",
+    "date": "2026-04-17",
+    "subject": "data(phase3a): image track 2\u00d74 thinking \u00d7 temperature matrix (384 px)"
+   }
+  },
+  "probabilities": {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n10/probabilities.json",
+   "git_blob_sha1": "e6db397aa85b3e13a9746b4b0500a3ee40865796",
+   "last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  },
+  "sweep": {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n10/sweep_2d.json",
+   "git_blob_sha1": "5761a02433b50fbf9258067aef22436632437e68",
+   "last_commit": {
+    "commit": "b8961e56f",
+    "date": "2026-04-17",
+    "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+   }
+  }
+ },
+ "membership": {
+  "path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/membership.json",
+  "git_blob_sha1": "46e0fc7eb9cbcea73a0741f08bca2e40ab0129d4"
+ },
+ "superseded_detections": {
+  "path": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.7-n10.geojson",
+  "n_features": 351,
+  "git_blob_sha1": "ef27a01a1ca708b45064b3adbe33795412c03a44",
+  "registry_vs_archived": "differs: registry F1 0.7765 n 348 vs archived board F1 0.7761 n 351"
+ },
+ "counts": {
+  "n_computed": 348,
+  "n_registry": 348,
+  "n_archived": 351,
+  "n_union": 3211,
+  "n_probabilities": 3211,
+  "n_kept": 348,
+  "n_missing_probability": 0
+ },
+ "gate_a": {
+  "expected_n": 348,
+  "observed_n": 348,
+  "passed": true
+ },
+ "output_crs": "EPSG:4326"
+}
