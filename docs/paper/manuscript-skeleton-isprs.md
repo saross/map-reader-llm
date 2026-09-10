@@ -123,6 +123,7 @@ funding; acknowledgements.
 ## Open decisions (PI)
 
 - **D-1**: the § 6 seed slate as proposed?
+  **DEFERRED 2026-09-10 (PI)**: briefing banked below (§ D-1 briefing); the PI will work through the literature review and the Results with the assistant first, and rule on the Discussion once the evidence → analysis → results pipeline is closed.
 - **D-2**: Related work as its own § 2 (proposed) vs folded into the
   Introduction (frees ~400 words for Results)?
 - **D-3**: single Results (proposed) vs Experiments+Results split?
@@ -132,7 +133,75 @@ funding; acknowledgements.
   (micro-registration) promised in this paper's Discussion as future
   work, or silently reserved?
 
+## D-1 briefing (2026-09-10, banked for the deferred ruling)
+
+**What is being decided.** The internal outline
+(`docs/paper/discussion-outline.md`, DD1–DD13 settled in Session 139)
+has eleven subsections built from twelve seeds
+(`docs/paper/discussion-seeds.md`). The venue gives the Discussion about
+1,300 words, so § 6 above proposes a hard cut to about five moves. D-1
+asks whether that cut is the Discussion's content for this paper; it
+decides content and emphasis, not prose, and DD1–DD13 stay settled for
+whatever survives.
+
+**The seeds, one line each.** 1 — a calibration instrument's resolution
+depends on representativeness before size. 2 — deploy-and-evaluate is
+cheaper than the reference data it replaces. 3 — GT-free selection is a
+falsifiable proposal, not a validated method. 4 — the tile-MCC
+counter-board replicates across instruments. 5 — tile-MCC as the basis
+for semi-automated extraction; temperature and pool-size cost
+equivalences. 6 — the plateau rule: what transfers from a small
+calibration corpus and what does not. 7 — the preregistration
+retrospective and the micro-registration alternative. 8 — the bitter
+lesson arrives at map-symbol extraction. 9 — what a high-performing
+extraction run looks like. 10 — cost and expertise: the generalist route
+is accessible. 11 — crowdsourcing and participatory mapping as comparison
+and mutual QA. 12 — the efficiency breakthrough from the stride
+programme, with the simulated-workflow rider.
+
+**The proposed slate** (about 250 words per move): spine = Seed 12 plus
+rider (IN); Seeds 1 + 2 merged (IN); Seed 3 (IN); Seed 8 partial (most
+migrates to Related work, one clause stays); Seed 7 and the
+collaboration reflexives OUT to the companion paper; Seeds 4, 5 (one
+clause survives in the MCC thread), 9, 10, 11 OUT to supplement or cut.
+
+**What changed after the slate was written (2026-08-25).**
+
+1. Seed 12's first move ("no new F1 high, only a cheaper frontier") is
+   now partly untrue: the Gemini 3.7 and 3.8 campaigns produced a new
+   high on the GS instrument (0.923–0.931), and the GS Era-2 verified
+   board (Obs 463, 465) shows it as a tier move against the whole Era-2
+   incumbency, robust to the symmetry fix. The spine's claim needs
+   re-stating: the architecture ceiling held within a model generation
+   and moved with the generation, at the same recipe.
+2. The transfer story is fuller: the 55-map 3.7 text run, the r2
+   reference, and § R7.2–R7.3 now exist; Seed 12's cost frontier has a
+   deployment-scale column it did not have.
+3. Seed 6, the plateau rule, is cut although the internal outline calls
+   it the central methodological lesson; the 3.7 results are also a
+   test of what transferred from the calibration corpus.
+
+**Options.** (a) Accept as proposed; the family step lives in Results
+only and Seed 12 is corrected at prose time. (b) Accept with one
+amendment: the Seed 12 spine gains the family-step clause (frontier
+moved in cost within the generation and in F1 across generations at the
+same recipe) — the assistant's recommendation, since it keeps the
+five-move budget and fixes the one claim now false. (c) Revise the cut:
+for example restore Seed 6 as its own move by folding Seed 3 into the
+Seeds 1 + 2 move, so the Discussion carries the plateau rule the 3.7
+transfer test speaks to; costs a re-cut and a fresh word budget.
+
+**Sequencing ruling (PI, 2026-09-10).** Work through the literature
+review and the Results together first, so the material is in mind
+before deciding what is important; ensure the evidence → analysis →
+results pipeline is completely closed; then turn to writing and rule on
+D-1 to D-5 and the D.9 naming question.
+
 ## Changelog
+
+### 2026-09-10 — D-1 briefing banked; D-1 to D-5 deferred behind the pipeline close-out (PI, Session 152)
+
+The D-1 options were laid out with what changed since the slate (the 3.7/3.8 new high, the fuller transfer story, Seed 6's cut) and banked as § D-1 briefing; the PI deferred the Discussion decisions until the literature review and the Results have been worked through together and the evidence → analysis → results pipeline is closed.
 
 ### 2026-09-08 — Exhibit (iii)'s home settled (PI ruling, Session 151)
 
