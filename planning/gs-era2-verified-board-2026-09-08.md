@@ -215,11 +215,14 @@ until § 9 is signed.
 
 ## 9. Sign-off (PI)
 
-- [ ] Frame: (a) Era-2 ∩ B-union (recommended), (b) grid-common, or (c) the full Era-2 frame (rejected).
-- [ ] Membership: the enumerated nine plus the incumbent rule as listed by
-      `--dry-run`, or an amended list.
-- [ ] Buffers / tiering as § 5, or amended.
-- [ ] Go.
+- [x] Frame: **(a) Era-2 ∩ B-union** — PI, 2026-09-09: "maintaining
+      discipline is important for a large, complex project like this, I
+      accept your proposal, please proceed".
+- [x] Membership: the enumerated nine plus the incumbent rule of § 3
+      (B-geometry and Era-2-tiling cells), confirmed with the proposal;
+      the `--dry-run` listing is recorded in § Changelog when built.
+- [x] Buffers / tiering as § 5.
+- [x] Go — 2026-09-09.
 
 ## Changelog
 
