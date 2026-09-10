@@ -1165,3 +1165,38 @@ S150 and S151 above are still pending.
   open items into an ordered start-of-session list rather than
   attempting them in a tired context. Candidate: keep the scheduled-start
   block as a standing beacon device.
+
+## S152 candidates (pending review, 2026-09-10, drafted at close) — silence never discards
+
+S150, S151 and S151-d above are still pending. This session ran without
+in-session interaction: the scheduled start-of-session block from S151-d,
+executed in order, with the two PI acts (the G1 publication ruling and the
+analysis-row signature) left where the brief put them.
+
+- **C1 — The scheduled-start block worked as a beacon.** Four ordered
+  items, each with its inputs named, ran end to end without a round-trip;
+  the one judgement the brief did not settle (whether the three K = 3
+  archived cells join the board) was decided by applying the card's own
+  rule and reported as a call. Candidate: a brief that names the rule to
+  apply is worth more than one that names the expected count — the "40"
+  in the brief was right for the wrong reason (43 rows, 40 by the K ≥ 5
+  rule), and the rule is what carried.
+- **C2 — "Recompute the MCB last" turned out to be a number, not a
+  ritual.** The rule set on 2026-09-10 (the admissible set is a property
+  of the candidate set) measured itself the same day: 11 of 39 became 28
+  of 79 as forty near-tied cells joined, with the band widening from
+  0.0439 to 0.0501 while Tier 1 did not move. Candidate: when he sets a
+  procedural rule in anticipation, record the first instance where it
+  bites, so the rule's cost and value are both on file.
+- **C3 — A gate failure read as drift was a cache.** The brief's item 1
+  asked for a bisect "until the +0.0015 appears" and the answer was not a
+  commit but a seventy-second gap between a board build and the commit
+  that re-materialised its input. Candidate: his preference for bisecting
+  a regression before ruling on it (rather than waiving or accepting it)
+  paid for itself twice — the gate passes from the true inputs, and the
+  same cache class was found one layer down in the archived registry.
+- **C4 — Costing without a decision.** "Cost a run (costing only) that I
+  'may' fund later" produced a report whose last paragraph says the
+  pre-agreed trigger was not met. Candidate: a costing request is not a
+  proposal request; keep the recommendation out unless asked, and put the
+  trigger's status next to the price.
