@@ -11218,3 +11218,54 @@ throws away evidence. The B tiling misses a 13.4 km² strip of the Era-2
 frame that holds no mound; grid-common throws away 51 km² and seven
 mounds that everyone covered. The PI accepted the rule on discipline
 grounds explicitly, and that sentence is the thing to keep.
+
+## Session 152 — 2026-09-10/11 — the session that bisected a gate failure to a cache, built the symmetry fix in the background, and then cleared decisions one at a time
+
+**Instance:** primary (Fable 5.1 throughout; one session id
+`9305672f-701b-4813-ac1c-aa28f6c6c769`; the first five hours autonomous
+from the S151-d scheduled block, then the PI present for the walk-through).
+
+**What surprised me?** Twice, the same finding reversed under a better
+check. G1's "+0.0015 of instrument drift" became, under the bisect, a
+label-keyed cache serving a 372-feature blob seventy seconds before the
+373-feature file was committed — the evaluator had not moved at all. Then
+my own closing report said nine archived cells carried a "stale sweep";
+the correct join (union feature *i* ↔ `candidate_{i:05d}`) showed the
+opposite: the sweeps and probabilities were current, and the
+2026-04-19 materialised files were the defective side. Both surprises
+had the same shape — a derived artefact standing in for its input — and
+both were caught by asking which side today's inputs reproduce, rather
+than trusting either record. The third surprise was smaller and
+methodological: the card's "4 of 44 cells match a registered condition"
+was a four-decimal F1 coincidence; only one was the same set. F1 and a
+count are not an identity.
+
+**What question emerged that wasn't pursued?** Why the 2026-04-19
+materialiser produced a different set from its own sweep for nine cells
+and the right set for twenty. I rebuilt the nine from their stages and
+proved the rebuild reproduces the sweep, which fixes the register, but
+the mechanism of the original defect — a different union, a candidate
+ordering, a bounds filter — is undiagnosed. If the same materialiser
+built anything still in use, that question matters; it is on the
+continuity's queue beside the PI's K-ladder review. A second unpursued
+question: the seventy blocked pairs of the "no committed pre-verifier
+set" class were assumed absent until the PI's "clear it up" rule made
+me look, and a survey is now running; the assumption cost nothing but
+was never tested.
+
+**What was different about this session?** Two things. It was the
+first here to run background agents in isolated worktrees on their own
+branches, with the parent session continuing in the main checkout —
+Obs 353's recommendation, finally used. The re-materialisation agent
+ran for forty-five minutes while the PI and I cleared six rulings in
+the same tree; the only merge conflicts were in generated manifests
+and one changelog, both trivially resolved. And the shape of the
+PI-present half was new: one decision at a time, each with the
+evidence, two or three options and a recommendation, then his ruling,
+then the ruling landed and committed before the next. He told me the
+claims-with-anchors inventory of a section was "a much more useful
+presentation" than prose, and that he works outline-first — a
+preference recorded in June that I had honoured for the Discussion but
+not for the Results, which was drafted as prose. The Results will need
+re-drafting after an outline pass; the information is there, which was
+today's test.

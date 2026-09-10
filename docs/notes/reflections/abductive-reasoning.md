@@ -8253,3 +8253,89 @@ Era-2 union).
 When a spatial comparison returns "nothing coincides", the boring
 hypothesis (same objects, different CRS or precision) must be tested
 before the surprising one is reported.
+
+## Entry — 2026-09-10 (Session 152, map-reader-llm): The +0.0015 of "instrument drift" was a cache serving a file the archive no longer holds
+
+**Session:** 9305672f-701b-4813-ac1c-aa28f6c6c769
+**Instance:** primary
+
+### Surprising fact
+
+Rebuilding the archived Era-2 PV board with the retired builder moved
+one cell of 44 by +0.0015 F1, enough to flip one BH verdict and re-cut
+two tiers. Fifteen commits had touched the evaluator chain since the
+archived build, so "instrument drift" was the natural reading and the
+one S151-d recorded (Obs 463).
+
+### Probe
+
+The archived cache entry for the cell recorded 372 detections; the
+archived file holds 373 features. Blob hashes at each commit: the
+372-feature blob was committed 2026-04-19 and the cache entry written
+from it 2026-04-25; the board's own timestamp (17:33:42 +0800 on
+2026-05-06) fell seventy seconds before the commit that re-materialised
+the cell to 373 features. The builder's cache path is keyed by label,
+threshold, and buffer only. Today's evaluator on the 372 blob reproduced
+every archived number to four decimals; on the 373 blob it gave 0.7475.
+A full rebuild with the 372 blob substituted reproduced the archived
+board exactly (44/44, 946/946, tiers identical).
+
+### Belief revision
+
+From "the retired builder drifted" to "the retired builder is exact;
+the archived input is not the input it scored". The gate as specified
+fails and the gate on true inputs passes; the PI ruled the latter the
+operative reading and signed the board.
+
+### What would change this belief
+
+If the 372 blob under today's evaluator had reproduced anything other
+than the archived numbers, evaluator drift would be back in play; it
+reproduced all five buffers and the tile confusion matrix.
+
+### Implications for practice
+
+Bisect a marginal gate failure before ruling on it, starting from the
+gate's premise (are the archived inputs the scored inputs?), and
+require content hashes on any cache keyed by name.
+
+## Entry — 2026-09-10 (Session 152, map-reader-llm): "Nine stale sweeps" were nine stale files — the first join was wrong, the second reversed the reading
+
+**Session:** 9305672f-701b-4813-ac1c-aa28f6c6c769
+**Instance:** primary
+
+### Surprising fact
+
+Nine of 29 archived sweep-optimal cells had a registry best point (from
+`sweep_2d.json`) whose F1 and count differed from the materialised file
+the board had scored, by up to 50 detections. I reported this to the PI
+as the sweep-staleness class of Obs 461 ("the sweep predates the file").
+
+### Probe
+
+Asked "which side does today's data reproduce?" First attempt, joining
+the probabilities alone at the registered (vote, prob) point, returned
+zero for every cell — a result I recognised as a join error (vote counts
+live in the union, not the probabilities), not a finding. Second
+attempt, union feature *i* joined to `candidate_{i:05d}`, reproduced the
+registry's count for all nine; git dated the union, probabilities and
+sweep to 2026-04-17/18, unchanged since, and the files to 2026-04-19.
+
+### Belief revision
+
+From "stale sweeps against current files" to "current sweeps against
+mis-materialised files". The fix changed accordingly: re-materialise
+the nine from their stages (gated to the sweep's F1 to four decimals),
+not re-sweep; all nine rose by 0.0004 to 0.0081 and nothing on the board
+moved tier.
+
+### What would change this belief
+
+Had the second join reproduced the file's count instead of the
+registry's, or had the sweep's git date post-dated the file's, the
+original reading would have stood.
+
+### What this is not
+
+Not a diagnosis of the 2026-04-19 materialiser's defect — the mechanism
+that produced 376 candidates where the sweep had 426 is still unknown.

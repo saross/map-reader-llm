@@ -2338,3 +2338,76 @@ check what I did not.
 **How to apply.** Before asking for a signature, run the E56 lens over
 every board membership as a standing check: which cells are in-sample
 optima, which are committed points, and is the comparison symmetric.
+
+## claude-obs 103 — 2026-09-11 (Session 152): "Clear it up rather than defer it" reframed how I present options
+
+**Pattern.** Asked what disambiguating fourteen blocked pairs would buy,
+Shawn ruled to do it, then stated the general rule: clearing up a
+problem is usually preferable to tolerating or deferring it, subject to
+a cost-benefit judgement made together. My default framing had put
+"accept as disclosed" first and recommended it.
+
+**Lesson.** Disclosure is the floor, not the resolution. When a gap can
+be closed exactly at modest cost, the option to close it must be costed
+and offered, and usually recommended.
+
+**How to apply.** Every "accept / defer" option now carries a costed
+"close it" sibling; the fourteen-pair case (about twenty minutes on
+sapphire, $0, closing the uplift column over the paper's GS cells) is
+the calibration point.
+
+## claude-obs 104 — 2026-09-11 (Session 152): Self-critique — a confident class label sent before the better check
+
+**Pattern.** My closing report told Shawn nine archived cells carried
+"a sweep best point that differs from the file" and filed it under the
+Obs 461 sweep-staleness class. His question "is there anything we
+could/should do?" made me run the reproduction check, which reversed
+the reading: the sweeps were current and the files were stale. I had
+labelled a symptom with the nearest known class instead of testing
+which side today's data reproduces.
+
+**Lesson.** A class label is a hypothesis. When two records disagree,
+the check is "which one does the current input reproduce?", and it is
+cheap; run it before naming the class, and when a later check reverses
+an earlier report, say so plainly rather than folding it in.
+
+**How to apply.** Before assigning a discrepancy to a known class in a
+report to Shawn, run the reproduction test on at least one instance;
+report "X differs from Y; which is stale is untested" when it has not
+been run.
+
+## claude-obs 105 — 2026-09-11 (Session 152): Claims-with-anchors is the review unit; outline before prose
+
+**Pattern.** A verbatim paragraph got two useful edits; a claims list
+for §§ R7.2–R7.3 (numbered claims, each with its analysis id or Obs,
+plus a gaps list) got "a much more useful presentation" and a request
+to /remember that he works outline-first. He also said the prose
+sections will likely be re-drafted after an outline pass and that the
+draft's internal jargon must be translated for an archaeologist reader.
+
+**Lesson.** The Results draft was written as prose against his June
+preference; the information is present, which was the test he set, but
+the collaboration unit is the outline. Prose written before the outline
+is agreed is a mine, not a draft.
+
+**How to apply.** For each paper section: produce the claims-and-anchors
+outline, get the ruling, then draft; present reviews as claims lists
+with a gaps list; schedule a jargon-translation pass at the writing
+phase.
+
+## claude-obs 106 — 2026-09-11 (Session 152): One decision at a time, landed before the next
+
+**Pattern.** Shawn asked to "walk through my decisions/tasks together
+one-by-one to clear them" while an agent ran in the background. Each
+item went: evidence, two or three options with a recommendation, his
+ruling, the ruling committed and pushed, then the next item. Eight
+rulings cleared in one sitting; none was re-litigated.
+
+**Lesson.** Landing each ruling before presenting the next keeps the
+register honest in real time and keeps his attention on one question;
+batching options would have produced fewer rulings and more re-reads.
+
+**How to apply.** In walk-throughs, present exactly one decision with
+its options, commit its outcome immediately, then move on; keep the
+queue visible at the top so he can re-order it (he did, putting the
+pipeline before writing).

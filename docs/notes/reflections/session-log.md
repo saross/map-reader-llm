@@ -9435,3 +9435,47 @@ the symmetry fix (sweep-optimal Gemini 3 cells to be registered as
 opmax rows) and the G1 bisect; the supplement's board-frame exclusion
 rule is agreed but unimplemented; the transient ENOSPC on amd-tower
 (90 GB free minutes later) is unexplained.
+
+## Session 152 — 2026-09-10/11 (amd-tower + sapphire; US$0 API; Fable 5.1; four Opus-tier agents: two obs-writer, two worktree-isolated build agents)
+
+**Autonomous half (from the S151-d scheduled block).** (1) G1 bisected:
+the archived board's cell `pv-high-image-t0.3-n5` had been scored from a
+372-feature blob served by a label-keyed cache; the 373-feature file was
+committed seventy seconds after the build; today's evaluator reproduces
+the archived numbers from the old blob; a confirmatory rebuild with it
+substituted reproduces the archived board exactly (`817de06a0`,
+`f331c69ef`; Obs 464 `210e4057c`; the "005e6c71 (2026-08-20)" date error
+corrected — the commit is 2026-05-06). (2) Symmetry fix: 43 `-opmax` rows
+minted from the archived board (one true twin by coordinates; 40 join
+under K ≥ 5; gates 40/40; `scripts/build_gs_era2_board_opmax.py`),
+sweep optimism measured for ten screen cells
+(`selection_aware_intervals.py --sweep-union`, gated to the committed
+sweeps), re-tier 79 cells → Tier 1 unchanged, MCB 28 (`a5ac7dc16`;
+Obs 465 `c2a01bbaf`). (3) Uplift supplement: board-frame exclusion rule
+(`300473765`). (4) 55-map 3.7 image run costed
+(`reports/gemini37-image-55map-costing-2026-09-10.md`; K = 5 ≈ US$425–660).
+
+**PI-present half.** Item 4 declined (trigger not met). Nine `-opmax`
+files found mis-materialised (registry current, files stale) and rebuilt
+by a worktree agent; re-tier unchanged in substance (`aec214e0f`); the
+14 ambiguous verifier twins resolved by crop manifest, uplift 71 → 85
+pairs. Rulings landed one by one: A-07 re-signed (`d724bcf09`);
+notation key § 6 frames + § 7.1 columns (`f97bede45`); r2 headline
+reference (`3dfa12c00`); the 14 twins resolved and the 40 opmax rows
+kept out of the supplement by design (`e30dd7cdb`); G1 ruled satisfied
+on the true-input reproduction and the board signed (`0982a531e`); the
+supplement's two analysis rows registered and signed (`067eb7b95`);
+§ R4 paragraph refreshed and reviewed (`d788c9213`, `6ba7d36ca`); the
+D-1 briefing banked and D-1 to D-5 deferred behind the pipeline
+close-out (`0bafaeca5`). Memories: clear-up-not-defer; results draft is
+a mine, jargon to translate; outline-first reaffirmed. A second worktree
+agent launched for `pv-high-text-t0.0-n3` (re-sweep, re-materialise) and
+the 70 "absent twin" pairs (survey and close); running at reflection
+time.
+
+**Contextual assumptions**: the PI was absent for the first half and
+returned mid-session; the K-ladder review (K = 1, 3, 5, 10 at fixed
+parameters, Pareto framing; whether re-materialised cells belong on the
+board) is a new PI intent, queued not started; the R7.2–R7.3 gaps (the
+3.8 leg, the 3.7 cost column, a back-reference to the GS board) are
+identified, not closed.

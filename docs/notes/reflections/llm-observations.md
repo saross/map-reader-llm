@@ -8000,3 +8000,50 @@ remains the missing primitive.
   that the 3.7 GS cells are sweep-best points. The E56 lens should be
   applied to every board membership as a standing check, not recalled on
   demand.
+
+## Session 152 — 2026-09-10/11 (a gate failure bisected; the board's symmetry fix; the supplement's registration; agents in worktrees)
+
+- **A label-keyed cache is a wrong-source cache waiting to happen.** The
+  retired builder's evaluation cache was keyed by (label, threshold,
+  buffer), never by input content. A re-materialisation seventy seconds
+  after a board build was silently served the old entry, and the commit
+  that did it recorded "zero tier flips" as a finding. The
+  `feature_count_crosscheck` rule (cache n_detections ≠ file feature
+  count) would have caught it; the builder never ran it. Any cache keyed
+  by name must carry a content hash.
+- **A regression gate's premise is itself a claim to test.** G1 asked
+  whether the archived board rebuilds from its archived inputs; the
+  premise "archived inputs = scored inputs" was false for one cell. The
+  right response to a marginal gate failure is a bisect that checks the
+  premise before the instrument, not a waiver and not an acceptance.
+- **The E56 symmetry, measured rather than argued.** With the Gemini 3
+  family at its own sweep-optimal level on the board, Tier 1 did not
+  move, the best Gemini 3 sweep optimum ranked 11th, and the screens'
+  own selection optimism was +0.0006 to +0.0035 (Efron–Gong, argmax
+  replayed per tile resample, gated to the committed sweeps to 1e-16).
+  The asymmetry the PI's question found in S151 was real and small.
+- **A simultaneous instrument answers to the candidate set.** The Hsu
+  MCB admissible set went from 11 of 39 to 28 of 79 when forty
+  near-tied cells joined, the band from 0.0439 to 0.0501, while the
+  greedy Tier 1 held. This is the PI's "recompute last, cite only the
+  final" rule biting for the first time — a property to explain in
+  the Methods, not a weakness to hide.
+- **Identity between sets is decided by coordinates.** Two of three
+  (F1, n) matches to four decimals shared fewer than 60 of 400 points.
+  The card's "4 of 44 match" had been a crude F1 join; the true twin
+  count was one.
+- **My own diagnostic was wrong before it was right.** The first join
+  (probabilities alone) returned "neither side matches today" for all
+  nine cells, which I did not report; the second (union by index)
+  showed the registry current and the files stale — the inverse of what
+  my closing report had said hours earlier. Two lessons: verify a
+  surprising all-zero result against the data model before drawing any
+  conclusion, and re-check a claim already sent to the PI when a better
+  instrument becomes available, then correct it plainly.
+- **Worktree-isolated agents worked.** Two Opus-tier agents ran
+  forty-five-minute chains (materialise → score on sapphire → re-tier →
+  MCB → finalise → docs) on their own branches while the main checkout
+  stayed live for the walk-through. Merge conflicts fell only in
+  generated manifests (resolved by regeneration) and one changelog.
+  Sapphire was switched to the agent's branch for compute and returned
+  to main after the merge — a pattern to keep.
