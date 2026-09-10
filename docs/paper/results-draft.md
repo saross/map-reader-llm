@@ -300,8 +300,9 @@ of all 18 never-swept proposer pools later confirmed this is the global
 optimum of the 30-pass union, not an artefact of the operating points
 swept (analysis `unswept-pools-completeness`, Obs 363).
 
-On the Era-2 frame the same tiered instrument now places 39 registered
-verified cells on one frame, the Era-2 carrier tiles clipped to the
+On the Era-2 frame the same tiered instrument now places 79 verified
+cells on one frame (39 register cells at their committed operating
+points and 40 sweep optima), the Era-2 carrier tiles clipped to the
 B tiling's union (487 tiles, 435 reference mounds; board
 `gs-era2-verified-board-2026-09-10`, analysis of the same id). The
 board holds both model families at both levels: the Gemini 3 incumbents
@@ -317,7 +318,9 @@ holds 28 of the 79 cells. Every Gemini 3 cell sits in Tier 2 or below at
 either level: the best committed incumbent is the 16-of-30 cell at
 0.8951 and the best sweep optimum the HIGH text T0.3 K = 5 cell at
 0.8873 (rank 11); 30 of the 40 sweep optima are significantly below the
-lowest Tier-1 cell and all 40 below the top one. Removing the screens'
+lowest Tier-1 cell and all 40 below the top one (the lowest Tier-1 cell
+against the best sweep optimum: +0.020, p = 0.16, not significant; the
+top cell against it: +0.037, p = 0.011, BH-adjusted 0.021). Removing the screens'
 own selection optimism (Efron–Gong, the argmax replayed per tile
 resample) costs the 3.7 and 3.8 cells 0.0006 to 0.0035, leaving
 corrected board-frame F1 of 0.9027 to 0.9215. The family step that
