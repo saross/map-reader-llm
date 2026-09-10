@@ -144,6 +144,7 @@ Sanctioned 2026-09-10 (PI ruling 2(i) of the supplement's registration walk-thro
 | `engine` | anti-confabulation | Which scorer the job needs: evaluate_detections or corrected_f1_multi_buffer. |
 | `eval_path` | anti-confabulation | The evaluation artefact the metrics came from. |
 | `frame_id` | § 6 | Fourth component: the evaluation frame id (era-1-340, era-2-487, ...). |
+| `headline_reference` | § 4 | True where the stratum's reference is the corpus headline reference (r2 on the 55-map corpus, curator on the gold standard; PI ruling 2026-09-10). |
 | `geometry` | § 2 (geometry cell) | The geometry cell label the key defines, as a column. |
 | `geometry_basis` | § 2 | Which rule resolved the geometry: pool-name, label, or run-facts-tile-size. |
 | `is_primary_buffer` | § 1 (R) | True where buffer_m is the corpus headline buffer (20 m GS / 50 m 55-map). |
@@ -225,6 +226,8 @@ Sanctioned 2026-09-10 (PI ruling 2(i) of the supplement's registration walk-thro
 ## Changelog
 
 ### 2026-09-10 — § 6 frames completed; § 7.1 uplift-supplement columns sanctioned
+
+Also (ruling 2(ii), later the same day): `headline_reference` added to § 7.1 — r2 headlines the 55-map corpus, curator the gold standard.
 
 PI ruling 2(i), S152. § 6 gains the five frames the registered runs use beyond the original three (era-2-487, era-3-327, px256-1032, h13-common-338 with its id/count discrepancy left open, and the board frame era2-b-487 marked as a leaderboard scoring frame). § 7.1 sanctions the uplift-supplement builder's declared column extensions as proposed. Nothing else changed.
 

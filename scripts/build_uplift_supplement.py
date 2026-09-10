@@ -85,6 +85,7 @@ from scripts.lib_detection_paths import (  # noqa: E402
     resolve_pool_passes,
 )
 from scripts.lib_uplift_supplement import (
+    HEADLINE_REFERENCE_BY_CORPUS,
     NotationKey,
     BOARD_FRAMES,
     is_board_frame_condition,  # noqa: E402
@@ -126,7 +127,7 @@ CONDITION_COLUMNS: tuple[str, ...] = (
 
 #: Strata table.
 STRATUM_COLUMNS: tuple[str, ...] = (
-    "stratum_id", "corpus", "reference", "buffer_m", "frame_id",
+    "stratum_id", "corpus", "reference", "headline_reference", "buffer_m", "frame_id",
     "n_tiles", "n_refs", "n_conditions",
     "null_std", "null_sd_lo", "null_sd_hi", "n_comparisons",
     "mde_50", "mde_80", "mde_instrument", "mde_source", "mde_join_basis",
@@ -695,6 +696,7 @@ def build_strata_rows(
             "stratum_id": stratum_id,
             "corpus": key.corpus, "reference": key.reference,
             "buffer_m": key.buffer_m, "frame_id": key.frame_id,
+            "headline_reference": HEADLINE_REFERENCE_BY_CORPUS.get(key.corpus) == key.reference,
             "n_tiles": n_tiles,
             "n_refs": REFERENCE_N_MOUNDS.get(key.reference),
             "n_conditions": len(members),
@@ -708,6 +710,8 @@ def build_strata_rows(
             "mde_join_basis": join_basis,
             "notes": "; ".join(notes) or None,
         })
+    # Headline-reference strata lead within each corpus (PI ruling 2(ii)).
+    rows.sort(key=lambda r: (r["corpus"] or "", not r["headline_reference"], r["stratum_id"]))
     return rows
 
 
@@ -937,8 +941,14 @@ def render_build_report(
         "",
         "### Strata carrying the master table's rows",
         "",
-        "| `stratum_id` | Conditions | `n_tiles` | `n_refs` | MDE(80 %) |",
-        "|---|---:|---:|---:|---:|",
+        "Headline strata lead within each corpus (PI ruling 2(ii), 2026-09-10):",
+        "the 55-map corpus is headlined on the r2 reference, the gold standard on",
+        "the curator reference; the other references stay as disclosed strata,",
+        "the lineage of any figure scored on them, with the transfer tax to the",
+        "headline reference named wherever such a figure is cited.",
+        "",
+        "| `stratum_id` | headline | Conditions | `n_tiles` | `n_refs` | MDE(80 %) |",
+        "|---|:---:|---:|---:|---:|---:|",
     ]
     master_strata = {r["stratum_id"] for r in master}
     for stratum in strata:
@@ -947,6 +957,7 @@ def render_build_report(
         mde = stratum["mde_80"]
         lines.append(
             f"| `{_md_cell(stratum['stratum_id'])}` "
+            f"| {'●' if stratum['headline_reference'] else ''} "
             f"| {sum(1 for r in master if r['stratum_id'] == stratum['stratum_id'])} "
             f"| {stratum['n_tiles'] or '—'} | {stratum['n_refs'] or '—'} "
             f"| {round(mde, 4) if mde is not None else '—'} |"

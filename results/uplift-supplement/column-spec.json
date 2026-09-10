@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-10T07:10:56Z",
+  "generated_at": "2026-09-10T07:16:15Z",
   "notation_key": "docs/methodology/notation-key.md",
   "sanctioned_by_notation_key": [
     "55maps-8541",
@@ -50,6 +50,7 @@
     "grid-common-487",
     "group",
     "h13-common-338",
+    "headline_reference",
     "is_primary_buffer",
     "job_id",
     "k1_with_verifier",
@@ -247,6 +248,11 @@
     "geometry_basis": {
       "extends": "\u00a7 2",
       "rationale": "Which rule resolved the geometry: pool-name, label, or run-facts-tile-size.",
+      "sanctioned_by_key": true
+    },
+    "headline_reference": {
+      "extends": "\u00a7 4",
+      "rationale": "True where the stratum's reference is the corpus headline reference (r2 on the 55-map corpus, curator on the gold standard; PI ruling 2026-09-10).",
       "sanctioned_by_key": true
     },
     "is_primary_buffer": {
@@ -693,6 +699,7 @@
       "stratum_id",
       "corpus",
       "reference",
+      "headline_reference",
       "buffer_m",
       "frame_id",
       "n_tiles",

@@ -2,12 +2,12 @@
 
 > **Last revised**: 2026-09-10 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-10T07:10:56Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-10T07:16:15Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 The canonical key `docs/methodology/notation-key.md` requires that
 "new tables and dataset builders must conform to it or extend it here
 first". The uplift-supplement builder validates every column it writes
-against §§ 6-7, which sanction 150 names. A builder must not
+against §§ 6-7, which sanction 151 names. A builder must not
 amend the canonical key unilaterally, so columns the key does not name
 are declared in `scripts/lib_uplift_supplement.py` (`COLUMN_EXTENSIONS`)
 and proposed here for the PI to fold into § 7; an undeclared column
@@ -17,7 +17,7 @@ still fails loudly.
 
 None: every declared extension is sanctioned by the key.
 
-## Extensions already sanctioned by the key (84)
+## Extensions already sanctioned by the key (85)
 
 Landed as § 7.1 on 2026-09-10 (PI ruling 2(i) of the supplement's
 registration walk-through); still declared here so the builder's
@@ -44,6 +44,7 @@ validation and the key cannot drift apart silently.
 | `frame_id` | § 6 |
 | `geometry` | § 2 (geometry cell) |
 | `geometry_basis` | § 2 |
+| `headline_reference` | § 4 |
 | `is_primary_buffer` | § 1 (R) |
 | `job_id` | anti-confabulation |
 | `k1_with_verifier` | § 2 (PV) |

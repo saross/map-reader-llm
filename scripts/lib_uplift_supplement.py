@@ -75,6 +75,7 @@ __all__ = [
     "CrossStratumAggregationError",
     "NotationKey",
     "PRIMARY_BUFFER_BY_CORPUS",
+    "HEADLINE_REFERENCE_BY_CORPUS",
     "REFERENCE_BY_FILENAME",
     "SHELL_EPILOGUE",
     "SHELL_PREAMBLE",
@@ -167,6 +168,12 @@ REFERENCE_PATH: dict[str, str] = {
 #: 20 m; 55-map operational 50 m"). The master conditions table carries one row
 #: per registered condition AT this buffer; the by-buffer companion carries the
 #: full sweep.
+#: The reference each corpus's headline figures are scored on (PI ruling 2(ii),
+#: 2026-09-10): r2 for the 55-map corpus, the curator reference on the gold
+#: standard. Other references stay in the dataset as disclosed strata — the
+#: lineage of a figure scored on them — never dropped.
+HEADLINE_REFERENCE_BY_CORPUS: dict[str, str] = {"4-map-gs": "curator", "55-map": "r2"}
+
 PRIMARY_BUFFER_BY_CORPUS: dict[str, int] = {
     "4-map-gs": 20,
     "55-map": 50,
@@ -279,6 +286,9 @@ COLUMN_EXTENSIONS: dict[str, ColumnExtension] = {
              "The path the evaluation literally recorded, where it differs from the anchor."),
         _ext("buffer_m", "§ 1 (R / R_m)",
              "Third component, as an integer column; `R_m` is the corrected-F1 CSV's name."),
+        _ext("headline_reference", "§ 4",
+             "True where the stratum's reference is the corpus headline reference "
+             "(r2 on the 55-map corpus, curator on the gold standard; PI ruling 2026-09-10)."),
         _ext("frame_id", "§ 6",
              "Fourth component: the evaluation frame id (era-1-340, era-2-487, ...)."),
         _ext("is_primary_buffer", "§ 1 (R)",
