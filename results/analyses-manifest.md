@@ -2,7 +2,7 @@
 
 # Analyses manifest
 
-> Generated 2026-09-10T07:11:53Z · 64 row(s) · schema v1.0.
+> Generated 2026-09-10T07:21:29Z · 64 row(s) · schema v1.0.
 >
 > **Coverage**: 64 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
 
@@ -71,4 +71,4 @@
 | estimated-correction-r2 | diagnostic | 35 | post-hoc | Results | Expected terms M 49.7, E_err 35.8, E_om 35.8; F1-hat sits within 0.0007 of the r2 point — below it for 32 of 35 cells (by 0.0007 at the top of the board), at it for one, marginally above it for the two lowest-recall cells (TM-k4 +0.0003, IM-k4 +0.0007) — with ≈ ±0.005 intervals, wider than the tier gaps. |
 | student-baseline-r2 | diagnostic | 0 | post-hoc | Discussion | P 0.991 / R 0.923 / F1 0.956 (without extrapolated terms R 0.941 / F1 0.966); GS-4 direct 1.000 / 0.947 / 0.973. |
 | sensitivity-mde-r2 | diagnostic | 35 | post-hoc | Appendix | 55-map r2 board null SD 0.0045 over 595 pairs; MDE80 0.013 — resolution unchanged by r2. |
-| gs-era2-verified-board-2026-09-10 | leaderboard | 79 | post-hoc | Results | PENDING: re-tier after the symmetry fix (filled by build_gs_era2_board finalise) |
+| gs-era2-verified-board-2026-09-10 | leaderboard | 79 | post-hoc | Results | 1845/3081 pairs significant at BH q = 0.05, 7 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 28. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 39/39; G6 max |delta| 0.0078. |

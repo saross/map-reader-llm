@@ -448,7 +448,8 @@ def finalise(board: Path, membership: dict[str, Any]) -> None:
                      f"{r['mcc'] if r['mcc'] is not None else '—'} |")
     lines += ["", "Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 "
               "frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the "
-              "Era-2-frame reproduction of the archived board's score). Full pairwise table: `tiering_20m.json`; "
+              "Era-2-frame reproduction of the archived board's score, or — for the nine re-materialised on "
+              "2026-09-10 — of the materialisation registry's registered point). Full pairwise table: `tiering_20m.json`; "
               "gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: "
               "`cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.", ""]
     # Keep an existing changelog across rebuilds: the body is regenerated, the
