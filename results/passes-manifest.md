@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-09-08T12:54:53Z · 1285 row(s) · schema v1.0.
+> Generated 2026-09-10T05:50:26Z · 1286 row(s) · schema v1.0.
 >
-> **Coverage**: 1285 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 1286 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cands | cost_usd |
 |---|---|---|---|---|---|---|---|---|
@@ -122,6 +122,7 @@
 | n1-outstanding-384::pro-text-high-t0::run3 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 0.591894 |
 | n1-outstanding-384::pro-image-medium-t07::run1 | gemini-3-flash-preview | image | medium | 0.7 | ok | 487 | — | 4.003194 |
 | n1-outstanding-384::pro-text-medium-t07::run1 | gemini-3-flash-preview | text | medium | 0.7 | ok | 487 | — | 0.646861 |
+| n1-outstanding-384::image-t0-verified-v1-n3::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 690 | 0.969774 |
 | n1-pro-rerun-384::pro-text-high-t0::run1 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | — | 1.850932 |
 | n1-pro-rerun-384::pro-text-high-t0::run2 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | — | 1.849756 |
 | n1-pro-rerun-384::pro-text-high-t0::run3 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | — | 1.8592 |

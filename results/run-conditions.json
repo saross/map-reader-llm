@@ -294,7 +294,12 @@
      "model_of_record_note": "E57 billing verdict (corrected 2026-06-03): dispatched as Flash (per_item_metadata.model_version=gemini-3-flash-preview), NOT the gemini-3.1-pro the study YAML intended; the runner never threaded --model. The genuine-Pro re-dispatch of this corner is n1-pro-rerun-384::baseline-pro-text-medium-t-0-7."
     }
    },
-   "verifier_passes": {},
+   "verifier_passes": {
+    "image-t0-verified-v1-n3": {
+     "modality": "image",
+     "path": "image-t0/verified-v1-n3"
+    }
+   },
    "conditions": [
     {
      "label": "brief-text-t03-consensus-1of3",
@@ -951,6 +956,26 @@
      "verifier_config": null,
      "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-7/evaluation.json",
      "detections": "outputs/h11/n1-outstanding-384/pro-text-medium-t07"
+    },
+    {
+     "label": "pv-n1-image-t0-n3-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "image-t0",
+     "n_passes": 3,
+     "vote_threshold": 2,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/n1-outstanding-384__pv-n1-image-t0-n3-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-n1-image-t0-n3.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-n1-image-t0-n3 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage image-t0-verified-v1-n3 at the F1@20-argmax (vote_t 2, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. K = 3 < 5 (card § 3 rule); registered, not a member; the row's evaluation is the Era-2-frame score."
     }
    ],
    "_ignored_evals": [
@@ -3652,6 +3677,1140 @@
       "n_calibration_tiles": null
      },
      "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-text-t03-4of5 re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "pv-high-text-t0.3-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.3",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t0_3-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.3-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-text-t0.3-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.3-verified-v1-n5 at the F1@20-argmax (vote_t 4, prob_t 0.2) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8863) is the waived opmax/g2 evaluation. NOTE: the materialisation registry's sweep best point differs: registry F1 0.8873 n 408 vs archived board F1 0.8863 n 409 — the sweep_2d.json predates or differs from the materialised file (sweep-staleness class, Obs 461); the row is the file the archived board scored.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-text-comparative-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.25,
+     "verifier_config": {
+      "variant": "session-78-comparative",
+      "instruction_file": "verify_comparative.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-comparative-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-comparative.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-comparative (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-comparative at the F1@20-argmax (vote_t 4, prob_t 0.25) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8846) is the waived opmax/g2 evaluation.",
+     "n_candidates": 3736,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-text-adversarial-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-adversarial",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-adversarial-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-adversarial.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-adversarial (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8833) is the waived opmax/g2 evaluation.",
+     "n_candidates": 3736,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-high-text-t1.0-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t1.0",
+     "n_passes": 10,
+     "vote_threshold": 5,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t1_0-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t1.0-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-text-t1.0-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t1.0-verified-v1-n10 at the F1@20-argmax (vote_t 5, prob_t 0.2) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8804) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-text-checklist-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-checklist",
+      "instruction_file": "verify_checklist.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-checklist-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-checklist.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-checklist (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8783) is the waived opmax/g2 evaluation.",
+     "n_candidates": 3736,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-text-t0.3-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-minimal-text-n30-t07-text-t0.3",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t0_3-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.3-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-text-t0.3-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-minimal-text-n30-t07-text-t0.3-verified-v1-n5 at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8778) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-text-t1.0-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-minimal-text-n30-t07-text-t1.0",
+     "n_passes": 10,
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t1_0-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t1.0-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-text-t1.0-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10 at the F1@20-argmax (vote_t 5, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8771) is the waived opmax/g2 evaluation. NOTE: the materialisation registry's sweep best point differs: registry F1 0.8781 n 410 vs archived board F1 0.8771 n 395 — the sweep_2d.json predates or differs from the materialised file (sweep-staleness class, Obs 461); the row is the file the archived board scored.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-text-brief-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-brief",
+      "instruction_file": "verify_brief.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-brief-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-brief.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-brief (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8762) is the waived opmax/g2 evaluation.",
+     "n_candidates": 3736,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-high-text-t0.7-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.7",
+     "n_passes": 10,
+     "vote_threshold": 8,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t0_7-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.7-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-text-t0.7-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-verified-v1-n10 at the F1@20-argmax (vote_t 8, prob_t 0.2) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8744) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-text-t0.7-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-minimal-text-n30-t07-text-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t0_7-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.7-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-text-t0.7-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-minimal-text-n30-t07-text-t0.7-verified-v1-n5 at the F1@20-argmax (vote_t 4, prob_t 0.2) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8732) is the waived opmax/g2 evaluation. NOTE: the materialisation registry's sweep best point differs: registry F1 0.8739 n 382 vs archived board F1 0.8732 n 385 — the sweep_2d.json predates or differs from the materialised file (sweep-staleness class, Obs 461); the row is the file the archived board scored.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-text-t0.7-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-minimal-text-n30-t07-text-t0.7",
+     "n_passes": 10,
+     "vote_threshold": 6,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t0_7-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.7-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-text-t0.7-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-minimal-text-n30-t07-text-t0.7-verified-v1-n10 at the F1@20-argmax (vote_t 6, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8726) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-high-text-t0.3-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.3",
+     "n_passes": 10,
+     "vote_threshold": 8,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t0_3-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.3-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-text-t0.3-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.3-verified-v1-n10 at the F1@20-argmax (vote_t 8, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8722) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-text-t1.0-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-minimal-text-n30-t07-text-t1.0",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t1_0-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t1.0-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-text-t1.0-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-minimal-text-n30-t07-text-t1.0-verified-v1-n5 at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8714) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-text-t0.3-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-minimal-text-n30-t07-text-t0.3",
+     "n_passes": 10,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t0_3-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.3-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-text-t0.3-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-minimal-text-n30-t07-text-t0.3-verified-v1-n10 at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8682) is the waived opmax/g2 evaluation. NOTE: the materialisation registry's sweep best point differs: registry F1 0.873 n 431 vs archived board F1 0.8682 n 392 — the sweep_2d.json predates or differs from the materialised file (sweep-staleness class, Obs 461); the row is the file the archived board scored.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-text-checklist-text-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-checklist-text",
+      "instruction_file": "verify_checklist-text.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-checklist-text-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-checklist-text.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-checklist-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8639) is the waived opmax/g2 evaluation.",
+     "n_candidates": 3736,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-high-text-t0.7-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t0_7-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.7-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-text-t0.7-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-verified-v1-n5 at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8634) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-text-t0.0-n3-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-minimal-text-n30-t07-text-t0.0",
+     "n_passes": 3,
+     "vote_threshold": 2,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/pv-diag-384__pv-min-text-t0_0-n3-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.0-n3.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-text-t0.0-n3 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-minimal-text-n30-t07-text-t0.0-verified-v1-n3 at the F1@20-argmax (vote_t 2, prob_t 0.2) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. K = 3 < 5 (card § 3 rule); registered, not a member; the row's evaluation is the Era-2-frame score."
+    },
+    {
+     "label": "pv-high-text-t1.0-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t1.0",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t1_0-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t1.0-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-text-t1.0-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t1.0-verified-v1-n5 at the F1@20-argmax (vote_t 3, prob_t 0.2) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8607) is the waived opmax/g2 evaluation. NOTE: the materialisation registry's sweep best point differs: registry F1 0.8688 n 426 vs archived board F1 0.8607 n 376 — the sweep_2d.json predates or differs from the materialised file (sweep-staleness class, Obs 461); the row is the file the archived board scored.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-text-adversarial-text-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-adversarial-text",
+      "instruction_file": "verify_adversarial-text.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-adversarial-text-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-adversarial-text.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-adversarial-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8603) is the waived opmax/g2 evaluation.",
+     "n_candidates": 3736,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-text-brief-text-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-brief-text",
+      "instruction_file": "verify_brief-text.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-brief-text-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-brief-text.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-brief-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8519) is the waived opmax/g2 evaluation.",
+     "n_candidates": 3736,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-high-text-t0.0-n3-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.0",
+     "n_passes": 3,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/pv-diag-384__pv-high-text-t0_0-n3-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.0-n3.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-text-t0.0-n3 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.0-verified-v1-n3 at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. K = 3 < 5 (card § 3 rule); registered, not a member; the row's evaluation is the Era-2-frame score."
+    },
+    {
+     "label": "pv-min-image-t0.7-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "image-n5-image-t0.7",
+     "n_passes": 10,
+     "vote_threshold": 6,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_7-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t0.7-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-image-t0.7-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage image-n5-image-t0.7-verified-v1-n10 at the F1@20-argmax (vote_t 6, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7881) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-high-image-t0.7-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-image-t0_7-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.7-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-image-t0.7-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-verified-v1-n5 at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7868) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-image-adversarial-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-adversarial",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-adversarial-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-adversarial.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-adversarial (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7866) is the waived opmax/g2 evaluation.",
+     "n_candidates": 2017,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-image-comparative-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.25,
+     "verifier_config": {
+      "variant": "session-78-comparative",
+      "instruction_file": "verify_comparative.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-comparative-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-comparative.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-comparative (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-comparative at the F1@20-argmax (vote_t 3, prob_t 0.25) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7857) is the waived opmax/g2 evaluation.",
+     "n_candidates": 2017,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-image-checklist-text-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-checklist-text",
+      "instruction_file": "verify_checklist-text.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-checklist-text-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-checklist-text.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-checklist-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7852) is the waived opmax/g2 evaluation.",
+     "n_candidates": 2017,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-image-brief-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-brief",
+      "instruction_file": "verify_brief.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-brief-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-brief.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-brief (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7844) is the waived opmax/g2 evaluation.",
+     "n_candidates": 2017,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-image-checklist-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-checklist",
+      "instruction_file": "verify_checklist.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-checklist-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-checklist.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-checklist (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.783) is the waived opmax/g2 evaluation.",
+     "n_candidates": 2017,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-image-t0.3-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "image-n5-image-t0.3",
+     "n_passes": 10,
+     "vote_threshold": 7,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_3-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t0.3-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-image-t0.3-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage image-n5-image-t0.3-verified-v1-n10 at the F1@20-argmax (vote_t 7, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7819) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-image-brief-text-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-brief-text",
+      "instruction_file": "verify_brief-text.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-brief-text-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-brief-text.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-brief-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7782) is the waived opmax/g2 evaluation.",
+     "n_candidates": 2017,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-image-t0.3-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "image-n5-image-t0.3",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_3-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t0.3-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-image-t0.3-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage image-n5-image-t0.3-verified-v1-n5 at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7767) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-high-image-t0.7-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t0.7",
+     "n_passes": 10,
+     "vote_threshold": 7,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-image-t0_7-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.7-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-image-t0.7-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-verified-v1-n10 at the F1@20-argmax (vote_t 7, prob_t 0.2) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7761) is the waived opmax/g2 evaluation. NOTE: the materialisation registry's sweep best point differs: registry F1 0.7765 n 348 vs archived board F1 0.7761 n 351 — the sweep_2d.json predates or differs from the materialised file (sweep-staleness class, Obs 461); the row is the file the archived board scored.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-image-t0.7-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "image-n5-image-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_7-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t0.7-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-image-t0.7-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage image-n5-image-t0.7-verified-v1-n5 at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7734) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "session-78-image-adversarial-text-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t0.7",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "session-78-adversarial-text",
+      "instruction_file": "verify_adversarial-text.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-adversarial-text-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-adversarial-text.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-adversarial-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7718) is the waived opmax/g2 evaluation.",
+     "n_candidates": 2017,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-high-image-t0.3-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t0.3",
+     "n_passes": 10,
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-image-t0_3-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.3-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-image-t0.3-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.3-verified-v1-n10 at the F1@20-argmax (vote_t 5, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7689) is the waived opmax/g2 evaluation. NOTE: the materialisation registry's sweep best point differs: registry F1 0.7705 n 432 vs archived board F1 0.7689 n 400 — the sweep_2d.json predates or differs from the materialised file (sweep-staleness class, Obs 461); the row is the file the archived board scored.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-scale4-optimal-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "scale-4-optimal-487",
+     "n_passes": 10,
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-scale4-optimal-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-scale4-optimal-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-scale4-optimal-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage scale-4-optimal-487-verified-v1-n10 at the F1@20-argmax (vote_t 5, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7683) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-high-image-t1.0-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t1.0",
+     "n_passes": 10,
+     "vote_threshold": 5,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-image-t1_0-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t1.0-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-image-t1.0-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t1.0-verified-v1-n10 at the F1@20-argmax (vote_t 5, prob_t 0.2) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7633) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-scale4-optimal-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "scale-4-optimal-487",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-scale4-optimal-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-scale4-optimal-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-scale4-optimal-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage scale-4-optimal-487-verified-v1-n5 at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7629) is the waived opmax/g2 evaluation. NOTE: the materialisation registry's sweep best point differs: registry F1 0.7635 n 398 vs archived board F1 0.7629 n 396 — the sweep_2d.json predates or differs from the materialised file (sweep-staleness class, Obs 461); the row is the file the archived board scored.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-high-image-t0.3-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t0.3",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-image-t0_3-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.3-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-image-t0.3-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.3-verified-v1-n5 at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.746) is the waived opmax/g2 evaluation. NOTE: g1-regression.json bisect: archived cache from blob 456dd9bf (372), file re-materialised to 373 features at d6cdb648b; the archived 0.7460 is not this file's score (G1 bisect).",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-image-t1.0-n10-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "image-n5-image-t1.0",
+     "n_passes": 10,
+     "vote_threshold": 6,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t1_0-n10-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t1.0-n10.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-image-t1.0-n10 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage image-n5-image-t1.0-verified-v1-n10 at the F1@20-argmax (vote_t 6, prob_t 0.2) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7409) is the waived opmax/g2 evaluation. NOTE: the materialisation registry's sweep best point differs: registry F1 0.7428 n 397 vs archived board F1 0.7409 n 364 — the sweep_2d.json predates or differs from the materialised file (sweep-staleness class, Obs 461); the row is the file the archived board scored.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-min-image-t1.0-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "image-n5-image-t1.0",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t1_0-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t1.0-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-image-t1.0-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage image-n5-image-t1.0-verified-v1-n5 at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7384) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "pv-high-image-t1.0-n5-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-image-n5-image-t1.0",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-image-t1_0-n5-opmax/evaluation.json",
+     "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t1.0-n5.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-image-t1.0-n5 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t1.0-verified-v1-n5 at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7337) is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
     }
    ],
    "_ignored_evals": [
@@ -4393,6 +5552,166 @@
     {
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-text-t03-4of5/evaluation.json",
      "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-text-t03-4of5's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-text-t0_3-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-text-t0.3-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-text-comparative-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-text-comparative-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-text-adversarial-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-text-adversarial-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-text-t1_0-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-text-t1.0-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-text-checklist-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-text-checklist-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-text-t0_3-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-text-t0.3-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-text-t1_0-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-text-t1.0-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-text-brief-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-text-brief-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-text-t0_7-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-text-t0.7-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-text-t0_7-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-text-t0.7-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-text-t0_7-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-text-t0.7-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-text-t0_3-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-text-t0.3-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-text-t1_0-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-text-t1.0-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-text-t0_3-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-text-t0.3-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-text-checklist-text-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-text-checklist-text-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-text-t0_7-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-text-t0.7-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-text-t1_0-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-text-t1.0-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-text-adversarial-text-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-text-adversarial-text-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-text-brief-text-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-text-brief-text-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-image-t0_7-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-image-t0.7-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-image-t0_7-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-image-t0.7-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-image-adversarial-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-image-adversarial-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-image-comparative-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-image-comparative-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-image-checklist-text-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-image-checklist-text-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-image-brief-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-image-brief-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-image-checklist-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-image-checklist-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-image-t0_3-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-image-t0.3-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-image-brief-text-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-image-brief-text-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-image-t0_3-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-image-t0.3-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-image-t0_7-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-image-t0.7-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-image-t0_7-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-image-t0.7-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__session-78-image-adversarial-text-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): session-78-image-adversarial-text-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-image-t0_3-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-image-t0.3-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-scale4-optimal-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-scale4-optimal-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-image-t1_0-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-image-t1.0-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-scale4-optimal-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-scale4-optimal-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-image-t0_3-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-image-t0.3-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-image-t1_0-n10-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-image-t1.0-n10-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-image-t1_0-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-image-t1.0-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-image-t1_0-n5-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-image-t1.0-n5-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
     }
    ]
   },

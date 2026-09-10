@@ -608,6 +608,10 @@ def build_sweep_tile_counts(
         worst_f1, worst_n, n_rows = 0.0, 0, 0
         with open(sweep_csv, newline="") as fh:
             for row in _csv.DictReader(fh):
+                # A campaign-wide sweep (grid: one csv, a ``cell`` column) is
+                # filtered to this union's cell, the verify dir's parent name.
+                if row.get("cell") and row["cell"] != verify_dir.parent.name:
+                    continue
                 key = (round(float(row["prob_t"]), 4), int(row["min_votes"]))
                 s = by_point.get(key)
                 if s is None:

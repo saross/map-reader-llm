@@ -383,6 +383,13 @@ def finalise(board: Path, membership: dict[str, Any]) -> None:
     gates = json.loads((board / "gates.json").read_text(encoding="utf-8"))
     g1 = _eval_meta(f"{BOARD_DIR}/g1-regression.json") or {}
     deltas = {r["condition_id"]: r for r in gates["cells"]}
+    # The symmetry fix's -opmax members (build_gs_era2_board_opmax.py) carry
+    # their Era-2-frame reproduction as committed_f1_20 in opmax/gates.json.
+    opmax_gates = _eval_meta(f"{BOARD_DIR}/opmax/gates.json") or {}
+    for r in opmax_gates.get("cells", []):
+        if r.get("on_board"):
+            deltas[r["condition_id"]] = {**r, "committed_f1_20": r.get("g2_f1_20")}
+    n_opmax = sum(1 for r in opmax_gates.get("cells", []) if r.get("on_board"))
     admissible, mcb_path = _mcb_admissible(board)
     ranking = tiering["ranking"]
     n_sig = sum(1 for r in tiering["pairwise"] if r["significant"])
@@ -407,7 +414,11 @@ def finalise(board: Path, membership: dict[str, Any]) -> None:
     provenance = {
         "board_id": BOARD_ID, "card": CARD, "frame": FRAME, "frame_id": FRAME_ID,
         "frame_provenance": "inputs/vectors/bounds/384/era2_b_intersection_bounds.provenance.json",
-        "membership": {"n": membership["n_members"], "rule": "card § 3 under the § 2 frame rule; see membership.json"},
+        "membership": {"n": membership["n_members"] + n_opmax,
+                       "rule": "card § 3 under the § 2 frame rule; see membership.json",
+                       "n_era2b": membership["n_members"], "n_opmax": n_opmax,
+                       "opmax": "the archived Era-2 PV board's sweep-optimal cells (opmax/membership.json)" if n_opmax else None},
+        "gates_opmax": {k: v for k, v in opmax_gates.items() if k != "cells"} if opmax_gates else None,
         "instruments": {"per_cell_scoring": "scripts/evaluate_detections.py (each member's committed recipe, bounds swapped)",
                         "tiering": "scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m)",
                         "mcb": mcb_path or "scripts/selection_aware_intervals.py --board (not found in board/mcb)"},
@@ -431,16 +442,24 @@ def finalise(board: Path, membership: dict[str, Any]) -> None:
              "|---:|---|---:|:---:|---:|---:|---:|---:|"]
     for r in ranking:
         src = r["ref"].replace(SUFFIX, "")
-        d = deltas.get(src, {})
+        d = deltas.get(src) or deltas.get(r["ref"]) or {}
         lines.append(f"| {r['rank']} | `{src}` | {r['tier']} | {'●' if r['ref'] in admissible else ''} | {r['eval_f1']:.4f} | "
                      f"{d.get('committed_f1_20', float('nan')):.4f} | {d.get('delta_board_minus_committed', 0.0):+.4f} | "
                      f"{r['mcc'] if r['mcc'] is not None else '—'} |")
     lines += ["", "Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 "
-              "frame for the incumbents and grid-common for the B-geometry cells). Full pairwise table: `tiering_20m.json`; "
-              "gates: `gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; "
-              "reproduction evaluations: `g2/`.", "", "## Changelog", "",
-              f"### {provenance['finalised_at_utc'][:10]} — Original publication", "",
-              "Built on sapphire per the card; all gates recorded in `provenance.json`."]
+              "frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the "
+              "Era-2-frame reproduction of the archived board's score). Full pairwise table: `tiering_20m.json`; "
+              "gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: "
+              "`cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.", ""]
+    # Keep an existing changelog across rebuilds: the body is regenerated, the
+    # revision trail is not (document revision policy, docs/agent-guidance.md).
+    old_readme = (board / "README.md").read_text(encoding="utf-8") if (board / "README.md").exists() else ""
+    marker = "## Changelog"
+    if marker in old_readme:
+        lines += [old_readme[old_readme.index(marker):].rstrip("\n")]
+    else:
+        lines += [marker, "", f"### {provenance['finalised_at_utc'][:10]} — Original publication", "",
+                  "Built on sapphire per the card; all gates recorded in `provenance.json`."]
     (board / "README.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(outcome)
 
