@@ -1,0 +1,253 @@
+{
+ "board_id": "gs-era2-verified-board-2026-09-10",
+ "card": "planning/gs-era2-verified-board-2026-09-08.md",
+ "frame": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+ "frame_id": "era2-b-487",
+ "frame_provenance": "inputs/vectors/bounds/384/era2_b_intersection_bounds.provenance.json",
+ "membership": {
+  "n": 79,
+  "rule": "card \u00a7 3 under the \u00a7 2 frame rule; see membership.json",
+  "n_era2b": 39,
+  "n_opmax": 40,
+  "opmax": "the archived Era-2 PV board's sweep-optimal cells (opmax/membership.json)"
+ },
+ "gates_opmax": {
+  "board_id": "gs-era2-verified-board-2026-09-10",
+  "checked_at_utc": "2026-09-10T05:49:23+00:00",
+  "G2_reproduction_failures": 0,
+  "G3_frame_failures": 0,
+  "G4_cells": 40,
+  "G4_members": 40,
+  "G4_ok": true,
+  "missing": 0,
+  "passed": true,
+  "bisected": {
+   "pv-high-image-t0.3-n5": {
+    "archived_f1_20": 0.746,
+    "expected_f1_20": 0.7475,
+    "archived_n": 372,
+    "expected_n": 373,
+    "why": "g1-regression.json bisect: archived cache from blob 456dd9bf (372), file re-materialised to 373 features at d6cdb648b"
+   }
+  }
+ },
+ "instruments": {
+  "per_cell_scoring": "scripts/evaluate_detections.py (each member's committed recipe, bounds swapped)",
+  "tiering": "scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m)",
+  "mcb": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/mcb/gs-era2-verified-board-2026-09-10_b20_m1.json"
+ },
+ "gates": {
+  "G1": {
+   "gate": "G1",
+   "archived_board": "archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json",
+   "archived_git_commit": "005e6c71",
+   "rebuilt_git_commit": "be01df377",
+   "spec": "planning/leaderboard-specs/gs-era2-regression-archived-board-2026-09-10.yaml",
+   "n_cells_archived": 44,
+   "n_cells_rebuilt": 44,
+   "n_cells_common": 44,
+   "max_abs_delta_f1_20": 0.0015000000000000568,
+   "n_pairs_archived": 946,
+   "n_pairs_rebuilt": 946,
+   "n_pairs_shared": 946,
+   "max_abs_delta_p_value": 0.05699999999999994,
+   "n_pairs_significance_differs": 1,
+   "tiers_identical": false,
+   "tier_sizes_archived": [
+    8,
+    11,
+    3,
+    12,
+    6,
+    4
+   ],
+   "tier_sizes_rebuilt": [
+    8,
+    11,
+    3,
+    12,
+    9,
+    1
+   ],
+   "note": "first attempt ran with the builder default --top-n 20 and rebuilt 26 cells (F1 exact on those); rerun with --top-n 0 as the archived metadata records",
+   "checked_at_utc": "2026-09-10T02:40:54+00:00",
+   "passed": false,
+   "detail": {
+    "cells_moved": [
+     {
+      "label": "pv-high-image-t0.3-n5",
+      "archived_f1_20": 0.746,
+      "rebuilt_f1_20": 0.7475
+     }
+    ],
+    "pair_significance_flipped": [
+     {
+      "pair": [
+       "pv-high-image-t0.3-n10",
+       "pv-high-image-t0.3-n5"
+      ],
+      "archived_p": 0.0253,
+      "archived_bh_adjusted_p": 0.045675,
+      "rebuilt_p": 0.0339,
+      "rebuilt_bh_adjusted_p": 0.059498
+     }
+    ],
+    "tiers_changed": "tiers 5 and 6 (the bottom of the image block) re-cut: archived 6 + 4 cells, rebuilt 9 + 1; tiers 1-4 identical member-for-member",
+    "reading": "43 of 44 cells reproduce F1@20 exactly and 945 of 946 pairs keep their verdict; one image PV cell moves +0.0015 F1 under the current evaluator (builder git 005e6c71 on 2026-08-20 vs be01df377 today), enough to lift one BH-adjusted p across 0.05 and merge the two bottom image tiers. Instrument drift in the RETIRED builder on one archived input; the new board is scored and tiered by the register-driven chain, whose reproduction gate is G2. Publication decision (card \u00a7 6: nothing published unless all gates pass) is the PI's."
+   },
+   "verdict": "FAIL as specified (archived inputs are not, for one cell, the inputs the archived board scored); PASS from the inputs actually scored (confirmatory rebuild 817de06a0: 44/44, 946/946, tiers identical); no evaluator drift - see bisect",
+   "bisect": {
+    "bisected_at_utc": "2026-09-10T05:30:00+00:00",
+    "method": "scripts/g1_drift_bisect_rescore.py on sapphire: the moved cell's input scored under today's evaluator (builder worker _evaluate_single_threshold, GT mounds-reference.geojson, bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson, buffers 20/30/40/50/100, bootstrap 1000, seed 42) as two blobs: the content the archived cache entry was computed from, and the content that survives under archive/ today",
+    "input": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.3-n5.geojson",
+    "blob_scored_by_archived_board": {
+     "blob": "456dd9bfe1935180d75e35333b6bf484a8906fab",
+     "n_features": 372,
+     "crs": "WGS84 degrees, no crs member",
+     "committed": "bd24293d4 2026-04-19 (results/leaderboard/era2/pv-materialised/)",
+     "cache_entry_created": "f8d755790 2026-04-25T06:30:05Z (n_detections 372, f1 0.746); untracked at 94c759183 the same day",
+     "today_f1_20": 0.746,
+     "today_precision_20": 0.8091,
+     "today_recall_20": 0.692,
+     "today_f1_30_40_50_100": [
+      0.8253,
+      0.8401,
+      0.8476,
+      0.8575
+     ],
+     "today_tile_mcc": 0.8049,
+     "reproduces_archived_cache": "exactly, every buffer and the tile confusion matrix (tp 187 tn 251 fp 7 fn 42)"
+    },
+    "blob_in_archive_today": {
+     "blob": "9d65ac84949bedebf9734abbb37e2c771d53f1f5",
+     "n_features": 373,
+     "crs": "EPSG:32635 with crs member",
+     "committed": "d6cdb648b 2026-05-06T09:34:52Z, re-materialised after the Tier-2/3 gap recovery (its message records '-> 373 features')",
+     "today_f1_20": 0.7475,
+     "today_precision_20": 0.8097,
+     "today_recall_20": 0.6943,
+     "today_f1_30_40_50_100": [
+      0.8267,
+      0.8416,
+      0.849,
+      0.8589
+     ],
+     "today_tile_mcc": 0.8049,
+     "reproduces_g1_rebuild": "exactly (0.7475)"
+    },
+    "feature_added_by_re_materialisation": {
+     "x_32635": 327944.8,
+     "y_32635": 4687638.87,
+     "vote_count": "5 of 5",
+     "subtype": "burial_mound",
+     "source_tile": "K-35-062-2_Rakovski_x2688_y0.png",
+     "nearest_old_feature_m": 750.2,
+     "effect": "one additional true positive: recall 0.6920 -> 0.6943 (+1 of 435), precision 0.8091 -> 0.8097; tile MCC unchanged (tile already positive)"
+    },
+    "timeline": [
+     "2026-04-19 bd24293d4: 372-feature blob committed",
+     "2026-04-25 f8d755790: label-keyed cache entry written from it (n_detections 372, f1 0.746)",
+     "2026-04-25 94c759183: .cache untracked (gitignored) - survives only in working trees",
+     "2026-05-06 17:26 +0800 005e6c71: HEAD when the archived board was built",
+     "2026-05-06 17:33:42 +0800: archived board built; builder served the April cache entry (cache path keyed by label/threshold/buffer only, never by input content)",
+     "2026-05-06 17:34:52 +0800 d6cdb648b: 373-feature re-materialised blob AND the board committed together; commit message claims 'zero tier flips' - itself a stale-cache artefact",
+     "2026-08-20 b69d8af4b: family archived; the untracked cache re-tracked under archive/",
+     "2026-09-10 be01df377: G1 rebuild in a fresh cache evaluated the 373-feature file for the first time -> 0.7475"
+    ],
+    "why_only_one_cell_moved": "d6cdb648b re-materialised four pv cells; the other three (pv-high-image-t0.7-n5 414, pv-high-image-t1.0-n5 410, pv-scale4-optimal-n10 411 features) changed CRS representation only, so their stale cache entries were numerically right by coincidence",
+    "evaluator_drift": "none on this input: 15 commits touched the evaluator chain between 005e6c71 and HEAD (evaluate_detections.py, lib_advanced_metrics.py, lib_detection_paths.py, build_tiered_leaderboard.py); GT and both bounds blobs identical at 005e6c71 and HEAD; the archived numbers reproduce to 4 dp today",
+    "mechanism": "stale label-keyed evaluation cache (wrong-source cache): the archived board's score for this cell was computed from a 372-feature blob that its own archived input no longer is; the class of feedback_feature_count_crosscheck (cache n_detections 372 != archived feature count 373)",
+    "date_correction": "the original reading's '005e6c71 on 2026-08-20' was wrong: 005e6c71 is dated 2026-05-06; 2026-08-20 is b69d8af4b, the archive move",
+    "reading": "G1's premise (archived inputs = the inputs the archived board scored) is false for one cell. From the blob it actually scored, the archived board reproduces 44 of 44 under today's evaluator; the retired builder has not drifted. The +0.0015, the one BH flip and the Tier 5-6 re-cut are what the archived board WOULD have shown on 2026-05-06 had its cache been invalidated. Publication ruling remains the PI's under card \u00a7 6.",
+    "sidecar": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g1-bisect-rescore.json",
+    "script": "scripts/g1_drift_bisect_rescore.py",
+    "confirmatory_rebuild": {
+     "what": "the archived 44-cell board rebuilt with the retired builder from its archived inputs with ONE substitution: pv-high-image-t0.3-n5.geojson replaced by the 372-feature blob 456dd9bf its cache entry was computed from (git show 005e6c71:results/leaderboard/era2/pv-materialised/pv-high-image-t0.3-n5.geojson); spec = the G1 spec with that one path swapped; --top-n 0; fresh cache; sapphire",
+     "n_cells_common": 44,
+     "cells_moved": [],
+     "n_pairs_shared": 946,
+     "max_abs_delta_p_value": 0.0,
+     "n_pairs_significance_differs": 0,
+     "tier_sizes_archived": [
+      8,
+      11,
+      3,
+      12,
+      6,
+      4
+     ],
+     "tier_sizes_rebuilt": [
+      8,
+      11,
+      3,
+      12,
+      6,
+      4
+     ],
+     "tiers_identical": true,
+     "rebuilt_git_commit": "817de06a0",
+     "rebuilt_timestamp": "2026-09-10T05:32:16.114268+00:00",
+     "verdict": "PASS from the inputs the archived board actually scored: 44/44 cells, 946/946 pairs (max |dp| 0.0, 0 significance flips), tiers identical member-for-member",
+     "tiers_file": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g1-confirmatory-rebuild-tiers_20m.json"
+    }
+   }
+  },
+  "G2_G3_G4_G6": {
+   "board_id": "gs-era2-verified-board-2026-09-10",
+   "checked_at_utc": "2026-09-10T02:45:28+00:00",
+   "G2_reproduction_failures": 0,
+   "G3_frame_failures": 0,
+   "G4_cells": 39,
+   "G4_members": 39,
+   "G4_ok": true,
+   "missing": 0,
+   "passed": true
+  }
+ },
+ "tiering": {
+  "n_pairs": 3081,
+  "n_significant": 1853,
+  "n_tiers": 7,
+  "tie_set": [
+   "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+   "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+   "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+   "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+   "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b"
+  ],
+  "mcb_admissible_hsu": [
+   "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+   "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+   "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
+   "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
+   "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+   "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+   "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b",
+   "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+   "pv-diag-384::verified-adv-text-6of10-era2b",
+   "pv-diag-384::verified-adv-text-consensus-16of30-era2b",
+   "pv-diag-384::verified-adv-text-min-6of10-era2b",
+   "pv-diag-384::verified-adv-text-min-true-3of5-era2b",
+   "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b",
+   "pv-diag-384::verified-adv-text-t03-4of5-era2b",
+   "verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b",
+   "verifier-robustness::verified-384-ge3of5-t0-3-high-n5-era2b",
+   "verifier-robustness::verified-384-ge3of5-t0-3-n5-era2b",
+   "verifier-robustness::verified-384-ge3of5-t0-7-high-n5-era2b",
+   "pv-diag-384::pv-high-text-t0.3-n5-opmax",
+   "pv-diag-384::session-78-text-comparative-opmax",
+   "pv-diag-384::session-78-text-adversarial-opmax",
+   "pv-diag-384::pv-high-text-t1.0-n10-opmax",
+   "pv-diag-384::session-78-text-checklist-opmax",
+   "pv-diag-384::pv-min-text-t0.3-n5-opmax",
+   "pv-diag-384::pv-min-text-t1.0-n10-opmax",
+   "pv-diag-384::session-78-text-brief-opmax",
+   "pv-diag-384::pv-high-text-t0.7-n10-opmax",
+   "pv-diag-384::pv-min-text-t0.7-n5-opmax"
+  ],
+  "mcb_two_sided_band_n": 39,
+  "git_commit": "ff8049f4a",
+  "generated_at_utc": "2026-09-10T05:58:16.408311+00:00"
+ },
+ "finalised_at_utc": "2026-09-10T06:09:29+00:00"
+}
