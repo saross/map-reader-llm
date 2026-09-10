@@ -1,0 +1,1555 @@
+{
+ "board_id": "gs-era2-verified-board-2026-09-10",
+ "frame": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+ "frame_id": "era2-b-487",
+ "card": "planning/gs-era2-verified-board-2026-09-08.md",
+ "derived_at_utc": "2026-09-10T02:38:24+00:00",
+ "n_members": 39,
+ "members": [
+  {
+   "condition_id": "flash35-pv-2x2::f35prop-f35vf-4of10",
+   "run_id": "flash35-pv-2x2",
+   "label": "f35prop-f35vf-4of10",
+   "k": 10,
+   "detections": "results/flash35-2x2/best-op-sets/f35prop-f35vf-n10-4of10-pt0.25.geojson",
+   "eval_path": "results/flash35-2x2/evals/f35prop-f35vf-n10-4of10-pt0.25/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8362,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "flash35-pv-2x2::f35prop-f3vf-4of10",
+   "run_id": "flash35-pv-2x2",
+   "label": "f35prop-f3vf-4of10",
+   "k": 10,
+   "detections": "results/flash35-2x2/best-op-sets/f35prop-f3vf-n10-4of10-pt0.15.geojson",
+   "eval_path": "results/flash35-2x2/evals/f35prop-f3vf-n10-4of10-pt0.15/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.848,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "flash35-pv-2x2::f3prop-f35vf-6of10",
+   "run_id": "flash35-pv-2x2",
+   "label": "f3prop-f35vf-6of10",
+   "k": 10,
+   "detections": "results/flash35-2x2/best-op-sets/f3prop-f35vf-n10-6of10-pt0.25.geojson",
+   "eval_path": "results/flash35-2x2/evals/f3prop-f35vf-n10-6of10-pt0.25/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8689,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5",
+   "run_id": "gemini37-image-gs-2026-09-01",
+   "label": "g37-image-k5-verified-carried-p0.10-k5",
+   "k": 5,
+   "detections": "results/gemini37-image-gs-2026-09-01/arm1/verified_best_20m.geojson",
+   "eval_path": "results/gemini37-image-gs-2026-09-01/arm1/best-eval/evaluation.json",
+   "committed_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+   "committed_f1_20": 0.9254,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "image"
+  },
+  {
+   "condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5",
+   "run_id": "gemini37-image-gs-2026-09-01",
+   "label": "g37-image-k5-verified-swap37-p0.90-k5",
+   "k": 5,
+   "detections": "results/gemini37-image-gs-2026-09-01/arm2/verified_best_20m.geojson",
+   "eval_path": "results/gemini37-image-gs-2026-09-01/arm2/best-eval/evaluation.json",
+   "committed_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+   "committed_f1_20": 0.9308,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "image"
+  },
+  {
+   "condition_id": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10",
+   "run_id": "gemini37-screen-2026-08-28",
+   "label": "g37-text-k10-verified-carried-p0.10-k10",
+   "k": 10,
+   "detections": "results/gemini37-screen-2026-08-28/k10/verified_best_20m.geojson",
+   "eval_path": "results/gemini37-screen-2026-08-28/k10/best-eval/evaluation.json",
+   "committed_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+   "committed_f1_20": 0.9142,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5",
+   "run_id": "gemini37-screen-2026-08-28",
+   "label": "g37-text-k5-verified-carried-p0.10-k5",
+   "k": 5,
+   "detections": "results/gemini37-screen-2026-08-28/verified_best_20m.geojson",
+   "eval_path": "results/gemini37-screen-2026-08-28/best-eval/evaluation.json",
+   "committed_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+   "committed_f1_20": 0.9139,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5",
+   "run_id": "gemini37-screen-2026-08-28",
+   "label": "g37-text-k5-verified-swap37-p0.80-k5",
+   "k": 5,
+   "detections": "results/gemini37-screen-2026-08-28/swap37/verified_best_20m.geojson",
+   "eval_path": "results/gemini37-screen-2026-08-28/swap37/best-eval/evaluation.json",
+   "committed_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+   "committed_f1_20": 0.9265,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5",
+   "run_id": "gemini37-screen-2026-08-28",
+   "label": "g37-text-k5-verified-swap38-p0.88-k5",
+   "k": 5,
+   "detections": "results/gemini38-screen-2026-09-04/armV/verified_best_20m.geojson",
+   "eval_path": "results/gemini38-screen-2026-09-04/armV/best-eval/evaluation.json",
+   "committed_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+   "committed_f1_20": 0.9258,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10",
+   "run_id": "grid-2026-08-18",
+   "label": "g384-ov192-k10-verified-p0.15-k10",
+   "k": 10,
+   "detections": "results/grid-2026-08-18/conditions-verified/g384_ov192/detections.geojson",
+   "eval_path": "results/grid-2026-08-18/conditions-verified/g384_ov192/eval/evaluation.json",
+   "committed_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+   "committed_f1_20": 0.8961,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     20
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10",
+   "run_id": "grid-2026-08-18",
+   "label": "g384-ov192-k10-verified37-p0.98-k10",
+   "k": 10,
+   "detections": "results/gemini37-fourth-cell/gs-leg/verified_best_20m.geojson",
+   "eval_path": "results/gemini37-fourth-cell/gs-leg/best-eval/evaluation.json",
+   "committed_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+   "committed_f1_20": 0.914,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8",
+   "run_id": "image-b-gs-2026-08-28",
+   "label": "g384-ov192-image-high-k10-verified-p0.20-k8",
+   "k": 10,
+   "detections": "results/image-b-gs-2026-08-28/high/verified_best_20m.geojson",
+   "eval_path": "results/image-b-gs-2026-08-28/high/best-eval/evaluation.json",
+   "committed_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+   "committed_f1_20": 0.8333,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "image"
+  },
+  {
+   "condition_id": "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9",
+   "run_id": "image-b-gs-2026-08-28",
+   "label": "g384-ov192-image-min-k10-verified-p0.15-k9",
+   "k": 10,
+   "detections": "results/image-b-gs-2026-08-28/verified_best_20m.geojson",
+   "eval_path": "results/image-b-gs-2026-08-28/best-eval/evaluation.json",
+   "committed_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+   "committed_f1_20": 0.8412,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "image"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-image-3of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-image-3of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/condition-sets/image-3of5-n1-pt0.15.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-image-3of5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.7778,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "image"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-image-min-3of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-image-min-3of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-min-3of5.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-image-min-3of5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.7673,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "image"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-image-min-6of10",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-image-min-6of10",
+   "k": 10,
+   "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-min-6of10.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-image-min-6of10/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.789,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "image"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-pro-image-pro-vf-3of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-pro-image-pro-vf-3of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-image-pro-vf-3of5.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-pro-image-pro-vf-3of5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.7112,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "image"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-pro-text-flash-vf-3of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-pro-text-flash-vf-3of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/condition-sets/pro-flash-vf-3of5.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-pro-text-flash-vf-3of5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8491,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-pro-text-medium-vf-3of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-pro-text-medium-vf-3of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-text-medium-vf-3of5.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-pro-text-medium-vf-3of5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8495,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-pro-text-pro-vf-3of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-pro-text-pro-vf-3of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/condition-sets/pro-pro-vf-3of5.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-pro-text-pro-vf-3of5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8506,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-4of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-text-4of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/pareto/cheap6-4of5-n1-pt0.15.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-text-4of5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8641,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-6of10",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-text-6of10",
+   "k": 10,
+   "detections": "results/verifier-robustness/pareto/nof10-6of10-n1-pt0.2.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-text-6of10/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8769,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-consensus-16of30",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-text-consensus-16of30",
+   "k": 30,
+   "detections": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson",
+   "eval_path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8902,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-high-vf-4of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-text-high-vf-4of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/matrix-sets/high-T0.0.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-text-high-vf-4of5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8519,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-medium-vf-4of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-text-medium-vf-4of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/condition-sets/medium-vf-4of5.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-text-medium-vf-4of5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8545,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-min-6of10",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-text-min-6of10",
+   "k": 10,
+   "detections": "results/verifier-robustness/min-thinking-sets/text-min-t07-10pass-6of10-n1-pt0.2.geojson",
+   "eval_path": "results/flash35-2x2/evals/min11/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8835,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-min-n30lineage-4of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-text-min-n30lineage-4of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/min-thinking-sets/text-min-t07-5pass-n30lineage-4of5-n1-pt0.15.geojson",
+   "eval_path": "results/flash35-2x2/evals/min6-n30lineage/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8708,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-min-true-3of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-text-min-true-3of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/min-thinking-sets/text-min-t07-TRUE-5pass-3of5-n1-pt0.15.geojson",
+   "eval_path": "results/flash35-2x2/evals/min6-true/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8784,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-pro-vf-4of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-text-pro-vf-4of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/min-thinking-sets/high6-PRO-vf-4of5-pt0.25.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-text-pro-vf-4of5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8792,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-t03-4of5",
+   "run_id": "pv-diag-384",
+   "label": "verified-adv-text-t03-4of5",
+   "k": 5,
+   "detections": "results/verifier-robustness/condition-sets/t03-4of5-n1-pt0.2.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-adv-text-t03-4of5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8783,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "verifier-robustness::verified-384-16of30-t0-3-n5-opmax",
+   "run_id": "verifier-robustness",
+   "label": "verified-384-16of30-t0-3-n5-opmax",
+   "k": 30,
+   "detections": "results/verifier-robustness/opmax-sets/opmax-16of30-N5minT0.3-vt3-pt0.15.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8951,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "verifier-robustness::verified-384-ge3of5-t0-3-high-n5",
+   "run_id": "verifier-robustness",
+   "label": "verified-384-ge3of5-t0-3-high-n5",
+   "k": 5,
+   "detections": "results/verifier-robustness/matrix-sets/high-T0.3.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-384-ge3of5-t0-3-high-n5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8764,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "verifier-robustness::verified-384-ge3of5-t0-3-n5",
+   "run_id": "verifier-robustness",
+   "label": "verified-384-ge3of5-t0-3-n5",
+   "k": 5,
+   "detections": "results/verifier-robustness/matrix-sets/min-T0.3.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-384-ge3of5-t0-3-n5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8739,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "verifier-robustness::verified-384-ge3of5-t0-7-high-n5",
+   "run_id": "verifier-robustness",
+   "label": "verified-384-ge3of5-t0-7-high-n5",
+   "k": 5,
+   "detections": "results/verifier-robustness/matrix-sets/high-T0.7.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-384-ge3of5-t0-7-high-n5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8739,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "verifier-robustness::verified-384-ge3of5-t0-7-n5",
+   "run_id": "verifier-robustness",
+   "label": "verified-384-ge3of5-t0-7-n5",
+   "k": 5,
+   "detections": "results/verifier-robustness/matrix-sets/min-T0.7.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-384-ge3of5-t0-7-n5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8709,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "verifier-robustness::verified-384-union-t0-0-n5",
+   "run_id": "verifier-robustness",
+   "label": "verified-384-union-t0-0-n5",
+   "k": 5,
+   "detections": "results/verifier-robustness/matrix-sets/min-T0.0.geojson",
+   "eval_path": "results/verifier-robustness/evals/verified-384-union-t0-0-n5/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8722,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "verifier-t-pilot::verified-t0-0",
+   "run_id": "verifier-t-pilot",
+   "label": "verified-t0-0",
+   "k": 5,
+   "detections": "outputs/verifier-t-pilot/T0.0/materialised/vote4_prob0.20.geojson",
+   "eval_path": "results/rescore-2026-05-31/verifier-t-pilot/T0.0-vote4-prob0.20/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8507,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "verifier-t-pilot::verified-t0-5",
+   "run_id": "verifier-t-pilot",
+   "label": "verified-t0-5",
+   "k": 5,
+   "detections": "outputs/verifier-t-pilot/T0.5/materialised/vote4_prob0.20.geojson",
+   "eval_path": "results/rescore-2026-05-31/verifier-t-pilot/T0.5-vote4-prob0.20/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8561,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  },
+  {
+   "condition_id": "verifier-t-pilot::verified-t1-0",
+   "run_id": "verifier-t-pilot",
+   "label": "verified-t1-0",
+   "k": 5,
+   "detections": "outputs/verifier-t-pilot/T1.0/materialised/vote4_prob0.20.geojson",
+   "eval_path": "results/rescore-2026-05-31/verifier-t-pilot/T1.0-vote4-prob0.20/evaluation.json",
+   "committed_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "committed_f1_20": 0.8422,
+   "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+     5,
+     10,
+     15,
+     20,
+     25,
+     30,
+     35,
+     40,
+     45,
+     50,
+     75,
+     100,
+     125,
+     150
+    ],
+    "bootstrap": 10000,
+    "seed": 42
+   },
+   "track": "text"
+  }
+ ],
+ "excluded": [
+  {
+   "condition_id": "gold-standard-v2::verified-v1",
+   "reason": "no readable committed evaluation"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-image-baseline",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-image-baseline-medium-vf",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-image-baseline-pro-vf",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-baseline",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-baseline-medium-vf",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-text-baseline-pro-vf",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-pro-text-baseline",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-pro-text-baseline-medium-vf",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-pro-text-baseline-pro-vf",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-pro-image-baseline",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-pro-image-baseline-medium-vf",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "pv-diag-384::verified-adv-pro-image-baseline-pro-vf",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "h8-v2::verified-scale-4",
+   "reason": "committed evaluation on h10_test_bounds.geojson, neither the Era-2 frame nor grid-common"
+  },
+  {
+   "condition_id": "h8-v2::verified-wbf-scale-4",
+   "reason": "committed evaluation on h10_test_bounds.geojson, neither the Era-2 frame nor grid-common"
+  },
+  {
+   "condition_id": "h8-v2::verified-wbf-scale-8",
+   "reason": "committed evaluation on h10_test_bounds.geojson, neither the Era-2 frame nor grid-common"
+  },
+  {
+   "condition_id": "h10::verified-pool-160",
+   "reason": "committed evaluation on h10_test_bounds.geojson, neither the Era-2 frame nor grid-common"
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-adversarial-text",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-adversarial-image",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-brief-text",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-brief-image",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-checklist-text",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-checklist-image",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-cascade-adversarial-checklist",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-cascade-checklist-adversarial",
+   "reason": "single-pass proposer + verifier (K = 1)"
+  },
+  {
+   "condition_id": "verifier-robustness::verified-256-union-t0-0-n5",
+   "reason": "scope override px256-1032"
+  },
+  {
+   "condition_id": "verifier-robustness::verified-256-ge3of5-t0-3-n5",
+   "reason": "scope override px256-1032"
+  },
+  {
+   "condition_id": "grid-2026-08-18::g512-ov064-k10-verified-p0.15-k5",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "grid-2026-08-18::g512-ov256-k10-verified-p0.15-k9",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "grid-2026-08-18::g384-ov048-k10-verified-p0.20-k7",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-phaseb-2026-08-25::g512-ov176-k10-verified-p0.15-k6",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-phaseb-2026-08-25::g256-ov064-k10-verified-p0.15-k8",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-phaseb-2026-08-25::g512-ov320-k10-verified-p0.15-k10",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-phasec-2026-08-25::g384-ov240-k10-verified-p0.15-k10",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-verified-carried-p0.15-k8-canonical-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-verified-oracle-p0.15-k7-canonical-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-verified-oracle-p0.20-k9-canonical-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-standardised-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-standardised-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-standardised-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-standardised-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-k10-verified37-p0.98-k10-canonical-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-k10-verified37-p0.98-k10-standardised-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+   "reason": "grid/stride cell on a geometry other than B (its tiling falls short of the frame)"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-canonical-gt",
+   "reason": "55-map corpus cell"
+  }
+ ]
+}

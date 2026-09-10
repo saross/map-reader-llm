@@ -512,6 +512,125 @@ def build_evals_tile_counts(
             reference_occupancy(gdf_ref, gdf_bounds, tile_order), scope)
 
 
+def build_sweep_tile_counts(
+    union_path: Path, verify_dir: Path, k_total: int, bounds_path: Path,
+    gdf_ref: gpd.GeoDataFrame, buffer_metres: int = BUFFER_M,
+    sweep_csv: Path | None = None, anchor_eval: Path | None = None,
+) -> tuple[list[dict[str, Any]], np.ndarray, np.ndarray, dict[str, Any]]:
+    """A verifier-stage (prob_t x min_votes) sweep as per-tile TP/FP/FN candidates.
+
+    The 3.7 / 3.8 screen cells and the B-geometry cells on the GS Era-2 board
+    are the argmax of ``scripts.image_b_analysis.sweep`` over the union of a
+    proposer pool joined to one verify stage's ``probabilities.json``:
+    thresholds = {0} plus every distinct rounded probability, votes = 1..K,
+    both inclusive (``grid_verifier_analysis.verified_subset``). This builds
+    that candidate set IN PROCESS — the same loader, the same reassignment
+    gate, the same subset rule — and books every candidate to tiles through
+    the canonical chain the board itself used (``era1_leaderboard_tiering``:
+    ``assign_source_tiles`` then ``_per_tile_one_set``), on whichever bounds
+    are asked for. So the selection the screen performed can be replayed
+    inside each tile resample, on the committed frame or on the board frame.
+
+    Two gates, both fatal when requested:
+
+    * ``sweep_csv``: every row of the screen's committed ``sweep_20m.csv``
+      (``prob_t``, ``min_votes``, ``f1``, ``n_detections``) is reproduced by
+      the candidate with that operating point — the candidate set IS the sweep
+      as performed. Meaningful on the committed (grid-common) bounds.
+    * ``anchor_eval``: the argmax candidate's micro-F1 at ``buffer_metres``
+      equals the named committed ``evaluation.json``'s F1 to 1e-6 — the
+      apparent point IS the board's point. Meaningful on the board frame.
+
+    Args:
+        union_path: The pool union geojson (``vote_count``, ``source_tile``).
+        verify_dir: The verify stage directory holding ``probabilities.json``.
+        k_total: The pool's pass count K (votes sweep 1..K).
+        bounds_path: Scoring bounds (grid-common or the board frame).
+        gdf_ref: Ground-truth references.
+        buffer_metres: Matching radius.
+        sweep_csv: Optional committed sweep to reproduce (gate).
+        anchor_eval: Optional committed evaluation the argmax must equal (gate).
+
+    Returns:
+        ``(specs, counts, has_mounds, meta)`` as the other builders, with
+        ``meta`` recording the inputs and the gate results.
+    """
+    import csv as _csv  # noqa: PLC0415
+
+    from scripts.era1_leaderboard_tiering import (  # noqa: PLC0415
+        _per_tile_one_set,
+        assign_source_tiles,
+    )
+    from scripts.grid_verifier_analysis import verified_subset  # noqa: PLC0415
+    from scripts.image_b_analysis import load_image_union  # noqa: PLC0415
+    from scripts.stride_verifier_analysis import reassign_gate  # noqa: PLC0415
+
+    union_path, verify_dir, bounds_path = Path(union_path), Path(verify_dir), Path(bounds_path)
+    gdf = load_image_union(verify_dir.parent, union_path.name, verify_dir.name)
+    common = gpd.read_file(COMMON_BOUNDS)
+    gdf = reassign_gate(gdf, common, union_path.stem)  # the screen's own gate
+    bounds = gpd.read_file(bounds_path).to_crs(gdf.crs)
+    gdf_ref = gdf_ref.to_crs(gdf.crs)
+    tile_order = list(bounds["tile_name"])
+    thresholds = sorted({0.0} | {round(float(v), 4) for v in gdf["mound_probability"]})
+    specs: list[dict[str, Any]] = []
+    rows: list[np.ndarray] = []
+    for prob_t in thresholds:
+        for k in range(1, k_total + 1):
+            sub = verified_subset(gdf, prob_t, k)
+            arr = np.zeros((len(tile_order), 3))
+            if sub.empty:
+                empty = gpd.GeoDataFrame(
+                    {"source_tile": pd.Series([], dtype="object")},
+                    geometry=[], crs=bounds.crs,
+                )
+                tm = compute_per_tile_tp_fp_fn(empty, gdf_ref, bounds, buffer_metres=buffer_metres)
+                tm = tm.set_index("tile_name").reindex(tile_order).fillna(0)
+                arr[:, 2] = tm["fn"].to_numpy(dtype=float)
+            else:
+                booked = assign_source_tiles(sub.drop(columns=["source_tile"]), bounds)
+                tp, fp, fn = _per_tile_one_set(booked, gdf_ref, bounds, tile_order, buffer_metres)
+                arr[:, 0], arr[:, 1], arr[:, 2] = tp, fp, fn
+            specs.append({"prob_t": prob_t, "min_votes": k, "n_detections": int(len(sub)),
+                          "label": f"p{prob_t:.2f}-k{k}"})
+            rows.append(arr)
+    counts = np.stack(rows)
+    f1s = f1_from_counts(counts)
+    for s, f in zip(specs, f1s, strict=True):
+        s["f1"] = float(f)
+    meta: dict[str, Any] = {"sweep_union": str(union_path), "sweep_verify": str(verify_dir),
+                            "K": k_total, "bounds": str(bounds_path), "n_thresholds": len(thresholds)}
+    if sweep_csv is not None:
+        by_point = {(s["prob_t"], s["min_votes"]): s for s in specs}
+        worst_f1, worst_n, n_rows = 0.0, 0, 0
+        with open(sweep_csv, newline="") as fh:
+            for row in _csv.DictReader(fh):
+                key = (round(float(row["prob_t"]), 4), int(row["min_votes"]))
+                s = by_point.get(key)
+                if s is None:
+                    raise ValueError(f"sweep gate: {key} in {sweep_csv} has no candidate")
+                worst_f1 = max(worst_f1, abs(s["f1"] - float(row["f1"])))
+                worst_n = max(worst_n, abs(s["n_detections"] - int(row["n_detections"])))
+                n_rows += 1
+        meta["gate_sweep_csv"] = {"path": str(sweep_csv), "rows": n_rows,
+                                  "max_abs_delta_f1": worst_f1, "max_abs_delta_n": worst_n}
+        if worst_f1 > 1e-9 or worst_n:
+            raise ValueError(f"sweep gate FAILED: max |dF1| {worst_f1:.2e}, max |dn| {worst_n} vs {sweep_csv}")
+        logger.info("sweep gate OK: %d rows of %s reproduced (max |dF1| %.1e)", n_rows, sweep_csv, worst_f1)
+    if anchor_eval is not None:
+        doc = json.loads(Path(anchor_eval).read_text())
+        brow = next(b for b in doc["summary"]["buffers"] if b["buffer_metres"] == buffer_metres)
+        apparent = float(f1s.max())
+        meta["gate_anchor_eval"] = {"path": str(anchor_eval), "anchor_f1": float(brow["f1"]),
+                                    "argmax_f1": apparent, "delta": apparent - float(brow["f1"])}
+        if abs(apparent - float(brow["f1"])) > 1e-6:
+            raise ValueError(f"anchor gate FAILED: argmax {apparent:.6f} vs {brow['f1']:.6f} in {anchor_eval}")
+        logger.info("anchor gate OK: argmax %.4f == %s", apparent, anchor_eval)
+    logger.info("sweep %s / %s K=%d: %d candidates over %d tiles", union_path.name,
+                verify_dir.name, k_total, len(specs), len(tile_order))
+    return specs, counts, reference_occupancy(gdf_ref, bounds, tile_order), meta
+
+
 def main() -> int:
     """Run the pilot on one cell and report both instruments."""
     ap = argparse.ArgumentParser(
@@ -522,6 +641,16 @@ def main() -> int:
                     help="Analysis id of a registered leaderboard to analyse instead.")
     ap.add_argument("--evals", default=None,
                     help="Glob of evaluation.json files forming the candidate set.")
+    ap.add_argument("--sweep-union", type=Path, default=None,
+                    help="A verifier sweep as the candidate set: the pool union geojson "
+                         "(with --sweep-verify and --sweep-k).")
+    ap.add_argument("--sweep-verify", type=Path, default=None,
+                    help="The verify stage directory holding probabilities.json.")
+    ap.add_argument("--sweep-k", type=int, default=None, help="The pool's pass count K.")
+    ap.add_argument("--sweep-csv", type=Path, default=None,
+                    help="Gate: the screen's committed sweep_20m.csv the candidates must reproduce.")
+    ap.add_argument("--sweep-anchor-eval", type=Path, default=None,
+                    help="Gate: a committed evaluation.json the argmax candidate must equal.")
     ap.add_argument("--tag", default=None, help="Output filename stem for --evals.")
     ap.add_argument("--metric", choices=("f1", "mcc"), default="f1",
                     help="Detection-level micro-F1, or registered tile-level MCC.")
@@ -542,12 +671,23 @@ def main() -> int:
     ap.add_argument("--out", type=Path,
                     default=PROJECT_ROOT / "results/selection-aware")
     args = ap.parse_args()
-    given = [bool(args.cell), bool(args.board), bool(args.evals)]
+    given = [bool(args.cell), bool(args.board), bool(args.evals), bool(args.sweep_union)]
     if sum(given) != 1:
-        ap.error("give exactly one of --cell, --board or --evals")
+        ap.error("give exactly one of --cell, --board, --evals or --sweep-union")
+    if args.sweep_union and not (args.sweep_verify and args.sweep_k):
+        ap.error("--sweep-union needs --sweep-verify and --sweep-k")
     args.out.mkdir(parents=True, exist_ok=True)
 
-    if args.evals:
+    if args.sweep_union:
+        gdf_ref = gpd.read_file(args.ground_truth or GROUND_TRUTH)
+        specs, counts, has_mounds, sweep_meta = build_sweep_tile_counts(
+            args.sweep_union, args.sweep_verify, args.sweep_k,
+            args.bounds or COMMON_BOUNDS, gdf_ref, args.buffer,
+            args.sweep_csv, args.sweep_anchor_eval)
+        tag = args.tag or f"sweep_{args.sweep_union.stem}_{args.sweep_verify.name}"
+        res_meta = {**sweep_meta,
+                    "ground_truth": str(args.ground_truth or GROUND_TRUTH)}
+    elif args.evals:
         specs, counts, has_mounds, scope = build_evals_tile_counts(
             args.evals, args.buffer)
         tag = args.tag or "evals"
