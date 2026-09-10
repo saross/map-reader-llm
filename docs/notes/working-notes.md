@@ -33808,3 +33808,118 @@ and whose publication ruling is still pending); **Obs 461** (a stage's
 of staleness, found here in nine of the archived board's own registry
 cells); **Obs 441, 444, 447, 448** (the pairwise 3.7/3.8 findings whose
 plateau these argmax-stability figures quantify).
+
+## Observation 466: The nine mis-materialised archived cells were the Era-3 frame's sweep optima scored on the Era-2 frame — the materialiser was right, its operating points came from the wrong registry (Session 152, 2026-09-11)
+
+**The finding.** **Obs 465** recorded, as a side finding of the board
+symmetry fix, that nine of the 29 free-sweep cells in the archived Era-2
+PV materialisation registry
+(`archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv_registry.json`,
+built from each stage's `sweep_2d.json` on the 487-tile Era-2 frame)
+carried a best point whose detection count and F1 differed from the
+materialised file the archived board actually scored — and read it as
+the **Obs 461** sweep-staleness class. Session 152's worktree agent
+rebuilt the nine from their stages at the 487-frame optimum, gated on
+count and Era-2-frame F1 equalling the sweep to four decimals (merge
+`aec214e0f`), and the board's Tier 1, admissible set, and every
+incumbent tier were unchanged. Today's diagnosis names the mechanism,
+and it is **not staleness**. Brute-forcing every (`vote_t`, `prob_t`)
+point of each cell's sweep grid against the archived set — today's
+union and probabilities, joined by candidate index — finds **exactly one
+match per cell**, and in all nine it is the **327-tile Era-3 frame's**
+optimum recorded in `pv_registry_327.json` (`best_at_327`).
+
+| cell | archived file's point (Era-3 optimum) | n / F1@20 on Era-2 | Era-2 optimum | n / F1@20 |
+|---|---|---:|---|---:|
+| `pv-high-text-t0.3-n5` | (4, 0.15) | 409 / 0.8863 | (4, 0.20) | 408 / **0.8873** |
+| `pv-min-text-t1.0-n10` | (6, 0.15) | 395 / 0.8771 | (5, 0.15) | 410 / **0.8781** |
+| `pv-min-text-t0.7-n5` | (4, 0.15) | 385 / 0.8732 | (4, 0.20) | 382 / **0.8739** |
+| `pv-min-text-t0.3-n10` | (6, 0.15) | 392 / 0.8682 | (3, 0.15) | 431 / **0.8730** |
+| `pv-high-text-t1.0-n5` | (4, 0.15) | 376 / 0.8607 | (3, 0.20) | 426 / **0.8688** |
+| `pv-high-image-t0.7-n10` | (7, 0.15) | 351 / 0.7761 | (7, 0.20) | 348 / **0.7765** |
+| `pv-high-image-t0.3-n10` | (6, 0.15) | 400 / 0.7689 | (5, 0.15) | 432 / **0.7705** |
+| `pv-scale4-optimal-n5` | (3, 0.20) | 396 / 0.7629 | (3, 0.15) | 398 / **0.7635** |
+| `pv-min-image-t1.0-n10` | (7, 0.20) | 364 / 0.7409 | (6, 0.20) | 397 / **0.7428** |
+
+For the **other twenty** free-sweep cells the two frames' optima
+coincide, which is why only nine differed; the thirtieth registry row,
+`pv-flash-high-text-16of30`, carries a preset vote threshold
+(`vote_t_preset` 16) rather than a free sweep and is out of scope for the
+comparison. The 2026-04-19 materialiser
+(`scripts/materialise_pv_geojson.py`, first committed `bd24293d4`: index
+join `candidate_{i:05d}`, keep where `vote_count >= vote_t` **and**
+`mound_probability >= prob_t`) is the same filter used today, and it was
+correct. **It was fed the Era-3 operating points.** The files it cut were
+then scored on the Era-2 frame
+(`inputs/vectors/bounds/384/full_evaluation_bounds.geojson`, 487 tiles,
+re-counted today) and placed on the archived board as *that* frame's
+sweep optima.
+
+**Why this matters.** The archived board's nine cells were not stale
+copies of the right cell; they were **sweep-optimal on the wrong frame** —
+a cross-frame operating-point leak, the 327-vs-487 trap the register's
+scope check exists to catch (`scripts/verify_run_conditions.py`, the
+`scope` check, docstring line 11: "the 327-vs-487 leakage trap"; cf.
+`feedback_feature_count_crosscheck`). It leaked one layer below where
+that check looks: not the evaluation's bounds, which were right, but the
+argmax the detection file had already been cut at. The consequence for
+the signed board is that Session 152's rebuild at the 487-frame optima
+is **the correct cell, not merely a repaired file** — which is why the
+correction survives having moved counts by up to 50 detections without
+moving a tier. The lesson generalises past this board: **a materialised
+"best" cell must carry the frame its argmax was taken on**, and a board's
+gate should check that every sweep-optimal member's operating point is
+the optimum on the board's *own* frame, not merely that the cell's
+evaluation names that frame.
+
+**Caveats.** The diagnosis is an exhaustive match on today's inputs — the
+unions and `probabilities.json` files are unchanged since 2026-04-17/18
+(recorded in the nine register rows' notes), but no 2026-04-19 command
+log survives to show the Era-3 point being passed, so the mechanism is
+inferred from a unique grid match rather than observed. Nothing on the
+board moves: the nine corrected cells were already in place when the
+analysis row was signed (**Obs 465**).
+
+**Findable later**: nine mis-materialised cells mechanism, cross-frame
+operating-point leak, 327-vs-487 trap, `best_at_327`,
+`pv_registry_327.json`, Era-3 optimum boarded on Era-2 frame,
+`materialise_pv_geojson.py` fed the wrong registry, sweep argmax frame
+provenance, `pv-high-text-t1.0-n5` (4, 0.15) vs (3, 0.20), twenty cells
+whose optima coincide, `0949f52b5`, `aec214e0f`, sweep-optimal member
+gate.
+
+Sources: `archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv_registry.json`
+and `pv_registry_327.json` (read 2026-09-11: 30 rows each; `best_at_20m`
+versus `best_at_327` compared row for row — exactly nine (`vote_t`,
+`prob_t`) disagreements, the nine tabulated above, and
+`pv-flash-high-text-16of30`'s `vote_t_preset` 16 / `mode` "manifest");
+`results/run-conditions.json` (read 2026-09-11: the nine
+`decomposition.*.conditions[]` rows whose `_note` carries "MECHANISM
+(diagnosed 2026-09-11)", from which the archived-versus-rebuilt counts
+and F1@20 values in the table were taken — e.g.
+`pv-high-text-t0.3-n5-opmax` "it held 409 features scoring F1@20 0.8863
+… yields 408 features, the registry's count, at F1@20 0.8873" — and the
+"union, probabilities and sweep unchanged since 2026-04-17/18" clause);
+`planning/gs-era2-verified-board-2026-09-08.md` (read 2026-09-11:
+changelog entry "### 2026-09-11 — The nine mis-materialised cells:
+mechanism diagnosed", line 356); `scripts/materialise_pv_geojson.py`
+(read 2026-09-11: lines 195–211, the index join and the two `<`
+rejections); `scripts/verify_run_conditions.py` (read 2026-09-11: the
+module docstring's `scope` bullet, lines 10–11);
+`inputs/vectors/bounds/384/full_evaluation_bounds.geojson` (487 features,
+counted 2026-09-11); `git log -1` on `bd24293d4` (2026-04-19 11:59:39
++1000, the materialiser's introducing commit), `aec214e0f` (2026-09-10
+17:40:08 +1000, the nine-cell rebuild merge), and `0949f52b5`
+(2026-09-11 09:45:08 +1000, which landed the mechanism into the card and
+the nine register rows).
+Related: **Obs 465** (the symmetry fix, whose `registry_vs_archived` side
+finding this entry explains and reclassifies — the nine are a cross-frame
+leak, not the staleness class it filed them under, and its rebuild is
+thereby the correct cell rather than a repair); **Obs 461** (the genuine
+stale-derived-artefact class — a stage's `sweep_2d.json` predating its
+own `probabilities.json`; the distinction is that there the derived
+artefact was computed from inputs that later changed, whereas here every
+input was current and the *frame* of the argmax was wrong); **Obs 464**
+(the other archived-board defect of this pair, a label-keyed cache
+serving a superseded file — both were invisible to the board's own gates
+and both surfaced only from a cross-artefact count check).
