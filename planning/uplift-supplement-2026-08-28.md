@@ -75,6 +75,8 @@ registered as analyses (not new conditions) when built, per the
 sweep-interior ruling; any cell the supplement headline-cites gets
 promoted on citation as usual.
 
+**Registered and signed 2026-09-10/11 (S152)**: analysis rows `uplift-supplement-flatten` (diagnostic; 441 conditions; `conditions.csv`) and `verifier-uplift-pairing` (comparison, H2; the 85 verified cells with a computed uplift; `verifier-uplift.csv` and the MCC companion), approved as drafted by the PI (ruling 2(v)); signature notes on the rows.
+
 ## Changelog
 
 ### 2026-09-10 (later) — The 14 ambiguous verifier-pairing twins resolved by crop manifest
