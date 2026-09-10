@@ -10,9 +10,11 @@
 
 ---
 
-> **Last revised**: 2026-09-08 (Session 151: § R7 restructured into
-> three blocks on the PI's ruling, giving the 35-cell final board and
-> the Gemini 3.7 campaign their Results home in §§ R7.2–R7.3). Prior:
+> **Last revised**: 2026-09-10 (Session 151-d: § R4 gains the GS Era-2
+> verified board paragraph, unsigned, ruling pending). Prior: 2026-09-08
+> (Session 151: § R7 restructured into three blocks on the PI's ruling,
+> giving the 35-cell final board and the Gemini 3.7 campaign their Results
+> home in §§ R7.2–R7.3). Prior:
 > 2026-09-07 (Session 150: erratum E84, § R7 refreshed to reference
 > r2). Prior: 2026-08-21 (Session 139: the eight E83-flagged
 > tie-set sentences rewritten — MCB admissible sets replace
@@ -297,6 +299,28 @@ and a single adversarial verifier pass
 of all 18 never-swept proposer pools later confirmed this is the global
 optimum of the 30-pass union, not an artefact of the operating points
 swept (analysis `unswept-pools-completeness`, Obs 363).
+
+On the Era-2 frame the same tiered instrument now places 39 registered
+verified cells on one frame, the Era-2 carrier tiles clipped to the
+B tiling's union (487 tiles, 435 reference mounds; board
+`gs-era2-verified-board-2026-09-10`, analysis of the same id). Of 741
+pairs, 375 are significant at BH q = 0.05, giving six tiers. The greedy
+Tier 1 holds five Gemini 3.7 and 3.8 cells (image under the 3.7 verifier
+0.9233, text under the 3.7 verifier 0.9190, text under the 3.8 verifier
+0.9182, image under the carried Gemini 3 verifier 0.9179, text at K = 10
+under the carried verifier 0.9068), and the Hsu MCB admissible set holds
+11 cells. Every Gemini 3 incumbent sits in Tier 2 or below, led by the
+16-of-30 cell at 0.8951, so the family step that § R7.3 measures at
+deployment is a tier move on the GS instrument against the whole Era-2
+incumbency at once. The frame itself moved no incumbent's F1 at four
+decimals and the B-geometry cells by 0.007 to 0.008 downward.
+
+[DRAFT NOTE, S151-d: post-hoc; the analysis row is unsigned and the
+board's G1 gate on the retired builder failed marginally (one image PV
+cell +0.0015, one of 946 pairs crossing q = 0.05), so the publication
+ruling is pending; the archived Era-2 PV board of sweep-optimal cells is
+superseded by this register-backed board. Card:
+`planning/gs-era2-verified-board-2026-09-08.md`.]
 
 ## R5. Verifier robustness: nothing dearer is measurably better, so the cheap stack wins
 
@@ -802,6 +826,15 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-09-10 — § R4 gains the GS Era-2 verified board paragraph (Session 151-d)
+
+**Refresh trigger**: the GS Era-2 verified board built on the PI's frame
+ruling (`planning/gs-era2-verified-board-2026-09-08.md`;
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/`). One
+paragraph at the end of § R4 with a [DRAFT NOTE] on its unsigned,
+pending-ruling status. **What did not change**: every other figure in the
+draft.
 
 ### 2026-09-08 — § R7 restructured into three blocks; §§ R7.2–R7.3 added (Session 151)
 
