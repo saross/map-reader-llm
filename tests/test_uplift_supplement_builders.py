@@ -829,16 +829,39 @@ class TestPairingAndUpliftEndToEnd:
         assert "twin-2of3.geojson" in row["command"]
         assert "consensus-2of3.geojson" not in row["command"]
 
-    def test_only_corrected_f1_twins_get_a_prelude(self, built: Path) -> None:
-        """Only the corrected-F1 engine scopes by source_tile.
+    def test_a_prelude_appears_only_where_the_basis_needs_one(
+        self, built: Path
+    ) -> None:
+        """A twin is materialised only when it cannot be scored as committed.
 
-        `evaluate_detections.py` does not, so its twins are scored directly. A
-        blanket prelude would change how the eleven working jobs are fed —
-        a parameter change smuggled in behind a bug fix.
+        Two reasons qualify. Either the basis IS a materialisation — a vote
+        shell has to be filtered out of a union or a crop manifest before it is
+        a set — or the corrected-F1 engine needs a `source_tile` the committed
+        consensus file does not carry. Anything else would change how an
+        already-working job is fed, which is a parameter change smuggled in
+        behind a bug fix.
         """
+        materialised_bases = {
+            "union", "source-run-union", "crop-manifest", "stage-manifest",
+            "shell-manifests", "single-pass-manifest",
+        }
         for row in _read_csv(built / "verifier-pairing-worklist.csv"):
-            if row["materialise_command"]:
-                assert row["engine"] == "corrected_f1_multi_buffer", row["job_id"]
+            if not row["materialise_command"]:
+                continue
+            assert (
+                row["pairing_basis"] in materialised_bases
+                or row["engine"] == "corrected_f1_multi_buffer"
+            ), row["job_id"]
+
+    def test_a_committed_consensus_twin_is_scored_as_it_stands(
+        self, built: Path
+    ) -> None:
+        """A consensus-file twin for `evaluate_detections` needs no prelude."""
+        for row in _read_csv(built / "verifier-pairing-worklist.csv"):
+            if row["pairing_basis"] != "consensus-file":
+                continue
+            if row["engine"] == "evaluate_detections":
+                assert row["status"] == "ready", row["job_id"]
 
     def test_the_command_script_runs_the_prelude_first(self, built: Path) -> None:
         """Order matters: the twin must exist before the scorer opens it."""
