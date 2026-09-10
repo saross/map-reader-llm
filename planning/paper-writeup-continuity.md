@@ -8,6 +8,37 @@ project state.
 
 ---
 
+## 🔍 S152 IN PROGRESS (2026-09-10 — scheduled item (1) DONE: the G1 drift bisect; $0)
+
+> **(1) G1 bisected — a stale label-keyed cache, not instrument drift**
+> (`scripts/g1_drift_bisect_rescore.py`, sapphire; record in
+> `g1-regression.json` `bisect` block + `provenance.json`, sidecar
+> `g1-bisect-rescore.json`; card changelog "2026-09-10 (later)"). The
+> archived board's cache entry for `pv-high-image-t0.3-n5` was written
+> 2026-04-25 (`f8d755790`, n_detections 372, F1 0.746) from the
+> 372-feature blob `456dd9bf`; `d6cdb648b` (2026-05-06, seventy seconds
+> AFTER the board's build timestamp) re-materialised the cell to 373
+> features after the Tier-2/3 gap recovery, and the builder's cache
+> (keyed by label/threshold/buffer, never content) served the April
+> entry. Today's evaluator on the 372 blob reproduces every archived
+> number to 4 dp at all five buffers and the tile confusion matrix;
+> on the 373 blob it gives 0.7475 (+1 TP: a 5-of-5 mound on
+> `K-35-062-2_Rakovski_x2688_y0`, 750 m from any old feature). GT and
+> both bounds blobs identical at `005e6c71` and HEAD; 15 evaluator-chain
+> commits in between changed nothing on this input. The other three
+> cells re-materialised in `d6cdb648b` changed CRS only (same counts),
+> so their stale entries were right by coincidence. **Date correction**:
+> `005e6c71` is 2026-05-06, not 2026-08-20 (that is `b69d8af4b`, the
+> archive move) — the S151-d beacon, the card and Obs 463 carried the
+> wrong date; card corrected, Obs follow-up pending. **Reading for the
+> PI's § 6 ruling**: from the inputs it actually scored the archived
+> board reproduces 44/44; the retired builder has not drifted; G1's
+> failure is a wrong-source cache of the `feature_count_crosscheck`
+> class. Gotcha: the builder's `DEFAULT_BOUNDS` is the 340-tile Era-1
+> file; the archived board used `384/full_evaluation_bounds.geojson`
+> (487) — always pin bounds explicitly when reproducing a board.
+> **Next**: items (2)–(5) of the scheduled block below, unchanged.
+
 ## 🔍 STATE AFTER S151-b (2026-09-08 — the PI's rulings EXECUTED: two e47 stages registered, five sweeps preserved, ten Obs written, S148–S149 user-obs reviewed; $0)
 
 > **HEADLINES, all committed and pushed (main synced; sapphire at main):**

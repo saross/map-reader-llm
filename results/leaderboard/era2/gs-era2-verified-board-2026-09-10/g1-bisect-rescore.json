@@ -1,0 +1,100 @@
+{
+  "gt": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson",
+  "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "builder_default_bounds_unused": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/full_evaluation_bounds.geojson",
+  "buffers": [
+    20,
+    30,
+    40,
+    50,
+    100
+  ],
+  "bootstrap": 1000,
+  "seed": 42,
+  "blobs": {
+    "old_456dd9bf": {
+      "20m": {
+        "f1": 0.746,
+        "precision": 0.8091,
+        "recall": 0.692
+      },
+      "30m": {
+        "f1": 0.8253,
+        "precision": 0.8952,
+        "recall": 0.7655
+      },
+      "40m": {
+        "f1": 0.8401,
+        "precision": 0.9113,
+        "recall": 0.7793
+      },
+      "50m": {
+        "f1": 0.8476,
+        "precision": 0.9194,
+        "recall": 0.7862
+      },
+      "100m": {
+        "f1": 0.8575,
+        "precision": 0.9301,
+        "recall": 0.7954
+      },
+      "n_detections": 372,
+      "mcc_point": 0.8049,
+      "confusion": {
+        "tp": 187,
+        "tn": 251,
+        "fp": 7,
+        "fn": 42
+      }
+    },
+    "new_9d65ac84": {
+      "20m": {
+        "f1": 0.7475,
+        "precision": 0.8097,
+        "recall": 0.6943
+      },
+      "30m": {
+        "f1": 0.8267,
+        "precision": 0.8954,
+        "recall": 0.7678
+      },
+      "40m": {
+        "f1": 0.8416,
+        "precision": 0.9115,
+        "recall": 0.7816
+      },
+      "50m": {
+        "f1": 0.849,
+        "precision": 0.9196,
+        "recall": 0.7885
+      },
+      "100m": {
+        "f1": 0.8589,
+        "precision": 0.9303,
+        "recall": 0.7977
+      },
+      "n_detections": 373,
+      "mcc_point": 0.8049,
+      "confusion": {
+        "tp": 187,
+        "tn": 251,
+        "fp": 7,
+        "fn": 42
+      }
+    }
+  },
+  "new_minus_old": [
+    {
+      "x": 327944.8017132112,
+      "y": 4687638.874621531,
+      "nearest_old_m": 750.1898825016059,
+      "vote_count": 5,
+      "subtype": "burial_mound",
+      "source_tiles": [
+        "K-35-062-2_Rakovski_x2688_y0.png"
+      ]
+    }
+  ],
+  "n_old": 372,
+  "n_new": 373
+}

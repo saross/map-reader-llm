@@ -1,6 +1,8 @@
 # The GS Era-2 verified board: the Gemini 3.7 and 3.8 GS cells on one frame with the incumbents
 
-> **Last revised**: 2026-09-09 (later: § 2 frame rule and recommendation —
+> **Last revised**: 2026-09-10 (later: G1 bisected — a stale label-keyed
+> cache at the 2026-05-06 build, no instrument drift; earlier: built,
+> three deviations disclosed; prior: 2026-09-09 later: § 2 frame rule and recommendation —
 > Era-2 ∩ B-union, 435 mounds; § 3 membership and G6 follow; earlier the
 > same day: frame description corrected, same carrier tiles, 80 clipped; prior: 2026-09-08 original publication, drafted
 > overnight in Session 151 on the PI's instruction; **DRAFT — awaits PI
@@ -241,6 +243,57 @@ until § 9 is signed.
 
 ## Changelog
 
+### 2026-09-10 (later) — G1 bisected: a stale label-keyed cache, not instrument drift
+
+**Trigger**: the scheduled first act of S152 (continuity, "NEXT SESSION").
+**Method**: `scripts/g1_drift_bisect_rescore.py` on sapphire scored the one
+moved input (`pv-high-image-t0.3-n5.geojson`) under today's evaluator with
+the retired builder's own worker (GT `mounds-reference.geojson`, the
+487-tile `384/full_evaluation_bounds.geojson` the archived metadata
+records, buffers 20/30/40/50/100 m, bootstrap 1,000, seed 42) as two blobs:
+the 372-feature WGS 84 blob `456dd9bf` (committed `bd24293d4` 2026-04-19)
+and the 373-feature EPSG:32635 blob `9d65ac84` that survives under
+`archive/` (re-materialised and committed `d6cdb648b` 2026-05-06). Record:
+`g1-regression.json` (`bisect` block), sidecar `g1-bisect-rescore.json`.
+
+| Blob | Features | F1@20 today | Archived cache | 30 / 40 / 50 / 100 m today |
+|------|----------|-------------|----------------|----------------------------|
+| `456dd9bf` (what the archived board scored) | 372 | **0.7460** | 0.7460 (n_detections 372) | 0.8253 / 0.8401 / 0.8476 / 0.8575, all exact |
+| `9d65ac84` (in `archive/` today) | 373 | **0.7475** | none | 0.8267 / 0.8416 / 0.8490 / 0.8589 |
+
+**Mechanism**: the retired builder's evaluation cache is keyed by label,
+threshold, and buffer only, never by input content
+(`build_tiered_leaderboard._cache_path_eval`). The cache entry was written
+on 2026-04-25 (`f8d755790`, n_detections 372, F1 0.746) and untracked the
+same day; when `d6cdb648b` re-materialised the cell to 373 features after
+the Tier-2/3 gap recovery, the 2026-05-06 board build (timestamp 17:33:42
++0800, seventy seconds before that commit) served the April entry
+unchanged. That commit's own "zero tier flips" was the stale entry. The
+added feature is a 5-of-5 burial mound on tile
+`K-35-062-2_Rakovski_x2688_y0` (EPSG:32635 327944.8, 4687638.9; nearest
+old feature 750 m) and is a true positive: recall 0.6920 → 0.6943 (+1 of
+435), tile MCC unchanged. The other three cells re-materialised in the
+same commit changed CRS representation only (414, 410, 411 features before
+and after), so their stale entries were numerically right by coincidence.
+
+**What did NOT drift**: the evaluator. Fifteen commits touched the chain
+between `005e6c71` and HEAD; GT and both bounds blobs are identical at both
+ends; the archived numbers reproduce to four decimals, every buffer and the
+tile confusion matrix, from the blob the board actually scored.
+
+**Reading for the § 6 ruling**: G1's premise (archived inputs = the inputs
+the archived board scored) is false for one cell of 44. From the inputs it
+scored, the archived board reproduces 44 of 44; the +0.0015, the one BH
+flip and the Tier 5–6 re-cut are what the archived board would have shown
+on 2026-05-06 had its cache been invalidated. The
+`feedback_feature_count_crosscheck` rule (cache n_detections ≠ archived
+feature count) would have caught it; the retired builder never ran it.
+Publication ruling remains the PI's.
+
+**Date correction**: the build entry's "`005e6c71` (2026-08-20)" was wrong
+(`005e6c71` is 2026-05-06; 2026-08-20 is `b69d8af4b`, the archive move),
+corrected in place below.
+
 ### 2026-09-10 — Built (S151-d, PI go 2026-09-09); three deviations disclosed
 
 **Executed**: frame materialised (`scripts/materialise_era2_b_frame.py`,
@@ -288,8 +341,10 @@ cells reproduce F1@20 exactly; `pv-high-image-t0.3-n5` moves
 0.7460 → 0.7475; one of 946 pairs crosses BH q = 0.05 (adjusted p
 0.046 → 0.059); tiers 5–6 (the bottom of the image block) re-cut,
 tiers 1–4 identical. Instrument drift in the RETIRED builder on one
-archived input between `005e6c71` (2026-08-20) and today
-(`g1-regression.json`). **Publication ruling (§ 6: nothing published
+archived input between `005e6c71` and today (`g1-regression.json`).
+[Corrected 2026-09-10 (later): `005e6c71` is dated 2026-05-06, not
+2026-08-20, and the bisect entry above found no instrument drift — a
+stale cache.] **Publication ruling (§ 6: nothing published
 unless all gates pass) is the PI's**; the analysis row is unsigned.
 
 **The dry-run listing (39):** `flash35-pv-2x2::f35prop-f35vf-4of10`, `flash35-pv-2x2::f35prop-f3vf-4of10`, `flash35-pv-2x2::f3prop-f35vf-6of10`, `gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5`, `gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5`, `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10`, `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5`, `gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5`, `gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5`, `grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10`, `grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10`, `image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8`, `image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9`, `pv-diag-384::verified-adv-image-3of5`, `pv-diag-384::verified-adv-image-min-3of5`, `pv-diag-384::verified-adv-image-min-6of10`, `pv-diag-384::verified-adv-pro-image-pro-vf-3of5`, `pv-diag-384::verified-adv-pro-text-flash-vf-3of5`, `pv-diag-384::verified-adv-pro-text-medium-vf-3of5`, `pv-diag-384::verified-adv-pro-text-pro-vf-3of5`, `pv-diag-384::verified-adv-text-4of5`, `pv-diag-384::verified-adv-text-6of10`, `pv-diag-384::verified-adv-text-consensus-16of30`, `pv-diag-384::verified-adv-text-high-vf-4of5`, `pv-diag-384::verified-adv-text-medium-vf-4of5`, `pv-diag-384::verified-adv-text-min-6of10`, `pv-diag-384::verified-adv-text-min-n30lineage-4of5`, `pv-diag-384::verified-adv-text-min-true-3of5`, `pv-diag-384::verified-adv-text-pro-vf-4of5`, `pv-diag-384::verified-adv-text-t03-4of5`, `verifier-robustness::verified-384-16of30-t0-3-n5-opmax`, `verifier-robustness::verified-384-ge3of5-t0-3-high-n5`, `verifier-robustness::verified-384-ge3of5-t0-3-n5`, `verifier-robustness::verified-384-ge3of5-t0-7-high-n5`, `verifier-robustness::verified-384-ge3of5-t0-7-n5`, `verifier-robustness::verified-384-union-t0-0-n5`, `verifier-t-pilot::verified-t0-0`, `verifier-t-pilot::verified-t0-5`, `verifier-t-pilot::verified-t1-0`.
