@@ -5,8 +5,31 @@
  "frame_id": "era2-b-487",
  "frame_provenance": "inputs/vectors/bounds/384/era2_b_intersection_bounds.provenance.json",
  "membership": {
-  "n": 39,
-  "rule": "card § 3 under the § 2 frame rule; see membership.json"
+  "n": 79,
+  "rule": "card \u00a7 3 under the \u00a7 2 frame rule; see membership.json",
+  "n_era2b": 39,
+  "n_opmax": 40,
+  "opmax": "the archived Era-2 PV board's sweep-optimal cells (opmax/membership.json)"
+ },
+ "gates_opmax": {
+  "board_id": "gs-era2-verified-board-2026-09-10",
+  "checked_at_utc": "2026-09-10T05:49:23+00:00",
+  "G2_reproduction_failures": 0,
+  "G3_frame_failures": 0,
+  "G4_cells": 40,
+  "G4_members": 40,
+  "G4_ok": true,
+  "missing": 0,
+  "passed": true,
+  "bisected": {
+   "pv-high-image-t0.3-n5": {
+    "archived_f1_20": 0.746,
+    "expected_f1_20": 0.7475,
+    "archived_n": 372,
+    "expected_n": 373,
+    "why": "g1-regression.json bisect: archived cache from blob 456dd9bf (372), file re-materialised to 373 features at d6cdb648b"
+   }
+  }
  },
  "instruments": {
   "per_cell_scoring": "scripts/evaluate_detections.py (each member's committed recipe, bounds swapped)",
@@ -70,7 +93,7 @@
      }
     ],
     "tiers_changed": "tiers 5 and 6 (the bottom of the image block) re-cut: archived 6 + 4 cells, rebuilt 9 + 1; tiers 1-4 identical member-for-member",
-    "reading": "43 of 44 cells reproduce F1@20 exactly and 945 of 946 pairs keep their verdict; one image PV cell moves +0.0015 F1 under the current evaluator (builder git 005e6c71 on 2026-08-20 vs be01df377 today), enough to lift one BH-adjusted p across 0.05 and merge the two bottom image tiers. Instrument drift in the RETIRED builder on one archived input; the new board is scored and tiered by the register-driven chain, whose reproduction gate is G2. Publication decision (card § 6: nothing published unless all gates pass) is the PI's."
+    "reading": "43 of 44 cells reproduce F1@20 exactly and 945 of 946 pairs keep their verdict; one image PV cell moves +0.0015 F1 under the current evaluator (builder git 005e6c71 on 2026-08-20 vs be01df377 today), enough to lift one BH-adjusted p across 0.05 and merge the two bottom image tiers. Instrument drift in the RETIRED builder on one archived input; the new board is scored and tiered by the register-driven chain, whose reproduction gate is G2. Publication decision (card \u00a7 6: nothing published unless all gates pass) is the PI's."
    },
    "verdict": "FAIL as specified (archived inputs are not, for one cell, the inputs the archived board scored); PASS from the inputs actually scored (confirmatory rebuild 817de06a0: 44/44, 946/946, tiers identical); no evaluator drift - see bisect",
    "bisect": {
@@ -135,7 +158,7 @@
     "evaluator_drift": "none on this input: 15 commits touched the evaluator chain between 005e6c71 and HEAD (evaluate_detections.py, lib_advanced_metrics.py, lib_detection_paths.py, build_tiered_leaderboard.py); GT and both bounds blobs identical at 005e6c71 and HEAD; the archived numbers reproduce to 4 dp today",
     "mechanism": "stale label-keyed evaluation cache (wrong-source cache): the archived board's score for this cell was computed from a 372-feature blob that its own archived input no longer is; the class of feedback_feature_count_crosscheck (cache n_detections 372 != archived feature count 373)",
     "date_correction": "the original reading's '005e6c71 on 2026-08-20' was wrong: 005e6c71 is dated 2026-05-06; 2026-08-20 is b69d8af4b, the archive move",
-    "reading": "G1's premise (archived inputs = the inputs the archived board scored) is false for one cell. From the blob it actually scored, the archived board reproduces 44 of 44 under today's evaluator; the retired builder has not drifted. The +0.0015, the one BH flip and the Tier 5-6 re-cut are what the archived board WOULD have shown on 2026-05-06 had its cache been invalidated. Publication ruling remains the PI's under card § 6.",
+    "reading": "G1's premise (archived inputs = the inputs the archived board scored) is false for one cell. From the blob it actually scored, the archived board reproduces 44 of 44 under today's evaluator; the retired builder has not drifted. The +0.0015, the one BH flip and the Tier 5-6 re-cut are what the archived board WOULD have shown on 2026-05-06 had its cache been invalidated. Publication ruling remains the PI's under card \u00a7 6.",
     "sidecar": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g1-bisect-rescore.json",
     "script": "scripts/g1_drift_bisect_rescore.py",
     "confirmatory_rebuild": {
@@ -182,9 +205,9 @@
   }
  },
  "tiering": {
-  "n_pairs": 741,
-  "n_significant": 375,
-  "n_tiers": 6,
+  "n_pairs": 3081,
+  "n_significant": 1853,
+  "n_tiers": 7,
   "tie_set": [
    "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
@@ -201,13 +224,30 @@
    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
    "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b",
    "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+   "pv-diag-384::verified-adv-text-6of10-era2b",
    "pv-diag-384::verified-adv-text-consensus-16of30-era2b",
    "pv-diag-384::verified-adv-text-min-6of10-era2b",
-   "verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b"
+   "pv-diag-384::verified-adv-text-min-true-3of5-era2b",
+   "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b",
+   "pv-diag-384::verified-adv-text-t03-4of5-era2b",
+   "verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b",
+   "verifier-robustness::verified-384-ge3of5-t0-3-high-n5-era2b",
+   "verifier-robustness::verified-384-ge3of5-t0-3-n5-era2b",
+   "verifier-robustness::verified-384-ge3of5-t0-7-high-n5-era2b",
+   "pv-diag-384::pv-high-text-t0.3-n5-opmax",
+   "pv-diag-384::session-78-text-comparative-opmax",
+   "pv-diag-384::session-78-text-adversarial-opmax",
+   "pv-diag-384::pv-high-text-t1.0-n10-opmax",
+   "pv-diag-384::session-78-text-checklist-opmax",
+   "pv-diag-384::pv-min-text-t0.3-n5-opmax",
+   "pv-diag-384::pv-min-text-t1.0-n10-opmax",
+   "pv-diag-384::session-78-text-brief-opmax",
+   "pv-diag-384::pv-high-text-t0.7-n10-opmax",
+   "pv-diag-384::pv-min-text-t0.7-n5-opmax"
   ],
-  "mcb_two_sided_band_n": 22,
-  "git_commit": "77cc55617",
-  "generated_at_utc": "2026-09-10T02:55:59.282609+00:00"
+  "mcb_two_sided_band_n": 39,
+  "git_commit": "ff8049f4a",
+  "generated_at_utc": "2026-09-10T05:58:16.408311+00:00"
  },
- "finalised_at_utc": "2026-09-10T02:57:42+00:00"
+ "finalised_at_utc": "2026-09-10T06:09:29+00:00"
 }

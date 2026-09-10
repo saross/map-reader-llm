@@ -303,24 +303,39 @@ swept (analysis `unswept-pools-completeness`, Obs 363).
 On the Era-2 frame the same tiered instrument now places 39 registered
 verified cells on one frame, the Era-2 carrier tiles clipped to the
 B tiling's union (487 tiles, 435 reference mounds; board
-`gs-era2-verified-board-2026-09-10`, analysis of the same id). Of 741
-pairs, 375 are significant at BH q = 0.05, giving six tiers. The greedy
-Tier 1 holds five Gemini 3.7 and 3.8 cells (image under the 3.7 verifier
-0.9233, text under the 3.7 verifier 0.9190, text under the 3.8 verifier
-0.9182, image under the carried Gemini 3 verifier 0.9179, text at K = 10
-under the carried verifier 0.9068), and the Hsu MCB admissible set holds
-11 cells. Every Gemini 3 incumbent sits in Tier 2 or below, led by the
-16-of-30 cell at 0.8951, so the family step that § R7.3 measures at
-deployment is a tier move on the GS instrument against the whole Era-2
-incumbency at once. The frame itself moved no incumbent's F1 at four
-decimals and the B-geometry cells by 0.007 to 0.008 downward.
+`gs-era2-verified-board-2026-09-10`, analysis of the same id). The
+board holds both model families at both levels: the Gemini 3 incumbents
+at their committed operating points and, as `-opmax` rows, the 40
+sweep-optimal Gemini 3 cells of the archived Era-2 board, beside the
+3.7 and 3.8 cells, which are themselves sweep-best points. Of 3,081
+pairs, 1,853 are significant at BH q = 0.05, giving seven tiers. The
+greedy Tier 1 holds five Gemini 3.7 and 3.8 cells (image under the 3.7
+verifier 0.9233, text under the 3.7 verifier 0.9190, text under the 3.8
+verifier 0.9182, image under the carried Gemini 3 verifier 0.9179, text
+at K = 10 under the carried verifier 0.9068); the Hsu MCB admissible set
+holds 28 of the 79 cells. Every Gemini 3 cell sits in Tier 2 or below at
+either level: the best committed incumbent is the 16-of-30 cell at
+0.8951 and the best sweep optimum the HIGH text T0.3 K = 5 cell at
+0.8863 (rank 11); 31 of the 40 sweep optima are significantly below the
+lowest Tier-1 cell and all 40 below the top one. Removing the screens'
+own selection optimism (Efron–Gong, the argmax replayed per tile
+resample) costs the 3.7 and 3.8 cells 0.0006 to 0.0035, leaving
+corrected board-frame F1 of 0.9027 to 0.9215. The family step that
+§ R7.3 measures at deployment is therefore a tier move on the GS
+instrument against the whole Era-2 incumbency at once, at both levels.
+The frame itself moved no incumbent's F1 at four decimals and the
+B-geometry cells by 0.007 to 0.008 downward.
 
-[DRAFT NOTE, S151-d: post-hoc; the analysis row is unsigned and the
-board's G1 gate on the retired builder failed marginally (one image PV
-cell +0.0015, one of 946 pairs crossing q = 0.05), so the publication
-ruling is pending; the archived Era-2 PV board of sweep-optimal cells is
-superseded by this register-backed board. Card:
-`planning/gs-era2-verified-board-2026-09-08.md`.]
+[DRAFT NOTE, S152: post-hoc; the analysis row is unsigned. The board's
+G1 gate (the archived board rebuilt by the retired builder) FAILED as
+specified on one cell, and the bisect showed the cause to be a stale
+label-keyed evaluation cache at the 2026-05-06 build, not instrument
+drift: from the inputs the archived board actually scored, it reproduces
+44 of 44 cells and 946 of 946 pairs (Obs 464). The publication ruling is
+the PI's. The archived Era-2 PV board of sweep-optimal cells is
+superseded by this register-backed board, whose `-opmax` rows now carry
+its cells. Card: `planning/gs-era2-verified-board-2026-09-08.md`; board:
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`.]
 
 ## R5. Verifier robustness: nothing dearer is measurably better, so the cheap stack wins
 
@@ -826,6 +841,27 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-09-10 (later) — § R4 board paragraph refreshed for the symmetry fix (Session 152)
+
+**Refresh trigger**: the GS Era-2 verified board's symmetry fix (card
+changelog "2026-09-10 (later still)"): the archived board's 40
+sweep-optimal Gemini 3 cells registered as `-opmax` rows and added to
+the membership, the board re-tiered, the Hsu MCB set recomputed last.
+
+| Claim | Before | After |
+|---|---:|---:|
+| Cells / pairs significant | 39 / 375 of 741 | 79 / 1,853 of 3,081 |
+| Tiers | 6 | 7 |
+| Tier 1 | five 3.7/3.8 cells | the same five |
+| Hsu MCB admissible | 11 | 28 |
+| Best Gemini 3 cell | 16-of-30 at 0.8951 | committed 0.8951; sweep optimum 0.8863 |
+
+**What did NOT change**: the Tier-1 membership, the five Tier-1 point
+values, the frame deltas. **Added**: the sweep-optimism sentence
+(corrected 3.7/3.8 F1 0.9027–0.9215) and the G1 resolution in the draft
+note (stale cache, Obs 464). Commit: the S152 board commit (see the
+continuity file).
 
 ### 2026-09-10 — § R4 gains the GS Era-2 verified board paragraph (Session 151-d)
 
