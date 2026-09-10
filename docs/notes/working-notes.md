@@ -33528,3 +33528,283 @@ is 2026-05-06 not 2026-08-20; the board's own tiering is untouched);
 layer down: there the derived artefact decoupled from its sibling
 inputs, here a cache decoupled from the input it was keyed to, and both
 are visible only to a cross-artefact count check).
+
+## Observation 465: The GS Era-2 board's 3.7/3.8 Tier 1 survives the symmetry fix — Gemini 3 at its own sweep-optimal level reaches only rank 11, and the screens' selection optimism is at most 0.0035 (Session 152, 2026-09-10)
+
+**The finding.** The board of **Obs 463** compared unlike with unlike.
+Its Gemini 3.7 / 3.8 cells are the screens' sweep-best points —
+in-sample optima of the erratum E56 class — while its Gemini 3
+incumbents sit at committed operating points, only
+`verifier-robustness::verified-384-16of30-t0-3-n5-opmax` being itself a
+sweep optimum. That asymmetry favours the newer family by exactly the
+optimism of a sweep. The PI called it on 2026-09-10 (continuity,
+"NEXT SESSION" item 2; WN-C13) and Session 152 fixed it in three parts:
+put Gemini 3 on the board at its own sweep-optimal level, measure and
+subtract the screens' own selection optimism, and re-tier. **The
+Tier-1 claim survives all three**: the greedy clique holds the same five
+3.7/3.8 cells, the best Gemini 3 sweep optimum reaches rank 11, and the
+largest optimism correction on any screen cell is 0.0035.
+
+**(a) Gemini 3 at its own sweep-optimal level: the 43 `-opmax` rows**
+(`scripts/build_gs_era2_board_opmax.py`; `8c4b0aa9e`, `c598377b3`,
+`ff8049f4a`). The archived per-architecture Era-2 PV board's cells are
+sweep optima by construction, so they are the right counterpart — but
+first, which of its 44 cells are already on the board? **One**, and
+identity had to be decided by coordinates, not by score:
+`pv-flash-high-text-16of30` is `pv-diag-384::verified-adv-text-consensus-16of30`,
+412 of 412 points identical (largest nearest-neighbour distance
+**0.0 m**). Obs 463's "4 of 44 match a registered condition by committed
+F1" over-counted: the other matches are (F1, n) coincidences — at a 1 m
+identity tolerance `session-78-text-checklist` shares **45 of 403**
+points with `verified-adv-text-t03-4of5`, and `pv-high-text-t0.3-n10`
+shares **56 of 402** with `verifier-robustness::verified-384-union-t0-0-n5`.
+Equal F1 at equal n is not identity when the sets are near-tied plateaus.
+
+So 43 `-opmax` rows were minted — 42 into `pv-diag-384`, 1 into
+`n1-outstanding-384` (whose verifier stage was registered on the way) —
+each carrying an in-sample-optimum note. **40 join the board** under the
+card's K ≥ 5 rule; the three K = 3 cells (`pv-min-text-t0.0-n3`,
+`pv-high-text-t0.0-n3`, `pv-n1-image-t0-n3`) are registered but stay
+off-board. Gates (`opmax/gates.json`, 2026-09-10T05:49:23Z): the
+Era-2-frame re-score reproduces **all 40** archived F1@20 exactly (the
+bisected `pv-high-image-t0.3-n5` at its **0.7475**, per **Obs 464**),
+detection counts identical across archived / expected / reproduction /
+board for every cell, every board evaluation names the board frame
+`era2-b-487` (40/40), and **every `-opmax` cell scores identically on
+the Era-2 frame and the board frame — all 40 frame deltas 0.0000**,
+which is what an Era-2-dispatched cell should do and a useful control on
+the frame machinery of Obs 463.
+
+A side finding fell out of the registry read: **9 of the 29 `pv_registry`
+cells carry a `sweep_2d.json` best point whose F1 and n differ from the
+materialised file the archived board actually scored** — e.g.
+`pv-high-text-t1.0-n5` registry F1 0.8688 / n 426 versus file 0.8607 /
+n 376, and `pv-min-text-t0.3-n10` 0.8730 / 431 versus 0.8682 / 392 (up
+to 50 detections apart). That is the **Obs 461** sweep-staleness class
+found inside the archived board's own registry. Each row is flagged
+`registry_vs_archived` in `opmax/membership.json`; the rule applied is
+**the row is the file** — what the archived board scored, not what its
+registry says it scored.
+
+**(b) Sweep optimism of the screen cells** (`scripts/selection_aware_intervals.py
+--sweep-union/--sweep-verify/--sweep-k`, new in S152; `3097e9bbe`;
+summary by `scripts/summarise_sweep_optimism.py`). The verifier
+(prob_t × min_votes) sweep is rebuilt in process as the candidate set
+(`image_b_analysis.load_image_union`, `stride_verifier_analysis.reassign_gate`,
+`grid_verifier_analysis.verified_subset`) and booked to tiles through the
+canonical chain (`era1_leaderboard_tiering.assign_source_tiles` then
+`_per_tile_one_set`), then Efron–Gong optimism with **the argmax replayed
+inside each of 10,000 tile resamples** (seed 42, 20 m). One implementation
+trap is worth recording: the first version dropped the union's own
+`source_tile` column and re-booked by spatial join, which drifts from the
+evaluator (which keeps an existing column) by **up to 0.016 F1**; keeping
+it is what makes the sweep reproduce. Two gates enforce that: each screen's
+committed `sweep_20m.csv` is reproduced **row for row** (75–200 rows per
+cell; max |ΔF1| **2.2e-16**, Δn exactly 0) and the replayed argmax equals
+the committed evaluation to the four decimals it publishes (largest
+anchor Δ 4.7e-05). Board frame:
+
+| cell | candidates | apparent | optimism | corrected | argmax stability |
+|---|---:|---:|---:|---:|---:|
+| `g37-image-k5-verified-swap37-p0.90-k5` | 80 | 0.9233 | +0.0017 | **0.9215** | 0.414 |
+| `g37-text-k5-verified-swap37-p0.80-k5` | 95 | 0.9190 | +0.0020 | **0.9169** | 0.288 |
+| `g37-text-k5-verified-swap38-p0.88-k5` | 95 | 0.9182 | +0.0020 | **0.9162** | 0.313 |
+| `g37-image-k5-verified-carried-p0.10-k5` | 75 | 0.9179 | +0.0016 | **0.9163** | 0.767 |
+| `g37-text-k10-verified-carried-p0.10-k10` | 130 | 0.9068 | +0.0013 | **0.9054** | 0.879 |
+| `g37-text-k5-verified-carried-p0.10-k5` | 75 | 0.9066 | +0.0006 | **0.9060** | 0.945 |
+| `g384-ov192-k10-verified37-p0.98-k10` | 200 | 0.9062 | +0.0035 | **0.9027** | 0.485 |
+| `g384-ov192-k10-verified-p0.15-k10` (G3) | 140 | 0.8886 | +0.0018 | **0.8869** | 0.550 |
+| `g384-ov192-image-min-k10-verified-p0.15-k9` (G3) | 140 | 0.8341 | +0.0046 | **0.8295** | 0.479 |
+| `g384-ov192-image-high-k10-verified-p0.20-k8` (G3) | 190 | 0.8263 | +0.0056 | **0.8208** | 0.422 |
+
+The seven 3.7/3.8 cells (six `g37-*` plus the "fourth cell", Gemini 3
+proposals re-verified by the 3.7 verifier) pay **+0.0006 to +0.0035**;
+the three Gemini 3 B-geometry sweep cells pay **+0.0018 to +0.0056** —
+the newer family's points are, if anything, the *less* optimistic ones.
+Committed-frame values run 0.0070–0.0078 higher throughout with the
+same optimism to four decimals, so the correction is a property of the
+sweep, not of the frame. The swap arms' low argmax stability is the
+plateau the 3.7 findings already noted: the text swap37 sweep ties
+exactly at prob_t 0.80 and 0.85 (both 0.918981) and the image swap37
+sweep at 0.90, 0.92, and 0.95 (all 0.923256) — a flat optimum is a
+stable operating point even when the argmax label is unstable.
+
+**(c) Re-tier by the canonical chain, MCB last** (`scripts/era1_leaderboard_tiering.py`,
+sapphire; `tiering_20m.json`, git `ff8049f4a`, generated
+2026-09-10T05:58:16Z). 79 cells, **3,081 pairs, 1,853 significant at
+BH q = 0.05, 7 tiers (5 / 16 / 15 / 17 / 10 / 12 / 4)**.
+
+| Quantity | 39-cell board (Obs 463) | 79-cell board |
+|---|---:|---:|
+| Pairs significant | 375 / 741 | 1,853 / 3,081 |
+| Tiers | 6 | 7 |
+| Tier 1 (greedy clique) | the five 3.7/3.8 cells | **the same five** |
+| Best Gemini 3 sweep optimum | — | `pv-high-text-t0.3-n5-opmax` 0.8863, rank 11, Tier 2 |
+| Hsu MCB admissible | 11 of 39 (band 22; w_upper 0.0439) | 28 of 79 (band 39; w_upper 0.0501) |
+| Board argmax optimism | +0.0051 → 0.9182 | +0.0051 → 0.9181 |
+
+Tier 1 is the same five cells at the same scores (image swap37 0.9233,
+text swap37 0.9190, text swap38 0.9182, image carried 0.9179, text
+K = 10 carried 0.9068). The best Gemini 3 sweep optimum is
+`pv-diag-384::pv-high-text-t0.3-n5-opmax` at **0.8863, rank 11, Tier 2**:
+against the *lowest* Tier-1 cell it is Δ +0.0205, p = 0.1557, BH-adjusted
+0.2174 — **not** separable; against the top cell Δ +0.0370, p = 0.0114,
+adjusted 0.0210 — separable. **31 of the 40 `-opmax` cells are
+significantly below the lowest Tier-1 cell and all 40 below the top
+cell**; the nine not separable from the Tier-1 floor are all text sweep
+optima at 0.8744–0.8863, and none reaches Tier 1. Nine of the 39
+incumbents moved **down exactly one tier** as the `-opmax` cells
+interleaved (`verified-adv-text-6of10`, the three `verifier-robustness`
+ge3of5 cells, `verified-adv-text-4of5`, `verified-t0-5`, image-B high,
+`verified-adv-image-3of5`, `verified-adv-pro-image-pro-vf-3of5`); **none
+moved up**, and Tier 1–2 membership among the incumbents is unchanged.
+
+The Hsu MCB set was recomputed **last**, on the final membership
+(`scripts/selection_aware_intervals.py --board`, 10,000 resamples;
+`mcb/gs-era2-verified-board-2026-09-10_b20_m1.json`), per the PI's rule
+that the admissible set is a property of the candidate set and only the
+final one may be cited. It holds **28 of 79**: the seven 3.7/3.8 cells,
+ten Gemini 3 committed cells, the 16of30 `-opmax`, and ten text sweep
+optima. Landed in `a5ac7dc16` (README, provenance, analysis outcome;
+card changelog "2026-09-10 (later still)"; `docs/paper/results-draft.md`
+§ R4 refreshed).
+
+**Why this matters.** The family step now survives a like-for-like
+comparison, which is the only kind a reviewer will accept. Obs 463 could
+be answered with one sentence — "your new cells are tuned and theirs are
+not" — and that sentence is now closed twice over: Gemini 3 is on the
+board at its own sweep-optimal level and still tops out at rank 11, and
+the screens' own selection optimism has been measured and subtracted,
+costing at most 0.0035. The second lesson is procedural. **The MCB set
+growing from 11 to 28 is not a weakening of the Tier-1 claim** — it is
+the anticipated behaviour of a simultaneous instrument when 40 near-tied
+candidates join the candidate set (the band widened 0.0439 → 0.0501),
+which is precisely why the PI ruled that it be recomputed after every
+membership change and only the final one cited. The greedy clique is
+unchanged; what the admissible set now reports is which 28 of 79 cells
+cannot be ruled out as best at simultaneous 95 %. Reporting the 11-cell
+set beside a 79-cell board would have been the error, not the growth.
+Third, the identity check: **coordinates, not (F1, n), decide whether two
+board rows are the same cell.** On a plateau, an (F1, n) match can rest
+on as few as 45 shared points of 403.
+
+**Caveats.** The analysis is **post-hoc** and the register row remains
+**UNSIGNED** (`results/run-analyses.json`, `gs-era2-verified-board-2026-09-10`:
+79 conditions, `"preregistered": "post-hoc"`, H-refs H2/H1, no
+`manually_verified_at`); the G1 publication ruling under the card's § 6
+is still the PI's (**Obs 464**). The `-opmax` rows are **E56-class
+in-sample optima by construction** — that is the point of them, but the
+board now carries 40 rows that are not deployable operating points and
+must not be read as such. The optimism measurement covers the
+**verifier-threshold sweep only**: the proposer-side configuration
+choices upstream of the sweep (prompt, thinking level, K, temperature)
+are not replayed, so these corrections are a lower bound on total
+selection optimism. Every "was → now" figure above is against the
+39-cell snapshot under
+`archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-39cell/`.
+The 55-map costing produced the same session
+(`reports/gemini37-image-55map-costing-2026-09-10.md`) is for the record
+only — nothing was run, no API call made.
+
+**Findable later**: board symmetry fix, in-sample optima both families,
+-opmax rows, build_gs_era2_board_opmax.py, 43 rows minted 40 on board,
+K >= 5 rule three K=3 cells off-board, 412 of 412 twin coordinate
+identity, 45 of 403 and 56 of 402 within 1 m, (F1, n) coincidence is not
+identity, registry_vs_archived nine of 29 pv registry cells, the row is
+the file, sweep optimism Efron-Gong argmax replayed per tile resample,
+selection_aware_intervals.py --sweep-union --sweep-verify --sweep-k,
+summarise_sweep_optimism.py, source_tile drift up to 0.016, sweep_20m.csv
+reproduced row for row 2.2e-16, argmax stability 0.288 swap arms plateau,
+prob_t 0.80 0.85 tie 0.918981, 0.90 0.92 0.95 tie 0.923256, optimism
++0.0006 to +0.0035 seven cells, corrected 0.9027 to 0.9215, 79 cells 1853
+of 3081 pairs, 7 tiers 5 16 15 17 10 12 4, Tier 1 unchanged five cells,
+pv-high-text-t0.3-n5-opmax 0.8863 rank 11 Tier 2, +0.0205 p 0.1557
+adjusted 0.2174, 31 of 40 below lowest Tier-1, nine incumbents down one
+tier none up, Hsu MCB 28 of 79 band 39 w_upper 0.0501, MCB recomputed
+last on final membership, board argmax optimism +0.0051 corrected 0.9181,
+ff8049f4a, 3097e9bbe, a5ac7dc16, 39-cell snapshot archive, WN-C13.
+
+Sources: `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`
+(read 2026-09-10: the "Last revised" banner, the 79-row board table with
+tier, MCB marker, board-frame and committed F1@20 and Δ frame, the
+"79 cells; 1853/3081 pairs significant; 7 tiers; tie set 5; MCB
+admissible 28" summary line, and the "2026-09-10 (later) — Symmetry fix"
+changelog entry with its 39-cell vs 79-cell table);
+`opmax/membership.json` (read 2026-09-10: `n_archived` 44, `n_rows` 43,
+`n_members` 40, the K ≥ 5 rule string, the single `excluded` entry
+naming the registered twin, and the per-row `registry_vs_archived` field
+— nine `differs:` rows of the 29 `pv_registry.json` cells, including
+`pv-high-text-t1.0-n5` 0.8688/426 vs 0.8607/376 and `pv-min-text-t0.3-n10`
+0.8730/431 vs 0.8682/392); `opmax/gates.json` (read 2026-09-10:
+`checked_at_utc` 2026-09-10T05:49:23Z, `passed` true, G2/G3 failures 0,
+`G4_cells` 40, all 43 cells' `archived_f1_20` / `expected_f1_20` /
+`g2_f1_20` / `board_f1_20` and the four detection counts, every
+`delta_board_minus_committed` exactly 0.0, `board_bounds`
+`era2_b_intersection_bounds.geojson`, and the `bisected` block for
+`pv-high-image-t0.3-n5`); `optimism/summary.json` and `optimism/README.md`
+(read 2026-09-10: all 20 rows — ten cells × committed and board frames —
+`n_candidates`, `apparent`, `optimism`, `mcse`, `corrected`, `sa_ci`,
+`stability`, `n_distinct`, `selected`, `bounds`); the per-cell optimism
+JSONs (read 2026-09-10: `gate_sweep_csv` rows and `max_abs_delta_f1`
+(max 2.22e-16 over the ten committed-frame runs, `max_abs_delta_n` 0),
+`gate_anchor_eval` deltas (max 4.7e-05), and the `candidates` arrays
+that give the prob_t plateaus 0.80/0.85 = 0.918981 and 0.90/0.92/0.95 =
+0.923256); `tiering_20m.json` (read 2026-09-10: `git_commit` `ff8049f4a`,
+`generated_at_utc` 2026-09-10T05:58:16Z, 79 ranking rows, 3,081 pairwise
+records of which 1,853 `significant`, tier sizes [5,16,15,17,10,12,4],
+the five-member `tie_set`, and the two decisive pairs —
+`pv-high-text-t0.3-n5-opmax` vs `g37-text-k10-verified-carried-p0.10-k10`
+diff 0.020504 p 0.1557 BH 0.217359 not significant, vs
+`g37-image-k5-verified-swap37-p0.90-k5` diff 0.037 p 0.0114 BH 0.021019
+significant; counts of 31/40 and 40/40 computed from that table);
+`mcb/gs-era2-verified-board-2026-09-10_b20_m1.json` and the 39-cell
+counterpart under `archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-39cell/mcb/`
+(read 2026-09-10: `n_candidates` 79 vs 39, `hsu_not_ruled_out` 28 vs 11,
+`mcb_not_ruled_out` 39 vs 22, `hsu_w_upper` 0.050125 vs 0.043871,
+`optimism` 0.005140 vs 0.005085, `corrected_f1` 0.918116 vs 0.918171,
+`argmax_stability` 0.6017 vs 0.6019, bootstrap 10,000, seed 42, and the
+`candidates` list from which the 28-cell composition was tabulated);
+the archived 39-cell `tiering_20m.json` (read 2026-09-10: tier sizes
+[5,13,6,11,2,2] and the per-cell tiers from which the nine one-tier
+demotions were computed); `planning/gs-era2-verified-board-2026-09-08.md`
+(read 2026-09-10: the "2026-09-10 (later still) — Symmetry fix built"
+changelog entry, parts (a)–(d), including the trigger quote, the
+gate summary, the 39/79 table, and the reading);
+`scripts/build_gs_era2_board_opmax.py` (read 2026-09-10: the module
+docstring's Why and subcommand descriptions, `TWINS` line 110, `BISECTED`
+lines 112–115, and `PV_REGISTRY`/`S78_REGISTRY` lines 97–98);
+`scripts/selection_aware_intervals.py` (read 2026-09-10: lines 526–595 —
+the sweep-union docstring, the three imported analysis helpers, and the
+`source_tile` branch at line 594); `git log -1` on `8c4b0aa9e`,
+`c598377b3`, `ff8049f4a`, `3097e9bbe`, `a5ac7dc16`, and `817de06a0`
+(read 2026-09-10: dates 2026-09-10 15:44–16:12 +1000 and full bodies,
+including `c598377b3`'s "up to 0.016 F1" and registry-flag paragraphs);
+`results/run-analyses.json` (read 2026-09-10: the
+`gs-era2-verified-board-2026-09-10` row — 79 `conditions_compared`,
+`"preregistered": "post-hoc"`, `hypothesis_refs` ["H2","H1"], no
+`manually_verified_at`, and the outcome string);
+`docs/paper/results-draft.md` § R4 (read 2026-09-10: the refreshed
+paragraph carrying 1,853/3,081, seven tiers, MCB 28 of 79, rank 11 at
+0.8863, and 31 of 40); `docs/methodology/preregistration/protocol-errata.md`
+E56 (line 2003, in-sample verifier operating points) and E83 (line 4919,
+the order-dependent sequential tiering rule replaced by Hsu MCB);
+`reports/gemini37-image-55map-costing-2026-09-10.md` (read 2026-09-10:
+the title's "costing only; nothing run" and the no-API-call statement).
+Point-identity counts recomputed 2026-09-10 from the geojsons themselves
+(`archive/superseded-leaderboards/leaderboard/era2/pv-materialised/{pv-flash-high-text-16of30,session-78-text-checklist,pv-high-text-t0.3-n10}.geojson`
+against `outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson`,
+`results/verifier-robustness/condition-sets/t03-4of5-n1-pt0.2.geojson`,
+and `results/verifier-robustness/matrix-sets/min-T0.0.geojson`;
+reprojected to EPSG:32635, nearest-neighbour within 1 m): 412/412 at
+0.0 m, 45/403, and 56/402.
+Related: **Obs 463** (the 39-cell board this entry extends — its Tier 1,
+frame ruling, and G6 deltas are unchanged; this entry supersedes its
+"4 of 44 match a registered condition by committed F1" with the
+coordinate test, and answers the in-sample-optima asymmetry its own
+caveat paragraph left open); **Obs 464** (the G1 bisect, whose 0.7475
+is the expected value the `-opmax` gate uses for `pv-high-image-t0.3-n5`,
+and whose publication ruling is still pending); **Obs 461** (a stage's
+`sweep_2d.json` predating its own `probabilities.json` — the same class
+of staleness, found here in nine of the archived board's own registry
+cells); **Obs 441, 444, 447, 448** (the pairwise 3.7/3.8 findings whose
+plateau these argmax-stability figures quantify).
