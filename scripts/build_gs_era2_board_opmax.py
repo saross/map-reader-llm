@@ -402,11 +402,16 @@ def _resolve_existing_row(row: dict[str, Any], m: dict[str, Any]) -> int:
     old_n, new_n = m["archived_n"], m["registry_n"]
     row["detections"] = m["detections"]
     note = str(row.get("_note", ""))
+    # Drop the superseded discrepancy sentence: register() appends it last, so
+    # everything from the marker onwards goes.
     marker = " NOTE: the materialisation registry's sweep best point differs"
     idx = note.find(marker)
-    if idx != -1:  # drop the superseded discrepancy sentence
-        end = note.find(". ", note.find("Obs 461", idx)) if "Obs 461" in note[idx:] else -1
-        note = note[:idx] + (note[end + 2:] if end != -1 else "")
+    if idx != -1:
+        note = note[:idx]
+    # The waiver sentence named the archived F1 as the value the g2 evaluation
+    # reproduces; it now reproduces the registered one.
+    note = note.replace(f"reproduction of the archived F1 ({m['archived_f1_20']})",
+                        f"reproduction of the registered F1 ({m['registry_f1_20']})")
     row["_note"] = note.rstrip() + (
         f" RE-MATERIALISED {m['resolved_at']}: the detection file this row pointed at "
         f"({m['archived_detections']}, materialised 2026-04-19 at bd24293d4) did not hold the operating point the "
@@ -496,8 +501,11 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
     for cid in board_ids:
         if cid not in arow["conditions_compared"]:
             arow["conditions_compared"].append(cid)
+    # Count the '-era2b' rows from the list itself: on a re-run ``before``
+    # already includes the opmax rows and would double-count them.
+    n_era2b = sum(1 for cid in arow["conditions_compared"] if not cid.endswith(SUFFIX))
     arow["_conditions_note"] = (
-        f"{before} '-era2b' rows (the registered cells re-scored on the board frame; the committed rows remain the "
+        f"{n_era2b} '-era2b' rows (the registered cells re-scored on the board frame; the committed rows remain the "
         f"members' records) plus {len(board_ids)} '{SUFFIX}' rows (the archived Era-2 PV board's sweep-optimal Gemini 3 "
         f"cells, in-sample optima of the E56 class, registered 2026-09-10 for the symmetry fix; three K = 3 archived "
         f"cells are registered but off-board by the K >= {MIN_K} rule). Both families at both levels: committed "
