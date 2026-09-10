@@ -175,23 +175,44 @@ project state.
 > (unsigned, ruling pending). Obs dispatched (obs-writer): see the
 > working-notes commit after `4652ab434`.
 >
-> **NEXT SESSION (PI calls queued by the overnight run)**: (a) the Era-2
-> board: rule on G1's marginal failure (publish as is with the drift
-> disclosed, or hold), sign the analysis row, and decide whether the
-> archived board's sweep-optimal cells should ever join; (b) whether to
-> register the uplift supplement now that 69 of 169 pairs compute, and
-> whether to re-score the CRS-less `verified-paired` twin first; (c)
-> re-sign A-07 if the prose correction warrants it; (d) review §§ R7.2–R7.3;
-> (e) S150 + S151 user-obs review; (f) D-1..D-5 and D.9 rulings.
-> **Standing gotchas (new):** obs-writer dispatches must run SEQUENTIALLY
-> (shared Obs numbering and one file); April-era crop manifests record
-> `proposer_votes` where `sweep_f1_greedy_pv.py` reads `vote_count`
-> (default 1 — a silent all-vote-1 sweep if unmapped); `git pull --rebase`
-> refuses while the working tree carries any uncommitted file, including a
-> transiently mis-sized one — push after a fetch shows `0 behind` instead; the sweep of a stage on a different candidate-set
-> construction is not a recovery comparator (check cluster counts per vote
-> tier first).
-
+> **NEXT SESSION — SCHEDULED at its start (PI, 2026-09-10, "we're low on
+> context here"), in this order:**
+> **(1) The G1 drift bisect** ($0, ~15 min on sapphire): score the one
+> archived input `archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.3-n5.geojson`
+> on `full_evaluation_bounds` with `evaluate_detections.py` at each commit
+> touching it since `005e6c71` (2026-08-20) until the +0.0015 appears;
+> record the commit and mechanism in `g1-regression.json`.
+> **(2) The board's symmetry fix, then re-tier**: the 3.7/3.8 GS cells
+> are the screens' sweep-best points (in-sample optima, E56 class) while
+> the Gemini 3 incumbents on the board are committed operating points
+> (only the 16of30 opmax is a sweep optimum) — an asymmetry that favours
+> 3.7 by the optimism of a ~20-point sweep. Fix: (a) register the
+> archived board's 40 unregistered Gemini 3 sweep-optimal cells (their
+> files survive under `archive/superseded-leaderboards/…/pv-materialised/`)
+> as `-opmax` rows with an in-sample-optimum note, score them on the
+> board frame, and re-tier with both families at both levels; (b) run
+> `selection_aware_intervals.py --cell` (Efron–Gong optimism) on the
+> seven 3.7/3.8 screen cells and report the corrected F1 beside the
+> point; (c) THEN the E83 wording (Hsu set vs greedy Tier 1) and the
+> analysis-row signature.
+> **(3) Uplift supplement**: implement the agreed rule — rows whose
+> `scope_override.test_set_id` is a board frame (`era2-b-487`) are
+> excluded from the flatten and the pairing (they duplicate rows already
+> present on another frame); rebuild supplement + pairing; then the
+> registration prerequisites for the PI: rule on
+> `results/uplift-supplement/notation-extension-proposal.md` (notation
+> key § 7), on the strata presentation (the 55-map r2 stratum beside or
+> instead of canonical/standardised/student), and on accepting the 100
+> unresolved pairs as disclosed; then mint and sign the analysis row(s)
+> (card § Registration: derivations registered as analyses, not
+> conditions).
+> **(4) Cost a 3.7/3.8 image run at 55-map scale** (the PI "may" fund it
+> in a later session): proposer at the image-B rate with caching
+> (~$22.50 per 1,398-tile GS pass ⇒ estimate for 24,561 tiles × N), both
+> verifier arms; present with the MDE80 ≈ 0.013 resolution.
+> **(5) Still pending**: re-sign A-07; review §§ R7.2–R7.3 and the § R4
+> paragraph; S150 + S151 user-obs; D-1..D-5 and D.9.
+>
 ## 🔍 STATE AFTER S151 (2026-09-08 — verifier-stage refresh BOOKKEPT; a sweep-staleness class found; PR #12 MERGED; $0 this session — the refresh run itself, US$8.73 at list, was spent in S150-b)
 
 > **HEADLINES, all committed and pushed (main synced at `459556ba4`; PR #12
