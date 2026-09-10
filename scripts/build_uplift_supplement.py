@@ -85,6 +85,7 @@ from scripts.lib_detection_paths import (  # noqa: E402
     resolve_pool_passes,
 )
 from scripts.lib_uplift_supplement import (
+    NotationKey,
     BOARD_FRAMES,
     is_board_frame_condition,  # noqa: E402
     COLUMN_EXTENSIONS,
@@ -731,20 +732,28 @@ def _md_cell(value: Any) -> str:
     return str(value).replace("|", r"\|")
 
 
-def render_extension_proposal(sanctioned: int) -> str:
+def render_extension_proposal(notation: NotationKey, frames_in_use: set[str]) -> str:
     """Render the notation-key extension proposal.
 
     The canonical key requires new builders to "conform to it or extend it here
     first". A builder amending the key by itself would defeat the point of a
     single PI-commissioned authority, so the extensions are rendered here for
-    the PI to paste into § 7.
+    the PI to fold into § 7. Extensions the key already sanctions (§ 7.1,
+    landed 2026-09-10) are listed as landed, not proposed; only the remainder
+    is a proposal. The § 6 frame check is COMPUTED: the frames the registered
+    runs use (``run-facts.json``) minus the frame ids the key's § 6 table names.
 
     Args:
-        sanctioned: How many names the key itself sanctions.
+        notation: The parsed canonical key.
+        frames_in_use: Every ``test_set_id`` the registered runs record.
 
     Returns:
         The Markdown document.
     """
+    sanctioned = notation.sanctioned
+    landed = sorted((e for e in COLUMN_EXTENSIONS.values() if e.column in sanctioned), key=lambda e: e.column)
+    pending = sorted((e for e in COLUMN_EXTENSIONS.values() if e.column not in sanctioned), key=lambda e: e.column)
+    missing_frames = sorted(f for f in frames_in_use if f not in sanctioned)
     lines = [
         "# Notation-key extension proposal — uplift supplement",
         "",
@@ -756,35 +765,39 @@ def render_extension_proposal(sanctioned: int) -> str:
         "The canonical key `docs/methodology/notation-key.md` requires that",
         "\"new tables and dataset builders must conform to it or extend it here",
         "first\". The uplift-supplement builder validates every column it writes",
-        f"against §§ 6-7, which sanction {sanctioned} names. The columns below are",
-        "the ones the dataset needs that §§ 6-7 do not yet name. A builder must",
-        "not amend the canonical key unilaterally, so they are proposed here for",
-        "the PI to fold into § 7.",
+        f"against §§ 6-7, which sanction {len(sanctioned)} names. A builder must not",
+        "amend the canonical key unilaterally, so columns the key does not name",
+        "are declared in `scripts/lib_uplift_supplement.py` (`COLUMN_EXTENSIONS`)",
+        "and proposed here for the PI to fold into § 7; an undeclared column",
+        "still fails loudly.",
         "",
-        "Until they land in the key, they are declared in",
-        "`scripts/lib_uplift_supplement.py` (`COLUMN_EXTENSIONS`), which is what",
-        "the builder validates against — so an undeclared column still fails",
-        "loudly.",
+        f"## Proposed additions to § 7 ({len(pending)} pending)",
         "",
-        "## Proposed additions to § 7",
-        "",
-        "| Column | Extends | Rationale |",
-        "|---|---|---|",
     ]
-    for extension in sorted(COLUMN_EXTENSIONS.values(), key=lambda e: e.column):
-        lines.append(
-            f"| `{extension.column}` | {extension.derives_from} | {extension.rationale} |"
-        )
+    if pending:
+        lines += ["| Column | Extends | Rationale |", "|---|---|---|"]
+        lines += [f"| `{e.column}` | {e.derives_from} | {e.rationale} |" for e in pending]
+    else:
+        lines.append("None: every declared extension is sanctioned by the key.")
     lines += [
         "",
-        "## Also worth the PI's eye: the § 6 frame table is incomplete",
+        f"## Extensions already sanctioned by the key ({len(landed)})",
         "",
-        "§ 6 names three frames (`era-1-340`, `grid-common-487`, `55maps-8541`).",
-        "`results/run-facts.json` uses four more across the registered runs:",
-        "`era-2-487`, `era-3-327`, `h13-common-338`, and `px256-1032`. The",
-        "dataset's `frame_id` column carries whichever the run records, so the",
-        "gap is visible in the data; closing it in the key would make the",
-        "vocabulary checkable rather than merely observable.",
+        "Landed as § 7.1 on 2026-09-10 (PI ruling 2(i) of the supplement's",
+        "registration walk-through); still declared here so the builder's",
+        "validation and the key cannot drift apart silently.",
+        "",
+        "| Column | Extends |",
+        "|---|---|",
+    ]
+    lines += [f"| `{e.column}` | {e.derives_from} |" for e in landed]
+    lines += ["", "## The § 6 frame table against the registered runs", ""]
+    if missing_frames:
+        lines += ["§ 6 does not name these frames the registered runs use "
+                  "(`results/run-facts.json`): " + ", ".join(f"`{f}`" for f in missing_frames) + "."]
+    else:
+        lines += [f"Complete: every frame the registered runs use ({len(frames_in_use)}) is named in § 6."]
+    lines += [
         "",
         *_changelog_lines(
             "Generated with the first build of the uplift-supplement dataset\n"
@@ -1132,9 +1145,13 @@ def main(argv: list[str] | None = None) -> int:
         "notation_key": str(sources.notation.path.relative_to(repo_root)),
         "sanctioned_by_notation_key": sorted(sources.notation.sanctioned),
         "declared_extensions": {
-            name: {"extends": e.derives_from, "rationale": e.rationale}
+            name: {"extends": e.derives_from, "rationale": e.rationale,
+                   "sanctioned_by_key": name in sources.notation.sanctioned}
             for name, e in sorted(COLUMN_EXTENSIONS.items())
         },
+        "pending_extensions": sorted(
+            n for n in COLUMN_EXTENSIONS if n not in sources.notation.sanctioned
+        ),
         "tables": {
             "conditions.csv": list(CONDITION_COLUMNS),
             "conditions-by-buffer.csv": list(CONDITION_COLUMNS),
@@ -1145,8 +1162,12 @@ def main(argv: list[str] | None = None) -> int:
     (out_dir / "column-spec.json").write_text(
         json.dumps(spec, indent=2) + "\n", encoding="utf-8"
     )
+    frames_in_use = {
+        str((f.get("scope") or {}).get("test_set_id"))
+        for f in sources.facts.values() if (f.get("scope") or {}).get("test_set_id")
+    }
     (out_dir / "notation-extension-proposal.md").write_text(
-        render_extension_proposal(len(sources.notation.sanctioned)), encoding="utf-8"
+        render_extension_proposal(sources.notation, frames_in_use), encoding="utf-8"
     )
     (out_dir / "build-report.md").write_text(
         render_build_report(sources, master, by_buffer, strata, out_dir), encoding="utf-8"

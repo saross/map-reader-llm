@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-10T05:57:08Z",
+  "generated_at": "2026-09-10T07:10:56Z",
   "notation_key": "docs/methodology/notation-key.md",
   "sanctioned_by_notation_key": [
     "55maps-8541",
@@ -8,399 +8,574 @@
     "F1_CI_lo",
     "FN",
     "FP",
+    "K",
     "MCC",
     "MCC_CI_hi",
     "MCC_CI_lo",
     "N",
     "R_m",
+    "T",
     "TP",
+    "aggregation",
+    "architecture",
     "basis",
     "bh_adjusted_p",
+    "blocked_reason",
+    "bounds_path",
+    "buffer_m",
     "cell",
     "ci",
+    "ci_method",
+    "ci_unreliable",
+    "command",
+    "condition_id",
+    "corpus",
     "corrected_f1",
+    "cost_basis",
     "cost_usd",
+    "delta",
+    "detections_path",
+    "engine",
     "era-1-340",
+    "era-2-487",
+    "era-3-327",
+    "era2-b-487",
+    "eval_path",
     "f1_50",
     "fn",
     "fp",
+    "frame_id",
+    "geometry",
+    "geometry_basis",
     "grid-common-487",
     "group",
+    "h13-common-338",
+    "is_primary_buffer",
+    "job_id",
+    "k1_with_verifier",
+    "k1_with_verifier_reason",
     "label",
+    "materialise_command",
+    "materialise_filter",
     "mcc",
+    "mde_50",
+    "mde_80",
+    "mde_instrument",
+    "mde_join_basis",
+    "mde_source",
+    "metric",
+    "metrics_source",
     "micro_f1_50",
     "min_votes",
+    "modality",
+    "model_used",
+    "n_comparisons",
+    "n_conditions",
     "n_detections",
     "n_permutations",
     "n_phantom_duplicates_dropped",
     "n_ref_extended",
     "n_ref_student_only",
+    "n_refs",
     "n_reviewer_promoted_at_R",
     "n_tiles",
+    "notes",
     "null_mean",
+    "null_sd_hi",
+    "null_sd_lo",
     "null_std",
     "observed_diff",
+    "output_dir",
+    "overlap_px",
     "p_value",
+    "pair_id",
+    "pairing_basis",
     "point",
     "precision",
     "precision_50",
     "precision_CI_hi",
     "precision_CI_lo",
     "prob_t",
+    "proposer_pool",
+    "px256-1032",
+    "rationale",
     "recall",
     "recall_50",
     "recall_CI_hi",
     "recall_CI_lo",
+    "reference",
+    "reference_basis",
+    "reference_consumed_path",
+    "reference_path",
+    "registered_analysis_id",
+    "run_id",
+    "rung",
     "sensitivity",
     "significant",
+    "source_condition",
+    "source_condition_id",
+    "source_stratum_id",
+    "source_value",
     "specificity",
+    "status",
     "stratum_id",
+    "stride_px",
+    "target_condition_id",
+    "target_stratum_id",
+    "target_value",
+    "tax_kind",
+    "temperature",
+    "thinking",
     "tier",
     "tiers",
     "tile_FN",
     "tile_FP",
     "tile_TN",
     "tile_TP",
-    "tp"
+    "tile_px",
+    "tp",
+    "transfer",
+    "union_path",
+    "unverified_condition_id",
+    "unverified_detections_path",
+    "unverified_eval_path",
+    "unverified_stratum_basis",
+    "unverified_stratum_id",
+    "unverified_value",
+    "uplift",
+    "uplift_metric",
+    "verified",
+    "verified_condition_id",
+    "verified_stratum_id",
+    "verified_value",
+    "verifier_crop_manifest",
+    "verifier_floor_basis",
+    "verifier_min_vote_seen",
+    "verifier_variant"
   ],
   "declared_extensions": {
     "K": {
       "extends": "\u00a7 1 (K)",
-      "rationale": "Passes RUN in the pool. The key defines the symbol; this is the column."
+      "rationale": "Passes RUN in the pool. The key defines the symbol; this is the column.",
+      "sanctioned_by_key": true
     },
     "aggregation": {
       "extends": "conditions-manifest schema",
-      "rationale": "none / greedy / wbf / consensus / verified."
+      "rationale": "none / greedy / wbf / consensus / verified.",
+      "sanctioned_by_key": true
     },
     "architecture": {
       "extends": "conditions-manifest schema",
-      "rationale": "single-pass / consensus / proposer-verifier \u2014 the evaluable architecture."
+      "rationale": "single-pass / consensus / proposer-verifier \u2014 the evaluable architecture.",
+      "sanctioned_by_key": true
     },
     "blocked_reason": {
       "extends": "anti-confabulation",
-      "rationale": "Why a blocked job cannot run; never a placeholder, always a measured fact."
+      "rationale": "Why a blocked job cannot run; never a placeholder, always a measured fact.",
+      "sanctioned_by_key": true
     },
     "bounds_path": {
       "extends": "\u00a7 6",
-      "rationale": "The evaluation bounds defining the frame."
+      "rationale": "The evaluation bounds defining the frame.",
+      "sanctioned_by_key": true
     },
     "buffer_m": {
       "extends": "\u00a7 1 (R / R_m)",
-      "rationale": "Third component, as an integer column; `R_m` is the corrected-F1 CSV's name."
+      "rationale": "Third component, as an integer column; `R_m` is the corrected-F1 CSV's name.",
+      "sanctioned_by_key": true
     },
     "ci_method": {
       "extends": "\u00a7 5 (CI, BCa, percentile)",
-      "rationale": "The CI method the source evaluation recorded; omitted where it recorded none."
+      "rationale": "The CI method the source evaluation recorded; omitted where it recorded none.",
+      "sanctioned_by_key": true
     },
     "ci_unreliable": {
       "extends": "conditions-manifest schema",
-      "rationale": "The measured D28/E72 reliability verdict carried through from the source."
+      "rationale": "The measured D28/E72 reliability verdict carried through from the source.",
+      "sanctioned_by_key": true
     },
     "command": {
       "extends": "anti-confabulation",
-      "rationale": "The exact invocation the operator runs on sapphire."
+      "rationale": "The exact invocation the operator runs on sapphire.",
+      "sanctioned_by_key": true
     },
     "condition_id": {
       "extends": "\u00a7 7 (registry ids)",
-      "rationale": "The `run_id::label` composite spelled as a column name."
+      "rationale": "The `run_id::label` composite spelled as a column name.",
+      "sanctioned_by_key": true
     },
     "corpus": {
       "extends": "\u00a7 6",
-      "rationale": "First component of stratum_id: 4-map-gs or 55-map, from run-facts.json."
+      "rationale": "First component of stratum_id: 4-map-gs or 55-map, from run-facts.json.",
+      "sanctioned_by_key": true
     },
     "cost_basis": {
       "extends": "\u00a7 8 (audited / list / flex)",
-      "rationale": "Which cost basis `cost_usd` carries; NOT the audited basis (see build report)."
+      "rationale": "Which cost basis `cost_usd` carries; NOT the audited basis (see build report).",
+      "sanctioned_by_key": true
     },
     "delta": {
       "extends": "\u00a7 3 (transfer tax)",
-      "rationale": "target_value - source_value; a transfer tax when the sign is negative."
+      "rationale": "target_value - source_value; a transfer tax when the sign is negative.",
+      "sanctioned_by_key": true
     },
     "detections_path": {
       "extends": "anti-confabulation",
-      "rationale": "The detection set scored."
+      "rationale": "The detection set scored.",
+      "sanctioned_by_key": true
     },
     "engine": {
       "extends": "anti-confabulation",
-      "rationale": "Which scorer the job needs: evaluate_detections or corrected_f1_multi_buffer."
+      "rationale": "Which scorer the job needs: evaluate_detections or corrected_f1_multi_buffer.",
+      "sanctioned_by_key": true
     },
     "eval_path": {
       "extends": "anti-confabulation",
-      "rationale": "The evaluation artefact the metrics came from."
+      "rationale": "The evaluation artefact the metrics came from.",
+      "sanctioned_by_key": true
     },
     "frame_id": {
       "extends": "\u00a7 6",
-      "rationale": "Fourth component: the evaluation frame id (era-1-340, era-2-487, ...)."
+      "rationale": "Fourth component: the evaluation frame id (era-1-340, era-2-487, ...).",
+      "sanctioned_by_key": true
     },
     "geometry": {
       "extends": "\u00a7 2 (geometry cell)",
-      "rationale": "The geometry cell label the key defines, as a column."
+      "rationale": "The geometry cell label the key defines, as a column.",
+      "sanctioned_by_key": true
     },
     "geometry_basis": {
       "extends": "\u00a7 2",
-      "rationale": "Which rule resolved the geometry: pool-name, label, or run-facts-tile-size."
+      "rationale": "Which rule resolved the geometry: pool-name, label, or run-facts-tile-size.",
+      "sanctioned_by_key": true
     },
     "is_primary_buffer": {
       "extends": "\u00a7 1 (R)",
-      "rationale": "True where buffer_m is the corpus headline buffer (20 m GS / 50 m 55-map)."
+      "rationale": "True where buffer_m is the corpus headline buffer (20 m GS / 50 m 55-map).",
+      "sanctioned_by_key": true
     },
     "job_id": {
       "extends": "anti-confabulation",
-      "rationale": "Primary key of a scoring job in a worklist."
+      "rationale": "Primary key of a scoring job in a worklist.",
+      "sanctioned_by_key": true
     },
     "k1_with_verifier": {
       "extends": "\u00a7 2 (PV)",
-      "rationale": "derivable / blocked / not-applicable \u2014 the card's disclosed K = 1 PV anchor."
+      "rationale": "derivable / blocked / not-applicable \u2014 the card's disclosed K = 1 PV anchor.",
+      "sanctioned_by_key": true
     },
     "k1_with_verifier_reason": {
       "extends": "anti-confabulation",
-      "rationale": "The measured ground for that verdict; never an approximation."
+      "rationale": "The measured ground for that verdict; never an approximation.",
+      "sanctioned_by_key": true
     },
     "materialise_command": {
       "extends": "anti-confabulation",
-      "rationale": "Prelude that builds the twin with the source_tile the engine scopes by."
+      "rationale": "Prelude that builds the twin with the source_tile the engine scopes by.",
+      "sanctioned_by_key": true
     },
     "materialise_filter": {
       "extends": "\u00a7 1 (k)",
-      "rationale": "The vote_count predicate that turns the union into the paired shell."
+      "rationale": "The vote_count predicate that turns the union into the paired shell.",
+      "sanctioned_by_key": true
     },
     "mde_50": {
       "extends": "\u00a7 5 (MDE 50 %/80 %)",
-      "rationale": "Minimum detectable effect at 50 % power, joined from sensitivity.json."
+      "rationale": "Minimum detectable effect at 50 % power, joined from sensitivity.json.",
+      "sanctioned_by_key": true
     },
     "mde_80": {
       "extends": "\u00a7 5 (MDE 50 %/80 %)",
-      "rationale": "Minimum detectable effect at 80 % power, joined from sensitivity.json."
+      "rationale": "Minimum detectable effect at 80 % power, joined from sensitivity.json.",
+      "sanctioned_by_key": true
     },
     "mde_instrument": {
       "extends": "\u00a7 5",
-      "rationale": "The named permutation instrument the MDE and null SD describe."
+      "rationale": "The named permutation instrument the MDE and null SD describe.",
+      "sanctioned_by_key": true
     },
     "mde_join_basis": {
       "extends": "\u00a7 5",
-      "rationale": "The join key used (n_tiles + buffer_m) and any ambiguity it carries."
+      "rationale": "The join key used (n_tiles + buffer_m) and any ambiguity it carries.",
+      "sanctioned_by_key": true
     },
     "mde_source": {
       "extends": "\u00a7 5",
-      "rationale": "The artefact the instrument's null SD was measured from."
+      "rationale": "The artefact the instrument's null SD was measured from.",
+      "sanctioned_by_key": true
     },
     "metric": {
       "extends": "\u00a7 5",
-      "rationale": "Which metric the delta is on (F1, MCC, precision, recall)."
+      "rationale": "Which metric the delta is on (F1, MCC, precision, recall).",
+      "sanctioned_by_key": true
     },
     "metrics_source": {
       "extends": "anti-confabulation",
-      "rationale": "conditions-manifest or evaluation-json \u2014 where this row's metrics were read."
+      "rationale": "conditions-manifest or evaluation-json \u2014 where this row's metrics were read.",
+      "sanctioned_by_key": true
     },
     "modality": {
       "extends": "\u00a7 2 (image / text)",
-      "rationale": "Proposer input modality; the key names the values, not a column."
+      "rationale": "Proposer input modality; the key names the values, not a column.",
+      "sanctioned_by_key": true
     },
     "model_used": {
       "extends": "passes-manifest schema",
-      "rationale": "Authoritative model identity, read from per-item metadata, never a name."
+      "rationale": "Authoritative model identity, read from per-item metadata, never a name.",
+      "sanctioned_by_key": true
     },
     "n_comparisons": {
       "extends": "\u00a7 5",
-      "rationale": "Pairwise comparisons the instrument's null SD was measured over."
+      "rationale": "Pairwise comparisons the instrument's null SD was measured over.",
+      "sanctioned_by_key": true
     },
     "n_conditions": {
       "extends": "\u00a7 6",
-      "rationale": "How many registered conditions resolve into the stratum."
+      "rationale": "How many registered conditions resolve into the stratum.",
+      "sanctioned_by_key": true
     },
     "n_refs": {
       "extends": "\u00a7 4",
-      "rationale": "Reference mounds in the stratum's reference file; the key gives no column name."
+      "rationale": "Reference mounds in the stratum's reference file; the key gives no column name.",
+      "sanctioned_by_key": true
     },
     "notes": {
       "extends": "anti-confabulation",
-      "rationale": "Free text recording any gap or caveat attached to this row."
+      "rationale": "Free text recording any gap or caveat attached to this row.",
+      "sanctioned_by_key": true
     },
     "null_sd_hi": {
       "extends": "\u00a7 5 (null SD)",
-      "rationale": "High end of the instrument's observed null-SD range."
+      "rationale": "High end of the instrument's observed null-SD range.",
+      "sanctioned_by_key": true
     },
     "null_sd_lo": {
       "extends": "\u00a7 5 (null SD)",
-      "rationale": "Low end of the instrument's observed null-SD range."
+      "rationale": "Low end of the instrument's observed null-SD range.",
+      "sanctioned_by_key": true
     },
     "output_dir": {
       "extends": "anti-confabulation",
-      "rationale": "Where the job writes its evaluation."
+      "rationale": "Where the job writes its evaluation.",
+      "sanctioned_by_key": true
     },
     "overlap_px": {
       "extends": "\u00a7 2 (geometry cell)",
-      "rationale": "Overlap in pixels, the second half of the geometry cell."
+      "rationale": "Overlap in pixels, the second half of the geometry cell.",
+      "sanctioned_by_key": true
     },
     "pair_id": {
       "extends": "\u00a7 6 (stratum_id)",
-      "rationale": "Primary key of a transfer pair; the key defines the object, not the column."
+      "rationale": "Primary key of a transfer pair; the key defines the object, not the column.",
+      "sanctioned_by_key": true
     },
     "pairing_basis": {
       "extends": "anti-confabulation",
-      "rationale": "Which rule located the pre-verifier twin: registered, consensus-file, union."
+      "rationale": "Which rule located the pre-verifier twin: registered, consensus-file, union.",
+      "sanctioned_by_key": true
     },
     "proposer_pool": {
       "extends": "\u00a7 7 (registry ids: run_id::pool::runN)",
-      "rationale": "The pool component of the pass id, as a column."
+      "rationale": "The pool component of the pass id, as a column.",
+      "sanctioned_by_key": true
     },
     "rationale": {
       "extends": "anti-confabulation",
-      "rationale": "Why this pair is a meaningful comparison despite spanning strata."
+      "rationale": "Why this pair is a meaningful comparison despite spanning strata.",
+      "sanctioned_by_key": true
     },
     "reference": {
       "extends": "\u00a7 4",
-      "rationale": "Second component: curator / student / canonical / standardised."
+      "rationale": "Second component: curator / student / canonical / standardised.",
+      "sanctioned_by_key": true
     },
     "reference_basis": {
       "extends": "\u00a7 4",
-      "rationale": "Which rule resolved `reference`: eval-ground-truth, label-suffix, or run-facts."
+      "rationale": "Which rule resolved `reference`: eval-ground-truth, label-suffix, or run-facts.",
+      "sanctioned_by_key": true
     },
     "reference_consumed_path": {
       "extends": "anti-confabulation",
-      "rationale": "The path the evaluation literally recorded, where it differs from the anchor."
+      "rationale": "The path the evaluation literally recorded, where it differs from the anchor.",
+      "sanctioned_by_key": true
     },
     "reference_path": {
       "extends": "\u00a7 4",
-      "rationale": "The ground-truth GeoJSON the evaluation consumed (the re-verify anchor)."
+      "rationale": "The ground-truth GeoJSON the evaluation consumed (the re-verify anchor).",
+      "sanctioned_by_key": true
     },
     "registered_analysis_id": {
       "extends": "analyses-manifest schema",
-      "rationale": "The registered analysis this pair belongs to, where one exists."
+      "rationale": "The registered analysis this pair belongs to, where one exists.",
+      "sanctioned_by_key": true
     },
     "run_id": {
       "extends": "\u00a7 7 (registry ids)",
-      "rationale": "Foreign key to the run registry; the key names the composite, not the part."
+      "rationale": "Foreign key to the run registry; the key names the composite, not the part.",
+      "sanctioned_by_key": true
     },
     "rung": {
       "extends": "\u00a7 1 (N)",
-      "rationale": "Which ladder rung the job scores (N = 1 for the K = 1 gap-fill)."
+      "rationale": "Which ladder rung the job scores (N = 1 for the K = 1 gap-fill).",
+      "sanctioned_by_key": true
     },
     "source_condition": {
       "extends": "\u00a7 7 (registry ids)",
-      "rationale": "The K >= 3 consensus cell whose K = 1 rung this job supplies."
+      "rationale": "The K >= 3 consensus cell whose K = 1 rung this job supplies.",
+      "sanctioned_by_key": true
     },
     "source_condition_id": {
       "extends": "\u00a7 7 (registry ids)",
-      "rationale": "The cell a calibration or claim came FROM."
+      "rationale": "The cell a calibration or claim came FROM.",
+      "sanctioned_by_key": true
     },
     "source_stratum_id": {
       "extends": "\u00a7 6",
-      "rationale": "Its stratum \u2014 necessarily different from the target's."
+      "rationale": "Its stratum \u2014 necessarily different from the target's.",
+      "sanctioned_by_key": true
     },
     "source_value": {
       "extends": "\u00a7 5",
-      "rationale": "The metric's value in the source cell."
+      "rationale": "The metric's value in the source cell.",
+      "sanctioned_by_key": true
     },
     "status": {
       "extends": "anti-confabulation",
-      "rationale": "ready / blocked / already-registered \u2014 whether the job can run at all."
+      "rationale": "ready / blocked / already-registered \u2014 whether the job can run at all.",
+      "sanctioned_by_key": true
     },
     "stride_px": {
       "extends": "\u00a7 2 (geometry cell)",
-      "rationale": "tile_px - overlap_px, which the key defines as the stride."
+      "rationale": "tile_px - overlap_px, which the key defines as the stride.",
+      "sanctioned_by_key": true
     },
     "target_condition_id": {
       "extends": "\u00a7 7 (registry ids)",
-      "rationale": "The cell the claim was carried TO."
+      "rationale": "The cell the claim was carried TO.",
+      "sanctioned_by_key": true
     },
     "target_stratum_id": {
       "extends": "\u00a7 6",
-      "rationale": "The target cell's stratum; the delta is a transfer across the two."
+      "rationale": "The target cell's stratum; the delta is a transfer across the two.",
+      "sanctioned_by_key": true
     },
     "target_value": {
       "extends": "\u00a7 5",
-      "rationale": "The metric's value in the target cell."
+      "rationale": "The metric's value in the target cell.",
+      "sanctioned_by_key": true
     },
     "tax_kind": {
       "extends": "\u00a7 3 (transfer tax)",
-      "rationale": "Which tax the pair isolates: geometry, reference, corpus, buffer, or frame."
+      "rationale": "Which tax the pair isolates: geometry, reference, corpus, buffer, or frame.",
+      "sanctioned_by_key": true
     },
     "temperature": {
       "extends": "\u00a7 1 (T)",
-      "rationale": "Sampling temperature. `T` alone is too short to be a safe CSV header."
+      "rationale": "Sampling temperature. `T` alone is too short to be a safe CSV header.",
+      "sanctioned_by_key": true
     },
     "thinking": {
       "extends": "\u00a7 2 (MIN / HIGH / low)",
-      "rationale": "Thinking level; the key names the levels, not a column."
+      "rationale": "Thinking level; the key names the levels, not a column.",
+      "sanctioned_by_key": true
     },
     "tile_px": {
       "extends": "\u00a7 2 (geometry cell)",
-      "rationale": "Tile size in pixels, the first half of the geometry cell."
+      "rationale": "Tile size in pixels, the first half of the geometry cell.",
+      "sanctioned_by_key": true
     },
     "transfer": {
       "extends": "heterogeneity design \u00a7 3",
-      "rationale": "Always TRUE here: the flag that licenses a cross-stratum number."
+      "rationale": "Always TRUE here: the flag that licenses a cross-stratum number.",
+      "sanctioned_by_key": true
     },
     "union_path": {
       "extends": "anti-confabulation",
-      "rationale": "The committed vote >= 1 union the vote shell must be filtered out of."
+      "rationale": "The committed vote >= 1 union the vote shell must be filtered out of.",
+      "sanctioned_by_key": true
     },
     "unverified_condition_id": {
       "extends": "\u00a7 7 (registry ids)",
-      "rationale": "The registered pre-verifier cell, where one already exists."
+      "rationale": "The registered pre-verifier cell, where one already exists.",
+      "sanctioned_by_key": true
     },
     "unverified_detections_path": {
       "extends": "anti-confabulation",
-      "rationale": "The pre-verifier consensus set at the same vote threshold."
+      "rationale": "The pre-verifier consensus set at the same vote threshold.",
+      "sanctioned_by_key": true
     },
     "unverified_eval_path": {
       "extends": "anti-confabulation",
-      "rationale": "That cell's committed evaluation, where one already exists."
+      "rationale": "That cell's committed evaluation, where one already exists.",
+      "sanctioned_by_key": true
     },
     "unverified_stratum_basis": {
       "extends": "anti-confabulation",
-      "rationale": "Whether the twin's stratum was derived from its own cell or from the recipe."
+      "rationale": "Whether the twin's stratum was derived from its own cell or from the recipe.",
+      "sanctioned_by_key": true
     },
     "unverified_stratum_id": {
       "extends": "\u00a7 6",
-      "rationale": "The twin's stratum, keyed independently; a tripwire, not a lineage check."
+      "rationale": "The twin's stratum, keyed independently; a tripwire, not a lineage check.",
+      "sanctioned_by_key": true
     },
     "unverified_value": {
       "extends": "\u00a7 5",
-      "rationale": "The paired unverified cell's metric value."
+      "rationale": "The paired unverified cell's metric value.",
+      "sanctioned_by_key": true
     },
     "uplift": {
       "extends": "\u00a7 3",
-      "rationale": "verified minus unverified on the same metric, same stratum."
+      "rationale": "verified minus unverified on the same metric, same stratum.",
+      "sanctioned_by_key": true
     },
     "uplift_metric": {
       "extends": "\u00a7 5",
-      "rationale": "Which metric the uplift column is computed on."
+      "rationale": "Which metric the uplift column is computed on.",
+      "sanctioned_by_key": true
     },
     "verified": {
       "extends": "\u00a7 2 (PV)",
-      "rationale": "Boolean: a verifier stage ran. The key names the architecture, not a flag."
+      "rationale": "Boolean: a verifier stage ran. The key names the architecture, not a flag.",
+      "sanctioned_by_key": true
     },
     "verified_condition_id": {
       "extends": "\u00a7 7 (registry ids)",
-      "rationale": "The verified cell of a with/without-verifier pair."
+      "rationale": "The verified cell of a with/without-verifier pair.",
+      "sanctioned_by_key": true
     },
     "verified_stratum_id": {
       "extends": "\u00a7 6",
-      "rationale": "The verified cell's own stratum, keyed from its own evidence."
+      "rationale": "The verified cell's own stratum, keyed from its own evidence.",
+      "sanctioned_by_key": true
     },
     "verified_value": {
       "extends": "\u00a7 5",
-      "rationale": "The verified cell's metric value."
+      "rationale": "The verified cell's metric value.",
+      "sanctioned_by_key": true
     },
     "verifier_crop_manifest": {
       "extends": "anti-confabulation",
-      "rationale": "The candidate manifest that measurement came from."
+      "rationale": "The candidate manifest that measurement came from.",
+      "sanctioned_by_key": true
     },
     "verifier_floor_basis": {
       "extends": "anti-confabulation",
-      "rationale": "How the cell's verifier stage was matched: lineage, shell, sole, or ambiguous."
+      "rationale": "How the cell's verifier stage was matched: lineage, shell, sole, or ambiguous.",
+      "sanctioned_by_key": true
     },
     "verifier_min_vote_seen": {
       "extends": "\u00a7 1 (k)",
-      "rationale": "Lowest vote_count the verifier actually saw, measured from the crop manifest."
+      "rationale": "Lowest vote_count the verifier actually saw, measured from the crop manifest.",
+      "sanctioned_by_key": true
     },
     "verifier_variant": {
       "extends": "\u00a7 2 (PV)",
-      "rationale": "Verifier variant id from the condition's verifier_config."
+      "rationale": "Verifier variant id from the condition's verifier_config.",
+      "sanctioned_by_key": true
     }
   },
+  "pending_extensions": [],
   "tables": {
     "conditions.csv": [
       "condition_id",
