@@ -2,7 +2,7 @@
 
 > **Last revised**: 2026-09-10 (regenerated from committed artefacts by `scripts/build_verifier_pairing_worklist.py`; original publication; the with/without-verifier pairing plan). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-10T05:57:13Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-10T07:31:03Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 Build order step 3 of `planning/uplift-supplement-2026-08-28.md`. No
 scoring has been run: this document and its worklist are the plan.
@@ -40,9 +40,9 @@ measurements of their own, and are neither paired nor offered as twins
 | Status | Cells |
 |---|---:|
 | `already-registered` | 9 |
-| `blocked` | 100 |
+| `blocked` | 86 |
 | `ready` | 20 |
-| `ready-after-materialise` | 43 |
+| `ready-after-materialise` | 57 |
 
 `already-registered` pairs need nothing: the twin is scored. `ready`
 pairs have a committed consensus GeoJSON and one scoring invocation.
@@ -56,13 +56,14 @@ re-aggregation — and the row records the exact predicate in
 | `pairing_basis` | Cells |
 |---|---:|
 | `consensus-file` | 20 |
+| `crop-manifest` | 14 |
 | `registered` | 9 |
 | `union` | 43 |
-| `unresolved` | 100 |
+| `unresolved` | 86 |
 
 ## Blocked pairs
 
-100 verified cell(s) have no locatable pre-verifier twin.
+86 verified cell(s) have no locatable pre-verifier twin.
 They are recorded with the reason and left empty in the uplift column;
 no substitute set is constructed.
 
@@ -94,26 +95,12 @@ no substitute set is constructed.
 | `proposer-verifier-512::verified-adversarial-text` | the verified cell records no vote threshold, so there is no 'same vote threshold' pre-verifier set to pair it with |
 | `pv-diag-256::verified-adv-text-consensus-5of5` | the verified cell records no vote threshold, so there is no 'same vote threshold' pre-verifier set to pair it with |
 | `pv-diag-384::verified-adv-text-consensus-16of30` | the verified cell records no vote threshold, so there is no 'same vote threshold' pre-verifier set to pair it with |
-| `pv-diag-384::verified-adv-text-4of5` | 2 committed 4-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (flash-high-text-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-text-6of10` | 1 committed 6-of-10 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (flash-high-text-1of10). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-text-high-vf-4of5` | 2 committed 4-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (flash-high-text-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-text-medium-vf-4of5` | 2 committed 4-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (flash-high-text-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-pro-text-flash-vf-3of5` | 2 committed 3-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (pro-high-text-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-pro-text-pro-vf-3of5` | 2 committed 3-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (pro-high-text-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-text-min-true-3of5` | 2 committed 3-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (text-min-t07-true-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-text-min-n30lineage-4of5` | 2 committed 4-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (flash-minimal-text-t07-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-text-t03-4of5` | 2 committed 4-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (flash-high-text-t03-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-image-3of5` | 2 committed 3-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (flash-high-image-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-text-pro-vf-4of5` | 2 committed 4-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (flash-high-text-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-image-min-6of10` | 1 committed 6-of-10 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (image-1of10). None can be shown to be the set its verifier consumed; refused rather than guessed |
 | `pv-diag-384::verified-adv-image-baseline` | no committed pre-verifier set was found for (run=pv-diag-384, pool='image-baseline', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `pv-diag-384::verified-adv-image-baseline-medium-vf` | no committed pre-verifier set was found for (run=pv-diag-384, pool='image-baseline', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `pv-diag-384::verified-adv-image-baseline-pro-vf` | no committed pre-verifier set was found for (run=pv-diag-384, pool='image-baseline', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `pv-diag-384::verified-adv-text-baseline` | no committed pre-verifier set was found for (run=pv-diag-384, pool='text-baseline', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `pv-diag-384::verified-adv-text-baseline-medium-vf` | no committed pre-verifier set was found for (run=pv-diag-384, pool='text-baseline', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `pv-diag-384::verified-adv-text-baseline-pro-vf` | no committed pre-verifier set was found for (run=pv-diag-384, pool='text-baseline', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
-| `pv-diag-384::verified-adv-pro-text-medium-vf-3of5` | 2 committed 3-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (pro-high-text-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
-| `pv-diag-384::verified-adv-pro-image-pro-vf-3of5` | 2 committed 3-of-5 consensus set(s) sit under the run tree, which serves 41 distinct pool/geometry lineages, and none carries this cell's tokens (pro-high-image-1of5). None can be shown to be the set its verifier consumed; refused rather than guessed |
 | `pv-diag-384::verified-adv-pro-text-baseline` | no committed pre-verifier set was found for (run=pv-diag-384, pool='pro-medium-text-baseline', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `pv-diag-384::verified-adv-pro-text-baseline-medium-vf` | no committed pre-verifier set was found for (run=pv-diag-384, pool='pro-medium-text-baseline', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
 | `pv-diag-384::verified-adv-pro-text-baseline-pro-vf` | no committed pre-verifier set was found for (run=pv-diag-384, pool='pro-medium-text-baseline', N=1, k=1): the registry holds no consensus sibling, no consensus GeoJSON names that threshold under the pool or run tree, and the run holds no vote >= 1 union over N passes |
@@ -185,8 +172,8 @@ stands:
 |---|---:|---:|---|
 | `already-registered` | 9 | 9 | Both sides are registered conditions, so both are already in `conditions.csv`. No scoring needed. |
 | `ready` | 20 | 20 | Once the emitted job writes its score. |
-| `ready-after-materialise` | 43 | 0 | The vote shell has to be filtered out of the committed union first, and no job is emitted for that yet. |
-| `blocked` | 100 | 0 | No twin located. |
+| `ready-after-materialise` | 57 | 0 | The vote shell has to be filtered out of the committed union first, and no job is emitted for that yet. |
+| `blocked` | 86 | 0 | No twin located. |
 
 So the ceiling after a clean run of `verifier-pairing-commands.sh` is **29 computed, 143 pending**.
 

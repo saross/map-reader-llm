@@ -416,7 +416,11 @@ COLUMN_EXTENSIONS: dict[str, ColumnExtension] = {
         _ext("unverified_stratum_basis", "anti-confabulation",
              "Whether the twin's stratum was derived from its own cell or from the recipe."),
         _ext("pairing_basis", "anti-confabulation",
-             "Which rule located the pre-verifier twin: registered, consensus-file, union."),
+             "Which rule located the pre-verifier twin: registered, consensus-file, union, "
+             "crop-manifest."),
+        _ext("crop_manifest_path", "anti-confabulation",
+             "The candidate manifest of the cell's own proposer pool, when the twin is the "
+             "vote shell of the universe its verifier cropped (pairing_basis crop-manifest)."),
         _ext("unverified_condition_id", "§ 7 (registry ids)",
              "The registered pre-verifier cell, where one already exists."),
         _ext("unverified_eval_path", "anti-confabulation",
