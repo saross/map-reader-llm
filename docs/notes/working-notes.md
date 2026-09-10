@@ -33325,3 +33325,206 @@ verifier seat; the 3.8-verifier cell is this board's rank 3, also
 Tier 1); **Obs 435** (the stride/geometry plateau on grid-common —
 the fallback frame this Obs's § (a) explains why the board did not
 adopt as primary).
+
+## Observation 464: The GS Era-2 board's G1 "instrument drift" was a stale label-keyed evaluation cache — the archived Era-2 PV board reproduces 44/44 from the inputs it actually scored (Session 152, 2026-09-10)
+
+**The finding.** **Obs 463** recorded gate G1 of the GS Era-2 verified
+board (`planning/gs-era2-verified-board-2026-09-08.md` § 6) as a
+marginal FAIL and read it as instrument drift in the retired builder:
+rebuilding the archived 44-cell per-architecture Era-2 PV board
+(`archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json`,
+git `005e6c71`) from its archived inputs with
+`scripts/build_tiered_leaderboard.py` reproduced 43 of 44 cells; one
+image PV cell, `pv-high-image-t0.3-n5`, moved F1@20 **0.7460 → 0.7475**;
+one of 946 pairs (`pv-high-image-t0.3-n10` vs `pv-high-image-t0.3-n5`)
+crossed BH q = 0.05 (adjusted p **0.045675 → 0.059498**, raw 0.0253 →
+0.0339); and Tiers 5–6 re-cut 6 + 4 → 9 + 1 cells. Session 152's
+scheduled first act bisected it (`scripts/g1_drift_bisect_rescore.py`,
+sapphire; record: the `bisect` block of `g1-regression.json` and the
+sidecar `g1-bisect-rescore.json`, commit `817de06a0`). **The retired
+builder had not drifted at all. The archived board's score for that
+cell came from a file its own archived input no longer is.**
+
+The archived board's cache entry for the cell
+(`…/pv/.cache/evaluations/pv-high-image-t0-3-n5/t1_20m.json`) records
+`n_detections` **372** and F1 **0.746**. It was written on 2026-04-25
+(`f8d755790`, 06:30:05 +0000) from the 372-feature WGS 84 blob
+`456dd9bf` (committed `bd24293d4`, 2026-04-19) and untracked the same
+day (`94c759183`). Commit `d6cdb648b` (**2026-05-06 17:34:52 +0800**)
+re-materialised the cell to **373** features in EPSG:32635 after the
+Tier-2/3 gap recovery — its message records "`-> 373 features`" —
+**seventy seconds after the archived board's own build timestamp**
+(17:33:42 +0800). The builder's evaluation cache is keyed by label,
+threshold, and buffer only, never by input content
+(`build_tiered_leaderboard._cache_path_eval`, lines 647–649), so the
+May build served the April entry unchanged. `d6cdb648b`'s own "zero
+tier flips" claim was that stale entry talking.
+
+There is **no evaluator drift on this input**. Today's evaluator run
+through the retired builder's own worker (GT `mounds-reference.geojson`,
+the 487-tile `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`
+the archived metadata records, buffers 20/30/40/50/100 m, bootstrap
+1,000, seed 42) reproduces every archived number to four decimals from
+the blob the board actually scored:
+
+| Blob | Features / CRS | F1@20 | P / R @20 | 30 / 40 / 50 / 100 m | tile MCC |
+|---|---|---:|---|---|---:|
+| `456dd9bf` (what the board scored) | 372, WGS 84, no `crs` member | **0.7460** | 0.8091 / 0.6920 | 0.8253 / 0.8401 / 0.8476 / 0.8575 | 0.8049 |
+| `9d65ac84` (in `archive/` today) | 373, EPSG:32635 | **0.7475** | 0.8097 / 0.6943 | 0.8267 / 0.8416 / 0.8490 / 0.8589 | 0.8049 |
+
+The 372-feature row matches the archived cache exactly at every buffer
+and in the tile confusion matrix (tp 187, tn 251, fp 7, fn 42), despite
+**15 commits** touching the evaluator chain (`evaluate_detections.py`,
+`lib_advanced_metrics.py`, `lib_detection_paths.py`,
+`build_tiered_leaderboard.py`) between `005e6c71` and HEAD; the ground
+truth and both bounds blobs are byte-identical at both ends. The whole
++0.0015 is **one feature**: a 5-of-5 burial mound on tile
+`K-35-062-2_Rakovski_x2688_y0` (EPSG:32635 327944.8, 4687638.87;
+nearest old feature 750.2 m) that is a true positive — recall 0.6920 →
+0.6943, +1 of 435; tile MCC unchanged, the tile already being positive.
+The other three cells re-materialised by `d6cdb648b` changed **CRS
+representation only** (414, 410, and 411 features before and after), so
+their equally stale cache entries were numerically right by coincidence.
+
+The **confirmatory rebuild** closes it (run at HEAD `817de06a0`,
+2026-09-10T05:32:16Z, sapphire; landed in `f331c69ef`;
+`g1-confirmatory-rebuild.json` and `g1-confirmatory-rebuild-tiers_20m.json`):
+the retired builder on the archived inputs with that one blob
+substituted reproduces the archived board **exactly** — **44/44 cells**
+(`cells_moved` empty), **946/946 pairs** (largest p-value difference
+**0.0**, zero significance flips), tier sizes [8, 11, 3, 12, 6, 4] on
+both sides, identical member for member. **G1 passes from the inputs
+the archived board actually scored.** The gate's recorded verdict now
+reads "FAIL as specified … PASS from the inputs actually scored"; the
+FAIL as specified stands, because the archived inputs are not, for one
+cell of 44, the inputs the archived board scored. Publication under the
+card's § 6 rule ("nothing published unless all gates pass") remains the
+PI's ruling. This entry also corrects a date error carried in **Obs
+463**'s sources: `005e6c71` is dated **2026-05-06** (17:26:29 +0800),
+not 2026-08-20 — that is `b69d8af4b`, the archive move ("retire the
+legacy `results/leaderboard` family", 2026-08-20 18:27:21 +1000).
+
+**Why this matters.** Three lessons, in ascending order of reach.
+(1) **A wrong-source cache is the `feedback_feature_count_crosscheck`
+class**, and the check that would have caught it is a one-line
+comparison the retired builder never ran: cache `n_detections` 372 ≠
+the input file's 373 features. Any cache keyed by label alone is a
+correctness hazard the moment its inputs can be re-materialised
+underneath it; the invalidation key must include an input content hash.
+The seventy-second margin here is the sharpest possible illustration —
+the board and the input that invalidates it were committed in the same
+minute, and the board has carried a wrong cell for four months.
+(2) **A regression gate's premise must be checked before its failure is
+interpreted.** G1 asserts "the archived inputs are the inputs the
+archived board scored". That premise was false for one cell, and every
+downstream reading — instrument drift, a defect in the retired builder,
+a caveat on the new board — followed from not testing it. The
+diagnostic move that resolved it (score both candidate inputs under
+today's evaluator and see which reproduces the archive) generalises to
+any archived-artefact regression: **bisect input versus instrument
+before attributing a delta to either**.
+(3) The **+0.0015, the BH flip, and the Tier 5–6 re-cut are still real
+numbers** — they are what the archived board would have shown on
+2026-05-06 had its cache been invalidated. The archived board is
+therefore mildly wrong as a historical artefact, and correct as a
+reproduction target; those are different claims, and the new GS Era-2
+board depends on neither (it is scored and tiered by the register-driven
+canonical chain, whose reproduction gate is G2).
+
+**Caveats.** The bisect establishes no evaluator drift **on this input**
+— 15 evaluator-chain commits changing nothing here is not a general
+no-drift finding for the retired builder, and no other archived board
+was tested. The confirmatory rebuild is a single-substitution
+reproduction: it shows the archived board is reproducible from what it
+scored, not that its other 43 cache entries were themselves fresh
+(three of them demonstrably were not, and were saved only by CRS-only
+re-materialisation). Two reproduction gotchas found on the way, both
+worth pinning explicitly when rebuilding any archived board with this
+builder: `build_tiered_leaderboard.DEFAULT_BOUNDS` (lines 117–119) is
+the **340-tile Era-1** `inputs/vectors/bounds/full_evaluation_bounds.geojson`,
+whereas the archived board used the **487-tile**
+`inputs/vectors/bounds/384/full_evaluation_bounds.geojson` — the
+bisect record names the unused default as
+`builder_default_bounds_unused` precisely so this cannot be repeated;
+and the first G1 attempt ran at the builder's default `--top-n 20` and
+rebuilt only 26 cells (exact on those), needing a rerun at `--top-n 0`
+as the archived metadata records. Neither the publication ruling nor
+any amendment to the archived board is made here.
+
+**Findable later**: G1 stale cache not instrument drift, wrong-source
+evaluation cache, label-keyed cache invalidation, `_cache_path_eval`
+label threshold buffer only, cache n_detections 372 vs 373 features,
+pv-high-image-t0.3-n5 0.7460 to 0.7475, blob 456dd9bf 372 features WGS
+84, blob 9d65ac84 373 features EPSG:32635, d6cdb648b seventy seconds
+after board build, 17:33:42 vs 17:34:52 +0800, f8d755790 April cache
+entry, 94c759183 cache untracked, bd24293d4 372-feature commit,
+g1_drift_bisect_rescore.py, g1-bisect-rescore.json,
+g1-confirmatory-rebuild.json, 44/44 cells 946/946 pairs max dp 0.0,
+tier sizes 8 11 3 12 6 4 identical, 817de06a0 bisect, f331c69ef
+confirmatory rebuild, BH adjusted p 0.045675 to 0.059498, one extra
+true positive K-35-062-2_Rakovski_x2688_y0, 327944.8 4687638.87 nearest
+750.2 m, recall 0.6920 to 0.6943 plus 1 of 435, 15 evaluator-chain
+commits no drift, 414 410 411 CRS-only re-materialisation,
+feedback_feature_count_crosscheck, check the gate's premise before
+reading its failure, DEFAULT_BOUNDS 340-tile Era-1 vs 487-tile 384
+bounds, --top-n 0 not 20, 005e6c71 is 2026-05-06 not 2026-08-20,
+b69d8af4b archive move.
+
+Sources: `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g1-regression.json`
+(read 2026-09-10: the top-level gate block — `archived_board`,
+`archived_git_commit` `005e6c71`, `rebuilt_git_commit` `be01df377`,
+44/44 cells, `max_abs_delta_f1_20` 0.0015, 946 pairs,
+`n_pairs_significance_differs` 1, `tier_sizes_archived` [8,11,3,12,6,4]
+vs `tier_sizes_rebuilt` [8,11,3,12,9,1], the `--top-n 20` first-attempt
+note, and the verdict string; `detail.cells_moved` and
+`detail.pair_significance_flipped` with the 0.045675 → 0.059498
+adjusted-p pair; and the whole `bisect` block — method, both blobs'
+provenance, `feature_added_by_re_materialisation`, `timeline`,
+`why_only_one_cell_moved`, `evaluator_drift`, `mechanism`,
+`date_correction`, and `reading`); `g1-bisect-rescore.json` (read
+2026-09-10: `bounds`, `builder_default_bounds_unused`, buffers,
+bootstrap 1000, seed 42, both blobs' full metric sets including tile
+MCC 0.8049 and confusion tp 187 / tn 251 / fp 7 / fn 42, and the
+single-element `new_minus_old` list — x 327944.8017132112, y
+4687638.874621531, `nearest_old_m` 750.1898825016059, `vote_count` 5,
+`subtype` burial_mound, source tile `K-35-062-2_Rakovski_x2688_y0.png`);
+`g1-confirmatory-rebuild.json` (read 2026-09-10: the `what` string
+naming the one substitution and `--top-n 0`, `n_cells_common` 44,
+empty `cells_moved`, `n_pairs_shared` 946, `max_abs_delta_p_value` 0.0,
+`n_pairs_significance_differs` 0, both tier-size arrays,
+`tiers_identical` true, `rebuilt_git_commit` `817de06a0`,
+`rebuilt_timestamp` 2026-09-10T05:32:16Z, and the verdict);
+`archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/.cache/evaluations/pv-high-image-t0-3-n5/t1_20m.json`
+(read 2026-09-10: `f1` 0.746, `precision` 0.8091, `recall` 0.692,
+`n_detections` 372, `coverage.n_tiles` 487, and the
+`__tile_classification__` confusion and MCC 0.8049);
+`scripts/build_tiered_leaderboard.py` (read 2026-09-10: lines 647–649,
+`_cache_path_eval(cache_dir, label, threshold, buffer_m)` returning
+`cache_dir / "evaluations" / slugify(label) / f"t{threshold}_{buffer_m}m.json"`,
+and lines 117–119, `DEFAULT_BOUNDS` = `inputs/vectors/bounds/full_evaluation_bounds.geojson`);
+feature counts of `inputs/vectors/bounds/full_evaluation_bounds.geojson`
+(340) and `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`
+(487) (counted 2026-09-10 from the files);
+`git log -1` on `005e6c715` (2026-05-06 17:26:29 +0800), `d6cdb648b`
+(2026-05-06 17:34:52 +0800, whose body lists "`-> 373 features`" for
+this cell and 414 / 410 / 411 for the other three), `f8d755790`
+(2026-04-25 06:30:05 +0000), `94c759183` (2026-04-25 14:43:02 +0000),
+`bd24293d4` (2026-04-19), `b69d8af4b` (2026-08-20 18:27:21 +1000),
+`817de06a0` (2026-09-10 15:26:45 +1000), and `f331c69ef` (2026-09-10
+15:36:07 +1000) (read 2026-09-10: dates, subjects, and the two S152
+commits' file lists);
+`planning/gs-era2-verified-board-2026-09-08.md` (read 2026-09-10: the
+"Last revised" banner, § 6's gate list including G1's wording and the
+`feedback_feature_count_crosscheck` stop state, and the changelog entry
+"### 2026-09-10 (later) — G1 bisected: a stale label-keyed cache, not
+instrument drift" in full — its two-blob table, Mechanism, "What did
+NOT drift", "Reading for the § 6 ruling", "Confirmatory rebuild", and
+"Date correction" paragraphs).
+Related: **Obs 463** (the S151-d board Obs whose G1 reading this entry
+corrects — the FAIL is a stale cache, not builder drift, and `005e6c71`
+is 2026-05-06 not 2026-08-20; the board's own tiering is untouched);
+**Obs 461** (a stage's `sweep_2d.json` older than its own
+`probabilities.json` — the same stale-derived-artefact family, one
+layer down: there the derived artefact decoupled from its sibling
+inputs, here a cache decoupled from the input it was keyed to, and both
+are visible only to a cross-artefact count check).
