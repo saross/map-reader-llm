@@ -1142,3 +1142,26 @@ steps and the PR merge.
   side by side is what exposed that the old image sweep predated its own
   probabilities; a "refresh and move on" would have recorded a +0.41
   recovery effect that was really a partial-verification artefact.
+
+## S151-d candidates (pending review, 2026-09-10, drafted at handoff) — silence never discards
+
+S150 and S151 above are still pending.
+
+- **C1 — A ruling on the rule, not the numbers.** Asked for a principled
+  frame decision, Shawn accepted it on discipline grounds ("maintaining
+  discipline is important for a large, complex project like this") while
+  the numerical differences sat inside the instrument's resolution.
+  Candidate: when the evidence cannot decide, offer the rule with its
+  measured cost and let him rule on the rule.
+- **C2 — Two questions found what the gates did not.** "Why are there two
+  487-tile frames?" exposed that my "no polygon shared" was a faulty
+  comparison; "what are we losing from the exclusion of the sweep-optimal
+  cells?" exposed that the board compares 3.7 in-sample optima with
+  Gemini 3 committed points. Candidate: his questions about exclusions
+  and provenance are the audit the build lacks; invite them before a
+  signature, not after.
+- **C3 — Scheduling under low context.** "We're low on context here,
+  please schedule the run for the next session's start" turned three
+  open items into an ordered start-of-session list rather than
+  attempting them in a tired context. Candidate: keep the scheduled-start
+  block as a standing beacon device.
