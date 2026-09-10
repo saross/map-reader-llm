@@ -119,12 +119,16 @@ the text-B GS anchor the image-B findings cite, 0.8961, is the grid cell
 `grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10` and joins under the
 rule below.)
 
-**The incumbents (by rule):** every registered condition with
-`aggregation: verified` whose run is a 4-map-GS, 384 px, curator-reference
-run at N ≥ 5 dispatched on the Era-2 tiling or the B tiling — the members
-of the archived per-architecture Era-2 PV board (44 conditions at
-`ef3ec4fe`) plus the B-geometry verified cells of the grid and stride
-campaigns (`grid-2026-08-18::g384-ov192-*-verified-*`, the stride B cells).
+**The incumbents (by rule; body revised 2026-09-10 to what was built):**
+every registered condition with `aggregation: verified` whose run is a
+4-map-GS, 384 px, curator-reference run, whose proposer pool has K ≥ 5
+passes, dispatched on the Era-2 tiling or the B tiling, plus the
+B-geometry verified cells of the grid campaign. The archived
+per-architecture Era-2 PV board (44 cells at `ef3ec4fe`) is NOT the
+incumbent set: only 4 of its 44 cells match a registered condition, the
+rest being sweep-optimal "pv-materialised" cells (the in-sample optima
+E56 / E83 retired), so it stays archived and its cells stay off this
+board (changelog, 2026-09-10, deviation 1).
 Under the frame rule of § 2 the 11 verified cells of the other grid and
 stride geometries (512 px; 384 px at 12.5 % and 33 %; 256 px) are
 excluded — their tilings fall short of the Era-2 frame by up to 38 km² —
@@ -153,14 +157,18 @@ existing rules.
 
 ## 5. Instrument
 
-`scripts/build_tiered_leaderboard.py --spec …`: threshold sweep per cell
-at the four buffers, F1-led selection at 20 m, round-robin tile-level
-paired permutation tests (10,000, seed 42), Benjamini–Hochberg q = 0.05,
-greedy-clique tiers with the Tier-1 membership reported as the MCB
-admissible set (E83 / D20), bootstrap CIs per buffer, MCC alongside.
-Identical to the archived Era-2 PV board's instrument
-(`archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/`,
-`ef3ec4fe`), so the regression gate below is meaningful.
+(Body revised 2026-09-10 to what was built.) Per cell:
+`scripts/evaluate_detections.py` with the member's own committed recipe
+and only the bounds swapped to the board frame (14 buffers, bootstrap
+10,000, seed 42, MCC). Board: the project's canonical register-driven
+chain, `scripts/era1_leaderboard_tiering.py` — round-robin tile-swap
+micro-F1 permutation (10,000, seed 42), Benjamini–Hochberg q = 0.05,
+greedy-clique tiers at 20 m — over the analysis row's
+`conditions_compared`, with Tier-1 membership also reported as the Hsu
+MCB admissible set from `scripts/selection_aware_intervals.py --board`
+(E83 / D20). The retired builder (`build_tiered_leaderboard.py`) is used
+only for gate G1, rebuilding the archived board from its archived
+inputs (changelog, 2026-09-10, deviation 2).
 
 ## 6. Gates (nothing published unless all pass)
 
@@ -189,16 +197,23 @@ Identical to the archived Era-2 PV board's instrument
 
 ## 7. Deliverables
 
-- `results/leaderboard/era2/gs-era2-verified-board-2026-09/` —
-  `board_20m.json`, `board-20m.md` (tiers, CIs, MCC, the significance
-  figure), `cells/<id>/evaluation.json` for every one-frame re-score,
-  `spec.yaml` copied in, `provenance.json` (inputs, commit, gates passed).
-  **Git-tracked**, unlike its predecessors.
-- `planning/leaderboard-specs/gs-era2-verified-board.yaml`; inventory rows.
-- Register: `verifier_passes` / conditions already exist for every member;
-  one analysis row `gs-era2-verified-board-2026-09` (type `leaderboard`,
-  post-hoc, H-refs H2 and H1 for the modality cells, `paper_section`
-  Results § R4 / R7.3), PI-signed; manifests regenerated;
+- `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/` —
+  `tiering_20m.{json,md}` (ranking, tiers, pairwise), `mcb/` (the MCB
+  admissible sets), `cells/<id>/evaluation.json` for every one-frame
+  re-score, `g2/` (the reproductions), `membership.{json,txt}`,
+  `score-commands.sh`, `gates.json`, `g1-regression.json`,
+  `frame-deltas.md`, `provenance.json`, and `README.md` (the board
+  table). **Git-tracked**, unlike its predecessors.
+- `planning/leaderboard-specs/gs-era2-regression-archived-board-2026-09-10.yaml`
+  (the G1 spec); no inventory rows were needed — the canonical chain reads
+  the register, not `planning/condition-inventory.json`.
+- Register (body revised 2026-09-10): one `<label>-era2b` condition row
+  per member — a copy of the member's row whose `eval_path` is the
+  board-frame evaluation and whose `scope_override` names `era2-b-487`
+  (the r2 chain's pattern; deviation 3) — and one analysis row
+  `gs-era2-verified-board-2026-09-10` (type `leaderboard`, post-hoc,
+  H-refs H2 and H1, `paper_section` Results), to be PI-signed; the G2
+  reproduction evaluations waived as gate artefacts; manifests and the
   hypothesis-outcome table regenerated.
 - An Obs (obs-writer) once the board is read: whether the 3.7 stack's GS
   gain is a tier move on the tiered instrument (the campaigns' pairwise

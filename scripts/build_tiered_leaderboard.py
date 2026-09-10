@@ -904,6 +904,7 @@ def select_best_thresholds(
     top_n: int | None = None,
     metric: str = METRIC_F1,
     undefined_metric_out: list[str] | None = None,
+    dropped_by_top_n_out: list[dict] | None = None,
 ) -> list[SelectedCondition]:
     """Select the best consensus threshold per condition.
 
@@ -930,6 +931,14 @@ def select_best_thresholds(
             only — see Returns). Supplied as an out-parameter so the
             existing single-list return type, and every caller of it,
             stay unchanged.
+        dropped_by_top_n_out: Optional list that receives one record
+            (``label``, ``condition_id``, ``best_threshold``,
+            ``f1_primary``) per condition the top-N filter removed, so
+            a caller can write them into the board's metadata. The
+            drop is also logged at WARNING with every label. Until
+            2026-09-10 the filter logged only the counts at INFO, and a
+            regression rebuild of a 44-cell board silently produced 26
+            (S151-d, the GS Era-2 board card's gate G1).
 
     Returns:
         List of SelectedCondition, sorted by chosen metric descending
@@ -1054,11 +1063,30 @@ def select_best_thresholds(
                 included_labels.add(c.label)
 
         before = len(selected)
+        dropped = [c for c in selected if c.label not in included_labels]
         selected = [c for c in selected if c.label in included_labels]
         logger.info(
             "Top-%d filter: %d → %d conditions (union across %d buffers)",
             top_n, before, len(selected), len(all_buffers),
         )
+        if dropped:
+            logger.warning(
+                "Top-%d filter DROPPED %d condition(s) from the tiered board "
+                "(their full sweeps remain in leaderboard_all_evaluations.json; "
+                "pass --top-n 0 to tier every condition): %s",
+                top_n, len(dropped),
+                ", ".join(
+                    f"{c.label} (F1@{primary_buffer}m="
+                    f"{c.evaluations.get(primary_buffer, {}).get('f1', float('nan')):.4f})"
+                    for c in dropped
+                ),
+            )
+            if dropped_by_top_n_out is not None:
+                dropped_by_top_n_out.extend({
+                    "label": c.label, "condition_id": c.condition_id,
+                    "best_threshold": c.best_threshold,
+                    "f1_primary": c.evaluations.get(primary_buffer, {}).get("f1"),
+                } for c in dropped)
     elif top_n is None or top_n == 0:
         logger.info(
             "Top-N filter disabled (top_n=%s); including all %d conditions",
@@ -2220,14 +2248,20 @@ def main() -> int:
     # dropped inside select_best_thresholds; collect their labels so
     # the Markdown can name them rather than silently omitting them.
     mcc_undefined: list[str] = []
+    dropped_by_top_n: list[dict] = []
     selected = select_best_thresholds(
         conditions, all_evaluations,
         primary_buffer=args.threshold_buffer,
         top_n=args.top_n,
         metric=args.metric,
         undefined_metric_out=mcc_undefined,
+        dropped_by_top_n_out=dropped_by_top_n,
     )
     metadata["mcc_undefined_conditions"] = mcc_undefined
+    # Recorded, not silent: the cells the top-N filter kept off the tiered
+    # board, with their F1 at the threshold buffer (S151-d). Their full
+    # sweeps are in leaderboard_all_evaluations.json regardless.
+    metadata["dropped_by_top_n"] = dropped_by_top_n
 
     if not selected:
         logger.error("No conditions survived threshold selection")
