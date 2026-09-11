@@ -1200,3 +1200,30 @@ analysis-row signature) left where the brief put them.
   pre-agreed trigger was not met. Candidate: a costing request is not a
   proposal request; keep the recommendation out unless asked, and put the
   trigger's status next to the price.
+
+## S152-b candidates (pending review, 2026-09-11, drafted at handoff; PI present for this half) — silence never discards
+
+S150, S151, S151-d and S152 (autonomous half) above are still pending.
+
+- **C1 — In-the-moment reaction, relayed.** On the claims-with-anchors
+  inventory of §§ R7.2–R7.3 (numbered claims, each with its analysis id
+  or Obs, plus a gaps list) after a verbatim-paragraph review: "This is a
+  much more useful presentation." Candidate: the review unit is the
+  claims list, not the prose.
+- **C2 — The outline-first reminder, and its consequence stated plainly.**
+  "I often draft papers from an outline … I'm afraid you may have to
+  re-draft sections of the paper after we've done that." Candidate: the
+  Results draft was written as prose against a preference recorded in
+  June; the cost of that is now explicit and accepted.
+- **C3 — "Clear up rather than defer."** Asked what disambiguating
+  fourteen blocked pairs would buy, Shawn ruled to do it and generalised:
+  "clearing up problems rather than tolerating or deferring them is
+  usually preferable (depending on cost-benefit tradeoffs, which you and
+  I can decide together)". Candidate: my options had led with "accept as
+  disclosed"; the rule inverts that default.
+- **C4 — "Is there anything you would like to do while you wait?"**
+  Offered idle time at session close, I used it to diagnose the
+  mechanism behind the nine mis-materialised cells (Era-3 optima boarded
+  on the Era-2 frame), which closed the question my own reflection had
+  listed as unpursued. Candidate: an invitation to use idle time on the
+  session's open question is productive; he can offer it deliberately.

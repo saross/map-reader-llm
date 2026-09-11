@@ -2411,3 +2411,20 @@ batching options would have produced fewer rulings and more re-reads.
 its options, commit its outcome immediately, then move on; keep the
 queue visible at the top so he can re-order it (he did, putting the
 pipeline before writing).
+
+## claude-obs 107 — 2026-09-11 (Session 152): An invitation to use idle time closed the reflection's open question
+
+**Pattern.** With an agent still running and the handoff waiting on it,
+Shawn asked whether there was anything *I* wanted to do. The reflection
+I had just written named one unpursued question (why nine cells were
+mis-materialised); ten minutes of read-only checks found the mechanism
+exactly (the Era-3 frame's optima applied on the Era-2 frame), recorded
+in the rows, the card and Obs 466.
+
+**Lesson.** The reflection's "question not pursued" is a ready-made
+answer to "what would you do with spare time"; the two artefacts pair.
+
+**How to apply.** When idle time appears at session end, take the
+reflection's unpursued question first; when writing the reflection,
+phrase that question so it can be started cold.
+
