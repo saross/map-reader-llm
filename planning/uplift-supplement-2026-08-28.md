@@ -1,10 +1,14 @@
 # Uplift supplement + corpus dataset: consensus and verifier, quantified
 
-> **Last revised**: 2026-09-11 (the 70 "no committed pre-verifier set"
-> pairs surveyed and 43 closed by four new absence-refusal rules —
-> blocked 86 → 43, uplift computed 85 → 128 on both metrics, every one
-> of the 43 positive; the 27 that stay are first-N ladder rungs whose
-> universe was never committed. Prior: 2026-09-10, the 14 ambiguous verifier-pairing twins
+> **Last revised**: 2026-09-11 (the 16 pairs refused for recording no vote
+> threshold closed by two new derivation rules — blocked 43 → 27, uplift
+> computed 129 → 145 on F1 and 129 → 144 on MCC; 15 of the 16 positive on
+> both metrics, one negative on F1 and one MCC undefined, both flagged.
+> Prior, same day: the 70 "no committed pre-verifier set" pairs surveyed
+> and 43 closed by four new absence-refusal rules — blocked 86 → 43,
+> uplift computed 85 → 128 on both metrics, every one of the 43 positive;
+> the 27 that stay are first-N ladder rungs whose universe was never
+> committed. Prior: 2026-09-10, the 14 ambiguous verifier-pairing twins
 > resolved by the new `crop-manifest` rule — blocked 100 → 86, uplift
 > computed 71 → 85 on both metrics; earlier the same day: the board-frame
 > exclusion rule implemented and the supplement rebuilt; prior:
@@ -82,6 +86,160 @@ promoted on citation as usual.
 **Registered and signed 2026-09-10/11 (S152)**: analysis rows `uplift-supplement-flatten` (diagnostic; 441 conditions; `conditions.csv`) and `verifier-uplift-pairing` (comparison, H2; the 85 verified cells with a computed uplift; `verifier-uplift.csv` and the MCC companion), approved as drafted by the PI (ruling 2(v)); signature notes on the rows.
 
 ## Changelog
+
+### 2026-09-11 (later) — The 16 "no vote threshold" cells closed
+
+**Trigger**: PI, 2026-09-11 — unblock the 16 pairs refused with "the verified
+cell records no vote threshold, so there is no 'same vote threshold'
+pre-verifier set to pair it with". The entry below (the 43 absence-refusal
+pairs, earlier the same day) left them as the second largest blocked class,
+and ruling 2(iii) had accepted them as disclosed; this ruling supersedes that
+for these 16. The other 27 blocked rows — the first-N ladder rungs of
+`stride-55map-2026-08-25` and `gemini37-55map-2026-08-29` — stay blocked under
+the ruling recorded in that entry, untouched.
+
+**Why they were answerable.** The refusal fired at
+`scripts/build_verifier_pairing_worklist.py` BEFORE any pairing rule ran, on a
+null `vote_threshold` alone. But a null is written for two different reasons,
+and in both the shell IS determined:
+
+- **The pool ran one proposer pass.** There were no votes to record, so the
+  column is null and the shell at `k = 1` is the whole pass. The registry
+  writes `k = 1, N = 1` explicitly for the pv-diag-384 baselines of exactly
+  this shape (the `single-pass-manifest` rows above), so the derivation only
+  supplies what those rows already carry.
+- **The pool is a pre-aggregated consensus set** whose NAME carries its shell
+  (`flash-high-text-consensus-16of30`, `text-consensus-5of5`,
+  `image-t0.7-n30-18of30`). The verifier consumed that shell; the registry
+  simply never copied `k` out of the pool name.
+
+**Two rules**, both firing ONLY on the null-threshold refusal and both feeding
+the existing cascade rather than bypassing it:
+
+| rule | rows | the attribution it reads |
+|---|---:|---|
+| `_derive_vote_shell` | 16 | the pool name's own `<k>of<N>` shell, else — at `n_passes = 1` — the vacuous `k = 1` shell of a single pass |
+| `_find_pool_named_condition` | 5 | the pool is the LABEL of a registered condition in the run the row's `source_run` names: that condition IS the pre-verifier set, already scored |
+
+Each refuses rather than approximates. The pool name is read FIRST, because a
+pre-aggregated pool also registers `n_passes = 1` and the vacuous `k = 1` shell
+would mispair it; only `k >= 2` counts as a named shell, because the corpus
+names a pool of PASSES for its vote ≥ 1 shell (`flash-high-text-1of5`) — the
+convention `_find_pool_crop_manifest` already relies on. `k > N` is refused.
+`_find_pool_named_condition` refuses a candidate that is itself a verified cell
+(pairing two verified cells measures no verifier) or that carries no
+evaluation. Ranked first, so nothing is materialised that the corpus already
+scored. A `<lineage>-consensus-<k>of<N>` pool additionally offers the
+de-infixed form as a lineage token, because its committed set is named without
+the infix; the token is offered only on this derivation, so no already-resolved
+row's search changes. The `single-pass-manifest` rule gains a run-level
+manifest fallback (`candidates/candidate_manifest.json`, no pool-named
+directory) accepted only in a single-lineage run and only when the manifest's
+`source_geojson` is readable — with a second lineage the run's one manifest
+could belong to either, and "it was the only file" is not evidence.
+
+| Quantity | Before | After |
+|---|---:|---:|
+| Blocked pairs | 43 | **27** |
+| `already-registered` | 9 | 14 |
+| `ready` | 25 | 27 |
+| `ready-after-materialise` | 95 | 104 |
+| Uplift computed (F1) | 129 | **145** |
+| Uplift computed (MCC) | 129 | **144** |
+| Pairing worklist rows | 172 | 172 |
+
+**The 16, by twin** (verified − twin at the cell's own headline buffer, 20 m,
+and reference). Rows sharing a twin share its value, which is the parameter
+control an uplift number is supposed to isolate: all eight `proposer-verifier-384`
+cells re-verify ONE shared 572-candidate proposer pass and read 0.4032, and the
+two 16-of-30 cells score the same 729-feature committed consensus set on the
+same recipe and read 0.6770.
+
+| cell | twin | verified | twin | uplift F1 | uplift MCC |
+|---|---|---:|---:|---:|---:|
+| `pv-diag-256::verified-adv-text-consensus-5of5` | `pv-diag-256::text-consensus-5of5` | 0.8558 | 0.4599 | +0.3959 | +0.5921 |
+| `verifier-robustness::verified-384-16of30-t0-3-n5-opmax` | `flash-high-text-16of30.geojson` | 0.8951 | 0.6770 | +0.2181 | +0.3966 |
+| `pv-diag-384::verified-adv-text-consensus-16of30` | `flash-high-text-16of30.geojson` | 0.8902 | 0.6770 | +0.2132 | +0.3928 |
+| `retest-phase2b::verified-adv-text-t0.0` | `retest-phase2b::text-t0.0` | 0.7703 | 0.6055 | +0.1648 | undefined |
+| `proposer-verifier-384::verified-checklist-image` | pv-384 proposer pass (572) | 0.5309 | 0.4032 | +0.1277 | +0.3575 |
+| `proposer-verifier-384::verified-checklist-text` | pv-384 proposer pass (572) | 0.5214 | 0.4032 | +0.1182 | +0.2856 |
+| `proposer-verifier-384::verified-brief-image` | pv-384 proposer pass (572) | 0.5204 | 0.4032 | +0.1172 | +0.3104 |
+| `proposer-verifier-384::verified-brief-text` | pv-384 proposer pass (572) | 0.5142 | 0.4032 | +0.1110 | +0.3655 |
+| `proposer-verifier-384::verified-cascade-adversarial-checklist` | pv-384 proposer pass (572) | 0.5036 | 0.4032 | +0.1004 | +0.4015 |
+| `proposer-verifier-384::verified-cascade-checklist-adversarial` | pv-384 proposer pass (572) | 0.4950 | 0.4032 | +0.0918 | +0.3823 |
+| `proposer-verifier-384::verified-adversarial-image` | pv-384 proposer pass (572) | 0.4943 | 0.4032 | +0.0911 | +0.3862 |
+| `retest-phase2b::verified-adv-image-t0.0` | `retest-phase2b::image-t0.0` | 0.6739 | 0.5862 | +0.0877 | +0.7398 |
+| `proposer-verifier-384::verified-adversarial-text` | pv-384 proposer pass (572) | 0.4708 | 0.4032 | +0.0676 | +0.4015 |
+| `retest-phase3a::verified-adv-image-t0.7-n30-18of30` | `retest-phase3a::image-t0.7-n30-18of30` | 0.7275 | 0.6909 | +0.0366 | +0.3437 |
+| `retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30` | `retest-phase3a-high::text-high-t1.0-n30-23of30` | 0.7925 | 0.7747 | +0.0178 | +0.0340 |
+| `proposer-verifier-512::verified-adversarial-text` | pv-512 proposer pass (140) | 0.1931 | 0.2297 | **−0.0366** | +0.2350 |
+
+**Two findings to flag, neither explained away.**
+
+1. **The first negative F1 uplift in the class.**
+   `proposer-verifier-512::verified-adversarial-text` loses 0.0366 F1 while
+   gaining 0.2350 MCC. Its twin is a 140-candidate single Flash pass at 512 px
+   on the Era-1 340-tile frame with precision 0.5571 and recall 0.1447 — a pass
+   that is already precise and badly under-recalling, so the verifier's 140 → 72
+   cut takes recall with it. It is also the run the register SIDELINED (S107:
+   "thin GAP-9 provenance, pool-unresolved, n = 1"), so the cell is weak
+   evidence either way. It is reported, not suppressed.
+2. **One MCC uplift is undefined, not missing.** The twin of
+   `retest-phase2b::verified-adv-text-t0.0` records
+   `tile_classification.mcc.point = null` with `n_runs_defined = 0`
+   (`results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-0/evaluation.json`):
+   sensitivity 1.0 and specificity 0.0 in all three replicates, because one
+   unverified Flash text pass at T = 0.0 fires somewhere on every tile of the
+   340 and the confusion matrix has no true negatives. MCC has a zero
+   denominator there. The pair stays `pending` on MCC — the correct refusal —
+   which is why MCC reads 144 to F1's 145.
+
+**Reading.** The consensus-input cells behave as the corpus already reads
+verifier uplift: the higher the pre-verifier operating point, the less there is
+to add. The two extremes are in this class. `pv-diag-256`'s 5-of-5 text
+consensus sits at F1 0.4599 and its verifier lifts it 0.396; the phase3a-high
+23-of-30 consensus already sits at 0.7747 and gains 0.018. Between them, the
+paper's headline verified cell `pv-diag-384::verified-adv-text-consensus-16of30`
+(F1 0.8902) is now anchored: **+0.2132 F1 and +0.3928 MCC over the 16-of-30
+consensus it verified** (0.6770 / 0.3975, 729 candidates, precision 0.5405 and
+recall 0.9057) — a verifier converting a high-recall, low-precision consensus
+into the board's leader, which is the deployment argument stated on the cell
+the paper actually cites. The eight pv-384 verifier strategies, all re-verifying
+one shared proposer pass, spread only 0.0676–0.1277 F1: at a 572-candidate
+single-pass operating point the choice of verifier instruction is worth about
+0.06 F1, an order less than having a verifier at all.
+
+**Gates**: each materialised single-pass twin's feature count equals its
+manifest's recorded universe (572 × 8, 140); the 16-of-30 twin's 729 features
+equal the `vote_count >= 16` subset of the committed
+`flash-high-text-1of30.geojson` universe (11,771 candidates), and the two cells
+that share it return identical scores; blocked dropped by exactly 16, the
+number of pairs resolved; no previously computed uplift changed on either
+metric and none was lost; no already-resolved row changed basis, path, command
+or status. Twin evaluations waived into their runs' `_ignored_evals` by
+`scripts/waive_uplift_anchor_evals.py` — 12, not 11: one twin of the previous
+batch (`pv-diag-384__pv-min-text-t0_0-n3-opmax`, landed in `5ed589fe1`) had
+never been waived. `verify_run_conditions.py` 22 pass / 19 partial / 0 fail,
+unchanged. `conditions-manifest.json` untouched: none of the new evaluations
+belongs to a registered condition.
+
+**Also fixed, same pass.** `verifier-pairing-report.md` still narrated "the
+ceiling after a clean run of `verifier-pairing-commands.sh` is 34 computed, 138
+pending" with `ready-after-materialise` 95 → 0 computable — a 2026-08-29 model
+of the pipeline that predated the materialise-then-score jobs (flagged in
+`reports/r7-gaps-deltas-2026-09-11.md` § 5.1 as generated prose needing a
+generator change). The ceiling is now counted from what the build actually
+emitted and reads 145 computed / 27 pending, matching
+`compute_verifier_uplift.py` exactly; the report carries an explicit GENERATED
+banner naming the source commit. The `shell-manifests` refusal is now
+repo-relative: it had been leaking the generating checkout's absolute path into
+the committed worklist, so the same corpus produced a different artefact from a
+worktree than from the main clone (the 27 blocked rows' reason text changes;
+nothing else).
+
+**The registered analysis row `verifier-uplift-pairing` is SIGNED and was not
+touched.** Its counts move with this work and the PI amends it; the figures for
+the amended row are in the session report.
 
 ### 2026-09-11 — The 70 "no committed pre-verifier set" pairs surveyed; 43 closed
 
@@ -338,7 +496,9 @@ commit, which is not these rows'); manifests regenerated;
 rows and 16 rows whose verified cell records no vote threshold at all, so
 there is no "same vote threshold" set to pair with. Those are not this
 rule's shape: 14 of the 86 were ambiguous attributions, and this rule
-resolves ambiguity, not absence.
+resolves ambiguity, not absence. (The 16 were closed later the same day
+by two derivation rules of their own — see the entry at the top of this
+changelog; blocked stands at 27.)
 
 ### 2026-09-10 (later) — Registration walk-through rulings 2(i)–2(iv) (S152, PI present)
 
@@ -356,6 +516,10 @@ resolves ambiguity, not absence.
   (16 with no vote threshold, and those with no committed pre-verifier
   set) are accepted as disclosed. Standing preference recorded: close a
   gap that can be closed exactly at modest cost rather than defer it.
+  **Superseded in part, 2026-09-11**: the PI ruled the 16 no-vote-threshold
+  pairs be closed too, on the same standing preference; only the 27 with no
+  committed universe remain disclosed.
+
 - **2(iv)** The board's 40 `-opmax` rows (Gemini 3 sweep optima) stay
   OUT of the supplement by design: an uplift at an in-sample argmax is
   the maximum over the sweep, an optimistically biased quantity (E56),
