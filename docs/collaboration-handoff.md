@@ -22,8 +22,9 @@ and determine who owns it before switching branches or staging files.
 
 For a new task, fetch the intended base and create a fresh topic branch. An
 admitted single-branch clone may still track its original preparation branch:
-plain `git fetch` does not necessarily refresh `origin/main`. In your own checkout,
-this explicit refspec refreshes the base without widening the saved fetch configuration:
+plain `git fetch` does not necessarily refresh `origin/main`. For Codex, run the
+following commands in the admitted clone. This explicit refspec refreshes the base
+without widening the saved fetch configuration:
 
 ```bash
 git fetch --no-tags origin refs/heads/main:refs/remotes/origin/main
