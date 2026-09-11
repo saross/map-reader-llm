@@ -1,6 +1,10 @@
 # The GS Era-2 verified board: the Gemini 3.7 and 3.8 GS cells on one frame with the incumbents
 
-> **Last revised**: 2026-09-10 (later still ×2: nine `-opmax` cells
+> **Last revised**: 2026-09-11 (`pv-high-text-t0.0-n3`: the union under it was
+> rebuilt, the sweep was never stale — the 410 was a cross-vintage join
+> artefact; the argmax (3, 0.15) holds on both vintages; off-board, not
+> repointed, the call is the PI's; a vintage guard now runs before the filter.
+> Prior: 2026-09-10 later still ×2: nine `-opmax` cells
 > re-materialised from their registered stage — the sweep was right, the
 > 2026-04-19 materialisation was wrong; re-tiered, Tier 1 / tie set / Hsu
 > admissible set all unchanged; later still: the symmetry fix built — 40
@@ -257,6 +261,82 @@ until § 9 is signed.
       79-cell board with the nine opmax cells corrected.
 
 ## Changelog
+
+### 2026-09-11 — `pv-high-text-t0.0-n3`: the union was rebuilt, the sweep was never stale
+
+**Trigger**: PI ruling 2026-09-11 ("re-sweep, re-materialise, re-score,
+report") on the one `-opmax` row the entry below could not reconcile — the
+off-board (K = 3) `pv-diag-384::pv-high-text-t0.0-n3-opmax`, where the
+registry's own filter gave 410 detections against a registered and archived
+403. The entry classed it with Obs 461: a sweep older than its inputs, its
+union re-materialised on 2026-07-30 (`f6116cba0`, `77bb342b4`).
+
+**The premise does not survive execution.** The union at `consensus_path`
+holds 1,319 features; the registered stage's `probabilities.json` holds 1,256.
+The rebuild was not an append — of the 1,256 original positions only 994 still
+hold the same point, 12 candidates are gone and 75 are new — so the index join
+(union feature *i* ↔ key `candidate_{i:05d}`) pairs 262 probabilities with the
+wrong geometry and drops 63 as unverified. **The 410 is a cross-vintage join
+artefact, not an operating point.**
+
+**The sweep reproduces exactly.** Rebuilding the April universe from the union
+blob at `09fe46a7f` and sweeping it against the stage's own probabilities with
+the stage's own tool (`scripts/sweep_f1_greedy_pv.py`, buffers 20/30/40/50 m,
+`full_evaluation_bounds`) reproduces the committed `sweep_2d.json` in **all 240
+rows**, to every digit; its 20 m argmax is the registered (vote_t 3,
+prob_t 0.15) at n 403, F1 0.8234; and the registry filter on that blob yields
+exactly the 403 features the row's file holds. Registry, sweep, filter and file
+agree on the vintage they all describe. **The argmax does not move on the
+current vintage either**: the union as committed today was completely
+re-verified on 2026-09-08 (`43516df9a`, same verifier config and
+system-instruction hash), that stage's manifest IS the current union in index
+order (1,319 centroids, all to 0 m), and sweeping it gives the same (3, 0.15)
+at n 423, F1 0.8508 — reproducing the committed recovery sweep in all 240 rows.
+
+| | original vintage (April) | current vintage (2026-09-08 complete) |
+|---|---:|---:|
+| candidate universe | 1,256 | 1,319 |
+| 20 m argmax | (3, 0.15) | **(3, 0.15)** — unmoved |
+| n | 403 | 423 |
+| Era-2-frame F1@20 | 0.8234 [0.7788, 0.8585] | 0.8508 [0.8147, 0.8813] |
+| Era-2-frame tile-MCC | 0.7750 | 0.7857 |
+
+**Not repointed — the call is the PI's.** The row's `detections` still name the
+403-feature April file and its evaluation still records 0.8234. On its own
+vintage the row is correct, and repointing it would change what it IS: from the
+archived board's April cell (its `_note`: "IN-SAMPLE OPTIMUM (E56 class)") to a
+September re-verification of a rebuilt candidate set — a scope change the PI
+ruled on a different premise. Being off-board, nothing on the board turns on
+it: **no re-tier, no MCB, Tier 1 untouched**. Everything needed to make the
+other choice is built and committed at
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/staleness-2026-09-11/`
+(both sweeps, both manifests, the 423-feature comparison cell with its
+provenance sidecar, and its Era-2-frame score under the row's own recipe).
+
+**The class, and the guard.** `scripts/check_pv_sweep_vintage.py survey`
+classifies every `pv_registry` cell by three universe sizes — the union's
+features, the probabilities' keys, and the sweep's own `n` at (vote_t 1,
+prob_t 0.0). Of the 30: 24 `same-vintage`; 4 `probabilities-grew` (the sweep
+saw fewer candidates than are now verified — the index join stays SOUND, only
+the sweep is stale; this is the true Obs 461 class, and the four are exactly
+the stages re-swept on the PI's 2026-09-08 ruling); 1 `union-rebuilt` (this
+cell — join INVALID); 1 `manifest-mode` (no index join to go stale). The other
+two off-board rows are clean on every check: `pv-min-text-t0.0-n3` has 1,087
+across union, probabilities and sweep and reproduces its registered 393;
+`pv-n1-image-t0-n3` has 690 and reproduces 446. Neither union was touched by
+the 2026-07-30 recovery, which rebuilt only the two live `t0.0` cells of the
+`flash-high-*-n5` pools. `scripts/materialise_opmax_cells.py` now classifies
+before it filters and publishes **no count** for a `union-rebuilt` row
+(`check.json`, field `vintage`) instead of the soft-failing join that produced
+the 410; the 2026-09-10 `check.json` is preserved under
+`archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-opmax-stale-materialisation/opmax/`.
+
+**State**: `membership.json` regenerated (every pv row now carries a `vintage`
+block; nothing else moved); the row's `_note` carries the finding
+(`build_gs_era2_board_opmax.py notes --write`, a narrow amendment path that
+touches `_note` only — never the signed analysis row); `opmax/gates.json` G2 0
+/ G3 0 / G4 40/40 PASS, unchanged; manifests regenerated; verifier 22/19/0.
+$0 API; all compute on sapphire.
 
 ### 2026-09-10 (later still ×2) — Nine `-opmax` cells re-materialised: the sweep was right, the materialisation was wrong
 

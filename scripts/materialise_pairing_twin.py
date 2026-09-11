@@ -106,7 +106,7 @@ class TwinMaterialisationError(RuntimeError):
 
 
 def build_twin(
-    manifest: dict[str, Any], min_votes: int
+    manifest: dict[str, Any], min_votes: int, single_pass: bool = False
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Select the vote shell from a crop manifest and shape it as GeoJSON features.
 
@@ -114,14 +114,20 @@ def build_twin(
         manifest: A parsed ``candidate_manifest.json``.
         min_votes: The vote threshold k; candidates with ``vote_count >= k``
             are kept, matching the verified cell's own shell.
+        single_pass: The manifest records ONE proposer pass, so it carries no
+            ``vote_count`` — there were no votes to record — and every
+            candidate has exactly one vote. Only ``min_votes`` = 1 is
+            meaningful then, and the caller must say so explicitly: a missing
+            column must never be read as zero votes by default.
 
     Returns:
         ``(features, stats)`` — the twin's features and a summary of what was
         selected, for the caller to report.
 
     Raises:
-        TwinMaterialisationError: If a kept candidate has no ``source_tile``, or
-            the candidate ids are not the contiguous range.
+        TwinMaterialisationError: If a kept candidate has no ``source_tile``,
+            the candidate ids are not the contiguous range, or ``single_pass``
+            is claimed of a manifest that does record votes (or at k > 1).
     """
     candidates = manifest.get("candidates") or []
     if not candidates:
@@ -134,11 +140,25 @@ def build_twin(
             "the manifest cannot be joined positionally"
         )
 
+    if single_pass:
+        if min_votes != 1:
+            raise TwinMaterialisationError(
+                f"--single-pass is meaningful only at k = 1; got {min_votes}. A "
+                "one-pass universe records no shells, so no higher shell can be "
+                "selected from it")
+        recorded = [c for c in candidates
+                    if isinstance((c.get("properties") or {}).get("vote_count"), int)]
+        if recorded:
+            raise TwinMaterialisationError(
+                f"--single-pass was claimed but {len(recorded)} candidate(s) DO "
+                "record a vote_count, so this manifest is not a one-pass "
+                "universe and its shell must be selected, not assumed")
+
     features: list[dict[str, Any]] = []
     missing_tile: list[int] = []
     for candidate in candidates:
         properties = candidate.get("properties") or {}
-        votes = properties.get("vote_count")
+        votes = 1 if single_pass else properties.get("vote_count")
         if not isinstance(votes, int) or votes < min_votes:
             continue
         # The candidate's own recorded tile. Copied, never inferred: the
@@ -252,8 +272,12 @@ def main(argv: list[str] | None = None) -> int:
     """
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     source = parser.add_mutually_exclusive_group(required=True)
-    source.add_argument("--crop-manifest", type=Path,
-                        help="The verifier stage's candidate_manifest.json (manifest mode).")
+    source.add_argument("--crop-manifest", type=Path, action="append",
+                        dest="crop_manifest",
+                        help=("The verifier stage's candidate_manifest.json (manifest "
+                              "mode). Repeatable: where a run records its candidate "
+                              "universe across a base manifest and a committed "
+                              "increment, pass both and the twin is their union."))
     source.add_argument("--union", type=Path,
                         help="The committed vote >= 1 union GeoJSON (union mode).")
     source.add_argument("--consensus", type=Path,
@@ -275,6 +299,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--min-votes", type=int, default=None,
                         help=("Vote threshold k, matching the verified cell "
                               "(required in manifest and union modes)."))
+    parser.add_argument("--single-pass", action="store_true",
+                        help=("Manifest mode: the manifest records ONE proposer "
+                              "pass and so carries no vote_count. Only valid at "
+                              "--min-votes 1, where the shell is the whole "
+                              "universe. Refused if the manifest does record votes."))
     parser.add_argument("--output", type=Path, required=True,
                         help="Destination GeoJSON.")
     parser.add_argument(
@@ -361,14 +390,40 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
 
-    manifest = json.loads(args.crop_manifest.read_text(encoding="utf-8"))
+    paths: list[Path] = list(args.crop_manifest)
+    features = []
+    stats = {"n_candidates": 0, "n_kept": 0, "min_votes": args.min_votes,
+             "source_geojson": None, "manifests": []}
     try:
-        features, stats = build_twin(manifest, args.min_votes)
+        for offset, path in enumerate(paths):
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            part, part_stats = build_twin(manifest, args.min_votes, args.single_pass)
+            # Candidate ids are per-manifest and each manifest is checked to be
+            # the contiguous range, so a union has to re-key them or two
+            # candidates from different files would share an id.
+            for index, feature in enumerate(part):
+                feature["properties"]["candidate_id"] = len(features) + index
+                if len(paths) > 1:
+                    feature["properties"]["source_manifest"] = str(path)
+            features += part
+            stats["n_candidates"] += part_stats["n_candidates"]
+            stats["n_kept"] += part_stats["n_kept"]
+            stats["manifests"].append({
+                "path": str(path), "n_candidates": part_stats["n_candidates"],
+                "n_kept": part_stats["n_kept"],
+                "source_geojson": part_stats["source_geojson"]})
+            if offset == 0:
+                stats["source_geojson"] = part_stats["source_geojson"]
     except TwinMaterialisationError as error:
         print(f"REFUSED: {error}", file=sys.stderr)
         return 2
+    if not features:
+        print(f"REFUSED: no candidate reaches vote_count >= {args.min_votes}; "
+              "the shell is empty", file=sys.stderr)
+        return 2
 
-    if args.expect_consensus is not None and args.expect_consensus.exists():
+    if (args.expect_consensus is not None and args.expect_consensus.exists()
+            and len(paths) == 1):
         committed = json.loads(args.expect_consensus.read_text(encoding="utf-8"))
         n_committed = len(committed.get("features") or [])
         delta = n_committed - stats["n_candidates"]
@@ -389,12 +444,22 @@ def main(argv: list[str] | None = None) -> int:
     args.output.write_text(json.dumps({
         "type": "FeatureCollection",
         "crs": {"type": "name", "properties": {"name": EVALUATION_CRS}},
+        "_materialised": {
+            "mode": "single-pass-manifest" if args.single_pass
+            else ("manifest-union" if len(paths) > 1 else "manifest"),
+            "filter": ("none (N = 1: every candidate has the one vote)"
+                       if args.single_pass else f"vote_count >= {args.min_votes}"),
+            "manifests": stats["manifests"],
+            "n_candidates": stats["n_candidates"],
+            "n_kept": stats["n_kept"],
+        },
         "features": features,
     }, indent=1), encoding="utf-8")
 
     print(
         f"wrote {stats['n_kept']} of {stats['n_candidates']} candidates "
         f"at vote_count >= {args.min_votes} to {args.output}"
+        + (f" (union of {len(paths)} manifests)" if len(paths) > 1 else "")
     )
     return 0
 

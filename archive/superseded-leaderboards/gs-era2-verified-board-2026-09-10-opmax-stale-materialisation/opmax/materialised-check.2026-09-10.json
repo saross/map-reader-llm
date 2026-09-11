@@ -1,0 +1,1231 @@
+{
+ "board_id": "gs-era2-verified-board-2026-09-10",
+ "checked_at_utc": "2026-09-10T07:00:51+00:00",
+ "n_rows": 43,
+ "n_re_materialised": 9,
+ "gate_a_failures": 0,
+ "gate_a_passed": true,
+ "n_other_rows": 34,
+ "n_other_mismatches": 1,
+ "written": true,
+ "rows": [
+  {
+   "label": "pv-high-text-t0.3-n5",
+   "condition_id": "pv-diag-384::pv-high-text-t0.3-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-text-n5-text-t0.3-verified-v1-n5",
+   "vote_t": 4,
+   "prob_t": 0.2,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.3-n5.geojson",
+   "n_computed": 408,
+   "n_registry": 408,
+   "n_archived": 409,
+   "registry_vs_archived": "differs: registry F1 0.8873 n 408 vs archived board F1 0.8863 n 409",
+   "matches_registry": true,
+   "matches_archived": false,
+   "re_materialise": true,
+   "stats": {
+    "n_union": 2954,
+    "n_probabilities": 2954,
+    "n_kept": 408,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "session-78-text-comparative",
+   "condition_id": "pv-diag-384::session-78-text-comparative-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-comparative",
+   "vote_t": 4,
+   "prob_t": 0.25,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-comparative.geojson",
+   "n_computed": 397,
+   "n_registry": 397,
+   "n_archived": 397,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 3736,
+    "n_probabilities": 3736,
+    "n_kept": 397,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "session-78-text-adversarial",
+   "condition_id": "pv-diag-384::session-78-text-adversarial-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial",
+   "vote_t": 4,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-adversarial.geojson",
+   "n_computed": 396,
+   "n_registry": 396,
+   "n_archived": 396,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 3736,
+    "n_probabilities": 3736,
+    "n_kept": 396,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "pv-high-text-t1.0-n10",
+   "condition_id": "pv-diag-384::pv-high-text-t1.0-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-text-n5-text-t1.0-verified-v1-n10",
+   "vote_t": 5,
+   "prob_t": 0.2,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t1.0-n10.geojson",
+   "n_computed": 426,
+   "n_registry": 426,
+   "n_archived": 426,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 5920,
+    "n_probabilities": 5920,
+    "n_kept": 426,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "session-78-text-checklist",
+   "condition_id": "pv-diag-384::session-78-text-checklist-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist",
+   "vote_t": 4,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-checklist.geojson",
+   "n_computed": 403,
+   "n_registry": 403,
+   "n_archived": 403,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 3736,
+    "n_probabilities": 3736,
+    "n_kept": 403,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "pv-min-text-t0.3-n5",
+   "condition_id": "pv-diag-384::pv-min-text-t0.3-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n5",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.3-n5.geojson",
+   "n_computed": 408,
+   "n_registry": 408,
+   "n_archived": 408,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 1388,
+    "n_probabilities": 1388,
+    "n_kept": 408,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-min-text-t1.0-n10",
+   "condition_id": "pv-diag-384::pv-min-text-t1.0-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10",
+   "vote_t": 5,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t1.0-n10.geojson",
+   "n_computed": 410,
+   "n_registry": 410,
+   "n_archived": 395,
+   "registry_vs_archived": "differs: registry F1 0.8781 n 410 vs archived board F1 0.8771 n 395",
+   "matches_registry": true,
+   "matches_archived": false,
+   "re_materialise": true,
+   "stats": {
+    "n_union": 2472,
+    "n_probabilities": 2472,
+    "n_kept": 410,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "session-78-text-brief",
+   "condition_id": "pv-diag-384::session-78-text-brief-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief",
+   "vote_t": 4,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-brief.geojson",
+   "n_computed": 405,
+   "n_registry": 405,
+   "n_archived": 405,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 3736,
+    "n_probabilities": 3736,
+    "n_kept": 405,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "pv-high-text-t0.7-n10",
+   "condition_id": "pv-diag-384::pv-high-text-t0.7-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-text-n5-text-t0.7-verified-v1-n10",
+   "vote_t": 8,
+   "prob_t": 0.2,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.7-n10.geojson",
+   "n_computed": 377,
+   "n_registry": 377,
+   "n_archived": 377,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 5866,
+    "n_probabilities": 5866,
+    "n_kept": 377,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-min-text-t0.7-n5",
+   "condition_id": "pv-diag-384::pv-min-text-t0.7-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n5",
+   "vote_t": 4,
+   "prob_t": 0.2,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.7-n5.geojson",
+   "n_computed": 382,
+   "n_registry": 382,
+   "n_archived": 385,
+   "registry_vs_archived": "differs: registry F1 0.8739 n 382 vs archived board F1 0.8732 n 385",
+   "matches_registry": true,
+   "matches_archived": false,
+   "re_materialise": true,
+   "stats": {
+    "n_union": 1593,
+    "n_probabilities": 1593,
+    "n_kept": 382,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-min-text-t0.7-n10",
+   "condition_id": "pv-diag-384::pv-min-text-t0.7-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n10",
+   "vote_t": 6,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.7-n10.geojson",
+   "n_computed": 397,
+   "n_registry": 397,
+   "n_archived": 397,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 1953,
+    "n_probabilities": 1953,
+    "n_kept": 397,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-high-text-t0.3-n10",
+   "condition_id": "pv-diag-384::pv-high-text-t0.3-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-text-n5-text-t0.3-verified-v1-n10",
+   "vote_t": 8,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.3-n10.geojson",
+   "n_computed": 402,
+   "n_registry": 402,
+   "n_archived": 402,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 4313,
+    "n_probabilities": 4313,
+    "n_kept": 402,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-min-text-t1.0-n5",
+   "condition_id": "pv-diag-384::pv-min-text-t1.0-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n5",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t1.0-n5.geojson",
+   "n_computed": 405,
+   "n_registry": 405,
+   "n_archived": 405,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 1926,
+    "n_probabilities": 1926,
+    "n_kept": 405,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-min-text-t0.3-n10",
+   "condition_id": "pv-diag-384::pv-min-text-t0.3-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n10",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.3-n10.geojson",
+   "n_computed": 431,
+   "n_registry": 431,
+   "n_archived": 392,
+   "registry_vs_archived": "differs: registry F1 0.873 n 431 vs archived board F1 0.8682 n 392",
+   "matches_registry": true,
+   "matches_archived": false,
+   "re_materialise": true,
+   "stats": {
+    "n_union": 1575,
+    "n_probabilities": 1575,
+    "n_kept": 431,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "session-78-text-checklist-text",
+   "condition_id": "pv-diag-384::session-78-text-checklist-text-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text",
+   "vote_t": 4,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-checklist-text.geojson",
+   "n_computed": 410,
+   "n_registry": 410,
+   "n_archived": 410,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 3736,
+    "n_probabilities": 3736,
+    "n_kept": 410,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "pv-high-text-t0.7-n5",
+   "condition_id": "pv-diag-384::pv-high-text-t0.7-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-text-n5-text-t0.7-verified-v1-n5",
+   "vote_t": 4,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.7-n5.geojson",
+   "n_computed": 392,
+   "n_registry": 392,
+   "n_archived": 392,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 3736,
+    "n_probabilities": 3736,
+    "n_kept": 392,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-min-text-t0.0-n3",
+   "condition_id": "pv-diag-384::pv-min-text-t0.0-n3-opmax",
+   "on_board": false,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-minimal-text-n30-t07-text-t0.0-verified-v1-n3",
+   "vote_t": 2,
+   "prob_t": 0.2,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/verified-v1-n3/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/verified-v1-n3/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.0-n3.geojson",
+   "n_computed": 393,
+   "n_registry": 393,
+   "n_archived": 393,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 1087,
+    "n_probabilities": 1087,
+    "n_kept": 393,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-high-text-t1.0-n5",
+   "condition_id": "pv-diag-384::pv-high-text-t1.0-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-text-n5-text-t1.0-verified-v1-n5",
+   "vote_t": 3,
+   "prob_t": 0.2,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t1.0-n5.geojson",
+   "n_computed": 426,
+   "n_registry": 426,
+   "n_archived": 376,
+   "registry_vs_archived": "differs: registry F1 0.8688 n 426 vs archived board F1 0.8607 n 376",
+   "matches_registry": true,
+   "matches_archived": false,
+   "re_materialise": true,
+   "stats": {
+    "n_union": 3760,
+    "n_probabilities": 3760,
+    "n_kept": 426,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "session-78-text-adversarial-text",
+   "condition_id": "pv-diag-384::session-78-text-adversarial-text-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial-text",
+   "vote_t": 4,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-adversarial-text.geojson",
+   "n_computed": 388,
+   "n_registry": 388,
+   "n_archived": 388,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 3736,
+    "n_probabilities": 3736,
+    "n_kept": 388,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "session-78-text-brief-text",
+   "condition_id": "pv-diag-384::session-78-text-brief-text-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief-text",
+   "vote_t": 4,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-brief-text.geojson",
+   "n_computed": 389,
+   "n_registry": 389,
+   "n_archived": 389,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 3736,
+    "n_probabilities": 3736,
+    "n_kept": 389,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "pv-high-text-t0.0-n3",
+   "condition_id": "pv-diag-384::pv-high-text-t0.0-n3-opmax",
+   "on_board": false,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-text-n5-text-t0.0-verified-v1-n3",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.0-n3.geojson",
+   "n_computed": 410,
+   "n_registry": 403,
+   "n_archived": 403,
+   "registry_vs_archived": "match",
+   "matches_registry": false,
+   "matches_archived": false,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 1319,
+    "n_probabilities": 1256,
+    "n_kept": 410,
+    "n_missing_probability": 63
+   }
+  },
+  {
+   "label": "pv-min-image-t0.7-n10",
+   "condition_id": "pv-diag-384::pv-min-image-t0.7-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "image-n5-image-t0.7-verified-v1-n10",
+   "vote_t": 6,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t0.7/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/image-n5/image-t0.7/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t0.7-n10.geojson",
+   "n_computed": 405,
+   "n_registry": 405,
+   "n_archived": 405,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 1450,
+    "n_probabilities": 1450,
+    "n_kept": 405,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-high-image-t0.7-n5",
+   "condition_id": "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-image-n5-image-t0.7-verified-v1-n5",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.7-n5.geojson",
+   "n_computed": 414,
+   "n_registry": 414,
+   "n_archived": 414,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 2017,
+    "n_probabilities": 2017,
+    "n_kept": 414,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "session-78-image-adversarial",
+   "condition_id": "pv-diag-384::session-78-image-adversarial-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-adversarial.geojson",
+   "n_computed": 432,
+   "n_registry": 432,
+   "n_archived": 432,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 2017,
+    "n_probabilities": 2017,
+    "n_kept": 432,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "session-78-image-comparative",
+   "condition_id": "pv-diag-384::session-78-image-comparative-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-comparative",
+   "vote_t": 3,
+   "prob_t": 0.25,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-comparative.geojson",
+   "n_computed": 433,
+   "n_registry": 433,
+   "n_archived": 433,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 2017,
+    "n_probabilities": 2017,
+    "n_kept": 433,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "session-78-image-checklist-text",
+   "condition_id": "pv-diag-384::session-78-image-checklist-text-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-checklist-text.geojson",
+   "n_computed": 431,
+   "n_registry": 431,
+   "n_archived": 431,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 2017,
+    "n_probabilities": 2017,
+    "n_kept": 431,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "session-78-image-brief",
+   "condition_id": "pv-diag-384::session-78-image-brief-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-brief.geojson",
+   "n_computed": 437,
+   "n_registry": 437,
+   "n_archived": 437,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 2017,
+    "n_probabilities": 2017,
+    "n_kept": 437,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "session-78-image-checklist",
+   "condition_id": "pv-diag-384::session-78-image-checklist-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-checklist.geojson",
+   "n_computed": 436,
+   "n_registry": 436,
+   "n_archived": 436,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 2017,
+    "n_probabilities": 2017,
+    "n_kept": 436,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "pv-min-image-t0.3-n10",
+   "condition_id": "pv-diag-384::pv-min-image-t0.3-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "image-n5-image-t0.3-verified-v1-n10",
+   "vote_t": 7,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t0.3-n10.geojson",
+   "n_computed": 404,
+   "n_registry": 404,
+   "n_archived": 404,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 1114,
+    "n_probabilities": 1114,
+    "n_kept": 404,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "session-78-image-brief-text",
+   "condition_id": "pv-diag-384::session-78-image-brief-text-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-brief-text.geojson",
+   "n_computed": 408,
+   "n_registry": 408,
+   "n_archived": 408,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 2017,
+    "n_probabilities": 2017,
+    "n_kept": 408,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "pv-min-image-t0.3-n5",
+   "condition_id": "pv-diag-384::pv-min-image-t0.3-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "image-n5-image-t0.3-verified-v1-n5",
+   "vote_t": 4,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t0.3-n5.geojson",
+   "n_computed": 407,
+   "n_registry": 407,
+   "n_archived": 407,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 987,
+    "n_probabilities": 987,
+    "n_kept": 407,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-high-image-t0.7-n10",
+   "condition_id": "pv-diag-384::pv-high-image-t0.7-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-image-n5-image-t0.7-verified-v1-n10",
+   "vote_t": 7,
+   "prob_t": 0.2,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.7-n10.geojson",
+   "n_computed": 348,
+   "n_registry": 348,
+   "n_archived": 351,
+   "registry_vs_archived": "differs: registry F1 0.7765 n 348 vs archived board F1 0.7761 n 351",
+   "matches_registry": true,
+   "matches_archived": false,
+   "re_materialise": true,
+   "stats": {
+    "n_union": 3211,
+    "n_probabilities": 3211,
+    "n_kept": 348,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-min-image-t0.7-n5",
+   "condition_id": "pv-diag-384::pv-min-image-t0.7-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "image-n5-image-t0.7-verified-v1-n5",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t0.7/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/image-n5/image-t0.7/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t0.7-n5.geojson",
+   "n_computed": 421,
+   "n_registry": 421,
+   "n_archived": 421,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 1123,
+    "n_probabilities": 1123,
+    "n_kept": 421,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "session-78-image-adversarial-text",
+   "condition_id": "pv-diag-384::session-78-image-adversarial-text-opmax",
+   "on_board": true,
+   "pool_shape": "session-78-shared-crops-manifest",
+   "stage_id": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json",
+    "sweep": null
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-adversarial-text.geojson",
+   "n_computed": 415,
+   "n_registry": 415,
+   "n_archived": 415,
+   "registry_vs_archived": "n/a",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 2017,
+    "n_probabilities": 2017,
+    "n_kept": 415,
+    "n_missing_probability": 0,
+    "n_out_of_scope": 0
+   }
+  },
+  {
+   "label": "pv-high-image-t0.3-n10",
+   "condition_id": "pv-diag-384::pv-high-image-t0.3-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-image-n5-image-t0.3-verified-v1-n10",
+   "vote_t": 5,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.3-n10.geojson",
+   "n_computed": 432,
+   "n_registry": 432,
+   "n_archived": 400,
+   "registry_vs_archived": "differs: registry F1 0.7705 n 432 vs archived board F1 0.7689 n 400",
+   "matches_registry": true,
+   "matches_archived": false,
+   "re_materialise": true,
+   "stats": {
+    "n_union": 3412,
+    "n_probabilities": 3412,
+    "n_kept": 432,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-scale4-optimal-n10",
+   "condition_id": "pv-diag-384::pv-scale4-optimal-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "scale-4-optimal-487-verified-v1-n10",
+   "vote_t": 5,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-scale4-optimal-n10.geojson",
+   "n_computed": 411,
+   "n_registry": 411,
+   "n_archived": 411,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 3601,
+    "n_probabilities": 3601,
+    "n_kept": 411,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-n1-image-t0-n3",
+   "condition_id": "n1-outstanding-384::pv-n1-image-t0-n3-opmax",
+   "on_board": false,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "image-t0-verified-v1-n3",
+   "vote_t": 2,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/n1-outstanding-384/image-t0/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/n1-outstanding-384/image-t0/verified-v1-n3/probabilities.json",
+    "sweep": "outputs/h11/n1-outstanding-384/image-t0/verified-v1-n3/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-n1-image-t0-n3.geojson",
+   "n_computed": 446,
+   "n_registry": 446,
+   "n_archived": 446,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 690,
+    "n_probabilities": 690,
+    "n_kept": 446,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-high-image-t1.0-n10",
+   "condition_id": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-image-n5-image-t1.0-verified-v1-n10",
+   "vote_t": 5,
+   "prob_t": 0.2,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t1.0-n10.geojson",
+   "n_computed": 414,
+   "n_registry": 414,
+   "n_archived": 414,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 4638,
+    "n_probabilities": 4638,
+    "n_kept": 414,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-scale4-optimal-n5",
+   "condition_id": "pv-diag-384::pv-scale4-optimal-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "scale-4-optimal-487-verified-v1-n5",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-scale4-optimal-n5.geojson",
+   "n_computed": 398,
+   "n_registry": 398,
+   "n_archived": 396,
+   "registry_vs_archived": "differs: registry F1 0.7635 n 398 vs archived board F1 0.7629 n 396",
+   "matches_registry": true,
+   "matches_archived": false,
+   "re_materialise": true,
+   "stats": {
+    "n_union": 2198,
+    "n_probabilities": 2198,
+    "n_kept": 398,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-high-image-t0.3-n5",
+   "condition_id": "pv-diag-384::pv-high-image-t0.3-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-image-n5-image-t0.3-verified-v1-n5",
+   "vote_t": 4,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t0.3-n5.geojson",
+   "n_computed": 373,
+   "n_registry": 372,
+   "n_archived": 373,
+   "registry_vs_archived": "match",
+   "matches_registry": false,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 2190,
+    "n_probabilities": 2190,
+    "n_kept": 373,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-min-image-t1.0-n10",
+   "condition_id": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "image-n5-image-t1.0-verified-v1-n10",
+   "vote_t": 6,
+   "prob_t": 0.2,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n10/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n10/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t1.0-n10.geojson",
+   "n_computed": 397,
+   "n_registry": 397,
+   "n_archived": 364,
+   "registry_vs_archived": "differs: registry F1 0.7428 n 397 vs archived board F1 0.7409 n 364",
+   "matches_registry": true,
+   "matches_archived": false,
+   "re_materialise": true,
+   "stats": {
+    "n_union": 1975,
+    "n_probabilities": 1975,
+    "n_kept": 397,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-min-image-t1.0-n5",
+   "condition_id": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "image-n5-image-t1.0-verified-v1-n5",
+   "vote_t": 4,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-image-t1.0-n5.geojson",
+   "n_computed": 364,
+   "n_registry": 364,
+   "n_archived": 364,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 1443,
+    "n_probabilities": 1443,
+    "n_kept": 364,
+    "n_missing_probability": 0
+   }
+  },
+  {
+   "label": "pv-high-image-t1.0-n5",
+   "condition_id": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+   "on_board": true,
+   "pool_shape": "pv-consensus-union",
+   "stage_id": "flash-high-image-n5-image-t1.0-verified-v1-n5",
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "inputs": {
+    "union": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n5/consensus_t1.geojson",
+    "probabilities": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/probabilities.json",
+    "sweep": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/sweep_2d.json"
+   },
+   "archived_detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-image-t1.0-n5.geojson",
+   "n_computed": 410,
+   "n_registry": 410,
+   "n_archived": 410,
+   "registry_vs_archived": "match",
+   "matches_registry": true,
+   "matches_archived": true,
+   "re_materialise": false,
+   "stats": {
+    "n_union": 2840,
+    "n_probabilities": 2840,
+    "n_kept": 410,
+    "n_missing_probability": 0
+   }
+  }
+ ]
+}

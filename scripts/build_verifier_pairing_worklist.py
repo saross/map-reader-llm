@@ -15,7 +15,8 @@ scores, and the scoring itself runs on sapphire.
 
 How a twin is located
 ---------------------
-Five rules, in descending order of authority, each recorded in ``pairing_basis``:
+Nine rules, in descending order of authority, each recorded in
+``pairing_basis``:
 
 ``registered``
     A sibling condition already in the registry sharing the verified cell's run,
@@ -45,9 +46,40 @@ Five rules, in descending order of authority, each recorded in ``pairing_basis``
     ``scripts/materialise_pairing_twin.py --crop-manifest``. Ranked BELOW a
     registered twin and below an unambiguous consensus file, and never used to
     override either. PI ruling 2026-09-10.
+The next four fire only on the ABSENCE refusal — nothing under the run names
+the cell's shell — and are ranked below every rule above them (PI ruling
+2026-09-11). "No consensus GeoJSON at that threshold" is not the same as "no
+recorded candidate universe", and each of these reads an attribution the corpus
+already made rather than inferring one:
+
+``source-run-consensus`` / ``source-run-union``
+    The condition row itself names another run as its proposer's home
+    (``source_run``), so the consensus-file and union searches run under THAT
+    run's tree. The attribution is the register's.
+``stage-manifest``
+    The candidate universe the cell's OWN verifier stage cropped, located by
+    the same lineage matcher the union rule cross-checks with, or — when token
+    matching is ambiguous — by the manifest's recorded ``source_geojson``
+    naming the cell's pool. Accepted only when the manifest counts votes over
+    the cell's N and starts at or below the cell's k: vote shells NEST, so its
+    ``vote_count >= k`` subset then IS the pre-verifier shell rather than an
+    approximation of it.
+``shell-manifests``
+    The universe is recorded across two files — a base manifest and a committed
+    increment that cropped and verified the shell below it (the S104 vote-3
+    increment, ``_INCREMENT_ROOTS``). Accepted only when the two shells are
+    disjoint and join into an unbroken range reaching k; the twin is their
+    union. ``scripts/final_board_sweeps.py`` makes and gates the same join.
+``single-pass-manifest``
+    ``N = 1``, where the pool ran one proposer pass and so recorded no
+    ``vote_count`` at all. The shell at ``k = 1`` is the whole universe, and
+    the twin differs from its verified pair in the probability filter alone.
+    Fires at ``N = 1, k = 1`` only.
+
 ``unresolved``
     Nothing committed matches. Recorded as blocked with the reason, never
-    substituted.
+    substituted. Every rule's refusal is joined into that reason, so a reader
+    sees what was tried.
 
 Outputs (under ``results/uplift-supplement/``)
 ----------------------------------------------
@@ -75,6 +107,7 @@ import re
 import shlex
 import sys
 from collections import Counter
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -109,6 +142,12 @@ from scripts.lib_uplift_supplement import (
 )
 
 DEFAULT_OUT_DIR = Path("results/uplift-supplement")
+
+#: Bases whose twin is a committed GeoJSON scoreable as it stands.
+_CONSENSUS_FILE_BASES = ("consensus-file", "source-run-consensus")
+#: Bases whose twin is the vote shell of one or more candidate manifests.
+_MANIFEST_BASES = ("crop-manifest", "stage-manifest", "shell-manifests",
+                   "single-pass-manifest")
 
 WORKLIST_COLUMNS: tuple[str, ...] = (
     "job_id", "verified_condition_id", "run_id", "proposer_pool",
@@ -415,6 +454,422 @@ def _find_pool_crop_manifest(
     return None, None, f"the run records no crop manifest for this pool (tried {tried})"
 
 
+#: Roots under which a run's committed candidate universe is recorded in a
+#: SECOND file. The S104 vote-3 increment cropped and verified the vote == 3
+#: shell of three 55-map generalisation runs after their vote >= 4 verification
+#: had been committed, so a k = 3 cell of those runs was drawn from the union of
+#: the two manifests. ``scripts/final_board_sweeps.py`` (``build_families``)
+#: makes exactly that join, gates it on the vote structure, and reproduces the
+#: committed k3 cells' detection counts EXACTLY from it — so the attribution is
+#: the corpus's, not this script's guess. Keyed by the run's directory basename.
+_INCREMENT_ROOTS: tuple[str, ...] = (
+    "results/deployment-oracle-2026-06-06/vote3-verify",
+)
+
+
+def _manifest_shape(path: Path) -> dict[str, Any] | None:
+    """Read a candidate manifest and summarise its vote structure.
+
+    Args:
+        path: A ``candidate_manifest.json``.
+
+    Returns:
+        ``{n_candidates, min_vote, max_vote, n_voted, basis, source}`` where
+        ``basis`` is the manifest's declared ``total_passes`` when every
+        candidate agrees on one, else ``None``. ``None`` is returned when the
+        file is unreadable or lists no candidates.
+    """
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    candidates = document.get("candidates") or []
+    if not candidates:
+        return None
+    props = [(c.get("properties") or {}) for c in candidates]
+    votes = [p.get("vote_count") for p in props]
+    votes = [v for v in votes if isinstance(v, int)]
+    passes = {p.get("total_passes") for p in props}
+    passes = {p for p in passes if isinstance(p, int)}
+    return {
+        "n_candidates": len(candidates),
+        "min_vote": min(votes) if votes else None,
+        "max_vote": max(votes) if votes else None,
+        "n_voted": len(votes),
+        "basis": passes.pop() if len(passes) == 1 else None,
+        "source": document.get("source_geojson"),
+    }
+
+
+def _shell_at(path: Path, votes: int) -> int:
+    """How many of a manifest's candidates reach ``vote_count >= votes``."""
+    document = json.loads(path.read_text(encoding="utf-8"))
+    return sum(
+        1 for c in (document.get("candidates") or [])
+        if isinstance((c.get("properties") or {}).get("vote_count"), int)
+        and c["properties"]["vote_count"] >= votes
+    )
+
+
+def _find_single_pass_manifest(
+    run_dir: Path | None, pool: str, n_passes: int, votes: int, repo_root: Path
+) -> tuple[str | None, dict[str, Any] | None, str | None]:
+    """Locate the candidate universe of a ONE-pass proposer pool.
+
+    A single-pass pool has no votes to record — every candidate was seen by the
+    one pass — so its crop manifest carries no ``vote_count`` at all and every
+    vote-shell rule refuses it. At ``N = 1, k = 1`` the shell is nevertheless
+    exactly determined: it is the whole universe, and the pair differs from the
+    verified cell in the probability filter alone, which is what an uplift
+    number needs. This rule fires only in that case; anything else is a shell
+    of a universe that does not record shells, and stays refused.
+
+    Args:
+        run_dir: The run's output directory.
+        pool: The cell's registered ``proposer_pool`` — the manifest lives in a
+            directory of exactly that name, an attribution the run recorded.
+        n_passes: The cell's N; must be 1.
+        votes: The cell's k; must be 1.
+        repo_root: Repository root, so the path is recorded relative.
+
+    Returns:
+        ``(path, shape, refusal)`` as for :func:`_find_pool_crop_manifest`.
+    """
+    if n_passes != 1 or votes != 1:
+        return None, None, (
+            f"the vacuous-shell rule needs N = 1 and k = 1; this cell is "
+            f"N = {n_passes}, k = {votes}")
+    if run_dir is None or not run_dir.is_dir() or not pool:
+        return None, None, "the registry records no output directory for this run"
+    for sub in _POOL_MANIFEST_DIRS:
+        path = run_dir / sub / pool / "candidate_manifest.json"
+        if not path.is_file():
+            continue
+        shape = _manifest_shape(path)
+        if shape is None:
+            return None, None, f"{path} lists no candidates"
+        if shape["n_voted"]:
+            return None, None, (
+                f"{path} DOES record vote counts ({shape['min_vote']}-"
+                f"{shape['max_vote']}), so it is not a single-pass universe and "
+                "the vacuous-shell rule does not apply")
+        return str(path.relative_to(repo_root)), shape, None
+    tried = ", ".join(f"{sub}/{pool}/candidate_manifest.json" for sub in _POOL_MANIFEST_DIRS)
+    return None, None, f"the run records no crop manifest for this pool (tried {tried})"
+
+
+def _find_shell_manifests(
+    run_dir: Path | None, votes: int, n_passes: int, repo_root: Path
+) -> tuple[list[str], dict[str, Any] | None, str | None]:
+    """Locate a base manifest plus the committed increment that completes it.
+
+    Where a run's committed manifest starts ABOVE the cell's k, the cell was not
+    drawn from it alone: a later increment cropped and verified the missing
+    shell, and the cell's universe is the union of the two. This rule accepts
+    that union only when the shells are DISJOINT and together cover
+    ``[k, N]`` — anything else would double-count a candidate or leave a hole,
+    and either way the twin would not be the set the verifier saw.
+
+    Args:
+        run_dir: The run's output directory.
+        votes: The cell's k.
+        n_passes: The cell's N.
+        repo_root: Repository root.
+
+    Returns:
+        ``(paths, stats, refusal)``. ``paths`` is ordered base-then-increment.
+    """
+    if run_dir is None or not run_dir.is_dir():
+        return [], None, "the registry records no output directory for this run"
+    base = run_dir / "crops" / "candidate_manifest.json"
+    if not base.is_file():
+        return [], None, f"the run records no base crop manifest at {base}"
+    base_shape = _manifest_shape(base)
+    if base_shape is None or base_shape["min_vote"] is None:
+        return [], None, f"{base} records no integer vote_count"
+    if base_shape["min_vote"] <= votes:
+        return [], None, (
+            f"{base} already reaches vote_count >= {votes} (floor "
+            f"{base_shape['min_vote']}); no increment is needed and the "
+            "single-manifest rule applies")
+    for root in _INCREMENT_ROOTS:
+        increment = repo_root / root / run_dir.name / "crops" / "candidate_manifest.json"
+        if not increment.is_file():
+            continue
+        inc_shape = _manifest_shape(increment)
+        if inc_shape is None or inc_shape["min_vote"] is None:
+            return [], None, f"{increment} records no integer vote_count"
+        if inc_shape["max_vote"] >= base_shape["min_vote"]:
+            return [], None, (
+                f"the increment {increment} covers votes {inc_shape['min_vote']}-"
+                f"{inc_shape['max_vote']} and the base covers "
+                f"{base_shape['min_vote']}-{base_shape['max_vote']}; the shells "
+                "overlap, so their union would double-count candidates")
+        if inc_shape["min_vote"] > votes or inc_shape["max_vote"] + 1 != base_shape["min_vote"]:
+            return [], None, (
+                f"the increment {increment} covers votes {inc_shape['min_vote']}-"
+                f"{inc_shape['max_vote']}, which does not join the base's floor "
+                f"{base_shape['min_vote']} into an unbroken shell reaching this "
+                f"cell's k = {votes}")
+        return (
+            [str(base.relative_to(repo_root)), str(increment.relative_to(repo_root))],
+            {"n_base": base_shape["n_candidates"], "n_increment": inc_shape["n_candidates"],
+             "n_candidates": base_shape["n_candidates"] + inc_shape["n_candidates"],
+             "base_votes": [base_shape["min_vote"], base_shape["max_vote"]],
+             "increment_votes": [inc_shape["min_vote"], inc_shape["max_vote"]],
+             "n_at_threshold": _shell_at(base, votes) + _shell_at(increment, votes)},
+            None,
+        )
+    tried = ", ".join(f"{r}/{run_dir.name}/crops/candidate_manifest.json"
+                      for r in _INCREMENT_ROOTS)
+    return [], None, (
+        f"{base} starts at vote_count >= {base_shape['min_vote']}, above this "
+        f"cell's k = {votes}, and no committed increment supplies the missing "
+        f"shell (tried {tried})")
+
+
+@dataclass
+class RecordedUniverse:
+    """One resolution of the absence refusal.
+
+    Attributes:
+        basis: The ``pairing_basis`` to record, or ``""`` when unresolved.
+        manifests: Candidate manifests forming the universe, base first.
+        union: A committed union GeoJSON, when that is the universe.
+        consensus: A committed consensus GeoJSON scoreable as-is.
+        materialise_filter: The predicate recorded in the worklist.
+        notes: Lines appended to the row's ``notes``.
+        refusal: Why nothing resolved, when ``basis`` is empty — every rule's
+            reason, joined, so a reader can see what was tried.
+    """
+
+    basis: str = ""
+    manifests: list[str] = field(default_factory=list)
+    union: str | None = None
+    consensus: str | None = None
+    materialise_filter: str | None = None
+    notes: list[str] = field(default_factory=list)
+    refusal: str = ""
+
+
+def _find_stage_manifest(
+    sources: CorpusSources,
+    spec: Mapping[str, Any],
+    run_id: str,
+    pool: str,
+    geometry: str | None,
+    n_passes: int,
+    votes: int,
+    lineages: Mapping[str, set],
+    coverage: dict[str, list[VerifierManifest]],
+) -> tuple[str | None, dict[str, Any] | None, str | None]:
+    """The candidate universe the cell's OWN verifier stage cropped.
+
+    Vote shells nest: a universe counted over N passes and recorded from its
+    ``j of N`` floor contains every candidate at ``vote_count >= k`` for any
+    ``k >= j``, and nothing else. So when the cell's own stage manifest is
+    counted over the cell's N and starts at or below the cell's k, its
+    ``vote_count >= k`` subset IS the pre-verifier shell — not an approximation
+    of it. Both conditions are checked, because a manifest counted over a
+    different N is a different rung of the ladder and one that starts above k
+    cannot reach the shell at all.
+
+    Args:
+        sources: Loaded corpus sources.
+        spec: The verified condition's registered row.
+        run_id: Its run.
+        pool: Its proposer pool.
+        geometry: Its geometry cell, where resolved.
+        n_passes: N.
+        votes: k.
+        lineages: Every run's registered (pool, geometry) lineages.
+        coverage: Per-run manifest survey cache.
+
+    Returns:
+        ``(path, stats, refusal)``.
+    """
+    stage, stage_basis = match_verifier_manifest(
+        _run_manifests(sources, run_id, coverage),
+        spec["label"], pool, geometry, n_passes,
+        siblings=sorted(lineages.get(run_id, set())),
+        pool_dir=None,
+    )
+    if stage is None:
+        # Second attribution, used only when token matching is ambiguous: a
+        # manifest RECORDS the set it cropped in ``source_geojson``, and where
+        # exactly one of the run's manifests names this cell's pool there, the
+        # run itself has said which universe belongs to the lineage. That is
+        # the same argument the crop-manifest rule makes about directory names,
+        # read off the manifest's own field instead of its path.
+        named = [
+            m for m in _run_manifests(sources, run_id, coverage)
+            if Path(m.source_basename).stem == pool
+            or Path(m.source_basename).stem.startswith(f"{pool}-")
+        ]
+        if len(named) != 1:
+            return None, None, (
+                f"no verifier stage could be matched to this cell ({stage_basis}), "
+                f"and {len(named)} of the run's manifests record a source_geojson "
+                f"naming the pool {pool!r}, so no manifest can be shown to be the "
+                "universe its verifier saw")
+        stage, stage_basis = named[0], "matched-manifest-source-geojson"
+    shape = _manifest_shape(sources.repo_root / stage.path)
+    if shape is None or shape["min_vote"] is None:
+        return None, None, f"{stage.path} records no integer vote_count"
+    basis = shape["basis"] if shape["basis"] is not None else shape["max_vote"]
+    if basis != n_passes:
+        return None, None, (
+            f"{stage.path} counts votes over {basis} pass(es) but the cell "
+            f"consumed N = {n_passes}; they are different rungs of the pass "
+            "ladder, so its shell at k is a different universe")
+    if shape["min_vote"] > votes:
+        return None, None, (
+            f"{stage.path} starts at vote_count >= {shape['min_vote']}, above "
+            f"this cell's k = {votes}: the shell it would yield is the "
+            "manifest's own floor, not the cell's")
+    stats = dict(shape)
+    stats["match_basis"] = stage_basis
+    stats["n_at_threshold"] = _shell_at(sources.repo_root / stage.path, votes)
+    return stage.path, stats, None
+
+
+def _find_recorded_universe(
+    sources: CorpusSources,
+    spec: Mapping[str, Any],
+    run_id: str,
+    pool: str,
+    geometry: str | None,
+    n_passes: int,
+    votes: int,
+    lineages: Mapping[str, set],
+    coverage: dict[str, list[VerifierManifest]],
+) -> RecordedUniverse:
+    """Resolve the absence refusal, or say what every rule refused.
+
+    Ordered by the strength of the attribution: a run the REGISTRY names as the
+    proposer's home first, then the cell's own verifier stage, then a universe
+    recorded across two files, then the vacuous single-pass shell.
+
+    Args:
+        sources: Loaded corpus sources.
+        spec: The verified condition's registered row.
+        run_id: Its run.
+        pool: Its proposer pool.
+        geometry: Its geometry cell, where resolved.
+        n_passes: N.
+        votes: k.
+        lineages: Every run's registered (pool, geometry) lineages.
+        coverage: Per-run manifest survey cache.
+
+    Returns:
+        A :class:`RecordedUniverse`.
+    """
+    refusals: list[str] = []
+
+    source_run = spec.get("source_run")
+    if source_run:
+        entry = sources.registry.get(source_run)
+        other_dir = sources.repo_root / entry["directory_path"] if entry else None
+        if other_dir is None or not other_dir.is_dir():
+            refusals.append(
+                f"source-run: the row names {source_run!r} as its proposer's home "
+                "but the registry records no readable directory for it")
+        else:
+            other_pool = sources.pool_directory(source_run, pool)
+            found, why = _find_consensus_file(
+                other_pool, other_dir, votes, n_passes,
+                (geometry or "", pool), len(lineages.get(source_run, {("", None)})),
+            )
+            if found is not None:
+                return RecordedUniverse(
+                    basis="source-run-consensus",
+                    consensus=str(found.relative_to(sources.repo_root)),
+                    notes=[
+                        f"the row records source_run {source_run!r}, so the "
+                        "pre-verifier set was looked for under THAT run — the "
+                        "attribution is the register's, not this script's",
+                        f"twin is the committed {votes}-of-{n_passes} consensus "
+                        f"set {found.relative_to(sources.repo_root)}",
+                    ],
+                )
+            union = _find_union(other_dir, (geometry or "", pool), n_passes,
+                                len(lineages.get(source_run, {("", None)})))
+            if union is not None:
+                return RecordedUniverse(
+                    basis="source-run-union",
+                    union=str(union.relative_to(sources.repo_root)),
+                    materialise_filter=f"vote_count >= {votes}",
+                    notes=[f"the row records source_run {source_run!r}; the twin is "
+                           f"the vote >= {votes} shell of that run's committed union"],
+                )
+            refusals.append(
+                f"source-run: nothing under {source_run} names a "
+                f"{votes}-of-{n_passes} set either ({why or 'no candidate found'})")
+
+    path, stats, why = _find_stage_manifest(
+        sources, spec, run_id, pool, geometry, n_passes, votes, lineages, coverage)
+    if path is not None:
+        return RecordedUniverse(
+            basis="stage-manifest",
+            manifests=[path],
+            materialise_filter=f"vote_count >= {votes}",
+            notes=[
+                "no committed consensus set names this cell's shell, so the twin "
+                f"is the vote >= {votes} shell of the candidate universe its own "
+                f"verifier stage cropped ({path}: {stats['n_candidates']} "
+                f"candidates over {n_passes} pass(es), votes "
+                f"{stats['min_vote']}-{stats['max_vote']}, "
+                f"{stats['n_at_threshold']} at vote >= {votes}; matched "
+                f"{stats['match_basis']}). Vote shells nest, so this subset IS "
+                "the shell, not an approximation of it",
+            ],
+        )
+    refusals.append(f"stage-manifest: {why}")
+
+    paths, stats, why = _find_shell_manifests(
+        sources.repo_root / sources.registry[run_id]["directory_path"]
+        if run_id in sources.registry else None,
+        votes, n_passes, sources.repo_root)
+    if paths:
+        return RecordedUniverse(
+            basis="shell-manifests",
+            manifests=paths,
+            materialise_filter=f"vote_count >= {votes}",
+            notes=[
+                f"the run's candidate universe is recorded in two files: the base "
+                f"manifest at votes {stats['base_votes'][0]}-{stats['base_votes'][1]} "
+                f"({stats['n_base']}) and the committed increment at votes "
+                f"{stats['increment_votes'][0]}-{stats['increment_votes'][1]} "
+                f"({stats['n_increment']}). The shells are disjoint and join into "
+                f"an unbroken range reaching k = {votes}, so the twin is their "
+                f"union at vote >= {votes} ({stats['n_at_threshold']} candidates)",
+                "the same join scripts/final_board_sweeps.py makes and gates for "
+                "this run's sweep space",
+            ],
+        )
+    refusals.append(f"shell-manifests: {why}")
+
+    path, shape, why = _find_single_pass_manifest(
+        sources.repo_root / sources.registry[run_id]["directory_path"]
+        if run_id in sources.registry else None,
+        pool, n_passes, votes, sources.repo_root)
+    if path is not None:
+        return RecordedUniverse(
+            basis="single-pass-manifest",
+            manifests=[path],
+            materialise_filter="none (N = 1: every candidate has the one vote)",
+            notes=[
+                f"the pool ran a single proposer pass, so its manifest records no "
+                f"vote_count and the shell at k = 1 is the whole universe "
+                f"({path}: {shape['n_candidates']} candidates). The twin differs "
+                "from its verified pair in the probability filter alone",
+            ],
+        )
+    refusals.append(f"single-pass: {why}")
+
+    return RecordedUniverse(refusal="; ".join(refusals))
+
+
 def _has_source_tile(path: Path) -> bool:
     """Whether a detection GeoJSON carries a singular per-feature ``source_tile``.
 
@@ -591,6 +1046,7 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
         materialise_filter = None
         matched_stage = None
         crop_manifest_path: str | None = None
+        extra_manifests: list[str] = []
         notes: list[str] = []
 
         # The twin's stratum is keyed INDEPENDENTLY, so the cross-stratum guard
@@ -699,6 +1155,47 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
                 else:
                     blocked = f"{refusal} — and {crop_refusal}"
 
+            if basis == "unresolved" and blocked is None:
+                # The ABSENCE refusal (PI ruling 2026-09-11). Nothing under the
+                # run names the cell's shell — but "no consensus GeoJSON at that
+                # threshold" is not the same as "no recorded candidate
+                # universe". Three further places the corpus records one, each
+                # an attribution the corpus already made:
+                #
+                #   source-run       the row names another run as its proposer's
+                #                    home, so the search runs THERE;
+                #   stage-manifest   the cell's own verifier stage cropped a
+                #                    manifest whose vote basis is N — the shell
+                #                    at k is exactly its `vote_count >= k`
+                #                    subset, because vote shells nest;
+                #   shell-manifests  the universe is recorded in two files, a
+                #                    base and a committed increment;
+                #   single-pass      N = 1, so the shell is the whole universe.
+                #
+                # All rank BELOW a registered twin, a consensus file and a
+                # union, and never override one.
+                found = _find_recorded_universe(
+                    sources, spec, run_id, pool, geometry, n_passes, int(votes),
+                    lineages, coverage,
+                )
+                if found.basis:
+                    basis = found.basis
+                    twin_detections = found.consensus
+                    union_path = found.union
+                    crop_manifest_path = found.manifests[0] if found.manifests else None
+                    extra_manifests = found.manifests[1:]
+                    materialise_filter = found.materialise_filter
+                    notes += found.notes
+                else:
+                    blocked = (
+                        "no committed pre-verifier set was found for "
+                        f"(run={run_id}, pool={pool!r}, N={n_passes}, k={votes}): "
+                        "the registry holds no consensus sibling, no consensus "
+                        "GeoJSON names that threshold under the pool or run tree, "
+                        "and the run holds no vote >= 1 union over N passes"
+                        f" — and {found.refusal}"
+                    )
+
             if basis == "unresolved":
                 blocked = blocked or refusal or (
                     "no committed pre-verifier set was found for "
@@ -710,11 +1207,12 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
             elif recipe is None:
                 status, blocked = "blocked", recipe_problem
             else:
-                status = "ready" if basis == "consensus-file" else "ready-after-materialise"
+                status = ("ready" if basis in _CONSENSUS_FILE_BASES
+                          else "ready-after-materialise")
 
         slug = condition_id.replace("::", "__").replace(".", "_")
         output_dir = f"results/uplift-supplement/verifier-pairing/{slug}"
-        scoreable = twin_detections if basis == "consensus-file" else None
+        scoreable = twin_detections if basis in _CONSENSUS_FILE_BASES else None
 
         # The corrected-F1 engine scopes per map sheet with
         # `source_tile.str.startswith(...)`, so a detection set without that
@@ -726,7 +1224,7 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
         # in the probability filter.
         materialise_command = None
         if (
-            basis == "consensus-file" and recipe is not None and scoreable
+            basis in _CONSENSUS_FILE_BASES and recipe is not None and scoreable
             and recipe.engine == "evaluate_detections"
             and _projected_without_crs(sources.repo_root / scoreable)
         ):
@@ -746,7 +1244,7 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
                 "crs member; twin copied with EPSG:32635 declared"
             )
             scoreable = materialised  # status stays "ready": the prelude runs first
-        if basis == "union" and recipe is not None and union_path:
+        if basis in ("union", "source-run-union") and recipe is not None and union_path:
             # S151: the union mode of the materialiser. The twin is the vote
             # shell of the committed union (which already carries source_tile
             # and vote_count per feature), gated on the candidate universe
@@ -762,24 +1260,33 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
             parts += ["--output", materialised]
             materialise_command = " ".join(shlex.quote(part) for part in parts)
             scoreable = materialised
-        if basis == "crop-manifest" and recipe is not None and crop_manifest_path:
+        if basis in _MANIFEST_BASES and recipe is not None and crop_manifest_path:
             # The twin is the vote shell of the pool's own crop manifest. The
             # materialiser's manifest mode copies each candidate's recorded
             # source_tile and centroid verbatim, so the twin shares the verified
             # side's candidate universe exactly and differs from it in the
             # probability filter alone.
             materialised = f"{output_dir}/twin-{int(votes)}of{n_passes}.geojson"
-            materialise_command = " ".join(shlex.quote(part) for part in [
-                "python", "scripts/materialise_pairing_twin.py",
-                "--crop-manifest", crop_manifest_path,
-                "--min-votes", str(int(votes)),
-                "--output", materialised,
-            ])
+            parts = ["python", "scripts/materialise_pairing_twin.py",
+                     "--crop-manifest", crop_manifest_path]
+            # A universe recorded across two files is passed as two manifests;
+            # the materialiser unions them and re-checks that their shells are
+            # disjoint, so the join is gated on both sides.
+            for extra in extra_manifests:
+                parts += ["--crop-manifest", extra]
+            if basis == "single-pass-manifest":
+                # N = 1: the manifest records no vote_count because there were
+                # no votes to record. The flag says so explicitly rather than
+                # letting a missing column be read as zero votes.
+                parts += ["--single-pass"]
+            parts += ["--min-votes", str(int(votes)), "--output", materialised]
+            materialise_command = " ".join(shlex.quote(part) for part in parts)
             scoreable = materialised
         if (
             scoreable
             and recipe is not None
             and recipe.engine == "corrected_f1_multi_buffer"
+            and basis not in _MANIFEST_BASES
             and not _has_source_tile(sources.repo_root / scoreable)
         ):
             stage, _stage_basis = match_verifier_manifest(
@@ -916,9 +1423,11 @@ def render_report(rows: list[dict[str, Any]], excluded: Sequence[str] = ()) -> s
         "`already-registered` pairs need nothing: the twin is scored. `ready`",
         "pairs have a committed consensus GeoJSON and one scoring invocation.",
         "`ready-after-materialise` pairs need the vote shell filtered out of the",
-        "committed union first — a local geometry filter, no API spend and no",
-        "re-aggregation — and the row records the exact predicate in",
-        "`materialise_filter`.",
+        "recorded candidate universe first — a committed union, the crop manifest",
+        "of the cell's own verifier stage, or a base manifest joined with the",
+        "committed increment that completes it. That is a local geometry filter:",
+        "no API spend and no re-aggregation, and the row records the exact",
+        "predicate in `materialise_filter`.",
         "",
         "## How the twin was located",
         "",
