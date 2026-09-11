@@ -1,6 +1,10 @@
 # Uplift supplement + corpus dataset: consensus and verifier, quantified
 
-> **Last revised**: 2026-09-10 (the 14 ambiguous verifier-pairing twins
+> **Last revised**: 2026-09-11 (the 70 "no committed pre-verifier set"
+> pairs surveyed and 43 closed by four new absence-refusal rules —
+> blocked 86 → 43, uplift computed 85 → 128 on both metrics, every one
+> of the 43 positive; the 27 that stay are first-N ladder rungs whose
+> universe was never committed. Prior: 2026-09-10, the 14 ambiguous verifier-pairing twins
 > resolved by the new `crop-manifest` rule — blocked 100 → 86, uplift
 > computed 71 → 85 on both metrics; earlier the same day: the board-frame
 > exclusion rule implemented and the supplement rebuilt; prior:
@@ -78,6 +82,163 @@ promoted on citation as usual.
 **Registered and signed 2026-09-10/11 (S152)**: analysis rows `uplift-supplement-flatten` (diagnostic; 441 conditions; `conditions.csv`) and `verifier-uplift-pairing` (comparison, H2; the 85 verified cells with a computed uplift; `verifier-uplift.csv` and the MCC companion), approved as drafted by the PI (ruling 2(v)); signature notes on the rows.
 
 ## Changelog
+
+### 2026-09-11 — The 70 "no committed pre-verifier set" pairs surveyed; 43 closed
+
+**Trigger**: PI, 2026-09-11 — survey the 70 rows blocked with "no committed
+pre-verifier set was found" and close every pair that can be closed exactly.
+The `crop-manifest` rule below resolved AMBIGUITY (several committed consensus
+sets, none attributable); these 70 were the absence class, and the entry below
+said so: "this rule resolves ambiguity, not absence".
+
+**What the survey found.** The refusal conflated two states. "No consensus
+GeoJSON names this cell's shell" is true of all 70. "No candidate universe is
+recorded anywhere" is true of only 27. For the other 43 the corpus records the
+universe — in the cell's own verifier crop manifest, in a second run the
+register itself names, or across two files — and the shell at the cell's `k` is
+exactly its `vote_count >= k` subset, because **vote shells nest**: a universe
+counted over N passes and recorded from its `j of N` floor contains every
+candidate at `vote >= k` for any `k >= j`, and nothing else.
+
+**Four rules** (`scripts/build_verifier_pairing_worklist.py`), each firing ONLY
+on the absence refusal and each ranked below `registered`, `consensus-file`,
+`union` and `crop-manifest`, never overriding one:
+
+| basis | rows | the attribution it reads |
+|---|---:|---|
+| `source-run-consensus` | 5 | the condition row names another run as its proposer's home (`source_run`), so the consensus and union searches run under THAT run's tree |
+| `stage-manifest` | 13 | the candidate universe the cell's OWN verifier stage cropped, matched by the same lineage matcher the union rule cross-checks with — or, where token matching is ambiguous, by the manifest's recorded `source_geojson` naming the cell's pool |
+| `shell-manifests` | 13 | the universe recorded across a base manifest and the committed S104 vote-3 increment; accepted only when the two shells are disjoint and join into an unbroken range reaching `k` |
+| `single-pass-manifest` | 12 | `N = 1`, where the pool recorded no `vote_count` because there were no votes to record; the shell at `k = 1` is the whole universe |
+
+Each refuses rather than approximates: `stage-manifest` requires the manifest's
+vote basis to equal the cell's N and its floor to be at or below `k` (a
+different rung of the pass ladder, or a universe that starts above `k`, is
+refused); `shell-manifests` refuses overlapping shells (double counting) and
+gaps (missing candidates); `single-pass-manifest` fires at `N = 1, k = 1` only
+and refuses a manifest that does record votes. The materialiser
+(`scripts/materialise_pairing_twin.py`) gains the two modes they need: a
+repeatable `--crop-manifest` that unions manifests and re-keys candidate ids,
+and an explicit `--single-pass` — a missing `vote_count` column must never be
+read as zero votes by default.
+
+**The 70, classified**
+
+| run | rows | verdict |
+|---|---:|---|
+| `stride-55map-2026-08-25` | 23 | **truly absent** |
+| `pv-diag-384` (four baselines) | 12 | resolvable — `single-pass-manifest` |
+| `verifier-robustness` | 7 | resolvable — 5 `stage-manifest`, 2 `source-run-consensus` |
+| `55maps-text-high-t0-3-generalisation` | 5 | resolvable — `shell-manifests` |
+| `55maps-text-min-generalisation` | 5 | resolvable — `shell-manifests` |
+| `gemini37-55map-2026-08-29` | 4 | **truly absent** |
+| `55maps-text-high-generalisation` | 3 | resolvable — `shell-manifests` |
+| `verifier-t-pilot` | 3 | resolvable — `source-run-consensus` |
+| `flash35-pv-2x2` | 3 | resolvable — `stage-manifest` |
+| `55maps-text-min-n10-uplift` | 3 | resolvable — `stage-manifest` |
+| `55maps-image-generalisation` | 2 | resolvable — `stage-manifest` |
+
+**The 27 that stay blocked, and why.** All are first-N rungs of a longer pass
+ladder. `stride-55map`'s A and B cells and `gemini37-55map`'s two arms commit
+one candidate universe each — `union_k10.geojson` (38,713 / 57,482) and
+`union_k5.geojson` (12,715) — counted over 10 and 5 passes. Their N = 1 / 3 / 5
+rungs are not subsets of those: each is re-clustered from the committed passes
+at analysis time (`scripts/stride55_ladder.py` and
+`scripts/gemini37_arm_ladder.py`, `cluster_first_n`, which clusters
+`passes[:n]` and inherits the K-pass probabilities by nearest neighbour within
+10 m). Clustering over 3 passes is not clustering over 10 restricted to 3, so
+filtering the committed union at the rung's `k` would pair the cell with a
+universe of a different vote basis — the "different rung of the ladder" refusal
+the pairing rules already make. The rung's pre-verifier counts ARE recorded, in
+the final board's sweep CSVs at `prob_t = 0.0`
+(`results/55map-final-board-2026-08-27/sweep_A-N3.csv` and siblings), so a
+derived twin is possible — but it would be a re-aggregation, which this
+builder refuses by design, and it needs the ladder re-run under its own gates.
+**That is a PI decision, not this rule's shape.**
+
+| Quantity | Before | After |
+|---|---:|---:|
+| Blocked pairs | 86 | 43 |
+| `ready` | 20 | 25 |
+| `ready-after-materialise` | 57 | 95 |
+| Uplift computed (F1) | 85 | **128** |
+| Uplift computed (MCC) | 85 | **128** |
+| Pairing worklist rows | 172 | 172 |
+
+**The 43, by twin** (verified − twin at the cell's own headline buffer and
+reference; every one positive on both metrics). Rows sharing a twin share its
+value, which is the parameter control an uplift number is supposed to isolate.
+
+| cell | twin n | verified | twin | uplift F1 | uplift MCC |
+|---|---:|---:|---:|---:|---:|
+| `verifier-robustness::verified-256-union-t0-0-n5` | 1,165 | 0.8637 | 0.4599 | +0.4038 | +0.5970 |
+| `verifier-robustness::verified-256-ge3of5-t0-3-n5` | 1,165 | 0.8582 | 0.4599 | +0.3983 | +0.5774 |
+| `55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-standardised-gt` | 13,945 | 0.8406 | 0.4651 | +0.3755 | +0.4975 |
+| `55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt` | 13,945 | 0.8476 | 0.4727 | +0.3750 | +0.4936 |
+| `55maps-text-high-t0-3-generalisation::verified-oracle-p0.20-k3-r2-gt` | 13,945 | 0.8399 | 0.4651 | +0.3748 | +0.4976 |
+| `55maps-text-high-t0-3-generalisation::verified-k3-standardised-gt` | 13,945 | 0.8393 | 0.4651 | +0.3742 | +0.4909 |
+| `55maps-text-high-t0-3-generalisation::verified-k3-r2-gt` | 13,945 | 0.8387 | 0.4651 | +0.3736 | +0.4910 |
+| `55maps-text-high-generalisation::verified-k3-standardised-gt` | 13,572 | 0.8387 | 0.4688 | +0.3699 | +0.4715 |
+| `55maps-text-high-generalisation::verified-k3-r2-gt` | 13,572 | 0.8380 | 0.4690 | +0.3690 | +0.4705 |
+| `55maps-text-high-generalisation::verified-k3-canonical-gt` | 13,572 | 0.8425 | 0.4745 | +0.3680 | +0.4726 |
+| `55maps-text-min-n10-uplift::verified-5of10-standardised-gt` | 12,276 | 0.8279 | 0.4708 | +0.3571 | +0.6144 |
+| `55maps-text-min-n10-uplift::verified-5of10-r2-gt` | 12,276 | 0.8274 | 0.4709 | +0.3565 | +0.6132 |
+| `55maps-text-min-n10-uplift::verified-5of10-canonical-gt` | 12,276 | 0.8290 | 0.4749 | +0.3541 | +0.6166 |
+| `55maps-text-min-generalisation::verified-oracle-p0.20-k3-standardised-gt` | 12,390 | 0.8110 | 0.4570 | +0.3540 | +0.6121 |
+| `55maps-text-min-generalisation::verified-k3-standardised-gt` | 12,390 | 0.8109 | 0.4570 | +0.3538 | +0.6066 |
+| `55maps-text-min-generalisation::verified-oracle-p0.20-k3-r2-gt` | 12,390 | 0.8103 | 0.4571 | +0.3532 | +0.6112 |
+| `55maps-text-min-generalisation::verified-k3-r2-gt` | 12,390 | 0.8102 | 0.4571 | +0.3531 | +0.6057 |
+| `55maps-text-min-generalisation::verified-k3-canonical-gt` | 12,390 | 0.8127 | 0.4614 | +0.3513 | +0.6083 |
+| `pv-diag-384::verified-adv-text-baseline-pro-vf` | 1,047 | 0.8263 | 0.5196 | +0.3067 | +0.8366 |
+| `pv-diag-384::verified-adv-text-baseline-medium-vf` | 1,047 | 0.8244 | 0.5196 | +0.3048 | +0.8410 |
+| `flash35-pv-2x2::f3prop-f35vf-6of10` | 929 | 0.8689 | 0.5704 | +0.2985 | +0.6566 |
+| `flash35-pv-2x2::f35prop-f3vf-4of10` | 859 | 0.8480 | 0.5502 | +0.2978 | +0.6768 |
+| `pv-diag-384::verified-adv-text-baseline` | 1,047 | 0.8142 | 0.5196 | +0.2946 | +0.8366 |
+| `flash35-pv-2x2::f35prop-f35vf-4of10` | 859 | 0.8362 | 0.5502 | +0.2860 | +0.6462 |
+| `verifier-t-pilot::verified-t0-5` | 608 | 0.8561 | 0.6999 | +0.1562 | +0.3157 |
+| `verifier-robustness::verified-384-ge3of5-t0-3-high-n5` | 584 | 0.8764 | 0.7223 | +0.1541 | +0.2850 |
+| `verifier-robustness::verified-384-ge3of5-t0-3-n5` | 584 | 0.8739 | 0.7223 | +0.1516 | +0.2673 |
+| `verifier-robustness::verified-384-ge3of5-t0-7-high-n5` | 584 | 0.8739 | 0.7223 | +0.1516 | +0.2887 |
+| `verifier-t-pilot::verified-t0-0` | 608 | 0.8507 | 0.6999 | +0.1508 | +0.3221 |
+| `verifier-robustness::verified-384-union-t0-0-n5` | 584 | 0.8722 | 0.7223 | +0.1499 | +0.2581 |
+| `verifier-robustness::verified-384-ge3of5-t0-7-n5` | 584 | 0.8709 | 0.7223 | +0.1486 | +0.2673 |
+| `verifier-t-pilot::verified-t1-0` | 608 | 0.8422 | 0.6999 | +0.1423 | +0.3005 |
+| `pv-diag-384::verified-adv-image-baseline-pro-vf` | 746 | 0.7309 | 0.5995 | +0.1314 | +0.5763 |
+| `pv-diag-384::verified-adv-image-baseline-medium-vf` | 746 | 0.7300 | 0.5995 | +0.1305 | +0.5724 |
+| `pv-diag-384::verified-adv-image-baseline` | 746 | 0.7167 | 0.5995 | +0.1172 | +0.5642 |
+| `55maps-image-generalisation::verified-k4-standardised-gt` | 4,982 | 0.7400 | 0.6669 | +0.0731 | +0.1609 |
+| `55maps-image-generalisation::verified-k4-r2-gt` | 4,982 | 0.7398 | 0.6668 | +0.0730 | +0.1602 |
+| `pv-diag-384::verified-adv-pro-text-baseline-pro-vf` | 430 | 0.7861 | 0.7630 | +0.0231 | +0.0393 |
+| `pv-diag-384::verified-adv-pro-image-baseline-medium-vf` | 519 | 0.6281 | 0.6059 | +0.0222 | +0.0992 |
+| `pv-diag-384::verified-adv-pro-text-baseline-medium-vf` | 430 | 0.7842 | 0.7630 | +0.0212 | +0.0357 |
+| `pv-diag-384::verified-adv-pro-image-baseline` | 519 | 0.6196 | 0.6059 | +0.0137 | +0.0896 |
+| `pv-diag-384::verified-adv-pro-image-baseline-pro-vf` | 519 | 0.6178 | 0.6059 | +0.0119 | +0.0992 |
+| `pv-diag-384::verified-adv-pro-text-baseline` | 430 | 0.7696 | 0.7630 | +0.0066 | +0.0308 |
+
+**Reading.** Every one of the 43 is positive on both metrics, and the spread
+runs the same way the corpus already reads it: a Pro proposer's single pass is
+precise enough that a verifier adds 0.007–0.023 F1 (the four
+`pro-medium-*-baseline` cells), while a Flash single text pass gains +0.29–0.31
+F1 — and, at tile level, the whole of its discriminative power. The
+`text-baseline` twin's tile MCC is **−0.0038**: one unverified Flash text pass
+fires somewhere on almost every tile of the 487, so as a tile classifier it is
+indistinguishable from chance; the verifier lifts the same candidate set to
+0.833. That is the single largest uplift in the supplement on either metric,
+and it is a baseline cell — the class the pairing could not reach until now.
+The three 55-map text families gain +0.35–0.38 F1 and +0.47–0.62 MCC from their
+3-of-5 and 5-of-10 shells, which is where the deployment argument for a
+verifier actually lives.
+
+**Gates**: every materialised twin's feature count equals its universe's count
+at `vote >= k` 4,982 / 13,572 / 13,945 / 12,390 / 12,276 / 1,047 / 746 / 519 / 430 / 859 / 929 / 584 — each equal to the count an independent pre-computed shell of the same universe gives, and the two `source-run` twins are committed files scored as they stand (608 and 1,165); blocked dropped by exactly 43, the number
+of pairs resolved; no previously computed uplift changed on either metric and
+none was lost; no already-resolved row changed basis, path or command. Twin
+evaluations waived into their runs' `_ignored_evals` by
+`scripts/waive_uplift_anchor_evals.py`; manifests regenerated;
+`verify_run_conditions.py` 22 pass / 19 partial / 0 fail, unchanged.
+
+**The registered analysis row `verifier-uplift-pairing` is SIGNED and was not
+touched.** Its counts move with this work and the PI amends it.
 
 ### 2026-09-10 (later) — The 14 ambiguous verifier-pairing twins resolved by crop manifest
 

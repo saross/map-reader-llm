@@ -2,7 +2,7 @@
 
 > **Last revised**: 2026-09-10 (regenerated from committed artefacts by `scripts/build_verifier_pairing_worklist.py`; original publication; the with/without-verifier pairing plan). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-10T23:42:20Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-10T23:51:24Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 Build order step 3 of `planning/uplift-supplement-2026-08-28.md`. No
 scoring has been run: this document and its worklist are the plan.
@@ -47,9 +47,11 @@ measurements of their own, and are neither paired nor offered as twins
 `already-registered` pairs need nothing: the twin is scored. `ready`
 pairs have a committed consensus GeoJSON and one scoring invocation.
 `ready-after-materialise` pairs need the vote shell filtered out of the
-committed union first — a local geometry filter, no API spend and no
-re-aggregation — and the row records the exact predicate in
-`materialise_filter`.
+recorded candidate universe first — a committed union, the crop manifest
+of the cell's own verifier stage, or a base manifest joined with the
+committed increment that completes it. That is a local geometry filter:
+no API spend and no re-aggregation, and the row records the exact
+predicate in `materialise_filter`.
 
 ## How the twin was located
 
