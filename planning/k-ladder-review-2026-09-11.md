@@ -1,7 +1,8 @@
 # K-ladder review: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-12 (B3 ruled: the 27 first-N twins are derived
-> inside this job; prior 2026-09-11: DRAFT scaffold, S153, from committed
+> **Last revised**: 2026-09-12 (R1–R5 RULED and two project principles
+> recorded; B3 ruled: the 27 first-N twins are derived inside this job;
+> prior 2026-09-11: DRAFT scaffold, S153, from committed
 > material only; **no compute, no API, no register change until the PI
 > rules on § 4**). See
 > [§ Changelog](#changelog).
@@ -82,40 +83,64 @@ check is § 3 step 1, and it is $0.
    sign. Feed the Results outline (§ R6 frontier) as a claims-with-anchors
    delta, not prose.
 
-## 4. Rulings needed from the PI before step 1
+## 4. Rulings — given by the PI on 2026-09-12 (originally "needed before step 1")
 
-- **R1 — scope of "fixed parameters".** Same verifier for every rung of
-  a family (the carried Gemini 3 verifier, or each family's own best
-  verifier), or the family's board-best stack at every rung?
-  Recommendation: the carried verifier, because the ladder's question is
-  the proposer's pass count, and swapping verifiers re-opens the seat
-  question § R7.3 already answers.
-- **R2 — the operating-point rule per rung.** Sweep-optimal on the
-  board frame (the `-opmax` convention, Obs 466 gate) or the carried
-  rule (prob 0.15, k = K)? Recommendation: report both; tier on the
-  sweep-optimal, as the board does, and show the carried point as the
-  transfer-tax column.
-- **R3 — K = 1 on the board.** The board excludes twenty single-pass
-  proposer-plus-verifier cells by rule
-  (`gs-era2-verified-board-2026-09-10/membership.txt`, exclusion list).
-  Keep the exclusion and publish the ladder as its own table, or admit
-  K = 1 rungs so the board shows the floor? Recommendation: keep the
-  board's rule; the ladder table carries K = 1.
-- **R4 — re-materialised and current-vintage cells.** Session 152 rebuilt
-  nine `-opmax` cells from their stages (board unchanged in tiers) and
-  found that `pv-high-text-t0.0-n3` would score 0.8508 on the current
-  union vintage against the archived 0.8234 (not repointed;
-  `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/staleness-2026-09-11/README.md`). Ruling
-  needed: a ladder rung that exists only on the current vintage is
-  admissible to the ladder table, the board, both, or neither?
-  Recommendation: ladder table yes with the vintage disclosed; board
-  no, unless the same vintage rule is applied to every cell in the
-  family.
-- **R5 — spend ceiling for gap-filling verifier passes** (step 2). The
-  3.8 screen's verifier arm cost about $0.9–1.3 per 791-candidate union
-  (`planning/gemini38-screen-2026-09-04.md`); a K = 1 or K = 3 union is
-  smaller. Propose a ceiling of US$10 total across families, each call
-  costed and approved separately under the API gate.
+**Two principles the PI stated with the rulings, recorded as project rules:**
+
+- **Keep history, present the best available.** Registers keep every
+  run; nothing is rewritten. Anything paper-facing — leaderboards,
+  ladders, tables, results documents — carries, for each configuration,
+  the best-QUALITY cell available: the one on the most complete inputs,
+  the sound vintage, the current reference and frame, usually the newest;
+  never chosen on F1. When a board's representative for a configuration
+  changes, the board's changelog says so and the superseded cell stays in
+  the register and the supplement.
+- **Ladder, then board.** Each major lever (pass count K, stride, tile
+  size, temperature, thinking level, model family) is analysed in
+  isolation as a ladder at otherwise fixed parameters, registered as its
+  own analysis; then every cell, ladder rungs included, feeds the board.
+  This is the preregistration's factor-at-a-time intent, reached by a
+  different road.
+
+
+- **R1 — RULED: the carried Gemini 3 verifier at every rung, no
+  swapping.** The ladder's question is the proposer's pass count.
+- **R2 — RULED: report both operating points; tier on the sweep-optimal
+  on the board frame (the `-opmax` convention, Obs 466 gate); show the
+  carried point (prob 0.15, k = K) as the transfer-tax column.**
+- **R3 — RULED: the ladder carries K = 1, AND a K = 1 cell that earns a
+  place on a board is admitted.** The board's twenty single-pass
+  exclusions were a scope choice of the inventory builder (architecture
+  class), not a statistical one; under "ladder, then board" the board
+  takes every verified cell on its frame regardless of K, and the
+  Era-2 board is re-tiered and re-signed with them in.
+- **R4 — RULED (with a clarification): compare like with like by
+  rebuilding older cells on the best available inputs, and let the best
+  available cell per configuration stand on ladders and boards.** The
+  PI's framing was "the ground truth is a moving target"; the
+  clarification (accepted 2026-09-12) is that three things move
+  separately. (a) The REFERENCE (ground truth) and (b) the FRAME are
+  already held fixed by the board: every cell is re-scored on one
+  reference and one frame (gate G1), and the 55-map cells on r2. The
+  Gold Standard curator reference has not moved. (c) The CANDIDATE
+  VINTAGE is what B2 was about: a union rebuilt from recovered passes is
+  a different input set, and a verifier's probabilities are API output
+  tied to the candidates it saw, so an old cell cannot be "re-scored" on
+  a new union — it has to be re-verified (API spend). The vintage guard
+  (`scripts/check_pv_sweep_vintage.py`) says the exposure is small: of
+  the 30 registry cells, 24 same-vintage, 4 probabilities-grew (already
+  re-swept 2026-09-08), 1 union-rebuilt (`pv-high-text-t0.0-n3`, whose
+  current-vintage pair was re-verified 2026-09-08 for US$1.82), 1
+  manifest-mode. So R4 in practice: register the September pair of
+  `pv-high-text-t0.0-n3` under its own name as the best available cell
+  for that configuration (the April pair stays as the archived board's
+  cell — B2); re-verify any other cell whose union is newer than its
+  probabilities, costed under R5; and every cell is scored on the current
+  reference and frame by the board as now.
+- **R5 — RULED: up to US$50 for loose ends, every run costed and
+  approved by the PI first; batching approvals is fine.** The 3.8
+  screen's verifier arm cost about US$0.82 billed per 791-candidate
+  union, so gap-filling verifier passes are cents to a few dollars each.
 
 ## 5. What this card does not do
 
@@ -134,10 +159,14 @@ supplement is regenerated when they land.
 
 ## Changelog
 
-### 2026-09-12 — B3 ruling folded in (Session 153)
+### 2026-09-12 — R1–R5 ruled; two principles recorded; B3 folded in (Session 153)
 
-The PI ruled that the uplift supplement's 27 blocked first-N ladder
-rungs get their twins from this job (§ 5). Rulings R1–R5 still open.
+The PI ruled R1–R5 (§ 4) and stated the "keep history, present the best
+available" and "ladder, then board" principles, both recorded at the head
+of § 4. R4 was accepted with the clarification that reference, frame and
+candidate vintage move separately. B3: the 27 blocked first-N ladder
+rungs get their twins from this job (§ 5). The card is no longer a
+scaffold; the job can be planned (Phase 1 at $0, Phase 2 costed).
 
 ### 2026-09-11 — Original publication (S153, DRAFT scaffold)
 

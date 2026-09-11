@@ -259,13 +259,14 @@ supplied in-session (account timezone AEST). **All "billed" figures in
 this table are AUD** — established 2026-09-11 from the invoices, which
 state `Currency,AUD`; the audited predictions are USD. The 26 Apr and 9–11 Jun
 rows were re-worked in one currency and on tokens on 2026-09-12; the
-18 Apr–7 May window row awaits a project-filtered export.
+18 Apr–7 May window row on 2026-09-12 as well; § 10 is now fully in one
+currency.
 
 | window | billed | audited prediction | verdict |
 |---|--:|--:|---|
 | 18 Apr (TM + TH7 + image proposer day) | A$402.08 (≈ US$277 at April's invoice rate 1.4508) | US$419.64 (three proposer legs) | **CORRECTED 2026-09-11**: the original "match, −4 %" compared an AUD console figure with a USD audit. In one currency the day bills 34 % under the three legs, so the single-day corroboration is not established; the legs plausibly straddle billing days (17–19 Apr bills A$1,175.59 ≈ US$810, covering the legs plus other runs). It still excludes the manifests' $1,281. The rate corroboration now rests on the SKU-level reconciliation of `reports/billing-reconciliation-2026-09-11.md` § 1, where every billed rate equals the USD list rate × the invoice exchange rate exactly. |
 | 26 Apr (t0.3 campaign day) | A$528.00 = US$363.9 (April rate 1.4508) | ~US$261 + retries | **RE-WORKED 2026-09-12** on tokens: the day billed 226.6 M flex output tokens against the campaign's clean 158.7 M (5 × (1.46 M output + 30.28 M thinking), § 3.3), a 1.43 × overhead, and 96.2 M input against the clean 64.1 M, 1.50 ×. Billed / audited in one currency = 1.39 ×. The § 8 retry caveat is therefore **quantified at about 40 % for this campaign** (12,322 logged retries), and the residual is fully attributed to retries. |
-| 18 Apr–7 May window | $1,122.90 | ~$700 (four campaigns) + other April runs | consistent; full attribution would need a per-day predicted series |
+| 18 Apr–7 May window | A$1,122.90 (the project-filtered 18 Apr–8 May export: A$1,124.16 = US$774.9 at 1.4508; 396.4 M flex output, 580.9 M image input, 137.9 M text input tokens) | ~US$700 (four campaigns) + other April runs | **RE-WORKED 2026-09-12**: consistent in one currency (US$775 billed against ~US$700 audited for the four campaigns plus the GS-scale runs of the same fortnight); full attribution would still need a per-day predicted series |
 | 9–11 Jun dailies | A$62.22 / A$33.75 / A$41.25 = US$44.4 / 24.1 / 29.4 (June rate 1.4011) | session spends at audited rates | **RE-WORKED 2026-09-12**: conclusion (c) survives in one currency — the Gemini 3 SKUs on 10–11 Jun bill US$38.4, which the audited uplift US$34.5 fits and the pre-audit US$58.5 does not; on tokens, 10–11 Jun bills 8.3 M Gemini 3 output against the uplift's 7.4 M (5 × 0.96 M + 2.59 M verifier). The Flash 3.5 SKUs on 10 Jun billed A$21.14 = **US$15.1**; the S111 working figure of ~US$34 for the 2×2×2 covered all eight cells including their Gemini 3 seats, which bill under Gemini 3 SKUs, so the two are not comparable and the estimate is not contradicted. 9 Jun (US$44.4, all Gemini 3) is the pro-vf and second-wave registration runs, not attributed here. |
 
 Conclusions: (a) [corrected 2026-09-11] the audited per-pass rates are
@@ -281,7 +282,7 @@ against the dailies.
 
 ### 2026-09-12 — § 10 rows 2 and 4 re-worked in one currency and on tokens (Session 153)
 
-From the PI's project-filtered daily exports (26 Apr; 9, 10, 11 Jun). The 26 Apr campaign day quantifies the § 8 retry caveat at about 40 % (billed 1.39 × audited in USD; 1.43 × on output tokens). Conclusion (c) of 10–11 Jun survives in USD. The Flash 3.5 seats of the 2×2×2 billed US$15.1 (the ~$34 working figure covered the Gemini 3 seats too, so it stands).
+From the PI's project-filtered exports (26 Apr; 9, 10, 11 Jun; 18 Apr–8 May window). The 26 Apr campaign day quantifies the § 8 retry caveat at about 40 % (billed 1.39 × audited in USD; 1.43 × on output tokens). Conclusion (c) of 10–11 Jun survives in USD. The Flash 3.5 seats of the 2×2×2 billed US$15.1 (the ~$34 working figure covered the Gemini 3 seats too, so it stands).
 
 ### 2026-09-11 — § 10 corrected: the 18 April corroboration was AUD against USD (Session 153)
 
