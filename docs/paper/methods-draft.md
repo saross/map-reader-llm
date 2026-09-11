@@ -241,7 +241,16 @@ forward from the gold-standard programme at their calibrated
 operating points, plus verification), with audited per-pass costs of
 $4.66 (minimal text) to $50.82 (HIGH-thinking text at T = 0.3) and a
 corrected total of ≈ $722 at flex-tier rates (§ 5.4 states the
-audited cost basis and its billing-console corroboration). Batch
+audited cost basis and its billing-console corroboration). The whole
+study's Gemini API spend, every campaign from December 2025 to
+11 September 2026 including calibration, screens, and re-runs, was
+A$6,740 before tax on the project's invoices, US$4,695 at the monthly
+invoice exchange rates (`reports/billing/gemini-spend-by-sku.csv`);
+the token-basis audits reproduce the invoiced SKU rates exactly and
+reconcile to the invoices within 2 % where a campaign can be isolated
+to its billing days (`reports/billing-reconciliation-2026-09-11.md`).
+[DRAFT, S153 — inserted on the PI's instruction 2026-09-12 so the
+figure is not lost; placement to be settled in the outline pass] Batch
 failures were recovered by targeted re-dispatch. One out-of-band
 recovery campaign (127 passes, 350 tiles) is disclosed as erratum
 E70, and clean token loads are lower bounds because retry spend is

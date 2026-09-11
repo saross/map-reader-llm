@@ -1,8 +1,9 @@
 # K-ladder review: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-11 (DRAFT scaffold, S153 — written while the
-> PI was away, from committed material only; **no compute, no API, no
-> register change until the PI rules on § 4**). See
+> **Last revised**: 2026-09-12 (B3 ruled: the 27 first-N twins are derived
+> inside this job; prior 2026-09-11: DRAFT scaffold, S153, from committed
+> material only; **no compute, no API, no register change until the PI
+> rules on § 4**). See
 > [§ Changelog](#changelog).
 
 **Status**: SCOPING CARD, not a run card. The PI asked in Session 152 for
@@ -119,13 +120,24 @@ check is § 3 step 1, and it is $0.
 ## 5. What this card does not do
 
 It does not re-open the pass-budget Pareto's efficient set, the E83 MCB
-ruling, or the stride ladders' registered outcomes. It does not touch
-the uplift supplement's 27 truly-absent first-N twins (a separate ruling,
-item B3), although step 2's sub-pool consensus would produce some of
-them as a by-product — if the PI rules B3 "derive by re-running", the
-two can share one job.
+ruling, or the stride ladders' registered outcomes. **It DOES now own
+the uplift supplement's 27 truly-absent first-N twins**: the PI ruled on
+2026-09-12 (B3) that their pre-verifier universes are derived inside this
+ladder job, under its gates, rather than by a separate re-run — the
+rungs of `stride-55map-2026-08-25` A and B (23 pairs) and
+`gemini37-55map-2026-08-29` arms 1 and 2 (4 pairs), re-clustered from
+the first N passes exactly as `scripts/stride55_ladder.py` and
+`scripts/gemini37_arm_ladder.py` do, materialised, registered as
+conditions, and scored on the cells' own recipes. Step 2 therefore
+includes the 55-map rungs, not only the GS families, and the uplift
+supplement is regenerated when they land.
 
 ## Changelog
+
+### 2026-09-12 — B3 ruling folded in (Session 153)
+
+The PI ruled that the uplift supplement's 27 blocked first-N ladder
+rungs get their twins from this job (§ 5). Rulings R1–R5 still open.
 
 ### 2026-09-11 — Original publication (S153, DRAFT scaffold)
 

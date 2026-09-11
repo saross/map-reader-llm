@@ -633,7 +633,7 @@ One row per run family, its best carried and its best oracle cell:
 | B: Gemini 3 text MIN, 384 px / 50 % overlap, K = 10 | 0.8503 (T5) | 0.701 | $97 | 0.8560 (T4) at (0.20, k9) |  |
 | 3.7 arm 1: 3.7 proposer + Gemini 3 verifier, K = 5 | 0.8551 (T4) | 0.665 | $153 | 0.8727 (T3) at (0.15, k5) | shares its proposer with arm 2 |
 | 3.7 arm 2: all-3.7 stack, K = 5 | 0.8827 (T2) | 0.706 | $159 | 0.8871 (T1) at (0.95, k5) | shares its proposer with arm 1 |
-| fourth cell: B K = 10 union + 3.7 verifier | 0.8728 (T3) | 0.726 | ≈ $231 (verifier billed) | 0.8813 (T2) at (0.96, k9) | proposer $173.59 audited (B, K = 10) + verifier ≈ $58 from the invoice, isolated on its billing day (its `run.meta.json` records only the cleanup pass; `reports/billing-reconciliation-2026-09-11.md` § 3) [DRAFT, S153 — pending PI ruling] |
+| fourth cell: B K = 10 union + 3.7 verifier | 0.8728 (T3) | 0.726 | ≈ $231 (verifier billed) | 0.8813 (T2) at (0.96, k9) | proposer $173.59 audited (B, K = 10) + verifier ≈ $58 from the invoice, isolated on its billing day (its `run.meta.json` records only the cleanup pass; `reports/billing-reconciliation-2026-09-11.md` § 3; mixed basis approved by the PI 2026-09-12) |
 
 Among the Gemini 3 families B holds the top, B N = 10 oracle 0.8560
 (T4) and B N = 5 carried 0.8503 (T5), above every incumbent cell,
@@ -780,7 +780,7 @@ $159; `reports/r7-gaps-deltas-2026-09-11.md` § 2), the fourth cell's
 verifier is taken from the invoice (about $58, day-isolated;
 `reports/billing-reconciliation-2026-09-11.md` § 3), and the billed
 reconciliation closed within 2 % — PI ruling on the mixed basis of the
-fourth-cell cell pending; (c) RESOLVED
+fourth-cell cell given 2026-09-12: keep as marked; (c) RESOLVED
 S153 — the Gemini 3.8 verifier-seat leg is
 drafted above from its register rows
 (`gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5` and

@@ -1,8 +1,8 @@
 # Token-load audit — 55-map deployment cost manifests (2026-06-12)
 
-> **Last revised**: 2026-09-11 (§ 10 corrected — the 18 April
-> "−4 % match" compared AUD with USD; corroboration now rests on the
-> SKU-level invoice reconciliation). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-12 (§ 10 rows 2 and 4 re-worked on tokens;
+> prior 2026-09-11: the 18 April "−4 % match" compared AUD with USD;
+> corroboration now rests on the SKU-level invoice reconciliation). See [§ Changelog](#changelog).
 
 Audit of the four 55-map deployment `cost_manifest.json` files, recomputation
 of the project cost model from original per-pass metadata, and the resulting
@@ -257,16 +257,16 @@ pre-recovery backups additively; (2) price at the run's recorded
 The ground-truth cross-check § 6 requested. Google dashboard figures
 supplied in-session (account timezone AEST). **All "billed" figures in
 this table are AUD** — established 2026-09-11 from the invoices, which
-state `Currency,AUD`; the audited predictions are USD. Rows other than
-18 Apr have not been re-worked; treat their verdicts as order-of-
-magnitude only.
+state `Currency,AUD`; the audited predictions are USD. The 26 Apr and 9–11 Jun
+rows were re-worked in one currency and on tokens on 2026-09-12; the
+18 Apr–7 May window row awaits a project-filtered export.
 
 | window | billed | audited prediction | verdict |
 |---|--:|--:|---|
 | 18 Apr (TM + TH7 + image proposer day) | A$402.08 (≈ US$277 at April's invoice rate 1.4508) | US$419.64 (three proposer legs) | **CORRECTED 2026-09-11**: the original "match, −4 %" compared an AUD console figure with a USD audit. In one currency the day bills 34 % under the three legs, so the single-day corroboration is not established; the legs plausibly straddle billing days (17–19 Apr bills A$1,175.59 ≈ US$810, covering the legs plus other runs). It still excludes the manifests' $1,281. The rate corroboration now rests on the SKU-level reconciliation of `reports/billing-reconciliation-2026-09-11.md` § 1, where every billed rate equals the USD list rate × the invoice exchange rate exactly. |
-| 26 Apr (t0.3 campaign day) | $528.01 | ~$261 + retries | audited rate + the § 8 retry caveat (t0.3 logged 12,322 retries); residual partly unattributed |
+| 26 Apr (t0.3 campaign day) | A$528.00 = US$363.9 (April rate 1.4508) | ~US$261 + retries | **RE-WORKED 2026-09-12** on tokens: the day billed 226.6 M flex output tokens against the campaign's clean 158.7 M (5 × (1.46 M output + 30.28 M thinking), § 3.3), a 1.43 × overhead, and 96.2 M input against the clean 64.1 M, 1.50 ×. Billed / audited in one currency = 1.39 ×. The § 8 retry caveat is therefore **quantified at about 40 % for this campaign** (12,322 logged retries), and the residual is fully attributed to retries. |
 | 18 Apr–7 May window | $1,122.90 | ~$700 (four campaigns) + other April runs | consistent; full attribution would need a per-day predicted series |
-| 9–11 Jun dailies | $62.21 / $33.75 / $41.21 | session spends at audited rates | **the pre-audit uplift figure ($58.5) is excluded** — it would require negative Flash 3.5 spend on 10–11 Jun; the audited $34.5 fits |
+| 9–11 Jun dailies | A$62.22 / A$33.75 / A$41.25 = US$44.4 / 24.1 / 29.4 (June rate 1.4011) | session spends at audited rates | **RE-WORKED 2026-09-12**: conclusion (c) survives in one currency — the Gemini 3 SKUs on 10–11 Jun bill US$38.4, which the audited uplift US$34.5 fits and the pre-audit US$58.5 does not; on tokens, 10–11 Jun bills 8.3 M Gemini 3 output against the uplift's 7.4 M (5 × 0.96 M + 2.59 M verifier). The Flash 3.5 2×2 (10 Jun) billed A$21.14 = **US$15.1**, against the S111 working estimate of ~US$34 — that estimate was 2.2 × high. 9 Jun (US$44.4, all Gemini 3) is the pro-vf and second-wave registration runs, not attributed here. |
 
 Conclusions: (a) [corrected 2026-09-11] the audited per-pass rates are
 corroborated at the SKU level by the invoices (billed rate = USD list ×
@@ -278,6 +278,10 @@ any paper cost claim); (c) the corrected uplift cost is confirmed
 against the dailies.
 
 ## Changelog
+
+### 2026-09-12 — § 10 rows 2 and 4 re-worked in one currency and on tokens (Session 153)
+
+From the PI's project-filtered daily exports (26 Apr; 9, 10, 11 Jun). The 26 Apr campaign day quantifies the § 8 retry caveat at about 40 % (billed 1.39 × audited in USD; 1.43 × on output tokens). Conclusion (c) of 10–11 Jun survives in USD. New finding: the Flash 3.5 2×2 billed US$15.1, not the ~$34 of the S111 working estimate.
 
 ### 2026-09-11 — § 10 corrected: the 18 April corroboration was AUD against USD (Session 153)
 
