@@ -631,9 +631,9 @@ One row per run family, its best carried and its best oracle cell:
 | Gemini 3 image HIGH, K = 5 | 0.8008 (T10) | 0.711 | $195 | 0.8008 (T10) at (0.15, k3) | as shipped (k3); the E82 k4 comparability cell (0.7398, T12) is not tabled |
 | A: Gemini 3 text MIN, 384 px / 33 % overlap, K = 10 | 0.8391 (T7) | 0.693 | $104 | 0.8419 (T6) at (0.15, k7) |  |
 | B: Gemini 3 text MIN, 384 px / 50 % overlap, K = 10 | 0.8503 (T5) | 0.701 | $97 | 0.8560 (T4) at (0.20, k9) |  |
-| 3.7 arm 1: 3.7 proposer + Gemini 3 verifier, K = 5 | 0.8551 (T4) | 0.665 | not supplied | 0.8727 (T3) at (0.15, k5) |  |
-| 3.7 arm 2: all-3.7 stack, K = 5 | 0.8827 (T2) | 0.706 | not supplied | 0.8871 (T1) at (0.95, k5) |  |
-| fourth cell: B K = 10 union + 3.7 verifier | 0.8728 (T3) | 0.726 | not supplied | 0.8813 (T2) at (0.96, k9) |  |
+| 3.7 arm 1: 3.7 proposer + Gemini 3 verifier, K = 5 | 0.8551 (T4) | 0.665 | $153 | 0.8727 (T3) at (0.15, k5) | shares its proposer with arm 2 |
+| 3.7 arm 2: all-3.7 stack, K = 5 | 0.8827 (T2) | 0.706 | $159 | 0.8871 (T1) at (0.95, k5) | shares its proposer with arm 1 |
+| fourth cell: B K = 10 union + 3.7 verifier | 0.8728 (T3) | 0.726 | not supplied | 0.8813 (T2) at (0.96, k9) | verifier token load not on file (its `run.meta.json` records only the cleanup pass) |
 
 Among the Gemini 3 families B holds the top, B N = 10 oracle 0.8560
 (T4) and B N = 5 carried 0.8503 (T5), above every incumbent cell,
@@ -740,18 +740,31 @@ a 55-map image extension was not met (all-3.7 image 0.9308 against
 the all-3.7 text swap's 0.9265, +0.0043, not significant and under
 MDE80 ≈ 0.024), so the deployment table carries text cells only.
 
-Cost for this leg is provisional. The campaign's token-basis spend was
-about $171 before the fourth cell (proposer $144, verifier arms
-$12.54 and $14.31). The billed reconciliation is pending (the 3.7 SKU
-has billed at roughly 0.6 × the token basis) and the board's cost
-column for the 3.7 cells is unsupplied, so § R6's frontier is not
-extended to this family here. Thinking volume was 265–277 tokens per
-call on the text arms (D4) and 88–157 on image (I4).
+Cost for this leg is audited on the token basis and reconciled no
+further. The five 3.7 proposer passes over the deployment tiling cost
+$144.27 at flex rates, and the two verifier arms $8.89 (Gemini 3 over
+12,715 candidates) and $14.31 (3.7 over the same candidates), giving
+$153 for arm 1 and $159 for arm 2 — the two arms share one proposer, so
+the campaign spent $167 to place both. The fourth cell's verifier token
+load is not on file, because its run metadata records only the cleanup
+pass that followed it, so its cost stays unsupplied and § R6's frontier
+is not extended to this family here. Every figure is a token-basis
+estimate at list rates less the flex discount, on the method of § 5.4
+and the audit that fixed the Gemini 3 manifests, with thinking billed at
+the output rate and retries and recovery merges counted once; the billed
+reconciliation remains pending, and on this vendor's 3.7 SKU the invoice
+has run at roughly 0.6 × the token basis. Thinking volume was 265–277
+tokens per call on the text arms (D4) and 88–157 on image (I4).
+[DRAFT, S153 — pending PI ruling]
 
 [DRAFT NOTE, S151: (a) chains are named per sentence, canonical for
-the bets and r2 for the board, as the findings documents do; (b) the
-3.7 cost column stays "not supplied" until the audited all-in costs land
-(`FAMILY_COST`); (c) RESOLVED S153 — the Gemini 3.8 verifier-seat leg is
+the bets and r2 for the board, as the findings documents do; (b) PART
+RESOLVED S153 — the two 3.7 arms now carry audited token-basis costs
+($153 and $159; working in `reports/r7-gaps-deltas-2026-09-11.md` § 2),
+but the fourth cell's column stays "not supplied" because its verifier
+token load was overwritten by that run's cleanup pass, and the billed
+reconciliation is still outstanding for the whole family; (c) RESOLVED
+S153 — the Gemini 3.8 verifier-seat leg is
 drafted above from its register rows
 (`gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5` and
 its `-era2b` board sibling) and Obs 448; (d) §§ R7.2–R7.3 run to about
