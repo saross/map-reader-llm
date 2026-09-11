@@ -696,6 +696,21 @@ seat's gain partly exists, since arm 1's oracle 0.8662 would have
 cleared the incumbent by +0.0224, but its GS-selected threshold
 re-opened a transfer tax of +0.0168 that the all-3.7 arm did not pay.
 
+Because the family gain sits in the verifier seat, a follow-up screen
+asked whether the next release moved it: Gemini 3.8 Flash, published
+2026-09-02 at 3.7's list price, re-verified the identical 791-candidate
+union at its lowest thinking level, so the two verifiers differ in model
+version alone. It reached 0.9258 F1 at 20 m against the all-3.7 stack's
+0.9265, a difference of −0.0007 at p = 0.78; because both arms score the
+same candidates the paired instrument resolves about 0.011, which makes
+this a measured tie rather than an underpowered one. On the Era-2 board
+of § R4 — the 487-tile gold-standard frame — the 3.8 cell joins Tier 1 at
+0.9182, third of the five, and in that seat 3.8 thinks 28 % less per
+candidate than 3.7 (76 tokens against 106) for about $0.85. The family
+ladder for this task therefore stops at 3.7, and because the 3.8
+proposer seat was never measured, nothing here bears on 3.8 as a
+proposer (Obs 448). [DRAFT, S153 — pending PI ruling]
+
 On the r2 board the all-3.7 stack takes tier 1: arm 2 N = 5 oracle
 0.8871 and carried 0.8827 (T2), which on the board's own instrument
 is +0.0267 above the entire Gemini 3 board including its oracles. The
@@ -736,8 +751,10 @@ call on the text arms (D4) and 88–157 on image (I4).
 [DRAFT NOTE, S151: (a) chains are named per sentence, canonical for
 the bets and r2 for the board, as the findings documents do; (b) the
 3.7 cost column stays "not supplied" until the audited all-in costs land
-(`FAMILY_COST`); (c) the Gemini 3.8 verifier-seat leg (Obs 448) is not
-drafted here pending its register rows; (d) §§ R7.2–R7.3 run to about
+(`FAMILY_COST`); (c) RESOLVED S153 — the Gemini 3.8 verifier-seat leg is
+drafted above from its register rows
+(`gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5` and
+its `-era2b` board sibling) and Obs 448; (d) §§ R7.2–R7.3 run to about
 1,700 words of prose against the skeleton's 2,200-word Results budget, so the
 compression pass will cut the mechanism lists to one clause each and
 keep the table.]
