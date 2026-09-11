@@ -1,7 +1,8 @@
 # Token-load audit — 55-map deployment cost manifests (2026-06-12)
 
-> **Last revised**: 2026-06-12 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-11 (§ 10 corrected — the 18 April
+> "−4 % match" compared AUD with USD; corroboration now rests on the
+> SKU-level invoice reconciliation). See [§ Changelog](#changelog).
 
 Audit of the four 55-map deployment `cost_manifest.json` files, recomputation
 of the project cost model from original per-pass metadata, and the resulting
@@ -254,22 +255,33 @@ pre-recovery backups additively; (2) price at the run's recorded
 ## 10. Billing-console corroboration (Shawn, 2026-06-12, AEST dailies)
 
 The ground-truth cross-check § 6 requested. Google dashboard figures
-supplied in-session (account timezone AEST):
+supplied in-session (account timezone AEST). **All "billed" figures in
+this table are AUD** — established 2026-09-11 from the invoices, which
+state `Currency,AUD`; the audited predictions are USD. Rows other than
+18 Apr have not been re-worked; treat their verdicts as order-of-
+magnitude only.
 
 | window | billed | audited prediction | verdict |
 |---|--:|--:|---|
-| 18 Apr (TM + TH7 + image proposer day) | $402.08 | $419.64 (three proposer legs) | **match, −4 %** — excludes the manifests' $1,281 for the same runs by 3× |
+| 18 Apr (TM + TH7 + image proposer day) | A$402.08 (≈ US$277 at April's invoice rate 1.4508) | US$419.64 (three proposer legs) | **CORRECTED 2026-09-11**: the original "match, −4 %" compared an AUD console figure with a USD audit. In one currency the day bills 34 % under the three legs, so the single-day corroboration is not established; the legs plausibly straddle billing days (17–19 Apr bills A$1,175.59 ≈ US$810, covering the legs plus other runs). It still excludes the manifests' $1,281. The rate corroboration now rests on the SKU-level reconciliation of `reports/billing-reconciliation-2026-09-11.md` § 1, where every billed rate equals the USD list rate × the invoice exchange rate exactly. |
 | 26 Apr (t0.3 campaign day) | $528.01 | ~$261 + retries | audited rate + the § 8 retry caveat (t0.3 logged 12,322 retries); residual partly unattributed |
 | 18 Apr–7 May window | $1,122.90 | ~$700 (four campaigns) + other April runs | consistent; full attribution would need a per-day predicted series |
 | 9–11 Jun dailies | $62.21 / $33.75 / $41.21 | session spends at audited rates | **the pre-audit uplift figure ($58.5) is excluded** — it would require negative Flash 3.5 spend on 10–11 Jun; the audited $34.5 fits |
 
-Conclusions: (a) the audited per-pass rates are corroborated by the
-cleanest single-day natural experiment (18 Apr); (b) retry overhead is
+Conclusions: (a) [corrected 2026-09-11] the audited per-pass rates are
+corroborated at the SKU level by the invoices (billed rate = USD list ×
+exchange rate, `reports/billing-reconciliation-2026-09-11.md`); the
+18 Apr single-day comparison originally cited here was AUD against
+USD and is withdrawn as a corroboration; (b) retry overhead is
 real and material (the § 8 lower-bound caveat deserves quantification in
 any paper cost claim); (c) the corrected uplift cost is confirmed
 against the dailies.
 
 ## Changelog
+
+### 2026-09-11 — § 10 corrected: the 18 April corroboration was AUD against USD (Session 153)
+
+**Trigger**: the PI's billing-console exports. The 18 April project-filtered daily is A$402.08 in the account currency (invoices state AUD); the audit's $419.64 was USD. In one currency the day bills about 34 % under the three legs, so the "match, −4 %" is withdrawn. The rate corroboration is re-founded on `reports/billing-reconciliation-2026-09-11.md`: every billed SKU rate equals USD list × the invoice exchange rate, and the August 2026 Gemini 3.7 leg reconciles within 2 %. Audited figures elsewhere in this report are unchanged.
 
 ### 2026-06-12 (even later) — billing-console corroboration added (§ 10)
 

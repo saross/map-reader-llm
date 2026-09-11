@@ -1,6 +1,9 @@
 # Billing reconciliation: Google Cloud invoices against the audited token basis
 
-> **Last revised**: 2026-09-11 (original publication, Session 153). See
+> **Last revised**: 2026-09-11 (later: daily attribution of the 3.7 leg,
+> fourth cell costed from the invoice, September rows, the June audit's
+> currency question answered; earlier: original publication, Session
+> 153). See
 > [§ Changelog](#changelog).
 
 **Purpose**: reconcile what Google actually charged for this project
@@ -111,6 +114,43 @@ output tokens against 40.05 M (proposer, thinking included) + 3.07 M
 exceeds the known 334.5 M by 30.8 M, consistent with roughly one
 aborted 24,561-tile pass (36.9 M input per complete pass).
 
+### 3.1 Daily attribution (Pacific-time billing days, project-filtered Reports exports)
+
+| Billing day | 3.7 output + thinking | 3.7 fresh input | 3.7 cached input | AUD | Runs whose metadata fall on the day |
+|---|---:|---:|---:|---:|---|
+| 28 Aug | 7,550,679 | 32,536,324 | 0 | 37.93 | GS screen passes (4.96 M output in total) and the start of 55-map pass 1 |
+| 29 Aug | 13,464,883 | 63,606,280 | 0 | 70.66 | 55-map pass 1 (7.81 M), part of pass 2; GS swap-37 verifier |
+| 30 Aug | 29,217,899 | 148,607,532 | 0 | 159.02 | 55-map passes 2–5 with recoveries (about 32 M), arm 2 verifier (3.07 M, 03:47–05:04 UTC 31 Aug), grid `verify_37`; standard-tier probes |
+| 31 Aug | 12,197,054 | 99,958,800 | 20,564,016 | 87.96 | fourth-cell verifier (cleanup 03:57 UTC 1 Sep), image-GS pass 1 (0.32 M output; 20.4 M cached image tokens match the caching line), three tiny recoveries |
+| 1 Sep | 1,645,726 | 24,685,713 | 91,025,055 | 22.56 | image-GS passes 2–5 and recoveries, both image-GS verifier arms |
+
+The 28–30 August output total, 50.23 M, against the runs known on
+those days — GS screen 4.96 M, 55-map passes 40.05 M, arm 2 3.07 M,
+small 3.7 verifiers about 0.3 M — leaves 1.9 M, which is the two
+aborted partial passes of 30 August. The 31 August day is therefore
+the fourth-cell verifier plus the image-GS first pass, and subtracting
+that pass (5.5 M fresh input, 20.4 M cached, 0.32 M output, from its
+`run.meta.json`) gives the fourth-cell verifier about **94.5 M fresh
+input and 11.9 M output-plus-thinking tokens, ≈ US$58** at flex rates
+(94.5 × 0.375 + 11.9 × 1.875), against the § 3 simulation of US$64.7.
+This is the figure now carried in the § R7.2 table as "verifier
+billed, day-isolated", with B's audited K = 10 proposer $173.59, about
+$231 in all. Its uncertainty is the three recoveries (under 0.01 M
+tokens) and the exact split of the image pass, a few dollars at most.
+
+### 3.2 September to date (project-filtered, 1–30 September export)
+
+| Run | SKUs | AUD | USD (at August's 1.4389; September's rate is not yet invoiced) |
+|---|---|---:|---:|
+| 3.7 image-GS run, passes 2–5 and verifiers' 3.7 arm | 3.7 image input 23.7 M fresh + 89.1 M cached; text output 1.65 M; text input 0.98 M (+1.95 M cached) | 21.90 | 15.2 |
+| Verifier-stage refresh (8 Sep) and the image-GS Gemini 3 arm | Gemini 3 flex: image input 8.6 M, text output 1.28 M, text input 5.3 M | 7.50 | 5.2 |
+| 3.8 screen (4 Sep) | 3.8 flex: image input 0.87 M, text output 0.17 M, text input 0.56 M | 1.18 | 0.82 |
+| **total** | | **30.58** | **21.3** |
+
+The 3.8 screen's card estimated US$0.9–1.3 for its verifier arm; the
+invoice says US$0.82. The image-GS run, including its first pass on
+31 August, is about US$19.
+
 **Conclusion for § R7.3**: the "billed at roughly 0.6 × the token basis"
 expectation is **refuted**. Billed spend slightly exceeds the audited
 token basis, as it should when aborted runs are unrecorded. The 0.6 ×
@@ -121,24 +161,31 @@ figure has two candidate origins, both artefacts: the 3.7 metas' own
 say the leg's billed cost reconciles to the audited basis within 2 %, in
 USD, with the fourth cell's verifier simulated.
 
-## 4. Open questions
+## 4. Questions raised and answered the same day
 
-1. **The June audit's corroboration currency.** § 10 of
-   `reports/token-load-audit-2026-06-12.md` compares "billed $402.08" on
-   18 April with an audited US$419.64 and calls it a −4 % match, but
-   names no currency. If that dashboard figure was AUD, the USD billed
-   was about US$277 (at April's 1.4508) and the match is not a match.
-   The PI is asked which console page supplied the 18 April daily.
-2. **September SKU rows for the project.** The 3.7 image GS run
-   (1–2 September), the fourth cell's cleanup, the 3.8 screen
-   (4 September) and the 8 September verifier-stage refresh are not yet
-   invoiced. A Reports export filtered to the project for 1–11
-   September would close them now; otherwise the September invoice will.
-3. **The fourth cell's true verifier load** is unrecoverable from the
-   repository (meta overwritten). The billing residual above bounds it
-   only jointly with the aborted passes.
+1. **The June audit's corroboration currency — answered: AUD.** The
+   PI's project-filtered Reports export for 18 April 2026 alone totals
+   A$402.08, the figure § 10 of `reports/token-load-audit-2026-06-12.md`
+   compared with an audited US$419.64 and called a −4 % match. In one
+   currency the day bills about US$277, 34 % under the three legs; the
+   17–19 April window bills A$1,175.59 (≈ US$810), covering the legs
+   plus other runs. § 10 has been corrected in place with a changelog
+   entry; the rate corroboration now rests on § 1 above.
+2. **September SKU rows — supplied** (§ 3.2).
+3. **The fourth cell's verifier load — bounded from its billing day**
+   (§ 3.1): about US$58, within 11 % of the simulation.
+
+**Still open**: nothing on the billing side. The derived public table
+is `reports/billing/gemini-spend-by-sku.csv` (month, SKU, tokens, AUD,
+exchange rate, USD; no account, invoice or project identifiers), built
+from the invoices and the September export; September's USD column is
+at August's rate until its invoice issues.
 
 ## Changelog
+
+### 2026-09-11 (later) — daily attribution, fourth cell, September, June-audit currency (Session 153)
+
+Added § 3.1 (five project-filtered daily exports, 28 Aug – 1 Sep, Pacific-time days), § 3.2 (September to date), rewrote § 4 as answered. The fourth-cell verifier is bounded at ≈ US$58 from its billing day; the June audit's 18 April "match" is shown to be AUD against USD and corrected at source; the derived public table published.
 
 ### 2026-09-11 — Original publication (Session 153)
 
