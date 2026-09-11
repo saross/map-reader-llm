@@ -102,7 +102,6 @@ check is § 3 step 1, and it is $0.
   This is the preregistration's factor-at-a-time intent, reached by a
   different road.
 
-
 - **R1 — RULED: the carried Gemini 3 verifier at every rung, no
   swapping.** The ladder's question is the proposer's pass count.
 - **R2 — RULED: report both operating points; tier on the sweep-optimal
