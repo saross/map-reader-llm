@@ -511,8 +511,20 @@ def _shell_at(path: Path, votes: int) -> int:
     )
 
 
+#: Directories under a run tree that hold the run's ONE candidate manifest,
+#: unnamed by pool. Used only by the single-pass rule and only in a run whose
+#: conditions register a single proposer lineage, so there is no second pool the
+#: manifest could belong to.
+_RUN_MANIFEST_DIRS: tuple[str, ...] = ("candidates", "crops")
+
+
 def _find_single_pass_manifest(
-    run_dir: Path | None, pool: str, n_passes: int, votes: int, repo_root: Path
+    run_dir: Path | None,
+    pool: str,
+    n_passes: int,
+    votes: int,
+    repo_root: Path,
+    n_lineages: int = 0,
 ) -> tuple[str | None, dict[str, Any] | None, str | None]:
     """Locate the candidate universe of a ONE-pass proposer pool.
 
@@ -531,6 +543,11 @@ def _find_single_pass_manifest(
         n_passes: The cell's N; must be 1.
         votes: The cell's k; must be 1.
         repo_root: Repository root, so the path is recorded relative.
+        n_lineages: How many distinct (pool, geometry) lineages the run
+            registers. The run-level fallback below is accepted only at 1: in a
+            single-lineage run the run's one manifest has one pool it can
+            belong to, and the attribution is not a guess. Left at 0 (the
+            default) the fallback never fires.
 
     Returns:
         ``(path, shape, refusal)`` as for :func:`_find_pool_crop_manifest`.
@@ -554,8 +571,43 @@ def _find_single_pass_manifest(
                 f"{shape['max_vote']}), so it is not a single-pass universe and "
                 "the vacuous-shell rule does not apply")
         return str(path.relative_to(repo_root)), shape, None
+    # Fallback: a run with ONE proposer lineage records its manifest at run
+    # level, not under a pool-named directory (the two Era-1 pv-strategy runs,
+    # whose verifier matrix re-verifies one shared single proposer pass). The
+    # attribution is safe only there: with a second lineage the run's one
+    # manifest could belong to either, and "it was the only file" is not
+    # evidence that it is the right one.
+    if n_lineages == 1:
+        for sub in _RUN_MANIFEST_DIRS:
+            path = run_dir / sub / "candidate_manifest.json"
+            if not path.is_file():
+                continue
+            shape = _manifest_shape(path)
+            if shape is None:
+                return None, None, f"{path} lists no candidates"
+            if shape["n_voted"]:
+                return None, None, (
+                    f"{path} DOES record vote counts ({shape['min_vote']}-"
+                    f"{shape['max_vote']}), so it is not a single-pass universe "
+                    "and the vacuous-shell rule does not apply")
+            # The manifest must name the detection set it cropped, and that set
+            # must still be in the tree: the twin's provenance is the claim
+            # "these candidates are that pass", and an unreadable source makes
+            # the claim uncheckable.
+            source = str(shape.get("source") or "")
+            resolved = Path(source)
+            if not source or not (
+                resolved.is_file() or (repo_root / source.lstrip("/")).is_file()
+            ):
+                return None, None, (
+                    f"{path} records source_geojson {source!r}, which is not a "
+                    "readable file, so the universe cannot be confirmed")
+            return str(path.relative_to(repo_root)), shape, None
     tried = ", ".join(f"{sub}/{pool}/candidate_manifest.json" for sub in _POOL_MANIFEST_DIRS)
-    return None, None, f"the run records no crop manifest for this pool (tried {tried})"
+    return None, None, (
+        f"the run records no crop manifest for this pool (tried {tried}), and "
+        f"the run-level fallback needs a single-lineage run (this run registers "
+        f"{n_lineages or 'an unrecorded number of'} lineage(s))")
 
 
 def _find_shell_manifests(
@@ -583,7 +635,13 @@ def _find_shell_manifests(
         return [], None, "the registry records no output directory for this run"
     base = run_dir / "crops" / "candidate_manifest.json"
     if not base.is_file():
-        return [], None, f"the run records no base crop manifest at {base}"
+        # Repo-relative: an absolute path here leaked the generating checkout's
+        # location into the committed worklist, so the same corpus produced a
+        # different artefact from a worktree than from the main clone.
+        return [], None, (
+            "the run records no base crop manifest at "
+            f"{base.relative_to(repo_root) if base.is_relative_to(repo_root) else base}"
+        )
     base_shape = _manifest_shape(base)
     if base_shape is None or base_shape["min_vote"] is None:
         return [], None, f"{base} records no integer vote_count"
@@ -743,6 +801,7 @@ def _find_recorded_universe(
     votes: int,
     lineages: Mapping[str, set],
     coverage: dict[str, list[VerifierManifest]],
+    aliases: Sequence[str] = (),
 ) -> RecordedUniverse:
     """Resolve the absence refusal, or say what every rule refused.
 
@@ -760,11 +819,15 @@ def _find_recorded_universe(
         votes: k.
         lineages: Every run's registered (pool, geometry) lineages.
         coverage: Per-run manifest survey cache.
+        aliases: Extra lineage tokens, supplied only by the null-threshold
+            derivation, where the pool is named ``<lineage>-consensus-<k>of<N>``
+            and the committed set ``<lineage>-<k>of<N>``.
 
     Returns:
         A :class:`RecordedUniverse`.
     """
     refusals: list[str] = []
+    tokens = (geometry or "", pool, *aliases)
 
     source_run = spec.get("source_run")
     if source_run:
@@ -778,7 +841,7 @@ def _find_recorded_universe(
             other_pool = sources.pool_directory(source_run, pool)
             found, why = _find_consensus_file(
                 other_pool, other_dir, votes, n_passes,
-                (geometry or "", pool), len(lineages.get(source_run, {("", None)})),
+                tokens, len(lineages.get(source_run, {("", None)})),
             )
             if found is not None:
                 return RecordedUniverse(
@@ -792,7 +855,7 @@ def _find_recorded_universe(
                         f"set {found.relative_to(sources.repo_root)}",
                     ],
                 )
-            union = _find_union(other_dir, (geometry or "", pool), n_passes,
+            union = _find_union(other_dir, tokens, n_passes,
                                 len(lineages.get(source_run, {("", None)})))
             if union is not None:
                 return RecordedUniverse(
@@ -852,7 +915,8 @@ def _find_recorded_universe(
     path, shape, why = _find_single_pass_manifest(
         sources.repo_root / sources.registry[run_id]["directory_path"]
         if run_id in sources.registry else None,
-        pool, n_passes, votes, sources.repo_root)
+        pool, n_passes, votes, sources.repo_root,
+        n_lineages=len(lineages.get(run_id, ())))
     if path is not None:
         return RecordedUniverse(
             basis="single-pass-manifest",
@@ -868,6 +932,123 @@ def _find_recorded_universe(
     refusals.append(f"single-pass: {why}")
 
     return RecordedUniverse(refusal="; ".join(refusals))
+
+
+#: A pool name that IS a consensus shell. The corpus writes the shell either
+#: bare (``image-t0.7-n30-18of30``) or with a ``consensus`` infix
+#: (``flash-high-text-consensus-16of30``); the infix is stripped so the lineage
+#: matches the committed set, which is named without it.
+_POOL_NAMED_SHELL_RE = re.compile(
+    r"^(?P<lineage>.+?)(?:[-_]consensus)?[-_](?P<k>\d+)of(?P<n>\d+)$"
+)
+
+
+def _derive_vote_shell(
+    pool: str, n_passes: int
+) -> tuple[int, int, str] | None:
+    """Derive the vote shell of a cell whose ``vote_threshold`` is null.
+
+    A null threshold has been read as "no shell to hold fixed", which refused 16
+    verified cells before any pairing rule ran. It is written for two reasons,
+    and in both the shell is exactly determined (PI ruling 2026-09-11, later):
+
+    * **The pool ran one pass.** There were no votes to record, so the column is
+      null and the shell at ``k = 1`` is the whole pass. The registry writes
+      ``k = 1, N = 1`` explicitly for the pv-diag-384 baselines of the same
+      shape, so this derivation only supplies what those rows already carry.
+    * **The pool is a pre-aggregated consensus set** whose name carries its own
+      shell (``…-16of30``, ``…-consensus-5of5``). The verifier consumed that
+      shell; the registry simply never copied ``k`` out of the pool name.
+
+    The pool name is read FIRST, because a pre-aggregated pool is also
+    registered with ``n_passes = 1`` (one verifier pass over an already-fused
+    set) and the vacuous ``k = 1`` shell would then be the wrong pair.
+
+    Args:
+        pool: The cell's registered ``proposer_pool``.
+        n_passes: The cell's registered ``n_passes``.
+
+    Returns:
+        ``(k, N, basis)`` where ``basis`` is a note recording the derivation, or
+        ``None`` when neither derivation applies and the refusal stands.
+    """
+    shell = _POOL_NAMED_SHELL_RE.match(pool or "")
+    if shell is not None:
+        k, total = int(shell.group("k")), int(shell.group("n"))
+        # k >= 2 only. The corpus names a pool of PASSES for its vote >= 1 shell
+        # (``flash-high-text-1of5``) — the convention
+        # :func:`_find_pool_crop_manifest` relies on — so a ``1of<N>`` pool is
+        # not a fused set whose shell the registry forgot to copy, and reading
+        # one as such would derive a shell where the registry recorded none.
+        if 2 <= k <= total:
+            return k, total, (
+                f"the registry records no vote_threshold, but the pool {pool!r} "
+                f"names its own shell: k = {k} of N = {total}. The verifier "
+                "consumed that shell, so that is the shell the twin must be"
+            )
+    if n_passes == 1:
+        return 1, 1, (
+            "the registry records no vote_threshold because the pool ran a "
+            "single proposer pass and had no votes to record; the shell at "
+            "k = 1 is the whole pass"
+        )
+    return None
+
+
+def _find_pool_named_condition(
+    sources: CorpusSources,
+    spec: Mapping[str, Any],
+    run_id: str,
+    pool: str,
+) -> tuple[tuple[str, dict[str, Any]] | None, str]:
+    """Find the registered condition a verified cell's pool NAMES.
+
+    Where a verified cell's ``proposer_pool`` is not a pool of passes but the
+    LABEL of another registered condition — ``text-consensus-5of5``,
+    ``image-t0.7-n30-18of30``, ``text-t0.0`` — that condition is the
+    pre-verifier set the verifier consumed, already scored and registered. The
+    attribution is the register's twice over: the pool names the label, and
+    ``source_run`` names the run it lives in.
+
+    Ranked FIRST among the null-threshold rules, so nothing is materialised
+    that the corpus already scored (the card's rule order: a registered twin
+    beats a derived one).
+
+    Args:
+        sources: Loaded corpus sources.
+        spec: The verified condition's registered row.
+        run_id: Its run.
+        pool: Its ``proposer_pool``.
+
+    Returns:
+        ``((condition_id, spec), "")`` on a hit, else ``(None, refusal)``.
+    """
+    if not pool:
+        return None, "the cell records no proposer pool"
+    searched: list[str] = []
+    for candidate_run in (spec.get("source_run"), run_id):
+        if not candidate_run or candidate_run in searched:
+            continue
+        searched.append(candidate_run)
+        entry = sources.decomposition.get(candidate_run) or {}
+        for other in entry.get("conditions", []):
+            if other.get("label") != pool:
+                continue
+            if other.get("aggregation") == "verified":
+                return None, (
+                    f"{candidate_run}::{pool} is itself a VERIFIED cell, so it "
+                    "is not a pre-verifier set"
+                )
+            if not other.get("eval_path"):
+                return None, (
+                    f"{candidate_run}::{pool} is registered but records no "
+                    "evaluation, so it carries no score to pair with"
+                )
+            return (f"{candidate_run}::{pool}", other), ""
+    return None, (
+        f"no registered condition is labelled {pool!r} in "
+        f"{', '.join(searched) or 'any run the row names'}"
+    )
 
 
 def _has_source_tile(path: Path) -> bool:
@@ -1063,12 +1244,64 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
         geometry = resolve_geometry(
             pool, spec["label"], facts.get("tile_size_px")
         )["geometry"]
+        #: Extra lineage tokens, offered only by the null-threshold derivation.
+        pool_aliases: tuple[str, ...] = ()
         sibling = registered.get(_pair_key(run_id, condition_id, spec))
         if votes is None:
-            blocked = (
-                "the verified cell records no vote threshold, so there is no "
-                "'same vote threshold' pre-verifier set to pair it with"
-            )
+            # PI ruling 2026-09-11 (later). A null ``vote_threshold`` was read
+            # as "no shell to hold fixed" and refused before any rule ran. But
+            # a null is written for two different reasons, and in both the shell
+            # IS determined:
+            #
+            #   N = 1              one proposer pass, so there were no votes to
+            #                      record; the shell at k = 1 is the whole pass.
+            #   pool <k>of<N>      the pool is a pre-aggregated consensus set
+            #                      and NAMES its shell; the registry simply
+            #                      never copied k into the column.
+            #
+            # Both then route through the ordinary cascade below, registered
+            # sibling first, so nothing is materialised that the corpus already
+            # scored. Anything else stays refused.
+            shell = _derive_vote_shell(pool, n_passes)
+            if shell is None:
+                blocked = (
+                    "the verified cell records no vote threshold, so there is no "
+                    "'same vote threshold' pre-verifier set to pair it with"
+                    f" — and the pool {pool!r} names no <k>of<N> shell and the "
+                    f"cell consumed N = {n_passes} passes, not one, so neither "
+                    "derivation applies"
+                )
+            else:
+                votes, n_passes, vote_basis = shell
+                notes.append(vote_basis)
+                # A pool named `<lineage>-consensus-<k>of<N>` has its committed
+                # set named `<lineage>-<k>of<N>`, so the pool name alone never
+                # matches it at a segment boundary. The de-infixed form is the
+                # lineage token the search needs, and it is offered ONLY on this
+                # derivation, so no already-resolved row's tokens change.
+                alias = _POOL_NAMED_SHELL_RE.match(pool)
+                if alias is not None:
+                    canonical = f"{alias.group('lineage')}-{votes}of{n_passes}"
+                    if canonical != pool:
+                        pool_aliases = (canonical,)
+                # The pool names the condition that produced the pre-verifier
+                # set — an attribution the register made, not one inferred
+                # here — so ask the register for it before deriving anything.
+                pool_twin, pool_refusal = _find_pool_named_condition(
+                    sources, spec, run_id, pool
+                )
+                if pool_twin is not None:
+                    sibling = pool_twin
+                    notes.append(
+                        f"the pool {pool!r} names a registered condition in "
+                        f"{pool_twin[0].split('::', 1)[0]}, which IS the "
+                        "pre-verifier set this cell's verifier consumed"
+                    )
+                else:
+                    notes.append(f"no pool-named condition: {pool_refusal}")
+        if votes is None:
+            # The derivation refused; ``blocked`` above says why.
+            pass
         elif sibling is not None:
             basis, status = "registered", "already-registered"
             twin_id, twin_spec = sibling
@@ -1085,17 +1318,15 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
             notes.append("the pre-verifier twin is already scored and registered")
         else:
             n_lineages = len(lineages.get(run_id, {("", None)}))
+            tokens = (geometry or "", pool, *pool_aliases)
             found, refusal = _find_consensus_file(
-                pool_dir, run_dir, int(votes), n_passes,
-                (geometry or "", pool), n_lineages,
+                pool_dir, run_dir, int(votes), n_passes, tokens, n_lineages,
             )
             if found is not None:
                 basis = "consensus-file"
                 twin_detections = str(found.relative_to(sources.repo_root))
             elif run_dir is not None and run_dir.is_dir():
-                union = _find_union(
-                    run_dir, (geometry or "", pool), n_passes, n_lineages
-                )
+                union = _find_union(run_dir, tokens, n_passes, n_lineages)
                 if union is not None:
                     # The union must be the SAME set the verifier consumed, or
                     # the "pair" differs in two things at once. The verifier
@@ -1176,7 +1407,7 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
                 # union, and never override one.
                 found = _find_recorded_universe(
                     sources, spec, run_id, pool, geometry, n_passes, int(votes),
-                    lineages, coverage,
+                    lineages, coverage, aliases=pool_aliases,
                 )
                 if found.basis:
                     basis = found.basis

@@ -177,3 +177,160 @@ class TestMaterialiserModes:
         assert m.main(["--crop-manifest", str(base), "--min-votes", "5",
                        "--output", str(out)]) == 2
         assert not out.exists()
+
+
+class TestDeriveVoteShell:
+    """The null-``vote_threshold`` derivation (PI ruling 2026-09-11, later).
+
+    Sixteen verified cells recorded no vote threshold and were refused before
+    any pairing rule ran. A null is written for two reasons and in both the
+    shell is determined; anything else must stay refused.
+    """
+
+    def test_a_pool_that_names_its_shell_supplies_k_and_n(self):
+        shell = b._derive_vote_shell("image-t0.7-n30-18of30", 1)
+        assert shell is not None
+        assert shell[0] == 18 and shell[1] == 30
+        assert "names its own shell" in shell[2]
+
+    def test_the_consensus_infix_is_stripped_from_the_lineage(self):
+        """``<lineage>-consensus-<k>of<N>`` pools have sets named without it."""
+        match = b._POOL_NAMED_SHELL_RE.match("flash-high-text-consensus-16of30")
+        assert match is not None
+        assert match.group("lineage") == "flash-high-text"
+        assert (match.group("k"), match.group("n")) == ("16", "30")
+
+    def test_a_named_shell_outranks_the_vacuous_one(self):
+        """A pre-aggregated pool also registers N = 1; k = 1 would mispair it."""
+        assert b._derive_vote_shell("text-consensus-5of5", 1)[:2] == (5, 5)
+
+    def test_a_single_pass_cell_gets_the_vacuous_shell(self):
+        shell = b._derive_vote_shell("detect_brief-text", 1)
+        assert shell is not None and shell[:2] == (1, 1)
+        assert "single proposer pass" in shell[2]
+
+    @pytest.mark.parametrize("pool, n_passes", [
+        ("track2-text-t0.7", 5),      # several passes, and no shell named
+        ("flash-high-text-1of5", 5),  # a vote >= 1 pool, not a fused set
+        ("", 3),
+    ])
+    def test_refuses_anything_else(self, pool, n_passes):
+        assert b._derive_vote_shell(pool, n_passes) is None
+
+    def test_refuses_an_impossible_shell(self):
+        """``k > N`` is a shell of nothing; the vacuous rule must not rescue it."""
+        assert b._derive_vote_shell("pool-7of5", 5) is None
+
+
+class TestPoolNamedCondition:
+    """The pool as the LABEL of the registered condition that fed the verifier."""
+
+    @staticmethod
+    def _sources(decomposition):
+        """A stand-in carrying only the field the rule reads."""
+        return type("Sources", (), {"decomposition": decomposition})()
+
+    @staticmethod
+    def _call(sources, spec, run_id, pool):
+        return b._find_pool_named_condition(sources, spec, run_id, pool)
+
+    def test_finds_the_condition_the_pool_names_in_the_source_run(self):
+        sources = self._sources({"home": {"conditions": [
+            {"label": "text-consensus-5of5", "aggregation": "consensus",
+             "eval_path": "results/x/evaluation.json"},
+        ]}})
+        spec = {"proposer_pool": "text-consensus-5of5", "source_run": "home"}
+        found, refusal = self._call(sources, spec, "other", "text-consensus-5of5")
+        assert refusal == ""
+        assert found[0] == "home::text-consensus-5of5"
+
+    def test_falls_back_to_the_cells_own_run(self):
+        sources = self._sources({"own": {"conditions": [
+            {"label": "text-t0.0", "aggregation": "none",
+             "eval_path": "results/x/evaluation.json"},
+        ]}})
+        found, _refusal = self._call(sources, {"proposer_pool": "text-t0.0"},
+                                     "own", "text-t0.0")
+        assert found[0] == "own::text-t0.0"
+
+    def test_refuses_a_verified_condition_as_a_pre_verifier_twin(self):
+        """Pairing a verified cell with a verified cell measures no verifier."""
+        sources = self._sources({"own": {"conditions": [
+            {"label": "p", "aggregation": "verified", "eval_path": "e.json"},
+        ]}})
+        found, refusal = self._call(sources, {"proposer_pool": "p"}, "own", "p")
+        assert found is None and "itself a VERIFIED cell" in refusal
+
+    def test_refuses_a_condition_with_no_evaluation(self):
+        sources = self._sources({"own": {"conditions": [
+            {"label": "p", "aggregation": "consensus", "eval_path": None},
+        ]}})
+        found, refusal = self._call(sources, {"proposer_pool": "p"}, "own", "p")
+        assert found is None and "records no evaluation" in refusal
+
+    def test_refuses_when_no_condition_carries_the_label(self):
+        sources = self._sources({"own": {"conditions": [
+            {"label": "q", "aggregation": "consensus", "eval_path": "e.json"},
+        ]}})
+        found, refusal = self._call(sources, {"proposer_pool": "p"}, "own", "p")
+        assert found is None and "no registered condition is labelled" in refusal
+
+
+class TestSinglePassRunLevelManifest:
+    """The run-level fallback for a run whose one manifest names no pool."""
+
+    @staticmethod
+    def _run(tmp_path, votes):
+        """A run holding ``candidates/candidate_manifest.json`` and its source."""
+        run = tmp_path / "outputs" / "run-y"
+        path = _manifest(run / "candidates" / "candidate_manifest.json", votes)
+        document = json.loads(path.read_text())
+        source = run / "proposer" / "detections.geojson"
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text('{"type": "FeatureCollection", "features": []}',
+                          encoding="utf-8")
+        document["source_geojson"] = str(source.relative_to(tmp_path))
+        path.write_text(json.dumps(document), encoding="utf-8")
+        return run
+
+    def test_accepts_a_single_lineage_run(self, tmp_path):
+        run = self._run(tmp_path, [None, None, None])
+        path, shape, refusal = b._find_single_pass_manifest(
+            run, "detect_brief-text", 1, 1, tmp_path, n_lineages=1)
+        assert refusal is None and shape["n_candidates"] == 3
+        assert path.endswith("candidates/candidate_manifest.json")
+
+    @pytest.mark.parametrize("n_lineages", [0, 2, 41])
+    def test_refuses_a_multi_lineage_run(self, tmp_path, n_lineages):
+        """With a second pool the run's one manifest could belong to either."""
+        run = self._run(tmp_path, [None])
+        path, _shape, refusal = b._find_single_pass_manifest(
+            run, "detect_brief-text", 1, 1, tmp_path, n_lineages=n_lineages)
+        assert path is None and "single-lineage run" in refusal
+
+    def test_refuses_when_the_source_geojson_is_absent(self, tmp_path):
+        """An unreadable source leaves the twin's provenance uncheckable."""
+        run = self._run(tmp_path, [None])
+        path = run / "candidates" / "candidate_manifest.json"
+        document = json.loads(path.read_text())
+        document["source_geojson"] = "outputs/run-y/proposer/gone.geojson"
+        path.write_text(json.dumps(document), encoding="utf-8")
+        found, _shape, refusal = b._find_single_pass_manifest(
+            run, "detect_brief-text", 1, 1, tmp_path, n_lineages=1)
+        assert found is None and "readable file" in refusal
+
+    def test_refuses_a_run_level_manifest_that_records_votes(self, tmp_path):
+        run = self._run(tmp_path, [1, 2, 3])
+        found, _shape, refusal = b._find_single_pass_manifest(
+            run, "detect_brief-text", 1, 1, tmp_path, n_lineages=1)
+        assert found is None and "DOES record vote counts" in refusal
+
+    def test_a_pool_named_manifest_still_wins(self, tmp_path):
+        """The run-level fallback must not override a pool-attributed manifest."""
+        run = self._run(tmp_path, [None])
+        _manifest(run / "crops" / "detect_brief-text" / "candidate_manifest.json",
+                  [None, None])
+        path, shape, refusal = b._find_single_pass_manifest(
+            run, "detect_brief-text", 1, 1, tmp_path, n_lineages=1)
+        assert refusal is None and shape["n_candidates"] == 2
+        assert path.endswith("crops/detect_brief-text/candidate_manifest.json")
