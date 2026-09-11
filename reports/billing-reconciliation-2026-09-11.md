@@ -66,10 +66,14 @@ The Reports export was account-wide (it has no project column), so the
 most economical reading is that another project on the same billing
 account used Gemini 3.5 Flash heavily in September. The map-reader-llm
 Flash 3.5 work (the 2×2 role permutation, Session 111) is the June
-invoice's A$11.46 and nothing else. **To confirm**: a Reports export
-grouped by project over the same range (requested from the PI). Until
-then the project total stands at A$6,740.47 before tax, which agrees
-with the invoices.
+invoice's A$11.46 and nothing else. **Confirmed** the same day by a
+Reports export grouped by project (1 December 2025 to 30 September
+2026): `map-reader-llm` A$6,740.47, `Shawn-individual` A$467.25,
+`Fieldmark` A$1.87, account subtotal A$7,209.58. The project total is
+therefore A$6,740.47 before tax, agreeing with the invoices; the
+September usage belongs to the PI's individual project. Two further
+project-filtered Cost-breakdown exports agree: April 2026 A$3,233.93
+(invoice usage A$3,233.95) and September 2026 to date A$30.60.
 
 ## 3. The Gemini 3.7 leg, August 2026
 
