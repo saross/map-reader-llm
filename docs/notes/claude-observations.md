@@ -2427,4 +2427,3 @@ answer to "what would you do with spare time"; the two artefacts pair.
 **How to apply.** When idle time appears at session end, take the
 reflection's unpursued question first; when writing the reflection,
 phrase that question so it can be started cold.
-
