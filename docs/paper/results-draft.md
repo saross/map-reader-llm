@@ -725,7 +725,13 @@ N = 3 → 5 step is not significant. It does not replicate for arm 1
 verifier reaches 0.8563 at its rung oracle on the canonical chain,
 above the Gemini 3 five-pass incumbent, but only 0.8421 at the carried
 threshold. The one-pass economy therefore requires a rung-tuned
-threshold that the carry-forward discipline does not supply.
+threshold that the carry-forward discipline does not supply. The
+gold-standard instrument had already recorded the same step: on the
+Era-2 verified board of § R4 all five Tier-1 cells are Gemini 3.7 or
+3.8, and every Gemini 3 cell falls to Tier 2 or below at both its
+committed and its sweep-optimal operating point, so the family gain
+reads the same way on 487 curated tiles as on 55 deployment sheets.
+[DRAFT, S153 — pending PI ruling]
 
 The image screen on GS (I1–I5) moves the modality result of §§ R2 and
 R4. The 3.7 image proposer scored 0.9254 at 20 m under the Gemini 3
