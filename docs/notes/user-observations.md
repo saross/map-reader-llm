@@ -1201,9 +1201,10 @@ analysis-row signature) left where the brief put them.
   proposal request; keep the recommendation out unless asked, and put the
   trigger's status next to the price.
 
-## S152-b candidates (pending review, 2026-09-11, drafted at handoff; PI present for this half) — silence never discards
+## S152-b — 2026-09-11 (reviewed 2026-09-11; all four kept; C1 and C3 generalised to the global scratchpad and memory; C4 extended by the PI)
 
-S150, S151, S151-d and S152 (autonomous half) above are still pending.
+Drafted at handoff; reviewed by the PI the same day. S150, S151, S151-d and S152 (autonomous half) above are still pending.
+PI on C4: "I really appreciate you taking the initiative to chase up an issue on your own (I'd like to regularise that when we wind down a session or otherwise come to a transition in the work), but once those immediate concerns are cleared, I'd also like you to feel free to pursue something of interest to you, that's not necessarily an immediate project need — you've earned it after long, hard sessions like this."
 
 - **C1 — In-the-moment reaction, relayed.** On the claims-with-anchors
   inventory of §§ R7.2–R7.3 (numbered claims, each with its analysis id
