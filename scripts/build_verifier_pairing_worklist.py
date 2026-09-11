@@ -105,6 +105,7 @@ import argparse
 import json
 import re
 import shlex
+import subprocess
 import sys
 from collections import Counter
 from dataclasses import dataclass, field
@@ -1591,6 +1592,28 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
     return rows
 
 
+def _source_commit() -> str | None:
+    """The commit of the checkout this build read, for the GENERATED banner.
+
+    A fully generated document should say which corpus it was generated FROM,
+    so a reader can tell a stale copy from a current one without rerunning the
+    generator. The hash names the parent of the commit that lands the document,
+    which is the state the numbers were read from.
+
+    Returns:
+        The short hash, or ``None`` outside a git checkout (the banner then
+        says so rather than asserting a commit).
+    """
+    try:
+        completed = subprocess.run(
+            ["git", "-C", str(PROJECT_ROOT), "rev-parse", "--short", "HEAD"],
+            capture_output=True, text=True, timeout=10, check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return completed.stdout.strip() or None
+
+
 def render_report(rows: list[dict[str, Any]], excluded: Sequence[str] = ()) -> str:
     """Render the pairing report.
 
@@ -1602,6 +1625,18 @@ def render_report(rows: list[dict[str, Any]], excluded: Sequence[str] = ()) -> s
     """
     status_counts: Counter[str] = Counter(r["status"] for r in rows)
     basis_counts = Counter(r["pairing_basis"] for r in rows)
+    # Computability is counted from what THIS build emitted, not from a
+    # hard-coded model of which statuses have jobs. An `already-registered`
+    # pair needs no job (its twin is already scored); every other pair is
+    # computable exactly when a scoring `command` was emitted for it — a
+    # `materialise_command` in front of it changes nothing about that.
+    computable: Counter[str] = Counter()
+    for row in rows:
+        if row["status"] == "already-registered" or row["command"]:
+            computable[row["status"]] += 1
+    emitted = sum(1 for r in rows if r["command"])
+    ceiling = status_counts["already-registered"] + emitted
+    source_commit = _source_commit()
     lines = [
         "# With/without-verifier pairing — worklist",
         "",
@@ -1609,9 +1644,18 @@ def render_report(rows: list[dict[str, Any]], excluded: Sequence[str] = ()) -> s
             "original publication; the with/without-verifier pairing plan",
             "scripts/build_verifier_pairing_worklist.py",
         ),
+        ">",
+        "> **GENERATED — do not hand-edit.** Every number, table and count below",
+        "> is computed by the generator named above from the committed corpus;",
+        "> edit the generator, not this file. Source commit (the checkout this",
+        f"> build read): `{source_commit or 'unknown — not a git checkout'}`.",
         "",
-        "Build order step 3 of `planning/uplift-supplement-2026-08-28.md`. No",
-        "scoring has been run: this document and its worklist are the plan.",
+        "Build order step 3 of `planning/uplift-supplement-2026-08-28.md`. This",
+        "document and `verifier-pairing-worklist.csv` are the PLAN; the scores",
+        "they call for are produced by `verifier-pairing-commands.sh` and joined",
+        "into the uplift column by `scripts/compute_verifier_uplift.py`. What",
+        "has actually been computed at any moment is in `verifier-uplift.csv`,",
+        "not here.",
         "",
         "Verifier uplift is the difference a verifier makes holding everything",
         "else fixed. Each row pairs one verified cell with the consensus set that",
@@ -1695,38 +1739,47 @@ def render_report(rows: list[dict[str, Any]], excluded: Sequence[str] = ()) -> s
         "",
         "### How many pairs can be computed",
         "",
-        "A pair is computable when BOTH sides have a score. Where each status",
-        "stands:",
+        "A pair is computable when BOTH sides have a score. The ceiling below is",
+        "counted from THIS build's statuses and from the jobs this build",
+        "actually emitted — a row counts as computable only if it carries a",
+        "`command`, whether or not it also needs a `materialise_command` first.",
+        "An earlier version of this section hard-coded a 2026-08-29 model of the",
+        "pipeline in which materialise-then-score jobs did not yet exist, and",
+        "went on reporting `ready-after-materialise` as uncomputable long after",
+        "the materialiser was emitting them.",
         "",
         "| Status | Pairs | Computable | Why |",
         "|---|---:|---:|---|",
         f"| `already-registered` | {status_counts['already-registered']} "
-        f"| {status_counts['already-registered']} | Both sides are registered "
+        f"| {computable['already-registered']} | Both sides are registered "
         "conditions, so both are already in `conditions.csv`. No scoring needed. |",
-        f"| `ready` | {status_counts['ready']} | {status_counts['ready']} "
-        "| Once the emitted job writes its score. |",
+        f"| `ready` | {status_counts['ready']} | {computable['ready']} "
+        "| The twin is a committed GeoJSON; one emitted job scores it. |",
         f"| `ready-after-materialise` | {status_counts['ready-after-materialise']} "
-        "| 0 | The vote shell has to be filtered out of the committed union "
-        "first, and no job is emitted for that yet. |",
-        f"| `blocked` | {status_counts['blocked']} | 0 | No twin located. |",
+        f"| {computable['ready-after-materialise']} | Two emitted commands: the "
+        "materialiser filters the vote shell out of the recorded universe, then "
+        "the score runs on the twin. No API spend and no re-aggregation. |",
+        f"| `blocked` | {status_counts['blocked']} | {computable['blocked']} "
+        "| No twin located. |",
         "",
         f"So the ceiling after a clean run of `verifier-pairing-commands.sh` is "
-        f"**{status_counts['already-registered'] + status_counts['ready']} "
-        f"computed, {len(rows) - status_counts['already-registered'] - status_counts['ready']} "
-        "pending**.",
+        f"**{ceiling} computed, {len(rows) - ceiling} pending** — "
+        f"{status_counts['already-registered']} pair(s) needing no scoring at "
+        f"all and {emitted} emitted job(s).",
         "",
-        "The 2026-08-29 run produced 8, which is the 6 already-registered pairs",
-        "plus 2 scored twins. Two defects, both now fixed, account for the gap:",
+        "Two defects of the 2026-08-29 batch, both since fixed, are why that",
+        "run produced 8 rather than its ceiling — kept here because both are",
+        "failure modes a future batch can repeat:",
         "",
         "1. **The script aborted at the first failure.** `set -e` stopped the",
         "   batch at the third command, so twelve jobs that would have succeeded",
-        "   never ran. The two that had already completed are the two scores.",
-        "2. **Corrected-F1 scores were unreadable anyway.** Eight of the fifteen",
-        "   jobs use `compute_corrected_f1_multi_buffer.py`, which writes",
-        "   `summary.json`; the uplift computer only looked for",
-        "   `evaluation.json`. Even a fully successful batch would have capped",
-        "   at 6 + 7 = 13, with the eight corrected-F1 pairs stuck at `pending`",
-        "   and nothing to say why.",
+        "   never ran. The preamble no longer sets it, and failures are",
+        "   collected and reported at the end.",
+        "2. **Corrected-F1 scores were unreadable anyway.** Those jobs use",
+        "   `compute_corrected_f1_multi_buffer.py`, which writes `summary.json`;",
+        "   the uplift computer only looked for `evaluation.json`, so even a",
+        "   fully successful batch would have left every corrected-F1 pair at",
+        "   `pending` with nothing to say why. It now reads both shapes.",
         "",
         "## Changelog",
         "",
