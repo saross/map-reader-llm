@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -55,6 +56,28 @@ from scripts.lib_uplift_supplement import (
 pytestmark = pytest.mark.tier1
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _section_7_1_columns() -> set[str]:
+    """Column names the canonical key sanctions in § 7.1 specifically.
+
+    § 7.1 ("Uplift-supplement dataset columns") is the builder's own extension
+    table folded into the key by the PI on 2026-09-10, so its rows are
+    *expected* to coincide with ``COLUMN_EXTENSIONS``. Tests that ask whether a
+    builder is shadowing the key need the key's vocabulary from everywhere
+    ELSE, which means slicing this subsection out.
+
+    Returns:
+        The backticked first-column names of the § 7.1 table. Empty if the
+        subsection is absent, which leaves the shadow check at full strength
+        rather than silently passing.
+    """
+    text = (PROJECT_ROOT / NOTATION_KEY_PATH).read_text(encoding="utf-8")
+    match = re.search(r"^### 7\.1\b.*?(?=^## 8\.)", text, re.M | re.S)
+    if match is None:
+        return set()
+    return set(re.findall(r"^\|\s*`([^`]+)`\s*\|", match.group(0), re.M))
+
 
 NOTATION_KEY_FIXTURE = """# Fixture key
 
@@ -342,12 +365,25 @@ class TestNotationKeyValidation:
             key.validate(columns)
 
     def test_no_extension_duplicates_a_sanctioned_name(self) -> None:
-        """An extension that shadows the key is a sign the key already has it."""
+        """An extension that shadows the key is a sign the key already has it.
+
+        Scoped to the key's vocabulary OUTSIDE § 7.1. On 2026-09-10 the PI
+        sanctioned the builder's declared extensions into the key as
+        `§ 7.1 Uplift-supplement dataset columns` (ruling 2(i) of the
+        supplement's registration walk-through), so § 7.1 *is* this
+        extension table folded into the key: every one of its rows is
+        expected to appear in ``COLUMN_EXTENSIONS``, which remains the
+        generator of ``notation-extension-proposal.md`` and the home of each
+        column's warrant. Counting § 7.1 as a shadow would make the fold-in
+        itself the failure. What the invariant still catches is a column the
+        key sanctions somewhere else — §§ 6, 7 proper, or a later
+        subsection — while a builder goes on declaring it as new.
+        """
         key = NotationKey(PROJECT_ROOT / NOTATION_KEY_PATH)
-        overlap = sorted(set(COLUMN_EXTENSIONS) & key.sanctioned)
+        overlap = sorted((set(COLUMN_EXTENSIONS) & key.sanctioned) - _section_7_1_columns())
         assert overlap == [], (
             f"these columns are declared as extensions but the canonical key "
-            f"already sanctions them: {overlap}"
+            f"already sanctions them outside § 7.1: {overlap}"
         )
 
     def test_every_extension_states_its_warrant(self) -> None:
