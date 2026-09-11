@@ -1,8 +1,8 @@
 # Output Directory Standard
 
-> **Last revised**: 2026-08-03 (governance: `docs/methodology/reports/**`
-> split-by-citation rule added to the Revision-Policy scope section —
-> PI ruling closing the gap that directory sat in). See
+> **Last revised**: 2026-09-11 (governance: generated projections carry
+> machine provenance, not a hand changelog — PI ruling, Session 153;
+> prior 2026-08-03: `docs/methodology/reports/**` split-by-citation rule). See
 > [§ Changelog](#changelog) for revision history.
 
 ## Purpose
@@ -339,6 +339,25 @@ records), `docs/methodology/preregistration/*.md` (governed separately
 by the preregistration process), `docs/methodology/research/*.md`
 (third-party Deep Research reports), and `archive/**` (frozen state).
 
+**Generated projections — provenance, not a hand changelog (PI ruling
+2026-09-11, Session 153)**: a Markdown file under an in-scope path that
+is emitted by a generator from registered inputs (for example
+`results/hypothesis-outcome-table/hypothesis-outcome-table.md`, a pure
+projection of `results/analyses-manifest.json`) is OUT of the
+banner-and-changelog requirement and IN a stricter one. The principle:
+a hand-edited document's history is human, so a human writes it down; a
+generated document's history is its inputs' and its generator's git
+history, so the file must make that traceable by machine instead. Every
+such file must carry (1) a `GENERATED FILE — do not hand-edit` banner
+naming the generator script, (2) the source commit of the inputs it was
+projected from, and (3) a `--check` drift guard in the generator, run by
+a tier-1 test, that fails when the committed file no longer matches a
+fresh projection. A hand-added changelog would break (3), which is why
+the exemption exists. "Is this current?" is answered by the drift test,
+not by a changelog. Before→after notes for a regeneration go in the
+commit message and, when the change is paper-relevant, in the session's
+report under `reports/`.
+
 **`docs/methodology/reports/**` — split by citation (PI ruling
 2026-08-03, closing the governance gap this directory sat in)**: scope
 follows CONSUMPTION, not location. A file in this directory that the
@@ -417,6 +436,10 @@ directory with a README documenting the run configuration, cost, and
 the ground truth filtering applied (hairy-only symbols from student data).
 
 ## Changelog
+
+### 2026-09-11 — Governance: generated projections carry provenance, not a changelog (Session 153)
+
+**Trigger**: regenerating the hypothesis-outcome table after the `verifier-uplift-pairing` row was registered exposed a collision — the Document Revision Policy asks for a hand changelog on `results/**.md`, but the table is a generated projection whose `--check` byte-equality guard (tier-1) would fail on any hand edit. PI ruling: generated projections are exempt from the banner-and-changelog rule and must instead carry a GENERATED banner, a source-commit stamp, and a tested drift guard. Rule added to § "Documents in Revision Policy Scope". Route (b) of `reports/r7-gaps-deltas-2026-09-11.md` § 6.1.
 
 ### 2026-08-03 — Governance: reports-directory split-by-citation rule (Session 125, D3)
 

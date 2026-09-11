@@ -335,8 +335,8 @@ reproduction: the archived board rebuilt by the retired builder failed
 as specified on one cell because a stale label-keyed cache had served
 that cell's 372-feature input at the 2026-05-06 build; from the inputs
 it actually scored it reproduces 44 of 44 cells and 946 of 946 pairs
-(Obs 464). Nine of the 40 `-opmax` files were found mis-materialised on
-2026-04-19 and rebuilt from their stages the same day (each rose by
+(Obs 464). Nine of the 40 `-opmax` files, materialised on 2026-04-19, were found
+mis-materialised on 2026-09-10 and rebuilt from their stages the same day (each rose by
 0.0004 to 0.0081; Tier 1 and the admissible set unchanged). The archived
 Era-2 PV board of sweep-optimal cells is superseded by this
 register-backed board, whose `-opmax` rows now carry its cells. Card: `planning/gs-era2-verified-board-2026-09-08.md`; board:
@@ -885,6 +885,10 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-09-11 (later) — § R4 opmax-rebuild dates corrected (Session 153)
+
+**Trigger**: the S153 R7 gaps agent flagged that the § R4 board paragraph dated the nine `-opmax` files' discovery and rebuild to 2026-04-19. That is their original materialisation date (`bd24293d4`); they were found mis-materialised and rebuilt on 2026-09-10 (board README changelog entry of that date; Obs 466). One sentence corrected; no figure moved.
 
 ### 2026-09-11 — § R4 board paragraph: signed board, corrected materialisation (Session 152)
 

@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -264,7 +265,7 @@ def test_verify_run_leaves_the_working_tree_clean():
         cwd=PROJECT_ROOT, capture_output=True, text=True, check=True,
     ).stdout
     subprocess.run(
-        [".venv/bin/python", "scripts/regenerate_per_arch_md_from_json.py", "--verify"],
+        [sys.executable, "scripts/regenerate_per_arch_md_from_json.py", "--verify"],
         cwd=PROJECT_ROOT, capture_output=True, text=True, check=False,
     )
     after = subprocess.run(
