@@ -712,8 +712,11 @@ proposer seat was never measured, nothing here bears on 3.8 as a
 proposer (Obs 448). [DRAFT, S153 — pending PI ruling]
 
 On the r2 board the all-3.7 stack takes tier 1: arm 2 N = 5 oracle
-0.8871 and carried 0.8827 (T2), which on the board's own instrument
-is +0.0267 above the entire Gemini 3 board including its oracles. The
+0.8871 and carried 0.8827 (T2). Its carried point alone stands +0.0267
+above the best cell the Gemini 3 board can field, B's own N = 10 oracle
+at 0.8560, and its oracle stands +0.0311 above the same cell — so the
+family clears the incumbent family even when the incumbent is allowed
+its own hindsight. [DRAFT, S153 — pending PI ruling] The
 fourth cell scores 0.8728 carried (T3) and 0.8813 oracle (T2) and
 holds the board's highest carried tile-MCC, 0.726 at precision 0.952
 and recall 0.806, the discriminating verifier on the noisier Gemini 3
