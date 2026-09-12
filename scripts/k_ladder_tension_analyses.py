@@ -84,8 +84,8 @@ sys.path.insert(0, str(BASE_DIR))
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
-from scripts.era1_leaderboard_tiering import TARGET_CRS  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
+    TARGET_CRS,
     micro_f1,
     permutation_test_float,
 )
