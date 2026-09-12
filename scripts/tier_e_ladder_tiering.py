@@ -265,6 +265,8 @@ def main() -> None:
     tiering = json.loads(
         (TIERING_DIR / f"tiering_{HEADLINE_BUFFER}m.json").read_text()
     )
+    pairwise = tiering.get("pairwise") or []
+    mcc = (tiering.get("mcc_permutation") or {}).get("pairwise") or []
     ladder = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(
             timespec="seconds"
@@ -283,18 +285,32 @@ def main() -> None:
             "greedy-clique tiers"
         ),
         "rungs": rungs,
-        "n_tiers": tiering.get("n_tiers"),
+        "n_tiles": tiering.get("n_tiles"),
+        "n_permutations": tiering.get("n_permutations"),
+        "seed": tiering.get("seed"),
+        "fdr_q": tiering.get("fdr_q"),
+        "tiers": tiering.get("tiers"),
+        "n_tiers": len(tiering.get("tiers") or []) or None,
         "tie_set": tiering.get("tie_set"),
-        "n_pairs": tiering.get("n_pairs"),
-        "n_significant": tiering.get("n_significant"),
-        "pairwise": tiering.get("pairwise"),
+        "n_pairs_f1": len(pairwise),
+        "n_significant_f1": sum(
+            1 for row in pairwise if row.get("significant")
+        ),
+        "n_pairs_mcc": len(mcc),
+        "n_significant_mcc": sum(1 for row in mcc if row.get("significant")),
+        "pairwise_f1": pairwise,
+        "pairwise_mcc": mcc,
         "ranking": tiering.get("ranking"),
     }
     LADDER_JSON.write_text(json.dumps(ladder, indent=2) + "\n")
     logger.info(
-        "tiers %s, tie set %s -> %s",
-        tiering.get("n_tiers"),
+        "tiers %s, tie set %s, F1 %d/%d significant, MCC %d/%d -> %s",
+        ladder["n_tiers"],
         len(tiering.get("tie_set") or []),
+        ladder["n_significant_f1"],
+        ladder["n_pairs_f1"],
+        ladder["n_significant_mcc"],
+        ladder["n_pairs_mcc"],
         LADDER_JSON.relative_to(BASE_DIR),
     )
 
