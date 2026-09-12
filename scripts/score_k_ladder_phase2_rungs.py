@@ -370,7 +370,36 @@ def cmd_prepare(args: argparse.Namespace) -> None:
             "labels": labels,
         }
 
+        # At K = 1 the vote axis is degenerate (vote_t can only be 1), so the
+        # sweep-optimal point can coincide with the carried point exactly. When
+        # it does, the two cells are the same cell: it is materialised and
+        # scored once, the carried entry points at the opmax artefacts, and the
+        # transfer tax is exactly zero by construction rather than by
+        # measurement. Registering a duplicate row would double-count the cell.
+        identical = (
+            entry["opmax"]["vote_t"],
+            entry["opmax"]["prob_t"],
+        ) == (entry["carried"]["vote_t"], entry["carried"]["prob_t"])
+        entry["carried_identical_to_opmax"] = identical
+
         for point in ("opmax", "carried"):
+            if point == "carried" and identical:
+                entry["carried"].update(
+                    {
+                        key: entry["opmax"][key]
+                        for key in (
+                            "detections",
+                            "n_detections",
+                            "cell",
+                            "eval_path",
+                        )
+                    }
+                )
+                entry["carried"]["_note"] = (
+                    "identical to the sweep-optimal point; one cell, scored "
+                    "once, transfer tax 0.0000 by construction"
+                )
+                continue
             label = labels[point]
             detections = MATERIALISED_DIR / f"{label}.geojson"
             count = materialise(
@@ -500,6 +529,7 @@ def cmd_collect(args: argparse.Namespace) -> None:
                 "candidates",
                 "verifier_stage",
                 "frames_agree_on_argmax",
+                "carried_identical_to_opmax",
                 "labels",
             )
         }
