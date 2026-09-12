@@ -33923,3 +33923,848 @@ input was current and the *frame* of the argmax was wrong); **Obs 464**
 (the other archived-board defect of this pair, a label-keyed cache
 serving a superseded file — both were invisible to the board's own gates
 and both surfaced only from a cross-artefact count check).
+
+## Observation 467: In-sample optima and committed operating points do not belong on one board without a symmetry check — the E56 lens as a standing membership gate, warranted at +0.0006 to +0.0056 (Session 153, 2026-09-12)
+
+**The finding.** As first published on 2026-09-10 the GS Era-2 verified
+board compared unlike with unlike. Its Gemini 3.7 / 3.8 screen cells sat
+at their **sweep-best** points — in-sample optima of the erratum E56
+class — while its Gemini 3 incumbents sat at **committed** operating
+points, only `verifier-robustness::verified-384-16of30-t0-3-n5-opmax`
+being itself a sweep optimum. That asymmetry favours whichever family
+was allowed to choose its operating point post hoc, by exactly the
+optimism of a sweep. The PI called it on 2026-09-10 (WN-C13) and both
+halves of the correction are now measured.
+
+| Correction applied | What was measured | Effect on the board |
+|---|---|---|
+| Gemini 3 raised to its own sweep-optimal level | 43 `-opmax` rows minted, **40** join under the card's K ≥ 5 rule (39 → 79 cells) | Tier 1 = the same five 3.7 / 3.8 cells; best Gemini 3 sweep optimum `pv-high-text-t0.3-n5-opmax` reaches rank **11**, Tier 2 |
+| Screen cells' own selection optimism subtracted (Efron–Gong, argmax replayed per tile resample, 10,000 resamples, seed 42, 20 m) | board frame **+0.0006 to +0.0056** across 10 cells: +0.0006 to +0.0035 for the seven 3.7 / 3.8 cells, +0.0018 to +0.0056 for the three Gemini 3 B-geometry sweep cells | no Tier-1 member moved |
+
+The largest single correction is +0.0056
+(`image-b-gs-2026-08-28__g384-ov192-image-high-k10-verified-p0_20-k8`,
+apparent 0.8263 → corrected 0.8208 on the board frame); the largest on
+any 3.7 / 3.8 cell is +0.0035
+(`grid-2026-08-18__g384-ov192-k10-verified37-p0_98-k10`, 0.9062 →
+0.9027). Nine of the 39 incumbents moved down one tier as the `-opmax`
+cells interleaved; none moved up, and Tier 1–2 membership among
+incumbents was unchanged.
+
+**Why this matters.** The warrant survived the check here, but it was
+not guaranteed to: the correction is of the same order as the board's
+own tier margins, and the asymmetry was found only because the PI asked
+what excluding the sweep optimum costs, not because any gate looked for
+it. The lesson is a standing one: **apply the E56 lens to every board
+membership** — for each candidate, record whether its operating point
+was chosen in-sample (a sweep argmax) or committed in advance, and
+refuse to tier the two kinds together until either both families are
+represented at both levels or the in-sample side's optimism has been
+subtracted. This is a membership property, decided before tiering, not
+a caveat added afterwards.
+
+**Caveats.** The optimism estimate is Efron–Gong over tile resamples
+with the argmax replayed in-resample; it prices *this* sweep's selection
+on *this* frame and does not price the choice of which cells to sweep at
+all. Argmax stability across resamples ranges from 0.287
+(`g37-text-k5-verified-swap37-p0.80-k5`, 12 distinct winners) to 0.945
+(`g37-text-k5-verified-carried-p0.10-k5`, 7 winners), so the corrections
+on the low-stability cells rest on a replayed choice that is genuinely
+unstable.
+
+**Findable later**: E56 lens on board membership, in-sample versus
+committed operating point, symmetry fix, sweep optimism +0.0006 to
++0.0056, Efron–Gong argmax replay, `-opmax` twins 43 minted 40 joined,
+39 → 79 cells, argmax stability 0.287, standing membership gate,
+WN-C13.
+
+Sources: `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`
+(read 2026-09-12: the 79-cell header line "79 cells; 1845/3081 pairs
+significant; 7 tiers; tie set 5; MCB admissible 28"; rank 11
+`pv-diag-384::pv-high-text-t0.3-n5-opmax` 0.8873; changelog entry
+"### 2026-09-10 (later) — Symmetry fix: both families at both levels;
+79 cells", from which the 43-minted / 40-joined counts, the two optimism
+sub-ranges, and the nine-incumbents-down-one-tier statement were taken);
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/optimism/README.md`
+(read 2026-09-12: the 20-row per-frame table and the closing line "Board
+frame: optimism ranges +0.0006 to +0.0056 over 10 cells", and the
+instrument line naming `scripts/selection_aware_intervals.py
+--sweep-union`, 10,000 tile resamples, seed 42, 20 m);
+`planning/paper-writeup-continuity.md` (read 2026-09-12: the
+"STATE AFTER S152" headline (2), "sweep optimism of ten screen cells
++0.0006 to +0.0056 (`3097e9bbe`)"); `git show 68cea286c:planning/paper-writeup-continuity.md`
+(read 2026-09-12: the WN-C13 candidate text, lines 106–108).
+Related: **Obs 465** (the symmetry fix itself, and the result that the
+3.7 / 3.8 Tier 1 survives it — this entry records the generalised
+membership rule the fix warrants, not the fix's verdict); **Obs 463**
+(the board as first published, whose membership carried the asymmetry);
+**Obs 470** (the MCB consequence of changing the candidate set the same
+correction changed).
+
+## Observation 468: A silent top-N filter turned a 44-cell regression rebuild into 26 cells and was read as a gate failure — the drop now logs every label and records them in the board's metadata (Session 153, 2026-09-12)
+
+**The finding.** `scripts/build_tiered_leaderboard.py` applies a top-N
+filter to the tiered board, `DEFAULT_TOP_N = 20` (line 125), and until
+2026-09-10 it announced the cut only as an INFO-level count. The first
+G1 regression rebuild of the archived 44-cell per-architecture Era-2 PV
+board therefore came back with **26** cells, and the missing 18 were
+invisible in the log: `g1-regression.json`'s `note` records "first
+attempt ran with the builder default `--top-n 20` and rebuilt 26 cells
+(F1 exact on those); rerun with `--top-n 0` as the archived metadata
+records". The rebuild had to be re-run against the archived metadata's
+own setting before the gate could be read at all.
+
+Commit `c5a7f43e5` (2026-09-10 14:33:23 +1000) makes the drop loud:
+
+- every dropped condition is logged at **WARNING** with its label and
+  its F1 at the primary buffer, together with the hint that their full
+  sweeps remain in `leaderboard_all_evaluations.json` and that
+  `--top-n 0` tiers everything (`scripts/build_tiered_leaderboard.py`,
+  the `logger.warning` block after the filter);
+- the dropped conditions are recorded structurally in the board JSON's
+  metadata as `dropped_by_top_n` (one record per condition: `label`,
+  `condition_id`, `best_threshold`, `f1_primary`), plumbed through
+  `select_best_thresholds`'s new `dropped_by_top_n_out` out-parameter
+  (line 907) so the existing return type and every caller stay
+  unchanged, and written at line 2264;
+- two tier-1 tests pin the behaviour
+  (`tests/test_build_tiered_leaderboard_top_n.py`:
+  `test_top_n_drop_is_logged_and_recorded`,
+  `test_top_n_zero_keeps_everything_and_records_nothing`).
+
+The same commit revised §§ 3, 5, and 7 of the GS Era-2 board card in
+place so the signed text matches what was actually built.
+
+**Why this matters.** The failure mode is not the filter; it is a
+**default that silently changes the population under a comparison**.
+A regression gate asks "does the retired instrument reproduce the
+archived board?" — a question that is meaningless if the two boards hold
+different cells, and the 26-versus-44 mismatch was not the shape of
+error the gate was written to notice. The generalisable rule: any
+filter, cap, or sampling default that changes the *membership* of a
+compared set must be loud by default and recorded in the artefact's own
+metadata, because a downstream reader cannot reconstruct it from the
+numbers. The out-parameter pattern here is also worth reusing — it added
+a structured record without touching the return type of a function with
+many callers.
+
+**Findable later**: silent top-N drop, `DEFAULT_TOP_N` 20, 44 cells
+rebuilt as 26, `dropped_by_top_n`, `dropped_by_top_n_out`,
+`--top-n 0`, `c5a7f43e5`, `test_build_tiered_leaderboard_top_n.py`,
+membership-changing default, G1 first attempt, WN-C14.
+
+Sources: `git log -1` and `git show` on `c5a7f43e5` (read 2026-09-12:
+commit `c5a7f43e532f9524eb99d7366546688179efc635`, 2026-09-10 14:33:23
++1000, subject "fix(leaderboard): the top-N filter logs and records what
+it drops; card body matches the build", body sentence "a regression
+rebuild of a 44-cell board silently produced 26 (S151-d, gate G1)", and
+the diff's three files — `planning/gs-era2-verified-board-2026-09-08.md`
++63/−24 lines, `scripts/build_tiered_leaderboard.py` +34,
+`tests/test_build_tiered_leaderboard_top_n.py` +47);
+`scripts/build_tiered_leaderboard.py` (read 2026-09-12: line 125
+`DEFAULT_TOP_N = 20`, line 907 `dropped_by_top_n_out`, the docstring at
+lines 934–941, the WARNING block after the top-N filter at lines
+1063–1090, line 2264 `metadata["dropped_by_top_n"] = dropped_by_top_n`,
+and the `--top-n` argument at line 2052 defaulting to `DEFAULT_TOP_N`);
+`tests/test_build_tiered_leaderboard_top_n.py` (read 2026-09-12: the two
+test names at lines 29 and 42);
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g1-regression.json`
+(read 2026-09-12: `note`, and `n_cells_archived` / `n_cells_rebuilt` /
+`n_cells_common` all 44 on the re-run).
+Related: **Obs 464** (the G1 gate whose first rebuild this drop
+corrupted — the eventual diagnosis was a stale label-keyed cache, but
+the 26-cell rebuild had to be cleared out of the way first);
+**Obs 463** (the board Obs that recorded G1 as a marginal FAIL);
+**Obs 472** (the companion lesson: check a regression gate's premise
+before reading its failure).
+
+## Observation 469: Identity between an archived cell and a register row must be decided by coordinates, not by score — two of three four-decimal (F1, n) matches shared fewer than 60 of ~400 points (Session 153, 2026-09-12)
+
+**The finding.** The GS Era-2 board card originally claimed that "4 of
+44" cells of the archived per-architecture Era-2 PV board match a
+registered condition, on the evidence of F1 agreeing to four decimal
+places together with a detection count. Checked by **geometry** — a
+nearest-neighbour match between the two detection sets at a 1 m identity
+tolerance — only **one** of the four is the same set:
+
+| claimed match | points shared | verdict |
+|---|---|---|
+| `pv-flash-high-text-16of30` ↔ `pv-diag-384::verified-adv-text-consensus-16of30` | **412 of 412**, largest nearest-neighbour distance 0.0 m | the same cell |
+| `session-78-text-checklist` ↔ `verified-adv-text-t03-4of5` | **45 of 403** | an (F1, n) coincidence |
+| `pv-high-text-t0.3-n10` ↔ `verifier-robustness::verified-384-union-t0-0-n5` | **56 of 402** | an (F1, n) coincidence |
+
+Two detection sets of ~400 features can therefore agree on F1 to four
+decimals and on their count while sharing barely more than a tenth of
+their actual detections. The session reflection states the lesson in
+five words: "**F1 and a count are not an identity.**"
+
+Today's name-keyed cache audit finds the same lesson one layer down,
+where the question is not identity between two cells but currency
+between a record and the file it names.
+`scripts/build_gs_era2_board_opmax.py` reads each archived cell's
+`n_detections` from the archived board JSON and, when absent — which it
+is for **all 44** cells — falls back to the label-keyed evaluation cache
+(lines 171–173). A cross-check over all 44 archived cells run 2026-09-12
+found the cache's `n_detections` equal to the materialised file's feature
+count for **43**, with `pv-high-image-t0.3-n5` the single exception
+(cache 372, file 373 today) — the one already-known stale entry, and no
+second one. Because `archived_n` feeds `registry_vs_archived` (lines
+228–235) and that verdict switches the row's `detections` only when it
+begins `"differs"` (lines 246–247), the stale 372 *suppressed* the
+disagreement it should have raised: `opmax/membership.json` still reads
+`registry_n 372 · archived_n 372 · registry_vs_archived "match"` for a
+file holding 373 features.
+
+**Why this matters.** Both halves are the same discipline. A summary
+statistic is a lossy projection of a detection set; two different sets
+can project onto the same (F1, n) pair, and a count taken from a record
+rather than from the file is not a count of the file. For the paper this
+governs which claims may say "the same cell": the identity claim that
+survives is `pv-flash-high-text-16of30` ≡
+`pv-diag-384::verified-adv-text-consensus-16of30`, and it survives
+because 412 of 412 points coincide at 0.0 m, not because 0.8902 = 0.8902.
+Operationally: **decide identity by content (coordinates, or a content
+hash), decide currency by re-counting the file, and never by a name or a
+score.**
+
+**Caveats.** The geometric check used a 1 m tolerance on nearest
+neighbours; the two coincidence pairs are not being claimed to share
+*exactly* 45 and 56 points at every tolerance, only that they are
+nowhere near identical. The 44-cell cross-check confirms one stale cache
+entry and no second one, which bounds the known damage but does not make
+the fallback read at lines 171–173 safe — it remains a live dependency
+of a signed board on a cache with no content key.
+
+**Findable later**: F1 and a count are not an identity, identity by
+coordinates, 412 of 412 at 0.0 m, 45 of 403, 56 of 402, four-decimal F1
+coincidence, `registry_vs_archived` "match" suppressed, `archived_n`
+from the label-keyed cache, 372 versus 373, 43 of 44 cache counts agree,
+WN-C15.
+
+Sources: `docs/notes/reflections/session-reflection.md` (read 2026-09-12:
+the Session 152 entry's "What surprised me?" paragraph, ending "F1 and a
+count are not an identity", line 11241);
+`docs/notes/working-notes.md` (read 2026-09-12: **Obs 465**'s § (a), the
+three coordinate-match figures — 412 of 412 at 0.0 m, 45 of 403, 56 of
+402 — and its statement that Obs 463's "4 of 44" over-counted);
+`reports/name-keyed-cache-audit-2026-09-12.md` (read 2026-09-12:
+"Finding 2", the `archived_cells()` fallback at
+`scripts/build_gs_era2_board_opmax.py:161-176` and `:171-173`, the
+`registry_vs_archived` switch at `:228-235` and `:246-247`, the quoted
+`membership.json` row, and the closing cross-check "cache `n_detections`
+equals the materialised file's feature count for 43, and
+`pv-high-image-t0.3-n5` is the single exception (372 vs 373)"; the
+document's own audit header records HEAD `2fabf4e1d`).
+Related: **Obs 465** (the source of the three coordinate matches, taken
+while deciding which archived cells were already on the board);
+**Obs 464** (the stale label-keyed cache whose residue Finding 2
+tracks — the same 372-versus-373 blob, seen from the membership side);
+**Obs 471** (a registry's own best point stale against the file it
+names — the currency question in its own right).
+
+## Observation 470: The Hsu MCB admissible set is a property of the candidate set, not of the winner — 11 of 39 became 28 of 79 and the band widened 0.0439 → 0.0501 when 40 near-tied cells joined (Session 153, 2026-09-12)
+
+**The finding.** The GS Era-2 board's symmetry fix added 40
+sweep-optimal Gemini 3 `-opmax` cells to a 39-cell board, and the Hsu
+multiple comparisons with the best (MCB) admissible set moved with the
+candidate set, not with the evidence about the winner:
+
+| Quantity | 39-cell board | 79-cell board |
+|---|---:|---:|
+| Hsu MCB admissible set | **11** | **28** |
+| Two-sided MCB band | 22 | 39 |
+| `w_upper` | 0.0439 | 0.0501 |
+| Tier 1 (greedy clique) | the five 3.7 / 3.8 cells | **the same five** |
+| Pairs significant at BH q = 0.05 | 375 / 741 | 1,853 / 3,081 |
+| Tiers | 6 | 7 |
+
+None of the 40 additions beat the top cell — all 40 are significantly
+below it, and 31 of 40 are significantly below the lowest Tier-1 cell
+(`g37-text-k10-verified-carried-p0.10-k10`, 0.9068) — yet the admissible
+set more than doubled, because the critical value that defines
+admissibility is computed over the candidate set's joint distribution.
+The nine additions not separable from the lowest Tier-1 cell are text
+sweep optima at 0.8744–0.8863 (best: Δ +0.0205, p = 0.16). The final
+28-cell set holds the seven 3.7 / 3.8 cells, ten Gemini 3 committed
+cells, the 16-of-30 opmax, and ten text sweep optima.
+
+This is the **first measured instance** of the PI's rule that the MCB
+must be recomputed last, on the final membership, and only the final
+number cited. A subsequent correction the same week confirms the rule's
+other edge: when nine `-opmax` cells were re-materialised, `w_upper`
+moved only 0.05012 → 0.05011 and the admissible set held at 28 **with
+the same members** — so the set is stable against changes to a cell's
+score at fixed membership, and unstable against changes to membership.
+
+**Why this matters.** An admissible-set count is not a property of the
+winning cell and must never be quoted as one. "28 cells are admissible"
+says as much about how many near-tied candidates were placed on the
+board as about the winner's margin, so a paper that cites an
+intermediate MCB count, or that compares MCB counts across boards with
+different memberships, is making a claim it cannot support. The
+operational rule this instance now warrants with a number: **recompute
+the MCB last, after membership is final, and cite only the final set** —
+and when reporting it, state the candidate-set size alongside, because
+28 of 79 and 11 of 39 are not comparable quantities.
+
+**Caveats.** The two figures come from the same instrument and chain
+(`scripts/era1_leaderboard_tiering.py`, round-robin tile-swap micro-F1
+permutation, BH q = 0.05, greedy clique, 20 m), so the movement is
+attributable to membership alone; but the 39-cell board's own membership
+was itself the asymmetric one (**Obs 467**), so the 11 is not a
+"correct" prior value that 28 corrects — both are conditional on their
+candidate sets, which is precisely the point.
+
+**Findable later**: Hsu MCB admissible set is a property of the
+candidate set, 11 of 39 to 28 of 79, w_upper 0.0439 to 0.0501, MCB band
+22 to 39, recompute the MCB last cite only the final, 31 of 40 below the
+lowest Tier-1 cell, Δ +0.0205 p = 0.16, admissible set stable at fixed
+membership, WN-C16.
+
+Sources: `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`
+(read 2026-09-12: changelog "### 2026-09-10 (later) — Symmetry fix" —
+its before/after table giving Hsu 11 (band 22; `w_upper` 0.0439) versus
+28 (band 39; `w_upper` 0.0501), 375/741 versus 1,853/3,081 pairs, 6
+versus 7 tiers, the PI's "recomputed LAST … only the final one is cited"
+sentence, the 31-of-40 and all-40 separation counts, the nine text sweep
+optima at 0.8744–0.8863 with Δ +0.0205 at p = 0.16, and the composition
+of the 28; plus the "### 2026-09-10 (later still)" entry's table giving
+`w_upper` 0.05012 → 0.05011 with the same 28 members, and the header
+line "79 cells; 1845/3081 pairs significant; 7 tiers; tie set 5; MCB
+admissible 28"); `git show 68cea286c:planning/paper-writeup-continuity.md`
+(read 2026-09-12: the WN-C16 candidate text, lines 111–114).
+Related: **Obs 467** (the symmetry fix that changed the candidate set,
+and the E56 membership rule that governs what may join);
+**Obs 465** (the symmetry fix's verdict — Tier 1 unchanged — of which
+this entry is the multiple-comparisons corollary); **Obs 471**
+(the nine re-materialised cells, the fixed-membership perturbation that
+left the admissible set's members unchanged).
+
+## Observation 471: A materialisation registry's own best point can be stale against the file it names — 9 of 29 free-sweep PV cells, Obs 461's class one layer down (Session 153, 2026-09-12)
+
+**The finding.** The archived Era-2 PV materialisation registry
+(`archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv_registry.json`)
+records, per cell, the operating point and score of "the best point",
+and names the materialised detection file that point produced. For
+**nine of its 29 free-sweep cells** the registry's own `best_at_20m`
+`(vote_t, prob_t)` does not agree with the point the named file was
+actually cut at. Re-read and re-derived 2026-09-12 from the two
+registries directly: 30 rows, of which 29 are free sweeps and one
+(`pv-flash-high-text-16of30`) carries a preset vote threshold; comparing
+`best_at_20m` against `pv_registry_327.json`'s `best_at_327` row by row
+gives exactly **nine** `(vote_t, prob_t)` disagreements:
+
+| cell | file's point (`best_at_327`) | registry's point (`best_at_20m`) |
+|---|---|---|
+| `pv-high-text-t0.3-n5` | (4, 0.15) | (4, 0.20) |
+| `pv-high-text-t1.0-n5` | (4, 0.15) | (3, 0.20) |
+| `pv-min-text-t0.3-n10` | (6, 0.15) | (3, 0.15) |
+| `pv-min-text-t0.7-n5` | (4, 0.15) | (4, 0.20) |
+| `pv-min-text-t1.0-n10` | (6, 0.15) | (5, 0.15) |
+| `pv-high-image-t0.3-n10` | (6, 0.15) | (5, 0.15) |
+| `pv-high-image-t0.7-n10` | (7, 0.15) | (7, 0.20) |
+| `pv-min-image-t1.0-n10` | (7, 0.20) | (6, 0.20) |
+| `pv-scale4-optimal-n5` | (3, 0.20) | (3, 0.15) |
+
+The consequences on the board were real but small: rebuilding the nine
+from their registered stages at the registry's own point moved detection
+counts by up to 50 features (`pv-min-text-t0.3-n10` 392 → 431,
+`pv-high-text-t1.0-n5` 376 → 426) and raised every one of the nine, by
+**+0.0004 to +0.0081** F1@20 — the direction the diagnosis predicts,
+since the registry's point is its sweep's argmax while the superseded
+file held some other set. Three cells changed tier, all `-opmax`; Tier 1,
+the tie set, the Hsu admissible set's size *and* membership, and every
+`-era2b` incumbent's tier were unchanged.
+
+**Why this matters.** This is **Obs 461**'s class one layer down. There,
+a derived artefact (`sweep_2d.json`) had gone stale against its own
+sibling input (`probabilities.json`). Here the stale link is between a
+*registry row* and the *file the row names*: two records of the same
+decision, neither of which is checked against the other, and the board
+scored the file while every human-readable account of the cell quoted
+the registry. The general rule: **a registry that names a file must be
+gated against that file's content**, not merely written at the same
+time as it. A count is the cheapest sufficient gate, and it is what
+eventually caught this.
+
+**Caveats.** The *mechanism* of the nine is not staleness at all — it is
+a cross-frame operating-point leak, diagnosed in **Obs 466**: the files
+were the 327-tile Era-3 frame's optima, boarded on the 487-tile Era-2
+frame. This entry records the class as it presents to an auditor —
+"the registry's best point disagrees with the file it names, in 9 of 29
+cells" — because that is the *detectable* signature, and the check it
+motivates (gate the registry against the file) catches both the
+staleness class and the cross-frame class. Do not cite this entry for
+the mechanism; cite **Obs 466**.
+
+**Findable later**: materialisation registry stale against the file it
+names, 9 of 29 free-sweep cells, `pv_registry.json` versus
+`pv_registry_327.json`, `best_at_20m` versus `best_at_327`, nine
+`(vote_t, prob_t)` disagreements, +0.0004 to +0.0081, 392 → 431,
+registry gated against file content, Obs 461 one layer down, WN-C17.
+
+Sources: `archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv_registry.json`
+and `pv_registry_327.json` (both read and compared programmatically
+2026-09-12: 30 rows each; 29 free-sweep rows, `pv-flash-high-text-16of30`
+the one carrying `vote_t_preset`; `best_at_20m` versus `best_at_327`
+row by row yields exactly the nine disagreements tabulated above);
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`
+(read 2026-09-12: changelog "### 2026-09-10 (later still) — Nine
+`-opmax` cells re-materialised", its nine-row before/after table giving
+the counts and F1 values, the "+0.0004 to +0.0081" range, the
+"33 reproduce their archived file exactly" statement over the other 34
+rows, and the "What did NOT change" paragraph);
+`git show 68cea286c:planning/paper-writeup-continuity.md` (read
+2026-09-12: the WN-C17 candidate text, lines 114–116).
+Related: **Obs 466** (the mechanism — the Era-3 frame's optima
+materialised on the Era-2 frame; this entry is the detectable signature,
+that entry is the cause); **Obs 461** (the genuine stale-derived-artefact
+class, of which this is the registry-versus-file analogue);
+**Obs 473** (the gate the class motivates); **Obs 470** (the
+fixed-membership MCB perturbation the nine-cell rebuild supplied).
+
+## Observation 472: Check a regression gate's premise before reading its failure — G1's "+0.0015 of instrument drift" was a stale cache serving a superseded input (Session 153, 2026-09-12)
+
+**The finding.** Gate G1 of the GS Era-2 board asked whether the retired
+`scripts/build_tiered_leaderboard.py` still reproduces the archived
+44-cell per-architecture Era-2 PV board from its archived inputs. It
+came back a marginal FAIL: one cell (`pv-high-image-t0.3-n5`) moved
+F1@20 0.7460 → 0.7475, `max_abs_delta_f1_20` **0.0015**; one of 946
+pairs crossed BH q = 0.05 (adjusted p 0.045675 → 0.059498); Tiers 5–6
+re-cut from 6 + 4 to 9 + 1 cells. That was read as drift in the retired
+instrument. It was not. The bisect showed the archived board's score for
+that cell came from a **label-keyed evaluation cache** written on
+2026-04-25 from a 372-feature blob, while the file the rebuild read had
+been re-materialised to 373 features on 2026-05-06 — seventy seconds
+after the archived board's own build timestamp. Rebuilt from the inputs
+the archived board **actually scored**, the retired builder reproduces
+44 of 44 cells and 946 of 946 pairs with `max |Δp| = 0.0`, zero
+significance flips, and tiers identical member for member.
+
+The gate's unstated premise was **archived inputs = scored inputs**. The
+premise was false, and nothing in the gate's design could tell the
+difference between "the instrument changed" and "the inputs are not the
+ones that were scored" — both present as a numerical disagreement of the
+same size and sign.
+
+**Why this matters.** A regression gate is a two-sided comparison, and a
+failure localises to the instrument only if the inputs are held fixed.
+The standing rule this yields: **before reading a regression failure as
+drift, verify that the archived inputs are the inputs the archived
+artefact scored** — by re-counting features, comparing content hashes,
+or comparing timestamps against the artefact's build time. The cheapest
+sufficient check here was one line: the cache's own `n_detections` (372)
+against the input file's feature count (373). Without that check, a
+correct instrument was nearly retired as drifting, and — worse — a
+signed board's gate would have carried a false explanation into the
+paper's methods.
+
+**Caveats.** The numerical facts of the original FAIL are still real:
+the +0.0015, the BH flip, and the Tier 5–6 re-cut all happened, and the
+final G1 ruling rests on the confirmatory rebuild from the true inputs,
+not on the disagreement having been imaginary. The PI ruled G1 satisfied
+on that reproduction on 2026-09-10.
+
+**Findable later**: regression gate premise, archived inputs are not
+scored inputs, +0.0015 not drift, `max_abs_delta_f1_20` 0.0015, BH flip
+0.045675 to 0.059498, Tier 5–6 re-cut 6+4 to 9+1, 44/44 946/946
+confirmatory rebuild, 372 versus 373 seventy seconds, verify the premise
+before reading the failure, WN-C18.
+
+Sources: `docs/notes/working-notes.md` (read 2026-09-12: **Obs 464**'s
+finding section — the 0.7460 → 0.7475 move, the adjusted-p pair
+0.045675 → 0.059498, the Tier 5–6 re-cut, the 2026-04-25 cache entry at
+`n_detections` 372 / F1 0.746, and the seventy-second gap after the
+board's 17:33:42 +0800 build timestamp);
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g1-regression.json`
+(read 2026-09-12: `verdict` — "FAIL as specified (archived inputs are
+not, for one cell, the inputs the archived board scored); PASS from the
+inputs actually scored (confirmatory rebuild `817de06a0`: 44/44,
+946/946, tiers identical)" — and the `bisect.confirmatory_rebuild` block
+with `n_cells_common` 44 and its PASS verdict "44/44 cells, 946/946
+pairs (max |dp| 0.0, 0 significance flips), tiers identical
+member-for-member");
+`reports/name-keyed-cache-audit-2026-09-12.md` (read 2026-09-12:
+"Instance 1 — the board builder's evaluation cache", which states the
+one-line check that would have caught it);
+`git show 68cea286c:planning/paper-writeup-continuity.md` (read
+2026-09-12: the WN-C18 candidate text, lines 116–118).
+Related: **Obs 464** (the bisect itself and the cache mechanism — this
+entry extracts the transferable gate-design lesson); **Obs 463** (the
+board Obs that recorded G1 as a marginal FAIL and read it as drift);
+**Obs 468** (the other reason G1's first rebuild could not be read: a
+silent top-N drop); **Obs 469** (the same discipline applied to
+identity and currency).
+
+## Observation 473: A board gate for sweep-optimal members — the operating point must be the optimum on the board's own frame, and a vintage guard runs before the filter (Session 153, 2026-09-12)
+
+**The finding.** **Obs 466** diagnosed nine archived cells as
+sweep-optimal **on the wrong frame**: the 327-tile Era-3 frame's argmax,
+materialised and then boarded on the 487-tile Era-2 frame. The
+generalisable form is a gate, and it is now stated as one and
+implemented:
+
+> For every board member whose operating point is a sweep argmax, the
+> recorded point must be the optimum on the **board's own frame** — not
+> merely an optimum, and not merely accompanied by an evaluation that
+> names the right frame. A materialised "best" cell must carry the frame
+> its argmax was taken on.
+
+The implementation has two parts, both in the repository today:
+
+1. **The frame gate.** `scripts/materialise_opmax_cells.py` rebuilds
+   each cell from its registered stage and gates the result on the count
+   and the Era-2-frame F1 equalling the registry's sweep to four
+   decimals; the board's `opmax/gates.json` records G2 0 failures, G3 0,
+   and G4 40/40 — the last being "opmax cells identical on both frames".
+   Each rebuilt cell carries a provenance sidecar recording every
+   input's git blob hash.
+2. **The vintage guard, run before the filter.**
+   `scripts/materialise_opmax_cells.py` classifies each row's candidate
+   vintage before it applies the `(vote_t, prob_t)` filter and publishes
+   the verdict in `check.json` under the field `vintage`
+   (`classify_vintage` at line 199, the call at line 439, the emitted
+   field at line 478); the standalone survey is
+   `scripts/check_pv_sweep_vintage.py survey`. For a `union-rebuilt` row
+   it publishes **no count at all**, rather than the soft-failing index
+   join that previously produced a plausible-looking wrong number.
+
+**Why this matters.** The 327-versus-487 leak passed *underneath* the
+register's existing `scope` check, which verifies the frame an
+evaluation was computed on. That check was correct and it was satisfied:
+the evaluation named the right bounds. What leaked was the frame of the
+argmax the detection file had **already been cut at**, one step upstream
+of anything the scope check looks at. A board is therefore not safe
+merely because every member's evaluation names the board's frame; the
+*selection* that produced each member must also be on that frame. This
+gate belongs in the card of any future board that mixes sweep-optimal
+with committed cells, alongside the E56 membership rule (**Obs 467**).
+
+**Caveats.** The gate as implemented checks Era-2-frame F1 and count
+against the registry to four decimals, which is a strong but indirect
+test of "the argmax is on this frame": it verifies the cell reproduces
+the registry's claimed optimum, and relies on the registry itself being
+a 487-frame sweep. Where a cell's own sweep grid is available the
+direct check — brute-force the grid on the board frame and confirm the
+recorded point is the argmax — is stronger, and is what diagnosed the
+nine in the first place.
+
+**Findable later**: board gate sweep-optimal member frame, argmax frame
+provenance, 327-versus-487 leak below the scope check,
+`materialise_opmax_cells.py` vintage field, `classify_vintage`,
+`check_pv_sweep_vintage.py survey`, `opmax/gates.json` G4 40/40,
+no count published for union-rebuilt, materialised best cell must carry
+its frame, WN-C19.
+
+Sources: `scripts/materialise_opmax_cells.py` (read 2026-09-12: the
+"# the vintage guard" block at line 173, `classify_vintage` at line 199
+with its `(verdict, explanation)` contract at line 222 and the
+`same-vintage` return at line 234, the per-row call at lines 439–440,
+and the emitted `"vintage"` field at line 478);
+`scripts/check_pv_sweep_vintage.py` (read 2026-09-12: the module
+docstring's "Why" section and the two named classes
+`probabilities-grew` / `union-rebuilt` at lines 25–35, and the `survey`
+subcommand at lines 38–41);
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`
+(read 2026-09-12: the "### 2026-09-11" changelog entry's gate line
+"`opmax/gates.json` re-run: G2 0 / G3 0 / G4 40/40 PASS, unchanged", and
+the "### 2026-09-10 (later)" entry's gate list "40/40 archived scores
+reproduce on the Era-2 frame, every board evaluation on the board frame,
+opmax cells identical on both frames");
+`docs/notes/working-notes.md` (read 2026-09-12: **Obs 466**'s "Why this
+matters" paragraph, which states the lesson this entry converts into a
+gate, and its citation of `scripts/verify_run_conditions.py`'s `scope`
+check docstring, "the 327-vs-487 leakage trap");
+`planning/paper-writeup-continuity.md` (read 2026-09-12: the WN-C19
+candidate line in the "STATE AFTER S152" block).
+Related: **Obs 466** (the leak this gate generalises from);
+**Obs 467** (the companion membership rule — whether a point is
+in-sample at all — which this gate presupposes); **Obs 475** (the
+vintage taxonomy the guard implements); **Obs 471** (the
+registry-versus-file signature the same gate detects).
+
+## Observation 474: Worktree-isolated agents are the concurrency pattern — seven ran in parallel in S153 with the parent session in the main checkout, and the day's only incident was a sync command, not a tree conflict (Session 153, 2026-09-12)
+
+**The finding.** **Obs 353** (Session 108) recorded that non-isolated
+background agents share the working tree, and recommended worktree
+isolation or explicit path partitioning. The recommendation sat unused
+for 44 sessions. Session 152 used it for the first time — background
+agents on their own branches in isolated worktrees, with the parent
+session continuing in the main checkout — and Session 153 scaled it:
+**seven** agent worktrees ran on their own branches while the parent
+session worked in the main checkout, and merges were trivial.
+
+Corroboration from the repository itself: `git branch` lists eight
+`worktree-agent-*` branches whose tips are dated 2026-09-11 or
+2026-09-12 (`a0eb70c8484c74422`, `a21cbcfbeaa770b59`,
+`a40f2383672669053`, `a51feb87262e915a2`, `a98527f84011ee57d`,
+`abd140cf9d9b571c6`, `ade6eca3c3102284a`, and this obs-writer's own
+`adbb5a6f08b0b269e`) — seven agents plus this one. Their products are on
+`main`: the R7.2–R7.3 gap deltas (`5039d152c`), the billing
+reconciliation (`3aa0b3f94`, `f7c72f56f`), the name-keyed cache audit
+(`627ea0708`), the Results claims inventory (`dd7beb884`, `92433f49a`),
+the null-threshold pairing derivation (`b13994a77`, `ce38a39da`,
+`ac4b88b50`), and the K-ladder card (`6d21812e0`). In S152 the pattern
+was already visible in the small: the re-materialisation agent ran for
+forty-five minutes while the PI and the parent session cleared six
+rulings in the same tree, and the only merge conflicts were in generated
+manifests and one changelog, both trivially resolved.
+
+**The one incident of the day was not a tree conflict.** As reported in
+session (and not yet recorded in any committed artefact — see Caveats):
+a sapphire sync command set aside 58 pre-existing untracked paths along
+with an agent's 11; everything was restored and nothing was lost. The
+failure surface had moved from *the shared working tree* to *the
+cross-machine sync command*, which is a different and narrower thing to
+guard.
+
+**Why this matters.** Two things follow. First, the pattern is now the
+default for parallel agent work in this project: worktree per agent,
+branch per agent, parent session in the main checkout, merge at the end.
+It scaled from two agents to seven without a tree conflict, which is the
+evidence Obs 353 asked for. Second, the residual risk has relocated.
+Worktree isolation protects the *repository*; it does nothing for
+untracked files, and a sweeping sync or clean operating on a
+whole-directory basis can still take an agent's uncommitted work along
+with everyone else's. The guard that matters is the one already in the
+global conventions — explicit pathspecs, and a behind-check before
+committing or pushing — applied to **sync and clean commands**, not only
+to `git add`.
+
+**Caveats.** The seven-agent count and the merge-triviality claim are
+this session's own report; the branch listing corroborates the count but
+not what each agent did concurrently, and the continuity file has no
+S153 block yet (its latest is "STATE AFTER S152"), nor is there an S153
+reflection entry. The sync incident — the 58 pre-existing untracked
+paths and the agent's 11 — is **reported in session only**: it has no
+committed artefact behind it as at the time of writing, and a future
+reader should treat the two counts as unverified and look for the S153
+continuity block, which should carry them.
+
+**Findable later**: worktree-isolated agents concurrency pattern,
+Obs 353 recommendation first used, seven agents S153,
+`worktree-agent-*` branches, parent session in the main checkout, merges
+trivial, sapphire sync set aside 58 untracked paths, agent's 11
+restored, residual risk is sync not the tree, explicit pathspecs for
+sync and clean, WN-C20.
+
+Sources: `docs/notes/reflections/session-reflection.md` (read 2026-09-12:
+the Session 152 entry's "What was different about this session?"
+paragraph — "the first here to run background agents in isolated
+worktrees on their own branches, with the parent session continuing in
+the main checkout — Obs 353's recommendation, finally used", the
+forty-five-minute re-materialisation agent, and the generated-manifest
+and changelog conflicts; verified the file has no Session 153 entry);
+`git branch --format='%(refname:short) %(committerdate:short)'` (read
+2026-09-12: 14 `worktree-agent-*` branches in all, of which the eight
+listed above carry 2026-09-11 / 2026-09-12 tips);
+`git log --since=2026-09-11 main` (read 2026-09-12: the commit subjects
+and hashes cited above);
+`planning/paper-writeup-continuity.md` (read 2026-09-12: the WN-C20
+candidate line in the "STATE AFTER S152" block, "worktree-isolated
+agents as the concurrency pattern (Obs 353's recommendation, first used,
+worked)"; and the absence of any S153 block — `grep` for "S153" returns
+nothing);
+`docs/notes/working-notes.md` (read 2026-09-12: **Obs 353**, whose
+recommendation this entry closes out).
+Related: **Obs 353** (the S108 concurrency Obs that recommended worktree
+isolation after non-isolated agents shared the tree — this entry records
+the recommendation adopted, scaled, and its residual risk relocated);
+**Obs 462** (the ordering discipline that parallel agents make harder:
+regenerate derived documents after the session's last register write).
+
+## Observation 475: The `union-rebuilt` vintage class is distinct from `probabilities-grew` — a taxonomy over 30 registry cells, and the difference decides re-verify versus re-score (Session 153, 2026-09-12)
+
+**The finding.** `scripts/check_pv_sweep_vintage.py` diagnoses a
+candidate-vintage mismatch from three universe sizes: the union's
+feature count, the `probabilities.json` key count, and the sweep's own
+universe (its `n` at `vote_t 1, prob_t 0.0`). Over the 30 cells of the
+archived PV materialisation registry the survey gives:
+
+| verdict | n | meaning |
+|---|---:|---|
+| `same-vintage` | 24 | all three agree; nothing to check |
+| `probabilities-grew` | 4 | `n_sweep < n_union == n_probabilities`: the probabilities were completed after the sweep ran. The index join is **sound**; only the sweep is stale. This is the **Obs 461** class, and these four are exactly the stages re-swept on the PI's 2026-09-08 ruling |
+| `union-rebuilt` | 1 | `n_probabilities < n_union`: the union was re-materialised after the verifier ran, so its feature **order** no longer matches the probability keys. The index join is **invalid** and any count it produces is noise |
+| `manifest-mode` | 1 | `pv-flash-high-text-16of30`, whose universe is a manifest keyed by `candidate_id`; there is no index join to go stale |
+
+The single `union-rebuilt` cell is `pv-high-text-t0.0-n3`, and it is
+the reason the distinction was drawn. Its union at `consensus_path`
+holds **1,319** features today against the registered stage's **1,256**
+probabilities; the 2026-07-30 rebuild was not an append — comparing the
+two blobs feature by feature, only **994 of the 1,256** original
+positions still hold the same point, 12 original candidates are gone
+and 75 are new. Joining union index *i* to key `candidate_{i:05d}`
+therefore pairs **262** probabilities with the wrong geometry and drops
+63 features as unverified. That is where the "410 detections against a
+registered 403" came from: an artefact, not an operating point. The
+committed sweep is **not** stale — rebuilt from the union blob at
+`09fe46a7f` and swept with the stage's own tool it reproduces the
+committed `sweep_2d.json` in **all 240 rows**, at the registered
+(`vote_t` 3, `prob_t` 0.15), n 403, F1@20 0.8234 — and the argmax does
+not move on the current vintage either (same point, n 423, F1@20 0.8508
+against the complete 2026-09-08 re-verification).
+
+**Why this matters.** The two classes call for **different remedies**,
+and conflating them prescribes the wrong work. `probabilities-grew` is a
+re-**score** problem: the join is sound, so re-sweeping the same union
+against the completed probabilities is both valid and sufficient.
+`union-rebuilt` is a re-**verify** problem: the candidate universe
+itself changed identity, so no amount of re-scoring the recorded join
+recovers anything — the question is which vintage of the inputs the row
+is meant to describe, which is a scope decision, not a computation.
+Today's § R4 discussion turned on exactly this: the board holds the
+reference and the frame fixed, so **candidate vintage is an
+input-completeness question needing re-verification, not a scoring
+question needing re-scoring**. The PI's 2026-09-11 ruling ("re-sweep,
+re-materialise, re-score, report") was issued on the
+`probabilities-grew` premise, and the premise did not survive
+execution — which is why the row was reported rather than repointed.
+
+**Caveats.** The taxonomy is decided by universe *sizes*, which is cheap
+and decisive in the observed cases but is a sufficient rather than a
+necessary test: a union rebuilt at the same feature count with a changed
+order would classify `same-vintage` and go undetected. The one
+`union-rebuilt` row is off-board (K = 3 < 5), so nothing on the signed
+board depends on the repointing decision either way; the choice between
+the archived April cell (403 @ 0.8234) and the current-vintage cell
+(423 @ 0.8508) remains the PI's.
+
+**Findable later**: `union-rebuilt` versus `probabilities-grew`,
+vintage taxonomy 24/4/1/1 over 30 cells, `pv-high-text-t0.0-n3`,
+1,256 → 1,319 candidates, 994 of 1,256 positions unchanged, 262
+mispaired probabilities, the 410 is a cross-vintage join artefact, sweep
+reproduces all 240 rows, re-verify versus re-score, candidate vintage is
+input completeness, `check_pv_sweep_vintage.py survey`, WN-C21.
+
+Sources: `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/staleness-2026-09-11/README.md`
+(read 2026-09-12: "## The class, across the whole registry" and its
+four-row verdict table over the 30 cells; the 1,319 / 1,256 universe
+sizes, "only **994 of the 1,256** original positions still hold the same
+point, 12 original candidates are gone and 75 are new", the 262
+mispairings and 63 dropped features; the 240-row sweep reproduction at
+(3, 0.15) / n 403 / F1 0.8234; the two-vintage comparison table giving
+n 423 and F1@20 0.8508 on the current vintage; and the "What was NOT
+done, and why" section's three reasons);
+`scripts/check_pv_sweep_vintage.py` (read 2026-09-12: the module
+docstring's definitions of `probabilities-grew` and `union-rebuilt` at
+lines 25–35, and the decisive-diagnostic paragraph naming the sweep's
+own `n` at `(vote_t 1, prob_t 0.0)`);
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`
+(read 2026-09-12: the "### 2026-09-11" changelog entry, which records
+the same taxonomy counts and the 2026-07-30 rebuild);
+`planning/paper-writeup-continuity.md` (read 2026-09-12: the "STATE
+AFTER S152" headline (5) and the WN-C21 candidate line).
+Related: **Obs 461** (the `probabilities-grew` class, which this entry
+separates the new class from — there the sweep is stale and the join
+sound); **Obs 466** (the third member of the family, a cross-frame
+argmax leak with every input current); **Obs 473** (the guard that now
+runs the taxonomy before the filter and publishes no count for a
+`union-rebuilt` row); **Obs 471** (the registry-versus-file signature by
+which these classes first surface).
+
+## Observation 476: The verifier is a tile classifier before it is a detector — tile MCC −0.0038 → 0.8328 on the single-pass baseline twin, +0.3928 on the headline cell, and one negative F1 uplift with a positive MCC (Session 153, 2026-09-12)
+
+**The finding.** The uplift supplement pairs each verified cell with the
+consensus set that went into its verifier at the same vote threshold —
+same passes, same reference, same buffer, same frame — and reports the
+difference on both F1 and tile-level MCC. The MCC column is where the
+verifier's function shows.
+
+The clearest case is the single-pass baseline twin
+`pv-diag-384::verified-adv-text-baseline` (era-2-487 frame, 20 m,
+N = 1, `prob_t` 0.15): tile MCC **−0.0038 → 0.8328**, an uplift of
++0.8366, alongside F1 0.5196 → 0.8142 (+0.2946). An unverified
+single-pass Flash text proposer at these settings fires somewhere on
+essentially every tile, so its tile-level confusion matrix has almost no
+true negatives and its MCC is indistinguishable from zero; the verifier
+supplies the tile-level discrimination more or less entirely.
+
+Today's 16 newly paired cells extend the class, and put the project's
+headline cell in it:
+
+| pair | F1 uplift | MCC uplift |
+|---|---:|---:|
+| `pv-diag-384::verified-adv-text-consensus-16of30` (F1 0.8902 vs 0.6770; MCC 0.7903 vs 0.3975) | **+0.2132** | **+0.3928** |
+| `pv-diag-256::verified-adv-text-consensus-5of5` | +0.3959 | — |
+| `verifier-robustness::verified-384-16of30-t0-3-n5-opmax` | +0.2181 | — |
+| `proposer-verifier-512::verified-adversarial-text` (F1 0.1931 vs 0.2297; MCC 0.2350 vs 0.0) | **−0.0366** | **+0.2350** |
+
+`proposer-verifier-512::verified-adversarial-text` is the one **negative
+F1 uplift among the 16**: the verifier removed enough of a 140-candidate
+proposer pass's detections to cost 0.0366 of F1 while moving tile MCC
+from 0.0 to 0.2350 — it cut recall on a set that was already
+comparatively precise, and still improved the tile-level call. It was
+flagged for the PI rather than explained away. A second pairing
+subtlety: 15 of the 16 gained an MCC value, not all 16. The twin of
+`retest-phase2b::verified-adv-text-t0.0` is a registered replicate-mean
+condition whose tile MCC is **undefined** rather than missing —
+sensitivity 1.0 and specificity 0.0 in all three replicates, no true
+negatives anywhere on the 340 tiles — so that pair stays pending on MCC,
+which is the correct refusal. The CSVs today stand at **145 of 172**
+pairs computed on F1 (27 pending) and **144 of 172** on MCC (28
+pending), counted directly from the files.
+
+**Why this matters.** Reporting the verifier as an F1 improvement
+understates and occasionally mis-signs what it does. On F1 the uplift
+can be small or negative; on tile-level MCC it is large and consistently
+positive in these pairs, because the verifier's primary effect is to
+convert "something is here on every tile" into a calibrated per-tile
+decision. For the paper this supports a sharper claim than "the verifier
+helps": the verifier is what makes the pipeline a tile classifier at
+all, and the single-pass baseline twin's −0.0038 is the number that
+demonstrates it. It is also a concrete instance of the project's
+standing rule to report tile-level MCC alongside F1 wherever the inputs
+support it — here the metric pair, not either metric alone, carries the
+finding.
+
+**Caveats.** These are paired with/without-verifier comparisons, not
+significance tests; no confidence interval or p-value is attached to any
+uplift in the CSVs. Across all 145 computed F1 rows there are **two**
+negative uplifts, not one:
+`proposer-verifier-512::verified-adversarial-text` at −0.0366 and
+`h8-v2::verified-wbf-scale-4` at −0.0003 (the latter pre-dating today's
+16, and within rounding of zero). The 27 pairs still pending are
+`blocked` — no twin locatable — and 79 board-frame rows are excluded by
+the PI's 2026-09-10 rule as board artefacts rather than measurements of
+their own, so the supplement is not a census of every verified cell in
+the register. The registered `verifier-uplift-pairing` analysis row was
+signed at 85 computed and amended on 2026-09-11 (`3b32ea3ce`); a reader
+should check its current state rather than assume the CSV counts are the
+signed ones.
+
+**Findable later**: verifier as a tile classifier, tile MCC −0.0038 to
+0.8328, `verified-adv-text-baseline` twin, +0.2132 F1 / +0.3928 MCC,
+`verified-adv-text-consensus-16of30` uplift, negative F1 uplift positive
+MCC, `proposer-verifier-512::verified-adversarial-text` −0.0366 /
++0.2350, 145 of 172 computed on F1, 144 of 172 on MCC, undefined MCC no
+true negatives, MCC alongside F1, WN-C22.
+
+Sources: `results/uplift-supplement/verifier-uplift.csv` and
+`results/uplift-supplement/verifier-uplift-mcc.csv` (both read
+2026-09-12: 173 lines each including the header; status counts computed
+from column `status` — F1 145 `computed` / 27 `pending`, MCC 144 / 28;
+rows 45, 47, and 65 supplying the `proposer-verifier-512`,
+`verified-adv-text-consensus-16of30`, and `verified-adv-text-baseline`
+values quoted above; the full set of negative F1 uplifts obtained by
+sorting the `uplift` column);
+`git diff 5ed589fe1 ac4b88b50 -- results/uplift-supplement/verifier-uplift.csv`
+(read 2026-09-12: the 16 rows added today, listed with their uplifts);
+`git log -1 ac4b88b50` (read 2026-09-12: 2026-09-11 16:54:18 +1000,
+"results(uplift): 145 of 172 pairs computed on F1", and its body — the
+15-of-16 MCC gain, the undefined-MCC refusal for
+`retest-phase2b::text-t0.0` with `n_runs_defined = 0` in
+`results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-0/evaluation.json`,
+and the −0.0366 / +0.2350 flag against a 140-candidate proposer pass);
+`results/uplift-supplement/verifier-pairing-report.md` (read 2026-09-12:
+"172 verified cell(s) in the registry", the 79 board-frame exclusions
+under the PI's 2026-09-10 rule, the status table with 27 `blocked`, and
+the pairing definition — same passes, reference, buffer, and frame);
+`planning/paper-writeup-continuity.md` (read 2026-09-12: the "STATE
+AFTER S152" headline (3), "`verified-adv-text-baseline` twin MCC −0.004
+→ 0.833", and the WN-C22 candidate line).
+Related: **Obs 462** (the ordering rule for the same supplement:
+regenerate derived documents after the session's last register write);
+**Obs 467** (why the 40 `-opmax` board rows stay out of this supplement
+by design — they are in-sample optima, E56 class); **Obs 469** (the
+identity discipline that governs which twin may be paired with which
+cell).
