@@ -1,9 +1,9 @@
 # Era-1 leaderboard — statistical tiering (20 m) — `gs-era2-verified-board-2026-09-10`
 
-- **Cells**: 79 (0 single-pass + 0 consensus + 79 verified-PV), 487 evaluation tiles
+- **Cells**: 103 (0 single-pass + 0 consensus + 103 verified-PV), 487 evaluation tiles
 - **Metric**: micro-average F1 @ 20 m; MCC reported (tile-level, buffer-agnostic — NOT cross-era comparable)
 - **Test**: round-robin tile-swap permutation, 10,000 perms, seed 42, two-sided; **BH-FDR** q = 0.05
-- **Pairs**: 3081 (1845 significant) -> **7 tiers**
+- **Pairs**: 5253 (3651 significant) -> **12 tiers**
 - **Tie set (Tier 1)**: `gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b`, `gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b`, `gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b`, `gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b`, `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b`
 
 | rank | condition | kind | passes | F1@20m | micro-F1 | gap | MCC | tier |
@@ -48,42 +48,66 @@
 | 38 | `verified-adv-text-4of5-era2b` | verified-PV | 1 | 0.864 | 0.864 | -0.000 | 0.769 | 4 |
 | 39 | `session-78-text-checklist-text-opmax` | verified-PV | 1 | 0.864 | 0.864 | +0.000 | 0.756 | 4 |
 | 40 | `pv-high-text-t0.7-n5-opmax` | verified-PV | 1 | 0.863 | 0.863 | -0.000 | 0.768 | 4 |
-| 41 | `session-78-text-adversarial-text-opmax` | verified-PV | 1 | 0.860 | 0.860 | -0.000 | 0.753 | 4 |
-| 42 | `verified-t0-5-era2b` | verified-PV | 1 | 0.856 | 0.856 | -0.000 | 0.771 | 4 |
-| 43 | `verified-adv-text-medium-vf-4of5-era2b` | verified-PV | 1 | 0.855 | 0.854 | -0.000 | 0.721 | 4 |
-| 44 | `verified-adv-text-high-vf-4of5-era2b` | verified-PV | 1 | 0.852 | 0.852 | -0.000 | 0.699 | 4 |
-| 45 | `session-78-text-brief-text-opmax` | verified-PV | 1 | 0.852 | 0.852 | +0.000 | 0.758 | 4 |
-| 46 | `verified-t0-0-era2b` | verified-PV | 1 | 0.851 | 0.851 | +0.000 | 0.778 | 4 |
-| 47 | `verified-adv-pro-text-pro-vf-3of5-era2b` | verified-PV | 1 | 0.851 | 0.851 | -0.000 | 0.730 | 4 |
-| 48 | `verified-adv-pro-text-medium-vf-3of5-era2b` | verified-PV | 1 | 0.850 | 0.849 | -0.000 | 0.730 | 4 |
-| 49 | `verified-adv-pro-text-flash-vf-3of5-era2b` | verified-PV | 1 | 0.849 | 0.849 | +0.000 | 0.730 | 4 |
-| 50 | `f35prop-f3vf-4of10-era2b` | verified-PV | 1 | 0.848 | 0.848 | -0.000 | 0.767 | 4 |
-| 51 | `verified-t1-0-era2b` | verified-PV | 1 | 0.842 | 0.842 | +0.000 | 0.756 | 4 |
-| 52 | `f35prop-f35vf-4of10-era2b` | verified-PV | 1 | 0.836 | 0.836 | +0.000 | 0.737 | 4 |
-| 53 | `g384-ov192-image-min-k10-verified-p0.15-k9-era2b` | verified-PV | 1 | 0.834 | 0.834 | +0.000 | 0.793 | 4 |
-| 54 | `g384-ov192-image-high-k10-verified-p0.20-k8-era2b` | verified-PV | 1 | 0.826 | 0.826 | +0.000 | 0.794 | 5 |
-| 55 | `verified-adv-image-min-6of10-era2b` | verified-PV | 1 | 0.789 | 0.789 | -0.000 | 0.803 | 5 |
-| 56 | `pv-min-image-t0.7-n10-opmax` | verified-PV | 1 | 0.788 | 0.788 | -0.000 | 0.822 | 5 |
-| 57 | `pv-high-image-t0.7-n5-opmax` | verified-PV | 1 | 0.787 | 0.787 | +0.000 | 0.836 | 5 |
-| 58 | `session-78-image-adversarial-opmax` | verified-PV | 1 | 0.787 | 0.787 | +0.000 | 0.831 | 5 |
-| 59 | `session-78-image-comparative-opmax` | verified-PV | 1 | 0.786 | 0.786 | +0.000 | 0.831 | 5 |
-| 60 | `session-78-image-checklist-text-opmax` | verified-PV | 1 | 0.785 | 0.785 | +0.000 | 0.822 | 5 |
-| 61 | `session-78-image-brief-opmax` | verified-PV | 1 | 0.784 | 0.784 | +0.000 | 0.830 | 5 |
-| 62 | `session-78-image-checklist-opmax` | verified-PV | 1 | 0.783 | 0.783 | +0.000 | 0.817 | 5 |
-| 63 | `pv-min-image-t0.3-n10-opmax` | verified-PV | 1 | 0.782 | 0.782 | -0.000 | 0.838 | 5 |
-| 64 | `session-78-image-brief-text-opmax` | verified-PV | 1 | 0.778 | 0.778 | -0.000 | 0.820 | 6 |
-| 65 | `verified-adv-image-3of5-era2b` | verified-PV | 1 | 0.778 | 0.778 | -0.000 | 0.827 | 6 |
-| 66 | `pv-min-image-t0.3-n5-opmax` | verified-PV | 1 | 0.777 | 0.777 | +0.000 | 0.842 | 6 |
-| 67 | `pv-high-image-t0.7-n10-opmax` | verified-PV | 1 | 0.776 | 0.777 | +0.000 | 0.798 | 6 |
-| 68 | `pv-min-image-t0.7-n5-opmax` | verified-PV | 1 | 0.773 | 0.773 | -0.000 | 0.838 | 6 |
-| 69 | `session-78-image-adversarial-text-opmax` | verified-PV | 1 | 0.772 | 0.772 | -0.000 | 0.797 | 6 |
-| 70 | `pv-high-image-t0.3-n10-opmax` | verified-PV | 1 | 0.770 | 0.770 | -0.000 | 0.829 | 6 |
-| 71 | `pv-scale4-optimal-n10-opmax` | verified-PV | 1 | 0.768 | 0.768 | +0.000 | 0.815 | 6 |
-| 72 | `verified-adv-image-min-3of5-era2b` | verified-PV | 1 | 0.767 | 0.767 | -0.000 | 0.846 | 6 |
-| 73 | `pv-scale4-optimal-n5-opmax` | verified-PV | 1 | 0.763 | 0.764 | +0.000 | 0.831 | 6 |
-| 74 | `pv-high-image-t1.0-n10-opmax` | verified-PV | 1 | 0.763 | 0.763 | -0.000 | 0.800 | 6 |
-| 75 | `pv-high-image-t0.3-n5-opmax` | verified-PV | 1 | 0.748 | 0.748 | +0.000 | 0.805 | 6 |
-| 76 | `pv-min-image-t1.0-n10-opmax` | verified-PV | 1 | 0.743 | 0.743 | -0.000 | 0.808 | 6 |
-| 77 | `pv-min-image-t1.0-n5-opmax` | verified-PV | 1 | 0.738 | 0.738 | +0.000 | 0.802 | 6 |
-| 78 | `pv-high-image-t1.0-n5-opmax` | verified-PV | 1 | 0.734 | 0.734 | +0.000 | 0.823 | 7 |
-| 79 | `verified-adv-pro-image-pro-vf-3of5-era2b` | verified-PV | 1 | 0.711 | 0.711 | -0.000 | 0.850 | 7 |
+| 41 | `pv-min-text-t0.0-n3-opmax` | verified-PV | 1 | 0.862 | 0.862 | +0.000 | 0.783 | 4 |
+| 42 | `session-78-text-adversarial-text-opmax` | verified-PV | 1 | 0.860 | 0.860 | -0.000 | 0.753 | 4 |
+| 43 | `verified-t0-5-era2b` | verified-PV | 1 | 0.856 | 0.856 | -0.000 | 0.771 | 4 |
+| 44 | `verified-adv-text-medium-vf-4of5-era2b` | verified-PV | 1 | 0.855 | 0.854 | -0.000 | 0.721 | 4 |
+| 45 | `verified-adv-text-high-vf-4of5-era2b` | verified-PV | 1 | 0.852 | 0.852 | -0.000 | 0.699 | 4 |
+| 46 | `session-78-text-brief-text-opmax` | verified-PV | 1 | 0.852 | 0.852 | +0.000 | 0.758 | 4 |
+| 47 | `pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b` | verified-PV | 1 | 0.851 | 0.851 | +0.000 | 0.786 | 4 |
+| 48 | `verified-t0-0-era2b` | verified-PV | 1 | 0.851 | 0.851 | +0.000 | 0.778 | 4 |
+| 49 | `verified-adv-pro-text-pro-vf-3of5-era2b` | verified-PV | 1 | 0.851 | 0.851 | -0.000 | 0.730 | 4 |
+| 50 | `verified-adv-pro-text-medium-vf-3of5-era2b` | verified-PV | 1 | 0.850 | 0.849 | -0.000 | 0.730 | 4 |
+| 51 | `verified-adv-pro-text-flash-vf-3of5-era2b` | verified-PV | 1 | 0.849 | 0.849 | +0.000 | 0.730 | 4 |
+| 52 | `f35prop-f3vf-4of10-era2b` | verified-PV | 1 | 0.848 | 0.848 | -0.000 | 0.767 | 4 |
+| 53 | `verified-t1-0-era2b` | verified-PV | 1 | 0.842 | 0.842 | +0.000 | 0.756 | 4 |
+| 54 | `f35prop-f35vf-4of10-era2b` | verified-PV | 1 | 0.836 | 0.836 | +0.000 | 0.737 | 4 |
+| 55 | `g384-ov192-image-min-k10-verified-p0.15-k9-era2b` | verified-PV | 1 | 0.834 | 0.834 | +0.000 | 0.793 | 4 |
+| 56 | `g384-ov192-image-high-k10-verified-p0.20-k8-era2b` | verified-PV | 1 | 0.826 | 0.826 | +0.000 | 0.794 | 5 |
+| 57 | `verified-adv-text-baseline-pro-vf-era2b` | verified-PV | 1 | 0.826 | 0.826 | -0.000 | 0.833 | 5 |
+| 58 | `verified-adv-text-baseline-medium-vf-era2b` | verified-PV | 1 | 0.824 | 0.824 | +0.000 | 0.837 | 5 |
+| 59 | `pv-high-text-t0.0-n3-opmax` | verified-PV | 1 | 0.823 | 0.823 | -0.000 | 0.775 | 5 |
+| 60 | `verified-adv-text-baseline-era2b` | verified-PV | 1 | 0.814 | 0.814 | +0.000 | 0.833 | 5 |
+| 61 | `verified-adv-image-min-6of10-era2b` | verified-PV | 1 | 0.789 | 0.789 | -0.000 | 0.803 | 5 |
+| 62 | `pv-min-image-t0.7-n10-opmax` | verified-PV | 1 | 0.788 | 0.788 | -0.000 | 0.822 | 5 |
+| 63 | `pv-high-image-t0.7-n5-opmax` | verified-PV | 1 | 0.787 | 0.787 | +0.000 | 0.836 | 5 |
+| 64 | `session-78-image-adversarial-opmax` | verified-PV | 1 | 0.787 | 0.787 | +0.000 | 0.831 | 5 |
+| 65 | `verified-adv-pro-text-baseline-pro-vf-era2b` | verified-PV | 1 | 0.786 | 0.786 | +0.000 | 0.791 | 5 |
+| 66 | `session-78-image-comparative-opmax` | verified-PV | 1 | 0.786 | 0.786 | +0.000 | 0.831 | 5 |
+| 67 | `session-78-image-checklist-text-opmax` | verified-PV | 1 | 0.785 | 0.785 | +0.000 | 0.822 | 5 |
+| 68 | `session-78-image-brief-opmax` | verified-PV | 1 | 0.784 | 0.784 | +0.000 | 0.830 | 5 |
+| 69 | `verified-adv-pro-text-baseline-medium-vf-era2b` | verified-PV | 1 | 0.784 | 0.784 | -0.000 | 0.787 | 5 |
+| 70 | `session-78-image-checklist-opmax` | verified-PV | 1 | 0.783 | 0.783 | +0.000 | 0.817 | 5 |
+| 71 | `pv-min-image-t0.3-n10-opmax` | verified-PV | 1 | 0.782 | 0.782 | -0.000 | 0.838 | 6 |
+| 72 | `session-78-image-brief-text-opmax` | verified-PV | 1 | 0.778 | 0.778 | -0.000 | 0.820 | 6 |
+| 73 | `verified-adv-image-3of5-era2b` | verified-PV | 1 | 0.778 | 0.778 | -0.000 | 0.827 | 6 |
+| 74 | `pv-min-image-t0.3-n5-opmax` | verified-PV | 1 | 0.777 | 0.777 | +0.000 | 0.842 | 6 |
+| 75 | `pv-high-image-t0.7-n10-opmax` | verified-PV | 1 | 0.776 | 0.777 | +0.000 | 0.798 | 6 |
+| 76 | `pv-min-image-t0.7-n5-opmax` | verified-PV | 1 | 0.773 | 0.773 | -0.000 | 0.838 | 6 |
+| 77 | `session-78-image-adversarial-text-opmax` | verified-PV | 1 | 0.772 | 0.772 | -0.000 | 0.797 | 6 |
+| 78 | `pv-high-image-t0.3-n10-opmax` | verified-PV | 1 | 0.770 | 0.770 | -0.000 | 0.829 | 6 |
+| 79 | `verified-adv-pro-text-baseline-era2b` | verified-PV | 1 | 0.770 | 0.770 | +0.000 | 0.782 | 6 |
+| 80 | `pv-scale4-optimal-n10-opmax` | verified-PV | 1 | 0.768 | 0.768 | +0.000 | 0.815 | 6 |
+| 81 | `verified-adv-image-min-3of5-era2b` | verified-PV | 1 | 0.767 | 0.767 | -0.000 | 0.846 | 6 |
+| 82 | `pv-n1-image-t0-n3-opmax` | verified-PV | 1 | 0.767 | 0.767 | +0.000 | 0.840 | 6 |
+| 83 | `pv-scale4-optimal-n5-opmax` | verified-PV | 1 | 0.763 | 0.764 | +0.000 | 0.831 | 6 |
+| 84 | `pv-high-image-t1.0-n10-opmax` | verified-PV | 1 | 0.763 | 0.763 | -0.000 | 0.800 | 6 |
+| 85 | `pv-high-image-t0.3-n5-opmax` | verified-PV | 1 | 0.748 | 0.748 | +0.000 | 0.805 | 6 |
+| 86 | `pv-min-image-t1.0-n10-opmax` | verified-PV | 1 | 0.743 | 0.743 | -0.000 | 0.808 | 7 |
+| 87 | `pv-min-image-t1.0-n5-opmax` | verified-PV | 1 | 0.738 | 0.738 | +0.000 | 0.802 | 7 |
+| 88 | `pv-high-image-t1.0-n5-opmax` | verified-PV | 1 | 0.734 | 0.734 | +0.000 | 0.823 | 7 |
+| 89 | `verified-adv-image-baseline-pro-vf-era2b` | verified-PV | 1 | 0.731 | 0.731 | +0.000 | 0.889 | 7 |
+| 90 | `verified-adv-image-baseline-medium-vf-era2b` | verified-PV | 1 | 0.730 | 0.730 | -0.000 | 0.885 | 7 |
+| 91 | `verified-adv-image-baseline-era2b` | verified-PV | 1 | 0.717 | 0.717 | +0.000 | 0.877 | 8 |
+| 92 | `verified-adv-pro-image-pro-vf-3of5-era2b` | verified-PV | 1 | 0.711 | 0.711 | -0.000 | 0.850 | 8 |
+| 93 | `verified-adv-pro-image-baseline-medium-vf-era2b` | verified-PV | 1 | 0.628 | 0.628 | -0.000 | 0.833 | 9 |
+| 94 | `verified-adv-pro-image-baseline-era2b` | verified-PV | 1 | 0.620 | 0.620 | -0.000 | 0.823 | 9 |
+| 95 | `verified-adv-pro-image-baseline-pro-vf-era2b` | verified-PV | 1 | 0.618 | 0.618 | -0.000 | 0.833 | 10 |
+| 96 | `verified-checklist-image-era2b` | verified-PV | 1 | 0.531 | 0.531 | -0.000 | 0.387 | 10 |
+| 97 | `verified-checklist-text-era2b` | verified-PV | 1 | 0.521 | 0.521 | +0.000 | 0.315 | 11 |
+| 98 | `verified-brief-image-era2b` | verified-PV | 1 | 0.520 | 0.520 | -0.000 | 0.340 | 11 |
+| 99 | `verified-brief-text-era2b` | verified-PV | 1 | 0.514 | 0.514 | +0.000 | 0.395 | 11 |
+| 100 | `verified-cascade-adversarial-checklist-era2b` | verified-PV | 1 | 0.504 | 0.504 | -0.000 | 0.431 | 11 |
+| 101 | `verified-cascade-checklist-adversarial-era2b` | verified-PV | 1 | 0.495 | 0.495 | -0.000 | 0.412 | 11 |
+| 102 | `verified-adversarial-image-era2b` | verified-PV | 1 | 0.494 | 0.494 | -0.000 | 0.416 | 11 |
+| 103 | `verified-adversarial-text-era2b` | verified-PV | 1 | 0.471 | 0.471 | -0.000 | 0.431 | 12 |

@@ -428,7 +428,9 @@ def _mcb_admissible(board: Path) -> tuple[list[str], str | None]:
     return [], None
 
 
-def finalise(board: Path, membership: dict[str, Any]) -> None:
+def finalise(board: Path, membership: dict[str, Any],
+             skip_analysis_row: bool = False,
+             re_sign_reason: str | None = None) -> None:
     tiering = json.loads((board / "tiering_20m.json").read_text(encoding="utf-8"))
     gates = json.loads((board / "gates.json").read_text(encoding="utf-8"))
     g1 = _eval_meta(f"{BOARD_DIR}/g1-regression.json") or {}
@@ -458,11 +460,34 @@ def finalise(board: Path, membership: dict[str, Any]) -> None:
     ra = json.loads(RUN_ANALYSES.read_text(encoding="utf-8"))
     rows = ra["analyses"] if isinstance(ra, dict) else ra
     row = next(r for r in rows if r["analysis_id"] == BOARD_ID)
-    row["outcome"] = outcome
-    row["output_path"] = f"{BOARD_DIR}/tiering_20m.json"
-    RUN_ANALYSES.write_text(json.dumps(ra, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    re_sign: dict[str, Any] | None = None
+    if skip_analysis_row:
+        # The row is PI-signed. Its outcome is a PROPOSAL here, recorded in the
+        # board's provenance for the PI to apply when re-signing, so the
+        # register keeps exactly the text the PI approved.
+        re_sign = {
+            "status": "PENDING — the PI re-signs",
+            "reason": re_sign_reason or "the board's membership changed",
+            "signed_outcome": row.get("outcome"),
+            "proposed_outcome": outcome,
+            "signed_n_conditions_compared": len(row.get("conditions_compared") or []),
+            "proposed_n_conditions_compared": membership["n_members"] + n_opmax,
+            "tiering_membership_source": (
+                f"{BOARD_DIR}/tiering-input/run-analyses.json — the register's "
+                "row was NOT amended; see scripts/build_board_tiering_input.py"),
+            "untouched_fields": ["manually_verified_at", "_signature_note",
+                                 "conditions_compared", "outcome",
+                                 "gates.G1.pi_ruling"],
+        }
+        print("\n=== analysis row NOT amended (--no-analysis-row). "
+              "Proposed outcome, for the PI ===\n" + outcome + "\n")
+    else:
+        row["outcome"] = outcome
+        row["output_path"] = f"{BOARD_DIR}/tiering_20m.json"
+        RUN_ANALYSES.write_text(json.dumps(ra, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     provenance = {
         "board_id": BOARD_ID, "card": CARD, "frame": FRAME, "frame_id": FRAME_ID,
+        **({"re_sign_pending": re_sign} if re_sign else {}),
         "frame_provenance": "inputs/vectors/bounds/384/era2_b_intersection_bounds.provenance.json",
         "membership": {"n": membership["n_members"] + n_opmax,
                        "rule": "card § 3 under the § 2 frame rule; see membership.json",
@@ -480,7 +505,34 @@ def finalise(board: Path, membership: dict[str, Any]) -> None:
                     "git_commit": tiering.get("git_commit"), "generated_at_utc": tiering.get("generated_at_utc")},
         "finalised_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
-    (board / "provenance.json").write_text(json.dumps(provenance, indent=1) + "\n", encoding="utf-8")
+    # Carry forward the fields no gate artefact holds: the PI's signature and
+    # the PI's G1 ruling. `finalise` rebuilds this file from the gates, so
+    # without this a re-finalise erases them — which on a signed board would
+    # quietly delete the record of the signature it is meant to preserve.
+    prior_path = board / "provenance.json"
+    if prior_path.is_file():
+        prior = json.loads(prior_path.read_text(encoding="utf-8"))
+        carried: list[str] = []
+        for field in ("signed_at", "signed_by"):
+            if field in prior and field not in provenance:
+                provenance[field] = prior[field]
+                carried.append(field)
+        prior_ruling = ((prior.get("gates") or {}).get("G1") or {}).get("pi_ruling")
+        current_g1 = (provenance.get("gates") or {}).get("G1")
+        if prior_ruling is not None and isinstance(current_g1, dict) \
+                and "pi_ruling" not in current_g1:
+            current_g1["pi_ruling"] = prior_ruling
+            carried.append("gates.G1.pi_ruling")
+        if carried:
+            provenance["_carried_forward"] = {
+                "fields": carried,
+                "why": ("no gate artefact records these, so finalise carries them "
+                        "from the previous provenance.json rather than rebuilding "
+                        "them away; they are the PI's and only the PI sets them"),
+            }
+            print(f"carried forward from the previous provenance.json: "
+                  f"{', '.join(carried)}")
+    prior_path.write_text(json.dumps(provenance, indent=1) + "\n", encoding="utf-8")
     lines = [f"# The GS Era-2 verified board on one frame — `{BOARD_ID}`", "",
              f"> **Last revised**: {provenance['finalised_at_utc'][:10]} (original publication). Card: `{CARD}`. "
              f"Frame: `{FRAME}` (`{FRAME_ID}`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, "
@@ -519,6 +571,14 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("command", choices=["membership", "jobs", "gates", "register", "finalise"])
     parser.add_argument("--write", action="store_true", help="register: persist to the register files")
+    parser.add_argument("--no-analysis-row", action="store_true",
+                        help=("register / finalise: do NOT write to the board's "
+                              "analysis row. It is PI-signed, so its membership "
+                              "and outcome are the PI's to amend; finalise then "
+                              "records the proposed outcome under "
+                              "provenance.json's re_sign_pending instead."))
+    parser.add_argument("--re-sign-reason", default=None,
+                        help="finalise --no-analysis-row: one line naming what changed.")
     args = parser.parse_args(argv)
     board = REPO_ROOT / BOARD_DIR
     board.mkdir(parents=True, exist_ok=True)
@@ -545,7 +605,8 @@ def main(argv: list[str] | None = None) -> int:
         register(membership, args.write)
         return 0
     if args.command == "finalise":
-        finalise(board, membership)
+        finalise(board, membership, skip_analysis_row=args.no_analysis_row,
+                 re_sign_reason=args.re_sign_reason)
         return 0
     return 1
 
