@@ -20,7 +20,7 @@ question. This script answers it from committed artefacts, per pool:
 * read the vote >= 1 union of the SHORTER pool (the sub-pool the rung would
   use) and of the LONGER pool (the union a verifier has already scored);
 * compare feature *i* of one with feature *i* of the other, in order, at a
-  tolerance the caller sets (default 0.01 m — storage precision, not a
+  tolerance the caller sets (default 0.2 m — storage precision, not a
   clustering difference);
 * report the count of positions that hold the same point, the first index that
   does not, and whether the shorter union is a strict positional prefix.
@@ -52,34 +52,47 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-#: Two coordinates closer than this are the same point. A GeoJSON round trip
-#: costs about 1e-7 degrees, well under a centimetre in projected metres, so
-#: anything above this is a real difference in the clustering.
-DEFAULT_TOLERANCE_M = 0.01
+from scripts.merge_passes import (  # noqa: E402
+    coords_are_geographic,
+    geojson_coords_to_utm,
+)
+
+#: Two coordinates closer than this are the same point. The committed
+#: consensus files store WGS84 degrees rounded to six decimal places, about
+#: 0.11 m of latitude, and a 4326 round trip adds a little more, so 0.2 m is
+#: storage precision. Anything beyond it is a real clustering difference —
+#: the same reasoning, and nearly the same figure, as the 0.2 m union gate in
+#: ``scripts/stride55_ladder.py``.
+DEFAULT_TOLERANCE_M = 0.2
 
 
-def load_points(path: Path) -> list[tuple[float, float]]:
-    """Every Point feature's coordinates, in file order.
+def load_points(path: Path) -> tuple[list[tuple[float, float]], str]:
+    """Every Point feature's coordinates in EPSG:32635 metres, in file order.
 
     Args:
         path: A GeoJSON FeatureCollection of Point features.
 
     Returns:
-        The coordinates as ``(x, y)`` pairs, in the order the file stores them
-        — which is the order a ``candidate_{i:05d}`` probability key refers to.
+        ``(points, crs_note)`` — the coordinates as ``(x, y)`` pairs in
+        EPSG:32635 metres, in the order the file stores them (the order a
+        ``candidate_{i:05d}`` probability key refers to), and a note saying
+        whether they were reprojected.
 
     Raises:
         ValueError: If a feature is not a Point, since a non-Point cannot be
             position-matched against a candidate centroid.
     """
     doc = json.loads(path.read_text(encoding="utf-8"))
-    points: list[tuple[float, float]] = []
+    raw: list[tuple[float, float]] = []
     for index, feature in enumerate(doc.get("features") or []):
         geom = feature.get("geometry") or {}
         if geom.get("type") != "Point":
@@ -87,8 +100,15 @@ def load_points(path: Path) -> list[tuple[float, float]]:
                 f"{path}: feature {index} is a {geom.get('type')!r}, not a Point; "
                 "candidate-position matching is defined on centroids only")
         x, y = geom["coordinates"][:2]
-        points.append((float(x), float(y)))
-    return points
+        raw.append((float(x), float(y)))
+    if raw and coords_are_geographic(raw[0][0], raw[0][1]):
+        # The committed consensus files are WGS84 degrees with no crs member
+        # (merge_passes.apply_threshold reprojects before writing), so a metre
+        # tolerance applied to them would mean about 1.1 km per 0.01 unit.
+        return [geojson_coords_to_utm(x, y) for x, y in raw], (
+            "reprojected EPSG:4326 -> EPSG:32635 (file carried geographic "
+            "coordinates and no crs member)")
+    return raw, "already projected (coordinates are not geographic)"
 
 
 def positional_match(
@@ -118,12 +138,28 @@ def positional_match(
             agree += 1
         elif first_mismatch is None:
             first_mismatch = i
-    # Set-level containment, on a rounded grid so the tolerance applies.
-    scale = 1.0 / tolerance if tolerance else 1.0
-    longer_set = {(round(x * scale), round(y * scale)) for x, y in longer}
-    in_set = sum(
-        1 for x, y in shorter
-        if (round(x * scale), round(y * scale)) in longer_set)
+    # Set-level containment. A single rounded grid would miss a pair that
+    # straddles a cell boundary, so the lookup checks the 3 x 3 cell
+    # neighbourhood and then the true distance.
+    cell = tolerance if tolerance > 0 else 1.0
+    buckets: dict[tuple[int, int], list[tuple[float, float]]] = {}
+    for x, y in longer:
+        buckets.setdefault((int(x // cell), int(y // cell)), []).append((x, y))
+    in_set = 0
+    for x, y in shorter:
+        cx, cy = int(x // cell), int(y // cell)
+        found = False
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                for bx, by in buckets.get((cx + dx, cy + dy), ()):
+                    if abs(bx - x) <= tolerance and abs(by - y) <= tolerance:
+                        found = True
+                        break
+                if found:
+                    break
+            if found:
+                break
+        in_set += 1 if found else 0
     prefix = first_mismatch is None and len(shorter) <= len(longer)
     return {
         "n_shorter": len(shorter),
@@ -163,11 +199,13 @@ def main(argv: list[str] | None = None) -> int:
     probes = []
     for index, (shorter_path, longer_path) in enumerate(args.pair):
         label = args.label[index] if index < len(args.label) else f"probe-{index}"
-        shorter = load_points(Path(shorter_path))
-        longer = load_points(Path(longer_path))
+        shorter, shorter_crs = load_points(Path(shorter_path))
+        longer, longer_crs = load_points(Path(longer_path))
         result = positional_match(shorter, longer, args.tolerance_m)
         probes.append({"label": label, "shorter": shorter_path,
-                       "longer": longer_path, **result})
+                       "longer": longer_path,
+                       "shorter_crs_handling": shorter_crs,
+                       "longer_crs_handling": longer_crs, **result})
         print(f"{label}\n  {shorter_path}\n  {longer_path}\n  "
               f"{result['n_shorter']} vs {result['n_longer']}; "
               f"{result['n_positions_agreeing']} of "
