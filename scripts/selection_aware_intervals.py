@@ -406,6 +406,8 @@ def build_board_tile_counts(
     gt_override: Path | None = None,
     bounds_override: Path | None = None,
     buffer_metres: int = BUFFER_M,
+    analyses_path: Path | None = None,
+    conditions_path: Path | None = None,
 ) -> tuple[list[dict[str, Any]], np.ndarray, np.ndarray]:
     """Load a registered leaderboard's cells as per-tile TP/FP/FN.
 
@@ -415,6 +417,15 @@ def build_board_tile_counts(
 
     Args:
         analysis_id: The analysis whose ``conditions_compared`` defines the board.
+        gt_override: Optional ground-truth path (adapter-written boards need it).
+        bounds_override: Optional bounds path.
+        buffer_metres: Matching buffer.
+        analyses_path: Analyses file to read the membership from. Defaults to the
+            register. Pass a board-local copy when the board's own row is signed
+            and its membership has since grown — the admissible set is a property
+            of the candidate set, so it must be computed over the SAME set the
+            tiering used, not over a smaller signed one.
+        conditions_path: Conditions file, likewise. Defaults to the register.
 
     Returns:
         ``(specs, counts)`` with ``counts`` shaped ``(n_cells, n_tiles, 3)``.
@@ -422,8 +433,8 @@ def build_board_tile_counts(
     from scripts.era1_leaderboard_tiering import load_cells  # noqa: PLC0415
 
     cells, gdf_ref, gdf_bounds, tile_order = load_cells(
-        PROJECT_ROOT / "results/run-conditions.json",
-        PROJECT_ROOT / "results/run-analyses.json",
+        conditions_path or PROJECT_ROOT / "results/run-conditions.json",
+        analyses_path or PROJECT_ROOT / "results/run-analyses.json",
         analysis_id, bounds_override, gt_override, buffer_metres,
     )
     specs = [{"ref": c["ref"], "label": c["label"], "eval_f1": c["eval_f1"]}
@@ -647,6 +658,14 @@ def main() -> int:
                     help="Grid cell whose (corroboration x vote) sweep to analyse.")
     ap.add_argument("--board", default=None,
                     help="Analysis id of a registered leaderboard to analyse instead.")
+    ap.add_argument("--analyses", type=Path, default=None,
+                    help=("--board: read the membership from this analyses file "
+                          "instead of results/run-analyses.json. Use a "
+                          "board-local copy when the board's own row is signed "
+                          "and its membership has grown, so the admissible set "
+                          "is computed over the set the tiering used."))
+    ap.add_argument("--conditions", type=Path, default=None,
+                    help="--board: conditions file, defaulting to the register.")
     ap.add_argument("--evals", default=None,
                     help="Glob of evaluation.json files forming the candidate set.")
     ap.add_argument("--sweep-union", type=Path, default=None,
@@ -702,7 +721,8 @@ def main() -> int:
         res_meta = {"evals_glob": args.evals, **scope}
     elif args.board:
         specs, counts, has_mounds = build_board_tile_counts(
-            args.board, args.ground_truth, args.bounds, args.buffer)
+            args.board, args.ground_truth, args.bounds, args.buffer,
+            analyses_path=args.analyses, conditions_path=args.conditions)
         tag = args.board
         res_meta = {"board": args.board}
         # Record the overrides the run actually used. Adapter-written boards
@@ -715,6 +735,13 @@ def main() -> int:
             res_meta["ground_truth_override"] = str(args.ground_truth)
         if args.bounds is not None:
             res_meta["bounds_override"] = str(args.bounds)
+        # Same reproducibility rule for the membership source: an artefact
+        # computed over a board-local analyses copy must say so, or a reader
+        # would assume the register's row and get a different candidate set.
+        if args.analyses is not None:
+            res_meta["analyses_override"] = str(args.analyses)
+        if args.conditions is not None:
+            res_meta["conditions_override"] = str(args.conditions)
     else:
         bounds = gpd.read_file(COMMON_BOUNDS)
         gdf_ref = gpd.read_file(GROUND_TRUTH)
