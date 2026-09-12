@@ -1,6 +1,11 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-12 (later — **§ 7 added: the fourteen four-rung
+> **Last revised**: 2026-09-12 (latest — **§ 7.3 amended**: the withheld
+> tile-MCC question is now measured across all 149 committed cells the board
+> reads, only these three are affected, the scorer refuses rather than
+> emitting, and repair is confirmed to be a corpus-wide decision — see
+> `reports/tile-mcc-geometric-join-2026-09-12.md`). Before that: **§ 7 added:
+> the fourteen four-rung
 > ladders Phase 2 bought** for US$24.81 over 28 rungs, which closes § 6.3's gap
 > and takes the document from eight ladders to twenty-two; § 4.3 extends § 4's
 > F1-against-MCC table to them, § 5 points at their Pareto table and figure).
@@ -711,6 +716,42 @@ vocabulary differs from its proposer's tiling has this problem, and nothing in
 the pipeline warns of it — the board's own confusion gate reproduces the same
 wrong confusion and passes.
 
+**Amended 2026-09-12 (later).** Both questions above are now answered by
+measurement, and the withholding stands — but on a firmer footing and for a
+sharper reason. `reports/tile-mcc-geometric-join-2026-09-12.md` is the full
+account; three things belong here.
+
+1. **The general question is closed for this corpus.** All **149** committed
+   cells the Era-2 board reads — its own 103 plus this run's 46 — were
+   re-scored under the legacy string join and both geometric joins
+   (`scripts/audit_tile_join_variants.py`, on sapphire;
+   `results/tile-join-audit/`). **146 reproduce their committed confusion and
+   MCC exactly, and exactly these three are refused — no other cell in either
+   corpus, the signed board included.** No published MCC outside these three
+   was ever affected.
+2. **It can no longer fail silently.** The join is now a named parameter at one
+   place in the library, and the scorer refuses to emit an MCC when any point
+   inside the frame's tile union was booked to no tile — 21 of 475 here. The
+   board's confusion gate now checks the confusion against the frame's
+   polygons rather than against a rebuild of itself, which is why it passed
+   these cells before. A wider exposure also surfaced: the same string join
+   booked TPs and FPs in the per-tile table the bootstrap CIs and permutation
+   tests resample, so a mismatched cell lost **every** TP and FP there too —
+   this family escaped that only because it was already excluded from the
+   permutation testing.
+3. **Repair is a larger decision than it looked, so it is still the PI's.**
+   The premise that a geometric join reproduces the string join where the
+   vocabulary matches is **false**: the 384 px frames overlap on a 336 px
+   stride (the 487 tile areas sum to 1.2783x their union; a median 30.6 % of
+   detections lie inside more than one tile), so a geometric join raises MCC
+   on **146 of 146** sound cells, by +0.106 mean under `geometric-primary` and
+   +0.075 under `geometric-contains`. These three cells would read **0.9535 /
+   0.9059 / 0.9121** under the first rule and **0.9262 / 0.8761 / 0.8903**
+   under the second. Restoring them at either value while their sound K = 5
+   sibling stays at 0.7651 would invite the same misreading this section
+   withheld them to avoid, with the arrow reversed — so a coherent restoration
+   re-scores the family, which means re-scoring the board.
+
 ### 7.4 Pareto: K = 10 is almost never worth it, and the 3.7 family shows why
 
 Efficient rungs per family are tabulated in `phase2/ladder-tables.md`; the
@@ -746,6 +787,30 @@ US$12.94, or about US$1,100 per 0.001 F1.
   number changed.
 
 ## Changelog
+
+### 2026-09-12 (latest) — § 7.3: the withheld tile-MCC, measured
+
+**Trigger**: the PI's 2026-09-12 ruling on
+`reports/k-ladder-phase2-deltas-2026-09-12.md` § 6.3 — make the tile assignment
+geometric, re-score the withheld cells, and generalise so the error cannot
+recur. Full account: `reports/tile-mcc-geometric-join-2026-09-12.md`.
+
+**What moved**: § 7.3 gains an amendment. No table, figure or number elsewhere
+in this document changed.
+
+| Claim | before | after |
+|---|---|---|
+| Cells in the corpus with a vocabulary mismatch | unknown, "put back to the PI" | **3 of 149** committed cells the board reads; 146 reproduce exactly |
+| Published MCCs affected outside these three | unknown | **none** — 0 of the signed board's 103 cells |
+| The three cells' tile-MCC | withheld (raw 0.1337 / 0.1337) | **still withheld**; raw third value recorded as 0.1422; geometric candidates 0.9535 / 0.9059 / 0.9121 (`geometric-primary`) or 0.9262 / 0.8761 / 0.8903 (`geometric-contains`) |
+| Whether a geometric join reproduces the string join on matched cells | assumed yes | **no** — higher on 146 of 146, +0.106 mean; the frames overlap |
+| Exposure of the defect | tile-MCC | tile-MCC **and** the per-tile TP/FP/FN table the bootstrap CIs and permutation tests resample |
+
+**What did NOT change**: §§ 2–7.2 and 7.4–7.5 in full; every F1 in the
+document (F1 is geometric and never consulted a tile name); the exclusion of the
+3.7 family from the permutation testing; the withholding itself.
+
+Landed on branch `worktree-agent-a5339796998dcf596`.
 
 ### 2026-09-12 (later) — § 7: the fourteen ladders Phase 2 bought
 
