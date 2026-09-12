@@ -1,0 +1,412 @@
+{
+  "analysis_id": "k-ladder-mcc-55map-stride-a-r2-2026-09-12",
+  "metric": "f1",
+  "buffer_metres": 50,
+  "n_permutations": 10000,
+  "seed": 42,
+  "fdr_q": 0.05,
+  "n_tiles": 8541,
+  "replicate_handling": "single-set cells: integer per-tile of one aggregated set; replicate-mean cells (single-pass K runs, phase3c 5 replications): pass-averaged per-tile (float)",
+  "generated_at_utc": "2026-09-12T06:13:44.698869+00:00",
+  "git_commit": "156bddf36",
+  "ranking": [
+    {
+      "rank": 1,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+      "label": "g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8419,
+      "observed_micro_f1": 0.841876,
+      "f1_gap": -2.4e-05,
+      "mcc": 0.6954,
+      "tier": 1
+    },
+    {
+      "rank": 2,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+      "label": "g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8383,
+      "observed_micro_f1": 0.838274,
+      "f1_gap": -2.6e-05,
+      "mcc": 0.6907,
+      "tier": 2
+    },
+    {
+      "rank": 3,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+      "label": "g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8321,
+      "observed_micro_f1": 0.832077,
+      "f1_gap": -2.3e-05,
+      "mcc": 0.7018,
+      "tier": 3
+    },
+    {
+      "rank": 4,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+      "label": "g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8227,
+      "observed_micro_f1": 0.822674,
+      "f1_gap": -2.6e-05,
+      "mcc": 0.7006,
+      "tier": 4
+    }
+  ],
+  "tiers": [
+    {
+      "tier": 1,
+      "members": [
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt"
+      ]
+    },
+    {
+      "tier": 2,
+      "members": [
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt"
+      ]
+    },
+    {
+      "tier": 3,
+      "members": [
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt"
+      ]
+    },
+    {
+      "tier": 4,
+      "members": [
+        "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt"
+      ]
+    }
+  ],
+  "tie_set": [
+    "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt"
+  ],
+  "pairwise": [
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+      "f1_a": 0.822674,
+      "f1_b": 0.832077,
+      "observed_diff": -0.009403,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 2.1e-05,
+      "null_std": 0.00218,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+      "f1_a": 0.822674,
+      "f1_b": 0.838274,
+      "observed_diff": -0.0156,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 3.8e-05,
+      "null_std": 0.002805,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+      "f1_a": 0.822674,
+      "f1_b": 0.841876,
+      "observed_diff": -0.019203,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 2.1e-05,
+      "null_std": 0.002813,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+      "f1_a": 0.832077,
+      "f1_b": 0.838274,
+      "observed_diff": -0.006197,
+      "p_value": 0.0079,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 1.7e-05,
+      "null_std": 0.002347,
+      "bh_adjusted_p": 0.0079,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+      "f1_a": 0.832077,
+      "f1_b": 0.841876,
+      "observed_diff": -0.0098,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -0.0,
+      "null_std": 0.002334,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+      "f1_a": 0.838274,
+      "f1_b": 0.841876,
+      "observed_diff": -0.003603,
+      "p_value": 0.0077,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -1.7e-05,
+      "null_std": 0.00137,
+      "bh_adjusted_p": 0.0079,
+      "significant": true
+    }
+  ],
+  "mcc_permutation": {
+    "statistic": "tile-level MCC (buffer-invariant: tile truth is intersection with any reference, tile prediction is any detection assigned to the tile)",
+    "kernel": "pairwise_permutation_test.permutation_test_mcc_arrays",
+    "swap_mask": "identical to the F1 test's (same seed, same tile order, same rng.random(n_tiles) < 0.5 stream)",
+    "fdr_q": 0.05,
+    "n_significant": 3,
+    "gates": {
+      "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt": {
+        "confusion": {
+          "tp": 2424,
+          "tn": 4847,
+          "fp": 165,
+          "fn": 1105
+        },
+        "mcc_rebuilt": 0.700623,
+        "mcc_recorded": 0.7006,
+        "passed": true
+      },
+      "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt": {
+        "confusion": {
+          "tp": 2424,
+          "tn": 4851,
+          "fp": 161,
+          "fn": 1105
+        },
+        "mcc_rebuilt": 0.701785,
+        "mcc_recorded": 0.7018,
+        "passed": true
+      },
+      "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt": {
+        "confusion": {
+          "tp": 2406,
+          "tn": 4827,
+          "fp": 185,
+          "fn": 1123
+        },
+        "mcc_rebuilt": 0.690733,
+        "mcc_recorded": 0.6907,
+        "passed": true
+      },
+      "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt": {
+        "confusion": {
+          "tp": 2429,
+          "tn": 4825,
+          "fp": 187,
+          "fn": 1100
+        },
+        "mcc_rebuilt": 0.695409,
+        "mcc_recorded": 0.6954,
+        "passed": true
+      }
+    },
+    "pairwise": [
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+        "mcc_a": 0.700623,
+        "mcc_b": 0.701785,
+        "confusion_a": {
+          "tp": 2424,
+          "tn": 4847,
+          "fp": 165,
+          "fn": 1105
+        },
+        "confusion_b": {
+          "tp": 2424,
+          "tn": 4851,
+          "fp": 161,
+          "fn": 1105
+        },
+        "observed_mcc_diff": -0.001162,
+        "p_value": 0.6391,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": 2.9e-05,
+          "std": 0.002395,
+          "percentile_2.5": -0.004721,
+          "percentile_97.5": 0.004594
+        },
+        "bh_adjusted_p": 0.6391,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+        "mcc_a": 0.700623,
+        "mcc_b": 0.690733,
+        "confusion_a": {
+          "tp": 2424,
+          "tn": 4847,
+          "fp": 165,
+          "fn": 1105
+        },
+        "confusion_b": {
+          "tp": 2406,
+          "tn": 4827,
+          "fp": 185,
+          "fn": 1123
+        },
+        "observed_mcc_diff": 0.00989,
+        "p_value": 0.0087,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": 5.6e-05,
+          "std": 0.003754,
+          "percentile_2.5": -0.00745,
+          "percentile_97.5": 0.007366
+        },
+        "bh_adjusted_p": 0.0261,
+        "significant": true
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+        "mcc_a": 0.700623,
+        "mcc_b": 0.695409,
+        "confusion_a": {
+          "tp": 2424,
+          "tn": 4847,
+          "fp": 165,
+          "fn": 1105
+        },
+        "confusion_b": {
+          "tp": 2429,
+          "tn": 4825,
+          "fp": 187,
+          "fn": 1100
+        },
+        "observed_mcc_diff": 0.005214,
+        "p_value": 0.1653,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": 4.4e-05,
+          "std": 0.00376,
+          "percentile_2.5": -0.007371,
+          "percentile_97.5": 0.007248
+        },
+        "bh_adjusted_p": 0.19836,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+        "mcc_a": 0.701785,
+        "mcc_b": 0.690733,
+        "confusion_a": {
+          "tp": 2424,
+          "tn": 4851,
+          "fp": 161,
+          "fn": 1105
+        },
+        "confusion_b": {
+          "tp": 2406,
+          "tn": 4827,
+          "fp": 185,
+          "fn": 1123
+        },
+        "observed_mcc_diff": 0.011052,
+        "p_value": 0.0011,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": 2.8e-05,
+          "std": 0.003367,
+          "percentile_2.5": -0.00654,
+          "percentile_97.5": 0.006621
+        },
+        "bh_adjusted_p": 0.0066,
+        "significant": true
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+        "mcc_a": 0.701785,
+        "mcc_b": 0.695409,
+        "confusion_a": {
+          "tp": 2424,
+          "tn": 4851,
+          "fp": 161,
+          "fn": 1105
+        },
+        "confusion_b": {
+          "tp": 2429,
+          "tn": 4825,
+          "fp": 187,
+          "fn": 1100
+        },
+        "observed_mcc_diff": 0.006376,
+        "p_value": 0.0636,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": 1.5e-05,
+          "std": 0.003429,
+          "percentile_2.5": -0.006796,
+          "percentile_97.5": 0.006673
+        },
+        "bh_adjusted_p": 0.0954,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+        "mcc_a": 0.690733,
+        "mcc_b": 0.695409,
+        "confusion_a": {
+          "tp": 2406,
+          "tn": 4827,
+          "fp": 185,
+          "fn": 1123
+        },
+        "confusion_b": {
+          "tp": 2429,
+          "tn": 4825,
+          "fp": 187,
+          "fn": 1100
+        },
+        "observed_mcc_diff": -0.004676,
+        "p_value": 0.015,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": -1.2e-05,
+          "std": 0.001923,
+          "percentile_2.5": -0.003784,
+          "percentile_97.5": 0.003689
+        },
+        "bh_adjusted_p": 0.03,
+        "significant": true
+      }
+    ]
+  }
+}

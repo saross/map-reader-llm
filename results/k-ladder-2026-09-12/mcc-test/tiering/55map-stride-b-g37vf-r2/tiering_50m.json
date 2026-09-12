@@ -1,0 +1,251 @@
+{
+  "analysis_id": "k-ladder-mcc-55map-stride-b-g37vf-r2-2026-09-12",
+  "metric": "f1",
+  "buffer_metres": 50,
+  "n_permutations": 10000,
+  "seed": 42,
+  "fdr_q": 0.05,
+  "n_tiles": 8541,
+  "replicate_handling": "single-set cells: integer per-tile of one aggregated set; replicate-mean cells (single-pass K runs, phase3c 5 replications): pass-averaged per-tile (float)",
+  "generated_at_utc": "2026-09-12T06:16:49.162924+00:00",
+  "git_commit": "156bddf36",
+  "ranking": [
+    {
+      "rank": 1,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+      "label": "g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8813,
+      "observed_micro_f1": 0.88132,
+      "f1_gap": 2e-05,
+      "mcc": 0.7359,
+      "tier": 1
+    },
+    {
+      "rank": 2,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+      "label": "g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8747,
+      "observed_micro_f1": 0.874741,
+      "f1_gap": 4.1e-05,
+      "mcc": 0.7376,
+      "tier": 2
+    },
+    {
+      "rank": 3,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+      "label": "g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8352,
+      "observed_micro_f1": 0.835152,
+      "f1_gap": -4.8e-05,
+      "mcc": 0.7471,
+      "tier": 3
+    }
+  ],
+  "tiers": [
+    {
+      "tier": 1,
+      "members": [
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt"
+      ]
+    },
+    {
+      "tier": 2,
+      "members": [
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt"
+      ]
+    },
+    {
+      "tier": 3,
+      "members": [
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt"
+      ]
+    }
+  ],
+  "tie_set": [
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt"
+  ],
+  "pairwise": [
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+      "f1_a": 0.835152,
+      "f1_b": 0.874741,
+      "observed_diff": -0.039589,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 3e-05,
+      "null_std": 0.002899,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+      "f1_a": 0.835152,
+      "f1_b": 0.88132,
+      "observed_diff": -0.046168,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 6e-06,
+      "null_std": 0.003085,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+      "f1_a": 0.874741,
+      "f1_b": 0.88132,
+      "observed_diff": -0.00658,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -2.5e-05,
+      "null_std": 0.001634,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    }
+  ],
+  "mcc_permutation": {
+    "statistic": "tile-level MCC (buffer-invariant: tile truth is intersection with any reference, tile prediction is any detection assigned to the tile)",
+    "kernel": "pairwise_permutation_test.permutation_test_mcc_arrays",
+    "swap_mask": "identical to the F1 test's (same seed, same tile order, same rng.random(n_tiles) < 0.5 stream)",
+    "fdr_q": 0.05,
+    "n_significant": 2,
+    "gates": {
+      "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt": {
+        "confusion": {
+          "tp": 2473,
+          "tn": 4967,
+          "fp": 45,
+          "fn": 1056
+        },
+        "mcc_rebuilt": 0.747084,
+        "mcc_recorded": 0.7471,
+        "passed": true
+      },
+      "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt": {
+        "confusion": {
+          "tp": 2420,
+          "tn": 4974,
+          "fp": 38,
+          "fn": 1109
+        },
+        "mcc_rebuilt": 0.737593,
+        "mcc_recorded": 0.7376,
+        "passed": true
+      },
+      "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt": {
+        "confusion": {
+          "tp": 2411,
+          "tn": 4975,
+          "fp": 37,
+          "fn": 1118
+        },
+        "mcc_rebuilt": 0.735931,
+        "mcc_recorded": 0.7359,
+        "passed": true
+      }
+    },
+    "pairwise": [
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+        "mcc_a": 0.747084,
+        "mcc_b": 0.737593,
+        "confusion_a": {
+          "tp": 2473,
+          "tn": 4967,
+          "fp": 45,
+          "fn": 1056
+        },
+        "confusion_b": {
+          "tp": 2420,
+          "tn": 4974,
+          "fp": 38,
+          "fn": 1109
+        },
+        "observed_mcc_diff": 0.009491,
+        "p_value": 0.0,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": -0.0,
+          "std": 0.002063,
+          "percentile_2.5": -0.004033,
+          "percentile_97.5": 0.004031
+        },
+        "bh_adjusted_p": 0.0,
+        "significant": true
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+        "mcc_a": 0.747084,
+        "mcc_b": 0.735931,
+        "confusion_a": {
+          "tp": 2473,
+          "tn": 4967,
+          "fp": 45,
+          "fn": 1056
+        },
+        "confusion_b": {
+          "tp": 2411,
+          "tn": 4975,
+          "fp": 37,
+          "fn": 1118
+        },
+        "observed_mcc_diff": 0.011152,
+        "p_value": 0.0,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": -1.4e-05,
+          "std": 0.002271,
+          "percentile_2.5": -0.004554,
+          "percentile_97.5": 0.004383
+        },
+        "bh_adjusted_p": 0.0,
+        "significant": true
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+        "mcc_a": 0.737593,
+        "mcc_b": 0.735931,
+        "confusion_a": {
+          "tp": 2420,
+          "tn": 4974,
+          "fp": 38,
+          "fn": 1109
+        },
+        "confusion_b": {
+          "tp": 2411,
+          "tn": 4975,
+          "fp": 37,
+          "fn": 1118
+        },
+        "observed_mcc_diff": 0.001662,
+        "p_value": 0.2644,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": -1.4e-05,
+          "std": 0.001444,
+          "percentile_2.5": -0.002889,
+          "percentile_97.5": 0.002889
+        },
+        "bh_adjusted_p": 0.2644,
+        "significant": false
+      }
+    ]
+  }
+}

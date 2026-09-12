@@ -1,0 +1,208 @@
+{
+  "ladder": "gs-stride-a",
+  "family": "Stride A (g384 ov128), GS, exact re-verification",
+  "run_id": "stride-phaseb-2026-08-25",
+  "proposer_pool": "g384_ov128",
+  "corpus": "4-map-gs",
+  "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+  "frame_file": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+  "headline_buffer_m": 20,
+  "basis": "oracle",
+  "instrument": {
+    "name": "round-robin tile-swap permutation (the board chain)",
+    "script": "scripts/era1_leaderboard_tiering.py --permute-mcc",
+    "f1_statistic": "micro-average F1 @ 20 m over 487 tiles, per-tile TP/FP/FN swapped",
+    "mcc_statistic": "tile-level MCC, buffer-invariant; per-tile one-hot (TP, TN, FP, FN) swapped under the SAME mask as F1",
+    "kernels": [
+      "n1_baseline_leaderboard_tiering.permutation_test_float",
+      "pairwise_permutation_test.permutation_test_mcc_arrays"
+    ],
+    "n_permutations": 10000,
+    "seed": 42,
+    "n_tiles": 487,
+    "bh_q": 0.05,
+    "bh_family": "within this ladder: the full round-robin of 6 pair(s), F1 and MCC adjusted as separate families",
+    "instrument_ruling": "This is the instrument that tiered these cells and the only one with committed F1 p-values for every pair asked about. findings.md \u00a7 6.1 records that the PI's ruling on the 55-map ladders' instrument is pending; the per-map paired sign-swap of scripts/stride55_ladder.py is reported separately where it is registered."
+  },
+  "gate": {
+    "kind": "harness-internal only (no committed pairwise table exists for this ladder \u2014 findings.md \u00a7 6.1)",
+    "n_pairs_gated": 0,
+    "passed": true,
+    "pairs": [
+      {
+        "pair": "K1-vs-K10",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K1-vs-K3",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K3-vs-K5",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K5-vs-K10",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      }
+    ],
+    "cell_gates": {
+      "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1": {
+        "confusion": {
+          "tp": 185,
+          "tn": 248,
+          "fp": 10,
+          "fn": 44
+        },
+        "mcc_rebuilt": 0.783433,
+        "mcc_recorded": 0.7834,
+        "passed": true
+      },
+      "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3": {
+        "confusion": {
+          "tp": 178,
+          "tn": 252,
+          "fp": 6,
+          "fn": 51
+        },
+        "mcc_rebuilt": 0.776229,
+        "mcc_recorded": 0.7762,
+        "passed": true
+      },
+      "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4": {
+        "confusion": {
+          "tp": 179,
+          "tn": 251,
+          "fp": 7,
+          "fn": 50
+        },
+        "mcc_rebuilt": 0.775109,
+        "mcc_recorded": 0.7751,
+        "passed": true
+      },
+      "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8": {
+        "confusion": {
+          "tp": 181,
+          "tn": 254,
+          "fp": 4,
+          "fn": 48
+        },
+        "mcc_rebuilt": 0.796852,
+        "mcc_recorded": 0.7969,
+        "passed": true
+      }
+    }
+  },
+  "pairs": [
+    {
+      "pair": "K1-vs-K10",
+      "kind": "k1-vs-best",
+      "k_low": 1,
+      "k_high": 10,
+      "condition_low": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+      "condition_high": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8677,
+        "high": 0.8982,
+        "delta": 0.029991,
+        "p_raw": 0.0012,
+        "p_bh": 0.0072,
+        "significant": true
+      },
+      "mcc": {
+        "low": 0.7894,
+        "high": 0.8022,
+        "delta": 0.013419,
+        "p_raw": 0.3839,
+        "p_bh": 0.7678,
+        "significant": false
+      },
+      "verdict": "F1 up (sig), MCC up n.s."
+    },
+    {
+      "pair": "K1-vs-K3",
+      "kind": "adjacent",
+      "k_low": 1,
+      "k_high": 3,
+      "condition_low": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+      "condition_high": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8677,
+        "high": 0.8911,
+        "delta": 0.022915,
+        "p_raw": 0.0352,
+        "p_bh": 0.1056,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.7894,
+        "high": 0.7814,
+        "delta": -0.007204,
+        "p_raw": 0.6734,
+        "p_bh": 0.80808,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    },
+    {
+      "pair": "K3-vs-K5",
+      "kind": "adjacent",
+      "k_low": 3,
+      "k_high": 5,
+      "condition_low": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+      "condition_high": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8911,
+        "high": 0.8856,
+        "delta": -0.005269,
+        "p_raw": 0.4693,
+        "p_bh": 0.4693,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.7814,
+        "high": 0.7805,
+        "delta": -0.00112,
+        "p_raw": 1.0,
+        "p_bh": 1.0,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    },
+    {
+      "pair": "K5-vs-K10",
+      "kind": "adjacent",
+      "k_low": 5,
+      "k_high": 10,
+      "condition_low": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+      "condition_high": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8856,
+        "high": 0.8982,
+        "delta": 0.012344,
+        "p_raw": 0.0648,
+        "p_bh": 0.1296,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.7805,
+        "high": 0.8022,
+        "delta": 0.021743,
+        "p_raw": 0.0649,
+        "p_bh": 0.1947,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    }
+  ],
+  "tiering_artefact": "results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.json",
+  "generated_at_utc": "2026-09-12T06:14:57.598413+00:00"
+}
