@@ -804,11 +804,206 @@ and score each run against a reference that contains none of its own output.
 
 ---
 
+## Cross-section summary
+
+### Counts per section
+
+| section | claims | VERIFIED | DRIFTED | UNANCHORED | prose words | vs ≈200-word share |
+|---|---:|---:|---:|---:|---:|---|
+| R0 | 9 | 8 | 1 | 0 | 447 | 2.2× |
+| R1 | 11 | 8 | 3 | 0 | 235 | 1.2× |
+| R2 | 15 | 15 | 0 | 0 | 543 | 2.7× |
+| R3 | *not inventoried* | — | — | — | 303 | 1.5× |
+| R4 | 29 | 23 | 6 | 0 | 864 | 4.3× |
+| R5 | 16 | 14 | 1 | 1 | 662 | 3.3× |
+| R6 | *not inventoried* | — | — | — | 494 | 2.5× |
+| R7 lead | 2 | 2 | 0 | 0 | 71 | 0.4× |
+| R7.1 | 15 | 14 | 1 | 0 | 562 | 2.8× |
+| R7.2 | 35 | 33 | 2 | 0 | 879 | 4.4× |
+| R7.3 | 29 | 29 | 0 | 0 | 1,284 | 6.4× |
+| R8 | 7 | 6 | 0 | 1 | 255 | 1.3× |
+| R9 | 13 | 13 | 0 | 0 | 587 | 2.9× |
+| **total (inventoried)** | **181** | **165** | **14** | **2** | **6,389** | — |
+| **all eleven blocks** | — | — | — | — | **7,186** | **3.3× the 2,200-word budget** |
+
+"vs ≈200-word share" is the section's prose against an even split of 2,200
+words across the eleven blocks; it is a diagnostic, not a proposed
+allocation.
+
+### Every DRIFTED claim, both values
+
+| # | claim | draft value | anchor value | anchor |
+|---|---|---|---|---|
+| R0-02 | 55-map instrument composition | 4,731 student + 279 extension (ruling-21 standardised, r1) | 4,726 student + 278 extension + 14 audit-reviewed = 5,018 (r2) | `results/55map-leaderboard/55map-leaderboard-50m-r2.md:28-38` |
+| R1-02 | conditions in the plateau analysis | 259 | 306 | `results/working-precision/gs-plateau-characterisation.md:5` |
+| R1-03 | single-pass plateau onset | 40 m | 75 m | same file `:17` |
+| R1-05 | "modality, not architecture, is dominant" | modality dominant | both span 30–75 m once R1-03 is corrected | same file `:17-19,34-35` |
+| R4-12 | consensus tile-size preference | "consensus prefers 384 px" | MINIMAL consensus prefers 512 px (+0.02..+0.05); only HIGH consensus flips to 384 | `run-analyses.json` → `tile-size-sweep` |
+| R4-13 | consensus+verifier 512 px value | 0.792 | 0.793 | same row (0.792 is the 340-tile Era-1 value) |
+| R4-23 | lowest Tier-1 vs best sweep optimum | +0.020, p = 0.16 | +0.0195, p = 0.1783 (BH 0.2438) | `results/leaderboard/era2/.../tiering_20m.json` |
+| R4-24 | top cell vs best sweep optimum | +0.037, p = 0.011, BH 0.021 | +0.0359, p = 0.0158, BH 0.0284 | same file |
+| R4-28 | Era-2 board signature | "SIGNED by the PI on 2026-09-10" | board README (rev. 2026-09-11): "The analysis row remains UNSIGNED"; draft banner: "unsigned, ruling pending"; register `manually_verified_at` 2026-09-10T12:34:56Z | `results/leaderboard/era2/.../README.md` changelog tail; `results/run-analyses.json` |
+| R4-29 | nine `-opmax` cells, mechanism | "found mis-materialised … rebuilt from their stages" | the materialiser was correct and was fed the **Era-3 (327-tile) frame's** operating points — a cross-frame leak, explicitly not staleness | Obs 466, `docs/notes/working-notes.md:33812-33860` |
+| R5-15 | min6 vs high6 | 0.8784 vs 0.8641, p = 0.66 | the p = 0.656 test is 0.8708 (n30-lineage) vs 0.8641; 0.8784 is the untested true merge | `run-analyses.json` → `min-vs-high-thinking-pv` |
+| R7.1-13 | text-only cells on the MCC board | "the six text-only cells keep their F1 ordering" | seven text-only cells, and TM-n10-k5 (0.6695) overtakes T03-k4 (0.6691) | `results/metric-leaderboards/55map-mcc-tiering-r2.md:7-14` |
+| R7.2-19 | estimated-correction direction | every cell by −0.0004 to −0.0007 | below for 32 of 35, at for 1, **above** for 2 (TM-k4 +0.0003, IM-k4 +0.0007) | `run-analyses.json` → `estimated-correction-r2` |
+| R7.2-23 | uplift family row cost | "none" | $58 | `results/55map-final-board-r2-2026-09-06/final-board-50m.md` row 28 |
+
+Fourteen drifted claims. R1-05 is listed because the corrected R1-03 removes
+its support, not because a number in it was itself mis-transcribed.
+
+Two further sentences are wrong without being numerically drifted, and belong
+on the same fix list: § R4's heading still asserts the claim erratum E83
+retracted, and § R7.2's "(§ R1, Obs 435)" cross-reference points at a
+section that does not contain the GS geometry grid.
+
+### UNANCHORED claims
+
+| # | claim | note |
+|---|---|---|
+| R5-01 | the verifier-robustness programme cost "≈ $54 flex as-run, recorded at run time" | The findings document carries per-cell and per-pass costs but no programme total, and the register row carries none. |
+| R8-07 | the "+3 %/+5 %" deployment-recall sensitivity band | The four-event basis is anchored; the band's endpoints are not, and do not follow arithmetically from the measured 2.4–2.7 %. |
+
+### Open `[DRAFT NOTE]` / `[DRAFT …]` markers
+
+| section | marker | what it asks |
+|---|---|---|
+| R0 | `[DRAFT NOTE: cross-reference the Methods subsections for GT construction, the matching algorithm (Hungarian, per map), and bootstrap CIs once Methods prose lands.]` | blocked on Methods prose |
+| R0 | `[TABLE N: results/hypothesis-outcome-table/hypothesis-outcome-table.md — the generated table, placed here per D16.]` | placement confirmed; the table exists |
+| R4 | `[DRAFT NOTE, S152: …]` | Era-2 board's signature status, the G1 ruling, and the nine `-opmax` rebuilds — see DRIFTED rows R4-28 and R4-29 |
+| R7.3 | `[DRAFT, S153 — pending PI ruling]` after the 3.8 leg (R7.3-13) | whether the 3.8 leg is reported at all |
+| R7.3 | `[DRAFT, S153 — pending PI ruling]` after the r2 tier-1 sentence (R7.3-15) | whether the family-clears-incumbent framing stands |
+| R7.3 | `[DRAFT, S153 — pending PI ruling]` after the cost paragraph (R7.3-29) | whether the cost paragraph stays in the body |
+| R7.3 | `[DRAFT NOTE, S151: (a) chains named per sentence … (d) §§ R7.2–R7.3 run to about 1,700 words against the 2,200-word budget]` | (a) open; (b), (c) marked RESOLVED S153; (d) open — the measured figure is 2,163 words |
+
+Seven markers, of which **six are open** (the `[TABLE N]` placement is
+satisfied). Three of the six are the identical S153 pending-ruling marker in
+R7.3, so the PI has **four distinct decisions** outstanding in the draft's
+own notes.
+
+The `[Resolved 2026-06-13: …]` markers in R2, R7.1, and R8 are historical
+records of Session-114 decisions and are not open items.
+
+### Jargon to translate, with proposed glosses
+
+| term | proposed one-clause gloss (at first use) |
+|---|---|
+| gold standard (GS) | the four calibration sheets, whose mounds a curator checked by hand |
+| 55-map / deployment instrument | the 55 unseen sheets the chosen settings were then run over |
+| Era 1 / Era 2 / Era 3 | fixed evaluation frames — a tile footprint plus a reference vintage — that make boards comparable (Era 1: 340 tiles at 512 px; Era 2: 487 at 384 px; Era 3: 327) |
+| working precision / plateau onset | the match radius beyond which widening it stops improving the score |
+| proposer–verifier (PV) | a two-stage pipeline: the first pass nominates candidate mounds, the second inspects each one and accepts or rejects it |
+| proposer seat / verifier seat | which of those two stages a given model is doing |
+| consensus, K, k-of-N | K independent passes over the same tile; a candidate counts only if at least k of them found it |
+| `-opmax` | a cell scored at the best threshold found by sweeping afterwards, rather than at the threshold committed in advance |
+| swap37 / swap38 | the same candidate set re-checked by a different model version, so only the model version differs |
+| r1 / r2 (reference revision) | successive corrected versions of the 55-map reference data |
+| carry-forward / carried point | the settings committed before deployment — the honest result |
+| oracle | the best settings identifiable only with hindsight — an upper bound, not an achievement |
+| transfer tax | the score lost by using the pre-committed threshold instead of the best one visible afterwards |
+| MCB (Hsu multiple comparisons with the best) | the set of configurations that cannot be ruled out as the single best |
+| BH-FDR | a correction for testing many pairs at once, controlling the share of false findings |
+| tile-swap permutation | a paired significance test that reshuffles which configuration each tile is credited to |
+| tile-level MCC | how well a configuration tells occupied tiles from empty ones, as opposed to placing points precisely |
+| corrected F1 | F1 after human adjudication of the detections a configuration produced |
+| MDE80 | the smallest difference this corpus could reliably detect |
+| stride / overlap | how far the tiling window moves between neighbouring image tiles |
+| phantom pool | model detections absent from the student layer, sent for human adjudication |
+| extension mounds | mounds the students missed that human review confirmed as real |
+| LOFO | leave-one-family-out: score each run against a stand-in reference built only from the other runs |
+| Efron–Gong optimism | how much picking the best of many operating points flatters the score |
+| flex rates | the vendor's discounted asynchronous pricing tier |
+| lean-deploy cost | the cost excluding passes a production run would not need |
+| E-numbers (E56, E59, E81, E82, E83, E84) | numbered errata against the preregistration |
+
+### Figures and tables: promised versus existing
+
+| promised in the draft | exists? | where |
+|---|---|---|
+| `Table [N]` — the hypothesis-outcome table | **yes** | `results/hypothesis-outcome-table/hypothesis-outcome-table.md`, generated at commit `54ae2dc03`, 15 hypotheses |
+| R6 seven-rung cost table (inline) | inline only | not inventoried (K-ladder pending) |
+| R6 four-row transfer table (inline) | inline only | not inventoried |
+| R7.1 eight-cell board table (inline) | inline; source exists | `results/55map-leaderboard/55map-leaderboard-50m-r2.md` |
+| R7.2 ten-row family table (inline) | inline; rendered by script | `scripts/render_r7_family_table.py` from `results/55map-final-board-r2-2026-09-06/final_board_50m.json` |
+| **no figure is promised anywhere in Results** | — | — |
+
+Existing figure assets the draft does not use:
+
+- `results/55map-final-board-r2-2026-09-06/significance-groups.png` — the
+  35-cell dot-and-interval plot with significance groups. The obvious
+  candidate for the deployment exhibit.
+- `results/figures/phase3d-pr-curves.png`,
+  `results/figures/phase3d-cross-modal-venn.png` — Phase-3d assets,
+  referenced nowhere in the draft.
+- `docs/paper/figures/` contains only `review-app-examples/` — no paper
+  figure has been made.
+
+The ISPRS skeleton § 5 organises Results "around three exhibits" — (i) the
+GS verified board plus the stride/geometry programme, (ii) the Pareto
+frontier, (iii) the 55-map portfolio transfer. **Exhibit (i)'s stride and
+geometry half has no section in the draft at all**, and no exhibit has a
+figure.
+
+### Register-hygiene items surfaced by this pass
+
+These are drift in the *register*, not in the draft, and the PI may want them
+fixed before Results prose is final.
+
+1. `gemini37-55map-grid-2026-08-31` still carries the superseded verifier
+   cost **$12.54** for arm 1; the audited figure is **$8.89**
+   (`reports/r7-gaps-deltas-2026-09-11.md:155-160`).
+2. Five rows the whole of § R7.3 rests on have
+   `manually_verified_at: None`: `gemini37-screen-2026-08-28`,
+   `gemini37-55map-grid-2026-08-31`, `gemini37-55map-gridboard-2026-08-31`,
+   `gemini37-image-gs-2026-09-01`, `gemini38-screen-armv-2026-09-04`.
+3. `gs-era2-verified-board-2026-09-10` carries
+   `manually_verified_at: 2026-09-10T12:34:56Z` while its board README
+   (revised a day later) says the row is unsigned.
+4. Forty-two register rows are never cited in the draft body, twenty-two of
+   them labelled `paper_section: Results`. The substantive ones are
+   `h10-pool-size`, `h12-v2-hp-hn-ratio`, `h13-overlap-2026-08-18`,
+   `image-b-modality-2026-08-28`, `image-b-thinking-pair-2026-08-28`,
+   `stride-plateau-2026-08-25`,
+   `stride-winner-ladder-exact-2026-08-25`,
+   `grid-tilesize-overlap-2026-08-18`, `grid-postverifier-2026-08-18`,
+   `tile-level-f1`, `tile-level-f1-r2`, and
+   `gemini38-screen-armv-2026-09-04`.
+5. `results/gtfree-selection/` (§ R9) has no register row at all.
+
+### The three rulings the PI should give first
+
+1. **One reference revision for the whole of Results.** §§ R0 and R8
+   describe the ruling-21 standardised layer (r1: 4,731 + 279), § R9 quotes
+   the canonical and standardised chains, and § R7 is scored on r2
+   (4,726 + 278 + 14 = 5,018). Recommended: **r2 everywhere**, with r1 and
+   the canonical chain named only where a *bet* was assessed on them.
+2. **Is the GS Era-2 verified board signed, and does it change the paper's
+   headline?** Three artefacts disagree on its signature (R4-28), and the
+   draft simultaneously calls 0.890 / 0.790 "the study headline" and reports
+   five cells above 0.906. Recommended: **sign or gate the row explicitly,
+   and headline the Gemini 3 calibrated result with the 3.7 family step
+   reported as a separate dated finding.**
+3. **What is Results' word allocation across eleven blocks?** The section is
+   at 7,186 words against 2,200, and §§ R4, R7.2, and R7.3 alone account for
+   3,027. Recommended: **allocate before any prose is rewritten** — roughly
+   R0 120, seam 150, R1 100, R2 250, R3 200, R4 300, R5 200, R6 250,
+   R7.1 250, R7.2 250, R7.3 300, R8 200, R9 250 — with the cost
+   reconciliation, the per-axis robustness detail, the E81 mechanism, and
+   the GS screen routed to Supplements S1/S2.
+
+---
+
 ## Changelog
 
 ### 2026-09-12 — Original publication
 
-Per-section claims-with-anchors inventory for R0, R1, R2, R4, R5, R7 (lead-in,
-R7.1, R7.2, R7.3), R8, and R9; R3 and R6 left as placeholders pending the
-parallel K-ladder (pass-count) job. Cross-section summary follows in the
-next commit.
+Built on the PI's outline-first ruling for Results. Sections R0, R1, R2, R4,
+R5, R7 (lead-in, R7.1, R7.2, R7.3), R8, and R9 inventoried claim by claim
+against `results/run-analyses.json`, the findings documents, the board
+READMEs and JSONs, the errata, `docs/notes/working-notes.md`, and the
+Session-153 gap and billing-reconciliation reports; R3 and R6 deliberately
+left as placeholders pending a parallel K-ladder (pass-count) job. 181
+claims recorded: 165 VERIFIED, 14 DRIFTED, 2 UNANCHORED (6,389 prose words in
+the inventoried blocks; 7,186 across all eleven, against the ISPRS skeleton's
+2,200-word Results budget). No file other than this one was modified; in
+particular `docs/paper/results-draft.md` was read only.
