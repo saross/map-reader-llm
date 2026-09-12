@@ -1257,69 +1257,69 @@
    "verifier_passes": {},
    "conditions": [
     {
-     "label": "consensus-1of30",
+     "label": "consensus-1of5",
      "architecture": "consensus",
      "aggregation": "consensus",
      "proposer_pool": "384",
-     "n_passes": 30,
+     "n_passes": 5,
      "vote_threshold": 1,
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t1/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t1.geojson",
-     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md. ERRATUM E85 (2026-09-12): this condition is N = 5, not N = 30. The union it reads is the first 5 of the pool's 30 passes (reports/union-staleness-retrospective-2026-09-12.md § 3), so the label was consensus-<t>of30 and n_passes was 30 until the PI's 2026-09-12 ruling relabelled it consensus-<t>of5 with n_passes 5. No measured value changed; the vote threshold is out of 5, so t5 is unanimity rather than a 1-in-6 minority."
     },
     {
-     "label": "consensus-2of30",
+     "label": "consensus-2of5",
      "architecture": "consensus",
      "aggregation": "consensus",
      "proposer_pool": "384",
-     "n_passes": 30,
+     "n_passes": 5,
      "vote_threshold": 2,
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t2/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t2.geojson",
-     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md. ERRATUM E85 (2026-09-12): this condition is N = 5, not N = 30. The union it reads is the first 5 of the pool's 30 passes (reports/union-staleness-retrospective-2026-09-12.md § 3), so the label was consensus-<t>of30 and n_passes was 30 until the PI's 2026-09-12 ruling relabelled it consensus-<t>of5 with n_passes 5. No measured value changed; the vote threshold is out of 5, so t5 is unanimity rather than a 1-in-6 minority."
     },
     {
-     "label": "consensus-3of30",
+     "label": "consensus-3of5",
      "architecture": "consensus",
      "aggregation": "consensus",
      "proposer_pool": "384",
-     "n_passes": 30,
+     "n_passes": 5,
      "vote_threshold": 3,
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t3/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t3.geojson",
-     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md. ERRATUM E85 (2026-09-12): this condition is N = 5, not N = 30. The union it reads is the first 5 of the pool's 30 passes (reports/union-staleness-retrospective-2026-09-12.md § 3), so the label was consensus-<t>of30 and n_passes was 30 until the PI's 2026-09-12 ruling relabelled it consensus-<t>of5 with n_passes 5. No measured value changed; the vote threshold is out of 5, so t5 is unanimity rather than a 1-in-6 minority."
     },
     {
-     "label": "consensus-4of30",
+     "label": "consensus-4of5",
      "architecture": "consensus",
      "aggregation": "consensus",
      "proposer_pool": "384",
-     "n_passes": 30,
+     "n_passes": 5,
      "vote_threshold": 4,
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t4/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t4.geojson",
-     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md. ERRATUM E85 (2026-09-12): this condition is N = 5, not N = 30. The union it reads is the first 5 of the pool's 30 passes (reports/union-staleness-retrospective-2026-09-12.md § 3), so the label was consensus-<t>of30 and n_passes was 30 until the PI's 2026-09-12 ruling relabelled it consensus-<t>of5 with n_passes 5. No measured value changed; the vote threshold is out of 5, so t5 is unanimity rather than a 1-in-6 minority."
     },
     {
-     "label": "consensus-5of30",
+     "label": "consensus-5of5",
      "architecture": "consensus",
      "aggregation": "consensus",
      "proposer_pool": "384",
-     "n_passes": 30,
+     "n_passes": 5,
      "vote_threshold": 5,
      "prob_threshold": null,
      "verifier_config": null,
      "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t5/evaluation.json",
      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t5.geojson",
-     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md."
+     "_note": "E72 COVERAGE CONFOUND — do not cite this cell's 487-bounds figures. Native data scope is the 240-tile validation pool (inputs/vectors/bounds/384/validation_bounds.geojson; registered at results/evaluation-scopes.md § 12), but the recorded evaluation at eval_path scores it against 487-tile Era 2 bounds: 247 of the 487 bounds tiles were never processed, so the 193 ground-truth mounds on them enter as artificial false negatives and recall is capped at 242/435 = 0.556 before any model behaviour is measured. scope_override is deliberately left null because the as-evaluated scope really is era-2-487 — that mis-scoping IS the defect, and overriding the field would misdescribe the recorded metrics rather than flag them. Matched-scope replacement: results/e43-matched-temperature/ (both buffers, 10,000 permutations, no significant difference); the paper's citable temperature evidence is the preregistered Phase 2b sweep at results/retest/phase2b/analysis_summary.md. See erratum E72 in docs/methodology/preregistration/protocol-errata.md and the investigation at reports/e43-coverage-confound-remediation-2026-08-02.md. ERRATUM E85 (2026-09-12): this condition is N = 5, not N = 30. The union it reads is the first 5 of the pool's 30 passes (reports/union-staleness-retrospective-2026-09-12.md § 3), so the label was consensus-<t>of30 and n_passes was 30 until the PI's 2026-09-12 ruling relabelled it consensus-<t>of5 with n_passes 5. No measured value changed; the vote threshold is out of 5, so t5 is unanimity rather than a 1-in-6 minority."
     },
     {
      "label": "single-pass-run_1",
