@@ -1,6 +1,6 @@
 # Evaluation: pv-min-text-t0.3-n5-carried-p0.15-k4
 
-**Generated**: 2026-09-12T06:37:40.941766+00:00  
+**Generated**: 2026-09-12T08:42:32.619298+00:00  
 **Detections**: 378  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |

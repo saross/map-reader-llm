@@ -1,6 +1,6 @@
 # Evaluation: pv-scale4-optimal-n10-carried-p0.15-k8
 
-**Generated**: 2026-09-12T06:38:49.163916+00:00  
+**Generated**: 2026-09-12T08:43:26.216091+00:00  
 **Detections**: 299  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |

@@ -1,0 +1,208 @@
+{
+  "ladder": "phase2-flash-minimal-text-n30-t07-text-t0-3",
+  "family": "Gemini 3 MINIMAL text 384 px, T 0.3",
+  "run_id": "pv-diag-384",
+  "proposer_pool": "flash-minimal-text-n30-t07-text-t0.3",
+  "corpus": "4-map-gs",
+  "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+  "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "headline_buffer_m": 20,
+  "basis": "oracle",
+  "instrument": {
+    "name": "round-robin tile-swap permutation (the board chain)",
+    "script": "scripts/era1_leaderboard_tiering.py --permute-mcc",
+    "f1_statistic": "micro-average F1 @ 20 m over 487 tiles, per-tile TP/FP/FN swapped",
+    "mcc_statistic": "tile-level MCC, buffer-invariant; per-tile one-hot (TP, TN, FP, FN) swapped under the SAME mask as F1",
+    "kernels": [
+      "n1_baseline_leaderboard_tiering.permutation_test_float",
+      "pairwise_permutation_test.permutation_test_mcc_arrays"
+    ],
+    "n_permutations": 10000,
+    "seed": 42,
+    "n_tiles": 487,
+    "bh_q": 0.05,
+    "bh_family": "within this ladder: the full round-robin of 6 pair(s), F1 and MCC adjusted as separate families",
+    "instrument_ruling": "This is the instrument that tiered these cells and the only one with committed F1 p-values for every pair asked about. findings.md \u00a7 6.1 records that the PI's ruling on the 55-map ladders' instrument is pending; the per-map paired sign-swap of scripts/stride55_ladder.py is reported separately where it is registered."
+  },
+  "gate": {
+    "kind": "harness-internal only (no committed pairwise table exists for this ladder \u2014 findings.md \u00a7 6.1)",
+    "n_pairs_gated": 0,
+    "passed": true,
+    "pairs": [
+      {
+        "pair": "K1-vs-K5",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K1-vs-K3",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K3-vs-K5",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K5-vs-K10",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      }
+    ],
+    "cell_gates": {
+      "pv-diag-384::pv-min-text-t0.3-n1-opmax": {
+        "confusion": {
+          "tp": 189,
+          "tn": 248,
+          "fp": 10,
+          "fn": 40
+        },
+        "mcc_rebuilt": 0.798621,
+        "mcc_recorded": 0.7986,
+        "passed": true
+      },
+      "pv-diag-384::pv-min-text-t0.3-n3-opmax": {
+        "confusion": {
+          "tp": 188,
+          "tn": 250,
+          "fp": 8,
+          "fn": 41
+        },
+        "mcc_rebuilt": 0.803997,
+        "mcc_recorded": 0.804,
+        "passed": true
+      },
+      "pv-diag-384::pv-min-text-t0.3-n5-opmax": {
+        "confusion": {
+          "tp": 186,
+          "tn": 245,
+          "fp": 13,
+          "fn": 43
+        },
+        "mcc_rebuilt": 0.773514,
+        "mcc_recorded": 0.7735,
+        "passed": true
+      },
+      "pv-diag-384::pv-min-text-t0.3-n10-opmax": {
+        "confusion": {
+          "tp": 187,
+          "tn": 248,
+          "fp": 10,
+          "fn": 42
+        },
+        "mcc_rebuilt": 0.791011,
+        "mcc_recorded": 0.791,
+        "passed": true
+      }
+    }
+  },
+  "pairs": [
+    {
+      "pair": "K1-vs-K5",
+      "kind": "k1-vs-best",
+      "k_low": 1,
+      "k_high": 5,
+      "condition_low": "pv-diag-384::pv-min-text-t0.3-n1-opmax",
+      "condition_high": "pv-diag-384::pv-min-text-t0.3-n5-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8555,
+        "high": 0.8778,
+        "delta": 0.022367,
+        "p_raw": 0.0899,
+        "p_bh": 0.2768,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.7986,
+        "high": 0.7735,
+        "delta": -0.025107,
+        "p_raw": 0.2368,
+        "p_bh": 0.6044,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    },
+    {
+      "pair": "K1-vs-K3",
+      "kind": "adjacent",
+      "k_low": 1,
+      "k_high": 3,
+      "condition_low": "pv-diag-384::pv-min-text-t0.3-n1-opmax",
+      "condition_high": "pv-diag-384::pv-min-text-t0.3-n3-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8555,
+        "high": 0.8708,
+        "delta": 0.015363,
+        "p_raw": 0.0995,
+        "p_bh": 0.2768,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.7986,
+        "high": 0.804,
+        "delta": 0.005375,
+        "p_raw": 0.7546,
+        "p_bh": 0.7631,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    },
+    {
+      "pair": "K3-vs-K5",
+      "kind": "adjacent",
+      "k_low": 3,
+      "k_high": 5,
+      "condition_low": "pv-diag-384::pv-min-text-t0.3-n3-opmax",
+      "condition_high": "pv-diag-384::pv-min-text-t0.3-n5-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8708,
+        "high": 0.8778,
+        "delta": 0.007004,
+        "p_raw": 0.4935,
+        "p_bh": 0.72,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.804,
+        "high": 0.7735,
+        "delta": -0.030483,
+        "p_raw": 0.0181,
+        "p_bh": 0.1086,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    },
+    {
+      "pair": "K5-vs-K10",
+      "kind": "adjacent",
+      "k_low": 5,
+      "k_high": 10,
+      "condition_low": "pv-diag-384::pv-min-text-t0.3-n5-opmax",
+      "condition_high": "pv-diag-384::pv-min-text-t0.3-n10-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8778,
+        "high": 0.873,
+        "delta": -0.004838,
+        "p_raw": 0.6,
+        "p_bh": 0.72,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.7735,
+        "high": 0.791,
+        "delta": 0.017497,
+        "p_raw": 0.3022,
+        "p_bh": 0.6044,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    }
+  ],
+  "tiering_artefact": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m.json",
+  "generated_at_utc": "2026-09-12T08:51:28.833675+00:00"
+}

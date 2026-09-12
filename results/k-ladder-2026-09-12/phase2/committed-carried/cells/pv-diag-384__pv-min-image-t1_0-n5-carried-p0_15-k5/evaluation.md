@@ -1,6 +1,6 @@
 # Evaluation: pv-min-image-t1.0-n5-carried-p0.15-k5
 
-**Generated**: 2026-09-12T06:38:31.844944+00:00  
+**Generated**: 2026-09-12T08:43:11.207820+00:00  
 **Detections**: 280  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |

@@ -1,0 +1,208 @@
+{
+  "ladder": "phase2-scale-4-optimal-487",
+  "family": "Gemini 3 scale-4-optimal 487",
+  "run_id": "pv-diag-384",
+  "proposer_pool": "scale-4-optimal-487",
+  "corpus": "4-map-gs",
+  "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+  "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "headline_buffer_m": 20,
+  "basis": "oracle",
+  "instrument": {
+    "name": "round-robin tile-swap permutation (the board chain)",
+    "script": "scripts/era1_leaderboard_tiering.py --permute-mcc",
+    "f1_statistic": "micro-average F1 @ 20 m over 487 tiles, per-tile TP/FP/FN swapped",
+    "mcc_statistic": "tile-level MCC, buffer-invariant; per-tile one-hot (TP, TN, FP, FN) swapped under the SAME mask as F1",
+    "kernels": [
+      "n1_baseline_leaderboard_tiering.permutation_test_float",
+      "pairwise_permutation_test.permutation_test_mcc_arrays"
+    ],
+    "n_permutations": 10000,
+    "seed": 42,
+    "n_tiles": 487,
+    "bh_q": 0.05,
+    "bh_family": "within this ladder: the full round-robin of 6 pair(s), F1 and MCC adjusted as separate families",
+    "instrument_ruling": "This is the instrument that tiered these cells and the only one with committed F1 p-values for every pair asked about. findings.md \u00a7 6.1 records that the PI's ruling on the 55-map ladders' instrument is pending; the per-map paired sign-swap of scripts/stride55_ladder.py is reported separately where it is registered."
+  },
+  "gate": {
+    "kind": "harness-internal only (no committed pairwise table exists for this ladder \u2014 findings.md \u00a7 6.1)",
+    "n_pairs_gated": 0,
+    "passed": true,
+    "pairs": [
+      {
+        "pair": "K1-vs-K10",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K1-vs-K3",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K3-vs-K5",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K5-vs-K10",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      }
+    ],
+    "cell_gates": {
+      "pv-diag-384::pv-scale4-optimal-n1-opmax": {
+        "confusion": {
+          "tp": 209,
+          "tn": 247,
+          "fp": 11,
+          "fn": 20
+        },
+        "mcc_rebuilt": 0.872557,
+        "mcc_recorded": 0.8726,
+        "passed": true
+      },
+      "pv-diag-384::pv-scale4-optimal-n3-opmax": {
+        "confusion": {
+          "tp": 195,
+          "tn": 253,
+          "fp": 5,
+          "fn": 34
+        },
+        "mcc_rebuilt": 0.844253,
+        "mcc_recorded": 0.8443,
+        "passed": true
+      },
+      "pv-diag-384::pv-scale4-optimal-n5-opmax": {
+        "confusion": {
+          "tp": 195,
+          "tn": 250,
+          "fp": 8,
+          "fn": 34
+        },
+        "mcc_rebuilt": 0.830634,
+        "mcc_recorded": 0.8306,
+        "passed": true
+      },
+      "pv-diag-384::pv-scale4-optimal-n10-opmax": {
+        "confusion": {
+          "tp": 191,
+          "tn": 250,
+          "fp": 8,
+          "fn": 38
+        },
+        "mcc_rebuilt": 0.81536,
+        "mcc_recorded": 0.8154,
+        "passed": true
+      }
+    }
+  },
+  "pairs": [
+    {
+      "pair": "K1-vs-K10",
+      "kind": "k1-vs-best",
+      "k_low": 1,
+      "k_high": 10,
+      "condition_low": "pv-diag-384::pv-scale4-optimal-n1-opmax",
+      "condition_high": "pv-diag-384::pv-scale4-optimal-n10-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.6376,
+        "high": 0.7683,
+        "delta": 0.130672,
+        "p_raw": 0.0,
+        "p_bh": 0.0,
+        "significant": true
+      },
+      "mcc": {
+        "low": 0.8726,
+        "high": 0.8154,
+        "delta": -0.057198,
+        "p_raw": 0.0127,
+        "p_bh": 0.0762,
+        "significant": false
+      },
+      "verdict": "F1 up (sig), MCC down n.s."
+    },
+    {
+      "pair": "K1-vs-K3",
+      "kind": "adjacent",
+      "k_low": 1,
+      "k_high": 3,
+      "condition_low": "pv-diag-384::pv-scale4-optimal-n1-opmax",
+      "condition_high": "pv-diag-384::pv-scale4-optimal-n3-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.6376,
+        "high": 0.7296,
+        "delta": 0.091984,
+        "p_raw": 0.0,
+        "p_bh": 0.0,
+        "significant": true
+      },
+      "mcc": {
+        "low": 0.8726,
+        "high": 0.8443,
+        "delta": -0.028304,
+        "p_raw": 0.18,
+        "p_bh": 0.27,
+        "significant": false
+      },
+      "verdict": "F1 up (sig), MCC down n.s."
+    },
+    {
+      "pair": "K3-vs-K5",
+      "kind": "adjacent",
+      "k_low": 3,
+      "k_high": 5,
+      "condition_low": "pv-diag-384::pv-scale4-optimal-n3-opmax",
+      "condition_high": "pv-diag-384::pv-scale4-optimal-n5-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.7296,
+        "high": 0.7635,
+        "delta": 0.033871,
+        "p_raw": 0.0084,
+        "p_bh": 0.01008,
+        "significant": true
+      },
+      "mcc": {
+        "low": 0.8443,
+        "high": 0.8306,
+        "delta": -0.013618,
+        "p_raw": 0.4157,
+        "p_bh": 0.4157,
+        "significant": false
+      },
+      "verdict": "F1 up (sig), MCC down n.s."
+    },
+    {
+      "pair": "K5-vs-K10",
+      "kind": "adjacent",
+      "k_low": 5,
+      "k_high": 10,
+      "condition_low": "pv-diag-384::pv-scale4-optimal-n5-opmax",
+      "condition_high": "pv-diag-384::pv-scale4-optimal-n10-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.7635,
+        "high": 0.7683,
+        "delta": 0.004816,
+        "p_raw": 0.6902,
+        "p_bh": 0.6902,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.8306,
+        "high": 0.8154,
+        "delta": -0.015275,
+        "p_raw": 0.297,
+        "p_bh": 0.3564,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    }
+  ],
+  "tiering_artefact": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-scale-4-optimal-487/tiering_20m.json",
+  "generated_at_utc": "2026-09-12T08:52:38.093385+00:00"
+}

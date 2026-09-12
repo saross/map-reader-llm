@@ -1,6 +1,6 @@
 # Evaluation: pv-high-image-t0.3-n5-carried-p0.15-k5
 
-**Generated**: 2026-09-12T06:36:33.380264+00:00  
+**Generated**: 2026-09-12T08:41:43.033525+00:00  
 **Detections**: 299  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
