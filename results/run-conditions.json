@@ -12668,6 +12668,18 @@
     "g384_ov192-union-k10-verify37": {
      "modality": "text",
      "path": "verifier/g384_ov192/verify_37"
+    },
+    "g384_ov192-k-ladder-k1-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov192/k-ladder/k1"
+    },
+    "g384_ov192-k-ladder-k3-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov192/k-ladder/k3"
+    },
+    "g384_ov192-k-ladder-k5-verify": {
+     "modality": "text",
+     "path": "verifier/g384_ov192/k-ladder/k5"
     }
    },
    "conditions": [
@@ -12865,6 +12877,118 @@
       "n_calibration_tiles": null
      },
      "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell g384-ov192-k10-verified37-p0.98-k10 re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on grid_common_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "g384-ov192-k1-verified-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "brief-text",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.json",
+     "detections": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k1-verified-opmax/detections.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the F1@20 argmax of this rung's own sweep, taken on the BOARD frame per ruling R2. The sweep was also run on the Era-2 frame full_evaluation_bounds.geojson and the two frames agree on the argmax for this rung. Tie-break where needed: highest F1@20, then lowest vote_t, then lowest prob_t (0 point(s) tied here). K-LADDER TIER E (approved by the PI on the evening of 2026-09-12 at US$5.02 for three rungs, hard stop US$7.00; controlling card planning/k-ladder-review-2026-09-11.md, gate results/k-ladder-2026-09-12/tier-e/pre_launch_audit.md). First-N rung: the union is passes 1 of pool outputs/grid-2026-08-18/g384_ov192, built at US$0 by scripts/merge_passes.py --passes 1 --sweep (union 1826 candidates at vote >= 1, reproducing the PI's approved figure of 1826 EXACTLY, delta +0). Verified by one pass of the carried Gemini 3 verifier (ruling R1: no verifier swaps) at real-time flex tier, US$1.2531 on the audited flex basis (input x 0.25 + (output + thinking) x 1.50 per million). NOTE the verify path stamps cost_basis 'list' with discount 1.0 even under flex and records the tier nowhere, so the stage meta's total_cost_usd is about twice the invoice (reports/r7-gaps-deltas-2026-09-11.md § 2.3). Scored on the board frame era2-b-487: curator reference, 14 buffers, 10,000 BCa draws, seed 42, MCC. CONSTRUCTION CAVEAT, recorded because it makes this rung's candidate universe wider than its K = 10 sibling's: the committed K = 10 rung of this family (outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson, 3319 candidates) was built by scripts/materialise_grid_unions.py, which filters the union to the grid study's common 487-tile carrier footprint, while this rung is a merge_passes union on the pool's native footprint (a merge_passes K = 10 union holds 3591, of which 3325 survive that filter). Scoring on the board frame excludes the out-of-frame candidates, so the F1 comparison across the ladder is like for like, but the universe the verifier priced is not. Put to the PI in reports/k-ladder-closeout-deltas-2026-09-12.md.",
+     "n_candidates": 1826,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "g384-ov192-k1-verified-p0.15-k1",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "brief-text",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-p0_15-k1/evaluation.json",
+     "detections": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k1-verified-p0_15-k1/detections.geojson",
+     "_note": "CARRIED POINT (the transfer-tax column of ruling R2): prob_t 0.15, k = K = 1, fixed before this evaluation rather than selected on it. The probability is 0.15 because that is the committed grid cells' threshold (g384-ov192-k10-verified-p0.15-k10), so the ladder stays a ladder. K-LADDER TIER E (approved by the PI on the evening of 2026-09-12 at US$5.02 for three rungs, hard stop US$7.00; controlling card planning/k-ladder-review-2026-09-11.md, gate results/k-ladder-2026-09-12/tier-e/pre_launch_audit.md). First-N rung: the union is passes 1 of pool outputs/grid-2026-08-18/g384_ov192, built at US$0 by scripts/merge_passes.py --passes 1 --sweep (union 1826 candidates at vote >= 1, reproducing the PI's approved figure of 1826 EXACTLY, delta +0). Verified by one pass of the carried Gemini 3 verifier (ruling R1: no verifier swaps) at real-time flex tier, US$1.2531 on the audited flex basis (input x 0.25 + (output + thinking) x 1.50 per million). NOTE the verify path stamps cost_basis 'list' with discount 1.0 even under flex and records the tier nowhere, so the stage meta's total_cost_usd is about twice the invoice (reports/r7-gaps-deltas-2026-09-11.md § 2.3). Scored on the board frame era2-b-487: curator reference, 14 buffers, 10,000 BCa draws, seed 42, MCC. CONSTRUCTION CAVEAT, recorded because it makes this rung's candidate universe wider than its K = 10 sibling's: the committed K = 10 rung of this family (outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson, 3319 candidates) was built by scripts/materialise_grid_unions.py, which filters the union to the grid study's common 487-tile carrier footprint, while this rung is a merge_passes union on the pool's native footprint (a merge_passes K = 10 union holds 3591, of which 3325 survive that filter). Scoring on the board frame excludes the out-of-frame candidates, so the F1 comparison across the ladder is like for like, but the universe the verifier priced is not. Put to the PI in reports/k-ladder-closeout-deltas-2026-09-12.md.",
+     "n_candidates": 1826,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "g384-ov192-k3-verified-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "brief-text",
+     "n_passes": 3,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k3-verified-opmax/evaluation.json",
+     "detections": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k3-verified-opmax/detections.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the F1@20 argmax of this rung's own sweep, taken on the BOARD frame per ruling R2. The sweep was also run on the Era-2 frame full_evaluation_bounds.geojson and the two frames agree on the argmax for this rung. Tie-break where needed: highest F1@20, then lowest vote_t, then lowest prob_t (0 point(s) tied here). K-LADDER TIER E (approved by the PI on the evening of 2026-09-12 at US$5.02 for three rungs, hard stop US$7.00; controlling card planning/k-ladder-review-2026-09-11.md, gate results/k-ladder-2026-09-12/tier-e/pre_launch_audit.md). First-N rung: the union is passes 1,2,3 of pool outputs/grid-2026-08-18/g384_ov192, built at US$0 by scripts/merge_passes.py --passes 1,2,3 --sweep (union 2481 candidates at vote >= 1, reproducing the PI's approved figure of 2481 EXACTLY, delta +0). Verified by one pass of the carried Gemini 3 verifier (ruling R1: no verifier swaps) at real-time flex tier, US$1.6989 on the audited flex basis (input x 0.25 + (output + thinking) x 1.50 per million). NOTE the verify path stamps cost_basis 'list' with discount 1.0 even under flex and records the tier nowhere, so the stage meta's total_cost_usd is about twice the invoice (reports/r7-gaps-deltas-2026-09-11.md § 2.3). Scored on the board frame era2-b-487: curator reference, 14 buffers, 10,000 BCa draws, seed 42, MCC. CONSTRUCTION CAVEAT, recorded because it makes this rung's candidate universe wider than its K = 10 sibling's: the committed K = 10 rung of this family (outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson, 3319 candidates) was built by scripts/materialise_grid_unions.py, which filters the union to the grid study's common 487-tile carrier footprint, while this rung is a merge_passes union on the pool's native footprint (a merge_passes K = 10 union holds 3591, of which 3325 survive that filter). Scoring on the board frame excludes the out-of-frame candidates, so the F1 comparison across the ladder is like for like, but the universe the verifier priced is not. Put to the PI in reports/k-ladder-closeout-deltas-2026-09-12.md. THIS ROW IS ALSO THE CARRIED CELL: the sweep argmax lands exactly on the carried point (prob_t 0.15, k = 3), so one cell serves both operating points and the transfer tax is 0.0000 by construction, not by measurement. No separate carried row is registered, because it would be the same detections file and the same evaluation.",
+     "n_candidates": 2481,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
+    },
+    {
+     "label": "g384-ov192-k5-verified-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "brief-text",
+     "n_passes": 5,
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.json",
+     "detections": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k5-verified-opmax/detections.geojson",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the F1@20 argmax of this rung's own sweep, taken on the BOARD frame per ruling R2. The sweep was also run on the Era-2 frame full_evaluation_bounds.geojson and the two frames agree on the argmax for this rung. Tie-break where needed: highest F1@20, then lowest vote_t, then lowest prob_t (0 point(s) tied here). K-LADDER TIER E (approved by the PI on the evening of 2026-09-12 at US$5.02 for three rungs, hard stop US$7.00; controlling card planning/k-ladder-review-2026-09-11.md, gate results/k-ladder-2026-09-12/tier-e/pre_launch_audit.md). First-N rung: the union is passes 1,2,3,4,5 of pool outputs/grid-2026-08-18/g384_ov192, built at US$0 by scripts/merge_passes.py --passes 1,2,3,4,5 --sweep (union 2932 candidates at vote >= 1, reproducing the PI's approved figure of 2932 EXACTLY, delta +0). Verified by one pass of the carried Gemini 3 verifier (ruling R1: no verifier swaps) at real-time flex tier, US$2.0075 on the audited flex basis (input x 0.25 + (output + thinking) x 1.50 per million). NOTE the verify path stamps cost_basis 'list' with discount 1.0 even under flex and records the tier nowhere, so the stage meta's total_cost_usd is about twice the invoice (reports/r7-gaps-deltas-2026-09-11.md § 2.3). Scored on the board frame era2-b-487: curator reference, 14 buffers, 10,000 BCa draws, seed 42, MCC. CONSTRUCTION CAVEAT, recorded because it makes this rung's candidate universe wider than its K = 10 sibling's: the committed K = 10 rung of this family (outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson, 3319 candidates) was built by scripts/materialise_grid_unions.py, which filters the union to the grid study's common 487-tile carrier footprint, while this rung is a merge_passes union on the pool's native footprint (a merge_passes K = 10 union holds 3591, of which 3325 survive that filter). Scoring on the board frame excludes the out-of-frame candidates, so the F1 comparison across the ladder is like for like, but the universe the verifier priced is not. Put to the PI in reports/k-ladder-closeout-deltas-2026-09-12.md. THIS ROW IS ALSO THE CARRIED CELL: the sweep argmax lands exactly on the carried point (prob_t 0.15, k = 5), so one cell serves both operating points and the transfer tax is 0.0000 by construction, not by measurement. No separate carried row is registered, because it would be the same detections file and the same evaluation.",
+     "n_candidates": 2932,
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
     }
    ],
    "_ignored_evals": [

@@ -2,7 +2,7 @@
 
 > **Last revised**: 2026-09-12 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-12T01:27:29Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-12T14:24:23Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 The canonical key `docs/methodology/notation-key.md` requires that
 "new tables and dataset builders must conform to it or extend it here
