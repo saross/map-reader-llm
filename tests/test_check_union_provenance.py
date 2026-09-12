@@ -186,6 +186,10 @@ def test_union_built_before_the_pool_grew_is_stale(tmp_path: Path) -> None:
     assert result.pool_passes == ["run_1", "run_2", "run_3", "run_4"]
     assert result.union_passes_used == ["run_1", "run_2", "run_3", "run_4"]
     assert result.rederived_features != result.committed_features
+    # The verdict names what the union does reflect, not merely that it is wrong.
+    assert result.reflects_subset == ["run_1", "run_2"]
+    assert result.passes_not_reflected == ["run_3", "run_4"]
+    assert "FIRST 2 of 4" in result.detail
 
 
 def test_union_built_before_a_pass_was_rewritten_is_stale(tmp_path: Path) -> None:

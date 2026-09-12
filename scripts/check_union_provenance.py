@@ -212,6 +212,7 @@ class UnionResult:
     unmatched_rederived: int | None = None
     max_match_distance_m: float | None = None
     vs_total_passes: int | None = None
+    reflects_subset: list[str] | None = None
     detail: str = ""
     seconds: float | None = None
 
@@ -565,6 +566,28 @@ def check_union(
             best = candidate
 
     assert best is not None
+    # Nothing the union declares reproduces it. Name what it DOES reflect, so
+    # the verdict says which passes are missing rather than only that some are.
+    # The candidate is the first-N prefix for the pass count the union's own
+    # voting_summary.json recorded, which is the only provenance a pre-fix
+    # union carries.
+    if vs_total and 0 < vs_total < len(pool_passes):
+        features, used = rederive_union(
+            pool_dir, spec.threshold, list(range(1, vs_total + 1)),
+            scratch_dir / f"{slug}.identified-first-{vs_total}.geojson",
+        )
+        if compare_feature_sets(committed, features, tolerance_m)["identical"]:
+            missing = [p for p in pool_passes if p not in used]
+            best.reflects_subset = used
+            best.passes_not_reflected = missing
+            best.detail = (
+                f"reproduces exactly from the FIRST {vs_total} of "
+                f"{len(pool_passes)} passes ({', '.join(used)}) and from no "
+                f"declared selection: the union does not reflect "
+                f"{', '.join(missing)}, and nothing on disk declares it a "
+                f"sub-pool (its directory is {Path(spec.union_dir).name!r}, "
+                f"not consensus-n{vs_total})"
+            )
     best.seconds = round(time.time() - started, 2)
     return best
 
