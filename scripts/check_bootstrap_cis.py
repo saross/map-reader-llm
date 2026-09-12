@@ -25,44 +25,47 @@ The decisive diagnostic is cheap and this script performs it: re-count the
 GeoJSON's features and compare with the recorded ``n_detections``. It is the
 ``feedback_feature_count_crosscheck`` signal, applied to the CI store.
 
-Two path shapes do not resolve to a file at all and are reported separately
-rather than as failures-to-count: the 24 ``consensus:<label>`` pseudo-paths
-(never file paths) and the 16 ``data/consensus-proposers/*.geojson`` entries
-(a tree that no longer exists). Entries the repair could not resolve carry
-``"source_status": "unresolved"``.
+Twenty-four entries do not resolve to a file at all and are reported separately
+rather than as failures-to-count: their ``source_file`` is a
+``consensus:<label>`` pseudo-path, because the N=30 consensus merge they scored
+was built in memory and never written to disk. The 2026-09-12 repair marks each
+of them ``"source_status": "unresolved"``.
+
+After that repair no entry should ever *mismatch* again: the 85 stale ones were
+re-run on their present source files rather than annotated as uncitable
+(the Principal Investigator's ruling, 2026-09-12 — the store is to be wholly
+current). A mismatch is therefore always a failure, never a known state, and
+this check is the tier-1 gate that makes future drift fail loudly.
 
 Modes
 -----
 ``--check``
     Resolve, count, and compare every entry; print a summary and the full
-    mismatch list. Exit 1 if anything is unresolved or mismatching, unless
-    ``--allow-annotated`` is given, in which case entries already annotated by
-    the 2026-09-12 repair (``"pre_e70": true`` for a known divergence,
-    ``"source_status": "unresolved"`` for a known dead path) are counted as
-    KNOWN and do not fail the run. Anything *new* still fails.
+    mismatch list. Exit 1 on any mismatch, and on any unresolved entry unless
+    ``--allow-annotated`` is given — which treats the 24 entries the repair
+    marked ``"source_status": "unresolved"`` as known. A mismatch is never
+    excused by ``--allow-annotated``, and an unresolved entry that carries no
+    annotation still fails.
 
 ``--remap``
-    Apply the documented ``data/retest/`` -> ``outputs/retest/`` prefix remap
-    before resolving. Needed only for a pre-repair file: after the 2026-09-12
-    path repair the committed ``source_file`` values already point at
-    ``outputs/retest/**``, so ``--check`` alone suffices.
+    Apply the documented ``data/`` prefix remaps before resolving. Needed only
+    for a pre-repair file: after the 2026-09-12 path repair the committed
+    ``source_file`` values already name the files that exist today, so
+    ``--check`` alone suffices.
 
 Usage
 -----
-Reproduce the audit finding against a pre-repair file (456 / 40 / 371 / 85)::
+Reproduce the audit finding against the archived pre-repair file — 472 resolved
+/ 24 unresolved / 387 match / 85 mismatch, or 456 / 40 / 371 / 85 with only the
+``data/retest/`` remap, which is what the audit report quotes::
 
     python scripts/check_bootstrap_cis.py --check --remap \\
         archive/superseded-bootstrap-cis-2026-09-12/all-bootstrap-cis.json
 
-The per-commit gate over the repaired, annotated file (exit 0)::
+The per-commit gate over the repaired store (exit 0, zero mismatches)::
 
     python scripts/check_bootstrap_cis.py --check --allow-annotated \\
         results/all-bootstrap-cis.json
-
-Strict mode over the repaired file — every one of the 85 PRE-E70 entries and
-every unresolved path is reported and the run exits 1::
-
-    python scripts/check_bootstrap_cis.py --check results/all-bootstrap-cis.json
 
 Machine-readable summary for a downstream check::
 
@@ -81,10 +84,25 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-# The prefix remap the audit inferred and this repository's layout confirms:
-# the retest pass tree lives under ``outputs/``, never ``data/``.
-REMAP_FROM = "data/retest/"
-REMAP_TO = "outputs/retest/"
+# The prefix remaps the audit inferred and this repository's history confirms.
+#
+# ``data/retest/`` -> ``outputs/retest/``: the retest pass tree lives under
+# ``outputs/``, never ``data/`` (no ``data/`` directory has ever existed here).
+#
+# ``data/consensus-proposers/`` ->
+# ``archive/outputs-experimental-pilot/pv/consensus-proposers/``: these sixteen
+# files were created at ``outputs/pv/consensus-proposers/`` by ``2de117096``
+# (the same commit that first wrote the CI store) and moved to their archive
+# location by ``276e4ca80`` ("refactor(archive): prune non-production results
+# and superseded outputs"). All sixteen still match their recorded
+# ``n_detections`` exactly, which corroborates the mapping.
+REMAPS: tuple[tuple[str, str], ...] = (
+    ("data/retest/", "outputs/retest/"),
+    (
+        "data/consensus-proposers/",
+        "archive/outputs-experimental-pilot/pv/consensus-proposers/",
+    ),
+)
 
 # ``source_file`` values with this prefix are condition labels, not paths.
 PSEUDO_PATH_PREFIX = "consensus:"
@@ -110,7 +128,7 @@ class EntryResult:
         patched: The ``.tiles.json`` sidecar's ``patched`` count when a sidecar
             exists and records one, else ``None``.
         annotated: True when the entry carries a repair annotation marking this
-            verdict as already known (``pre_e70`` or ``source_status``).
+            verdict as already known (``source_status``; unresolved only).
         reason: Short human-readable note for unresolved entries.
     """
 
@@ -202,8 +220,11 @@ def resolve_source(source_file: str, repo_root: Path, remap: bool) -> tuple[Path
         return None, "condition label, not a file path"
 
     candidate = source_file
-    if remap and candidate.startswith(REMAP_FROM):
-        candidate = REMAP_TO + candidate[len(REMAP_FROM):]
+    if remap:
+        for prefix, replacement in REMAPS:
+            if candidate.startswith(prefix):
+                candidate = replacement + candidate[len(prefix):]
+                break
 
     path = Path(candidate)
     if not path.is_absolute():
@@ -217,16 +238,20 @@ def resolve_source(source_file: str, repo_root: Path, remap: bool) -> tuple[Path
 def is_annotated(entry: dict[str, Any], status: str) -> bool:
     """Report whether an entry's verdict is already annotated as known.
 
+    Only ``unresolved`` can be a known state. A mismatch is never annotated
+    away: since the 2026-09-12 re-run every resolvable entry matches its source,
+    so a mismatch means something changed under the store's feet and must fail.
+    (An entry's ``pre_e70`` sub-object records values the re-run superseded — it
+    is history, not an exemption.)
+
     Args:
         entry: The entry mapping from the ``results`` object.
         status: The verdict computed for it.
 
     Returns:
-        True when a ``mismatch`` carries ``"pre_e70": true`` or an
-        ``unresolved`` carries ``"source_status": "unresolved"``.
+        True when an ``unresolved`` entry carries ``"source_status":
+        "unresolved"``; False otherwise.
     """
-    if status == STATUS_MISMATCH:
-        return entry.get("pre_e70") is True
     if status == STATUS_UNRESOLVED:
         return entry.get("source_status") == STATUS_UNRESOLVED
     return False
@@ -364,10 +389,14 @@ def format_report(
 
     failing = counts["mismatch"] + counts["unresolved"]
     if allow_annotated:
-        failing = counts["mismatch_new"] + counts["unresolved_new"]
+        failing = counts["mismatch"] + counts["unresolved_new"]
     lines.append("")
     if failing:
-        mode = "new (unannotated)" if allow_annotated else "unresolved or mismatching"
+        mode = (
+            "mismatching or newly unresolved"
+            if allow_annotated
+            else "unresolved or mismatching"
+        )
         lines.append(f"FAIL: {failing} {mode} entries.")
     else:
         lines.append("OK: every entry accounted for.")
@@ -386,7 +415,8 @@ def exit_code(results: list[EntryResult], allow_annotated: bool) -> int:
     """
     counts = summarise(results)
     if allow_annotated:
-        failing = counts["mismatch_new"] + counts["unresolved_new"]
+        # Mismatches always count: ``is_annotated`` never marks one known.
+        failing = counts["mismatch"] + counts["unresolved_new"]
     else:
         failing = counts["mismatch"] + counts["unresolved"]
     return 1 if failing else 0
@@ -416,14 +446,14 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--remap",
         action="store_true",
-        help=f"Apply the documented {REMAP_FROM} -> {REMAP_TO} prefix remap before "
-        "resolving (needed only for a pre-repair file).",
+        help="Apply the documented data/ -> outputs/ and data/ -> archive/ prefix "
+        "remaps before resolving (needed only for a pre-repair file).",
     )
     parser.add_argument(
         "--allow-annotated",
         action="store_true",
-        help="Treat entries annotated by the 2026-09-12 repair (pre_e70 / "
-        "source_status) as known, so only new drift fails.",
+        help="Treat the entries the 2026-09-12 repair marked "
+        "source_status=unresolved as known. Mismatches always fail.",
     )
     parser.add_argument(
         "--repo-root",
