@@ -180,7 +180,10 @@ elaboration (H1), example ordering (H4), negative-text treatment (H5),
 temperature (H7), example-library composition (H8) — all land inside or
 near that tie: the GS instrument cannot separate the stronger single-pass
 configs from one another. Two robust patterns do emerge: text-modality
-prompts dominate image-only prompts at the bottom of the board, and a
+prompts dominate image-only prompts at the bottom of the board — a
+property of the Gemini 3 family rather than of the task, since under
+Gemini 3.7 the within-family text − image gap closes from +0.0549
+(p = 0.001) to −0.0115 (p = 0.25; § R7.3, Obs 447) — and a
 metric trade-off recurs in which text-only cells reach F1 ≈ 0.60 with
 essentially no tile-level discrimination while image-bearing cells trade
 F1 for markedly better discrimination (MCC 0.094–0.291 across the
@@ -339,7 +342,9 @@ pairs, 1,845 are significant at BH q = 0.05, giving seven tiers. The
 greedy Tier 1 holds five Gemini 3.7 and 3.8 cells (image under the 3.7
 verifier 0.9233, text under the 3.7 verifier 0.9190, text under the 3.8
 verifier 0.9182, image under the carried Gemini 3 verifier 0.9179, text
-at K = 10 under the carried verifier 0.9068); the Hsu MCB admissible set
+at K = 10 under the carried verifier 0. That two of the five are image cells is the modality result of
+§ R7.3: the text advantage of § R2 belongs to the Gemini 3 family, not
+to the task (Obs 447).9068); the Hsu MCB admissible set
 holds 28 of the 79 cells. Every Gemini 3 cell sits in Tier 2 or below at
 either level: the best committed incumbent is the 16-of-30 cell at
 0.8951 and the best sweep optimum the HIGH text T0.3 K = 5 cell at
@@ -959,6 +964,10 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-09-12 (later) — Obs 447 qualification in § R2 and § R4 (Session 153)
+
+**Trigger**: PI ruling 8b (2026-09-12). One clause in § R2 and one sentence in § R4 state that the text-over-image advantage is a Gemini 3 family property, not a task property, anchored to § R7.3's difference-in-differences (+0.0549, p = 0.001 → −0.0115, p = 0.25) and Obs 447. No number elsewhere changed.
 
 ### 2026-09-12 (later still) — § R1b added: the GS stride/geometry programme's Results home (Session 153)
 
