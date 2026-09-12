@@ -221,10 +221,35 @@ PASS_ANCHORS: dict[str, str] = {
 }
 
 
+#: Cells whose ``source_tile`` vocabulary does not match the scoring frame's
+#: tile names have a MEANINGLESS tile-MCC, because
+#: ``lib_advanced_metrics.calculate_tile_classification`` matches detections to
+#: tiles by that string rather than geometrically. Their F1 is unaffected (point
+#: matching is geometric). This file records the per-cell verdict; any cell that
+#: is not ``MATCH`` has its tile-MCC withheld rather than printed.
+TILE_VOCAB_JSON = PHASE2 / "tile-vocabulary-match.json"
+
+
 def load(path: Path) -> Any:
     """Read a JSON file."""
     with open(path) as handle:
         return json.load(handle)
+
+
+def tile_mcc_verdicts() -> dict[str, str]:
+    """Map each materialised cell's filename to its tile-vocabulary verdict."""
+    if not TILE_VOCAB_JSON.exists():
+        logger.warning(
+            "%s absent — tile-MCC is reported unconditionally. Run "
+            "scripts/check_tile_vocabulary_match.py so a vocabulary mismatch "
+            "cannot pass as a measurement",
+            TILE_VOCAB_JSON.relative_to(BASE_DIR),
+        )
+        return {}
+    return {
+        Path(cell["detections"]).name: cell["verdict"]
+        for cell in load(TILE_VOCAB_JSON)["cells"]
+    }
 
 
 def git_head() -> str:
@@ -268,6 +293,8 @@ def build() -> dict[str, Any]:
     committed_carried = load(PHASE2 / "committed-carried" / "scores.json")
     membership = load(BOARD / "opmax" / "membership.json")
     conditions = load(BASE_DIR / "results" / "run-conditions.json")
+
+    verdicts = tile_mcc_verdicts()
 
     g37_opmax_path = PHASE2 / "g37-opmax" / "scores.json"
     g37_opmax = load(g37_opmax_path) if g37_opmax_path.exists() else None
@@ -467,6 +494,39 @@ def build() -> dict[str, Any]:
             )
 
         rungs.sort(key=lambda rung: rung["K"])
+
+        # Withhold tile-MCC wherever the cell's source_tile vocabulary is not
+        # the frame's. Printing 0.13 beside a sibling's 0.77 would invite a
+        # reading of "K destroys tile discrimination" from an instrument
+        # artefact.
+        for rung in rungs:
+            for point_name in ("opmax", "carried"):
+                points = []
+                if point_name == "opmax" and rung.get("opmax"):
+                    points = [rung["opmax"]]
+                elif point_name == "carried":
+                    points = [
+                        values
+                        for values in (rung.get("carried") or {}).values()
+                        if values
+                    ]
+                for values in points:
+                    detections = values.get("detections")
+                    if not detections:
+                        continue
+                    verdict = verdicts.get(Path(detections).name)
+                    if verdict and verdict != "MATCH":
+                        values["tile_mcc_withheld"] = verdict
+                        values["tile_mcc_withheld_why"] = (
+                            "the cell's source_tile vocabulary is not this "
+                            "frame's tile_name vocabulary, and "
+                            "calculate_tile_classification matches on that "
+                            "string rather than geometrically, so tile-MCC is "
+                            "not interpretable here; F1 is unaffected"
+                        )
+                        values["tile_mcc_raw"] = values.get("tile_mcc")
+                        values["tile_mcc"] = None
+
         for rung in rungs:
             proposer = round(rung["K"] * meta["pass_usd"], 4)
             rung["proposer_flex_usd"] = proposer
@@ -632,6 +692,33 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
                     "why": (
                         "fewer than three register-resolvable rungs on one "
                         "operating-point basis"
+                    ),
+                }
+            )
+            continue
+        withheld = [
+            rung["K"]
+            for rung in ladder["rungs"]
+            if (rung.get(basis) or {}).get("tile_mcc_withheld")
+            or any(
+                (values or {}).get("tile_mcc_withheld")
+                for values in (rung.get("carried") or {}).values()
+            )
+        ]
+        if withheld:
+            skipped.append(
+                {
+                    "family": ladder["family"],
+                    "basis": basis,
+                    "n_resolvable_rungs": len(rungs),
+                    "rungs_with_withheld_tile_mcc": sorted(set(withheld)),
+                    "why": (
+                        "tile-MCC is withheld on some rungs (source_tile "
+                        "vocabulary is not the frame's), and the instrument "
+                        "runs the F1 and MCC permutations together — tiering "
+                        "this ladder would compare a meaningless MCC against a "
+                        "sound one and manufacture a large spurious drop. The "
+                        "F1 ladder is still reported in full in the tables"
                     ),
                 }
             )
