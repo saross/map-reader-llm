@@ -8339,3 +8339,93 @@ original reading would have stood.
 
 Not a diagnosis of the 2026-04-19 materialiser's defect — the mechanism
 that produced 376 candidates where the sweep had 426 is still unknown.
+
+## Entry — 2026-09-12 (Session 153, map-reader-llm): The June "−4 % billing match" was two currencies, and the corroboration it carried was a coincidence
+
+**Session:** 18e4f52f-97a8-432d-87f9-4c5541c051b3
+**Instance:** primary
+
+### Surprising fact
+
+The PI's project-filtered Reports export for 18 April 2026 alone totalled
+$402.08 — exactly the figure the June token-load audit (§ 10) had compared
+with an audited US$419.64 and called "match, −4 %". The exports state
+`Currency,AUD` and a monthly exchange rate (1.4508 for April). The two
+numbers were never in the same currency.
+
+### Probe
+
+Convert, then check on tokens, which are currency-free. In USD the day
+billed about $277, 34 % under the three proposer legs; the 17–19 April
+window billed A$1,175.59 (≈ US$810), covering the legs and other runs.
+On the August Gemini 3.7 leg, where the invoice carries SKU-level token
+counts, billed rate = USD list rate × exchange rate exactly for every SKU,
+and the billed output tokens match the audited reconstruction within
+0.2 %. On 26 April, the T0.3 campaign day, billed output tokens are
+1.43 × the campaign's clean load — the retry overhead the audit had
+flagged but never sized.
+
+### Belief revision
+
+Before: the audited per-pass rates were corroborated by a single-day
+natural experiment. After: the single-day comparison was an artefact of
+an exchange rate near 1.04 × (419.64 / 402.08); the rates are corroborated
+at the SKU level instead, more strongly, and the retry overhead is now a
+number (~40 % on that campaign). Every "billed" figure in the project's
+history was AUD; every audit USD.
+
+### What would change this belief
+
+A Reports export in which the account currency is shown as USD for the
+April period, or an invoice whose SKU rates do not reproduce list × rate
+— neither exists in the nine invoices read.
+
+### Implications for practice
+
+Currency is a unit. A comparison of a console figure with an audit must
+name both units before the arithmetic; and the corroboration to trust is
+the one that reproduces the *rate*, not the one that lands near the
+total.
+
+## Entry — 2026-09-12 (Session 153, map-reader-llm): "Make the tile join geometric" had a false premise — the frames overlap, so the containing tile is not a function
+
+**Session:** 18e4f52f-97a8-432d-87f9-4c5541c051b3
+**Instance:** primary
+
+### Surprising fact
+
+Tile-level MCC matches tile identifiers as strings, so a cell scored on a
+frame with a different tile vocabulary gets a correct F1 beside a
+meaningless MCC (three cells, MCC 0.13 beside F1 0.85). The obvious fix,
+ruled by the PI on my recommendation, was a geometric join. The agent
+implementing it found that a geometric join raised MCC on all 146 sound
+cells, not only the three broken ones.
+
+### Probe
+
+Sum the frame's tile areas against their union: 1.28 ×. A median 30.6 %
+of detections lie in more than one tile, because the 384 px frames sit on
+a 336 px stride. "The tile containing this point" is therefore a rule to
+be chosen (primary tile, or every containing tile), and the two candidate
+rules differ from each other by up to 0.05 MCC.
+
+### Belief revision
+
+Before: the string join was a bug and geometry the fix. After: the string
+join is a *convention* that happens to be a function on each cell's own
+tiling, and the defect is using it across tilings; the fix is an invariant
+that refuses a cross-tiling join, with the choice of geometric rule a
+published-methods decision, not a repair. Every published MCC is on one
+convention and stays comparable; the three cells stay withheld.
+
+### What would change this belief
+
+A frame whose tiles do not overlap (the 512 px / 12.5 % grid would come
+close), on which the geometric and string joins coincide — there the
+"bug" reading would be right.
+
+### Implications for practice
+
+Before ruling that a metric should be re-keyed by geometry, check whether
+the geometry partitions the space. Two of us ruled on the join without
+looking at the frame; the regression run looked.

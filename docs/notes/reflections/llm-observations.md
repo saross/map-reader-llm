@@ -8047,3 +8047,42 @@ remains the missing primitive.
   generated manifests (resolved by regeneration) and one changelog.
   Sapphire was switched to the agent's branch for compute and returned
   to main after the merge — a pattern to keep.
+
+## Session 153 — 2026-09-11/12 (the walk-through day; billing in one currency; the G1 class repo-wide; the K-ladder in two phases; eleven agents)
+
+- **A "match" between two currencies is a coincidence of the exchange
+  rate.** The June billing corroboration compared A$402.08 with US$419.64
+  and called the −4 % a match; at 1.4508 AUD per USD the day billed
+  US$277, 34 % under. Every "billed" figure quoted before today was in
+  the account currency and every audit in list USD. The corroboration
+  that survives is the SKU-level one: billed rate = USD list × invoice
+  rate, exactly, for every SKU checked.
+- **A day-level billing export isolates a run the repository cannot.**
+  The fourth cell's verifier token load was overwritten by its own
+  cleanup pass; its billing day (Pacific time) carried only that verifier,
+  one image-GS pass and three tiny recoveries, so its cost is bounded
+  from the invoice at about US$58 against a US$64.7 simulation.
+- **The name-keyed cache class recurs at every layer.** Today's
+  instances: a bootstrap-CI store whose source files the E70 recovery
+  grew in place (85 of 456 entries); a board membership file reading
+  counts from a label-keyed cache; five consensus unions built between
+  pass 5 and pass 30 of a run and never rebuilt. Content anchors are now
+  written by the runner, the union builder and the evaluator (PR #14).
+- **Pass count pays when the proposer thinks.** Across fourteen
+  Gold Standard families at K = 1, 3, 5, 10 the F1 gain from more passes
+  is significant on 7 of 7 HIGH-thinking ladders and 2 of 6 MINIMAL,
+  rises with temperature on both HIGH tracks, and is front-loaded
+  everywhere (K = 3 takes most of it). Tile-MCC never rises significantly
+  with K and falls significantly on three ladders; the Pareto's
+  MCC-efficient set is the two cheapest rungs.
+- **The tile-MCC join is a string join, and the frames overlap.** Tile
+  ids are matched by name; a cell scored on a frame with a different tile
+  vocabulary gets a correct F1 beside a meaningless MCC (three cells
+  caught, MCC withheld). A geometric replacement is not available: the
+  487-tile frame's tile areas sum to 1.28 × their union, a median 30.6 %
+  of detections lie in more than one tile, and either geometric variant
+  raises MCC on all 146 sound cells. The published rule stays `id` with
+  an invariant that refuses rather than emits.
+- **Uplift is universal and the verifier is a tile classifier.** 170 of
+  170 pairs computed; the 0.890 headline gains +0.213 F1 and +0.393 MCC
+  over its 16-of-30 consensus; two negatives in 170, both explained.

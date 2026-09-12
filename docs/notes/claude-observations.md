@@ -2427,3 +2427,43 @@ answer to "what would you do with spare time"; the two artefacts pair.
 **How to apply.** When idle time appears at session end, take the
 reflection's unpursued question first; when writing the reflection,
 phrase that question so it can be started cold.
+
+## claude-obs 108 — 2026-09-12 (Session 153): A written signature walkthrough got eleven rulings in one reply
+
+**Pattern.** Asked to sign a board and eleven rows, Shawn said he was
+"trying to make my signatures mean something" and asked for a short
+review. One paragraph per row — what the signature attests, what
+changed since the last one, what did not, a recommendation — produced
+eleven one-word rulings and one deliberate exception.
+**Lesson.** A signature is a review unit like a claims list. The
+walkthrough is cheap to write and it is what makes the register's
+`manually_verified_at` field mean anything.
+**How to apply.** Never present a signature as a formality; batch the
+walkthroughs; put the recommendation last so the attestation is read
+first.
+
+## claude-obs 109 — 2026-09-12 (Session 153): The invitation to push back is meant, and a mechanism correction is thanked
+
+**Pattern.** "If I'm wrong, call me on it and we'll discuss further"
+(R4). The correction — reference and frame are fixed by the board; the
+candidate vintage is what moves — was accepted in one line with thanks.
+Earlier the same day he was right against me on R3 and neither of us
+was right on the tile join.
+**Lesson.** Disagreement here is a division of labour: he holds the
+rules, I hold the mechanisms, and the regression run holds the facts
+neither of us checked.
+**How to apply.** State the distinction the ruling conflates, in one
+sentence, and proceed; do not soften a mechanism correction into an
+option list.
+
+## claude-obs 110 — 2026-09-12 (Session 153): My two process errors were both "act on the whole set when I meant the subset"
+
+**Pattern.** A sapphire sync moved every untracked path instead of the
+agent's eleven; ten worktrees were spawned without counting the disk.
+Both were commands written for the case in front of me and run against
+a larger set than I had pictured.
+**Lesson.** Before a command that moves, deletes or creates at scale,
+print the count of what it will touch and compare it with the count I
+expect; the second sync of the day did exactly that (81 of 146,468) and
+was clean.
+**How to apply.** Count first, act second, on anything plural.

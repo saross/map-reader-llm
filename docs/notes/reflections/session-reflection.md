@@ -11269,3 +11269,57 @@ preference recorded in June that I had honoured for the Discussion but
 not for the Results, which was drafted as prose. The Results will need
 re-drafting after an outline pass; the information is there, which was
 today's test.
+
+## Session 153 — 2026-09-11/12 — the session that cleared thirty rulings one at a time, ran eleven agents in worktrees, and found the G1 class twice more
+
+*map-reader-llm; primary instance (no compaction); the overnight close-out job was still running when this was written — its result is an addendum in the continuity block, not here.*
+
+**Where did we disagree, and who was right?** Three times, and the score
+is two to one against me. On R3 I recommended keeping K = 1 off the
+Gold Standard board because the board had always excluded single-pass
+cells; Shawn asked why a K = 1 cell that earned a place should be
+excluded, and he was right — the exclusion was the inventory builder's
+architecture label, not a statistical rule, and once "ladder, then
+board" was stated the exclusion had no principle left under it. On the
+tile-join I recommended, and he ruled, a geometric assignment and a
+re-score; the agent that tried it found the 384 px frames overlap on a
+336 px stride, so "the tile containing this point" is not a function and
+either geometric variant raises every published MCC. Neither of us had
+checked the frame's geometry before ruling on it. On R4 he framed the
+candidate-vintage question as "the ground truth is a moving target" and
+asked to be called on it if wrong; the reference and the frame are held
+fixed by the board and it is the candidate universe that moves, and he
+took the correction in one line. The pattern is the useful part: when
+the disagreement was about a rule he held (R3) he was right; when it was
+about a mechanism I had read (R4) I was right; when neither of us had
+looked (the tile join) we were both wrong, and only the agent's
+regression run said so.
+
+**What will be hardest to reconstruct in six months?** Why the
+supplement's pairing row says 170 of 170 and not 172 of 172. The count
+fell by two because three K = 3 archived sweep optima became board
+members during the same day's rebuild and the supplement excludes board
+cells by a rule signed on 2026-09-10, while the September recovery pair
+joined. Every number is anchored, but the reason lives in three
+documents from one afternoon, and a reader who sees 145 → 170 with 27
+twins added will expect 172. The second is the currency: every "billed"
+figure the project quoted before today was AUD read against a USD audit,
+and the June "−4 % match" that the Methods cost-basis section leans on
+was a coincidence of the exchange rate. The correction is at source with
+a changelog, but the memory of *why* the June figures looked right for
+three months is only here.
+
+**The single most important thing a future reader should know.** The
+name-keyed cache class is not an incident, it is a property of how this
+repository was built: a builder cache, a materialisation registry, a
+bootstrap store, a board membership file and five consensus unions all
+went stale under a stable name, found on four consecutive days by four
+different probes. Pull request #14 anchors the future; the retrospective
+sweeps found the past. What remains is a habit: any new derived artefact
+gets a content hash or a feature-count cross-check before it gets a
+name.
+
+*Texture: an all-day interactive ruling session with the PI present for
+most of it, then an overnight autonomous block; the longest session of
+the write-up phase by commit count (about 140). Relational note: the PI
+asked twice to be told when he was wrong and once said thank you for it.*

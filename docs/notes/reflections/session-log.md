@@ -9479,3 +9479,49 @@ parameters, Pareto framing; whether re-materialised cells belong on the
 board) is a new PI intent, queued not started; the R7.2–R7.3 gaps (the
 3.8 leg, the 3.7 cost column, a back-reference to the GS board) are
 identified, not closed.
+
+## Session 153 — 2026-09-11/12 (amd-tower + sapphire; US$24.81 API for K-ladder Phase 2 and ≈ US$5 tier E approved and running at close; Fable 5.1 driving; eleven Opus-tier worktree agents; about 140 commits)
+
+**Morning (autonomous).** The §§ R7.2–R7.3 gaps agent: 3.8 verifier-seat
+sentences; 3.7 costs audited (arm 1 corrected $12.54 → $8.89); the +0.0267
+comparator named; the 44th twin scored; the hypothesis table regenerated
+and the notation test fixed (`c2d98144d`). The K-ladder card scaffolded
+(`6d21812e0`).
+
+**With the PI.** B1: the 16 null-vote-threshold pairing twins unblocked
+(`2bac888e5`), the pairing row amended to 145 then 170 of 170 and
+re-signed twice. Billing: nine invoices, Reports and Cost-breakdown
+exports read (AUD, single project); the account-wide excess attributed
+to Shawn-individual; the August 3.7 leg reconciled within 2 %; the fourth
+cell bounded from its billing day; the June audit § 10 corrected (AUD vs
+USD) and re-worked on tokens; a public derived cost table published;
+the whole-study figure (A$6,740 / US$4,695) inserted into Methods.
+Revision policy: generated projections carry provenance, not a hand
+changelog (`716c9f3da`). The G1-class audit (27 sites; the bootstrap-CI
+store's 85 pre-E70 entries re-run on sapphire after a 5/5 bit-exact
+gate; PR #14 merged; the union-staleness retrospective: 5 of 106 stale).
+K-ladder: R1–R5 ruled, two principles recorded; Phase 1 at $0 (K = 1
+admitted, board 79 → 103, Tier 1 unchanged, eight ladders, the 27 first-N
+twins derived); the MCC test (no significant rise, three falls; Pareto
+MCC-efficient set = min6, min11; row re-signed); Phase 2 (PR #15 merged;
+US$24.81; 28 rungs, 46 cells, 22 ladders; K's return governed by thinking
+level). Results: the claims inventory (181 claims; 14 drifted, 2
+unanchored), seven rulings (r2 throughout; headline = the 3.7 stack;
+tables not prose; fix drift now; § R1b; figures; timestamp real), 16
+claims fixed, the r2 sweep, § R1b as 23 claims, the figures plan, Obs 447
+in R2/R4, the word-allocation table. Register: Era-2 board re-signed at
+103; ten rows signed after a written walkthrough; one unsigned by
+design. Obs 467–476 (WN-C13–C22, all kept). PR #16 opened (tile-join
+refactor; the geometric rule a morning question). The close-out job
+launched at ~10 pm with tier E and seven $0 items.
+
+**Incidents.** A sapphire sync command set aside all 69 untracked paths
+instead of the agent's 11; restored file-for-file (146,387 files), no
+loss. Nine worktrees filled the local disk (ENOSPC on a tenth); merged
+worktrees removed, ceiling of three set. Two agents each ran on Opus and
+signed as Opus.
+
+**Contextual assumptions.** The PI was present for most of the day and
+ruled item by item; the close-out ran unattended overnight with every
+unruled question routed to a morning list; the local disk stays tight
+until the PI's upgrade, so compute and merges go through sapphire.
