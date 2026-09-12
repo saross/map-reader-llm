@@ -1,15 +1,20 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-12 (§ 4.1 added: the § 4 tile-MCC direction
-> permutation-tested on all eight ladders, per the PI's ruling; § 4.2 added: the
-> same question under the other registered instrument, which agrees; § 2.1 and
-> § 6.1 corrected where they described that test as missing). Prior same-day revision:
+> **Last revised**: 2026-09-12 (later — **§ 7 added: the fourteen four-rung
+> ladders Phase 2 bought** for US$24.81 over 28 rungs, which closes § 6.3's gap
+> and takes the document from eight ladders to twenty-two; § 4.3 extends § 4's
+> F1-against-MCC table to them, § 5 points at their Pareto table and figure).
+> Prior same-day revisions: § 4.1 added (the § 4 tile-MCC direction
+> permutation-tested on all eight ladders, per the PI's ruling), § 4.2 added (the
+> same question under the other registered instrument, which agrees), § 2.1 and
+> § 6.1 corrected where they described that test as missing; before that,
 > original publication — step 5 of the K-ladder
 > Phase-1 run, `planning/k-ladder-phase1-run-2026-09-12.md`. Controlling card:
 > `planning/k-ladder-review-2026-09-11.md`. Companions: the inventory
 > (`inventory.md`), the Phase-2 costing
 > (`reports/k-ladder-phase2-costing-2026-09-12.md`), the deltas
-> (`reports/k-ladder-phase1-deltas-2026-09-12.md`).
+> (`reports/k-ladder-phase1-deltas-2026-09-12.md`,
+> `reports/k-ladder-phase2-deltas-2026-09-12.md`).
 > See [§ Changelog](#changelog).
 
 **Scope, stated first.** Eight fixed-parameter ladders exist and are scorable at
@@ -41,6 +46,19 @@ BH p = 0.77), while the MCC FALL is significant on three ladders and **no ladder
 shows a significant MCC rise**. More passes buy localisation, not
 discrimination. § 4 treats that as the result it is rather than an artefact, and
 § 4.1 tests it.
+
+**What Phase 2 adds to that paragraph (§ 7).** Fourteen more four-rung ladders,
+all on one frame and one recipe, turn the statement above from a description
+into a conditional one. **The size of K's return is governed by the proposer's
+thinking level, and within a thinking level by its temperature.** Across the
+thirteen Gemini 3 ladders the K = 1 → best-rung F1 gain is **+0.0139 to
++0.1514**; it is significant on **7 of 7 HIGH-thinking ladders and only 2 of 6
+MINIMAL** ones, and **four ladders — every one of them MINIMAL — collapse to a
+single statistical tier, where K buys nothing detectable at all**. On both HIGH
+tracks the gain rises monotonically with temperature. The MCC story survives
+intact and gains its first significant instance: the direction is negative on
+11 of 13, and one ladder (HIGH image T 1.0) now shows a **significant** MCC
+decline (−0.0637, BH p = 0.0420) where § 4.1 found none among the eight.
 
 ## 2. The gold-standard ladder, on the board frame
 
@@ -424,12 +442,50 @@ carry no permutation test (§ 6.1) — and the two standardised-reference siblin
 are the same detections against the other 55-map reference, which the sign-swap
 does not score. Those five are reported under the board instrument only.
 
+## 4.3 The same table for the fourteen Phase 2 ladders
+
+Same construction as § 4 — each family's lowest rung against its best rung, on
+one reference and one frame — for the fourteen ladders § 7 adds. All are gold
+standard, board frame `era2-b-487`, 20 m, sweep-optimal operating point.
+
+| ladder | F1@20, K = 1 → best rung | tile-MCC over the same two rungs | MCC verdict |
+|---|---|---|---|
+| MINIMAL text T 0.3 | 0.8555 → 0.8778 (**+0.0223**) | 0.7986 → 0.7735 (**−0.0251**) | **down** |
+| MINIMAL text T 0.7 | 0.8575 → 0.8739 (**+0.0164**) | 0.7881 → 0.7957 (+0.0076) | up |
+| MINIMAL text T 1.0 | 0.8235 → 0.8781 (**+0.0546**) | 0.8095 → 0.7881 (**−0.0214**) | **down** |
+| HIGH text T 0.3 | 0.8314 → 0.8873 (**+0.0559**) | 0.8068 → 0.7805 (**−0.0263**) | **down** |
+| HIGH text T 0.7 | 0.8009 → 0.8744 (**+0.0735**) | 0.7737 → 0.7641 (−0.0096) | **down** |
+| HIGH text T 1.0 | 0.7810 → 0.8804 (**+0.0994**) | 0.8162 → 0.7910 (**−0.0252**) | **down** |
+| MINIMAL image T 0.3 | 0.7680 → 0.7819 (**+0.0139**) | 0.8443 → 0.8377 (−0.0065) | **down** |
+| MINIMAL image T 0.7 | 0.7252 → 0.7881 (**+0.0629**) | 0.8437 → 0.8223 (**−0.0214**) | **down** |
+| MINIMAL image T 1.0 | 0.7044 → 0.7428 (**+0.0384**) | 0.8360 → 0.8078 (**−0.0282**) | **down** |
+| HIGH image T 0.3 | 0.6925 → 0.7705 (**+0.0780**) | 0.8270 → 0.8294 (+0.0024) | flat |
+| HIGH image T 0.7 | 0.6909 → 0.7868 (**+0.0959**) | 0.8435 → 0.8359 (−0.0076) | **down** |
+| HIGH image T 1.0 | 0.6119 → 0.7633 (**+0.1514**) | 0.8640 → 0.8002 (**−0.0637**) | **down, and SIGNIFICANT** |
+| scale-4-optimal 487 | 0.6376 → 0.7683 (**+0.1307**) | 0.8726 → 0.8154 (**−0.0572**) | **down** (BH p = 0.076) |
+| 3.7 text, GS B geometry | 0.8495 → 0.9068 (**+0.0573**) | — (withheld, § 7.3) | — |
+
+**All fourteen gain F1. Eleven of the thirteen with an interpretable MCC lose
+it**, one is flat and one gains — the same direction § 4 reported on the eight,
+now on fourteen more ladders, two model families, two thinking levels, two
+modalities and three temperatures. § 4.1 found **no** significant MCC change
+among the eight; here **one is significant** (HIGH image T 1.0, −0.0637, BH
+p = 0.0420) and one is a near miss (scale-4-optimal, −0.0572, BH p = 0.0762).
+So the count of significant MCC declines in the corpus moves from zero to one,
+and the direction is now supported by twenty-two ladders rather than eight.
+
+The 3.7 family's MCC is **withheld rather than reported** at K = 1 and K = 3;
+§ 7.3 gives the reason, which is an instrument property and not a measurement.
+
 ## 5. The Pareto frame
 
 Figure: `figures/k-ladder-pareto.png` — audited all-in cost (log axis) against the
-headline F1, one line per ladder, each point labelled with its K. In table form,
-the efficient rungs of each ladder (a rung is efficient when no cheaper rung of
-the same ladder scores as well):
+headline F1, one line per ladder, each point labelled with its K. The fourteen
+Phase 2 ladders have their own figure, `figures/k-ladder-pareto-phase2.png`, and
+their own efficient-rung table in
+`phase2/ladder-tables.md` § "Pareto"; § 7.4 reads the result off it. In table
+form, the efficient rungs of each Phase 1 ladder (a rung is efficient when no
+cheaper rung of the same ladder scores as well):
 
 | ladder | efficient rungs (K @ US$ → F1) |
 |---|---|
@@ -534,14 +590,188 @@ partially-measured claim the original decision avoided. The § 4.1 result is
 committed under `mcc-test/` and cited from this document; the row waits on the
 MCB.
 
-### 6.3 No Gemini 3 `pv-diag-384` ladders
+### 6.3 The Gemini 3 `pv-diag-384` ladders — GAP CLOSED by Phase 2
 
-Every one of those twelve families holds two rungs, K = 5 and K = 10, so none
-reaches the three-rung bar (`inventory.md` § 3). Their K = 1 and K = 3 rungs are
-Phase 2, costed at US$4.50 for the two T 0.7 pools and US$24.84 for all 28
+This section recorded that every one of those families held two rungs, K = 5
+and K = 10, so none reached the three-rung bar (`inventory.md` § 3), and that
+their K = 1 and K = 3 rungs were Phase 2, costed at US$24.84 for all 28
 (`reports/k-ladder-phase2-costing-2026-09-12.md`).
 
+**The PI approved all four tiers on 2026-09-12 and the run executed them for
+US$24.8065.** All thirteen `pv-diag-384` families and the 3.7 gold-standard
+screen now carry four rungs at K = 1, 3, 5, 10. They are § 7.
+
+## 7. The fourteen ladders Phase 2 bought
+
+**What was purchased.** The PI approved tiers A–D of
+`reports/k-ladder-phase2-costing-2026-09-12.md` on 2026-09-12 at US$24.84: one
+pass of the carried Gemini 3 verifier over each of 28 first-N consensus unions,
+which is the K = 1 and K = 3 rung of thirteen `pv-diag-384` families and of the
+3.7 gold-standard text screen. It ran for **US$24.8065** audited flex —
+35,844 candidates offered, 35,844 verified, **0 failed** — and every family
+named in § 6.3 now carries **four rungs at K = 1, 3, 5, 10** on one frame
+(`era2-b-487`), one reference (the Gold Standard curator reference), one
+verifier (ruling R1), one evaluation recipe (14 buffers, 10,000 BCa draws,
+seed 42, MCC) and one operating-point rule.
+
+Full per-family tables, both operating points, cost per rung and every anchor
+are in `phase2/ladder-tables.md`; the machine-readable form is
+`phase2/ladders.json`, the spend in `phase2/spend-ledger.json`, and the run's
+report is `reports/k-ladder-phase2-deltas-2026-09-12.md`. This section states
+what the fourteen ladders mean.
+
+### 7.1 The result: K's return is governed by the thinking level
+
+Ruling R2's sweep-optimal point, board frame, K = 1 against the best rung, with
+the board's own instrument (`scripts/era1_leaderboard_tiering.py`, round-robin
+tile-swap permutation, 10,000 permutations, seed 42, BH q = 0.05,
+`--permute-mcc`) run over the thirteen ladders whose rungs are all
+register-resolvable:
+
+| thinking | ladders | ΔF1 range, K = 1 → best | ΔF1 significant | ladders that are ONE tier |
+|---|---:|---|---:|---:|
+| MINIMAL | 6 | +0.0139 to +0.0629 | **2 of 6** | **4 of 6** |
+| HIGH | 7 | +0.0559 to +0.1514 | **7 of 7** | 0 of 7 |
+
+**With HIGH thinking, more proposer passes always pay; with MINIMAL thinking,
+usually they do not.** Four ladders greedy-clique into a **single tier** — all
+four rungs statistically indistinguishable, so K buys nothing detectable at
+all — and every one of the four is MINIMAL: text T 0.3 (BH p = 0.28), text
+T 0.7 (p = 0.58), image T 0.3 (p = 0.78), image T 1.0 (p = 0.12). The seven
+HIGH-thinking ladders all separate, and the number of distinguishable tiers
+rises with temperature on the text track (T 0.3 → 2 tiers, T 0.7 → 3,
+T 1.0 → 3).
+
+**Temperature modifies it within a thinking level, monotonically on both HIGH
+tracks**: HIGH text +0.0559 → +0.0735 → +0.0994 and HIGH image
++0.0780 → +0.0959 → +0.1514 as T goes 0.3 → 0.7 → 1.0. On the MINIMAL tracks
+the gain is smaller and not ordered by temperature.
+
+**The reading, offered rather than asserted.** Extra passes can only help to the
+extent that they differ from each other, and both HIGH thinking and higher
+temperature make a pass more different from its siblings. That is the diversity
+dividend (Obs 141) measured on a K ladder for the first time: K is not a
+free-standing lever but a way of buying sampling diversity, and it pays in
+proportion to how much diversity the configuration already generates. It also
+explains a result the corpus already held without explaining — that the
+registered `pass-budget-pareto-v2` efficient set contains both a cheap
+MINIMAL rung and an expensive HIGH one.
+
+### 7.2 Tile-MCC: the direction holds, and now has one significant case
+
+§ 4.3 carries the table. Across the fourteen: F1 rises on all fourteen,
+tile-MCC falls on eleven of the thirteen that have an interpretable one, and
+for the first time in the corpus **one MCC decline is statistically
+significant** — HIGH image T 1.0, −0.0637, BH p = 0.0420 — with
+scale-4-optimal a near miss at −0.0572, BH p = 0.0762. Twelve of thirteen show
+no significant MCC change, which is what § 4.1 found on the eight.
+
+Note the shape of the exception: it is the family with the **largest** F1 gain
+(+0.1514). The ladders where K buys the most localisation are the ladders where
+it costs the most tile-level specificity, which is exactly the mechanism § 4
+proposed — extra true positives land in tiles already counted positive, extra
+false positives flip negative tiles.
+
+### 7.3 One family's tile-MCC is withheld, and why
+
+**The 3.7 gold-standard family's K = 1 and K = 3 rungs report no tile-MCC.**
+This is an instrument property, found while checking the numbers, and it is
+worth stating in full because it fails silently.
+
+`scripts/lib_advanced_metrics.py:2079` decides whether a tile contains a
+detection with a **string** comparison —
+`gdf_det[gdf_det['source_tile'] == tile_name]` — not geometrically. So a
+detection counts towards a tile only when its `source_tile` property is
+byte-equal to a `tile_name` in the bounds file. Point matching is geometric, so
+F1 at every buffer is unaffected.
+
+The 3.7 screen's proposer ran on the `ov192` tile set, whose names
+(`…_x0_y1920.png`) are **absent** from the board frame's 336-stride vocabulary
+(`…_x0_y2016.png`). Measured with `scripts/check_tile_vocabulary_match.py`:
+of the 47 materialised Phase 2 cells, **44 match the frame and exactly 3 do
+not**, all three this family's new rungs — 21 of 502 detections land in a frame
+tile, giving tp 10 / fn 219 and MCC 0.1337 beside an F1@20 of 0.8495. The
+family's committed K = 5 and K = 10 rungs are sound (tp 185, MCC 0.7651)
+because their unions carry frame-vocabulary names.
+
+Two consequences, both conservative. The three cells' tile-MCC is **withheld
+rather than printed**, because 0.13 beside a sibling's 0.77 invites reading an
+instrument artefact as "K destroys tile discrimination". And this family is
+**excluded from the permutation testing**: the instrument runs the F1 and MCC
+arms on one set of swap masks, so tiering it would compare a meaningless MCC
+against a sound one and manufacture a large spurious drop. **Its F1 ladder is
+reported in full** and is unaffected.
+
+No re-keying was attempted. Assigning these detections to frame tiles by
+spatial containment would work and would reproduce what the family's committed
+unions already do, but choosing which tile wins where tiles overlap is a
+methodological decision for the PI, not for a gap-fill run. **The general
+question is put back too**: any cell in the corpus scored on a frame whose tile
+vocabulary differs from its proposer's tiling has this problem, and nothing in
+the pipeline warns of it — the board's own confusion gate reproduces the same
+wrong confusion and passes.
+
+### 7.4 Pareto: K = 10 is almost never worth it, and the 3.7 family shows why
+
+Efficient rungs per family are tabulated in `phase2/ladder-tables.md`; the
+figure is `figures/k-ladder-pareto-phase2.png`. Two things to read off them.
+
+**K = 3 takes 37 % to 92 % of each ladder's total F1 gain for 31 % to 44 % of
+its top rung's cost.** Every one of the fourteen has K = 3 on its efficient set.
+
+**The last step is the worst buy on every ladder, and on the 3.7 family it is
+the worst in the corpus.** Its K = 5 → K = 10 step buys **+0.0002 F1 for
+US$8.65** — about **US$43,000 per 0.001 F1**, two and a half times the
+US$17,400 that § 5 records for 55-map stride B, and the cleanest statement yet
+that "the ladder saturates" is an economic claim rather than a statistical one.
+For comparison the HIGH text T 1.0 ladder's last step buys +0.0116 for
+US$12.94, or about US$1,100 per 0.001 F1.
+
+### 7.5 What § 7 does not claim
+
+- **No rung joined the Era-2 board.** The board was re-signed on 2026-09-10;
+  admitting 46 new cells is a re-tier and a re-signature, and that is the PI's
+  to authorise under "ladder, then board".
+- **No analysis row was authored or signed.** The tiering read its cell sets
+  from scratch analyses files, so the register gained no placeholder row.
+- **The Hsu MCB admissible set is still not supplied**, exactly as § 6.1 says.
+- **The carried column carries an ambiguity the PI must settle.** The corpus
+  holds two readings of "the carried point" and they diverge sharply above
+  K = 3 — `k = K` taxes F1@20 by up to −0.2566 on the committed rungs while the
+  gold-standard stride ladder's own 1/3/4/8 shell taxes at most −0.0735. Both
+  are computed and committed
+  (`phase2/committed-carried/scores.json`); they coincide at K = 1 and K = 3, so
+  no Phase 2 rung is affected either way.
+- **Nothing in §§ 2–6 moved.** No Phase 1 ladder gained a rung and no Phase 1
+  number changed.
+
 ## Changelog
+
+### 2026-09-12 (later) — § 7: the fourteen ladders Phase 2 bought
+
+**Trigger**: the PI approved tiers A–D of the Phase 2 costing at US$24.84 and
+the run executed all 28 rungs for US$24.8065 audited flex. Closing report:
+`reports/k-ladder-phase2-deltas-2026-09-12.md`.
+
+**What moved**: the document's scope, from eight ladders to twenty-two. § 7 is
+new; § 4.3 extends § 4's F1-against-MCC table by fourteen rows; § 5 points at
+the new Pareto table and figure; § 1 gains a paragraph; § 6.3's gap is closed.
+
+| Claim | before | after |
+|---|---|---|
+| Fixed-parameter ladders reported | 8 | **22** |
+| Gemini 3 `pv-diag-384` ladders | none reach the three-rung bar (§ 6.3) | **13 four-rung ladders** |
+| Significant tile-MCC declines in the corpus | 0 (§ 4.1, over 8 ladders) | **1** (HIGH image T 1.0, BH p = 0.0420) |
+| Ladders where K buys nothing detectable | not measurable — no family had enough rungs | **4 of 13**, all MINIMAL thinking |
+| Worst last-step buy on record | US$17,400 per 0.001 F1 (55-map stride B, § 5) | **US$43,000** per 0.001 F1 (3.7 GS, K = 5 → 10) |
+
+**What did NOT change**: every number in §§ 2, 3, 4, 4.1, 4.2 and 5's Phase 1
+table; the eight Phase 1 ladders' membership and rungs; the signed Era-2 board;
+every analysis row; the pending instrument ruling for the 55-map ladders; and
+the § 6.1 MCB gap, which is still outstanding. The § 4 tile-MCC direction is
+corroborated, not revised.
+
+Landed on branch `worktree-agent-ae87367bcee3e0e5c`.
 
 ### 2026-09-12 — §§ 4.1–4.2: the tile-MCC direction, tested
 
