@@ -15,9 +15,16 @@ It is the candidate universe a single Gemini 3 verifier pass is then run over
 
 ## The pass list, recorded explicitly
 
-`pass_provenance` is not yet on `main` (PR #14 is unmerged), so the pass list
-is recorded here by hand rather than read back from a property of the
-consensus file:
+The pass list is recorded twice, and the two records agree. This file carries
+it in prose, because when this rung was first built the branch point had no
+`pass_provenance` mechanism; a concurrent session landed one on `main` the same
+day (`fix(consensus): record and check a union's pass list`), and after merging
+it the union was rebuilt, so `voting_summary.json` beside this file now also
+carries a `pass_provenance` block with a `git_blob_hash` per pass. That rebuild
+changed **only** `voting_summary.json` — not one byte of any
+`consensus_t*.geojson` across all 28 rungs — which is the cross-check that the
+refactor was behaviour-preserving and that this union is the one the verifier
+consumed.
 
 | field | value |
 |---|---|

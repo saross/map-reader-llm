@@ -23,9 +23,13 @@ Description:
        ``TOLERANCE_FRACTION`` is recorded as a STOP for that rung — the rung is
        NOT to be verified, and the mismatch is reported;
     3. writes an ``experiment_intent.md`` beside the union recording the pass
-       list explicitly. ``pass_provenance`` is not on ``main`` (PR #14 is
-       unmerged), so the pass list is recorded by hand here rather than read
-       back from a consensus property.
+       list in prose, alongside the rung's costing row and tier.
+
+    Re-running is safe and is how the unions gained their machine-readable
+    ``pass_provenance``: the branch point had no such mechanism, a concurrent
+    session landed one on ``main`` the same day, and a rebuild after merging it
+    changed only each rung's ``voting_summary.json`` — not one byte of any
+    ``consensus_t*.geojson`` across all 28 rungs.
 
     Nothing in this script calls an API. It is safe to re-run: ``merge_passes``
     overwrites its outputs deterministically.
@@ -360,9 +364,15 @@ def build_union(rung: dict[str, Any], *, check_only: bool) -> dict[str, Any]:
 def write_intent(rung: dict[str, Any]) -> None:
     """Write the rung's ``experiment_intent.md``, recording the pass list.
 
-    ``pass_provenance`` is not on ``main`` (PR #14 unmerged), so the pass list
-    is recorded here explicitly rather than read back from a consensus
-    property. This file is in the document revision policy's scope
+    The pass list is recorded here in prose as well as in the union's own
+    ``voting_summary.json``. When this run began, its branch point carried no
+    ``pass_provenance`` mechanism, so the prose record was the only one; a
+    concurrent session landed ``fix(consensus): record and check a union's
+    pass list`` on ``main`` the same day, and after merging it the unions were
+    rebuilt and now carry a machine-readable record too. The two agree, and the
+    prose one is kept because it also names the rung's costing row and tier.
+
+    This file is in the document revision policy's scope
     (``docs/methodology/output-directory-standard.md``).
 
     Args:
@@ -396,9 +406,16 @@ It is the candidate universe a single Gemini 3 verifier pass is then run over
 
 ## The pass list, recorded explicitly
 
-`pass_provenance` is not yet on `main` (PR #14 is unmerged), so the pass list
-is recorded here by hand rather than read back from a property of the
-consensus file:
+The pass list is recorded twice, and the two records agree. This file carries
+it in prose, because when this rung was first built the branch point had no
+`pass_provenance` mechanism; a concurrent session landed one on `main` the same
+day (`fix(consensus): record and check a union's pass list`), and after merging
+it the union was rebuilt, so `voting_summary.json` beside this file now also
+carries a `pass_provenance` block with a `git_blob_hash` per pass. That rebuild
+changed **only** `voting_summary.json` — not one byte of any
+`consensus_t*.geojson` across all 28 rungs — which is the cross-check that the
+refactor was behaviour-preserving and that this union is the one the verifier
+consumed.
 
 | field | value |
 |---|---|

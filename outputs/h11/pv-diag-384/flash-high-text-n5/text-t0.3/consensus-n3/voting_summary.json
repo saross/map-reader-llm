@@ -4,5 +4,28 @@
     "1": 2201,
     "2": 912,
     "3": 606
-  }
+  },
+  "pass_provenance_schema": "consensus-pass-provenance/1",
+  "pass_ids": [
+    "run_1",
+    "run_2",
+    "run_3"
+  ],
+  "pass_provenance": [
+    {
+      "pass_id": "run_1",
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+      "git_blob_hash": "a96da2137c85f6a9c0afbd5b91b6e91ba50dad0c"
+    },
+    {
+      "pass_id": "run_2",
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+      "git_blob_hash": "93249a1c008fe9d52c2c359d680fd65c7fb1aeb2"
+    },
+    {
+      "pass_id": "run_3",
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+      "git_blob_hash": "727f5c2bcafb9746f73f3e741a277b4156c61567"
+    }
+  ]
 }
