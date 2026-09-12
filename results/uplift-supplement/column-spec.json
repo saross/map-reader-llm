@@ -1,8 +1,12 @@
 {
-  "generated_at": "2026-09-10T07:16:15Z",
+  "generated_at": "2026-09-12T01:27:29Z",
   "notation_key": "docs/methodology/notation-key.md",
   "sanctioned_by_notation_key": [
+    "-era2b",
+    "-opmax",
+    "-recovery-<date>",
     "55maps-8541",
+    "<date>",
     "F1",
     "F1_CI_hi",
     "F1_CI_lo",
@@ -42,6 +46,7 @@
     "era2-b-487",
     "eval_path",
     "f1_50",
+    "first-n-recluster",
     "fn",
     "fp",
     "frame_id",
@@ -215,6 +220,11 @@
       "rationale": "Which cost basis `cost_usd` carries; NOT the audited basis (see build report).",
       "sanctioned_by_key": true
     },
+    "crop_manifest_path": {
+      "extends": "anti-confabulation",
+      "rationale": "The candidate manifest of the cell's own proposer pool, when the twin is the vote shell of the universe its verifier cropped (pairing_basis crop-manifest).",
+      "sanctioned_by_key": false
+    },
     "delta": {
       "extends": "\u00a7 3 (transfer tax)",
       "rationale": "target_value - source_value; a transfer tax when the sign is negative.",
@@ -377,7 +387,7 @@
     },
     "pairing_basis": {
       "extends": "anti-confabulation",
-      "rationale": "Which rule located the pre-verifier twin: registered, consensus-file, union.",
+      "rationale": "Which rule located the pre-verifier twin: registered, consensus-file, union, crop-manifest.",
       "sanctioned_by_key": true
     },
     "proposer_pool": {
@@ -581,7 +591,9 @@
       "sanctioned_by_key": true
     }
   },
-  "pending_extensions": [],
+  "pending_extensions": [
+    "crop_manifest_path"
+  ],
   "tables": {
     "conditions.csv": [
       "condition_id",
