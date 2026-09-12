@@ -786,6 +786,183 @@ US$12.94, or about US$1,100 per 0.001 F1.
 - **Nothing in §§ 2–6 moved.** No Phase 1 ladder gained a rung and no Phase 1
   number changed.
 
+## 8. Tension: MINIMAL ladders on the two corpora
+
+**The tension, stated first.** §§ 3.1–3.2 report that the two deployment
+MINIMAL stride ladders gain a lot from K and gain it decisively — stride B
++0.0547 F1@50 from K = 1 to K = 10 at BH p < 0.0001, stride A +0.0192 at
+BH p < 0.0001. § 7.1 reports that on the gold standard the MINIMAL ladders gain
++0.0139 to +0.0629 and **four of six are a single statistical tier** in which K
+buys nothing detectable. Two readings compete, and the corpus as it stood could
+not choose between them:
+
+- **the scale reading** — the effect is the same size on both corpora, and the
+  gold standard has 17.5x fewer tiles, so its instrument cannot resolve it;
+- **the corpus reading** — K really pays more at deployment, where the proposer
+  meets 55 unseen sheets rather than the 4 its examples were drawn from, so
+  extra passes have more left to find.
+
+Three analyses settle the first and qualify it. All cost US$0 and ran on
+sapphire; the machine-readable forms are `tension/subsample.json`,
+`tension/effect-sizes.json` and `tension/grid-overlap.json`.
+
+### 8.1 The subsample test: the gold standard's tile count, on the deployment cells
+
+The comparison across corpora confounds tile count with everything else. This
+one does not: it takes the **deployment ladders' own cells**, on their own
+reference and their own buffer, and scores them on random **487-tile** subsets
+of their own 8,541 tiles — the gold standard's exact tile count — 200 draws,
+seed 42, with the ladder's own instrument (round-robin tile-swap permutation
+over the four rungs, 10,000 permutations, BH q = 0.05 within each draw's six
+pairs). Corpus, reference, recipe and cells are held fixed; **only the number of
+tiles scored varies**.
+
+**The gate first.** Each rung's per-tile table was rebuilt from its committed
+detections and its micro-F1 compared with its committed board F1 before any
+subset was drawn: all eight rungs reproduce to within 2.6e-5 (the committed
+values are published at four decimals). The first run of this analysis
+**failed** that gate at micro-F1 0.0000 on all eight rungs, which is the
+signature § 7.3 describes — and the cause was the projection, not the tile
+names: the committed cells' detections are EPSG:4326 while the reference and
+frame are EPSG:32635, so a 50 m tolerance was being applied in degrees. The
+names were never in question (`source_tile` matches the frame 2,579 of 2,579).
+Recorded because the gate is the only reason the first numbers were not
+published.
+
+| ladder | full corpus (8,541 tiles) | draws BH-significant at 487 tiles | ΔF1 across draws: mean (sd) | p05 … p95 | draws with ΔF1 < 0 |
+|---|---:|---:|---|---|---:|
+| 55-map stride A, r2 | **+0.0192** (p < 0.0001) | **39 of 200 — 19.5 %** | +0.0191 (0.0113) | +0.0012 … +0.0377 | 8 |
+| 55-map stride B, r2 | **+0.0547** (p < 0.0001) | **197 of 200 — 98.5 %** | +0.0537 (0.0116) | +0.0329 … +0.0723 | 0 |
+
+**Read the two rows together and the mechanism is arithmetic.** The subsampling
+standard deviation of ΔF1 is the same on both ladders, ≈ 0.0114, because it is a
+property of scoring 487 tiles rather than of the ladder. An effect of +0.019
+therefore sits about 1.7 standard deviations from zero and is detected in fewer
+than one draw in five; an effect of +0.055 sits about 4.7 out and is detected in
+almost every draw. **At 487 tiles this instrument resolves a ΔF1 of roughly
+0.03 and above, and does not resolve one below it** — and that is measured on
+cells whose full-corpus p-value is below the permutation floor.
+
+### 8.2 The effect sizes, both corpora side by side
+
+Every MINIMAL-thinking K ladder in the corpus, K = 1 to its best rung, ordered
+by effect size rather than by corpus. Figures are re-read from the committed
+ladder inventories and permutation summaries, not recomputed.
+
+| ladder | corpus | tiles | K = 1 → best | ΔF1 | BH p | separates? |
+|---|---|---:|---|---:|---:|:---:|
+| MINIMAL image T 0.7 | gold standard | 487 | 1 → 10 | **+0.0629** | 0.0006 | **yes** |
+| stride B | deployment | 8,541 | 1 → 10 | **+0.0547** | < 0.0001 | **yes** |
+| MINIMAL text T 1.0 | gold standard | 487 | 1 → 10 | **+0.0546** | 0.0012 | **yes** |
+| MINIMAL image T 1.0 | gold standard | 487 | 1 → 10 | +0.0384 | 0.1236 | no |
+| GS stride A (exact) | gold standard | 487 | 1 → 10 | **+0.0305** | 0.0072 | **yes** |
+| MINIMAL text T 0.3 | gold standard | 487 | 1 → 5 | +0.0223 | 0.2768 | no |
+| stride A | deployment | 8,541 | 1 → 10 | **+0.0192** | < 0.0001 | **yes** |
+| MINIMAL text T 0.7 | gold standard | 487 | 1 → 5 | +0.0164 | 0.5780 | no |
+| MINIMAL image T 0.3 | gold standard | 487 | 1 → 10 | +0.0139 | 0.7803 | no |
+
+**Two things this table makes plain.**
+
+1. **The gold-standard ladders sort by effect size, not by anything else.**
+   Every one at or above +0.0546 separates; every one at or below +0.0223 does
+   not; the two in between straddle the resolution § 8.1 measured, and they
+   straddle it in both directions (+0.0384 does not separate, +0.0305 does),
+   which is what a resolution limit rather than a threshold looks like.
+2. **The two corpora's MINIMAL ranges are not different — the deployment range
+   sits INSIDE the gold standard's.** Gold standard +0.0139 to +0.0629;
+   deployment +0.0192 to +0.0547. There is no effect at deployment larger than
+   the largest on the gold standard.
+
+### 8.3 Does K's return depend on the geometry? The grid ladders say yes — before the verifier
+
+The grid study holds K = 1/3/5/10 ladders at four (tile size x overlap)
+geometries at **fixed MINIMAL text T 0.7 on one corpus**, which isolates
+geometry from everything the two-corpora comparison confounds. They are
+**consensus-only** — no verifier stage — and each rung is the best F1@20 over
+the (corroboration, vote) grid, which is how `results/grid-2026-08-18/findings.md`
+reads that sweep. On the grid-common 487-tile footprint:
+
+| geometry | K = 1 | K = 3 | K = 5 | K = 10 | ΔF1, K = 1 → 10 | ΔMCC |
+|---|---:|---:|---:|---:|---:|---:|
+| 384 px / 50 % | 0.6633 | 0.6837 | 0.7045 | 0.7205 | **+0.0572** | +0.0444 |
+| 512 px / 50 % | 0.7121 | 0.7429 | 0.7440 | 0.7518 | **+0.0396** | +0.0382 |
+| 384 px / 12.5 % | 0.5021 | 0.5976 | 0.6176 | 0.6475 | **+0.1454** | +0.1543 |
+| 512 px / 12.5 % | 0.5845 | 0.6763 | 0.6736 | 0.6759 | **+0.0914** | +0.0597 |
+
+**Overlap governs K's consensus-only return, and by a factor of about 2.4.**
+At both tile sizes the low-overlap cell gains far more from K than the
+high-overlap one (+0.1454 against +0.0572 at 384 px; +0.0914 against +0.0396 at
+512 px). The reading offered: **overlap and pass count buy the same thing.** A
+50 % overlap already shows each mound to the proposer in several tiles within a
+single pass, so extra passes add less that the geometry has not already
+supplied; at 12.5 % overlap a mound is seen once, and extra passes are the only
+redundancy available. This is the same substitution the grid's own registered
+analysis found between consensus and the verifier
+(`grid-postverifier-2026-08-18`: "consensus and verifier are complements, not
+substitutes"), now between consensus and *overlap*.
+
+**But the pattern does not survive to the verified deployment ladders, and that
+is worth stating rather than smoothing.** Stride A runs a 128 px overlap of 384
+(33 %) and stride B a 192 px overlap (50 %), so the grid's rule predicts stride
+A should gain MORE from K. It gains **less** (+0.0192 against +0.0547). The
+difference between the two settings is the verifier, which the grid ladders
+above do not have — and § 8.4 is the measurement that isolates it.
+
+Note also the ΔMCC column: on these consensus-only ladders tile-MCC **rises**
+with K at every geometry, by +0.038 to +0.154. That is the opposite of §§ 4
+and 4.3, where tile-MCC falls on 16 of 21 verified ladders. The two are
+consistent under § 4's mechanism: a consensus-only union at a tuned vote
+threshold is precision-starved, so extra passes still add true positives in
+tiles that were negative, which raises MCC; once a verifier has already removed
+most false positives, extra passes mostly add false positives, which lowers it.
+**Tile-MCC's response to K reverses across the verifier stage.**
+
+### 8.4 The verified B-geometry ladder tier E bought
+
+TIER_E_PLACEHOLDER
+
+### 8.5 Which reading the data favour
+
+**The scale reading, for the tension as posed — with the geometry qualification
+of § 8.3 standing beside it, and without claiming the corpora are identical.**
+
+What is established:
+
+1. **The gold standard's null results are a resolution limit, not a finding
+   about K.** § 8.1 shows that the deployment stride A gain — below the
+   permutation floor on 8,541 tiles — goes undetected in 80.5 % of 487-tile
+   draws of its own cells. A gold-standard ladder reporting "one tier" at
+   ΔF1 +0.0139 to +0.0384 is reporting that 487 tiles cannot see an effect that
+   size, which is the same statement.
+2. **There is no evidence that K pays more at deployment.** § 8.2's deployment
+   range sits inside the gold-standard range, and the two gold-standard MINIMAL
+   ladders whose effects are deployment-sized (+0.0546, +0.0629) both separate.
+   The corpus reading predicts a shift the data do not show.
+3. **"K buys nothing detectable on four MINIMAL configurations" stands as
+   written** — it is a claim about detectability at 487 tiles, and § 8.1 is its
+   warrant rather than its refutation. What must not be said is that K buys
+   nothing *on those configurations*: four effects between +0.0139 and +0.0384
+   are consistent both with nothing and with the +0.019 the deployment corpus
+   resolves.
+
+What is **not** established, stated so the reading is not over-claimed:
+
+- **Two deployment ladders against seven gold-standard ones.** § 8.1's
+  resolution estimate rests on two ladders, and both are stride geometries under
+  the Gemini 3 verifier. A third would test it.
+- **§ 8.1 measures the instrument on the deployment cells, not on the gold
+  standard's.** The deployment ladders are scored against the r2 reference at
+  50 m, the gold standard against the curator reference at 20 m. The ≈ 0.0114
+  subsampling standard deviation is therefore a deployment-cell figure imported
+  to the gold standard's tile count, not a gold-standard measurement. It is the
+  closest available like-for-like, and it is not identical.
+- **A resolution limit is not a power calculation.** 19.5 % and 98.5 % are
+  detection rates at two effect sizes, not a curve; nothing here says what
+  ΔF1 the gold standard detects half the time.
+- **§ 8.3's geometry effect is consensus-only and unverified as a claim about
+  the verified ladders.** It is measured at one thinking level, one temperature,
+  one corpus and one modality, and the verified ladders order the other way.
+
 ## Changelog
 
 ### 2026-09-12 (latest) — § 7.3: the withheld tile-MCC, measured
