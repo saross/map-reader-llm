@@ -570,8 +570,7 @@ def run_rerun(
             entry["n_iterations"] = outcome["n_iterations"]
             entry["elapsed_seconds"] = outcome["elapsed_seconds"]
             entry["recomputed_at"] = timestamp
-        payload.setdefault("_rerun", {})
-        payload["_rerun"] = {
+        rerun_note = {
             "date": "2026-09-12",
             "reran_entries": len(good),
             "errors": len(errors),
@@ -590,8 +589,15 @@ def run_rerun(
             ),
             "audit_report": AUDIT_REPORT,
         }
+        # Keep the provenance notes together at the head of the file, ahead of
+        # the 496 entries, so a reader meets them before the data.
+        ordered: dict[str, Any] = {"_metadata": payload["_metadata"]}
+        if "_path_repair" in payload:
+            ordered["_path_repair"] = payload["_path_repair"]
+        ordered["_rerun"] = rerun_note
+        ordered.update({k: v for k, v in payload.items() if k not in ordered})
         if not dry_run:
-            write_store(store_path, payload)
+            write_store(store_path, ordered)
             print(f"  wrote {store_path}")
 
     shifts.sort(key=lambda s: -abs(s[2] - s[1]))
