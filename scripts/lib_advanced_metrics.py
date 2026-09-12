@@ -56,6 +56,90 @@ DEFAULT_CRS = "EPSG:32635"  # UTM Zone 35N (Bulgaria)
 BOOTSTRAP_METHOD: str = "BCa"
 BOOTSTRAP_LIB: str = "scipy.stats.bootstrap"
 
+# Tile-join constants (E-series: the name-versus-geometry defect) ----------
+#
+# The tile confusion matrix behind tile-level Matthews Correlation
+# Coefficient (MCC) needs, for each evaluation-frame tile, two booleans:
+# does the tile hold a reference mound, and does it hold a detection. The
+# reference side has always been geometric. The detection side, until
+# 2026-09-12, was a **string** comparison of the detection's
+# ``source_tile`` property against the frame's ``tile_name``:
+#
+#     dets_in_tile = gdf_det[gdf_det['source_tile'] == tile_name]
+#
+# That silently produces a meaningless confusion — and therefore a
+# meaningless MCC — whenever a cell is scored on a frame whose tile
+# vocabulary differs from the tiling its proposer ran on, because no
+# detection's name is ever equal to any frame tile's name. F1 is
+# geometric (buffer matching) and stays correct, so the failure looks
+# like a plausible number rather than an error. Measured on the K-ladder
+# Phase 2 corpus: 44 of 47 cells matched, 3 did not, and the three
+# reported MCC 0.1337 beside F1 0.8495
+# (``results/k-ladder-2026-09-12/phase2/tile-vocabulary-match.json``).
+#
+# The three supported joins are below. They are NOT interchangeable, and
+# the reason is that the project's main evaluation frames **overlap**:
+# ``inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson`` holds
+# 384 px tiles on a 336 px stride, so the sum of its tile areas is
+# 1.2783x its union area and about 35 % of detections lie inside more
+# than one frame tile. "The tile containing this point" is therefore not
+# unique, and the three joins disagree by up to ~0.05 MCC on cells whose
+# vocabulary matches (see ``reports/tile-mcc-geometric-join-2026-09-12.md``).
+#
+#: Legacy join. A tile holds a detection iff some detection's
+#: ``source_tile`` string equals the tile's ``tile_name``. Encodes *which
+#: tile the model was shown*, not *where the point is*. Correct only when
+#: the cell's proposer tiling is the scoring frame; guarded by the
+#: shortfall invariant below so it can no longer fail silently.
+TILE_JOIN_ID: str = "id"
+#: Geometric, one tile per point. Among the frame tiles the point
+#: intersects (``intersects``, so a point exactly on a shared edge is a
+#: candidate for both neighbours), take the tile whose centroid is
+#: nearest; ties are broken by the lexicographically smallest
+#: ``tile_name`` so the result is deterministic. Mirrors
+#: ``scripts/prepare_h13_scoring.assign_primary_tiles``, the rule the
+#: materialisation scripts use when they *write* ``source_tile``.
+TILE_JOIN_GEOMETRIC_PRIMARY: str = "geometric-primary"
+#: Geometric, every containing tile. A tile holds a detection iff some
+#: detection intersects it. Symmetric with the reference side's
+#: long-standing rule, so the confusion matrix is built one way on both
+#: axes; on an overlapping frame a point is booked to every tile that
+#: contains it.
+TILE_JOIN_GEOMETRIC_CONTAINS: str = "geometric-contains"
+
+TILE_JOINS: tuple[str, ...] = (
+    TILE_JOIN_ID,
+    TILE_JOIN_GEOMETRIC_PRIMARY,
+    TILE_JOIN_GEOMETRIC_CONTAINS,
+)
+
+#: The default join for every scorer in the repository.
+#:
+#: **It is deliberately still the legacy string join, and flipping it is a
+#: one-line change that must not be made without the PI's ruling on which
+#: geometric variant to adopt.** The 2026-09-12 ruling ("make the tile
+#: assignment geometric") was made on the understanding that a geometric
+#: join reproduces the string join wherever the vocabulary matches. It
+#: does not: the frames overlap, so on a matched cell the string join,
+#: ``geometric-primary`` and ``geometric-contains`` give three different
+#: confusions (measured 0.8270 / 0.8162 / 0.8667 MCC on
+#: ``pv-high-image-t0.3-n1-opmax``). Defaulting to a geometric join would
+#: therefore move every MCC in the committed corpus — 103 signed Era-2
+#: board cells among them — and make the board's own confusion gate fail
+#: on all of them. Until the variant is chosen, the default reproduces
+#: published numbers and the shortfall invariant below refuses to emit an
+#: MCC where the string join is not interpretable.
+TILE_JOIN_DEFAULT: str = TILE_JOIN_ID
+
+#: Named reasons the tile confusion can be refused rather than reported.
+#: A refusal returns ``{"error": ..., "reason": ...}`` with the
+#: diagnostics attached, so a caller never receives a number it should
+#: not have.
+TILE_JOIN_REASON_DETECTION_SHORTFALL: str = "tile_join_detection_shortfall"
+TILE_JOIN_REASON_REFERENCE_SHORTFALL: str = "tile_join_reference_shortfall"
+TILE_JOIN_REASON_NO_TILES: str = "no_tiles_in_bounds"
+TILE_JOIN_REASON_NO_SOURCE_TILE: str = "detections_have_no_source_tile"
+
 # Mitigation 3 (sparse-coverage transparency) constants --------------------
 #
 # When ``zero_fraction`` (proportion of tiles with TP+FP+FN == 0) exceeds
@@ -937,6 +1021,7 @@ def compute_per_tile_tp_fp_fn(
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     buffer_metres: int = 20,
+    tile_join: str = TILE_JOIN_DEFAULT,
 ) -> pd.DataFrame:
     """
     Pre-compute TP, FP, FN counts per tile via per-map Hungarian matching.
@@ -957,19 +1042,97 @@ def compute_per_tile_tp_fp_fn(
     tile — TPs and FPs to the detection's ``source_tile``, unmatched FNs
     to the reference's primary tile (nearest centroid).
 
+    **This function carries the same name-versus-geometry defect as the
+    tile confusion, in the TP and FP arms.** TPs and FPs are booked to
+    ``det_row["source_tile"]`` — a string — while FNs are booked to the
+    reference's primary tile, computed geometrically. A cell scored on a
+    frame whose tile vocabulary is not its proposer's therefore loses
+    **every** TP and FP (no name matches a frame tile), leaving a table of
+    pure false negatives; the global F1 in the same evaluation is
+    unaffected, because it is matched geometrically before any tile is
+    consulted. The consumers of this table are the per-tile bootstrap
+    confidence intervals and the pairwise permutation tests, so the
+    exposure is wider than tile-level Matthews Correlation Coefficient
+    (MCC) alone.
+
+    ``tile_join`` names the rule, exactly as in
+    :func:`calculate_tile_classification`. Under the geometric rules the
+    detection's booked tile is derived from its geometry against *this*
+    bounds file, so a vocabulary difference cannot arise; under
+    ``geometric-contains`` a detection in an overlap zone is booked to
+    every tile containing it, which double-counts TPs and FPs across
+    overlapping tiles exactly as the reference-side rule has always
+    double-counted references. A shortfall between booked and in-union
+    detections raises rather than passing a silently truncated table on.
+
     Args:
         gdf_det: GeoDataFrame of detections (must have 'source_tile').
         gdf_ref: GeoDataFrame of ground truth references (must have 'Map').
         gdf_bounds: GeoDataFrame of tile boundaries (must have 'tile_name').
         buffer_metres: Maximum distance for a valid match (default 20 m).
+        tile_join: One of :data:`TILE_JOINS`; defaults to
+            :data:`TILE_JOIN_DEFAULT`.
 
     Returns:
         DataFrame with columns [tile_name, tp, fp, fn], one row per tile.
+
+    Raises:
+        ValueError: If the booked TP + FP count falls short of the
+            detections geometrically inside the frame, which means the
+            join is not describing this frame.
     """
     tile_counts: dict[str, dict[str, int]] = {
         row["tile_name"]: {"tp": 0, "fp": 0, "fn": 0}
         for _, row in gdf_bounds.iterrows()
     }
+    # Pre-book detections geometrically when asked to. ``booked_tiles``
+    # maps a detection's GeoDataFrame index to the tile name(s) its
+    # outcome should be credited to; the ``id`` rule keeps the legacy
+    # single string.
+    det_booking = assign_points_to_tiles(gdf_det, gdf_bounds, tile_join)
+    geometric_booking: dict[Any, list[str]] | None = None
+    if tile_join != TILE_JOIN_ID:
+        geometric_booking = _tiles_intersecting(gdf_det, gdf_bounds)
+        if tile_join == TILE_JOIN_GEOMETRIC_PRIMARY:
+            centroids = {
+                str(row["tile_name"]): row.geometry.centroid
+                for _, row in gdf_bounds.iterrows()
+            }
+            geoms = dict(zip(gdf_det.index, gdf_det.geometry))
+            geometric_booking = {
+                idx: [
+                    min(names, key=lambda t: geoms[idx].distance(centroids[t]))
+                    if len(names) > 1 else names[0]
+                ]
+                for idx, names in geometric_booking.items()
+            }
+
+    # Detection indices lying geometrically inside the frame's tile union.
+    # Only these are subject to the booking invariant: a detection outside
+    # the frame is correctly booked nowhere, and one dropped earlier by the
+    # per-map scoping is a different failure (see ``n_out_of_scope``).
+    in_union = set(_tiles_intersecting(gdf_det, gdf_bounds))
+
+    def _book(det_index: Any, recorded_tile: Any, outcome: str) -> tuple[int, int]:
+        """Credit one matched/unmatched detection to its tile(s).
+
+        Returns ``(considered, booked)``, each 0 or 1: ``considered`` counts
+        the detection towards the invariant's denominator only when it is
+        inside the frame's tile union, and ``booked`` records whether it
+        reached any tile.
+        """
+        if geometric_booking is None:
+            names = [recorded_tile] if recorded_tile in tile_counts else []
+        else:
+            names = geometric_booking.get(det_index, [])
+        for name in names:
+            if name in tile_counts:
+                tile_counts[name][outcome] += 1
+        considered = 1 if det_index in in_union else 0
+        return considered, (1 if names else 0)
+
+    n_considered = 0
+    n_booked = 0
 
     # Pre-compute primary tile for each reference (for FN assignment)
     ref_primary = _assign_refs_to_primary_tiles(gdf_ref, gdf_bounds)
@@ -1028,10 +1191,12 @@ def compute_per_tile_tp_fp_fn(
 
         if ref_scope.empty:
             # All detections are FPs — assign to source tiles
-            for _, det_row in det_scope.iterrows():
-                tile = det_row["source_tile"]
-                if tile in tile_counts:
-                    tile_counts[tile]["fp"] += 1
+            for det_idx, det_row in det_scope.iterrows():
+                considered, booked = _book(
+                    det_idx, det_row["source_tile"], "fp",
+                )
+                n_considered += considered
+                n_booked += booked
             continue
 
         # Per-map Hungarian matching (same as calculate_f1_internal)
@@ -1042,19 +1207,24 @@ def compute_per_tile_tp_fp_fn(
                 det_geoms, ref_geoms, buffer_metres,
             )
 
-        # Assign TPs to the detection's source tile
+        # Assign TPs to the detection's tile
+        det_scope_index = list(det_scope.index)
         for d_idx in matched_det:
             det_row = det_scope.iloc[d_idx]
-            tile = det_row["source_tile"]
-            if tile in tile_counts:
-                tile_counts[tile]["tp"] += 1
+            considered, booked = _book(
+                det_scope_index[d_idx], det_row["source_tile"], "tp",
+            )
+            n_considered += considered
+            n_booked += booked
 
-        # Assign FPs to the detection's source tile
+        # Assign FPs to the detection's tile
         for d_idx in unmatched_det:
             det_row = det_scope.iloc[d_idx]
-            tile = det_row["source_tile"]
-            if tile in tile_counts:
-                tile_counts[tile]["fp"] += 1
+            considered, booked = _book(
+                det_scope_index[d_idx], det_row["source_tile"], "fp",
+            )
+            n_considered += considered
+            n_booked += booked
 
         # Assign FNs to the reference's primary tile
         ref_index_list = list(ref_scope.index)
@@ -1063,6 +1233,41 @@ def compute_per_tile_tp_fp_fn(
             tile = ref_to_tile.get(ref_original_idx)
             if tile and tile in tile_counts:
                 tile_counts[tile]["fn"] += 1
+
+    # The same invariant the tile confusion enforces, in the TP/FP arm:
+    # every in-frame detection that reached the booking step must have been
+    # credited to some tile. A shortfall means the booking rule is not
+    # describing this frame, and a table of pure false negatives must not
+    # be handed to a bootstrap or a permutation test.
+    if n_booked < n_considered:
+        raise ValueError(
+            f"per-tile TP/FP/FN table refused: {n_booked} of "
+            f"{n_considered} in-frame detections were credited to a "
+            f"tile under the '{tile_join}' tile join, a shortfall of "
+            f"{n_considered - n_booked}. "
+            f"({TILE_JOIN_REASON_DETECTION_SHORTFALL}) Most often the "
+            f"cell's source_tile vocabulary is not this frame's; re-run "
+            f"with a geometric tile_join."
+        )
+
+    # A *separate* failure, warned rather than raised because it is wider
+    # than the tile join and predates it: the per-map scoping above selects
+    # detections with ``source_tile.str.startswith(map_name)``, so a cell
+    # whose names do not begin with one of the frame's map-name prefixes
+    # loses detections before any tile is consulted — and loses them from
+    # ``calculate_f1_internal`` in exactly the same way, which is why this
+    # cannot be fixed here without changing F1 as well.
+    n_inside_union = det_booking["n_inside_union"]
+    if n_considered < n_inside_union:
+        logger.warning(
+            "per-tile table: %d of %d in-frame detections never reached "
+            "the tile booking step — the per-map scoping "
+            "(source_tile.str.startswith(map_name)) dropped them. F1 is "
+            "scoped the same way, so this is a wider issue than the tile "
+            "join; see reports/tile-mcc-geometric-join-2026-09-12.md "
+            "§ 5.1(a).",
+            n_considered, n_inside_union,
+        )
 
     rows = [
         {"tile_name": tile, **counts}
@@ -1075,6 +1280,7 @@ def compute_per_tile_classification(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
+    tile_join: str = TILE_JOIN_DEFAULT,
 ) -> pd.DataFrame:
     """Pre-compute per-tile binary classification (TP, TN, FP, FN) for MCC.
 
@@ -1097,10 +1303,19 @@ def compute_per_tile_classification(
         gdf_ref: GeoDataFrame of ground-truth references.
         gdf_bounds: GeoDataFrame of tile boundaries (must have
             ``tile_name`` column).
+        tile_join: One of :data:`TILE_JOINS`; passed to
+            :func:`calculate_tile_classification`, so the permutation
+            tests that consume this table swap the same labels the
+            reported confusion was built from.
 
     Returns:
         DataFrame with columns [tile_name, tp, tn, fp, fn]. Exactly one
         of {tp, tn, fp, fn} is 1 per row; the other three are 0.
+
+    Raises:
+        ValueError: If the tile join is refused for this frame (a
+            shortfall of booked points against the frame's geometry) —
+            the permutation test must not receive a mislabelled table.
 
     Notes:
         Sums over all rows reproduce the aggregate (TP, TN, FP, FN)
@@ -1110,8 +1325,14 @@ def compute_per_tile_classification(
         independently swapped between two conditions.
     """
     classification_result = calculate_tile_classification(
-        gdf_det, gdf_ref, gdf_bounds,
+        gdf_det, gdf_ref, gdf_bounds, tile_join=tile_join,
     )
+    if "error" in classification_result:
+        raise ValueError(
+            f"per-tile classification refused "
+            f"({classification_result.get('reason')}): "
+            f"{classification_result['error']}"
+        )
     rows = []
     for detail in classification_result.get("tile_details", []):
         cls = detail["classification"]
@@ -1180,6 +1401,7 @@ def score_detection_set(
     gdf_bounds: gpd.GeoDataFrame,
     buffer_metres: int = 20,
     compute_mcc: bool = True,
+    tile_join: str = TILE_JOIN_DEFAULT,
 ) -> dict:
     """Fast, bootstrap-free POINT scorer for grid / sweep analyses.
 
@@ -1215,23 +1437,42 @@ def score_detection_set(
             with a ``tile_name`` column for MCC).
         buffer_metres: Match radius for F1 (default 20 m, the headline buffer).
         compute_mcc: If True, also compute the point tile-level MCC.
+        tile_join: One of :data:`TILE_JOINS`; defaults to
+            :data:`TILE_JOIN_DEFAULT`.
 
     Returns:
-        ``{"f1", "precision", "recall", "n_detections", "mcc"}``. ``mcc`` is
-        ``None`` when ``compute_mcc`` is False or there are no detections.
+        ``{"f1", "precision", "recall", "n_detections", "mcc",
+        "mcc_refused_reason"}``. ``mcc`` is ``None`` when ``compute_mcc``
+        is False, when there are no detections, when the confusion matrix
+        is degenerate, or when the tile join was refused for this frame —
+        ``mcc_refused_reason`` distinguishes the last case from the
+        others and is ``None`` otherwise. A sweep must not rank on a
+        refused MCC, so it is never silently returned as a number.
     """
     n_det = len(gdf_det)
     if n_det == 0:
         return {"f1": 0.0, "precision": 0.0, "recall": 0.0,
-                "n_detections": 0, "mcc": None}
+                "n_detections": 0, "mcc": None, "mcc_refused_reason": None}
     precision, recall, f1 = calculate_f1_internal(
         gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
     )
     mcc = None
+    mcc_refused_reason = None
     if compute_mcc:
-        mcc = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds).get("mcc")
+        tile_class = calculate_tile_classification(
+            gdf_det, gdf_ref, gdf_bounds, tile_join=tile_join,
+        )
+        if "error" in tile_class:
+            mcc_refused_reason = tile_class.get("reason")
+            logger.warning(
+                "MCC withheld (%s): %s",
+                mcc_refused_reason, tile_class["error"],
+            )
+        else:
+            mcc = tile_class.get("mcc")
     return {"f1": float(f1), "precision": float(precision),
-            "recall": float(recall), "n_detections": n_det, "mcc": mcc}
+            "recall": float(recall), "n_detections": n_det, "mcc": mcc,
+            "mcc_refused_reason": mcc_refused_reason}
 
 
 def calculate_f1_internal(
@@ -2028,10 +2269,291 @@ def bootstrap_interaction_ci(
     }
 
 
+def _tiles_intersecting(
+    gdf_points: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+) -> dict[Any, list[str]]:
+    """
+    Map each point's index to every frame tile it intersects.
+
+    ``intersects`` rather than ``contains`` is deliberate: it covers the
+    boundary, so a point lying exactly on the edge shared by two tiles is
+    a candidate for both. Which of the two it is finally booked to is the
+    caller's rule (see :data:`TILE_JOIN_GEOMETRIC_PRIMARY` and
+    :data:`TILE_JOIN_GEOMETRIC_CONTAINS`).
+
+    Args:
+        gdf_points: Point geometries (detections or references) in the
+            frame's coordinate reference system.
+        gdf_bounds: Tile polygons with a ``tile_name`` column.
+
+    Returns:
+        ``{point index: [tile_name, ...]}``, omitting points that
+        intersect no tile. Tile-name lists are sorted so downstream
+        tie-breaking is deterministic regardless of spatial-index order.
+
+    Example:
+        >>> # Two 10-unit tiles overlapping by 2 units; a point at x=9
+        >>> # lies inside both, so both are candidates.
+        >>> len(_tiles_intersecting(points, bounds)[0])  # doctest: +SKIP
+        2
+    """
+    if gdf_points.empty:
+        return {}
+
+    joined = gpd.sjoin(
+        gdf_points,
+        gdf_bounds[["tile_name", "geometry"]],
+        how="inner",
+        predicate="intersects",
+    )
+    candidates: dict[Any, list[str]] = {}
+    for idx, tile_name in zip(joined.index, joined["tile_name"]):
+        candidates.setdefault(idx, []).append(tile_name)
+    for names in candidates.values():
+        names.sort()
+    return candidates
+
+
+def assign_points_to_tiles(
+    gdf_points: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    tile_join: str,
+    *,
+    id_column: str = "source_tile",
+) -> dict[str, Any]:
+    """
+    Book each point to the frame tile(s) it belongs to, under one named rule.
+
+    This is the single place in the library where a point becomes a tile.
+    It exists so that the tile confusion matrix is built the same way on
+    both of its axes and at every call site, and so that the rule in force
+    is a recorded parameter rather than an implementation accident.
+
+    The three rules are documented on :data:`TILE_JOIN_ID`,
+    :data:`TILE_JOIN_GEOMETRIC_PRIMARY` and
+    :data:`TILE_JOIN_GEOMETRIC_CONTAINS`. In summary:
+
+    ``id``
+        String equality of ``id_column`` against ``tile_name``. Geometry
+        is not consulted, so this rule cannot detect that a point lies in
+        a tile whose name it does not carry.
+    ``geometric-primary``
+        Exactly one tile per point: among the tiles the point intersects,
+        the one whose centroid is nearest, ties broken by the
+        lexicographically smallest ``tile_name``.
+    ``geometric-contains``
+        Every tile the point intersects, which on an overlapping frame is
+        more than one for a substantial share of points.
+
+    **Points in no tile** are never booked anywhere. They are excluded
+    from the confusion matrix and counted in ``n_outside_union`` so the
+    exclusion is reported rather than invisible. A point on a shared edge
+    is inside the union and is booked by the rule above.
+
+    Args:
+        gdf_points: Point geometries (detections or references), already
+            in the frame's coordinate reference system.
+        gdf_bounds: Tile polygons with a ``tile_name`` column.
+        tile_join: One of :data:`TILE_JOINS`.
+        id_column: Column holding the recorded tile name, consulted only
+            by the ``id`` rule.
+
+    Returns:
+        Dict with:
+
+        ``tiles_with_point``
+            ``set[str]`` of tile names holding at least one point.
+        ``counts``
+            ``{tile_name: int}``, points booked to each tile. Under
+            ``geometric-contains`` these sum to more than ``n_points``.
+        ``n_points``
+            Rows in ``gdf_points``.
+        ``n_assigned``
+            Points booked to at least one tile.
+        ``n_inside_union``
+            Points intersecting at least one frame tile — the geometric
+            truth the shortfall invariant compares ``n_assigned`` against.
+        ``n_outside_union``
+            ``n_points - n_inside_union``; excluded by design.
+        ``n_multi_tile``
+            Points intersecting more than one frame tile (a property of
+            the frame, reported under every rule).
+        ``tile_join``
+            The rule applied, echoed back for the record.
+
+    Raises:
+        ValueError: If ``tile_join`` is not a member of :data:`TILE_JOINS`.
+    """
+    if tile_join not in TILE_JOINS:
+        raise ValueError(
+            f"tile_join must be one of {TILE_JOINS!r}, got {tile_join!r}",
+        )
+
+    n_points = len(gdf_points)
+    candidates = _tiles_intersecting(gdf_points, gdf_bounds)
+    n_inside_union = len(candidates)
+    n_multi_tile = sum(1 for names in candidates.values() if len(names) > 1)
+
+    counts: dict[str, int] = {}
+
+    if tile_join == TILE_JOIN_ID:
+        # Geometry is not consulted. A point counts towards a tile only
+        # when the string it carries is byte-equal to that tile's name.
+        frame = set(gdf_bounds["tile_name"].astype(str))
+        if n_points and id_column not in gdf_points.columns:
+            return {
+                "tiles_with_point": set(),
+                "counts": {},
+                "n_points": n_points,
+                "n_assigned": 0,
+                "n_inside_union": n_inside_union,
+                "n_outside_union": n_points - n_inside_union,
+                "n_multi_tile": n_multi_tile,
+                "tile_join": tile_join,
+                "missing_id_column": True,
+            }
+        values = (
+            gdf_points[id_column].tolist() if n_points else []
+        )
+        for value in values:
+            if value is not None and str(value) in frame:
+                counts[str(value)] = counts.get(str(value), 0) + 1
+
+    elif tile_join == TILE_JOIN_GEOMETRIC_PRIMARY:
+        centroids = {
+            str(row["tile_name"]): row.geometry.centroid
+            for _, row in gdf_bounds.iterrows()
+        }
+        geometries = dict(zip(gdf_points.index, gdf_points.geometry))
+        for idx, names in candidates.items():
+            if len(names) == 1:
+                winner = names[0]
+            else:
+                geom = geometries[idx]
+                # Nearest tile centroid; ``names`` is already sorted, and
+                # ``min`` keeps the first minimum, so an exact distance
+                # tie resolves to the lexicographically smallest name.
+                winner = min(
+                    names, key=lambda t: geom.distance(centroids[t]),
+                )
+            counts[winner] = counts.get(winner, 0) + 1
+
+    else:  # TILE_JOIN_GEOMETRIC_CONTAINS
+        for names in candidates.values():
+            for name in names:
+                counts[name] = counts.get(name, 0) + 1
+
+    if tile_join == TILE_JOIN_ID:
+        n_assigned = sum(counts.values())
+    else:
+        # Under the geometric rules every point inside the union is
+        # booked, so the number of distinct assigned points is exactly
+        # the number inside the union minus none.
+        n_assigned = sum(
+            1 for names in candidates.values() if names
+        )
+
+    return {
+        "tiles_with_point": set(counts),
+        "counts": counts,
+        "n_points": n_points,
+        "n_assigned": n_assigned,
+        "n_inside_union": n_inside_union,
+        "n_outside_union": n_points - n_inside_union,
+        "n_multi_tile": n_multi_tile,
+        "tile_join": tile_join,
+    }
+
+
+def check_tile_join_invariant(
+    detection_assignment: dict[str, Any],
+    reference_assignment: dict[str, Any],
+) -> dict[str, Any] | None:
+    """
+    Refuse a tile confusion whose join lost points that are inside the frame.
+
+    The invariant, in one sentence: *the number of points booked to some
+    tile must equal the number of points geometrically inside the frame's
+    tile union.* It holds by construction under both geometric rules, and
+    it is exactly what the legacy ``id`` rule violates when a cell is
+    scored on a frame whose tile vocabulary is not the one its proposer
+    ran on — 21 of 475 in-union detections booked, in the measured case.
+
+    This replaces the need for a separate pre-flight vocabulary check for
+    *correctness* purposes: the scorer itself now aborts the MCC with a
+    named reason rather than emitting a plausible-looking number.
+    ``scripts/check_tile_vocabulary_match.py`` remains useful as a cheap
+    survey instrument over a corpus that has already been scored.
+
+    Args:
+        detection_assignment: Output of :func:`assign_points_to_tiles`
+            for the detections.
+        reference_assignment: Output of :func:`assign_points_to_tiles`
+            for the reference mounds.
+
+    Returns:
+        ``None`` when the invariant holds. Otherwise a dict with
+        ``error``, ``reason`` (one of the ``TILE_JOIN_REASON_*``
+        constants) and a ``tile_join_diagnostics`` block, suitable for
+        returning directly from a scorer.
+    """
+    if detection_assignment.get("missing_id_column"):
+        return {
+            "error": (
+                "tile confusion refused: detections carry no "
+                "'source_tile' property, which the 'id' tile join "
+                "requires — re-score with a geometric --tile-join, or "
+                "assign source_tile first"
+            ),
+            "reason": TILE_JOIN_REASON_NO_SOURCE_TILE,
+            "tile_join_diagnostics": {
+                "detections": detection_assignment,
+                "references": reference_assignment,
+            },
+        }
+
+    checks = (
+        (detection_assignment, "detection", TILE_JOIN_REASON_DETECTION_SHORTFALL),
+        (reference_assignment, "reference", TILE_JOIN_REASON_REFERENCE_SHORTFALL),
+    )
+    for assignment, noun, reason in checks:
+        assigned = assignment["n_assigned"]
+        inside = assignment["n_inside_union"]
+        if assigned < inside:
+            return {
+                "error": (
+                    f"tile confusion refused: {assigned} of {inside} "
+                    f"in-frame {noun}s were booked to a tile under the "
+                    f"'{assignment['tile_join']}' tile join, a shortfall "
+                    f"of {inside - assigned}. The join is not describing "
+                    f"this frame — most often because the cell's "
+                    f"source_tile vocabulary is not the frame's. MCC is "
+                    f"withheld rather than reported."
+                ),
+                "reason": reason,
+                "tile_join_diagnostics": {
+                    "detections": _diagnostics(detection_assignment),
+                    "references": _diagnostics(reference_assignment),
+                },
+            }
+    return None
+
+
+def _diagnostics(assignment: dict[str, Any]) -> dict[str, Any]:
+    """Strip the bulky members from an assignment for reporting."""
+    return {
+        key: value
+        for key, value in assignment.items()
+        if key not in ("tiles_with_point", "counts")
+    }
+
+
 def calculate_tile_classification(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
+    tile_join: str = TILE_JOIN_DEFAULT,
 ) -> dict:
     """
     Binary classification of tiles as empty vs populated for MCC calculation.
@@ -2046,20 +2568,73 @@ def calculate_tile_classification(
     - False Positive: Empty + Detected >=1 mound (hallucination)
     - False Negative: Has mounds + Detected nothing
 
+    **The tile join.** ``tile_join`` names how a point becomes a tile, and
+    the three rules are not interchangeable on an overlapping frame — see
+    :data:`TILE_JOIN_ID`, :data:`TILE_JOIN_GEOMETRIC_PRIMARY`,
+    :data:`TILE_JOIN_GEOMETRIC_CONTAINS` and the note on
+    :data:`TILE_JOIN_DEFAULT`. The geometric rules are applied
+    **symmetrically**, to references as well as detections, so that both
+    axes of the confusion matrix are built the same way. ``id`` keeps the
+    legacy asymmetric pairing (detections by name, references by
+    containment) purely so that published numbers reproduce.
+
+    Whichever rule is in force, the assignment is checked against
+    geometry by :func:`check_tile_join_invariant` before any count is
+    reported: every point inside the frame's tile union must have been
+    booked to some tile. A shortfall returns ``{"error": ...,
+    "reason": ...}`` instead of an MCC.
+
     Args:
-        gdf_det: GeoDataFrame of detections (must have 'source_tile' column).
+        gdf_det: GeoDataFrame of detections. A ``source_tile`` column is
+            required by the ``id`` join only.
         gdf_ref: GeoDataFrame of ground truth references.
         gdf_bounds: GeoDataFrame of tile boundaries (must have 'tile_name' column).
+        tile_join: One of :data:`TILE_JOINS`; defaults to
+            :data:`TILE_JOIN_DEFAULT`.
 
     Returns:
         Classification results including tp, tn, fp, fn counts; mcc;
-        sensitivity; specificity; tile counts; and per-tile details.
+        sensitivity; specificity; tile counts; per-tile details; and a
+        ``tile_join`` / ``tile_join_diagnostics`` record of how the
+        assignment was made and how many points fell outside the frame.
+        On a refused confusion, ``error`` and ``reason`` instead.
+
+    Example:
+        >>> result = calculate_tile_classification(
+        ...     dets, refs, bounds, tile_join=TILE_JOIN_GEOMETRIC_CONTAINS,
+        ... )  # doctest: +SKIP
+        >>> result["tile_join"]  # doctest: +SKIP
+        'geometric-contains'
     """
     tiles = gdf_bounds['tile_name'].unique()
     n_tiles = len(tiles)
 
     if n_tiles == 0:
-        return {"error": "No tiles in bounds"}
+        return {"error": "No tiles in bounds", "reason": TILE_JOIN_REASON_NO_TILES}
+
+    # Book detections and references to tiles once, up front, instead of
+    # re-scanning both frames inside the per-tile loop. The reference rule
+    # follows the detection rule whenever the detection rule is geometric,
+    # so the confusion matrix is not built one way on one axis and another
+    # way on the other — the defect this parameter exists to close.
+    reference_join = (
+        TILE_JOIN_GEOMETRIC_CONTAINS
+        if tile_join == TILE_JOIN_ID
+        else tile_join
+    )
+    det_assignment = assign_points_to_tiles(gdf_det, gdf_bounds, tile_join)
+    ref_assignment = assign_points_to_tiles(
+        gdf_ref, gdf_bounds, reference_join,
+    )
+
+    refusal = check_tile_join_invariant(det_assignment, ref_assignment)
+    if refusal is not None:
+        refusal["n_tiles"] = n_tiles
+        refusal["tile_join"] = tile_join
+        return refusal
+
+    det_counts = det_assignment["counts"]
+    ref_counts = ref_assignment["counts"]
 
     tile_details = []
     tp = 0
@@ -2068,17 +2643,10 @@ def calculate_tile_classification(
     fn = 0
 
     for tile_name in tiles:
-        # Get tile geometry
-        tile_row = gdf_bounds[gdf_bounds['tile_name'] == tile_name].iloc[0]
-        tile_geom = tile_row.geometry
-
-        # Check if tile has any reference mounds (intersecting tile geometry)
-        refs_in_tile = gdf_ref[gdf_ref.intersects(tile_geom)]
-        has_mounds = len(refs_in_tile) > 0
-
-        # Check if model detected any mounds in this tile
-        dets_in_tile = gdf_det[gdf_det['source_tile'] == tile_name]
-        has_detections = len(dets_in_tile) > 0
+        n_references = ref_counts.get(str(tile_name), 0)
+        n_detections = det_counts.get(str(tile_name), 0)
+        has_mounds = n_references > 0
+        has_detections = n_detections > 0
 
         # Classify tile
         if has_mounds and has_detections:
@@ -2098,8 +2666,8 @@ def calculate_tile_classification(
             "tile_name": tile_name,
             "has_mounds": has_mounds,
             "has_detections": has_detections,
-            "n_references": len(refs_in_tile),
-            "n_detections": len(dets_in_tile),
+            "n_references": n_references,
+            "n_detections": n_detections,
             "classification": classification,
         })
 
@@ -2141,6 +2709,12 @@ def calculate_tile_classification(
         "n_populated": n_populated,
         "n_empty": n_empty,
         "tile_details": tile_details,
+        "tile_join": tile_join,
+        "tile_join_diagnostics": {
+            "detections": _diagnostics(det_assignment),
+            "references": _diagnostics(ref_assignment),
+            "reference_join": reference_join,
+        },
     }
 
 
@@ -2150,6 +2724,7 @@ def bootstrap_tile_classification_ci(
     gdf_bounds: gpd.GeoDataFrame,
     n_iterations: int = 1000,
     random_seed: int | None = None,
+    tile_join: str = TILE_JOIN_DEFAULT,
 ) -> dict:
     """
     BCa bootstrap 95 % CIs for tile-level MCC, sensitivity, and specificity.
@@ -2186,22 +2761,36 @@ def bootstrap_tile_classification_ci(
         gdf_bounds: GeoDataFrame of tile boundaries.
         n_iterations: Number of bootstrap iterations (default 1000).
         random_seed: Optional seed for reproducibility.
+        tile_join: How points are booked to tiles; passed straight through
+            to :func:`calculate_tile_classification`, which is the single
+            place the rule is applied. When that function refuses the
+            confusion (a tile-join shortfall), this function propagates
+            the refusal rather than bootstrapping a meaningless statistic.
 
     Returns:
         Bootstrap CIs for MCC, sensitivity, and specificity. Each metric
         dict includes ``point`` (deterministic estimate from
         :func:`calculate_tile_classification`), ``mean`` (bootstrap mean),
-        ``ci_lower``, ``ci_upper``, and ``method``.
+        ``ci_lower``, ``ci_upper``, and ``method``. On a refused
+        confusion, the refusal dict from
+        :func:`check_tile_join_invariant`.
     """
     tiles = gdf_bounds['tile_name'].unique()
     n_tiles = len(tiles)
 
     if n_tiles == 0:
-        return {"error": "No tiles in bounds"}
+        return {"error": "No tiles in bounds", "reason": TILE_JOIN_REASON_NO_TILES}
 
     # Pre-compute per-tile classification once (errata E26: fixes isin()
     # de-duplication that turned bootstrap into subsampling).
-    point_result = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
+    point_result = calculate_tile_classification(
+        gdf_det, gdf_ref, gdf_bounds, tile_join=tile_join,
+    )
+    if "error" in point_result:
+        # The tile join did not describe this frame. Resampling tiles
+        # whose labels are wrong would produce a confidence interval
+        # around a number that must not be reported at all.
+        return point_result
     tile_class_map: dict[str, str] = {}
     for detail in point_result.get("tile_details", []):
         tile_class_map[detail["tile_name"]] = detail["classification"]
@@ -2322,6 +2911,7 @@ def bootstrap_tile_effect_size_ci(
     gdf_ref: gpd.GeoDataFrame,
     n_iterations: int = 1000,
     random_seed: int | None = None,
+    tile_join: str = TILE_JOIN_DEFAULT,
 ) -> dict:
     """
     Bootstrap 95% CIs for tile-level MCC difference between two conditions.
@@ -2337,9 +2927,14 @@ def bootstrap_tile_effect_size_ci(
         gdf_ref: GeoDataFrame of ground truth references (shared).
         n_iterations: Number of bootstrap iterations (default 1000).
         random_seed: Optional seed for reproducibility.
+        tile_join: One of :data:`TILE_JOINS`; applied to both conditions
+            so a paired comparison never pairs a name-joined confusion
+            against a geometry-joined one.
 
     Returns:
         Effect size CIs for MCC, sensitivity, and specificity differences.
+        If either condition's tile join is refused, the refusal dict is
+        returned instead, with ``condition`` naming which side failed.
     """
     # Get common tiles between conditions
     tiles_a = set(gdf_bounds_a['tile_name'].unique())
@@ -2356,8 +2951,17 @@ def bootstrap_tile_effect_size_ci(
     common_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(common_tiles)]
     common_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(common_tiles)]
 
-    result_a_full = calculate_tile_classification(gdf_det_a, gdf_ref, common_bounds_a)
-    result_b_full = calculate_tile_classification(gdf_det_b, gdf_ref, common_bounds_b)
+    result_a_full = calculate_tile_classification(
+        gdf_det_a, gdf_ref, common_bounds_a, tile_join=tile_join,
+    )
+    result_b_full = calculate_tile_classification(
+        gdf_det_b, gdf_ref, common_bounds_b, tile_join=tile_join,
+    )
+    for label, result in (("A", result_a_full), ("B", result_b_full)):
+        if "error" in result:
+            refused = dict(result)
+            refused["condition"] = label
+            return refused
 
     tile_class_a: dict[str, str] = {}
     for detail in result_a_full.get("tile_details", []):
