@@ -738,7 +738,11 @@ def cmd_smoke(args: argparse.Namespace) -> None:
             timespec="seconds"
         ),
         "candidates": len(union["features"]),
-        "probabilities_returned": len(probabilities),
+        # `probabilities.json` is an envelope, so the per-candidate count is
+        # its `total_results`, not the number of its top-level keys.
+        "probabilities_returned": probabilities.get(
+            "total_results", len(probabilities.get("results", []))
+        ),
         "model": meta.get("configuration", {}).get("model"),
         "thinking_level": meta.get("configuration", {}).get("thinking_level"),
         "temperature": meta.get("configuration", {}).get("temperature"),
