@@ -19,7 +19,7 @@ approval**.
 | # | Item | Outcome |
 |---:|---|---|
 | 1 | Tier E — the approved API spend | **LANDED.** US$4.9595 audited flex against a US$5.02 approval; 7,239 of 7,239 candidates verified, 0 failed |
-| 2 | The K = 5 fill for stride B under the 3.7 verifier | **PARTIAL** — the generator defect is fixed and the rung builds; see § 5 |
+| 2 | The K = 5 fill for stride B under the 3.7 verifier | **PARTIAL** — the generator defect found and fixed, every gate reached passing, nothing written; see § 5 |
 | 3 | The tension analyses | **LANDED**, and they answer the question |
 | 4 | The K-ladder analysis row | **LANDED**, UNSIGNED |
 | 5 | The five stale T = 1.0 unions | **LANDED** — relabelled, propagated, erratum E85 |
@@ -288,10 +288,15 @@ the whole of `findings.md` § 3.3's "zero-usd-inherited, never built".
 strictly below it — so the arms keep exactly the rungs they had, the fourth cell
 gains N = 5, and the asymmetry cannot drift back in.
 
-**What landed and what did not.** The generator fix is committed and the sweep
-regeneration ran with every gate passing (G4 reproduces all eleven committed
-micro-F1 values at d ±0.0000, and both pass pins verified). What is **not** done
-is the rest of the chain — `r2_score_cells.py --stage board`, the register row,
+**What landed and what did not.** The generator fix is committed, and the sweep
+regeneration was launched on sapphire with every gate it reached passing: **G4
+reproduces all eleven committed micro-F1 values at d ±0.0000**, and all four pass
+pins verified (`stride:g384_ov128_55map` and `stride:g384_ov192_55map` at K = 10
+with 19 files each, `g37:g384_ov192_55map_g37` at K = 5 with 11). It had not
+finished at the end of the job — the first-N re-clustering over ten passes and
+8,541 tiles is the expensive part — and **it had written nothing**: the r2 board
+directory stayed clean throughout, which is what the gates-before-writes
+ordering is for. What is **not** done is the rest of the chain — `r2_score_cells.py --stage board`, the register row,
 and the regenerated inventory — because completing it would also mean running
 `scripts/final_board_build.py --reference r2`, which **re-tiers the 55-map final
 board**: its BH family would grow from 595 pairs, and `findings.md` § 4.1's gate
@@ -461,7 +466,7 @@ by reading rather than by running:
 | 12 | `conditions_compared` resolves | every id checked against the register before writing; the script exits non-zero otherwise | `scripts/author_k_ladder_analysis_row.py` |
 | 13 | The fourth cell's sweep regeneration gates | G4 reproduces **11 of 11** committed micro-F1 values at d ±0.0000; both pass pins verified | `/tmp/sweeps.log` on sapphire, § 5 |
 | 14 | Lint | `ruff check` clean on every Python file touched; `markdownlint-cli2` clean on every Markdown file touched | — |
-| 15 | Tier-1 tests | TIER1_RESULT | `tests/test_k_ladder_closeout.py` and the suite |
+| 15 | Tier-1 tests | **2,447 passed, 1 skipped, 3 xfailed, 0 failed** in 193 s on sapphire (`python -m pytest -m tier1 -q`). 28 of them are this job's new module; the baseline before it was 2,419, so the suite grew by exactly the tests added and nothing regressed | `tests/test_k_ladder_closeout.py` and the suite |
 
 ## 10. Morning questions for the PI
 
