@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-12T00:28:03+00:00",
+  "generated_at_utc": "2026-09-12T01:16:06+00:00",
   "card": "planning/k-ladder-review-2026-09-11.md",
   "run_card": "planning/k-ladder-phase1-run-2026-09-12.md",
   "ruling": "R1 \u2014 the carried Gemini 3 verifier at every rung, no swapping",
@@ -26,7 +26,7 @@
     "tolerance_m": 0.2,
     "n_covered": 0
   },
-  "n_families": 171,
+  "n_families": 187,
   "families": [
     {
       "family": "55maps-generalisation / detect_brief-text [55maps_evaluation_bounds.geojson / student-mounds-55maps-reviewed.geojson]",
@@ -67,11 +67,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
             "f1_20": 0.6254,
+            "f1_50": 0.7921,
             "mcc": 0.6509,
             "n_detections": 4068
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -137,6 +139,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.5459,
+            "f1_50": 0.8008,
             "mcc": 0.711,
             "n_detections": 4680
           },
@@ -149,11 +152,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.5248,
+            "f1_50": 0.7398,
             "mcc": 0.654,
             "n_detections": 3541
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -220,11 +225,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.5251,
+            "f1_50": 0.74,
             "mcc": 0.6548,
             "n_detections": 3541
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -290,11 +297,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
             "f1_20": 0.5082,
+            "f1_50": 0.7747,
             "mcc": 0.6927,
             "n_detections": 4680
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -360,6 +369,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.5081688945469975,
+            "f1_50": 0.7986993191748807,
             "mcc": 0.7104103204864493,
             "n_detections": 4680
           },
@@ -372,11 +382,13 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.5461300309597523,
+            "f1_50": 0.8010319917440661,
             "mcc": 0.7119504066553468,
             "n_detections": 4680
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -443,6 +455,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.672,
+            "f1_50": 0.838,
             "mcc": 0.6792,
             "n_detections": 4786
           },
@@ -455,11 +468,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.6652,
+            "f1_50": 0.8162,
             "mcc": 0.6647,
             "n_detections": 4164
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -526,11 +541,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
             "f1_20": 0.626,
+            "f1_50": 0.7921,
             "mcc": 0.648,
             "n_detections": 4164
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -596,6 +613,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6307175828787243,
+            "f1_50": 0.8424650648436715,
             "mcc": 0.679608597108498,
             "n_detections": 4786
           },
@@ -608,6 +626,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6725193956717027,
+            "f1_50": 0.8387096774193548,
             "mcc": 0.679608597108498,
             "n_detections": 4786
           },
@@ -620,6 +639,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6260381593714928,
+            "f1_50": 0.8152278820375335,
             "mcc": 0.6666252946918438,
             "n_detections": 4164
           },
@@ -632,11 +652,13 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6657946370176586,
+            "f1_50": 0.816873773708306,
             "mcc": 0.6650417680321745,
             "n_detections": 4164
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -705,6 +727,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.6714,
+            "f1_50": 0.8387,
             "mcc": 0.6889,
             "n_detections": 4905
           },
@@ -717,6 +740,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.6721,
+            "f1_50": 0.8294,
             "mcc": 0.6691,
             "n_detections": 4350
           },
@@ -729,11 +753,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.6726,
+            "f1_50": 0.8399,
             "mcc": 0.6955,
             "n_detections": 4762
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -801,11 +827,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.6731,
+            "f1_50": 0.8406,
             "mcc": 0.6954,
             "n_detections": 4762
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -871,11 +899,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
             "f1_20": 0.6308,
+            "f1_50": 0.8047,
             "mcc": 0.6541,
             "n_detections": 4350
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -941,6 +971,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6295720650709771,
+            "f1_50": 0.8476058017087225,
             "mcc": 0.6903302334580523,
             "n_detections": 4905
           },
@@ -953,6 +984,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6719112455874937,
+            "f1_50": 0.8393343419062027,
             "mcc": 0.6887952828707767,
             "n_detections": 4905
           },
@@ -965,6 +997,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6308267370272647,
+            "f1_50": 0.8358742508674167,
             "mcc": 0.6710705487171356,
             "n_detections": 4350
           },
@@ -977,11 +1010,13 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6728632478632478,
+            "f1_50": 0.8303418803418802,
             "mcc": 0.6689725848962402,
             "n_detections": 4350
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -1050,6 +1085,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.6703,
+            "f1_50": 0.8102,
             "mcc": 0.6565,
             "n_detections": 4279
           },
@@ -1062,6 +1098,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.6545,
+            "f1_50": 0.7826,
             "mcc": 0.6397,
             "n_detections": 3865
           },
@@ -1074,11 +1111,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.6715,
+            "f1_50": 0.8103,
             "mcc": 0.662,
             "n_detections": 4156
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -1146,11 +1185,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.672,
+            "f1_50": 0.811,
             "mcc": 0.6624,
             "n_detections": 4156
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -1216,11 +1257,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
             "f1_20": 0.6201,
+            "f1_50": 0.7618,
             "mcc": 0.6264,
             "n_detections": 3865
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -1286,6 +1329,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6335734072022161,
+            "f1_50": 0.8127118644067797,
             "mcc": 0.6579582748365398,
             "n_detections": 4279
           },
@@ -1298,6 +1342,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6709010657767251,
+            "f1_50": 0.8108515448379804,
             "mcc": 0.6569092929260921,
             "n_detections": 4279
           },
@@ -1310,6 +1355,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6201370340262455,
+            "f1_50": 0.7830711278528694,
             "mcc": 0.6411358134707998,
             "n_detections": 3865
           },
@@ -1322,11 +1368,13 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6548732394366197,
+            "f1_50": 0.7833239436619718,
             "mcc": 0.6400648540183066,
             "n_detections": 3865
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -1395,11 +1443,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.6877,
+            "f1_50": 0.8274,
             "mcc": 0.6695,
             "n_detections": 4361
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -1465,6 +1515,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.647194465795542,
+            "f1_50": 0.8290275152278933,
             "mcc": 0.6724579910368705,
             "n_detections": 4361
           },
@@ -1477,11 +1528,13 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6878668231778892,
+            "f1_50": 0.8278732259097216,
             "mcc": 0.670886957725763,
             "n_detections": 4361
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -1549,6 +1602,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7475,
+            "f1_50": 0.849,
             "mcc": 0.8049,
             "n_detections": 373
           }
@@ -1563,11 +1617,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7705,
+            "f1_50": 0.8697,
             "mcc": 0.8294,
             "n_detections": 432
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -1636,6 +1692,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7868,
+            "f1_50": 0.881,
             "mcc": 0.8359,
             "n_detections": 414
           }
@@ -1650,11 +1707,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7765,
+            "f1_50": 0.8429,
             "mcc": 0.798,
             "n_detections": 348
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -1722,11 +1781,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7866,
+            "f1_50": 0.895,
             "mcc": 0.8306,
             "n_detections": 432
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -1792,11 +1853,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7857,
+            "f1_50": 0.894,
             "mcc": 0.8306,
             "n_detections": 433
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -1862,11 +1925,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7852,
+            "f1_50": 0.8938,
             "mcc": 0.8217,
             "n_detections": 431
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -1932,11 +1997,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7844,
+            "f1_50": 0.8922,
             "mcc": 0.83,
             "n_detections": 437
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2002,11 +2069,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.783,
+            "f1_50": 0.8909,
             "mcc": 0.8172,
             "n_detections": 436
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2072,11 +2141,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7782,
+            "f1_50": 0.8731,
             "mcc": 0.8199,
             "n_detections": 408
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2142,11 +2213,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7718,
+            "f1_50": 0.8682,
             "mcc": 0.7973,
             "n_detections": 415
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2213,6 +2286,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7337,
+            "f1_50": 0.8615,
             "mcc": 0.823,
             "n_detections": 410
           }
@@ -2227,11 +2301,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7633,
+            "f1_50": 0.8575,
             "mcc": 0.8002,
             "n_detections": 414
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2299,11 +2375,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8263,
+            "f1_50": 0.8623,
             "mcc": 0.7937,
             "n_detections": 400
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2369,11 +2447,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8333,
+            "f1_50": 0.8696,
             "mcc": 0.7993,
             "n_detections": 400
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2396,6 +2476,92 @@
           "evidence": [
             "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8"
           ]
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "Gemini 3 HIGH text 384 px, T 0.0 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "Gemini 3 HIGH text 384 px, T 0.0",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "flash-high-text-n5-text-t0.0",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": true,
+      "n_proposer_passes_on_disk": 3,
+      "rungs_present": [
+        3
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "3": [
+          {
+            "condition_id": "pv-diag-384::pv-high-text-t0.0-n3-opmax",
+            "vote_threshold": 3,
+            "prob_threshold": 0.15,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t0_0-n3-opmax/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.8234,
+            "f1_50": 0.8568,
+            "mcc": 0.775,
+            "n_detections": 403
+          },
+          {
+            "condition_id": "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b",
+            "vote_threshold": 3,
+            "prob_threshold": 0.15,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t0_0-n3-recovery-2026-09-08-opmax/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.8508,
+            "f1_50": 0.8881,
+            "mcc": 0.7857,
+            "n_detections": 423
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 3,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::pv-high-text-t0.0-n3-opmax",
+            "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b"
+          ]
+        },
+        {
+          "K": 5,
+          "class": "no-passes",
+          "evidence": "the run holds 3 proposer pass(es) for this pool, fewer than the 5 the rung needs"
+        },
+        {
+          "K": 10,
+          "class": "no-passes",
+          "evidence": "the run holds 3 proposer pass(es) for this pool, fewer than the 10 the rung needs"
         }
       ],
       "ladder_status": "single-rung"
@@ -2431,19 +2597,21 @@
       "cells": {
         "3": [
           {
-            "condition_id": "pv-diag-384::pv-high-text-t0.0-n3-opmax",
+            "condition_id": "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax",
             "vote_threshold": 3,
             "prob_threshold": 0.15,
             "scope_override": null,
-            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/pv-diag-384__pv-high-text-t0_0-n3-opmax/evaluation.json",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/staleness-2026-09-11/current-vintage/era2-eval/evaluation.json",
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
-            "f1_20": 0.8234,
-            "mcc": 0.775,
-            "n_detections": 403
+            "f1_20": 0.8508,
+            "f1_50": 0.8881,
+            "mcc": 0.7857,
+            "n_detections": 423
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2454,7 +2622,7 @@
           "K": 3,
           "class": "committed",
           "evidence": [
-            "pv-diag-384::pv-high-text-t0.0-n3-opmax"
+            "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax"
           ]
         },
         {
@@ -2510,6 +2678,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8873,
+            "f1_50": 0.9087,
             "mcc": 0.7805,
             "n_detections": 408
           }
@@ -2524,11 +2693,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8722,
+            "f1_50": 0.9032,
             "mcc": 0.7872,
             "n_detections": 402
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2596,11 +2767,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8846,
+            "f1_50": 0.9111,
             "mcc": 0.7947,
             "n_detections": 397
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2666,11 +2839,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8833,
+            "f1_50": 0.9097,
             "mcc": 0.7947,
             "n_detections": 396
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2736,11 +2911,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8783,
+            "f1_50": 0.9045,
             "mcc": 0.7759,
             "n_detections": 403
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2806,11 +2983,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8762,
+            "f1_50": 0.9024,
             "mcc": 0.7659,
             "n_detections": 405
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2877,6 +3056,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8634,
+            "f1_50": 0.8875,
             "mcc": 0.7684,
             "n_detections": 392
           }
@@ -2891,11 +3071,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8744,
+            "f1_50": 0.8892,
             "mcc": 0.7641,
             "n_detections": 377
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -2963,11 +3145,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8639,
+            "f1_50": 0.8899,
             "mcc": 0.7561,
             "n_detections": 410
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3033,11 +3217,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8603,
+            "f1_50": 0.887,
             "mcc": 0.7534,
             "n_detections": 388
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3103,11 +3289,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8519,
+            "f1_50": 0.8786,
             "mcc": 0.7582,
             "n_detections": 389
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3174,6 +3362,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8688,
+            "f1_50": 0.9013,
             "mcc": 0.7857,
             "n_detections": 426
           }
@@ -3188,11 +3377,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8804,
+            "f1_50": 0.9059,
             "mcc": 0.791,
             "n_detections": 426
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3261,6 +3452,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7767,
+            "f1_50": 0.8622,
             "mcc": 0.8416,
             "n_detections": 407
           }
@@ -3275,11 +3467,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7819,
+            "f1_50": 0.8677,
             "mcc": 0.8377,
             "n_detections": 404
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3348,6 +3542,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7734,
+            "f1_50": 0.8808,
             "mcc": 0.8383,
             "n_detections": 421
           }
@@ -3362,11 +3557,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7881,
+            "f1_50": 0.8762,
             "mcc": 0.8223,
             "n_detections": 405
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3435,6 +3632,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7384,
+            "f1_50": 0.8385,
             "mcc": 0.8021,
             "n_detections": 364
           }
@@ -3449,11 +3647,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7428,
+            "f1_50": 0.8534,
             "mcc": 0.8078,
             "n_detections": 397
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3521,11 +3721,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8341,
+            "f1_50": 0.8702,
             "mcc": 0.7927,
             "n_detections": 397
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3591,11 +3793,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8412,
+            "f1_50": 0.8776,
             "mcc": 0.7985,
             "n_detections": 397
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3623,9 +3827,9 @@
       "ladder_status": "single-rung"
     },
     {
-      "family": "Gemini 3 MINIMAL text 384 px, T 0.0 [full_evaluation_bounds.geojson / mounds-reference.geojson]",
+      "family": "Gemini 3 MINIMAL text 384 px, T 0.0 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
       "family_base": "Gemini 3 MINIMAL text 384 px, T 0.0",
-      "frame_file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
       "reference_file": "inputs/vectors/references/mounds-reference.geojson",
       "run_id": "pv-diag-384",
       "proposer_pool": "flash-minimal-text-n30-t07-text-t0.0",
@@ -3646,7 +3850,7 @@
       "n_distinct_eval_recipes": 1,
       "eval_recipes": [
         {
-          "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
           "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
         }
       ],
@@ -3656,16 +3860,18 @@
             "condition_id": "pv-diag-384::pv-min-text-t0.0-n3-opmax",
             "vote_threshold": 2,
             "prob_threshold": 0.2,
-            "scope_override": null,
-            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/pv-diag-384__pv-min-text-t0_0-n3-opmax/evaluation.json",
-            "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t0_0-n3-opmax/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8623,
+            "f1_50": 0.8913,
             "mcc": 0.7834,
             "n_detections": 393
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3732,6 +3938,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8778,
+            "f1_50": 0.8992,
             "mcc": 0.7735,
             "n_detections": 408
           }
@@ -3746,11 +3953,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.873,
+            "f1_50": 0.8891,
             "mcc": 0.791,
             "n_detections": 431
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3819,6 +4028,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8739,
+            "f1_50": 0.8911,
             "mcc": 0.7957,
             "n_detections": 382
           }
@@ -3833,11 +4043,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8726,
+            "f1_50": 0.8894,
             "mcc": 0.7768,
             "n_detections": 397
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3906,6 +4118,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8714,
+            "f1_50": 0.8976,
             "mcc": 0.7797,
             "n_detections": 405
           }
@@ -3920,11 +4133,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8781,
+            "f1_50": 0.8994,
             "mcc": 0.7881,
             "n_detections": 410
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -3994,6 +4209,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7481,
+            "f1_50": 0.8413,
             "mcc": 0.7246,
             "n_detections": 5219
           }
@@ -4008,6 +4224,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7739,
+            "f1_50": 0.8705,
             "mcc": 0.7179,
             "n_detections": 4772
           }
@@ -4022,6 +4239,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7592,
+            "f1_50": 0.8551,
             "mcc": 0.6655,
             "n_detections": 5229
           },
@@ -4034,11 +4252,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7754,
+            "f1_50": 0.8727,
             "mcc": 0.7147,
             "n_detections": 4616
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -4111,6 +4331,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7664,
+            "f1_50": 0.861,
             "mcc": 0.7422,
             "n_detections": 5021
           }
@@ -4125,6 +4346,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.787,
+            "f1_50": 0.8848,
             "mcc": 0.7163,
             "n_detections": 5097
           }
@@ -4139,6 +4361,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7846,
+            "f1_50": 0.8827,
             "mcc": 0.7063,
             "n_detections": 5003
           },
@@ -4151,11 +4374,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7888,
+            "f1_50": 0.8871,
             "mcc": 0.7147,
             "n_detections": 4924
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -4226,11 +4451,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7591,
+            "f1_50": 0.855,
             "mcc": 0.6665,
             "n_detections": 5229
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -4296,11 +4523,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.784,
+            "f1_50": 0.8825,
             "mcc": 0.7073,
             "n_detections": 5003
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -4366,11 +4595,13 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.7220050125313283,
+            "f1_50": 0.8493598998941189,
             "mcc": 0.6664686403732362,
             "n_detections": 5229
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -4436,11 +4667,13 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.7469484049646118,
+            "f1_50": 0.8763160484109023,
             "mcc": 0.7072914415212007,
             "n_detections": 5003
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -4506,11 +4739,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9179,
+            "f1_50": 0.9272,
             "mcc": 0.8133,
             "n_detections": 430
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -4576,11 +4811,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9233,
+            "f1_50": 0.9326,
             "mcc": 0.8264,
             "n_detections": 425
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -4646,11 +4883,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9254,
+            "f1_50": 0.9347,
             "mcc": 0.8192,
             "n_detections": 430
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -4716,11 +4955,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9308,
+            "f1_50": 0.9402,
             "mcc": 0.8322,
             "n_detections": 425
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -4787,6 +5028,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9066,
+            "f1_50": 0.9203,
             "mcc": 0.7651,
             "n_detections": 443
           }
@@ -4801,11 +5043,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9068,
+            "f1_50": 0.9301,
             "mcc": 0.7675,
             "n_detections": 423
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -4873,11 +5117,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.919,
+            "f1_50": 0.9329,
             "mcc": 0.7937,
             "n_detections": 429
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -4943,11 +5189,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9182,
+            "f1_50": 0.9322,
             "mcc": 0.8079,
             "n_detections": 421
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -5014,6 +5262,7 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9139,
+            "f1_50": 0.9277,
             "mcc": 0.7797,
             "n_detections": 443
           }
@@ -5028,11 +5277,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9142,
+            "f1_50": 0.9377,
             "mcc": 0.7817,
             "n_detections": 423
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -5100,11 +5351,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9265,
+            "f1_50": 0.9405,
             "mcc": 0.8078,
             "n_detections": 429
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -5170,11 +5423,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9258,
+            "f1_50": 0.9399,
             "mcc": 0.8218,
             "n_detections": 421
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -5240,11 +5495,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8886,
+            "f1_50": null,
             "mcc": 0.7903,
             "n_detections": 400
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -5310,11 +5567,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.9062,
+            "f1_50": 0.9184,
             "mcc": 0.8102,
             "n_detections": 386
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -5380,6 +5639,7 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8677,
+            "f1_50": null,
             "mcc": 0.7751,
             "n_detections": 358
           },
@@ -5392,6 +5652,7 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8961,
+            "f1_50": null,
             "mcc": 0.7965,
             "n_detections": 400
           },
@@ -5404,6 +5665,7 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8311,
+            "f1_50": null,
             "mcc": 0.7937,
             "n_detections": 383
           },
@@ -5416,11 +5678,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8815,
+            "f1_50": null,
             "mcc": 0.8011,
             "n_detections": 382
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -5489,11 +5753,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.914,
+            "f1_50": 0.9263,
             "mcc": 0.8239,
             "n_detections": 386
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -5562,6 +5828,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.6776,
+            "f1_50": 0.8227,
             "mcc": 0.7006,
             "n_detections": 4879
           }
@@ -5576,6 +5843,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7027,
+            "f1_50": 0.8307,
             "mcc": 0.6876,
             "n_detections": 4400
           },
@@ -5588,6 +5856,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.699,
+            "f1_50": 0.8321,
             "mcc": 0.7018,
             "n_detections": 4796
           }
@@ -5602,6 +5871,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7062,
+            "f1_50": 0.8383,
             "mcc": 0.6907,
             "n_detections": 4597
           },
@@ -5614,6 +5884,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7062,
+            "f1_50": 0.8383,
             "mcc": 0.6907,
             "n_detections": 4597
           }
@@ -5628,6 +5899,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7081,
+            "f1_50": 0.8391,
             "mcc": 0.693,
             "n_detections": 4475
           },
@@ -5640,11 +5912,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7083,
+            "f1_50": 0.8419,
             "mcc": 0.6954,
             "n_detections": 4639
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -5722,6 +5996,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.6777,
+            "f1_50": 0.8231,
             "mcc": 0.701,
             "n_detections": 4879
           }
@@ -5736,6 +6011,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7024,
+            "f1_50": 0.8308,
             "mcc": 0.688,
             "n_detections": 4400
           },
@@ -5748,6 +6024,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.6992,
+            "f1_50": 0.8326,
             "mcc": 0.7022,
             "n_detections": 4796
           }
@@ -5762,6 +6039,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7059,
+            "f1_50": 0.8383,
             "mcc": 0.6911,
             "n_detections": 4597
           },
@@ -5774,6 +6052,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7059,
+            "f1_50": 0.8383,
             "mcc": 0.6911,
             "n_detections": 4597
           }
@@ -5788,6 +6067,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7079,
+            "f1_50": 0.8392,
             "mcc": 0.6934,
             "n_detections": 4475
           },
@@ -5800,11 +6080,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7081,
+            "f1_50": 0.842,
             "mcc": 0.6958,
             "n_detections": 4639
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -5879,6 +6161,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6689079275566642,
+            "f1_50": 0.8325895173845355,
             "mcc": 0.6934407564418507,
             "n_detections": 4475
           },
@@ -5891,11 +6174,13 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6685135855087907,
+            "f1_50": 0.8362077763037044,
             "mcc": 0.6958294935087906,
             "n_detections": 4639
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -5965,6 +6250,7 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8677,
+            "f1_50": null,
             "mcc": 0.7894,
             "n_detections": 411
           }
@@ -5979,6 +6265,7 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8911,
+            "f1_50": null,
             "mcc": 0.7814,
             "n_detections": 380
           }
@@ -5993,6 +6280,7 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8856,
+            "f1_50": null,
             "mcc": 0.7805,
             "n_detections": 394
           }
@@ -6007,11 +6295,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8982,
+            "f1_50": null,
             "mcc": 0.8022,
             "n_detections": 387
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -6086,6 +6376,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.6695,
+            "f1_50": 0.8013,
             "mcc": 0.7092,
             "n_detections": 5655
           }
@@ -6100,6 +6391,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7182,
+            "f1_50": 0.8477,
             "mcc": 0.702,
             "n_detections": 4971
           },
@@ -6112,6 +6404,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7211,
+            "f1_50": 0.8507,
             "mcc": 0.7128,
             "n_detections": 4772
           }
@@ -6126,6 +6419,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7209,
+            "f1_50": 0.8503,
             "mcc": 0.701,
             "n_detections": 4736
           },
@@ -6138,6 +6432,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7222,
+            "f1_50": 0.8516,
             "mcc": 0.7098,
             "n_detections": 4566
           }
@@ -6152,6 +6447,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7252,
+            "f1_50": 0.8497,
             "mcc": 0.6977,
             "n_detections": 4505
           },
@@ -6164,11 +6460,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7296,
+            "f1_50": 0.856,
             "mcc": 0.7123,
             "n_detections": 4639
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -6245,6 +6543,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7023,
+            "f1_50": 0.8352,
             "mcc": 0.7471,
             "n_detections": 5337
           }
@@ -6259,6 +6558,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7445,
+            "f1_50": 0.8747,
             "mcc": 0.7376,
             "n_detections": 4626
           }
@@ -6273,6 +6573,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7472,
+            "f1_50": 0.8728,
             "mcc": 0.7264,
             "n_detections": 4246
           },
@@ -6285,11 +6586,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
             "f1_20": 0.7533,
+            "f1_50": 0.8813,
             "mcc": 0.7359,
             "n_detections": 4495
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -6363,6 +6666,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.6693,
+            "f1_50": 0.8013,
             "mcc": 0.7097,
             "n_detections": 5655
           }
@@ -6377,6 +6681,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7178,
+            "f1_50": 0.8476,
             "mcc": 0.7025,
             "n_detections": 4971
           },
@@ -6389,6 +6694,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7207,
+            "f1_50": 0.8505,
             "mcc": 0.7132,
             "n_detections": 4772
           }
@@ -6403,6 +6709,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7205,
+            "f1_50": 0.8502,
             "mcc": 0.7014,
             "n_detections": 4736
           },
@@ -6415,6 +6722,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7218,
+            "f1_50": 0.8515,
             "mcc": 0.7102,
             "n_detections": 4566
           }
@@ -6429,6 +6737,7 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.725,
+            "f1_50": 0.8498,
             "mcc": 0.6982,
             "n_detections": 4505
           },
@@ -6441,11 +6750,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7292,
+            "f1_50": 0.8558,
             "mcc": 0.7127,
             "n_detections": 4639
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -6520,11 +6831,13 @@
             "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
             "f1_20": 0.7472,
+            "f1_50": 0.8732,
             "mcc": 0.7268,
             "n_detections": 4246
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -6591,6 +6904,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6796034591858258,
+            "f1_50": 0.8437752627324171,
             "mcc": 0.7013882811101221,
             "n_detections": 4736
           }
@@ -6605,6 +6919,7 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6846827370014053,
+            "f1_50": 0.8422141748577341,
             "mcc": 0.6981604573921036,
             "n_detections": 4505
           },
@@ -6617,11 +6932,13 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.6883324453915822,
+            "f1_50": 0.8502908460046944,
             "mcc": 0.7127495787794123,
             "n_detections": 4639
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -6690,11 +7007,13 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": 0.7084074733096085,
+            "f1_50": 0.8656176908356368,
             "mcc": 0.7268024827224564,
             "n_detections": 4246
           }
         ]
       },
+      "headline_buffer_m": 50,
       "gaps": [
         {
           "K": 1,
@@ -6760,11 +7079,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8689,
+            "f1_50": 0.8908,
             "mcc": 0.7666,
             "n_detections": 389
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -6830,11 +7151,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8689,
+            "f1_50": 0.8908,
             "mcc": 0.7666,
             "n_detections": 389
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -6900,11 +7223,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.848,
+            "f1_50": 0.8578,
             "mcc": 0.7675,
             "n_detections": 374
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -6970,11 +7295,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8362,
+            "f1_50": 0.8437,
             "mcc": 0.7369,
             "n_detections": 371
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7040,11 +7367,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.848,
+            "f1_50": 0.8578,
             "mcc": 0.7675,
             "n_detections": 374
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7110,11 +7439,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8362,
+            "f1_50": 0.8437,
             "mcc": 0.7369,
             "n_detections": 371
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7180,11 +7511,13 @@
             "bounds": null,
             "ground_truth": null,
             "f1_20": null,
+            "f1_50": null,
             "mcc": null,
             "n_detections": 380
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7250,11 +7583,13 @@
             "bounds": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7223,
+            "f1_50": 0.7913,
             "mcc": 0.7602,
             "n_detections": 232
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7320,6 +7655,7 @@
             "bounds": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7368,
+            "f1_50": 0.8175,
             "mcc": 0.803,
             "n_detections": 251
           },
@@ -7332,11 +7668,13 @@
             "bounds": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.737,
+            "f1_50": 0.8669,
             "mcc": 0.8052,
             "n_detections": 297
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7403,11 +7741,13 @@
             "bounds": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7219,
+            "f1_50": 0.8775,
             "mcc": 0.8133,
             "n_detections": 285
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7435,9 +7775,9 @@
       "ladder_status": "single-rung"
     },
     {
-      "family": "n1-outstanding-384 / image-t0 [full_evaluation_bounds.geojson / mounds-reference.geojson]",
+      "family": "n1-outstanding-384 / image-t0 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
       "family_base": "n1-outstanding-384 / image-t0",
-      "frame_file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
       "reference_file": "inputs/vectors/references/mounds-reference.geojson",
       "run_id": "n1-outstanding-384",
       "proposer_pool": "image-t0",
@@ -7458,7 +7798,7 @@
       "n_distinct_eval_recipes": 1,
       "eval_recipes": [
         {
-          "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
           "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
         }
       ],
@@ -7468,16 +7808,18 @@
             "condition_id": "n1-outstanding-384::pv-n1-image-t0-n3-opmax",
             "vote_threshold": 2,
             "prob_threshold": 0.15,
-            "scope_override": null,
-            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/n1-outstanding-384__pv-n1-image-t0-n3-opmax/evaluation.json",
-            "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/n1-outstanding-384__pv-n1-image-t0-n3-opmax/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7673,
+            "f1_50": 0.8717,
             "mcc": 0.8397,
             "n_detections": 446
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7490,6 +7832,292 @@
           "evidence": [
             "n1-outstanding-384::pv-n1-image-t0-n3-opmax"
           ]
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "proposer-verifier-384 / detect_brief-text [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "proposer-verifier-384 / detect_brief-text",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "proposer-verifier-384",
+      "proposer_pool": "detect_brief-text",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": null
+      },
+      "r1_verifier": true,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "proposer-verifier-384::verified-adversarial-image-era2b",
+            "vote_threshold": null,
+            "prob_threshold": null,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-adversarial-image/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.4943,
+            "f1_50": 0.5115,
+            "mcc": 0.416,
+            "n_detections": 261
+          },
+          {
+            "condition_id": "proposer-verifier-384::verified-adversarial-text-era2b",
+            "vote_threshold": null,
+            "prob_threshold": null,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-adversarial-text/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.4708,
+            "f1_50": 0.4831,
+            "mcc": 0.4313,
+            "n_detections": 215
+          },
+          {
+            "condition_id": "proposer-verifier-384::verified-cascade-checklist-adversarial-era2b",
+            "vote_threshold": null,
+            "prob_threshold": null,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-cascade-checklist-adversarial/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.495,
+            "f1_50": 0.5122,
+            "mcc": 0.4121,
+            "n_detections": 260
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "proposer-verifier-384::verified-adversarial-image-era2b",
+            "proposer-verifier-384::verified-adversarial-text-era2b",
+            "proposer-verifier-384::verified-cascade-checklist-adversarial-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "proposer-verifier-384 / detect_brief-text [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "proposer-verifier-384 / detect_brief-text",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "proposer-verifier-384",
+      "proposer_pool": "detect_brief-text",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_brief.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": null
+      },
+      "r1_verifier": false,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "proposer-verifier-384::verified-brief-image-era2b",
+            "vote_threshold": null,
+            "prob_threshold": null,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-brief-image/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.5204,
+            "f1_50": 0.5361,
+            "mcc": 0.3402,
+            "n_detections": 326
+          },
+          {
+            "condition_id": "proposer-verifier-384::verified-brief-text-era2b",
+            "vote_threshold": null,
+            "prob_threshold": null,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-brief-text/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.5142,
+            "f1_50": 0.5284,
+            "mcc": 0.3953,
+            "n_detections": 269
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "proposer-verifier-384::verified-brief-image-era2b",
+            "proposer-verifier-384::verified-brief-text-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "proposer-verifier-384 / detect_brief-text [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "proposer-verifier-384 / detect_brief-text",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "proposer-verifier-384",
+      "proposer_pool": "detect_brief-text",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_checklist.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": null
+      },
+      "r1_verifier": false,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "proposer-verifier-384::verified-cascade-adversarial-checklist-era2b",
+            "vote_threshold": null,
+            "prob_threshold": null,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-cascade-adversarial-checklist/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.5036,
+            "f1_50": 0.5207,
+            "mcc": 0.4313,
+            "n_detections": 264
+          },
+          {
+            "condition_id": "proposer-verifier-384::verified-checklist-image-era2b",
+            "vote_threshold": null,
+            "prob_threshold": null,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-checklist-image/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.5309,
+            "f1_50": 0.5466,
+            "mcc": 0.3873,
+            "n_detections": 326
+          },
+          {
+            "condition_id": "proposer-verifier-384::verified-checklist-text-era2b",
+            "vote_threshold": null,
+            "prob_threshold": null,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-checklist-text/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.5214,
+            "f1_50": 0.537,
+            "mcc": 0.3154,
+            "n_detections": 336
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "proposer-verifier-384::verified-cascade-adversarial-checklist-era2b",
+            "proposer-verifier-384::verified-checklist-image-era2b",
+            "proposer-verifier-384::verified-checklist-text-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
         },
         {
           "K": 5,
@@ -7543,6 +8171,7 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.4943,
+            "f1_50": 0.5115,
             "mcc": 0.416,
             "n_detections": 261
           },
@@ -7555,6 +8184,7 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.4708,
+            "f1_50": 0.4831,
             "mcc": 0.4313,
             "n_detections": 215
           },
@@ -7567,11 +8197,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.495,
+            "f1_50": 0.5122,
             "mcc": 0.4121,
             "n_detections": 260
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7639,6 +8271,7 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.5204,
+            "f1_50": 0.5361,
             "mcc": 0.3402,
             "n_detections": 326
           },
@@ -7651,11 +8284,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.5142,
+            "f1_50": 0.5284,
             "mcc": 0.3953,
             "n_detections": 269
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7722,6 +8357,7 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.5036,
+            "f1_50": 0.5207,
             "mcc": 0.4313,
             "n_detections": 264
           },
@@ -7734,6 +8370,7 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.5309,
+            "f1_50": 0.5466,
             "mcc": 0.3873,
             "n_detections": 326
           },
@@ -7746,11 +8383,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.5214,
+            "f1_50": 0.537,
             "mcc": 0.3154,
             "n_detections": 336
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7818,11 +8457,13 @@
             "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.1931,
+            "f1_50": 0.216,
             "mcc": 0.235,
             "n_detections": 72
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7888,11 +8529,13 @@
             "bounds": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8558,
+            "f1_50": 0.8679,
             "mcc": 0.7448,
             "n_detections": 394
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -7958,11 +8601,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7778,
+            "f1_50": 0.8771,
             "mcc": 0.8268,
             "n_detections": 411
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8028,11 +8673,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7778,
+            "f1_50": 0.8771,
             "mcc": 0.8268,
             "n_detections": 411
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8098,11 +8745,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8769,
+            "f1_50": 0.9004,
             "mcc": 0.7903,
             "n_detections": 418
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8168,11 +8817,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8769,
+            "f1_50": 0.9004,
             "mcc": 0.7903,
             "n_detections": 418
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8238,11 +8889,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8641,
+            "f1_50": 0.8908,
             "mcc": 0.7693,
             "n_detections": 389
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8308,11 +8961,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8519,
+            "f1_50": 0.8773,
             "mcc": 0.6992,
             "n_detections": 429
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8378,11 +9033,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8545,
+            "f1_50": 0.8801,
             "mcc": 0.7208,
             "n_detections": 424
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8448,11 +9105,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8792,
+            "f1_50": 0.9058,
             "mcc": 0.7947,
             "n_detections": 393
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8518,11 +9177,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8641,
+            "f1_50": 0.8908,
             "mcc": 0.7693,
             "n_detections": 389
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8588,11 +9249,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8519,
+            "f1_50": 0.8773,
             "mcc": 0.6992,
             "n_detections": 429
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8658,11 +9321,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8545,
+            "f1_50": 0.8801,
             "mcc": 0.7208,
             "n_detections": 424
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8728,11 +9393,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8792,
+            "f1_50": 0.9058,
             "mcc": 0.7947,
             "n_detections": 393
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8798,11 +9465,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8902,
+            "f1_50": 0.9044,
             "mcc": 0.7903,
             "n_detections": 412
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8868,11 +9537,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8902,
+            "f1_50": 0.9044,
             "mcc": 0.7903,
             "n_detections": 412
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -8938,11 +9609,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8783,
+            "f1_50": 0.9045,
             "mcc": 0.7834,
             "n_detections": 403
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9008,11 +9681,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8783,
+            "f1_50": 0.9045,
             "mcc": 0.7834,
             "n_detections": 403
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9078,11 +9753,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8708,
+            "f1_50": 0.8881,
             "mcc": 0.7873,
             "n_detections": 378
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9148,11 +9825,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8708,
+            "f1_50": 0.8881,
             "mcc": 0.7873,
             "n_detections": 378
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9218,11 +9897,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.789,
+            "f1_50": 0.8753,
             "mcc": 0.8032,
             "n_detections": 399
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9288,11 +9969,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.789,
+            "f1_50": 0.8753,
             "mcc": 0.8032,
             "n_detections": 399
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9358,11 +10041,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7673,
+            "f1_50": 0.8749,
             "mcc": 0.8461,
             "n_detections": 420
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9428,11 +10113,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7673,
+            "f1_50": 0.8749,
             "mcc": 0.8461,
             "n_detections": 420
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9450,6 +10137,222 @@
           "evidence": [
             "pv-diag-384::verified-adv-image-min-3of5"
           ]
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / image-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / image-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "image-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": true,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-image-baseline-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.2,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-image-baseline/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.7167,
+            "f1_50": 0.8076,
+            "mcc": 0.8766,
+            "n_detections": 511
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-image-baseline-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / image-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / image-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "image-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": false,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.25,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-image-baseline-medium-vf/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.73,
+            "f1_50": 0.827,
+            "mcc": 0.8848,
+            "n_detections": 513
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / image-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / image-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "image-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3.1-pro-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": false,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.15,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-image-baseline-pro-vf/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.7309,
+            "f1_50": 0.8242,
+            "mcc": 0.8887,
+            "n_detections": 509
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
         },
         {
           "K": 10,
@@ -9498,11 +10401,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7167,
+            "f1_50": 0.8076,
             "mcc": 0.8766,
             "n_detections": 511
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9568,11 +10473,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.73,
+            "f1_50": 0.827,
             "mcc": 0.8848,
             "n_detections": 513
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9638,11 +10545,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7309,
+            "f1_50": 0.8242,
             "mcc": 0.8887,
             "n_detections": 509
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9708,11 +10617,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7112,
+            "f1_50": 0.8838,
             "mcc": 0.8499,
             "n_detections": 434
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9778,11 +10689,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7112,
+            "f1_50": 0.8838,
             "mcc": 0.8499,
             "n_detections": 434
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9848,11 +10761,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8491,
+            "f1_50": 0.867,
             "mcc": 0.7302,
             "n_detections": 347
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9918,11 +10833,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8495,
+            "f1_50": 0.8673,
             "mcc": 0.7302,
             "n_detections": 349
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -9988,11 +10905,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8506,
+            "f1_50": 0.8685,
             "mcc": 0.7302,
             "n_detections": 348
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10058,11 +10977,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8491,
+            "f1_50": 0.867,
             "mcc": 0.7302,
             "n_detections": 347
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10128,11 +11049,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8495,
+            "f1_50": 0.8673,
             "mcc": 0.7302,
             "n_detections": 349
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10198,11 +11121,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8506,
+            "f1_50": 0.8685,
             "mcc": 0.7302,
             "n_detections": 348
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10220,6 +11145,222 @@
           "evidence": [
             "pv-diag-384::verified-adv-pro-text-pro-vf-3of5"
           ]
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / pro-medium-image-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / pro-medium-image-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "pro-medium-image-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": true,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-pro-image-baseline-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.1,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-image-baseline/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.6196,
+            "f1_50": 0.7978,
+            "mcc": 0.8232,
+            "n_detections": 485
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-pro-image-baseline-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / pro-medium-image-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / pro-medium-image-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "pro-medium-image-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": false,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.05,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-image-baseline-medium-vf/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.6281,
+            "f1_50": 0.8062,
+            "mcc": 0.8328,
+            "n_detections": 463
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / pro-medium-image-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / pro-medium-image-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "pro-medium-image-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3.1-pro-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": false,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.05,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-image-baseline-pro-vf/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.6178,
+            "f1_50": 0.8,
+            "mcc": 0.8328,
+            "n_detections": 465
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
         },
         {
           "K": 10,
@@ -10268,11 +11409,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.6196,
+            "f1_50": 0.7978,
             "mcc": 0.8232,
             "n_detections": 485
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10338,11 +11481,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.6281,
+            "f1_50": 0.8062,
             "mcc": 0.8328,
             "n_detections": 463
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10408,17 +11553,235 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.6178,
+            "f1_50": 0.8,
             "mcc": 0.8328,
             "n_detections": 465
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
           "class": "committed",
           "evidence": [
             "pv-diag-384::verified-adv-pro-image-baseline-pro-vf"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / pro-medium-text-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / pro-medium-text-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "pro-medium-text-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": true,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-pro-text-baseline-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.15,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-text-baseline/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.7696,
+            "f1_50": 0.8058,
+            "mcc": 0.7823,
+            "n_detections": 394
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-pro-text-baseline-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / pro-medium-text-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / pro-medium-text-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "pro-medium-text-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": false,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-pro-text-baseline-medium-vf-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.15,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-text-baseline-medium-vf/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.7842,
+            "f1_50": 0.8201,
+            "mcc": 0.7872,
+            "n_detections": 399
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-pro-text-baseline-medium-vf-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / pro-medium-text-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / pro-medium-text-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "pro-medium-text-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3.1-pro-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": false,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-pro-text-baseline-pro-vf-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.15,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-text-baseline-pro-vf/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.7861,
+            "f1_50": 0.822,
+            "mcc": 0.7908,
+            "n_detections": 402
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-pro-text-baseline-pro-vf-era2b"
           ]
         },
         {
@@ -10478,11 +11841,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7696,
+            "f1_50": 0.8058,
             "mcc": 0.7823,
             "n_detections": 394
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10548,11 +11913,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7842,
+            "f1_50": 0.8201,
             "mcc": 0.7872,
             "n_detections": 399
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10618,11 +11985,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7861,
+            "f1_50": 0.822,
             "mcc": 0.7908,
             "n_detections": 402
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10689,6 +12058,7 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7635,
+            "f1_50": 0.8523,
             "mcc": 0.8306,
             "n_detections": 398
           }
@@ -10703,11 +12073,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7683,
+            "f1_50": 0.8582,
             "mcc": 0.8154,
             "n_detections": 411
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10775,11 +12147,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8835,
+            "f1_50": 0.9029,
             "mcc": 0.8068,
             "n_detections": 389
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10845,11 +12219,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8835,
+            "f1_50": 0.9029,
             "mcc": 0.8068,
             "n_detections": 389
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10872,6 +12248,222 @@
           "evidence": [
             "pv-diag-384::verified-adv-text-min-6of10"
           ]
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / text-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / text-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "text-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": true,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-text-baseline-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.15,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-text-baseline/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.8142,
+            "f1_50": 0.8387,
+            "mcc": 0.8328,
+            "n_detections": 464
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-text-baseline-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / text-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / text-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "text-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": false,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.15,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-text-baseline-medium-vf/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.8244,
+            "f1_50": 0.8489,
+            "mcc": 0.8372,
+            "n_detections": 465
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        }
+      ],
+      "ladder_status": "single-rung"
+    },
+    {
+      "family": "pv-diag-384 / text-baseline [era2_b_intersection_bounds.geojson / mounds-reference.geojson]",
+      "family_base": "pv-diag-384 / text-baseline",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "text-baseline",
+      "corpus": "4-map-gs",
+      "verifier": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3.1-pro-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "r1_verifier": false,
+      "n_proposer_passes_on_disk": null,
+      "rungs_present": [
+        1
+      ],
+      "n_distinct_eval_recipes": 1,
+      "eval_recipes": [
+        {
+          "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+          "ground_truth": "inputs/vectors/references/mounds-reference.geojson"
+        }
+      ],
+      "cells": {
+        "1": [
+          {
+            "condition_id": "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b",
+            "vote_threshold": 1,
+            "prob_threshold": 0.15,
+            "scope_override": "era2-b-487",
+            "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-text-baseline-pro-vf/evaluation.json",
+            "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+            "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+            "f1_20": 0.8263,
+            "f1_50": 0.8508,
+            "mcc": 0.8328,
+            "n_detections": 463
+          }
+        ]
+      },
+      "headline_buffer_m": 20,
+      "gaps": [
+        {
+          "K": 1,
+          "class": "committed",
+          "evidence": [
+            "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b"
+          ]
+        },
+        {
+          "K": 3,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 5,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
+        },
+        {
+          "K": 10,
+          "class": "needs-verifier-pass",
+          "evidence": "a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)"
         }
       ],
       "ladder_status": "single-rung"
@@ -10915,11 +12507,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8142,
+            "f1_50": 0.8387,
             "mcc": 0.8328,
             "n_detections": 464
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -10985,11 +12579,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8244,
+            "f1_50": 0.8489,
             "mcc": 0.8372,
             "n_detections": 465
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11055,11 +12651,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8263,
+            "f1_50": 0.8508,
             "mcc": 0.8328,
             "n_detections": 463
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11125,11 +12723,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8784,
+            "f1_50": 0.8996,
             "mcc": 0.7903,
             "n_detections": 412
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11195,11 +12795,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8784,
+            "f1_50": 0.8996,
             "mcc": 0.7903,
             "n_detections": 412
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11265,11 +12867,13 @@
             "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.6739,
+            "f1_50": 0.7964,
             "mcc": 0.8894,
             "n_detections": null
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11335,11 +12939,13 @@
             "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7703,
+            "f1_50": 0.8267,
             "mcc": 0.7895,
             "n_detections": null
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11405,11 +13011,13 @@
             "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7275,
+            "f1_50": 0.8228,
             "mcc": 0.7853,
             "n_detections": 426
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11475,11 +13083,13 @@
             "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.7925,
+            "f1_50": 0.826,
             "mcc": 0.6765,
             "n_detections": 415
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11545,11 +13155,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8795,
+            "f1_50": null,
             "mcc": 0.7959,
             "n_detections": 427
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11615,11 +13227,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8655,
+            "f1_50": null,
             "mcc": 0.7964,
             "n_detections": 390
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11685,11 +13299,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.88,
+            "f1_50": null,
             "mcc": 0.8023,
             "n_detections": 397
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11755,11 +13371,13 @@
             "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.886,
+            "f1_50": null,
             "mcc": 0.791,
             "n_detections": 423
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11825,11 +13443,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8764,
+            "f1_50": 0.9028,
             "mcc": 0.789,
             "n_detections": 398
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11895,11 +13515,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8739,
+            "f1_50": 0.9004,
             "mcc": 0.7713,
             "n_detections": 398
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -11965,11 +13587,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8739,
+            "f1_50": 0.9004,
             "mcc": 0.7927,
             "n_detections": 398
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12035,11 +13659,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8709,
+            "f1_50": 0.8951,
             "mcc": 0.7713,
             "n_detections": 394
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12105,11 +13731,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8722,
+            "f1_50": 0.8984,
             "mcc": 0.7621,
             "n_detections": 402
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12175,11 +13803,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8722,
+            "f1_50": 0.8984,
             "mcc": 0.7621,
             "n_detections": 402
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12245,11 +13875,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8739,
+            "f1_50": 0.9004,
             "mcc": 0.7713,
             "n_detections": 398
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12315,11 +13947,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8709,
+            "f1_50": 0.8951,
             "mcc": 0.7713,
             "n_detections": 394
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12385,11 +14019,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8764,
+            "f1_50": 0.9028,
             "mcc": 0.789,
             "n_detections": 398
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12455,11 +14091,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8739,
+            "f1_50": 0.9004,
             "mcc": 0.7927,
             "n_detections": 398
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12525,11 +14163,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8951,
+            "f1_50": 0.9161,
             "mcc": 0.7941,
             "n_detections": 423
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12595,11 +14235,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8951,
+            "f1_50": 0.9161,
             "mcc": 0.7941,
             "n_detections": 423
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12665,11 +14307,13 @@
             "bounds": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8637,
+            "f1_50": 0.8758,
             "mcc": 0.7497,
             "n_detections": 398
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12735,11 +14379,13 @@
             "bounds": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8582,
+            "f1_50": 0.8702,
             "mcc": 0.7301,
             "n_detections": 401
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12805,11 +14451,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8507,
+            "f1_50": 0.8706,
             "mcc": 0.7778,
             "n_detections": 369
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12875,11 +14523,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8561,
+            "f1_50": 0.8784,
             "mcc": 0.7714,
             "n_detections": 371
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -12945,11 +14595,13 @@
             "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8422,
+            "f1_50": 0.8646,
             "mcc": 0.7562,
             "n_detections": 370
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -13015,11 +14667,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8507,
+            "f1_50": 0.8706,
             "mcc": 0.7778,
             "n_detections": 369
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -13085,11 +14739,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8561,
+            "f1_50": 0.8784,
             "mcc": 0.7714,
             "n_detections": 371
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,
@@ -13155,11 +14811,13 @@
             "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
             "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
             "f1_20": 0.8422,
+            "f1_50": 0.8646,
             "mcc": 0.7562,
             "n_detections": 370
           }
         ]
       },
+      "headline_buffer_m": 20,
       "gaps": [
         {
           "K": 1,

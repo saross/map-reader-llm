@@ -1,7 +1,10 @@
 # K-ladder inventory: the fixed-parameter pass-count ladders that exist
 
-> **Last revised**: 2026-09-12 (original publication — step 1 of the K-ladder
-> Phase-1 run, `planning/k-ladder-phase1-run-2026-09-12.md`). Controlling card:
+> **Last revised**: 2026-09-12 (later — the ladder tables now carry each
+> family's OWN headline buffer, 50 m on the 55-map corpus, and the group count
+> moves with the 21 board rows step 4 registered; prior: original publication,
+> step 1 of the K-ladder Phase-1 run,
+> `planning/k-ladder-phase1-run-2026-09-12.md`). Controlling card:
 > `planning/k-ladder-review-2026-09-11.md` (§ 3 step 1; ruling R1).
 > See [§ Changelog](#changelog).
 
@@ -35,9 +38,9 @@ scored against the r2, canonical and standardised references is three ladders,
 not one ladder with three recipes, and mixing them would compare cells across
 strata. This is why the counts below are larger than a per-pool count would be.
 
-## 2. Coverage: 171 groups, 24 with more than one rung
+## 2. Coverage: 187 groups, 24 with more than one rung
 
-`inventory.json` holds **171** (run, pool, verifier, frame, reference) groups
+`inventory.json` holds **187** (run, pool, verifier, frame, reference) groups
 with at least one verified condition, of which **24** carry two or more rungs.
 Eight of those carry **three or more** of the asked rungs {1, 3, 5, 10}, and
 every rung of all eight is already committed — so eight ladders are scorable at
@@ -169,6 +172,16 @@ ladders; two swap the verifier and are reported separately. One is on the gold
 standard (`grid_common_bounds`, curator reference) and seven are on the 55-map
 corpus at 50 m.
 
+**Read each ladder at its own headline buffer.** The tables in
+`inventory-tables.md` carry F1 at both 20 m and 50 m and bold the family's
+headline: 20 m on the gold standard, 50 m on the 55-map corpus (the
+`is_primary_buffer` rule of `docs/methodology/notation-key.md` § 7.1). The
+difference is large, not cosmetic — the Stride A r2 ladder reads
+0.6776 → 0.7027 → 0.7062 → 0.7083 at 20 m and
+**0.8227 → 0.8321 → 0.8383 → 0.8419** at 50 m — and the 50 m column reproduces
+`results/55map-final-board-r2-2026-09-06/final_board_50m.json` cell for cell,
+which is the cross-check that it is the right column.
+
 **A caveat step 5 must carry.** The vote threshold k is not constant down a
 ladder and cannot be: a vote shell is defined relative to K. On the GS stride
 ladder it runs 1 / 3 / 4 / 8 at a fixed prob_t of 0.15; on the 55-map ladders
@@ -179,6 +192,29 @@ reference, one frame, and — at the carried point — one prob_t; k moves with 
 construction, and the review says so rather than claiming otherwise.
 
 ## Changelog
+
+### 2026-09-12 (later) — Headline buffer corrected; group count refreshed
+
+**Trigger**: the ladder tables reported F1@20 for every family. That is the
+gold standard's headline buffer but not the 55-map corpus's, which is 50 m, so
+seven of the eight multi-rung ladders were tabulated at a buffer their own
+campaigns do not report. The builder now records both buffers and bolds the
+family's own; the 50 m column was checked against
+`results/55map-final-board-r2-2026-09-06/final_board_50m.json` and reproduces
+every stride and arm rung exactly.
+
+| Quantity | before | after |
+|---|---:|---:|
+| Groups with at least one verified condition | 171 | 187 |
+| Groups with two or more rungs | 24 | 24 |
+| Families with three or more of {1, 3, 5, 10} | 8 | 8 |
+| Gap classes over the 96 (family, K) cells | 61 / 30 / 3 / 2 | **unchanged** |
+| Stride A r2 ladder, K = 1 → 10 | 0.6776 → 0.7083 (F1@20) | 0.8227 → 0.8419 (F1@50) |
+
+**What did NOT change**: which families are ladders, which rungs are committed,
+any gap's class, the coverage probe's verdict, or the § 4 conclusion that no gap
+is fillable at US$0 exactly. The group count moved only because step 4
+registered 21 new `-era2b` board rows between the two runs.
 
 ### 2026-09-12 — Original publication (Session 154, K-ladder Phase 1 step 1)
 

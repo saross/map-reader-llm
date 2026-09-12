@@ -2,7 +2,7 @@
 
 ## Families, one table each
 
-Generated 2026-09-12T00:28:03+00:00 from `results/conditions-manifest.json`. 171 (run, pool, verifier) groups hold at least one verified condition.
+Generated 2026-09-12T01:16:06+00:00 from `results/conditions-manifest.json`. 187 (run, pool, verifier) groups hold at least one verified condition.
 
 ### Gemini 3 HIGH image 384 px, T 0.3 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
@@ -10,11 +10,12 @@ Generated 2026-09-12T00:28:03+00:00 from `results/conditions-manifest.json`. 171
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-high-image-t0.3-n5-opmax` | 4 | 0.15 | 0.7475 | 0.8049 | 373 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-high-image-t0.3-n10-opmax` | 5 | 0.15 | 0.7705 | 0.8294 | 432 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-high-image-t0.3-n5-opmax` | 4 | 0.15 | **0.7475** | 0.849 | 0.8049 | 373 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-high-image-t0.3-n10-opmax` | 5 | 0.15 | **0.7705** | 0.8697 | 0.8294 | 432 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -29,11 +30,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-high-image-t0.7-n5-opmax` | 3 | 0.15 | 0.7868 | 0.8359 | 414 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-high-image-t0.7-n10-opmax` | 7 | 0.2 | 0.7765 | 0.798 | 348 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-high-image-t0.7-n5-opmax` | 3 | 0.15 | **0.7868** | 0.881 | 0.8359 | 414 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-high-image-t0.7-n10-opmax` | 7 | 0.2 | **0.7765** | 0.8429 | 0.798 | 348 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -48,11 +50,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-high-image-t1.0-n5-opmax` | 3 | 0.15 | 0.7337 | 0.823 | 410 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-high-image-t1.0-n10-opmax` | 5 | 0.2 | 0.7633 | 0.8002 | 414 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-high-image-t1.0-n5-opmax` | 3 | 0.15 | **0.7337** | 0.8615 | 0.823 | 410 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-high-image-t1.0-n10-opmax` | 5 | 0.2 | **0.7633** | 0.8575 | 0.8002 | 414 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -67,11 +70,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-high-text-t0.3-n5-opmax` | 4 | 0.2 | 0.8873 | 0.7805 | 408 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-high-text-t0.3-n10-opmax` | 8 | 0.15 | 0.8722 | 0.7872 | 402 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-high-text-t0.3-n5-opmax` | 4 | 0.2 | **0.8873** | 0.9087 | 0.7805 | 408 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-high-text-t0.3-n10-opmax` | 8 | 0.15 | **0.8722** | 0.9032 | 0.7872 | 402 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -86,11 +90,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 30
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-high-text-t0.7-n5-opmax` | 4 | 0.15 | 0.8634 | 0.7684 | 392 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-high-text-t0.7-n10-opmax` | 8 | 0.2 | 0.8744 | 0.7641 | 377 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-high-text-t0.7-n5-opmax` | 4 | 0.15 | **0.8634** | 0.8875 | 0.7684 | 392 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-high-text-t0.7-n10-opmax` | 8 | 0.2 | **0.8744** | 0.8892 | 0.7641 | 377 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -105,11 +110,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-high-text-t1.0-n5-opmax` | 3 | 0.2 | 0.8688 | 0.7857 | 426 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-high-text-t1.0-n10-opmax` | 5 | 0.2 | 0.8804 | 0.791 | 426 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-high-text-t1.0-n5-opmax` | 3 | 0.2 | **0.8688** | 0.9013 | 0.7857 | 426 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-high-text-t1.0-n10-opmax` | 5 | 0.2 | **0.8804** | 0.9059 | 0.791 | 426 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -124,11 +130,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-min-image-t0.3-n5-opmax` | 4 | 0.15 | 0.7767 | 0.8416 | 407 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-min-image-t0.3-n10-opmax` | 7 | 0.15 | 0.7819 | 0.8377 | 404 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-min-image-t0.3-n5-opmax` | 4 | 0.15 | **0.7767** | 0.8622 | 0.8416 | 407 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-min-image-t0.3-n10-opmax` | 7 | 0.15 | **0.7819** | 0.8677 | 0.8377 | 404 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -143,11 +150,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-min-image-t0.7-n5-opmax` | 3 | 0.15 | 0.7734 | 0.8383 | 421 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-min-image-t0.7-n10-opmax` | 6 | 0.15 | 0.7881 | 0.8223 | 405 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-min-image-t0.7-n5-opmax` | 3 | 0.15 | **0.7734** | 0.8808 | 0.8383 | 421 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-min-image-t0.7-n10-opmax` | 6 | 0.15 | **0.7881** | 0.8762 | 0.8223 | 405 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -162,11 +170,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-min-image-t1.0-n5-opmax` | 4 | 0.15 | 0.7384 | 0.8021 | 364 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-min-image-t1.0-n10-opmax` | 6 | 0.2 | 0.7428 | 0.8078 | 397 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-min-image-t1.0-n5-opmax` | 4 | 0.15 | **0.7384** | 0.8385 | 0.8021 | 364 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-min-image-t1.0-n10-opmax` | 6 | 0.2 | **0.7428** | 0.8534 | 0.8078 | 397 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -181,11 +190,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-min-text-t0.3-n5-opmax` | 3 | 0.15 | 0.8778 | 0.7735 | 408 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-min-text-t0.3-n10-opmax` | 3 | 0.15 | 0.873 | 0.791 | 431 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-min-text-t0.3-n5-opmax` | 3 | 0.15 | **0.8778** | 0.8992 | 0.7735 | 408 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-min-text-t0.3-n10-opmax` | 3 | 0.15 | **0.873** | 0.8891 | 0.791 | 431 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -200,11 +210,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 30
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-min-text-t0.7-n5-opmax` | 4 | 0.2 | 0.8739 | 0.7957 | 382 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-min-text-t0.7-n10-opmax` | 6 | 0.15 | 0.8726 | 0.7768 | 397 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-min-text-t0.7-n5-opmax` | 4 | 0.2 | **0.8739** | 0.8911 | 0.7957 | 382 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-min-text-t0.7-n10-opmax` | 6 | 0.15 | **0.8726** | 0.8894 | 0.7768 | 397 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -219,11 +230,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-min-text-t1.0-n5-opmax` | 3 | 0.15 | 0.8714 | 0.7797 | 405 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-min-text-t1.0-n10-opmax` | 5 | 0.15 | 0.8781 | 0.7881 | 410 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-min-text-t1.0-n5-opmax` | 3 | 0.15 | **0.8714** | 0.8976 | 0.7797 | 405 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-min-text-t1.0-n10-opmax` | 5 | 0.15 | **0.8781** | 0.8994 | 0.7881 | 410 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -238,13 +250,14 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 5
 - ladder status: ladder
+- headline buffer: 50 m (the 55-map corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 1 | `gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt` | 1 | 0.2 | 0.7481 | 0.7246 | 5219 | 55maps_evaluation_bounds.geojson |
-| 3 | `gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt` | 3 | 0.15 | 0.7739 | 0.7179 | 4772 | 55maps_evaluation_bounds.geojson |
-| 5 | `gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-r2-gt` | 5 | 0.1 | 0.7592 | 0.6655 | 5229 | 55maps_evaluation_bounds.geojson |
-| 5 | `gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt` | 5 | 0.15 | 0.7754 | 0.7147 | 4616 | 55maps_evaluation_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 1 | `gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt` | 1 | 0.2 | 0.7481 | **0.8413** | 0.7246 | 5219 | 55maps_evaluation_bounds.geojson |
+| 3 | `gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt` | 3 | 0.15 | 0.7739 | **0.8705** | 0.7179 | 4772 | 55maps_evaluation_bounds.geojson |
+| 5 | `gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-r2-gt` | 5 | 0.1 | 0.7592 | **0.8551** | 0.6655 | 5229 | 55maps_evaluation_bounds.geojson |
+| 5 | `gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt` | 5 | 0.15 | 0.7754 | **0.8727** | 0.7147 | 4616 | 55maps_evaluation_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [10]
 
@@ -258,13 +271,14 @@ Rungs absent of [1, 3, 5, 10]: [10]
 - verifier: `verify_adversarial.md` / `gemini-3.7-flash` / low / T 0.0 / n 1 — R1 compliant: **no**
 - proposer passes on disk: 5
 - ladder status: ladder
+- headline buffer: 50 m (the 55-map corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 1 | `gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt` | 1 | 0.98 | 0.7664 | 0.7422 | 5021 | 55maps_evaluation_bounds.geojson |
-| 3 | `gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt` | 3 | 0.95 | 0.787 | 0.7163 | 5097 | 55maps_evaluation_bounds.geojson |
-| 5 | `gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-r2-gt` | 5 | 0.8 | 0.7846 | 0.7063 | 5003 | 55maps_evaluation_bounds.geojson |
-| 5 | `gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt` | 5 | 0.95 | 0.7888 | 0.7147 | 4924 | 55maps_evaluation_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 1 | `gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt` | 1 | 0.98 | 0.7664 | **0.861** | 0.7422 | 5021 | 55maps_evaluation_bounds.geojson |
+| 3 | `gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt` | 3 | 0.95 | 0.787 | **0.8848** | 0.7163 | 5097 | 55maps_evaluation_bounds.geojson |
+| 5 | `gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-r2-gt` | 5 | 0.8 | 0.7846 | **0.8827** | 0.7063 | 5003 | 55maps_evaluation_bounds.geojson |
+| 5 | `gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt` | 5 | 0.95 | 0.7888 | **0.8871** | 0.7147 | 4924 | 55maps_evaluation_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [10]
 
@@ -278,11 +292,12 @@ Rungs absent of [1, 3, 5, 10]: [10]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b` | 5 | 0.1 | 0.9066 | 0.7651 | 443 | era2_b_intersection_bounds.geojson |
-| 10 | `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b` | 10 | 0.1 | 0.9068 | 0.7675 | 423 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b` | 5 | 0.1 | **0.9066** | 0.9203 | 0.7651 | 443 | era2_b_intersection_bounds.geojson |
+| 10 | `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b` | 10 | 0.1 | **0.9068** | 0.9301 | 0.7675 | 423 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -297,11 +312,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5` | 5 | 0.1 | 0.9139 | 0.7797 | 443 | grid_common_bounds.geojson |
-| 10 | `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10` | 10 | 0.1 | 0.9142 | 0.7817 | 423 | grid_common_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5` | 5 | 0.1 | **0.9139** | 0.9277 | 0.7797 | 443 | grid_common_bounds.geojson |
+| 10 | `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10` | 10 | 0.1 | **0.9142** | 0.9377 | 0.7817 | 423 | grid_common_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -316,16 +332,17 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n None — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 50 m (the 55-map corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 1 | `stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt` | 1 | 0.2 | 0.6776 | 0.7006 | 4879 | 55maps_evaluation_bounds.geojson |
-| 3 | `stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt` | 3 | 0.15 | 0.7027 | 0.6876 | 4400 | 55maps_evaluation_bounds.geojson |
-| 3 | `stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt` | 2 | 0.2 | 0.699 | 0.7018 | 4796 | 55maps_evaluation_bounds.geojson |
-| 5 | `stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt` | 4 | 0.15 | 0.7062 | 0.6907 | 4597 | 55maps_evaluation_bounds.geojson |
-| 5 | `stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt` | 4 | 0.15 | 0.7062 | 0.6907 | 4597 | 55maps_evaluation_bounds.geojson |
-| 10 | `stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt` | 8 | 0.15 | 0.7081 | 0.693 | 4475 | 55maps_evaluation_bounds.geojson |
-| 10 | `stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt` | 7 | 0.15 | 0.7083 | 0.6954 | 4639 | 55maps_evaluation_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 1 | `stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt` | 1 | 0.2 | 0.6776 | **0.8227** | 0.7006 | 4879 | 55maps_evaluation_bounds.geojson |
+| 3 | `stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt` | 3 | 0.15 | 0.7027 | **0.8307** | 0.6876 | 4400 | 55maps_evaluation_bounds.geojson |
+| 3 | `stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt` | 2 | 0.2 | 0.699 | **0.8321** | 0.7018 | 4796 | 55maps_evaluation_bounds.geojson |
+| 5 | `stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt` | 4 | 0.15 | 0.7062 | **0.8383** | 0.6907 | 4597 | 55maps_evaluation_bounds.geojson |
+| 5 | `stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt` | 4 | 0.15 | 0.7062 | **0.8383** | 0.6907 | 4597 | 55maps_evaluation_bounds.geojson |
+| 10 | `stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt` | 8 | 0.15 | 0.7081 | **0.8391** | 0.693 | 4475 | 55maps_evaluation_bounds.geojson |
+| 10 | `stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt` | 7 | 0.15 | 0.7083 | **0.8419** | 0.6954 | 4639 | 55maps_evaluation_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: none
 
@@ -335,16 +352,17 @@ Rungs absent of [1, 3, 5, 10]: none
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n None — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 50 m (the 55-map corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 1 | `stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt` | 1 | 0.2 | 0.6777 | 0.701 | 4879 | 55maps_evaluation_bounds.geojson |
-| 3 | `stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt` | 3 | 0.15 | 0.7024 | 0.688 | 4400 | 55maps_evaluation_bounds.geojson |
-| 3 | `stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt` | 2 | 0.2 | 0.6992 | 0.7022 | 4796 | 55maps_evaluation_bounds.geojson |
-| 5 | `stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-standardised-gt` | 4 | 0.15 | 0.7059 | 0.6911 | 4597 | 55maps_evaluation_bounds.geojson |
-| 5 | `stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt` | 4 | 0.15 | 0.7059 | 0.6911 | 4597 | 55maps_evaluation_bounds.geojson |
-| 10 | `stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-standardised-gt` | 8 | 0.15 | 0.7079 | 0.6934 | 4475 | 55maps_evaluation_bounds.geojson |
-| 10 | `stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt` | 7 | 0.15 | 0.7081 | 0.6958 | 4639 | 55maps_evaluation_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 1 | `stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt` | 1 | 0.2 | 0.6777 | **0.8231** | 0.701 | 4879 | 55maps_evaluation_bounds.geojson |
+| 3 | `stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt` | 3 | 0.15 | 0.7024 | **0.8308** | 0.688 | 4400 | 55maps_evaluation_bounds.geojson |
+| 3 | `stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt` | 2 | 0.2 | 0.6992 | **0.8326** | 0.7022 | 4796 | 55maps_evaluation_bounds.geojson |
+| 5 | `stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-standardised-gt` | 4 | 0.15 | 0.7059 | **0.8383** | 0.6911 | 4597 | 55maps_evaluation_bounds.geojson |
+| 5 | `stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt` | 4 | 0.15 | 0.7059 | **0.8383** | 0.6911 | 4597 | 55maps_evaluation_bounds.geojson |
+| 10 | `stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-standardised-gt` | 8 | 0.15 | 0.7079 | **0.8392** | 0.6934 | 4475 | 55maps_evaluation_bounds.geojson |
+| 10 | `stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt` | 7 | 0.15 | 0.7081 | **0.842** | 0.6958 | 4639 | 55maps_evaluation_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: none
 
@@ -354,13 +372,14 @@ Rungs absent of [1, 3, 5, 10]: none
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n None — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 1 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1` | 1 | 0.15 | 0.8677 | 0.7894 | 411 | grid_common_bounds.geojson |
-| 3 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3` | 3 | 0.15 | 0.8911 | 0.7814 | 380 | grid_common_bounds.geojson |
-| 5 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4` | 4 | 0.15 | 0.8856 | 0.7805 | 394 | grid_common_bounds.geojson |
-| 10 | `stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8` | 8 | 0.15 | 0.8982 | 0.8022 | 387 | grid_common_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 1 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1` | 1 | 0.15 | **0.8677** | None | 0.7894 | 411 | grid_common_bounds.geojson |
+| 3 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3` | 3 | 0.15 | **0.8911** | None | 0.7814 | 380 | grid_common_bounds.geojson |
+| 5 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4` | 4 | 0.15 | **0.8856** | None | 0.7805 | 394 | grid_common_bounds.geojson |
+| 10 | `stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8` | 8 | 0.15 | **0.8982** | None | 0.8022 | 387 | grid_common_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: none
 
@@ -370,16 +389,17 @@ Rungs absent of [1, 3, 5, 10]: none
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n None — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 50 m (the 55-map corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 1 | `stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt` | 1 | 0.2 | 0.6695 | 0.7092 | 5655 | 55maps_evaluation_bounds.geojson |
-| 3 | `stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt` | 3 | 0.15 | 0.7182 | 0.702 | 4971 | 55maps_evaluation_bounds.geojson |
-| 3 | `stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt` | 3 | 0.2 | 0.7211 | 0.7128 | 4772 | 55maps_evaluation_bounds.geojson |
-| 5 | `stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt` | 5 | 0.15 | 0.7209 | 0.701 | 4736 | 55maps_evaluation_bounds.geojson |
-| 5 | `stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt` | 5 | 0.2 | 0.7222 | 0.7098 | 4566 | 55maps_evaluation_bounds.geojson |
-| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt` | 10 | 0.15 | 0.7252 | 0.6977 | 4505 | 55maps_evaluation_bounds.geojson |
-| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt` | 9 | 0.2 | 0.7296 | 0.7123 | 4639 | 55maps_evaluation_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 1 | `stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt` | 1 | 0.2 | 0.6695 | **0.8013** | 0.7092 | 5655 | 55maps_evaluation_bounds.geojson |
+| 3 | `stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt` | 3 | 0.15 | 0.7182 | **0.8477** | 0.702 | 4971 | 55maps_evaluation_bounds.geojson |
+| 3 | `stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt` | 3 | 0.2 | 0.7211 | **0.8507** | 0.7128 | 4772 | 55maps_evaluation_bounds.geojson |
+| 5 | `stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt` | 5 | 0.15 | 0.7209 | **0.8503** | 0.701 | 4736 | 55maps_evaluation_bounds.geojson |
+| 5 | `stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt` | 5 | 0.2 | 0.7222 | **0.8516** | 0.7098 | 4566 | 55maps_evaluation_bounds.geojson |
+| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt` | 10 | 0.15 | 0.7252 | **0.8497** | 0.6977 | 4505 | 55maps_evaluation_bounds.geojson |
+| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt` | 9 | 0.2 | 0.7296 | **0.856** | 0.7123 | 4639 | 55maps_evaluation_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: none
 
@@ -389,13 +409,14 @@ Rungs absent of [1, 3, 5, 10]: none
 - verifier: `verify_adversarial.md` / `gemini-3.7-flash` / low / T 0.0 / n 1 — R1 compliant: **no**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 50 m (the 55-map corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 1 | `stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt` | 1 | 0.96 | 0.7023 | 0.7471 | 5337 | 55maps_evaluation_bounds.geojson |
-| 3 | `stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt` | 3 | 0.96 | 0.7445 | 0.7376 | 4626 | 55maps_evaluation_bounds.geojson |
-| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt` | 10 | 0.98 | 0.7472 | 0.7264 | 4246 | 55maps_evaluation_bounds.geojson |
-| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt` | 9 | 0.96 | 0.7533 | 0.7359 | 4495 | 55maps_evaluation_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 1 | `stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt` | 1 | 0.96 | 0.7023 | **0.8352** | 0.7471 | 5337 | 55maps_evaluation_bounds.geojson |
+| 3 | `stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt` | 3 | 0.96 | 0.7445 | **0.8747** | 0.7376 | 4626 | 55maps_evaluation_bounds.geojson |
+| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt` | 10 | 0.98 | 0.7472 | **0.8728** | 0.7264 | 4246 | 55maps_evaluation_bounds.geojson |
+| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt` | 9 | 0.96 | 0.7533 | **0.8813** | 0.7359 | 4495 | 55maps_evaluation_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [5]
 
@@ -409,16 +430,17 @@ Rungs absent of [1, 3, 5, 10]: [5]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n None — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 50 m (the 55-map corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 1 | `stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt` | 1 | 0.2 | 0.6693 | 0.7097 | 5655 | 55maps_evaluation_bounds.geojson |
-| 3 | `stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt` | 3 | 0.15 | 0.7178 | 0.7025 | 4971 | 55maps_evaluation_bounds.geojson |
-| 3 | `stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt` | 3 | 0.2 | 0.7207 | 0.7132 | 4772 | 55maps_evaluation_bounds.geojson |
-| 5 | `stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-standardised-gt` | 5 | 0.15 | 0.7205 | 0.7014 | 4736 | 55maps_evaluation_bounds.geojson |
-| 5 | `stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt` | 5 | 0.2 | 0.7218 | 0.7102 | 4566 | 55maps_evaluation_bounds.geojson |
-| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-standardised-gt` | 10 | 0.15 | 0.725 | 0.6982 | 4505 | 55maps_evaluation_bounds.geojson |
-| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt` | 9 | 0.2 | 0.7292 | 0.7127 | 4639 | 55maps_evaluation_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 1 | `stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt` | 1 | 0.2 | 0.6693 | **0.8013** | 0.7097 | 5655 | 55maps_evaluation_bounds.geojson |
+| 3 | `stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt` | 3 | 0.15 | 0.7178 | **0.8476** | 0.7025 | 4971 | 55maps_evaluation_bounds.geojson |
+| 3 | `stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt` | 3 | 0.2 | 0.7207 | **0.8505** | 0.7132 | 4772 | 55maps_evaluation_bounds.geojson |
+| 5 | `stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-standardised-gt` | 5 | 0.15 | 0.7205 | **0.8502** | 0.7014 | 4736 | 55maps_evaluation_bounds.geojson |
+| 5 | `stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt` | 5 | 0.2 | 0.7218 | **0.8515** | 0.7102 | 4566 | 55maps_evaluation_bounds.geojson |
+| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-standardised-gt` | 10 | 0.15 | 0.725 | **0.8498** | 0.6982 | 4505 | 55maps_evaluation_bounds.geojson |
+| 10 | `stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt` | 9 | 0.2 | 0.7292 | **0.8558** | 0.7127 | 4639 | 55maps_evaluation_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: none
 
@@ -428,12 +450,13 @@ Rungs absent of [1, 3, 5, 10]: none
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n None — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 50 m (the 55-map corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-canonical-gt` | 5 | 0.15 | 0.6796034591858258 | 0.7013882811101221 | 4736 | — |
-| 10 | `stride-55map-2026-08-25::g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt` | 10 | 0.15 | 0.6846827370014053 | 0.6981604573921036 | 4505 | — |
-| 10 | `stride-55map-2026-08-25::g384-ov192-55map-verified-oracle-p0.20-k9-canonical-gt` | 9 | 0.2 | 0.6883324453915822 | 0.7127495787794123 | 4639 | — |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-canonical-gt` | 5 | 0.15 | 0.6796034591858258 | **0.8437752627324171** | 0.7013882811101221 | 4736 | — |
+| 10 | `stride-55map-2026-08-25::g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt` | 10 | 0.15 | 0.6846827370014053 | **0.8422141748577341** | 0.6981604573921036 | 4505 | — |
+| 10 | `stride-55map-2026-08-25::g384-ov192-55map-verified-oracle-p0.20-k9-canonical-gt` | 9 | 0.2 | 0.6883324453915822 | **0.8502908460046944** | 0.7127495787794123 | 4639 | — |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -448,11 +471,12 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 - verifier: `verify_adversarial.md` / `gemini-3-flash-preview` / minimal / T 0.0 / n 1 — R1 compliant: **yes**
 - proposer passes on disk: 10
 - ladder status: ladder
+- headline buffer: 20 m (the 4-map-gs corpus's, per the notation key's `is_primary_buffer` rule)
 
-| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |
-|---:|---|---:|---:|---:|---:|---:|---|
-| 5 | `pv-diag-384::pv-scale4-optimal-n5-opmax` | 3 | 0.15 | 0.7635 | 0.8306 | 398 | era2_b_intersection_bounds.geojson |
-| 10 | `pv-diag-384::pv-scale4-optimal-n10-opmax` | 5 | 0.15 | 0.7683 | 0.8154 | 411 | era2_b_intersection_bounds.geojson |
+| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 5 | `pv-diag-384::pv-scale4-optimal-n5-opmax` | 3 | 0.15 | **0.7635** | 0.8523 | 0.8306 | 398 | era2_b_intersection_bounds.geojson |
+| 10 | `pv-diag-384::pv-scale4-optimal-n10-opmax` | 5 | 0.15 | **0.7683** | 0.8582 | 0.8154 | 411 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 

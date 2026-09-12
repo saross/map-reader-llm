@@ -161,11 +161,30 @@ def is_r1_verifier(cond: dict[str, Any]) -> bool:
     return all(vc.get(k) == v for k, v in R1_VERIFIER.items())
 
 
+#: The headline matching buffer per corpus. 20 m on the gold standard, 50 m on
+#: the 55-map corpus — the ``is_primary_buffer`` rule of
+#: ``docs/methodology/notation-key.md`` § 7.1.
+HEADLINE_BUFFER_M = {"4-map-gs": 20, "55-map": 50}
+DEFAULT_HEADLINE_BUFFER_M = 20
+
+
 def eval_recipe(cond: dict[str, Any]) -> dict[str, Any]:
-    """The frame and reference the condition's committed evaluation used."""
+    """The frame, reference and metrics of the condition's committed evaluation.
+
+    Records F1 at BOTH 20 m and 50 m, because the corpora have different
+    headline buffers and a ladder must be read at its own.
+
+    Args:
+        cond: A condition row joined with its register-side fields.
+
+    Returns:
+        The evaluation path, its bounds and ground truth, F1 at 20 m and 50 m,
+        the tile MCC point estimate, and the detection count.
+    """
     path = cond.get("eval_path") or ""
     out = {"eval_path": path, "bounds": None, "ground_truth": None,
-           "f1_20": None, "mcc": None, "n_detections": cond.get("n_detections")}
+           "f1_20": None, "f1_50": None, "mcc": None,
+           "n_detections": cond.get("n_detections")}
     full = REPO_ROOT / path
     if not path or not full.exists():
         return out
@@ -178,8 +197,11 @@ def eval_recipe(cond: dict[str, Any]) -> dict[str, Any]:
     out["ground_truth"] = cli.get("ground_truth")
     summary = doc.get("summary") or {}
     for band in summary.get("buffers", []):
-        if band.get("buffer_metres") == 20 or band.get("buffer_m") == 20:
+        metres = band.get("buffer_metres", band.get("buffer_m"))
+        if metres == 20:
             out["f1_20"] = band.get("f1")
+        elif metres == 50:
+            out["f1_50"] = band.get("f1")
     tile = (summary.get("tile_classification") or {}).get("mcc")
     out["mcc"] = tile.get("point") if isinstance(tile, dict) else tile
     if summary.get("n_detections") is not None:
@@ -388,6 +410,8 @@ def build() -> dict[str, Any]:
                 key=lambda r: str(r["bounds"])),
             "cells": cells,
         }
+        fam["headline_buffer_m"] = HEADLINE_BUFFER_M.get(
+            fam["corpus"], DEFAULT_HEADLINE_BUFFER_M)
         fam["gaps"] = classify_gaps(fam, probe)
         fam["ladder_status"] = (
             "not-a-ladder: rungs do not share one evaluation recipe"
@@ -451,16 +475,24 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"— R1 compliant: **{'yes' if fam['r1_verifier'] else 'no'}**",
             f"- proposer passes on disk: {fam['n_proposer_passes_on_disk']}",
             f"- ladder status: {fam['ladder_status']}",
+            f"- headline buffer: {fam['headline_buffer_m']} m "
+            f"(the {fam['corpus']} corpus's, per the notation key's "
+            "`is_primary_buffer` rule)",
             "",
-            "| K | condition | k | prob_t | F1@20 | tile-MCC | n | frame |",
-            "|---:|---|---:|---:|---:|---:|---:|---|",
+            "| K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |",
+            "|---:|---|---:|---:|---:|---:|---:|---:|---|",
         ]
+        headline = fam["headline_buffer_m"]
         for k in sorted(fam["cells"]):
             for cell in fam["cells"][k]:
                 frame = (cell["bounds"] or "").split("/")[-1] or "—"
+                f20 = cell["f1_20"]
+                f50 = cell["f1_50"]
+                f20 = f"**{f20}**" if headline == 20 and f20 is not None else f20
+                f50 = f"**{f50}**" if headline == 50 and f50 is not None else f50
                 lines.append(
                     f"| {k} | `{cell['condition_id']}` | {cell['vote_threshold']} | "
-                    f"{cell['prob_threshold']} | {cell['f1_20']} | {cell['mcc']} | "
+                    f"{cell['prob_threshold']} | {f20} | {f50} | {cell['mcc']} | "
                     f"{cell['n_detections']} | {frame} |")
         missing = [k for k in payload["ladder_rungs_asked"] if k not in fam["cells"]]
         lines += ["", f"Rungs absent of {payload['ladder_rungs_asked']}: "
