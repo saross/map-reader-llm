@@ -1,13 +1,19 @@
 # K-ladder Phase 2: what the missing rungs would cost
 
-> **Last revised**: 2026-09-12 (original publication — step 6 of the K-ladder
-> Phase-1 run, `planning/k-ladder-phase1-run-2026-09-12.md`). Controlling card:
+> **Last revised**: 2026-09-12 (later — tiers A–D approved and **run**; § 5's
+> tier-A rationale corrected, the K = 30 "fifth rung" withdrawn. Prior: original
+> publication — step 6 of the K-ladder Phase-1 run,
+> `planning/k-ladder-phase1-run-2026-09-12.md`). Controlling card:
 > `planning/k-ladder-review-2026-09-11.md` (ruling R5: up to US$50 for loose
 > ends, every run costed and approved by the PI first).
 > See [§ Changelog](#changelog).
 
-**For the PI to approve or refuse. Nothing in this table has been run, and
-Phase 1 made no API call of any kind.**
+**APPROVED AND RUN.** The PI approved all four tiers on 2026-09-12 at
+US$24.84; the run executed them. This document remains the costing — the plan
+and the prices it was approved on — and is **not** updated with the outcome. The
+audited spend, every rung's numbers, and what each ladder gained are in
+`reports/k-ladder-phase2-deltas-2026-09-12.md`; the ladders themselves are in
+`results/k-ladder-2026-09-12/findings.md`.
 
 ## 1. The headline
 
@@ -143,10 +149,26 @@ every step.
 
 | tier | rungs | candidates | USD | running | what it buys |
 |---:|---|---:|---:|---:|---|
-| **A** | K = 1 and K = 3 of **Gemini 3 MINIMAL text T 0.7** and **HIGH text T 0.7** (rows 3, 4, 9, 10) | 6,492 | **4.50** | 4.50 | The two pools the registered `pass-budget-pareto-v2` efficient set is built on, at the temperature its rungs use. This is the one purchase that turns the Pareto analysis's two-point comparison into a four-rung ladder on the GS frame, and it completes the two families that also hold a K = 30 rung — so MINIMAL text T 0.7 and HIGH text T 0.7 would each carry K = 1, 3, 5, 10, 30: five rungs, the longest fixed-parameter ladder the corpus could have |
+| **A** | K = 1 and K = 3 of **Gemini 3 MINIMAL text T 0.7** and **HIGH text T 0.7** (rows 3, 4, 9, 10) | 6,492 | **4.50** | 4.50 | The two pools the registered `pass-budget-pareto-v2` efficient set is built on, at the temperature its rungs use. This is the one purchase that turns the Pareto analysis's two-point comparison into a **four-rung** ladder — K = 1, 3, 5, 10 — on the GS frame, for the two families the rest of the paper is built from (**corrected 2026-09-12**: this cell previously claimed a fifth rung at K = 30. It does not exist as a rung. See the note below the table) |
 | **B** | K = 1 and K = 3 of the remaining **text** families (rows 1, 2, 5–8, 11, 12) | 12,662 | **8.77** | 13.27 | Temperature × K at four rungs across T 0.3 / 0.7 / 1.0 on both thinking levels. Turns the ladder into a factorial and lets the review say whether K's return depends on temperature — a question no committed cell can answer |
 | **C** | K = 1 and K = 3 of the four **image** families (rows 13–24) | 12,877 | **8.92** | 22.19 | The same for the image track, where the committed K = 5 → 10 steps are the smallest in the corpus and tile-MCC moves opposite to F1. Lower priority because the image track is not the paper's headline architecture |
 | **D** | K = 1 and K = 3 of **scale-4-optimal** and the **3.7 GS text screen** (rows 25–28) | 3,813 | **2.64** | **24.84** | Completeness. The 3.7 rungs would give a second model family a four-rung GS ladder, which is the only way to ask whether the saturation shape is a property of the pipeline or of Gemini 3 |
+
+**No family reaches five rungs, and the two K = 30 cells are not the reason to
+think otherwise** (corrected 2026-09-12, during the Phase 2 run). The K = 30
+cells of these two pools are
+`pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-29of30` and
+`pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30`, and both carry
+`aggregation: "consensus"` with `verifier_config: null` — consensus-only cells
+at vote thresholds 29/30 and 26/30, with no verifier pass. Ruling R1 fixes the
+carried verifier at **every** rung, so neither can be a rung of one of these
+ladders. The corpus's one verified 30-pass cell,
+`pv-diag-384::verified-adv-text-consensus-16of30`, is registered at
+`n_passes: 1` with `vote_threshold: null` because its verifier ran over an
+already-thresholded 16-of-30 consensus rather than over the vote ≥ 1 union, so
+its candidate universe is a different object from a ladder rung's. Tier A
+therefore buys a four-rung verified ladder, which is what it was worth buying;
+the recommendation is unchanged.
 
 Tier A alone — **US$4.50** — is the recommendation if only one approval is
 wanted. It is 9 % of the ceiling and it is the tier whose absence the Phase-1
@@ -168,6 +190,27 @@ no rung is a long-running job. Daily Gemini quotas reset at midnight US Pacific
 (7 pm AEDT), and the whole tier A is about 6,500 calls, well inside a day.
 
 ## Changelog
+
+### 2026-09-12 (later) — Tiers A–D approved and RUN; § 5's tier-A rationale corrected
+
+**Trigger**: the PI approved all four tiers on 2026-09-12 at US$24.84 and the
+run executed them. Closing report, with the audited spend and every rung's
+numbers: `reports/k-ladder-phase2-deltas-2026-09-12.md`. Findings:
+`results/k-ladder-2026-09-12/findings.md`. Pre-launch audit:
+`results/k-ladder-2026-09-12/phase2/pre_launch_audit.md`.
+
+**What moved in this document**: one claim, in § 5's tier-A rationale.
+
+| Claim | before | after |
+|---|---|---|
+| What tier A completes for MINIMAL text T 0.7 and HIGH text T 0.7 | "K = 1, 3, 5, 10, 30: five rungs, the longest fixed-parameter ladder the corpus could have" | a **four**-rung ladder at K = 1, 3, 5, 10 |
+| Why | the two pools were read as holding a K = 30 rung | both K = 30 cells carry `aggregation: "consensus"` and `verifier_config: null`, so ruling R1 excludes them; the one verified 30-pass cell is registered at `n_passes: 1` over a 16-of-30 consensus, not over the union |
+
+**What did NOT change**: every number in §§ 1–4 — the 28 rungs, their measured
+union sizes, the 35,844 candidates, the US$24.84 total, the rates and their
+anchors, and the nil re-verification exposure of § 4. Nor does the tier-A
+recommendation change: four rungs at fixed parameters on the pools the paper is
+built from was the reason to buy it.
 
 ### 2026-09-12 — Original publication (Session 154, K-ladder Phase 1 step 6)
 
