@@ -10,9 +10,12 @@
 
 ---
 
-> **Last revised**: 2026-09-12 (Session 153: reference r2 carried through
+> **Last revised**: 2026-09-12 (Session 153: § R1b added as a heading and
+> a `[BLOCK PENDING]` pointer on the PI's ruling 5, the GS stride/geometry
+> programme's Results home, and § R7.2's cross-reference re-pointed to it;
+> earlier the same day, reference r2 carried through
 > §§ R0, R8, and R9 on the PI's ruling 1, so the whole of Results quotes
-> one reference revision; earlier the same day, the fourteen DRIFTED and two
+> one reference revision; and, first of the three, the fourteen DRIFTED and two
 > UNANCHORED claims of
 > `docs/paper/results-claims-inventory-2026-09-12.md` corrected against
 > their anchors, on the PI's ruling 4). Prior: 2026-09-10 (Session 151-d: § R4 gains the GS Era-2
@@ -140,6 +143,17 @@ of mounds are already at cross-match risk at 50 m and 42 % at 125 m
 buffer is also ~2× the measured student digitisation jitter. GS results
 are therefore quoted at 20 m (the preregistered radius) or 30 m (the
 plateau), and all 55-map results at 50 m.
+
+## R1b. Tile geometry: tile size × overlap × pass count, and the stride ladders
+
+[BLOCK PENDING — outline in `docs/paper/results-outline.md`
+§ R1b — Tile geometry: tile size × overlap × pass count, and the stride
+ladders. Twenty-three anchored claims covering the 2 × 2 tile-size ×
+overlap grid at both the consensus and the post-verifier stage, the
+nine-cell stride board and its interior optimum, the exact winner
+ladder, the GS k-curves on which § R7.2's deployment carried points were
+selected, and H13's registered leg. New block per D21 (PI ruling 5,
+2026-09-12); prose deliberately not drafted, per ruling 3.]
 
 ## R2. Single-pass baselines: a broad statistical tie at modest performance
 
@@ -595,9 +609,10 @@ subsection lead; see Changelog.]
 The portfolio ran two Gemini 3 text-MINIMAL geometries at ten passes each
 over the full 8,541-tile corpus: A at 384 px with 33 % overlap (stride
 256) and B at 384 px with 50 % overlap (stride 192). Each carried one
-operating point selected on the GS stride ladder and declared before
+operating point selected on the GS stride ladder (§ R1b) and declared before
 launch, A at prob ≥ 0.15 with k ≥ 8 of 10 and B at prob ≥ 0.15 with
-k ≥ 10 of 10. The design froze the configuration axis (one carrier
+k ≥ 10 of 10 — the two GS k-curve argmaxes at prob_t 0.15, which is what
+makes the selection checkable rather than asserted. The design froze the configuration axis (one carrier
 configuration per run), so overlap is the only lever between the two
 runs, and eight bets (P1–P8) were named in advance, one of them
 expected to fail informatively.
@@ -632,7 +647,7 @@ primaries (ΔF1 −0.0096, p = 0.0147, per-sheet sign-swap permutation,
 rung (−0.0116, p = 0.0042, a post-hoc test outside the declared
 family). Every non-tie result survives Benjamini–Hochberg at q = 0.05
 over the seven tests. On the GS geometry grid the two
-geometries had tied (§ R1, Obs 435). A GS tie is bounded ignorance at
+geometries had tied (§ R1b, Obs 435). A GS tie is bounded ignorance at
 roughly ±0.03 resolution (Obs 362), and a real effect of about 0.01
 sat inside the bound. The effect is one overlap step on one corpus,
 although its sign held at every rung tested.
@@ -944,6 +959,31 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-09-12 (later still) — § R1b added: the GS stride/geometry programme's Results home (Session 153)
+
+**Refresh trigger**: the PI's ruling 5 of 2026-09-12 — the GS
+stride/geometry programme gets its own Results block. The block is
+numbered **R1b**, between R1 and R2, so no existing section renumbers.
+
+Per ruling 3, no prose was written: the draft carries a heading and a
+`[BLOCK PENDING]` pointer, and the twenty-three anchored claims live in
+`docs/paper/results-outline.md` § R1b — the 2 × 2 tile-size × overlap grid
+at both the consensus and the post-verifier stage, the nine-cell stride
+board and its interior optimum, the exact winner ladder (N = 3 at 0.8911
+for $2.64), the GS k-curves that selected § R7.2's deployment carried
+points, and H13's registered leg.
+
+**Also corrected**: § R7.2's "(§ R1, Obs 435)" cross-reference pointed at
+a section that did not contain the GS geometry grid; it now reads
+"(§ R1b, Obs 435)". § R7.2's carried-point sentence gains a clause
+naming the two GS k-curve argmaxes, which is what makes its
+"declared before launch" claim checkable by a reader.
+
+**What did NOT change**: §§ R3 and R6, reserved for the parallel K-ladder
+job, which will extend the pass-count ladder as a *cost* object in R6;
+and every existing number in §§ R1 and R2, which R1b sits between
+without renumbering.
 
 ### 2026-09-12 (later) — One reference revision across Results: r2 in §§ R0, R8, and R9 (Session 153)
 

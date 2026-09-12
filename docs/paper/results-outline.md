@@ -62,7 +62,8 @@ Options A and C therefore converge. What remains is not a restructure but a
 
 ```text
 PART 1 — CHARACTERISATION (gold standard, 4 maps / 487 tiles)
-  R0 reading guide → R1 precisions → R2 single-pass → R3 consensus →
+  R0 reading guide → R1 precisions → R1b tile geometry (per D21) →
+  R2 single-pass → R3 consensus →
   R4 proposer–verifier → R5 verifier robustness → R6 cost frontier (GS)
 
 SEAM — what carries forward, and what changes (§ S)
@@ -220,8 +221,10 @@ current goal, because the paper will be re-drafted from the outline.
 **Decision (PI, 2026-09-12; ruling 5)**: the tile-size × overlap ×
 pass-count grid and the stride ladders get **their own Results block**,
 not a fold into R4 and not supplement-only. Realised as **§ R1b**,
-between R1 and R2, so no existing section renumbers. The block's claims-with-anchors outline lands in § R1b below,
-between the R1 and R2 blocks of Part 1.
+between R1 and R2, so no existing section renumbers. The block's claims-with-anchors outline is
+[§ R1b](#r1b--tile-geometry-tile-size--overlap--pass-count-and-the-stride-ladders),
+between the R1 and R2 blocks of Part 1 — twenty-three claims, each
+anchored.
 
 - This closes the gap the inventory found at R7.2-15: § R7.2's
   "(§ R1, Obs 435)" cross-reference pointed at a section that did not
@@ -299,6 +302,77 @@ below, after the decision register.
   wording: "in a supplement or appendix we should report full sweeps
   for all results using the thresholds we previously agreed on, then
   in the paper we should emphasise the data-derived headlines."
+
+### R1b — Tile geometry: tile size × overlap × pass count, and the stride ladders
+
+> **New block, per D21 (PI ruling 5, 2026-09-12).** Numbered **R1b** —
+> between R1 and R2 — so that no existing section renumbers. It is a
+> **claims-with-anchors list, not prose**: per D20, this pass establishes
+> coverage and placement, and the paper is re-drafted from the outline.
+>
+> **Why it exists.** The gold-standard geometry programme is the ISPRS
+> skeleton's exhibit (i) half that had no section anywhere in the draft.
+> § R7.2 already cross-referenced it as "(§ R1, Obs 435)" — a section
+> that does not contain the geometry grid — and the GS stride ladder on
+> which § R7.2's two deployment carried points were *selected* was
+> reported nowhere, leaving that block's central discipline claim
+> uncheckable by a reader.
+>
+> **Registration status.** Post-hoc (E41-class) throughout, with one
+> registered leg: **H13** (overlap/stride) is `registered-exploratory`
+> and is discharged here — the only place in Results where it is. Three
+> of the five governing register rows are unsigned
+> (`manually_verified_at: None`): `grid-tilesize-overlap-2026-08-18`,
+> `grid-postverifier-2026-08-18`, `h13-overlap-2026-08-18`.
+> `stride-plateau-2026-08-25` and
+> `stride-winner-ladder-exact-2026-08-25` are signed 2026-08-28.
+>
+> **Scope boundary.** The *deployment* stride leg is § R7.2's and is not
+> re-told here; R1b ends on a one-clause hand-off. Everything below is on
+> the GS instrument, 487-tile common footprint, F1@20 m.
+
+| # | claim | anchor |
+|---|---|---|
+| R1b-01 | The design is a clean 2 × 2 crossing tile size (384, 512 px) with overlap (12.5 %, 50 %) at K = 10 proposer passes per cell, one configuration throughout (`detect_brief-text`, gemini-3-flash-preview, MINIMAL, T = 0.7), so only the two geometry factors vary; 30,130 calls, **$18.53 billed flex**, scoring $0. | `results/grid-2026-08-18/findings.md:10-22,215` |
+| R1b-02 | **At a single pass both bigger tiles and less overlap win.** 50 % overlap costs +0.1200 F1 at 512 px and +0.1348 at 384 px; 384 px costs −0.0824 at 12.5 % overlap and −0.0972 at 50 %. All four contrasts exclude zero (paired tile bootstrap, B = 10,000, seed 42, E82). | same file `:77-80` |
+| R1b-03 | The **interaction is unresolved**: difference-of-differences −0.0148 [−0.0552, +0.0268], p = 0.4902. The two factors are additive to within the instrument's resolution. | same file `:81` |
+| R1b-04 | **Mechanism — overlap manufactures its own consensus.** Within-pass 20 m deduplication records how many overlapping tiles independently reported a location; corroborated detections (c ≥ 2) are 7.0 % / 7.7 % of the 12.5 % cells but **40.8 % / 41.7 %** of the 50 % cells. At 12.5 % the same filter is demolition rather than filtering; at 50 % it keeps recall near 0.87–0.89 while lifting precision from 0.156 → 0.531 (512 px). | same file `:101-117` |
+| R1b-05 | **Under aggregation the overlap ranking inverts and the tile-size ranking does not.** Best cell per configuration at K = 10: 512/50 % **0.7518**, 384/50 % 0.7205, 512/12.5 % 0.6759, 384/12.5 % 0.6475. | same file `:135-141`; register `grid-tilesize-overlap-2026-08-18` |
+| R1b-06 | **Passes do not substitute for overlap**, on all three counts at once: 384/12.5 % at K = 10 (union recall 0.8925, best F1 0.6475, $2.91) loses to 512/50 % at K = 3 (0.9229, 0.7429, $1.60). More overlap is better *and* cheaper. | same file `:180-186` |
+| R1b-07 | Sharper still: **one single pass** of 512/50 % (F1 0.7121, $0.53) beats **ten** passes of either 12.5 % cell (0.6759 at $1.90; 0.6475 at $2.91). Overlap buys corroboration inside one pass; extra passes buy the same corroboration at K times the price. | same file `:163,187-191` |
+| R1b-08 | **The verifier stage reverses the tile-size ranking.** Post-verifier board (best F1@20 m per cell, 9,133/9,133 candidates verified, zero failures): 384/50 % **0.8961**, 512/50 % 0.8815, 384/12.5 % 0.8677, 512/12.5 % 0.8311. | same file `:336-343`; register `grid-postverifier-2026-08-18` |
+| R1b-09 | **The overlap reversal survives the verifier, at about half the margin**: (12.5 − 50) = −0.0504, p = 0.0004 at 512 px and −0.0285, p = 0.0208 at 384 px, against a K = 10 consensus baseline of −0.0758, p = 0.0004 and −0.0730, p = 0.0026. The corroboration filter and the verifier are partially redundant, not interchangeable. | same file `:361-367` |
+| R1b-10 | **The like-for-like baseline is what makes the reversal statable.** The pre-verifier arm is the registered K = 10 consensus operating points scored as single sets on the same instrument — (384 − 512) = −0.0284, p = 0.281 at 12.5 % and −0.0312, p = 0.089 at 50 %, **both non-significant** — not the single-pass contrasts of R1b-02. So: aggregation alone erodes 512 px's significant single-pass advantage to non-significance, and the verifier then flips the sign, significantly at 12.5 % (+0.0366, p = 0.034) and unresolved at 50 % (+0.0147, p = 0.231). | same file `:352-367`; register row's 2026-08-24 audit revision |
+| R1b-11 | The verifier's gain over the consensus-only board is **+0.130 to +0.220**, largest exactly where consensus-only was worst (the two 384 px cells, +0.220 and +0.176), because the verifier recovers the precision 384 px lacked while its higher union-recall ceilings (0.8925 / 0.9509 against 0.8715 / 0.9416) are the resource a verifier cannot create. **→ D12 callback to R5's recall-ceiling hub**; the Obs 352 256 px rescue at a new tile-size pair. | same file `:345-349,381-390` |
+| R1b-12 | **Consensus and verifier are complements, not substitutes**: every cell's best operating point keeps a vote threshold (k ≥ 5..10) on top of the probability threshold, and the pure-verifier k = 1 board tops out at 0.8153, trailing the stacked optimum in every cell by 0.052–0.203. | same file `:400-404`; register `grid-postverifier-2026-08-18` |
+| R1b-13 | **Stride is not the lever.** The nine-cell verified board's iso-stride contrasts are all non-significant, but the direction is consistent: **at fixed stride, 384 px is at or above every alternative at every stride tested, and never below** — the study's long-standing 384 px preference surviving the one design that could have unconfounded it. | `results/stride-2026-08-25/findings.md:44-53`; Obs 435, `docs/notes/working-notes.md:28698` |
+| R1b-14 | **The optimum is interior.** The 384 px ladder reads 0.8677 (stride 336) → **0.8982** (256) → 0.8961 (192) → 0.8860 (144): 336 → 256 is significant (+0.0305 [+0.0052, +0.0564], p = 0.020), the top is flat (256 vs 192: +0.0020, p = 0.862), and the 144 rung falls away (p = 0.297 / 0.360). The stop rule fired at stride 144. | same file `:55-61` |
+| R1b-15 | **The exit criterion resolves to plateau, not winner.** The 13-cell tiered board gives **6 of 78 pairs significant, all involving 512/12.5 %**, with Tier 1 holding the other twelve cells including all four incumbents; the best new cell ties the grid winner (+0.0020, p = 0.862) and at 30 m the top three are indistinguishable to the third decimal. **No new GS F1 high comes from geometry**: the leading shelf stays at ~0.896–0.898 @ 20 m, ~0.903 @ 30 m. | same file `:63-71,144-147`; register `stride-plateau-2026-08-25` |
+| R1b-16 | **What geometry bought was cost, not F1.** 384/33.3 % runs 820 tiles per pass against the grid winner's 1,398 — the same performance at ~59 % of the calls — for ≈ $6.6 all-in on this footprint against ≈ $10.7 (384/50 %) and ~$50-class for the HIGH-thinking incumbents that share the 30 m shelf. | same file `:72-81`; Obs 435 |
+| R1b-17 | **The exact winner ladder** (384/33.3 %, N ∈ {1, 3, 5, 10}, exactly re-verified, 4,958/4,958 candidates, zero failures): F1@20 m 0.8677 / **0.8911** / 0.8856 / 0.8982 at $1.38 / **$2.64** / $3.81 / $6.56 all-in flex. N ∈ {3, 5, 10} are one statistical point; N = 3 reaches 0.8911 for $2.64 — within 0.007 of the full K = 10 winner at 40 % of its cost and ~19× cheaper than the $50-class incumbents. | same file `:149-163`; register `stride-winner-ladder-exact-2026-08-25`; `results/stride-2026-08-25/plateau_analyses.json` → `winner_ladder_exact` |
+| R1b-18 | **The GS ladder that § R7.2's carried points were selected on, made checkable.** At prob_t 0.15 the A geometry's k-curve argmax is **k = 8** with a flat top at k 6–9 (within 0.005), and the B geometry's is **k = 10** with a single-point top — exactly the (0.15, k8) and (0.15, k10) operating points § R7.2 says were declared before launch. This is the anchor a reader needs to verify that the deployment carried points were chosen on GS and not on the deployment sweeps. | `results/stride-2026-08-25/plateau_analyses.json` → `k_curves.g384_ov128` (`best_k` 8, `k_within_0p005` [6,7,8,9]) and `k_curves.g384_ov192` (`best_k` 10); `results/stride-2026-08-25/findings.md:146-147` |
+| R1b-19 | **H13, the registered leg: prediction split.** The registered *mechanism* is confirmed and the registered *performance* claim falsified. F1 falls monotonically as overlap rises — arm A (12.5 %) 0.5578, arm B (25 %) 0.5198, arm C (50 %) 0.4025 — with all three paired contrasts excluding zero. Recall behaves exactly as registered (0.7379 → 0.7844 → 0.8717); precision falls faster (0.4484 → 0.3887 → 0.2616). | register `h13-overlap-2026-08-18` (`registered-exploratory`, **unsigned**) |
+| R1b-20 | H13's edge mechanism **localises and is real but small**: the ten mounds arm A could only ever see within 100 m of a tile edge go from recall 0.2667 (A) to 0.7667 (B) to 0.9333 (C), against 0.7468 → 0.7847 → 0.8706 for the other 528. The gain is concentrated in under 2 % of mounds — too few to pay for the precision lost elsewhere, so **every additional API dollar spent on overlap buys negative F1**. | same register row |
+| R1b-21 | The registration's own cost multiplier for H13 arm C (~2×) was **wrong before any result existed**: arm C needs **2.99×** the tiles. A disclosure-grade point about the registration, not about the result. | same register row's `predicted_outcome` (authoring disclosure) |
+| R1b-22 | **Selection caveat, stated once for both boards**: every operating point is F1-selected on the same 487 tiles it is scored on, and the post-verifier sweep offers ~4–5× the consensus sweep's selection space, so the contrasts condition on that selection (E41-class). | `results/grid-2026-08-18/findings.md:390-395`; register `grid-postverifier-2026-08-18` |
+| R1b-23 | **Hand-off to § R7.2, one clause, no re-telling**: the two geometries selected here went to the 55-map corpus, where their GS-selected carried points transferred with taxes of +0.0036 (A) and +0.0081 (B) against the incumbent's +0.0324, and B beat A — the pre-named P6 failure. | `results/stride55-2026-08-27/findings.md:40-42,75-76`; register `stride55-sweep-oracle-2026-08-27`, `stride55-ladder-2026-08-27`, `stride55-a5-vs-b5-2026-08-27` |
+
+**Twenty-three claims.** Load-bearing for the paper: R1b-05 (the
+aggregation inversion), R1b-08 to R1b-11 (the verifier reverses tile
+size, and the like-for-like baseline that licenses saying so), R1b-15
+(plateau, not winner), R1b-17 (the ~19× efficiency result the ISPRS
+skeleton's exhibit (ii) also draws on), R1b-18 (the checkable GS ladder),
+and R1b-19 (H13 discharged).
+
+**Cross-references out** (one clause each, per the anti-double-telling
+convention): **R4** gains a clause noting that the tile-size optimum's
+architecture dependence is corroborated at a second tile-size pair here;
+**R5** is the recall-ceiling hub R1b-11 points back to; **R7.2's**
+"(§ R1, Obs 435)" is re-pointed to § R1b.
+
+**Not in this block**: the deployment stride leg (§ R7.2), the pass-count
+ladder as a *cost* object (§ R6 — and the parallel K-ladder job will
+extend it), and the consensus-only per-cell sweeps (Supplement S2).
 
 ### R2 — Single-pass baselines: a floor, and which factors moved it
 
