@@ -2,7 +2,7 @@
 
 ## Families, one table each
 
-Generated 2026-09-12T00:20:09+00:00 from `results/conditions-manifest.json`. 171 (run, pool, verifier) groups hold at least one verified condition.
+Generated 2026-09-12T00:28:03+00:00 from `results/conditions-manifest.json`. 171 (run, pool, verifier) groups hold at least one verified condition.
 
 ### Gemini 3 HIGH image 384 px, T 0.3 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
@@ -18,6 +18,11 @@ Generated 2026-09-12T00:20:09+00:00 from `results/conditions-manifest.json`. 171
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+
 ### Gemini 3 HIGH image 384 px, T 0.7 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
 - run `pv-diag-384`, pool `flash-high-image-n5-image-t0.7`, corpus 4-map-gs
@@ -31,6 +36,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 | 10 | `pv-diag-384::pv-high-image-t0.7-n10-opmax` | 7 | 0.2 | 0.7765 | 0.798 | 348 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
+
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
 
 ### Gemini 3 HIGH image 384 px, T 1.0 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
@@ -46,6 +56,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+
 ### Gemini 3 HIGH text 384 px, T 0.3 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
 - run `pv-diag-384`, pool `flash-high-text-n5-text-t0.3`, corpus 4-map-gs
@@ -59,6 +74,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 | 10 | `pv-diag-384::pv-high-text-t0.3-n10-opmax` | 8 | 0.15 | 0.8722 | 0.7872 | 402 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
+
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
 
 ### Gemini 3 HIGH text 384 px, T 0.7 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
@@ -74,6 +94,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+
 ### Gemini 3 HIGH text 384 px, T 1.0 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
 - run `pv-diag-384`, pool `flash-high-text-n5-text-t1.0`, corpus 4-map-gs
@@ -87,6 +112,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 | 10 | `pv-diag-384::pv-high-text-t1.0-n10-opmax` | 5 | 0.2 | 0.8804 | 0.791 | 426 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
+
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
 
 ### Gemini 3 MINIMAL image 384 px, T 0.3 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
@@ -102,6 +132,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+
 ### Gemini 3 MINIMAL image 384 px, T 0.7 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
 - run `pv-diag-384`, pool `image-n5-image-t0.7`, corpus 4-map-gs
@@ -115,6 +150,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 | 10 | `pv-diag-384::pv-min-image-t0.7-n10-opmax` | 6 | 0.15 | 0.7881 | 0.8223 | 405 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
+
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
 
 ### Gemini 3 MINIMAL image 384 px, T 1.0 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
@@ -130,6 +170,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+
 ### Gemini 3 MINIMAL text 384 px, T 0.3 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
 - run `pv-diag-384`, pool `flash-minimal-text-n30-t07-text-t0.3`, corpus 4-map-gs
@@ -143,6 +188,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 | 10 | `pv-diag-384::pv-min-text-t0.3-n10-opmax` | 3 | 0.15 | 0.873 | 0.791 | 431 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
+
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
 
 ### Gemini 3 MINIMAL text 384 px, T 0.7 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
@@ -158,6 +208,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+
 ### Gemini 3 MINIMAL text 384 px, T 1.0 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
 - run `pv-diag-384`, pool `flash-minimal-text-n30-t07-text-t1.0`, corpus 4-map-gs
@@ -171,6 +226,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 | 10 | `pv-diag-384::pv-min-text-t1.0-n10-opmax` | 5 | 0.15 | 0.8781 | 0.7881 | 410 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
+
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
 
 ### Gemini 3.7 arm, 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps-r2.geojson]
 
@@ -188,6 +248,10 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 
 Rungs absent of [1, 3, 5, 10]: [10]
 
+| absent K | class | why |
+|---:|---|---|
+| 10 | `no-passes` | the run holds 5 proposer pass(es) for this pool, fewer than the 10 the rung needs |
+
 ### Gemini 3.7 arm, 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps-r2.geojson]
 
 - run `gemini37-55map-2026-08-29`, pool `g384_ov192_55map_g37`, corpus 55-map
@@ -204,6 +268,10 @@ Rungs absent of [1, 3, 5, 10]: [10]
 
 Rungs absent of [1, 3, 5, 10]: [10]
 
+| absent K | class | why |
+|---:|---|---|
+| 10 | `no-passes` | the run holds 5 proposer pass(es) for this pool, fewer than the 10 the rung needs |
+
 ### Gemini 3.7 text, GS B geometry [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
 - run `gemini37-screen-2026-08-28`, pool `g384_ov192_g37`, corpus 4-map-gs
@@ -218,6 +286,11 @@ Rungs absent of [1, 3, 5, 10]: [10]
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+
 ### Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]
 
 - run `gemini37-screen-2026-08-28`, pool `g384_ov192_g37`, corpus 4-map-gs
@@ -231,6 +304,11 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 | 10 | `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10` | 10 | 0.1 | 0.9142 | 0.7817 | 423 | grid_common_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
+
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
 
 ### Stride A (g384 ov128), 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps-r2.geojson]
 
@@ -321,6 +399,10 @@ Rungs absent of [1, 3, 5, 10]: none
 
 Rungs absent of [1, 3, 5, 10]: [5]
 
+| absent K | class | why |
+|---:|---|---|
+| 5 | `zero-usd-inherited` | this family's committed rungs were built by cluster_first_n plus nearest-neighbour probability inheritance within 10 m (scripts/stride55_ladder.py, scripts/gemini37_arm_ladder.py), so the same mechanism reaches this rung at US$0 — as an approximation, not an exact re-verification |
+
 ### Stride B (g384 ov192), 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps.geojson]
 
 - run `stride-55map-2026-08-25`, pool `g384_ov192_55map`, corpus 55-map
@@ -355,6 +437,11 @@ Rungs absent of [1, 3, 5, 10]: none
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
+| absent K | class | why |
+|---:|---|---|
+| 1 | `zero-usd-inherited` | this family's committed rungs were built by cluster_first_n plus nearest-neighbour probability inheritance within 10 m (scripts/stride55_ladder.py, scripts/gemini37_arm_ladder.py), so the same mechanism reaches this rung at US$0 — as an approximation, not an exact re-verification |
+| 3 | `zero-usd-inherited` | this family's committed rungs were built by cluster_first_n plus nearest-neighbour probability inheritance within 10 m (scripts/stride55_ladder.py, scripts/gemini37_arm_ladder.py), so the same mechanism reaches this rung at US$0 — as an approximation, not an exact re-verification |
+
 ### pv-diag-384 / scale-4-optimal-487 [era2_b_intersection_bounds.geojson / mounds-reference.geojson]
 
 - run `pv-diag-384`, pool `scale-4-optimal-487`, corpus 4-map-gs
@@ -368,4 +455,9 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 | 10 | `pv-diag-384::pv-scale4-optimal-n10-opmax` | 5 | 0.15 | 0.7683 | 0.8154 | 411 | era2_b_intersection_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
+
+| absent K | class | why |
+|---:|---|---|
+| 1 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
+| 3 | `needs-verifier-pass` | a first-N sub-pool consensus is buildable at US$0 (scripts/merge_passes.py --passes 1,..,N, the preregistered first-N rule), but no committed verifier output covers its candidates: clustering over N passes recomputes every cluster's mean centroid, so the sub-pool union is neither a positional prefix of a longer union nor a coordinate subset of it. 6 of 6 probed sub-pool / longer-union pairs are NOT positional prefixes at 0.2 m (`results/k-ladder-2026-09-12/subpool-coverage-probe.json`) |
 

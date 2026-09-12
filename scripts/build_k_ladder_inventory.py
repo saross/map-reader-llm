@@ -79,6 +79,7 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CONDITIONS_MANIFEST = REPO_ROOT / "results/conditions-manifest.json"
+COVERAGE_PROBE = REPO_ROOT / "results/k-ladder-2026-09-12/subpool-coverage-probe.json"
 RUN_CONDITIONS = REPO_ROOT / "results/run-conditions.json"
 RUN_FACTS = REPO_ROOT / "results/run-facts.json"
 
@@ -211,6 +212,88 @@ def count_passes(run_id: str, pool: str) -> int | None:
     return best
 
 
+#: Families whose committed rungs were themselves built by the first-N
+#: inheritance mechanism (``cluster_first_n`` plus nearest-neighbour
+#: probability inheritance within 10 m). A missing rung in one of these can be
+#: added the same way at US$0, as an approximation rather than an exact
+#: re-verification.
+INHERITANCE_FAMILIES = {
+    ("stride-55map-2026-08-25", "g384_ov128_55map"),
+    ("stride-55map-2026-08-25", "g384_ov192_55map"),
+    ("gemini37-55map-2026-08-29", "g384_ov192_55map_g37"),
+}
+
+
+def load_coverage_probe() -> dict[str, Any] | None:
+    """The candidate-position coverage probe's findings, if it has been run.
+
+    ``scripts/probe_subpool_verifier_coverage.py`` answers the one question the
+    gap classification turns on: can a shorter first-N sub-pool union reuse a
+    longer union's verifier probabilities? The probe's verdict is cited per gap
+    so the classification is evidence-backed rather than asserted.
+    """
+    if not COVERAGE_PROBE.exists():
+        return None
+    try:
+        return json.loads(COVERAGE_PROBE.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def classify_gaps(fam: dict[str, Any], probe: dict[str, Any] | None) -> list[dict[str, Any]]:
+    """Class every absent rung of one family, with the evidence for the class.
+
+    Args:
+        fam: A family record from :func:`build`.
+        probe: The coverage probe's payload, or ``None`` if it has not run.
+
+    Returns:
+        One record per K in :data:`LADDER_RUNGS`, in ascending order.
+    """
+    available = fam["n_proposer_passes_on_disk"]
+    key = (fam["run_id"], fam["proposer_pool"])
+    probe_summary = None
+    if probe:
+        not_covered = [pr for pr in probe["probes"] if not pr["covered_by_position_match"]]
+        probe_summary = (
+            f"{len(not_covered)} of {probe['n_probes']} probed sub-pool / longer-union "
+            f"pairs are NOT positional prefixes at {probe['tolerance_m']} m "
+            f"(`results/k-ladder-2026-09-12/subpool-coverage-probe.json`)")
+    out = []
+    for k in LADDER_RUNGS:
+        if k in fam["cells"]:
+            out.append({"K": k, "class": "committed",
+                        "evidence": [c["condition_id"] for c in fam["cells"][k]]})
+            continue
+        if available is not None and k > available:
+            out.append({
+                "K": k, "class": "no-passes",
+                "evidence": (f"the run holds {available} proposer pass(es) for this "
+                             f"pool, fewer than the {k} the rung needs")})
+            continue
+        if key in INHERITANCE_FAMILIES:
+            out.append({
+                "K": k, "class": "zero-usd-inherited",
+                "evidence": ("this family's committed rungs were built by "
+                             "cluster_first_n plus nearest-neighbour probability "
+                             "inheritance within 10 m (scripts/stride55_ladder.py, "
+                             "scripts/gemini37_arm_ladder.py), so the same "
+                             "mechanism reaches this rung at US$0 — as an "
+                             "approximation, not an exact re-verification")})
+            continue
+        out.append({
+            "K": k, "class": "needs-verifier-pass",
+            "evidence": (
+                "a first-N sub-pool consensus is buildable at US$0 "
+                "(scripts/merge_passes.py --passes 1,..,N, the preregistered "
+                "first-N rule), but no committed verifier output covers its "
+                "candidates: clustering over N passes recomputes every cluster's "
+                "mean centroid, so the sub-pool union is neither a positional "
+                "prefix of a longer union nor a coordinate subset of it. "
+                + (probe_summary or "The coverage probe has not been run."))})
+    return out
+
+
 def register_side_fields() -> dict[str, dict[str, Any]]:
     """``eval_path`` / ``detections`` / ``_note`` per condition id.
 
@@ -236,6 +319,7 @@ def build() -> dict[str, Any]:
     manifest = json.loads(CONDITIONS_MANIFEST.read_text(encoding="utf-8"))
     facts = json.loads(RUN_FACTS.read_text(encoding="utf-8"))["facts"]
     side = register_side_fields()
+    probe = load_coverage_probe()
 
     groups: dict[tuple, list[dict[str, Any]]] = defaultdict(list)
     for cond in manifest["conditions"]:
@@ -304,6 +388,7 @@ def build() -> dict[str, Any]:
                 key=lambda r: str(r["bounds"])),
             "cells": cells,
         }
+        fam["gaps"] = classify_gaps(fam, probe)
         fam["ladder_status"] = (
             "not-a-ladder: rungs do not share one evaluation recipe"
             if len(recipes) > 1 else
@@ -323,6 +408,15 @@ def build() -> dict[str, Any]:
         "source": {
             "conditions_manifest": "results/conditions-manifest.json",
             "run_facts": "results/run-facts.json",
+        },
+        "coverage_probe": {
+            "path": "results/k-ladder-2026-09-12/subpool-coverage-probe.json",
+            "ran": probe is not None,
+            "n_probes": (probe or {}).get("n_probes"),
+            "tolerance_m": (probe or {}).get("tolerance_m"),
+            "n_covered": sum(
+                1 for pr in (probe or {}).get("probes", [])
+                if pr["covered_by_position_match"]),
         },
         "n_families": len(families),
         "families": families,
@@ -371,6 +465,15 @@ def render_markdown(payload: dict[str, Any]) -> str:
         missing = [k for k in payload["ladder_rungs_asked"] if k not in fam["cells"]]
         lines += ["", f"Rungs absent of {payload['ladder_rungs_asked']}: "
                       f"{missing or 'none'}", ""]
+        gaps = [g for g in fam["gaps"] if g["class"] != "committed"]
+        if gaps:
+            lines += ["| absent K | class | why |", "|---:|---|---|"]
+            for gap in gaps:
+                why = gap["evidence"]
+                if isinstance(why, list):
+                    why = ", ".join(why)
+                lines.append(f"| {gap['K']} | `{gap['class']}` | {why} |")
+            lines.append("")
     return "\n".join(lines) + "\n"
 
 
