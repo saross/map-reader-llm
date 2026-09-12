@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-09-10T05:50:26Z · 1286 row(s) · schema v1.0.
+> Generated 2026-09-12T08:51:04Z · 1314 row(s) · schema v1.0.
 >
-> **Coverage**: 1286 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 1314 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cands | cost_usd |
 |---|---|---|---|---|---|---|---|---|
@@ -446,6 +446,32 @@
 | pv-diag-384::verified-text-baseline-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 21 | 0.111588 |
 | pv-diag-384::flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 889 | 1.240619 |
 | pv-diag-384::flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1319 | 1.819798 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 938 | 1.29976 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1244 | 1.714507 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1012 | 1.399757 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1355 | 1.864447 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1022 | 1.414237 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1588 | 2.184137 |
+| pv-diag-384::flash-high-text-n5-text-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1326 | 1.830195 |
+| pv-diag-384::flash-high-text-n5-text-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2201 | 3.019279 |
+| pv-diag-384::flash-high-text-n5-text-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1370 | 1.890418 |
+| pv-diag-384::flash-high-text-n5-text-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2755 | 3.773552 |
+| pv-diag-384::flash-high-text-n5-text-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1495 | 2.060147 |
+| pv-diag-384::flash-high-text-n5-text-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2848 | 3.900716 |
+| pv-diag-384::image-n5-image-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 729 | 1.018839 |
+| pv-diag-384::image-n5-image-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 885 | 1.234911 |
+| pv-diag-384::image-n5-image-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 694 | 0.975149 |
+| pv-diag-384::image-n5-image-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 950 | 1.327741 |
+| pv-diag-384::image-n5-image-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 792 | 1.105863 |
+| pv-diag-384::image-n5-image-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 1174 | 1.631348 |
+| pv-diag-384::flash-high-image-n5-image-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 872 | 1.218856 |
+| pv-diag-384::flash-high-image-n5-image-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 1619 | 2.2453 |
+| pv-diag-384::flash-high-image-n5-image-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 771 | 1.079076 |
+| pv-diag-384::flash-high-image-n5-image-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 1522 | 2.114786 |
+| pv-diag-384::flash-high-image-n5-image-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 982 | 1.36754 |
+| pv-diag-384::flash-high-image-n5-image-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 1887 | 2.611356 |
+| pv-diag-384::scale-4-optimal-487-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 830 | 1.158025 |
+| pv-diag-384::scale-4-optimal-487-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1586 | 2.20294 |
 | h12-v2::r1-hn-heavy::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.395056 |
 | h12-v2::r1-hn-heavy::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.400733 |
 | h12-v2::r1-hn-heavy::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.392723 |
@@ -1280,6 +1306,8 @@
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 913 | 1.280777 |
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap37::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 2 | 0.002665 |
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap38::run1 | gemini-3.8-flash | text | low | 0.0 | ok | — | 1 | 0.003871 |
+| gemini37-screen-2026-08-28::g384_ov192_g37-union-k1-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 640 | 0.904184 |
+| gemini37-screen-2026-08-28::g384_ov192_g37-union-k3-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 757 | 1.065866 |
 | gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 11.042451 |
 | gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 11.149652 |
 | gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 4.033745 |
