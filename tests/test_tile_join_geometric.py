@@ -422,6 +422,61 @@ def test_per_tile_table_raises_on_the_same_shortfall():
     assert int(table["tp"].sum()) == 2
 
 
+# --------------------------------------------------------------------------
+# 5. The board's confusion gate checks geometry, not a copy of itself
+# --------------------------------------------------------------------------
+
+def test_board_gate_fails_a_shortfall_even_when_the_record_agrees():
+    """A confusion that reproduces its own record still fails on geometry.
+
+    This is the gap the defect went through: the gate rebuilt the confusion
+    by calling the same function that produced the committed number, so a
+    wrong confusion reproduced itself and passed. The geometric arm appeals
+    to the frame's polygons instead.
+    """
+    from scripts.era1_leaderboard_tiering import (
+        ConfusionGateError,
+        check_confusion_gate,
+    )
+
+    confusion = {"tp": 1, "tn": 1, "fp": 0, "fn": 1}
+    shortfall = {
+        "detections": {
+            "n_assigned": 21, "n_inside_union": 475, "n_outside_union": 27,
+        },
+        "references": {
+            "n_assigned": 435, "n_inside_union": 435, "n_outside_union": 0,
+        },
+    }
+    with pytest.raises(ConfusionGateError, match="lost 454 of 475"):
+        check_confusion_gate(
+            "a-3.7-rung", confusion, confusion, 0.1337, 0.1337,
+            geometry_check=shortfall,
+        )
+
+
+def test_board_gate_records_the_geometric_arm_when_it_passes():
+    """A sound cell passes and the gate record shows the arm actually ran."""
+    from scripts.era1_leaderboard_tiering import check_confusion_gate
+
+    confusion = {"tp": 2, "tn": 1, "fp": 0, "fn": 0}
+    sound = {
+        "detections": {
+            "n_assigned": 469, "n_inside_union": 469, "n_outside_union": 0,
+        },
+        "references": {
+            "n_assigned": 435, "n_inside_union": 435, "n_outside_union": 0,
+        },
+    }
+    record = check_confusion_gate(
+        "a-sound-cell", confusion, confusion, 0.8270, 0.8270,
+        geometry_check=sound,
+    )
+    assert record["passed"] is True
+    assert record["geometry"]["detections"]["n_assigned"] == 469
+    assert record["geometry"]["references"]["n_inside_union"] == 435
+
+
 def test_unknown_tile_join_is_rejected():
     """A typo in the rule name must fail loudly, not fall back silently."""
     frame = _grid(2, offset=0.0, prefix="frame")
