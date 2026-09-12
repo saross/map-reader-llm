@@ -25,8 +25,7 @@ project state.
 > invariant that WITHHOLDS a mismatched cell's MCC. Recommended: keep
 > `id` as the published rule, disclose the three withheld 3.7-rung MCCs,
 > and treat the geometric variants as a supplement sensitivity row.
-> **(2) The close-out PR** (branch of the overnight job, when it lands):
-> merge; then **sign** the `k-ladder-2026-09-12` analysis row and
+> **(2) PR #17 (the close-out)**: merge after #16; then **sign** the `k-ladder-2026-09-12` analysis row and
 > **re-sign** the Era-2 board at its new size (46 Phase 2 rungs + tier E
 > admitted; proposed outcome in `provenance.json → re_sign_pending`);
 > amend the pairing row again only if the job reports new pairs.
@@ -118,10 +117,32 @@ project state.
 > sapphire worktree because the phantom files block merge in the main
 > checkout — memory `2026-09-12-442f303cbbd5`). Sol's PR #13
 > (collaboration-handoff docs) merged from origin during the day.
-> **CLOSE-OUT STATUS**: [PENDING at the time of writing — the overnight
-> job runs tier E, the K = 5 fill, the tension analyses, the ladder row,
-> the relabel + erratum, the h10 rebuilds, the E72 propagation and the
-> board rebuild; this line is replaced when it lands.]
+> **CLOSE-OUT STATUS (landed 2026-09-13 ~01:00, PR #17, builds on PR #16
+> — merge #16 first, then #17)**: tier E US$4.96 audited (7,239/7,239
+> verified, counts exact); the verified MINIMAL B-geometry ladder scored,
+> tiered, registered; the **tension is resolved** — the two corpora agree
+> once resolution is accounted for (487 tiles resolve ΔF1 ≈ 0.03 and
+> above: deployment cells subsampled to 487 tiles are significant in
+> 197/200 draws at +0.055 and 39/200 at +0.019; MINIMAL ladders sort by
+> effect size, not corpus); analysis row `k-ladder-2026-09-12` authored
+> UNSIGNED (94 conditions); the five T = 1.0 unions relabelled
+> `consensus-{1..5}of5` with **erratum E85**; h10 t1/t2 rebuilt and
+> archived; E72 propagated as a `caveat` field (315 of 592 rows); board
+> admission of the 46 rungs STOPPED on a mechanism question (provenance
+> byte-identical); stride B K = 5 fill partial (defect fixed, sweep
+> unfinished). Finding to flag: **tile-MCC's response to K reverses
+> across the verifier stage** on the same pool (consensus-only +0.044,
+> verified −0.031). Tier-1 2,447 passed. **THE MORNING QUESTIONS ARE
+> `reports/k-ladder-closeout-deltas-2026-09-12.md` § 10** (eight, with
+> recommendations): board admission mechanism (recommend a
+> `k-ladder/membership.json` the builder defers to); confirm the five
+> renamed ids in the signed `uplift-supplement-flatten` row (rename only);
+> tier E's K = 10 rung built by a different rule (leave, cite § 2.2); the
+> tile-join rule (recommend `geometric-primary` as a scheduled
+> migration; `id` used everywhere meanwhile); finish and register the
+> K = 5 rung without re-tiering the 55-map board; leave h10 t3–t5; sign
+> the ladder row after reading findings §§ 7.5 and 8 (MCB sets still
+> missing); no pairing-row amendment needed.
 
 ## 🔍 STATE AFTER S152 (2026-09-10/11 — the four scheduled items DONE, then a PI walk-through cleared nine rulings; the pipeline close-out is the priority; $0 API)
 

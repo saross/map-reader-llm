@@ -9525,3 +9525,11 @@ signed as Opus.
 ruled item by item; the close-out ran unattended overnight with every
 unruled question routed to a morning list; the local disk stays tight
 until the PI's upgrade, so compute and merges go through sapphire.
+
+**Addendum (2026-09-13 ~01:00).** The close-out job landed as PR #17 on
+top of PR #16: tier E US$4.96 (7,239/7,239 verified); the tension
+resolved as a resolution effect (487 tiles resolve ΔF1 ≈ 0.03 and above);
+`k-ladder-2026-09-12` authored unsigned; erratum E85; E72 caveats
+propagated; h10 t1/t2 rebuilt; board admission stopped on a mechanism
+question; eight morning questions in the close-out report § 10. Session
+API total: US$24.81 + US$4.96 = **US$29.77**. Tier-1 2,447 passed.
