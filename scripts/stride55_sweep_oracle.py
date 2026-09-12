@@ -153,6 +153,109 @@ def f1_from_map_counts(counts: dict[str, tuple[int, int, int]]) -> float:
     return compute_point_estimate(tp, fp, fn)[2]
 
 
+def per_map_tile_confusion(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ext: gpd.GeoDataFrame,
+    bounds: gpd.GeoDataFrame,
+) -> dict[str, tuple[int, int, int, int]]:
+    """Per-map (TP, TN, FP, FN) TILE confusion — the ΔMCC permutation input.
+
+    The MCC analogue of :func:`per_map_counts`. Where that function returns
+    point-matching counts at ``BUFFER_R``, this returns the buffer-free tile
+    classification the house MCC is computed from: a tile is TRUE if any
+    reference intersects its geometry and PREDICTED if the detection set
+    assigned any detection to it (``lib_advanced_metrics.
+    calculate_tile_classification``, matched cell-for-cell by the vectorised
+    ``mcc_tiering_55map.tile_vectors``). The four cells are then summed per map,
+    so the sign-swap exchanges whole map sheets exactly as it does for F1.
+
+    Because tile truth and tile prediction involve no matching tolerance,
+    tile-MCC is INVARIANT to ``BUFFER_R`` — a "50 m ΔMCC" and a "20 m ΔMCC" are
+    the same number by construction.
+
+    Args:
+        gdf_det: Detections with a ``source_tile`` column, in ``DEFAULT_CRS``.
+        gdf_ext: Extended ground truth, same CRS.
+        bounds: Tile boundary polygons with ``tile_name``, same CRS.
+
+    Returns:
+        Map name -> ``(tp, tn, fp, fn)`` tile counts, one entry per map sheet
+        present in ``bounds`` (``Unknown`` excluded, as in
+        :func:`per_map_counts`).
+    """
+    from scripts.mcc_tiering_55map import tile_vectors  # noqa: PLC0415
+
+    tiles, truth, pred = tile_vectors(gdf_det, gdf_ext, bounds)
+    maps = {get_map_name(n) for n in bounds["tile_name"].unique()}
+    maps.discard("Unknown")
+    per_tile_map = np.array([get_map_name(t) for t in tiles])
+    out: dict[str, tuple[int, int, int, int]] = {}
+    for m in sorted(maps):
+        sel = per_tile_map == m
+        t, p = truth[sel], pred[sel]
+        out[m] = (int((p & t).sum()), int((~p & ~t).sum()),
+                  int((p & ~t).sum()), int((~p & t).sum()))
+    return out
+
+
+def mcc_from_map_counts(counts: dict[str, tuple[int, int, int, int]]) -> float:
+    """Aggregate tile-MCC from per-map tile confusion, summed over maps.
+
+    Args:
+        counts: Map name -> ``(tp, tn, fp, fn)``.
+
+    Returns:
+        The tile-level MCC of the pooled confusion matrix.
+    """
+    from scripts.mcc_tiering_55map import mcc_from_confusion  # noqa: PLC0415
+
+    tp = sum(c[0] for c in counts.values())
+    tn = sum(c[1] for c in counts.values())
+    fp = sum(c[2] for c in counts.values())
+    fn = sum(c[3] for c in counts.values())
+    return float(mcc_from_confusion(tp, tn, fp, fn))
+
+
+def paired_permutation_mcc(a: dict, b: dict) -> dict:
+    """Paired sign-swap permutation of tile-MCC over the 55 maps.
+
+    The MCC sibling of :func:`paired_permutation`, deliberately identical in
+    every respect but the statistic: the same 55 pairing units, the same
+    ``numpy.random.default_rng(SEED)`` stream, the same ``rng.random(55) < 0.5``
+    sign-swap, the same ``N_PERMS``, and the same two-sided
+    ``p = mean(|null| >= |observed|)`` with the same ``1/N_PERMS`` floor. With
+    one seed the two tests therefore see the SAME per-map swap masks — a ΔF1 and
+    a ΔMCC on one rung pair are two statistics of one permutation.
+
+    Args:
+        a: Per-map ``(tp, tn, fp, fn)`` tile confusion for arm A.
+        b: The same for arm B, over the same map keys.
+
+    Returns:
+        Dict with ``delta_mcc``, the two-sided p-value, and the permutation
+        parameters — the shape :func:`paired_permutation` returns for F1.
+    """
+    from scripts.mcc_tiering_55map import mcc_from_confusion  # noqa: PLC0415
+
+    maps = sorted(a)
+    assert maps == sorted(b)
+    rng = np.random.default_rng(SEED)
+    obs = mcc_from_map_counts(a) - mcc_from_map_counts(b)
+    arr_a = np.array([a[m] for m in maps])
+    arr_b = np.array([b[m] for m in maps])
+    count = 0
+    for _ in range(N_PERMS):
+        swap = rng.random(len(maps)) < 0.5
+        pa = np.where(swap[:, None], arr_b, arr_a).sum(axis=0)
+        pb = np.where(swap[:, None], arr_a, arr_b).sum(axis=0)
+        d = float(mcc_from_confusion(*pa)) - float(mcc_from_confusion(*pb))
+        if abs(d) >= abs(obs):
+            count += 1
+    return {"delta_mcc": float(obs),
+            "p_two_sided": max(count / N_PERMS, 1.0 / N_PERMS),
+            "n_permutations": N_PERMS, "seed": SEED}
+
+
 def paired_permutation(a: dict, b: dict) -> dict:
     """Paired sign-swap permutation of corrected-F1 over the 55 maps."""
     maps = sorted(a)

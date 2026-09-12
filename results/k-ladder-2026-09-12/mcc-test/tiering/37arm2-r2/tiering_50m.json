@@ -1,0 +1,247 @@
+{
+  "analysis_id": "k-ladder-mcc-37arm2-r2-2026-09-12",
+  "metric": "f1",
+  "buffer_metres": 50,
+  "n_permutations": 10000,
+  "seed": 42,
+  "fdr_q": 0.05,
+  "n_tiles": 8541,
+  "replicate_handling": "single-set cells: integer per-tile of one aggregated set; replicate-mean cells (single-pass K runs, phase3c 5 replications): pass-averaged per-tile (float)",
+  "generated_at_utc": "2026-09-12T06:12:31.136993+00:00",
+  "git_commit": "156bddf36",
+  "ranking": [
+    {
+      "rank": 1,
+      "ref": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+      "label": "arm2-n5-oracle-p0.95-k5-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8871,
+      "observed_micro_f1": 0.887145,
+      "f1_gap": 4.5e-05,
+      "mcc": 0.7147,
+      "tier": 1
+    },
+    {
+      "rank": 2,
+      "ref": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+      "label": "arm2-n3-oracle-p0.95-k3-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8848,
+      "observed_micro_f1": 0.884825,
+      "f1_gap": 2.5e-05,
+      "mcc": 0.7163,
+      "tier": 1
+    },
+    {
+      "rank": 3,
+      "ref": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+      "label": "arm2-n1-oracle-p0.98-k1-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.861,
+      "observed_micro_f1": 0.861042,
+      "f1_gap": 4.2e-05,
+      "mcc": 0.7422,
+      "tier": 2
+    }
+  ],
+  "tiers": [
+    {
+      "tier": 1,
+      "members": [
+        "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt"
+      ]
+    },
+    {
+      "tier": 2,
+      "members": [
+        "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt"
+      ]
+    }
+  ],
+  "tie_set": [
+    "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+    "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt"
+  ],
+  "pairwise": [
+    {
+      "ref_a": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+      "ref_b": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+      "f1_a": 0.861042,
+      "f1_b": 0.884825,
+      "observed_diff": -0.023783,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -2.5e-05,
+      "null_std": 0.003401,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+      "ref_b": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+      "f1_a": 0.861042,
+      "f1_b": 0.887145,
+      "observed_diff": -0.026104,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -3e-05,
+      "null_std": 0.003595,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+      "ref_b": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+      "f1_a": 0.884825,
+      "f1_b": 0.887145,
+      "observed_diff": -0.002321,
+      "p_value": 0.1208,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -4e-06,
+      "null_std": 0.001491,
+      "bh_adjusted_p": 0.1208,
+      "significant": false
+    }
+  ],
+  "mcc_permutation": {
+    "statistic": "tile-level MCC (buffer-invariant: tile truth is intersection with any reference, tile prediction is any detection assigned to the tile)",
+    "kernel": "pairwise_permutation_test.permutation_test_mcc_arrays",
+    "swap_mask": "identical to the F1 test's (same seed, same tile order, same rng.random(n_tiles) < 0.5 stream)",
+    "fdr_q": 0.05,
+    "n_significant": 2,
+    "gates": {
+      "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt": {
+        "confusion": {
+          "tp": 2441,
+          "tn": 4974,
+          "fp": 38,
+          "fn": 1088
+        },
+        "mcc_rebuilt": 0.742189,
+        "mcc_recorded": 0.7422,
+        "passed": true
+      },
+      "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt": {
+        "confusion": {
+          "tp": 2534,
+          "tn": 4814,
+          "fp": 198,
+          "fn": 995
+        },
+        "mcc_rebuilt": 0.71634,
+        "mcc_recorded": 0.7163,
+        "passed": true
+      },
+      "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt": {
+        "confusion": {
+          "tp": 2502,
+          "tn": 4834,
+          "fp": 178,
+          "fn": 1027
+        },
+        "mcc_rebuilt": 0.714653,
+        "mcc_recorded": 0.7147,
+        "passed": true
+      }
+    },
+    "pairwise": [
+      {
+        "ref_a": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+        "ref_b": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+        "mcc_a": 0.742189,
+        "mcc_b": 0.71634,
+        "confusion_a": {
+          "tp": 2441,
+          "tn": 4974,
+          "fp": 38,
+          "fn": 1088
+        },
+        "confusion_b": {
+          "tp": 2534,
+          "tn": 4814,
+          "fp": 198,
+          "fn": 995
+        },
+        "observed_mcc_diff": 0.025849,
+        "p_value": 0.0,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": -3.6e-05,
+          "std": 0.004974,
+          "percentile_2.5": -0.0097,
+          "percentile_97.5": 0.009924
+        },
+        "bh_adjusted_p": 0.0,
+        "significant": true
+      },
+      {
+        "ref_a": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+        "ref_b": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+        "mcc_a": 0.742189,
+        "mcc_b": 0.714653,
+        "confusion_a": {
+          "tp": 2441,
+          "tn": 4974,
+          "fp": 38,
+          "fn": 1088
+        },
+        "confusion_b": {
+          "tp": 2502,
+          "tn": 4834,
+          "fp": 178,
+          "fn": 1027
+        },
+        "observed_mcc_diff": 0.027536,
+        "p_value": 0.0,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": -3.1e-05,
+          "std": 0.004887,
+          "percentile_2.5": -0.009546,
+          "percentile_97.5": 0.009546
+        },
+        "bh_adjusted_p": 0.0,
+        "significant": true
+      },
+      {
+        "ref_a": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+        "ref_b": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+        "mcc_a": 0.71634,
+        "mcc_b": 0.714653,
+        "confusion_a": {
+          "tp": 2534,
+          "tn": 4814,
+          "fp": 198,
+          "fn": 995
+        },
+        "confusion_b": {
+          "tp": 2502,
+          "tn": 4834,
+          "fp": 178,
+          "fn": 1027
+        },
+        "observed_mcc_diff": 0.001687,
+        "p_value": 0.358,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": 4e-06,
+          "std": 0.001797,
+          "percentile_2.5": -0.003525,
+          "percentile_97.5": 0.003525
+        },
+        "bh_adjusted_p": 0.358,
+        "significant": false
+      }
+    ]
+  }
+}

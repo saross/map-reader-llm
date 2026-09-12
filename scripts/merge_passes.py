@@ -10,6 +10,12 @@ Implements the voting algorithm from preregistration Section 8.5:
 3. Count votes per cluster (distinct passes contributing)
 4. Apply vote threshold
 5. Output: centroid, majority label, confidence (votes/N), source passes
+6. Provenance: ``voting_summary.json`` records the pass files the union was
+   built from — repository-relative paths plus each file's git blob hash — so
+   a later reader can tell whether the union still matches its pool. Added
+   2026-09-12 for Finding 4 of
+   ``reports/name-keyed-cache-audit-2026-09-12.md``; ``build_all_consensus.py``
+   compares that record against the pool before reporting "exists".
 
 Supports K=10 to N=5 conversion by splitting runs 1-5 and 6-10 into
 separate pools (preregistration Section 3.8).
@@ -46,15 +52,32 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+from typing import Any
+
 import geojson
 from geojson import Feature, FeatureCollection, Point
 from pyproj import Transformer
 from shapely.geometry import shape
 
+# Allow sibling-module imports whether this file is run as a script or
+# imported as ``scripts.merge_passes``.
+_SCRIPT_DIR = Path(__file__).resolve().parent
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
+
+from lib_content_anchor import git_blob_hash  # noqa: E402
+
 logger = logging.getLogger(__name__)
 
-# Script version
-__version__ = "1.1.0"
+# Script version — 1.2.0 records the union's pass provenance (paths plus
+# git blob hashes) in voting_summary.json (audit Finding 4).
+__version__ = "1.2.0"
+
+REPO_ROOT = _SCRIPT_DIR.parent
+
+#: Schema tag on the pass-provenance block, so a reader can distinguish a
+#: union that records its inputs from a pre-fix union that does not.
+PASS_PROVENANCE_SCHEMA = "consensus-pass-provenance/1"
 
 # CRS constants — internal coordinates are EPSG:32635 (UTM Zone 35N);
 # GeoJSON spec (RFC 7946) mandates EPSG:4326 for output.
@@ -69,6 +92,26 @@ _TO_UTM = Transformer.from_crs(
 
 # Constants aligned with preregistration Section 8.5
 DISTANCE_THRESHOLD_METRES = 20.0  # Matches F1 evaluation tolerance
+
+
+def _repo_relative(path: Path) -> str:
+    """Return *path* relative to the repository root where possible.
+
+    Provenance records are compared across machines and checkouts, so an
+    absolute path would make two identical pools look different. A path
+    outside the repository (a temporary materialisation, a test fixture)
+    is recorded as given.
+
+    Args:
+        path: Path to normalise.
+
+    Returns:
+        The repository-relative path string, or ``str(path)``.
+    """
+    try:
+        return str(Path(path).resolve().relative_to(REPO_ROOT))
+    except ValueError:
+        return str(path)
 
 
 def geojson_coords_to_utm(lon: float, lat: float) -> tuple[float, float]:
@@ -362,12 +405,17 @@ def apply_threshold(
     return FeatureCollection(features)
 
 
-def load_pass_detections(
+def resolve_pass_files(
     input_dir: Path,
     pass_filter: list[int] | None = None,
-) -> dict[str, list[dict]]:
+) -> dict[str, list[Path]]:
     """
-    Load detection GeoJSON files from pass directories.
+    Resolve the detection GeoJSON files each pass contributes.
+
+    The single definition of "which files make up this pool", shared by
+    :func:`load_pass_detections` (which reads them) and
+    :func:`build_pass_provenance` (which records them), so the union's
+    provenance record cannot drift from the union's inputs.
 
     Expected directory structure::
 
@@ -379,11 +427,13 @@ def load_pass_detections(
     Also supports ``run_*`` directory naming as an alternative.
 
     Args:
-        input_dir: Directory containing pass_XX subdirectories.
+        input_dir: Directory containing pass_XX / run_XX subdirectories.
         pass_filter: Optional list of pass numbers to include (1-indexed).
 
     Returns:
-        Dict mapping pass_id to list of GeoJSON features.
+        Dict mapping pass_id to its detection files in directory-glob
+        order (``*.meta*`` sidecars excluded). Passes with no GeoJSON
+        files are omitted.
     """
     pass_dirs = sorted(input_dir.glob("pass_*"))
 
@@ -395,8 +445,7 @@ def load_pass_detections(
         logger.warning("No pass_* or run_* directories found in %s", input_dir)
         return {}
 
-    result: dict[str, list[dict]] = {}
-
+    resolved: dict[str, list[Path]] = {}
     for pass_dir in pass_dirs:
         # Extract pass number from directory name
         pass_name = pass_dir.name
@@ -414,13 +463,70 @@ def load_pass_detections(
         if pass_filter and pass_num not in pass_filter:
             continue
 
-        # Load all GeoJSON files in pass directory
-        features: list[dict] = []
-        for geojson_file in pass_dir.glob("*.geojson"):
-            # Skip metadata files
-            if ".meta" in geojson_file.name:
-                continue
+        # Glob order, not sorted: the loader's original iteration order is
+        # preserved exactly, because within-pass dedup keeps the FIRST of a
+        # near-duplicate pair. build_pass_provenance sorts its own record.
+        files = [
+            f for f in pass_dir.glob("*.geojson") if ".meta" not in f.name
+        ]
+        if files:
+            resolved[pass_name] = files
 
+    return resolved
+
+
+def build_pass_provenance(
+    pass_files: dict[str, list[Path]],
+) -> list[dict[str, Any]]:
+    """
+    Record which files a union was built from, anchored to their content.
+
+    Finding 4 of ``reports/name-keyed-cache-audit-2026-09-12.md``: a
+    consensus union recorded only ``total_passes``, so a legitimate
+    sub-pool union and a union whose pool has since been rewritten (the
+    E57 and E70 recovery campaigns both rewrote passes in place) were
+    indistinguishable from the artefact. Recording each pass file's
+    repository-relative path and ``git_blob_hash`` makes the comparison
+    decisive and cheap.
+
+    Args:
+        pass_files: The mapping returned by :func:`resolve_pass_files`.
+
+    Returns:
+        One entry per contributing file, sorted by ``(pass_id, path)``:
+        ``{"pass_id", "path", "git_blob_hash"}``. ``git_blob_hash`` is
+        ``None`` only if the file vanished between resolution and hashing.
+    """
+    entries: list[dict[str, Any]] = []
+    for pass_id, files in sorted(pass_files.items()):
+        for path in files:
+            entries.append({
+                "pass_id": pass_id,
+                "path": _repo_relative(path),
+                "git_blob_hash": git_blob_hash(path),
+            })
+    return sorted(entries, key=lambda e: (e["pass_id"], e["path"]))
+
+
+def load_pass_detections(
+    input_dir: Path,
+    pass_filter: list[int] | None = None,
+) -> dict[str, list[dict]]:
+    """
+    Load detection GeoJSON files from pass directories.
+
+    Args:
+        input_dir: Directory containing pass_XX subdirectories.
+        pass_filter: Optional list of pass numbers to include (1-indexed).
+
+    Returns:
+        Dict mapping pass_id to list of GeoJSON features.
+    """
+    result: dict[str, list[dict]] = {}
+
+    for pass_name, files in resolve_pass_files(input_dir, pass_filter).items():
+        features: list[dict] = []
+        for geojson_file in files:
             try:
                 with open(geojson_file) as f:
                     data = json.load(f)
@@ -501,6 +607,12 @@ def merge_passes(
     stats = {
         "total_passes": total_passes,
         "pass_ids": sorted(raw_passes.keys()),
+        "pass_provenance_schema": PASS_PROVENANCE_SCHEMA,
+        "pass_provenance": build_pass_provenance(
+            {pid: files for pid, files in
+             resolve_pass_files(input_dir, pass_filter).items()
+             if pid in raw_passes},
+        ),
         "total_raw_detections": total_raw_detections,
         "total_deduped_detections": total_deduped,
         "total_clusters": len(clusters),
@@ -551,7 +663,21 @@ def threshold_sweep(
     output_dir.mkdir(parents=True, exist_ok=True)
 
     logger.info("Generating outputs for thresholds 1 to %d...", total_passes)
-    summary: dict = {"total_passes": total_passes, "thresholds": {}}
+    # Finding 4: record WHICH files this union was built from, anchored to
+    # their bytes. ``total_passes`` alone cannot distinguish a declared
+    # sub-pool union from a union whose pool has since been rewritten.
+    provenance = build_pass_provenance(
+        {pid: files for pid, files in
+         resolve_pass_files(input_dir, pass_filter).items()
+         if pid in raw_passes},
+    )
+    summary: dict = {
+        "total_passes": total_passes,
+        "thresholds": {},
+        "pass_provenance_schema": PASS_PROVENANCE_SCHEMA,
+        "pass_ids": sorted(raw_passes.keys()),
+        "pass_provenance": provenance,
+    }
 
     for t in range(1, total_passes + 1):
         consensus = apply_threshold(clusters, t, total_passes)

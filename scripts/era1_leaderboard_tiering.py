@@ -56,10 +56,25 @@
 #
 # METRIC
 # ------
-# Tiering ranks F1 @ 20 m (the preregistered headline). MCC (buffer-agnostic
+# Tiering ranks F1 at the headline buffer (``--buffer``, default the
+# preregistered 20 m; a 55-map board's headline is 50 m). MCC (buffer-agnostic
 # tile-level discrimination, ``summary.tile_classification.mcc.point``) is
-# carried as a reported column per the standing report-MCC-with-F1 preference;
-# it is NOT the permutation statistic.
+# carried as a reported column per the standing report-MCC-with-F1 preference.
+#
+# Since 2026-09-12, ``--permute-mcc`` ALSO makes MCC a permutation statistic:
+# each cell's per-tile one-hot (TP, TN, FP, FN) classification is rebuilt
+# through ``lib_advanced_metrics.compute_per_tile_classification`` (the house
+# definition), hard-gated against the cell's committed
+# ``tile_classification.confusion`` and MCC point estimate, and swapped by
+# ``pairwise_permutation_test.permutation_test_mcc_arrays`` — the MCC sibling of
+# ``permutation_test_float``. Both kernels draw one
+# ``rng.random(n_tiles) < 0.5`` mask per iteration from
+# ``default_rng(seed)``, so with one seed and one tile order the F1 and MCC
+# tests see BYTE-IDENTICAL swap masks: two statistics of one permutation, with
+# a separate BH-FDR family each. Tiering itself stays on F1 — MCC is tested,
+# not tiered, because the board's ranked headline is the preregistered F1.
+# MCC needs one detection SET per cell, so a replicate-mean cell
+# (``detections_dir``) raises rather than being silently collapsed.
 #
 # COMPUTE LOCATION
 # ----------------
@@ -112,9 +127,20 @@ from n1_baseline_leaderboard_tiering import (  # noqa: E402
 )
 
 from apply_fdr_correction import apply_bh_correction  # noqa: E402
-from lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from lib_advanced_metrics import (  # noqa: E402
+    compute_per_tile_classification,
+    compute_per_tile_tp_fp_fn,
+)
 from lib_detection_paths import resolve_pool_passes  # noqa: E402
-from pairwise_permutation_test import assign_source_tiles  # noqa: E402
+from pairwise_permutation_test import (  # noqa: E402
+    assign_source_tiles,
+    compute_mcc_or_none,
+    permutation_test_mcc_arrays,
+)
+
+#: Recorded MCC is rounded to 4 dp by evaluate_detections.py, so the gate
+#: cannot be tighter than half a unit in the last place.
+MCC_GATE_TOL = 5e-5
 
 DEFAULT_CONDITIONS = BASE_DIR / "results" / "run-conditions.json"
 DEFAULT_ANALYSES = BASE_DIR / "results" / "run-analyses.json"
@@ -348,6 +374,146 @@ def cell_per_tile(
     )
 
 
+
+class ConfusionGateError(RuntimeError):
+    """A cell's rebuilt tile confusion disagrees with its committed evaluation."""
+
+
+def read_tile_confusion(eval_path: Path) -> dict | None:
+    """Read a cell's committed per-tile confusion cells, if it recorded them.
+
+    Args:
+        eval_path: Path to the cell's evaluation.json.
+
+    Returns:
+        A ``{tp, tn, fp, fn}`` dict of ints, or ``None`` when the evaluation
+        carries no ``tile_classification.confusion`` block.
+    """
+    summary = json.loads(eval_path.read_text())["summary"]
+    conf = (summary.get("tile_classification") or {}).get("confusion")
+    if not isinstance(conf, dict):
+        return None
+    return {k: int(conf[k]) for k in ("tp", "tn", "fp", "fn") if k in conf}
+
+
+def cell_detections(cli_args: dict, gdf_bounds: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """Rebuild ONE detection set for a cell, with source tiles assigned.
+
+    The MCC statistic is a per-tile binary classification of one detection SET,
+    so unlike :func:`cell_per_tile` it has no replicate-mean form: a
+    pass-averaged per-tile *count* has no one-hot classification. Replicate-mean
+    cells therefore raise rather than being silently collapsed.
+
+    Args:
+        cli_args: The cell's ``evaluation.json[_metadata][cli_args]``.
+        gdf_bounds: Evaluation tile boundaries in ``TARGET_CRS``.
+
+    Returns:
+        The cell's detections in ``TARGET_CRS`` with a ``source_tile`` column.
+
+    Raises:
+        ValueError: if the cell is a replicate-mean (``detections_dir``) cell.
+        FileNotFoundError: if a declared detection file is missing.
+    """
+    det = cli_args.get("detections")
+    if not det:
+        raise ValueError(
+            "MCC permutation needs a single detection SET; this cell declares "
+            "detections_dir (a replicate-mean cell), for which a per-tile "
+            "one-hot classification is undefined"
+        )
+    files = det if isinstance(det, list) else [det]
+    paths = [BASE_DIR / f for f in files]
+    missing = [q for q in paths if not q.exists()]
+    if missing:
+        raise FileNotFoundError(f"detections set file(s) not found: {missing}")
+    parts = [_read_detections_gdf(q) for q in paths]
+    gdf_det = (
+        parts[0] if len(parts) == 1
+        else gpd.GeoDataFrame(pd.concat(parts, ignore_index=True), crs=TARGET_CRS)
+    )
+    return assign_source_tiles(gdf_det, gdf_bounds)
+
+
+def cell_per_tile_classification(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    tile_order: list[str],
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Per-tile one-hot (TP, TN, FP, FN) classification aligned to ``tile_order``.
+
+    Wraps ``lib_advanced_metrics.compute_per_tile_classification`` — the house
+    definition, a thin per-tile view over ``calculate_tile_classification`` — so
+    the labels cannot drift from the ones ``evaluate_detections.py`` published.
+    Buffer-free by construction: a tile is positive if it intersects any
+    reference mound, predicted positive if the set assigned any detection to it.
+
+    Args:
+        gdf_det: One detection set in ``TARGET_CRS`` with ``source_tile``.
+        gdf_ref: Ground-truth references in ``TARGET_CRS``.
+        gdf_bounds: Evaluation tile boundaries in ``TARGET_CRS``.
+        tile_order: Fixed list of ``tile_name`` values defining array positions.
+
+    Returns:
+        Tuple ``(tp, tn, fp, fn)`` of integer arrays, length ``len(tile_order)``.
+    """
+    per_tile = compute_per_tile_classification(gdf_det, gdf_ref, gdf_bounds)
+    tile_index = {name: i for i, name in enumerate(tile_order)}
+    n_tiles = len(tile_order)
+    arrays = {k: np.zeros(n_tiles, dtype=int) for k in ("tp", "tn", "fp", "fn")}
+    for _, row in per_tile.iterrows():
+        idx = tile_index.get(row["tile_name"])
+        if idx is None:
+            continue
+        for k in arrays:
+            arrays[k][idx] = int(row[k])
+    return arrays["tp"], arrays["tn"], arrays["fp"], arrays["fn"]
+
+
+def check_confusion_gate(label: str, rebuilt: dict, recorded: dict | None,
+                         mcc_rebuilt: float | None, mcc_recorded: float | None,
+                         ) -> dict:
+    """Hard-gate a rebuilt tile confusion against the cell's committed record.
+
+    The MCC permutation is only trustworthy if the per-tile labels it swaps
+    aggregate to the confusion matrix and MCC the published evaluation reported.
+    A disagreement means the harness is not reproducing the scored cell, so it
+    raises rather than reporting a number.
+
+    Args:
+        label: Cell label, for the error message.
+        rebuilt: ``{tp, tn, fp, fn}`` recomputed here.
+        recorded: ``{tp, tn, fp, fn}`` from the evaluation, or None if absent.
+        mcc_rebuilt: MCC recomputed from ``rebuilt`` (None when undefined).
+        mcc_recorded: ``tile_classification.mcc.point`` from the evaluation.
+
+    Returns:
+        A gate-record dict for the output JSON.
+
+    Raises:
+        ConfusionGateError: on any cell-count disagreement, or an MCC
+            disagreement beyond the recorded 4-dp rounding.
+    """
+    if recorded is None:
+        raise ConfusionGateError(
+            f"{label}: evaluation records no tile_classification.confusion, so "
+            f"the MCC permutation cannot be gated"
+        )
+    if rebuilt != recorded:
+        raise ConfusionGateError(
+            f"{label}: rebuilt tile confusion {rebuilt} != recorded {recorded}"
+        )
+    if mcc_recorded is not None and mcc_rebuilt is not None \
+            and abs(mcc_rebuilt - mcc_recorded) > MCC_GATE_TOL:
+        raise ConfusionGateError(
+            f"{label}: rebuilt MCC {mcc_rebuilt:.6f} != recorded "
+            f"{mcc_recorded:.6f}"
+        )
+    return {"confusion": rebuilt, "mcc_rebuilt": mcc_rebuilt,
+            "mcc_recorded": mcc_recorded, "passed": True}
+
+
 def load_cells(
     conditions_path: Path,
     analyses_path: Path,
@@ -355,6 +521,7 @@ def load_cells(
     bounds_override: Path | None,
     gt_override: Path | None,
     buffer_metres: int = HEADLINE_BUFFER_M,
+    want_mcc: bool = False,
 ) -> tuple[list[dict], gpd.GeoDataFrame, gpd.GeoDataFrame, list[str]]:
     """Load every board cell with per-tile stats, F1 and MCC.
 
@@ -370,6 +537,10 @@ def load_cells(
         analysis_id: The analysis whose conditions_compared defines the board.
         bounds_override: Optional explicit bounds path (wins over the evals').
         gt_override: Optional explicit ground-truth path (wins over the evals').
+        buffer_metres: Buffer the F1 statistic is computed at.
+        want_mcc: Also rebuild each cell's per-tile one-hot tile classification
+            (and gate it against the committed confusion), so the MCC
+            permutation can run on the same tile order as the F1 one.
 
     Returns:
         ``(cells, gdf_ref, gdf_bounds, tile_order)``.
@@ -465,6 +636,22 @@ def load_cells(
                 ),
             }
         )
+        if want_mcc:
+            gdf_det = cell_detections(cli, gdf_bounds)
+            tp_c, tn_c, fp_c, fn_c = cell_per_tile_classification(
+                gdf_det, gdf_ref, gdf_bounds, tile_order
+            )
+            rebuilt = {"tp": int(tp_c.sum()), "tn": int(tn_c.sum()),
+                       "fp": int(fp_c.sum()), "fn": int(fn_c.sum())}
+            mcc_rebuilt = compute_mcc_or_none(**rebuilt)
+            gate = check_confusion_gate(
+                cond["label"], rebuilt, read_tile_confusion(eval_path),
+                None if mcc_rebuilt is None else round(float(mcc_rebuilt), 6),
+                cells[-1]["mcc"],
+            )
+            cells[-1].update({"tp_c": tp_c, "tn_c": tn_c, "fp_c": fp_c,
+                              "fn_c": fn_c, "mcc_gate": gate,
+                              "n_detections": int(len(gdf_det))})
         print(
             f"  {kind:12s} {cond['label']:34s} passes={n_passes:2d} "
             f"eval-F1={cells[-1]['eval_f1']:.4f} "
@@ -490,11 +677,26 @@ def main() -> int:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--n-permutations", type=int, default=N_PERMUTATIONS)
     parser.add_argument("--seed", type=int, default=SEED)
+    parser.add_argument(
+        "--buffer", type=int, default=HEADLINE_BUFFER_M,
+        help="Buffer in metres the F1 statistic is computed at (default: "
+             f"{HEADLINE_BUFFER_M}, the preregistered headline). A 55-map "
+             "board's headline is 50.",
+    )
+    parser.add_argument(
+        "--permute-mcc", action="store_true",
+        help="Also run the tile-swap permutation on tile-level MCC, through "
+             "the same per-tile swap masks as the F1 test (same seed, same "
+             "tile order), with its own BH-FDR family. Every cell must be a "
+             "single detection SET and must carry a committed "
+             "tile_classification.confusion to gate against.",
+    )
     args = parser.parse_args()
 
     cells, _gdf_ref, _gdf_bounds, tile_order = load_cells(
         args.conditions, args.analyses, args.analysis_id,
-        args.bounds, args.ground_truth,
+        args.bounds, args.ground_truth, buffer_metres=args.buffer,
+        want_mcc=args.permute_mcc,
     )
     print(f"Loaded {len(cells)} cells "
           f"({sum(c['kind'] == 'single-pass' for c in cells)} single-pass + "
@@ -523,6 +725,32 @@ def main() -> int:
         r["significant"] = bool(adj < FDR_Q)
         significant[frozenset({r["ref_a"], r["ref_b"]})] = r["significant"]
 
+    # --- Optional MCC round-robin, on the SAME swap masks -----------------
+    # Same kernel family, same seed, same tile order: the MCC test sees the
+    # identical per-tile swap mask the F1 test saw, so a ΔF1 and a ΔMCC on one
+    # pair are two statistics of one permutation, not two separate experiments.
+    pairwise_mcc: list[dict] = []
+    if args.permute_mcc:
+        print(f"Running {len(pairs)} pairwise MCC permutation tests "
+              f"({args.n_permutations} perms, seed {args.seed}) ...", flush=True)
+        for a, b in pairs:
+            ca, cb = cells[a], cells[b]
+            res = permutation_test_mcc_arrays(
+                ca["tp_c"], ca["tn_c"], ca["fp_c"], ca["fn_c"],
+                cb["tp_c"], cb["tn_c"], cb["fp_c"], cb["fn_c"],
+                n_permutations=args.n_permutations, seed=args.seed,
+            )
+            pairwise_mcc.append({"ref_a": ca["ref"], "ref_b": cb["ref"], **res})
+        adjusted_mcc = apply_bh_correction(
+            [r["p_value"] for r in pairwise_mcc], q=FDR_Q
+        )
+        for r, adj in zip(pairwise_mcc, adjusted_mcc):
+            r["bh_adjusted_p"] = round(adj, 6)
+            r["significant"] = bool(adj < FDR_Q)
+        n_sig_mcc = sum(1 for r in pairwise_mcc if r["significant"])
+        print(f"MCC FDR: {n_sig_mcc}/{len(pairwise_mcc)} pairs significant "
+              f"at q={FDR_Q}", flush=True)
+
     # --- Sort by the eval-reported F1@20 m (the ranked headline) and tier ---
     ordered = sorted(cells, key=lambda c: c["eval_f1"], reverse=True)
     ordered_refs = [c["ref"] for c in ordered]
@@ -542,7 +770,7 @@ def main() -> int:
     result = {
         "analysis_id": args.analysis_id,
         "metric": "f1",
-        "buffer_metres": HEADLINE_BUFFER_M,
+        "buffer_metres": args.buffer,
         "n_permutations": args.n_permutations,
         "seed": args.seed,
         "fdr_q": FDR_Q,
@@ -573,12 +801,26 @@ def main() -> int:
         "tie_set": tie_set,
         "pairwise": pairwise,
     }
-    json_path = args.output_dir / "tiering_20m.json"
+    if args.permute_mcc:
+        result["mcc_permutation"] = {
+            "statistic": "tile-level MCC (buffer-invariant: tile truth is "
+                         "intersection with any reference, tile prediction is "
+                         "any detection assigned to the tile)",
+            "kernel": "pairwise_permutation_test.permutation_test_mcc_arrays",
+            "swap_mask": "identical to the F1 test's (same seed, same tile "
+                         "order, same rng.random(n_tiles) < 0.5 stream)",
+            "fdr_q": FDR_Q,
+            "n_significant": sum(1 for r in pairwise_mcc if r["significant"]),
+            "gates": {c["ref"]: c["mcc_gate"] for c in cells},
+            "pairwise": pairwise_mcc,
+        }
+    json_path = args.output_dir / f"tiering_{args.buffer}m.json"
     json_path.write_text(json.dumps(result, indent=2))
     print(f"Wrote {json_path}", flush=True)
 
-    _write_markdown(args.output_dir / "tiering_20m.md", result, ordered, tier_of)
-    print(f"Wrote {args.output_dir / 'tiering_20m.md'}", flush=True)
+    md_path = args.output_dir / f"tiering_{args.buffer}m.md"
+    _write_markdown(md_path, result, ordered, tier_of)
+    print(f"Wrote {md_path}", flush=True)
     return 0
 
 
@@ -591,7 +833,8 @@ def _write_markdown(md_path: Path, result: dict, ordered: list[dict],
     n_sig = sum(1 for r in result["pairwise"] if r["significant"])
     pv_frag = f" + {n_pv} verified-PV" if n_pv else ""
     lines = [
-        f"# Era-1 leaderboard — statistical tiering (20 m) — `{result['analysis_id']}`",
+        f"# Era-1 leaderboard — statistical tiering "
+        f"({result['buffer_metres']} m) — `{result['analysis_id']}`",
         "",
         f"- **Cells**: {len(ordered)} ({n_sp} single-pass + {n_con} consensus{pv_frag}), "
         f"{result['n_tiles']} evaluation tiles",
@@ -614,6 +857,29 @@ def _write_markdown(md_path: Path, result: dict, ordered: list[dict],
             f"{c['eval_f1']:.3f} | {c['observed_micro_f1']:.3f} | "
             f"{c['f1_gap']:+.3f} | {mcc} | {tier_of[c['ref']]} |"
         )
+    if result.get("mcc_permutation"):
+        mcc_block = result["mcc_permutation"]
+        lines += [
+            "",
+            "## Tile-level MCC — the same permutation, a second statistic",
+            "",
+            f"- **Test**: tile-swap permutation on tile-level MCC, "
+            f"{result['n_permutations']:,} perms, seed {result['seed']}, "
+            f"two-sided; **BH-FDR** q = {mcc_block['fdr_q']} within this "
+            f"board; swap masks identical to the F1 test's",
+            f"- **Pairs**: {len(mcc_block['pairwise'])} "
+            f"({mcc_block['n_significant']} significant)",
+            "",
+            "| a | b | MCC a | MCC b | ΔMCC | raw p | BH p | significant |",
+            "|---|---|---:|---:|---:|---:|---:|:--:|",
+        ]
+        for r in mcc_block["pairwise"]:
+            lines.append(
+                f"| `{r['ref_a']}` | `{r['ref_b']}` | {r['mcc_a']:.4f} | "
+                f"{r['mcc_b']:.4f} | {r['observed_mcc_diff']:+.4f} | "
+                f"{r['p_value']:.4f} | {r['bh_adjusted_p']:.4f} | "
+                f"{'yes' if r['significant'] else 'no'} |"
+            )
     md_path.write_text("\n".join(lines) + "\n")
 
 

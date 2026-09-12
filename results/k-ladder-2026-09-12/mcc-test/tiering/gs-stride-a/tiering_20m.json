@@ -1,0 +1,404 @@
+{
+  "analysis_id": "k-ladder-gs-stride-a-2026-09-12",
+  "metric": "f1",
+  "buffer_metres": 20,
+  "n_permutations": 10000,
+  "seed": 42,
+  "fdr_q": 0.05,
+  "n_tiles": 487,
+  "replicate_handling": "single-set cells: integer per-tile of one aggregated set; replicate-mean cells (single-pass K runs, phase3c 5 replications): pass-averaged per-tile (float)",
+  "generated_at_utc": "2026-09-12T06:14:57.526349+00:00",
+  "git_commit": "156bddf36",
+  "ranking": [
+    {
+      "rank": 1,
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+      "label": "g384-ov128-k10-verified-p0.15-k8",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8905,
+      "observed_micro_f1": 0.890511,
+      "f1_gap": 1.1e-05,
+      "mcc": 0.7969,
+      "tier": 1
+    },
+    {
+      "rank": 2,
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+      "label": "g384-ov128-ladder-n3-verified-p0.15-k3",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8834,
+      "observed_micro_f1": 0.883436,
+      "f1_gap": 3.6e-05,
+      "mcc": 0.7762,
+      "tier": 1
+    },
+    {
+      "rank": 3,
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+      "label": "g384-ov128-ladder-n5-verified-p0.15-k4",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8782,
+      "observed_micro_f1": 0.878166,
+      "f1_gap": -3.4e-05,
+      "mcc": 0.7751,
+      "tier": 1
+    },
+    {
+      "rank": 4,
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+      "label": "g384-ov128-ladder-n1-verified-p0.15-k1",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8605,
+      "observed_micro_f1": 0.86052,
+      "f1_gap": 2e-05,
+      "mcc": 0.7834,
+      "tier": 2
+    }
+  ],
+  "tiers": [
+    {
+      "tier": 1,
+      "members": [
+        "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+        "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+        "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4"
+      ]
+    },
+    {
+      "tier": 2,
+      "members": [
+        "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1"
+      ]
+    }
+  ],
+  "tie_set": [
+    "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+    "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+    "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4"
+  ],
+  "pairwise": [
+    {
+      "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+      "ref_b": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+      "f1_a": 0.86052,
+      "f1_b": 0.883436,
+      "observed_diff": -0.022915,
+      "p_value": 0.0352,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -1.6e-05,
+      "null_std": 0.010951,
+      "bh_adjusted_p": 0.1056,
+      "significant": false
+    },
+    {
+      "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+      "ref_b": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+      "f1_a": 0.86052,
+      "f1_b": 0.878166,
+      "observed_diff": -0.017646,
+      "p_value": 0.1,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -7.1e-05,
+      "null_std": 0.010796,
+      "bh_adjusted_p": 0.15,
+      "significant": false
+    },
+    {
+      "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+      "ref_b": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+      "f1_a": 0.86052,
+      "f1_b": 0.890511,
+      "observed_diff": -0.029991,
+      "p_value": 0.0012,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -1.6e-05,
+      "null_std": 0.00981,
+      "bh_adjusted_p": 0.0072,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+      "ref_b": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+      "f1_a": 0.883436,
+      "f1_b": 0.878166,
+      "observed_diff": 0.005269,
+      "p_value": 0.4693,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -5.6e-05,
+      "null_std": 0.007074,
+      "bh_adjusted_p": 0.4693,
+      "significant": false
+    },
+    {
+      "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+      "ref_b": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+      "f1_a": 0.883436,
+      "f1_b": 0.890511,
+      "observed_diff": -0.007075,
+      "p_value": 0.3206,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -1e-06,
+      "null_std": 0.00689,
+      "bh_adjusted_p": 0.38472,
+      "significant": false
+    },
+    {
+      "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+      "ref_b": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+      "f1_a": 0.878166,
+      "f1_b": 0.890511,
+      "observed_diff": -0.012344,
+      "p_value": 0.0648,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 5.6e-05,
+      "null_std": 0.006562,
+      "bh_adjusted_p": 0.1296,
+      "significant": false
+    }
+  ],
+  "mcc_permutation": {
+    "statistic": "tile-level MCC (buffer-invariant: tile truth is intersection with any reference, tile prediction is any detection assigned to the tile)",
+    "kernel": "pairwise_permutation_test.permutation_test_mcc_arrays",
+    "swap_mask": "identical to the F1 test's (same seed, same tile order, same rng.random(n_tiles) < 0.5 stream)",
+    "fdr_q": 0.05,
+    "n_significant": 0,
+    "gates": {
+      "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1": {
+        "confusion": {
+          "tp": 185,
+          "tn": 248,
+          "fp": 10,
+          "fn": 44
+        },
+        "mcc_rebuilt": 0.783433,
+        "mcc_recorded": 0.7834,
+        "passed": true
+      },
+      "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3": {
+        "confusion": {
+          "tp": 178,
+          "tn": 252,
+          "fp": 6,
+          "fn": 51
+        },
+        "mcc_rebuilt": 0.776229,
+        "mcc_recorded": 0.7762,
+        "passed": true
+      },
+      "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4": {
+        "confusion": {
+          "tp": 179,
+          "tn": 251,
+          "fp": 7,
+          "fn": 50
+        },
+        "mcc_rebuilt": 0.775109,
+        "mcc_recorded": 0.7751,
+        "passed": true
+      },
+      "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8": {
+        "confusion": {
+          "tp": 181,
+          "tn": 254,
+          "fp": 4,
+          "fn": 48
+        },
+        "mcc_rebuilt": 0.796852,
+        "mcc_recorded": 0.7969,
+        "passed": true
+      }
+    },
+    "pairwise": [
+      {
+        "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+        "ref_b": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+        "mcc_a": 0.783433,
+        "mcc_b": 0.776229,
+        "confusion_a": {
+          "tp": 185,
+          "tn": 248,
+          "fp": 10,
+          "fn": 44
+        },
+        "confusion_b": {
+          "tp": 178,
+          "tn": 252,
+          "fp": 6,
+          "fn": 51
+        },
+        "observed_mcc_diff": 0.007204,
+        "p_value": 0.6734,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 0.000173,
+          "std": 0.01789,
+          "percentile_2.5": -0.034003,
+          "percentile_97.5": 0.035496
+        },
+        "bh_adjusted_p": 0.80808,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+        "ref_b": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+        "mcc_a": 0.783433,
+        "mcc_b": 0.775109,
+        "confusion_a": {
+          "tp": 185,
+          "tn": 248,
+          "fp": 10,
+          "fn": 44
+        },
+        "confusion_b": {
+          "tp": 179,
+          "tn": 251,
+          "fp": 7,
+          "fn": 50
+        },
+        "observed_mcc_diff": 0.008324,
+        "p_value": 0.6164,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 2.4e-05,
+          "std": 0.016762,
+          "percentile_2.5": -0.030947,
+          "percentile_97.5": 0.030947
+        },
+        "bh_adjusted_p": 0.80808,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+        "ref_b": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+        "mcc_a": 0.783433,
+        "mcc_b": 0.796852,
+        "confusion_a": {
+          "tp": 185,
+          "tn": 248,
+          "fp": 10,
+          "fn": 44
+        },
+        "confusion_b": {
+          "tp": 181,
+          "tn": 254,
+          "fp": 4,
+          "fn": 48
+        },
+        "observed_mcc_diff": -0.013419,
+        "p_value": 0.3839,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 0.000101,
+          "std": 0.015155,
+          "percentile_2.5": -0.028293,
+          "percentile_97.5": 0.028293
+        },
+        "bh_adjusted_p": 0.7678,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+        "ref_b": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+        "mcc_a": 0.776229,
+        "mcc_b": 0.775109,
+        "confusion_a": {
+          "tp": 178,
+          "tn": 252,
+          "fp": 6,
+          "fn": 51
+        },
+        "confusion_b": {
+          "tp": 179,
+          "tn": 251,
+          "fp": 7,
+          "fn": 50
+        },
+        "observed_mcc_diff": 0.00112,
+        "p_value": 1.0,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000152,
+          "std": 0.012507,
+          "percentile_2.5": -0.025429,
+          "percentile_97.5": 0.025429
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+        "ref_b": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+        "mcc_a": 0.776229,
+        "mcc_b": 0.796852,
+        "confusion_a": {
+          "tp": 178,
+          "tn": 252,
+          "fp": 6,
+          "fn": 51
+        },
+        "confusion_b": {
+          "tp": 181,
+          "tn": 254,
+          "fp": 4,
+          "fn": 48
+        },
+        "observed_mcc_diff": -0.020623,
+        "p_value": 0.0624,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -7.4e-05,
+          "std": 0.009311,
+          "percentile_2.5": -0.020623,
+          "percentile_97.5": 0.020623
+        },
+        "bh_adjusted_p": 0.1947,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+        "ref_b": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+        "mcc_a": 0.775109,
+        "mcc_b": 0.796852,
+        "confusion_a": {
+          "tp": 179,
+          "tn": 251,
+          "fp": 7,
+          "fn": 50
+        },
+        "confusion_b": {
+          "tp": 181,
+          "tn": 254,
+          "fp": 4,
+          "fn": 48
+        },
+        "observed_mcc_diff": -0.021743,
+        "p_value": 0.0649,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 7.9e-05,
+          "std": 0.009907,
+          "percentile_2.5": -0.021743,
+          "percentile_97.5": 0.021743
+        },
+        "bh_adjusted_p": 0.1947,
+        "significant": false
+      }
+    ]
+  }
+}

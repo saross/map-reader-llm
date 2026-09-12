@@ -1,0 +1,316 @@
+{
+  "ladder": "55map-stride-b-r2",
+  "family": "Stride B (g384 ov192), 55-map",
+  "run_id": "stride-55map-2026-08-25",
+  "proposer_pool": "g384_ov192_55map",
+  "corpus": "55-map",
+  "reference_file": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+  "frame_file": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+  "headline_buffer_m": 50,
+  "basis": "oracle",
+  "instrument": {
+    "name": "round-robin tile-swap permutation (the board chain)",
+    "script": "scripts/era1_leaderboard_tiering.py --permute-mcc",
+    "f1_statistic": "micro-average F1 @ 50 m over 8541 tiles, per-tile TP/FP/FN swapped",
+    "mcc_statistic": "tile-level MCC, buffer-invariant; per-tile one-hot (TP, TN, FP, FN) swapped under the SAME mask as F1",
+    "kernels": [
+      "n1_baseline_leaderboard_tiering.permutation_test_float",
+      "pairwise_permutation_test.permutation_test_mcc_arrays"
+    ],
+    "n_permutations": 10000,
+    "seed": 42,
+    "n_tiles": 8541,
+    "bh_q": 0.05,
+    "bh_family": "within this ladder: the full round-robin of 6 pair(s), F1 and MCC adjusted as separate families",
+    "instrument_ruling": "This is the instrument that tiered these cells and the only one with committed F1 p-values for every pair asked about. findings.md \u00a7 6.1 records that the PI's ruling on the 55-map ladders' instrument is pending; the per-map paired sign-swap of scripts/stride55_ladder.py is reported separately where it is registered."
+  },
+  "gate": {
+    "kind": "committed board pairwise F1 permutation",
+    "n_pairs_gated": 4,
+    "passed": true,
+    "pairs": [
+      {
+        "pair": "K1-vs-K10",
+        "available": true,
+        "board": "results/55map-final-board-r2-2026-09-06/final_board_50m.json",
+        "cell_a": "B-N1-oracle",
+        "cell_b": "B-N10-oracle",
+        "committed": {
+          "f1_a": 0.801274,
+          "f1_b": 0.855959,
+          "observed_diff": -0.054685,
+          "p_value": 0.0,
+          "n_tiles": 8541
+        },
+        "reproduced": {
+          "f1_a": 0.801274,
+          "f1_b": 0.855959,
+          "observed_diff": -0.054685,
+          "p_value": 0.0,
+          "n_tiles": 8541
+        },
+        "abs_delta": {
+          "f1_a": 0.0,
+          "f1_b": 0.0,
+          "observed_diff": 0.0,
+          "p_value": 0.0
+        },
+        "tolerance": {
+          "f1": 5e-07,
+          "p_value": 5e-05
+        },
+        "passed": true
+      },
+      {
+        "pair": "K1-vs-K3",
+        "available": true,
+        "board": "results/55map-final-board-r2-2026-09-06/final_board_50m.json",
+        "cell_a": "B-N1-oracle",
+        "cell_b": "B-N3-oracle",
+        "committed": {
+          "f1_a": 0.801274,
+          "f1_b": 0.850664,
+          "observed_diff": -0.04939,
+          "p_value": 0.0,
+          "n_tiles": 8541
+        },
+        "reproduced": {
+          "f1_a": 0.801274,
+          "f1_b": 0.850664,
+          "observed_diff": -0.04939,
+          "p_value": 0.0,
+          "n_tiles": 8541
+        },
+        "abs_delta": {
+          "f1_a": 0.0,
+          "f1_b": 0.0,
+          "observed_diff": 0.0,
+          "p_value": 0.0
+        },
+        "tolerance": {
+          "f1": 5e-07,
+          "p_value": 5e-05
+        },
+        "passed": true
+      },
+      {
+        "pair": "K3-vs-K5",
+        "available": true,
+        "board": "results/55map-final-board-r2-2026-09-06/final_board_50m.json",
+        "cell_a": "B-N3-oracle",
+        "cell_b": "B-N5-oracle",
+        "committed": {
+          "f1_a": 0.850664,
+          "f1_b": 0.851628,
+          "observed_diff": -0.000964,
+          "p_value": 0.5086,
+          "n_tiles": 8541
+        },
+        "reproduced": {
+          "f1_a": 0.850664,
+          "f1_b": 0.851628,
+          "observed_diff": -0.000964,
+          "p_value": 0.5086,
+          "n_tiles": 8541
+        },
+        "abs_delta": {
+          "f1_a": 0.0,
+          "f1_b": 0.0,
+          "observed_diff": 0.0,
+          "p_value": 0.0
+        },
+        "tolerance": {
+          "f1": 5e-07,
+          "p_value": 5e-05
+        },
+        "passed": true
+      },
+      {
+        "pair": "K5-vs-K10",
+        "available": true,
+        "board": "results/55map-final-board-r2-2026-09-06/final_board_50m.json",
+        "cell_a": "B-N5-oracle",
+        "cell_b": "B-N10-oracle",
+        "committed": {
+          "f1_a": 0.851628,
+          "f1_b": 0.855959,
+          "observed_diff": -0.004332,
+          "p_value": 0.0029,
+          "n_tiles": 8541
+        },
+        "reproduced": {
+          "f1_a": 0.851628,
+          "f1_b": 0.855959,
+          "observed_diff": -0.004332,
+          "p_value": 0.0029,
+          "n_tiles": 8541
+        },
+        "abs_delta": {
+          "f1_a": 0.0,
+          "f1_b": 0.0,
+          "observed_diff": 0.0,
+          "p_value": 0.0
+        },
+        "tolerance": {
+          "f1": 5e-07,
+          "p_value": 5e-05
+        },
+        "passed": true
+      }
+    ],
+    "cell_gates": {
+      "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt": {
+        "confusion": {
+          "tp": 2525,
+          "tn": 4796,
+          "fp": 216,
+          "fn": 1004
+        },
+        "mcc_rebuilt": 0.709239,
+        "mcc_recorded": 0.7092,
+        "passed": true
+      },
+      "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt": {
+        "confusion": {
+          "tp": 2452,
+          "tn": 4867,
+          "fp": 145,
+          "fn": 1077
+        },
+        "mcc_rebuilt": 0.712778,
+        "mcc_recorded": 0.7128,
+        "passed": true
+      },
+      "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt": {
+        "confusion": {
+          "tp": 2422,
+          "tn": 4880,
+          "fp": 132,
+          "fn": 1107
+        },
+        "mcc_rebuilt": 0.709814,
+        "mcc_recorded": 0.7098,
+        "passed": true
+      },
+      "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt": {
+        "confusion": {
+          "tp": 2441,
+          "tn": 4874,
+          "fp": 138,
+          "fn": 1088
+        },
+        "mcc_rebuilt": 0.712336,
+        "mcc_recorded": 0.7123,
+        "passed": true
+      }
+    }
+  },
+  "pairs": [
+    {
+      "pair": "K1-vs-K10",
+      "kind": "k1-vs-best",
+      "k_low": 1,
+      "k_high": 10,
+      "condition_low": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+      "condition_high": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8013,
+        "high": 0.856,
+        "delta": 0.054685,
+        "p_raw": 0.0,
+        "p_bh": 0.0,
+        "significant": true
+      },
+      "mcc": {
+        "low": 0.7092,
+        "high": 0.7123,
+        "delta": 0.003096,
+        "p_raw": 0.3728,
+        "p_bh": 0.5592,
+        "significant": false
+      },
+      "verdict": "F1 up (sig), MCC up n.s."
+    },
+    {
+      "pair": "K1-vs-K3",
+      "kind": "adjacent",
+      "k_low": 1,
+      "k_high": 3,
+      "condition_low": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+      "condition_high": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8013,
+        "high": 0.8507,
+        "delta": 0.04939,
+        "p_raw": 0.0,
+        "p_bh": 0.0,
+        "significant": true
+      },
+      "mcc": {
+        "low": 0.7092,
+        "high": 0.7128,
+        "delta": 0.003539,
+        "p_raw": 0.2843,
+        "p_bh": 0.5592,
+        "significant": false
+      },
+      "verdict": "F1 up (sig), MCC up n.s."
+    },
+    {
+      "pair": "K3-vs-K5",
+      "kind": "adjacent",
+      "k_low": 3,
+      "k_high": 5,
+      "condition_low": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+      "condition_high": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8507,
+        "high": 0.8516,
+        "delta": 0.000964,
+        "p_raw": 0.5086,
+        "p_bh": 0.5086,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.7128,
+        "high": 0.7098,
+        "delta": -0.002964,
+        "p_raw": 0.0687,
+        "p_bh": 0.4122,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    },
+    {
+      "pair": "K5-vs-K10",
+      "kind": "adjacent",
+      "k_low": 5,
+      "k_high": 10,
+      "condition_low": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+      "condition_high": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8516,
+        "high": 0.856,
+        "delta": 0.004332,
+        "p_raw": 0.0029,
+        "p_bh": 0.00348,
+        "significant": true
+      },
+      "mcc": {
+        "low": 0.7098,
+        "high": 0.7123,
+        "delta": 0.002521,
+        "p_raw": 0.1465,
+        "p_bh": 0.4395,
+        "significant": false
+      },
+      "verdict": "F1 up (sig), MCC up n.s."
+    }
+  ],
+  "tiering_artefact": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-r2/tiering_50m.json",
+  "generated_at_utc": "2026-09-12T06:16:03.645478+00:00"
+}

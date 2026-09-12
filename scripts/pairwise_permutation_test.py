@@ -570,6 +570,96 @@ def compute_mcc_or_none(
     return float(((tp * tn) - (fp * fn)) / np.sqrt(denom_parts))
 
 
+def permutation_test_mcc_arrays(
+    tp_a: np.ndarray,
+    tn_a: np.ndarray,
+    fp_a: np.ndarray,
+    fn_a: np.ndarray,
+    tp_b: np.ndarray,
+    tn_b: np.ndarray,
+    fp_b: np.ndarray,
+    fn_b: np.ndarray,
+    n_permutations: int = 10_000,
+    seed: int = 42,
+) -> dict:
+    """Tile-swap paired permutation test for ΔMCC on pre-computed per-tile arrays.
+
+    This is the array-level kernel :func:`run_permutation_test_mcc` delegates
+    to, and it is the MCC sibling of
+    ``n1_baseline_leaderboard_tiering.permutation_test_float`` (the F1 kernel
+    the boards use). It exists so an array-based harness — a leaderboard that
+    has already built per-tile arrays on a fixed tile order — can run the MCC
+    test through the SAME machinery as its F1 test rather than re-deriving
+    per-tile classifications from GeoDataFrames for every pair.
+
+    The permutation stream is identical to the F1 kernels': one
+    ``numpy.random.default_rng(seed)`` draw of ``n_tiles`` uniforms per
+    iteration, thresholded at 0.5, giving a per-tile swap mask. With the same
+    seed, the same tile count and the same tile ORDER, the F1 and MCC tests
+    therefore see byte-identical swap masks — the two metrics are carried
+    through one permutation machinery, not two.
+
+    Args:
+        tp_a, tn_a, fp_a, fn_a: Condition A per-tile one-hot classification
+            arrays (exactly one of the four is 1 per tile), on a fixed tile
+            order.
+        tp_b, tn_b, fp_b, fn_b: Condition B's arrays, same tile order.
+        n_permutations: Number of permutation iterations.
+        seed: Random seed.
+
+    Returns:
+        Dict with the observed per-condition confusion cells and MCCs, the
+        observed ΔMCC, the two-sided p-value, and null-distribution summary
+        statistics. Win/loss/tie counts and per-tile details are NOT included —
+        they belong to the GeoDataFrame wrapper.
+    """
+    tp_a_s, tn_a_s = int(tp_a.sum()), int(tn_a.sum())
+    fp_a_s, fn_a_s = int(fp_a.sum()), int(fn_a.sum())
+    tp_b_s, tn_b_s = int(tp_b.sum()), int(tn_b.sum())
+    fp_b_s, fn_b_s = int(fp_b.sum()), int(fn_b.sum())
+    mcc_a = _compute_mcc(tp_a_s, tn_a_s, fp_a_s, fn_a_s)
+    mcc_b = _compute_mcc(tp_b_s, tn_b_s, fp_b_s, fn_b_s)
+    observed_diff = mcc_a - mcc_b
+
+    n_tiles = len(tp_a)
+    rng = np.random.default_rng(seed)
+    null_diffs = np.empty(n_permutations)
+    for i in range(n_permutations):
+        swap = rng.random(n_tiles) < 0.5
+        perm_tp_a = np.where(swap, tp_b, tp_a)
+        perm_tn_a = np.where(swap, tn_b, tn_a)
+        perm_fp_a = np.where(swap, fp_b, fp_a)
+        perm_fn_a = np.where(swap, fn_b, fn_a)
+        perm_tp_b = np.where(swap, tp_a, tp_b)
+        perm_tn_b = np.where(swap, tn_a, tn_b)
+        perm_fp_b = np.where(swap, fp_a, fp_b)
+        perm_fn_b = np.where(swap, fn_a, fn_b)
+        null_diffs[i] = (
+            _compute_mcc(int(perm_tp_a.sum()), int(perm_tn_a.sum()),
+                         int(perm_fp_a.sum()), int(perm_fn_a.sum()))
+            - _compute_mcc(int(perm_tp_b.sum()), int(perm_tn_b.sum()),
+                           int(perm_fp_b.sum()), int(perm_fn_b.sum()))
+        )
+
+    p_value = float(np.mean(np.abs(null_diffs) >= np.abs(observed_diff)))
+    return {
+        "mcc_a": round(mcc_a, 6),
+        "mcc_b": round(mcc_b, 6),
+        "confusion_a": {"tp": tp_a_s, "tn": tn_a_s, "fp": fp_a_s, "fn": fn_a_s},
+        "confusion_b": {"tp": tp_b_s, "tn": tn_b_s, "fp": fp_b_s, "fn": fn_b_s},
+        "observed_mcc_diff": round(observed_diff, 6),
+        "p_value": round(p_value, 4),
+        "n_permutations": n_permutations,
+        "n_tiles": n_tiles,
+        "null_distribution": {
+            "mean": round(float(np.mean(null_diffs)), 6),
+            "std": round(float(np.std(null_diffs)), 6),
+            "percentile_2.5": round(float(np.percentile(null_diffs, 2.5)), 6),
+            "percentile_97.5": round(float(np.percentile(null_diffs, 97.5)), 6),
+        },
+    }
+
+
 def run_permutation_test_mcc(
     gdf_a: gpd.GeoDataFrame,
     gdf_b: gpd.GeoDataFrame,
@@ -672,72 +762,45 @@ def run_permutation_test_mcc(
             ),
         })
 
-    # Observed aggregate confusion + MCC
-    tp_a, tn_a = int(tp_a_arr.sum()), int(tn_a_arr.sum())
-    fp_a, fn_a = int(fp_a_arr.sum()), int(fn_a_arr.sum())
-    tp_b, tn_b = int(tp_b_arr.sum()), int(tn_b_arr.sum())
-    fp_b, fn_b = int(fp_b_arr.sum()), int(fn_b_arr.sum())
-    mcc_a = _compute_mcc(tp_a, tn_a, fp_a, fn_a)
-    mcc_b = _compute_mcc(tp_b, tn_b, fp_b, fn_b)
-    observed_diff = mcc_a - mcc_b
-
-    # Tile-swap permutation null. For each iteration, independently
-    # swap each tile's full (TP, TN, FP, FN) 4-tuple between A and B
-    # with probability 0.5, then recompute aggregate MCC.
-    rng = np.random.default_rng(seed)
-    null_diffs = np.empty(n_permutations)
-    for i in range(n_permutations):
-        swap = rng.random(n_tiles) < 0.5
-        perm_tp_a = np.where(swap, tp_b_arr, tp_a_arr)
-        perm_tn_a = np.where(swap, tn_b_arr, tn_a_arr)
-        perm_fp_a = np.where(swap, fp_b_arr, fp_a_arr)
-        perm_fn_a = np.where(swap, fn_b_arr, fn_a_arr)
-        perm_tp_b = np.where(swap, tp_a_arr, tp_b_arr)
-        perm_tn_b = np.where(swap, tn_a_arr, tn_b_arr)
-        perm_fp_b = np.where(swap, fp_a_arr, fp_b_arr)
-        perm_fn_b = np.where(swap, fn_a_arr, fn_b_arr)
-
-        perm_mcc_a = _compute_mcc(
-            int(perm_tp_a.sum()), int(perm_tn_a.sum()),
-            int(perm_fp_a.sum()), int(perm_fn_a.sum()),
-        )
-        perm_mcc_b = _compute_mcc(
-            int(perm_tp_b.sum()), int(perm_tn_b.sum()),
-            int(perm_fp_b.sum()), int(perm_fn_b.sum()),
-        )
-        null_diffs[i] = perm_mcc_a - perm_mcc_b
-
-    p_value = float(np.mean(np.abs(null_diffs) >= np.abs(observed_diff)))
+    # Observed confusion, observed ΔMCC and the tile-swap permutation null all
+    # come from the array kernel, so there is exactly ONE implementation of the
+    # MCC permutation in the codebase (this wrapper adds only the per-tile
+    # bookkeeping the array form does not carry).
+    kernel = permutation_test_mcc_arrays(
+        tp_a_arr, tn_a_arr, fp_a_arr, fn_a_arr,
+        tp_b_arr, tn_b_arr, fp_b_arr, fn_b_arr,
+        n_permutations=n_permutations, seed=seed,
+    )
+    conf_a, conf_b = kernel["confusion_a"], kernel["confusion_b"]
+    tp_a, tn_a, fp_a, fn_a = (conf_a["tp"], conf_a["tn"],
+                              conf_a["fp"], conf_a["fn"])
+    tp_b, tn_b, fp_b, fn_b = (conf_b["tp"], conf_b["tn"],
+                              conf_b["fp"], conf_b["fn"])
+    mcc_a, mcc_b = kernel["mcc_a"], kernel["mcc_b"]
+    observed_diff = kernel["observed_mcc_diff"]
+    p_value = kernel["p_value"]
+    null_summary = kernel["null_distribution"]
 
     return {
         "global_a": {
-            "mcc": round(mcc_a, 6),
+            "mcc": mcc_a,
             "n_detections": len(gdf_a),
             "tp": tp_a, "tn": tn_a, "fp": fp_a, "fn": fn_a,
         },
         "global_b": {
-            "mcc": round(mcc_b, 6),
+            "mcc": mcc_b,
             "n_detections": len(gdf_b),
             "tp": tp_b, "tn": tn_b, "fp": fp_b, "fn": fn_b,
         },
         "permutation_test": {
-            "observed_mcc_diff": round(observed_diff, 6),
-            "p_value": round(p_value, 4),
+            "observed_mcc_diff": observed_diff,
+            "p_value": p_value,
             "n_permutations": n_permutations,
             "n_tiles": n_tiles,
             "wins_a": wins,
             "losses_a": losses,
             "ties": ties,
-            "null_distribution": {
-                "mean": round(float(np.mean(null_diffs)), 6),
-                "std": round(float(np.std(null_diffs)), 6),
-                "percentile_2.5": round(
-                    float(np.percentile(null_diffs, 2.5)), 6,
-                ),
-                "percentile_97.5": round(
-                    float(np.percentile(null_diffs, 97.5)), 6,
-                ),
-            },
+            "null_distribution": null_summary,
         },
         "per_tile": per_tile_details,
     }

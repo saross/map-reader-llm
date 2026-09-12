@@ -818,9 +818,41 @@ pricing run) — each needs its own phase-gate before execution.
 
 ---
 
+## Word allocation (proposed 2026-09-12, for the PI to adjust)
+
+Per PI ruling 8c: a per-block target against the skeleton's ~2,200-word
+Results budget, with the numbers carried by tables and figures (ruling 3)
+and the detail by the supplement. Current prose counts are the S153
+draft (7,186 words over the inventoried blocks; 9,067 with R3 and R6).
+
+| Block | Now | Target | Carried by |
+|---|---:|---:|---|
+| R0 reading guide | 516 | 120 | one instruments table; the rest to Methods |
+| R1 working precisions | 275 | 100 | one table (precision by architecture) |
+| R1b tile geometry and stride | 100 (pointer) | 150 | the grid 2×2 table; the stride ladder figure |
+| R2 single-pass baselines | 613 | 150 | the board table, Tier-1 tie set |
+| R3 consensus and pass count | 315 | 200 | the K-ladder table and figure (Phase 1–2) |
+| R4 proposer–verifier | 1,165 | 300 | the Era-2 board table (103 cells → top tiers only); tile-size table |
+| R5 verifier robustness | 730 | 150 | one table (the four axes, all ties) |
+| R6 cost frontier | 671 | 200 | the Pareto figure with its MCC column |
+| R7 lead | 79 | 30 | — |
+| R7.1 calibrate, then deploy | 747 | 150 | the transfer table |
+| R7.2 stride at deployment, final board | 1,300 | 200 | the r2 board figure (significance groups); bets table |
+| R7.3 model-generation leg | 1,436 | 250 | the 3.7/3.8 cells table; the cost column |
+| R8 ground truth limits | 496 | 100 | one table (error structure); supplement |
+| R9 GT-free selection | 624 | 100 | one table (protocol steps and ρ) |
+| **total** | **9,067** | **2,200** | |
+
+The targets sum to the budget exactly; R4 and R7.3 keep the largest
+shares because they carry the architecture result and the headline.
+
 ## Figures and tables
 
-> **New section, per D22 (PI ruling 6, 2026-09-12).** One row per Results
+> **New section, per D22 (PI ruling 6, 2026-09-12).** **ADOPTED 2026-09-12
+> (PI ruling 8d)**: the three existing figures named below serve as the
+> ISPRS exhibits — `pareto_v2.png` (ii), `significance-groups.png` (iii),
+> and the cross-corpus false-positive classification plot; the Pareto
+> figure is regenerated with its MCC column when the MCC job lands. One row per Results
 > block: what the block's claims are best carried by, and the existing
 > artefact that could serve or "to be made". **No figure was made in this
 > pass** and no prose was cut — this is the plan, not its execution.

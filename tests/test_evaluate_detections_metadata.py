@@ -100,7 +100,10 @@ class TestBuildMetadataSchema:
         # 1.2 (2026-05-31) added the ``spatial`` block recording the evaluation CRS.
         # 1.3 (2026-08-20, defect D36) split ``bootstrap.method`` into the
         # requested method and a measured one added at write time.
-        assert meta["metadata_version"] == "1.3"
+        # 1.4 (2026-09-12, audit Finding 6) added
+        # ``input_git_state.blob_hashes``, the content anchor binding an
+        # evaluation to the input bytes it scored.
+        assert meta["metadata_version"] == "1.4"
 
     def test_script_path_is_relative(self) -> None:
         """Script path is the stable repo-relative location."""
@@ -577,10 +580,37 @@ class TestInputGitStates:
         )
         md = ed._build_metadata(args)
         block = md["input_git_state"]
-        assert set(block) == {"head", "inputs"}
+        assert set(block) == {"head", "inputs", "blob_hashes"}
         assert block["inputs"]["untracked.geojson"] == "untracked"
         assert block["inputs"]["clean.geojson"] == "clean"
         assert block["inputs"]["modified.geojson"] == "modified"
+
+    def test_build_metadata_stamps_blob_hashes(self, tmp_path, monkeypatch) -> None:
+        """Every input carries a content anchor, keyed as ``inputs`` is.
+
+        Audit Finding 6: a state word plus a HEAD hash never said WHICH
+        bytes were scored. ``blob_hashes`` does, so an existing evaluation
+        can be checked against the file that is there now.
+        """
+        from scripts.lib_content_anchor import git_blob_hash
+
+        from scripts import evaluate_detections as ed
+
+        _temp_repo(tmp_path)
+        monkeypatch.setattr(ed, "PROJECT_ROOT", tmp_path)
+        args = _make_args(
+            detections=[tmp_path / "clean.geojson"],
+            ground_truth=tmp_path / "modified.geojson",
+            bounds=tmp_path / "absent.geojson",
+        )
+        blobs = ed._build_metadata(args)["input_git_state"]["blob_hashes"]
+
+        assert blobs["clean.geojson"] == git_blob_hash(tmp_path / "clean.geojson")
+        assert blobs["modified.geojson"] == git_blob_hash(
+            tmp_path / "modified.geojson",
+        )
+        # A missing input records None rather than being dropped silently.
+        assert blobs["absent.geojson"] is None
 
 
 @pytest.mark.tier1

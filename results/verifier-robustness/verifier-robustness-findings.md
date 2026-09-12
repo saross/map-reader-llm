@@ -1,6 +1,8 @@
 # Verifier-robustness — findings
 
-> **Last revised**: 2026-06-13 (currency sweep: the one remaining
+> **Last revised**: 2026-09-12 (§ 15 gains a tile-MCC column and a second
+> Pareto frontier, per the PI's ruling; the F1 column, the cost model and the
+> F1 tiering are unchanged). Prior: 2026-06-13 (currency sweep: the one remaining
 > pre-audit dollar — Run B's "~$60" launch estimate in § 16(c) —
 > corrected to the audited as-run ~$34.5). Prior: 2026-06-12
 > (token-load audit: the cost model was rebuilt from per-item metadata —
@@ -386,17 +388,55 @@ model (token-load audit, 2026-06-12 —
 $4.66/8,541-tile pass, scaled by 487/8,541); HIGH pass $2.29 at GS
 (five measured 55-map T0.7 passes, $40.19/8,541-tile pass with
 ~2,693 thinking tokens/tile billed at the output rate); **flex ≡
-batch pricing**. All seven rungs remain ONE statistical tier (0/21 pairs).
+batch pricing**. All seven rungs remain ONE statistical tier (0/21 pairs)
+— and, since 2026-09-12, one tier on tile-MCC as well (0/21 pairs).
 
-| rung | F1@20m | GS run | 55-map production | frontier |
-|---|---:|---:|---:|---|
-| min6 | 0.8784 | $2.43 | ~$43 | ✓ |
-| min11 | 0.8835 | $4.00 | ~$70 | ✓ |
-| high6 | 0.8641 | $14.04 | ~$246 | dominated |
-| high5+5vf | 0.8739 | $14.41 | ~$253 | dominated |
-| high11 | 0.8769 | $26.97 | ~$473 | dominated |
-| high31 (headline) | 0.8902 | $69.21 | ~$1,214 | ✓ |
-| high35 (opmax) | 0.8951 | $71.23 | ~$1,249 | ✓ |
+| rung | F1@20m | tile-MCC | GS run | 55-map production | F1 frontier | MCC frontier |
+|---|---:|---:|---:|---:|---|---|
+| min6 | 0.8784 | 0.7903 | $2.43 | ~$43 | ✓ | ✓ |
+| min11 | 0.8835 | **0.8068** | $4.00 | ~$70 | ✓ | ✓ |
+| high6 | 0.8641 | 0.7693 | $14.04 | ~$246 | dominated | dominated |
+| high5+5vf | 0.8739 | 0.7713 | $14.41 | ~$253 | dominated | dominated |
+| high11 | 0.8769 | 0.7903 | $26.97 | ~$473 | dominated | dominated |
+| high31 (headline) | 0.8902 | 0.7903 | $69.21 | ~$1,214 | ✓ | **dominated** |
+| high35 (opmax) | **0.8951** | 0.7941 | $71.23 | ~$1,249 | ✓ | **dominated** |
+
+**The tile-MCC column (added 2026-09-12, per the PI's ruling).** Each rung's
+MCC is read from that rung's own committed evaluation — resolved through its
+registered condition in `results/run-conditions.json`, whose `detections` path is
+gated against the geojson this board scores — and then re-derived from that same
+geojson through the house per-tile classification and checked cell-for-cell
+against the recorded `tile_classification` confusion. All seven gates pass
+exactly. MCC here is on the **Era-2 frame, 487 tiles**
+(`full_evaluation_bounds.geojson`), the frame the F1 column is scored on; it is
+**buffer-invariant** (tile truth is intersection with any reference, tile
+prediction is any detection assigned to the tile — no matching tolerance
+enters), so "MCC at 20 m" and "MCC at 50 m" are the same number and only the F1
+axis carries a buffer. `pareto_v2.png` now has two panels: (a) cost against
+F1@20 m, (b) cost against tile-MCC.
+
+**The two frontiers do not coincide.** The F1-efficient set is unchanged —
+`min6, min11, high31, high35` — but the **MCC-efficient set is `min6, min11`
+alone**: the two expensive HIGH rungs fall off it. **min11, at $4.00, has the
+highest tile-MCC of all seven rungs (0.8068)** — above high35's 0.7941 at
+$71.23, a 17.8× cost ratio. Read on tile discrimination rather than point
+localisation, the $67.23 of extra GS spend between min11 and high35 buys
+**nothing**, and the reversal is not marginal: min11's MCC lead over high35 is
++0.0127, larger than high35's F1 lead over min11 (+0.0116).
+
+**Two honest qualifications.** First, **none of it separates statistically**: the
+C(7,2) round-robin on tile-MCC, run through the F1 kernel's MCC sibling on
+identical swap masks (10,000 permutations, seed 42, BH q = 0.05), returns
+**0/21 significant** — the same verdict as F1. The MCC frontier is therefore a
+point-estimate ordering on one tier, exactly as the F1 frontier is, and the
+min11-over-high35 reversal is a reason to stop assuming the expensive rungs
+dominate, not a demonstration that they do not. Second, **the 487-tile frame is
+coarse enough to tie**: `min6`, `high11` and `high31` have the *identical* tile
+confusion (188 TP / 247 TN / 11 FP / 41 FN) and therefore the identical MCC of
+0.7903, despite being three different detection sets with F1s spanning
+0.8769–0.8902 and GS costs spanning $2.43–$69.21. That is not an error — the gate recomputed all three from their
+own geojsons and reproduced the recorded cells exactly — but it is the reason a
+tile-level metric on 487 tiles cannot be asked to rank fine-grained rungs.
 
 Costs rebuilt 2026-06-12 from per-item token metadata: the 2026-06-11
 calibration sat on a 2× double-counted cost manifest (minimal passes
@@ -487,6 +527,48 @@ flags live at `results/metric-leaderboards/` (GS @ 30 m; 55-map @ 50 m).
   preregistration amendment needed for a robustness check.
 
 ## Changelog
+
+### 2026-09-12 — § 15 gains a tile-MCC column and a second Pareto frontier
+
+**Refresh trigger**: the PI's ruling, during the K-ladder § 4.1 campaign
+(`results/k-ladder-2026-09-12/findings.md`), that `pass-budget-pareto-v2` —
+stated on F1 alone — gains a tile-MCC column. The K-ladder result is that pass
+count buys localisation and not tile discrimination; the Pareto board is the
+place a reader acts on a spend decision, so it should show both metrics.
+
+**How**: `scripts/build_pareto_v2.py` extended (not rewritten). Each rung now
+declares the registered condition it is; the script gates that the condition's
+`detections` path in `results/run-conditions.json` is the geojson it scores,
+reads the MCC from that condition's committed `evaluation.json`, and re-derives
+the per-tile classification from the same geojson to check the confusion cells
+against the record. The C(7,2) round-robin also runs on tile-MCC, through
+`pairwise_permutation_test.permutation_test_mcc_arrays` — the MCC sibling of the
+F1 kernel, drawing the same swap masks from seed 42 — with its own BH family.
+Run on sapphire, US$0, zero API calls.
+
+**What moved**:
+
+| claim | before | after |
+|---|---|---|
+| § 15 table | F1@20 m only | + tile-MCC column and an MCC frontier column |
+| Pareto-efficient set | `min6, min11, high31, high35` (F1) | unchanged on F1; **`min6, min11` on tile-MCC** |
+| highest-scoring rung | high35 (F1 0.8951, $71.23) | unchanged on F1; **min11 leads on MCC (0.8068, $4.00)** |
+| statistical separation | "one statistical tier (0/21 pairs)" on F1 | unchanged; **also one tier on MCC (0/21 pairs)** |
+| `pareto_v2.png` | one panel (cost × F1) | two panels: (a) cost × F1@20 m, (b) cost × tile-MCC |
+
+**What did NOT change**: the cost model and every dollar figure; the F1 column,
+the F1 round-robin and the F1 tiering; the registered analysis row
+`pass-budget-pareto-v2`, whose `outcome`, counts and signature
+(`manually_verified_at: 2026-06-12T06:59:01Z`) are untouched — a proposed
+amendment naming the MCC-efficient set is put to the PI in
+`reports/k-ladder-mcc-test-2026-09-12.md` rather than applied here; §§ 12, 16
+and 17.
+
+**Caveat recorded in the body**: on the 487-tile Era-2 frame, `min6`, `high11`
+and `high31` share one identical tile confusion (188/247/11/41) and therefore one
+MCC, so the metric is too coarse to rank fine-grained rungs there — and none of
+the 21 MCC pairs separates. Artefacts: `pareto/pareto_v2.{json,png}`. Landed in
+commit `605def6d2`.
 
 ### 2026-06-13 — Currency sweep: last pre-audit dollar corrected (§ 16)
 

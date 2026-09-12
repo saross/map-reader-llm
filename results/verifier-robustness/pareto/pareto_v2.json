@@ -28,76 +28,800 @@
     "high31",
     "high35"
   ],
+  "mcc": {
+    "statistic": "tile-level MCC from each rung's committed evaluation, gated by rebuilding the per-tile classification through the house definition",
+    "frame": "Era-2, 487 tiles (inputs/vectors/bounds/384/full_evaluation_bounds.geojson)",
+    "buffer_invariance": "tile truth is intersection with any reference and tile prediction is any detection assigned to the tile, so no matching tolerance enters: this MCC is the same number at every F1 buffer",
+    "kernel": "pairwise_permutation_test.permutation_test_mcc_arrays (same seed, same tile order, therefore the same swap masks as the F1 round-robin)",
+    "tiers": [
+      [
+        "min11",
+        "high35",
+        "min6",
+        "high11",
+        "high31",
+        "high5+5vf",
+        "high6"
+      ]
+    ],
+    "pareto_efficient": [
+      "min6",
+      "min11"
+    ],
+    "n_significant": 0,
+    "pairwise": [
+      {
+        "a": "min6",
+        "b": "min11",
+        "mcc_a": 0.790252,
+        "mcc_b": 0.806796,
+        "confusion_a": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "confusion_b": {
+          "tp": 185,
+          "tn": 253,
+          "fp": 5,
+          "fn": 44
+        },
+        "observed_mcc_diff": -0.016543,
+        "p_value": 0.3612,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -5.7e-05,
+          "std": 0.018038,
+          "percentile_2.5": -0.035614,
+          "percentile_97.5": 0.037363
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "min6",
+        "b": "high6",
+        "mcc_a": 0.790252,
+        "mcc_b": 0.769327,
+        "confusion_a": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "confusion_b": {
+          "tp": 180,
+          "tn": 249,
+          "fp": 9,
+          "fn": 49
+        },
+        "observed_mcc_diff": 0.020926,
+        "p_value": 0.3576,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000254,
+          "std": 0.022574,
+          "percentile_2.5": -0.042876,
+          "percentile_97.5": 0.042876
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "min6",
+        "b": "high5+5vf",
+        "mcc_a": 0.790252,
+        "mcc_b": 0.771253,
+        "confusion_a": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "confusion_b": {
+          "tp": 183,
+          "tn": 247,
+          "fp": 11,
+          "fn": 46
+        },
+        "observed_mcc_diff": 0.019,
+        "p_value": 0.4391,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000262,
+          "std": 0.022725,
+          "percentile_2.5": -0.044944,
+          "percentile_97.5": 0.044944
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "min6",
+        "b": "high11",
+        "mcc_a": 0.790252,
+        "mcc_b": 0.790252,
+        "confusion_a": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "confusion_b": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "observed_mcc_diff": 0.0,
+        "p_value": 1.0,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000387,
+          "std": 0.02147,
+          "percentile_2.5": -0.042575,
+          "percentile_97.5": 0.042575
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "a": "min6",
+        "b": "high31",
+        "mcc_a": 0.790252,
+        "mcc_b": 0.790252,
+        "confusion_a": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "confusion_b": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "observed_mcc_diff": 0.0,
+        "p_value": 1.0,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.0003,
+          "std": 0.022753,
+          "percentile_2.5": -0.044036,
+          "percentile_97.5": 0.044036
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "a": "min6",
+        "b": "high35",
+        "mcc_a": 0.790252,
+        "mcc_b": 0.794077,
+        "confusion_a": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "confusion_b": {
+          "tp": 189,
+          "tn": 247,
+          "fp": 11,
+          "fn": 40
+        },
+        "observed_mcc_diff": -0.003824,
+        "p_value": 0.9185,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000264,
+          "std": 0.022434,
+          "percentile_2.5": -0.043506,
+          "percentile_97.5": 0.044937
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "a": "min11",
+        "b": "high6",
+        "mcc_a": 0.806796,
+        "mcc_b": 0.769327,
+        "confusion_a": {
+          "tp": 185,
+          "tn": 253,
+          "fp": 5,
+          "fn": 44
+        },
+        "confusion_b": {
+          "tp": 180,
+          "tn": 249,
+          "fp": 9,
+          "fn": 49
+        },
+        "observed_mcc_diff": 0.037469,
+        "p_value": 0.1078,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000202,
+          "std": 0.022785,
+          "percentile_2.5": -0.044901,
+          "percentile_97.5": 0.044901
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "min11",
+        "b": "high5+5vf",
+        "mcc_a": 0.806796,
+        "mcc_b": 0.771253,
+        "confusion_a": {
+          "tp": 185,
+          "tn": 253,
+          "fp": 5,
+          "fn": 44
+        },
+        "confusion_b": {
+          "tp": 183,
+          "tn": 247,
+          "fp": 11,
+          "fn": 46
+        },
+        "observed_mcc_diff": 0.035543,
+        "p_value": 0.1314,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000209,
+          "std": 0.023314,
+          "percentile_2.5": -0.044922,
+          "percentile_97.5": 0.044898
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "min11",
+        "b": "high11",
+        "mcc_a": 0.806796,
+        "mcc_b": 0.790252,
+        "confusion_a": {
+          "tp": 185,
+          "tn": 253,
+          "fp": 5,
+          "fn": 44
+        },
+        "confusion_b": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "observed_mcc_diff": 0.016543,
+        "p_value": 0.473,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000335,
+          "std": 0.022459,
+          "percentile_2.5": -0.044888,
+          "percentile_97.5": 0.044888
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "min11",
+        "b": "high31",
+        "mcc_a": 0.806796,
+        "mcc_b": 0.790252,
+        "confusion_a": {
+          "tp": 185,
+          "tn": 253,
+          "fp": 5,
+          "fn": 44
+        },
+        "confusion_b": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "observed_mcc_diff": 0.016543,
+        "p_value": 0.4737,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000246,
+          "std": 0.022382,
+          "percentile_2.5": -0.044888,
+          "percentile_97.5": 0.044888
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "min11",
+        "b": "high35",
+        "mcc_a": 0.806796,
+        "mcc_b": 0.794077,
+        "confusion_a": {
+          "tp": 185,
+          "tn": 253,
+          "fp": 5,
+          "fn": 44
+        },
+        "confusion_b": {
+          "tp": 189,
+          "tn": 247,
+          "fp": 11,
+          "fn": 40
+        },
+        "observed_mcc_diff": 0.012719,
+        "p_value": 0.5738,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000209,
+          "std": 0.021731,
+          "percentile_2.5": -0.041119,
+          "percentile_97.5": 0.042846
+        },
+        "bh_adjusted_p": 0.8607,
+        "significant": false
+      },
+      {
+        "a": "high6",
+        "b": "high5+5vf",
+        "mcc_a": 0.769327,
+        "mcc_b": 0.771253,
+        "confusion_a": {
+          "tp": 180,
+          "tn": 249,
+          "fp": 9,
+          "fn": 49
+        },
+        "confusion_b": {
+          "tp": 183,
+          "tn": 247,
+          "fp": 11,
+          "fn": 46
+        },
+        "observed_mcc_diff": -0.001926,
+        "p_value": 1.0,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -1e-05,
+          "std": 0.009214,
+          "percentile_2.5": -0.020599,
+          "percentile_97.5": 0.020599
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "a": "high6",
+        "b": "high11",
+        "mcc_a": 0.769327,
+        "mcc_b": 0.790252,
+        "confusion_a": {
+          "tp": 180,
+          "tn": 249,
+          "fp": 9,
+          "fn": 49
+        },
+        "confusion_b": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "observed_mcc_diff": -0.020926,
+        "p_value": 0.2691,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000138,
+          "std": 0.018922,
+          "percentile_2.5": -0.035331,
+          "percentile_97.5": 0.035331
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "high6",
+        "b": "high31",
+        "mcc_a": 0.769327,
+        "mcc_b": 0.790252,
+        "confusion_a": {
+          "tp": 180,
+          "tn": 249,
+          "fp": 9,
+          "fn": 49
+        },
+        "confusion_b": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "observed_mcc_diff": -0.020926,
+        "p_value": 0.2895,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -4.9e-05,
+          "std": 0.019663,
+          "percentile_2.5": -0.037069,
+          "percentile_97.5": 0.037052
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "high6",
+        "b": "high35",
+        "mcc_a": 0.769327,
+        "mcc_b": 0.794077,
+        "confusion_a": {
+          "tp": 180,
+          "tn": 249,
+          "fp": 9,
+          "fn": 49
+        },
+        "confusion_b": {
+          "tp": 189,
+          "tn": 247,
+          "fp": 11,
+          "fn": 40
+        },
+        "observed_mcc_diff": -0.02475,
+        "p_value": 0.1894,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -1.2e-05,
+          "std": 0.019151,
+          "percentile_2.5": -0.037377,
+          "percentile_97.5": 0.037377
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "high5+5vf",
+        "b": "high11",
+        "mcc_a": 0.771253,
+        "mcc_b": 0.790252,
+        "confusion_a": {
+          "tp": 183,
+          "tn": 247,
+          "fp": 11,
+          "fn": 46
+        },
+        "confusion_b": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "observed_mcc_diff": -0.019,
+        "p_value": 0.368,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000127,
+          "std": 0.019131,
+          "percentile_2.5": -0.037343,
+          "percentile_97.5": 0.037343
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "high5+5vf",
+        "b": "high31",
+        "mcc_a": 0.771253,
+        "mcc_b": 0.790252,
+        "confusion_a": {
+          "tp": 183,
+          "tn": 247,
+          "fp": 11,
+          "fn": 46
+        },
+        "confusion_b": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "observed_mcc_diff": -0.019,
+        "p_value": 0.3721,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -3.9e-05,
+          "std": 0.019106,
+          "percentile_2.5": -0.037343,
+          "percentile_97.5": 0.037343
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "high5+5vf",
+        "b": "high35",
+        "mcc_a": 0.771253,
+        "mcc_b": 0.794077,
+        "confusion_a": {
+          "tp": 183,
+          "tn": 247,
+          "fp": 11,
+          "fn": 46
+        },
+        "confusion_b": {
+          "tp": 189,
+          "tn": 247,
+          "fp": 11,
+          "fn": 40
+        },
+        "observed_mcc_diff": -0.022824,
+        "p_value": 0.256,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -3e-06,
+          "std": 0.018597,
+          "percentile_2.5": -0.035081,
+          "percentile_97.5": 0.035081
+        },
+        "bh_adjusted_p": 0.765208,
+        "significant": false
+      },
+      {
+        "a": "high11",
+        "b": "high31",
+        "mcc_a": 0.790252,
+        "mcc_b": 0.790252,
+        "confusion_a": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "confusion_b": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "observed_mcc_diff": 0.0,
+        "p_value": 1.0,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 8.7e-05,
+          "std": 0.009861,
+          "percentile_2.5": -0.016738,
+          "percentile_97.5": 0.016738
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "a": "high11",
+        "b": "high35",
+        "mcc_a": 0.790252,
+        "mcc_b": 0.794077,
+        "confusion_a": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "confusion_b": {
+          "tp": 189,
+          "tn": 247,
+          "fp": 11,
+          "fn": 40
+        },
+        "observed_mcc_diff": -0.003824,
+        "p_value": 0.9414,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 0.000122,
+          "std": 0.011132,
+          "percentile_2.5": -0.021991,
+          "percentile_97.5": 0.021991
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "a": "high31",
+        "b": "high35",
+        "mcc_a": 0.790252,
+        "mcc_b": 0.794077,
+        "confusion_a": {
+          "tp": 188,
+          "tn": 247,
+          "fp": 11,
+          "fn": 41
+        },
+        "confusion_b": {
+          "tp": 189,
+          "tn": 247,
+          "fp": 11,
+          "fn": 40
+        },
+        "observed_mcc_diff": -0.003824,
+        "p_value": 1.0,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 3.5e-05,
+          "std": 0.007433,
+          "percentile_2.5": -0.012907,
+          "percentile_97.5": 0.012907
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      }
+    ]
+  },
   "rungs": [
     {
       "rung": "high35",
       "f1": 0.8951,
+      "mcc": 0.7941,
+      "tile_confusion": {
+        "tp": 189,
+        "tn": 247,
+        "fp": 11,
+        "fn": 40
+      },
+      "condition_ref": "verifier-robustness::verified-384-16of30-t0-3-n5-opmax",
+      "eval_path": "results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.json",
       "passes": 35,
       "est_cost_usd": 71.23,
       "est_cost_55map_usd": 1249.16,
       "proposer": "30xHIGH",
       "verifier": "n=5 over 729 crops",
-      "tier": 1
+      "tier": 1,
+      "tier_mcc": 1
     },
     {
       "rung": "high31",
       "f1": 0.8902,
+      "mcc": 0.7903,
+      "tile_confusion": {
+        "tp": 188,
+        "tn": 247,
+        "fp": 11,
+        "fn": 41
+      },
+      "condition_ref": "pv-diag-384::verified-adv-text-consensus-16of30",
+      "eval_path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
       "passes": 31,
       "est_cost_usd": 69.21,
       "est_cost_55map_usd": 1213.72,
       "proposer": "30xHIGH",
       "verifier": "n=1 over 729 crops",
-      "tier": 1
+      "tier": 1,
+      "tier_mcc": 1
     },
     {
       "rung": "min11",
       "f1": 0.8835,
+      "mcc": 0.8068,
+      "tile_confusion": {
+        "tp": 185,
+        "tn": 253,
+        "fp": 5,
+        "fn": 44
+      },
+      "condition_ref": "pv-diag-384::verified-adv-text-min-6of10",
+      "eval_path": "results/flash35-2x2/evals/min11/evaluation.json",
       "passes": 11,
       "est_cost_usd": 4.0,
       "est_cost_55map_usd": 70.22,
       "proposer": "10xMIN",
       "verifier": "n=1 over 1939 crops",
-      "tier": 1
+      "tier": 1,
+      "tier_mcc": 1
     },
     {
       "rung": "min6",
       "f1": 0.8784,
+      "mcc": 0.7903,
+      "tile_confusion": {
+        "tp": 188,
+        "tn": 247,
+        "fp": 11,
+        "fn": 41
+      },
+      "condition_ref": "pv-diag-384::verified-adv-text-min-true-3of5",
+      "eval_path": "results/flash35-2x2/evals/min6-true/evaluation.json",
       "passes": 6,
       "est_cost_usd": 2.43,
       "est_cost_55map_usd": 42.6,
       "proposer": "5xMIN",
       "verifier": "n=1 over 1586 crops",
-      "tier": 1
+      "tier": 1,
+      "tier_mcc": 1
     },
     {
       "rung": "high11",
       "f1": 0.8769,
+      "mcc": 0.7903,
+      "tile_confusion": {
+        "tp": 188,
+        "tn": 247,
+        "fp": 11,
+        "fn": 41
+      },
+      "condition_ref": "pv-diag-384::verified-adv-text-6of10",
+      "eval_path": "results/verifier-robustness/evals/verified-adv-text-6of10/evaluation.json",
       "passes": 11,
       "est_cost_usd": 26.97,
       "est_cost_55map_usd": 472.91,
       "proposer": "10xHIGH",
       "verifier": "n=1 over 5866 crops",
-      "tier": 1
+      "tier": 1,
+      "tier_mcc": 1
     },
     {
       "rung": "high5+5vf",
       "f1": 0.8739,
+      "mcc": 0.7713,
+      "tile_confusion": {
+        "tp": 183,
+        "tn": 247,
+        "fp": 11,
+        "fn": 46
+      },
+      "condition_ref": "verifier-robustness::verified-384-ge3of5-t0-3-n5",
+      "eval_path": "results/verifier-robustness/evals/verified-384-ge3of5-t0-3-n5/evaluation.json",
       "passes": 10,
       "est_cost_usd": 14.41,
       "est_cost_55map_usd": 252.77,
       "proposer": "5xHIGH",
       "verifier": "n=5 over 855 crops",
-      "tier": 1
+      "tier": 1,
+      "tier_mcc": 1
     },
     {
       "rung": "high6",
       "f1": 0.8641,
+      "mcc": 0.7693,
+      "tile_confusion": {
+        "tp": 180,
+        "tn": 249,
+        "fp": 9,
+        "fn": 49
+      },
+      "condition_ref": "pv-diag-384::verified-adv-text-4of5",
+      "eval_path": "results/verifier-robustness/evals/verified-adv-text-4of5/evaluation.json",
       "passes": 6,
       "est_cost_usd": 14.04,
       "est_cost_55map_usd": 246.22,
       "proposer": "5xHIGH",
       "verifier": "n=1 over 3736 crops",
-      "tier": 1
+      "tier": 1,
+      "tier_mcc": 1
     }
   ],
   "pairwise": [

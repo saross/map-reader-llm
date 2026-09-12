@@ -4,13 +4,13 @@
  "frame": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
  "frame_id": "era2-b-487",
  "re_sign_pending": {
-  "status": "PENDING \u2014 the PI re-signs",
-  "reason": "PI ruling R3 (2026-09-12): K = 1 admitted, so the board grew from 79 cells to 103 \u2014 the twenty single-pass proposer-verifier cells, the three K = 3 archived sweep optima promoted from off-board, and the September recovery pair of pv-high-text-t0.0-n3. Re-tiered and the MCB recomputed last. Tier 1 and its five members are unchanged.",
+  "status": "RE-SIGNED 2026-09-12T06:04:30Z by the PI (S153)",
+  "reason": "PI ruling R3 (2026-09-12): K = 1 admitted, so the board grew from 79 cells to 103 — the twenty single-pass proposer-verifier cells, the three K = 3 archived sweep optima promoted from off-board, and the September recovery pair of pv-high-text-t0.0-n3. Re-tiered and the MCB recomputed last. Tier 1 and its five members are unchanged.",
   "signed_outcome": "1845/3081 pairs significant at BH q = 0.05, 7 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 28. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 39/39; G6 max |delta| 0.0078.",
   "proposed_outcome": "3651/5253 pairs significant at BH q = 0.05, 12 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 49. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 60/60; G6 max |delta| 0.0078.",
   "signed_n_conditions_compared": 79,
   "proposed_n_conditions_compared": 103,
-  "tiering_membership_source": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering-input/run-analyses.json \u2014 the register's row was NOT amended; see scripts/build_board_tiering_input.py",
+  "tiering_membership_source": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering-input/run-analyses.json — the register's row was NOT amended; see scripts/build_board_tiering_input.py",
   "untouched_fields": [
    "manually_verified_at",
    "_signature_note",
@@ -22,7 +22,7 @@
  "frame_provenance": "inputs/vectors/bounds/384/era2_b_intersection_bounds.provenance.json",
  "membership": {
   "n": 103,
-  "rule": "card \u00a7 3 under the \u00a7 2 frame rule; see membership.json",
+  "rule": "card § 3 under the § 2 frame rule; see membership.json",
   "n_era2b": 60,
   "n_opmax": 43,
   "opmax": "the archived Era-2 PV board's sweep-optimal cells (opmax/membership.json)"
@@ -192,7 +192,7 @@
      }
     ],
     "tiers_changed": "tiers 5 and 6 (the bottom of the image block) re-cut: archived 6 + 4 cells, rebuilt 9 + 1; tiers 1-4 identical member-for-member",
-    "reading": "43 of 44 cells reproduce F1@20 exactly and 945 of 946 pairs keep their verdict; one image PV cell moves +0.0015 F1 under the current evaluator (builder git 005e6c71 on 2026-08-20 vs be01df377 today), enough to lift one BH-adjusted p across 0.05 and merge the two bottom image tiers. Instrument drift in the RETIRED builder on one archived input; the new board is scored and tiered by the register-driven chain, whose reproduction gate is G2. Publication decision (card \u00a7 6: nothing published unless all gates pass) is the PI's."
+    "reading": "43 of 44 cells reproduce F1@20 exactly and 945 of 946 pairs keep their verdict; one image PV cell moves +0.0015 F1 under the current evaluator (builder git 005e6c71 on 2026-08-20 vs be01df377 today), enough to lift one BH-adjusted p across 0.05 and merge the two bottom image tiers. Instrument drift in the RETIRED builder on one archived input; the new board is scored and tiered by the register-driven chain, whose reproduction gate is G2. Publication decision (card § 6: nothing published unless all gates pass) is the PI's."
    },
    "verdict": "FAIL as specified (archived inputs are not, for one cell, the inputs the archived board scored); PASS from the inputs actually scored (confirmatory rebuild 817de06a0: 44/44, 946/946, tiers identical); no evaluator drift - see bisect",
    "bisect": {
@@ -257,7 +257,7 @@
     "evaluator_drift": "none on this input: 15 commits touched the evaluator chain between 005e6c71 and HEAD (evaluate_detections.py, lib_advanced_metrics.py, lib_detection_paths.py, build_tiered_leaderboard.py); GT and both bounds blobs identical at 005e6c71 and HEAD; the archived numbers reproduce to 4 dp today",
     "mechanism": "stale label-keyed evaluation cache (wrong-source cache): the archived board's score for this cell was computed from a 372-feature blob that its own archived input no longer is; the class of feedback_feature_count_crosscheck (cache n_detections 372 != archived feature count 373)",
     "date_correction": "the original reading's '005e6c71 on 2026-08-20' was wrong: 005e6c71 is dated 2026-05-06; 2026-08-20 is b69d8af4b, the archive move",
-    "reading": "G1's premise (archived inputs = the inputs the archived board scored) is false for one cell. From the blob it actually scored, the archived board reproduces 44 of 44 under today's evaluator; the retired builder has not drifted. The +0.0015, the one BH flip and the Tier 5-6 re-cut are what the archived board WOULD have shown on 2026-05-06 had its cache been invalidated. Publication ruling remains the PI's under card \u00a7 6.",
+    "reading": "G1's premise (archived inputs = the inputs the archived board scored) is false for one cell. From the blob it actually scored, the archived board reproduces 44 of 44 under today's evaluator; the retired builder has not drifted. The +0.0015, the one BH flip and the Tier 5-6 re-cut are what the archived board WOULD have shown on 2026-05-06 had its cache been invalidated. Publication ruling remains the PI's under card § 6.",
     "sidecar": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g1-bisect-rescore.json",
     "script": "scripts/g1_drift_bisect_rescore.py",
     "confirmatory_rebuild": {
@@ -375,12 +375,19 @@
   "generated_at_utc": "2026-09-12T01:23:36.138692+00:00"
  },
  "finalised_at_utc": "2026-09-12T01:30:17+00:00",
- "signed_at": "2026-09-10T12:34:56Z",
+ "signed_at": "2026-09-12T06:04:30Z",
  "_carried_forward": {
   "fields": [
    "signed_at",
    "gates.G1.pi_ruling"
   ],
   "why": "no gate artefact records these, so finalise carries them from the previous provenance.json rather than rebuilding them away; they are the PI's and only the PI sets them"
- }
+ },
+ "signature_history": [
+  {
+   "signed_at": "2026-09-10T12:34:56Z",
+   "n_conditions_compared": 79,
+   "note": "original signature; text preserved in the register row"
+  }
+ ]
 }
