@@ -509,3 +509,154 @@ def test_fmt_renders_missing_values_as_an_em_dash() -> None:
     assert tables.fmt(None) == "—"
     assert tables.fmt(0.8735) == "0.8735"
     assert tables.fmt(412, 0) == "412"
+
+
+# --------------------------------------------------------------------------
+# Reuse of the existing gated instrument
+# --------------------------------------------------------------------------
+
+
+def _phase2_ladder(
+    pool: str,
+    *,
+    ks: tuple[int, ...] = (1, 3, 5, 10),
+    with_carried: bool = True,
+    committed_ids: bool = True,
+) -> dict:
+    """Build a synthetic Phase 2 ladder in ``build()``'s output shape."""
+    rungs = []
+    for k in ks:
+        new = k in (1, 3)
+        point = {
+            "vote_t": k,
+            "prob_t": 0.15,
+            "n_detections": 400 - k,
+            "f1_20": 0.85 + k / 1000,
+            "tile_mcc": 0.78,
+            "eval_path": f"results/x/cells/{pool}-k{k}/evaluation.json",
+        }
+        rung: dict = {
+            "K": k,
+            "source": "phase-2 (new, this run)" if new else "committed (signed board)",
+            "candidates": 1000 + k,
+            "all_in_flex_usd": 1.0 + k,
+            "opmax": dict(point),
+            "carried": {
+                "k-equals-K": dict(point) if with_carried else {},
+                "stride-shell": dict(point) if with_carried else {},
+            },
+        }
+        if new:
+            rung["labels"] = {
+                "opmax": f"lab-k{k}-opmax",
+                "carried": f"lab-k{k}-carried",
+            }
+            rung["carried_identical_to_opmax"] = False
+        elif committed_ids:
+            rung["condition_id"] = f"pv-diag-384::committed-k{k}-opmax"
+        rungs.append(rung)
+    return {
+        "family": f"synthetic {pool}",
+        "proposer_pool": pool,
+        "run_id": (
+            "gemini37-screen-2026-08-28"
+            if pool == "g384_ov192_g37"
+            else "pv-diag-384"
+        ),
+        "thinking_level": "minimal",
+        "modality": "text",
+        "temperature": 0.7,
+        "pass_usd": 0.266,
+        "pass_usd_anchor": "synthetic",
+        "corpus": "4-map-gs",
+        "frame": "era2-b-487",
+        "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+        "headline_buffer_m": 20,
+        "r1_verifier": True,
+        "n_rungs": len(rungs),
+        "rungs": rungs,
+    }
+
+
+def test_compat_inventory_uses_the_opmax_basis_for_pv_families() -> None:
+    """The thirteen pv-diag-384 families tier on opmax at all four rungs."""
+    payload = {
+        "generated_at_utc": "2026-09-12T00:00:00+00:00",
+        "ladders": [_phase2_ladder("image-n5-image-t0.7")],
+    }
+    compat = tables.compat_inventory(payload)
+    assert compat["n_ladders"] == 1
+    ladder = compat["ladders"][0]
+    assert ladder["operating_point_basis"] == "opmax"
+    assert [rung["K"] for rung in ladder["rungs"]] == [1, 3, 5, 10]
+    assert ladder["rungs"][0]["condition_id"] == "pv-diag-384::lab-k1-opmax"
+    assert (
+        ladder["rungs"][3]["condition_id"]
+        == "pv-diag-384::committed-k10-opmax"
+    )
+
+
+def test_compat_inventory_uses_the_carried_basis_for_the_g37_family() -> None:
+    """The 3.7 GS family's committed rungs are carried cells, so it tiers there."""
+    payload = {
+        "generated_at_utc": "2026-09-12T00:00:00+00:00",
+        "ladders": [_phase2_ladder("g384_ov192_g37", committed_ids=False)],
+    }
+    compat = tables.compat_inventory(payload)
+    ladder = compat["ladders"][0]
+    assert ladder["operating_point_basis"] == "carried"
+    committed = [rung for rung in ladder["rungs"] if rung["K"] in (5, 10)]
+    assert all(
+        rung["condition_id"].endswith(f"-carried-p0.10-k{rung['K']}-era2b")
+        for rung in committed
+    )
+
+
+def test_compat_inventory_skips_a_ladder_with_too_few_rungs() -> None:
+    """A two-rung family must be skipped with its reason recorded, not emitted."""
+    payload = {
+        "generated_at_utc": "2026-09-12T00:00:00+00:00",
+        "ladders": [_phase2_ladder("image-n5-image-t0.3", ks=(5, 10))],
+    }
+    compat = tables.compat_inventory(payload)
+    assert compat["n_ladders"] == 0
+    assert compat["n_skipped"] == 1
+    assert compat["skipped"][0]["n_resolvable_rungs"] == 2
+    assert "three" in compat["skipped"][0]["why"]
+
+
+def test_compat_inventory_gives_every_ladder_a_distinct_slug() -> None:
+    """Fourteen gold-standard ladders must not collapse onto one slug."""
+    payload = {
+        "generated_at_utc": "2026-09-12T00:00:00+00:00",
+        "ladders": [
+            _phase2_ladder(pool)
+            for pool in ("image-n5-image-t0.3", "image-n5-image-t0.7")
+        ],
+    }
+    compat = tables.compat_inventory(payload)
+    slugs = [ladder["slug"] for ladder in compat["ladders"]]
+    assert len(slugs) == len(set(slugs)) == 2
+
+
+def test_instrument_honours_an_explicit_slug() -> None:
+    """k_ladder_mcc_test.slug_for must prefer a named slug over the corpus rule.
+
+    Without this the corpus == "4-map-gs" rule returns "gs-stride-a" for every
+    gold-standard ladder, collapsing fourteen Phase 2 ladders onto one
+    directory and routing them at the prebuilt Phase-1 input.
+    """
+    from scripts import k_ladder_mcc_test
+
+    assert (
+        k_ladder_mcc_test.slug_for(
+            {"slug": "phase2-image-n5-image-t0-7", "corpus": "4-map-gs"}
+        )
+        == "phase2-image-n5-image-t0-7"
+    )
+    # The Phase-1 inventory names no slugs, so its behaviour is unchanged.
+    assert (
+        k_ladder_mcc_test.slug_for({"corpus": "4-map-gs", "rungs": []})
+        == "gs-stride-a"
+    )
