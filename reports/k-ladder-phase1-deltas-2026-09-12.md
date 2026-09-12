@@ -232,11 +232,11 @@ Every figure is anchored inside
 
 | run | result |
 |---|---|
-| before the last two commits | 2 failed, 2,242 passed, 1 skipped, 3 xfailed — both failures `tests/test_selection_aware_intervals.py`, **caused by this run** (the `--board` stub had a fixed signature and the MCB gained `analyses_path` / `conditions_path`) |
-| after fixing them | `tests/test_selection_aware_intervals.py` 8 passed, including one new test that the membership-source override is recorded in the artefact |
+| mid-batch | 2 failed, 2,242 passed, 1 skipped, 3 xfailed — both failures `tests/test_selection_aware_intervals.py`, **caused by this run** (the `--board` stub had a fixed signature and the MCB gained `analyses_path` / `conditions_path`) |
+| after fixing them and extending the test | **2,245 passed, 1 skipped, 27 deselected, 3 xfailed, 0 failed** in 226.56 s |
 
 `tests/test_per_arch_md_ownership.py`, the known environment-only failure the run
-card said to expect, did **not** fail here.
+card said to expect, did **not** fail here — its 20 tests pass in this worktree.
 
 New tier-1 tests this run: `tests/test_build_gs_era2_board_opmax_archived_counts.py`
 (4) and `test_board_membership_source_override_is_recorded` (1).
