@@ -1,5 +1,9 @@
 # Confidence Interval (CI) Metadata Registry
 
+> **Last revised**: 2026-09-12 (both `all-bootstrap-cis.json` rows refreshed
+> after the E70 stale-source re-run). See [§ Changelog](#changelog) for
+> revision history.
+
 Generated: 2026-04-20. Maintainer: `shawn@faims.edu.au`.
 
 ## Purpose
@@ -94,8 +98,8 @@ rows with no sidecar show `—`.
 | `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` | 12 | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-04-18T17:48Z | YES_SIDECAR | `outputs/55maps-text-high-generalisation/evaluation/evaluation.metadata.json` | Sister text-high track; no run.log, values resolved from `resolved_config.yaml`. |
 | `outputs/55maps-text-min-generalisation/evaluation/evaluation.json` | 12 | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-04-18T12:21Z | YES_SIDECAR | `outputs/55maps-text-min-generalisation/evaluation/evaluation.metadata.json` | Sister text-min track; `run.log` present; sidecar includes CLI invocation. |
 | `outputs/h11/single-pass-384-UNINTENDED-T1.0/analysis_report.json` | ≥ 12 | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/analyse_phase2_results.py` | not recorded | 2026-03-14T11:13Z | YES_SIDECAR | `outputs/h11/single-pass-384-UNINTENDED-T1.0/analysis_report.metadata.json` | `n_bootstrap=1000` in file; seed defaults to 42 in script. UNINTENDED (protocol deviation); kept for provenance. |
-| `results/all-bootstrap-cis.json` | 2976 | bootstrap percentile | 1000 | 42 | tile | `scripts/consolidate_pv_bootstrap_cis.py` | not recorded | per-entry | YES | — | `_metadata.n_bootstrap=1000, _metadata.random_seed=42` explicit in file. Each entry carries `n_iterations`, `source_file`. |
-| `results/pv/all-bootstrap-cis.json` | (aggregate) | bootstrap percentile | 1000 | 42 | tile | `scripts/consolidate_pv_bootstrap_cis.py` | not recorded | per-entry | YES | — | Same structure as the repo-root aggregate. |
+| `results/all-bootstrap-cis.json` | 2976 | bootstrap percentile | 1000 | 42 | tile | `scripts/repair_bootstrap_cis.py` (2026-09-12 re-run; the March 2026 producer was never committed and the `consolidate_pv_bootstrap_cis.py` attribution this row previously carried was wrong — that script consolidates PV threshold sweeps and cannot write this schema) | not recorded | per-entry | YES | — | **Paper-citable: all 472 resolvable entries, current as of 2026-09-12.** `_metadata.n_bootstrap=1000, _metadata.random_seed=42` explicit in file; each entry carries `n_iterations`, `source_file`, `source_file_original`. 85 entries were re-run on 2026-09-12 because the E70 recovery campaign grew their source pass files after their CIs were computed; their superseded values are preserved per entry in `pre_e70` and must not be cited. The 24 `consensus:<label>` entries carry `source_status=unresolved` — the N=30 merge they scored was built in memory and never written, so they cannot be re-verified against a file; cite with that caveat. Drift gate: `scripts/check_bootstrap_cis.py --check --allow-annotated` (tier-1 test `tests/test_check_bootstrap_cis.py`). |
+| `results/pv/all-bootstrap-cis.json` | (aggregate) | bootstrap percentile | 1000 | 42 | tile | `scripts/repair_bootstrap_cis.py` (see the row above) | not recorded | per-entry | YES | — | Byte-identical duplicate of the repo-root aggregate, before and after the 2026-09-12 repair (sha256 verified both times). Every caveat in the row above applies unchanged. |
 | `results/pv/pairwise-effects/pairwise-effect-sizes.json` | 52 comparisons | paired bootstrap percentile | 1000 | 42 | tile (paired) | `scripts/compute-pairwise-effect-sizes.py` | not recorded | per-entry | YES | — | `metadata.n_iterations=1000, metadata.random_seed=42` explicit. |
 | `results/pv/pairwise-effects/pairwise-effect-sizes-v2.json` | 52 comparisons | paired bootstrap percentile | 1000 | 42 | tile (paired) | `scripts/compute-pairwise-effect-sizes.py` | not recorded | per-entry | YES | — | Same, v2. |
 | `results/pv/phase1/**/threshold_sweep.json` (7 files) | 21 thresholds × 3 metrics × 7 files | bootstrap percentile | 1000 | 42 | tile | `scripts/run_pv.py` (threshold sweep) | not recorded | per-file | YES | — | Each file records `bootstrap_iterations=1000, seed=42` explicitly. |
@@ -327,8 +331,15 @@ was flagged `true` anywhere in the pass.
   `results/leaderboard/era2/.cache/evaluations/**` (all share script
   defaults; tier file carries explicit run metadata).
 - `results/all-bootstrap-cis.json` → individual `detections_*.geojson`
-  raw files under `data/retest/**` (aggregate records the chain via
-  `source_file` per entry).
+  raw files under `outputs/retest/**` (456 entries) and
+  `archive/outputs-experimental-pilot/pv/consensus-proposers/**` (16
+  entries); the aggregate records the chain via `source_file` per entry.
+  **Corrected 2026-09-12**: this line previously read `data/retest/**`, a
+  tree that has never existed in this repository, and so did every
+  `source_file` in the file itself. Paths repaired in place, originals
+  preserved per entry in `source_file_original`. The remaining 24 entries
+  are `consensus:<label>` pseudo-paths with no file at the end of the
+  chain (`source_status=unresolved`).
 - `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json`
   (measured block) ← `outputs/55maps-image-generalisation/evaluation/evaluation.json`.
 
@@ -341,3 +352,60 @@ n_bootstrap, "seed": seed, "resampling_unit": "tile", "git_commit":
 <sha>}` — would move every INFERABLE entry to YES without re-running
 any experiments. See `archive/planning-completed-session-81-82/ci-rerun-todo.md` §§ "Durable
 mitigation" for the proposed patch.
+
+## Changelog
+
+### 2026-09-12 — E70 stale-source re-run and path repair
+
+**Trigger.** `reports/name-keyed-cache-audit-2026-09-12.md` § 4 Finding 1
+established that every `source_file` in both `all-bootstrap-cis.json` copies
+named a `data/**` tree that has never existed here, and that 85 of the
+resolvable entries had been computed from pass files the March 2026 E70
+recovery campaign
+(`docs/methodology/preregistration/protocol-errata.md:3154-3199`) later grew in
+place. The Principal Investigator ruled that the store be made wholly current
+by re-running the stale entries rather than annotated as partly uncitable.
+
+**Reproduction gate.** Before anything was rewritten, five already-matching
+entries were recomputed and compared against their committed values. All five
+reproduced to `|Δ| = 0.000e+00` on every bound of all three metrics, which
+identifies the estimator exactly: 1,000 tile-level percentile-method resamples,
+seed 42, 20 m buffer, reference
+`inputs/vectors/references/mounds-reference.geojson`, bounds
+`inputs/vectors/bounds/full_evaluation_bounds.geojson` (340 tiles). The
+estimator had to be pinned to the March 2026 implementation
+(`git show 2de117096:scripts/lib_advanced_metrics.py`) because the library
+function of that name moved to Bias-Corrected and Accelerated (BCa) intervals
+on 2026-04-29 and would not have reproduced the file.
+
+**What moved.**
+
+| claim | before | after |
+|---|---|---|
+| `source_file` values resolving to a file | 0 of 496 | 472 of 496 |
+| entries matching their source's feature count | 371 (of 456 resolvable) | 472 (of 472 resolvable) |
+| entries whose CI predates the E70 recovery | 85 | 0 |
+| paper-citable entries | 496 claimed, 371 verifiable | 472 verified current; 24 unresolvable and flagged |
+| source script recorded | `consolidate_pv_bootstrap_cis.py` (incorrect) | `repair_bootstrap_cis.py` for the 85; March producer never committed |
+
+The 85 re-run entries span 16 run families, the largest being
+`phase3a/track1-image` (44). Median `|ΔF1 mean|` was 0.000583 and the maximum
+0.027611 (`single:phase3c/track2-text/h9-E-p2/run_5`, whose source gained 119
+detections); 81 of the 85 moved by less than 0.005. Full per-family and
+per-entry tables: `reports/bootstrap-cis-repair-2026-09-12.md`.
+
+**What did NOT change.** The 411 entries whose sources were already current
+were not recomputed and not touched: all 411 `f1` / `precision` / `recall`
+blocks and `n_detections` values are bit-identical to the pre-repair file
+(verified 2026-09-12 against
+`archive/superseded-bootstrap-cis-2026-09-12/all-bootstrap-cis.json`). No
+methodology, iteration count, seed, resampling unit, or completeness state
+changed for any other row in this registry.
+
+### 2026-04-20 — Original publication
+
+First registry of every CI-bearing file in the results tree, recording the four
+paper-reproducibility fields (iterations, seed, resampling unit, generating
+script) and a four-state completeness grade per file, plus the provenance
+chains for aggregate files and a recommended durable mitigation for
+`scripts/evaluate_detections.py`.
