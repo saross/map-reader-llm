@@ -84,6 +84,7 @@ sys.path.insert(0, str(BASE_DIR))
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
+from scripts.era1_leaderboard_tiering import TARGET_CRS  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     micro_f1,
     permutation_test_float,
@@ -174,6 +175,16 @@ def per_tile_table(
         ``(tp, fp, fn, tile_names)`` — three float arrays and the tile order.
     """
     gdf_det = gpd.read_file(detections)
+    # Every input is projected to the metric CRS before matching, exactly as
+    # ``era1_leaderboard_tiering.load_geojson`` (:232-235) and its
+    # reference/bounds loader (:665-666) do. Without this the committed cells'
+    # EPSG:4326 detections are matched against EPSG:32635 references at a 50 m
+    # tolerance expressed in degrees, which books every reference as a false
+    # negative and yields a micro-F1 of 0.0000 — the shape the rebuild gate
+    # caught on the first run of this script.
+    if gdf_det.crs is None:
+        gdf_det = gdf_det.set_crs("EPSG:4326")
+    gdf_det = gdf_det.to_crs(TARGET_CRS)
     table = compute_per_tile_tp_fp_fn(
         gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres
     )
@@ -329,8 +340,8 @@ def subsample_ladder(
 
 def cmd_subsample(args: argparse.Namespace) -> dict[str, Any]:
     """Run analysis (a) for both deployment MINIMAL ladders."""
-    gdf_ref = gpd.read_file(GT_55MAP)
-    gdf_bounds = gpd.read_file(BOUNDS_55MAP)
+    gdf_ref = gpd.read_file(GT_55MAP).to_crs(TARGET_CRS)
+    gdf_bounds = gpd.read_file(BOUNDS_55MAP).to_crs(TARGET_CRS)
     logger.info(
         "reference %d records; frame %d tiles", len(gdf_ref), len(gdf_bounds)
     )
