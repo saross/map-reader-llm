@@ -10,7 +10,9 @@
 
 ---
 
-> **Last revised**: 2026-09-12 (Session 153: the fourteen DRIFTED and two
+> **Last revised**: 2026-09-12 (Session 153: reference r2 carried through
+> §§ R0, R8, and R9 on the PI's ruling 1, so the whole of Results quotes
+> one reference revision; earlier the same day, the fourteen DRIFTED and two
 > UNANCHORED claims of
 > `docs/paper/results-claims-inventory-2026-09-12.md` corrected against
 > their anchors, on the PI's ruling 4). Prior: 2026-09-10 (Session 151-d: § R4 gains the GS Era-2
@@ -824,15 +826,26 @@ keep the table.]
 Because every metric above is bounded by the reference data, we measured
 the reference data's own error structure rather than assuming it away
 (Obs 361, Obs 396). **Precision is review-verified and
-position-marked**: the standardised 55-map reference absorbed a human
+position-marked**: the 55-map reference at revision r2 absorbed a human
 review of every cross-configuration detection cluster — the
 773-candidate phantom pool was adjudicated point by point (278 of the
-773 confirmed as distinct real mounds the students missed, plus one
-marking-pass extra; the rest resolved as duplicates of student records
-or non-mounds) and every
+773 stand in r2 as distinct real mounds the students missed; the rest
+resolved as duplicates of student records or non-mounds) — and two
+further PI audits then removed 6 records the audit found not to be
+mounds and added 14 mounds neither layer carried, giving r2's
+three-class composition of 4,726 + 278 + 14 = 5,018, with every
 reviewed position hand-marked to the mound centre (±2.5 m) — so
-reported precision is robust to GT omissions. **Recall is a measured
-upper bound with quantified opposing biases**: on the GS sheets, where
+reported precision is robust to GT omissions. r2's own residual, on the
+empty-tile audit's estimate, is ≈ 50 mounds (≈ 1 % of the reference)
+unseen by both the student and the model channel, and it is carried by
+the estimated-correction column rather than by the point estimate.
+**Recall is a measured
+upper bound with quantified opposing biases**
+[REF: r1 — the four figures that follow were measured on the
+ruling-21 standardised reference and its GS curator twin, and have no r2
+recomputation; they are properties of the reference-building process
+rather than of a reference revision. Supplement candidate per ruling 1]:
+on the GS sheets, where
 a curator reference exists, configurations miss mounds the GT contains
 at a rate implying reported 55-map recall is inflated by ~2.4–2.7 %;
 because the double-miss correlation between independent configurations
@@ -903,12 +916,15 @@ single-linkage cluster at 50 m, keep clusters supported by ≥ 2 distinct
 families, score each cell against its own family's held-out reference —
 ranks the eight deployment cells at **Spearman ρ = +0.881** against the
 true board (measured against the canonical-reference board; the
-standardised re-tiering preserved the full rank order, so ρ is
-unchanged), with no cell ever evaluated against a reference
+standardised and r2 re-tierings each preserve the full rank order — the
+r2 board's ranks are cell-for-cell those of the standardised board — so
+ρ is unchanged on the reference § R7 now uses), with no cell ever
+evaluated against a reference
 containing its own family's detections. The GT-free top pick (TH7-k3)
-is statistically tied with the true winner on the real board (p = 0.127
-on the canonical reference; the tie deepens to p = 0.857 on the
-standardised one):
+is statistically tied with the true winner on the real board, and more
+deeply so the better the reference gets (p = 0.127
+on the canonical reference, 0.857 on the standardised one, **0.855 on
+r2**):
 the "miss" sits inside a tie the 8,541-tile instrument itself cannot
 resolve, and the cost meta-rule then breaks the residual tie at exactly
 the scope § R6 qualified it to. Two boundary conditions frame the
@@ -928,6 +944,31 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-09-12 (later) — One reference revision across Results: r2 in §§ R0, R8, and R9 (Session 153)
+
+**Refresh trigger**: the PI's ruling 1 of 2026-09-12 — one reference
+revision for the whole of Results, r2 throughout, with older-reference
+figures moving to the supplement. § R7 was already on r2 (erratum E84);
+§§ R0, R8, and R9 were not. Sweep table with anchors:
+`reports/results-rulings-deltas-2026-09-12.md` § 2.
+
+| figure | old reference | r2 value |
+|---|---|---|
+| § R0 55-map composition | r1: 4,731 + 279 | 4,726 + 278 + 14 = 5,018 (landed in the earlier commit of this date) |
+| § R0 as-digitised student records | r1: 4,090 | 4,085, p90 18.3 m (same) |
+| § R8 phantom-pool adjudication | standardised: 278 + 1 marking-pass extra | 278 in r2, plus the audits' −6 / +14 and the three-class 5,018 total |
+| § R8 reference residual | not stated | ≈ 50 mounds (≈ 1 %) unseen by both channels, carried by the estimated-correction column |
+| § R8 recall inflation +2.4–2.7 % | GS curator twin | **no r2 twin** — marked `[REF: r1]` |
+| § R8 double-miss correlation 1.5–1.7× | GS curator twin | **no r2 twin** — marked `[REF: r1]` |
+| § R8 ~370 residual duplicates, ≈ 0.03 | standardised README | **no r2 twin** — marked `[REF: r1]` |
+| § R8 net bias ≈ −0.017 | standardised README | **no r2 twin** — marked `[REF: r1]` |
+| § R9 GT-free top pick vs true winner | canonical p = 0.127; standardised p = 0.857 | **r2 p = 0.855**, added alongside |
+| § R9 Spearman ρ = +0.881 | canonical board | unchanged — the r2 board's ranks are cell-for-cell the standardised board's, so the rank correlation does not move |
+
+**What did NOT change**: no tier, no verdict, and no point estimate in
+§§ R8 or R9. Nothing was recomputed for this sweep; every r2 value quoted
+already existed in a committed artefact.
 
 ### 2026-09-12 — The fourteen DRIFTED and two UNANCHORED claims corrected (Session 153)
 
