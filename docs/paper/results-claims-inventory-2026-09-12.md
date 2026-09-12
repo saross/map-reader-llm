@@ -1,8 +1,33 @@
 # Results claims-with-anchors inventory — `results-draft.md`, 2026-09-12
 
-> **Last revised**: 2026-09-12 (original publication; outline-first claims
+> **Last revised**: 2026-09-12 (later: the PI's seven rulings on this
+> inventory recorded at [§ Rulings 2026-09-12](#rulings-2026-09-12), with
+> execution status; prior: original publication, the outline-first claims
 > inventory for the PI's section-by-section Results review). See
 > [§ Changelog](#changelog) for revision history.
+
+## Rulings 2026-09-12
+
+The PI ruled on the Results section on the evidence of this document the
+same day it was published. All seven rulings, as given, with where each
+is now recorded and what remains.
+
+| # | ruling | recorded at | status |
+|---|---|---|---|
+| 1 | **One reference revision across Results: r2 throughout.** Older-reference figures move to the supplement. | `docs/paper/results-outline.md` § D18 | **EXECUTED** — §§ R0, R8, R9 re-pointed in `results-draft.md` (§ R7 was already r2 via E84). Four § R8 figures have no r2 twin and carry `[REF: r1 — supplement candidate per ruling 1]`. § R6 inherits the ruling when the K-ladder job lands. |
+| 2 | **The headline is the Gemini 3.7 stack** — all-3.7 text, GS F1 0.9265, Tier 1 on the Era-2 board; r2 deployment 0.8827 carried / 0.8871 oracle. The Gemini 3 board is the calibration story that got there. Additional point to carry: **models keep improving and the calibrated configuration carries across model versions, at least within the Gemini family.** | `docs/paper/results-outline.md` § D19 (superseding D2's two numbers, not its placement); § R0 and § R7 blocks carry the placement notes; `docs/paper/manuscript-skeleton-isprs.md` § 5 | **RECORDED** — the draft's prose still calls 0.890 / 0.790 "the study headline" at § R4-15 and does not yet state which number the paper headlines. That re-framing is a prose task for the re-draft, not a number fix, and is deliberately left to it. |
+| 3 | **Word budget: move information into tables, do not repeat it in text** (the PI's "paper-b" practice); reference the supplement; every major section and finding must be present, but prose is not to be polished — the paper will be re-drafted from the outline. | `docs/paper/results-outline.md` § D20 | **RECORDED** — governs the execution of D5, D7, D11, D13. |
+| 4 | **Fix the 14 DRIFTED and 2 UNANCHORED claims now.** | `docs/paper/results-draft.md` § Changelog 2026-09-12; `reports/results-rulings-deltas-2026-09-12.md` | **EXECUTED** — 13 of the 14 DRIFTED edited; R4-28 needed no numeric change (see ruling 7). Both UNANCHORED figures were found to have sources and are anchored with inline `[ANCHOR: …]` notes rather than cut. |
+| 5 | **The GS stride/geometry programme gets its own Results block.** | `docs/paper/results-outline.md` § D21 and § R1b | **EXECUTED as outline** — § R1b is a claims-with-anchors list between R1 and R2, chosen so no existing section renumbers; `results-draft.md` carries a heading and a `[BLOCK PENDING]` pointer. Prose is deliberately not written, per ruling 3. |
+| 6 | **Tables and figures**: anything communicated more directly, clearly, or concisely by a figure, chart, or table is done that way. | `docs/paper/results-outline.md` § D22 and § Figures and tables | **EXECUTED as plan** — one row per Results block naming the carrier and the existing artefact or "to be made". No figure was made. |
+| 7 | **The Era-2 board signing timestamp `2026-09-10T12:34:56Z` is real** (no action). | `docs/paper/results-draft.md` § R4 draft note | **EXECUTED** — the draft's "SIGNED by the PI on 2026-09-10" stands; the note now names the register field and flags the board README's two stale "remains UNSIGNED" closing lines, which its own "2026-09-10 (evening) — Signed" entry supersedes. The README itself is left for the PI, being a results artefact rather than a paper document. |
+
+**Not ruled on, and therefore still open**: the section-by-section
+"Rulings needed" lists below, the four distinct `[DRAFT NOTE]` decisions
+the draft's own markers carry, the five register-hygiene items of
+[§ Register-hygiene items](#register-hygiene-items-surfaced-by-this-pass),
+and the word allocation across the eleven blocks (ruling 3 sets the
+*method* for hitting the budget but not the per-block split).
 
 **What this is.** The Principal Investigator (PI) has ruled that the paper's
 Results are rebuilt outline-first: before any prose is re-drafted, each
@@ -994,6 +1019,17 @@ fixed before Results prose is final.
 ---
 
 ## Changelog
+
+### 2026-09-12 (later) — The PI's seven rulings recorded (Session 153)
+
+**Refresh trigger**: the PI ruled on Results the same day this inventory
+was published. [§ Rulings 2026-09-12](#rulings-2026-09-12) records all
+seven verbatim in substance, with where each is now recorded and its
+execution status. No claim row, count, or anchor in the body changed —
+the inventory's own numbers are the evidence the rulings were taken on
+and are left exactly as published. The corrections the rulings directed
+land in `docs/paper/results-draft.md`, not here; the delta table with
+`file:line` anchors is `reports/results-rulings-deltas-2026-09-12.md`.
 
 ### 2026-09-12 — Original publication
 

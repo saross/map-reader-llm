@@ -10,7 +10,15 @@
 
 ---
 
-> **Last revised**: 2026-09-10 (Session 151-d: § R4 gains the GS Era-2
+> **Last revised**: 2026-09-12 (Session 153: § R1b added as a heading and
+> a `[BLOCK PENDING]` pointer on the PI's ruling 5, the GS stride/geometry
+> programme's Results home, and § R7.2's cross-reference re-pointed to it;
+> earlier the same day, reference r2 carried through
+> §§ R0, R8, and R9 on the PI's ruling 1, so the whole of Results quotes
+> one reference revision; and, first of the three, the fourteen DRIFTED and two
+> UNANCHORED claims of
+> `docs/paper/results-claims-inventory-2026-09-12.md` corrected against
+> their anchors, on the PI's ruling 4). Prior: 2026-09-10 (Session 151-d: § R4 gains the GS Era-2
 > verified board paragraph, unsigned, ruling pending). Prior: 2026-09-08
 > (Session 151: § R7 restructured into three blocks on the PI's ruling,
 > giving the 35-cell final board and the Gemini 3.7 campaign their Results
@@ -52,14 +60,17 @@ instrument** — four Soviet 1:50,000 sheets, curator-adjudicated ground
 truth — is the *characterisation* instrument: it measures how well a
 configuration can localise burial-mound symbols against known ground truth,
 at each configuration's own best operating point, per the preregistered
-H-series analysis plan. The **55-map instrument** — 8,541 tiles, the
-ruling-21 standardised extended reference: 4,731 standardised student
-digitisations plus 279 human-confirmed extension mounds, the
-773-candidate phantom pool adjudicated down to distinct real mounds.
+H-series analysis plan. The **55-map instrument** — 8,541 tiles,
+**reference revision r2** (the ruling-21 standardised extended reference
+as revised by the PI's cluster and empty-tile audits, erratum E84):
+4,726 standardised student digitisations, 278 human-confirmed extension
+mounds from the 773-candidate phantom pool, and 14 audit-reviewed mounds
+that neither layer carried — 5,018 in all.
 Positions are mixed-provenance by design: the 641 reviewed student
-records and all 279 extension mounds carry hand-marked centres
-(±2.5 m); the 4,090 out-of-scope student records keep as-digitised
-positions (median 8.6 m from the true centre). It is the *deployment*
+records, all 278 extension mounds, and all 14 audit-reviewed mounds
+carry hand-marked centres
+(±2.5 m); the remaining 4,085 student records keep as-digitised
+positions (median 8.6 m from the true centre, p90 18.3 m). It is the *deployment*
 instrument: it measures what a configuration
 calibrated on the GS sheets actually delivers on a large, diverse,
 unseen corpus. Results on the first instrument are
@@ -108,12 +119,14 @@ a one-line registration status naming which of these applies.
 
 Buffer radius is the analyst's largest free parameter, so we derived it
 from the data rather than asserting it. On the GS instrument, plateau-onset
-analysis of all 259 conditions with full buffer curves (every later step
+analysis of all 306 conditions with full buffer curves (every later step
 ≤ 0.005 F1) puts the **text pipeline's localisation plateau at 30 m**
 (~6 px at map scale) — proposer–verifier (PV) architectures plateau at
-30 m, consensus at 35 m, single-pass at 40 m — while **image-modality
-localisation plateaus at 75 m**, roughly 2.5× looser; modality, not
-architecture, is the dominant factor
+30 m, consensus at 35 m, single-pass at 75 m — while **image-modality
+localisation plateaus at 75 m**, roughly 2.5× looser than text's 30 m.
+Modality and architecture span the same 30–75 m range, so neither
+dominates the other; what the table separates is the tight end (text,
+PV) from the loose end (image, single-pass)
 (`results/working-precision/gs-plateau-characterisation.{json,md}`). For
 the production text-PV family the buffer curve is flat between 30 m and
 50 m, so GS headline values are insensitive to the choice within that
@@ -130,6 +143,17 @@ of mounds are already at cross-match risk at 50 m and 42 % at 125 m
 buffer is also ~2× the measured student digitisation jitter. GS results
 are therefore quoted at 20 m (the preregistered radius) or 30 m (the
 plateau), and all 55-map results at 50 m.
+
+## R1b. Tile geometry: tile size × overlap × pass count, and the stride ladders
+
+[BLOCK PENDING — outline in `docs/paper/results-outline.md`
+§ R1b — Tile geometry: tile size × overlap × pass count, and the stride
+ladders. Twenty-three anchored claims covering the 2 × 2 tile-size ×
+overlap grid at both the consensus and the post-verifier stage, the
+nine-cell stride board and its interior optimum, the exact winner
+ladder, the GS k-curves on which § R7.2's deployment carried points were
+selected, and H13's registered leg. New block per D21 (PI ruling 5,
+2026-09-12); prose deliberately not drafted, per ruling 3.]
 
 ## R2. Single-pass baselines: a broad statistical tie at modest performance
 
@@ -231,7 +255,7 @@ thinking — is revised, but not contradicted, by the verifier results in
 § R5: the dividend is real for consensus-*only* architectures and obsolete
 once a verifier stage exists.
 
-## R4. The proposer–verifier architecture is the best architecture on every tile size
+## R4. The proposer–verifier architecture is the strongest architecture by point estimate on every tile size tested
 
 *Registration status: H2 is confirmatory and rejects in the family
 FDR against its own registered prediction, a falsification in the
@@ -279,8 +303,10 @@ post-hoc extension. The tile-size
 optimum is architecture-dependent: single-pass climbs monotonically with
 tile size (256 px 0.342 < 384 px 0.520 < 512 px 0.606 in the clean
 isolation), because without any false-positive filter larger tiles give
-cleaner context; consensus prefers 384 px; and under consensus + verifier
-the ordering is **384 (0.890) > 256 (0.856) > 512 (0.792)** (analysis
+cleaner context; MINIMAL-thinking consensus still prefers 512 px (by
++0.02 to +0.05 across T0.3/0.7/1.0) while only HIGH-thinking consensus
+flips to 384 px (T0.7 0.814 > 0.773); and under consensus + verifier
+the ordering is **384 (0.890) > 256 (0.856) > 512 (0.793)** (analysis
 `tile-size-sweep`). <!-- [S137-audit F16] Cross-scope comparison: the three
 numbers sit on 487-, 1,032-, and 340-tile footprints respectively. Phase 0.3
 re-scored a DIFFERENT 256-vs-384 pairing on a common footprint (the gap
@@ -319,8 +345,9 @@ either level: the best committed incumbent is the 16-of-30 cell at
 0.8951 and the best sweep optimum the HIGH text T0.3 K = 5 cell at
 0.8873 (rank 11); 30 of the 40 sweep optima are significantly below the
 lowest Tier-1 cell and all 40 below the top one (the lowest Tier-1 cell
-against the best sweep optimum: +0.020, p = 0.16, not significant; the
-top cell against it: +0.037, p = 0.011, BH-adjusted 0.021). Removing the screens'
+against the best sweep optimum: +0.0195, p = 0.178, BH-adjusted 0.244,
+not significant; the
+top cell against it: +0.036, p = 0.016, BH-adjusted 0.028). Removing the screens'
 own selection optimism (Efron–Gong, the argmax replayed per tile
 resample) costs the 3.7 and 3.8 cells 0.0006 to 0.0035, leaving
 corrected board-frame F1 of 0.9027 to 0.9215. The family step that
@@ -335,9 +362,17 @@ reproduction: the archived board rebuilt by the retired builder failed
 as specified on one cell because a stale label-keyed cache had served
 that cell's 372-feature input at the 2026-05-06 build; from the inputs
 it actually scored it reproduces 44 of 44 cells and 946 of 946 pairs
-(Obs 464). Nine of the 40 `-opmax` files, materialised on 2026-04-19, were found
-mis-materialised on 2026-09-10 and rebuilt from their stages the same day (each rose by
-0.0004 to 0.0081; Tier 1 and the admissible set unchanged). The archived
+(Obs 464). The signature is the register's
+`manually_verified_at` 2026-09-10T12:34:56Z, confirmed real by the PI on
+2026-09-12 (ruling 7); the board README's two 2026-09-10 changelog
+entries still close on a stale "remains UNSIGNED" line, which its own
+"2026-09-10 (evening) — Signed" entry supersedes. Nine of the 40
+`-opmax` files, materialised on 2026-04-19, were rebuilt from their
+stages on 2026-09-10 (each rose by
+0.0004 to 0.0081; Tier 1 and the admissible set unchanged). The
+mechanism, diagnosed the following day, is **not** staleness: the
+materialiser was correct and was fed the 327-tile **Era-3** frame's
+operating points — a cross-frame operating-point leak (Obs 466). The archived
 Era-2 PV board of sweep-optimal cells is superseded by this
 register-backed board, whose `-opmax` rows now carry its cells. Card: `planning/gs-era2-verified-board-2026-09-08.md`; board:
 `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`.]
@@ -346,8 +381,11 @@ register-backed board, whose `-opmax` rows now carry its cells. Card: `planning/
 
 *Registration status: post-hoc throughout. The robustness programme extends the registered proposer–verifier contingency beyond its registered parameters (E56, E62); no registered hypothesis is adjudicated in this subsection.*
 
-A dedicated robustness programme (≈ $54 flex as-run, recorded at run
-time) stress-tested every parameter
+A dedicated robustness programme (≈ $54 flex as-run — the sum of the
+four recorded stage costs, $21.93 + $8.71 + $20.86 + $2.54
+[ANCHOR: `results/verifier-robustness/verifier-robustness-findings.md`
+`:57`, `:212`, `:224`, `:294` respectively; the document carries no
+programme total, so the sum is stated as a sum]) stress-tested every parameter
 of the production verifier (gemini-3-flash, adversarial text, minimal
 thinking, T = 0.0, n = 1). The summary is uniform: **nothing more expensive
 is measurably better** (citable home:
@@ -407,8 +445,10 @@ and a zero-diversity anchor (a single T = 0.0 pass + verifier) scores
 0.8142 — temperature diversity is worth +0.057, about 60 % of it via the
 ceiling lift. The consensus-era diversity dividend (§ R3) is thereby
 *explained and retired* for PV architectures: at equal pass count,
-minimal-thinking proposers reach statistical parity with HIGH (min6 0.8784
-vs high6 0.8641, p = 0.66; min11 0.8835 vs high11 0.8769, p = 0.59; min11
+minimal-thinking proposers reach statistical parity with HIGH (the tested
+min6 pair is the n30-lineage stand-in, 0.8708 vs high6 0.8641, p = 0.66,
+the true min6 merge standing numerically higher at 0.8784 but never
+tested against high6; min11 0.8835 vs high11 0.8769, p = 0.59; min11
 vs the 31-pass headline, p = 0.56; analysis `min-vs-high-thinking-pv`) —
 on the GS instrument. The same comparison reverses at deployment (§ R6).
 
@@ -518,7 +558,8 @@ oracle (+0.022) as its upper bound:
 Every figure in this table also carries the reference's residual error:
 the estimated correction (§ M.3; E84) puts F1̂ within 0.0007 of each r2
 point with an interval of about ±0.005 — wider than the gaps between
-tiers, uniform across cells, and therefore unable to re-order the board
+tiers, close to uniform across cells (its three exceptions are given at
+§ R7.2), and therefore unable to re-order the board
 — and is reported beside the point estimates in the results artefact
 rather than as a column here. The r2 final board (35 cells) also
 carries the A/B stride rungs and the Gemini 3.7 campaign's cells; those
@@ -545,8 +586,9 @@ statistically clear of all seven others including the F1 co-leaders
 (ΔMCC +0.022 vs the MCC runner-up, BH p = 0.002; analysis
 `55map-r2-leaderboard-mcc-50m`, 20/28 pairs significant, five tiers —
 tier structure identical to the standardised and canonical boards). The
-MCC tier order inverts the F1 board's top while the six text-only cells
-keep their F1 ordering, so the reversal is a modality effect rather than
+MCC tier order inverts the F1 board's top while five of the seven
+text-only cells keep their F1 ordering — only TM-n10-k5 (0.6695) and
+T03-k4 (0.6691) swap — so the reversal is a modality effect rather than
 noise; the shared-reference re-measurement
 (`results/55maps-standardised-ref-2026-08-14/obs280-remeasurement.md`,
 reproduced on r2 in `results/55maps-r2-ref-2026-09-06/obs280-shared-reference-r2.json`,
@@ -567,9 +609,10 @@ subsection lead; see Changelog.]
 The portfolio ran two Gemini 3 text-MINIMAL geometries at ten passes each
 over the full 8,541-tile corpus: A at 384 px with 33 % overlap (stride
 256) and B at 384 px with 50 % overlap (stride 192). Each carried one
-operating point selected on the GS stride ladder and declared before
+operating point selected on the GS stride ladder (§ R1b) and declared before
 launch, A at prob ≥ 0.15 with k ≥ 8 of 10 and B at prob ≥ 0.15 with
-k ≥ 10 of 10. The design froze the configuration axis (one carrier
+k ≥ 10 of 10 — the two GS k-curve argmaxes at prob_t 0.15, which is what
+makes the selection checkable rather than asserted. The design froze the configuration axis (one carrier
 configuration per run), so overlap is the only lever between the two
 runs, and eight bets (P1–P8) were named in advance, one of them
 expected to fail informatively.
@@ -604,7 +647,7 @@ primaries (ΔF1 −0.0096, p = 0.0147, per-sheet sign-swap permutation,
 rung (−0.0116, p = 0.0042, a post-hoc test outside the declared
 family). Every non-tie result survives Benjamini–Hochberg at q = 0.05
 over the seven tests. On the GS geometry grid the two
-geometries had tied (§ R1, Obs 435). A GS tie is bounded ignorance at
+geometries had tied (§ R1b, Obs 435). A GS tie is bounded ignorance at
 roughly ±0.03 resolution (Obs 362), and a real effect of about 0.01
 sat inside the bound. The effect is one overlap step on one corpus,
 although its sign held at every rung tested.
@@ -627,7 +670,7 @@ One row per run family, its best carried and its best oracle cell:
 | Gemini 3 text HIGH T0.7, K = 5 (the carry-forward) | 0.8162 (T9) | 0.665 | $207 | 0.8380 (T7) at (0.15, k3) |  |
 | Gemini 3 text HIGH T0.3, K = 5 | 0.8294 (T8) | 0.669 | $261 | 0.8399 (T6) at (0.20, k3) |  |
 | Gemini 3 text MIN, K = 5 | 0.7826 (T11) | 0.640 | $23 | 0.8103 (T10) at (0.20, k3) |  |
-| Gemini 3 text MIN uplift, K = 10 | none | none | none | 0.8274 (T8) at (0.15, k5) |  |
+| Gemini 3 text MIN uplift, K = 10 | none | none | $58 | 0.8274 (T8) at (0.15, k5) | no carried point was registered at this rung, so the cost is the oracle cell's |
 | Gemini 3 image HIGH, K = 5 | 0.8008 (T10) | 0.711 | $195 | 0.8008 (T10) at (0.15, k3) | as shipped (k3); the E82 k4 comparability cell (0.7398, T12) is not tabled |
 | A: Gemini 3 text MIN, 384 px / 33 % overlap, K = 10 | 0.8391 (T7) | 0.693 | $104 | 0.8419 (T6) at (0.15, k7) |  |
 | B: Gemini 3 text MIN, 384 px / 50 % overlap, K = 10 | 0.8503 (T5) | 0.701 | $97 | 0.8560 (T4) at (0.20, k9) |  |
@@ -649,8 +692,10 @@ holding 0.827–0.832 on the canonical chain. Costs are flex-tier
 estimates rather than billing figures, and the N < 10 rungs' costs
 are simulated from audited per-call rates because those passes ran
 inside the K = 10 campaign. The estimated-correction column (§ M.3)
-moves every cell by −0.0004 to −0.0007 with intervals of about
-±0.005 and re-tiers nothing.
+sits within 0.0007 of each r2 point — below it for 32 of the 35 cells,
+at it for one, and marginally above it for the two lowest-recall cells
+(TM-k4 +0.0003, IM-k4 +0.0007) — with intervals of about ±0.005, and
+re-tiers nothing.
 
 The bets were assessed on the canonical chain, and the board is scored
 on r2. The offset between the two is roughly uniform for these cells
@@ -796,15 +841,26 @@ keep the table.]
 Because every metric above is bounded by the reference data, we measured
 the reference data's own error structure rather than assuming it away
 (Obs 361, Obs 396). **Precision is review-verified and
-position-marked**: the standardised 55-map reference absorbed a human
+position-marked**: the 55-map reference at revision r2 absorbed a human
 review of every cross-configuration detection cluster — the
 773-candidate phantom pool was adjudicated point by point (278 of the
-773 confirmed as distinct real mounds the students missed, plus one
-marking-pass extra; the rest resolved as duplicates of student records
-or non-mounds) and every
+773 stand in r2 as distinct real mounds the students missed; the rest
+resolved as duplicates of student records or non-mounds) — and two
+further PI audits then removed 6 records the audit found not to be
+mounds and added 14 mounds neither layer carried, giving r2's
+three-class composition of 4,726 + 278 + 14 = 5,018, with every
 reviewed position hand-marked to the mound centre (±2.5 m) — so
-reported precision is robust to GT omissions. **Recall is a measured
-upper bound with quantified opposing biases**: on the GS sheets, where
+reported precision is robust to GT omissions. r2's own residual, on the
+empty-tile audit's estimate, is ≈ 50 mounds (≈ 1 % of the reference)
+unseen by both the student and the model channel, and it is carried by
+the estimated-correction column rather than by the point estimate.
+**Recall is a measured
+upper bound with quantified opposing biases**
+[REF: r1 — the four figures that follow were measured on the
+ruling-21 standardised reference and its GS curator twin, and have no r2
+recomputation; they are properties of the reference-building process
+rather than of a reference revision. Supplement candidate per ruling 1]:
+on the GS sheets, where
 a curator reference exists, configurations miss mounds the GT contains
 at a rate implying reported 55-map recall is inflated by ~2.4–2.7 %;
 because the double-miss correlation between independent configurations
@@ -818,6 +874,13 @@ first order (Obs 396). We therefore present deployment recall with a
 +3 %/+5 % sensitivity band rather than a point correction, the band
 chosen wide because the correlation estimate rests on four events
 (`results/working-precision/gs-miss-correlation.*`).
+[ANCHOR: the band is a presentation choice, not a computed interval —
+its two endpoints are Obs 361's sensitivity-framing rows
+(`docs/notes/working-notes.md:19945-19950`: +3 % true population → F1
+≈ 0.836, +5 % → ≈ 0.829), chosen to bracket the measured 2.4–2.7 %
+inflation from above, and recorded as that choice at
+`reports/session-111-discoveries.md:170-173`. It should be stated as a
+judgement rather than a measurement.]
 
 [Resolved 2026-06-13: stays in Results as a results-of-validation
 subsection — everything above is a measured quantity (review-verified
@@ -868,12 +931,15 @@ single-linkage cluster at 50 m, keep clusters supported by ≥ 2 distinct
 families, score each cell against its own family's held-out reference —
 ranks the eight deployment cells at **Spearman ρ = +0.881** against the
 true board (measured against the canonical-reference board; the
-standardised re-tiering preserved the full rank order, so ρ is
-unchanged), with no cell ever evaluated against a reference
+standardised and r2 re-tierings each preserve the full rank order — the
+r2 board's ranks are cell-for-cell those of the standardised board — so
+ρ is unchanged on the reference § R7 now uses), with no cell ever
+evaluated against a reference
 containing its own family's detections. The GT-free top pick (TH7-k3)
-is statistically tied with the true winner on the real board (p = 0.127
-on the canonical reference; the tie deepens to p = 0.857 on the
-standardised one):
+is statistically tied with the true winner on the real board, and more
+deeply so the better the reference gets (p = 0.127
+on the canonical reference, 0.857 on the standardised one, **0.855 on
+r2**):
 the "miss" sits inside a tie the 8,541-tile instrument itself cannot
 resolve, and the cost meta-rule then breaks the residual tie at exactly
 the scope § R6 qualified it to. Two boundary conditions frame the
@@ -893,6 +959,97 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-09-12 (later still) — § R1b added: the GS stride/geometry programme's Results home (Session 153)
+
+**Refresh trigger**: the PI's ruling 5 of 2026-09-12 — the GS
+stride/geometry programme gets its own Results block. The block is
+numbered **R1b**, between R1 and R2, so no existing section renumbers.
+
+Per ruling 3, no prose was written: the draft carries a heading and a
+`[BLOCK PENDING]` pointer, and the twenty-three anchored claims live in
+`docs/paper/results-outline.md` § R1b — the 2 × 2 tile-size × overlap grid
+at both the consensus and the post-verifier stage, the nine-cell stride
+board and its interior optimum, the exact winner ladder (N = 3 at 0.8911
+for $2.64), the GS k-curves that selected § R7.2's deployment carried
+points, and H13's registered leg.
+
+**Also corrected**: § R7.2's "(§ R1, Obs 435)" cross-reference pointed at
+a section that did not contain the GS geometry grid; it now reads
+"(§ R1b, Obs 435)". § R7.2's carried-point sentence gains a clause
+naming the two GS k-curve argmaxes, which is what makes its
+"declared before launch" claim checkable by a reader.
+
+**What did NOT change**: §§ R3 and R6, reserved for the parallel K-ladder
+job, which will extend the pass-count ladder as a *cost* object in R6;
+and every existing number in §§ R1 and R2, which R1b sits between
+without renumbering.
+
+### 2026-09-12 (later) — One reference revision across Results: r2 in §§ R0, R8, and R9 (Session 153)
+
+**Refresh trigger**: the PI's ruling 1 of 2026-09-12 — one reference
+revision for the whole of Results, r2 throughout, with older-reference
+figures moving to the supplement. § R7 was already on r2 (erratum E84);
+§§ R0, R8, and R9 were not. Sweep table with anchors:
+`reports/results-rulings-deltas-2026-09-12.md` § 2.
+
+| figure | old reference | r2 value |
+|---|---|---|
+| § R0 55-map composition | r1: 4,731 + 279 | 4,726 + 278 + 14 = 5,018 (landed in the earlier commit of this date) |
+| § R0 as-digitised student records | r1: 4,090 | 4,085, p90 18.3 m (same) |
+| § R8 phantom-pool adjudication | standardised: 278 + 1 marking-pass extra | 278 in r2, plus the audits' −6 / +14 and the three-class 5,018 total |
+| § R8 reference residual | not stated | ≈ 50 mounds (≈ 1 %) unseen by both channels, carried by the estimated-correction column |
+| § R8 recall inflation +2.4–2.7 % | GS curator twin | **no r2 twin** — marked `[REF: r1]` |
+| § R8 double-miss correlation 1.5–1.7× | GS curator twin | **no r2 twin** — marked `[REF: r1]` |
+| § R8 ~370 residual duplicates, ≈ 0.03 | standardised README | **no r2 twin** — marked `[REF: r1]` |
+| § R8 net bias ≈ −0.017 | standardised README | **no r2 twin** — marked `[REF: r1]` |
+| § R9 GT-free top pick vs true winner | canonical p = 0.127; standardised p = 0.857 | **r2 p = 0.855**, added alongside |
+| § R9 Spearman ρ = +0.881 | canonical board | unchanged — the r2 board's ranks are cell-for-cell the standardised board's, so the rank correlation does not move |
+
+**What did NOT change**: no tier, no verdict, and no point estimate in
+§§ R8 or R9. Nothing was recomputed for this sweep; every r2 value quoted
+already existed in a committed artefact.
+
+### 2026-09-12 — The fourteen DRIFTED and two UNANCHORED claims corrected (Session 153)
+
+**Refresh trigger**: the PI's ruling 4 of 2026-09-12 on
+`docs/paper/results-claims-inventory-2026-09-12.md`, whose cross-section
+summary listed fourteen DRIFTED and two UNANCHORED claims. Every anchor
+named below was re-opened and re-read before the edit; no value was
+copied from the inventory. Full delta table with `file:line` anchors:
+`reports/results-rulings-deltas-2026-09-12.md`.
+
+| # | claim | before | after | anchor |
+|---|---|---|---|---|
+| R0-02 | 55-map instrument composition | 4,731 student + 279 extension (r1) | 4,726 student + 278 extension + 14 audit-reviewed = 5,018 (r2) | `results/55map-leaderboard/55map-leaderboard-50m-r2.md:31-40` |
+| R0-03 | as-digitised student records | 4,090 | 4,085 (= 4,726 − 641), p90 18.3 m added | same file `:31-33` |
+| R1-02 | conditions in the plateau analysis | 259 | 306 | `results/working-precision/gs-plateau-characterisation.md:5` |
+| R1-03 | single-pass plateau onset | 40 m | 75 m | same file `:17` |
+| R1-05 | "modality, not architecture, is dominant" | modality dominant | both span 30–75 m; the table separates tight (text, PV) from loose (image, single-pass) | same file `:17-19,34-35` |
+| R4 heading | architecture claim | "is the best architecture on every tile size" | "is the strongest architecture by point estimate on every tile size tested" (E83) | `results/run-analyses.json` → `era1-leaderboard` E83 block |
+| R4-12 | consensus tile-size preference | "consensus prefers 384 px" | MINIMAL consensus still prefers 512 px (+0.02..+0.05); only HIGH flips to 384 px (0.814 > 0.773) | `results/run-analyses.json` → `tile-size-sweep` |
+| R4-13 | consensus + verifier at 512 px | 0.792 | 0.793 | same row, View 3 |
+| R4-23 | lowest Tier-1 vs best sweep optimum | +0.020, p = 0.16 | +0.0195, p = 0.178, BH 0.244 | `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json` |
+| R4-24 | top cell vs best sweep optimum | +0.037, p = 0.011, BH 0.021 | +0.036, p = 0.016, BH 0.028 | same file |
+| R4-28 | Era-2 board signature | "SIGNED by the PI on 2026-09-10" | unchanged — the PI ruled the `2026-09-10T12:34:56Z` timestamp real (ruling 7); the note now names the register field and flags the README's stale "remains UNSIGNED" lines | `results/run-analyses.json` `manually_verified_at`; board README `:200,202-204,248` |
+| R4-29 | nine `-opmax` cells, mechanism | "found mis-materialised … rebuilt from their stages" | the materialiser was correct and was fed the 327-tile Era-3 frame's operating points — a cross-frame leak, explicitly not staleness | Obs 466, `docs/notes/working-notes.md:33812,33826-33831` |
+| R5-01 | robustness programme cost | "≈ $54 flex as-run" (UNANCHORED) | anchored as the sum of four recorded stage costs, $21.93 + $8.71 + $20.86 + $2.54 | `results/verifier-robustness/verifier-robustness-findings.md:57,212,224,294` |
+| R5-15 | min6 vs high6 | 0.8784 vs 0.8641, p = 0.66 | the tested pair is 0.8708 (n30-lineage) vs 0.8641, p = 0.66; the true 0.8784 merge was never tested against high6 | `results/run-analyses.json` → `min-vs-high-thinking-pv` |
+| R7.1-07 | estimated correction across cells | "uniform across cells" | "close to uniform across cells", its three exceptions given at § R7.2 | `results/run-analyses.json` → `estimated-correction-r2` |
+| R7.1-13 | text-only cells on the MCC board | "the six text-only cells keep their F1 ordering" | five of seven keep it; TM-n10-k5 (0.6695) and T03-k4 (0.6691) swap | `results/metric-leaderboards/55map-mcc-tiering-r2.md:7-14` |
+| R7.2-19 | estimated-correction direction | "every cell by −0.0004 to −0.0007" | within 0.0007 of each point: below for 32 of 35, at it for one, above for two (TM-k4 +0.0003, IM-k4 +0.0007) | `results/run-analyses.json` → `estimated-correction-r2` |
+| R7.2-23 | uplift family row cost | "none" | $58, footnoted as the oracle cell's cost | `results/55map-final-board-r2-2026-09-06/final-board-50m.md:38` |
+| R8-07 | the +3 %/+5 % recall band | UNANCHORED | anchored as a presentation choice to Obs 361's sensitivity rows (+3 % → ≈ 0.836, +5 % → ≈ 0.829) and the S111 decision record; flagged as a judgement, not a measurement | `docs/notes/working-notes.md:19945-19950`; `reports/session-111-discoveries.md:170-173` |
+
+**What did NOT change**: every tier assignment, every registration-status
+marker, every hypothesis verdict, the GS and deployment headline point
+estimates, §§ R3 and R6 (reserved for the parallel K-ladder job), and the
+R6 Pareto table's min6 row, which is the true-merge cell and was already
+correct at 0.8784.
+
+**Two non-numerical items on the same fix list**: § R4's heading is
+corrected above; § R7.2's "(§ R1, Obs 435)" cross-reference is
+re-pointed in the § R1b commit of the same session.
 
 ### 2026-09-11 (later still) — § R7 costs reconciled to the invoice; fourth cell costed (Session 153)
 

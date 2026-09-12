@@ -1,8 +1,9 @@
 # Results — structural outline (spine AGREED; section calls still open)
 
-> **Status**: collaborative structure document. **ALL SEVENTEEN
+> **Status**: collaborative structure document. **ALL TWENTY-TWO
 > DECISIONS ARE SETTLED** (D1–D4 in Session 118; D5–D17 in Session
-> 133). Prose drafting can begin per the agreed structure, gated only
+> 133; D18–D22 in Session 153, the PI's rulings of
+> 2026-09-12). Prose drafting can begin per the agreed structure, gated only
 > by the D17 reconciliation block (its own pre-run-reviewed pass,
 > before final Results prose). This is a
 > decision-forward outline, **not** prose. Prose drafting for a section waits
@@ -23,6 +24,7 @@
 | v6 | 2026-08-16 | **D14/D14b settled = A/A** (Session 133, PI in-session): R8 stays in Results as results-of-validation, whole at the head of the validity block. PI framing note recorded (GS = test set for configuration selection, 55-map = production with the luxury of GT to audit generalisation) + the standardised-reference drafting note for R8's error-structure description. |
 | v7 | 2026-08-16 | **D15 settled = C; D16 settled = A + Discussion prereg-retrospective rider; D17 settled = A + schema amendment** (Session 133, PI in-session). **All seventeen decisions settled.** D17 currency note added (family FDR, CMT-0106, E45 correction, E60 all landed since the block was drafted); the reconciliation block queued as the gate before final Results prose. |
 | v8 | 2026-08-17 | **D17 reconciliation block EXECUTED** (S134, `planning/s134-d17-reconciliation-block-2026-08-17.md`): vocabulary v2 + 31-row register + errata E74–E77/E59-update + the generated hypothesis-outcome table (`results/hypothesis-outcome-table/`). Gate-status note added at the decision register. PI walk pending (`reports/s134-relabel-walk-dossier.md`); prose drafting begins after the walk. |
+| v9 | 2026-09-12 | **D18–D22 SETTLED** (Session 153, PI rulings of 2026-09-12 on the claims inventory): r2 as the single reference revision across Results; the Gemini 3.7 stack as the headline, with "models improve, the calibrated configuration carries across" as a Results-level claim; information into tables, not repeated in prose; the GS stride/geometry programme promoted to its own block, **§ R1b**; exhibits-first. A **Figures and tables** section added per D22. |
 
 *Brief by design — consult `git log docs/paper/results-outline.md` for the
 full history and diffs.*
@@ -60,7 +62,8 @@ Options A and C therefore converge. What remains is not a restructure but a
 
 ```text
 PART 1 — CHARACTERISATION (gold standard, 4 maps / 487 tiles)
-  R0 reading guide → R1 precisions → R2 single-pass → R3 consensus →
+  R0 reading guide → R1 precisions → R1b tile geometry (per D21) →
+  R2 single-pass → R3 consensus →
   R4 proposer–verifier → R5 verifier robustness → R6 cost frontier (GS)
 
 SEAM — what carries forward, and what changes (§ S)
@@ -97,6 +100,14 @@ covers both the GS curator GT and the 55-map canonical GT). See D6 and D14.
 - Each is then derived in full in its own home (R4 and R7).
 - Stating them together up front is what makes the two-part structure legible
   from the first page, and pre-empts the conflation D1 guards against.
+
+**⚠ Numbers superseded by D19 (PI, 2026-09-12)**: the
+placement call above stands unchanged, but the two numbers the stub
+quotes do not. The headline is now the all-3.7 stack — GS 0.9265 on the
+screen union / 0.9190 Tier 1 on the Era-2 board frame, deployment r2
+0.8827 carried / 0.8871 oracle — with **0.890 / 0.790** and **0.8162**
+retained as the Gemini 3 *calibrated* result the family step is measured
+against. See [§ D19](#-d19--the-papers-headline-is-the-gemini-37-stack--settled-supersedes-d2s-numbers).
 
 ### ✅ D3 — the F1-vs-MCC theme — SETTLED (A, threaded)
 
@@ -142,6 +153,100 @@ The known repeat-offenders, with their assigned homes:
 | working precisions | Methods (per D6) | R1 recap, seam |
 | diversity dividend → its retirement | R3 → R5 | forward-ref only (D9) |
 | cost / Pareto frontier | R6 (GS), R7 (deployment) | seam bridge |
+| GS stride/geometry programme | R1b (per D21) | R4 (one clause), R7.2 (one clause) |
+
+### The 2026-09-12 PI rulings (D18–D22)
+
+> Five further spine-level calls, taken by the PI on 2026-09-12 on the
+> evidence of `docs/paper/results-claims-inventory-2026-09-12.md`. They are
+> numbered in the same D-series as D1–D17 and are all SETTLED. (The
+> `Dnn` *defect* numbers used in the errata — defect D20 for E83, defect
+> D13, defect D15 — are a separate series and are not these.)
+
+#### ✅ D18 — one reference revision across Results — SETTLED (r2 throughout)
+
+**Decision (PI, 2026-09-12; ruling 1)**: the whole of Results quotes
+**reference r2**. Figures that exist only on an older reference move to
+the supplement; r1, the canonical chain, and the standardised chain are
+named in the body only where a *bet* was assessed on them.
+
+- Executed in `results-draft.md` the same day: §§ R0, R8, and R9
+  re-pointed (§ R7 had been on r2 since erratum E84). Four § R8
+  error-structure figures have no r2 twin and carry
+  `[REF: r1 — supplement candidate per ruling 1]` for routing.
+- **Consequence for R6**: its transfer table is on the standardised
+  vintage and is *not* swept here — R6 is reserved for the parallel
+  K-ladder job and inherits this decision when that lands.
+
+#### ✅ D19 — the paper's headline is the Gemini 3.7 stack — SETTLED (supersedes D2's numbers)
+
+**Decision (PI, 2026-09-12; ruling 2)**: the headline is the **all-3.7
+text stack**, and the Gemini 3 board is the **calibration story that got
+there**.
+
+- GS: **F1@20 m 0.9265** on the 791-candidate screen union, **0.9190** on
+  the Era-2 487-tile board frame, where it sits in **Tier 1** (rank 2 of
+  79 cells).
+- Deployment (r2, 50 m): **0.8827 carried (T2)** and **0.8871 oracle
+  (T1)**.
+- The Gemini 3 recipe's **0.890 / 0.790** (GS) and **0.8162**
+  (deployment carry-forward) are retained as the *calibrated* result and
+  the thing the family step is measured against — not as the headline.
+- **D2's spine call stands** (state the headline early, both instruments
+  together); **D2's two numbers are superseded** by the four above.
+- **A Results-level claim to place**: *models keep improving, and the
+  calibrated configuration carries across model versions, at least
+  within the Gemini family.* Recommended home **§ R7.3**, where the
+  verifier-seat result and the 3.8 tie already establish it, with a
+  one-clause echo in **§ R0**'s headline stub so the reader meets it
+  before Part 1. This is the claim that makes the calibrate-then-deploy
+  spine pay off rather than date it.
+
+#### ✅ D20 — word budget: move information into tables, do not repeat it in prose — SETTLED
+
+**Decision (PI, 2026-09-12; ruling 3)**: the PI's "paper-b" practice.
+Information goes into a table once and is *not* restated in the text;
+the supplement is referenced rather than summarised. Every major section
+and finding must be **present**; prose polish is explicitly **not** the
+current goal, because the paper will be re-drafted from the outline.
+
+- Operative consequence: drafting effort goes to *coverage and
+  placement*, not sentences. A block that exists as a claims-with-anchors
+  list plus a table pointer is complete for this pass.
+- This supersedes nothing; it sets the standard against which D5, D7,
+  D11, and D13's compressions are executed.
+
+#### ✅ D21 — the GS stride/geometry programme gets its own Results block — SETTLED (§ R1b)
+
+**Decision (PI, 2026-09-12; ruling 5)**: the tile-size × overlap ×
+pass-count grid and the stride ladders get **their own Results block**,
+not a fold into R4 and not supplement-only. Realised as **§ R1b**,
+between R1 and R2, so no existing section renumbers. The block's claims-with-anchors outline is
+[§ R1b](#r1b--tile-geometry-tile-size--overlap--pass-count-and-the-stride-ladders),
+between the R1 and R2 blocks of Part 1 — twenty-three claims, each
+anchored.
+
+- This closes the gap the inventory found at R7.2-15: § R7.2's
+  "(§ R1, Obs 435)" cross-reference pointed at a section that did not
+  contain the GS geometry grid, and the GS stride ladder on which both
+  deployment carried points were *selected* was reported nowhere.
+- It also gives the five uncited `paper_section: Results` register rows
+  (`grid-tilesize-overlap-2026-08-18`, `grid-postverifier-2026-08-18`,
+  `stride-plateau-2026-08-25`, `stride-winner-ladder-exact-2026-08-25`,
+  `h13-overlap-2026-08-18`) a home, and is where H13 — a registered
+  hypothesis — is discharged.
+
+#### ✅ D22 — exhibits first: figures and tables carry what they carry better — SETTLED
+
+**Decision (PI, 2026-09-12; ruling 6)**: anything communicated more
+directly, clearly, or concisely by a figure, chart, or table is done that
+way. Per-block assignments are in
+[§ Figures and tables](#figures-and-tables), after the decision register.
+
+- The inventory established that Results currently promises **one table
+  and no figure**, while
+  `results/55map-final-board-r2-2026-09-06/significance-groups.png`
+  already exists at publication quality and is referenced nowhere.
 
 ---
 
@@ -157,8 +262,14 @@ The known repeat-offenders, with their assigned homes:
   Tie sets are now the Hsu MCB admissible set; the greedy-clique rule is
   superseded (defect D20). This methods claim must change with the sibling
   sentence already flagged in results-draft.md §R2. -->
-- **Now also carries** the two-headline stub (per D2) and a pointer to the
-  preregistration status statement (per D16).
+- **Now also carries** the two-headline stub (per D2, with D19's numbers)
+  and a pointer to the preregistration status statement (per D16).
+- **Also carries, per D19 (2026-09-12)**: a one-clause echo of the
+  Results-level claim that *models keep improving and the calibrated
+  configuration carries across model versions, at least within the
+  Gemini family* — its derivation home is § R7.3, and the echo here is
+  what lets the reader read Part 1 as calibration rather than as a dated
+  ceiling.
 - **✅ D5 SETTLED = A** (PI, Session 133, 2026-08-15): trim —
   orientation (2–3 lines) stays in R0, stats-convention detail moves
   to Methods.
@@ -191,6 +302,77 @@ The known repeat-offenders, with their assigned homes:
   wording: "in a supplement or appendix we should report full sweeps
   for all results using the thresholds we previously agreed on, then
   in the paper we should emphasise the data-derived headlines."
+
+### R1b — Tile geometry: tile size × overlap × pass count, and the stride ladders
+
+> **New block, per D21 (PI ruling 5, 2026-09-12).** Numbered **R1b** —
+> between R1 and R2 — so that no existing section renumbers. It is a
+> **claims-with-anchors list, not prose**: per D20, this pass establishes
+> coverage and placement, and the paper is re-drafted from the outline.
+>
+> **Why it exists.** The gold-standard geometry programme is the ISPRS
+> skeleton's exhibit (i) half that had no section anywhere in the draft.
+> § R7.2 already cross-referenced it as "(§ R1, Obs 435)" — a section
+> that does not contain the geometry grid — and the GS stride ladder on
+> which § R7.2's two deployment carried points were *selected* was
+> reported nowhere, leaving that block's central discipline claim
+> uncheckable by a reader.
+>
+> **Registration status.** Post-hoc (E41-class) throughout, with one
+> registered leg: **H13** (overlap/stride) is `registered-exploratory`
+> and is discharged here — the only place in Results where it is. Three
+> of the five governing register rows are unsigned
+> (`manually_verified_at: None`): `grid-tilesize-overlap-2026-08-18`,
+> `grid-postverifier-2026-08-18`, `h13-overlap-2026-08-18`.
+> `stride-plateau-2026-08-25` and
+> `stride-winner-ladder-exact-2026-08-25` are signed 2026-08-28.
+>
+> **Scope boundary.** The *deployment* stride leg is § R7.2's and is not
+> re-told here; R1b ends on a one-clause hand-off. Everything below is on
+> the GS instrument, 487-tile common footprint, F1@20 m.
+
+| # | claim | anchor |
+|---|---|---|
+| R1b-01 | The design is a clean 2 × 2 crossing tile size (384, 512 px) with overlap (12.5 %, 50 %) at K = 10 proposer passes per cell, one configuration throughout (`detect_brief-text`, gemini-3-flash-preview, MINIMAL, T = 0.7), so only the two geometry factors vary; 30,130 calls, **$18.53 billed flex**, scoring $0. | `results/grid-2026-08-18/findings.md:10-22,215` |
+| R1b-02 | **At a single pass both bigger tiles and less overlap win.** 50 % overlap costs +0.1200 F1 at 512 px and +0.1348 at 384 px; 384 px costs −0.0824 at 12.5 % overlap and −0.0972 at 50 %. All four contrasts exclude zero (paired tile bootstrap, B = 10,000, seed 42, E82). | same file `:77-80` |
+| R1b-03 | The **interaction is unresolved**: difference-of-differences −0.0148 [−0.0552, +0.0268], p = 0.4902. The two factors are additive to within the instrument's resolution. | same file `:81` |
+| R1b-04 | **Mechanism — overlap manufactures its own consensus.** Within-pass 20 m deduplication records how many overlapping tiles independently reported a location; corroborated detections (c ≥ 2) are 7.0 % / 7.7 % of the 12.5 % cells but **40.8 % / 41.7 %** of the 50 % cells. At 12.5 % the same filter is demolition rather than filtering; at 50 % it keeps recall near 0.87–0.89 while lifting precision from 0.156 → 0.531 (512 px). | same file `:101-117` |
+| R1b-05 | **Under aggregation the overlap ranking inverts and the tile-size ranking does not.** Best cell per configuration at K = 10: 512/50 % **0.7518**, 384/50 % 0.7205, 512/12.5 % 0.6759, 384/12.5 % 0.6475. | same file `:133-140`; register `grid-tilesize-overlap-2026-08-18` |
+| R1b-06 | **Passes do not substitute for overlap**, on all three counts at once: 384/12.5 % at K = 10 (union recall 0.8925, best F1 0.6475, $2.91) loses to 512/50 % at K = 3 (0.9229, 0.7429, $1.60). More overlap is better *and* cheaper. | same file `:176-185` |
+| R1b-07 | Sharper still: **one single pass** of 512/50 % (F1 0.7121, $0.53) beats **ten** passes of either 12.5 % cell (0.6759 at $1.90; 0.6475 at $2.91). Overlap buys corroboration inside one pass; extra passes buy the same corroboration at K times the price. | same file `:163,187-191` |
+| R1b-08 | **The verifier stage reverses the tile-size ranking.** Post-verifier board (best F1@20 m per cell, 9,133/9,133 candidates verified, zero failures): 384/50 % **0.8961**, 512/50 % 0.8815, 384/12.5 % 0.8677, 512/12.5 % 0.8311. | same file `:337-345`; register `grid-postverifier-2026-08-18` |
+| R1b-09 | **The overlap reversal survives the verifier, at about half the margin**: (12.5 − 50) = −0.0504, p = 0.0004 at 512 px and −0.0285, p = 0.0208 at 384 px, against a K = 10 consensus baseline of −0.0758, p = 0.0004 and −0.0730, p = 0.0026. The corroboration filter and the verifier are partially redundant, not interchangeable. | same file `:360-366,389-397` |
+| R1b-10 | **The like-for-like baseline is what makes the reversal statable.** The pre-verifier arm is the registered K = 10 consensus operating points scored as single sets on the same instrument — (384 − 512) = −0.0284, p = 0.281 at 12.5 % and −0.0312, p = 0.089 at 50 %, **both non-significant** — not the single-pass contrasts of R1b-02. So: aggregation alone erodes 512 px's significant single-pass advantage to non-significance, and the verifier then flips the sign, significantly at 12.5 % (+0.0366, p = 0.034) and unresolved at 50 % (+0.0147, p = 0.231). | same file `:351-366,368-375`; register row's 2026-08-24 audit revision |
+| R1b-11 | The verifier's gain over the consensus-only board is **+0.130 to +0.220**, largest exactly where consensus-only was worst (the two 384 px cells, +0.220 and +0.176), because the verifier recovers the precision 384 px lacked while its higher union-recall ceilings (0.8925 / 0.9509 against 0.8715 / 0.9416) are the resource a verifier cannot create. **→ D12 callback to R5's recall-ceiling hub**; the Obs 352 256 px rescue at a new tile-size pair. | same file `:347-349,376-388` |
+| R1b-12 | **Consensus and verifier are complements, not substitutes**: every cell's best operating point keeps a vote threshold (k ≥ 5..10) on top of the probability threshold, and the pure-verifier k = 1 board tops out at 0.8153, trailing the stacked optimum in every cell by 0.052–0.203. | same file `:399-404`; register `grid-postverifier-2026-08-18` |
+| R1b-13 | **Stride is not the lever.** The nine-cell verified board's iso-stride contrasts are all non-significant, but the direction is consistent: **at fixed stride, 384 px is at or above every alternative at every stride tested, and never below** — the study's long-standing 384 px preference surviving the one design that could have unconfounded it. | `results/stride-2026-08-25/findings.md:44-53`; Obs 435, `docs/notes/working-notes.md:28698` |
+| R1b-14 | **The optimum is interior.** The 384 px ladder reads 0.8677 (stride 336) → **0.8982** (256) → 0.8961 (192) → 0.8860 (144): 336 → 256 is significant (+0.0305 [+0.0052, +0.0564], p = 0.020), the top is flat (256 vs 192: +0.0020, p = 0.862), and the 144 rung falls away (p = 0.297 / 0.360). The stop rule fired at stride 144. | same file `:55-61` |
+| R1b-15 | **The exit criterion resolves to plateau, not winner.** The 13-cell tiered board gives **6 of 78 pairs significant, all involving 512/12.5 %**, with Tier 1 holding the other twelve cells including all four incumbents; the best new cell ties the grid winner (+0.0020, p = 0.862) and at 30 m the top three are indistinguishable to the third decimal. **No new GS F1 high comes from geometry**: the leading shelf stays at ~0.896–0.898 @ 20 m, ~0.903 @ 30 m. | same file `:63-70,144-146`; register `stride-plateau-2026-08-25` |
+| R1b-16 | **What geometry bought was cost, not F1.** 384/33.3 % runs 820 tiles per pass against the grid winner's 1,398 — the same performance at ~59 % of the calls — for ≈ $6.6 all-in on this footprint against ≈ $10.7 (384/50 %) and ~$50-class for the HIGH-thinking incumbents that share the 30 m shelf. | same file `:72-81`; Obs 435 |
+| R1b-17 | **The exact winner ladder** (384/33.3 %, N ∈ {1, 3, 5, 10}, exactly re-verified, 4,958/4,958 candidates, zero failures): F1@20 m 0.8677 / **0.8911** / 0.8856 / 0.8982 at $1.38 / **$2.64** / $3.81 / $6.56 all-in flex. N ∈ {3, 5, 10} are one statistical point; N = 3 reaches 0.8911 for $2.64 — within 0.007 of the full K = 10 winner at 40 % of its cost and ~19× cheaper than the $50-class incumbents. | same file `:149-163`; register `stride-winner-ladder-exact-2026-08-25`; `results/stride-2026-08-25/plateau_analyses.json` → `winner_ladder_exact` |
+| R1b-18 | **The GS ladder that § R7.2's carried points were selected on, made checkable.** At prob_t 0.15 the A geometry's k-curve argmax is **k = 8** with a flat top at k 6–9 (within 0.005), and the B geometry's is **k = 10** with a single-point top — exactly the (0.15, k8) and (0.15, k10) operating points § R7.2 says were declared before launch. This is the anchor a reader needs to verify that the deployment carried points were chosen on GS and not on the deployment sweeps. | `results/stride-2026-08-25/plateau_analyses.json` → `k_curves.g384_ov128` (`best_k` 8, `k_within_0p005` [6,7,8,9]) and `k_curves.g384_ov192` (`best_k` 10); `results/stride-2026-08-25/findings.md:147-148` |
+| R1b-19 | **H13, the registered leg: prediction split.** The registered *mechanism* is confirmed and the registered *performance* claim falsified. F1 falls monotonically as overlap rises — arm A (12.5 %) 0.5578, arm B (25 %) 0.5198, arm C (50 %) 0.4025 — with all three paired contrasts excluding zero. Recall behaves exactly as registered (0.7379 → 0.7844 → 0.8717); precision falls faster (0.4484 → 0.3887 → 0.2616). | register `h13-overlap-2026-08-18` (`registered-exploratory`, **unsigned**) |
+| R1b-20 | H13's edge mechanism **localises and is real but small**: the ten mounds arm A could only ever see within 100 m of a tile edge go from recall 0.2667 (A) to 0.7667 (B) to 0.9333 (C), against 0.7468 → 0.7847 → 0.8706 for the other 528. The gain is concentrated in under 2 % of mounds — too few to pay for the precision lost elsewhere, so **every additional API dollar spent on overlap buys negative F1**. | same register row |
+| R1b-21 | The registration's own cost multiplier for H13 arm C (~2×) was **wrong before any result existed**: arm C needs **2.99×** the tiles. A disclosure-grade point about the registration, not about the result. | same register row's `predicted_outcome` (authoring disclosure) |
+| R1b-22 | **Selection caveat, stated once for both boards**: every operating point is F1-selected on the same 487 tiles it is scored on, and the post-verifier sweep offers ~4–5× the consensus sweep's selection space, so the contrasts condition on that selection (E41-class). | `results/grid-2026-08-18/findings.md:384-388`; register `grid-postverifier-2026-08-18` |
+| R1b-23 | **Hand-off to § R7.2, one clause, no re-telling**: the two geometries selected here went to the 55-map corpus, where their GS-selected carried points transferred with taxes of +0.0036 (A) and +0.0081 (B) against the incumbent's +0.0324, and B beat A — the pre-named P6 failure. | `results/stride55-2026-08-27/findings.md:40-42,75-76`; register `stride55-sweep-oracle-2026-08-27`, `stride55-ladder-2026-08-27`, `stride55-a5-vs-b5-2026-08-27` |
+
+**Twenty-three claims.** Load-bearing for the paper: R1b-05 (the
+aggregation inversion), R1b-08 to R1b-11 (the verifier reverses tile
+size, and the like-for-like baseline that licenses saying so), R1b-15
+(plateau, not winner), R1b-17 (the ~19× efficiency result the ISPRS
+skeleton's exhibit (ii) also draws on), R1b-18 (the checkable GS ladder),
+and R1b-19 (H13 discharged).
+
+**Cross-references out** (one clause each, per the anti-double-telling
+convention): **R4** gains a clause noting that the tile-size optimum's
+architecture dependence is corroborated at a second tile-size pair here;
+**R5** is the recall-ceiling hub R1b-11 points back to; **R7.2's**
+"(§ R1, Obs 435)" is re-pointed to § R1b.
+
+**Not in this block**: the deployment stride leg (§ R7.2), the pass-count
+ladder as a *cost* object (§ R6 — and the parallel K-ladder job will
+extend it), and the consensus-only per-cell sweeps (Supplement S2).
 
 ### R2 — Single-pass baselines: a floor, and which factors moved it
 
@@ -365,6 +547,19 @@ is "among the 10 admissible of 82", with PV the point-estimate leader. -->
   essentially pure threshold-transfer failure, which sharpens lesson
   (i) (Obs 358) and licenses retiring the single-cell "oracle" label
   (Obs 409 measured the collapse).
+- **⚠ Structure moved on (PI ruling, 2026-09-08)**: § R7 is drafted as
+  three blocks — R7.1 the calibrate-then-deploy result on the Gemini 3
+  board, R7.2 the portfolio transfer and the 35-cell final board, R7.3
+  the model-generation leg. The claims above are R7.1's; R7.2 and R7.3
+  are inventoried in
+  `docs/paper/results-claims-inventory-2026-09-12.md`.
+- **Home of the D19 claim (2026-09-12)**: § R7.3 carries *models keep
+  improving and the calibrated configuration carries across model
+  versions, at least within the Gemini family* — the verifier-seat
+  result and the 3.8 measured tie are its evidence, and the same recipe
+  transferring across two model generations is what makes it a claim
+  about method rather than about a vendor release. § R0 echoes it in one
+  clause; nowhere else restates it.
 
 ### R8 — What the ground truth can and cannot support
 
@@ -598,8 +793,14 @@ favourable and should not be given away.
 | D15 | R9 | Results vs Discussion vs split | ✅ **C** — split; protocol → Discussion via Seeds 3/6 (S133) |
 | D16 | prereg | where prereg material and the hypothesis-outcome table live | ✅ **A** + Discussion prereg-retrospective rider (S133) |
 | D17 | prereg | confirmatory/exploratory reconciliation | ✅ **A** + schema amendment; reconciliation block queued (S133) |
+| D18 | spine | one reference revision across Results, or per-section currency | ✅ **r2 throughout**; older-reference figures → supplement (PI ruling 1, 2026-09-12) |
+| D19 | spine | headline the Gemini 3 calibrated result or the Gemini 3.7 stack | ✅ **the 3.7 stack** (GS 0.9265 screen / 0.9190 board-frame Tier 1; deployment r2 0.8827 carried / 0.8871 oracle); Gemini 3 is the calibration story; **supersedes D2's two numbers, not its placement** (PI ruling 2) |
+| D20 | spine | word budget: compress prose, or move information into tables | ✅ **into tables**, referenced not restated; coverage over polish, the paper being re-drafted from the outline (PI ruling 3) |
+| D21 | R1b | GS stride/geometry: new block, fold into R4, or supplement-only | ✅ **its own block, § R1b**, between R1 and R2 (PI ruling 5) |
+| D22 | all | exhibits: prose-first or figure/table-first | ✅ **figure/table-first** wherever it carries the claim better (PI ruling 6) |
 
-**Settled**: ALL — D1–D4 (Session 118), D5–D17 (Session 133).
+**Settled**: ALL — D1–D4 (Session 118), D5–D17 (Session 133),
+D18–D22 (Session 153).
 **Gate before final Results prose**: the D17 reconciliation block
 (schema amendment → relabelling → H10/H12-v2 rows → unexecuted-set
 erratum check → generate the hypothesis-outcome table).
@@ -614,3 +815,69 @@ PI-approved, the table generating at
 OPEN.** Three gated future items queued from the unexecuted-set
 adjudication (H6 $0 analyses; H13 re-pricing → arms B+C; H2-C
 pricing run) — each needs its own phase-gate before execution.
+
+---
+
+## Figures and tables
+
+> **New section, per D22 (PI ruling 6, 2026-09-12).** One row per Results
+> block: what the block's claims are best carried by, and the existing
+> artefact that could serve or "to be made". **No figure was made in this
+> pass** and no prose was cut — this is the plan, not its execution.
+
+**A correction to the inventory's premise.** The claims inventory
+concluded that "no paper figure has been made", on the evidence that
+`docs/paper/figures/` holds only `review-app-examples/`. That is true of
+`docs/paper/figures/`, but **`results/` carries about a hundred committed
+figures**, several of them directly serving the ISPRS skeleton's three
+exhibits. The most consequential finds, none of them referenced anywhere
+in the draft:
+
+- `results/verifier-robustness/pareto/pareto_v2.png` (and
+  `pareto_leaderboard.png`) — the cost/F1 frontier, i.e. **exhibit (ii)**,
+  generated by `scripts/build_pareto_v2.py:167`.
+- `results/55map-final-board-r2-2026-09-06/significance-groups.png` — the
+  35-cell dot-and-interval plot with significance groups, i.e.
+  **exhibit (iii)**, generated by `scripts/final_board_build.py:520`.
+- `results/gs-fp-classification/figures/cross_corpus_comparison.png` and
+  `category_distribution.png` — the error-mode comparison.
+- `results/double-miss-crops-2026-09-06/contact-sheet.png` — the
+  double-miss cases § R8 counts, as images.
+- `results/student-gt-fn-rate-analysis/figures/fn_rate_by_stratum.png`
+  and `.../-gs4/figures/fn_rate_by_sheet.png` — the reference's own
+  omission structure.
+
+So the gap is **selection and adaptation**, not creation from nothing.
+
+| block | best carried by | existing artefact, or to be made |
+|---|---|---|
+| **R0** reading guide | **table** — the two instruments side by side (corpus, tiles, reference, buffer, resolving power), plus the hypothesis-outcome table | hypothesis-outcome table exists and is generated: `results/hypothesis-outcome-table/hypothesis-outcome-table.md`. The two-instrument table is **to be made** — it is small, and it also discharges much of the D1 seam. |
+| **R1** working precisions | **prose**, two or three lines (D6 sent the derivation to Methods); the full 14-buffer sweeps go to the supplement per the D6 rider | tables exist at `results/working-precision/gs-plateau-characterisation.md`; a buffer-curve figure is **to be made for the supplement**, not the body |
+| **R1b** tile geometry | **one figure + one table.** Figure: F1 against cost across the geometry cells, which carries R1b-05 through R1b-17 at once — the aggregation inversion, the verifier reversal, the interior optimum, and the ~19× efficiency point. Table: the nine-cell stride board | both **to be made**, but from committed numbers at $0: the board table is `results/stride-2026-08-25/findings.md:28-40` and the ladder `:152-157`; the grid boards are `results/grid-2026-08-18/findings.md:135-141,336-343` |
+| **R2** single-pass | **table**, and a small one — D7 settled one sentence for the four inert factors, so the board belongs in the supplement with only the floor and the tie size in the body | `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.md` is the full board (supplement); the body table is **to be made** (3–4 rows) |
+| **R3** consensus | **figure** — the vote-threshold × N surface is the natural carrier of "diversity, not pass count" | inter-pass agreement figures exist (`results/inter-pass-agreement/figures/`, e.g. `phase3a_retest__replication-high.png`) but measure agreement, not the dividend; the dividend figure is **to be made**. *Held pending the K-ladder job, which governs R3.* |
+| **R4** proposer–verifier | **table** — the Era-2 verified board, top rows only | exists: `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md` rank table, 79 rows; the body needs the top ~8 plus the best Gemini 3 cells. Compression is **to be made**; the source is generated |
+| **R5** verifier robustness | **table** — exactly the D11 summary table the block still does not have: one row per axis (determinism, temperature × thinking, verifier consensus, compute allocation, verifier model, model upgrades) with the delta, the p-value, and the cost | **to be made**; every cell exists in `results/verifier-robustness/verifier-robustness-findings.md` and the four register rows. This is the highest-value missing table in Results: it discharges D11 and saves ~300 words |
+| **R6** cost frontier (GS) | **figure** — the Pareto frontier; the seven-rung table then reduces to the supplement | **exists and is unused**: `results/verifier-robustness/pareto/pareto_v2.png`. *Held pending the K-ladder job, which governs R6.* |
+| **Seam** | **prose**, half a page; it is the one place a paragraph beats a table, because what changes between instruments is a set of *reasons* | shares the R0 two-instrument table rather than adding its own |
+| **R7.1** Gemini 3 board | **table**, compressed to five rows per the inventory's recommendation — six of its eight rows reappear in R7.2's table | source exists: `results/55map-leaderboard/55map-leaderboard-50m-r2.md`; the MCC re-tiering that carries lesson (iii) is `results/metric-leaderboards/55map-mcc-tiering-r2.md` |
+| **R7.2** portfolio transfer + final board | **figure + table.** Figure: the significance-groups plot, which is the paper's obvious single deployment exhibit. Table: the ten-row family table already rendered by script | **figure exists**: `results/55map-final-board-r2-2026-09-06/significance-groups.png` (publication quality, referenced nowhere). Table is generated by `scripts/render_r7_family_table.py` from `final_board_50m.json` |
+| **R7.3** model-generation leg | **table** — the 2 × 2 grid (proposer × verifier) with each cell's carried and oracle F1, which carries the verifier-seat finding in four cells and replaces ~200 words | **to be made**; a 2 × 2 is the smallest possible exhibit for the block's headline finding. The cost reconciliation goes to the supplement per the inventory's ruling-3 recommendation |
+| **R8** ground-truth error structure | **table** — the opposing biases with their directions, magnitudes, and bases (recall inflation, double-miss correlation, residual duplicates, net), which also makes the `[REF: r1]` provenance visible per D18 | **to be made** (4 rows). Optional supporting figure exists: `results/double-miss-crops-2026-09-06/contact-sheet.png`, and the omission structure at `results/student-gt-fn-rate-analysis*/figures/` |
+| **R9** GT-free selection | **figure** — pseudo-rank against true rank for the eight cells, which shows ρ = +0.881 and the vote ≥ 3 inversion on one pair of axes | **to be made**; the numbers are in `results/gtfree-selection/gtfree-selection-findings.md`. The four-step protocol stays prose and goes to Discussion per D15 |
+
+**Count**: 3 figures and 1 table already exist and are unused
+(`pareto_v2.png`, `significance-groups.png`, the hypothesis-outcome
+table, and — for the supplement — the phase-3d PR curves); 4 figures and
+7 tables are to be made, all from committed numbers at **$0 compute**.
+
+**Priority order, if the budget for making exhibits is finite**:
+
+1. **R5's D11 summary table** — settled, missing, and saves the most words.
+2. **R7.2's significance-groups figure** — exists; Results currently has
+   no figure at all.
+3. **R6's Pareto figure** — exists; it is exhibit (ii).
+4. **R1b's F1-against-cost figure** — carries the most claims per square
+   inch of any proposed exhibit.
+5. **R0's two-instrument table** — small, and doubles as the seam's spine.
+6. **R7.3's 2 × 2** and **R8's bias table** — each replaces ~200 words.

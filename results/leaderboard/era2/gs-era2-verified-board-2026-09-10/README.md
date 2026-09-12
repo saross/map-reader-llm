@@ -311,7 +311,7 @@ the PI's. The superseded evaluations and a note on the diagnosis are under
 `archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-opmax-stale-materialisation/`;
 the 79-cell artefacts built on the stale materialisation are under
 `archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-79cell-stale-materialisation/`.
-The analysis row remains UNSIGNED; the publication ruling is the PI's.
+The analysis row remains UNSIGNED; the publication ruling is the PI's. [Superseded the same evening: signed 2026-09-10T12:34:56Z — see the "Signed" entry above.]
 
 ### 2026-09-10 (evening) — Signed
 
@@ -359,7 +359,7 @@ label-keyed cache, not instrument drift (`g1-regression.json` `bisect`,
 `g1-confirmatory-rebuild.json`: 44/44 from the inputs actually scored). The
 39-cell artefacts are snapshotted under
 `archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-39cell/`.
-The analysis row remains UNSIGNED; the publication ruling is the PI's.
+The analysis row remains UNSIGNED; the publication ruling is the PI's. [Superseded the same evening: signed 2026-09-10T12:34:56Z — see the "Signed" entry above.]
 
 ### 2026-09-10 — Original publication
 
