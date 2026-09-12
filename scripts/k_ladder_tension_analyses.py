@@ -408,29 +408,34 @@ def cmd_effect_sizes(args: argparse.Namespace) -> dict[str, Any]:
         family = ladder.get("family") or ""
         if "MINIMAL" not in family:
             continue
-        rungs = {int(r["K"]): r for r in ladder["rungs"]}
-        if 1 not in rungs:
+        # A Phase 2 rung carries its figures under the operating-point key,
+        # not at the rung's top level: ``rung["opmax"]["f1_20"]``.
+        rungs = {int(r["K"]): (r.get("opmax") or {}) for r in ladder["rungs"]}
+        if 1 not in rungs or rungs[1].get("f1_20") is None:
             continue
-        best_k = max(rungs, key=lambda k: rungs[k].get("f1_headline") or -1.0)
+        best_k = max(rungs, key=lambda k: rungs[k].get("f1_20") or -1.0)
         stat = p2_by_family.get(family, {})
         rows.append(
             {
                 "corpus": "gold standard (4 maps, 487 tiles)",
                 "ladder": family,
                 "buffer_m": ladder.get("headline_buffer_m"),
+                "thinking": ladder.get("thinking_level"),
+                "modality": ladder.get("modality"),
+                "temperature": ladder.get("temperature"),
                 "K_low": 1,
                 "K_best": best_k,
-                "f1_low": rungs[1].get("f1_headline"),
-                "f1_best": rungs[best_k].get("f1_headline"),
-                "delta_f1": (
-                    round(rungs[best_k]["f1_headline"]
-                          - rungs[1]["f1_headline"], 6)
-                    if rungs[best_k].get("f1_headline") is not None
-                    and rungs[1].get("f1_headline") is not None else None
+                "f1_low": rungs[1].get("f1_20"),
+                "f1_best": rungs[best_k].get("f1_20"),
+                "delta_f1": round(
+                    rungs[best_k]["f1_20"] - rungs[1]["f1_20"], 6
                 ),
-                "ci_low": rungs[1].get("f1_ci_low"),
-                "ci_high": rungs[1].get("f1_ci_high"),
+                "f1_low_ci": rungs[1].get("f1_20_ci"),
+                "f1_best_ci": rungs[best_k].get("f1_20_ci"),
+                "tile_mcc_low": rungs[1].get("tile_mcc"),
+                "tile_mcc_best": rungs[best_k].get("tile_mcc"),
                 "p_bh": stat.get("f1_p_bh_k1_to_best"),
+                "n_tiers": stat.get("n_tiers"),
                 "one_tier": stat.get("n_tiers") == 1,
                 "source": "results/k-ladder-2026-09-12/phase2/ladders.json",
             }
@@ -447,14 +452,28 @@ def cmd_effect_sizes(args: argparse.Namespace) -> dict[str, Any]:
          / "summary.json").read_text()
     )
     p1_by_slug = {e["ladder"]: e for e in p1_mcc.get("ladders", [])}
+    # ``family_base`` is NOT unique: stride A and stride B each appear three
+    # times (the r2 and standardised references, and for B a 3.7-verifier arm),
+    # so the key must also carry the reference and the R1 verdict. Only the
+    # R1-compliant r2 ladders belong in this comparison; the 3.7-verifier arm
+    # varies the verifier as well as K, which is why findings.md § 3.3 reports
+    # it separately.
     slug_of = {
-        "Stride A (g384 ov128), 55-map": "55map-stride-a-r2",
-        "Stride B (g384 ov192), 55-map": "55map-stride-b-r2",
-        "Stride A (g384 ov128), GS, exact re-verification": "gs-stride-a",
+        ("Stride A (g384 ov128), 55-map",
+         "best-available-gt-55maps-r2.geojson", True): "55map-stride-a-r2",
+        ("Stride B (g384 ov192), 55-map",
+         "best-available-gt-55maps-r2.geojson", True): "55map-stride-b-r2",
+        ("Stride A (g384 ov128), GS, exact re-verification",
+         "mounds-reference.geojson", True): "gs-stride-a",
     }
     for ladder in phase1.get("ladders", []):
         base = ladder.get("family_base") or ladder.get("family") or ""
-        slug = slug_of.get(base)
+        key = (
+            base,
+            Path(ladder.get("reference_file") or "").name,
+            bool(ladder.get("r1_verifier")),
+        )
+        slug = slug_of.get(key)
         if slug is None:
             continue
         rungs = {int(r["K"]): r for r in ladder["rungs"]}
@@ -471,6 +490,8 @@ def cmd_effect_sizes(args: argparse.Namespace) -> dict[str, Any]:
                 "corpus": corpus,
                 "ladder": ladder.get("family"),
                 "buffer_m": ladder.get("headline_buffer_m"),
+                "thinking": "minimal",
+                "modality": "text",
                 "K_low": 1,
                 "K_best": best_k,
                 "f1_low": rungs[1].get("f1_headline"),
@@ -481,6 +502,8 @@ def cmd_effect_sizes(args: argparse.Namespace) -> dict[str, Any]:
                     if rungs[best_k].get("f1_headline") is not None
                     and rungs[1].get("f1_headline") is not None else None
                 ),
+                "tile_mcc_low": rungs[1].get("tile_mcc"),
+                "tile_mcc_best": rungs[best_k].get("tile_mcc"),
                 "p_bh": stat.get("f1_p_bh_k1_to_best"),
                 "source": "results/k-ladder-2026-09-12/ladders.json",
             }
