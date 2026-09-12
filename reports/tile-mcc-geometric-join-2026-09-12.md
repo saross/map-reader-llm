@@ -393,7 +393,8 @@ becomes geometric they will fail on **every** cell. That is a cost of
 | 5 | Site 2's wider exposure | `compute_per_tile_tp_fp_fn` now raises on the refused cell; previously returned tp 0 / fp 0 | § 1 |
 | 6 | The board gate now checks geometry | fails a shortfall even when rebuilt == recorded | `tests/test_tile_join_geometric.py::test_board_gate_fails_a_shortfall_even_when_the_record_agrees` |
 | 7 | Lint | `ruff check` clean on all five touched Python files; `markdownlint-cli2` clean on this report and the two amended documents | — |
-| 8 | Tier-1 suite | see § Changelog | `python -m pytest -m tier1 -q` on sapphire |
+| 8 | Tier-1 suite | **2,419 passed, 1 skipped, 3 xfailed, 0 failed** in 180 s, of which 16 are this work's new module | `python -m pytest -m tier1 -q` on sapphire |
+| 9 | The invariant does not over-fire | 15 tier-1 tests initially failed on synthetic tile names the map-name regex rejects — a *different* loss (§ 5.1a), now warned rather than raised, with the real case still refusing at "21 of 475" | commit `921823009` |
 
 ## 8. Observation candidate
 
@@ -481,4 +482,8 @@ Landed by commits on the branch above: the library fix, the
 `--tile-join` wiring, the tier-1 tests, the gate hardening, the audit
 instrument, and the audit results.
 
-Tier-1 suite at publication: recorded in the session's final report.
+Tier-1 suite at publication: **2,419 passed, 1 skipped, 3 xfailed, 0
+failed** in 180 s on sapphire (2,403 before this work plus its 16 new
+tests). `ruff check` clean on the five touched Python files;
+`markdownlint-cli2` clean on this report, `findings.md` and the deltas
+report.
