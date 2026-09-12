@@ -144,7 +144,7 @@ lines reading `{"total_passes": 5, "thresholds": {...}}`, and every feature's
 `"total_passes": 5`. This is Finding 4's failure scenario, in the same
 forty-minute window that produced the data.
 
-### 3.1 What reads these five unions, and what is at risk
+### 3.1 The registered conditions, and what is at risk
 
 Each union is read by exactly one registered condition, via its evaluation at
 `outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t{1..5}/evaluation.json`:
@@ -157,18 +157,80 @@ Each union is read by exactly one registered condition, via its evaluation at
 | `consensus_t4.geojson` | `consensus-384-t1-0::consensus-4of30` | 30 | 4 | 395 | 0.4554 | 0.4785 | 0.4345 |
 | `consensus_t5.geojson` | `consensus-384-t1-0::consensus-5of30` | 30 | 5 | 295 | 0.4712 | 0.5831 | 0.3954 |
 
-**The metrics are not miscomputed — they are mislabelled.** Each recorded
-`n_detections` equals the committed union's feature count exactly, so each F1
-was measured on the artefact it names. What is wrong is the description: these
-are **5-pass unions at vote thresholds 1–5** (confidence = votes/5, so `t5` is
-unanimity), registered and labelled as **30-pass conditions at vote thresholds
-1–5** (where `t5` would be a 1-in-6 minority). The numbers at risk are
-therefore not the five F1 values in isolation but every claim that treats them
-as N=30 operating points — in particular any vote-threshold or N-scaling
+**The metrics are not miscomputed — they are mislabelled, and the correct label
+is already on the record elsewhere.** Each recorded `n_detections` equals the
+committed union's feature count exactly, so each F1 was measured on the artefact
+it names. What is wrong is the description: these are **5-pass unions at vote
+thresholds 1–5** (confidence = votes/5, so `t5` is unanimity), registered as
+**30-pass conditions at vote thresholds 1–5** (where `t5` would be a 1-in-6
+minority).
+
+The run's 30-pass sweep was in fact computed — as an *analysis*, never
+materialised. `results/paper-eval/flash-min-text-t10-20m/consensus-analysis-report.json`
+(`metadata.timestamp` 2026-03-26T12:46:10Z, `script_version` 2.0.0,
+`study_dir` `outputs/h11/consensus-384-UNINTENDED-T1.0`,
+`pool_selection` "first-N (preregistration Section 3.8)",
+`pool_sizes: [5, 10, 30]`, `n_configurations` 45) holds all 45 sweep points in
+memory-computed form. Its N=5 rows reproduce the five register conditions
+exactly:
+
+| T | analysis report F1 / `n_detections` | register condition F1 / `n_detections` |
+|---:|---|---|
+| 1 | 0.3038 / 974 | `consensus-1of30` 0.3038 / 974 |
+| 2 | 0.3977 / 616 | `consensus-2of30` 0.3977 / 616 |
+| 3 | 0.4331 / 484 | `consensus-3of30` 0.4331 / 484 |
+| 4 | 0.4554 / 395 | `consensus-4of30` 0.4554 / 395 |
+| 5 | 0.4712 / 295 | `consensus-5of30` 0.4712 / 295 |
+
+So the committed `voting/` unions are the **N=5 slice of a first-N sweep**,
+materialised on disk under a directory name (`voting/`) that does not say so,
+while the N=10 and N=30 slices were never written out at all (the report's
+per-pool optima are N=10 T=9, F1 0.4615, 319 detections; N=30 T=22, F1 0.4670,
+383 detections). The register then minted five conditions from the N=5 slice and
+labelled them `Nof30`.
+
+**The same study's board cells label it correctly.** `results/e43-board-regen/summary.md`
+(banner 2026-08-02; § 1) names the three cells the E72 remediation dropped from
+`leaderboard-20m` / `leaderboard-30m` as "`flash-min-text-t10 N=10 N=10,
+9-of-10`, `flash-min-text-t10 N=30 N=30, 22-of-30`, `flash-min-text-t10 N=5 N=5,
+5-of-5`", and states that "the underlying study is
+`outputs/h11/consensus-384-UNINTENDED-T1.0/`". Those are the three per-pool
+optima above, and the N=5 cell — the same artefact as
+`consensus-384-t1-0::consensus-5of30` — is labelled **5-of-5** there. The
+register's `Nof30` is therefore not a defensible alternative convention; it
+contradicts the board family derived from the same sweep.
+
+**The numbers at risk.** Not the five F1 values in isolation, but every claim
+that treats them as N=30 operating points — any vote-threshold or N-scaling
 reading of this cell, and any comparison against the genuine 30-pass sweeps
-(`outputs/retest/phase3a*/**/consensus/`, which all REPRODUCE here). A second,
-separate loss: 25 of the run's 30 passes have never entered any published
-consensus figure for it.
+(`outputs/retest/phase3a*/**/consensus/`, which all REPRODUCE here). Two
+downstream artefacts carry the mislabel forward: `results/uplift-supplement/conditions.csv`
+records `K=30, N=30` for all five rows (lines 43–47) with a `cost_basis` reading
+"sum over N=30 proposer passes", which over-attributes the cost of a 5-pass
+union by a factor of six; and `results/conditions-manifest.json` carries
+`n_passes: 30` (the field this report's § 3.1 table quotes).
+
+### 3.2 No board or paper artefact reads these unions — but the existing caveat has not propagated
+
+**What reads them.** Searching the working tree outside `archive/`,
+`consensus-384-UNINTENDED-T1.0` occurs in 272 files and `consensus-384-t1-0` in
+95. Of those:
+
+- **`docs/paper/` and `paper/`: zero hits for either string.** No paper text
+  cites this run.
+- **`results/leaderboard/`: one file**, and not a membership row —
+  `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering-input/run-analyses.json`,
+  where the five condition ids appear inside an `uplift-supplement-flatten`
+  diagnostic's `conditions_compared` list. The live board's own
+  `membership.json` has **zero** occurrences of `consensus-384` (verified
+  directly), as do its `tiering_20m.md` and `README.md`. **No signed board row
+  reads a stale union.**
+- **`results/ci-metadata-registry.md`: no row names this run.** The one
+  `UNINTENDED` row (`:100`) covers the *sibling* single-pass study
+  `outputs/h11/single-pass-384-UNINTENDED-T1.0/analysis_report.json`, and
+  `:302` confirms the singular ("the h11 UNINTENDED analysis report"). Contrast
+  Finding 1 of the parent audit, where the registry's paper-citable designation
+  was what made a defect LIVE: here it does not apply.
 
 **Mitigation already on the record.** This cell is *already* fenced off for an
 unrelated reason. Every one of the five register rows carries the note
@@ -182,18 +244,53 @@ the paper's citable temperature evidence
 (`results/run-conditions.json`, `decomposition.consensus-384-t1-0.conditions[*]._note`).
 The run's own README says the same: "**must not be cited as primary evidence
 for the temperature finding**" (`outputs/h11/consensus-384-UNINTENDED-T1.0/README.md`).
+Erratum E72 (`docs/methodology/preregistration/protocol-errata.md:3410`) and the
+2026-08-02 correction block of E43 (`:1248-1275`) carry the same disposition.
 So the staleness compounds a cell already marked uncitable rather than
-contaminating a live headline — but the `n_passes: 30` label is a *separate*
-defect from E72 and is not covered by that note.
+contaminating a live headline — and the `n_passes: 30` mislabel is a **separate**
+defect from E72, not covered by that note.
 
-**Nothing was changed.** Per the brief, no union, evaluation, or register row
-was touched. The remedy is a PI decision, and the options are distinguishable:
-(a) relabel the five conditions `consensus-Nof5` with `n_passes: 5`, which
-makes the register describe the artefacts truthfully at zero compute; (b)
-rebuild the union from all 30 passes and re-score, which changes five published
-F1 values in a cell already marked uncitable; or (c) record the discrepancy as
-an erratum beside E72. Option (a) plus (c) is the cheapest honest outcome, but
-it is not this report's call.
+**A propagation gap noticed in passing (not part of this audit's remit).**
+That E72 note lives only in `results/run-conditions.json`. `results/conditions-manifest.json`
+contains **zero** occurrences of "E72" and its condition schema has no note or
+caveat field at all (the five rows' keys are `condition_id, run_id, label,
+architecture, aggregation, proposer_pool, n_passes, vote_threshold,
+prob_threshold, verifier_config, scope_override, metrics, n_detections,
+n_candidates, n_reference_mounds, provenance`), and the `notes` column is empty
+for all five rows of `results/uplift-supplement/conditions.csv` — the artefact
+that feeds the current board's `tiering-input/`. E72's remediation item 4
+(`protocol-errata.md:3448-3452`) lists "conditions-manifest coverage caveats set
+for the derived conditions" among the hardening delivered. Whether that item was
+satisfied by some other mechanism — the register note itself, or the deliberate
+`scope_override: null` decision the register explains ("that mis-scoping IS the
+defect, and overriding the field would misdescribe the recorded metrics") — is a
+question for the PI, not something this report can settle. It is recorded here
+because the five conditions' raw 487-bounds F1 figures travel into the board
+pipeline with no caveat attached to them.
+
+### 3.3 What was not changed, and the options
+
+Per the brief, **no union, evaluation, or register row was touched.** The remedy
+is a PI decision, and the options are now cleanly distinguishable:
+
+1. **Relabel** the five conditions `consensus-1of5` … `consensus-5of5` with
+   `n_passes: 5`, matching the label `results/e43-board-regen/summary.md`
+   already uses for the same artefact, and correct `K`/`N` and `cost_basis` in
+   `results/uplift-supplement/conditions.csv`. Zero compute, zero change to any
+   measured value, and it makes every artefact describe what is on disk.
+2. **Materialise the N=30 union and re-score.** The 30-pass sweep already
+   exists as an analysis, so this adds no information — it would change five
+   published F1 values in a cell already marked uncitable, and cost a
+   re-derivation plus five evaluations.
+3. **Rename the directory** `voting/` → `consensus-n5/`, which would make the
+   sub-pool self-declaring and turn this cell SUBPOOL-CONSISTENT under the same
+   rule that covers the 36 phase3a and pv-diag-384 sub-pools. Cheap, but it
+   moves a path that 272 files reference.
+4. **Record an erratum** beside E72 noting that the cell's five consensus
+   conditions are N=5, not N=30.
+
+Option 1 plus option 4 is the cheapest honest outcome and changes no number,
+but the choice is not this report's to make.
 
 ## 4. What did NOT turn out stale
 
@@ -427,7 +524,13 @@ conditions, re-derived on sapphire (1 m 11 s wall, 16 workers) and classified
 64 REPRODUCES / 36 SUBPOOL-CONSISTENT / 5 STALE / 1 UNRESOLVED. The five STALE
 unions are `outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t1..t5.geojson`,
 which reflect the first 5 of a 30-pass pool while their register rows declare
-`n_passes: 30`. One near-miss recorded at § 4.1
+`n_passes: 30`; § 3.1 corroborates the N=5 reading against
+`results/paper-eval/flash-min-text-t10-20m/consensus-analysis-report.json` and
+the correct 5-of-5 label against `results/e43-board-regen/summary.md` § 1.
+§ 3.2 records that no signed board row or paper text reads any of the five, and
+notes in passing that the E72 caveat present in `results/run-conditions.json`
+does not appear in `results/conditions-manifest.json` or
+`results/uplift-supplement/conditions.csv`. One near-miss recorded at § 4.1
 (`outputs/h10/evaluation-v2/pool_160_hp4hn4/consensus/`, stale `t1`/`t2`
 siblings, read by nothing). No committed union, evaluation, or register row was
 modified.
