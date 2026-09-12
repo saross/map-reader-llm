@@ -50,10 +50,17 @@ A registered condition joins when all of these hold:
 * ``aggregation`` is ``verified``;
 * its run is a 4-map-GS, 384 px, curator-reference run, or it is a
   B-geometry (``g384-ov192``) cell of the grid campaign;
-* its proposer pool has K >= 5 passes (read from the label — ``kofN``,
-  ``-nN``, ``kN`` — falling back to the row's ``n_passes``), which excludes
-  the single-pass + verifier cells (``*baseline*`` and the whole
-  ``proposer-verifier-384`` run);
+* its proposer pool has K >= ``MIN_K`` passes (read from the label — ``kofN``,
+  ``-nN``, ``kN`` — falling back to the row's ``n_passes``). ``MIN_K`` is **1**
+  from 2026-09-12: the PI's ruling R3 of the K-ladder review
+  (``planning/k-ladder-review-2026-09-11.md`` § 4) is that the board takes every
+  verified cell on its frame regardless of K, because the twenty single-pass
+  exclusions were a scope choice of this inventory builder (architecture class),
+  not a statistical one. Before that ruling ``MIN_K`` was 5 and a separate rule
+  excluded the ``*baseline*`` labels and the whole ``proposer-verifier-384`` run
+  by name; both had to go together, since the K gate alone would have kept
+  excluding all twenty. A row whose K cannot be read at all is still excluded —
+  an unknown pass count is not a K of 1;
 * its committed evaluation is scored on the Era-2 frame or on grid-common
   (the B tiling's frame) — which excludes the Era-3 327-tile cells, the 256 px
   scope-override cells, and any row without a readable evaluation;
@@ -91,6 +98,14 @@ B_FRAME = "grid_common_bounds.geojson"
 B_GEOMETRY = "g384-ov192"
 GRID_RUNS = ("grid-2026-08-18", "stride-phaseb-2026-08-25", "stride-phasec-2026-08-25", "stride-55map-2026-08-25")
 SINGLE_PASS_PV_RUN = "proposer-verifier-384"
+#: The opmax builder's own membership. Every row it mints is ITS member, scored
+#: and gated by ``scripts/build_gs_era2_board_opmax.py``, so this builder must
+#: not admit the same condition a second time.
+OPMAX_MEMBERSHIP = f"{BOARD_DIR}/opmax/membership.json"
+#: Smallest proposer pool the board admits. 1 since 2026-09-12 (PI ruling R3):
+#: every verified cell on the frame joins, whatever its pass count. The
+#: constant is kept rather than inlined so the rule stays one edit wide.
+MIN_K = 1
 G2_BOOTSTRAP = 200
 
 
@@ -131,10 +146,36 @@ def f1_at(doc: dict[str, Any] | None, buffer_m: int = 20) -> float | None:
     return None
 
 
+def opmax_owned() -> set[str]:
+    """Condition ids the opmax builder mints, and therefore owns.
+
+    Read from ``opmax/membership.json`` rather than matched on a ``-opmax``
+    label suffix, because the suffix is also a sanctioned label convention for
+    rows this builder DOES own — the September ``-recovery-<date>-opmax`` pair,
+    for one. Ownership is a fact the other builder records, not a guess from a
+    name.
+
+    Returns:
+        The condition ids, or an empty set if the opmax membership has not been
+        derived yet (in which case this builder admits nothing extra and the
+        operator is told to run the opmax builder's ``membership`` first).
+    """
+    path = REPO_ROOT / OPMAX_MEMBERSHIP
+    if not path.is_file():
+        print(f"NOTE: {OPMAX_MEMBERSHIP} is absent, so no opmax row can be "
+              "recognised as the opmax builder's; derive it first or this "
+              "membership may double-count", file=sys.stderr)
+        return set()
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    return {row["condition_id"] for row in doc.get("members", [])
+            if "condition_id" in row}
+
+
 def derive_membership() -> dict[str, Any]:
     """Apply the § 3 rule to the register; return members and exclusions."""
     dec = json.loads(RUN_CONDITIONS.read_text(encoding="utf-8"))["decomposition"]
     facts = json.loads(RUN_FACTS.read_text(encoding="utf-8"))["facts"]
+    owned_by_opmax = opmax_owned()
     members: list[dict[str, Any]] = []
     excluded: list[dict[str, Any]] = []
     for run_id, entry in dec.items():
@@ -152,8 +193,13 @@ def derive_membership() -> dict[str, Any]:
             def out(reason: str) -> None:
                 excluded.append({"condition_id": cid, "reason": reason})
 
-            if run_id == SINGLE_PASS_PV_RUN or "baseline" in label:
-                out("single-pass proposer + verifier (K = 1)")
+            # The single-pass exclusion by run and label was removed on
+            # 2026-09-12 (PI ruling R3). ``SINGLE_PASS_PV_RUN`` is kept as a
+            # constant because the run id is still worth naming in the record.
+            if cid in owned_by_opmax:
+                out("minted and scored by scripts/build_gs_era2_board_opmax.py "
+                    "(its membership.json names this condition); admitting it "
+                    "here too would double-count the cell")
                 continue
             if grid_run and B_GEOMETRY not in label:
                 out("grid/stride cell on a geometry other than B (its tiling falls short of the frame)")
@@ -162,8 +208,12 @@ def derive_membership() -> dict[str, Any]:
                 out("55-map corpus cell")
                 continue
             k = pool_k(label, cond.get("n_passes"))
-            if k is None or k < 5:
-                out(f"proposer pool K = {k} < 5")
+            if k is None:
+                out("proposer pool K could not be read from the label or "
+                    "n_passes; an unknown pass count is not a K of 1")
+                continue
+            if k < MIN_K:
+                out(f"proposer pool K = {k} < {MIN_K}")
                 continue
             doc = _eval_meta(cond.get("eval_path") or "")
             if doc is None:

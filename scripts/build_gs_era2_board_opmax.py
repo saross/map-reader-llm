@@ -132,7 +132,11 @@ BOARD_BOOTSTRAP = 10000
 G2_BOOTSTRAP = 200
 SEED = 42
 SUFFIX = "-opmax"
-MIN_K = 5
+#: Smallest proposer pool the board admits. 1 since 2026-09-12 (PI ruling
+#: R3 of the K-ladder review): every verified cell on the frame joins,
+#: whatever its pass count, so the three K = 3 sweep optima that were
+#: registered off-board now join it.
+MIN_K = 1
 OPMAX_DIR = f"{BOARD_DIR}/opmax"
 # Cells re-materialised from their registered stage because the 2026-04-19
 # materialisation did not hold the registered point (scripts/materialise_opmax_cells.py).
