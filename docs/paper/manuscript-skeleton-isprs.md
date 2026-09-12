@@ -1,6 +1,9 @@
 # Manuscript skeleton — mapping our material onto the ISPRS shape
 
-> **Last revised**: 2026-08-25 (original publication; STRAWMAN for the
+> **Last revised**: 2026-09-12 (§ 5 gains the PI's headline ruling — the
+> all-3.7 stack, with the Gemini 3 board as the calibration story;
+> D-1 to D-5 stay deferred). Prior: 2026-08-25 (original publication;
+> STRAWMAN for the
 > PI's outline-first review — five decisions flagged OPEN). See
 > [§ Changelog](#changelog) for revision history.
 
@@ -63,6 +66,20 @@ portfolio transfer (running now; primary carried points vs oracle,
 bets P1–P8 assessed). Everything else (consensus-only boards, per-cell
 sweeps, historical eras) → Supplement S2 with the register as the
 machine-readable backbone.
+
+**Headline ruling (PI, 2026-09-12).** The paper headlines the **all-3.7
+text stack**: GS **F1@20 m 0.9265** on the 791-candidate screen union and
+**0.9190** on the Era-2 487-tile board frame, where it sits in **Tier 1**;
+deployment on reference r2 at 50 m, **0.8827 carried** and **0.8871
+oracle**. The Gemini 3 board — GS 0.890 / MCC 0.790, deployment
+carry-forward 0.8162 — is the **calibration story that got there**, not
+the headline. A Results-level claim rides with it: *models keep improving
+and the calibrated configuration carries across model versions, at least
+within the Gemini family* (home § R7.3, echoed in § R0). Recorded at
+`docs/paper/results-outline.md` § D19. This ruling settles the headline
+only; **D-1 to D-5 below remain deferred** and are not re-opened by it —
+though it resolves, in Results, the same claim the D-1 briefing flags as
+now false in Seed 12 ("no new F1 high, only a cheaper frontier").
 
 ### 6. Discussion (~1,300 words)
 
@@ -198,6 +215,19 @@ results pipeline is completely closed; then turn to writing and rule on
 D-1 to D-5 and the D.9 naming question.
 
 ## Changelog
+
+### 2026-09-12 — § 5 gains the headline ruling (PI, Session 153)
+
+**Refresh trigger**: the PI's rulings of 2026-09-12 on
+`docs/paper/results-claims-inventory-2026-09-12.md` (ruling 2). § 5
+Results now states the headline explicitly — the all-3.7 text stack, GS
+0.9265 on the screen union / 0.9190 Tier 1 on the Era-2 board frame,
+deployment r2 0.8827 carried / 0.8871 oracle — with the Gemini 3 board
+(0.890 / 0.790; 0.8162 carry-forward) named as the calibration story and
+the "models improve, the configuration carries across" claim placed at
+§ R7.3 with an echo in § R0. **What did NOT change**: the tree, the word
+budget, the three exhibits, the supplements manifest, and D-1 to D-5,
+which remain deferred per the 2026-09-10 sequencing ruling.
 
 ### 2026-09-10 — D-1 briefing banked; D-1 to D-5 deferred behind the pipeline close-out (PI, Session 152)
 

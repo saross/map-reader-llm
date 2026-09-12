@@ -1,8 +1,9 @@
 # Results — structural outline (spine AGREED; section calls still open)
 
-> **Status**: collaborative structure document. **ALL SEVENTEEN
+> **Status**: collaborative structure document. **ALL TWENTY-TWO
 > DECISIONS ARE SETTLED** (D1–D4 in Session 118; D5–D17 in Session
-> 133). Prose drafting can begin per the agreed structure, gated only
+> 133; D18–D22 in Session 153, the PI's rulings of
+> 2026-09-12). Prose drafting can begin per the agreed structure, gated only
 > by the D17 reconciliation block (its own pre-run-reviewed pass,
 > before final Results prose). This is a
 > decision-forward outline, **not** prose. Prose drafting for a section waits
@@ -23,6 +24,7 @@
 | v6 | 2026-08-16 | **D14/D14b settled = A/A** (Session 133, PI in-session): R8 stays in Results as results-of-validation, whole at the head of the validity block. PI framing note recorded (GS = test set for configuration selection, 55-map = production with the luxury of GT to audit generalisation) + the standardised-reference drafting note for R8's error-structure description. |
 | v7 | 2026-08-16 | **D15 settled = C; D16 settled = A + Discussion prereg-retrospective rider; D17 settled = A + schema amendment** (Session 133, PI in-session). **All seventeen decisions settled.** D17 currency note added (family FDR, CMT-0106, E45 correction, E60 all landed since the block was drafted); the reconciliation block queued as the gate before final Results prose. |
 | v8 | 2026-08-17 | **D17 reconciliation block EXECUTED** (S134, `planning/s134-d17-reconciliation-block-2026-08-17.md`): vocabulary v2 + 31-row register + errata E74–E77/E59-update + the generated hypothesis-outcome table (`results/hypothesis-outcome-table/`). Gate-status note added at the decision register. PI walk pending (`reports/s134-relabel-walk-dossier.md`); prose drafting begins after the walk. |
+| v9 | 2026-09-12 | **D18–D22 SETTLED** (Session 153, PI rulings of 2026-09-12 on the claims inventory): r2 as the single reference revision across Results; the Gemini 3.7 stack as the headline, with "models improve, the calibrated configuration carries across" as a Results-level claim; information into tables, not repeated in prose; the GS stride/geometry programme promoted to its own block, **§ R1b**; exhibits-first. A **Figures and tables** section added per D22. |
 
 *Brief by design — consult `git log docs/paper/results-outline.md` for the
 full history and diffs.*
@@ -98,6 +100,14 @@ covers both the GS curator GT and the 55-map canonical GT). See D6 and D14.
 - Stating them together up front is what makes the two-part structure legible
   from the first page, and pre-empts the conflation D1 guards against.
 
+**⚠ Numbers superseded by D19 (PI, 2026-09-12)**: the
+placement call above stands unchanged, but the two numbers the stub
+quotes do not. The headline is now the all-3.7 stack — GS 0.9265 on the
+screen union / 0.9190 Tier 1 on the Era-2 board frame, deployment r2
+0.8827 carried / 0.8871 oracle — with **0.890 / 0.790** and **0.8162**
+retained as the Gemini 3 *calibrated* result the family step is measured
+against. See [§ D19](#-d19--the-papers-headline-is-the-gemini-37-stack--settled-supersedes-d2s-numbers).
+
 ### ✅ D3 — the F1-vs-MCC theme — SETTLED (A, threaded)
 
 **Decision (Shawn, 2026-07-27)**: distributed but explicitly threaded — name
@@ -142,6 +152,98 @@ The known repeat-offenders, with their assigned homes:
 | working precisions | Methods (per D6) | R1 recap, seam |
 | diversity dividend → its retirement | R3 → R5 | forward-ref only (D9) |
 | cost / Pareto frontier | R6 (GS), R7 (deployment) | seam bridge |
+| GS stride/geometry programme | R1b (per D21) | R4 (one clause), R7.2 (one clause) |
+
+### The 2026-09-12 PI rulings (D18–D22)
+
+> Five further spine-level calls, taken by the PI on 2026-09-12 on the
+> evidence of `docs/paper/results-claims-inventory-2026-09-12.md`. They are
+> numbered in the same D-series as D1–D17 and are all SETTLED. (The
+> `Dnn` *defect* numbers used in the errata — defect D20 for E83, defect
+> D13, defect D15 — are a separate series and are not these.)
+
+#### ✅ D18 — one reference revision across Results — SETTLED (r2 throughout)
+
+**Decision (PI, 2026-09-12; ruling 1)**: the whole of Results quotes
+**reference r2**. Figures that exist only on an older reference move to
+the supplement; r1, the canonical chain, and the standardised chain are
+named in the body only where a *bet* was assessed on them.
+
+- Executed in `results-draft.md` the same day: §§ R0, R8, and R9
+  re-pointed (§ R7 had been on r2 since erratum E84). Four § R8
+  error-structure figures have no r2 twin and carry
+  `[REF: r1 — supplement candidate per ruling 1]` for routing.
+- **Consequence for R6**: its transfer table is on the standardised
+  vintage and is *not* swept here — R6 is reserved for the parallel
+  K-ladder job and inherits this decision when that lands.
+
+#### ✅ D19 — the paper's headline is the Gemini 3.7 stack — SETTLED (supersedes D2's numbers)
+
+**Decision (PI, 2026-09-12; ruling 2)**: the headline is the **all-3.7
+text stack**, and the Gemini 3 board is the **calibration story that got
+there**.
+
+- GS: **F1@20 m 0.9265** on the 791-candidate screen union, **0.9190** on
+  the Era-2 487-tile board frame, where it sits in **Tier 1** (rank 2 of
+  79 cells).
+- Deployment (r2, 50 m): **0.8827 carried (T2)** and **0.8871 oracle
+  (T1)**.
+- The Gemini 3 recipe's **0.890 / 0.790** (GS) and **0.8162**
+  (deployment carry-forward) are retained as the *calibrated* result and
+  the thing the family step is measured against — not as the headline.
+- **D2's spine call stands** (state the headline early, both instruments
+  together); **D2's two numbers are superseded** by the four above.
+- **A Results-level claim to place**: *models keep improving, and the
+  calibrated configuration carries across model versions, at least
+  within the Gemini family.* Recommended home **§ R7.3**, where the
+  verifier-seat result and the 3.8 tie already establish it, with a
+  one-clause echo in **§ R0**'s headline stub so the reader meets it
+  before Part 1. This is the claim that makes the calibrate-then-deploy
+  spine pay off rather than date it.
+
+#### ✅ D20 — word budget: move information into tables, do not repeat it in prose — SETTLED
+
+**Decision (PI, 2026-09-12; ruling 3)**: the PI's "paper-b" practice.
+Information goes into a table once and is *not* restated in the text;
+the supplement is referenced rather than summarised. Every major section
+and finding must be **present**; prose polish is explicitly **not** the
+current goal, because the paper will be re-drafted from the outline.
+
+- Operative consequence: drafting effort goes to *coverage and
+  placement*, not sentences. A block that exists as a claims-with-anchors
+  list plus a table pointer is complete for this pass.
+- This supersedes nothing; it sets the standard against which D5, D7,
+  D11, and D13's compressions are executed.
+
+#### ✅ D21 — the GS stride/geometry programme gets its own Results block — SETTLED (§ R1b)
+
+**Decision (PI, 2026-09-12; ruling 5)**: the tile-size × overlap ×
+pass-count grid and the stride ladders get **their own Results block**,
+not a fold into R4 and not supplement-only. Realised as **§ R1b**,
+between R1 and R2, so no existing section renumbers. The block's claims-with-anchors outline lands in § R1b below,
+between the R1 and R2 blocks of Part 1.
+
+- This closes the gap the inventory found at R7.2-15: § R7.2's
+  "(§ R1, Obs 435)" cross-reference pointed at a section that did not
+  contain the GS geometry grid, and the GS stride ladder on which both
+  deployment carried points were *selected* was reported nowhere.
+- It also gives the five uncited `paper_section: Results` register rows
+  (`grid-tilesize-overlap-2026-08-18`, `grid-postverifier-2026-08-18`,
+  `stride-plateau-2026-08-25`, `stride-winner-ladder-exact-2026-08-25`,
+  `h13-overlap-2026-08-18`) a home, and is where H13 — a registered
+  hypothesis — is discharged.
+
+#### ✅ D22 — exhibits first: figures and tables carry what they carry better — SETTLED
+
+**Decision (PI, 2026-09-12; ruling 6)**: anything communicated more
+directly, clearly, or concisely by a figure, chart, or table is done that
+way. Per-block assignments are in the "Figures and tables" section
+below, after the decision register.
+
+- The inventory established that Results currently promises **one table
+  and no figure**, while
+  `results/55map-final-board-r2-2026-09-06/significance-groups.png`
+  already exists at publication quality and is referenced nowhere.
 
 ---
 
@@ -157,8 +259,14 @@ The known repeat-offenders, with their assigned homes:
   Tie sets are now the Hsu MCB admissible set; the greedy-clique rule is
   superseded (defect D20). This methods claim must change with the sibling
   sentence already flagged in results-draft.md §R2. -->
-- **Now also carries** the two-headline stub (per D2) and a pointer to the
-  preregistration status statement (per D16).
+- **Now also carries** the two-headline stub (per D2, with D19's numbers)
+  and a pointer to the preregistration status statement (per D16).
+- **Also carries, per D19 (2026-09-12)**: a one-clause echo of the
+  Results-level claim that *models keep improving and the calibrated
+  configuration carries across model versions, at least within the
+  Gemini family* — its derivation home is § R7.3, and the echo here is
+  what lets the reader read Part 1 as calibration rather than as a dated
+  ceiling.
 - **✅ D5 SETTLED = A** (PI, Session 133, 2026-08-15): trim —
   orientation (2–3 lines) stays in R0, stats-convention detail moves
   to Methods.
@@ -365,6 +473,19 @@ is "among the 10 admissible of 82", with PV the point-estimate leader. -->
   essentially pure threshold-transfer failure, which sharpens lesson
   (i) (Obs 358) and licenses retiring the single-cell "oracle" label
   (Obs 409 measured the collapse).
+- **⚠ Structure moved on (PI ruling, 2026-09-08)**: § R7 is drafted as
+  three blocks — R7.1 the calibrate-then-deploy result on the Gemini 3
+  board, R7.2 the portfolio transfer and the 35-cell final board, R7.3
+  the model-generation leg. The claims above are R7.1's; R7.2 and R7.3
+  are inventoried in
+  `docs/paper/results-claims-inventory-2026-09-12.md`.
+- **Home of the D19 claim (2026-09-12)**: § R7.3 carries *models keep
+  improving and the calibrated configuration carries across model
+  versions, at least within the Gemini family* — the verifier-seat
+  result and the 3.8 measured tie are its evidence, and the same recipe
+  transferring across two model generations is what makes it a claim
+  about method rather than about a vendor release. § R0 echoes it in one
+  clause; nowhere else restates it.
 
 ### R8 — What the ground truth can and cannot support
 
@@ -598,8 +719,14 @@ favourable and should not be given away.
 | D15 | R9 | Results vs Discussion vs split | ✅ **C** — split; protocol → Discussion via Seeds 3/6 (S133) |
 | D16 | prereg | where prereg material and the hypothesis-outcome table live | ✅ **A** + Discussion prereg-retrospective rider (S133) |
 | D17 | prereg | confirmatory/exploratory reconciliation | ✅ **A** + schema amendment; reconciliation block queued (S133) |
+| D18 | spine | one reference revision across Results, or per-section currency | ✅ **r2 throughout**; older-reference figures → supplement (PI ruling 1, 2026-09-12) |
+| D19 | spine | headline the Gemini 3 calibrated result or the Gemini 3.7 stack | ✅ **the 3.7 stack** (GS 0.9265 screen / 0.9190 board-frame Tier 1; deployment r2 0.8827 carried / 0.8871 oracle); Gemini 3 is the calibration story; **supersedes D2's two numbers, not its placement** (PI ruling 2) |
+| D20 | spine | word budget: compress prose, or move information into tables | ✅ **into tables**, referenced not restated; coverage over polish, the paper being re-drafted from the outline (PI ruling 3) |
+| D21 | R1b | GS stride/geometry: new block, fold into R4, or supplement-only | ✅ **its own block, § R1b**, between R1 and R2 (PI ruling 5) |
+| D22 | all | exhibits: prose-first or figure/table-first | ✅ **figure/table-first** wherever it carries the claim better (PI ruling 6) |
 
-**Settled**: ALL — D1–D4 (Session 118), D5–D17 (Session 133).
+**Settled**: ALL — D1–D4 (Session 118), D5–D17 (Session 133),
+D18–D22 (Session 153).
 **Gate before final Results prose**: the D17 reconciliation block
 (schema amendment → relabelling → H10/H12-v2 rows → unexecuted-set
 erratum check → generate the hypothesis-outcome table).
