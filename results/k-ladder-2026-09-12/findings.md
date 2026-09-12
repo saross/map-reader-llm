@@ -1,8 +1,9 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
 > **Last revised**: 2026-09-12 (§ 4.1 added: the § 4 tile-MCC direction
-> permutation-tested on all eight ladders, per the PI's ruling; § 2.1 and § 6.1
-> corrected where they described that test as missing). Prior same-day revision:
+> permutation-tested on all eight ladders, per the PI's ruling; § 4.2 added: the
+> same question under the other registered instrument, which agrees; § 2.1 and
+> § 6.1 corrected where they described that test as missing). Prior same-day revision:
 > original publication — step 5 of the K-ladder
 > Phase-1 run, `planning/k-ladder-phase1-run-2026-09-12.md`. Controlling card:
 > `planning/k-ladder-review-2026-09-11.md`. Companions: the inventory
@@ -14,9 +15,14 @@
 **Scope, stated first.** Eight fixed-parameter ladders exist and are scorable at
 US$0; all eight are tabulated here at their own headline buffer with an audited
 cost per rung. The gold-standard ladder is additionally re-scored on the Era-2
-board frame. The seven 55-map ladders' pairwise significance is **cited from
-their own registered instrument**, not re-run under the board's — see § 6, which
-says exactly what is and is not supplied. Every figure is read from a committed
+board frame. The seven 55-map ladders' descriptive tables are **cited from their
+own campaign artefacts**; their pairwise significance is **tested in § 4.1 under
+the board instrument** — which is the instrument that tiered those very cells and
+holds a committed F1 p-value for every pair, and is therefore the one that can be
+gated — and, for the two ladders that also have a registered per-map sign-swap,
+**under that instrument too** in § 4.2. § 6 says exactly what is and is not
+supplied; the PI's choice between the two instruments stays open, and both
+answers agree on tile-MCC. Every figure is read from a committed
 artefact named beside it; the machine-readable form of every table is
 `ladders.json`.
 
@@ -537,7 +543,7 @@ Phase 2, costed at US$4.50 for the two T 0.7 pools and US$24.84 for all 28
 
 ## Changelog
 
-### 2026-09-12 — § 4.1: the tile-MCC direction, tested
+### 2026-09-12 — §§ 4.1–4.2: the tile-MCC direction, tested
 
 **Refresh trigger**: the PI's ruling that § 4's metric-divergence finding be
 TESTED rather than described. Both ladder instruments were extended to carry
@@ -570,6 +576,14 @@ of § 5; § 4's mechanism account, which the test is consistent with; the PI's o
 choice of instrument for the seven 55-map ladders, which § 4.1 reports under both
 where both are registered rather than resolving.
 
+**Cross-instrument check (§ 4.2)**: the two ladders that also have a registered
+per-map sign-swap were tested under it as well, after it reproduced all four
+committed `p7_saturation` F1 results exactly. Across the eight pairs both
+instruments cover, **all eight tile-MCC significance calls agree**; one F1 call
+differs (stride A's K = 3 → 5, significant on the tile-swap and not on the
+sign-swap). The PI's instrument ruling is therefore material to marginal F1
+claims and immaterial to the § 4.1 MCC conclusion.
+
 **Still outstanding**: the Hsu MCB admissible sets (§ 6.1), the analysis row
 (§ 6.2, which waits on them), and the `pv-diag-384` Phase-2 ladders (§ 6.3).
 
@@ -577,7 +591,7 @@ Artefacts: `mcc-test/` (per-ladder JSON, `summary.json`, the per-ladder
 round-robins under `tiering/`, the sign-swap under `sign-swap/`). Instruments:
 `scripts/era1_leaderboard_tiering.py --permute-mcc`,
 `scripts/stride55_ladder.py --pairs-output-dir`, driver
-`scripts/k_ladder_mcc_test.py`. Landed in commit `PENDING`.
+`scripts/k_ladder_mcc_test.py`. Landed in commits `156bddf36`, `d10137595` and `d900ed1d5`.
 
 ### 2026-09-12 — Original publication (Session 154, K-ladder Phase 1 step 5)
 

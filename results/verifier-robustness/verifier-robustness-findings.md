@@ -419,8 +419,8 @@ F1@20 m, (b) cost against tile-MCC.
 `min6, min11, high31, high35` — but the **MCC-efficient set is `min6, min11`
 alone**: the two expensive HIGH rungs fall off it. **min11, at $4.00, has the
 highest tile-MCC of all seven rungs (0.8068)** — above high35's 0.7941 at
-$71.23, an 18× cost ratio. Read on tile discrimination rather than point
-localisation, the ~$70 of extra GS spend between min11 and high35 buys
+$71.23, a 17.8× cost ratio. Read on tile discrimination rather than point
+localisation, the $67.23 of extra GS spend between min11 and high35 buys
 **nothing**, and the reversal is not marginal: min11's MCC lead over high35 is
 +0.0127, larger than high35's F1 lead over min11 (+0.0116).
 
@@ -568,7 +568,7 @@ and 17.
 and `high31` share one identical tile confusion (188/247/11/41) and therefore one
 MCC, so the metric is too coarse to rank fine-grained rungs there — and none of
 the 21 MCC pairs separates. Artefacts: `pareto/pareto_v2.{json,png}`. Landed in
-commit `PENDING`.
+commit `605def6d2`.
 
 ### 2026-06-13 — Currency sweep: last pre-audit dollar corrected (§ 16)
 
