@@ -144,10 +144,17 @@ def test_tile_vectors_reproduces_engine_confusion() -> None:
         ],
         crs=crs,
     )
+    # The third detection carries a ``source_tile`` that is not a tile of
+    # this frame, and is placed OUTSIDE the frame's tile union. That makes
+    # it the documented no-tile exclusion rather than a lost point: it used
+    # to sit at Point(1, 1), inside t00, which is exactly the
+    # name-versus-geometry pathology the 2026-09-12 tile-join invariant now
+    # refuses (a detection inside the frame booked to no tile). Keeping it
+    # inside would make this fixture assert the defect.
     dets = gpd.GeoDataFrame(
         {
             "source_tile": ["t00", "t11", "not-a-tile"],
-            "geometry": [Point(2, 2), Point(15, 15), Point(1, 1)],
+            "geometry": [Point(2, 2), Point(15, 15), Point(-50, -50)],
         },
         crs=crs,
     )

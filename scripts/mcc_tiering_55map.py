@@ -54,6 +54,10 @@ sys.path.insert(0, str(BASE_DIR))
 sys.path.insert(0, str(BASE_DIR / "scripts"))
 from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
 from scripts.build_55map_leaderboard import r2_gt  # noqa: E402
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_DEFAULT,
+    calculate_tile_classification,
+)
 from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
     ATTRIBUTION_RESOLUTION_NOTE,
     DEFAULT_CRS,
@@ -140,44 +144,59 @@ def tile_vectors(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
+    tile_join: str = TILE_JOIN_DEFAULT,
 ) -> tuple[list[str], np.ndarray, np.ndarray]:
     """Per-tile truth and prediction vectors for tile classification.
 
     Vectorised equivalent of the per-tile loop in
     ``lib_advanced_metrics.calculate_tile_classification``: a tile is
-    TRUE if any reference point intersects its geometry (boundary points
-    therefore count for every tile they touch), and PREDICTED if any
-    detection carries its ``tile_name`` in ``source_tile``. Equivalence
-    is pinned by a tier-1 test and by the exact confusion-matrix gate in
-    ``main``.
+    TRUE if any reference point belongs to it and PREDICTED if any
+    detection does. Both sides now go through
+    ``lib_advanced_metrics.assign_points_to_tiles`` so this function
+    cannot drift from the scorer's rule — it used to carry its own copy of
+    the string join (``pred`` from ``source_tile`` names, ``truth`` from
+    geometry), which is the 2026-09-12 name-versus-geometry defect.
+    Equivalence with the scorer is pinned by a tier-1 test and by the
+    exact confusion-matrix gate in ``main``.
 
     Args:
-        gdf_det: Detections with a ``source_tile`` column.
+        gdf_det: Detections with a ``source_tile`` column (required by the
+            ``id`` join only).
         gdf_ref: Reference (ground-truth) points, same CRS as bounds.
         gdf_bounds: Tile boundary polygons with ``tile_name``.
+        tile_join: One of ``lib_advanced_metrics.TILE_JOINS``.
 
     Returns:
         (tile_names, truth, pred) — names in bounds order, two aligned
         boolean arrays.
+
+    Raises:
+        ValueError: on duplicate tile names, or when the tile join is
+            refused for this frame (a point inside the frame booked to no
+            tile), so a mislabelled prediction vector cannot be tiered.
     """
     tiles = list(gdf_bounds["tile_name"].unique())
     if len(tiles) != len(gdf_bounds):
         raise ValueError("duplicate tile_name rows in bounds — loop/sjoin semantics differ")
     index = {t: i for i, t in enumerate(tiles)}
 
-    truth = np.zeros(len(tiles), dtype=bool)
-    joined = gpd.sjoin(
-        gdf_ref[["geometry"]], gdf_bounds[["tile_name", "geometry"]],
-        how="inner", predicate="intersects",
+    classification = calculate_tile_classification(
+        gdf_det, gdf_ref, gdf_bounds, tile_join=tile_join,
     )
-    for t in joined["tile_name"].unique():
-        truth[index[t]] = True
+    if "error" in classification:
+        raise ValueError(
+            f"tile vectors refused ({classification.get('reason')}): "
+            f"{classification['error']}"
+        )
 
+    truth = np.zeros(len(tiles), dtype=bool)
     pred = np.zeros(len(tiles), dtype=bool)
-    for t in pd.unique(gdf_det["source_tile"]):
-        i = index.get(t)
-        if i is not None:
-            pred[i] = True
+    for detail in classification["tile_details"]:
+        i = index.get(detail["tile_name"])
+        if i is None:
+            continue
+        truth[i] = bool(detail["has_mounds"])
+        pred[i] = bool(detail["has_detections"])
     return tiles, truth, pred
 
 
