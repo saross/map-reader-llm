@@ -1,0 +1,114 @@
+{
+  "generated_at_utc": "2026-09-12T14:20:31+00:00",
+  "board_bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "era2_bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+  "headline_buffer_m": 20,
+  "carried_prob": 0.15,
+  "n_rungs": 3,
+  "n_cells": 4,
+  "rungs": [
+    {
+      "row": 1,
+      "K": 1,
+      "family": "Gemini 3 MINIMAL text 384 px / 50 %, grid pool",
+      "run_id": "grid-2026-08-18",
+      "consensus_dir": "outputs/grid-2026-08-18/g384_ov192/consensus-n1",
+      "verify_dir": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k1",
+      "candidates": 1826,
+      "opmax": {
+        "vote_t": 1,
+        "prob_t": 0.2,
+        "sweep_f1_20": 0.8462,
+        "n_ties": 0,
+        "label": "g384-ov192-k1-verified-opmax",
+        "detections": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k1-verified-opmax/detections.geojson",
+        "n_detections": 482,
+        "cell": "grid-2026-08-18__g384-ov192-k1-verified-opmax"
+      },
+      "era2_frame_argmax": {
+        "vote_t": 1,
+        "prob_t": 0.2,
+        "sweep_f1_20": 0.8462
+      },
+      "frames_agree": true,
+      "carried": {
+        "vote_t": 1,
+        "prob_t": 0.15,
+        "label": "g384-ov192-k1-verified-p0.15-k1",
+        "detections": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k1-verified-p0_15-k1/detections.geojson",
+        "n_detections": 493,
+        "cell": "grid-2026-08-18__g384-ov192-k1-verified-p0_15-k1"
+      },
+      "carried_is_opmax": false
+    },
+    {
+      "row": 2,
+      "K": 3,
+      "family": "Gemini 3 MINIMAL text 384 px / 50 %, grid pool",
+      "run_id": "grid-2026-08-18",
+      "consensus_dir": "outputs/grid-2026-08-18/g384_ov192/consensus-n3",
+      "verify_dir": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k3",
+      "candidates": 2481,
+      "opmax": {
+        "vote_t": 3,
+        "prob_t": 0.15,
+        "sweep_f1_20": 0.8746,
+        "n_ties": 0,
+        "label": "g384-ov192-k3-verified-opmax",
+        "detections": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k3-verified-opmax/detections.geojson",
+        "n_detections": 450,
+        "cell": "grid-2026-08-18__g384-ov192-k3-verified-opmax"
+      },
+      "era2_frame_argmax": {
+        "vote_t": 3,
+        "prob_t": 0.15,
+        "sweep_f1_20": 0.8746
+      },
+      "frames_agree": true,
+      "carried": {
+        "vote_t": 3,
+        "prob_t": 0.15,
+        "label": "g384-ov192-k3-verified-p0.15-k3",
+        "detections": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k3-verified-opmax/detections.geojson",
+        "n_detections": 450,
+        "cell": "grid-2026-08-18__g384-ov192-k3-verified-opmax"
+      },
+      "carried_is_opmax": true
+    },
+    {
+      "row": 3,
+      "K": 5,
+      "family": "Gemini 3 MINIMAL text 384 px / 50 %, grid pool",
+      "run_id": "grid-2026-08-18",
+      "consensus_dir": "outputs/grid-2026-08-18/g384_ov192/consensus-n5",
+      "verify_dir": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5",
+      "candidates": 2932,
+      "opmax": {
+        "vote_t": 5,
+        "prob_t": 0.15,
+        "sweep_f1_20": 0.8828,
+        "n_ties": 0,
+        "label": "g384-ov192-k5-verified-opmax",
+        "detections": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k5-verified-opmax/detections.geojson",
+        "n_detections": 435,
+        "cell": "grid-2026-08-18__g384-ov192-k5-verified-opmax"
+      },
+      "era2_frame_argmax": {
+        "vote_t": 5,
+        "prob_t": 0.15,
+        "sweep_f1_20": 0.8828
+      },
+      "frames_agree": true,
+      "carried": {
+        "vote_t": 5,
+        "prob_t": 0.15,
+        "label": "g384-ov192-k5-verified-p0.15-k5",
+        "detections": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k5-verified-opmax/detections.geojson",
+        "n_detections": 435,
+        "cell": "grid-2026-08-18__g384-ov192-k5-verified-opmax"
+      },
+      "carried_is_opmax": true
+    }
+  ]
+}
