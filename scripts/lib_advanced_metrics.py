@@ -1107,8 +1107,20 @@ def compute_per_tile_tp_fp_fn(
                 for idx, names in geometric_booking.items()
             }
 
-    def _book(det_index: Any, recorded_tile: Any, outcome: str) -> int:
-        """Credit one matched/unmatched detection to its tile(s)."""
+    # Detection indices lying geometrically inside the frame's tile union.
+    # Only these are subject to the booking invariant: a detection outside
+    # the frame is correctly booked nowhere, and one dropped earlier by the
+    # per-map scoping is a different failure (see ``n_out_of_scope``).
+    in_union = set(_tiles_intersecting(gdf_det, gdf_bounds))
+
+    def _book(det_index: Any, recorded_tile: Any, outcome: str) -> tuple[int, int]:
+        """Credit one matched/unmatched detection to its tile(s).
+
+        Returns ``(considered, booked)``, each 0 or 1: ``considered`` counts
+        the detection towards the invariant's denominator only when it is
+        inside the frame's tile union, and ``booked`` records whether it
+        reached any tile.
+        """
         if geometric_booking is None:
             names = [recorded_tile] if recorded_tile in tile_counts else []
         else:
@@ -1116,8 +1128,10 @@ def compute_per_tile_tp_fp_fn(
         for name in names:
             if name in tile_counts:
                 tile_counts[name][outcome] += 1
-        return 1 if names else 0
+        considered = 1 if det_index in in_union else 0
+        return considered, (1 if names else 0)
 
+    n_considered = 0
     n_booked = 0
 
     # Pre-compute primary tile for each reference (for FN assignment)
@@ -1178,7 +1192,11 @@ def compute_per_tile_tp_fp_fn(
         if ref_scope.empty:
             # All detections are FPs — assign to source tiles
             for det_idx, det_row in det_scope.iterrows():
-                n_booked += _book(det_idx, det_row["source_tile"], "fp")
+                considered, booked = _book(
+                    det_idx, det_row["source_tile"], "fp",
+                )
+                n_considered += considered
+                n_booked += booked
             continue
 
         # Per-map Hungarian matching (same as calculate_f1_internal)
@@ -1193,16 +1211,20 @@ def compute_per_tile_tp_fp_fn(
         det_scope_index = list(det_scope.index)
         for d_idx in matched_det:
             det_row = det_scope.iloc[d_idx]
-            n_booked += _book(
+            considered, booked = _book(
                 det_scope_index[d_idx], det_row["source_tile"], "tp",
             )
+            n_considered += considered
+            n_booked += booked
 
         # Assign FPs to the detection's tile
         for d_idx in unmatched_det:
             det_row = det_scope.iloc[d_idx]
-            n_booked += _book(
+            considered, booked = _book(
                 det_scope_index[d_idx], det_row["source_tile"], "fp",
             )
+            n_considered += considered
+            n_booked += booked
 
         # Assign FNs to the reference's primary tile
         ref_index_list = list(ref_scope.index)
@@ -1213,20 +1235,38 @@ def compute_per_tile_tp_fp_fn(
                 tile_counts[tile]["fn"] += 1
 
     # The same invariant the tile confusion enforces, in the TP/FP arm:
-    # every detection that lies inside the frame's tile union must have
-    # been credited to some tile. A shortfall means the booking rule is
-    # not describing this frame, and a table of pure false negatives must
-    # not be handed to a bootstrap or a permutation test.
-    n_inside_union = det_booking["n_inside_union"]
-    if n_booked < n_inside_union:
+    # every in-frame detection that reached the booking step must have been
+    # credited to some tile. A shortfall means the booking rule is not
+    # describing this frame, and a table of pure false negatives must not
+    # be handed to a bootstrap or a permutation test.
+    if n_booked < n_considered:
         raise ValueError(
             f"per-tile TP/FP/FN table refused: {n_booked} of "
-            f"{n_inside_union} in-frame detections were credited to a "
+            f"{n_considered} in-frame detections were credited to a "
             f"tile under the '{tile_join}' tile join, a shortfall of "
-            f"{n_inside_union - n_booked}. "
+            f"{n_considered - n_booked}. "
             f"({TILE_JOIN_REASON_DETECTION_SHORTFALL}) Most often the "
             f"cell's source_tile vocabulary is not this frame's; re-run "
             f"with a geometric tile_join."
+        )
+
+    # A *separate* failure, warned rather than raised because it is wider
+    # than the tile join and predates it: the per-map scoping above selects
+    # detections with ``source_tile.str.startswith(map_name)``, so a cell
+    # whose names do not begin with one of the frame's map-name prefixes
+    # loses detections before any tile is consulted — and loses them from
+    # ``calculate_f1_internal`` in exactly the same way, which is why this
+    # cannot be fixed here without changing F1 as well.
+    n_inside_union = det_booking["n_inside_union"]
+    if n_considered < n_inside_union:
+        logger.warning(
+            "per-tile table: %d of %d in-frame detections never reached "
+            "the tile booking step — the per-map scoping "
+            "(source_tile.str.startswith(map_name)) dropped them. F1 is "
+            "scoped the same way, so this is a wider issue than the tile "
+            "join; see reports/tile-mcc-geometric-join-2026-09-12.md "
+            "§ 5.1(a).",
+            n_considered, n_inside_union,
         )
 
     rows = [
