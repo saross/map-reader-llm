@@ -76,7 +76,15 @@ except ImportError as exc:  # pragma: no cover - dev setup guard
         "PyYAML is required. Install with: pip install pyyaml"
     ) from exc
 
-__version__ = "1.0.0"
+# Allow sibling-module imports whether this file is run as a script or
+# imported as ``scripts.run_generalisation``.
+_SCRIPT_DIR = Path(__file__).resolve().parent
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
+
+from lib_content_anchor import config_hash  # noqa: E402
+
+__version__ = "1.1.0"
 
 # ---------------------------------------------------------------------------
 # Paths and constants
@@ -1768,10 +1776,46 @@ def write_launch_manifest(
     return out
 
 
+def _intent_body(text: str) -> list[str]:
+    """Return an intent file's lines with the generation timestamp dropped.
+
+    The ``Generated:`` line changes on every invocation, so comparing raw
+    text would report every resume as a change. Everything else in the
+    file is derived from the resolved configuration.
+
+    Args:
+        text: Full ``experiment_intent.md`` content.
+
+    Returns:
+        The comparable lines.
+    """
+    return [
+        ln for ln in text.splitlines()
+        if not ln.startswith("Generated: ")
+    ]
+
+
 def write_experiment_intent(
-    rcfg: ResolvedRunConfig, expected_cost_usd: float | None,
+    rcfg: ResolvedRunConfig,
+    expected_cost_usd: float | None,
+    *,
+    preserve_existing: bool = False,
 ) -> Path:
-    """Write a human-readable run description for audit trail."""
+    """Write a human-readable run description for audit trail.
+
+    Args:
+        rcfg: The resolved run configuration.
+        expected_cost_usd: Cost estimate to record, or ``None``.
+        preserve_existing: When True (set on ``--resume``) an existing
+            intent file is COMPARED rather than overwritten — the
+            Finding 3 fix, mirroring
+            ``lib_experiment_intent.write_experiment_intent``. The
+            launch-time record of what the operator confirmed is never
+            rewritten by a resume; a material difference is logged.
+
+    Returns:
+        The intent file's path.
+    """
     p, c, e, v, ev = (
         rcfg.proposer, rcfg.consensus, rcfg.extract,
         rcfg.verify, rcfg.evaluate,
@@ -1820,7 +1864,29 @@ def write_experiment_intent(
         "- `evaluation/` — per-buffer F1 / P / R with bootstrap CIs",
     ]
     out = rcfg.output_dir / "experiment_intent.md"
-    out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    text = "\n".join(lines) + "\n"
+
+    if preserve_existing and out.is_file():
+        existing = out.read_text(encoding="utf-8")
+        if _intent_body(existing) == _intent_body(text):
+            logger.info(
+                "%s exists and matches the current config; not overwriting.",
+                out,
+            )
+        else:
+            changed = [
+                ln for ln in _intent_body(text)
+                if ln not in _intent_body(existing)
+            ]
+            logger.warning(
+                "%s exists and describes a different run than the current "
+                "config. Leaving the launch-time record in place (not "
+                "overwriting). Current config would say:\n%s",
+                out, "\n".join(changed),
+            )
+        return out
+
+    out.write_text(text, encoding="utf-8")
     return out
 
 
@@ -1876,23 +1942,42 @@ def cmd_all(args: argparse.Namespace) -> int:
 
     resumed = _load_resume_state(rcfg.output_dir) if args.resume else {}
 
+    # Finding 3: the resume is keyed by stage NAME, so a stage marked done
+    # keeps its old-config outputs. Compare the content anchor of the
+    # resolved configuration against the one each completed stage ran
+    # under, and refuse unless the operator authorised the change.
+    snapshot = _resolved_config_snapshot(rcfg)
+    cfg_hash = config_hash(snapshot)
+    if resumed:
+        _check_resume_config(
+            resumed, cfg_hash, snapshot,
+            allow_config_change=bool(
+                getattr(args, "allow_config_change", False),
+            ),
+        )
+
+    def _record(stage: str, summary: dict) -> None:
+        """Save a stage's completion anchored to the config that ran it."""
+        _save_resume_state(
+            rcfg.output_dir, stage, summary,
+            config_hash_value=cfg_hash, config_snapshot=snapshot,
+        )
+
     if "proposer" not in resumed:
         summary = run_proposer(
             rcfg,
             limit=args.limit,
             skip_intent=True,  # wrapper-level intent check supersedes
         )
-        _save_resume_state(rcfg.output_dir, "proposer", summary)
+        _record("proposer", summary)
     if "consensus" not in resumed:
-        _save_resume_state(
-            rcfg.output_dir, "consensus", run_consensus(rcfg),
-        )
+        _record("consensus", run_consensus(rcfg))
     if "extract" not in resumed:
-        _save_resume_state(rcfg.output_dir, "extract", run_extract(rcfg))
+        _record("extract", run_extract(rcfg))
     if "verify" not in resumed:
-        _save_resume_state(rcfg.output_dir, "verify", run_verify(rcfg))
+        _record("verify", run_verify(rcfg))
     if "evaluate" not in resumed:
-        _save_resume_state(rcfg.output_dir, "evaluate", run_evaluate(rcfg))
+        _record("evaluate", run_evaluate(rcfg))
 
     aggregate_cost_manifest(rcfg)
     _finalise_launch_manifest(rcfg)
@@ -2001,20 +2086,19 @@ def _prepare_run(
     if write_manifests:
         # Snapshot resolved config for the audit trail.
         # ``yaml.safe_dump`` cannot serialise ``Path`` objects (which CLI
-        # overrides introduce into the merged config), so stringify them
-        # first.
-        snapshot = {
-            "run_name": rcfg.run_name,
-            "output_root": rcfg.global_opts["output_root"],
-            "proposer": _stringify_paths(rcfg.proposer),
-            "consensus": _stringify_paths(rcfg.consensus),
-            "extract": _stringify_paths(rcfg.extract),
-            "verify": _stringify_paths(rcfg.verify),
-            "evaluate": _stringify_paths(rcfg.evaluate),
-        }
-        (rcfg.output_dir / "resolved_config.yaml").write_text(
-            yaml.safe_dump(snapshot, sort_keys=False),
-            encoding="utf-8",
+        # overrides introduce into the merged config), so
+        # ``_resolved_config_snapshot`` stringifies them first.
+        #
+        # On a --resume the existing snapshot is COMPARED before being
+        # written (Finding 3): overwriting it first destroyed the only
+        # artefact that could detect a mid-run configuration change.
+        _reconcile_resolved_config(
+            rcfg.output_dir,
+            _resolved_config_snapshot(rcfg),
+            resuming=bool(getattr(args, "resume", False)),
+            allow_config_change=bool(
+                getattr(args, "allow_config_change", False),
+            ),
         )
 
     # Warn if evaluation buffers drop any of the paper standard.
@@ -2047,7 +2131,10 @@ def _prepare_run(
         write_launch_manifest(
             rcfg, sys.argv, config_path, expected_cost_usd=expected_cost,
         )
-        intent_path = write_experiment_intent(rcfg, expected_cost)
+        intent_path = write_experiment_intent(
+            rcfg, expected_cost,
+            preserve_existing=bool(getattr(args, "resume", False)),
+        )
         if args.dry_run:
             logger.info(
                 "[dry-run] Intent written to %s; no API calls will be "
@@ -2174,14 +2261,314 @@ def _stringify_paths(section: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _save_resume_state(output_dir: Path, stage: str, summary: dict) -> None:
-    """Record stage completion for --resume."""
+# ---------------------------------------------------------------------------
+# Resume provenance: content anchors on the resolved configuration
+# ---------------------------------------------------------------------------
+#
+# Finding 3 of reports/name-keyed-cache-audit-2026-09-12.md: the resume was
+# keyed by STAGE NAME alone, and the one artefact that could have detected a
+# config change (``resolved_config.yaml``) was overwritten from the current
+# config before the resume decision was taken. A stage marked done therefore
+# kept its old-config outputs while the run's recorded intent described the
+# new config — a mixed-configuration run whose artefacts all claim one
+# configuration. The helpers below anchor the resume to the CONTENT of the
+# resolved configuration: the hash is recorded beside each completed stage,
+# compared on resume, and a difference refuses the run unless the operator
+# passes ``--allow-config-change``.
+
+#: Top-level key in ``.resume_state.json`` holding the resolved-config
+#: snapshot the recorded stage hashes were taken over. Leading underscore
+#: keeps it out of the stage namespace.
+_RESUME_CONFIG_KEY = "_config"
+
+
+def _resolved_config_snapshot(rcfg: ResolvedRunConfig) -> dict[str, Any]:
+    """Return the resolved-config snapshot written to ``resolved_config.yaml``.
+
+    Extracted so the same structure is both written to disc and hashed
+    into ``.resume_state.json`` — one definition, so the snapshot and its
+    content anchor cannot drift apart.
+
+    Args:
+        rcfg: The resolved run configuration.
+
+    Returns:
+        A YAML/JSON-clean dict (``Path`` values stringified).
+    """
+    return {
+        "run_name": rcfg.run_name,
+        "output_root": rcfg.global_opts["output_root"],
+        "proposer": _stringify_paths(rcfg.proposer),
+        "consensus": _stringify_paths(rcfg.consensus),
+        "extract": _stringify_paths(rcfg.extract),
+        "verify": _stringify_paths(rcfg.verify),
+        "evaluate": _stringify_paths(rcfg.evaluate),
+    }
+
+
+def _resolved_config_hash(rcfg: ResolvedRunConfig) -> str:
+    """SHA-256 content anchor of the resolved configuration.
+
+    Args:
+        rcfg: The resolved run configuration.
+
+    Returns:
+        The 64-character digest of :func:`_resolved_config_snapshot`.
+    """
+    return config_hash(_resolved_config_snapshot(rcfg))
+
+
+def _flatten_snapshot(snapshot: Any, prefix: str = "") -> dict[str, Any]:
+    """Flatten a nested snapshot to ``{"section.field": value}``.
+
+    Args:
+        snapshot: The snapshot (or any nested value) to flatten.
+        prefix: Dotted prefix accumulated by recursion.
+
+    Returns:
+        A flat mapping whose keys are dotted paths. Non-dict values are
+        returned under their own prefix.
+    """
+    if not isinstance(snapshot, dict):
+        return {prefix or "(root)": snapshot}
+    flat: dict[str, Any] = {}
+    for key, value in snapshot.items():
+        dotted = f"{prefix}.{key}" if prefix else str(key)
+        if isinstance(value, dict):
+            flat.update(_flatten_snapshot(value, dotted))
+        else:
+            flat[dotted] = value
+    return flat
+
+
+def _snapshot_diff(recorded: Any, current: Any) -> list[str]:
+    """Human-readable field-level diff of two resolved-config snapshots.
+
+    Args:
+        recorded: The snapshot recorded at the original launch.
+        current: The snapshot resolved for this invocation.
+
+    Returns:
+        One ``"field: recorded → current"`` line per differing field
+        (absent fields render as ``(absent)``). Empty when the two agree.
+    """
+    old_flat = _flatten_snapshot(recorded)
+    new_flat = _flatten_snapshot(current)
+    lines: list[str] = []
+    for field in sorted(set(old_flat) | set(new_flat)):
+        old = old_flat.get(field, "(absent)")
+        new = new_flat.get(field, "(absent)")
+        if old != new:
+            lines.append(f"    - {field}: {old} → {new}")
+    return lines
+
+
+#: Appended to every config-change refusal so the operator's two options
+#: are always visible at the point of refusal.
+_CONFIG_CHANGE_OVERRIDE_HINT = (
+    "  Re-run with --allow-config-change to proceed anyway (the change is "
+    "logged and\n"
+    "  recorded in .resume_state.json, and the run becomes a "
+    "mixed-configuration run),\n"
+    "  or launch into a fresh output_dir."
+)
+
+
+def _refuse_config_change(header: str, detail_lines: list[str]) -> None:
+    """Abort the run with a diff and the override instruction.
+
+    Args:
+        header: First line of the refusal, naming what disagreed.
+        detail_lines: Pre-formatted diff / context lines.
+
+    Raises:
+        SystemExit: always. The message is the operator-facing refusal.
+    """
+    body = "\n".join([header, *detail_lines, _CONFIG_CHANGE_OVERRIDE_HINT])
+    raise SystemExit(body)
+
+
+def _reconcile_resolved_config(
+    output_dir: Path,
+    snapshot: dict[str, Any],
+    *,
+    resuming: bool,
+    allow_config_change: bool,
+) -> None:
+    """Compare (do not clobber) ``resolved_config.yaml`` before a resume.
+
+    On a fresh launch the snapshot is written exactly as before. On a
+    ``--resume`` into a directory that already holds a snapshot, the
+    existing file is COMPARED first — the Finding 3 fix, following the
+    precedent of ``lib_experiment_intent.write_experiment_intent``, which
+    verifies rather than overwrites an existing intent file. An
+    unparseable snapshot is treated as unknown provenance (warn, leave in
+    place) and never as a match.
+
+    Args:
+        output_dir: Run output directory.
+        snapshot: The snapshot resolved for this invocation.
+        resuming: Whether ``--resume`` was passed.
+        allow_config_change: Whether the operator explicitly authorised a
+            configuration change.
+
+    Raises:
+        SystemExit: when resuming with a changed configuration and no
+            ``--allow-config-change``.
+    """
+    path = output_dir / "resolved_config.yaml"
+    text = yaml.safe_dump(snapshot, sort_keys=False)
+
+    if not resuming or not path.is_file():
+        path.write_text(text, encoding="utf-8")
+        return
+
+    try:
+        existing = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except yaml.YAMLError:
+        existing = None
+    if not isinstance(existing, dict):
+        logger.warning(
+            "%s is not a readable config snapshot: resume provenance is "
+            "UNKNOWN, so the configuration cannot be verified. Leaving the "
+            "file in place (not overwriting).", path,
+        )
+        return
+
+    diff = _snapshot_diff(existing, snapshot)
+    if not diff:
+        logger.info(
+            "%s matches the current resolved configuration; not overwriting.",
+            path,
+        )
+        return
+
+    if not allow_config_change:
+        _refuse_config_change(
+            f"Refusing to resume: {path} was written from a different "
+            "resolved configuration.",
+            ["  Differences (recorded → current):", *diff],
+        )
+
+    logger.warning(
+        "--allow-config-change: overwriting %s despite %d differing "
+        "field(s) from the recorded launch configuration:\n%s",
+        path, len(diff), "\n".join(diff),
+    )
+    path.write_text(text, encoding="utf-8")
+
+
+def _check_resume_config(
+    state: dict[str, Any],
+    current_hash: str,
+    current_snapshot: dict[str, Any],
+    *,
+    allow_config_change: bool,
+) -> None:
+    """Refuse a resume whose completed stages ran under another configuration.
+
+    Args:
+        state: The loaded ``.resume_state.json``.
+        current_hash: :func:`_resolved_config_hash` for this invocation.
+        current_snapshot: :func:`_resolved_config_snapshot` for this
+            invocation, used to render the diff.
+        allow_config_change: Whether the operator explicitly authorised a
+            configuration change.
+
+    Raises:
+        SystemExit: when a completed stage's recorded config hash differs
+            from *current_hash* and no ``--allow-config-change`` was
+            given.
+    """
+    stages = {k: v for k, v in state.items() if not k.startswith("_")}
+    stale = sorted(
+        stage for stage, entry in stages.items()
+        if isinstance(entry, dict)
+        and entry.get("config_hash")
+        and entry["config_hash"] != current_hash
+    )
+    unanchored = sorted(
+        stage for stage, entry in stages.items()
+        if not isinstance(entry, dict) or not entry.get("config_hash")
+    )
+
+    if unanchored:
+        logger.warning(
+            "Resume: stage(s) %s carry no config_hash (recorded before "
+            "resume provenance was added). Their configuration is UNKNOWN "
+            "and cannot be verified — treat their outputs as unverified "
+            "provenance rather than as a match.",
+            ", ".join(unanchored),
+        )
+
+    if not stale:
+        return
+
+    recorded = state.get(_RESUME_CONFIG_KEY) or {}
+    recorded_hash = recorded.get("hash") or "(not recorded)"
+    detail = [
+        f"  Stages already complete under the recorded configuration: "
+        f"{', '.join(stale)}",
+        f"  Recorded config hash {recorded_hash}; current {current_hash}.",
+    ]
+    snapshot_diff = _snapshot_diff(
+        recorded.get("snapshot"), current_snapshot,
+    ) if isinstance(recorded.get("snapshot"), dict) else []
+    if snapshot_diff:
+        detail += ["  Differences (recorded → current):", *snapshot_diff]
+
+    if not allow_config_change:
+        _refuse_config_change(
+            "Refusing to resume: the resolved configuration differs from the "
+            "one that produced the completed stage(s) in .resume_state.json.",
+            detail,
+        )
+
+    logger.warning(
+        "--allow-config-change: resuming a run whose completed stage(s) %s "
+        "ran under a different configuration.\n%s",
+        ", ".join(stale), "\n".join(detail),
+    )
+
+
+def _save_resume_state(
+    output_dir: Path,
+    stage: str,
+    summary: dict,
+    *,
+    config_hash_value: str | None = None,
+    config_snapshot: dict[str, Any] | None = None,
+) -> None:
+    """Record stage completion for --resume, anchored to the config that ran it.
+
+    Args:
+        output_dir: Run output directory holding ``.resume_state.json``.
+        stage: Stage name (``proposer``, ``consensus``, …).
+        summary: The stage's summary dict, recorded verbatim.
+        config_hash_value: Hash of the resolved configuration this stage
+            ran under (:func:`_resolved_config_hash`). Recorded beside
+            the stage so a later ``--resume`` can tell whether the
+            configuration changed — the Finding 3 fix. ``None`` leaves
+            the stage's provenance unrecorded (legacy behaviour).
+        config_snapshot: The resolved-config snapshot the hash was taken
+            over, stored once under :data:`_RESUME_CONFIG_KEY` so a
+            refusal can print a field-level diff rather than two hashes.
+    """
     state_file = output_dir / ".resume_state.json"
     state = (
         json.loads(state_file.read_text(encoding="utf-8"))
         if state_file.is_file() else {}
     )
-    state[stage] = {"completed_at": now_iso(), "summary": summary}
+    entry: dict[str, Any] = {"completed_at": now_iso(), "summary": summary}
+    if config_hash_value is not None:
+        entry["config_hash"] = config_hash_value
+    state[stage] = entry
+    if config_hash_value is not None:
+        state[_RESUME_CONFIG_KEY] = {
+            "hash": config_hash_value,
+            "recorded_at": now_iso(),
+            "snapshot": config_snapshot,
+        }
     state_file.write_text(json.dumps(state, indent=2), encoding="utf-8")
 
 
@@ -2243,6 +2630,15 @@ def build_arg_parser() -> argparse.ArgumentParser:
                        help="Plan the run without API calls")
         p.add_argument("--resume", action="store_true",
                        help="Skip stages with existing outputs")
+        p.add_argument(
+            "--allow-config-change", action="store_true",
+            help=(
+                "Permit --resume when the resolved configuration differs "
+                "from the one the completed stages ran under (the run then "
+                "mixes configurations; the change is logged and recorded "
+                "in .resume_state.json)"
+            ),
+        )
         p.add_argument("--allow-dirty", action="store_true",
                        help="Permit launch with uncommitted changes")
         p.add_argument("--yes", action="store_true",

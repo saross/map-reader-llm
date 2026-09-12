@@ -24,8 +24,13 @@ Two stages, two homes (contract § 4a § 1 (3)):
   exactly where ``final_board_build.py --reference r2`` reads. Runs after
   4a (sweep) and 4c (N = 3 carried), which write those detections.
 
-Resumable: a cell with an ``evaluation.json`` is skipped, so a halted
-stage resumes; the plan and its counts print before anything runs
+Resumable: a cell with an ``evaluation.json`` **that was scored from the
+detections file now on disk** is skipped, so a halted stage resumes while a
+cell whose detections were re-materialised after scoring is re-scored rather
+than resumed (audit Finding 6; the check compares the detections' blob hash
+against ``_metadata.input_git_state.blob_hashes``). An evaluation written
+before that anchor existed has UNKNOWN provenance: it still counts as done, as
+before, with a warning. The plan and its counts print before anything runs
 (``--dry-run`` stops there). Provenance: ``--require-clean-inputs`` is ON
 by default, so an evaluation whose detections are uncommitted refuses to
 score -- commit the 4a/4c outputs first (they are gated, deterministic
@@ -65,6 +70,8 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from scripts.lib_content_anchor import git_blob_hash  # noqa: E402
+
 from scripts.build_55map_leaderboard import (  # noqa: E402
     BOARD_HOME_BY_REFERENCE,
     NAMES,
@@ -93,6 +100,12 @@ BOARD_HOME = BOARD_HOME_BY_REFERENCE["r2"]
 CONTRACT_FIXED = {"IM-k3", "IM-k4", "TH7-k3", "TH7-k4", "T03-k3", "T03-k4",
                   "TM-k3", "TM-k4", "TM-n10-k5"}
 
+#: Verdicts from :meth:`Job.evaluation_provenance` (audit Finding 6). An
+#: evaluation with no recorded content anchor is UNKNOWN, never a match.
+PROVENANCE_VERIFIED = "verified"
+PROVENANCE_UNKNOWN = "unknown"
+PROVENANCE_MISMATCH = "mismatch"
+
 
 @dataclass
 class Job:
@@ -105,7 +118,75 @@ class Job:
 
     @property
     def done(self) -> bool:
-        return (self.out_dir / "evaluation.json").exists()
+        """True only when an evaluation exists AND scored today's detections.
+
+        Presence alone was the whole test (audit candidate row 12), so a cell
+        whose detections were re-materialised after scoring resumed as
+        "already done" and kept the evaluation of the earlier file. With the
+        content anchor ``evaluate_detections.py`` now records
+        (``_metadata.input_git_state.blob_hashes``, audit Finding 6) the check
+        is one dict lookup and one hash of a file already on disk.
+
+        An evaluation written before the anchor existed has no recorded hash:
+        that is UNKNOWN provenance, not a mismatch, so it still counts as done
+        (the pre-fix behaviour) and logs a warning. A recorded hash that
+        DISAGREES logs an error and reports not-done, so the cell is re-scored.
+        """
+        evaluation = self.out_dir / "evaluation.json"
+        if not evaluation.exists():
+            return False
+        verdict, detail = self.evaluation_provenance()
+        if verdict == PROVENANCE_MISMATCH:
+            logger.error("%s: %s -- will re-score", self.label, detail)
+            return False
+        if verdict == PROVENANCE_UNKNOWN:
+            logger.warning("%s: %s", self.label, detail)
+        return True
+
+    def evaluation_provenance(self) -> tuple[str, str]:
+        """Classify an existing ``evaluation.json`` against today's detections.
+
+        Returns:
+            ``(verdict, detail)`` with *verdict* one of
+            :data:`PROVENANCE_VERIFIED`, :data:`PROVENANCE_UNKNOWN` (no
+            recorded anchor, or an unreadable evaluation), or
+            :data:`PROVENANCE_MISMATCH`.
+        """
+        evaluation = self.out_dir / "evaluation.json"
+        try:
+            meta = json.loads(evaluation.read_text())["_metadata"]
+        except (OSError, json.JSONDecodeError, KeyError, TypeError) as exc:
+            return PROVENANCE_UNKNOWN, (
+                f"existing evaluation.json carries no readable _metadata "
+                f"({exc}); its provenance is UNKNOWN"
+            )
+        blobs = (meta.get("input_git_state") or {}).get("blob_hashes") or {}
+        try:
+            key = str(self.detections.resolve().relative_to(PROJECT_ROOT))
+        except ValueError:
+            key = str(self.detections)
+        recorded = blobs.get(key)
+        if not recorded:
+            return PROVENANCE_UNKNOWN, (
+                f"existing evaluation.json records no content anchor for "
+                f"{key} (written before input blob hashes were recorded); "
+                f"its provenance is UNKNOWN, so it is not evidence that the "
+                f"detections on disk are the ones scored"
+            )
+        current = git_blob_hash(self.detections)
+        if current is None:
+            return PROVENANCE_UNKNOWN, (
+                f"{key} is not readable, so the existing evaluation cannot "
+                f"be checked against it"
+            )
+        if current != recorded:
+            return PROVENANCE_MISMATCH, (
+                f"existing evaluation.json was scored from {key} at blob "
+                f"{recorded[:12]}, but that file is now {current[:12]}"
+            )
+        return PROVENANCE_VERIFIED, (
+            f"evaluation.json verified against {key} at blob {recorded[:12]}"
+        )
 
 
 def fixed_jobs() -> list[Job]:
