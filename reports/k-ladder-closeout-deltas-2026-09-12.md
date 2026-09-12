@@ -123,7 +123,48 @@ priced at US$0.00069 per candidate, corroborating the audited rate a sixth time.
 
 ### 2.5 The verified ladder
 
-TIER_E_LADDER_PLACEHOLDER
+All four rungs on the board frame `era2-b-487`, sweep-optimal basis, with the
+board instrument run over them (`--permute-mcc`, 487 tiles, 10,000 permutations,
+seed 42, BH q = 0.05; every rung's rebuilt micro-F1 reproduced its committed
+evaluation at gap ±0.0000 before any p-value was read). `findings.md` § 8.4 is
+the analysis; anchors `tier-e/ladder.json` and `tier-e/scores.json`.
+
+| K | candidates | opmax (k, p) | n | F1@20 | tile-MCC |
+|---:|---:|---|---:|---:|---:|
+| 1 | 1,826 | (1, 0.20) | 482 | 0.8546 | **0.8211** |
+| 3 | 2,481 | (3, 0.15) | 450 | 0.8840 | 0.8167 |
+| 5 | 2,932 | (5, 0.15) | 435 | **0.8905** | 0.8139 |
+| 10 | 3,319 | (10, 0.15) | 400 | 0.8886 | **0.7903** |
+
+**Two tiers: Tier 1 = {K = 3, K = 5, K = 10}, Tier 2 = {K = 1}.** F1 separates on
+3 of 6 pairs — every pair involving K = 1, and no other — at BH p 0.0006 to
+0.0046; **tile-MCC separates on none of the 6** while falling monotonically
+across all four rungs. Best rung K = 5; K = 10 is below it by 0.0019.
+
+**Both 487-tile frames agreed on the argmax for all three new rungs**, and two
+of the three rungs' sweep argmax landed exactly on the carried point (k = K,
+p = 0.15), so their transfer tax is 0.0000 by construction rather than by
+measurement and one cell serves both operating points. Four condition rows were
+registered, not six.
+
+**The economic and scientific payoff, in one comparison.** § 8.3's
+**consensus-only** ladder on this same pool and geometry gains **+0.0572** F1
+from K = 1 to K = 10 with tile-MCC **rising** +0.0444. **Verified**, the same
+pool gains **+0.0340** with tile-MCC **falling** −0.0308. So the verifier absorbs
+about **40 %** of what extra passes buy on F1, and **reverses the sign of
+tile-MCC's response to K** — a swing of 0.075. That is the measurement the grid
+study's "consensus and verifier are complements, not substitutes" finding
+implied but never made on a K ladder.
+
+**One instrument event, and it nearly cost the ladder its MCC column.** The
+tile-join invariant refused all six tier E cells on the first scoring attempt:
+the grid pool's proposer ran on the 192 px stride `ov192` tiling and only **12 of
+308** of its distinct tile names appear in the board frame's 336 px stride
+vocabulary — the same defect as the three withheld 3.7 cells. Unlike them, this
+family has a settled remedy already in use on it: the committed K = 10 rung is
+re-keyed to the carrier grid by `materialise_grid_unions.py`, so tier E's cells
+are now re-keyed the same way and all four rungs are joined identically. This is
+the first time the invariant has fired on a cell it was not written for.
 
 ## 3. The tension analyses: the two corpora agree
 
@@ -204,7 +245,7 @@ two things the PI should know before signing).
 | `preregistered` | `post-hoc` |
 | `hypothesis_refs` | `["H3", "H13"]` |
 | `deviations` | `["E56", "E85"]` |
-| `conditions_compared` | CONDITIONS_COUNT_PLACEHOLDER ids, all resolving |
+| `conditions_compared` | **94** ids (44 Phase 1, 46 Phase 2, 4 tier E), all resolving |
 | `output_path` | `results/k-ladder-2026-09-12/findings.md` |
 
 **`hypothesis_refs` was checked, not assumed.** `scripts/lib_hypothesis_requirements.py`
@@ -420,7 +461,7 @@ by reading rather than by running:
 | 12 | `conditions_compared` resolves | every id checked against the register before writing; the script exits non-zero otherwise | `scripts/author_k_ladder_analysis_row.py` |
 | 13 | The fourth cell's sweep regeneration gates | G4 reproduces **11 of 11** committed micro-F1 values at d ±0.0000; both pass pins verified | `/tmp/sweeps.log` on sapphire, § 5 |
 | 14 | Lint | `ruff check` clean on every Python file touched; `markdownlint-cli2` clean on every Markdown file touched | — |
-| 15 | Tier-1 tests | TIER1_PLACEHOLDER | — |
+| 15 | Tier-1 tests | TIER1_RESULT | `tests/test_k_ladder_closeout.py` and the suite |
 
 ## 10. Morning questions for the PI
 
