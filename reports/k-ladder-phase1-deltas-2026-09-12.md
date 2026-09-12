@@ -50,19 +50,31 @@ fillable. Fixed at commit `75110d3b1`; the corrected numbers are claim 1.6.
 | 2.11 | 27 of 27 scorings succeeded | `/tmp/twin-scoring.log` on sapphire, "27 succeeded, 0 failed"; each row's own `evaluation.json` under its `output_dir` |
 
 **Figures for the SIGNED `verifier-uplift-pairing` row's amendment** — recorded
-here, NOT applied. `results/run-analyses.json`, `manually_verified_at`
-`2026-09-10T22:55:40Z`. The row is now three amendments behind (85 → 128 → 129
-were the earlier two; this session adds the rest).
+here, NOT applied.
 
-| field | signed value | current value |
+**The baseline is the row as it stands, not as `r7-gaps-deltas` § 5.1 described
+it.** That report's table is the 2026-09-10 signature (85 of 172, 86 blocked,
+median +0.212). The PI has since AMENDED and re-signed the row:
+`results/run-analyses.json`, `manually_verified_at` **`2026-09-11T07:03:41Z`**,
+`_signature_note` "Amended and re-signed 2026-09-11T07:03:41Z by the PI (S153
+ruling B1 …): counts 85 → 145 computed / 86 → 27 blocked". Using the older
+figures as the "before" column would have overstated this session's delta by two
+amendments, so the comparison below is against the row's current signed state.
+
+| field | signed value (2026-09-11) | current value |
 |---|---|---|
-| computed / total, F1 | 85 of 172 | **170 of 170** |
-| computed / total, MCC | not in the row | **169 of 170** |
-| blocked | 86 | **0** |
-| F1 uplift median | +0.212 | **+0.2631** |
-| F1 uplift range | −0.0003 to +0.486 | **−0.0366 to +0.5265** (2 negative) |
-| MCC uplift median | not in the row | **+0.4975** (3 negative, min −0.0230, max +0.8410) |
-| `conditions_compared` length | 85 | **170** |
+| computed / total, F1 | 145 of 172 | **170 of 170** |
+| computed / total, MCC | 144 of 172 | **169 of 170** |
+| blocked | 27 | **0** |
+| F1 uplift median | +0.201 | **+0.2631** |
+| F1 uplift range | −0.0366 to +0.486 (2 negative) | **−0.0366 to +0.5265** (2 negative) |
+| MCC uplift median | +0.427 | **+0.4975** (3 negative, min −0.0230, max +0.8410) |
+| `conditions_compared` length | 145 | **170** |
+
+The 27 that were blocked are exactly the 27 this session derived, and the signed
+outcome names them: "all first-N ladder rungs whose universe was never
+committed". The one MCC pair the signed text calls "undefined because its twin's
+MCC is undefined" is the pair still pending at § 2.8.
 
 By frame, computed pairs:
 
@@ -174,11 +186,22 @@ Every figure is anchored inside
 ## 7. What did NOT change
 
 - **No API call was made**, and no run was authorised by anything in this batch.
-- **`results/run-analyses.json` was not modified at any point.** No analysis row
-  gained, lost or altered a field; no `manually_verified_at`, `_signature_note`,
-  `outcome`, `conditions_compared` or `pi_ruling` was touched. The board's
-  proposed outcome and the uplift row's amendment figures are recorded for the PI
-  in `provenance.json` → `re_sign_pending` and § 2 above.
+- **`results/run-analyses.json` was not modified at any point.** Verified
+  structurally, not by eye: a field-by-field comparison of all 66 rows between
+  `origin/main` and `HEAD` finds **0 signature fields and 0 other fields
+  changed**, and no row added or removed. The board's proposed outcome and the
+  uplift row's amendment figures are recorded for the PI in `provenance.json` →
+  `re_sign_pending` and § 2 above.
+- **One apparent exception, which is not one.** The GENERATED
+  `results/analyses-manifest.json` does move on
+  `verifier-uplift-pairing.manually_verified_at`
+  (`2026-09-10T22:55:40Z` → `2026-09-11T07:03:41Z`), `conditions_compared`
+  (85 → 145) and `outcome`. That is **pre-existing drift being materialised**: the
+  register already held the 2026-09-11 values — the PI's own re-signature — and the
+  committed manifest was stale at the 2026-09-10 ones. Regenerating the manifest
+  propagated the register's values into it. Nothing in the register moved, and no
+  signature value was authored by this run. The same regeneration also refreshed
+  several other rows' `conditions_compared` for the same reason.
 - **Tier 1 of the GS Era-2 board, and its five members.** Same cells, same order,
   same F1. So are the tie set, the top cell, every gate's verdict, and G6's
   maximum frame delta (0.0078).
