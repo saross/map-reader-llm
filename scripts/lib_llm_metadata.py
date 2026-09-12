@@ -47,6 +47,27 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
+# Roots for resolving an example's config path to the image on disk. Example
+# paths in a prompt config are relative to ``inputs/examples`` (see
+# ``config.EXAMPLES_DIR``, which ``4_detect_mounds_batch.py`` joins them to).
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+_EXAMPLES_DIR = _REPO_ROOT / "inputs" / "examples"
+
+#: Records what ``library_hash`` was computed over, so a reader can tell a
+#: post-2026-09-12 content hash from the pre-fix filename hash (Finding 5 of
+#: ``reports/name-keyed-cache-audit-2026-09-12.md``). Values recorded in
+#: committed metas before that date were taken over the path/label/category
+#: triples ALONE and are not comparable with these.
+LIBRARY_HASH_BASIS = "example-bytes+path-label-category/1"
+
+#: Configuration fields excluded from the resume-time configuration diff:
+#: the instruction text is already covered by ``system_instruction_hash``,
+#: and the full snapshot is summarised by its own digest instead.
+_CONFIG_DIFF_EXCLUDE: tuple[str, ...] = (
+    "system_instruction_text",
+    "full_config_snapshot",
+)
+
 
 class LLMProvider(Enum):
     """Supported Large Language Model (LLM) providers."""
@@ -293,6 +314,7 @@ class LLMMetadataTracker:
             (system_instruction or "").encode('utf-8')
         ).hexdigest()
         self.library_hash = self._compute_library_hash(config)
+        self.library_manifest = self._example_library_manifest(config)
         self.script_name = script_name
         self.script_version = script_version
 
@@ -310,14 +332,93 @@ class LLMMetadataTracker:
         self.results_summary: dict[str, Any] = {}
 
     @staticmethod
-    def _compute_library_hash(config: dict[str, Any]) -> str:
-        """
-        Compute a SHA-256 hash of the example library composition.
+    def _resolve_example_path(path_str: str) -> Path | None:
+        """Resolve an example's config path to the image file on disk.
 
-        Hashes the list of examples (path, label, category) from the config
-        to produce a unique fingerprint for each library variant. This
-        distinguishes conditions that share the same system instruction but
-        use different example sets.
+        Prompt configs record example paths relative to
+        ``inputs/examples`` (the directory ``4_detect_mounds_batch.py``
+        joins them to). An absolute path, or one already relative to the
+        repository root, is honoured too.
+
+        Args:
+            path_str: The ``path`` field of one example entry.
+
+        Returns:
+            The resolved path, or ``None`` when no candidate is a file.
+        """
+        if not path_str:
+            return None
+        raw = Path(path_str)
+        candidates = (
+            [raw] if raw.is_absolute()
+            else [_EXAMPLES_DIR / raw, _REPO_ROOT / raw, raw]
+        )
+        for candidate in candidates:
+            if candidate.is_file():
+                return candidate
+        return None
+
+    @classmethod
+    def _example_library_manifest(
+        cls, config: dict[str, Any],
+    ) -> list[dict[str, str]]:
+        """Return the example library as a content-anchored manifest.
+
+        One entry per example, sorted for order-independence:
+        ``{"path", "label", "category", "sha256"}``, where ``sha256`` is
+        the digest of the image's BYTES (or ``"missing"`` when the file
+        cannot be resolved, so an absent example changes the fingerprint
+        rather than being silently ignored).
+
+        Args:
+            config: The prompt/experiment configuration dict.
+
+        Returns:
+            The manifest, empty when the config lists no examples.
+        """
+        manifest: list[dict[str, str]] = []
+        for ex in config.get("examples", []) or []:
+            path_str = ex.get("path", "")
+            resolved = cls._resolve_example_path(path_str)
+            if resolved is None:
+                digest = "missing"
+            else:
+                try:
+                    digest = hashlib.sha256(resolved.read_bytes()).hexdigest()
+                except OSError:
+                    digest = "unreadable"
+            manifest.append({
+                "path": path_str,
+                "label": ex.get("label", ""),
+                "category": ex.get("category", ""),
+                "sha256": digest,
+            })
+        return sorted(
+            manifest,
+            key=lambda e: (e["path"], e["label"], e["category"], e["sha256"]),
+        )
+
+    @classmethod
+    def _compute_library_hash(cls, config: dict[str, Any]) -> str:
+        """
+        Compute a SHA-256 hash of the example library's CONTENT.
+
+        Hashes each example's ``(path, label, category)`` triple together
+        with the SHA-256 of the image's bytes, so the fingerprint
+        distinguishes conditions that share the same system instruction
+        but use different example sets — and, unlike the pre-2026-09-12
+        version, also distinguishes a pool in which an image was replaced
+        under the same filename.
+
+        Finding 5 of ``reports/name-keyed-cache-audit-2026-09-12.md``: the
+        field documented itself as a library fingerprint but hashed only
+        the filenames, while its sibling ``system_instruction_hash`` is a
+        true content hash. ``library_hash`` is a ``changed_field`` in the
+        no-op rule table that polices "only the target parameter changed"
+        (``lib_hypothesis_requirements.py:308-336``), the H10/H12 failure
+        class, so a name-only hash weakened a live guard. Values recorded
+        before that date are filename hashes and are NOT comparable with
+        these; ``configuration.library_hash_basis`` records which is which.
 
         Args:
             config: The prompt/experiment configuration dict, expected to
@@ -327,19 +428,13 @@ class LLMMetadataTracker:
             Hex digest of the library hash, or "no_examples" if the config
             has no examples list.
         """
-        import json
-
-        examples = config.get("examples", [])
-        if not examples:
+        manifest = cls._example_library_manifest(config)
+        if not manifest:
             return "no_examples"
 
-        # Normalise to a stable representation: sorted list of (path, label, category)
-        # tuples serialised as JSON. Sorting ensures order-independence.
-        normalised = sorted(
-            (ex.get("path", ""), ex.get("label", ""), ex.get("category", ""))
-            for ex in examples
-        )
-        canonical = json.dumps(normalised, sort_keys=True)
+        # Canonical JSON over the sorted manifest: order-independent, and
+        # every field that defines the library is inside the digest.
+        canonical = json.dumps(manifest, sort_keys=True)
         return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
     def log_response(
@@ -556,6 +651,13 @@ class LLMMetadataTracker:
                     "system_instruction_hash": self.system_instruction_hash,
                     "system_instruction_text": self.system_instruction_text,
                     "library_hash": self.library_hash,
+                    # What library_hash was computed over. Recorded so a
+                    # reader can tell a content hash from the pre-2026-09-12
+                    # filename hash (audit Finding 5).
+                    "library_hash_basis": LIBRARY_HASH_BASIS,
+                    # The path/label/category triples kept alongside the
+                    # hash for legibility, each with its image's digest.
+                    "library_manifest": self.library_manifest,
                     "temperature": self.config.get("temperature"),
                     "max_output_tokens": self.config.get(
                         "max_output_tokens"
@@ -1211,11 +1313,77 @@ def _sum_dicts(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
     return out
 
 
+def _configuration_fingerprint(configuration: Any) -> dict[str, Any]:
+    """Return a configuration block reduced to comparable scalars.
+
+    The instruction text is dropped (``system_instruction_hash`` already
+    covers it) and the full config snapshot is replaced by its own digest,
+    so a diff names fields rather than dumping blobs.
+
+    Args:
+        configuration: A meta's ``configuration`` block, or anything else.
+
+    Returns:
+        A flat comparable dict; empty when *configuration* is not a dict.
+    """
+    if not isinstance(configuration, dict):
+        return {}
+    fingerprint = {
+        k: v for k, v in configuration.items()
+        if k not in _CONFIG_DIFF_EXCLUDE
+    }
+    if "full_config_snapshot" in configuration:
+        snapshot = json.dumps(
+            configuration["full_config_snapshot"], sort_keys=True, default=str,
+        )
+        fingerprint["full_config_snapshot_sha256"] = hashlib.sha256(
+            snapshot.encode("utf-8"),
+        ).hexdigest()
+    return fingerprint
+
+
+def compare_configurations(
+    original: dict[str, Any], recovery: dict[str, Any],
+) -> list[str]:
+    """Name the configuration fields on which two metas disagree.
+
+    Args:
+        original: The pre-resume meta.
+        recovery: The resume pass's meta.
+
+    Returns:
+        Sorted field names that differ (a field present in only one meta
+        counts as differing). Empty when the two configurations agree or
+        when either has no configuration block.
+    """
+    a = _configuration_fingerprint(original.get("configuration"))
+    b = _configuration_fingerprint(recovery.get("configuration"))
+    if not a or not b:
+        return []
+    sentinel = object()
+    return sorted(
+        field for field in set(a) | set(b)
+        if a.get(field, sentinel) != b.get(field, sentinel)
+    )
+
+
 def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, Any]:
     """Merge a recovery meta.json into an original meta.json.
 
     See ``scripts/merge_recovery_meta.py`` module docstring for
     field-by-field semantics.
+
+    ``configuration`` is still taken from *original* — downstream readers
+    (cost aggregation, the post-run report, the manifest re-derivation)
+    read it as the pass's configuration and must keep doing so — but the
+    merge no longer keeps it SILENTLY: a ``configuration_history`` entry
+    records both passes' configurations and the fields on which they
+    disagree, and a disagreement is logged as a warning. Finding 5 of
+    ``reports/name-keyed-cache-audit-2026-09-12.md``: a pass resumed under
+    an edited config recorded the first launch's ``configuration`` block —
+    including its ``system_instruction_hash`` — for a file whose later
+    tiles were produced under different instructions, and nothing in the
+    artefact disclosed the mix.
 
     Args:
         original: The pre-recovery meta.json contents.
@@ -1425,6 +1593,44 @@ def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, 
         )
     history.append(entry)
     merged["recovery_history"] = history
+
+    # ---- configuration_history: disclose the configuration of each pass ----
+    # ``merged["configuration"]`` remains the ORIGINAL launch's block (every
+    # downstream reader depends on that), but the chain is now recorded
+    # instead of discarded, and a disagreement is surfaced.
+    changed_config_fields = compare_configurations(original, recovery)
+    o_cfg = original.get("configuration")
+    r_cfg = recovery.get("configuration")
+    if isinstance(o_cfg, dict) or isinstance(r_cfg, dict):
+        config_history = list(merged.get("configuration_history", []))
+        if not config_history and isinstance(o_cfg, dict):
+            # Seed the chain with the original launch so a later reader can
+            # diff against a baseline rather than guess it.
+            config_history.append({
+                "source": "original",
+                "recorded_at": original.get("timestamp", {}).get("start"),
+                "run_id": original.get("run_id"),
+                "configuration": _configuration_fingerprint(o_cfg),
+            })
+        config_history.append({
+            "source": "resume",
+            "recorded_at": datetime.now(timezone.utc).isoformat(),
+            "run_id": recovery.get("run_id"),
+            "configuration": _configuration_fingerprint(r_cfg),
+            "differs_from_previous": bool(changed_config_fields),
+            "changed_fields": changed_config_fields,
+        })
+        merged["configuration_history"] = config_history
+
+    if changed_config_fields:
+        logger.warning(
+            "merge_meta: the resumed pass's configuration differs from the "
+            "original launch's on %d field(s): %s. merged['configuration'] "
+            "remains the ORIGINAL block; the disagreement is recorded in "
+            "configuration_history. The merged pass file therefore mixes "
+            "tiles produced under two configurations.",
+            len(changed_config_fields), ", ".join(changed_config_fields),
+        )
 
     # tpm_governor: keep original (recovery's small run governor stats not
     # meaningful at scale). If recovery has one, append as a list.

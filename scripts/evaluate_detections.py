@@ -58,6 +58,7 @@ import yaml
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from scripts.lib_content_anchor import git_blob_hash  # noqa: E402
 from scripts.lib_detection_paths import resolve_pool_passes  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     CI_FLAG_BASIS_FULL,
@@ -536,6 +537,40 @@ def _input_git_states(paths: list[Any]) -> dict[str, str]:
     return states
 
 
+def _input_blob_hashes(paths: list[Any]) -> dict[str, str | None]:
+    """Content anchor for each recipe input at scoring time.
+
+    Finding 6 of ``reports/name-keyed-cache-audit-2026-09-12.md``: the
+    ``input_git_state`` block recorded a state WORD (``clean`` /
+    ``modified`` / …) plus the repository HEAD, and never the inputs' own
+    bytes — so nothing in an evaluation bound it to the detections file it
+    was scored from. A file re-materialised under the same path later
+    leaves a committed evaluation that still looks clean. The blob hash is
+    what makes a "was this scored from the file that is here now?" check
+    possible (``r2_score_cells.Job.done`` now does exactly that).
+
+    Args:
+        paths: Candidate input paths (str/Path/None; Nones are skipped).
+
+    Returns:
+        Mapping of the same keys :func:`_input_git_states` uses
+        (repo-relative, or the original string when outside the repo) →
+        blob hash, or ``None`` when the file is absent or unreadable.
+    """
+    hashes: dict[str, str | None] = {}
+    root = PROJECT_ROOT.resolve()
+    for p in paths:
+        if not p:
+            continue
+        path = Path(p)
+        try:
+            key = str(path.resolve().relative_to(root))
+        except ValueError:
+            key = str(p)
+        hashes[key] = git_blob_hash(path)
+    return hashes
+
+
 #: Input states that mean "this artefact will not reproduce once the
 #: pending change is committed" — the D40 drift signature.
 _DIRTY_INPUT_STATES: frozenset[str] = frozenset({"modified", "untracked"})
@@ -686,8 +721,10 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
         # ``bootstrap.method`` literal into ``method_requested`` (what the code
         # asked for) and a ``method`` derived from what the run actually
         # measured — the literal was contradicted by 162 per-metric ``method``
-        # values inside 58 committed files.
-        "metadata_version": "1.3",
+        # values inside 58 committed files. 1.4 (2026-09-12, audit Finding 6)
+        # added ``input_git_state.blob_hashes`` — the content anchor that
+        # binds an evaluation to the exact input bytes it scored.
+        "metadata_version": "1.4",
         "script_path": _SCRIPT_RELATIVE_PATH,
         "script_git_commit": _git_short_hash(PROJECT_ROOT),
         "script_git_status": _git_status(PROJECT_ROOT),
@@ -717,9 +754,17 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
         # Per-input git state at scoring time (defect D40): discloses in the
         # artefact whether any recipe input was uncommitted when scored, so
         # input-vintage drift is visible without a replay campaign.
+        # ``blob_hashes`` (added 2026-09-12, audit Finding 6) turns a state
+        # word plus a HEAD hash into a CONTENT anchor: it says which bytes
+        # were scored, so a later reader — or a resumable driver — can check
+        # the evaluation against the file that is there now.
         "input_git_state": {
             "head": _git_short_hash(PROJECT_ROOT),
             "inputs": _input_git_states(
+                (detections_value if isinstance(detections_value, list)
+                 else [detections_value])
+                + [ground_truth, bounds]),
+            "blob_hashes": _input_blob_hashes(
                 (detections_value if isinstance(detections_value, list)
                  else [detections_value])
                 + [ground_truth, bounds]),

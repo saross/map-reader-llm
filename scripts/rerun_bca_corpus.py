@@ -104,7 +104,10 @@ logger = logging.getLogger(__name__)
 
 REPORT_PATH = PROJECT_ROOT / "results/e82-corpus-reemission-2026-08-20.json"
 SELECT_VINTAGES = ("1.1", "1.2")
-DONE_VINTAGE = "1.3"
+#: Metadata vintages that already carry a BCa-requested bootstrap and so need
+#: no re-emission. 1.4 (2026-09-12) only added the input content anchors of
+#: audit Finding 6, so it is done for this campaign's purposes too.
+DONE_VINTAGES = ("1.3", "1.4")
 MAX_FAILURES = 5
 WIDTH_RATIO_BAND = (0.8, 8.0)
 MEDIAN_BAND = (1.05, 6.0)
@@ -141,7 +144,7 @@ def select_targets(
             census["unparseable"] += 1
             continue
         ver = str((doc.get("_metadata") or {}).get("metadata_version", ""))
-        if ver == DONE_VINTAGE:
+        if ver in DONE_VINTAGES:
             census["done_1.3"] += 1
             continue
         if ver not in SELECT_VINTAGES:

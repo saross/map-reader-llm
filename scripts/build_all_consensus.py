@@ -43,12 +43,24 @@ Inputs:
 Outputs:
     - {condition_path}/consensus/consensus_t1..tK.geojson — per-threshold
       consensus detections (GeoJSON, EPSG:4326)
-    - {condition_path}/consensus/voting_summary.json — vote distribution
+    - {condition_path}/consensus/voting_summary.json — vote distribution plus
+      the pass files the union was built from (paths + content hashes)
+
+Provenance:
+    An existing union is skipped only when its recorded pass list still matches
+    the pool. A union whose passes have been rewritten, removed, or added to
+    since it was built is reported ``stale`` and refused (exit 1) — rebuilding
+    it would invalidate every downstream index join, so the operator decides,
+    with ``--force``. A union written before provenance recording existed
+    reports "provenance UNKNOWN" and is skipped as before, with a warning:
+    unknown provenance is never treated as a match. Added 2026-09-12 for
+    Finding 4 of ``reports/name-keyed-cache-audit-2026-09-12.md``.
     - results/consensus-build-manifest_{timestamp}.json — run manifest
 
 Exit Codes:
     0 - All conditions succeeded or were skipped
-    1 - Some conditions failed (partial success)
+    1 - Some conditions failed, or an existing union no longer matches the pool
+        it was built from (status ``stale``; see Provenance below)
     2 - Fatal error (bad configuration, missing paths)
 
 Author: Shawn Ross, Claude Code
@@ -68,13 +80,28 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
-__version__ = "1.0.0"
+# Allow sibling-module imports whether this file is run as a script or
+# imported as ``scripts.build_all_consensus``. ``merge_passes`` owns the
+# single definition of "which files make up this pool", so the provenance
+# comparison below reuses it rather than re-implementing the glob.
+_SCRIPT_DIR = Path(__file__).resolve().parent
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
+
+from merge_passes import (  # noqa: E402
+    build_pass_provenance,
+    resolve_pass_files,
+)
+
+#: 1.1.0 compares each existing union's recorded pass provenance against the
+#: pool before reporting "exists" (audit Finding 4).
+__version__ = "1.1.0"
 
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = _SCRIPT_DIR.parent
 DEFAULT_INVENTORY = PROJECT_ROOT / "planning" / "condition-inventory.json"
 DEFAULT_OUTPUT_SUBDIR = "consensus"
 MERGE_PASSES_SCRIPT = PROJECT_ROOT / "scripts" / "merge_passes.py"
@@ -326,19 +353,132 @@ def resolve_consensus_dir(
     return PROJECT_ROOT / condition["path"] / output_subdir
 
 
-def check_existing_consensus(consensus_dir: Path) -> tuple[bool, str]:
+# ---------------------------------------------------------------------------
+# Provenance comparison (audit Finding 4)
+# ---------------------------------------------------------------------------
+#
+# Finding 4 of reports/name-keyed-cache-audit-2026-09-12.md: this driver
+# skipped a condition on PRESENCE alone (threshold files + voting_summary.json
+# both there), and the summary recorded only ``total_passes`` — so a pool whose
+# passes had been added to or rewritten in place (the E57 and E70 recovery
+# campaigns both did exactly that) was reported "skipped — existing consensus:
+# complete" and the stale union went on serving as the candidate universe for
+# crop extraction, verification and every sweep downstream.
+#
+# merge_passes.py now records each contributing pass file's repository-relative
+# path and git blob hash in voting_summary.json. The verdicts below compare
+# that record against the pool as it stands.
+
+#: The union's recorded inputs match the pool exactly.
+PROVENANCE_VERIFIED = "verified"
+#: The union predates provenance recording — never treated as a match.
+PROVENANCE_UNKNOWN = "unknown"
+#: The pool has changed since the union was built.
+PROVENANCE_STALE = "stale"
+
+
+def compare_pass_provenance(
+    consensus_dir: Path,
+    pool_dir: Path,
+    pass_filter: list[int] | None = None,
+) -> tuple[str, str]:
+    """Compare a union's recorded pass list against the pool on disk.
+
+    Args:
+        consensus_dir: Directory holding ``voting_summary.json``.
+        pool_dir: The condition directory holding ``run_*`` / ``pass_*``.
+        pass_filter: Optional pass-number filter, for a declared sub-pool.
+
+    Returns:
+        ``(verdict, detail)``. *verdict* is :data:`PROVENANCE_VERIFIED`,
+        :data:`PROVENANCE_UNKNOWN` (legacy summary with no pass list, or an
+        unreadable one), or :data:`PROVENANCE_STALE`. *detail* names the
+        difference — which files were rewritten, which vanished, which
+        appeared — so a refusal is actionable without further digging.
+    """
+    summary_path = consensus_dir / "voting_summary.json"
+    try:
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return PROVENANCE_UNKNOWN, f"voting_summary.json unreadable ({exc})"
+
+    recorded_list = summary.get("pass_provenance")
+    if not isinstance(recorded_list, list) or not recorded_list:
+        return PROVENANCE_UNKNOWN, (
+            "voting_summary.json records no pass_provenance (written before "
+            "provenance recording was added), so the union cannot be checked "
+            "against the pool"
+        )
+
+    recorded = {
+        str(e.get("path")): e.get("git_blob_hash")
+        for e in recorded_list if isinstance(e, dict)
+    }
+    current = {
+        e["path"]: e["git_blob_hash"]
+        for e in build_pass_provenance(
+            resolve_pass_files(pool_dir, pass_filter),
+        )
+    }
+
+    rewritten = sorted(
+        p for p in recorded.keys() & current.keys()
+        if recorded[p] != current[p]
+    )
+    vanished = sorted(recorded.keys() - current.keys())
+    appeared = sorted(current.keys() - recorded.keys())
+
+    if not (rewritten or vanished or appeared):
+        return PROVENANCE_VERIFIED, (
+            f"pass provenance verified: {len(recorded)} pass file(s) unchanged"
+        )
+
+    parts: list[str] = []
+    if rewritten:
+        parts.append(
+            f"{len(rewritten)} pass file(s) rewritten since the union was "
+            f"built ({', '.join(rewritten[:3])}"
+            f"{', …' if len(rewritten) > 3 else ''})"
+        )
+    if vanished:
+        parts.append(
+            f"{len(vanished)} recorded pass file(s) no longer present "
+            f"({', '.join(vanished[:3])}{', …' if len(vanished) > 3 else ''})"
+        )
+    if appeared:
+        parts.append(
+            f"{len(appeared)} pass file(s) in the pool that the union does "
+            f"not record ({', '.join(appeared[:3])}"
+            f"{', …' if len(appeared) > 3 else ''})"
+        )
+    return PROVENANCE_STALE, "; ".join(parts)
+
+
+def check_existing_consensus(
+    consensus_dir: Path,
+    pool_dir: Path | None = None,
+    pass_filter: list[int] | None = None,
+) -> tuple[bool, str]:
     """Check whether consensus outputs already exist in a directory.
 
     Detects standard ``merge_passes.py --sweep`` output
     (``consensus_t*.geojson`` + ``voting_summary.json``) and partial builds
-    (threshold files without the summary).
+    (threshold files without the summary). When *pool_dir* is supplied the
+    complete case additionally compares the union's recorded pass list
+    against the pool (audit Finding 4) — presence alone is not evidence
+    that the union matches its inputs.
 
     Args:
         consensus_dir: Directory to check for existing consensus files.
+        pool_dir: The condition directory holding the pass subdirectories.
+            ``None`` skips the provenance comparison (legacy behaviour).
+        pass_filter: Optional pass-number filter, for a declared sub-pool.
 
     Returns:
         Tuple of ``(exists, description)`` where *description* explains what
-        was found.
+        was found. A stale union returns ``(True, "stale: …")`` — it exists,
+        but the caller must not treat it as current; the description begins
+        with ``"stale: "`` so callers can test for it.
     """
     if not consensus_dir.is_dir():
         return False, "no consensus directory"
@@ -350,10 +490,30 @@ def check_existing_consensus(consensus_dir: Path) -> tuple[bool, str]:
         return False, "consensus directory exists but is empty"
 
     n = len(threshold_files)
-    if has_summary:
+    if not has_summary:
+        return True, f"partial: {n} threshold files, missing voting_summary.json"
+
+    if pool_dir is None:
         return True, f"complete: {n} threshold files + voting_summary.json"
 
-    return True, f"partial: {n} threshold files, missing voting_summary.json"
+    verdict, detail = compare_pass_provenance(
+        consensus_dir, pool_dir, pass_filter,
+    )
+    if verdict == PROVENANCE_STALE:
+        return True, f"stale: {n} threshold files, but {detail}"
+    if verdict == PROVENANCE_UNKNOWN:
+        logger.warning(
+            "%s: pass provenance UNKNOWN — %s. Treating as existing but "
+            "UNVERIFIED (a legacy union is never evidence of a match).",
+            consensus_dir, detail,
+        )
+        return True, (
+            f"complete (provenance UNKNOWN): {n} threshold files + "
+            f"voting_summary.json — {detail}"
+        )
+    return True, (
+        f"complete: {n} threshold files + voting_summary.json, {detail}"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -401,7 +561,8 @@ def process_single_condition(
 
     Returns:
         Result dict with keys: ``id``, ``path``, ``status``
-        (``'success'``/``'failure'``/``'skipped'``/``'dry_run'``), ``K``,
+        (``'success'``/``'failure'``/``'stale'``/``'skipped'``/``'dry_run'``),
+        ``K``,
         ``thresholds_generated``, ``consensus_dir``, ``message``,
         ``duration_seconds``.
     """
@@ -436,8 +597,27 @@ def process_single_condition(
         consensus_dir.relative_to(PROJECT_ROOT)
     )
 
-    # Check for existing consensus
-    exists, description = check_existing_consensus(consensus_dir)
+    # Check for existing consensus, including whether the union still
+    # matches the pool it was built from (audit Finding 4).
+    pool_dir = PROJECT_ROOT / condition["path"]
+    exists, description = check_existing_consensus(consensus_dir, pool_dir)
+    stale = description.startswith("stale: ")
+
+    if stale and not force:
+        # Refuse rather than rebuild: a union rewritten in place invalidates
+        # every downstream index join (``candidate_{i:05d}`` against
+        # ``probabilities.json``), so the operator decides, not the driver.
+        result["status"] = "stale"
+        result["message"] = (
+            f"{description}. Refusing to report this union as current. "
+            f"Re-run with --force to rebuild it from the pool as it now "
+            f"stands (which invalidates any crops, probabilities, or sweeps "
+            f"derived from the old union), or investigate the pool change."
+        )
+        result["duration_seconds"] = time.monotonic() - start
+        logger.error("[%s] STALE — %s", cond_id, result["message"])
+        return result
+
     if exists and not force:
         result["status"] = "skipped"
         result["message"] = f"existing consensus: {description}"
@@ -751,6 +931,7 @@ def print_summary(results: list[dict]) -> None:
     print(f"  Total conditions:  {len(results)}")
     print(f"  Success:           {counts.get('success', 0)}")
     print(f"  Failed:            {counts.get('failure', 0)}")
+    print(f"  Stale:             {counts.get('stale', 0)}")
     print(f"  Skipped:           {counts.get('skipped', 0)}")
     print(f"  Dry run:           {counts.get('dry_run', 0)}")
     print(f"  Total time:        {total_time:.1f}s")
@@ -761,6 +942,15 @@ def print_summary(results: list[dict]) -> None:
     if failures:
         print("\nFAILED CONDITIONS:")
         for r in failures:
+            print(f"  {r['id']}: {r['message']}")
+        print()
+
+    # Stale unions are a distinct, actionable outcome (audit Finding 4): the
+    # union exists but no longer matches the pool it was built from.
+    stale = [r for r in results if r["status"] == "stale"]
+    if stale:
+        print("\nSTALE CONSENSUS (union no longer matches its pool):")
+        for r in stale:
             print(f"  {r['id']}: {r['message']}")
         print()
 
@@ -1026,8 +1216,11 @@ def main() -> int:
 
     # Exit code
     has_failures = any(r["status"] == "failure" for r in results)
-    if has_failures:
-        logger.warning("Some conditions failed — exit code 1")
+    has_stale = any(r["status"] == "stale" for r in results)
+    if has_failures or has_stale:
+        logger.warning(
+            "Some conditions failed or hold a stale union — exit code 1",
+        )
         return 1
 
     return 0
