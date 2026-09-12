@@ -86,7 +86,7 @@ Usage::
     python scripts/build_gs_era2_board_opmax.py membership
     python scripts/build_gs_era2_board_opmax.py jobs        # then run on sapphire
     python scripts/build_gs_era2_board_opmax.py gates
-    python scripts/build_gs_era2_board_opmax.py register [--write]
+    python scripts/build_gs_era2_board_opmax.py register [--write] [--no-analysis-row]
 """
 
 from __future__ import annotations
@@ -453,6 +453,49 @@ def run_gates(membership: dict[str, Any]) -> dict[str, Any]:
             "cells": rows}
 
 
+def _promote_existing_row(row: dict[str, Any], m: dict[str, Any], cell_slug: str) -> int:
+    """Repoint a row that has newly become a board member at the board frame.
+
+    Three ``-opmax`` rows were registered off-board under the old K >= 5 rule and
+    so carry the Era-2-frame evaluation (``opmax/era2/<slug>/``) and no scope
+    override. Under PI ruling R3 (2026-09-12) they are board members, and a
+    member's row records the BOARD-frame score — the same convention the other
+    forty follow. The off-board sentence in ``_note`` is replaced rather than
+    deleted, so the row still says what it used to be.
+
+    Args:
+        row: The condition row in ``results/run-conditions.json``.
+        m: Its ``opmax/membership.json`` member.
+        cell_slug: The member's slug, for the board-frame evaluation path.
+
+    Returns:
+        1 if the row was changed, else 0 (so the call is idempotent).
+    """
+    if not m.get("on_board"):
+        return 0
+    board_eval = f"{BOARD_DIR}/cells/{cell_slug}/evaluation.json"
+    if row.get("eval_path") == board_eval:
+        return 0
+    old_eval = row.get("eval_path")
+    row["eval_path"] = board_eval
+    row["scope_override"] = {"test_set_id": FRAME_ID, "bounds_path": FRAME,
+                             "n_test_tiles": FRAME_TILES,
+                             "calibration_set_id": None, "n_calibration_tiles": None}
+    note = str(row.get("_note", ""))
+    stale = f"K = {m['k']} < 5 (card § 3 rule); registered, not a member; the row's evaluation is the Era-2-frame score."
+    replacement = (
+        f"ADMITTED TO THE BOARD 2026-09-12 (PI ruling R3, "
+        f"planning/k-ladder-review-2026-09-11.md § 4): the board takes every "
+        f"verified cell on its frame regardless of K, so this K = {m['k']} cell is "
+        f"a member. Its evaluation is now the board-frame score ({FRAME_ID}); the "
+        f"Era-2-frame score it carried while off-board is kept at {old_eval} and "
+        f"is the waived opmax/g2 evaluation.")
+    note = note.replace(stale, replacement) if stale in note else note.rstrip() + " " + replacement
+    row["_note"] = note
+    print(f"  {row['label']}: promoted to board member; eval_path -> {board_eval}")
+    return 1
+
+
 def _resolve_existing_row(row: dict[str, Any], m: dict[str, Any]) -> int:
     """Point an already-registered ``-opmax`` row at its re-materialised file.
 
@@ -582,11 +625,12 @@ def sync_notes(membership: dict[str, Any], write: bool) -> int:
     return changed
 
 
-def register(membership: dict[str, Any], write: bool) -> list[str]:
+def register(membership: dict[str, Any], write: bool,
+             skip_analysis_row: bool = False) -> list[str]:
     rc = _load(RUN_CONDITIONS.relative_to(REPO_ROOT).as_posix())
     ra = _load(RUN_ANALYSES.relative_to(REPO_ROOT).as_posix())
     dec = rc["decomposition"]
-    added = waived = resolved = 0
+    added = waived = resolved = promoted = 0
     board_ids: list[str] = []
     for m in membership["members"]:
         run = dec[m["run_id"]]
@@ -603,6 +647,7 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
         existing = next((c for c in run["conditions"] if c["label"] == new_label), None)
         if existing is not None:
             resolved += _resolve_existing_row(existing, m)
+            promoted += _promote_existing_row(existing, m, s)
             continue
         note = (f"IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell "
                 f"{m['label']} (archived at {ARCHIVED_COMMIT}, retired instrument build_tiered_leaderboard.py; "
@@ -650,6 +695,16 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
                                    "the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate "
                                    "artefact, not a condition.")})
         waived += 1
+    if skip_analysis_row:
+        if write:
+            RUN_CONDITIONS.write_text(json.dumps(rc, indent=1, ensure_ascii=False) + "\n",
+                                      encoding="utf-8")
+        print(f"{'wrote' if write else 'would write'} {added} new {SUFFIX} rows, "
+              f"{resolved} re-materialised rows repointed, {promoted} rows promoted to "
+              f"board members and {waived} g2 waivers; the board's analysis row was NOT "
+              f"touched (--no-analysis-row): it is PI-SIGNED, and its conditions_compared "
+              f"would have gone to {len(board_ids)} members")
+        return board_ids
     rows = ra["analyses"] if isinstance(ra, dict) else ra
     arow = next(r for r in rows if r["analysis_id"] == BOARD_ID)
     before = len(arow["conditions_compared"])
@@ -679,6 +734,13 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("command", choices=["membership", "jobs", "gates", "register", "notes"])
     parser.add_argument("--write", action="store_true", help="register: persist to the register files")
+    parser.add_argument("--no-analysis-row", action="store_true",
+                        help=("register: mint and repoint condition rows but do "
+                              "NOT write to the board's analysis row. That row "
+                              "is PI-signed; amending its membership, note or "
+                              "outcome is the PI's call. The tiering instrument "
+                              "is then given a board-local copy of the analyses "
+                              "file carrying the full membership."))
     parser.add_argument("--only-resolved", action="store_true",
                         help="jobs: emit only the re-materialised rows' jobs (rescore-commands.sh + "
                              "rescore-jobs.txt for xargs -P)")
@@ -712,7 +774,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "notes":
         sync_notes(membership, args.write)
         return 0
-    register(membership, args.write)
+    register(membership, args.write, skip_analysis_row=args.no_analysis_row)
     return 0
 
 

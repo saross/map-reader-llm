@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-09-12T00:39:12Z · 521 row(s) · schema v1.0.
+> Generated 2026-09-12T01:04:24Z · 542 row(s) · schema v1.0.
 >
-> **Coverage**: 521 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 542 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -156,6 +156,14 @@
 | proposer-verifier-384::verified-checklist-image | proposer-verifier | verified | — | 1 | 0.5309 | 0.3873 | 326 |
 | proposer-verifier-384::verified-cascade-adversarial-checklist | proposer-verifier | verified | — | 1 | 0.5036 | 0.4313 | 264 |
 | proposer-verifier-384::verified-cascade-checklist-adversarial | proposer-verifier | verified | — | 1 | 0.495 | 0.4121 | 260 |
+| proposer-verifier-384::verified-adversarial-image-era2b | proposer-verifier | verified | — | 1 | 0.4943 | 0.416 | 261 |
+| proposer-verifier-384::verified-adversarial-text-era2b | proposer-verifier | verified | — | 1 | 0.4708 | 0.4313 | 215 |
+| proposer-verifier-384::verified-brief-image-era2b | proposer-verifier | verified | — | 1 | 0.5204 | 0.3402 | 326 |
+| proposer-verifier-384::verified-brief-text-era2b | proposer-verifier | verified | — | 1 | 0.5142 | 0.3953 | 269 |
+| proposer-verifier-384::verified-cascade-adversarial-checklist-era2b | proposer-verifier | verified | — | 1 | 0.5036 | 0.4313 | 264 |
+| proposer-verifier-384::verified-cascade-checklist-adversarial-era2b | proposer-verifier | verified | — | 1 | 0.495 | 0.4121 | 260 |
+| proposer-verifier-384::verified-checklist-image-era2b | proposer-verifier | verified | — | 1 | 0.5309 | 0.3873 | 326 |
+| proposer-verifier-384::verified-checklist-text-era2b | proposer-verifier | verified | — | 1 | 0.5214 | 0.3154 | 336 |
 | proposer-verifier-512::verified-adversarial-text | proposer-verifier | verified | — | 1 | 0.1931 | 0.235 | 72 |
 | pv-diag-256::text-baseline | single-pass | none | — | 1 | 0.3417 | 0.0883 | 1828 |
 | pv-diag-256::text-consensus-5of5 | consensus | consensus | 5 | 5 | 0.4599 | 0.1527 | 1165 |
@@ -289,6 +297,19 @@
 | pv-diag-384::pv-min-image-t1.0-n5-opmax | proposer-verifier | verified | 4 | 5 | 0.7384 | 0.8021 | 364 |
 | pv-diag-384::pv-high-image-t1.0-n5-opmax | proposer-verifier | verified | 3 | 5 | 0.7337 | 0.823 | 410 |
 | pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax | proposer-verifier | verified | 3 | 3 | 0.8508 | 0.7857 | 423 |
+| pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b | proposer-verifier | verified | 3 | 3 | 0.8508 | 0.7857 | 423 |
+| pv-diag-384::verified-adv-image-baseline-era2b | proposer-verifier | verified | 1 | 1 | 0.7167 | 0.8766 | 511 |
+| pv-diag-384::verified-adv-image-baseline-medium-vf-era2b | proposer-verifier | verified | 1 | 1 | 0.73 | 0.8848 | 513 |
+| pv-diag-384::verified-adv-image-baseline-pro-vf-era2b | proposer-verifier | verified | 1 | 1 | 0.7309 | 0.8887 | 509 |
+| pv-diag-384::verified-adv-pro-image-baseline-era2b | proposer-verifier | verified | 1 | 1 | 0.6196 | 0.8232 | 485 |
+| pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b | proposer-verifier | verified | 1 | 1 | 0.6281 | 0.8328 | 463 |
+| pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b | proposer-verifier | verified | 1 | 1 | 0.6178 | 0.8328 | 465 |
+| pv-diag-384::verified-adv-pro-text-baseline-era2b | proposer-verifier | verified | 1 | 1 | 0.7696 | 0.7823 | 394 |
+| pv-diag-384::verified-adv-pro-text-baseline-medium-vf-era2b | proposer-verifier | verified | 1 | 1 | 0.7842 | 0.7872 | 399 |
+| pv-diag-384::verified-adv-pro-text-baseline-pro-vf-era2b | proposer-verifier | verified | 1 | 1 | 0.7861 | 0.7908 | 402 |
+| pv-diag-384::verified-adv-text-baseline-era2b | proposer-verifier | verified | 1 | 1 | 0.8142 | 0.8328 | 464 |
+| pv-diag-384::verified-adv-text-baseline-medium-vf-era2b | proposer-verifier | verified | 1 | 1 | 0.8244 | 0.8372 | 465 |
+| pv-diag-384::verified-adv-text-baseline-pro-vf-era2b | proposer-verifier | verified | 1 | 1 | 0.8263 | 0.8328 | 463 |
 | h12-v2::greedy-r1-hn-heavy | consensus | greedy | 4 | 5 | 0.7084 | 0.6956 | 240 |
 | h12-v2::greedy-r2-balanced | consensus | greedy | 4 | 5 | 0.7171 | 0.7168 | 236 |
 | h12-v2::greedy-r3-hp-heavy | consensus | greedy | 4 | 5 | 0.6876 | 0.7169 | 254 |

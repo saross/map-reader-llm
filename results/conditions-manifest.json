@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-12T00:39:12Z",
+  "generated_at": "2026-09-12T01:04:24Z",
   "generator_version": "0.7.1",
   "conditions": [
     {
@@ -34228,7 +34228,13 @@
         "temperature": 0.0,
         "iterations": 1
       },
-      "scope_override": null,
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
       "metrics": {
         "per_buffer": {
           "5": {
@@ -34471,9 +34477,9 @@
       "n_reference_mounds": null,
       "provenance": {
         "source_files": [
-          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/n1-outstanding-384__pv-n1-image-t0-n3-opmax/evaluation.json"
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/n1-outstanding-384__pv-n1-image-t0-n3-opmax/evaluation.json"
         ],
-        "last_extracted_at": "2026-09-10T05:50:26Z",
+        "last_extracted_at": "2026-09-12T01:04:24Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -37598,6 +37604,2182 @@
           "results/rescore-2026-05-31/proposer-verifier-384/verified-cascade-checklist-adversarial-accepted/evaluation.json"
         ],
         "last_extracted_at": "2026-08-22T14:58:46Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "proposer-verifier-384::verified-adversarial-image-era2b",
+      "run_id": "proposer-verifier-384",
+      "label": "verified-adversarial-image-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "detect_brief-text",
+      "n_passes": 1,
+      "vote_threshold": null,
+      "prob_threshold": null,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.2443,
+            "precision": 0.3257,
+            "recall": 0.1954,
+            "ci": {
+              "low": 0.1941,
+              "high": 0.3034,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.4282,
+            "precision": 0.5709,
+            "recall": 0.3425,
+            "ci": {
+              "low": 0.3569,
+              "high": 0.5026,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.4741,
+            "precision": 0.6322,
+            "recall": 0.3793,
+            "ci": {
+              "low": 0.3982,
+              "high": 0.5487,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.4943,
+            "precision": 0.659,
+            "recall": 0.3954,
+            "ci": {
+              "low": 0.4153,
+              "high": 0.5678,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.5,
+            "precision": 0.6667,
+            "recall": 0.4,
+            "ci": {
+              "low": 0.4218,
+              "high": 0.5736,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.5057,
+            "precision": 0.6743,
+            "recall": 0.4046,
+            "ci": {
+              "low": 0.4267,
+              "high": 0.5783,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.5057,
+            "precision": 0.6743,
+            "recall": 0.4046,
+            "ci": {
+              "low": 0.4267,
+              "high": 0.5783,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.5086,
+            "precision": 0.6782,
+            "recall": 0.4069,
+            "ci": {
+              "low": 0.43,
+              "high": 0.5808,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.5086,
+            "precision": 0.6782,
+            "recall": 0.4069,
+            "ci": {
+              "low": 0.43,
+              "high": 0.5808,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.5115,
+            "precision": 0.682,
+            "recall": 0.4092,
+            "ci": {
+              "low": 0.4332,
+              "high": 0.5831,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.5115,
+            "precision": 0.682,
+            "recall": 0.4092,
+            "ci": {
+              "low": 0.4332,
+              "high": 0.5831,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.5172,
+            "precision": 0.6897,
+            "recall": 0.4138,
+            "ci": {
+              "low": 0.4414,
+              "high": 0.5879,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.5172,
+            "precision": 0.6897,
+            "recall": 0.4138,
+            "ci": {
+              "low": 0.4414,
+              "high": 0.5879,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.5172,
+            "precision": 0.6897,
+            "recall": 0.4138,
+            "ci": {
+              "low": 0.4414,
+              "high": 0.5879,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.416,
+          "sensitivity": 0.4367,
+          "specificity": 0.9225,
+          "tp": 100,
+          "tn": 238,
+          "fp": 20,
+          "fn": 129
+        }
+      },
+      "n_detections": 261,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-adversarial-image/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "proposer-verifier-384::verified-adversarial-text-era2b",
+      "run_id": "proposer-verifier-384",
+      "label": "verified-adversarial-text-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "detect_brief-text",
+      "n_passes": 1,
+      "vote_threshold": null,
+      "prob_threshold": null,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.2338,
+            "precision": 0.3535,
+            "recall": 0.1747,
+            "ci": {
+              "low": 0.182,
+              "high": 0.2953,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.4123,
+            "precision": 0.6233,
+            "recall": 0.308,
+            "ci": {
+              "low": 0.3379,
+              "high": 0.4923,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.4523,
+            "precision": 0.6837,
+            "recall": 0.3379,
+            "ci": {
+              "low": 0.3756,
+              "high": 0.5314,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.4708,
+            "precision": 0.7116,
+            "recall": 0.3517,
+            "ci": {
+              "low": 0.3925,
+              "high": 0.5487,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.4738,
+            "precision": 0.7163,
+            "recall": 0.354,
+            "ci": {
+              "low": 0.3958,
+              "high": 0.551,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.4769,
+            "precision": 0.7209,
+            "recall": 0.3563,
+            "ci": {
+              "low": 0.4,
+              "high": 0.5556,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.4769,
+            "precision": 0.7209,
+            "recall": 0.3563,
+            "ci": {
+              "low": 0.4,
+              "high": 0.5556,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.48,
+            "precision": 0.7256,
+            "recall": 0.3586,
+            "ci": {
+              "low": 0.4023,
+              "high": 0.5578,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.48,
+            "precision": 0.7256,
+            "recall": 0.3586,
+            "ci": {
+              "low": 0.4023,
+              "high": 0.5578,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.4831,
+            "precision": 0.7302,
+            "recall": 0.3609,
+            "ci": {
+              "low": 0.4056,
+              "high": 0.5599,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.4831,
+            "precision": 0.7302,
+            "recall": 0.3609,
+            "ci": {
+              "low": 0.4056,
+              "high": 0.5599,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.4862,
+            "precision": 0.7349,
+            "recall": 0.3632,
+            "ci": {
+              "low": 0.4102,
+              "high": 0.5616,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.4862,
+            "precision": 0.7349,
+            "recall": 0.3632,
+            "ci": {
+              "low": 0.4102,
+              "high": 0.5616,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.4892,
+            "precision": 0.7395,
+            "recall": 0.3655,
+            "ci": {
+              "low": 0.4135,
+              "high": 0.5654,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.4313,
+          "sensitivity": 0.393,
+          "specificity": 0.9574,
+          "tp": 90,
+          "tn": 247,
+          "fp": 11,
+          "fn": 139
+        }
+      },
+      "n_detections": 215,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-adversarial-text/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "proposer-verifier-384::verified-brief-image-era2b",
+      "run_id": "proposer-verifier-384",
+      "label": "verified-brief-image-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "detect_brief-text",
+      "n_passes": 1,
+      "vote_threshold": null,
+      "prob_threshold": null,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_brief.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.2654,
+            "precision": 0.3098,
+            "recall": 0.2322,
+            "ci": {
+              "low": 0.2146,
+              "high": 0.3272,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.4547,
+            "precision": 0.5307,
+            "recall": 0.3977,
+            "ci": {
+              "low": 0.3812,
+              "high": 0.5302,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.502,
+            "precision": 0.5859,
+            "recall": 0.4391,
+            "ci": {
+              "low": 0.4257,
+              "high": 0.5752,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.5204,
+            "precision": 0.6074,
+            "recall": 0.4552,
+            "ci": {
+              "low": 0.443,
+              "high": 0.5934,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.5256,
+            "precision": 0.6135,
+            "recall": 0.4598,
+            "ci": {
+              "low": 0.449,
+              "high": 0.5985,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.5309,
+            "precision": 0.6196,
+            "recall": 0.4644,
+            "ci": {
+              "low": 0.4545,
+              "high": 0.6034,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.5309,
+            "precision": 0.6196,
+            "recall": 0.4644,
+            "ci": {
+              "low": 0.4545,
+              "high": 0.6034,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.5335,
+            "precision": 0.6227,
+            "recall": 0.4667,
+            "ci": {
+              "low": 0.4566,
+              "high": 0.6058,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.5335,
+            "precision": 0.6227,
+            "recall": 0.4667,
+            "ci": {
+              "low": 0.4566,
+              "high": 0.6058,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.5361,
+            "precision": 0.6258,
+            "recall": 0.469,
+            "ci": {
+              "low": 0.4591,
+              "high": 0.6084,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.5361,
+            "precision": 0.6258,
+            "recall": 0.469,
+            "ci": {
+              "low": 0.4591,
+              "high": 0.6084,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.5414,
+            "precision": 0.6319,
+            "recall": 0.4736,
+            "ci": {
+              "low": 0.4664,
+              "high": 0.6128,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.5414,
+            "precision": 0.6319,
+            "recall": 0.4736,
+            "ci": {
+              "low": 0.4664,
+              "high": 0.6128,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.5414,
+            "precision": 0.6319,
+            "recall": 0.4736,
+            "ci": {
+              "low": 0.4664,
+              "high": 0.6128,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.3402,
+          "sensitivity": 0.4629,
+          "specificity": 0.8488,
+          "tp": 106,
+          "tn": 219,
+          "fp": 39,
+          "fn": 123
+        }
+      },
+      "n_detections": 326,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-brief-image/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "proposer-verifier-384::verified-brief-text-era2b",
+      "run_id": "proposer-verifier-384",
+      "label": "verified-brief-text-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "detect_brief-text",
+      "n_passes": 1,
+      "vote_threshold": null,
+      "prob_threshold": null,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_brief.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.2642,
+            "precision": 0.3457,
+            "recall": 0.2138,
+            "ci": {
+              "low": 0.2115,
+              "high": 0.3275,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.4517,
+            "precision": 0.5911,
+            "recall": 0.3655,
+            "ci": {
+              "low": 0.3791,
+              "high": 0.5316,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.4972,
+            "precision": 0.6506,
+            "recall": 0.4023,
+            "ci": {
+              "low": 0.4231,
+              "high": 0.5735,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.5142,
+            "precision": 0.6729,
+            "recall": 0.4161,
+            "ci": {
+              "low": 0.4388,
+              "high": 0.59,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.5199,
+            "precision": 0.6803,
+            "recall": 0.4207,
+            "ci": {
+              "low": 0.4444,
+              "high": 0.5952,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.5227,
+            "precision": 0.684,
+            "recall": 0.423,
+            "ci": {
+              "low": 0.4475,
+              "high": 0.5991,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.5227,
+            "precision": 0.684,
+            "recall": 0.423,
+            "ci": {
+              "low": 0.4475,
+              "high": 0.5991,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.5256,
+            "precision": 0.6877,
+            "recall": 0.4253,
+            "ci": {
+              "low": 0.4503,
+              "high": 0.6018,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.5256,
+            "precision": 0.6877,
+            "recall": 0.4253,
+            "ci": {
+              "low": 0.4503,
+              "high": 0.6018,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.5284,
+            "precision": 0.6914,
+            "recall": 0.4276,
+            "ci": {
+              "low": 0.453,
+              "high": 0.604,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.5284,
+            "precision": 0.6914,
+            "recall": 0.4276,
+            "ci": {
+              "low": 0.453,
+              "high": 0.604,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.5341,
+            "precision": 0.6989,
+            "recall": 0.4322,
+            "ci": {
+              "low": 0.4613,
+              "high": 0.6087,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.5341,
+            "precision": 0.6989,
+            "recall": 0.4322,
+            "ci": {
+              "low": 0.4613,
+              "high": 0.6087,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.5341,
+            "precision": 0.6989,
+            "recall": 0.4322,
+            "ci": {
+              "low": 0.4613,
+              "high": 0.6087,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.3953,
+          "sensitivity": 0.4323,
+          "specificity": 0.9109,
+          "tp": 99,
+          "tn": 235,
+          "fp": 23,
+          "fn": 130
+        }
+      },
+      "n_detections": 269,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-brief-text/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "proposer-verifier-384::verified-cascade-adversarial-checklist-era2b",
+      "run_id": "proposer-verifier-384",
+      "label": "verified-cascade-adversarial-checklist-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "detect_brief-text",
+      "n_passes": 1,
+      "vote_threshold": null,
+      "prob_threshold": null,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_checklist.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.2546,
+            "precision": 0.3371,
+            "recall": 0.2046,
+            "ci": {
+              "low": 0.2028,
+              "high": 0.3148,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.4378,
+            "precision": 0.5795,
+            "recall": 0.3517,
+            "ci": {
+              "low": 0.3655,
+              "high": 0.5127,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.4835,
+            "precision": 0.6402,
+            "recall": 0.3885,
+            "ci": {
+              "low": 0.407,
+              "high": 0.5579,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.5036,
+            "precision": 0.6667,
+            "recall": 0.4046,
+            "ci": {
+              "low": 0.4248,
+              "high": 0.5772,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.5093,
+            "precision": 0.6742,
+            "recall": 0.4092,
+            "ci": {
+              "low": 0.4307,
+              "high": 0.5822,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.515,
+            "precision": 0.6818,
+            "recall": 0.4138,
+            "ci": {
+              "low": 0.4364,
+              "high": 0.5874,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.515,
+            "precision": 0.6818,
+            "recall": 0.4138,
+            "ci": {
+              "low": 0.4364,
+              "high": 0.5874,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.5179,
+            "precision": 0.6856,
+            "recall": 0.4161,
+            "ci": {
+              "low": 0.4392,
+              "high": 0.5897,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.5179,
+            "precision": 0.6856,
+            "recall": 0.4161,
+            "ci": {
+              "low": 0.4392,
+              "high": 0.5897,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.5207,
+            "precision": 0.6894,
+            "recall": 0.4184,
+            "ci": {
+              "low": 0.4422,
+              "high": 0.5925,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.5207,
+            "precision": 0.6894,
+            "recall": 0.4184,
+            "ci": {
+              "low": 0.4422,
+              "high": 0.5925,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.5265,
+            "precision": 0.697,
+            "recall": 0.423,
+            "ci": {
+              "low": 0.4509,
+              "high": 0.5967,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.5265,
+            "precision": 0.697,
+            "recall": 0.423,
+            "ci": {
+              "low": 0.4509,
+              "high": 0.5967,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.5265,
+            "precision": 0.697,
+            "recall": 0.423,
+            "ci": {
+              "low": 0.4509,
+              "high": 0.5967,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.4313,
+          "sensitivity": 0.441,
+          "specificity": 0.9302,
+          "tp": 101,
+          "tn": 240,
+          "fp": 18,
+          "fn": 128
+        }
+      },
+      "n_detections": 264,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-cascade-adversarial-checklist/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "proposer-verifier-384::verified-cascade-checklist-adversarial-era2b",
+      "run_id": "proposer-verifier-384",
+      "label": "verified-cascade-checklist-adversarial-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "detect_brief-text",
+      "n_passes": 1,
+      "vote_threshold": null,
+      "prob_threshold": null,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.2446,
+            "precision": 0.3269,
+            "recall": 0.1954,
+            "ci": {
+              "low": 0.1944,
+              "high": 0.3041,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.4288,
+            "precision": 0.5731,
+            "recall": 0.3425,
+            "ci": {
+              "low": 0.357,
+              "high": 0.5038,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.4748,
+            "precision": 0.6346,
+            "recall": 0.3793,
+            "ci": {
+              "low": 0.3993,
+              "high": 0.5496,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.495,
+            "precision": 0.6615,
+            "recall": 0.3954,
+            "ci": {
+              "low": 0.4162,
+              "high": 0.5687,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.5007,
+            "precision": 0.6692,
+            "recall": 0.4,
+            "ci": {
+              "low": 0.4222,
+              "high": 0.574,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.5065,
+            "precision": 0.6769,
+            "recall": 0.4046,
+            "ci": {
+              "low": 0.4279,
+              "high": 0.579,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.5065,
+            "precision": 0.6769,
+            "recall": 0.4046,
+            "ci": {
+              "low": 0.4279,
+              "high": 0.579,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.5094,
+            "precision": 0.6808,
+            "recall": 0.4069,
+            "ci": {
+              "low": 0.431,
+              "high": 0.5818,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.5094,
+            "precision": 0.6808,
+            "recall": 0.4069,
+            "ci": {
+              "low": 0.431,
+              "high": 0.5818,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.5122,
+            "precision": 0.6846,
+            "recall": 0.4092,
+            "ci": {
+              "low": 0.4342,
+              "high": 0.5842,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.5122,
+            "precision": 0.6846,
+            "recall": 0.4092,
+            "ci": {
+              "low": 0.4342,
+              "high": 0.5842,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.518,
+            "precision": 0.6923,
+            "recall": 0.4138,
+            "ci": {
+              "low": 0.4419,
+              "high": 0.5887,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.518,
+            "precision": 0.6923,
+            "recall": 0.4138,
+            "ci": {
+              "low": 0.4419,
+              "high": 0.5887,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.518,
+            "precision": 0.6923,
+            "recall": 0.4138,
+            "ci": {
+              "low": 0.4419,
+              "high": 0.5887,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.4121,
+          "sensitivity": 0.4323,
+          "specificity": 0.9225,
+          "tp": 99,
+          "tn": 238,
+          "fp": 20,
+          "fn": 130
+        }
+      },
+      "n_detections": 260,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-cascade-checklist-adversarial/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "proposer-verifier-384::verified-checklist-image-era2b",
+      "run_id": "proposer-verifier-384",
+      "label": "verified-checklist-image-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "detect_brief-text",
+      "n_passes": 1,
+      "vote_threshold": null,
+      "prob_threshold": null,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_checklist.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.2707,
+            "precision": 0.316,
+            "recall": 0.2368,
+            "ci": {
+              "low": 0.2184,
+              "high": 0.3323,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.4652,
+            "precision": 0.5429,
+            "recall": 0.4069,
+            "ci": {
+              "low": 0.3903,
+              "high": 0.5425,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.5125,
+            "precision": 0.5982,
+            "recall": 0.4483,
+            "ci": {
+              "low": 0.4336,
+              "high": 0.5878,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.5309,
+            "precision": 0.6196,
+            "recall": 0.4644,
+            "ci": {
+              "low": 0.4505,
+              "high": 0.606,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.5361,
+            "precision": 0.6258,
+            "recall": 0.469,
+            "ci": {
+              "low": 0.4562,
+              "high": 0.6105,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.5414,
+            "precision": 0.6319,
+            "recall": 0.4736,
+            "ci": {
+              "low": 0.4622,
+              "high": 0.6156,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.5414,
+            "precision": 0.6319,
+            "recall": 0.4736,
+            "ci": {
+              "low": 0.4622,
+              "high": 0.6156,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.544,
+            "precision": 0.635,
+            "recall": 0.4759,
+            "ci": {
+              "low": 0.4648,
+              "high": 0.6177,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.544,
+            "precision": 0.635,
+            "recall": 0.4759,
+            "ci": {
+              "low": 0.4648,
+              "high": 0.6177,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.5466,
+            "precision": 0.638,
+            "recall": 0.4782,
+            "ci": {
+              "low": 0.4667,
+              "high": 0.6201,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.5466,
+            "precision": 0.638,
+            "recall": 0.4782,
+            "ci": {
+              "low": 0.4667,
+              "high": 0.6201,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.5519,
+            "precision": 0.6442,
+            "recall": 0.4828,
+            "ci": {
+              "low": 0.4741,
+              "high": 0.6246,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.5519,
+            "precision": 0.6442,
+            "recall": 0.4828,
+            "ci": {
+              "low": 0.4741,
+              "high": 0.6246,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.5519,
+            "precision": 0.6442,
+            "recall": 0.4828,
+            "ci": {
+              "low": 0.4741,
+              "high": 0.6246,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.3873,
+          "sensitivity": 0.476,
+          "specificity": 0.876,
+          "tp": 109,
+          "tn": 226,
+          "fp": 32,
+          "fn": 120
+        }
+      },
+      "n_detections": 326,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-checklist-image/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "proposer-verifier-384::verified-checklist-text-era2b",
+      "run_id": "proposer-verifier-384",
+      "label": "verified-checklist-text-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "detect_brief-text",
+      "n_passes": 1,
+      "vote_threshold": null,
+      "prob_threshold": null,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_checklist.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.2646,
+            "precision": 0.3036,
+            "recall": 0.2345,
+            "ci": {
+              "low": 0.2131,
+              "high": 0.3259,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.4565,
+            "precision": 0.5238,
+            "recall": 0.4046,
+            "ci": {
+              "low": 0.3831,
+              "high": 0.5324,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.5032,
+            "precision": 0.5774,
+            "recall": 0.446,
+            "ci": {
+              "low": 0.4268,
+              "high": 0.5782,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.5214,
+            "precision": 0.5982,
+            "recall": 0.4621,
+            "ci": {
+              "low": 0.4443,
+              "high": 0.5954,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.5266,
+            "precision": 0.6042,
+            "recall": 0.4667,
+            "ci": {
+              "low": 0.4488,
+              "high": 0.6003,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.5318,
+            "precision": 0.6101,
+            "recall": 0.4713,
+            "ci": {
+              "low": 0.4545,
+              "high": 0.605,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.5318,
+            "precision": 0.6101,
+            "recall": 0.4713,
+            "ci": {
+              "low": 0.4545,
+              "high": 0.605,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.5344,
+            "precision": 0.6131,
+            "recall": 0.4736,
+            "ci": {
+              "low": 0.4572,
+              "high": 0.6077,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.5344,
+            "precision": 0.6131,
+            "recall": 0.4736,
+            "ci": {
+              "low": 0.4572,
+              "high": 0.6077,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.537,
+            "precision": 0.6161,
+            "recall": 0.4759,
+            "ci": {
+              "low": 0.4596,
+              "high": 0.6099,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.537,
+            "precision": 0.6161,
+            "recall": 0.4759,
+            "ci": {
+              "low": 0.4596,
+              "high": 0.6099,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.5422,
+            "precision": 0.622,
+            "recall": 0.4805,
+            "ci": {
+              "low": 0.4675,
+              "high": 0.6146,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.5422,
+            "precision": 0.622,
+            "recall": 0.4805,
+            "ci": {
+              "low": 0.4675,
+              "high": 0.6146,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.5422,
+            "precision": 0.622,
+            "recall": 0.4805,
+            "ci": {
+              "low": 0.4675,
+              "high": 0.6146,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.3154,
+          "sensitivity": 0.4672,
+          "specificity": 0.8256,
+          "tp": 107,
+          "tn": 213,
+          "fp": 45,
+          "fn": 122
+        }
+      },
+      "n_detections": 336,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-checklist-text/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -65733,7 +67915,13 @@
         "temperature": 0.0,
         "iterations": 1
       },
-      "scope_override": null,
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
       "metrics": {
         "per_buffer": {
           "5": {
@@ -65976,9 +68164,9 @@
       "n_reference_mounds": null,
       "provenance": {
         "source_files": [
-          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/pv-diag-384__pv-min-text-t0_0-n3-opmax/evaluation.json"
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t0_0-n3-opmax/evaluation.json"
         ],
-        "last_extracted_at": "2026-09-10T05:50:26Z",
+        "last_extracted_at": "2026-09-12T01:04:24Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -66819,7 +69007,13 @@
         "temperature": 0.0,
         "iterations": 1
       },
-      "scope_override": null,
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
       "metrics": {
         "per_buffer": {
           "5": {
@@ -67062,9 +69256,9 @@
       "n_reference_mounds": null,
       "provenance": {
         "source_files": [
-          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/pv-diag-384__pv-high-text-t0_0-n3-opmax/evaluation.json"
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t0_0-n3-opmax/evaluation.json"
         ],
-        "last_extracted_at": "2026-09-10T05:50:26Z",
+        "last_extracted_at": "2026-09-12T01:04:24Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -73065,6 +75259,3555 @@
           "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/staleness-2026-09-11/current-vintage/era2-eval/evaluation.json"
         ],
         "last_extracted_at": "2026-09-12T00:39:12Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b",
+      "run_id": "pv-diag-384",
+      "label": "pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "flash-high-text-n5-text-t0.0",
+      "n_passes": 3,
+      "vote_threshold": 3,
+      "prob_threshold": 0.15,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.2844,
+            "precision": 0.2884,
+            "recall": 0.2805,
+            "ci": {
+              "low": 0.2428,
+              "high": 0.3291,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.6434,
+            "precision": 0.6525,
+            "recall": 0.6345,
+            "ci": {
+              "low": 0.5953,
+              "high": 0.6888,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.7972,
+            "precision": 0.8085,
+            "recall": 0.7862,
+            "ci": {
+              "low": 0.7566,
+              "high": 0.8333,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.8508,
+            "precision": 0.8629,
+            "recall": 0.8391,
+            "ci": {
+              "low": 0.8147,
+              "high": 0.8813,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.8741,
+            "precision": 0.8865,
+            "recall": 0.8621,
+            "ci": {
+              "low": 0.8393,
+              "high": 0.9021,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.8834,
+            "precision": 0.896,
+            "recall": 0.8713,
+            "ci": {
+              "low": 0.8524,
+              "high": 0.9087,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.8858,
+            "precision": 0.8983,
+            "recall": 0.8736,
+            "ci": {
+              "low": 0.8555,
+              "high": 0.9106,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.8881,
+            "precision": 0.9007,
+            "recall": 0.8759,
+            "ci": {
+              "low": 0.8579,
+              "high": 0.9127,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.8881,
+            "precision": 0.9007,
+            "recall": 0.8759,
+            "ci": {
+              "low": 0.8579,
+              "high": 0.9127,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.8881,
+            "precision": 0.9007,
+            "recall": 0.8759,
+            "ci": {
+              "low": 0.8579,
+              "high": 0.9127,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8928,
+            "precision": 0.9054,
+            "recall": 0.8805,
+            "ci": {
+              "low": 0.8633,
+              "high": 0.9166,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8951,
+            "precision": 0.9078,
+            "recall": 0.8828,
+            "ci": {
+              "low": 0.8663,
+              "high": 0.9181,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8974,
+            "precision": 0.9102,
+            "recall": 0.8851,
+            "ci": {
+              "low": 0.8692,
+              "high": 0.9201,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8974,
+            "precision": 0.9102,
+            "recall": 0.8851,
+            "ci": {
+              "low": 0.8692,
+              "high": 0.9201,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.7857,
+          "sensitivity": 0.821,
+          "specificity": 0.9535,
+          "tp": 188,
+          "tn": 246,
+          "fp": 12,
+          "fn": 41
+        }
+      },
+      "n_detections": 423,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t0_0-n3-recovery-2026-09-08-opmax/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-image-baseline-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-image-baseline-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "image-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.2,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.1945,
+            "precision": 0.18,
+            "recall": 0.2115,
+            "ci": {
+              "low": 0.1553,
+              "high": 0.2411,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.4968,
+            "precision": 0.4599,
+            "recall": 0.5402,
+            "ci": {
+              "low": 0.4476,
+              "high": 0.5465,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.6469,
+            "precision": 0.5988,
+            "recall": 0.7034,
+            "ci": {
+              "low": 0.6029,
+              "high": 0.6885,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.7167,
+            "precision": 0.6634,
+            "recall": 0.7793,
+            "ci": {
+              "low": 0.676,
+              "high": 0.7548,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.7569,
+            "precision": 0.7006,
+            "recall": 0.823,
+            "ci": {
+              "low": 0.7187,
+              "high": 0.7903,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.7822,
+            "precision": 0.7241,
+            "recall": 0.8506,
+            "ci": {
+              "low": 0.7468,
+              "high": 0.8136,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.7949,
+            "precision": 0.7358,
+            "recall": 0.8644,
+            "ci": {
+              "low": 0.7632,
+              "high": 0.8246,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.7992,
+            "precision": 0.7397,
+            "recall": 0.869,
+            "ci": {
+              "low": 0.7675,
+              "high": 0.8288,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.8076,
+            "precision": 0.7476,
+            "recall": 0.8782,
+            "ci": {
+              "low": 0.7764,
+              "high": 0.8368,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.8076,
+            "precision": 0.7476,
+            "recall": 0.8782,
+            "ci": {
+              "low": 0.7764,
+              "high": 0.8368,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8161,
+            "precision": 0.7554,
+            "recall": 0.8874,
+            "ci": {
+              "low": 0.7855,
+              "high": 0.8437,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8182,
+            "precision": 0.7573,
+            "recall": 0.8897,
+            "ci": {
+              "low": 0.7875,
+              "high": 0.846,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8203,
+            "precision": 0.7593,
+            "recall": 0.892,
+            "ci": {
+              "low": 0.7897,
+              "high": 0.848,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8203,
+            "precision": 0.7593,
+            "recall": 0.892,
+            "ci": {
+              "low": 0.7897,
+              "high": 0.848,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.8766,
+          "sensitivity": 0.9432,
+          "specificity": 0.9341,
+          "tp": 216,
+          "tn": 241,
+          "fp": 17,
+          "fn": 13
+        }
+      },
+      "n_detections": 511,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-image-baseline/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-image-baseline-medium-vf-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "image-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.25,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.192,
+            "precision": 0.1774,
+            "recall": 0.2092,
+            "ci": {
+              "low": 0.154,
+              "high": 0.2359,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.4979,
+            "precision": 0.46,
+            "recall": 0.5425,
+            "ci": {
+              "low": 0.4486,
+              "high": 0.549,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.6561,
+            "precision": 0.6062,
+            "recall": 0.7149,
+            "ci": {
+              "low": 0.6129,
+              "high": 0.6994,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.73,
+            "precision": 0.6745,
+            "recall": 0.7954,
+            "ci": {
+              "low": 0.6893,
+              "high": 0.7674,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.77,
+            "precision": 0.7115,
+            "recall": 0.8391,
+            "ci": {
+              "low": 0.7325,
+              "high": 0.8041,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.7975,
+            "precision": 0.7368,
+            "recall": 0.869,
+            "ci": {
+              "low": 0.7632,
+              "high": 0.8282,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.8122,
+            "precision": 0.7505,
+            "recall": 0.8851,
+            "ci": {
+              "low": 0.7824,
+              "high": 0.8404,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.8186,
+            "precision": 0.7563,
+            "recall": 0.892,
+            "ci": {
+              "low": 0.7888,
+              "high": 0.846,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.827,
+            "precision": 0.7641,
+            "recall": 0.9011,
+            "ci": {
+              "low": 0.7975,
+              "high": 0.8544,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.827,
+            "precision": 0.7641,
+            "recall": 0.9011,
+            "ci": {
+              "low": 0.7975,
+              "high": 0.8544,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8333,
+            "precision": 0.77,
+            "recall": 0.908,
+            "ci": {
+              "low": 0.8037,
+              "high": 0.8602,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8376,
+            "precision": 0.7739,
+            "recall": 0.9126,
+            "ci": {
+              "low": 0.8076,
+              "high": 0.865,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8418,
+            "precision": 0.7778,
+            "recall": 0.9172,
+            "ci": {
+              "low": 0.8117,
+              "high": 0.8684,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8418,
+            "precision": 0.7778,
+            "recall": 0.9172,
+            "ci": {
+              "low": 0.8117,
+              "high": 0.8684,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.8848,
+          "sensitivity": 0.9476,
+          "specificity": 0.938,
+          "tp": 217,
+          "tn": 242,
+          "fp": 16,
+          "fn": 12
+        }
+      },
+      "n_detections": 513,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-image-baseline-medium-vf/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-image-baseline-pro-vf-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "image-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.15,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3.1-pro-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.1928,
+            "precision": 0.1788,
+            "recall": 0.2092,
+            "ci": {
+              "low": 0.1545,
+              "high": 0.2378,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.5,
+            "precision": 0.4637,
+            "recall": 0.5425,
+            "ci": {
+              "low": 0.4508,
+              "high": 0.5512,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.6568,
+            "precision": 0.609,
+            "recall": 0.7126,
+            "ci": {
+              "low": 0.6137,
+              "high": 0.6984,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.7309,
+            "precision": 0.6778,
+            "recall": 0.7931,
+            "ci": {
+              "low": 0.6906,
+              "high": 0.7684,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.7691,
+            "precision": 0.7132,
+            "recall": 0.8345,
+            "ci": {
+              "low": 0.7316,
+              "high": 0.8034,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.7966,
+            "precision": 0.7387,
+            "recall": 0.8644,
+            "ci": {
+              "low": 0.762,
+              "high": 0.8271,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.8093,
+            "precision": 0.7505,
+            "recall": 0.8782,
+            "ci": {
+              "low": 0.779,
+              "high": 0.8374,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.8157,
+            "precision": 0.7564,
+            "recall": 0.8851,
+            "ci": {
+              "low": 0.7856,
+              "high": 0.8433,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.8242,
+            "precision": 0.7642,
+            "recall": 0.8943,
+            "ci": {
+              "low": 0.7943,
+              "high": 0.8516,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.8242,
+            "precision": 0.7642,
+            "recall": 0.8943,
+            "ci": {
+              "low": 0.7943,
+              "high": 0.8516,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8305,
+            "precision": 0.7701,
+            "recall": 0.9011,
+            "ci": {
+              "low": 0.8012,
+              "high": 0.8571,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8347,
+            "precision": 0.7741,
+            "recall": 0.9057,
+            "ci": {
+              "low": 0.8051,
+              "high": 0.8622,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.839,
+            "precision": 0.778,
+            "recall": 0.9103,
+            "ci": {
+              "low": 0.8091,
+              "high": 0.8659,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.839,
+            "precision": 0.778,
+            "recall": 0.9103,
+            "ci": {
+              "low": 0.8091,
+              "high": 0.8659,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.8887,
+          "sensitivity": 0.9389,
+          "specificity": 0.9496,
+          "tp": 215,
+          "tn": 245,
+          "fp": 13,
+          "fn": 14
+        }
+      },
+      "n_detections": 509,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-image-baseline-pro-vf/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-pro-image-baseline-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-pro-image-baseline-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "pro-medium-image-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.1,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.063,
+            "precision": 0.0598,
+            "recall": 0.0667,
+            "ci": {
+              "low": 0.0426,
+              "high": 0.0906,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.237,
+            "precision": 0.2247,
+            "recall": 0.2506,
+            "ci": {
+              "low": 0.1991,
+              "high": 0.2782,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.4543,
+            "precision": 0.4309,
+            "recall": 0.4805,
+            "ci": {
+              "low": 0.407,
+              "high": 0.5018,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.6196,
+            "precision": 0.5876,
+            "recall": 0.6552,
+            "ci": {
+              "low": 0.5711,
+              "high": 0.6643,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.7087,
+            "precision": 0.6722,
+            "recall": 0.7494,
+            "ci": {
+              "low": 0.6634,
+              "high": 0.749,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.7522,
+            "precision": 0.7134,
+            "recall": 0.7954,
+            "ci": {
+              "low": 0.7098,
+              "high": 0.7885,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.7761,
+            "precision": 0.7361,
+            "recall": 0.8207,
+            "ci": {
+              "low": 0.7341,
+              "high": 0.8101,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.7826,
+            "precision": 0.7423,
+            "recall": 0.8276,
+            "ci": {
+              "low": 0.7427,
+              "high": 0.8165,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.787,
+            "precision": 0.7464,
+            "recall": 0.8322,
+            "ci": {
+              "low": 0.7463,
+              "high": 0.8207,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.7978,
+            "precision": 0.7567,
+            "recall": 0.8437,
+            "ci": {
+              "low": 0.7591,
+              "high": 0.829,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8109,
+            "precision": 0.7691,
+            "recall": 0.8575,
+            "ci": {
+              "low": 0.7731,
+              "high": 0.8413,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8152,
+            "precision": 0.7732,
+            "recall": 0.8621,
+            "ci": {
+              "low": 0.7771,
+              "high": 0.8459,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8174,
+            "precision": 0.7753,
+            "recall": 0.8644,
+            "ci": {
+              "low": 0.7795,
+              "high": 0.8474,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8196,
+            "precision": 0.7773,
+            "recall": 0.8667,
+            "ci": {
+              "low": 0.7813,
+              "high": 0.8494,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.8232,
+          "sensitivity": 0.8821,
+          "specificity": 0.938,
+          "tp": 202,
+          "tn": 242,
+          "fp": 16,
+          "fn": 27
+        }
+      },
+      "n_detections": 485,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-image-baseline/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-pro-image-baseline-medium-vf-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "pro-medium-image-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.05,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.0624,
+            "precision": 0.0605,
+            "recall": 0.0644,
+            "ci": {
+              "low": 0.0414,
+              "high": 0.0905,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.2361,
+            "precision": 0.2289,
+            "recall": 0.2437,
+            "ci": {
+              "low": 0.1981,
+              "high": 0.2769,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.4566,
+            "precision": 0.4428,
+            "recall": 0.4713,
+            "ci": {
+              "low": 0.4093,
+              "high": 0.5057,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.6281,
+            "precision": 0.6091,
+            "recall": 0.6483,
+            "ci": {
+              "low": 0.5786,
+              "high": 0.6738,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.7194,
+            "precision": 0.6976,
+            "recall": 0.7425,
+            "ci": {
+              "low": 0.6741,
+              "high": 0.7594,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.7617,
+            "precision": 0.7387,
+            "recall": 0.7862,
+            "ci": {
+              "low": 0.7195,
+              "high": 0.7978,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.784,
+            "precision": 0.7603,
+            "recall": 0.8092,
+            "ci": {
+              "low": 0.742,
+              "high": 0.8185,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.7906,
+            "precision": 0.7667,
+            "recall": 0.8161,
+            "ci": {
+              "low": 0.75,
+              "high": 0.8237,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.7951,
+            "precision": 0.7711,
+            "recall": 0.8207,
+            "ci": {
+              "low": 0.7534,
+              "high": 0.8275,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.8062,
+            "precision": 0.7819,
+            "recall": 0.8322,
+            "ci": {
+              "low": 0.7678,
+              "high": 0.8369,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8196,
+            "precision": 0.7948,
+            "recall": 0.846,
+            "ci": {
+              "low": 0.7816,
+              "high": 0.849,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8241,
+            "precision": 0.7991,
+            "recall": 0.8506,
+            "ci": {
+              "low": 0.7851,
+              "high": 0.8538,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8263,
+            "precision": 0.8013,
+            "recall": 0.8529,
+            "ci": {
+              "low": 0.7878,
+              "high": 0.8553,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8285,
+            "precision": 0.8035,
+            "recall": 0.8552,
+            "ci": {
+              "low": 0.7906,
+              "high": 0.8578,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.8328,
+          "sensitivity": 0.869,
+          "specificity": 0.9574,
+          "tp": 199,
+          "tn": 247,
+          "fp": 11,
+          "fn": 30
+        }
+      },
+      "n_detections": 463,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-image-baseline-medium-vf/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-pro-image-baseline-pro-vf-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "pro-medium-image-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.05,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3.1-pro-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.0622,
+            "precision": 0.0602,
+            "recall": 0.0644,
+            "ci": {
+              "low": 0.0414,
+              "high": 0.0904,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.2356,
+            "precision": 0.228,
+            "recall": 0.2437,
+            "ci": {
+              "low": 0.1976,
+              "high": 0.2763,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.4511,
+            "precision": 0.4366,
+            "recall": 0.4667,
+            "ci": {
+              "low": 0.404,
+              "high": 0.4995,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.6178,
+            "precision": 0.5978,
+            "recall": 0.6391,
+            "ci": {
+              "low": 0.5683,
+              "high": 0.6641,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.7089,
+            "precision": 0.686,
+            "recall": 0.7333,
+            "ci": {
+              "low": 0.663,
+              "high": 0.7495,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.7533,
+            "precision": 0.729,
+            "recall": 0.7793,
+            "ci": {
+              "low": 0.7099,
+              "high": 0.7897,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.7778,
+            "precision": 0.7527,
+            "recall": 0.8046,
+            "ci": {
+              "low": 0.7352,
+              "high": 0.8128,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.7844,
+            "precision": 0.7591,
+            "recall": 0.8115,
+            "ci": {
+              "low": 0.7432,
+              "high": 0.8181,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.7889,
+            "precision": 0.7634,
+            "recall": 0.8161,
+            "ci": {
+              "low": 0.7468,
+              "high": 0.8224,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.8,
+            "precision": 0.7742,
+            "recall": 0.8276,
+            "ci": {
+              "low": 0.7606,
+              "high": 0.8307,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8156,
+            "precision": 0.7892,
+            "recall": 0.8437,
+            "ci": {
+              "low": 0.7772,
+              "high": 0.8458,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.82,
+            "precision": 0.7935,
+            "recall": 0.8483,
+            "ci": {
+              "low": 0.7806,
+              "high": 0.8503,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8222,
+            "precision": 0.7957,
+            "recall": 0.8506,
+            "ci": {
+              "low": 0.7842,
+              "high": 0.8519,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8244,
+            "precision": 0.7978,
+            "recall": 0.8529,
+            "ci": {
+              "low": 0.7864,
+              "high": 0.8541,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.8328,
+          "sensitivity": 0.869,
+          "specificity": 0.9574,
+          "tp": 199,
+          "tn": 247,
+          "fp": 11,
+          "fn": 30
+        }
+      },
+      "n_detections": 465,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-image-baseline-pro-vf/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-pro-text-baseline-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-pro-text-baseline-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "pro-medium-text-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.15,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.1713,
+            "precision": 0.1802,
+            "recall": 0.1632,
+            "ci": {
+              "low": 0.1366,
+              "high": 0.2087,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.5404,
+            "precision": 0.5685,
+            "recall": 0.5149,
+            "ci": {
+              "low": 0.4888,
+              "high": 0.591,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.7141,
+            "precision": 0.7513,
+            "recall": 0.6805,
+            "ci": {
+              "low": 0.6592,
+              "high": 0.7612,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.7696,
+            "precision": 0.8096,
+            "recall": 0.7333,
+            "ci": {
+              "low": 0.7176,
+              "high": 0.8121,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.7889,
+            "precision": 0.8299,
+            "recall": 0.7517,
+            "ci": {
+              "low": 0.74,
+              "high": 0.8293,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.7889,
+            "precision": 0.8299,
+            "recall": 0.7517,
+            "ci": {
+              "low": 0.74,
+              "high": 0.8293,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.7986,
+            "precision": 0.8401,
+            "recall": 0.7609,
+            "ci": {
+              "low": 0.7546,
+              "high": 0.8367,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.801,
+            "precision": 0.8426,
+            "recall": 0.7632,
+            "ci": {
+              "low": 0.757,
+              "high": 0.8379,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.8034,
+            "precision": 0.8452,
+            "recall": 0.7655,
+            "ci": {
+              "low": 0.7596,
+              "high": 0.8403,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.8058,
+            "precision": 0.8477,
+            "recall": 0.7678,
+            "ci": {
+              "low": 0.7622,
+              "high": 0.8428,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8106,
+            "precision": 0.8528,
+            "recall": 0.7724,
+            "ci": {
+              "low": 0.7668,
+              "high": 0.8471,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8106,
+            "precision": 0.8528,
+            "recall": 0.7724,
+            "ci": {
+              "low": 0.7668,
+              "high": 0.8471,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8106,
+            "precision": 0.8528,
+            "recall": 0.7724,
+            "ci": {
+              "low": 0.7668,
+              "high": 0.8471,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8106,
+            "precision": 0.8528,
+            "recall": 0.7724,
+            "ci": {
+              "low": 0.7668,
+              "high": 0.8471,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.7823,
+          "sensitivity": 0.7729,
+          "specificity": 0.9845,
+          "tp": 177,
+          "tn": 254,
+          "fp": 4,
+          "fn": 52
+        }
+      },
+      "n_detections": 394,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-text-baseline/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-pro-text-baseline-medium-vf-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-pro-text-baseline-medium-vf-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "pro-medium-text-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.15,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.1727,
+            "precision": 0.1805,
+            "recall": 0.1655,
+            "ci": {
+              "low": 0.1381,
+              "high": 0.2104,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.5396,
+            "precision": 0.5639,
+            "recall": 0.5172,
+            "ci": {
+              "low": 0.4868,
+              "high": 0.5915,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.7266,
+            "precision": 0.7594,
+            "recall": 0.6966,
+            "ci": {
+              "low": 0.6722,
+              "high": 0.7731,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.7842,
+            "precision": 0.8195,
+            "recall": 0.7517,
+            "ci": {
+              "low": 0.7314,
+              "high": 0.825,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.7986,
+            "precision": 0.8346,
+            "recall": 0.7655,
+            "ci": {
+              "low": 0.7497,
+              "high": 0.8378,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.801,
+            "precision": 0.8371,
+            "recall": 0.7678,
+            "ci": {
+              "low": 0.752,
+              "high": 0.8403,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.8106,
+            "precision": 0.8471,
+            "recall": 0.777,
+            "ci": {
+              "low": 0.7661,
+              "high": 0.8474,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.8129,
+            "precision": 0.8496,
+            "recall": 0.7793,
+            "ci": {
+              "low": 0.7692,
+              "high": 0.8489,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.8153,
+            "precision": 0.8521,
+            "recall": 0.7816,
+            "ci": {
+              "low": 0.7723,
+              "high": 0.8508,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.8201,
+            "precision": 0.8571,
+            "recall": 0.7862,
+            "ci": {
+              "low": 0.7765,
+              "high": 0.8555,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8249,
+            "precision": 0.8622,
+            "recall": 0.7908,
+            "ci": {
+              "low": 0.7813,
+              "high": 0.8597,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8249,
+            "precision": 0.8622,
+            "recall": 0.7908,
+            "ci": {
+              "low": 0.7813,
+              "high": 0.8597,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8249,
+            "precision": 0.8622,
+            "recall": 0.7908,
+            "ci": {
+              "low": 0.7813,
+              "high": 0.8597,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8249,
+            "precision": 0.8622,
+            "recall": 0.7908,
+            "ci": {
+              "low": 0.7813,
+              "high": 0.8597,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.7872,
+          "sensitivity": 0.7729,
+          "specificity": 0.9884,
+          "tp": 177,
+          "tn": 255,
+          "fp": 3,
+          "fn": 52
+        }
+      },
+      "n_detections": 399,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-text-baseline-medium-vf/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-pro-text-baseline-pro-vf-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-pro-text-baseline-pro-vf-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "pro-medium-text-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.15,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3.1-pro-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.172,
+            "precision": 0.1791,
+            "recall": 0.1655,
+            "ci": {
+              "low": 0.1377,
+              "high": 0.2109,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.54,
+            "precision": 0.5622,
+            "recall": 0.5195,
+            "ci": {
+              "low": 0.487,
+              "high": 0.5932,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.7264,
+            "precision": 0.7562,
+            "recall": 0.6989,
+            "ci": {
+              "low": 0.6728,
+              "high": 0.7737,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.7861,
+            "precision": 0.8184,
+            "recall": 0.7563,
+            "ci": {
+              "low": 0.7342,
+              "high": 0.8271,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.8005,
+            "precision": 0.8333,
+            "recall": 0.7701,
+            "ci": {
+              "low": 0.7516,
+              "high": 0.8397,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.8029,
+            "precision": 0.8358,
+            "recall": 0.7724,
+            "ci": {
+              "low": 0.7537,
+              "high": 0.8421,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.8124,
+            "precision": 0.8458,
+            "recall": 0.7816,
+            "ci": {
+              "low": 0.7681,
+              "high": 0.8495,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.8148,
+            "precision": 0.8483,
+            "recall": 0.7839,
+            "ci": {
+              "low": 0.7714,
+              "high": 0.8511,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.8172,
+            "precision": 0.8507,
+            "recall": 0.7862,
+            "ci": {
+              "low": 0.7738,
+              "high": 0.853,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.822,
+            "precision": 0.8557,
+            "recall": 0.7908,
+            "ci": {
+              "low": 0.7786,
+              "high": 0.8582,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8268,
+            "precision": 0.8607,
+            "recall": 0.7954,
+            "ci": {
+              "low": 0.7829,
+              "high": 0.8623,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8268,
+            "precision": 0.8607,
+            "recall": 0.7954,
+            "ci": {
+              "low": 0.7829,
+              "high": 0.8623,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8268,
+            "precision": 0.8607,
+            "recall": 0.7954,
+            "ci": {
+              "low": 0.7829,
+              "high": 0.8623,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8268,
+            "precision": 0.8607,
+            "recall": 0.7954,
+            "ci": {
+              "low": 0.7829,
+              "high": 0.8623,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.7908,
+          "sensitivity": 0.7773,
+          "specificity": 0.9884,
+          "tp": 178,
+          "tn": 255,
+          "fp": 3,
+          "fn": 51
+        }
+      },
+      "n_detections": 402,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-text-baseline-pro-vf/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-text-baseline-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-text-baseline-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "text-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.15,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.4227,
+            "precision": 0.4095,
+            "recall": 0.4368,
+            "ci": {
+              "low": 0.3745,
+              "high": 0.473,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.6919,
+            "precision": 0.6703,
+            "recall": 0.7149,
+            "ci": {
+              "low": 0.6464,
+              "high": 0.7333,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.7786,
+            "precision": 0.7543,
+            "recall": 0.8046,
+            "ci": {
+              "low": 0.7405,
+              "high": 0.8131,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.8142,
+            "precision": 0.7888,
+            "recall": 0.8414,
+            "ci": {
+              "low": 0.7795,
+              "high": 0.8444,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.8254,
+            "precision": 0.7996,
+            "recall": 0.8529,
+            "ci": {
+              "low": 0.7938,
+              "high": 0.8536,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.832,
+            "precision": 0.806,
+            "recall": 0.8598,
+            "ci": {
+              "low": 0.8018,
+              "high": 0.859,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.8343,
+            "precision": 0.8082,
+            "recall": 0.8621,
+            "ci": {
+              "low": 0.8045,
+              "high": 0.8602,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.8387,
+            "precision": 0.8125,
+            "recall": 0.8667,
+            "ci": {
+              "low": 0.8096,
+              "high": 0.8644,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.8387,
+            "precision": 0.8125,
+            "recall": 0.8667,
+            "ci": {
+              "low": 0.8096,
+              "high": 0.8644,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.8387,
+            "precision": 0.8125,
+            "recall": 0.8667,
+            "ci": {
+              "low": 0.8096,
+              "high": 0.8644,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8409,
+            "precision": 0.8147,
+            "recall": 0.869,
+            "ci": {
+              "low": 0.8126,
+              "high": 0.866,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8476,
+            "precision": 0.8211,
+            "recall": 0.8759,
+            "ci": {
+              "low": 0.8204,
+              "high": 0.8721,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8498,
+            "precision": 0.8233,
+            "recall": 0.8782,
+            "ci": {
+              "low": 0.8227,
+              "high": 0.874,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8498,
+            "precision": 0.8233,
+            "recall": 0.8782,
+            "ci": {
+              "low": 0.8227,
+              "high": 0.874,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.8328,
+          "sensitivity": 0.869,
+          "specificity": 0.9574,
+          "tp": 199,
+          "tn": 247,
+          "fp": 11,
+          "fn": 30
+        }
+      },
+      "n_detections": 464,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-text-baseline/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-text-baseline-medium-vf-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "text-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.15,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.4267,
+            "precision": 0.4129,
+            "recall": 0.4414,
+            "ci": {
+              "low": 0.3779,
+              "high": 0.4785,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.7044,
+            "precision": 0.6817,
+            "recall": 0.7287,
+            "ci": {
+              "low": 0.6589,
+              "high": 0.7478,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.7911,
+            "precision": 0.7656,
+            "recall": 0.8184,
+            "ci": {
+              "low": 0.7537,
+              "high": 0.8252,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.8244,
+            "precision": 0.7978,
+            "recall": 0.8529,
+            "ci": {
+              "low": 0.7911,
+              "high": 0.854,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.8356,
+            "precision": 0.8086,
+            "recall": 0.8644,
+            "ci": {
+              "low": 0.8056,
+              "high": 0.8635,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.84,
+            "precision": 0.8129,
+            "recall": 0.869,
+            "ci": {
+              "low": 0.811,
+              "high": 0.8674,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.8444,
+            "precision": 0.8172,
+            "recall": 0.8736,
+            "ci": {
+              "low": 0.8159,
+              "high": 0.8705,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.8489,
+            "precision": 0.8215,
+            "recall": 0.8782,
+            "ci": {
+              "low": 0.8211,
+              "high": 0.8746,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.8489,
+            "precision": 0.8215,
+            "recall": 0.8782,
+            "ci": {
+              "low": 0.8211,
+              "high": 0.8746,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.8489,
+            "precision": 0.8215,
+            "recall": 0.8782,
+            "ci": {
+              "low": 0.8211,
+              "high": 0.8746,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8511,
+            "precision": 0.8237,
+            "recall": 0.8805,
+            "ci": {
+              "low": 0.8247,
+              "high": 0.8761,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8533,
+            "precision": 0.8258,
+            "recall": 0.8828,
+            "ci": {
+              "low": 0.8268,
+              "high": 0.8784,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8556,
+            "precision": 0.828,
+            "recall": 0.8851,
+            "ci": {
+              "low": 0.8293,
+              "high": 0.88,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8556,
+            "precision": 0.828,
+            "recall": 0.8851,
+            "ci": {
+              "low": 0.8293,
+              "high": 0.88,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.8372,
+          "sensitivity": 0.869,
+          "specificity": 0.9612,
+          "tp": 199,
+          "tn": 248,
+          "fp": 10,
+          "fn": 30
+        }
+      },
+      "n_detections": 465,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-text-baseline-medium-vf/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b",
+      "run_id": "pv-diag-384",
+      "label": "verified-adv-text-baseline-pro-vf-era2b",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "text-baseline",
+      "n_passes": 1,
+      "vote_threshold": 1,
+      "prob_threshold": 0.15,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3.1-pro-preview",
+        "thinking_level": "medium",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": {
+        "test_set_id": "era2-b-487",
+        "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.4254,
+            "precision": 0.4125,
+            "recall": 0.4391,
+            "ci": {
+              "low": 0.3759,
+              "high": 0.477,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.706,
+            "precision": 0.6847,
+            "recall": 0.7287,
+            "ci": {
+              "low": 0.6597,
+              "high": 0.7497,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.7929,
+            "precision": 0.7689,
+            "recall": 0.8184,
+            "ci": {
+              "low": 0.755,
+              "high": 0.8278,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.8263,
+            "precision": 0.8013,
+            "recall": 0.8529,
+            "ci": {
+              "low": 0.794,
+              "high": 0.8565,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.8374,
+            "precision": 0.8121,
+            "recall": 0.8644,
+            "ci": {
+              "low": 0.8077,
+              "high": 0.8654,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.8419,
+            "precision": 0.8164,
+            "recall": 0.869,
+            "ci": {
+              "low": 0.8134,
+              "high": 0.8692,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.8463,
+            "precision": 0.8207,
+            "recall": 0.8736,
+            "ci": {
+              "low": 0.8186,
+              "high": 0.8726,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.8508,
+            "precision": 0.8251,
+            "recall": 0.8782,
+            "ci": {
+              "low": 0.8235,
+              "high": 0.8766,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.8508,
+            "precision": 0.8251,
+            "recall": 0.8782,
+            "ci": {
+              "low": 0.8235,
+              "high": 0.8766,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.8508,
+            "precision": 0.8251,
+            "recall": 0.8782,
+            "ci": {
+              "low": 0.8235,
+              "high": 0.8766,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.853,
+            "precision": 0.8272,
+            "recall": 0.8805,
+            "ci": {
+              "low": 0.826,
+              "high": 0.8784,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8552,
+            "precision": 0.8294,
+            "recall": 0.8828,
+            "ci": {
+              "low": 0.8283,
+              "high": 0.8802,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8575,
+            "precision": 0.8315,
+            "recall": 0.8851,
+            "ci": {
+              "low": 0.8304,
+              "high": 0.882,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8575,
+            "precision": 0.8315,
+            "recall": 0.8851,
+            "ci": {
+              "low": 0.8304,
+              "high": 0.882,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.8328,
+          "sensitivity": 0.869,
+          "specificity": 0.9574,
+          "tp": 199,
+          "tn": 247,
+          "fp": 11,
+          "fn": 30
+        }
+      },
+      "n_detections": 463,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-text-baseline-pro-vf/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-12T01:04:24Z",
         "extractor_version": "0.7.1"
       }
     },
