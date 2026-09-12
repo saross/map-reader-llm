@@ -406,26 +406,21 @@ def build() -> dict[str, Any]:
             if member is None:
                 logger.warning("%s K=%d: no committed board member", pool, k)
                 continue
-            opmax_metrics = headline(
-                BASE_DIR
-                / (
-                    "results/leaderboard/era2/"
-                    "gs-era2-verified-board-2026-09-10/cells/"
-                    + member["condition_id"]
-                    .split("::", 1)[1]
-                    .replace(".", "_")
-                    .join(["pv-diag-384__", ""])
-                    + "/evaluation.json"
-                )
+            # The board's cell directory is
+            # <run_id>__<label with dots as underscores>, and the label of an
+            # on-board opmax cell is <membership label>-opmax.
+            cell = (
+                f"{member['run_id']}__"
+                f"{(member['label'] + '-opmax').replace('.', '_')}"
             )
-            # The cell directory is <run>__<label with dots as underscores>.
+            opmax_eval = BOARD / "cells" / cell / "evaluation.json"
+            opmax_metrics = headline(opmax_eval)
             if opmax_metrics is None:
-                cell = (
-                    f"{member['run_id']}__"
-                    f"{(member['label'] + '-opmax').replace('.', '_')}"
-                )
-                opmax_metrics = headline(
-                    BOARD / "cells" / cell / "evaluation.json"
+                logger.warning(
+                    "%s K=%d: no board-frame evaluation at %s",
+                    pool,
+                    k,
+                    opmax_eval.relative_to(BASE_DIR),
                 )
             carried_readings: dict[str, Any] = {}
             if carried:
@@ -457,6 +452,10 @@ def build() -> dict[str, Any]:
                             "vote_t": member["vote_threshold"],
                             "prob_t": member["prob_threshold"],
                             "n_detections": member.get("registry_n"),
+                            "eval_path": str(
+                                opmax_eval.relative_to(BASE_DIR)
+                            ),
+                            "cell": cell,
                             **(opmax_metrics or {}),
                         }
                         if opmax_metrics
@@ -522,6 +521,137 @@ def build() -> dict[str, Any]:
             "basis": "flex (0.5 x list); input 0.25, output+thinking 1.50 per M",
         },
         "n_ladders": len(ladders),
+        "ladders": ladders,
+    }
+
+
+def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
+    """Re-shape the Phase 2 ladders into the Phase-1 inventory schema.
+
+    ``scripts/k_ladder_mcc_test.py`` — the gated instrument that carries
+    tile-MCC through the same permutation swap masks as F1 — reads the Phase-1
+    ``ladders.json`` schema: one rung per K, each with ``K``, ``condition_id``,
+    ``eval_path``, ``f1_headline`` and ``tile_mcc``. This emits that shape so
+    the Phase 2 ladders go through the existing instrument rather than a second
+    implementation of it.
+
+    **Basis, chosen per family rather than globally.** A ladder must compare
+    four rungs at ONE operating point, and only register-resolvable cells can be
+    tiered (the instrument resolves ``conditions_compared`` through the
+    register):
+
+    * the thirteen ``pv-diag-384`` families use the **opmax** basis at all four
+      rungs — K = 1 and K = 3 are this run's registered rows, K = 5 and K = 10
+      the signed board's committed ``-opmax`` cells;
+    * the 3.7 gold-standard family uses the **carried** basis, because its
+      committed K = 5 and K = 10 rungs are registered at their carried point
+      and their opmax cells were derived at US$0 without being registered. For
+      that family the two points coincide at K = 5 and K = 10 anyway, so the
+      basis choice costs nothing.
+
+    A family with fewer than three register-resolvable rungs on one basis is
+    omitted, with the reason recorded.
+
+    Args:
+        payload: The output of :func:`build`.
+
+    Returns:
+        An inventory dict in the Phase-1 schema, plus a ``skipped`` list.
+    """
+    ladders: list[dict[str, Any]] = []
+    skipped: list[dict[str, Any]] = []
+
+    for ladder in payload["ladders"]:
+        basis = (
+            "carried"
+            if ladder["proposer_pool"] == "g384_ov192_g37"
+            else "opmax"
+        )
+        rungs: list[dict[str, Any]] = []
+        for rung in ladder["rungs"]:
+            point = rung.get(basis)
+            if basis == "carried":
+                point = (rung.get("carried") or {}).get("k-equals-K")
+            if not point or point.get("f1_20") is None:
+                continue
+            condition_id = rung.get("condition_id")
+            if condition_id is None and rung["source"].startswith("phase-2"):
+                labels = rung.get("labels") or {}
+                label = labels.get(basis)
+                # A rung whose two points coincide registers once, under the
+                # opmax label; the carried basis must then cite that row.
+                if basis == "carried" and rung.get(
+                    "carried_identical_to_opmax"
+                ):
+                    label = labels.get("opmax")
+                if label:
+                    condition_id = f"{ladder['run_id']}::{label}"
+            if basis == "carried" and condition_id is None:
+                # The 3.7 family's committed carried rows are the -era2b ones.
+                condition_id = (
+                    f"{ladder['run_id']}::g37-text-k{rung['K']}"
+                    f"-verified-carried-p0.10-k{rung['K']}-era2b"
+                )
+            if condition_id is None:
+                continue
+            rungs.append(
+                {
+                    "K": rung["K"],
+                    "condition_id": condition_id,
+                    "eval_path": point["eval_path"],
+                    "f1_headline": point["f1_20"],
+                    "f1_20": point["f1_20"],
+                    "tile_mcc": point.get("tile_mcc"),
+                    "n_detections": point.get("n_detections"),
+                    "vote_threshold": point.get("vote_t"),
+                    "prob_threshold": point.get("prob_t"),
+                    "cost": {
+                        "usd": rung.get("all_in_flex_usd"),
+                        "basis": "audited (flex)",
+                    },
+                }
+            )
+        if len(rungs) < 3:
+            skipped.append(
+                {
+                    "family": ladder["family"],
+                    "basis": basis,
+                    "n_resolvable_rungs": len(rungs),
+                    "why": (
+                        "fewer than three register-resolvable rungs on one "
+                        "operating-point basis"
+                    ),
+                }
+            )
+            continue
+        ladders.append(
+            {
+                "slug": f"phase2-{ladder['proposer_pool'].replace('.', '-').replace('_', '-').lower()}",
+                "family": f"{ladder['family']} [{basis}]",
+                "family_base": ladder["family"],
+                "operating_point_basis": basis,
+                "run_id": ladder["run_id"],
+                "proposer_pool": ladder["proposer_pool"],
+                "corpus": ladder["corpus"],
+                "frame_file": ladder["frame_file"],
+                "reference_file": ladder["reference_file"],
+                "headline_buffer_m": ladder["headline_buffer_m"],
+                "r1_verifier": ladder["r1_verifier"],
+                "rungs": rungs,
+            }
+        )
+
+    return {
+        "generated_at_utc": payload["generated_at_utc"],
+        "script": "scripts/build_k_ladder_phase2_tables.py",
+        "schema_note": (
+            "Phase-1 ladders.json schema, emitted so "
+            "scripts/k_ladder_mcc_test.py can test these ladders with the "
+            "gated board instrument rather than a second implementation of it"
+        ),
+        "n_ladders": len(ladders),
+        "n_skipped": len(skipped),
+        "skipped": skipped,
         "ladders": ladders,
     }
 
@@ -782,6 +912,26 @@ def main() -> None:
         handle.write("\n")
     with open(PHASE2 / "ladder-tables.md", "w") as handle:
         handle.write(markdown)
+
+    compat = compat_inventory(payload)
+    with open(PHASE2 / "ladders-compat.json", "w") as handle:
+        json.dump(compat, handle, indent=2)
+        handle.write("\n")
+    logger.info(
+        "compat inventory: %d ladder(s) testable, %d skipped -> %s",
+        compat["n_ladders"],
+        compat["n_skipped"],
+        (PHASE2 / "ladders-compat.json").relative_to(BASE_DIR),
+    )
+    for entry in compat["skipped"]:
+        logger.warning(
+            "  skipped %s (%s basis, %d rung(s)): %s",
+            entry["family"],
+            entry["basis"],
+            entry["n_resolvable_rungs"],
+            entry["why"],
+        )
+
     if not args.no_figure:
         figure(payload, FIGURE)
 

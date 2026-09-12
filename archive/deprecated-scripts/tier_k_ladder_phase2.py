@@ -1,5 +1,32 @@
 #!/usr/bin/env python3
 """
+DEPRECATED — superseded before it ever ran (archived 2026-09-12)
+===============================================================
+
+**Do not use this script.** It was written during the K-ladder Phase 2 run to
+tier the new gold-standard ladders with the board's tile-swap instrument, and
+archived the same session, unrun, on discovering that
+``scripts/k_ladder_mcc_test.py`` — landed on ``main`` by a concurrent session
+hours earlier — already does the same job strictly better:
+
+* it carries **tile-MCC through the identical permutation swap masks** as F1
+  (``era1_leaderboard_tiering.py --permute-mcc``), which is what the PI's
+  ruling on the § 4 MCC direction actually asks for, and which this script does
+  not do at all;
+* it **gates** each reproduced F1 p-value against the committed board's
+  ``pairwise`` table where one exists, so a silent instrument drift fails loudly;
+* it collates exactly the pairs the ruling names (K = 1 versus the best rung,
+  and every adjacent pair) rather than only a tier assignment.
+
+Phase 2 therefore extended that script with a ``--ladders`` / ``--bounds`` pair
+and an explicit per-ladder ``slug``, and pointed it at the Phase 2 ladder
+inventory. This file is kept only because the project archives rather than
+deletes; nothing depends on it and it has no committed outputs.
+
+Original docstring follows.
+
+----
+
 Run the board's tile-swap instrument over the gold-standard K ladders
 ====================================================================
 
