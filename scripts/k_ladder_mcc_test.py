@@ -142,6 +142,12 @@ def slug_for(ladder: dict) -> str:
     Returns:
         A lowercase hyphenated slug, e.g. ``55map-stride-a-r2``.
     """
+    # An inventory may name its own slugs. The Phase-1 inventory does not, and
+    # its single gold-standard ladder is identified by corpus below; the
+    # K-ladder Phase 2 inventory holds FOURTEEN gold-standard ladders, which
+    # that rule cannot tell apart, so each carries an explicit slug.
+    if ladder.get("slug"):
+        return str(ladder["slug"])
     if ladder["corpus"] == "4-map-gs":
         return "gs-stride-a"
     first = ladder["rungs"][0]["eval_path"]
@@ -410,9 +416,19 @@ def main() -> int:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--only", type=str, default=None,
                         help="Run a single ladder slug (for a smoke test).")
+    parser.add_argument("--ladders", type=Path, default=LADDERS_JSON,
+                        help="Ladder inventory to test (default: the Phase-1 "
+                             "inventory). Point this at a Phase-2 inventory to "
+                             "test the ladders that run completed.")
+    parser.add_argument("--bounds", type=Path, default=None,
+                        help="Evaluation bounds for every ladder that is not "
+                             "the prebuilt gs-stride-a input. Needed when the "
+                             "inventory's ladders are scored on a frame the "
+                             "tiering harness would not otherwise pick up "
+                             "(e.g. the board frame era2-b-487).")
     args = parser.parse_args()
 
-    inventory = json.loads(LADDERS_JSON.read_text())
+    inventory = json.loads(args.ladders.read_text())
     args.output_dir.mkdir(parents=True, exist_ok=True)
     board_cache: dict = {}
     summary: list[dict] = []
@@ -435,7 +451,7 @@ def main() -> int:
             analyses, analysis_id = write_analysis_row(
                 args.output_dir, slug, ladder, rungs)
             conditions = RUN_CONDITIONS
-            bounds = None
+            bounds = args.bounds
 
         tiering_dir = args.output_dir / "tiering" / slug
         tiering = run_tiering(analyses, conditions, analysis_id, tiering_dir,
@@ -585,7 +601,7 @@ def main() -> int:
 
     (args.output_dir / "summary.json").write_text(json.dumps({
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "source_inventory": repo_relative(LADDERS_JSON),
+        "source_inventory": repo_relative(args.ladders),
         "n_permutations": args.n_permutations,
         "seed": args.seed,
         "n_ladders": len(summary),

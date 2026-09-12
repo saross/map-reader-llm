@@ -1,0 +1,31 @@
+{
+  "total_passes": 3,
+  "thresholds": {
+    "1": 2755,
+    "2": 937,
+    "3": 528
+  },
+  "pass_provenance_schema": "consensus-pass-provenance/1",
+  "pass_ids": [
+    "run_1",
+    "run_2",
+    "run_3"
+  ],
+  "pass_provenance": [
+    {
+      "pass_id": "run_1",
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+      "git_blob_hash": "660ddbe0518909cfc54ee2e4f1d2ebe1e2e9af04"
+    },
+    {
+      "pass_id": "run_2",
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+      "git_blob_hash": "664cdf3775016fed087d64fef70445d8b5ad7b50"
+    },
+    {
+      "pass_id": "run_3",
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+      "git_blob_hash": "db9cf765e3e0696ddb5228c7306119557b18493c"
+    }
+  ]
+}

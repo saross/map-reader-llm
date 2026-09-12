@@ -2,12 +2,12 @@
 
 > **Last revised**: 2026-09-12 (regenerated from committed artefacts by `scripts/build_verifier_pairing_worklist.py`; original publication; the with/without-verifier pairing plan). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-12T01:06:13Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-12T08:57:13Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 >
 > **GENERATED — do not hand-edit.** Every number, table and count below
 > is computed by the generator named above from the committed corpus;
 > edit the generator, not this file. Source commit (the checkout this
-> build read): `3013171cd`.
+> build read): `326181bcd`.
 
 Build order step 3 of `planning/uplift-supplement-2026-08-28.md`. This
 document and `verifier-pairing-worklist.csv` are the PLAN; the scores
@@ -38,7 +38,7 @@ guard downstream.
 
 170 verified cell(s) in the registry.
 
-103 board-frame row(s) excluded by rule (PI, 2026-09-10): rows whose
+149 board-frame row(s) excluded by rule (PI, 2026-09-10): rows whose
 `scope_override.test_set_id` names a leaderboard scoring frame are board
 artefacts (the GS Era-2 board's `-era2b` and `-opmax` rows), not
 measurements of their own, and are neither paired nor offered as twins

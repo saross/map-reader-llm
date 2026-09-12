@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-09-12T01:04:24Z · 542 row(s) · schema v1.0.
+> Generated 2026-09-12T08:51:04Z · 588 row(s) · schema v1.0.
 >
-> **Coverage**: 542 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 588 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -310,6 +310,49 @@
 | pv-diag-384::verified-adv-text-baseline-era2b | proposer-verifier | verified | 1 | 1 | 0.8142 | 0.8328 | 464 |
 | pv-diag-384::verified-adv-text-baseline-medium-vf-era2b | proposer-verifier | verified | 1 | 1 | 0.8244 | 0.8372 | 465 |
 | pv-diag-384::verified-adv-text-baseline-pro-vf-era2b | proposer-verifier | verified | 1 | 1 | 0.8263 | 0.8328 | 463 |
+| pv-diag-384::pv-min-text-t0.3-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.8555 | 0.7986 | 409 |
+| pv-diag-384::pv-min-text-t0.3-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.8708 | 0.804 | 401 |
+| pv-diag-384::pv-min-text-t0.3-n3-carried-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.8586 | 0.7556 | 364 |
+| pv-diag-384::pv-min-text-t0.7-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.8575 | 0.7881 | 414 |
+| pv-diag-384::pv-min-text-t0.7-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.8725 | 0.791 | 404 |
+| pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.8629 | 0.7665 | 360 |
+| pv-diag-384::pv-min-text-t1.0-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.8235 | 0.8095 | 415 |
+| pv-diag-384::pv-min-text-t1.0-n1-carried-p0.15-k1 | proposer-verifier | verified | 1 | 1 | 0.8228 | 0.7961 | 423 |
+| pv-diag-384::pv-min-text-t1.0-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.8647 | 0.804 | 400 |
+| pv-diag-384::pv-min-text-t1.0-n3-carried-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.8279 | 0.7413 | 338 |
+| pv-diag-384::pv-high-text-t0.3-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.8314 | 0.8068 | 443 |
+| pv-diag-384::pv-high-text-t0.3-n1-carried-p0.15-k1 | proposer-verifier | verified | 1 | 1 | 0.8301 | 0.8022 | 454 |
+| pv-diag-384::pv-high-text-t0.3-n3-opmax | proposer-verifier | verified | 3 | 3 | 0.8783 | 0.8053 | 387 |
+| pv-diag-384::pv-high-text-t0.7-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.8009 | 0.7737 | 464 |
+| pv-diag-384::pv-high-text-t0.7-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.8492 | 0.7979 | 427 |
+| pv-diag-384::pv-high-text-t0.7-n3-carried-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.8408 | 0.7762 | 369 |
+| pv-diag-384::pv-high-text-t1.0-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.781 | 0.8162 | 451 |
+| pv-diag-384::pv-high-text-t1.0-n1-carried-p0.15-k1 | proposer-verifier | verified | 1 | 1 | 0.7788 | 0.8071 | 469 |
+| pv-diag-384::pv-high-text-t1.0-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.8541 | 0.7986 | 422 |
+| pv-diag-384::pv-high-text-t1.0-n3-carried-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.822 | 0.7443 | 346 |
+| pv-diag-384::pv-min-image-t0.3-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.768 | 0.8443 | 440 |
+| pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1 | proposer-verifier | verified | 1 | 1 | 0.7654 | 0.8475 | 456 |
+| pv-diag-384::pv-min-image-t0.3-n3-opmax | proposer-verifier | verified | 3 | 3 | 0.7774 | 0.8178 | 396 |
+| pv-diag-384::pv-min-image-t0.7-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.7252 | 0.8437 | 453 |
+| pv-diag-384::pv-min-image-t0.7-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.7599 | 0.8377 | 423 |
+| pv-diag-384::pv-min-image-t0.7-n3-carried-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.7522 | 0.7994 | 344 |
+| pv-diag-384::pv-min-image-t1.0-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.7044 | 0.836 | 465 |
+| pv-diag-384::pv-min-image-t1.0-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.7288 | 0.8178 | 424 |
+| pv-diag-384::pv-min-image-t1.0-n3-carried-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.7016 | 0.7629 | 329 |
+| pv-diag-384::pv-high-image-t0.3-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.6925 | 0.827 | 469 |
+| pv-diag-384::pv-high-image-t0.3-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.7215 | 0.8237 | 441 |
+| pv-diag-384::pv-high-image-t0.3-n3-carried-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.7207 | 0.7788 | 342 |
+| pv-diag-384::pv-high-image-t0.7-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.6909 | 0.8435 | 474 |
+| pv-diag-384::pv-high-image-t0.7-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.7666 | 0.8435 | 426 |
+| pv-diag-384::pv-high-image-t0.7-n3-carried-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.7046 | 0.7621 | 303 |
+| pv-diag-384::pv-high-image-t1.0-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.6119 | 0.864 | 490 |
+| pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1 | proposer-verifier | verified | 1 | 1 | 0.6098 | 0.8601 | 503 |
+| pv-diag-384::pv-high-image-t1.0-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.7245 | 0.8294 | 418 |
+| pv-diag-384::pv-high-image-t1.0-n3-carried-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.6955 | 0.7389 | 281 |
+| pv-diag-384::pv-scale4-optimal-n1-opmax | proposer-verifier | verified | 1 | 1 | 0.6376 | 0.8726 | 484 |
+| pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1 | proposer-verifier | verified | 1 | 1 | 0.635 | 0.8599 | 491 |
+| pv-diag-384::pv-scale4-optimal-n3-opmax | proposer-verifier | verified | 2 | 3 | 0.7296 | 0.8443 | 412 |
+| pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3 | proposer-verifier | verified | 3 | 3 | 0.7019 | 0.7354 | 283 |
 | h12-v2::greedy-r1-hn-heavy | consensus | greedy | 4 | 5 | 0.7084 | 0.6956 | 240 |
 | h12-v2::greedy-r2-balanced | consensus | greedy | 4 | 5 | 0.7171 | 0.7168 | 236 |
 | h12-v2::greedy-r3-hp-heavy | consensus | greedy | 4 | 5 | 0.6876 | 0.7169 | 254 |
@@ -534,6 +577,9 @@
 | gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9066 | 0.7651 | 443 |
 | gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.919 | 0.7937 | 429 |
 | gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9182 | 0.8079 | 421 |
+| gemini37-screen-2026-08-28::g37-text-k1-verified-opmax | proposer-verifier | verified | 1 | 1 | 0.8495 | 0.1337 | 502 |
+| gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1 | proposer-verifier | verified | 1 | 1 | 0.8338 | 0.1422 | 558 |
+| gemini37-screen-2026-08-28::g37-text-k3-verified-opmax | proposer-verifier | verified | 3 | 3 | 0.887 | 0.1337 | 494 |
 | gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-canonical-gt | proposer-verifier | verified | 5 | 5 | 0.7220050125313283 | 0.6664686403732362 | 5229 |
 | gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-standardised-gt | proposer-verifier | verified | 5 | 5 | 0.7591 | 0.6665 | 5229 |
 | gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-canonical-gt | proposer-verifier | verified | 5 | 5 | 0.7469484049646118 | 0.7072914415212007 | 5003 |

@@ -1,0 +1,497 @@
+{
+  "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "n_frame_tiles": 487,
+  "mechanism": "lib_advanced_metrics.calculate_tile_classification matches detections to tiles by the source_tile STRING, not geometrically, so a vocabulary mismatch makes tile-MCC meaningless while leaving F1 correct",
+  "thresholds": {
+    "match_at_or_above": 0.999,
+    "mismatch_below": 0.1
+  },
+  "counts": {
+    "MISMATCH": 3,
+    "MATCH": 44
+  },
+  "cells": [
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k1-verified-carried-p0.10-k1.geojson",
+      "n_features": 558,
+      "n_with_source_tile": 558,
+      "n_matching_frame": 22,
+      "share_matching": 0.039427,
+      "n_distinct_unmatched_tiles": 339,
+      "example_unmatched": [
+        "K-35-052-4_32635_x0_y1152.png",
+        "K-35-052-4_32635_x0_y1536.png",
+        "K-35-052-4_32635_x0_y192.png"
+      ],
+      "verdict": "MISMATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k1-verified-opmax.geojson",
+      "n_features": 502,
+      "n_with_source_tile": 502,
+      "n_matching_frame": 21,
+      "share_matching": 0.041833,
+      "n_distinct_unmatched_tiles": 308,
+      "example_unmatched": [
+        "K-35-052-4_32635_x0_y1152.png",
+        "K-35-052-4_32635_x0_y1536.png",
+        "K-35-052-4_32635_x0_y192.png"
+      ],
+      "verdict": "MISMATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson",
+      "n_features": 494,
+      "n_with_source_tile": 494,
+      "n_matching_frame": 20,
+      "share_matching": 0.040486,
+      "n_distinct_unmatched_tiles": 294,
+      "example_unmatched": [
+        "K-35-052-4_32635_x0_y1152.png",
+        "K-35-052-4_32635_x0_y1536.png",
+        "K-35-052-4_32635_x0_y192.png"
+      ],
+      "verdict": "MISMATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.3-n1-opmax.geojson",
+      "n_features": 469,
+      "n_with_source_tile": 469,
+      "n_matching_frame": 469,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.3-n3-carried-p0.15-k3.geojson",
+      "n_features": 342,
+      "n_with_source_tile": 342,
+      "n_matching_frame": 342,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.3-n3-opmax.geojson",
+      "n_features": 441,
+      "n_with_source_tile": 441,
+      "n_matching_frame": 441,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.7-n1-opmax.geojson",
+      "n_features": 474,
+      "n_with_source_tile": 474,
+      "n_matching_frame": 474,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.7-n3-carried-p0.15-k3.geojson",
+      "n_features": 303,
+      "n_with_source_tile": 303,
+      "n_matching_frame": 303,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.7-n3-opmax.geojson",
+      "n_features": 426,
+      "n_with_source_tile": 426,
+      "n_matching_frame": 426,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t1.0-n1-carried-p0.15-k1.geojson",
+      "n_features": 503,
+      "n_with_source_tile": 503,
+      "n_matching_frame": 503,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t1.0-n1-opmax.geojson",
+      "n_features": 490,
+      "n_with_source_tile": 490,
+      "n_matching_frame": 490,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t1.0-n3-carried-p0.15-k3.geojson",
+      "n_features": 281,
+      "n_with_source_tile": 281,
+      "n_matching_frame": 281,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t1.0-n3-opmax.geojson",
+      "n_features": 418,
+      "n_with_source_tile": 418,
+      "n_matching_frame": 418,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.3-n1-carried-p0.15-k1.geojson",
+      "n_features": 454,
+      "n_with_source_tile": 454,
+      "n_matching_frame": 454,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.3-n1-opmax.geojson",
+      "n_features": 443,
+      "n_with_source_tile": 443,
+      "n_matching_frame": 443,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.3-n3-opmax.geojson",
+      "n_features": 387,
+      "n_with_source_tile": 387,
+      "n_matching_frame": 387,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.7-n1-opmax.geojson",
+      "n_features": 464,
+      "n_with_source_tile": 464,
+      "n_matching_frame": 464,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.7-n3-carried-p0.15-k3.geojson",
+      "n_features": 369,
+      "n_with_source_tile": 369,
+      "n_matching_frame": 369,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.7-n3-opmax.geojson",
+      "n_features": 427,
+      "n_with_source_tile": 427,
+      "n_matching_frame": 427,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t1.0-n1-carried-p0.15-k1.geojson",
+      "n_features": 469,
+      "n_with_source_tile": 469,
+      "n_matching_frame": 469,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t1.0-n1-opmax.geojson",
+      "n_features": 451,
+      "n_with_source_tile": 451,
+      "n_matching_frame": 451,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t1.0-n3-carried-p0.15-k3.geojson",
+      "n_features": 346,
+      "n_with_source_tile": 346,
+      "n_matching_frame": 346,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t1.0-n3-opmax.geojson",
+      "n_features": 422,
+      "n_with_source_tile": 422,
+      "n_matching_frame": 422,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.3-n1-carried-p0.15-k1.geojson",
+      "n_features": 456,
+      "n_with_source_tile": 456,
+      "n_matching_frame": 456,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.3-n1-opmax.geojson",
+      "n_features": 440,
+      "n_with_source_tile": 440,
+      "n_matching_frame": 440,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.3-n3-opmax.geojson",
+      "n_features": 396,
+      "n_with_source_tile": 396,
+      "n_matching_frame": 396,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.7-n1-opmax.geojson",
+      "n_features": 453,
+      "n_with_source_tile": 453,
+      "n_matching_frame": 453,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.7-n3-carried-p0.15-k3.geojson",
+      "n_features": 344,
+      "n_with_source_tile": 344,
+      "n_matching_frame": 344,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.7-n3-opmax.geojson",
+      "n_features": 423,
+      "n_with_source_tile": 423,
+      "n_matching_frame": 423,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t1.0-n1-opmax.geojson",
+      "n_features": 465,
+      "n_with_source_tile": 465,
+      "n_matching_frame": 465,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t1.0-n3-carried-p0.15-k3.geojson",
+      "n_features": 329,
+      "n_with_source_tile": 329,
+      "n_matching_frame": 329,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t1.0-n3-opmax.geojson",
+      "n_features": 424,
+      "n_with_source_tile": 424,
+      "n_matching_frame": 424,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.3-n1-opmax.geojson",
+      "n_features": 409,
+      "n_with_source_tile": 409,
+      "n_matching_frame": 409,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.3-n3-carried-p0.15-k3.geojson",
+      "n_features": 364,
+      "n_with_source_tile": 364,
+      "n_matching_frame": 364,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.3-n3-opmax.geojson",
+      "n_features": 401,
+      "n_with_source_tile": 401,
+      "n_matching_frame": 401,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.7-n1-carried-p0.15-k1.geojson",
+      "n_features": 414,
+      "n_with_source_tile": 414,
+      "n_matching_frame": 414,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.7-n1-opmax.geojson",
+      "n_features": 414,
+      "n_with_source_tile": 414,
+      "n_matching_frame": 414,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.7-n3-carried-p0.15-k3.geojson",
+      "n_features": 360,
+      "n_with_source_tile": 360,
+      "n_matching_frame": 360,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.7-n3-opmax.geojson",
+      "n_features": 404,
+      "n_with_source_tile": 404,
+      "n_matching_frame": 404,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t1.0-n1-carried-p0.15-k1.geojson",
+      "n_features": 423,
+      "n_with_source_tile": 423,
+      "n_matching_frame": 423,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t1.0-n1-opmax.geojson",
+      "n_features": 415,
+      "n_with_source_tile": 415,
+      "n_matching_frame": 415,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t1.0-n3-carried-p0.15-k3.geojson",
+      "n_features": 338,
+      "n_with_source_tile": 338,
+      "n_matching_frame": 338,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t1.0-n3-opmax.geojson",
+      "n_features": 400,
+      "n_with_source_tile": 400,
+      "n_matching_frame": 400,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-scale4-optimal-n1-carried-p0.15-k1.geojson",
+      "n_features": 491,
+      "n_with_source_tile": 491,
+      "n_matching_frame": 491,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-scale4-optimal-n1-opmax.geojson",
+      "n_features": 484,
+      "n_with_source_tile": 484,
+      "n_matching_frame": 484,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-scale4-optimal-n3-carried-p0.15-k3.geojson",
+      "n_features": 283,
+      "n_with_source_tile": 283,
+      "n_matching_frame": 283,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    },
+    {
+      "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-scale4-optimal-n3-opmax.geojson",
+      "n_features": 412,
+      "n_with_source_tile": 412,
+      "n_matching_frame": 412,
+      "share_matching": 1.0,
+      "n_distinct_unmatched_tiles": 0,
+      "example_unmatched": [],
+      "verdict": "MATCH"
+    }
+  ]
+}

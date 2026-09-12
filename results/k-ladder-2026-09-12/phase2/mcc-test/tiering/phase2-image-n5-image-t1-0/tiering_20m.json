@@ -1,0 +1,400 @@
+{
+  "analysis_id": "k-ladder-mcc-phase2-image-n5-image-t1-0-2026-09-12",
+  "metric": "f1",
+  "buffer_metres": 20,
+  "n_permutations": 10000,
+  "seed": 42,
+  "fdr_q": 0.05,
+  "n_tiles": 487,
+  "replicate_handling": "single-set cells: integer per-tile of one aggregated set; replicate-mean cells (single-pass K runs, phase3c 5 replications): pass-averaged per-tile (float)",
+  "generated_at_utc": "2026-09-12T08:52:14.806228+00:00",
+  "git_commit": "f724b7a10",
+  "ranking": [
+    {
+      "rank": 1,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+      "label": "pv-min-image-t1.0-n10-opmax",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.7428,
+      "observed_micro_f1": 0.742788,
+      "f1_gap": -1.2e-05,
+      "mcc": 0.8078,
+      "tier": 1
+    },
+    {
+      "rank": 2,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+      "label": "pv-min-image-t1.0-n5-opmax",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.7384,
+      "observed_micro_f1": 0.738423,
+      "f1_gap": 2.3e-05,
+      "mcc": 0.8021,
+      "tier": 1
+    },
+    {
+      "rank": 3,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+      "label": "pv-min-image-t1.0-n3-opmax",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.7288,
+      "observed_micro_f1": 0.728754,
+      "f1_gap": -4.6e-05,
+      "mcc": 0.8178,
+      "tier": 1
+    },
+    {
+      "rank": 4,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+      "label": "pv-min-image-t1.0-n1-opmax",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.7044,
+      "observed_micro_f1": 0.704444,
+      "f1_gap": 4.4e-05,
+      "mcc": 0.836,
+      "tier": 1
+    }
+  ],
+  "tiers": [
+    {
+      "tier": 1,
+      "members": [
+        "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n1-opmax"
+      ]
+    }
+  ],
+  "tie_set": [
+    "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+    "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+    "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+    "pv-diag-384::pv-min-image-t1.0-n1-opmax"
+  ],
+  "pairwise": [
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+      "ref_b": "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+      "f1_a": 0.704444,
+      "f1_b": 0.728754,
+      "observed_diff": -0.02431,
+      "p_value": 0.1257,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -0.000217,
+      "null_std": 0.015877,
+      "bh_adjusted_p": 0.2514,
+      "significant": false
+    },
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+      "ref_b": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+      "f1_a": 0.704444,
+      "f1_b": 0.738423,
+      "observed_diff": -0.033979,
+      "p_value": 0.0412,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -0.000157,
+      "null_std": 0.016763,
+      "bh_adjusted_p": 0.1236,
+      "significant": false
+    },
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+      "ref_b": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+      "f1_a": 0.704444,
+      "f1_b": 0.742788,
+      "observed_diff": -0.038344,
+      "p_value": 0.0237,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -1.2e-05,
+      "null_std": 0.017002,
+      "bh_adjusted_p": 0.1236,
+      "significant": false
+    },
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+      "ref_b": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+      "f1_a": 0.728754,
+      "f1_b": 0.738423,
+      "observed_diff": -0.009669,
+      "p_value": 0.4903,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 6.9e-05,
+      "null_std": 0.014072,
+      "bh_adjusted_p": 0.58836,
+      "significant": false
+    },
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+      "ref_b": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+      "f1_a": 0.728754,
+      "f1_b": 0.742788,
+      "observed_diff": -0.014034,
+      "p_value": 0.3132,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 0.000211,
+      "null_std": 0.013778,
+      "bh_adjusted_p": 0.4698,
+      "significant": false
+    },
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+      "ref_b": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+      "f1_a": 0.738423,
+      "f1_b": 0.742788,
+      "observed_diff": -0.004365,
+      "p_value": 0.7328,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 0.000148,
+      "null_std": 0.012448,
+      "bh_adjusted_p": 0.7328,
+      "significant": false
+    }
+  ],
+  "mcc_permutation": {
+    "statistic": "tile-level MCC (buffer-invariant: tile truth is intersection with any reference, tile prediction is any detection assigned to the tile)",
+    "kernel": "pairwise_permutation_test.permutation_test_mcc_arrays",
+    "swap_mask": "identical to the F1 test's (same seed, same tile order, same rng.random(n_tiles) < 0.5 stream)",
+    "fdr_q": 0.05,
+    "n_significant": 0,
+    "gates": {
+      "pv-diag-384::pv-min-image-t1.0-n1-opmax": {
+        "confusion": {
+          "tp": 202,
+          "tn": 245,
+          "fp": 13,
+          "fn": 27
+        },
+        "mcc_rebuilt": 0.835978,
+        "mcc_recorded": 0.836,
+        "passed": true
+      },
+      "pv-diag-384::pv-min-image-t1.0-n3-opmax": {
+        "confusion": {
+          "tp": 194,
+          "tn": 248,
+          "fp": 10,
+          "fn": 35
+        },
+        "mcc_rebuilt": 0.817799,
+        "mcc_recorded": 0.8178,
+        "passed": true
+      },
+      "pv-diag-384::pv-min-image-t1.0-n5-opmax": {
+        "confusion": {
+          "tp": 185,
+          "tn": 252,
+          "fp": 6,
+          "fn": 44
+        },
+        "mcc_rebuilt": 0.802077,
+        "mcc_recorded": 0.8021,
+        "passed": true
+      },
+      "pv-diag-384::pv-min-image-t1.0-n10-opmax": {
+        "confusion": {
+          "tp": 189,
+          "tn": 250,
+          "fp": 8,
+          "fn": 40
+        },
+        "mcc_rebuilt": 0.807776,
+        "mcc_recorded": 0.8078,
+        "passed": true
+      }
+    },
+    "pairwise": [
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+        "ref_b": "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+        "mcc_a": 0.835978,
+        "mcc_b": 0.817799,
+        "confusion_a": {
+          "tp": 202,
+          "tn": 245,
+          "fp": 13,
+          "fn": 27
+        },
+        "confusion_b": {
+          "tp": 194,
+          "tn": 248,
+          "fp": 10,
+          "fn": 35
+        },
+        "observed_mcc_diff": 0.018179,
+        "p_value": 0.4359,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000126,
+          "std": 0.021634,
+          "percentile_2.5": -0.044524,
+          "percentile_97.5": 0.044524
+        },
+        "bh_adjusted_p": 0.65385,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+        "ref_b": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+        "mcc_a": 0.835978,
+        "mcc_b": 0.802077,
+        "confusion_a": {
+          "tp": 202,
+          "tn": 245,
+          "fp": 13,
+          "fn": 27
+        },
+        "confusion_b": {
+          "tp": 185,
+          "tn": 252,
+          "fp": 6,
+          "fn": 44
+        },
+        "observed_mcc_diff": 0.033902,
+        "p_value": 0.1526,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -4.2e-05,
+          "std": 0.023718,
+          "percentile_2.5": -0.046812,
+          "percentile_97.5": 0.048112
+        },
+        "bh_adjusted_p": 0.6072,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+        "ref_b": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+        "mcc_a": 0.835978,
+        "mcc_b": 0.807776,
+        "confusion_a": {
+          "tp": 202,
+          "tn": 245,
+          "fp": 13,
+          "fn": 27
+        },
+        "confusion_b": {
+          "tp": 189,
+          "tn": 250,
+          "fp": 8,
+          "fn": 40
+        },
+        "observed_mcc_diff": 0.028203,
+        "p_value": 0.2024,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -9.7e-05,
+          "std": 0.022366,
+          "percentile_2.5": -0.041637,
+          "percentile_97.5": 0.042776
+        },
+        "bh_adjusted_p": 0.6072,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+        "ref_b": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+        "mcc_a": 0.817799,
+        "mcc_b": 0.802077,
+        "confusion_a": {
+          "tp": 194,
+          "tn": 248,
+          "fp": 10,
+          "fn": 35
+        },
+        "confusion_b": {
+          "tp": 185,
+          "tn": 252,
+          "fp": 6,
+          "fn": 44
+        },
+        "observed_mcc_diff": 0.015723,
+        "p_value": 0.4314,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 8.6e-05,
+          "std": 0.020468,
+          "percentile_2.5": -0.038912,
+          "percentile_97.5": 0.038912
+        },
+        "bh_adjusted_p": 0.65385,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+        "ref_b": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+        "mcc_a": 0.817799,
+        "mcc_b": 0.807776,
+        "confusion_a": {
+          "tp": 194,
+          "tn": 248,
+          "fp": 10,
+          "fn": 35
+        },
+        "confusion_b": {
+          "tp": 189,
+          "tn": 250,
+          "fp": 8,
+          "fn": 40
+        },
+        "observed_mcc_diff": 0.010023,
+        "p_value": 0.6323,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 3.1e-05,
+          "std": 0.01788,
+          "percentile_2.5": -0.035822,
+          "percentile_97.5": 0.035822
+        },
+        "bh_adjusted_p": 0.75876,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+        "ref_b": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+        "mcc_a": 0.802077,
+        "mcc_b": 0.807776,
+        "confusion_a": {
+          "tp": 185,
+          "tn": 252,
+          "fp": 6,
+          "fn": 44
+        },
+        "confusion_b": {
+          "tp": 189,
+          "tn": 250,
+          "fp": 8,
+          "fn": 40
+        },
+        "observed_mcc_diff": -0.005699,
+        "p_value": 0.7823,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -5.6e-05,
+          "std": 0.015052,
+          "percentile_2.5": -0.031813,
+          "percentile_97.5": 0.030012
+        },
+        "bh_adjusted_p": 0.7823,
+        "significant": false
+      }
+    ]
+  }
+}

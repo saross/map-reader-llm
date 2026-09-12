@@ -1,0 +1,86 @@
+{
+  "generated_at_utc": "2026-09-12T08:51:03+00:00",
+  "recipe": {
+    "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "buffers": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      75,
+      100,
+      125,
+      150
+    ],
+    "bootstrap": 10000,
+    "seed": 42,
+    "mcc": true
+  },
+  "n_missing_evaluations": 0,
+  "missing_evaluations": [],
+  "stages": [
+    {
+      "k": 5,
+      "label": "g37-text-k5-verified-opmax",
+      "run_id": "gemini37-screen-2026-08-28",
+      "stage_id": "g384_ov192_g37-union-k5-verify",
+      "union": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson",
+      "probabilities": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify/probabilities.json",
+      "opmax": {
+        "vote_t": 5,
+        "prob_t": 0.1,
+        "sweep_f1_20": 0.9066,
+        "sweep_n": 443,
+        "n_ties_at_argmax": 0
+      },
+      "opmax_on_era2_frame": {
+        "vote_t": 5,
+        "prob_t": 0.1,
+        "sweep_f1_20": 0.9066
+      },
+      "frames_agree_on_argmax": true,
+      "n_detections": 443,
+      "detections": "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k5-verified-opmax.geojson",
+      "cell": "gemini37-screen-2026-08-28__g37-text-k5-verified-opmax",
+      "eval_path": "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.json",
+      "carried_condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
+      "f1_20": 0.9066,
+      "tile_mcc": 0.7651
+    },
+    {
+      "k": 10,
+      "label": "g37-text-k10-verified-opmax",
+      "run_id": "gemini37-screen-2026-08-28",
+      "stage_id": "g384_ov192_g37-union-k10-verify",
+      "union": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k10.geojson",
+      "probabilities": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10/probabilities.json",
+      "opmax": {
+        "vote_t": 10,
+        "prob_t": 0.1,
+        "sweep_f1_20": 0.9068,
+        "sweep_n": 423,
+        "n_ties_at_argmax": 0
+      },
+      "opmax_on_era2_frame": {
+        "vote_t": 10,
+        "prob_t": 0.1,
+        "sweep_f1_20": 0.9068
+      },
+      "frames_agree_on_argmax": true,
+      "n_detections": 423,
+      "detections": "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k10-verified-opmax.geojson",
+      "cell": "gemini37-screen-2026-08-28__g37-text-k10-verified-opmax",
+      "eval_path": "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.json",
+      "carried_condition_id": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
+      "f1_20": 0.9068,
+      "tile_mcc": 0.7675
+    }
+  ]
+}

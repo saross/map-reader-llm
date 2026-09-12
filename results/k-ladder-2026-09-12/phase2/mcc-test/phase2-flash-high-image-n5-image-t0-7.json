@@ -1,0 +1,208 @@
+{
+  "ladder": "phase2-flash-high-image-n5-image-t0-7",
+  "family": "Gemini 3 HIGH image 384 px, T 0.7",
+  "run_id": "pv-diag-384",
+  "proposer_pool": "flash-high-image-n5-image-t0.7",
+  "corpus": "4-map-gs",
+  "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+  "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "headline_buffer_m": 20,
+  "basis": "oracle",
+  "instrument": {
+    "name": "round-robin tile-swap permutation (the board chain)",
+    "script": "scripts/era1_leaderboard_tiering.py --permute-mcc",
+    "f1_statistic": "micro-average F1 @ 20 m over 487 tiles, per-tile TP/FP/FN swapped",
+    "mcc_statistic": "tile-level MCC, buffer-invariant; per-tile one-hot (TP, TN, FP, FN) swapped under the SAME mask as F1",
+    "kernels": [
+      "n1_baseline_leaderboard_tiering.permutation_test_float",
+      "pairwise_permutation_test.permutation_test_mcc_arrays"
+    ],
+    "n_permutations": 10000,
+    "seed": 42,
+    "n_tiles": 487,
+    "bh_q": 0.05,
+    "bh_family": "within this ladder: the full round-robin of 6 pair(s), F1 and MCC adjusted as separate families",
+    "instrument_ruling": "This is the instrument that tiered these cells and the only one with committed F1 p-values for every pair asked about. findings.md \u00a7 6.1 records that the PI's ruling on the 55-map ladders' instrument is pending; the per-map paired sign-swap of scripts/stride55_ladder.py is reported separately where it is registered."
+  },
+  "gate": {
+    "kind": "harness-internal only (no committed pairwise table exists for this ladder \u2014 findings.md \u00a7 6.1)",
+    "n_pairs_gated": 0,
+    "passed": true,
+    "pairs": [
+      {
+        "pair": "K1-vs-K5",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K1-vs-K3",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K3-vs-K5",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K5-vs-K10",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      }
+    ],
+    "cell_gates": {
+      "pv-diag-384::pv-high-image-t0.7-n1-opmax": {
+        "confusion": {
+          "tp": 206,
+          "tn": 243,
+          "fp": 15,
+          "fn": 23
+        },
+        "mcc_rebuilt": 0.843539,
+        "mcc_recorded": 0.8435,
+        "passed": true
+      },
+      "pv-diag-384::pv-high-image-t0.7-n3-opmax": {
+        "confusion": {
+          "tp": 196,
+          "tn": 252,
+          "fp": 6,
+          "fn": 33
+        },
+        "mcc_rebuilt": 0.843503,
+        "mcc_recorded": 0.8435,
+        "passed": true
+      },
+      "pv-diag-384::pv-high-image-t0.7-n5-opmax": {
+        "confusion": {
+          "tp": 194,
+          "tn": 252,
+          "fp": 6,
+          "fn": 35
+        },
+        "mcc_rebuilt": 0.83589,
+        "mcc_recorded": 0.8359,
+        "passed": true
+      },
+      "pv-diag-384::pv-high-image-t0.7-n10-opmax": {
+        "confusion": {
+          "tp": 180,
+          "tn": 255,
+          "fp": 3,
+          "fn": 49
+        },
+        "mcc_rebuilt": 0.798049,
+        "mcc_recorded": 0.798,
+        "passed": true
+      }
+    }
+  },
+  "pairs": [
+    {
+      "pair": "K1-vs-K5",
+      "kind": "k1-vs-best",
+      "k_low": 1,
+      "k_high": 5,
+      "condition_low": "pv-diag-384::pv-high-image-t0.7-n1-opmax",
+      "condition_high": "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.6909,
+        "high": 0.7868,
+        "delta": 0.095939,
+        "p_raw": 0.0,
+        "p_bh": 0.0,
+        "significant": true
+      },
+      "mcc": {
+        "low": 0.8435,
+        "high": 0.8359,
+        "delta": -0.007649,
+        "p_raw": 0.6859,
+        "p_bh": 0.87456,
+        "significant": false
+      },
+      "verdict": "F1 up (sig), MCC down n.s."
+    },
+    {
+      "pair": "K1-vs-K3",
+      "kind": "adjacent",
+      "k_low": 1,
+      "k_high": 3,
+      "condition_low": "pv-diag-384::pv-high-image-t0.7-n1-opmax",
+      "condition_high": "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.6909,
+        "high": 0.7666,
+        "delta": 0.075681,
+        "p_raw": 0.0,
+        "p_bh": 0.0,
+        "significant": true
+      },
+      "mcc": {
+        "low": 0.8435,
+        "high": 0.8435,
+        "delta": -3.7e-05,
+        "p_raw": 1.0,
+        "p_bh": 1.0,
+        "significant": false
+      },
+      "verdict": "F1 up (sig), MCC down n.s."
+    },
+    {
+      "pair": "K3-vs-K5",
+      "kind": "adjacent",
+      "k_low": 3,
+      "k_high": 5,
+      "condition_low": "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+      "condition_high": "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.7666,
+        "high": 0.7868,
+        "delta": 0.020257,
+        "p_raw": 0.1172,
+        "p_bh": 0.1758,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.8435,
+        "high": 0.8359,
+        "delta": -0.007612,
+        "p_raw": 0.7288,
+        "p_bh": 0.87456,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    },
+    {
+      "pair": "K5-vs-K10",
+      "kind": "adjacent",
+      "k_low": 5,
+      "k_high": 10,
+      "condition_low": "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+      "condition_high": "pv-diag-384::pv-high-image-t0.7-n10-opmax",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.7868,
+        "high": 0.7765,
+        "delta": -0.010307,
+        "p_raw": 0.4232,
+        "p_bh": 0.50784,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.8359,
+        "high": 0.798,
+        "delta": -0.037841,
+        "p_raw": 0.0347,
+        "p_bh": 0.1041,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    }
+  ],
+  "tiering_artefact": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-image-n5-image-t0-7/tiering_20m.json",
+  "generated_at_utc": "2026-09-12T08:52:26.471075+00:00"
+}

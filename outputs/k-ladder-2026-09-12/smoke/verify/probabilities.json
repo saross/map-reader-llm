@@ -1,0 +1,39 @@
+{
+  "version": "1.0",
+  "mode": "realtime",
+  "verifier_config": "verify_adversarial-text",
+  "iterations": 1,
+  "total_results": 5,
+  "results": {
+    "candidate_00000": {
+      "mound_probability": 0.1,
+      "reasoning": "While the symbol is placed on a hilltop, which is a common location for burial mounds, the visual representation is that of a standalone survey marker. There are no visible hachures or radiating lines in the characteristic orange-brown color that would indicate an artificial mound structure beneath the marker.",
+      "best_alternative": "A standard triangulation point or survey marker without a mound.",
+      "alternative_evidence": "The central symbol is a solid black geometric shape (likely a triangle or square) located at a local topographic peak, but it lacks the distinct orange-brown 'sunburst' or 'gear' pattern of outward-radiating rays."
+    },
+    "candidate_00001": {
+      "mound_probability": 0.95,
+      "reasoning": "The symbol exhibits the classic 'sunburst' pattern characteristic of a burial mound (kurgan) on Soviet topographic maps. It consists of a central orange-brown circle with distinct, short lines radiating outward. The presence of the number '3' likely indicates the height of the mound in meters. There is no black triangle or square to suggest a triangulation point or benchmark, and the radial symmetry is inconsistent with contour features or vegetation boundaries. The non-mound interpretation is weak because the symbol matches the specific cartographic definition of a kurgan perfectly.",
+      "best_alternative": "A spot height or elevation label with a decorative or non-mound symbol.",
+      "alternative_evidence": "The symbol is rendered in orange-brown and is accompanied by the number '3'. While it has a central shape, the radiating lines are extremely short and uniform, which could potentially be interpreted as a stylized point marker rather than a topographic mound."
+    },
+    "candidate_00002": {
+      "mound_probability": 1.0,
+      "reasoning": "The adversarial check for non-mound interpretations fails here. The symbol is not a solid black triangle or square (triangulation/benchmark), nor is it a simple spot height or contour line. The outward-pointing rays are the defining characteristic of a burial mound on Soviet-style topographic maps, and they are clearly visible and well-formed in this instance.",
+      "best_alternative": "A burial mound (Kurgan).",
+      "alternative_evidence": "The symbol consists of a distinct orange-brown circular outline with clear, short lines (rays) radiating outward in a sunburst pattern."
+    },
+    "candidate_00003": {
+      "mound_probability": 1.0,
+      "reasoning": "Despite the adversarial requirement to find an alternative, the visual evidence for a burial mound is overwhelming. The symbols exhibit the classic 'sunburst' pattern with distinct outward-radiating rays in the correct orange-brown color. Furthermore, the presence of the Cyrillic text '\u043a\u0443\u0440\u0433.' (abbreviation for '\u043a\u0443\u0440\u0433\u0430\u043d' or 'kurgan') immediately adjacent to the symbols provides explicit cartographic confirmation that these are burial mounds.",
+      "best_alternative": "A cluster of vegetation or land-use boundary markers.",
+      "alternative_evidence": "The symbols are small, orange-brown, and appear in a pair rather than as a single isolated feature, which could suggest a specific type of terrain or vegetation grouping."
+    },
+    "candidate_00004": {
+      "mound_probability": 1.0,
+      "reasoning": "While the symbols are near a boundary, they exhibit the classic 'sunburst' pattern with distinct orange-brown rays radiating outward from a central circle. Furthermore, the Cyrillic text '\u043a\u0443\u0440\u0433.' (abbreviation for '\u043a\u0443\u0440\u0433\u0430\u043d' or burial mound) is explicitly written immediately to the right of the symbols, providing definitive cartographic confirmation that these are indeed burial mounds.",
+      "best_alternative": "A vegetation or land-use boundary marker.",
+      "alternative_evidence": "The symbols are located directly adjacent to a dashed boundary line and a solid black line, which could suggest they are decorative or functional markers for the intersection of these lines."
+    }
+  }
+}
