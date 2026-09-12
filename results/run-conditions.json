@@ -973,9 +973,16 @@
       "temperature": 0.0,
       "iterations": 1
      },
-     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/n1-outstanding-384__pv-n1-image-t0-n3-opmax/evaluation.json",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/n1-outstanding-384__pv-n1-image-t0-n3-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-n1-image-t0-n3.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-n1-image-t0-n3 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage image-t0-verified-v1-n3 at the F1@20-argmax (vote_t 2, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. K = 3 < 5 (card § 3 rule); registered, not a member; the row's evaluation is the Era-2-frame score."
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-n1-image-t0-n3 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage image-t0-verified-v1-n3 at the F1@20-argmax (vote_t 2, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. ADMITTED TO THE BOARD 2026-09-12 (PI ruling R3, planning/k-ladder-review-2026-09-11.md § 4): the board takes every verified cell on its frame regardless of K, so this K = 3 cell is a member. Its evaluation is now the board-frame score (era2-b-487); the Era-2-frame score it carried while off-board is kept at results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/n1-outstanding-384__pv-n1-image-t0-n3-opmax/evaluation.json and is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
     }
    ],
    "_ignored_evals": [
@@ -995,7 +1002,11 @@
     "results/paper-eval/n1/384px-all-buffers/pro-text-medium-t-0-7/evaluation.json",
     "results/phase3a-image-matrix/minimal-t0.0/n3/minimal-t0-0-1of3/evaluation.json",
     "results/phase3a-image-matrix/minimal-t0.0/n3/minimal-t0-0-2of3/evaluation.json",
-    "results/phase3a-image-matrix/minimal-t0.0/n3/minimal-t0-0-3of3/evaluation.json"
+    "results/phase3a-image-matrix/minimal-t0.0/n3/minimal-t0-0-3of3/evaluation.json",
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/n1-outstanding-384__pv-n1-image-t0-n3-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-n1-image-t0-n3-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    }
    ]
   },
   "n1-pro-rerun-384": {
@@ -4131,9 +4142,16 @@
       "temperature": 0.0,
       "iterations": 1
      },
-     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/pv-diag-384__pv-min-text-t0_0-n3-opmax/evaluation.json",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t0_0-n3-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-min-text-t0.0-n3.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-text-t0.0-n3 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-minimal-text-n30-t07-text-t0.0-verified-v1-n3 at the F1@20-argmax (vote_t 2, prob_t 0.2) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. K = 3 < 5 (card § 3 rule); registered, not a member; the row's evaluation is the Era-2-frame score."
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-min-text-t0.0-n3 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-minimal-text-n30-t07-text-t0.0-verified-v1-n3 at the F1@20-argmax (vote_t 2, prob_t 0.2) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. ADMITTED TO THE BOARD 2026-09-12 (PI ruling R3, planning/k-ladder-review-2026-09-11.md § 4): the board takes every verified cell on its frame regardless of K, so this K = 3 cell is a member. Its evaluation is now the board-frame score (era2-b-487); the Era-2-frame score it carried while off-board is kept at results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/pv-diag-384__pv-min-text-t0_0-n3-opmax/evaluation.json and is the waived opmax/g2 evaluation.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
     },
     {
      "label": "pv-high-text-t1.0-n5-opmax",
@@ -4234,9 +4252,16 @@
       "temperature": 0.0,
       "iterations": 1
      },
-     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/pv-diag-384__pv-high-text-t0_0-n3-opmax/evaluation.json",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t0_0-n3-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/pv-high-text-t0.0-n3.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-text-t0.0-n3 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.0-verified-v1-n3 at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. K = 3 < 5 (card § 3 rule); registered, not a member; the row's evaluation is the Era-2-frame score. VINTAGE 2026-09-11: the proposer union at outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t1.geojson was re-materialised on 2026-07-30 (f6116cba0, 77bb342b4) from 1256 features to 1319, in a different order, so this row's stage probabilities — the 1256 the verifier actually returned — can no longer be joined to it by candidate index. An index join against today's file yields a plausible but meaningless count; it is not an operating point. THE ROW IS UNCHANGED AND CORRECT ON ITS OWN VINTAGE: sweeping the union blob at 09fe46a7f against this stage's own probabilities reproduces the committed outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3/sweep_2d.json in all 240 rows, its 20 m argmax is the registered (vote_t 3, prob_t 0.15) at n 403, and re-applying the registry filter to that blob yields exactly the 403 features this row's detection file holds. For comparison, the same operating point applied to the union as committed today, against the complete 2026-09-08 re-verification of that union (stage verified-v1-n3-recovery-2026-09-08, 43516df9a), gives a different cell — see results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/staleness-2026-09-11/ for both sweeps, the comparison cell and its Era-2-frame score. Whether this row should be repointed at that vintage is the PI's call: it would change the row from the archived board's cell to a September re-verification. No repoint has been made."
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell pv-high-text-t0.0-n3 (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.0-verified-v1-n3 at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. ADMITTED TO THE BOARD 2026-09-12 (PI ruling R3, planning/k-ladder-review-2026-09-11.md § 4): the board takes every verified cell on its frame regardless of K, so this K = 3 cell is a member. Its evaluation is now the board-frame score (era2-b-487); the Era-2-frame score it carried while off-board is kept at results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/era2/pv-diag-384__pv-high-text-t0_0-n3-opmax/evaluation.json and is the waived opmax/g2 evaluation. VINTAGE 2026-09-11: the proposer union at outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t1.geojson was re-materialised on 2026-07-30 (f6116cba0, 77bb342b4) from 1256 features to 1319, in a different order, so this row's stage probabilities — the 1256 the verifier actually returned — can no longer be joined to it by candidate index. An index join against today's file yields a plausible but meaningless count; it is not an operating point. THE ROW IS UNCHANGED AND CORRECT ON ITS OWN VINTAGE: sweeping the union blob at 09fe46a7f against this stage's own probabilities reproduces the committed outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3/sweep_2d.json in all 240 rows, its 20 m argmax is the registered (vote_t 3, prob_t 0.15) at n 403, and re-applying the registry filter to that blob yields exactly the 403 features this row's detection file holds. For comparison, the same operating point applied to the union as committed today, against the complete 2026-09-08 re-verification of that union (stage verified-v1-n3-recovery-2026-09-08, 43516df9a), gives a different cell — see results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/staleness-2026-09-11/ for both sweeps, the comparison cell and its Era-2-frame score. Whether this row should be repointed at that vintage is the PI's call: it would change the row from the archived board's cell to a September re-verification. No repoint has been made.",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     }
     },
     {
      "label": "pv-min-image-t0.7-n10-opmax",
@@ -4811,6 +4836,377 @@
       "calibration_set_id": null,
       "n_calibration_tiles": null
      }
+    },
+    {
+     "label": "pv-high-text-t0.0-n3-recovery-2026-09-08-opmax",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.0",
+     "n_passes": 3,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/staleness-2026-09-11/current-vintage/era2-eval/evaluation.json",
+     "detections": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/staleness-2026-09-11/current-vintage/pv-high-text-t0.0-n3-current-vintage.geojson",
+     "_note": "CURRENT-VINTAGE PAIR of pv-high-text-t0.0-n3 (PI rulings B2 and R4, 2026-09-12; planning/k-ladder-review-2026-09-11.md § 4). The same configuration and the same operating point (vote_t 3, prob_t 0.15) as pv-diag-384::pv-high-text-t0.0-n3-opmax, applied to the proposer union as committed today (1,319 features, re-materialised 2026-07-30 at f6116cba0 / 77bb342b4) against the COMPLETE 2026-09-08 re-verification of that union — stage flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08 (43516df9a, US$1.82 already spent, same verifier config and system-instruction hash 2518d529). n 423, Era-2-frame F1@20 0.8508, tile-MCC 0.7857, against the April cell's 403 / 0.8234 / 0.7750. The argmax does not move between vintages: both sweeps put it at (3, 0.15), and each reproduces its committed sweep_2d.json in all 240 rows (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/staleness-2026-09-11/README.md). Under the PI's 'keep history, present the best available' principle THIS row is the configuration's representative on ladders and boards; the April row pv-high-text-t0.0-n3-opmax REMAINS the archived per-architecture Era-2 PV board's cell, registered and unchanged, and is correct on its own vintage. The '-recovery-<date>' suffix is the sanctioned notation for a configuration re-verified on a rebuilt union (docs/methodology/notation-key.md § 7.2); the date is the re-verification stage's, not this registration's. Zero API spend in this registration."
+    },
+    {
+     "label": "pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "flash-high-text-n5-text-t0.0",
+     "n_passes": 3,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/staleness-2026-09-11/current-vintage/pv-high-text-t0.0-n3-current-vintage.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t0_0-n3-recovery-2026-09-08-opmax/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell pv-high-text-t0.0-n3-recovery-2026-09-08-opmax re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-image-baseline-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "image-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.2,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-baseline.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-image-baseline/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-image-baseline re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-image-baseline-medium-vf-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "image-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.25,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "medium",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-baseline-medium-vf.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-image-baseline-medium-vf/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-image-baseline-medium-vf re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-image-baseline-pro-vf-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "image-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.1-pro-preview",
+      "thinking_level": "medium",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-baseline-pro-vf.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-image-baseline-pro-vf/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-image-baseline-pro-vf re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-pro-image-baseline-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "pro-medium-image-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-image-baseline.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-image-baseline/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-pro-image-baseline re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-pro-image-baseline-medium-vf-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "pro-medium-image-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.05,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "medium",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-image-baseline-medium-vf.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-image-baseline-medium-vf/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-pro-image-baseline-medium-vf re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-pro-image-baseline-pro-vf-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "pro-medium-image-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.05,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.1-pro-preview",
+      "thinking_level": "medium",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-image-baseline-pro-vf.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-image-baseline-pro-vf/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-pro-image-baseline-pro-vf re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-pro-text-baseline-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "pro-medium-text-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-text-baseline.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-text-baseline/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-pro-text-baseline re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-pro-text-baseline-medium-vf-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "pro-medium-text-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "medium",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-text-baseline-medium-vf.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-text-baseline-medium-vf/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-pro-text-baseline-medium-vf re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-pro-text-baseline-pro-vf-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "pro-medium-text-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.1-pro-preview",
+      "thinking_level": "medium",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-text-baseline-pro-vf.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-pro-text-baseline-pro-vf/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-pro-text-baseline-pro-vf re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-text-baseline-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "text-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-text-baseline.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-text-baseline/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-text-baseline re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-text-baseline-medium-vf-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "text-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "medium",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-medium-vf.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-text-baseline-medium-vf/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-text-baseline-medium-vf re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adv-text-baseline-pro-vf-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "text-baseline",
+     "n_passes": 1,
+     "vote_threshold": 1,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.1-pro-preview",
+      "thinking_level": "medium",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "detections": "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-pro-vf.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__verified-adv-text-baseline-pro-vf/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adv-text-baseline-pro-vf re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
     }
    ],
    "_ignored_evals": [
@@ -5824,6 +6220,66 @@
     {
      "eval_path": "results/uplift-supplement/verifier-pairing/pv-diag-384__verified-adv-text-consensus-16of30/evaluation.json",
      "reason": "uplift-supplement pairing/gap-fill anchor (planning/uplift-supplement-2026-08-28.md): an input to the supplement's pairing tables, scored on the reference, buffer, and frame of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__pv-high-text-t0_0-n3-recovery-2026-09-08-opmax/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): pv-high-text-t0.0-n3-recovery-2026-09-08-opmax's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-image-baseline/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-image-baseline's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-image-baseline-medium-vf/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-image-baseline-medium-vf's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-image-baseline-pro-vf/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-image-baseline-pro-vf's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-pro-image-baseline/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-pro-image-baseline's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-pro-image-baseline-medium-vf/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-pro-image-baseline-medium-vf's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-pro-image-baseline-pro-vf/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-pro-image-baseline-pro-vf's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-pro-text-baseline/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-pro-text-baseline's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-pro-text-baseline-medium-vf/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-pro-text-baseline-medium-vf's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-pro-text-baseline-pro-vf/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-pro-text-baseline-pro-vf's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-text-baseline/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-text-baseline's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-text-baseline-medium-vf/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-text-baseline-medium-vf's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/pv-diag-384__verified-adv-text-baseline-pro-vf/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adv-text-baseline-pro-vf's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-min-text-t0_0-n3-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-min-text-t0.0-n3-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-text-t0_0-n3-opmax/evaluation.json",
+     "reason": "GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-text-t0.0-n3-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition."
     }
    ]
   },
@@ -6532,6 +6988,214 @@
      },
      "eval_path": "results/rescore-2026-05-31/proposer-verifier-384/verified-cascade-checklist-adversarial-accepted/evaluation.json",
      "detections": "outputs/h11/proposer-verifier-384/verified-cascade-checklist-adversarial-accepted.geojson"
+    },
+    {
+     "label": "verified-adversarial-image-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "detections": "outputs/h11/proposer-verifier-384/verified-adversarial-image-accepted.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-adversarial-image/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adversarial-image re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-adversarial-text-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "detections": "outputs/h11/proposer-verifier-384/verified-adversarial-text-accepted.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-adversarial-text/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-adversarial-text re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-brief-image-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_brief.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "detections": "outputs/h11/proposer-verifier-384/verified-brief-image-accepted.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-brief-image/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-brief-image re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-brief-text-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_brief.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "detections": "outputs/h11/proposer-verifier-384/verified-brief-text-accepted.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-brief-text/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-brief-text re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-cascade-adversarial-checklist-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_checklist.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "detections": "outputs/h11/proposer-verifier-384/verified-cascade-adversarial-checklist-accepted.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-cascade-adversarial-checklist/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-cascade-adversarial-checklist re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-cascade-checklist-adversarial-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "detections": "outputs/h11/proposer-verifier-384/verified-cascade-checklist-adversarial-accepted.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-cascade-checklist-adversarial/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-cascade-checklist-adversarial re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-checklist-image-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_checklist.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "detections": "outputs/h11/proposer-verifier-384/verified-checklist-image-accepted.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-checklist-image/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-checklist-image re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
+    },
+    {
+     "label": "verified-checklist-text-era2b",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 1,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_checklist.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "detections": "outputs/h11/proposer-verifier-384/verified-checklist-text-accepted.geojson",
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/proposer-verifier-384__verified-checklist-text/evaluation.json",
+     "scope_override": {
+      "test_set_id": "era2-b-487",
+      "bounds_path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_test_tiles": 487,
+      "calibration_set_id": null,
+      "n_calibration_tiles": null
+     },
+     "_note": "GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell verified-checklist-text re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on full_evaluation_bounds.geojson stays the row's record."
     }
    ],
    "_ignored_evals": [
@@ -6586,6 +7250,38 @@
     {
      "eval_path": "results/uplift-supplement/verifier-pairing/proposer-verifier-384__verified-checklist-text/evaluation.json",
      "reason": "uplift-supplement pairing/gap-fill anchor (planning/uplift-supplement-2026-08-28.md): an input to the supplement's pairing tables, scored on the reference, buffer, and frame of the stratum it pairs with; not a registered condition and not cited by the paper. Waived by PI ruling 2026-09-07 (planning/reference-revision-2026-09-06.md, register-verifier debt)."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/proposer-verifier-384__verified-adversarial-image/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adversarial-image's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/proposer-verifier-384__verified-adversarial-text/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-adversarial-text's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/proposer-verifier-384__verified-brief-image/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-brief-image's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/proposer-verifier-384__verified-brief-text/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-brief-text's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/proposer-verifier-384__verified-cascade-adversarial-checklist/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-cascade-adversarial-checklist's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/proposer-verifier-384__verified-cascade-checklist-adversarial/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-cascade-checklist-adversarial's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/proposer-verifier-384__verified-checklist-image/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-checklist-image's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
+    },
+    {
+     "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/proposer-verifier-384__verified-checklist-text/evaluation.json",
+     "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-checklist-text's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
     }
    ]
   },

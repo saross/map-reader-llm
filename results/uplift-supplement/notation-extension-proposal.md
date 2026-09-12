@@ -1,21 +1,23 @@
 # Notation-key extension proposal — uplift supplement
 
-> **Last revised**: 2026-09-10 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-12 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-10T07:16:15Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-09-12T01:27:29Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 The canonical key `docs/methodology/notation-key.md` requires that
 "new tables and dataset builders must conform to it or extend it here
 first". The uplift-supplement builder validates every column it writes
-against §§ 6-7, which sanction 151 names. A builder must not
+against §§ 6-7, which sanction 156 names. A builder must not
 amend the canonical key unilaterally, so columns the key does not name
 are declared in `scripts/lib_uplift_supplement.py` (`COLUMN_EXTENSIONS`)
 and proposed here for the PI to fold into § 7; an undeclared column
 still fails loudly.
 
-## Proposed additions to § 7 (0 pending)
+## Proposed additions to § 7 (1 pending)
 
-None: every declared extension is sanctioned by the key.
+| Column | Extends | Rationale |
+|---|---|---|
+| `crop_manifest_path` | anti-confabulation | The candidate manifest of the cell's own proposer pool, when the twin is the vote shell of the universe its verifier cropped (pairing_basis crop-manifest). |
 
 ## Extensions already sanctioned by the key (85)
 

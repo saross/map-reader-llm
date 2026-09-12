@@ -175,7 +175,13 @@ def _run_main(monkeypatch, tmp_path, extra_args: list[str]) -> dict:
     specs = [{"ref": f"c{i}", "label": f"c{i}", "eval_f1": None}
              for i in range(3)]
 
-    def fake_board(analysis_id, gt_override, bounds_override, buffer_metres):
+    seen: dict[str, object] = {}
+
+    def fake_board(analysis_id, gt_override, bounds_override, buffer_metres,
+                   analyses_path=None, conditions_path=None):
+        seen.update(analysis_id=analysis_id, gt_override=gt_override,
+                    bounds_override=bounds_override, buffer_metres=buffer_metres,
+                    analyses_path=analyses_path, conditions_path=conditions_path)
         return specs, counts, has_mounds
 
     monkeypatch.setattr(sai, "build_board_tile_counts", fake_board)
@@ -185,7 +191,9 @@ def _run_main(monkeypatch, tmp_path, extra_args: list[str]) -> dict:
     assert sai.main() == 0
     out_files = list(tmp_path.glob("fake-board*.json"))
     assert len(out_files) == 1
-    return json.loads(out_files[0].read_text())
+    result = json.loads(out_files[0].read_text())
+    result["_seen"] = seen
+    return result
 
 
 def test_board_overrides_recorded_when_given(monkeypatch, tmp_path):
@@ -205,3 +213,28 @@ def test_board_overrides_omitted_when_absent(monkeypatch, tmp_path):
     res = _run_main(monkeypatch, tmp_path, [])
     assert "ground_truth_override" not in res
     assert "bounds_override" not in res
+    assert "analyses_override" not in res
+    assert "conditions_override" not in res
+    assert res["_seen"]["analyses_path"] is None
+    assert res["_seen"]["conditions_path"] is None
+
+
+def test_board_membership_source_override_is_recorded(monkeypatch, tmp_path):
+    """An artefact must say which membership it was computed over.
+
+    The GS Era-2 board's analysis row is PI-signed, so when ruling R3 enlarged
+    the board from 79 cells to 103 the MCB had to read the membership from a
+    board-local copy of the analyses file. An admissible set computed over a
+    different candidate set than the one cited is the audit-F9 defect in another
+    guise, so the override is recorded exactly as the reference and bounds ones
+    are.
+    """
+    analyses = "results/leaderboard/era2/board/tiering-input/run-analyses.json"
+    conditions = "results/leaderboard/era2/board/tiering-input/run-conditions.json"
+    res = _run_main(monkeypatch, tmp_path, [
+        "--analyses", analyses, "--conditions", conditions,
+    ])
+    assert res["analyses_override"] == analyses
+    assert res["conditions_override"] == conditions
+    assert str(res["_seen"]["analyses_path"]) == analyses
+    assert str(res["_seen"]["conditions_path"]) == conditions

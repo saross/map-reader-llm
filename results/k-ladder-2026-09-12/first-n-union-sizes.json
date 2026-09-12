@@ -1,0 +1,497 @@
+{
+  "generated_at_utc": "2026-09-12T00:49:33+00:00",
+  "method": "merge_passes.load_pass_detections(pass_filter=1..N) then deduplicate_within_pass then cluster_across_passes \u2014 the canonical consensus chain, at vote >= 1, with no consensus file written",
+  "n_pools": 14,
+  "pools": [
+    {
+      "label": "Gemini 3 MINIMAL text 384 px, T 0.3",
+      "pool_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 1007,
+          "n_deduped_detections": 938,
+          "n_union_candidates": 938,
+          "vote_distribution": {
+            "1": 938
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 3117,
+          "n_deduped_detections": 2909,
+          "n_union_candidates": 1244,
+          "vote_distribution": {
+            "1": 315,
+            "2": 198,
+            "3": 731
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 MINIMAL text 384 px, T 0.7",
+      "pool_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 1090,
+          "n_deduped_detections": 1012,
+          "n_union_candidates": 1012,
+          "vote_distribution": {
+            "1": 1012
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 3293,
+          "n_deduped_detections": 3067,
+          "n_union_candidates": 1355,
+          "vote_distribution": {
+            "1": 383,
+            "2": 235,
+            "3": 737
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 MINIMAL text 384 px, T 1.0",
+      "pool_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 1084,
+          "n_deduped_detections": 1022,
+          "n_union_candidates": 1022,
+          "vote_distribution": {
+            "1": 1022
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 3303,
+          "n_deduped_detections": 3106,
+          "n_union_candidates": 1588,
+          "vote_distribution": {
+            "1": 677,
+            "2": 310,
+            "3": 601
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 HIGH text 384 px, T 0.3",
+      "pool_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 1415,
+          "n_deduped_detections": 1327,
+          "n_union_candidates": 1326,
+          "vote_distribution": {
+            "1": 1326
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 3993,
+          "n_deduped_detections": 3730,
+          "n_union_candidates": 2201,
+          "vote_distribution": {
+            "1": 1289,
+            "2": 306,
+            "3": 606
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 HIGH text 384 px, T 0.7",
+      "pool_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 1459,
+          "n_deduped_detections": 1370,
+          "n_union_candidates": 1370,
+          "vote_distribution": {
+            "1": 1370
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 4494,
+          "n_deduped_detections": 4231,
+          "n_union_candidates": 2755,
+          "vote_distribution": {
+            "1": 1818,
+            "2": 409,
+            "3": 528
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 HIGH text 384 px, T 1.0",
+      "pool_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 1587,
+          "n_deduped_detections": 1495,
+          "n_union_candidates": 1495,
+          "vote_distribution": {
+            "1": 1495
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 4658,
+          "n_deduped_detections": 4395,
+          "n_union_candidates": 2848,
+          "vote_distribution": {
+            "1": 1863,
+            "2": 431,
+            "3": 554
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 MINIMAL image 384 px, T 0.3",
+      "pool_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.3",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 803,
+          "n_deduped_detections": 731,
+          "n_union_candidates": 729,
+          "vote_distribution": {
+            "1": 729
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 2415,
+          "n_deduped_detections": 2210,
+          "n_union_candidates": 885,
+          "vote_distribution": {
+            "1": 174,
+            "2": 108,
+            "3": 603
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 MINIMAL image 384 px, T 0.7",
+      "pool_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.7",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 758,
+          "n_deduped_detections": 698,
+          "n_union_candidates": 694,
+          "vote_distribution": {
+            "1": 694
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 2278,
+          "n_deduped_detections": 2092,
+          "n_union_candidates": 950,
+          "vote_distribution": {
+            "1": 307,
+            "2": 159,
+            "3": 484
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 MINIMAL image 384 px, T 1.0",
+      "pool_dir": "outputs/h11/pv-diag-384/image-n5/image-t1.0",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 848,
+          "n_deduped_detections": 792,
+          "n_union_candidates": 792,
+          "vote_distribution": {
+            "1": 792
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 2476,
+          "n_deduped_detections": 2297,
+          "n_union_candidates": 1174,
+          "vote_distribution": {
+            "1": 518,
+            "2": 200,
+            "3": 456
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 HIGH image 384 px, T 0.3",
+      "pool_dir": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 948,
+          "n_deduped_detections": 876,
+          "n_union_candidates": 872,
+          "vote_distribution": {
+            "1": 872
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 2880,
+          "n_deduped_detections": 2679,
+          "n_union_candidates": 1619,
+          "vote_distribution": {
+            "1": 989,
+            "2": 222,
+            "3": 408
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 HIGH image 384 px, T 0.7",
+      "pool_dir": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 831,
+          "n_deduped_detections": 771,
+          "n_union_candidates": 771,
+          "vote_distribution": {
+            "1": 771
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 2593,
+          "n_deduped_detections": 2417,
+          "n_union_candidates": 1522,
+          "vote_distribution": {
+            "1": 980,
+            "2": 201,
+            "3": 341
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 HIGH image 384 px, T 1.0",
+      "pool_dir": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 1035,
+          "n_deduped_detections": 983,
+          "n_union_candidates": 982,
+          "vote_distribution": {
+            "1": 982
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 2951,
+          "n_deduped_detections": 2774,
+          "n_union_candidates": 1887,
+          "vote_distribution": {
+            "1": 1329,
+            "2": 243,
+            "3": 315
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3 scale-4-optimal 487",
+      "pool_dir": "outputs/h11/pv-diag-384/scale-4-optimal-487",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 879,
+          "n_deduped_detections": 831,
+          "n_union_candidates": 830,
+          "vote_distribution": {
+            "1": 830
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 2557,
+          "n_deduped_detections": 2407,
+          "n_union_candidates": 1586,
+          "vote_distribution": {
+            "1": 1078,
+            "2": 206,
+            "3": 302
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "label": "Gemini 3.7 text, GS B geometry",
+      "pool_dir": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37",
+      "rungs": [
+        {
+          "n_passes": 1,
+          "pass_ids": [
+            "run_1"
+          ],
+          "n_raw_detections": 1586,
+          "n_deduped_detections": 644,
+          "n_union_candidates": 640,
+          "vote_distribution": {
+            "1": 640
+          }
+        },
+        {
+          "n_passes": 3,
+          "pass_ids": [
+            "run_1",
+            "run_2",
+            "run_3"
+          ],
+          "n_raw_detections": 4684,
+          "n_deduped_detections": 1914,
+          "n_union_candidates": 757,
+          "vote_distribution": {
+            "1": 149,
+            "2": 79,
+            "3": 529
+          }
+        }
+      ],
+      "refusals": []
+    }
+  ]
+}

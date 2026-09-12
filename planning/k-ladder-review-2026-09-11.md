@@ -1,13 +1,15 @@
 # K-ladder review: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-12 (R1–R5 RULED and two project principles
-> recorded; B3 ruled: the 27 first-N twins are derived inside this job;
-> prior 2026-09-11: DRAFT scaffold, S153, from committed
-> material only; **no compute, no API, no register change until the PI
-> rules on § 4**). See
-> [§ Changelog](#changelog).
+> **Last revised**: 2026-09-12 (later — **Phase 1 EXECUTED at US$0**, steps 0–7;
+> per-step outcome in [§ 6](#6-phase-1-what-landed-2026-09-12). Earlier the same
+> day: R1–R5 RULED and two project principles recorded; B3 ruled, the 27 first-N
+> twins derived inside this job; prior 2026-09-11: DRAFT scaffold, S153, from
+> committed material only). See [§ Changelog](#changelog).
 
-**Status**: SCOPING CARD, not a run card. The PI asked in Session 152 for
+**Status**: SCOPING CARD; the run card it produced is
+`planning/k-ladder-phase1-run-2026-09-12.md`, and Phase 1 has been executed —
+see § 6. Phase 2 is costed, not run:
+`reports/k-ladder-phase2-costing-2026-09-12.md`. The PI asked in Session 152 for
 a review of the pass-count ladder — K = 1, 3, 5, 10 at fixed parameters,
 framed as a Pareto (cost-against-F1) question, together with a ruling on
 whether re-materialised and current-vintage cells belong on the board
@@ -156,7 +158,56 @@ conditions, and scored on the cells' own recipes. Step 2 therefore
 includes the 55-map rungs, not only the GS families, and the uplift
 supplement is regenerated when they land.
 
+## 6. Phase 1: what landed (2026-09-12)
+
+Executed on branch `worktree-agent-a51feb87262e915a2` under
+`planning/k-ladder-phase1-run-2026-09-12.md`. **Zero API calls.** Every
+scoring, permutation, bootstrap, clustering and tiering step ran on sapphire.
+
+| Step | Outcome | Artefact |
+|---:|---|---|
+| 0 | **landed** — written before anything ran | `planning/k-ladder-phase1-run-2026-09-12.md` |
+| 1 | **landed** — 187 (run, pool, verifier, frame, reference) groups; 24 with ≥ 2 rungs; **8 ladders with ≥ 3 of {1, 3, 5, 10}, all already committed**; 30 gaps need a verifier pass and **none is fillable at US$0 exactly** | `results/k-ladder-2026-09-12/inventory.md` + `.json` + `inventory-tables.md` + `subpool-coverage-probe.json` |
+| 2 | **landed** — all 9 distinct first-N rungs materialised and gated; the worklist's 27 `blocked` rows are `ready` on basis `first-n-recluster`; 170 rows, **0 blocked** | `scripts/materialise_first_n_ladder_twin.py`, `results/uplift-supplement/verifier-pairing/first-n/`, regenerated worklist and uplift CSVs |
+| 3 | **landed** — the September pair registered as `pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax`; the April cell untouched | `results/run-conditions.json`, `docs/methodology/notation-key.md` § 7.2 |
+| 4 | **landed** — K = 1 admitted; board 79 → **103** cells; all gates pass; re-tiered and MCB recomputed; `re_sign_pending` recorded | the board directory; `archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-79cell-pre-k1/` |
+| 5 | **partial** — see the scope note below | `results/k-ladder-2026-09-12/findings.md` |
+| 6 | **landed** — 28 rungs, 35,844 candidates, **US$24.84** at the audited Gemini 3 verifier rate; R4 re-verification exposure **nil** | `reports/k-ladder-phase2-costing-2026-09-12.md` |
+| 7 | **landed** | `reports/k-ladder-phase1-deltas-2026-09-12.md` |
+
+**Two expectations in this card did not survive execution**, both recorded in
+the inventory:
+
+- § 3 step 1 expected the Gemini 3 MINIMAL text family to be "complete or nearly
+  so" at K = 1/3/5/10. It is not: every Gemini 3 `pv-diag-384` family holds
+  exactly two rungs, K = 5 and K = 10, at each of T 0.3 / 0.7 / 1.0. The K = 1
+  and K = 3 counts this card quoted (24 and 6) were over all 128 conditions of
+  that run, not the verified ones.
+- § 3 step 2 assumed gaps could be filled "from existing pools where the first-N
+  rule permits", re-verifying "only where a verifier pass over a smaller union
+  is missing". Measured, that exception is the rule: a first-N sub-pool union is
+  neither a positional prefix of a longer committed union nor a coordinate
+  subset of it, because the consensus builder records each cluster's MEAN
+  centroid, so adding passes moves it. **Every** gap needs a verifier pass.
+
+**Step 5's scope, stated plainly.** The ladder tables cover all eight families
+at their own headline buffer from committed evaluations, with audited cost per
+rung where a committed figure exists, and the gold-standard stride-A ladder was
+re-scored on the board frame and tiered with the board instrument verbatim. The
+55-map ladders' pairwise significance is **cited from their own registered
+instrument** (the per-map paired sign-swap permutation of `stride55_ladder.py`
+and `gemini37_arm_ladder.py`) rather than re-run under the board's tile-swap
+instrument, which is defined on a tile grid and a different scoring engine. A
+per-family Hsu MCB set is supplied for the gold-standard ladder only. What is
+missing is named in the findings document, not glossed.
+
 ## Changelog
+
+### 2026-09-12 (later) — Phase 1 executed at US$0 (Session 154)
+
+Steps 0–4, 6 and 7 landed; step 5 partial, with its scope stated in § 6. No API
+call was made. The card's two stale expectations (§ 6) are corrected against
+measurement rather than left standing.
 
 ### 2026-09-12 — R1–R5 ruled; two principles recorded; B3 folded in (Session 153)
 

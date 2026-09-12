@@ -50,10 +50,17 @@ A registered condition joins when all of these hold:
 * ``aggregation`` is ``verified``;
 * its run is a 4-map-GS, 384 px, curator-reference run, or it is a
   B-geometry (``g384-ov192``) cell of the grid campaign;
-* its proposer pool has K >= 5 passes (read from the label — ``kofN``,
-  ``-nN``, ``kN`` — falling back to the row's ``n_passes``), which excludes
-  the single-pass + verifier cells (``*baseline*`` and the whole
-  ``proposer-verifier-384`` run);
+* its proposer pool has K >= ``MIN_K`` passes (read from the label — ``kofN``,
+  ``-nN``, ``kN`` — falling back to the row's ``n_passes``). ``MIN_K`` is **1**
+  from 2026-09-12: the PI's ruling R3 of the K-ladder review
+  (``planning/k-ladder-review-2026-09-11.md`` § 4) is that the board takes every
+  verified cell on its frame regardless of K, because the twenty single-pass
+  exclusions were a scope choice of this inventory builder (architecture class),
+  not a statistical one. Before that ruling ``MIN_K`` was 5 and a separate rule
+  excluded the ``*baseline*`` labels and the whole ``proposer-verifier-384`` run
+  by name; both had to go together, since the K gate alone would have kept
+  excluding all twenty. A row whose K cannot be read at all is still excluded —
+  an unknown pass count is not a K of 1;
 * its committed evaluation is scored on the Era-2 frame or on grid-common
   (the B tiling's frame) — which excludes the Era-3 327-tile cells, the 256 px
   scope-override cells, and any row without a readable evaluation;
@@ -91,6 +98,14 @@ B_FRAME = "grid_common_bounds.geojson"
 B_GEOMETRY = "g384-ov192"
 GRID_RUNS = ("grid-2026-08-18", "stride-phaseb-2026-08-25", "stride-phasec-2026-08-25", "stride-55map-2026-08-25")
 SINGLE_PASS_PV_RUN = "proposer-verifier-384"
+#: The opmax builder's own membership. Every row it mints is ITS member, scored
+#: and gated by ``scripts/build_gs_era2_board_opmax.py``, so this builder must
+#: not admit the same condition a second time.
+OPMAX_MEMBERSHIP = f"{BOARD_DIR}/opmax/membership.json"
+#: Smallest proposer pool the board admits. 1 since 2026-09-12 (PI ruling R3):
+#: every verified cell on the frame joins, whatever its pass count. The
+#: constant is kept rather than inlined so the rule stays one edit wide.
+MIN_K = 1
 G2_BOOTSTRAP = 200
 
 
@@ -131,10 +146,36 @@ def f1_at(doc: dict[str, Any] | None, buffer_m: int = 20) -> float | None:
     return None
 
 
+def opmax_owned() -> set[str]:
+    """Condition ids the opmax builder mints, and therefore owns.
+
+    Read from ``opmax/membership.json`` rather than matched on a ``-opmax``
+    label suffix, because the suffix is also a sanctioned label convention for
+    rows this builder DOES own — the September ``-recovery-<date>-opmax`` pair,
+    for one. Ownership is a fact the other builder records, not a guess from a
+    name.
+
+    Returns:
+        The condition ids, or an empty set if the opmax membership has not been
+        derived yet (in which case this builder admits nothing extra and the
+        operator is told to run the opmax builder's ``membership`` first).
+    """
+    path = REPO_ROOT / OPMAX_MEMBERSHIP
+    if not path.is_file():
+        print(f"NOTE: {OPMAX_MEMBERSHIP} is absent, so no opmax row can be "
+              "recognised as the opmax builder's; derive it first or this "
+              "membership may double-count", file=sys.stderr)
+        return set()
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    return {row["condition_id"] for row in doc.get("members", [])
+            if "condition_id" in row}
+
+
 def derive_membership() -> dict[str, Any]:
     """Apply the § 3 rule to the register; return members and exclusions."""
     dec = json.loads(RUN_CONDITIONS.read_text(encoding="utf-8"))["decomposition"]
     facts = json.loads(RUN_FACTS.read_text(encoding="utf-8"))["facts"]
+    owned_by_opmax = opmax_owned()
     members: list[dict[str, Any]] = []
     excluded: list[dict[str, Any]] = []
     for run_id, entry in dec.items():
@@ -152,8 +193,13 @@ def derive_membership() -> dict[str, Any]:
             def out(reason: str) -> None:
                 excluded.append({"condition_id": cid, "reason": reason})
 
-            if run_id == SINGLE_PASS_PV_RUN or "baseline" in label:
-                out("single-pass proposer + verifier (K = 1)")
+            # The single-pass exclusion by run and label was removed on
+            # 2026-09-12 (PI ruling R3). ``SINGLE_PASS_PV_RUN`` is kept as a
+            # constant because the run id is still worth naming in the record.
+            if cid in owned_by_opmax:
+                out("minted and scored by scripts/build_gs_era2_board_opmax.py "
+                    "(its membership.json names this condition); admitting it "
+                    "here too would double-count the cell")
                 continue
             if grid_run and B_GEOMETRY not in label:
                 out("grid/stride cell on a geometry other than B (its tiling falls short of the frame)")
@@ -162,8 +208,12 @@ def derive_membership() -> dict[str, Any]:
                 out("55-map corpus cell")
                 continue
             k = pool_k(label, cond.get("n_passes"))
-            if k is None or k < 5:
-                out(f"proposer pool K = {k} < 5")
+            if k is None:
+                out("proposer pool K could not be read from the label or "
+                    "n_passes; an unknown pass count is not a K of 1")
+                continue
+            if k < MIN_K:
+                out(f"proposer pool K = {k} < {MIN_K}")
                 continue
             doc = _eval_meta(cond.get("eval_path") or "")
             if doc is None:
@@ -378,7 +428,9 @@ def _mcb_admissible(board: Path) -> tuple[list[str], str | None]:
     return [], None
 
 
-def finalise(board: Path, membership: dict[str, Any]) -> None:
+def finalise(board: Path, membership: dict[str, Any],
+             skip_analysis_row: bool = False,
+             re_sign_reason: str | None = None) -> None:
     tiering = json.loads((board / "tiering_20m.json").read_text(encoding="utf-8"))
     gates = json.loads((board / "gates.json").read_text(encoding="utf-8"))
     g1 = _eval_meta(f"{BOARD_DIR}/g1-regression.json") or {}
@@ -408,11 +460,34 @@ def finalise(board: Path, membership: dict[str, Any]) -> None:
     ra = json.loads(RUN_ANALYSES.read_text(encoding="utf-8"))
     rows = ra["analyses"] if isinstance(ra, dict) else ra
     row = next(r for r in rows if r["analysis_id"] == BOARD_ID)
-    row["outcome"] = outcome
-    row["output_path"] = f"{BOARD_DIR}/tiering_20m.json"
-    RUN_ANALYSES.write_text(json.dumps(ra, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    re_sign: dict[str, Any] | None = None
+    if skip_analysis_row:
+        # The row is PI-signed. Its outcome is a PROPOSAL here, recorded in the
+        # board's provenance for the PI to apply when re-signing, so the
+        # register keeps exactly the text the PI approved.
+        re_sign = {
+            "status": "PENDING — the PI re-signs",
+            "reason": re_sign_reason or "the board's membership changed",
+            "signed_outcome": row.get("outcome"),
+            "proposed_outcome": outcome,
+            "signed_n_conditions_compared": len(row.get("conditions_compared") or []),
+            "proposed_n_conditions_compared": membership["n_members"] + n_opmax,
+            "tiering_membership_source": (
+                f"{BOARD_DIR}/tiering-input/run-analyses.json — the register's "
+                "row was NOT amended; see scripts/build_board_tiering_input.py"),
+            "untouched_fields": ["manually_verified_at", "_signature_note",
+                                 "conditions_compared", "outcome",
+                                 "gates.G1.pi_ruling"],
+        }
+        print("\n=== analysis row NOT amended (--no-analysis-row). "
+              "Proposed outcome, for the PI ===\n" + outcome + "\n")
+    else:
+        row["outcome"] = outcome
+        row["output_path"] = f"{BOARD_DIR}/tiering_20m.json"
+        RUN_ANALYSES.write_text(json.dumps(ra, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     provenance = {
         "board_id": BOARD_ID, "card": CARD, "frame": FRAME, "frame_id": FRAME_ID,
+        **({"re_sign_pending": re_sign} if re_sign else {}),
         "frame_provenance": "inputs/vectors/bounds/384/era2_b_intersection_bounds.provenance.json",
         "membership": {"n": membership["n_members"] + n_opmax,
                        "rule": "card § 3 under the § 2 frame rule; see membership.json",
@@ -430,7 +505,34 @@ def finalise(board: Path, membership: dict[str, Any]) -> None:
                     "git_commit": tiering.get("git_commit"), "generated_at_utc": tiering.get("generated_at_utc")},
         "finalised_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
-    (board / "provenance.json").write_text(json.dumps(provenance, indent=1) + "\n", encoding="utf-8")
+    # Carry forward the fields no gate artefact holds: the PI's signature and
+    # the PI's G1 ruling. `finalise` rebuilds this file from the gates, so
+    # without this a re-finalise erases them — which on a signed board would
+    # quietly delete the record of the signature it is meant to preserve.
+    prior_path = board / "provenance.json"
+    if prior_path.is_file():
+        prior = json.loads(prior_path.read_text(encoding="utf-8"))
+        carried: list[str] = []
+        for field in ("signed_at", "signed_by"):
+            if field in prior and field not in provenance:
+                provenance[field] = prior[field]
+                carried.append(field)
+        prior_ruling = ((prior.get("gates") or {}).get("G1") or {}).get("pi_ruling")
+        current_g1 = (provenance.get("gates") or {}).get("G1")
+        if prior_ruling is not None and isinstance(current_g1, dict) \
+                and "pi_ruling" not in current_g1:
+            current_g1["pi_ruling"] = prior_ruling
+            carried.append("gates.G1.pi_ruling")
+        if carried:
+            provenance["_carried_forward"] = {
+                "fields": carried,
+                "why": ("no gate artefact records these, so finalise carries them "
+                        "from the previous provenance.json rather than rebuilding "
+                        "them away; they are the PI's and only the PI sets them"),
+            }
+            print(f"carried forward from the previous provenance.json: "
+                  f"{', '.join(carried)}")
+    prior_path.write_text(json.dumps(provenance, indent=1) + "\n", encoding="utf-8")
     lines = [f"# The GS Era-2 verified board on one frame — `{BOARD_ID}`", "",
              f"> **Last revised**: {provenance['finalised_at_utc'][:10]} (original publication). Card: `{CARD}`. "
              f"Frame: `{FRAME}` (`{FRAME_ID}`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, "
@@ -469,6 +571,14 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("command", choices=["membership", "jobs", "gates", "register", "finalise"])
     parser.add_argument("--write", action="store_true", help="register: persist to the register files")
+    parser.add_argument("--no-analysis-row", action="store_true",
+                        help=("register / finalise: do NOT write to the board's "
+                              "analysis row. It is PI-signed, so its membership "
+                              "and outcome are the PI's to amend; finalise then "
+                              "records the proposed outcome under "
+                              "provenance.json's re_sign_pending instead."))
+    parser.add_argument("--re-sign-reason", default=None,
+                        help="finalise --no-analysis-row: one line naming what changed.")
     args = parser.parse_args(argv)
     board = REPO_ROOT / BOARD_DIR
     board.mkdir(parents=True, exist_ok=True)
@@ -495,7 +605,8 @@ def main(argv: list[str] | None = None) -> int:
         register(membership, args.write)
         return 0
     if args.command == "finalise":
-        finalise(board, membership)
+        finalise(board, membership, skip_analysis_row=args.no_analysis_row,
+                 re_sign_reason=args.re_sign_reason)
         return 0
     return 1
 

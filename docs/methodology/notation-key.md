@@ -171,7 +171,7 @@ Sanctioned 2026-09-10 (PI ruling 2(i) of the supplement's registration walk-thro
 | `output_dir` | anti-confabulation | Where the job writes its evaluation. |
 | `overlap_px` | § 2 (geometry cell) | Overlap in pixels, the second half of the geometry cell. |
 | `pair_id` | § 6 (stratum_id) | Primary key of a transfer pair; the key defines the object, not the column. |
-| `pairing_basis` | anti-confabulation | Which rule located the pre-verifier twin: registered, consensus-file, union. |
+| `pairing_basis` | anti-confabulation | Which rule located the pre-verifier twin: registered, consensus-file, union, crop-manifest, stage-manifest, shell-manifests, single-pass-manifest, `first-n-recluster`. |
 | `proposer_pool` | § 7 (registry ids: run_id::pool::runN) | The pool component of the pass id, as a column. |
 | `rationale` | anti-confabulation | Why this pair is a meaningful comparison despite spanning strata. |
 | `reference` | § 4 | Second component: curator / student / canonical / standardised. |
@@ -213,6 +213,19 @@ Sanctioned 2026-09-10 (PI ruling 2(i) of the supplement's registration walk-thro
 | `verifier_min_vote_seen` | § 1 (k) | Lowest vote_count the verifier actually saw, measured from the crop manifest. |
 | `verifier_variant` | § 2 (PV) | Verifier variant id from the condition's verifier_config. |
 
+### 7.2 Condition-label suffixes
+
+Sanctioned 2026-09-12 (the PI sanctions notation extensions made for the
+K-ladder review; `planning/k-ladder-review-2026-09-11.md` § 4, and the job's run
+card `planning/k-ladder-phase1-run-2026-09-12.md`). A suffix qualifies a
+condition label within its run; it never changes what the configuration IS.
+
+| Suffix | Meaning | Rationale |
+|---|---|---|
+| `-opmax` | The cell at its sweep's F1@20 argmax (an in-sample optimum, E56 class) rather than at a committed operating point. | Pre-existing; recorded here for completeness alongside the new suffixes. |
+| `-era2b` | The same cell re-scored on the board frame `era2-b-487`. | Pre-existing; recorded here for completeness. |
+| `-recovery-<date>` | The same configuration, at the same operating point, re-verified on a REBUILT candidate union; `<date>` is the re-verification stage's date, not the registration's. | A verifier's probabilities are API output tied to the candidate set it saw, so a rebuilt union cannot be re-scored — it must be re-verified, and the result is a different cell of the same configuration. The suffix keeps both cells findable and says which vintage each describes, which is what "keep history, present the best available" requires of the register. |
+
 ## 8. Cost vocabulary
 
 | Term | Meaning |
@@ -224,6 +237,21 @@ Sanctioned 2026-09-10 (PI ruling 2(i) of the supplement's registration walk-thro
 | $/mound | Run cost per true-positive detection at the operating point (the per-mound economics) |
 
 ## Changelog
+
+### 2026-09-12 — § 7.1 `pairing_basis` extended; § 7.2 condition-label suffixes added
+
+Two extensions the K-ladder Phase-1 run needed, both sanctioned by the PI's
+standing permission for notation extensions made for that job. `pairing_basis`
+gains `first-n-recluster`, the rule that locates a first-N ladder rung's
+pre-verifier twin by re-clustering `passes[:N]` as
+`scripts/stride55_ladder.py` does, rather than by filtering a committed union
+(the 27 rows that refusal had blocked; PI ruling B3). The row's value list is
+also brought up to date with the `crop-manifest`, `stage-manifest`,
+`shell-manifests` and `single-pass-manifest` bases the builder already emits
+(`scripts/build_verifier_pairing_worklist.py:150-151`). New § 7.2 records the
+condition-label suffixes, including the new `-recovery-<date>` convention for a
+configuration re-verified on a rebuilt union (PI rulings B2 and R4). Nothing
+else changed.
 
 ### 2026-09-10 — § 6 frames completed; § 7.1 uplift-supplement columns sanctioned
 
