@@ -76,6 +76,26 @@ already made rather than inferring one:
     the twin differs from its verified pair in the probability filter alone.
     Fires at ``N = 1, k = 1`` only.
 
+``first-n-recluster``
+    The LOWEST-ranked route, consulted only once every rule above has refused.
+    A first-N ladder rung's candidate universe was never committed: the rung is
+    re-clustered at analysis time from ``passes[:N]``
+    (``scripts/stride55_ladder.py`` and ``scripts/gemini37_arm_ladder.py``,
+    ``cluster_first_n``), so the committed K-pass union filtered at k is a
+    universe of a different vote basis — the refusal the ``union`` and
+    ``stage-manifest`` rules make by design. The PI ruled on 2026-09-12 (B3,
+    ``planning/k-ladder-review-2026-09-11.md`` § 5) that those universes are
+    DERIVED, by ``scripts/materialise_first_n_ladder_twin.py``, under two gates:
+    the full-K rebuild must reproduce the committed union exactly, and the
+    shell's feature count must equal the rung's recorded pre-verifier count at
+    ``prob_t = 0.0`` in the final boards' sweep CSVs. This builder derives
+    nothing; it accepts a committed twin at
+    ``results/uplift-supplement/verifier-pairing/first-n/<pool>-n<N>-k<k>/twin.geojson``
+    only when the file's own ``_materialised`` block says it is that rung and its
+    recorded ``n_kept`` matches its feature count. Closes the 27 rows
+    ``planning/uplift-supplement-2026-08-28.md`` recorded as "the 27 that stay
+    blocked".
+
 ``unresolved``
     Nothing committed matches. Recorded as blocked with the reason, never
     substituted. Every rule's refusal is joined into that reason, so a reader
@@ -145,7 +165,11 @@ from scripts.lib_uplift_supplement import (
 DEFAULT_OUT_DIR = Path("results/uplift-supplement")
 
 #: Bases whose twin is a committed GeoJSON scoreable as it stands.
-_CONSENSUS_FILE_BASES = ("consensus-file", "source-run-consensus")
+_CONSENSUS_FILE_BASES = ("consensus-file", "source-run-consensus",
+                         "first-n-recluster")
+#: Where ``scripts/materialise_first_n_ladder_twin.py`` writes a derived
+#: first-N rung's pre-verifier set, one directory per (pool, N, k).
+_FIRST_N_TWIN_ROOT = "results/uplift-supplement/verifier-pairing/first-n"
 #: Bases whose twin is the vote shell of one or more candidate manifests.
 _MANIFEST_BASES = ("crop-manifest", "stage-manifest", "shell-manifests",
                    "single-pass-manifest")
@@ -1052,6 +1076,76 @@ def _find_pool_named_condition(
     )
 
 
+def _find_first_n_twin(
+    repo_root: Path, pool: str, n_passes: int, votes: int
+) -> tuple[str | None, str | None]:
+    """A derived first-N rung twin for this (pool, N, k), if one is committed.
+
+    A first-N ladder rung's candidate universe was never committed: the rung is
+    re-clustered at analysis time from ``passes[:N]``
+    (``scripts/stride55_ladder.py``, ``cluster_first_n``), so the committed
+    K-pass union filtered at k is a universe of a different vote basis — which
+    is why every other route in this builder refuses these cells. The PI ruled
+    on 2026-09-12 (B3) that the universes are derived instead, by
+    ``scripts/materialise_first_n_ladder_twin.py``, under that script's gates:
+    the full-K rebuild must reproduce the committed union, and the shell's count
+    must equal the rung's recorded pre-verifier count in the final boards' sweep
+    CSVs.
+
+    This finder does not re-derive anything. It looks for the committed twin at
+    the conventional path and re-reads the ``_materialised`` block the
+    materialiser wrote, so the file must SAY it is this rung before it is
+    accepted — a file at the right path with the wrong contents is refused, not
+    assumed.
+
+    Args:
+        repo_root: The repository root.
+        pool: The verified cell's proposer pool (the campaign cell).
+        n_passes: The rung's N.
+        votes: The verified cell's vote threshold k.
+
+    Returns:
+        ``(path, why)`` — the twin's repository-relative path and a note
+        describing its derivation, or ``(None, refusal)``.
+    """
+    relative = f"{_FIRST_N_TWIN_ROOT}/{pool}-n{n_passes}-k{votes}/twin.geojson"
+    path = repo_root / relative
+    if not path.is_file():
+        return None, (
+            f"first-n-recluster: no derived twin at {relative}; a first-N rung's "
+            "pre-verifier universe has to be re-clustered from passes[:N] before "
+            "it can be paired")
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        return None, f"first-n-recluster: {relative} is unreadable ({error})"
+    block = document.get("_materialised") or {}
+    if block.get("mode") != "first-n-recluster":
+        return None, (
+            f"first-n-recluster: {relative} does not record mode "
+            "'first-n-recluster', so it is not a derived rung twin")
+    gates = block.get("gates") or {}
+    if gates.get("n_passes") != n_passes:
+        return None, (
+            f"first-n-recluster: {relative} records N = {gates.get('n_passes')}, "
+            f"not {n_passes}")
+    if block.get("n_kept") != len(document.get("features") or []):
+        return None, (
+            f"first-n-recluster: {relative} records n_kept "
+            f"{block.get('n_kept')} but holds "
+            f"{len(document.get('features') or [])} features")
+    return relative, (
+        "twin derived by re-clustering passes[:%d] exactly as "
+        "scripts/stride55_ladder.py builds the rung, then taking the shell "
+        "vote_count >= %d at prob_t = 0.0; %d features, gated against the "
+        "rung's recorded pre-verifier count (%s) and against a full-K rebuild "
+        "of the committed union (%s features, max centroid drift %.3f m)" % (
+            n_passes, votes, block.get("n_kept"),
+            block.get("recorded_count_source"),
+            gates.get("full_k_rebuild_n"),
+            gates.get("full_k_max_centroid_distance_m", float("nan"))))
+
+
 def _has_source_tile(path: Path) -> bool:
     """Whether a detection GeoJSON carries a singular per-feature ``source_tile``.
 
@@ -1419,14 +1513,29 @@ def build_worklist(sources: CorpusSources) -> list[dict[str, Any]]:
                     materialise_filter = found.materialise_filter
                     notes += found.notes
                 else:
-                    blocked = (
-                        "no committed pre-verifier set was found for "
-                        f"(run={run_id}, pool={pool!r}, N={n_passes}, k={votes}): "
-                        "the registry holds no consensus sibling, no consensus "
-                        "GeoJSON names that threshold under the pool or run tree, "
-                        "and the run holds no vote >= 1 union over N passes"
-                        f" — and {found.refusal}"
-                    )
+                    # Last route, and the lowest-ranked: a DERIVED first-N rung
+                    # twin (PI ruling B3, 2026-09-12). It never overrides a
+                    # committed universe — it is consulted only once every route
+                    # above has refused, which for these cells is the point:
+                    # their universe was never committed at all.
+                    derived, derived_why = _find_first_n_twin(
+                        sources.repo_root, pool, n_passes, int(votes))
+                    if derived is not None:
+                        basis = "first-n-recluster"
+                        twin_detections = derived
+                        materialise_filter = (
+                            f"vote_count >= {int(votes)} at prob_t = 0.0, over "
+                            f"clusters re-built from passes[:{n_passes}]")
+                        notes.append(derived_why)
+                    else:
+                        blocked = (
+                            "no committed pre-verifier set was found for "
+                            f"(run={run_id}, pool={pool!r}, N={n_passes}, k={votes}): "
+                            "the registry holds no consensus sibling, no consensus "
+                            "GeoJSON names that threshold under the pool or run tree, "
+                            "and the run holds no vote >= 1 union over N passes"
+                            f" — and {found.refusal} — and {derived_why}"
+                        )
 
             if basis == "unresolved":
                 blocked = blocked or refusal or (
