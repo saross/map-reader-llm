@@ -54,6 +54,7 @@ Licence: Apache 2.0
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import logging
 import subprocess
@@ -318,16 +319,45 @@ def cmd_prepare(args: argparse.Namespace) -> None:
     points: list[dict[str, Any]] = []
     jobs: list[str] = []
 
+    # Each rung needs two sweeps (one per 487-tile frame) and each is a
+    # single-threaded CPU job of order a minute, so 28 rungs serially is an
+    # hour of wall clock for no reason. Sweeping is pure computation over
+    # committed files — independent per rung and per frame — so it runs in a
+    # pool, and the order-dependent bookkeeping below stays serial.
+    sweep_specs = [
+        (rung, bounds, out_name)
+        for rung in rungs
+        for bounds, out_name in (
+            (BOARD_BOUNDS, "sweep_2d_era2b.json"),
+            (ERA2_BOUNDS, "sweep_2d.json"),
+        )
+    ]
+    swept: dict[tuple[int, str], Path] = {}
+    if sweep_specs:
+        logger.info(
+            "sweeping %d (rung, frame) pair(s) with %d worker(s)",
+            len(sweep_specs),
+            args.sweep_workers,
+        )
+        with concurrent.futures.ThreadPoolExecutor(
+            max_workers=args.sweep_workers
+        ) as pool:
+            futures = {
+                pool.submit(run_sweep, rung, bounds=bounds, out_name=out_name):
+                    (rung["row"], out_name)
+                for rung, bounds, out_name in sweep_specs
+            }
+            for future in concurrent.futures.as_completed(futures):
+                key = futures[future]
+                swept[key] = future.result()
+                logger.info("  swept row %d -> %s", key[0], key[1])
+
     for rung in rungs:
         carried_prob = CARRIED_PROB_BY_RUN[rung["run_id"]]
         labels = condition_labels(rung, carried_prob)
 
-        board_sweep = run_sweep(
-            rung, bounds=BOARD_BOUNDS, out_name="sweep_2d_era2b.json"
-        )
-        era2_sweep = run_sweep(
-            rung, bounds=ERA2_BOUNDS, out_name="sweep_2d.json"
-        )
+        board_sweep = swept[(rung["row"], "sweep_2d_era2b.json")]
+        era2_sweep = swept[(rung["row"], "sweep_2d.json")]
         board_best = argmax_at_headline(board_sweep)
         era2_best = argmax_at_headline(era2_sweep)
         frames_agree = (board_best["vote_t"], board_best["prob_t"]) == (
@@ -629,6 +659,13 @@ def main() -> None:
     )
     prepare.add_argument("--tier", action="append", choices=["A", "B", "C", "D"])
     prepare.add_argument("--row", action="append", type=int)
+    prepare.add_argument(
+        "--sweep-workers",
+        type=int,
+        default=8,
+        help="Parallel sweep processes (default: 8). Sweeping is pure "
+             "computation over committed files, so it parallelises freely",
+    )
     prepare.add_argument(
         "--fresh",
         action="store_true",
