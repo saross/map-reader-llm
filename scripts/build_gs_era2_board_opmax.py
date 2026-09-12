@@ -160,18 +160,57 @@ def _load(rel: str) -> Any:
 
 
 def archived_cells() -> dict[str, dict[str, Any]]:
-    """The archived board's cells: F1@20, detection count, tier."""
+    """The archived board's cells: F1@20, detection count, tier.
+
+    ``archived_n`` is the FEATURE COUNT OF THE FILE THE ROW NAMES, counted here,
+    not a number read from the archived label-keyed evaluation cache.
+
+    The cache was the previous source (via a fallback, because the archived board
+    JSON records no ``n_detections`` for any of its 44 cells), and
+    ``reports/name-keyed-cache-audit-2026-09-12.md`` Finding 2 showed why that is
+    wrong: the cache is keyed by label with no content key, so for
+    ``pv-high-image-t0.3-n5`` it still serves the 372 features the file held at
+    ``bd24293d4`` although the file was re-materialised to 373 at ``d6cdb648b``.
+    Because the registry's count for that cell is also 372, the stale value
+    *agreed* with it and suppressed the ``differs`` verdict — and
+    ``registry_vs_archived`` is what decides whether the row is re-pointed at a
+    re-materialised file (``derive_membership``). A count taken from the file
+    cannot go stale that way. The cache's value is still recorded, as
+    ``archived_cache_n``, so the discrepancy is visible rather than erased.
+
+    Returns:
+        Per archived label: the archived F1@20, the counted ``archived_n``, the
+        cache's value and whether the two agree, the archived tier, the track,
+        and the YAML ``k``.
+
+    Raises:
+        FileNotFoundError: If a cell's materialised detection file is absent —
+            a count cannot be inferred, and inferring one is the defect this
+            change removes.
+    """
     doc = _load(ARCHIVED_BOARD)
     out: dict[str, dict[str, Any]] = {}
     for tier in doc["tiers"]:
         for c in tier["conditions"]:
             e = c["evaluations"]["20"]
-            n = e.get("n_detections")
-            if n is None:
+            detections = REPO_ROOT / MATERIALISED / f"{c['label']}.geojson"
+            if not detections.is_file():
+                raise FileNotFoundError(
+                    f"{c['label']}: no materialised detection file at "
+                    f"{detections.relative_to(REPO_ROOT)}; archived_n must be "
+                    "counted from the file the row names, never inferred")
+            n = len(json.loads(detections.read_text(encoding="utf-8")).get("features") or [])
+            cache_n = e.get("n_detections")
+            if cache_n is None:
                 cache = (REPO_ROOT / ARCHIVE / "per-architecture/era2/pv/.cache/evaluations"
                          / c["label"].replace(".", "-") / "t1_20m.json")
-                n = json.loads(cache.read_text(encoding="utf-8"))["n_detections"]
-            out[c["label"]] = {"archived_f1_20": float(e["f1"]), "archived_n": int(n), "archived_tier": tier["tier"],
+                if cache.is_file():
+                    cache_n = json.loads(cache.read_text(encoding="utf-8")).get("n_detections")
+            out[c["label"]] = {"archived_f1_20": float(e["f1"]), "archived_n": int(n),
+                               "archived_n_basis": f"counted from {MATERIALISED}/{c['label']}.geojson",
+                               "archived_cache_n": None if cache_n is None else int(cache_n),
+                               "archived_cache_agrees": None if cache_n is None else int(cache_n) == int(n),
+                               "archived_tier": tier["tier"],
                                "track": c["track"], "k_yaml": c.get("k")}
     return out
 
