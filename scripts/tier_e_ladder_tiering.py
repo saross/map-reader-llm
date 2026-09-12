@@ -117,6 +117,33 @@ def tier_e_rungs() -> list[dict[str, Any]]:
     return out
 
 
+def read_cell_figures(eval_path: str) -> dict[str, Any]:
+    """Read a cell's headline F1 and tile-MCC back from its own evaluation.
+
+    Args:
+        eval_path: Repository-relative path to an ``evaluation.json``.
+
+    Returns:
+        ``{"f1_20", "tile_mcc", "n_detections"}``, with ``tile_mcc`` ``None``
+        when the scorer withheld it.
+    """
+    doc = json.loads((BASE_DIR / eval_path).read_text())
+    summary = doc.get("summary", {})
+    buffers = {
+        int(entry["buffer_metres"]): entry
+        for entry in summary.get("buffers", [])
+    }
+    headline = buffers.get(HEADLINE_BUFFER, {})
+    tile = summary.get("tile_classification") or {}
+    mcc = tile.get("mcc")
+    return {
+        "f1_20": headline.get("f1"),
+        "tile_mcc": mcc.get("point") if isinstance(mcc, dict) else mcc,
+        "tile_mcc_withheld": bool(tile.get("withheld")),
+        "n_detections": summary.get("n_detections"),
+    }
+
+
 def write_inputs(rungs: list[dict[str, Any]]) -> tuple[Path, Path]:
     """Write the scratch analyses and conditions sidecars.
 
@@ -238,7 +265,9 @@ def main() -> None:
     )
 
     rungs = tier_e_rungs()
-    rungs.append(dict(K10))
+    k10 = dict(K10)
+    k10.update(read_cell_figures(k10["eval_path"]))
+    rungs.append(k10)
     rungs.sort(key=lambda rung: rung["n_passes"])
     logger.info(
         "ladder: K = %s", ", ".join(str(r["n_passes"]) for r in rungs)
