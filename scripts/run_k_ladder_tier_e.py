@@ -101,9 +101,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import geopandas as gpd
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
+from scripts.prepare_h13_scoring import assign_primary_tiles  # noqa: E402
 from scripts.run_k_ladder_phase2_verifier import (  # noqa: E402
     PADDING_PX,
     VERIFIER_CONFIG,
@@ -944,8 +947,56 @@ def materialise(
             completed.stderr[-2000:],
         )
         sys.exit(6)
-    with open(output) as handle:
-        return len(json.load(handle).get("features", []))
+    return reassign_carrier_tiles(output)
+
+
+def reassign_carrier_tiles(path: Path) -> int:
+    """Re-key a materialised cell's ``source_tile`` to the board frame's tiles.
+
+    **Why this is necessary, and why it is the like-for-like choice.** The grid
+    pool's proposer ran on ``inputs/tiles_384_ov192`` — a 192 px stride — so its
+    detections carry names like ``…_x0_y192.png``, while the board frame's
+    vocabulary is the 336 px stride (``…_x0_y1008.png``). Measured on the first
+    scoring attempt: only **12 of 308** distinct proposer tile names appear in
+    the frame, and the tile-join invariant refused the cell rather than
+    publishing a meaningless tile-MCC beside a sound F1
+    (``reports/tile-mcc-geometric-join-2026-09-12.md`` § 3).
+
+    The committed K = 10 rung of this same family does not have the problem
+    because ``scripts/materialise_grid_unions.py`` assigns each cluster a
+    primary CARRIER tile (``prepare_h13_scoring.assign_primary_tiles``, nearest
+    tile centroid among those intersected) before scoring. Doing the same here
+    is what makes the four rungs of the ladder joined the same way; leaving it
+    undone would join the top rung geometrically and the other three by a
+    foreign vocabulary.
+
+    Points that fall on no frame tile are kept in the file (they are real
+    detections, and the scorer counts them in ``n_outside_union``) with a null
+    ``source_tile``.
+
+    Args:
+        path: The materialised detections GeoJSON, rewritten in place.
+
+    Returns:
+        The feature count of the written GeoJSON.
+    """
+    bounds = gpd.read_file(BASE_DIR / BOARD_BOUNDS)
+    gdf = gpd.read_file(path)
+    if gdf.crs is None:
+        gdf = gdf.set_crs("EPSG:4326")
+    before = len(gdf)
+    projected = gdf.to_crs(bounds.crs)
+    projected["source_tile"] = assign_primary_tiles(projected, bounds)
+    gdf["source_tile"] = projected["source_tile"].to_numpy()
+    outside = int(gdf["source_tile"].isna().sum())
+    gdf.to_file(path, driver="GeoJSON")
+    logger.info(
+        "  re-keyed %s: %d feature(s), %d outside the frame's tile union",
+        path.name,
+        before,
+        outside,
+    )
+    return before
 
 
 def eval_command(detections: Path, cell: str, label: str) -> str:
