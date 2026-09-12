@@ -545,6 +545,16 @@ def build_condition_rows(sources: CorpusSources) -> tuple[list[dict], list[dict]
                 "reference_path is the canonical in-repo anchor and "
                 "reference_consumed_path records what the evaluation read"
             )
+        # E72 remediation item 4, discharged 2026-09-12: the register's own
+        # caveat travels into the published dataset. Until now a row whose
+        # register entry said "do not cite this cell's 487-bounds figures"
+        # published those figures with an EMPTY notes cell, so a reader of the
+        # supplement alone could not know. The whole ``_note`` is carried rather
+        # than a summary of it, because deciding what part of a caveat matters
+        # is the reader's job, not the builder's.
+        register_caveat = (spec.get("_note") or "").strip()
+        if register_caveat:
+            notes.append(f"register caveat: {register_caveat}")
 
         manifest_detections = (manifest_row or {}).get("n_detections")
         if manifest_detections is None:

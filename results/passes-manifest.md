@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-09-12T08:51:04Z · 1314 row(s) · schema v1.0.
+> Generated 2026-09-12T14:24:08Z · 1317 row(s) · schema v1.0.
 >
-> **Coverage**: 1314 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 1317 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cands | cost_usd |
 |---|---|---|---|---|---|---|---|---|
@@ -1177,6 +1177,9 @@
 | grid-2026-08-18::g384_ov048-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1827 | 2.510424 |
 | grid-2026-08-18::g384_ov192-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3319 | 4.542317 |
 | grid-2026-08-18::g384_ov192-union-k10-verify37::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 1 | 0.001364 |
+| grid-2026-08-18::g384_ov192-k-ladder-k1-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1826 | 2.506213 |
+| grid-2026-08-18::g384_ov192-k-ladder-k3-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2481 | 3.39789 |
+| grid-2026-08-18::g384_ov192-k-ladder-k5-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2932 | 4.014995 |
 | h13::armb::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 430 | — | 0.579331 |
 | h13::armb::run2 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 430 | — | 0.581053 |
 | h13::armb::run3 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 430 | — | 0.584686 |

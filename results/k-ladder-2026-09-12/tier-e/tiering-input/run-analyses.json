@@ -1,0 +1,27 @@
+{
+  "_README": "TIERING INPUT \u2014 NOT REGISTERED. Written by scripts/tier_e_ladder_tiering.py so scripts/era1_leaderboard_tiering.py can tier the tier E ladder's four rungs on ONE frame. The K = 10 rung's eval_path here is its BOARD-FRAME re-score, not the committed grid-common evaluation its registered row carries; that re-score is a derived comparison, not a new cell. results/run-conditions.json and results/run-analyses.json are not modified and this file must never be written back over either.",
+  "schema_version": "1.0",
+  "analyses": [
+    {
+      "analysis_id": "k-ladder-tier-e-2026-09-12",
+      "type": "comparison",
+      "_note": "Tier E: the verified grid 384 px / 50 % MINIMAL text K ladder, sweep-optimal basis, board frame era2-b-487, headline buffer 20 m.",
+      "conditions_compared": [
+        "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe"
+      ],
+      "hypothesis_refs": [
+        "H3",
+        "H13"
+      ],
+      "outcome": "PENDING: this is a tiering input, not a registered result",
+      "paper_section": "Results",
+      "output_path": null,
+      "working_notes_obs": [],
+      "preregistered": "post-hoc",
+      "deviations": []
+    }
+  ]
+}

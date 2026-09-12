@@ -1,0 +1,39 @@
+{
+  "version": "1.0",
+  "mode": "realtime",
+  "verifier_config": "verify_adversarial-text",
+  "iterations": 1,
+  "total_results": 5,
+  "results": {
+    "candidate_00002": {
+      "mound_probability": 0.05,
+      "reasoning": "The symbol is a clear triangulation point located on a road or embankment. While it marks a spot height (133,0), it lacks the specific outward-radiating hachures required to identify a burial mound. The orange line beneath it is a road or contour, not part of a mound symbol.",
+      "best_alternative": "A triangulation point without a mound.",
+      "alternative_evidence": "The symbol consists of a black triangle with a central dot, which is the standard representation for a triangulation point. There are no orange-brown radiating rays (sunburst pattern) surrounding the triangle."
+    },
+    "candidate_00000": {
+      "mound_probability": 0.05,
+      "reasoning": "The symbol lacks the characteristic 'sunburst' or 'gear' pattern of outward-radiating rays. Instead, it consists of a standard spot height (dot + elevation number) located next to a linear embankment or road feature. The hachures are part of the linear infrastructure, not a circular mound symbol.",
+      "best_alternative": "Spot height marker and embankment hachures.",
+      "alternative_evidence": "The central feature is a small black dot associated with the number '161.0'. To its left is a linear orange-brown feature with short perpendicular lines (hachures) pointing inward toward a road or embankment."
+    },
+    "candidate_00003": {
+      "mound_probability": 0.1,
+      "reasoning": "While the benchmark is located on a contour line (orange-brown line), the surrounding marks are consistent with vegetation symbols (the 'S' shapes) and the contour itself, rather than the specific radiating hachures required for a mound symbol. The black square is a standalone survey marker.",
+      "best_alternative": "A benchmark or survey marker without a mound.",
+      "alternative_evidence": "The central symbol is a solid black square with a central dot, which is the standard representation for a benchmark. There are no distinct, short, orange-brown rays radiating outward from the square to form a sunburst pattern."
+    },
+    "candidate_00001": {
+      "mound_probability": 0.0,
+      "reasoning": "The symbol is clearly part of the urban fabric, likely representing a specific type of building, monument, or landmark. It does not match the morphological requirements for a burial mound (no rays, no central circle/triangle/square with hachures).",
+      "best_alternative": "A building or architectural symbol within a settlement.",
+      "alternative_evidence": "The symbol is a black, hollow arch or horseshoe shape located in the center of a densely built-up urban area (indicated by the orange and black blocks). It lacks any outward-radiating rays or the characteristic sunburst pattern of a burial mound."
+    },
+    "candidate_00004": {
+      "mound_probability": 0.95,
+      "reasoning": "The symbol exhibits the classic 'sunburst' pattern with outward-radiating rays in the correct orange-brown color used for relief features on Soviet maps. The accompanying number '3' likely indicates the height of the mound in meters. No other standard map symbol (triangulation point, benchmark, or contour feature) matches this specific star-shaped orange geometry. The alternative of it being a random artifact is rejected due to the clear intentionality of the rays and the height label.",
+      "best_alternative": "A spot height or elevation label with a decorative or non-mound symbol.",
+      "alternative_evidence": "The symbol is rendered in orange-brown and is accompanied by the number '3'. While it has a star-like shape, the 'rays' are very short and uniform, and the central void is relatively large compared to standard kurgan symbols."
+    }
+  }
+}

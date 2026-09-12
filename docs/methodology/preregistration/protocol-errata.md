@@ -5167,3 +5167,94 @@ outline D.8 (one bullet), Results § R7 (table), and a working-notes
 observation.
 
 ---
+
+### E85: The temperature study's five consensus conditions were labelled N = 30 but read a 5-pass union — relabelled `consensus-{1..5}of5`; no measured value changes
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-09-12 (identified by the union-staleness retrospective, S154; ruled the same day) |
+| Type | Correction of a register label (the artefacts and every measured value are unchanged) |
+| Commit | the register relabel and the generator caveat propagation land together; this entry's commit |
+| Files | `results/run-conditions.json` (`decomposition.consensus-384-t1-0.conditions[0..4]`); `results/conditions-manifest.json` + `.md`; `results/uplift-supplement/conditions.csv` + `conditions-by-buffer.csv`; `results/run-analyses.json` (the `uplift-supplement-flatten` row's `conditions_compared`, five ids renamed in place) |
+| Impact | Nil on every measured value; medium on the description of five conditions. The five F1 figures were measured on the artefacts they name, so nothing is miscomputed — but a vote threshold of 5 is **unanimity of 5 passes**, not a 1-in-6 minority of 30, and the cost basis over-attributed a 5-pass union's cost by a factor of six. |
+
+**Description**: the five conditions
+`consensus-384-t1-0::consensus-{1..5}of30` read
+`outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t{1..5}.geojson`,
+and those five unions **reproduce exactly from the first 5 of the pool's 30
+passes** — 974 / 616 / 484 / 395 / 295 features, zero unmatched in either
+direction, maximum matched offset 0.066 m — while reproducing from no other
+selection (a first-10 re-derivation fails on all five, and an all-30
+re-derivation diverges grossly: 1,862 / 1,186 / 953 / 828 / 770).
+`reports/union-staleness-retrospective-2026-09-12.md` § 3 is the measurement.
+
+Nothing on disk declared the subset: the directory is `voting/`, not
+`consensus-n5/`, so the sub-pool naming convention that makes the corpus's 36
+other first-N unions self-describing was absent here. The mechanism is dated
+from the run's own artefacts: passes `run_1`–`run_5` completed at
+2026-03-14T11:10:45–49 UTC and `run_6`–`run_30` at 11:47:29–11:53:32 UTC, while
+`study_manifest.json` (generated 11:30:13Z) scheduled exactly the 25 remaining
+runs. The union in `voting/` was built between those two moments and never
+rebuilt; its `voting_summary.json` reads `{"total_passes": 5, …}` and every
+feature's `contributing_passes` is a subset of `run_1`–`run_5`.
+
+**The correct label was already on the record elsewhere.**
+`results/e43-board-regen/summary.md` § 1 names the same artefact
+`flash-min-text-t10 N=5 N=5, 5-of-5`, so `consensus-5of5` matches an existing
+board family rather than inventing a convention; the register's `Nof30` was not
+a defensible alternative reading but a contradiction of it. The run's 30-pass
+sweep was computed as an *analysis* and never materialised
+(`results/paper-eval/flash-min-text-t10-20m/consensus-analysis-report.json`,
+`pool_sizes: [5, 10, 30]`), and its N = 5 rows reproduce the five register
+conditions' F1 and `n_detections` exactly.
+
+**Protocol impact**: none on any registered hypothesis. H6's vote-threshold
+characterisation does not read this cell, no signed board row reads any of the
+five unions, and `docs/paper/` and `paper/` contain zero occurrences of either
+the run name or the condition prefix. The cell is separately fenced off under
+**E72** for an unrelated coverage confound — "do not cite this cell's 487-bounds
+figures" — and that disposition is unchanged and independent: the `n_passes: 30`
+mislabel is a **second** defect, not covered by E72's note. What the relabel
+does change is any reading of these five rows as an N-scaling or
+vote-threshold series over 30 passes, and their cost basis.
+
+**Remediation (PI ruling, 2026-09-12 — options 1 and 4 of the retrospective's § 3.3)**:
+
+1. **Relabel.** `label` `consensus-{1..5}of30` → `consensus-{1..5}of5` and
+   `n_passes` 30 → 5 on all five register rows, with this erratum appended to
+   each row's existing `_note` so both dispositions travel together.
+2. **Propagate.** `results/conditions-manifest.json` + `.md` and the uplift
+   supplement's CSVs regenerated through their own builders rather than
+   hand-edited. `N` and the `cost_basis` string are derived from `n_passes`, so
+   both correct themselves; `K` continues to read 30 because the pool genuinely
+   holds 30 committed passes, which is the documented meaning of that column
+   (`K` is the pool's full pass count, `N` the prefix consumed).
+3. **Do not touch the artefacts.** No union, evaluation, or measured value was
+   modified. Option 2 of § 3.3 (materialise the true N = 30 union and re-score)
+   was **not** taken: the 30-pass sweep already exists as an analysis, so it
+   would add no information while changing five published F1 values in a cell
+   already marked uncitable.
+4. **Rename the directory: NOT done.** Option 3 of § 3.3 would make the
+   sub-pool self-declaring, but `voting/` is referenced by 272 files. Left, and
+   recorded here so a future reader of that path knows what it holds.
+
+**Completion note on E72 remediation item 4 (2026-09-12)**: E72's remediation
+promised "conditions-manifest coverage caveats set for the derived conditions".
+The retrospective's § 3.2 found that promise undischarged — the E72 note lived
+only in `results/run-conditions.json`, `results/conditions-manifest.json`
+contained zero occurrences of "E72" and its schema had no field that could carry
+one, and the `notes` column was empty for all five rows of
+`results/uplift-supplement/conditions.csv`. It is discharged with this erratum:
+the manifest schema gains a nullable `caveat` field, both generators emit the
+register's caveat into it, and the five relabelled conditions now carry **both**
+E72 and E85 wherever their figures are published. The same caveat channel covers
+all 35 conditions of this run, which is every row that carries the E72 note.
+
+Cross-references: **E72** (the coverage confound on the same five conditions,
+and the remediation item this discharges); **E43** and its 2026-08-02 correction
+block (the parent study); `reports/union-staleness-retrospective-2026-09-12.md`
+§§ 3, 3.1, 3.2 and 3.3 (the measurement and the options); `reports/e43-coverage-confound-remediation-2026-08-02.md`
+(E72's investigation); `reports/k-ladder-closeout-deltas-2026-09-12.md` (the
+before→after figures and the open question about the signed row).
+
+---

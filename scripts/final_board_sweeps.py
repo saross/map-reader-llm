@@ -289,7 +289,14 @@ def build_g37_families(index: dict) -> dict[str, dict]:
         tree = cKDTree(np.c_[union.geometry.x, union.geometry.y])
         probs = union["mound_probability"].to_numpy()
         stem = family.rsplit("-N", 1)[0]
-        for n in (1, 3):
+        # Rungs are every first-N below the family's own K, so a family is
+        # never given a rung that IS its full union. The two arms hold five
+        # passes (k_max 5), so they keep exactly the (1, 3) they always had;
+        # the fourth cell re-verified stride B's TEN passes (k_max 10), so it
+        # gains the N = 5 rung findings.md § 3.3 records as
+        # "zero-usd-inherited, never built". Derived from k_max rather than
+        # listed, so the asymmetry cannot drift back in.
+        for n in (n for n in (1, 3, 5) if n < k_max):
             gdf = cluster_first_n(passes, n, index)
             d, idx = tree.query(np.c_[gdf.geometry.x, gdf.geometry.y], k=1)
             gdf["mound_probability"] = probs[idx]

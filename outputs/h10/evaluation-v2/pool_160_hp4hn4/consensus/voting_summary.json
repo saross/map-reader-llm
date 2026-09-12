@@ -1,10 +1,45 @@
 {
   "total_passes": 5,
   "thresholds": {
-    "1": 1454,
-    "2": 474,
+    "1": 1474,
+    "2": 477,
     "3": 313,
     "4": 236,
     "5": 163
-  }
+  },
+  "pass_provenance_schema": "consensus-pass-provenance/1",
+  "pass_ids": [
+    "run_1",
+    "run_2",
+    "run_3",
+    "run_4",
+    "run_5"
+  ],
+  "pass_provenance": [
+    {
+      "pass_id": "run_1",
+      "path": "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_1/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson",
+      "git_blob_hash": "df27077067409079de3382cf6d7a31cde708d93f"
+    },
+    {
+      "pass_id": "run_2",
+      "path": "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_2/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson",
+      "git_blob_hash": "30bc9ced95d59974f55c6f9ac3f9d959fb44f8ef"
+    },
+    {
+      "pass_id": "run_3",
+      "path": "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_3/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson",
+      "git_blob_hash": "373898bef8960cb321c908e7cd91aef039e3366d"
+    },
+    {
+      "pass_id": "run_4",
+      "path": "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_4/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson",
+      "git_blob_hash": "783307a4e7247dc17d9345ea37c3c8cbb535fc61"
+    },
+    {
+      "pass_id": "run_5",
+      "path": "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_5/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson",
+      "git_blob_hash": "864cd86a4bfbc996aa28a1b795a987d8ac2c8698"
+    }
+  ]
 }

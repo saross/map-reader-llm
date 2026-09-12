@@ -1,6 +1,17 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-12 (later — **§ 7 added: the fourteen four-rung
+> **Last revised**: 2026-09-12 (latest — **§ 8 added**: the MINIMAL-ladder
+> tension measured rather than described. The two corpora agree once resolution
+> is accounted for — 487 tiles resolve a ΔF1 of about 0.03 and above, and the
+> nine MINIMAL ladders sort by effect size rather than by corpus — and § 8.4 adds
+> the verified B-geometry ladder tier E bought for US$4.9595, which is the
+> corpus's 23rd and the first verified MINIMAL ladder on the deployment
+> geometry. Before that: **§ 7.3 amended**: the withheld
+> tile-MCC question is now measured across all 149 committed cells the board
+> reads, only these three are affected, the scorer refuses rather than
+> emitting, and repair is confirmed to be a corpus-wide decision — see
+> `reports/tile-mcc-geometric-join-2026-09-12.md`). Before that: **§ 7 added:
+> the fourteen four-rung
 > ladders Phase 2 bought** for US$24.81 over 28 rungs, which closes § 6.3's gap
 > and takes the document from eight ladders to twenty-two; § 4.3 extends § 4's
 > F1-against-MCC table to them, § 5 points at their Pareto table and figure).
@@ -711,6 +722,42 @@ vocabulary differs from its proposer's tiling has this problem, and nothing in
 the pipeline warns of it — the board's own confusion gate reproduces the same
 wrong confusion and passes.
 
+**Amended 2026-09-12 (later).** Both questions above are now answered by
+measurement, and the withholding stands — but on a firmer footing and for a
+sharper reason. `reports/tile-mcc-geometric-join-2026-09-12.md` is the full
+account; three things belong here.
+
+1. **The general question is closed for this corpus.** All **149** committed
+   cells the Era-2 board reads — its own 103 plus this run's 46 — were
+   re-scored under the legacy string join and both geometric joins
+   (`scripts/audit_tile_join_variants.py`, on sapphire;
+   `results/tile-join-audit/`). **146 reproduce their committed confusion and
+   MCC exactly, and exactly these three are refused — no other cell in either
+   corpus, the signed board included.** No published MCC outside these three
+   was ever affected.
+2. **It can no longer fail silently.** The join is now a named parameter at one
+   place in the library, and the scorer refuses to emit an MCC when any point
+   inside the frame's tile union was booked to no tile — 21 of 475 here. The
+   board's confusion gate now checks the confusion against the frame's
+   polygons rather than against a rebuild of itself, which is why it passed
+   these cells before. A wider exposure also surfaced: the same string join
+   booked TPs and FPs in the per-tile table the bootstrap CIs and permutation
+   tests resample, so a mismatched cell lost **every** TP and FP there too —
+   this family escaped that only because it was already excluded from the
+   permutation testing.
+3. **Repair is a larger decision than it looked, so it is still the PI's.**
+   The premise that a geometric join reproduces the string join where the
+   vocabulary matches is **false**: the 384 px frames overlap on a 336 px
+   stride (the 487 tile areas sum to 1.2783x their union; a median 30.6 % of
+   detections lie inside more than one tile), so a geometric join raises MCC
+   on **146 of 146** sound cells, by +0.106 mean under `geometric-primary` and
+   +0.075 under `geometric-contains`. These three cells would read **0.9535 /
+   0.9059 / 0.9121** under the first rule and **0.9262 / 0.8761 / 0.8903**
+   under the second. Restoring them at either value while their sound K = 5
+   sibling stays at 0.7651 would invite the same misreading this section
+   withheld them to avoid, with the arrow reversed — so a coherent restoration
+   re-scores the family, which means re-scoring the board.
+
 ### 7.4 Pareto: K = 10 is almost never worth it, and the 3.7 family shows why
 
 Efficient rungs per family are tabulated in `phase2/ladder-tables.md`; the
@@ -745,7 +792,342 @@ US$12.94, or about US$1,100 per 0.001 F1.
 - **Nothing in §§ 2–6 moved.** No Phase 1 ladder gained a rung and no Phase 1
   number changed.
 
+## 8. Tension: MINIMAL ladders on the two corpora
+
+**The tension, stated first.** §§ 3.1–3.2 report that the two deployment
+MINIMAL stride ladders gain a lot from K and gain it decisively — stride B
++0.0547 F1@50 from K = 1 to K = 10 at BH p < 0.0001, stride A +0.0192 at
+BH p < 0.0001. § 7.1 reports that on the gold standard the MINIMAL ladders gain
++0.0139 to +0.0629 and **four of six are a single statistical tier** in which K
+buys nothing detectable. Two readings compete, and the corpus as it stood could
+not choose between them:
+
+- **the scale reading** — the effect is the same size on both corpora, and the
+  gold standard has 17.5x fewer tiles, so its instrument cannot resolve it;
+- **the corpus reading** — K really pays more at deployment, where the proposer
+  meets 55 unseen sheets rather than the 4 its examples were drawn from, so
+  extra passes have more left to find.
+
+Three analyses settle the first and qualify it. All cost US$0 and ran on
+sapphire; the machine-readable forms are `tension/subsample.json`,
+`tension/effect-sizes.json` and `tension/grid-overlap.json`.
+
+### 8.1 The subsample test: the gold standard's tile count, on the deployment cells
+
+The comparison across corpora confounds tile count with everything else. This
+one does not: it takes the **deployment ladders' own cells**, on their own
+reference and their own buffer, and scores them on random **487-tile** subsets
+of their own 8,541 tiles — the gold standard's exact tile count — 200 draws,
+seed 42, with the ladder's own instrument (round-robin tile-swap permutation
+over the four rungs, 10,000 permutations, BH q = 0.05 within each draw's six
+pairs). Corpus, reference, recipe and cells are held fixed; **only the number of
+tiles scored varies**.
+
+**The gate first.** Each rung's per-tile table was rebuilt from its committed
+detections and its micro-F1 compared with its committed board F1 before any
+subset was drawn: all eight rungs reproduce to within 2.6e-5 (the committed
+values are published at four decimals). The first run of this analysis
+**failed** that gate at micro-F1 0.0000 on all eight rungs, which is the
+signature § 7.3 describes — and the cause was the projection, not the tile
+names: the committed cells' detections are EPSG:4326 while the reference and
+frame are EPSG:32635, so a 50 m tolerance was being applied in degrees. The
+names were never in question (`source_tile` matches the frame 2,579 of 2,579).
+Recorded because the gate is the only reason the first numbers were not
+published.
+
+| ladder | full corpus (8,541 tiles) | draws BH-significant at 487 tiles | ΔF1 across draws: mean (sd) | p05 … p95 | draws with ΔF1 < 0 |
+|---|---:|---:|---|---|---:|
+| 55-map stride A, r2 | **+0.0192** (p < 0.0001) | **39 of 200 — 19.5 %** | +0.0191 (0.0113) | +0.0012 … +0.0377 | 8 |
+| 55-map stride B, r2 | **+0.0547** (p < 0.0001) | **197 of 200 — 98.5 %** | +0.0537 (0.0116) | +0.0329 … +0.0723 | 0 |
+
+**Read the two rows together and the mechanism is arithmetic.** The subsampling
+standard deviation of ΔF1 is the same on both ladders, ≈ 0.0114, because it is a
+property of scoring 487 tiles rather than of the ladder. An effect of +0.019
+therefore sits about 1.7 standard deviations from zero and is detected in fewer
+than one draw in five; an effect of +0.055 sits about 4.7 out and is detected in
+almost every draw. **At 487 tiles this instrument resolves a ΔF1 of roughly
+0.03 and above, and does not resolve one below it** — and that is measured on
+cells whose full-corpus p-value is below the permutation floor.
+
+### 8.2 The effect sizes, both corpora side by side
+
+Every MINIMAL-thinking K ladder in the corpus, K = 1 to its best rung, ordered
+by effect size rather than by corpus. Figures are re-read from the committed
+ladder inventories and permutation summaries, not recomputed.
+
+| ladder | corpus | tiles | K = 1 → best | ΔF1 | BH p | separates? |
+|---|---|---:|---|---:|---:|:---:|
+| MINIMAL image T 0.7 | gold standard | 487 | 1 → 10 | **+0.0629** | 0.0006 | **yes** |
+| stride B | deployment | 8,541 | 1 → 10 | **+0.0547** | < 0.0001 | **yes** |
+| MINIMAL text T 1.0 | gold standard | 487 | 1 → 10 | **+0.0546** | 0.0012 | **yes** |
+| MINIMAL image T 1.0 | gold standard | 487 | 1 → 10 | +0.0384 | 0.1236 | no |
+| GS stride A (exact) | gold standard | 487 | 1 → 10 | **+0.0305** | 0.0072 | **yes** |
+| MINIMAL text T 0.3 | gold standard | 487 | 1 → 5 | +0.0223 | 0.2768 | no |
+| stride A | deployment | 8,541 | 1 → 10 | **+0.0192** | < 0.0001 | **yes** |
+| MINIMAL text T 0.7 | gold standard | 487 | 1 → 5 | +0.0164 | 0.5780 | no |
+| MINIMAL image T 0.3 | gold standard | 487 | 1 → 10 | +0.0139 | 0.7803 | no |
+
+**Two things this table makes plain.**
+
+1. **The gold-standard ladders sort by effect size, not by anything else.**
+   Every one at or above +0.0546 separates; every one at or below +0.0223 does
+   not; the two in between straddle the resolution § 8.1 measured, and they
+   straddle it in both directions (+0.0384 does not separate, +0.0305 does),
+   which is what a resolution limit rather than a threshold looks like.
+2. **The two corpora's MINIMAL ranges are not different — the deployment range
+   sits INSIDE the gold standard's.** Gold standard +0.0139 to +0.0629;
+   deployment +0.0192 to +0.0547. There is no effect at deployment larger than
+   the largest on the gold standard.
+
+### 8.3 Does K's return depend on the geometry? The grid ladders say yes — before the verifier
+
+The grid study holds K = 1/3/5/10 ladders at four (tile size x overlap)
+geometries at **fixed MINIMAL text T 0.7 on one corpus**, which isolates
+geometry from everything the two-corpora comparison confounds. They are
+**consensus-only** — no verifier stage — and each rung is the best F1@20 over
+the (corroboration, vote) grid, which is how `results/grid-2026-08-18/findings.md`
+reads that sweep. On the grid-common 487-tile footprint:
+
+| geometry | K = 1 | K = 3 | K = 5 | K = 10 | ΔF1, K = 1 → 10 | ΔMCC |
+|---|---:|---:|---:|---:|---:|---:|
+| 384 px / 50 % | 0.6633 | 0.6837 | 0.7045 | 0.7205 | **+0.0572** | +0.0444 |
+| 512 px / 50 % | 0.7121 | 0.7429 | 0.7440 | 0.7518 | **+0.0396** | +0.0382 |
+| 384 px / 12.5 % | 0.5021 | 0.5976 | 0.6176 | 0.6475 | **+0.1454** | +0.1543 |
+| 512 px / 12.5 % | 0.5845 | 0.6763 | 0.6736 | 0.6759 | **+0.0914** | +0.0597 |
+
+**Overlap governs K's consensus-only return, and by a factor of about 2.4.**
+At both tile sizes the low-overlap cell gains far more from K than the
+high-overlap one (+0.1454 against +0.0572 at 384 px; +0.0914 against +0.0396 at
+512 px). The reading offered: **overlap and pass count buy the same thing.** A
+50 % overlap already shows each mound to the proposer in several tiles within a
+single pass, so extra passes add less that the geometry has not already
+supplied; at 12.5 % overlap a mound is seen once, and extra passes are the only
+redundancy available. This is the same substitution the grid's own registered
+analysis found between consensus and the verifier
+(`grid-postverifier-2026-08-18`: "consensus and verifier are complements, not
+substitutes"), now between consensus and *overlap*.
+
+**But the pattern does not survive to the verified deployment ladders, and that
+is worth stating rather than smoothing.** Stride A runs a 128 px overlap of 384
+(33 %) and stride B a 192 px overlap (50 %), so the grid's rule predicts stride
+A should gain MORE from K. It gains **less** (+0.0192 against +0.0547). The
+difference between the two settings is the verifier, which the grid ladders
+above do not have — and § 8.4 is the measurement that isolates it.
+
+Note also the ΔMCC column: on these consensus-only ladders tile-MCC **rises**
+with K at every geometry, by +0.038 to +0.154. That is the opposite of §§ 4
+and 4.3, where tile-MCC falls on 16 of 21 verified ladders. The two are
+consistent under § 4's mechanism: a consensus-only union at a tuned vote
+threshold is precision-starved, so extra passes still add true positives in
+tiles that were negative, which raises MCC; once a verifier has already removed
+most false positives, extra passes mostly add false positives, which lowers it.
+**Tile-MCC's response to K reverses across the verifier stage.**
+
+### 8.4 The verified B-geometry ladder tier E bought
+
+**What it is, and why it is the term the tension was missing.** The grid study's
+384 px / 50 % overlap pool is the **B geometry** — the same tiling the deployment
+stride-B ladder runs on — at gold-standard scale, and it already held a verified
+K = 10 cell (the committed `grid-postverifier-2026-08-18` 384/50 cell). Tier E
+bought its K = 1, K = 3 and K = 5 siblings for **US$4.9595** audited flex (7,239
+of 7,239 candidates verified, 0 failed), so the corpus now has a **verified
+MINIMAL-text ladder on the deployment geometry**, which is what no gold-standard
+MINIMAL ladder previously supplied.
+
+All four rungs on the board frame `era2-b-487`, curator reference, 14 buffers,
+10,000 BCa draws, seed 42, MCC; sweep-optimal basis per ruling R2. Machine-
+readable form: `tier-e/ladder.json`, `tier-e/scores.json`, spend in
+`tier-e/spend-ledger.json`.
+
+| K | candidates | opmax (k, p) | n | F1@20 | tile-MCC | verifier leg, audited flex |
+|---:|---:|---|---:|---:|---:|---:|
+| 1 | 1,826 | (1, 0.20) | 482 | 0.8546 | **0.8211** | **$1.2531** |
+| 3 | 2,481 | (3, 0.15) | 450 | 0.8840 | 0.8167 | **$1.6989** |
+| 5 | 2,932 | (5, 0.15) | 435 | **0.8905** | 0.8139 | **$2.0074** |
+| 10 | 3,319 | (10, 0.15) | 400 | 0.8886 | **0.7903** | ≈ $2.28 † |
+
+† The K = 10 rung's verifier leg is not separately audited: it is part of the
+committed grid verifier run's US$6.2714 flex over 9,133 candidates across four
+geometries, so US$2.28 is that figure pro-rated by its 3,319 candidates. The
+proposer leg is US$0.8377 flex per pass on this pool
+(`outputs/grid-2026-08-18/g384_ov192/run_1/…meta.json`, `cost_estimate`
+US$1.675407 at list, halved), so the all-in flex figures are about $2.09, $4.21,
+$6.20 and $10.66.
+
+**The statistical result**, board instrument verbatim
+(`scripts/era1_leaderboard_tiering.py --permute-mcc`, 487 tiles, 10,000
+permutations, seed 42, BH q = 0.05 within the ladder's own six pairs; every
+rung's rebuilt micro-F1 reproduced its committed evaluation at gap ±0.0000
+before any p-value was read):
+
+| pair | ΔF1@20 | BH p | ΔMCC | BH p |
+|---|---:|---:|---:|---:|
+| K = 1 → 3 | **+0.0294** | **0.0039** | −0.0044 | 1.0000 |
+| K = 1 → 5 | **+0.0359** | **0.0006** | −0.0072 | 1.0000 |
+| K = 1 → 10 | **+0.0340** | **0.0046** | −0.0308 | 0.3960 |
+| K = 3 → 5 | +0.0065 | 0.5772 | −0.0028 | 1.0000 |
+| K = 3 → 10 | +0.0046 | 0.7248 | −0.0264 | 0.3960 |
+| K = 5 → 10 | −0.0019 | 0.8288 | −0.0236 | 0.3960 |
+
+**Two tiers: Tier 1 = {K = 3, K = 5, K = 10}, Tier 2 = {K = 1}.** F1 separates on
+3 of 6 pairs — every pair involving K = 1 and no other — and **tile-MCC separates
+on none**, while falling **monotonically across all four rungs**: 0.8211 →
+0.8167 → 0.8139 → 0.7903. The best rung is K = 5, and K = 10 is *below* it by
+0.0019.
+
+**Three things to read off it.**
+
+1. **It is the corpus's pattern again, on a fifth gold-standard MINIMAL family
+   and the first on the deployment geometry.** F1 rises significantly from
+   K = 1 and saturates immediately after; tile-MCC falls at every step and never
+   significantly. § 4's mechanism predicts exactly this, and the monotone MCC
+   decline across four rungs is the cleanest instance of it in the corpus —
+   every one of the three MCC steps is negative.
+2. **The verifier absorbs about 40 % of K's F1 return and reverses tile-MCC's
+   response to it.** § 8.3's consensus-only ladder on this same pool and
+   geometry gains **+0.0572** F1 from K = 1 to K = 10 with tile-MCC **rising**
+   +0.0444; verified, the same pool gains **+0.0340** with tile-MCC **falling**
+   −0.0308. So the verifier takes roughly two-fifths of what extra passes buy on
+   F1 — because it was already removing much of what extra passes remove — and
+   turns a tile-level *gain* into a tile-level *loss*, a swing of 0.075 MCC.
+   This is the measurement § 8.3 asked for, and it is consistent with the grid
+   study's own registered finding that consensus and the verifier are partial
+   substitutes.
+3. **It refines § 8.1's resolution estimate rather than confirming it exactly.**
+   This ladder resolves **+0.0294** at BH p = 0.0039, below the ≈ 0.03 § 8.1
+   measured, while MINIMAL image T 1.0 does not resolve **+0.0384**. So the
+   487-tile limit is a band, not a threshold, and it varies between ladders with
+   their variance — which is what § 8.5 says and why it is stated as a
+   resolution rather than a cut-off.
+
+**One caveat the reader must carry, and it is not in the numbers above.** The
+K = 10 rung's candidate universe was assembled by a different rule from the
+other three: the committed union (3,319) is filtered to the grid study's common
+487-tile carrier footprint by `scripts/materialise_grid_unions.py`, while tier
+E's rungs are `merge_passes` unions on the pool's native footprint (a
+`merge_passes` K = 10 union holds 3,591, of which 3,325 survive that filter).
+Scoring every rung on the board frame excludes the out-of-frame candidates
+either way, so the F1 and MCC comparisons above are like for like; what differs
+is the universe each verifier pass priced. `reports/k-ladder-closeout-deltas-2026-09-12.md`
+§ 2.2 measures it and puts it to the PI.
+
+**And one instrument note, because it nearly cost the ladder its MCC column.**
+The tile-join invariant refused all six tier E cells on the first scoring
+attempt: the grid pool's proposer ran on the 192 px stride `ov192` tiling, and
+only **12 of 308** of its distinct tile names appear in the board frame's 336 px
+stride vocabulary — the same defect § 7.3 describes for the 3.7 family. Unlike
+that family, this one has a settled remedy already in use on it: the committed
+K = 10 rung is re-keyed to the carrier grid before scoring, so tier E's cells are
+re-keyed the same way and all four rungs are joined identically. The MCC column
+above is therefore sound, and the invariant is why we know that rather than
+hoping it.
+
+### 8.5 Which reading the data favour
+
+**The scale reading, for the tension as posed — with the geometry qualification
+of § 8.3 standing beside it, and without claiming the corpora are identical.**
+
+What is established:
+
+1. **The gold standard's null results are a resolution limit, not a finding
+   about K.** § 8.1 shows that the deployment stride A gain — below the
+   permutation floor on 8,541 tiles — goes undetected in 80.5 % of 487-tile
+   draws of its own cells. A gold-standard ladder reporting "one tier" at
+   ΔF1 +0.0139 to +0.0384 is reporting that 487 tiles cannot see an effect that
+   size, which is the same statement.
+2. **There is no evidence that K pays more at deployment.** § 8.2's deployment
+   range sits inside the gold-standard range, and the two gold-standard MINIMAL
+   ladders whose effects are deployment-sized (+0.0546, +0.0629) both separate.
+   The corpus reading predicts a shift the data do not show.
+3. **"K buys nothing detectable on four MINIMAL configurations" stands as
+   written** — it is a claim about detectability at 487 tiles, and § 8.1 is its
+   warrant rather than its refutation. What must not be said is that K buys
+   nothing *on those configurations*: four effects between +0.0139 and +0.0384
+   are consistent both with nothing and with the +0.019 the deployment corpus
+   resolves.
+
+What is **not** established, stated so the reading is not over-claimed:
+
+- **Two deployment ladders against seven gold-standard ones.** § 8.1's
+  resolution estimate rests on two ladders, and both are stride geometries under
+  the Gemini 3 verifier. A third would test it.
+- **§ 8.1 measures the instrument on the deployment cells, not on the gold
+  standard's.** The deployment ladders are scored against the r2 reference at
+  50 m, the gold standard against the curator reference at 20 m. The ≈ 0.0114
+  subsampling standard deviation is therefore a deployment-cell figure imported
+  to the gold standard's tile count, not a gold-standard measurement. It is the
+  closest available like-for-like, and it is not identical.
+- **A resolution limit is not a power calculation.** 19.5 % and 98.5 % are
+  detection rates at two effect sizes, not a curve; nothing here says what
+  ΔF1 the gold standard detects half the time.
+- **§ 8.3's geometry effect is consensus-only and unverified as a claim about
+  the verified ladders.** It is measured at one thinking level, one temperature,
+  one corpus and one modality, and the verified ladders order the other way.
+
 ## Changelog
+
+### 2026-09-12 (latest) — § 8: the tension measured, and tier E's ladder
+
+**Trigger**: the PI's closeout brief. § 7.1 and §§ 3.1–3.2 disagreed about what
+K buys on a MINIMAL configuration, and the document recorded the disagreement
+without resolving it; the brief asked for the three analyses that could.
+
+**What was added.** § 8, in five subsections: the subsample test (§ 8.1), the
+effect-size table across both corpora (§ 8.2), the grid overlap comparison
+(§ 8.3), the verified B-geometry ladder tier E bought (§ 8.4), and the verdict
+with its limits (§ 8.5). Artefacts:
+`results/k-ladder-2026-09-12/tension/{subsample,effect-sizes,grid-overlap}.json`
+and `results/k-ladder-2026-09-12/tier-e/`.
+
+**The document's ladder count moves 22 → 23**, and its scope note's "eight
+fixed-parameter ladders … all eight are tabulated here" now describes § 2–§ 3
+only.
+
+| claim | before | after |
+|---|---|---|
+| Why four MINIMAL ladders are one tier | unexplained; two readings offered | **a resolution limit, measured**: the deployment ladders' own cells lose BH significance in 80.5 % of 487-tile draws at ΔF1 +0.0192 and keep it in 98.5 % at +0.0547 |
+| Whether K pays more at deployment | open | **no evidence that it does** — the deployment range +0.0192…+0.0547 sits inside the gold-standard range +0.0139…+0.0629 |
+| Whether K's return depends on geometry | not asked | **yes, consensus-only**: ≈ 2.4x larger at 12.5 % overlap than at 50 %, at fixed MINIMAL text T 0.7 |
+| tile-MCC's response to K | falls on the verified ladders | **reverses across the verifier stage** — it RISES with K on all four consensus-only grid cells (+0.038…+0.154) and falls once a verifier is in front of it |
+| Verified MINIMAL ladders on the B geometry | none | **one**, four rungs: F1 0.8546 → 0.8840 → 0.8905 → 0.8886, tile-MCC falling monotonically 0.8211 → 0.7903 |
+
+**What did NOT change.** No figure in §§ 1–7 moved. No committed evaluation was
+rewritten. The three withheld tile-MCC cells of § 7.3 are still withheld, and
+`TILE_JOIN_DEFAULT` is still `id`. The Hsu MCB admissible sets are still not
+supplied (§ 6.1).
+
+**One instrument event worth recording.** Two gates refused a number before it
+was published: the per-tile rebuild gate caught that the committed 55-map cells'
+detections are EPSG:4326 against an EPSG:32635 reference and frame (§ 8.1), and
+the tile-join invariant refused all six tier E cells over a 192 px-against-336 px
+stride vocabulary mismatch (§ 8.4). Both were repaired and both are recorded.
+
+Landed on branch `worktree-agent-ae1e65fd9508397ec`. Closing report:
+`reports/k-ladder-closeout-deltas-2026-09-12.md`.
+
+### 2026-09-12 (later still) — § 7.3: the withheld tile-MCC, measured
+
+**Trigger**: the PI's 2026-09-12 ruling on
+`reports/k-ladder-phase2-deltas-2026-09-12.md` § 6.3 — make the tile assignment
+geometric, re-score the withheld cells, and generalise so the error cannot
+recur. Full account: `reports/tile-mcc-geometric-join-2026-09-12.md`.
+
+**What moved**: § 7.3 gains an amendment. No table, figure or number elsewhere
+in this document changed.
+
+| Claim | before | after |
+|---|---|---|
+| Cells in the corpus with a vocabulary mismatch | unknown, "put back to the PI" | **3 of 149** committed cells the board reads; 146 reproduce exactly |
+| Published MCCs affected outside these three | unknown | **none** — 0 of the signed board's 103 cells |
+| The three cells' tile-MCC | withheld (raw 0.1337 / 0.1337) | **still withheld**; raw third value recorded as 0.1422; geometric candidates 0.9535 / 0.9059 / 0.9121 (`geometric-primary`) or 0.9262 / 0.8761 / 0.8903 (`geometric-contains`) |
+| Whether a geometric join reproduces the string join on matched cells | assumed yes | **no** — higher on 146 of 146, +0.106 mean; the frames overlap |
+| Exposure of the defect | tile-MCC | tile-MCC **and** the per-tile TP/FP/FN table the bootstrap CIs and permutation tests resample |
+
+**What did NOT change**: §§ 2–7.2 and 7.4–7.5 in full; every F1 in the
+document (F1 is geometric and never consulted a tile name); the exclusion of the
+3.7 family from the permutation testing; the withholding itself.
+
+Landed on branch `worktree-agent-a5339796998dcf596`.
 
 ### 2026-09-12 (later) — § 7: the fourteen ladders Phase 2 bought
 
