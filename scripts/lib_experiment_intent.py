@@ -28,6 +28,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import os
@@ -55,8 +56,23 @@ logger = logging.getLogger(__name__)
 
 _INTENT_FILENAME = "experiment_intent.md"
 
+#: Where ``instruction_file`` values resolve (the directory
+#: ``4_detect_mounds_batch.py`` joins them to).
+_INSTRUCTIONS_DIR = _REPO_ROOT / "prompts" / "system-instructions"
+
+#: Name of the derived field carrying the instruction file's content hash.
+#: Not a config key: computed from the file the config names.
+INSTRUCTION_HASH_FIELD = "instruction_file_sha256"
+
 # Fields we cross-check when deciding whether a pre-existing
 # experiment_intent.md is consistent with the current config.
+#
+# ``instruction_file`` is compared by NAME, which Finding 6 of
+# ``reports/name-keyed-cache-audit-2026-09-12.md`` showed is not enough: edit
+# the instruction markdown in place and all eight fields still agree, so a
+# resume silently mixes tiles answered under two different prompts inside one
+# pass file. ``instruction_file_sha256`` is the derived content anchor that
+# settles it, and is compared alongside the name.
 _KEY_FIELDS_FOR_CONSISTENCY: tuple[str, ...] = (
     "version",
     "hypothesis",
@@ -64,6 +80,7 @@ _KEY_FIELDS_FOR_CONSISTENCY: tuple[str, ...] = (
     "temperature",
     "thinking_level",
     "instruction_file",
+    INSTRUCTION_HASH_FIELD,
     "model",
     "base_config",
 )
@@ -87,6 +104,45 @@ def _get_git_commit() -> str:
     except (FileNotFoundError, subprocess.TimeoutExpired):
         pass
     return "(unknown)"
+
+
+def instruction_file_hash(config: dict[str, Any]) -> str | None:
+    """SHA-256 of the system-instruction file the config names.
+
+    The content anchor behind the intent check (audit Finding 6). The
+    ``instruction_file`` field names a markdown file under
+    ``prompts/system-instructions/``; editing that file in place changes
+    what the API is asked while leaving every compared config field —
+    including the filename — identical.
+
+    Args:
+        config: The loaded variant config dict.
+
+    Returns:
+        The hex digest, or ``None`` when the config names no instruction
+        file or the file cannot be read (absent, unreadable): a missing
+        anchor is reported as unknown, never as a match.
+    """
+    name = config.get("instruction_file")
+    if not name:
+        return None
+    raw = Path(str(name))
+    candidates = (
+        [raw] if raw.is_absolute()
+        else [_INSTRUCTIONS_DIR / raw, _REPO_ROOT / raw, raw]
+    )
+    for candidate in candidates:
+        if candidate.is_file():
+            try:
+                return hashlib.sha256(candidate.read_bytes()).hexdigest()
+            except OSError:
+                return None
+    logger.warning(
+        "instruction_file %s not found under %s: its content hash cannot be "
+        "recorded, so the intent check falls back to the filename alone.",
+        name, _INSTRUCTIONS_DIR,
+    )
+    return None
 
 
 def _format_field_value(value: Any) -> str:
@@ -193,6 +249,9 @@ def _build_intent_markdown(
     for field_name in (
         "model",
         "instruction_file",
+        # The instruction file's CONTENT, not just its name (Finding 6):
+        # an in-place edit of the markdown is invisible to every other row.
+        INSTRUCTION_HASH_FIELD,
         "include_example_images",
         "temperature",
         "thinking_level",
@@ -200,6 +259,8 @@ def _build_intent_markdown(
     ):
         if field_name == "include_example_images":
             value = include_images
+        elif field_name == INSTRUCTION_HASH_FIELD:
+            value = instruction_file_hash(config)
         else:
             value = config.get(field_name)
         lines.append(f"| `{field_name}` | {_format_field_value(value)} |")
@@ -341,6 +402,13 @@ def _existing_intent_matches(
         if field_name == "include_example_images":
             cur_val = current_config.get(field_name, True)
             cur_str = "true" if cur_val else "false"
+        elif field_name == INSTRUCTION_HASH_FIELD:
+            # Derived, not a config key: the hash of the file the config
+            # names (Finding 6). An intent file written before this field
+            # existed simply lacks the row and is skipped below, as for
+            # any other absent field.
+            cur_val = instruction_file_hash(current_config)
+            cur_str = "(absent)" if cur_val is None else str(cur_val)
         else:
             cur_val = current_config.get(field_name)
             cur_str = (

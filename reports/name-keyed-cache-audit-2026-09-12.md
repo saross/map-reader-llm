@@ -1,6 +1,6 @@
 # Name-keyed cache and derived-artefact audit
 
-> **Last revised**: 2026-09-12 (original publication). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-12 (fix 1 implemented — see [§ Changelog](#changelog) for revision history).
 >
 > **Audited**: 2026-09-12 against HEAD `2fabf4e1d`, branch `worktree-agent-a98527f84011ee57d`
 > (clean tree). Read-only: no repository file was modified, no Application
@@ -338,7 +338,13 @@ be used to detect the mix after the fact.
 
 ## 5. Proposed fixes, ranked by risk
 
-None implemented. Each prefers a pattern the repository already uses; the
+**Fix 1 was implemented on 2026-09-12** — see
+`reports/bootstrap-cis-repair-2026-09-12.md`. Under the Principal
+Investigator's ruling the 85 stale entries were **re-run** on their present
+source files rather than annotated as uncitable, so both stores are now wholly
+current; the dead paths are repaired and a tier-1 test re-counts every entry.
+Fixes 2-7 remain unimplemented. Each prefers a pattern the repository already
+uses; the
 content-addressed helper to reach for is `git_blob_hash`
 (`scripts/materialise_opmax_cells.py:125-141`, "``git hash-object`` is
 content-addressed, so this anchors a provenance record to the exact bytes read").
@@ -420,6 +426,32 @@ content-addressed, so this anchors a provenance record to the exact bytes read")
   the current board, not merely guarded.
 
 ## Changelog
+
+### 2026-09-12 — Fix 1 implemented
+
+`reports/bootstrap-cis-repair-2026-09-12.md` records the repair of Finding 1.
+Three corrections to this document's numbers, all from applying a second,
+documented prefix remap (`data/consensus-proposers/` ->
+`archive/outputs-experimental-pilot/pv/consensus-proposers/`, created by
+`2de117096` and moved by `276e4ca80`) that this audit did not try:
+
+| claim in § 4 Finding 1 | as audited | on re-check |
+|---|---:|---:|
+| resolvable entries | 456 | 472 |
+| unresolvable entries | 40 | 24 |
+| entries matching their recorded count | 371 | 387 |
+| entries diverging (the finding) | 85 | 85 (unchanged) |
+
+The 16 newly resolved entries all match their recorded `n_detections` exactly,
+so **the finding itself is unchanged**: the same 85 entries diverge, and 84 of
+them still record a patch. The 40-vs-24 difference is a matter of how far the
+audit pursued the remap, not a disagreement about the data. Also: this
+document's three-row "largest divergences" table omitted a fourth entry sharing
+third place at +33 (`single:phase3a-high/track2-text/T0.3/run_26`), and the
+`source_script` attribution quoted from `results/ci-metadata-registry.md:97`
+(`consolidate_pv_bootstrap_cis.py`) proved to be wrong in the registry — that
+script cannot write this schema, and the March 2026 producer appears never to
+have been committed.
 
 ### 2026-09-12 — Original publication
 
