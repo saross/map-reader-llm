@@ -361,6 +361,63 @@ non-significant −0.0052 is not a demonstrated absence of decline. Nor is any
 MCC *ranking* of rungs claimed: tiering stays on the preregistered F1, and the
 MCC round-robins are reported as tests of named pairs, not as a board.
 
+## 4.2 The same question under the other registered instrument
+
+§ 6.1 records that the PI's ruling on which instrument the 55-map ladders should
+be tested under is pending. **Two of the seven have a second registered
+instrument** — the per-map paired sign-swap of `scripts/stride55_ladder.py`
+(bet P7) — so those two are reported under both, and the ruling can be made
+knowing what turns on it.
+
+**The instrument.** Per-map paired sign-swap over the **55 map sheets** as
+pairing units, 10,000 permutations, seed 42, two-sided with a 1/10,000 floor,
+BH q = 0.05 within each cell's ladder. Statistic pair: corrected-F1 at 50 m from
+pooled per-map TP/FP/FN (`paired_permutation`, registered) and tile-MCC from
+pooled per-map tile confusion (`paired_permutation_mcc`, added 2026-09-12 as its
+sibling — same pairing units, same seed, same permutation count, therefore the
+same per-map swap masks). It scores against the **in-process extended ground
+truth** (student references plus canonical adjudicated phantoms gated at 50 m),
+not the board's materialised r2 reference, which is why its rung F1 values differ
+from the board cells'. Artefacts: `mcc-test/sign-swap/ladder_pairs.json`, with
+the rung rebuild at `mcc-test/sign-swap/rebuild/ladder.json`; the committed
+2026-08-27 artefacts were not touched.
+
+**Its gate.** The rebuild reproduces the committed K = 10 union (38,713 and
+57,482 candidates; votes identical; max centroid drift 0.069 m), the committed
+primary F1 to 1e-6, **each rung's committed oracle corrected-F1 to 1e-6**, and
+**all four committed `p7_saturation` F1 results to ten decimal places on the
+delta and exactly on the p-value** (stride A carried −0.0003664980 / p = 0.8239
+and oracle −0.0039847569 / p = 0.0131; stride B carried +0.0015610879 /
+p = 0.3243 and oracle −0.0053391701 / p = 0.0003).
+
+| ladder | pair | board tile-swap: ΔF1 (BH p) | sign-swap: ΔF1 (BH p) | board: ΔMCC (BH p) | sign-swap: ΔMCC (BH p) |
+|---|---|---:|---:|---:|---:|
+| 55-map stride A | K1 → K10 | **+0.0192** (<0.0001) | **+0.0176** (0.0004) | −0.0052 (0.1984) | −0.0052 (0.1176) |
+| 55-map stride A | K1 → K3 | **+0.0094** (<0.0001) | **+0.0088** (0.0006) | +0.0012 (0.6391) | +0.0006 (0.8201) |
+| 55-map stride A | K3 → K5 | **+0.0062** (0.0079) | +0.0048 (0.0655) | **−0.0111** (0.0066) | **−0.0105** (0.0184) |
+| 55-map stride A | K5 → K10 | **+0.0036** (0.0079) | **+0.0040** (0.0175) | **+0.0047** (0.0300) | **+0.0047** (0.0262) |
+| 55-map stride B | K1 → K10 | **+0.0547** (<0.0001) | **+0.0499** (0.0002) | +0.0031 (0.5592) | +0.0036 (0.3236) |
+| 55-map stride B | K1 → K3 | **+0.0494** (<0.0001) | **+0.0446** (0.0002) | +0.0035 (0.5592) | +0.0040 (0.3236) |
+| 55-map stride B | K3 → K5 | +0.0010 (0.5086) | +0.0000 (0.9966) | −0.0030 (0.4122) | −0.0030 (0.3236) |
+| 55-map stride B | K5 → K10 | **+0.0043** (0.0035) | **+0.0053** (0.0004) | +0.0025 (0.4395) | +0.0025 (0.3236) |
+
+**The ruling does not change the MCC answer.** Across the eight pairs both
+instruments cover, **all eight tile-MCC significance calls agree** — the same two
+pairs separate (stride A's K = 3 → 5 fall and K = 5 → 10 rise) and the same six
+do not, with ΔMCC estimates agreeing to 0.0006 or better. **One F1 call differs**:
+stride A's K = 3 → 5 step is significant on the board tile-swap (+0.0062,
+BH p = 0.0079) and not on the sign-swap (+0.0048, BH p = 0.0655) — expected, since
+55 map sheets are far fewer pairing units than 8,541 tiles, and the sign-swap's
+reference is the pre-r2 one. So the instrument question is live for marginal F1
+claims and **immaterial to the § 4.1 conclusion**.
+
+**Not available for the other five.** Three 55-map ladders (the 3.7-verifier
+stride B and the two 3.7 arms) have no registered sign-swap at all —
+`scripts/gemini37_arm_ladder.py` and `scripts/gemini37_fourth_cell_ladder.py`
+carry no permutation test (§ 6.1) — and the two standardised-reference siblings
+are the same detections against the other 55-map reference, which the sign-swap
+does not score. Those five are reported under the board instrument only.
+
 ## 5. The Pareto frame
 
 Figure: `figures/k-ladder-pareto.png` — audited all-in cost (log axis) against the

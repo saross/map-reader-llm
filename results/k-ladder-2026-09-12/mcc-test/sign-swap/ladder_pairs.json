@@ -1,0 +1,198 @@
+{
+  "buffer_m": 50,
+  "basis": "oracle",
+  "instrument": {
+    "name": "per-map paired sign-swap permutation",
+    "script": "scripts/stride55_ladder.py --pairs-output-dir",
+    "kernels": [
+      "stride55_sweep_oracle.paired_permutation",
+      "stride55_sweep_oracle.paired_permutation_mcc"
+    ],
+    "pairing_unit": "map sheet (55)",
+    "f1_statistic": "corrected-F1 @ 50 m, pooled TP/FP/FN",
+    "mcc_statistic": "tile-level MCC, buffer-invariant, pooled per-map tile confusion",
+    "n_permutations": 10000,
+    "seed": 42,
+    "bh_q": 0.05,
+    "bh_family": "within each cell's ladder, F1 and MCC separately",
+    "reference": "the extended GT this instrument was registered against (student references + canonical adjudicated phantoms gated at 50 m) \u2014 NOT the board's materialised r2 reference, which is why its F1 values differ from the board cells'"
+  },
+  "runs": {
+    "g384_ov128_55map": {
+      "pairs": [
+        {
+          "pair": "N1-vs-N10",
+          "kind": "k1-vs-best",
+          "n_low": 1,
+          "n_high": 10,
+          "delta_convention": "higher N minus lower N",
+          "f1": {
+            "low": 0.818607,
+            "high": 0.836208,
+            "delta": 0.0176,
+            "p_raw": 0.0001,
+            "p_bh": 0.0004,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.005208,
+            "p_raw": 0.0882,
+            "p_bh": 0.1176,
+            "significant": false
+          }
+        },
+        {
+          "pair": "N1-vs-N3",
+          "kind": "adjacent",
+          "n_low": 1,
+          "n_high": 3,
+          "delta_convention": "higher N minus lower N",
+          "f1": {
+            "low": 0.818607,
+            "high": 0.827441,
+            "delta": 0.008833,
+            "p_raw": 0.0003,
+            "p_bh": 0.0006,
+            "significant": true
+          },
+          "mcc": {
+            "delta": 0.000643,
+            "p_raw": 0.8201,
+            "p_bh": 0.8201,
+            "significant": false
+          }
+        },
+        {
+          "pair": "N3-vs-N5",
+          "kind": "adjacent",
+          "n_low": 3,
+          "n_high": 5,
+          "delta_convention": "higher N minus lower N",
+          "f1": {
+            "low": 0.827441,
+            "high": 0.832223,
+            "delta": 0.004782,
+            "p_raw": 0.0655,
+            "p_bh": 0.0655,
+            "significant": false
+          },
+          "mcc": {
+            "delta": -0.010535,
+            "p_raw": 0.0046,
+            "p_bh": 0.0184,
+            "significant": true
+          }
+        },
+        {
+          "pair": "N5-vs-N10",
+          "kind": "adjacent",
+          "n_low": 5,
+          "n_high": 10,
+          "delta_convention": "higher N minus lower N",
+          "f1": {
+            "low": 0.832223,
+            "high": 0.836208,
+            "delta": 0.003985,
+            "p_raw": 0.0131,
+            "p_bh": 0.017467,
+            "significant": true
+          },
+          "mcc": {
+            "delta": 0.004684,
+            "p_raw": 0.0131,
+            "p_bh": 0.0262,
+            "significant": true
+          }
+        }
+      ]
+    },
+    "g384_ov192_55map": {
+      "pairs": [
+        {
+          "pair": "N1-vs-N10",
+          "kind": "k1-vs-best",
+          "n_low": 1,
+          "n_high": 10,
+          "delta_convention": "higher N minus lower N",
+          "f1": {
+            "low": 0.80037,
+            "high": 0.850291,
+            "delta": 0.049921,
+            "p_raw": 0.0001,
+            "p_bh": 0.0002,
+            "significant": true
+          },
+          "mcc": {
+            "delta": 0.003562,
+            "p_raw": 0.3236,
+            "p_bh": 0.3236,
+            "significant": false
+          }
+        },
+        {
+          "pair": "N1-vs-N3",
+          "kind": "adjacent",
+          "n_low": 1,
+          "n_high": 3,
+          "delta_convention": "higher N minus lower N",
+          "f1": {
+            "low": 0.80037,
+            "high": 0.844946,
+            "delta": 0.044576,
+            "p_raw": 0.0001,
+            "p_bh": 0.0002,
+            "significant": true
+          },
+          "mcc": {
+            "delta": 0.00401,
+            "p_raw": 0.28,
+            "p_bh": 0.3236,
+            "significant": false
+          }
+        },
+        {
+          "pair": "N3-vs-N5",
+          "kind": "adjacent",
+          "n_low": 3,
+          "n_high": 5,
+          "delta_convention": "higher N minus lower N",
+          "f1": {
+            "low": 0.844946,
+            "high": 0.844952,
+            "delta": 6e-06,
+            "p_raw": 0.9966,
+            "p_bh": 0.9966,
+            "significant": false
+          },
+          "mcc": {
+            "delta": -0.002976,
+            "p_raw": 0.1051,
+            "p_bh": 0.3236,
+            "significant": false
+          }
+        },
+        {
+          "pair": "N5-vs-N10",
+          "kind": "adjacent",
+          "n_low": 5,
+          "n_high": 10,
+          "delta_convention": "higher N minus lower N",
+          "f1": {
+            "low": 0.844952,
+            "high": 0.850291,
+            "delta": 0.005339,
+            "p_raw": 0.0003,
+            "p_bh": 0.0004,
+            "significant": true
+          },
+          "mcc": {
+            "delta": 0.002529,
+            "p_raw": 0.1901,
+            "p_bh": 0.3236,
+            "significant": false
+          }
+        }
+      ]
+    }
+  }
+}

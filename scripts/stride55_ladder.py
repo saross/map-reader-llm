@@ -440,40 +440,50 @@ def main() -> int:
             n_unmatched = n_total - int(len(gdf))
 
             if args.reuse_oracles:
-                # Evaluate ONLY the committed operating point, and gate the
-                # rebuilt value against the committed corrected-F1. A pass here
-                # is strictly stronger evidence than re-deriving the argmax:
-                # it proves this code path reproduces the committed rung.
-                o_pt, o_k, o_f1 = committed_points[cell][n]
-                thresholds = [o_pt]
-                votes = [o_k]
+                # Evaluate ONLY the committed operating points — this rung's
+                # oracle, plus the carried point where one is committed — and
+                # gate the rebuilt oracle value against the committed
+                # corrected-F1. A pass here is strictly stronger evidence than
+                # re-deriving the argmax: it proves this code path reproduces
+                # the committed rung.
+                o_pt, o_k, _ = committed_points[cell][n]
+                points = [(o_pt, o_k)]
+                if n == 5 and CARRIED_N5[cell] not in points:
+                    points.append(CARRIED_N5[cell])
             else:
-                thresholds = sorted({0.0} | {round(float(v), 4)
-                                             for v in gdf["mound_probability"]})
-                votes = list(range(1, n + 1))
+                points = [(prob_t, k)
+                          for prob_t in sorted({0.0} | {round(float(v), 4)
+                                               for v in gdf["mound_probability"]})
+                          for k in range(1, n + 1)]
             rung_rows = []
-            for prob_t in thresholds:
-                for k in votes:
-                    s = gdf[(gdf["mound_probability"] >= prob_t)
-                            & (gdf["vote_count"] >= k)]
-                    tp, fp, fn, _ = compute_counts_at_r(s, ext_gt, bounds,
-                                                        BUFFER_R)
-                    p, r, f1 = compute_point_estimate(tp, fp, fn)
-                    rung_rows.append({
-                        "cell": cell, "N": n, "prob_t": prob_t,
-                        "min_votes": k, "n_detections": int(len(s)),
-                        "tp": tp, "fp": fp, "fn": fn, "precision": p,
-                        "recall": r, "corrected_f1": f1})
+            for prob_t, k in points:
+                s = gdf[(gdf["mound_probability"] >= prob_t)
+                        & (gdf["vote_count"] >= k)]
+                tp, fp, fn, _ = compute_counts_at_r(s, ext_gt, bounds,
+                                                    BUFFER_R)
+                p, r, f1 = compute_point_estimate(tp, fp, fn)
+                rung_rows.append({
+                    "cell": cell, "N": n, "prob_t": prob_t,
+                    "min_votes": k, "n_detections": int(len(s)),
+                    "tp": tp, "fp": fp, "fn": fn, "precision": p,
+                    "recall": r, "corrected_f1": f1})
             rows_all.extend(rung_rows)
-            best = max(rung_rows, key=lambda r: r["corrected_f1"])
             if args.reuse_oracles:
+                # The oracle is the COMMITTED point, not the argmax of the two
+                # points evaluated here — reading it back by argmax would let a
+                # carried point that happened to score higher silently redefine
+                # the rung.
                 o_pt, o_k, o_f1 = committed_points[cell][n]
+                best = next(r for r in rung_rows
+                            if r["prob_t"] == o_pt and r["min_votes"] == o_k)
                 if abs(best["corrected_f1"] - o_f1) > 1e-6:
                     raise RuntimeError(
                         f"{cell} N={n}: oracle gate FAILED — rebuilt "
                         f"{best['corrected_f1']:.6f} vs committed {o_f1:.6f}")
                 logger.info("%s N=%d: oracle gate OK (%.6f at (%.2f, k%d))",
                             cell, n, best["corrected_f1"], o_pt, o_k)
+            else:
+                best = max(rung_rows, key=lambda r: r["corrected_f1"])
 
             rung = {
                 "union_n": n_total, "unmatched": n_unmatched,
