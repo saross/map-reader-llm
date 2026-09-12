@@ -1228,3 +1228,54 @@ PI on C4: "I really appreciate you taking the initiative to chase up an issue on
   on the Era-2 frame), which closed the question my own reflection had
   listed as unpursued. Candidate: an invitation to use idle time on the
   session's open question is productive; he can offer it deliberately.
+
+## S153 candidates (pending review, 2026-09-12, drafted at handoff) — silence never discards
+
+S150, S151, S151-d and S152 above are still pending (the PI deferred the
+user-obs review on 2026-09-12). This session ran as an all-day interactive
+walk-through with the PI ruling item by item, eleven worktree agents in
+sequence, and an overnight close-out job.
+
+- **C1 — "Can I provide any other billing information to clarify this
+  matter?"** Offered a gap (the fourth cell's verifier cost, its metadata
+  overwritten), Shawn's first move was to offer more data, and the five
+  project-filtered daily exports he then downloaded isolated the cost on
+  its billing day. Candidate: when I present a gap as unrecoverable, ask
+  first what other records the PI can pull; the console had a finer
+  grain than the repository.
+- **C2 — "Trying to make my signatures mean something."** Asked to sign a
+  board and eleven analysis rows, he asked for a short review of what he
+  was signing. A written walkthrough — one paragraph per row: what the
+  signature attests, what changed since the last signature, what did not,
+  and a recommendation — got eleven rulings in one reply, ten "sign" and
+  one "unsigned by design". Candidate: the signature walkthrough is a
+  review unit like the claims list; never present a signature as a
+  formality.
+- **C3 — "If I'm wrong, call me on it and we'll discuss further."** Ruling
+  R4 conflated the moving 55-map reference with the candidate-vintage
+  question; the reframing (reference and frame are held fixed by the
+  board; vintage needs re-verification, not re-scoring) was accepted at
+  once: "thanks, I thought we were talking 55-map, thanks for the
+  correction." Candidate: the invitation to push back is explicit and
+  meant; a correction offered plainly with the distinction named costs
+  nothing and is thanked.
+- **C4 — Principles arrive with rulings.** Two project rules were stated
+  in the middle of ruling on B2 and the K-ladder ("don't rewrite history,
+  keep all legacy runs, but anything in leaderboards … should be the best
+  available run for the configuration"; "a 'parameter X' ladder, then a
+  leaderboard … in the spirit of the original plan"). Candidate: when a
+  ruling comes with a generalisation, record the generalisation as a
+  project rule at once (card, memory) and apply it to the next decision
+  in the same session — it was applied to R3 within minutes.
+- **C5 — Cheap decisive runs get a fast yes when the gate is concrete.**
+  "For <$10 you can just run the comparison, if you prepare the gate for
+  that I'll sign off"; and tiers A–D approved in one word after a
+  what-each-tier-buys table. Candidate: present spend as a gate (model,
+  mode, calls, cost, what it decides) with measured not estimated counts;
+  the decision then takes one line.
+- **C6 — Overnight delegation with a morning list.** "Please get as far as
+  you can, I'll clear any questions or decisions in the morning." The
+  S150 pattern (ceiling plus interrupt) extended to an unattended
+  overnight block; the close-out job's brief carries every ruled item
+  and routes every unruled one to a numbered morning list. Candidate:
+  the morning-questions list is the handoff unit for overnight work.
