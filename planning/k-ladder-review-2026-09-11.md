@@ -1,15 +1,19 @@
 # K-ladder review: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-12 (later — **Phase 1 EXECUTED at US$0**, steps 0–7;
-> per-step outcome in [§ 6](#6-phase-1-what-landed-2026-09-12). Earlier the same
-> day: R1–R5 RULED and two project principles recorded; B3 ruled, the 27 first-N
-> twins derived inside this job; prior 2026-09-11: DRAFT scaffold, S153, from
-> committed material only). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-12 (later still — **Phase 2 EXECUTED at
+> US$24.8065** against the PI's US$24.84 approval of tiers A–D; per-step
+> outcome in [§ 7](#7-phase-2-what-landed-2026-09-12). Earlier the same day:
+> **Phase 1 EXECUTED at US$0**, steps 0–7, per-step outcome in
+> [§ 6](#6-phase-1-what-landed-2026-09-12); before that R1–R5 RULED and two
+> project principles recorded, B3 ruled, the 27 first-N twins derived inside
+> this job; prior 2026-09-11: DRAFT scaffold, S153, from committed material
+> only). See [§ Changelog](#changelog).
 
 **Status**: SCOPING CARD; the run card it produced is
-`planning/k-ladder-phase1-run-2026-09-12.md`, and Phase 1 has been executed —
-see § 6. Phase 2 is costed, not run:
-`reports/k-ladder-phase2-costing-2026-09-12.md`. The PI asked in Session 152 for
+`planning/k-ladder-phase1-run-2026-09-12.md`. **Both phases have been
+executed** — Phase 1 at US$0 (§ 6) and Phase 2 at US$24.8065 (§ 7), the latter
+against the costing in `reports/k-ladder-phase2-costing-2026-09-12.md`. The PI
+asked in Session 152 for
 a review of the pass-count ladder — K = 1, 3, 5, 10 at fixed parameters,
 framed as a Pareto (cost-against-F1) question, together with a ruling on
 whether re-materialised and current-vintage cells belong on the board
@@ -201,7 +205,58 @@ instrument, which is defined on a tile grid and a different scoring engine. A
 per-family Hsu MCB set is supplied for the gold-standard ladder only. What is
 missing is named in the findings document, not glossed.
 
+## 7. Phase 2: what landed (2026-09-12)
+
+Executed on branch `worktree-agent-ae87367bcee3e0e5c` against the PI's approval
+of all four tiers of `reports/k-ladder-phase2-costing-2026-09-12.md` § 5 at
+**US$24.84**. Spent **US$24.8065** audited flex — 28 rungs, 35,844 candidates
+offered, **35,844 verified, 0 failed**, no rung stopped. Closing report:
+`reports/k-ladder-phase2-deltas-2026-09-12.md`.
+
+| Step | Outcome | Artefact |
+|---:|---|---|
+| 1 | **landed** — 28 first-N unions at US$0; all 28 candidate counts reproduce the costing table **exactly** (delta +0), and an independent re-derivation classifies all 28 `SUBPOOL-CONSISTENT`, zero `STALE` | `scripts/build_k_ladder_phase2_unions.py`, `phase2/unions.json`, `phase2/union-provenance.json` |
+| 2 | **landed — READY**, 0 blockers, 3 warnings; 9 preregistration requirements, 12 transmission modes all PASS, one deliberate deviation (E56), a 5-candidate smoke run | `phase2/pre_launch_audit.md` |
+| 3 | **landed** — tiers A (4.4641), B (8.7115), C (8.9654), D (2.6655); every per-tier rate inside the audit's 0.000684–0.000698 spread; the flex correction applied by the accounting because the verify path records the tier nowhere | `phase2/spend-ledger.json` |
+| 4 | **landed** — 46 cells swept on both 487-tile frames (which agree on the argmax **28 of 28**), materialised, scored on the board recipe, and registered as **46 condition rows** (542 → 588, all schema-valid, validator profile unchanged); 13 of 14 ladders tiered with the board instrument and `--permute-mcc`, all gates passed | `phase2/scores.json`, `phase2/ladders.json`, `phase2/mcc-test/`, `findings.md` § 7 |
+| 5 | **landed** — the closing report; the uplift supplement needs no re-pairing and the signed uplift row is untouched (all 46 rows are board-frame rows, excluded by the PI's 2026-09-10 rule: exclusions 103 → 149, pairable 170 unchanged) | `reports/k-ladder-phase2-deltas-2026-09-12.md` |
+
+**What the purchase answered.** § 6.3 of the findings had recorded that no
+Gemini 3 `pv-diag-384` family reached the three-rung bar. All thirteen now carry
+four rungs, and so does the 3.7 gold-standard screen. The result is that **K's
+return is governed by the proposer's thinking level, and within a level by its
+temperature**: the K = 1 → best-rung F1 gain is significant on 7 of 7
+HIGH-thinking ladders and 2 of 6 MINIMAL ones, and **four ladders — all
+MINIMAL — are a single statistical tier in which K buys nothing detectable**.
+The § 4 tile-MCC direction is corroborated on fourteen more ladders and gains
+the corpus's first significant instance.
+
+**Three things this card should record as not settled.** (a) The 46 new cells
+are not on the Era-2 board; admitting them is a re-tier and a re-signature and
+so a PI matter under "ladder, then board". (b) The corpus holds two readings of
+R2's "carried point" and they diverge sharply above K = 3; both are computed and
+the choice is put back. (c) Tile-MCC is computed by a **string** join on
+`source_tile`, so a cell scored on a frame whose tile vocabulary differs from
+its proposer's tiling gets a correct F1 beside a meaningless MCC — measured on
+3 of 47 Phase 2 cells, withheld rather than published, and the repair put to the
+PI (deltas § 6.3, § 8).
+
+**One expectation in this card did not survive Phase 2**, and it is recorded
+here as § 6 recorded Phase 1's two. § 5's ruling R5 budget framing held, but the
+costing's tier-A rationale claimed the two T 0.7 pools "also hold a K = 30
+rung", making five rungs possible. They do not: both K = 30 cells are
+`aggregation: "consensus"` with `verifier_config: null`, so ruling R1 excludes
+them. The correction is in the costing's own changelog.
+
 ## Changelog
+
+### 2026-09-12 (later still) — Phase 2 executed at US$24.8065 (§ 7)
+
+Tiers A–D approved and run; 28 rungs verified, 46 cells registered, 14 ladders
+completed to four rungs, 13 of them tiered. No analysis row authored or
+amended, no signature field touched, the board not rebuilt, and the 55-map
+instrument ruling not pre-empted. § 7 records the per-step outcome and the three
+questions handed back.
 
 ### 2026-09-12 (later) — Phase 1 executed at US$0 (Session 154)
 
