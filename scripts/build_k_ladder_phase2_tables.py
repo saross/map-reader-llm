@@ -470,6 +470,18 @@ def build() -> dict[str, Any]:
         for rung in rungs:
             proposer = round(rung["K"] * meta["pass_usd"], 4)
             rung["proposer_flex_usd"] = proposer
+            if rung["verifier_flex_usd"] is None:
+                # An em dash in the table is honest but quiet, and the usual
+                # cause is a ledger that has not caught up with a rung that
+                # finished after the last recompute. Say so, so a missing
+                # figure cannot be mistaken for a rung that has no cost.
+                logger.warning(
+                    "%s K=%d: no verifier cost — the spend ledger has no entry "
+                    "for this rung (run --recompute-ledger), so its all-in cost "
+                    "is left unset rather than guessed",
+                    meta["label"],
+                    rung["K"],
+                )
             rung["all_in_flex_usd"] = (
                 round(proposer + rung["verifier_flex_usd"], 4)
                 if rung["verifier_flex_usd"] is not None
