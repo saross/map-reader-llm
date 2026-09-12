@@ -535,7 +535,15 @@ def cmd_collect(args: argparse.Namespace) -> None:
         }
         spend = spend_by_row.get(rung["row"], {})
         record["verifier_flex_usd"] = spend.get("flex_usd")
-        record["verifier_calls"] = spend.get("items_processed")
+        # Billed API requests and verified candidates diverge when the API
+        # returns retryable errors, so both are carried rather than conflated.
+        record["verifier_api_requests"] = spend.get("api_requests") or spend.get(
+            "items_processed"
+        )
+        record["verifier_candidates_verified"] = spend.get(
+            "candidates_verified"
+        ) or spend.get("items_processed")
+        record["verifier_retries_total"] = spend.get("retries_total")
         record["verifier_wall_seconds"] = spend.get("wall_seconds")
 
         for point in ("opmax", "carried"):

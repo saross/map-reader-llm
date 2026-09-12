@@ -178,6 +178,8 @@ def audited_flex_usd(meta: dict[str, Any]) -> dict[str, float]:
         ``input_tokens``, ``output_tokens``, ``thoughts_tokens``,
         ``flex_usd`` and ``list_usd_recorded``.
     """
+    stats = meta.get("execution_stats", {})
+    finish = stats.get("finish_reason_counts", {})
     usage = meta.get("usage_stats", {})
     input_tokens = int(usage.get("total_input_tokens", 0))
     output_tokens = int(usage.get("total_output_tokens", 0))
@@ -194,6 +196,24 @@ def audited_flex_usd(meta: dict[str, Any]) -> dict[str, float]:
         "list_usd_recorded": float(
             meta.get("cost_estimate", {}).get("total_cost_usd", 0.0)
         ),
+        # Two different counts, kept apart because they diverge whenever the
+        # API returns a retryable error: `candidates_verified` is how many
+        # candidates got a probability, `api_requests` is how many calls were
+        # billed (successes plus retried attempts). Row 10 of tier A, for
+        # instance, verified 2,755 candidates in 2,898 requests after 143
+        # server-error retries, all of which returned empty and so cost
+        # almost nothing.
+        "candidates_verified": int(finish.get("success", 0))
+        or int(stats.get("items_processed", 0)),
+        "api_requests": int(
+            usage.get("by_provider", {})
+            .get("google_gemini", {})
+            .get("request_count", 0)
+        )
+        or sum(int(value) for value in finish.values()),
+        "retries_total": int(stats.get("retries_total", 0)),
+        "retries_server_error": int(stats.get("retries_server_error", 0)),
+        "retries_rate_limit_meta": int(stats.get("retries_rate_limit", 0)),
     }
 
 
@@ -238,7 +258,13 @@ def save_ledger(ledger: dict[str, Any]) -> None:
         )
         tier["rungs"] += 1
         tier["candidates"] += entry["candidates"]
-        tier["calls"] += entry["items_processed"]
+        tier["calls"] += entry.get("api_requests") or entry["items_processed"]
+        tier["candidates_verified"] = tier.get("candidates_verified", 0) + (
+            entry.get("candidates_verified") or entry["items_processed"]
+        )
+        tier["retries_total"] = tier.get("retries_total", 0) + entry.get(
+            "retries_total", 0
+        )
         tier["input_tokens"] += entry["input_tokens"]
         tier["output_tokens"] += entry["output_tokens"]
         tier["thoughts_tokens"] += entry["thoughts_tokens"]
@@ -262,7 +288,13 @@ def save_ledger(ledger: dict[str, Any]) -> None:
     ledger["total"] = {
         "rungs": len(rungs),
         "candidates": sum(tier["candidates"] for tier in by_tier.values()),
+        "candidates_verified": sum(
+            tier.get("candidates_verified", 0) for tier in by_tier.values()
+        ),
         "calls": sum(tier["calls"] for tier in by_tier.values()),
+        "retries_total": sum(
+            tier.get("retries_total", 0) for tier in by_tier.values()
+        ),
         "flex_usd": round(
             sum(tier["flex_usd"] for tier in by_tier.values()), 4
         ),
