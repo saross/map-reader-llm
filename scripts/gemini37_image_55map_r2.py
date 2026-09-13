@@ -736,6 +736,12 @@ def stage_tests(primary: str | None) -> int:
     if primary not in by_label:
         logger.error("no such cell %s; have %s", primary, sorted(by_label))
         return 2
+    if "-K3-" not in primary:
+        logger.error(
+            "the primary cell must be a K = 3 rung (%s is not): the family's "
+            "fifth test is the K = 1 versus K = 3 contrast, which a K = 1 "
+            "primary would run against itself", primary)
+        return 2
     internal = primary.replace("-K3-", "-K1-")
     if internal not in by_label:
         logger.error("no K=1 counterpart %s for the internal contrast", internal)
