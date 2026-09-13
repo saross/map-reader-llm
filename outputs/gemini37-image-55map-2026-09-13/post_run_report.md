@@ -98,8 +98,9 @@ WORKERS=50 nohup bash scripts/gemini37-image-55map-unions-and-arms.sh \
 
 # 4. Sweeps, materialisation, scoring, and the five-test family. Run the
 #    gates FIRST — they reproduce all four comparators' committed F1 and tile
-#    confusion through this campaign's own code path, and passed on
-#    2026-09-13 before any 55-map data existed.
+#    confusion, and the board's own ARM2-N5 vs ARM2-N3 permutation result,
+#    through this campaign's own code path. All four passed on 2026-09-13,
+#    before any 55-map data existed.
 .venv/bin/python scripts/gemini37_image_55map_r2.py --stage selftest
 .venv/bin/python scripts/gemini37_image_55map_r2.py --stage sweep --workers 12
 .venv/bin/python scripts/gemini37_image_55map_r2.py --stage materialise
@@ -205,6 +206,7 @@ is discovering a broken instrument after the API spend, not before.
 | Materialiser identity gate | **PASS** | reproduces the calibration leg's 444 and 433 |
 | F1 mechanism gate | **PASS** | all four comparators' committed F1 @ 50 m to 1e-4 |
 | MCC mechanism gate | **PASS** | all four comparators' committed tile confusion, exactly |
+| Permutation gate | **PASS** | the board's `ARM2-N5` vs `ARM2-N3` test reproduced: diff 0.002321, p 0.1208, null mean 4e-06, null sd 0.001491 |
 | Cost auditor, in this session's hands | **validated** | reproduces the GS leg's US$22.5004 / 0.00322 / 0.7948 |
 | Tier-1 suite on sapphire | **2,516 passed**, 4 skipped, 27 deselected, 3 xfailed | `claude-steward`, 193 s |
 
@@ -224,7 +226,7 @@ reviewed drivers and a settled ruling.
 | Scoring engine | "the corrected-F1 engine" | **`evaluate_detections.py`** on the r2 board's recipe (deltas § 10.3) |
 | Test family | four comparators | **five**, the fifth declared (deltas § 10.4) |
 | `IM-k3` detection set | unstated | named, with the `IM-oracle` near-miss recorded |
-| Gates ahead of the data | none run | **three PASS** + cost auditor validated (§ 6) |
+| Gates ahead of the data | none run | **four PASS** + cost auditor validated (§ 6) |
 | Tier-1 on sapphire | 2,496 passed | **2,516 passed** (20 new tests) |
 
 **Numerical claims that moved**: none of the campaign's own. The carried
