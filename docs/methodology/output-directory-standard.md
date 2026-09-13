@@ -1,8 +1,12 @@
 # Output Directory Standard
 
-> **Last revised**: 2026-09-11 (governance: generated projections carry
-> machine provenance, not a hand changelog — PI ruling, Session 153;
-> prior 2026-08-03: `docs/methodology/reports/**` split-by-citation rule). See
+> **Last revised**: 2026-09-13 (compliance table recounted to today and
+> the generated-projections ruling's reach recorded — `evaluation.md`
+> reclassified as generated, the post-run-report count stated as
+> pre-back-fill, a denominator note on the stale generated-file registry;
+> prior 2026-09-11: governance — generated projections carry machine
+> provenance, not a hand changelog, PI ruling, Session 153; prior
+> 2026-08-03: `docs/methodology/reports/**` split-by-citation rule). See
 > [§ Changelog](#changelog) for revision history.
 
 ## Purpose
@@ -318,21 +322,59 @@ CLAUDE.md wording covers these via "analogous post-run summary docs
 under `outputs/`"; this section is the authoritative enumeration —
 CLAUDE.md cross-references back here for the canonical path list.
 
-| Path pattern | Class | Count (2026-05-26) | Count (post-audit target) | Compliance |
+| Path pattern | Class | Count (2026-09-13) | Count (2026-05-26) | Compliance on 2026-09-13 |
 |---|---|---:|---:|---|
-| `results/**.md` (anchor docs only — see audit plan § 5.2) | Paper-citation working docs | ~35–50 | ~35–50 | Mostly non-compliant; back-fill on touch |
-| `reports/**.md` | Internal reports authored by Claude Code | varies | varies | Mostly compliant |
-| `outputs/**/post_run_report.md` | Per-run post-run reports | 2 + 1 retrospective | ~22 | 2 compliant; 15 missing entirely; back-fill in audit Phase 3 |
-| `outputs/**/experiment_intent.md` | Per-pass / per-run intent files | 139 | 139 | Informal; in scope going forward |
-| `outputs/**/evaluation.md` | Per-run evaluation summaries | 11 | 11 | Informal; in scope going forward |
-| `outputs/**/pre_launch_audit.md` | audit-config skill outputs | 1 (`55maps-text-high-t0.3-generalisation`) | varies | In scope going forward |
+| `results/**.md` (anchor docs only — see audit plan § 5.2) | Paper-citation working docs | **2,864** files, of which **80** carry a revision banner | ~35–50 (anchor docs) | Compliant on the classes that carry today's results — **17 of 17** `findings.md` and **4 of 4** uplift-supplement documents have banner + changelog. The 2,864 is the whole tree, most of it generated per-cell output, so it is not the denominator; see the registry note below |
+| `reports/**.md` | Internal reports authored by Claude Code | **101** files, **62** bannered | varies | Compliant on current work: **18 of 18** reports dated 2026-09-11/12/13 have banner + changelog. The 39 unbannered are older reports under back-fill-on-touch |
+| `outputs/**/post_run_report.md` | Per-run post-run reports | **3** files, **1** bannered — **before** the 2026-09-13 bulk back-fill (see note) | 2 + 1 retrospective | **2 of the 41 run directories** `results/runs-manifest.json` enumerates carry one and are registered in it; the third file, `outputs/gemini37-image-55map-2026-09-13/post_run_report.md`, is for a run not yet in the manifest. Bulk back-fill in progress |
+| `outputs/**/experiment_intent.md` | Per-pass / per-run intent files | **432** files, **35** bannered | 139 | Informal; in scope. Grew 139 → 432 since May |
+| `outputs/**/evaluation.md` | Per-run evaluation summaries | **46** files, **0** bannered; **46 of 46** carry a `**Generated**:` stamp | 11 | **Reclassified**: these are generated projections, so the 2026-09-11 generated-projections ruling below governs them, not the banner rule. None yet carries that regime's banner, source commit or drift guard — a generator change, not a document edit |
+| `outputs/**/pre_launch_audit.md` | audit-config skill outputs | **2** files, **1** bannered | 1 (`55maps-text-high-t0.3-generalisation`) | In scope going forward |
+
+All 2026-09-13 counts are file counts taken in a worktree at `main` on
+that date; the banner counts are files matching `^> **Last revised**`.
+The May 2026 counts are retained as history and are **not** restated on
+the new basis — the `results/**.md` row's May figure counted anchor docs
+per audit plan § 5.2, while its September figure counts the whole tree,
+so the two are not comparable and neither is wrong.
+
+**Note on the post-run-report row**: the count above is deliberately the
+state **before** item 1 of
+`planning/documentation-foundation-checklist-2026-09-13.md`, a bulk
+back-fill of the missing reports that was running in parallel when this
+row was written. Any reader after 2026-09-13 should recount rather than
+trust it.
+
+**Note on the denominator, and the instrument that sets it.** Only
+hand-written documents owe a banner and changelog; generated ones owe the
+regime below instead. The project's own classifier is
+`reports/verification/generated-file-registry.json`, built by
+`scripts/build_generated_file_registry.py`, which at its last build
+(`2026-08-20T08:24:18`, `git_head` `06f7b8ea5`) held 2,131 files — 1,952
+generated, 179 hand-written — of which 2,050 were `results/**.md` (98
+hand-written) and 53 were `reports/**.md` (all hand-written). It is now
+stale against this table by 814 `results/**.md` and 48 `reports/**.md`,
+and by its charter (§ 2 of the script) it does **not** enumerate
+`outputs/`, so the three `outputs/` rows above have no
+generated-versus-hand-written classification at all. Rebuild it before
+treating any ratio in this table as a compliance rate. One further
+caution: its marker test matches `**Generated**:` anywhere in a file's
+first fifteen lines, and at least six hand-authored `results/**.md`
+documents carry such a line as a provenance note rather than a generator
+stamp (`results/evaluation-scopes.md`,
+`results/retest/retest-production-summary.md`,
+`results/paper-tables/gold-standard-spatial-tolerance.md`,
+`results/55maps-mcc-v2-summary/report.md`, and
+`results/pv/phase{1,2}/pv-phase*-analysis.md`) — the registry's explicit
+`hw-*` rules override the marker on all six, so nothing is mis-filed
+today, but an audit that reads the marker instead of the registry would
+wrongly exempt six documents that already carry a hand revision trail.
 
 **Back-fill rule**: per CLAUDE.md, "back-fill on touch only" — when you
 edit one of these documents, attach the banner + Changelog stub. Do not
-bulk back-fill unchanged documents. The "Count (post-audit target)"
-column is the expected file count once Phase 3 authoring lands, not a
-compliance target; banner compliance follows the back-fill-on-touch
-rule.
+bulk back-fill unchanged documents, **except** where the PI rules
+otherwise for a named class (as for the post-run reports on 2026-09-13).
+Banner compliance otherwise follows the back-fill-on-touch rule.
 
 **Out of scope**: `docs/notes/reflections/*.md` (append-only historical
 records), `docs/methodology/preregistration/*.md` (governed separately
@@ -357,6 +399,26 @@ the exemption exists. "Is this current?" is answered by the drift test,
 not by a changelog. Before→after notes for a regeneration go in the
 commit message and, when the change is paper-relevant, in the session's
 report under `reports/`.
+
+**Which files this reaches, recorded 2026-09-13** so the ruling is not
+read as applying only to its worked example. Six documents currently
+satisfy it — `results/analyses-manifest.md`,
+`results/conditions-manifest.md`, `results/passes-manifest.md`,
+`results/runs-manifest.md`, `results/run-registry.md`, and
+`results/hypothesis-outcome-table/hypothesis-outcome-table.md`. At least
+six more in-scope documents are visibly generated and satisfy **neither**
+regime — no hand banner and changelog, and no GENERATED banner, source
+commit or drift guard: the Era-2 board's `tiering_20m.md` and
+`frame-deltas.md` (the latter stamped
+"Generated 2026-09-13T00:22:00+00:00 by `scripts/build_gs_era2_board.py`
+gates") and the four `results/55map-leaderboard/*.md` tables. **All 46**
+`outputs/**/evaluation.md` files are in the same state, and the
+compliance table's row for that class is amended accordingly. These
+carry ranks and per-cell numbers, which is precisely where "is this
+current?" has to be answerable, so closing the gap is a generator change
+(emit the banner, stamp the source commit, add a `--check` mode) rather
+than a document edit. Audit trail:
+`planning/interim-docs-review.md` § 11.4.
 
 **`docs/methodology/reports/**` — split by citation (PI ruling
 2026-08-03, closing the governance gap this directory sat in)**: scope
@@ -436,6 +498,66 @@ directory with a README documenting the run configuration, cost, and
 the ground truth filtering applied (hairy-only symbols from student data).
 
 ## Changelog
+
+### 2026-09-13 — Compliance table recounted; the generated-projections ruling's reach recorded (Session 153)
+
+**Trigger**: item 5(b) of
+`planning/documentation-foundation-checklist-2026-09-13.md` — the
+compliance table carried 2026-05-26 counts and predated the 2026-09-11
+generated-projections ruling, so it described neither today's inventory
+nor today's two regimes. Every count below was taken as a file count in a
+worktree at `main` on 2026-09-13; banner counts match
+`^> **Last revised**`.
+
+**Before → after table for numerical claims that moved** (the May column
+is retained in the table as history rather than overwritten):
+
+| Row | Count (2026-05-26) | Count (2026-09-13) |
+|---|---|---|
+| `results/**.md` | ~35–50 anchor docs | **2,864** files, **80** bannered (17 of 17 `findings.md` and 4 of 4 supplement docs compliant) |
+| `reports/**.md` | varies | **101** files, **62** bannered (18 of 18 dated 2026-09-11/12/13 compliant) |
+| `outputs/**/post_run_report.md` | 2 + 1 retrospective | **3** files, **1** bannered; **2 of the 41** manifest run directories, **before** item 1's bulk back-fill |
+| `outputs/**/experiment_intent.md` | 139 | **432** files, **35** bannered |
+| `outputs/**/evaluation.md` | 11 | **46** files, **0** bannered, **46 of 46** generated |
+| `outputs/**/pre_launch_audit.md` | 1 | **2** files, **1** bannered |
+
+**One row reclassified.** `outputs/**/evaluation.md` was listed as
+"Informal; in scope going forward" under the banner rule. All 46 carry a
+`**Generated**:` stamp and are generator output, so the 2026-09-11
+generated-projections ruling governs them instead; none yet carries that
+regime's banner, source commit or drift guard, and closing that is a
+generator change rather than a document edit.
+
+**Two notes added.** (1) The post-run-report row states explicitly that
+its count precedes item 1's bulk back-fill, which was running in
+parallel, and tells a later reader to recount. (2) A denominator note
+records that only hand-written documents owe a banner, that the project's
+own classifier
+(`reports/verification/generated-file-registry.json`) was last built
+`2026-08-20T08:24:18` at `git_head` `06f7b8ea5` and is stale against this
+table by 814 `results/**.md` and 48 `reports/**.md`, that by charter it
+does not enumerate `outputs/` so the three `outputs/` rows have no
+classification at all, and that its `**Generated**:` marker test matches
+six hand-authored documents whose explicit `hw-*` rules currently
+override it — so an audit reading the marker rather than the registry
+would wrongly exempt six documents that already carry a revision trail.
+
+**The generated-projections section gains a reach paragraph**, naming the
+six documents that satisfy the ruling and the six-plus-46 that satisfy
+neither regime, with `planning/interim-docs-review.md` § 11.4 as the audit
+trail.
+
+**The back-fill rule gains one clause**: bulk back-fill remains
+prohibited **except** where the PI rules otherwise for a named class, as
+for the post-run reports on 2026-09-13.
+
+**What did NOT change**: the Purpose, Status, Artefact Types, Gitignore
+Policy, Proposed Directory Structure, Naming Conventions, Post-Run Report
+Schema and Immediate TODOs sections; the six in-scope path patterns
+themselves (no class added or removed from scope); the out-of-scope list;
+the 2026-09-11 generated-projections rule's three requirements and its
+rationale; and the 2026-08-03 `docs/methodology/reports/**`
+split-by-citation rule.
 
 ### 2026-09-11 — Governance: generated projections carry provenance, not a changelog (Session 153)
 
