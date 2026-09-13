@@ -1406,6 +1406,9 @@ T 0.3 and MINIMAL image T 1.0 both rule K = 1 out as best. § 7.1 is not withdra
 best answer different questions — but § 6.1 now records that "one tier" must not
 be read as "every rung could be the best one".
 
+**Landed in** `b7e2821ba` (driver and tests in `ab778ad10`, `ef5cc813b` and
+`cebae7868`).
+
 **What did NOT change**: every F1 and tile-MCC point estimate in §§ 2–8; every
 cost figure (this job spent **US$0**); § 4.1's and § 4.2's permutation results
 and their BH p-values; the tiering, tiers and tie sets of all 22 committed

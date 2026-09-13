@@ -1,8 +1,7 @@
 # K-ladder review: pass count at fixed parameters, Pareto-framed
 
 > **Last revised**: 2026-09-13 (latest — the **MCB job** executed at zero API
-> cost: the
-> PI's two afternoon rulings landed and the review's analysis row is
+> cost: the PI's two afternoon rulings landed and the review's analysis row is
 > **ready for signature**. The per-family **Hsu MCB sets are supplied** for all 22
 > tiered ladders on F1 and tile-MCC with the Era-2 board's own MCB step, each
 > ladder on its own frame — K = 3 admissible on 12 of 22 and the cheapest
@@ -435,6 +434,8 @@ four MINIMAL ladders `findings.md` § 7.1 reports as a single tier where "K buys
 nothing detectable at all", only **two** are admissible whole under MCB. § 7.1
 stands as a within-ladder pairwise result and is not withdrawn, but "one tier"
 must not be read as "every rung could be the best one".
+
+**Landed in** `b7e2821ba`.
 
 **What did NOT change**: every F1 and tile-MCC point estimate anywhere in the
 review; every spend figure (this job spent **US$0**); §§ 1–5, 7, 8 and 9 of this

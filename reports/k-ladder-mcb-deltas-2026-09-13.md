@@ -223,6 +223,9 @@ never be misread as "no rung can be the best".
 
 ### 2026-09-13 — Original publication
 
+**Landed in** `b7e2821ba` (the driver and its tier-1 tests in `ab778ad10`,
+`ef5cc813b` and `cebae7868`).
+
 Written with the MCB job, which executed the PI's two rulings of 2026-09-13
 (afternoon) at US$0: the per-family Hsu MCB admissible sets for all 22 tiered
 ladders on F1 and tile-MCC, and the carried convention. The document's initial
