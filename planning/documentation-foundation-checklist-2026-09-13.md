@@ -1,12 +1,14 @@
 # Documentation foundation checklist — the preregistration → outcome chain
 
-> **Last revised**: 2026-09-13 (item 6a closed — the tile-join invariant
-> now withholds rather than aborts, the k3 cell's evaluation is written at
-> 0.8860 / 495, and `carry_probabilities.py` is promoted to `scripts/`;
-> prior 2026-09-13: Batch 1 items 1 and 2 closed; 2026-09-13: original
-> publication, Session 153, the PI asked for the chain's remaining
-> documentation to be externalised as a checklist to work through before
-> the paper's outline pass). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-13 (later still — item 6a closed: the
+> tile-join invariant now withholds rather than aborts, the k3 cell's
+> evaluation is written at 0.8860 / 495, and `carry_probabilities.py` is
+> promoted to `scripts/`; earlier: Batch 1's five documentation items all
+> closed — 41 of 41 run reports, verifier 38 pass / 3 partial / 0 fail,
+> Obs 477–481, § M.x current to E85 and the 67-row register, the audit
+> refreshed; original publication, Session 153, when the PI asked for the
+> chain's remaining documentation to be externalised as a checklist). See
+> [§ Changelog](#changelog).
 
 **Purpose**: make sure every primary and intermediate document on the
 chain preregistration → experiment → result → analysis → outcome is
@@ -23,10 +25,10 @@ agent work; Fable only for the PI-facing orchestration turns.
 | Experiments → runs and conditions | `results/runs-manifest.json`, `results/conditions-manifest.json`, `scripts/verify_run_conditions.py` | 41 runs, 593 conditions all with metrics; verifier ~~22 pass / 19 partial~~ → **38 pass / 3 partial / 0 fail** (2026-09-13, `f4fd90c71` + `e88fd5bfa`) | closed to the annotation limit (§ 2 item 2); the 3 remaining partials are by-design disclosures, and reaching 41 needs a PI verdict-model call |
 | Runs → post-run reports | `outputs/**/post_run_report.md` | ~~2 of 36 run directories~~ → **41 of 41** (2026-09-13, `c4edf1328`): 39 generated projections + 2 hand-authored | closed (§ 2 item 1) |
 | Results → analyses → signatures | `results/run-analyses.json`; findings documents | 67 rows, 66 signed, 1 unsigned by design; every findings doc bannered | boards pending one rebuild each (§ 2 items 4–5); the image run's row (§ 2 item 6) |
-| Deviations → errata | `docs/methodology/preregistration/protocol-errata.md` (E1–E85) | complete register | Methods amendments section currency to E85 (§ 2 item 7) |
-| Working notes | `docs/notes/working-notes.md` (Obs 1–476) | current | four or five Obs from 2026-09-12/13 (§ 2 item 3) |
+| Deviations → errata | `docs/methodology/preregistration/protocol-errata.md` (E1–E85) | complete register | **none** — § M.x brought current to E85 and to the S153 rulings, 2026-09-13 (§ 2 item 4) |
+| Working notes | `docs/notes/working-notes.md` (Obs 1–481) | current | **none** — Obs 477–481 written 2026-09-13 (§ 2 item 3) |
 | Paper-facing | `docs/paper/results-draft.md`, `results-outline.md`, `results-claims-inventory-2026-09-12.md`, `methods-draft.md`, `discussion-outline.md`, `discussion-seeds.md`, `manuscript-skeleton-isprs.md` | outline decisions D1–D22 settled; inventory built for R0–R2, R4–R5, R7–R9; Methods zero-draft; Discussion outline current to August | § 2 items 8–10; D-1..D-5 and D.9 stay DEFERRED |
-| The project's own documentation audit | `planning/interim-docs-review.md` (2026-04-22), `docs/methodology/output-directory-standard.md` compliance table (2026-05-26) | stale | § 2 item 11 |
+| The project's own documentation audit | `planning/interim-docs-review.md` (2026-04-22, § 11 re-score 2026-09-13), `docs/methodology/output-directory-standard.md` compliance table (recounted 2026-09-13, May counts kept as history) | refreshed | six generated documents in neither compliance regime, and a stale generated-file registry (§ 11.5); second pass is § 2 item 11 |
 
 ## 2. Items (tick with date + commit; never delete)
 
@@ -73,20 +75,40 @@ agent work; Fable only for the PI-facing orchestration turns.
   reach 41 pass without losing the disclosures, but it changes what a
   signature attests, so it was flagged rather than done
   (`reports/documentation-batch1-deltas-2026-09-13.md` § 3.4).
-- [ ] **3. Obs for the 2026-09-12/13 findings**: the tile-join class (a
+- [x] **3. Obs for the 2026-09-12/13 findings**: the tile-join class (a
   metric keyed by a name beside one keyed by geometry; overlapping frames);
   the recovery-fragment class (a count can hold while the set changes; a
   fragment can lower the count); the verifier-stage reversal of tile-MCC's
   response to K; the MCB-versus-greedy disagreement in both directions;
   the AUD-against-USD corroboration. Owner: obs-writer (Opus).
-- [ ] **4. Methods amendments section currency** (`docs/paper/methods-draft.md`
+  **Done 2026-09-13, `79a4d3c0e`** — Obs 477–481, next free number
+  collision-checked (max was 476, nothing at 477+), no existing entry
+  edited.
+- [x] **4. Methods amendments section currency** (`docs/paper/methods-draft.md`
   § M.x) to E85 and the S153 rulings (generated projections; the
   name-based tile join as published convention; the carried-point
   convention). Owner: Opus agent.
-- [ ] **5. Refresh the project's documentation audit**: re-run the
+  **Done 2026-09-13, `34c6d4be0`** — errata E78 → E85 (composites 26 → 33,
+  the defensible range 18–30 → 18–31, bare tallies unchanged); register
+  32 → 67 rows with the 66-signed / 1-unsigned-by-design layer; E82 and
+  E83 added to the registered-inference disclosure; the three S153
+  conventions carried with inline anchors. One stale claim corrected —
+  H13 is registered-exploratory **with a result**, not silently dropped,
+  so § M.x had been contradicting the generated hypothesis-outcome table
+  it vouches for.
+- [x] **5. Refresh the project's documentation audit**: re-run the
   interim-docs scorecard against today's inventory and update the
   output-directory standard's compliance table with current counts.
   Owner: Opus agent.
+  **Done 2026-09-13, `d52ec49af`** — `planning/interim-docs-review.md`
+  § 11 (the April scorecard untouched); the compliance table recounted
+  with the May counts kept as history. Headline: two compliance regimes
+  now, and six generated documents sit in **neither** — two of them the
+  Era-2 board's own tiering and frame-delta tables, plus all 46
+  `outputs/**/evaluation.md`, which that row is reclassified to.
+  Feeds item 11: rebuild
+  `reports/verification/generated-file-registry.json` first (last built
+  2026-08-20 at `06f7b8ea5`, and it does not enumerate `outputs/`).
 
 **Batch 2 — after the image run lands ($0 except as noted)**
 
@@ -152,6 +174,21 @@ agent work; Fable only for the PI-facing orchestration turns.
   counts move.
 - [ ] **11. Second documentation audit pass** after items 6–10, so the
   scorecard describes the foundation the outline pass starts from.
+  - [ ] **11a.** Rebuild the generated-file registry (built 2026-08-20 at
+    `06f7b8ea5`; short by 814 `results/**.md` and 48 `reports/**.md`;
+    does not enumerate `outputs/`) before item 11. Owner: Opus agent.
+  - [ ] **11b.** Verify a source-commit stamp and a tier-1 drift guard for
+    each of the five register renderings and the six generated documents
+    in neither compliance regime (the Era-2 board's `tiering_20m.md` and
+    `frame-deltas.md`, the four 55-map leaderboard tables); add where
+    missing. Owner: Opus agent.
+  - [ ] **11c.** `PaperImp` blocks on the 15 of 17 findings documents
+    that lack one — on touch during the outline pass, not in bulk.
+- [ ] **12. Verdict-model decision (PI)**: a `disclosures` list beside
+  `discrepancies` in the run-conditions verifier, so the 12 deliberate
+  WARNs (3 `n-passes-over` on the mixed-provenance uplift pool, 9
+  `pinned-vintage` disclosures) count as passes and 41 of 41 is
+  reachable — it changes what a signature attests, so it is the PI's.
 
 **Then**: the Results outline pass proper, section by section, with the
 PI ruling per section (the standing "outline first" rule); the
@@ -208,6 +245,37 @@ verdict-model change — a `disclosures` list beside `discrepancies`, with PASS
 defined over `discrepancies` alone — because the remaining 12 WARNs are
 satisfied checks the model has nowhere to put. That changes what a signature
 attests, so it is a PI call, not an agent's.
+
+### 2026-09-13 (later) — Items 3, 4 and 5 closed
+
+Batch 1's documentation items, run on one Opus agent in an isolated
+worktree, $0 and no API calls.
+
+- **Item 3** (`79a4d3c0e`): Obs **477–481** appended to
+  `docs/notes/working-notes.md` — the tile-join class, the
+  recovery-fragment class, the verifier-stage tile-MCC reversal, the
+  MCB-versus-greedy disagreement, and the AUD-against-USD corroboration.
+  Next free number collision-checked; no existing entry edited.
+- **Item 4** (`34c6d4be0`): § M.x of `docs/paper/methods-draft.md` current
+  to E85 and the 67-row register, with the S153 conventions and two
+  further inferential departures (E82, E83) disclosed. It also **found a
+  contradiction**: § M.x said H13 was silently dropped, while the
+  register and the generated hypothesis-outcome table both hold H13 as
+  registered-exploratory *with a result* — the arms were built and the
+  three registered analyses ran on 2026-08-17/18, the day after the
+  erratum recording the omission.
+- **Item 5** (`d52ec49af`): `planning/interim-docs-review.md` § 11
+  (additive; the April scorecard untouched) and a recounted compliance
+  table in `docs/methodology/output-directory-standard.md`.
+
+**What this changes for the items still open.** The audit's headline is
+that there are now two compliance regimes and **six generated documents
+sit in neither** — including the Era-2 board's own `tiering_20m.md` and
+`frame-deltas.md`, which carry the ranks, and all 46
+`outputs/**/evaluation.md`. Item 6's board rebuild is the natural moment
+to close the first two. Item 11 should be preceded by a rebuild of
+`reports/verification/generated-file-registry.json`, last built
+2026-08-20 at `06f7b8ea5` and by charter not covering `outputs/` at all.
 
 ### 2026-09-13 — Original publication (Session 153)
 

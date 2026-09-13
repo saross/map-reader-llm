@@ -10,31 +10,52 @@ project state.
 
 ## 🔍 STATE AFTER S153 (2026-09-11 → 12 — the PI's walk-through day; ~140 commits; US$24.81 API (Phase 2) + tier E ≈ US$5 pending in the close-out; eleven worktree agents)
 
-> **⏰ MORNING LIST — the PI's decisions, in the order to take them (each
-> independent; the close-out job's own numbered questions in
-> `reports/k-ladder-closeout-deltas-2026-09-12.md` supersede this list
-> where they overlap; CLOSE-OUT STATUS: see the note at the end of this
-> block):**
-> **(1) PR #16** (`fix: one tile-join function…`) — merge or hold; it moves
-> no published number but carries the **tile-join ruling**: the 384 px
-> frames overlap (487 tile areas = 1.28 × their union; a median 30.6 % of
-> detections lie in more than one tile), so a geometric "tile containing
-> the point" is not a function; two geometric variants are implemented,
-> either raises MCC on 146/146 cells (+0.106 / +0.075 mean) and would
-> change every published MCC; default stays the `id` string join with an
-> invariant that WITHHOLDS a mismatched cell's MCC. Recommended: keep
-> `id` as the published rule, disclose the three withheld 3.7-rung MCCs,
-> and treat the geometric variants as a supplement sensitivity row.
-> **(2) PR #17 (the close-out)**: merge after #16; then **sign** the `k-ladder-2026-09-12` analysis row and
-> **re-sign** the Era-2 board at its new size (46 Phase 2 rungs + tier E
-> admitted; proposed outcome in `provenance.json → re_sign_pending`);
-> amend the pairing row again only if the job reports new pairs.
-> **(3) Deferred by the PI on 2026-09-12**: the per-block word-allocation
-> table (`docs/paper/results-outline.md` § "Word allocation") — accept
-> or adjust; the user-obs candidates S150 → S153 (five batches pending).
-> **(4) Item 5 of the day is CLOSED** (the board tile-swap is the ladder
-> instrument, sign-swap as cross-check — ruled after the MCC agent showed
-> the 55-map "sign-swap" premise was wrong at source).
+> **⏰ STATE AT 2026-09-13 ~10:00 UTC (S153-b, the PI's rulings day) —
+> the PI's OPEN decisions, in order (each independent):**
+> **(1) Era-2 board re-signature** at its next rebuild (the PI: "I'll
+> wait"): one rebuild carrying the four recovery-fix cells (k3 0.8870 →
+> 0.8860 once item 6a lands), the tile-MCC permutation family (ruling 7),
+> and the withheld-cell disclosure; proposed outcome will sit in
+> `provenance.json → re_sign_pending`. Board today: 153 admitted / 150
+> tiered / 3 withheld, Tier 1 unchanged.
+> **(2) 55-map board r2 rebuild + signatures** once the image campaign
+> lands (stride B K = 5 under the 3.7 verifier, the image cells, the MCC
+> tiering); the image run's row `gemini37-image-55map-2026-09-13`.
+> **(3) Checklist 6b**: one verifier call (≈ US$0.0007) to make tier E's
+> K = 5 zero delta unconditional, or accept as disclosed.
+> **(4) Checklist 12**: the verifier's verdict model (a `disclosures` list)
+> so 41 of 41 runs can pass — changes what a signature attests.
+> **(5) Deferred by the PI**: the word-allocation table; user-obs
+> candidates S150 → S153 (five batches).
+> **(6) The eval-framework note** `planning/eval-framework-comparison-2026-09-13.md`
+> (verified: partial pass, no confabulation, recommendation intact) — for
+> the PI and Brian: keep the scoring package neutral, Inspect AI as the
+> harness, Pydantic AI's typed-model idiom for the metadata contract.
+>
+> **Rulings GIVEN on 2026-09-13 and executed** (all on main): PRs #14–17
+> merged; ladder row `k-ladder-2026-09-12` SIGNED after the MCB sets,
+> the carried convention (stride shell), H3+H13, the § 8.6 reversal
+> claim; ten rows signed, one unsigned by design; the tile-join rule =
+> the name-based join published (ruling 6); MCC family at the next
+> rebuild (7); the recovery-fragment patch applied (`75d7c8d4c`) and the
+> five negligible unions fixed properly (`f445fe1c6`, four calls
+> US$0.0028); the K-ladder Phase 2 (US$24.81) and tier E (US$4.96);
+> board admission via a membership file (153 cells); the image K = 3
+> run APPROVED (≈ US$261–276, caching confirmed) — blocked once at the
+> audit for US$0 (four blockers, all resolved), relaunched: GS
+> calibration leg done (US$1.12), **pass 1 of 3 RUNNING on sapphire**
+> in `~/worktrees/map-reader-llm/claude-image55` (steward agent armed
+> on the pass-1 gate: audited ≤ US$110 and cache ≥ 70 % → passes 2–3);
+> documentation batch 1 DONE (41/41 run reports, generated with a drift
+> guard; verifier 38 pass / 3 partial / 0 fail; Obs 477–481; Methods
+> § M.x current to E85; the audit refreshed) — checklist
+> `planning/documentation-foundation-checklist-2026-09-13.md`.
+> **Findings worth the PI's eye today**: the verifier-stage reversal of
+> tile-MCC's response to K (§ 8.6, Obs 479); the tension resolved as a
+> resolution effect (487 tiles resolve ΔF1 ≈ 0.03+); K = 3 admissible on
+> 12 of 22 ladders, K = 10 never excluded, K = 1 the MCC choice on 22
+> of 22; the 3.7 55-map pass 3's 241,834 retries (6–23 × its siblings);
+> § M.x had contradicted the hypothesis table on H13 (now fixed).
 >
 > **HEADLINES, all on main unless noted (main at `6cf9f1c9f`+; sapphire
 > main is behind and is being used by the close-out job in an isolated
@@ -180,6 +201,17 @@ project state.
 > design (E56); rulings 2(i)–2(iv) in the card (`e30dd7cdb`).
 > **(4) 55-map 3.7 image run COSTED and DECLINED** (PI: too dear, trigger
 > not met; `reports/gemini37-image-55map-costing-2026-09-10.md`).
+> **↳ ADDENDUM 2026-09-13** (does not revise the sentence above, which was
+> and remains true on its own terms): the decline was on **F1** grounds —
+> the GS screen resolved no new F1 high, so the pre-agreed F1 escalation
+> trigger was not met, and it still is not. On **2026-09-13** the PI
+> separately approved a **K = 3** 55-map 3.7 image campaign on **tile-MCC**
+> grounds, a different question with a different instrument
+> (`planning/gemini37-image-55map-2026-09-13.md` § 1: tile-MCC is the unit
+> of survey triage, the GS top-MCC cells are all image, and the 55-map
+> instrument resolves ΔMCC ≈ 0.01). So both records stand together: the
+> F1-trigger decline holds, and the MCC question is what the approved
+> campaign answers.
 > **(5) `pv-high-text-t0.0-n3` was NOT stale**: its "410" was a
 > cross-vintage index-join artefact (the union rebuilt 2026-07-30
 > reordered 262 positions); the sweep reproduces all 240 rows on its own

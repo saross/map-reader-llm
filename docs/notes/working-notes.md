@@ -34768,3 +34768,654 @@ regenerate derived documents after the session's last register write);
 by design — they are in-sample optima, E56 class); **Obs 469** (the
 identity discipline that governs which twin may be paired with which
 cell).
+
+## Observation 477: A metric keyed by a name beside one keyed by geometry — and on an overlapping frame the geometric join is not single-valued, so the name is the published convention (Session 153, 2026-09-13)
+
+**The finding.** The tile confusion matrix had one axis joined by string
+equality and the other by spatial containment.
+`lib_advanced_metrics.calculate_tile_classification` booked detections to
+frame tiles by the `source_tile` **string** and references to frame tiles
+by `intersects` **geometry** (`scripts/lib_advanced_metrics.py:2512`, site
+1 of a twelve-site census). Both axes looked like "which tile is this
+in?", and for a year they agreed, because every cell happened to be
+scored on the tiling its proposer ran on. The first cell scored on a
+foreign frame produced a sound F1 of **0.8495** beside a meaningless
+tile-MCC of **0.1337** — and every guard in the pipeline passed it. The
+board's confusion gate rebuilt the confusion by calling the same function
+that produced the committed number, so it could only ever confirm that a
+computation agreed with itself.
+
+The PI's first ruling was **make the assignment geometric**, and its
+premise did not survive execution. The premise was that a geometric join
+must reproduce the string join wherever the vocabulary matches. It does
+not, on any cell, because **the evaluation frames overlap**:
+`inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` holds 487
+tiles **1,923.84 m** wide on a **1,686.33 m** stride — 384 px tiles at a
+336 px step, a 12.5 % overlap — so neighbours overlap by 237.51 m, the sum
+of the 487 tile areas is **1.2783 ×** the area of their union, and a
+**median 30.6 %** of a cell's detections (range 24.4–45.4 %) lie inside
+**more than one** frame tile. "The frame tile whose polygon contains this
+point" is therefore not a function. There are two defensible geometric
+rules and they differ from each other by 0.02–0.05 MCC:
+
+| rule | question it answers | tiles per point | mean Δ MCC vs `id` | higher on |
+|---|---|---:|---:|---:|
+| `id` | did the model, shown tile T, report a mound? | 0 or 1 | — | — |
+| `geometric-primary` | is T the nearest-centroid tile of a detection? | 0 or 1 | **+0.1059** | 146 of 146 |
+| `geometric-contains` | does T contain a detection? | 0 or more | **+0.0754** | 145 of 146 |
+
+So the choice was never between a broken join and a correct one; it was
+between three different metrics. **PI ruling 6 (2026-09-13): the
+name-based `id` join is the published tile-MCC convention**, on the
+reasoning that tile-MCC scores the pipeline's decision on the tile the
+model saw, which the tile identifier records exactly. The geometric
+variants stay implemented as a supplement sensitivity option. The three
+refused cells stay **admitted-and-withheld** on the Era-2 board: their
+whole-frame F1 is quoted (0.8495, 0.8338, 0.8870) because the tile join
+does not touch it, and their pre-invariant tile-MCC (0.1337, 0.1422,
+0.1337) is **not published**, each with a named reason in the board's
+withheld table.
+
+**Why this matters.** Three things generalise past this defect.
+
+*A name is a claim about provenance; a coordinate is a claim about the
+world.* When both are available for the same entity, the name encodes
+where it came from and the coordinate where it is. Those are different
+facts, and a metric that mixes them is not approximately right — it is
+two metrics wearing one label. The tell here was an **asymmetry**: one
+axis of a 2 × 2 table keyed differently from the other. Asymmetry in a
+confusion matrix is worth auditing for its own sake.
+
+*A gate that recomputes with the function under suspicion cannot fail.*
+The board's confusion gate was carefully built, hard-raising and
+completely blind. A gate earns its name only by appealing to something
+the suspect code does not touch — here the frame's polygons. "Does the
+rebuild match the record?" and "does the record match the world?" are
+different questions, and only the second is a check. The gate now fails a
+geometric shortfall **even when the rebuilt confusion matches the
+committed record exactly**, which is the substantive change.
+
+*Fixing a silent failure can be cheaper than fixing what it concealed.*
+Making the failure loud took an afternoon and moved **not one published
+number** — 146 of the 149 committed cells the board reads reproduce their
+committed confusion *and* their committed four-decimal MCC exactly, 0
+drift, 3 refused. Making the metric geometric is a corpus-wide re-scoring,
+a board re-signature, and a choice between two rules that differ by more
+than most effects this project reports. The assumption that let the defect
+live (one tiling per cell) is also the assumption that made the fix look
+free. Worth checking, at the moment a defect is diagnosed, whether the
+repair and the diagnosis rest on the same unexamined premise.
+
+**Caveats.** The +0.1059 / +0.0754 shifts are measured over the 149
+committed cells of the signed Era-2 board plus K-ladder Phase 2, not the
+whole corpus. The corpus's standing reassurance that "F1 is geometric and
+therefore unaffected" is **too strong**: F1's *matching* is geometric but
+its map-sheet *scoping* is a `source_tile` string prefix
+(`det_scope = gdf_det[gdf_det['source_tile'].str.startswith(map_name)]`,
+`scripts/lib_advanced_metrics.py:1491`), so a cell from a differently-named
+sheet set would lose F1 as quietly as it loses MCC. The three refused
+cells escape only because their names
+(`K-35-052-4_32635_x0_y1152.png`) share the frame's map prefix and differ
+only in the tile offset — which is why their F1 is sound. Structurally,
+an F1-tolerance gate **cannot** detect a tile-assignment error at all,
+because micro-F1 sums TP/FP/FN over tiles and is invariant to which tile
+an outcome is booked to; only the confusion and MCC equality gates are
+sensitive, and they are equality gates against the committed name-join
+numbers, so they would fail on **every** cell the moment the default join
+changed. The deeper question the overlap raises stays open and is outside
+the join entirely: the reference side has always booked a mound to every
+tile it touches, so on this frame about 21 % of reference mounds are
+counted in more than one tile and "the tile" is not an independent unit.
+And one consequence surfaced only later — because the F1 bootstrap
+resamples tiles, the invariant's refusal raises inside `bootstrap_ci` and
+aborts the **whole** evaluation of a refused cell, so a refused cell's F1
+cannot be rewritten at HEAD even when it has genuinely moved (Obs 478).
+
+**Findable later**: tile join name versus geometry, `id` join published
+convention, ruling 6, 0.8495 beside 0.1337, overlapping evaluation frame,
+1,923.84 m on a 1,686.33 m stride, 336 px step 12.5 % overlap, Σ areas /
+union 1.2783, median 30.6 % of detections in more than one tile,
+`geometric-primary` +0.1059, `geometric-contains` +0.0754, 146 of 149
+EXACT 0 drift 3 refused, admitted-and-withheld, a gate that recomputes
+with the suspect function cannot fail, asymmetric confusion matrix,
+F1 map-sheet scoping is a string prefix, 21 % of reference mounds in more
+than one tile.
+
+Sources: `reports/tile-mcc-geometric-join-2026-09-12.md` (read 2026-09-13:
+§ 0 for the three rulings' states, the three-metric framing and the
+`geometric-primary` / `geometric-contains` means, medians and ranges;
+§ 1's twelve-site census, sites 1, 2 and 12 with their line anchors;
+§ 2's `TILE_JOINS` table; § 3's invariant and its three enforcement
+points; § 4.1's 146 EXACT / 0 DRIFT / 3 REFUSED; § 4.2's "no other cell
+in either corpus"; § 4.3's per-variant values for the three; § 5.1(a) on
+F1's map-sheet scoping; § 6's four open questions; § 7 check 4 for the
+frame measurements; § 8's observation-candidate framing, which this entry
+follows);
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`
+(read 2026-09-13: the 2026-09-13 banner and the two 2026-09-13 changelog
+entries; the "Admitted but WITHHELD" paragraph and its three rows with
+their `tile_join_detection_shortfall` reasons — 21 of 475, 22 of 526, 20
+of 467 — and the F1 values 0.8495 / 0.8338 / 0.8870);
+`planning/gs-era2-verified-board-2026-09-08.md` (read 2026-09-13:
+changelog entry "2026-09-13 — PI ruling: the name-based tile join is the
+published convention", recording ruling 6, and the adjacent ruling 7
+entry which withholds these cells from the tile-MCC permutation family
+too).
+Related: **Obs 476** (the tile-MCC values this join produces, and why the
+metric pair carries the verifier finding); **Obs 478** (the refusal's
+downstream cost — a refused cell's evaluation cannot be regenerated, so a
+genuinely moved F1 is stranded); **Obs 480** (the withheld family has no
+MCB admissible set on either metric, for the same reason).
+
+## Observation 478: A silent fragment drop no count gate can catch in either direction — a count can hold while the set changes, and folding recovered data can LOWER the count (Session 153, 2026-09-13)
+
+**The finding.** `merge_passes.resolve_pass_files` derived a pass
+directory's number by stripping the prefix and casting the remainder —
+`int(pass_name.replace("run_", ""))` at `scripts/merge_passes.py:453-456`
+— so `int("2_recovery")` raised `ValueError` and the
+`except ValueError: continue` at `:459-460` swallowed it **in silence**.
+Every `run_<N>_recovery` storm-recovery fragment directory was skipped.
+The comparable loader in `scripts/lib_detection_paths.py:277-284` walks
+numeric directories only but **logs** each skipped fragment; this one did
+not.
+
+The graver half was the **denominator**. `merge_passes` sets
+`total_passes = len(raw_passes)` (`:573`, and again at `:652` on the sweep
+path) from the loader's output, and `load_pass_detections` keeps a pass
+only `if features` (`:538-540`), so a pass whose main directory held a
+valid but **empty** FeatureCollection vanished entirely and every vote
+threshold was divided by the wrong number. That is live in exactly one
+pool: on `outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img`,
+`run_3`'s main file holds **0** features against **1,663** in
+`run_3_recovery`, so a five-pass build resolves five directories and loads
+**four**.
+
+**The reach is small and was measured, not assumed.** Fifteen pools hold
+recovery directories; **28 committed unions** read one; **0 MATERIAL**
+(≥ 0.5 % of features), **5 NEGLIGIBLE**, **23 UNAFFECTED**. The two pools
+where the drop is large — the 3.7 55-map text pool at 13,319 recovery
+features and the 3.7 gold-standard image pool at 5,109 — have **no
+`merge_passes.py` union at all**; their builders merge fragments, one
+provably so, because `image_b_prepare_and_union.py:84-89` raises
+`CoverageError` unless a pass's processed-tile set equals the pinned
+manifest exactly, and on that pool `run_3`'s sidecar records
+`completed: 1, failed: 1397` against the fragment's `completed: 1397` —
+strict complements, so the union could not have been written without the
+fragments. Fragments are additive, never duplicative: across all 43
+fragments in the fifteen pools, the tiles on which a fragment detected are
+**disjoint** from the main file's.
+
+**The class, and why it defeats a whole family of cheap gates.** No count
+check catches this, in either direction.
+
+- **A count can hold while the set changes.**
+  `gemini37-screen-…/consensus-n1/consensus_t1` is **640** committed and
+  **640** corrected; a per-candidate positional match at 2 m
+  (EPSG:32635) shows **639 matched, 1 new, 1 absent**. The fragment
+  displaced one candidate without moving the total.
+  `consensus-n3` does the same at larger scale: 757 → 759 with 756
+  matched, 3 new, 1 absent.
+- **Folding recovered data can LOWER the count.** Three pools go *down*
+  (−6, −4, −1): a fragment feature 20 m from two previously separate
+  clusters bridges them, and two candidates become one. So a fix cannot
+  be gated on "the count should go up" either — and the ± 2 % count gates
+  at `scripts/run_k_ladder_tier_e.py:165-166` would not have caught any of
+  this in either direction.
+- **A rebuild through the same blind spot reproduces perfectly.**
+  `reports/union-staleness-retrospective-2026-09-12.md` classified 106
+  unions 64 REPRODUCES / 36 SUBPOOL-CONSISTENT / 1 UNRESOLVED / 5 STALE
+  using `merge_passes.py`'s **own** resolver, so "REPRODUCES" certifies
+  faithfulness to *the pool as that resolver sees it*. Its 48 pools are
+  disjoint from these fifteen, so its verdicts stand — but its method
+  could not have caught this defect, and that is a property of the method,
+  not of the sample.
+
+**The fix and the repair.** Commit `75d7c8d4c`
+("fix(merge_passes): fold run_N_recovery fragments into their pass")
+groups pass directories by the number matched from `_PASS_DIR_RE`
+(`scripts/merge_passes.py:413`), appends each fragment's files **after**
+the main directory's so within-pass deduplication still prefers the main
+feature, keeps the main directory's name as the pass id, and leaves the
+pass **count** unchanged. Five unions were rebuilt and every count the
+measuring report predicted reproduced exactly (757/608/529 → **759/609/530**;
+640 → 640 with one candidate displaced 3.026 m; grid
+`consensus-n5` T5 1,168 → **1,169**), with `absent_from_new` **0** at the
+20 m tolerance `merge_passes.py` itself clusters on for all nine rebuilt
+threshold files. Four candidates needed a verifier call — **4 calls,
+US$0.002784** — and four registered conditions were re-scored on their
+recorded recipes with **every "before" re-derived in the same process as
+its "after"** as the control that rules out scorer drift.
+
+**The whole numerical consequence of the defect across the repository is
+one added false-positive detection.** `g37-text-k3-verified-opmax` gains
+`candidate_00049` at (25.865733, 42.441604), which the fragment promoted
+from 2 votes to 3 so that it clears a vote ≥ 3 gate at probability 1.0:
+F1@20 **0.8870 → 0.8860**, 494 → 495 detections, precision 0.8340 →
+0.8323, recall unchanged at 0.9471. It is one of the three cells the
+Era-2 board already withholds, and the one **tiered** cell of the four
+(`g384-ov192-k5-verified-opmax`, rank 9) re-scores **dict-identically** on
+every arm, so no rank, tier, pairwise test, BH family, MCB set or
+signature field on that board is touched by a number that actually
+changed. A fragment whose recovery was unambiguously correct data
+recovery made one cell very slightly **worse** — more data recovered, one
+more confident-but-wrong candidate promoted past a vote gate.
+
+**Why this matters.** The cheap gates this project relies on — count
+tolerances, reproduce-from-source checks, ± 2 % bands — are all blind to a
+defect whose signature is neither a count change nor a monotone
+direction. Detecting this class requires a **rebuild-and-diff at the
+candidate level**, matched positionally, which is more expensive than a
+count sweep and is the only thing that would have worked. The second
+lesson is about severity: it is not the fragment's size but **the
+fragment's share of its pass**. The largest absolute drop in the
+repository (13,319 features) sits against five substantially complete main
+passes and is immaterial; the only order-of-magnitude effect (+14.2 %) is
+a pool where one pass is *almost entirely* fragment.
+
+**Caveats.** The one large effect (3.7 GS image: defective 650 →
+corrected **742**, +14.2 % against a committed 674) never reached an
+artefact, because that union was built recovery-inclusive; it is reported
+so the size of the avoided error is on the record. Two K = 1 cells are
+unchanged at 20 m and at every buffer from 10 m up but **move at 5 m**
+(F1@5 0.4781 → 0.4760 and 0.4693 → 0.4673) from the 3.026 m centroid
+shift, so a reader checking only the headline buffer would wrongly
+conclude they are untouched. Three things were flagged rather than
+smoothed over: one of the four approved calls was **confirmatory, not
+necessary** — coverage was tested on metric distance where the **integer
+crop window** is the correct test, and that candidate's crop window was
+byte-identical either side at `(col_off, row_off) = (3177, 3192)`, so the
+call returned the committed 0.95 because it was the same image; **six
+carried probabilities sit on a crop shifted by one pixel**, one of them
+the sole sensitivity in tier E's claimed zero delta (`candidate_01335`
+carries 0.10 against a 0.15 gate and now has 5 votes, settleable for
+about US$0.0007); and the moved F1 **cannot be written into its own
+artefact** at HEAD, because the tile-join invariant refuses that cell's
+per-tile table and the F1 bootstrap resamples tiles, so
+`results/conditions-manifest.json` still reads 0.8870 / 494 and is stale
+by −0.0010 and one detection until the tile-join question is closed
+(Obs 477). One residue is named so it is not forgotten:
+`stride_prepare_and_union.resolve_pass_paths` globs the exact
+`f"{run}_recovery"`, so a `_recovery2` would be missed by anything routed
+through it; exactly one pool in the repository has one (15 features, 0.11 %
+of that pool's 13,319), and its union was built by
+`stride55_prepare_and_union.py`, whose `_recovery*` glob does catch it.
+Finally, one probe that looks decisive is not: a `contributing_passes`
+test is worthless on the `union_k*` family, which carries no such field,
+and yields false positives on the `consensus_t*` family because 50 % tile
+overlap means the main file often detected the same mound from a
+neighbouring tile.
+
+**Findable later**: recovery fragment drop, `run_N_recovery` skipped
+silently, `int("2_recovery")` ValueError continue, wrong vote denominator,
+`total_passes` omits an empty pass, 0 MATERIAL / 5 NEGLIGIBLE / 23
+UNAFFECTED, 28 committed unions in 15 recovery-bearing pools, a count
+holds while the set changes, 640 committed 640 corrected 639 matched 1 new
+1 absent, folding a fragment lowers the count, cluster bridging, ± 2 %
+count gate blind in both directions, a rebuild through the same blind spot
+reproduces, `75d7c8d4c`, four verifier calls US$0.002784, one added false
+positive, 0.8870 → 0.8860, dict-identical tier-E re-score, severity is the
+fragment's share of its pass, integer crop window is the coverage test,
+1 px-shifted carried probability.
+
+Sources: `reports/recovery-fragment-drop-2026-09-13.md` (read 2026-09-13:
+§ 1 for the mechanism with its `scripts/merge_passes.py` line anchors and
+the `run_3` 0-against-1,663 case; § 2.1's fifteen pools with recovery
+feature counts and the disjointness check; § 2.2's 28-union builder
+attribution table and the MATERIAL / NEGLIGIBLE / UNAFFECTED counts, plus
+the four independent lines establishing "included" and the
+`CoverageError` argument; § 2.3 on the September retrospective's 106
+unions, 48 disjoint pools, and why its method could not catch this;
+§ 3.1's five-union delta table; § 3.2 on the count that holds while the set
+changes; § 3.3's non-`merge_passes` table with the three negative deltas
+and the +14.154 % case; § 4.1–4.2 on the verifier coverage and the
+`candidate_01335` probability gate; § 4.3 on the paper-facing check);
+`reports/recovery-drop-fix-2026-09-13.md` (read 2026-09-13: § 1 for the
+fix and its `_PASS_DIR_RE` anchor; § 2's five rebuilds against prediction;
+§ 2.1's candidate-preservation measurement and the displacement census;
+§ 3's three verifier stages, carried counts and audited flex cost;
+§ 3.1's four returned probabilities; § 4's four re-scores with the
+re-derived "before" control; § 4.1's decomposition of the single movement;
+§ 4.2 on the 5 m buffer; § 5 on the board note and the 16 asserted
+signature paths; § 6.1–6.3 for the three flagged findings; § 8 on the 16
+tier-1 tests validated against the archived pre-fix artefacts);
+`git log -1 75d7c8d4c` (read 2026-09-13: "fix(merge_passes): fold
+run_N_recovery fragments into their pass", 2026-09-13 16:58:33 +1000);
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`
+(read 2026-09-13: the "2026-09-13 (later)" changelog entry, its four-cell
+before/after table, and the reason the entry exists as well as the
+`provenance.json` block — `finalise()` overwrites a PENDING
+`re_sign_pending` block but preserves an existing `## Changelog`).
+Related: **Obs 477** (the tile-join refusal that blocks rewriting the one
+figure that moved); **Obs 475** (the `union-rebuilt` versus
+`probabilities-grew` vintage taxonomy, which is the same question of
+whether a union's identity or only its size has changed); **Obs 461** (a
+sweep older than its own inputs — the neighbouring class where the
+artefact is stale rather than mis-built).
+
+## Observation 479: The verifier stage reverses the SIGN of tile-MCC's response to K, and absorbs 40.6 % of K's F1 return on the same pool (Session 153, 2026-09-13)
+
+**The finding.** On the same candidate pool and the same B geometry
+(384 px tiles, 50 % overlap), going from K = 1 to K = 10 proposer passes:
+
+| stage | ΔF1@20, K = 1 → 10 | Δtile-MCC, K = 1 → 10 |
+|---|---:|---:|
+| **consensus only** (no verifier) | **+0.0572** | **+0.0444** |
+| **verified** (Gemini 3 verifier) | **+0.0340** | **−0.0308** |
+
+The verifier therefore **absorbs 40.6 % of K's F1 return**
+(1 − 0.0340 / 0.0572) and **reverses the sign of K's tile-MCC effect**, a
+swing of **0.0752** MCC. Each of the four numbers was re-read at source:
+the consensus-only pair is the best F1@20 over the (corroboration, vote)
+grid per K on `results/grid-2026-08-18/sweep.csv`, cell `g384_ov192` —
+K = 1 F1 0.6633 / tile-MCC 0.4465 at (c ≥ 3, k ≥ 1) and K = 10 F1 0.7205 /
+0.4909 at (c ≥ 2, k ≥ 10) — and the verified pair is the tier-E rungs'
+own committed evaluations, K = 1 F1@20 0.8546 / MCC 0.8211 at 482
+detections and K = 10 F1@20 0.8886 / MCC 0.7903 at 400.
+
+**The mechanism, in two sentences.** A consensus-only union at a tuned
+vote threshold is precision-starved, so an extra pass mostly adds true
+positives in tiles that were predicted negative, which raises F1 and
+tile-MCC together. Once a verifier has already removed most of the false
+positives that extra passes would have removed, the same extra pass buys
+less F1, and what it now adds is disproportionately false positives in
+tiles that were correctly negative — so tile-MCC falls while F1 still
+rises.
+
+**Why this matters.** This is the corpus's cleanest evidence that
+**tile-MCC's response to K is a property of the pipeline stage rather
+than of K**. Tile-MCC falls on 16 of 21 verified ladders and rises at
+every geometry on the four consensus-only ladders; the two bodies of
+evidence were each half of a comparison nobody had made, and the
+comparison is what carries the claim. It also sharpens the project's
+standing rule to report tile-level MCC alongside F1: the two metrics do
+not merely differ in magnitude or in significance, their **response to a
+design lever can differ in sign**, and which sign a reader sees depends on
+where in the pipeline the measurement is taken. A paper sentence of the
+form "more passes improve detection" is stage-relative, and the verified
+stage — the deployed one — is where the MCC cost appears. It is also the
+first measurement on a K ladder of the partial substitution between
+consensus and the verifier that the registered
+`grid-postverifier-2026-08-18` analysis found.
+
+**Caveats.** One geometry, one thinking level, one temperature, one
+modality, one corpus. The ΔMCC values are **not statistically
+separated** — tile-MCC separates on none of the ladder's six pairs — so
+the claim is about the **sign and the size of the shift between stages**,
+not about either ladder's own MCC trend being significant. The two rows
+are measured at stage-appropriate operating points rather than at one
+fixed point (a sweep argmax per K on the consensus side, each rung's
+committed opmax cell on the verified side), which is the rule the grid
+study's own findings document reads that sweep by, but it means the
+comparison is between stages as each would actually be operated, not
+between two readings of one configuration. The § 8.4 caveat about the
+K = 10 rung's construction applies to the verified row. The claim sits in
+a findings document whose analysis row, `k-ladder-2026-09-12`, is
+post-hoc (H3, H13) and was signed 2026-09-13T06:58:12Z; a reader should
+check the row's current state rather than assume the prose and the
+register agree.
+
+**Findable later**: verifier absorbs K's F1 return, 40.6 %, tile-MCC sign
+reversal, consensus-only +0.0572 F1 +0.0444 MCC, verified +0.0340 F1
+−0.0308 MCC, 0.0752 MCC swing, stage not K, precision-starved consensus
+union, partial substitution consensus and verifier, grid
+`g384_ov192` sweep 0.6633 / 0.7205, tier E 0.8546 / 0.8886, MCC alongside
+F1 can differ in sign, `k-ladder-2026-09-12` signed.
+
+Sources: `results/k-ladder-2026-09-12/findings.md` § 8.6 (read 2026-09-13:
+the claim, the two-row table, the 40.6 % and 0.0752 arithmetic, the
+per-number anchors naming `results/grid-2026-08-18/sweep.csv` and the two
+tier-E cell evaluations with their operating points and detection counts,
+the mechanism paragraph, and the limits paragraph including the
+"significant on none of the ladder's six pairs" qualification and the
+comparison with §§ 4, 4.3 and 8.3); same document § 7.2 (read 2026-09-13:
+tile-MCC falls on eleven of thirteen Phase 2 ladders and the one
+significant decline, HIGH image T 1.0 at −0.0637, BH p = 0.0420, which is
+the family with the largest F1 gain); `results/run-analyses.json` (read
+2026-09-13: the row `k-ladder-2026-09-12` — `type` comparison,
+`preregistered` post-hoc, `hypothesis_refs` H3 and H13, `output_path`
+`results/k-ladder-2026-09-12/findings.md`, `manually_verified_at`
+2026-09-13T06:58:12Z, and the outcome prose's "TILE-MCC DOES NOT FOLLOW
+F1" and "PARETO MCC SET" passages).
+Related: **Obs 476** (the verifier as a tile classifier — the same
+metric pair, measured across the verifier rather than along K);
+**Obs 141** (the diversity dividend, which is what K is buying on the
+F1 side); **Obs 480** (the same ladders under a simultaneous instrument,
+where K = 1 is admissible on tile-MCC on all 22).
+
+## Observation 480: The MCB admissible set and the greedy-clique tie set disagree in BOTH directions — and "one tier" is not "any rung could be best" (Session 153, 2026-09-13)
+
+**The finding.** The committed tie set is a rank band from pairwise
+permutation plus Benjamini–Hochberg plus a greedy clique; the Hsu
+multiple-comparisons-with-the-best (MCB) admissible set is simultaneous by
+construction. Compared ladder for ladder over the 22 tiered K ladders,
+the F1-admissible set is **smaller** than the committed tie set on **two**
+ladders and **larger** on **six**.
+
+The sharp case is the one a paper sentence would have leaned on.
+`findings.md` § 7.1 reports **four MINIMAL ladders that greedy-clique into
+a single tier**, "all four rungs statistically indistinguishable, so K
+buys nothing detectable at all" — text T 0.3 (BH p = 0.28), text T 0.7
+(p = 0.58), image T 0.3 (p = 0.78), image T 1.0 (p = 0.12). Under MCB only
+**two of those four** are admissible whole. Read from
+`mcb/summary.json`: `phase2-flash-minimal-text-n30-t07-text-t0-3` and
+`phase2-image-n5-image-t1-0` both give F1-admissible {3, 5, 10} — K = 1 is
+**ruled out as best** on each — while `…-text-t0-7` and
+`phase2-image-n5-image-t0-3` are the only two ladders in the corpus whose
+F1-admissible set is the whole ladder.
+
+The disagreement runs the other way too, and gives the corpus's sharpest
+statement of the two objectives selecting different rungs:
+
+| claim | value |
+|---|---:|
+| ladders whose F1-admissible set contains K = 1 | **2 of 22** |
+| — so K = 1 is ruled out on F1 on | **20 of 22** |
+| ladders whose tile-MCC admissible set contains K = 1 | **22 of 22** |
+| ladders whose tile-MCC admissible set is the whole ladder | 12 of 22 |
+| ladders whose F1-admissible set excludes K = 10 | **0** of the 20 with a K = 10 rung |
+
+**On F1 the cheapest rung is almost always ruled out; on tile-level
+discrimination it never is.** And the top rung is never statistically
+excluded — only never worth its price, which is the formal counterpart of
+the ladder's US$1,100-to-US$43,000 per 0.001 F1 figures.
+
+**Why this matters.** Two instruments that both answer "which conditions
+are indistinguishable from the best?" disagree on a quarter of the
+ladders, in both directions, and the direction is not predictable from the
+instruments' relative conservatism. A within-ladder pairwise BH family and
+a simultaneous comparison against the best answer **different questions**,
+so § 7.1 is not withdrawn — the pairwise test is the registered tiering
+instrument — but **a non-significant pairwise family is not a licence to
+say any member could be the best one**. That is exactly what erratum E83
+and defect D20 warn of: E83 replaced an order-dependent sequential rule
+with Hsu MCB across eight boards and revised published tie-set membership
+in both directions, including one board whose headline claim of a *sole*
+leader did not survive; D20 turned on a BH-adjusted p of 0.048, and is the
+reason `docs/methodology/inference-instrument-policy.md` exists at all.
+The practical rule: when a claim rests on "indistinguishable", name the
+instrument, and if a second instrument is available, report where they
+disagree rather than picking the agreeable one.
+
+**Caveats.** The instrument is the Era-2 board's own MCB step, unmodified
+(`scripts/selection_aware_intervals.py --board`: Hsu's constrained
+one-sided form on `theta_i = stat_i − max(j ≠ i) stat_j`, a rung ruled out
+only when its simultaneous **upper** bound falls at or below zero, the
+critical value bootstrapped over **tiles** rather than read from Dunnett's
+table, 10,000 resamples, seed 42, m-out-of-n fraction 1.0, simultaneous
+95 %), and each ladder runs on its own committed frame, reference and
+headline buffer. The gate was set before any set was read: all **44 runs**
+(22 ladders × 2 metrics) had to reproduce their ladder's committed
+tiering ranking, and **170 candidate rows** passed with a maximum absolute
+deviation of **4.958e-05**. Resolution tracks the **corpus**, not the
+response to K — the simultaneous F1 width is 0.0151–0.0326 on 487 tiles
+against 0.0047–0.0056 on 8,541 — so a set's size is partly a statement
+about how many tiles the ladder was scored on. One family is **withheld
+whole** (the three Gemini 3.7 gold-standard text rungs, whose per-tile
+table the tile-join invariant refuses), so it has no admissible set on
+either metric and is listed rather than dropped; lifting it needs the
+corpus-wide tile-join decision (Obs 477). And the rule has a degenerate
+edge that is now pinned rather than trusted: because Hsu admits a
+candidate only when `theta_i + w_upper > 0`, four **byte-identical** rungs
+give `theta_i = 0` on every resample, `w_upper` is exactly 0, and the
+strict inequality rules out even the empirical best, returning an
+**empty** set. No real ladder is byte-identical (`degenerate_zero_width`
+is `false` on all 44 runs), but an empty set must never be read as "no
+rung can be the best".
+
+**Findable later**: MCB versus greedy clique disagree in both directions,
+smaller on two larger on six, four single-tier MINIMAL ladders only two
+admissible whole, K = 1 ruled out on F1 on 20 of 22, K = 1 admissible on
+tile-MCC on 22 of 22, F1 set excludes K = 10 on 0 of 20, one tier is not
+any rung could be best, E83, D20, Hsu constrained one-sided, critical
+value bootstrapped over tiles, 44 runs gated 170 candidate rows 4.958e-05,
+simultaneous width 487 versus 8,541 tiles, empty admissible set on a
+degenerate tie.
+
+Sources: `results/k-ladder-2026-09-12/mcb/summary.json` (read 2026-09-13:
+`n_ladders` 22, `gate_all_passed` true, the `roll_up` block's five keys —
+F1 set contains K = 3 on 12, excludes K = 10 on 0, is the whole ladder on
+2, tile-MCC set is the whole ladder on 12 and contains K = 1 on 22 — the
+per-ladder `f1.hsu_admissible_K` and `mcc.hsu_admissible_K` arrays from
+which the K = 1 counts and the four MINIMAL ladders' sets were computed
+directly, and the `withheld` block naming the three 3.7 gold-standard
+text cells and its reason);
+`reports/k-ladder-mcb-deltas-2026-09-13.md` (read 2026-09-13: § 1's
+instrument and its parameters, the per-ladder frame/reference/buffer
+registry, and the gate with its 170 rows and 4.958e-05 maximum deviation,
+including why the committed tiering rather than the ladder inventories is
+the gate reference; § 2's fourteen-row claims table with the simultaneous
+width ranges; § 4(1) for the both-directions comparison, the two-of-four
+MINIMAL result and the E83 / D20 reference; § 4(2) for the degenerate
+empty set; § 5 for what did not change);
+`results/k-ladder-2026-09-12/findings.md` § 7.1 (read 2026-09-13: the four
+single-tier MINIMAL ladders with their BH p-values, the HIGH-versus-MINIMAL
+table, and the diversity-dividend reading);
+`docs/methodology/preregistration/protocol-errata.md` E83 (read
+2026-09-13: dated 2026-08-19, "Correction (inferential instrument
+replaced; published tie-set membership changes in both directions)", the
+Files row naming `greedy_clique_tiers` and the eight revised `tie_set`
+fields, and the Impact row — "one board's headline claim of a **sole**
+leader does not survive");
+`docs/methodology/inference-instrument-policy.md` (read 2026-09-13:
+lines 11, 167 and 193 — D20 as the documented misuse the policy exists to
+prevent, and the BH-adjusted p of 0.048 it turned on).
+Related: **Obs 470** (the admissible set is a property of the candidate
+set, not of the winner — 11 of 39 became 28 of 79 when 40 near-tied cells
+joined); **Obs 479** (the same 22 ladders' stage-dependent MCC, which is
+why the MCC-admissible sets are so wide); **Obs 477** (the withheld
+family, and the ruling that keeps it withheld).
+
+## Observation 481: A corroboration that compared currencies read as a 4 % match — the most dangerous size a unit error can be (Session 153, 2026-09-11/13)
+
+**The finding.** The June token-load audit's headline ground-truth check
+compared **18 April billed A$402.08** with an **audited US$419.64** for
+three proposer legs and reported it as a "match, −4 %". The two figures
+are in different currencies. Every one of the nine monthly Cost-table
+exports states `Currency,AUD`, with a monthly exchange rate running from
+1.5398 (December 2025) through 1.3949 (May 2026) to 1.4389 (August 2026).
+Converted, the day bills about **US$277** — **34 % under** the three
+legs — so the single-day corroboration is **not established** and has been
+withdrawn at source; the legs plausibly straddle billing days, since
+17–19 April bills A$1,175.59 (≈ US$810), covering the legs plus other
+runs. The original comparison did still exclude the legacy manifests'
+US$1,281, which is the part of its conclusion that survives.
+
+**What replaced it is stronger than what it lost.** The corroboration now
+rests on an **SKU-level rate identity** rather than on one day's total:
+every billed rate equals the USD list rate × the invoice's own exchange
+rate, exactly. August 2026, Gemini 3.7 Flash flex — text output
+62,430,515 tokens for A$168.44 is A$2.698 per million, which is US$1.875 ×
+1.4389; image input 235,690,988 tokens for A$127.18 is US$0.375 × 1.4389;
+text input 109,017,948 for A$58.83, the same; image caching input
+20,122,880 for A$1.09 is US$0.0375, one tenth of the input rate. So the
+rates on file in `scripts/lib_llm_metadata.py` are the rates Google
+billed. A rate identity is checkable per SKU and cannot be satisfied by a
+coincidence of scope, which a day total can.
+
+**A second wrong-currency artefact, pointing the other way.** The
+Results draft's flagged note that Gemini 3.7 "bills at roughly 0.6 × the
+token basis" is **refuted**: the August 3.7 leg bills US$247.41 against a
+known token basis of US$242.3, about 2 % over, which is the size the two
+unrecorded aborted passes would plausibly have. The 0.6 × figure has two
+candidate origins, both artefacts — the 3.7 metadata's own
+`cost_estimate`, which priced 3.7 at Gemini 3 rates (0.5 / 3.0 against
+0.75 / 3.75, a 0.67 × ratio), or a **USD-against-AUD** reading
+(1 / 1.4389 = 0.695). Neither is a property of the SKU. So the same
+currency factor produced one spurious agreement and one spurious
+discrepancy in the same corpus.
+
+**And the correction bought a number the audit had carried unquantified
+since June.** Re-worked in one currency and on tokens, the 26 April T 0.3
+campaign day billed **226.6 M** flex output tokens against the campaign's
+clean **158.7 M** (5 × (1.46 M output + 30.28 M thinking)) — a **1.43 ×**
+overhead — and 96.2 M input against 64.1 M, **1.50 ×**; billed / audited
+in one currency is **1.39 ×**. The audit's § 8 retry caveat, a stated
+lower bound for five months, is therefore **quantified at about 40 % for
+that campaign**, against 12,322 logged retries, with the residual fully
+attributed to retries.
+
+**Why this matters.** A ~1.44 × currency factor is the most dangerous
+size a unit error can be: large enough to matter to every cost claim in
+the paper, small enough that the mismatch presents as a **4 % agreement**
+and reads as confirmation. Two rules come out of it. First, corroborate a
+**rate at the SKU level**, where identity is checkable, rather than a
+**total at the day level**, where a unit error and a scope error are
+indistinguishable and either can absorb the other. Second, a broken check
+can be worth more than a working one: withdrawing the day comparison is
+what forced the token-level re-work, and that re-work produced the retry
+figure the audit had been unable to state. The general shape — an
+agreement so close it was never interrogated — is the same failure mode as
+a gate that recomputes with the function under suspicion (Obs 477): a
+check that can only confirm is not a check.
+
+**Caveats.** The billing exports themselves sit in `docs/costs/`, which is
+gitignored (`.gitignore:191`) because the repository is public and the
+exports carry billing-account and invoice identifiers, so these figures
+are re-readable only from the PI's own copies plus the derived public
+table `reports/billing/gemini-spend-by-sku.csv`, whose September USD
+column is at August's rate until September's invoice issues. The 40 %
+retry overhead is **one campaign day**, not a corpus-wide rate, and the
+audit's other windows are reconciled only to "consistent in one currency"
+rather than attributed per day. The August 3.7 basis includes a
+**simulated** figure — the fourth cell's verifier, whose metadata was
+overwritten by a cleanup pass, priced at arm 2's per-candidate rate at
+US$64.7 and independently bounded from its billing day at about US$58, an
+11 % spread. And an account-wide export is not a project figure: the
+Reports export exceeded the invoiced project total by A$442.51 net, which
+a project-grouped export resolved to another project on the same billing
+account (`map-reader-llm` A$6,740.47, `Shawn-individual` A$467.25,
+`Fieldmark` A$1.87).
+
+**Findable later**: AUD against USD corroboration, 18 April A$402.08
+versus US$419.64, the −4 % match withdrawn, 34 % under in one currency,
+SKU-level rate identity, US$1.875 × 1.4389, `Currency,AUD`, exchange rate
+1.5398 to 1.3949 to 1.4389, 0.6 × expectation refuted, `cost_estimate`
+priced 3.7 at Gemini 3 rates 0.67 ×, 1 / 1.4389 = 0.695, retry overhead
+quantified at 40 %, 226.6 M against 158.7 M output tokens, 1.43 × and
+1.50 × and 1.39 ×, 12,322 logged retries, corroborate a rate not a total,
+a check that can only confirm is not a check, `docs/costs/` gitignored.
+
+Sources: `reports/billing-reconciliation-2026-09-11.md` (read 2026-09-13:
+§ 1's three facts about the invoices, with the August 3.7 Flash per-SKU
+rate arithmetic; § 2's account-wide versus project divergence and the
+project-grouped confirmation figures; § 3's August 3.7 leg table, billed
+US$247.41 against US$242.3 known, and the input/output reconciliation;
+§ 3.1's daily attribution and the fourth cell's ≈ US$58 bound; § 3.2's
+September rows; § 4 item 1, which answers the June audit's corroboration
+currency as AUD; the "Conclusion for § R7.3" paragraph refuting the 0.6 ×
+expectation and naming both candidate origins; and the note on
+`docs/costs/` being gitignored and on the derived public table);
+`reports/token-load-audit-2026-06-12.md` § 10 (read 2026-09-13: the
+corrected table — the 18 April row's withdrawal and its re-founding on
+the SKU-level reconciliation, and the 26 April row's token re-work with
+the 226.6 M / 158.7 M and 96.2 M / 64.1 M figures, the 1.43 × / 1.50 × /
+1.39 × ratios, the ~40 % quantification and the 12,322 logged retries),
+plus its conclusions (a)–(c) and the two changelog entries dated
+2026-09-11 and 2026-09-12; `.gitignore` line 191 (read 2026-09-13:
+`docs/costs/`); `reports/billing/gemini-spend-by-sku.csv` (confirmed
+present 2026-09-13).
+Related: **Obs 477** (a gate that can only confirm — the same
+epistemic shape in a scoring instrument rather than a cost claim);
+**Obs 472** (check a regression gate's premise before reading its
+failure, the neighbouring lesson about trusting a check's output over its
+setup).

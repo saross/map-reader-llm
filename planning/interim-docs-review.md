@@ -19,6 +19,14 @@ appended 2026-04-22 second pass (Task-B focused re-inventory + the
 `uncalibrated-vs-calibrated-crosstab` Obs 268 artefact). Rows 1–15
 unchanged.
 
+> **Addendum 2026-09-13**: a re-score against today's inventory is
+> appended as **§ 11**, and nothing in §§ 1–10 is altered by it. No row
+> was added to § 2 under the § 10.4 promotion rule, because the re-score
+> grades *classes* of document that did not exist in April (findings
+> documents, dated delta reports, generated register projections) rather
+> than promoting an April out-of-scope item. §§ 1–10 remain the record of
+> the corpus they graded.
+
 | Tier | Count | Notes |
 |:---|---:|:---|
 | ✓ Exemplar-tier | 0 | no report outside the exemplar clears the 17-section bar as written. |
@@ -1315,6 +1323,280 @@ elsewhere, add the row at the next sequential number (row 22+) and
 record the promotion rationale in §1 "Reports reviewed" with a
 dated note. The default posture remains **defer to §10** unless
 promotion is actively demonstrated.
+
+## 11. Re-score — 2026-09-13
+
+**Date**: 2026-09-13
+**Reviewer**: worktree-isolated Claude (item 5(a) of
+`planning/documentation-foundation-checklist-2026-09-13.md`)
+**Relationship to §§ 1–10**: additive. The April 2026 scorecard is **not
+rewritten** — its rows, its verdicts and its effort estimates stand as the
+record of the corpus it graded. This section applies the **same criteria**
+to a different inventory: the documents the paper will actually be written
+from as of today, which are largely not the documents April graded.
+**What this section does not do**: re-verify any headline number, or
+re-grade any April row.
+
+### 11.1 Why the inventory changed, not just the scores
+
+April's scorecard graded 21 documents drawn from `results/` topic
+directories — the 55-map generalisation reports, the Era-1 hypothesis
+directories, the phase3a matrices. Its critical gaps were *missing
+narrative documents* (`h8-v2`, `h10`, `h11`, Phase 2b) and its
+non-critical gaps were *missing infrastructure* on documents that had
+content ("five of seven lack a files manifest; six of seven lack a re-run
+command").
+
+Since then the project's primary documentary surface has moved. The
+paper's Results spine is now carried by a **findings document per
+analysis** under `results/<analysis>/findings.md`, four **machine-checked
+registers** with a generated projection each, one **signed board** with a
+changelog, an **uplift supplement**, and a class that did not exist in
+April: **dated delta reports** under `reports/` that record what a session
+changed. Grading April's 21 rows again would score the wrong corpus.
+
+### 11.2 Today's inventory, counted
+
+Counted on 2026-09-13 in a worktree at `main`; every figure is a file
+count or a JSON row count, not an estimate. The two post-run-report rows
+were added after item 1 of the checklist landed mid-section (`c4edf1328`)
+— see § 11.8 for why that class was not graded on the criteria grid.
+
+| Class | Documents | Banner | Changelog |
+|---|---:|---:|---:|
+| `results/**/findings.md` (findings documents) | **17** | **17** | **17** |
+| `reports/*-2026-09-1{1,2,3}.md` (this fortnight's reports) | **18** | **18** | **18** |
+| `results/uplift-supplement/*.md` | **4** | **4** | **4** |
+| Era-2 board anchor docs (`gs-era2-verified-board-2026-09-10/*.md`) | **3** | **1** | **1** |
+| 55-map leaderboard tables (`results/55map-leaderboard/*.md`) | **4** | **0** | **0** |
+| Generated register projections (`results/*manifest.md`, `run-registry.md`) | **5** | n/a | n/a |
+| Generated hypothesis-outcome table | **1** | n/a | n/a |
+| Generated post-run reports (`outputs/<run>/post_run_report.md`, item 1, `c4edf1328`) | **39** | n/a | n/a |
+| Hand-authored post-run reports (item 1) | **2** | **2** | **2** |
+
+The registers themselves, as row counts:
+`results/runs-manifest.json` **41** runs; `results/conditions-manifest.json`
+**593** conditions; `results/passes-manifest.json` **1,317** passes;
+`results/run-analyses.json` and `results/analyses-manifest.json` **67**
+analyses, of which **66** carry a `manually_verified_at` signature and
+**1** is unsigned by design (`pv-diag-384-consensus-calibration`).
+
+### 11.3 Scorecard, by class
+
+Legend as § 2. The six structural criteria re-scored here are April's
+`Exec`, `Methods`, `Repro`, `Caveats`, `Files` and `PaperImp` — the
+columns April found thin ("content is citable; infrastructure … is
+thin"). The content columns (`Conf`, `Hier`, `Agree`, `Cons`, `Buf`,
+`Per-map`, `Sparse`) are analysis-type-specific and are reported per class
+in the notes instead of as a grid. **How the six were judged, and its
+limits**: by pattern over each document's headings and bold lead blocks,
+which is a **lower bound** — a pattern can miss a block phrased
+differently, but it cannot invent one. Where a class's count was
+suspicious it was checked by reading (see § 11.6).
+
+| Class | n | Exec | Methods | Repro | Caveats | Files | PaperImp | Overall | Effort |
+|---|---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Findings documents | 17 | ✓ 17/17 | ~ 14/17 | ~ 11/17 | ~ 9/17 | ✗ 6/17 | ✗ 2/17 | **~** | S |
+| This fortnight's reports | 18 | ✓ 18/18 (read) | ~ 11/18 | ✓ 17/18 | ✓ 15/18 | ~ 11/18 | ✗ 8/18 | **~** | S |
+| Uplift supplement | 4 | ✗ 1/4 | ✗ 0/4 | ✓ 4/4 | ✗ 0/4 | ~ 2/4 | ✗ 0/4 | **~** | S |
+| Era-2 board anchor docs | 3 | ~ 1/3 | ~ 1/3 | ~ 1/3 | ~ 1/3 | ✗ 0/3 | ✗ 0/3 | **✗** | M |
+| 55-map leaderboard tables | 4 | ✗ 0/4 | ~ (one-line instrument note each) | ✗ 0/4 | ✗ 0/4 | ✗ 0/4 | ✗ 0/4 | **✗** | S |
+| Generated projections (45, three families) | 45 | N/A | N/A | ✓ (generator named; drift-guarded) | N/A | N/A | N/A | **✓** | — |
+
+**Tier summary**, on April's own tiering:
+
+| Tier | Count | Notes |
+|:---|---:|:---|
+| ✓ Exemplar-tier | **1 class** | the 45 generated projections in three families, which clear the regime that actually applies to them (§ 11.4) — the first documents in this project to clear a bar as written. |
+| ~ Partial (level-up needed) | **3 classes** | findings documents, this fortnight's reports, the uplift supplement: content is citable and the revision trail is now universal; `Files` and `PaperImp` remain the standing gaps. |
+| ✗ Sub-tier | **2 classes** | the Era-2 board's two generated tables and the four 55-map leaderboard tables — they carry **neither** applicable regime's marker (§ 11.4). |
+| ✗ Missing artefact | **0** | April's four missing-artefact rows have no counterpart in today's inventory: every analysis on the chain has a findings document or a register row. |
+
+### 11.4 The finding that matters most: a second regime, unevenly applied
+
+April graded one compliance regime — banner plus changelog. There are now
+**two**, and the split decides which one a document owes. The PI's ruling
+of 2026-09-11 (`docs/methodology/output-directory-standard.md`
+§ "Documents in Revision Policy Scope") exempts a Markdown artefact
+emitted by a generator from registered inputs from the hand
+banner-and-changelog requirement, and puts it under a stricter one: a
+`GENERATED FILE — do not hand-edit` banner naming the generator, the
+source commit of its inputs, and a `--check` drift guard run by a tier-1
+test.
+
+Applied, that ruling sorts today's inventory into three states, and the
+third is the gap:
+
+1. **Hand-written, and compliant.** The 17 findings documents, the 18
+   September reports and the 4 supplement documents: **39 of 39** carry a
+   banner and a changelog (21 of them under `results/`, 18 under
+   `reports/`). This is the April non-critical gap *closed*
+   on the classes that matter most, and it closed by practice rather than
+   by a back-fill campaign — these are documents authored or touched
+   after the policy landed.
+2. **Generated, and compliant.** Six documents under `results/` carry a
+   `GENERATED FILE` banner: `results/analyses-manifest.md`,
+   `results/conditions-manifest.md`, `results/passes-manifest.md`,
+   `results/runs-manifest.md`, `results/run-registry.md`, and
+   `results/hypothesis-outcome-table/hypothesis-outcome-table.md`. The
+   last names its generator and the source commit it was projected from
+   (`fdb96c571`) and has its drift guard in
+   `tests/test_generate_hypothesis_outcome_table.py`. **Item 1 of the
+   checklist added 39 more while this section was being written**
+   (`c4edf1328`): the generated `outputs/<run>/post_run_report.md` files,
+   from `scripts/generate_run_reports.py`, with a tier-1 drift guard in
+   `tests/test_generate_run_reports.py` — so the regime governs **45**
+   documents, three families, not one worked example. That is the best
+   news in this re-score: the newest bulk documentation in the project
+   was taken through the *stricter* regime by default rather than given 39
+   hand changelogs that would each have gone stale at the next manifest
+   rebuild.
+3. **Generated, and in neither regime.** Six more documents are visibly
+   generated and carry **no** `GENERATED FILE` banner, no source commit,
+   and (so far as this review can tell without running anything) no
+   named drift guard: the Era-2 board's `tiering_20m.md` and
+   `frame-deltas.md` (the latter stamped "Generated
+   2026-09-13T00:22:00+00:00 by `scripts/build_gs_era2_board.py gates`"),
+   and the four `results/55map-leaderboard/*.md` tables. Add the
+   `outputs/` classes and the count grows: **all 46**
+   `outputs/**/evaluation.md` files carry a `**Generated**:` timestamp
+   and **0** carry either regime's marker.
+
+**Why this is the load-bearing gap and not bookkeeping.** These are
+exactly the documents a reader reaches for a *number* — the board's
+tiering table, the leaderboard's ranks, a per-cell evaluation. Under
+regime 2 the question "is this current?" is answered by a drift test; a
+document in state 3 answers it with nothing at all, and its generation
+stamp is a claim about when it was written rather than about whether it
+still matches its inputs. The Era-2 board is the sharp case: its
+`README.md` is meticulous — a banner, eight dated changelog entries, an
+explicit note that it exists *because* `finalise()` overwrites a pending
+provenance block but preserves a changelog — while the two tables beside
+it, which carry the ranks, have no currency statement of either kind.
+
+### 11.5 Critical gaps (block the paper's Results spine)
+
+1. **Six generated documents in neither regime** (§ 11.4 state 3), two of
+   them the Era-2 board's own tiering and frame-delta tables. Effort:
+   **S** each if the generators already emit deterministically (add the
+   banner, the source commit, and a `--check` mode); **M** where a
+   generator would need a drift mode written.
+2. **`outputs/**/evaluation.md` — 46 documents, 0 in either regime.**
+   The revision-policy table lists this class as "Informal; in scope
+   going forward", which the 2026-09-11 ruling supersedes: they are
+   generated projections and belong in regime 2. Recorded in item 5(b)
+   of the checklist as a spec change, not a back-fill.
+3. **The instrument that would classify these is stale and does not cover
+   `outputs/`.** `reports/verification/generated-file-registry.json` is
+   the project's own generated-versus-hand-written classifier; it was
+   built at `2026-08-20T08:24:18` against `git_head` `06f7b8ea5` and
+   holds 2,131 files (1,952 generated, 179 hand-written). Against today
+   it is short by **814** `results/**.md` (2,050 → 2,864) and **48**
+   `reports/**.md` (53 → 101), and by charter (§ 2 of
+   `scripts/build_generated_file_registry.py`) it enumerates
+   `results/`, `reports/` and part of `docs/methodology` but **not**
+   `outputs/` — so the three `outputs/` classes in the revision-policy
+   table have no classification at all. A rebuild is the cheap
+   prerequisite for auditing regime 2 properly. Effort: **S** (one
+   `--check` run and a commit), and it should precede item 11 of the
+   checklist.
+4. **A marker that mis-sorts hand-written documents.** The registry's
+   marker test matches `**Generated**:` anywhere in a file's first
+   fifteen lines, and at least **six** hand-authored `results/**.md`
+   documents carry such a line as a *provenance note* rather than a
+   generator stamp — `results/evaluation-scopes.md`,
+   `results/retest/retest-production-summary.md`,
+   `results/paper-tables/gold-standard-spatial-tolerance.md`,
+   `results/55maps-mcc-v2-summary/report.md` and the two
+   `results/pv/phase{1,2}/pv-phase*-analysis.md`. The registry's own
+   rule set overrides the marker on all six (they resolve to
+   `hand-written` under explicit `hw-*` rules), so nothing is currently
+   mis-filed — but a future audit that reads the marker instead of the
+   registry would exempt six documents that owe a hand revision trail,
+   and each of the six already carries one. Worth a note in the spec
+   rather than a code change. Effort: **S**.
+
+### 11.6 Non-critical gaps (defer to paper drafting)
+
+- **`PaperImp` is still the corpus-wide gap, and it is the same gap April
+  found.** April: "All seven partial reports would benefit from a formal
+  'Paper implications' block." Today: **2 of 17** findings documents and
+  **8 of 18** September reports carry one. For the delta reports the
+  block is arguably N/A — they record what a session changed, not what a
+  result means — but for a findings document it is the column that turns
+  a result into a paper sentence, and 2 of 17 is thin. Effort: **S** per
+  document, **M** aggregate.
+- **`Files` (an artefact manifest): 6 of 17 findings documents, 11 of 18
+  reports.** April found "five of seven lack a files manifest"; the ratio
+  has improved and the gap has not closed.
+- **The uplift supplement has no caveats block in any of its four
+  documents** (0 of 4), though its pairing report does carry the
+  exclusion accounting that a caveats block would hold. Effort: **S**.
+- **`Methods` at 14 of 17 and 11 of 18.** Most documents state their
+  instrument in prose in the lead block rather than under a heading, so
+  this is the criterion the pattern under-reads most; treat the numbers
+  as a floor.
+
+### 11.7 What has demonstrably improved since April
+
+Recorded because a re-score that only lists gaps misrepresents the
+direction of travel.
+
+| April 2026 finding | State on 2026-09-13 |
+|---|---|
+| "no report outside the exemplar clears the bar as written" (0 exemplar-tier) | one class clears the regime that applies to it: 45 generated projections in three families, banner + generator + tested drift guard |
+| 4 missing-artefact rows (`h8-v2`, `h10`, `h11`, Phase 2b) | 0 missing-artefact rows in today's inventory; every analysis on the chain has a findings document or a register row |
+| "Mostly non-compliant; back-fill on touch" on `results/**.md` | **21 of 21** in the two `results/` classes that carry today's results (17 findings documents + 4 supplement documents) have banner + changelog, and **18 of 18** in this fortnight's `reports/` |
+| "six of seven lack a re-run command" | **17 of 18** September reports name their script or harness; findings documents 11 of 17 |
+| Revision trails achieved by campaign | achieved by **practice**: the compliant documents are the ones authored after the policy, not back-filled ones |
+| One compliance regime | **two**, with the generated-projection regime ruled 2026-09-11 — an improvement in principle whose application is the § 11.4 gap |
+
+### 11.8 Method, and what this section is not evidence of
+
+- Every count in §§ 11.2–11.4 is a file count, a JSON row count, or a
+  pattern count over committed files, taken on 2026-09-13 in a worktree
+  at `main`. No script was run against the data; no number in any graded
+  document was re-verified; no analysis was recomputed.
+- The six structural criteria are judged by pattern and are therefore
+  **lower bounds**. The one class where the shortfall was large enough to
+  matter was checked by reading: the pattern scored the September reports
+  `Exec` at 13 of 18, and reading each one's lead block shows **18 of
+  18** front-load a verdict — the five "misses" phrase it as "The one
+  adverse correction", "The single most important number", "A correction
+  to this report's own instrument", "APPROVED AND RUN" and "Gate result —
+  PASSED" rather than as "Verdict" or "Summary". The table records the
+  read count for that cell and the pattern count elsewhere.
+- The post-run-report class was deliberately **not** graded here: item 1
+  of the checklist was back-filling it in parallel with this section, so
+  any count taken here would have been stale before it was committed.
+  **It landed while this section was being written** (`c4edf1328`), and
+  the outcome moves § 11.4 in the project's favour: all **41** registered
+  runs now have a report, **39** of them emitted by
+  `scripts/generate_run_reports.py` with a GENERATED banner, a
+  source-commit stamp and a tier-1 drift guard, and **2** hand-authored
+  narrative reports given banner + Changelog. So the class went from
+  state 3 (neither regime) straight into state 2, and the generated
+  regime now governs **45** documents rather than 6. Item 5(b)'s
+  compliance table carries item 1's row, not the pre-back-fill count.
+  Item 1 also corrected a claim in the spec's own table on its own terms:
+  the former "2 compliant" cell described *existence*, since neither
+  hand-authored report had carried a banner or changelog until that day.
+- §§ 1–10's guardrail reminder still applies: the 82/85 doc-audit PASS
+  claims are not re-verified here.
+
+### 11.9 Recommended sequencing
+
+1. Rebuild `reports/verification/generated-file-registry.json` (§ 11.5
+   item 3) — the prerequisite for auditing regime 2 at all.
+2. Bring the six state-3 documents into regime 2 (§ 11.5 item 1),
+   starting with the Era-2 board's two tables, since they carry ranks.
+3. Decide the `outputs/**/evaluation.md` class (§ 11.5 item 2) — the spec
+   change is landed in item 5(b); the 46 files themselves are a
+   generator change, not a document edit.
+4. Add `PaperImp` blocks to findings documents **on touch**, during the
+   Results outline pass, where the outline will be reading them anyway.
+5. Then item 11 of the checklist, which will have something stable to
+   describe.
 
 ---
 
