@@ -180,6 +180,17 @@ project state.
 > design (E56); rulings 2(i)–2(iv) in the card (`e30dd7cdb`).
 > **(4) 55-map 3.7 image run COSTED and DECLINED** (PI: too dear, trigger
 > not met; `reports/gemini37-image-55map-costing-2026-09-10.md`).
+> **↳ ADDENDUM 2026-09-13** (does not revise the sentence above, which was
+> and remains true on its own terms): the decline was on **F1** grounds —
+> the GS screen resolved no new F1 high, so the pre-agreed F1 escalation
+> trigger was not met, and it still is not. On **2026-09-13** the PI
+> separately approved a **K = 3** 55-map 3.7 image campaign on **tile-MCC**
+> grounds, a different question with a different instrument
+> (`planning/gemini37-image-55map-2026-09-13.md` § 1: tile-MCC is the unit
+> of survey triage, the GS top-MCC cells are all image, and the 55-map
+> instrument resolves ΔMCC ≈ 0.01). So both records stand together: the
+> F1-trigger decline holds, and the MCC question is what the approved
+> campaign answers.
 > **(5) `pv-high-text-t0.0-n3` was NOT stale**: its "410" was a
 > cross-vintage index-join artefact (the union rebuilt 2026-07-30
 > reordered 262 positions); the sweep reproduces all 240 rows on its own

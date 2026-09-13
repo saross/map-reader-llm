@@ -1358,7 +1358,9 @@ changed. Grading April's 21 rows again would score the wrong corpus.
 ### 11.2 Today's inventory, counted
 
 Counted on 2026-09-13 in a worktree at `main`; every figure is a file
-count or a JSON row count, not an estimate.
+count or a JSON row count, not an estimate. The two post-run-report rows
+were added after item 1 of the checklist landed mid-section (`c4edf1328`)
+— see § 11.8 for why that class was not graded on the criteria grid.
 
 | Class | Documents | Banner | Changelog |
 |---|---:|---:|---:|
@@ -1369,6 +1371,8 @@ count or a JSON row count, not an estimate.
 | 55-map leaderboard tables (`results/55map-leaderboard/*.md`) | **4** | **0** | **0** |
 | Generated register projections (`results/*manifest.md`, `run-registry.md`) | **5** | n/a | n/a |
 | Generated hypothesis-outcome table | **1** | n/a | n/a |
+| Generated post-run reports (`outputs/<run>/post_run_report.md`, item 1, `c4edf1328`) | **39** | n/a | n/a |
+| Hand-authored post-run reports (item 1) | **2** | **2** | **2** |
 
 The registers themselves, as row counts:
 `results/runs-manifest.json` **41** runs; `results/conditions-manifest.json`
@@ -1397,13 +1401,13 @@ suspicious it was checked by reading (see § 11.6).
 | Uplift supplement | 4 | ✗ 1/4 | ✗ 0/4 | ✓ 4/4 | ✗ 0/4 | ~ 2/4 | ✗ 0/4 | **~** | S |
 | Era-2 board anchor docs | 3 | ~ 1/3 | ~ 1/3 | ~ 1/3 | ~ 1/3 | ✗ 0/3 | ✗ 0/3 | **✗** | M |
 | 55-map leaderboard tables | 4 | ✗ 0/4 | ~ (one-line instrument note each) | ✗ 0/4 | ✗ 0/4 | ✗ 0/4 | ✗ 0/4 | **✗** | S |
-| Generated projections (6) | 6 | N/A | N/A | ✓ (generator named) | N/A | N/A | N/A | **✓** | — |
+| Generated projections (45, three families) | 45 | N/A | N/A | ✓ (generator named; drift-guarded) | N/A | N/A | N/A | **✓** | — |
 
 **Tier summary**, on April's own tiering:
 
 | Tier | Count | Notes |
 |:---|---:|:---|
-| ✓ Exemplar-tier | **1 class** | the six generated projections, which clear the regime that actually applies to them (§ 11.4) — the first documents in this project to clear a bar as written. |
+| ✓ Exemplar-tier | **1 class** | the 45 generated projections in three families, which clear the regime that actually applies to them (§ 11.4) — the first documents in this project to clear a bar as written. |
 | ~ Partial (level-up needed) | **3 classes** | findings documents, this fortnight's reports, the uplift supplement: content is citable and the revision trail is now universal; `Files` and `PaperImp` remain the standing gaps. |
 | ✗ Sub-tier | **2 classes** | the Era-2 board's two generated tables and the four 55-map leaderboard tables — they carry **neither** applicable regime's marker (§ 11.4). |
 | ✗ Missing artefact | **0** | April's four missing-artefact rows have no counterpart in today's inventory: every analysis on the chain has a findings document or a register row. |
@@ -1430,14 +1434,23 @@ third is the gap:
    on the classes that matter most, and it closed by practice rather than
    by a back-fill campaign — these are documents authored or touched
    after the policy landed.
-2. **Generated, and compliant.** Six documents carry a `GENERATED FILE`
-   banner: `results/analyses-manifest.md`,
+2. **Generated, and compliant.** Six documents under `results/` carry a
+   `GENERATED FILE` banner: `results/analyses-manifest.md`,
    `results/conditions-manifest.md`, `results/passes-manifest.md`,
    `results/runs-manifest.md`, `results/run-registry.md`, and
    `results/hypothesis-outcome-table/hypothesis-outcome-table.md`. The
    last names its generator and the source commit it was projected from
    (`fdb96c571`) and has its drift guard in
-   `tests/test_generate_hypothesis_outcome_table.py`.
+   `tests/test_generate_hypothesis_outcome_table.py`. **Item 1 of the
+   checklist added 39 more while this section was being written**
+   (`c4edf1328`): the generated `outputs/<run>/post_run_report.md` files,
+   from `scripts/generate_run_reports.py`, with a tier-1 drift guard in
+   `tests/test_generate_run_reports.py` — so the regime governs **45**
+   documents, three families, not one worked example. That is the best
+   news in this re-score: the newest bulk documentation in the project
+   was taken through the *stricter* regime by default rather than given 39
+   hand changelogs that would each have gone stale at the next manifest
+   rebuild.
 3. **Generated, and in neither regime.** Six more documents are visibly
    generated and carry **no** `GENERATED FILE` banner, no source commit,
    and (so far as this review can tell without running anything) no
@@ -1531,7 +1544,7 @@ direction of travel.
 
 | April 2026 finding | State on 2026-09-13 |
 |---|---|
-| "no report outside the exemplar clears the bar as written" (0 exemplar-tier) | one class clears the regime that applies to it: the six generated projections, banner + source commit + tested drift guard |
+| "no report outside the exemplar clears the bar as written" (0 exemplar-tier) | one class clears the regime that applies to it: 45 generated projections in three families, banner + generator + tested drift guard |
 | 4 missing-artefact rows (`h8-v2`, `h10`, `h11`, Phase 2b) | 0 missing-artefact rows in today's inventory; every analysis on the chain has a findings document or a register row |
 | "Mostly non-compliant; back-fill on touch" on `results/**.md` | **21 of 21** in the two `results/` classes that carry today's results (17 findings documents + 4 supplement documents) have banner + changelog, and **18 of 18** in this fortnight's `reports/` |
 | "six of seven lack a re-run command" | **17 of 18** September reports name their script or harness; findings documents 11 of 17 |
@@ -1553,11 +1566,21 @@ direction of travel.
   to this report's own instrument", "APPROVED AND RUN" and "Gate result —
   PASSED" rather than as "Verdict" or "Summary". The table records the
   read count for that cell and the pattern count elsewhere.
-- The post-run-report class is deliberately **not** graded here: item 1
-  of the checklist is generating 34 of them in parallel with this
-  section, so any count would be stale before it was committed. Item 5(b)
-  records the pre-item-1 count in the spec's compliance table and says
-  so.
+- The post-run-report class was deliberately **not** graded here: item 1
+  of the checklist was back-filling it in parallel with this section, so
+  any count taken here would have been stale before it was committed.
+  **It landed while this section was being written** (`c4edf1328`), and
+  the outcome moves § 11.4 in the project's favour: all **41** registered
+  runs now have a report, **39** of them emitted by
+  `scripts/generate_run_reports.py` with a GENERATED banner, a
+  source-commit stamp and a tier-1 drift guard, and **2** hand-authored
+  narrative reports given banner + Changelog. So the class went from
+  state 3 (neither regime) straight into state 2, and the generated
+  regime now governs **45** documents rather than 6. Item 5(b)'s
+  compliance table carries item 1's row, not the pre-back-fill count.
+  Item 1 also corrected a claim in the spec's own table on its own terms:
+  the former "2 compliant" cell described *existence*, since neither
+  hand-authored report had carried a banner or changelog until that day.
 - §§ 1–10's guardrail reminder still applies: the 82/85 doc-audit PASS
   claims are not re-verified here.
 

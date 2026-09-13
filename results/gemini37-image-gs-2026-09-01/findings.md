@@ -1,6 +1,8 @@
 # The 3.7 image screen: the modality gap is eliminated
 
-> **Last revised**: 2026-09-02 (original publication). See
+> **Last revised**: 2026-09-13 (addendum only — the escalation section now
+> records that the F1-grounds decline stands while a tile-MCC-grounds K = 3
+> campaign was approved; no finding, figure or verdict changed). See
 > [§ Changelog](#changelog) for revision history.
 
 **Classification**: registered-by-card GS screen
@@ -64,6 +66,20 @@ the expensive 55-map image extension is NOT met. (Arm 2's image MCC
 finding stands on the GS instrument: parity, at image-track prices
 that caching makes comparable to text.
 
+> **Addendum, 2026-09-13.** The paragraph above is unrevised and still
+> correct: there is no resolvable new F1 high on the GS instrument, so
+> the pre-agreed **F1** trigger for a 55-map image extension is NOT met.
+> On 2026-09-13 the PI nonetheless approved a **K = 3** 55-map 3.7 image
+> campaign on **tile-MCC** grounds — a distinct question this section did
+> not weigh. The parenthetical above compares arm 2's GS image MCC
+> (0.8322) against the *GS* MCC crown, which is a GS-internal ranking;
+> the approved campaign's case is the *deployment*-scale one
+> (`planning/gemini37-image-55map-2026-09-13.md` § 1): on the 55-map
+> board the sole tile-MCC Tier 1 is an image campaign, the image-over-text
+> MCC gap is +0.03 to +0.07 there, and the 8,541-tile instrument resolves
+> ΔMCC ≈ 0.01. So the F1-grounds decline recorded here stands, and the
+> MCC question is what `results/gemini37-image-55map-2026-09-13/` answers.
+
 ## Operational notes (runner-fix queue; paper cost section)
 
 Two flex-era lessons from execution: image mode at WORKERS=400 blew
@@ -76,6 +92,27 @@ one 74-minute clear-window round. Total proposer spend including
 every retry and recovery: $22.50 token-basis.
 
 ## Changelog
+
+### 2026-09-13 — Escalation-section addendum (no findings changed)
+
+**Trigger**: the PI's 2026-09-13 approval of a K = 3 55-map 3.7 image
+campaign on tile-MCC grounds (`planning/gemini37-image-55map-2026-09-13.md`
+§ 1) sat in direct contradiction with this document's escalation section,
+which reads "the pre-agreed trigger … is NOT met". A reader arriving here
+first would conclude the campaign should not have run. Recorded as the
+residue of blocker B1 and as question Q1 in
+`reports/gemini37-image-55map-deltas-2026-09-13.md` § 8.
+
+**What changed**: an addendum blockquote appended to § "The escalation
+question (PI economics rule)", plus this banner and entry. The original
+text is untouched.
+
+**Numerical claims that moved**: none. The I1–I5 verdicts, the 0.9308 /
+0.9265 F1 pair, the +0.0043 delta, arm 2's image MCC 0.8322 and the
+US$22.50 token-basis proposer spend are all unchanged.
+
+**What did NOT change**: the F1 trigger is still recorded as unmet, because
+it is; no GS board or tiering was touched; no operating point was refixed.
 
 ### 2026-09-02 — Original publication
 

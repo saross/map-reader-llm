@@ -1,5 +1,7 @@
 # Post-Run Report — 55-Map Image Generalisation
 
+> **Last revised**: 2026-09-13 (revision-policy banner and Changelog attached; body unchanged). See [§ Changelog](#changelog) for revision history.
+
 **Run name**: `55maps-image-generalisation`
 **Completed**: 2026-04-18 05:10 UTC
 **Host**: sapphire (192.168.1.150)
@@ -278,3 +280,33 @@ Published alongside the paper and tracked in git:
 Large intermediate artefacts (per-pass detection GeoJSONs, verifier
 crop PNGs, raw per-tile probabilities) are available in the companion
 data release but not tracked in the main git history.
+
+## Changelog
+
+### 2026-09-13 — Revision-policy pattern attached (Session 153, Batch 1 item 1)
+
+**Trigger**: the documentation-foundation checklist's bulk back-fill of post-run
+reports (`planning/documentation-foundation-checklist-2026-09-13.md`, item 1). The
+other 39 registered runs now carry GENERATED projections emitted by
+`scripts/generate_run_reports.py`, which are exempt from the banner-and-changelog
+rule and carry provenance plus a `--check` drift guard instead (PI ruling
+2026-09-11, `docs/methodology/output-directory-standard.md` § "Documents in
+Revision Policy Scope"). This report is HAND-AUTHORED and stays in full
+Revision-Policy scope, so it takes the banner and Changelog the rule asks for.
+The back-fill also corrected the standard's compliance cell: this document and
+its text-MIN sibling existed but carried neither a banner nor a Changelog, so
+the "2 compliant" claim was about existence, not banner compliance.
+
+**What changed**: the banner below the H1 and this section. **No figure, table,
+claim or sentence of the body was touched** — F1 @ 50 m stays 0.771 measured /
+0.795 Dawid-Skene posterior, and the cost, timeline and per-map extrema tables
+are unmodified.
+
+### 2026-04-18 — Original publication
+
+Authored with the run itself (`4c147af65`, revised the same day at
+`15eb9383e`): the image-track 55-map generalisation run's measured and
+annotator-incompleteness-corrected results, cost accounting by stage and per
+pass, per-map extrema, timeline, operational issues and recoveries, the
+reproduction recipe, and the paper artefact list. No banner or Changelog, which
+is what the 2026-09-13 entry fixes.
