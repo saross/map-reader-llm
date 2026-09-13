@@ -1,10 +1,12 @@
 # Documentation foundation checklist — the preregistration → outcome chain
 
-> **Last revised**: 2026-09-13 (Batch 1 items 1 and 2 closed; prior
-> 2026-09-13: original publication, Session 153, the PI asked for the
-> chain's remaining documentation to be externalised as a checklist to
-> work through before the paper's outline pass). See
-> [§ Changelog](#changelog).
+> **Last revised**: 2026-09-13 (item 6a closed — the tile-join invariant
+> now withholds rather than aborts, the k3 cell's evaluation is written at
+> 0.8860 / 495, and `carry_probabilities.py` is promoted to `scripts/`;
+> prior 2026-09-13: Batch 1 items 1 and 2 closed; 2026-09-13: original
+> publication, Session 153, the PI asked for the chain's remaining
+> documentation to be externalised as a checklist to work through before
+> the paper's outline pass). See [§ Changelog](#changelog).
 
 **Purpose**: make sure every primary and intermediate document on the
 chain preregistration → experiment → result → analysis → outcome is
@@ -92,15 +94,45 @@ agent work; Fable only for the PI-facing orchestration turns.
   cells (recovery-fragment fix, landed `eda4ab70e`: three unchanged, k3
   0.8870 → 0.8860), the tile-MCC permutation family (ruling 7), one
   rebuild, one signature (PI: "I'll wait"). Owner: Opus agent; PI signs.
-  - [ ] **6a. Prerequisite**: the tile-join invariant currently raises
-    inside `bootstrap_ci` and aborts the WHOLE evaluation of a refused
-    cell, so the k3 cell's moved F1 cannot be written to its evaluation
-    or register row. Under ruling 6 (name-based join published; refused
-    cells' F1 reported in full, per-tile table withheld) the invariant
-    must withhold the per-tile table and let F1 and its bootstrap proceed.
-    Code fix + test, then write the k3 evaluation. Also promote
-    `carry_probabilities.py` (integer-crop-window coverage test) to
-    `scripts/`. Owner: Opus agent.
+  - [x] **6a. Prerequisite** — done 2026-09-13, commits `3eeaf96f4`
+    (scorer + 8 tier-1 tests), `987534c03` (the rebuilt 495-detection set,
+    the 494 archived), `a8c03bb9e` (the re-score), `977df2995` (manifests
+    and two renderers), `d2dd9539c` (board note resolved), `88e9f7cd3`
+    (`carry_probabilities.py` promoted, 13 tier-1 tests). The invariant
+    now **withholds** a refused cell's per-tile table, tile confusion,
+    tile-MCC and every bootstrap interval — recording the named reason,
+    the shortfall counts and both tile vocabularies in the evaluation
+    JSON, CSV and Markdown — and lets the buffer-matched F1, precision and
+    recall **point estimates** proceed.
+    **The bootstrap is withheld with the tile block, and that was measured
+    rather than assumed**: `bootstrap_ci` resamples TILES (Decision 10;
+    `_metadata.bootstrap.resampling_unit` says so in every artefact), not
+    matched pairs, so the refused per-tile table is its input too. The card
+    anticipated "F1 and its bootstrap proceed"; a refused cell has a point
+    and no interval, and the cell's previous interval is **withdrawn**, not
+    superseded.
+    The k3 cell reads F1@20 **0.8860** / **495 detections** (from 0.8870 /
+    494; precision 0.8340 → 0.8323, recall 0.9471 unchanged — the added
+    detection is a false positive), and `results/conditions-manifest.json`
+    matches. **Regression**: tier E's K = 5 cell, re-scored on its own
+    recipe, is dict-identical in summary and byte-identical in CSV and
+    Markdown to what is committed; the two K = 1 cells are untouched; a
+    matched synthetic cell reproduces a golden captured at `35dd1f254`
+    byte for byte. Board **not** rebuilt or re-tiered: the `re_sign_pending`
+    note already carried the k3 line, and its `blocked_artefact` claim was
+    replaced by a `resolved` record under a 16-signature-path byte-equality
+    guard. Two figures still reading 0.8870 — the board's `withheld_cells`
+    row and `re_sign_pending.proposed_outcome` — are signature-bearing and
+    left for the PI to restate at the rebuild.
+    **Raised for the register's owner, not actioned**: the conditions
+    extractor picks `gold-standard-v2::consensus-4of5`'s
+    `provenance.source_files` nondeterministically between two
+    uplift-supplement evaluation paths, so a regeneration with no input
+    change moves that row. No metric is affected.
+    Anchors: `reports/tile-mcc-geometric-join-2026-09-12.md`,
+    `reports/recovery-drop-fix-2026-09-13.md` § 6.3,
+    `results/k-ladder-2026-09-12/recovery-fix-2026-09-13/README.md`
+    § Changelog.
   - [ ] **6b. PI decision**: one verifier call (≈ US$0.0007) to make
     tier E's K = 5 zero-delta unconditional (candidate_01335 carried 0.10
     across a 1 px crop shift against a 0.15 gate) — or accept as
@@ -135,6 +167,29 @@ after that.
 - Compute on sapphire; at most three live worktrees on the local disk.
 
 ## Changelog
+
+### 2026-09-13 — item 6a closed: the invariant withholds, the k3 cell is written
+
+| Claim | Before | After |
+|---|---|---|
+| A refused cell's evaluation | aborts inside `bootstrap_ci` — no F1 written | **F1 / P / R point estimates written; per-tile table, confusion, tile-MCC and every interval WITHHELD with the reason, counts and both vocabularies named** |
+| `g37-text-k3-verified-opmax` F1@20 / detections | 0.8870 / 494 (stale, unwritable) | **0.8860 / 495** in its own evaluation and in `conditions-manifest.json` |
+| That cell's tile-MCC and CI | 0.1337; CI [0.3684, 0.7732] | **withheld / withdrawn** — both were computed from a table the invariant refuses |
+| `carry_probabilities.py` | in the recovery-fix harness | **`scripts/carry_probabilities.py`**, 13 tier-1 tests, original archived |
+| Tier-1 suite | — | **2,552 passed, 4 skipped, 3 xfailed, 0 failed** in 185 s on sapphire, of which 21 are this item's new tests |
+
+**Where the card's expectation had to be corrected**: it asked that "F1 and
+its bootstrap proceed". The bootstrap cannot: `bootstrap_ci` resamples
+**tiles**, so its input is exactly the table the invariant refuses. A refused
+cell therefore reports a point and no interval, and the interval it used to
+carry is withdrawn rather than replaced.
+
+**What did NOT change**: the board — not rebuilt, not re-tiered, no signature
+field, 16 signature-bearing paths asserted byte-equal when its pending note was
+amended; the two K = 1 cells and tier E's K = 5, whose live artefacts are
+untouched and whose re-score reproduces byte-identically; every number in
+`reports/recovery-drop-fix-2026-09-13.md`; and the 593 / 41 / 1,317 / 67
+manifest row counts.
 
 ### 2026-09-13 — Batch 1 items 1 and 2 closed (Session 153)
 
