@@ -1,8 +1,18 @@
 # Gemini 3.7 image at deployment scale: the tile-MCC candidate, K = 3
 
-> **Last revised**: 2026-09-13 (COSTED — the PI asked for the K = 3 gate
-> on 2026-09-13 after the Gold Standard and 55-map boards were read for
-> tile-MCC; awaiting the PI's API-gate approval). See
+> **Last revised**: 2026-09-13 (later: **API GATE APPROVED by the PI**,
+> 2026-09-13 morning, in session, on the condition that caching is in
+> effect — confirmed at source: the GS 3.7 image run's full passes show
+> 79–80 % of input tokens cached via Gemini's implicit prefix caching,
+> billed under the image caching SKU; launch then **BLOCKED at the
+> pre-launch audit at US$0** by `reports/gemini37-image-55map-deltas-2026-09-13.md`
+> — blocker B2, `merge_passes.py` silently drops `run_N_recovery`
+> fragments, so the GS calibration leg cannot be built until the builder
+> is fixed (PI ruling pending; reach being measured); B1 was the missing
+> minute of this approval, now supplied; B3 (stop rule on the audited
+> basis, `scripts/audit_proposer_cost.py`) and B4 (the cache gate is a
+> pass-scale gate, not a smoke gate) are corrections to § 5. Earlier:
+> COSTED). See
 > [§ Changelog](#changelog).
 
 **Question**: can a configuration chosen for tile-level discrimination
@@ -62,7 +72,12 @@ US$0.00245 per tile-pass, `reports/billing-reconciliation-2026-09-11.md`
 § 3.2): proposer ≈ US$180, total ≈ US$220. Upper bound at the runner
 estimator's basis (US$0.00512): proposer ≈ US$377, total ≈ US$415.
 **Stop rule**: abort the proposer if pass 1 exceeds US$110 on the
-audited basis.
+audited basis — computed with `scripts/audit_proposer_cost.py` (3.7 rate
+card, cache reads at the cache rate, thinking at the output rate), NOT
+the figure `run.meta.json` prints, which uses Gemini 3 rates and would
+read US$126 for a US$79 pass (blocker B3). The verifier legs in § 3 are
+on the list basis; `run_pv.py verify` defaults to flex, so the envelope
+is ≈ US$261 (B3).
 
 ## 4. Predictions, stated before the run
 
@@ -83,7 +98,10 @@ audited basis.
 ## 5. Run order and gates
 
 1. `/audit-config` on the proposer and both verifier configs; a 5-tile
-   smoke; the GS calibration leg (≈ US$1.2) → carried points fixed.
+   smoke (its cached share is by construction low — 16 % at 5 tiles,
+   54 % at 15 — so the ≥ 70 % cache gate is judged on PASS 1, not the
+   smoke; B4); the GS calibration leg (≈ US$1.2) → carried points fixed
+   — BLOCKED until `merge_passes.py` includes recovery fragments (B2).
 2. Pass 1 on sapphire; audited cost check against the stop rule.
 3. Passes 2–3; union; K = 1 and K = 3 unions with `pass_provenance`.
 4. Both verifier arms on both unions; sweep; score at carried and oracle
@@ -101,6 +119,10 @@ settles the modality question at deployment scale, which the paper
 currently states on the GS only.
 
 ## Changelog
+
+### 2026-09-13 (later) — approved, then blocked at the audit for US$0
+
+The PI approved the gate in session (caching confirmed at source). The launch agent's pre-launch audit returned BLOCKED on four points: B1 the approval was not minuted in this card (now is); B2 `merge_passes.py` drops recovery fragments, which would corrupt the GS calibration leg's union (650 vs 674 features on the K = 5 check) — builder fix and reach measurement pending the PI; B3 the stop rule must use the audited basis; B4 the cache gate is pass-scale. Cost basis US$0.00322 per tile-pass reproduced exactly (US$22.5004 over 6,990 GS tile-passes). No API call made.
 
 ### 2026-09-13 — Original publication (costed; awaiting the API-gate approval)
 
