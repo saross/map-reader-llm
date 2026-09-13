@@ -32,6 +32,22 @@ project state.
 > preregistered tiering and the headline; the MCC family is reported
 > beside it as the presence/absence result, with the disjoint Tier 1s
 > stated as a finding (the image-run campaign is its deployment test).
+> **(1c) Results inventory — R3/R6/R1b now inventoried** (item 9,
+> `a120e67cb`; 237 claims over 12 of 12 blocks: 214 verified, 19
+> drifted, 1 superseded, 3 unanchored; the draft carries ZERO open
+> markers of its own). Three rulings before R3/R6 can be drafted:
+> (i) where the K-ladder lives — recommended: split on axis, R3 the
+> shape and mechanism, R6 the price; (ii) tile-MCC as a finding or a
+> column — recommended: F1 stays the tiering and headline, the
+> disagreement stated in text (three instruments now agree the two
+> metrics select different configurations); (iii) which reference § R6
+> quotes — recommended: re-point five numbers to r2, keep the
+> confusion-matrix decomposition standardised as a named exception.
+> Also flagged: § R6's cost table is one signature behind the re-signed
+> `pass-budget-pareto-v2` (MCC-efficient set {min6, min11}); and an
+> INCONSISTENCY to adjudicate — the PI's 2026-08-28 H9 "disclose only"
+> ruling is recorded in the hypothesis-tracking document as NOT applied,
+> while § R3 and the register report H9 as executed and rejected.
 > **(2) 55-map board r2 rebuild + signatures** once the image campaign
 > lands (stride B K = 5 under the 3.7 verifier, the image cells, the MCC
 > tiering); the image run's row `gemini37-image-55map-2026-09-13`.
