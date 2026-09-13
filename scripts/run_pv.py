@@ -8,10 +8,13 @@ Description:
     Supports both Gemini Batch API and real-time API execution through a
     shared prompt construction layer in ``lib_verifier.py``.
 
-    Two subcommands:
+    Three subcommands:
 
     - **extract** — Crop candidate images from proposer detections
     - **verify** — Run verifier on cropped candidates (batch or real-time)
+    - **cleanup** — Retry the candidates a verify pass failed to score,
+      merging their usage into the stage's metadata rather than replacing
+      it (``reports/cleanup-meta-fix-2026-09-14.md``)
 
 Usage::
 
@@ -50,6 +53,7 @@ from __future__ import annotations
 
 import argparse
 import concurrent.futures
+import hashlib
 import json
 import logging
 import shutil
@@ -62,6 +66,13 @@ from typing import Any
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
+from scripts.lib_llm_metadata import (
+    CLEANUP_GATE_FIELDS,
+    compare_gate_fields,
+    configuration_fingerprint,
+    main_pass_configuration,
+    write_merged_pass_meta,
+)
 from scripts.lib_verifier import (
     aggregate_consensus_votes,
     build_generation_config,
@@ -71,6 +82,7 @@ from scripts.lib_verifier import (
     gen_config_to_sdk,
     load_system_instruction,
     parse_verifier_results,
+    system_instruction_path,
     verify_candidate_realtime,
 )
 
@@ -265,6 +277,154 @@ def _compute_missing_candidates(
     return missing, probs
 
 
+def _file_sha256(path: Path) -> str | None:
+    """SHA-256 of a file's bytes, or None when it cannot be read.
+
+    Args:
+        path: The file to digest.
+
+    Returns:
+        Hex digest, or None when the file is absent or unreadable.
+    """
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError:
+        return None
+
+
+def _cleanup_configuration_gate(
+    verified_dir: Path,
+    config_path: Path,
+    effective_config: dict,
+    model_override: str | None,
+    cli_overrides: dict[str, Any],
+    allow_config_change: bool,
+) -> tuple[bool, dict[str, Any]]:
+    """Decide whether a cleanup pass may run under this configuration.
+
+    A cleanup pass whose configuration differs from the main pass's makes
+    the stage's results a mixture of two conditions while the merged meta
+    reports one set of totals — the failure class the project's
+    parameter-control rule exists to prevent. This gate compares the
+    configuration the cleanup will actually use against the main pass's, as
+    recorded in the stage's ``run.meta.json``, and refuses unless the
+    operator has declared the change with ``--allow-config-change``.
+
+    The comparison is over ``lib_llm_metadata.CLEANUP_GATE_FIELDS`` — the
+    effective model, prompt version, instruction file and its content hash,
+    temperature, output-token ceiling, thinking level and example-library
+    hash. Two blind spots are recorded rather than blocked: a ``--temperature``
+    override is not reflected in a meta's ``configuration`` block on either
+    side of the comparison, and the config file's own byte digest was never
+    recorded by the main pass, so it is reported as evidence only.
+
+    Args:
+        verified_dir: The stage directory holding ``run.meta.json``.
+        config_path: The verifier config file, hashed as evidence.
+        effective_config: The config dict the cleanup will use, with
+            ``--thinking-level`` and any ``--safe-mode-tokens`` ceiling
+            already applied, so the gate sees the worst case.
+        model_override: The model the operator asked for, or None.
+        cli_overrides: The overrides the operator passed, recorded verbatim.
+        allow_config_change: When True, a difference warns instead of
+            refusing, and is recorded on the pass entry.
+
+    Returns:
+        ``(may_run, pass_record)``. ``pass_record`` is the evidence block for
+        this pass's ``cleanup_passes`` entry and is worth recording whether
+        or not the gate passes.
+    """
+    from scripts.lib_llm_metadata import LLMMetadataTracker
+
+    instruction_text = load_system_instruction(effective_config)
+    instruction_name = effective_config.get("instruction_file", "")
+    instruction_path = system_instruction_path(effective_config)
+    record: dict[str, Any] = {
+        "verifier_config_file": str(config_path),
+        "verifier_config_sha256": _file_sha256(config_path),
+        "instruction_file": instruction_name,
+        "instruction_file_sha256": (
+            _file_sha256(instruction_path) if instruction_path else None
+        ),
+        "cli_overrides": {
+            k: v for k, v in cli_overrides.items() if v is not None
+        },
+        "configuration_change_allowed": bool(allow_config_change),
+    }
+
+    meta_path = verified_dir / "run.meta.json"
+    if not meta_path.exists():
+        record["configuration_gate"] = "no-previous-meta"
+        logger.warning(
+            "No run.meta.json in %s — the main pass's configuration cannot "
+            "be checked. Proceeding; the cleanup pass's own configuration "
+            "is recorded.",
+            verified_dir,
+        )
+        return True, record
+
+    with open(meta_path) as f:
+        previous = json.load(f)
+
+    tracker = LLMMetadataTracker(
+        config=effective_config,
+        system_instruction=instruction_text,
+        script_name="run_pv.py",
+        script_version=__version__,
+        model_override=model_override,
+    )
+    candidate_block = tracker.finalise()["configuration"]
+    main_fingerprint = main_pass_configuration(previous)
+    differences = compare_gate_fields(
+        main_fingerprint, configuration_fingerprint(candidate_block),
+    )
+    record["configuration_differences"] = differences
+
+    if not main_fingerprint:
+        record["configuration_gate"] = "main-pass-configuration-unrecorded"
+        logger.warning(
+            "%s records no configuration block — the gate cannot compare. "
+            "Proceeding.", meta_path,
+        )
+        return True, record
+
+    if not differences:
+        record["configuration_gate"] = "matches-main-pass"
+        logger.info(
+            "Configuration gate: the cleanup matches the main pass on all "
+            "%d checked fields.", len(CLEANUP_GATE_FIELDS),
+        )
+        return True, record
+
+    rendered = "; ".join(
+        f"{field}: main pass {value['main_pass']!r} vs this pass "
+        f"{value['this_pass']!r}"
+        for field, value in differences.items()
+    )
+    if allow_config_change:
+        record["configuration_gate"] = "differs-allowed"
+        logger.warning(
+            "Configuration gate OVERRIDDEN (--allow-config-change): the "
+            "cleanup differs from the main pass on %d field(s) — %s. The "
+            "stage's results will mix configurations; the difference is "
+            "recorded in run.meta.json:cleanup_passes.",
+            len(differences), rendered,
+        )
+        return True, record
+
+    record["configuration_gate"] = "differs-refused"
+    logger.error(
+        "REFUSING to clean up under a changed configuration. %d field(s) "
+        "differ from the main pass — %s. Recovering candidates under a "
+        "different configuration makes the stage a mixture of conditions "
+        "(the project's parameter-control rule). Either restore the main "
+        "pass's configuration, or pass --allow-config-change to declare "
+        "the deviation, which records it in run.meta.json:cleanup_passes.",
+        len(differences), rendered,
+    )
+    return False, record
+
+
 def cmd_cleanup(args: argparse.Namespace) -> int:
     """Execute the cleanup subcommand.
 
@@ -276,11 +436,24 @@ def cmd_cleanup(args: argparse.Namespace) -> int:
     the final attempt to recover candidates that fail due to thinking
     token budget exhaustion.
 
+    Two guarantees, added 2026-09-14 (``reports/cleanup-meta-fix-2026-09-14.md``):
+
+    1. **The main pass's usage is never replaced.** Each attempt's metadata
+       is summed into the stage's ``run.meta.json``, which gains a
+       ``main_pass`` block holding the original pass verbatim and a
+       ``cleanup_passes`` entry per attempt; the pre-merge file is copied to
+       an indexed sidecar that is never overwritten.
+    2. **A changed configuration is refused.** Before any API call the
+       cleanup's effective configuration is compared with the main pass's
+       and a difference aborts the run unless ``--allow-config-change``
+       declares it.
+
     Args:
         args: Parsed CLI arguments.
 
     Returns:
-        Exit code (0=all recovered, 1=some remain missing).
+        Exit code (0=all recovered, 1=some remain missing, or the
+        configuration gate refused).
     """
     # Load manifest
     manifest_path = args.crops_dir / "candidate_manifest.json"
@@ -323,23 +496,41 @@ def cmd_cleanup(args: argparse.Namespace) -> int:
     if thinking_override is not None:
         config["thinking_level"] = thinking_override
 
-    # Backup before modifying
+    # Configuration gate — BEFORE any API call, so a refusal costs nothing.
+    # The gate sees the worst case: if --safe-mode-tokens will lower the
+    # output ceiling on the final attempt, that ceiling is what is compared.
+    gate_config = dict(config)
+    if args.safe_mode_tokens is not None:
+        gate_config["max_output_tokens"] = args.safe_mode_tokens
+    allow_config_change = getattr(args, "allow_config_change", False)
+    may_run, pass_record = _cleanup_configuration_gate(
+        verified_dir=args.verified_dir,
+        config_path=args.verifier_config,
+        effective_config=gate_config,
+        model_override=args.model,
+        cli_overrides={
+            "model": args.model,
+            "thinking_level": thinking_override,
+            "temperature": args.temperature,
+            "safe_mode_tokens": args.safe_mode_tokens,
+            "iterations": args.iterations,
+            "service_tier": getattr(args, "service_tier", None),
+        },
+        allow_config_change=allow_config_change,
+    )
+    if not may_run:
+        return 1
+
+    # Backup before modifying. The results file's backup is timestamped
+    # here; the metadata's is written by ``write_merged_pass_meta`` as an
+    # indexed, never-overwritten sidecar when the merge happens, so the
+    # ad-hoc meta copy this function used to make is no longer needed.
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
     backup_path = probs_path.with_name(
         f"probabilities.json.pre-cleanup-{timestamp}.backup"
     )
     shutil.copy(probs_path, backup_path)
     logger.info("Backup: %s", backup_path.name)
-
-    # The retry pass's tracker rewrites run.meta.json with the retries'
-    # usage only, so the main run's usage stats survive here or nowhere.
-    meta_path = args.verified_dir / "run.meta.json"
-    if meta_path.exists():
-        meta_backup = meta_path.with_name(
-            f"run.meta.json.pre-cleanup-{timestamp}.backup"
-        )
-        shutil.copy(meta_path, meta_backup)
-        logger.info("Backup: %s", meta_backup.name)
 
     # Iterative cleanup loop
     attempts_used = 0
@@ -374,6 +565,13 @@ def cmd_cleanup(args: argparse.Namespace) -> int:
         # cleanup_history (and _log_cleanup_failures_to_meta below), so
         # the inner completeness assertion must not short-circuit our
         # post-loop tally with a non-zero return.
+        attempt_record = dict(pass_record)
+        attempt_record["cleanup_attempt"] = attempt
+        attempt_record["candidates_missing_at_attempt"] = len(missing)
+        attempt_record["safe_mode_applied"] = (
+            attempt_config.get("max_output_tokens")
+            != config.get("max_output_tokens")
+        )
         _verify_realtime(
             manifest=manifest,
             config=attempt_config,
@@ -385,6 +583,8 @@ def cmd_cleanup(args: argparse.Namespace) -> int:
             model_override=args.model,
             service_tier=getattr(args, "service_tier", None),
             strict=False,
+            pass_kind="cleanup",
+            pass_record=attempt_record,
         )
 
     # Final tally
@@ -609,6 +809,12 @@ def _verify_batch(
         metadata_tracker=batch_metadata,
         model_name=model_name,
         strict=strict,
+        # A batch pass rebuilds the JSONL for the whole manifest and the
+        # results file it writes describes only itself, so summing an
+        # earlier pass's counts into it would over-count. The earlier
+        # meta is preserved to a sidecar instead of being discarded.
+        pass_kind="rerun",
+        merge_previous_meta=False,
     )
 
     return 1 if gap_count > 0 and strict else 0
@@ -988,6 +1194,8 @@ def _verify_realtime(
     model_override: str | None,
     service_tier: str | None = None,
     strict: bool = True,
+    pass_kind: str = "resume",
+    pass_record: dict[str, Any] | None = None,
 ) -> int:
     """Real-time API verification path.
 
@@ -1008,6 +1216,11 @@ def _verify_realtime(
             completeness assertion identifies a gap. Defaults to True
             so silent drops fail loud; ``cmd_cleanup`` overrides to
             False because it owns its own audit trail.
+        pass_kind: ``"resume"`` for a direct ``verify`` invocation (which
+            skips already-verified candidates and so extends any earlier
+            pass) or ``"cleanup"`` when called from ``cmd_cleanup``.
+        pass_record: Extra evidence for this pass's ``cleanup_passes``
+            entry, supplied by ``cmd_cleanup``.
 
     Returns:
         Exit code (0=success, 1=completeness gap in strict mode).
@@ -1221,6 +1434,8 @@ def _verify_realtime(
         metadata_tracker=metadata_tracker,
         model_name=model_name,
         strict=strict,
+        pass_kind=pass_kind,
+        pass_record=pass_record,
     )
 
     return 1 if gap_count > 0 and strict else 0
@@ -1242,6 +1457,9 @@ def _write_verification_outputs(
     threshold: float = 0.5,
     model_name: str | None = None,
     strict: bool = True,
+    pass_kind: str = "resume",
+    pass_record: dict[str, Any] | None = None,
+    merge_previous_meta: bool = True,
 ) -> int:
     """Write verification outputs shared by both modes.
 
@@ -1270,6 +1488,17 @@ def _write_verification_outputs(
             paths set this False — they own their own audit trail via
             ``cleanup_history`` and would otherwise short-circuit before
             writing it.
+        pass_kind: What kind of pass this is, for the metadata merge —
+            ``"cleanup"``, ``"resume"`` or ``"rerun"`` (see
+            ``lib_llm_metadata.PASS_KINDS``).
+        pass_record: Extra evidence recorded on this pass's
+            ``cleanup_passes`` entry (the configuration-gate verdict, the
+            candidate count attempted).
+        merge_previous_meta: When True, the stage's existing
+            ``run.meta.json`` is summed into this pass's rather than
+            replaced. Real-time passes resume and so accumulate; a batch
+            pass redoes the whole set and sets this False, its predecessor
+            preserved to a sidecar instead.
 
     Returns:
         Completeness gap count (0 when complete). The caller decides
@@ -1343,10 +1572,36 @@ def _write_verification_outputs(
             provider=LLMProvider.GEMINI.value,
             model=model_name or config.get("model", "gemini-3-flash"),
         )
+        # Never replace a prior pass's usage with this pass's: the previous
+        # meta is preserved verbatim to an indexed sidecar and, for a
+        # resume or cleanup, summed into what we write. See
+        # ``lib_llm_metadata.write_merged_pass_meta`` for the contract and
+        # ``reports/cleanup-meta-fix-2026-09-14.md`` for the defect it
+        # closes. A stage whose meta does not yet exist is written exactly
+        # as it was before this machinery existed.
         meta_path = output_dir / "run.meta.json"
-        with open(meta_path, "w") as f:
+        meta, sidecar = write_merged_pass_meta(
+            meta_path,
+            meta,
+            kind=pass_kind,
+            pass_record=pass_record,
+            merge_previous=merge_previous_meta,
+        )
+        # Atomic write: a kill mid-write must not leave a truncated meta,
+        # which now carries the running totals of every pass.
+        tmp_meta = meta_path.with_name(meta_path.name + ".tmp")
+        with open(tmp_meta, "w") as f:
             json.dump(meta, f, indent=2)
-        logger.info("Metadata written: %s", meta_path)
+        tmp_meta.replace(meta_path)
+        if sidecar is not None:
+            logger.info(
+                "Metadata written: %s (merged with %s)"
+                if merge_previous_meta
+                else "Metadata written: %s (predecessor kept as %s)",
+                meta_path, sidecar.name,
+            )
+        else:
+            logger.info("Metadata written: %s", meta_path)
 
     # Print summary
     if parsed_results:
@@ -1614,7 +1869,22 @@ def _build_parser() -> argparse.ArgumentParser:
         "--safe-mode-tokens", type=int, default=None,
         dest="safe_mode_tokens",
         help="Override max_output_tokens on the final attempt to "
-        "prevent thinking token exhaustion (e.g., 2048).",
+        "prevent thinking token exhaustion (e.g., 2048). NOTE: this is a "
+        "configuration change, so it needs --allow-config-change unless "
+        "the value matches the main pass's ceiling.",
+    )
+    cleanup_parser.add_argument(
+        "--allow-config-change",
+        dest="allow_config_change",
+        action="store_true",
+        help=(
+            "Permit a cleanup whose configuration differs from the main "
+            "pass's. Without it such a cleanup is REFUSED before any API "
+            "call, because recovering candidates under a different "
+            "configuration makes the stage a mixture of conditions. With "
+            "it, the difference is warned about and recorded in "
+            "run.meta.json:cleanup_passes."
+        ),
     )
     cleanup_parser.add_argument(
         "--dry-run", action="store_true",

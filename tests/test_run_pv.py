@@ -167,7 +167,8 @@ class TestCleanupSubcommand:
         # Mock _verify_realtime to simulate recovering 2 of 3 missing
         def side_effect(*, manifest, config, crops_base_dir, output_dir,
                         workers, iterations, temperature, model_override,
-                        service_tier, strict=True):
+                        service_tier, strict=True, pass_kind="resume",
+                        pass_record=None):
             probs_path = output_dir / "probabilities.json"
             probs = json.load(open(probs_path))
             # "Recover" candidates 7 and 9 (leave 8 missing)
@@ -227,18 +228,29 @@ class TestCleanupSubcommand:
         assert len(backups) == 1
         assert "pre-cleanup" in backups[0].name
 
-    def test_cleanup_backs_up_run_meta(self, tmp_path):
-        """Cleanup snapshots run.meta.json so the main run's usage survives.
+    def test_cleanup_leaves_the_main_meta_untouched(self, tmp_path):
+        """Cleanup never overwrites the main pass's usage.
 
-        The retry pass's tracker rewrites run.meta.json with the
-        retries' usage only (bit the S144 verifier swap), so cmd_cleanup
-        must back up the pre-cleanup meta alongside probabilities.json.
+        The retry pass's tracker used to rewrite run.meta.json with the
+        retries' usage only (it bit the S144 verifier swap and lost the
+        fourth cell's 57,482-candidate load). Since 2026-09-14 the
+        preservation is the writer's job, not an ad-hoc copy in
+        ``cmd_cleanup``: ``_write_verification_outputs`` copies the meta to
+        an indexed ``run.meta.pre-cleanup-N.json`` sidecar and sums the
+        retry's stats into it (``tests/test_cleanup_meta_merge.py``). With
+        the retry pass mocked out, no pass writes a meta, so the main
+        pass's file must be exactly as it was — and no ad-hoc
+        ``run.meta.json.pre-cleanup-*.backup`` is made any more. The file
+        is still rewritten by ``_log_cleanup_failures_to_meta``, which
+        appends the residual failure ids and preserves every other block —
+        so the assertion is on the usage block, not on the bytes.
         """
         crops_dir, verified_dir, config_path = _setup_cleanup_dirs(
             tmp_path, n_candidates=5, verified_ids=[0, 1, 2],
         )
         meta = {"usage_stats": {"total_input_tokens": 12345}}
-        with open(verified_dir / "run.meta.json", "w") as f:
+        meta_path = verified_dir / "run.meta.json"
+        with open(meta_path, "w") as f:
             json.dump(meta, f)
 
         with patch("scripts.run_pv._verify_realtime", return_value=0):
@@ -250,10 +262,11 @@ class TestCleanupSubcommand:
             )
             cmd_cleanup(args)
 
-        meta_backups = list(
-            verified_dir.glob("run.meta.json.pre-cleanup-*.backup"))
-        assert len(meta_backups) == 1
-        assert json.load(open(meta_backups[0])) == meta
+        after = json.load(open(meta_path))
+        assert after["usage_stats"] == meta["usage_stats"]
+        assert not list(verified_dir.glob("run.meta.json.pre-cleanup-*.backup"))
+        # The results file's own timestamped backup is still cmd_cleanup's.
+        assert len(list(verified_dir.glob("probabilities.json.pre-*.backup"))) == 1
 
     @patch("scripts.run_pv._verify_realtime")
     def test_cleanup_safe_mode_applied(self, mock_verify, tmp_path):
@@ -265,7 +278,8 @@ class TestCleanupSubcommand:
 
         def side_effect(*, manifest, config, crops_base_dir, output_dir,
                         workers, iterations, temperature, model_override,
-                        service_tier, strict=True):
+                        service_tier, strict=True, pass_kind="resume",
+                        pass_record=None):
             captured_configs.append(dict(config))
             return 0
 

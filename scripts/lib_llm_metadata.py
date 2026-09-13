@@ -33,9 +33,11 @@ Author: Shawn Ross
 Licence: Apache 2.0
 """
 
+import copy
 import hashlib
 import json
 import logging
+import shutil
 import subprocess
 import threading
 import uuid
@@ -1356,14 +1358,9 @@ def compare_configurations(
         counts as differing). Empty when the two configurations agree or
         when either has no configuration block.
     """
-    a = _configuration_fingerprint(original.get("configuration"))
-    b = _configuration_fingerprint(recovery.get("configuration"))
-    if not a or not b:
-        return []
-    sentinel = object()
-    return sorted(
-        field for field in set(a) | set(b)
-        if a.get(field, sentinel) != b.get(field, sentinel)
+    return _diff_fingerprints(
+        _configuration_fingerprint(original.get("configuration")),
+        _configuration_fingerprint(recovery.get("configuration")),
     )
 
 
@@ -1696,3 +1693,373 @@ def merge_meta_into_existing(
         )
 
     return merge_meta(existing, fresh)
+
+
+# =============================================================================
+# Cleanup / Resume Pass Merge — the "never replace the main pass" contract
+# =============================================================================
+#
+# ``run_pv.py cleanup`` retries the handful of candidates a verify pass failed
+# to score. Until 2026-09-14 the retry pass's tracker wrote ``run.meta.json``
+# with the RETRY's ``usage_stats`` and ``execution_stats`` only, replacing the
+# main pass's. Any audit reading the meta alone then understated the arm by
+# orders of magnitude: the fourth cell's verifier
+# (``outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37``)
+# records ``items_processed: 29`` against a 57,482-candidate load, and no
+# backup of the main pass was taken, so that load is unrecoverable from
+# metadata (``reports/r7-gaps-deltas-2026-09-11.md`` section 2.5).
+#
+# The functions below make the merge the tool's own behaviour, on the
+# ``configuration_history`` pattern of :func:`merge_meta`:
+#
+# - top-level ``usage_stats`` / ``execution_stats`` / ``cost_estimate`` carry
+#   the SUM over the main pass and every later pass;
+# - ``main_pass`` preserves the original pass's stats verbatim, written once
+#   and never rewritten;
+# - ``cleanup_passes`` lists one entry per later pass, each with its own
+#   usage block, its counts, and its configuration fingerprint;
+# - the pre-merge ``run.meta.json`` is copied to an indexed sidecar
+#   (``run.meta.pre-cleanup-1.json``) that is never overwritten, so the
+#   operator's ad-hoc backup convention becomes the tool's own.
+
+#: Schema marker stamped on a merged meta. Consumers (notably
+#: ``scripts/audit_verifier_cost.py``) branch on its presence.
+PASS_MERGE_SCHEMA: str = "cleanup-merge/1"
+
+#: Pass kinds recognised by :func:`write_merged_pass_meta`. ``cleanup`` is a
+#: ``run_pv.py cleanup`` retry; ``resume`` is a ``verify`` re-invocation that
+#: skipped already-verified candidates; ``rerun`` is a pass that redid the
+#: whole set (its sidecar is kept but its stats are NOT summed, because the
+#: results file it wrote describes only itself).
+PASS_KINDS: tuple[str, ...] = ("cleanup", "resume", "rerun")
+
+
+def _diff_fingerprints(a: dict[str, Any], b: dict[str, Any]) -> list[str]:
+    """Name the fields on which two configuration fingerprints disagree.
+
+    Args:
+        a: A fingerprint from :func:`_configuration_fingerprint`.
+        b: The fingerprint to compare against.
+
+    Returns:
+        Sorted field names that differ; a field present in only one
+        fingerprint counts as differing. Empty when either is empty, so a
+        meta with no configuration block cannot manufacture a difference.
+    """
+    if not a or not b:
+        return []
+    sentinel = object()
+    return sorted(
+        field for field in set(a) | set(b)
+        if a.get(field, sentinel) != b.get(field, sentinel)
+    )
+
+
+def verbatim_pass_block(meta: dict[str, Any]) -> dict[str, Any]:
+    """Return one pass's stats, copied verbatim for preservation.
+
+    Used to build the ``main_pass`` block: the original pass's own numbers,
+    untouched by any later summation, so a reader can always recover what
+    the first pass alone cost.
+
+    Args:
+        meta: A finalised meta dict.
+
+    Returns:
+        A deep copy of the pass's identity, timing, execution, usage and
+        cost blocks, plus its configuration reduced to a fingerprint.
+    """
+    return {
+        "run_id": meta.get("run_id"),
+        "timestamp": copy.deepcopy(meta.get("timestamp", {})),
+        "execution_stats": copy.deepcopy(meta.get("execution_stats", {})),
+        "usage_stats": copy.deepcopy(meta.get("usage_stats", {})),
+        "cost_estimate": copy.deepcopy(meta.get("cost_estimate", {})),
+        "configuration": _configuration_fingerprint(meta.get("configuration")),
+    }
+
+
+def merge_cleanup_meta(
+    previous: dict[str, Any],
+    fresh: dict[str, Any],
+    *,
+    kind: str = "cleanup",
+    pass_record: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Merge a cleanup or resume pass's meta into the pass it extends.
+
+    The arithmetic is :func:`merge_meta`'s (tokens summed, execution counts
+    summed, ``completed_items`` deduplicated, ``configuration`` kept from the
+    original). On top of it this function attaches the two blocks that make
+    the merge auditable: ``main_pass`` and ``cleanup_passes``.
+
+    Args:
+        previous: The meta already on disc — either the main pass's, or a
+            meta this function already merged (in which case its
+            ``main_pass`` block is carried through unchanged and its
+            ``cleanup_passes`` list is extended).
+        fresh: The meta the pass that just ran produced, describing that
+            pass ALONE.
+        kind: One of :data:`PASS_KINDS`, recorded on the entry.
+        pass_record: Extra fields to record on this pass's entry — the
+            caller's own evidence (config byte hashes, the candidate count
+            it attempted, the configuration-gate verdict).
+
+    Returns:
+        The merged meta dict. ``usage_stats``, ``execution_stats`` and
+        ``cost_estimate`` are the running totals; ``main_pass`` holds the
+        first pass verbatim; ``cleanup_passes`` holds one entry per later
+        pass, in order.
+    """
+    merged = merge_meta(previous, fresh)
+
+    # ``merge_meta`` shallow-copies the previous meta, so an existing
+    # ``main_pass`` is already carried through. Seed it only on the first
+    # merge, and never rewrite it afterwards.
+    if "main_pass" not in merged:
+        merged["main_pass"] = verbatim_pass_block(previous)
+
+    fresh_es = fresh.get("execution_stats", {}) or {}
+    verified = fresh_es.get("items_processed") or 0
+    failed = fresh_es.get("items_failed") or 0
+    main_fingerprint = (merged["main_pass"] or {}).get("configuration") or {}
+    fresh_fingerprint = _configuration_fingerprint(fresh.get("configuration"))
+    changed = _diff_fingerprints(main_fingerprint, fresh_fingerprint)
+
+    prior_passes = list(previous.get("cleanup_passes", []) or [])
+    entry: dict[str, Any] = {
+        "pass_index": len(prior_passes) + 1,
+        "kind": kind,
+        "timestamp": (
+            (fresh.get("timestamp") or {}).get("end")
+            or datetime.now(timezone.utc).isoformat()
+        ),
+        "run_id": fresh.get("run_id"),
+        "candidates_attempted": verified + failed,
+        "candidates_verified": verified,
+        "candidates_failed": failed,
+        "usage_stats": copy.deepcopy(fresh.get("usage_stats", {})),
+        "cost_estimate": copy.deepcopy(fresh.get("cost_estimate", {})),
+        "configuration": fresh_fingerprint,
+        "configuration_differs_from_main_pass": bool(changed),
+        "changed_configuration_fields": changed,
+    }
+    if pass_record:
+        entry.update(pass_record)
+    merged["cleanup_passes"] = prior_passes + [entry]
+    merged["meta_merge_schema"] = PASS_MERGE_SCHEMA
+
+    if changed:
+        logger.warning(
+            "%s pass %d ran under a configuration differing from the main "
+            "pass on %d field(s): %s. The merged meta's top-level totals "
+            "therefore mix configurations; the per-pass split is in "
+            "cleanup_passes.",
+            kind, entry["pass_index"], len(changed), ", ".join(changed),
+        )
+    return merged
+
+
+def next_pass_sidecar_path(meta_path: Path, kind: str) -> Path:
+    """Return the next free indexed sidecar path for a meta file.
+
+    Sidecars are named ``<stem>.pre-<kind>-<N>.json`` beside the meta
+    (``run.meta.json`` becomes ``run.meta.pre-cleanup-1.json``) and are
+    never overwritten: the index advances until a free name is found, so
+    every pre-merge state survives.
+
+    Args:
+        meta_path: The meta file about to be rewritten.
+        kind: The pass kind about to run, used in the sidecar name.
+
+    Returns:
+        A path that does not yet exist.
+    """
+    stem = (
+        meta_path.name[: -len(meta_path.suffix)]
+        if meta_path.suffix
+        else meta_path.name
+    )
+    index = 1
+    while True:
+        candidate = meta_path.with_name(f"{stem}.pre-{kind}-{index}.json")
+        if not candidate.exists():
+            return candidate
+        index += 1
+
+
+def write_merged_pass_meta(
+    meta_path: Path,
+    fresh: dict[str, Any],
+    *,
+    kind: str = "resume",
+    pass_record: dict[str, Any] | None = None,
+    merge_previous: bool = True,
+) -> tuple[dict[str, Any], Path | None]:
+    """Preserve the meta on disc, then return what should replace it.
+
+    This is the "never replace the main pass" contract in one call. When no
+    meta exists yet the *fresh* dict is returned unchanged, so a stage that
+    never sees a second pass is written exactly as it was before this
+    machinery existed.
+
+    Args:
+        meta_path: Where the meta will be written (not written here — the
+            caller owns the write, so it can be atomic).
+        fresh: The meta the pass that just ran produced.
+        kind: One of :data:`PASS_KINDS`.
+        pass_record: Extra evidence fields for this pass's
+            ``cleanup_passes`` entry.
+        merge_previous: When True (cleanup and resume), sum the fresh stats
+            into the previous meta. When False (a whole-set rerun, whose
+            results file describes only itself), keep the fresh meta as the
+            new content but still preserve the previous one to a sidecar.
+
+    Returns:
+        ``(meta_to_write, sidecar_path)``. ``sidecar_path`` is None when no
+        previous meta existed.
+    """
+    if not meta_path.exists():
+        return fresh, None
+
+    with open(meta_path) as f:
+        previous = json.load(f)
+
+    sidecar = next_pass_sidecar_path(meta_path, kind)
+    shutil.copy2(meta_path, sidecar)
+    logger.info(
+        "Preserved the pre-%s metadata verbatim: %s", kind, sidecar.name,
+    )
+
+    if not merge_previous:
+        return fresh, sidecar
+
+    record = dict(pass_record or {})
+    record["previous_meta_sidecar"] = sidecar.name
+    return (
+        merge_cleanup_meta(previous, fresh, kind=kind, pass_record=record),
+        sidecar,
+    )
+
+
+# -----------------------------------------------------------------------------
+# Configuration gate for a cleanup pass
+# -----------------------------------------------------------------------------
+
+#: The configuration fields a cleanup (or resume) pass must match for the
+#: merged meta's top-level totals to describe ONE experimental condition.
+#: Chosen over a byte-hash of the config file because the hazard is CLI
+#: overrides — ``--model``, ``--thinking-level``, ``--temperature``,
+#: ``--safe-mode-tokens`` — which change what the API is asked to do without
+#: touching a byte of the config file. ``system_instruction_hash`` is the
+#: instruction file's own content digest, so hashing that file adds nothing.
+#: ``full_config_snapshot_sha256`` is deliberately NOT here: it trips on
+#: cosmetic edits (a comment field, a reordered key) and is reported as
+#: advisory instead.
+CLEANUP_GATE_FIELDS: tuple[str, ...] = (
+    "model",
+    "version",
+    "instruction_file",
+    "system_instruction_hash",
+    "temperature",
+    "max_output_tokens",
+    "thinking_level",
+    "library_hash",
+)
+
+
+def configuration_fingerprint(configuration: Any) -> dict[str, Any]:
+    """Public form of :func:`_configuration_fingerprint`.
+
+    Args:
+        configuration: A meta's ``configuration`` block, or anything else.
+
+    Returns:
+        A flat comparable dict; empty when *configuration* is not a dict.
+    """
+    return _configuration_fingerprint(configuration)
+
+
+def main_pass_configuration(meta: dict[str, Any]) -> dict[str, Any]:
+    """Return the configuration fingerprint of a stage's MAIN pass.
+
+    Reads the ``main_pass`` block written by :func:`merge_cleanup_meta` when
+    the stage has already been merged once, and falls back to the meta's own
+    ``configuration`` block — which, on both the legacy and the fixed
+    format, is the main pass's.
+
+    Args:
+        meta: A stage's ``run.meta.json`` contents.
+
+    Returns:
+        A fingerprint dict, empty when the meta records no configuration.
+    """
+    main = meta.get("main_pass")
+    if isinstance(main, dict) and isinstance(main.get("configuration"), dict):
+        return main["configuration"]
+    return _configuration_fingerprint(meta.get("configuration"))
+
+
+def _models_compatible(main: Any, candidate: Any) -> bool:
+    """Whether two recorded model names denote the same model.
+
+    A meta records the name the SDK resolved (``gemini-3-flash-preview``)
+    while a relaunch usually supplies the name the operator typed
+    (``gemini-3-flash``), and ``run_pv.py`` resolves it only after a client
+    exists. A ``-preview`` suffix on one side alone is therefore not a
+    configuration change.
+
+    Args:
+        main: The main pass's recorded model.
+        candidate: The model the new pass will request.
+
+    Returns:
+        True when the two names may denote the same model.
+    """
+    if main == candidate:
+        return True
+    if not isinstance(main, str) or not isinstance(candidate, str):
+        return False
+    return (
+        main == f"{candidate}-preview" or candidate == f"{main}-preview"
+    )
+
+
+def compare_gate_fields(
+    main_fingerprint: dict[str, Any],
+    candidate_fingerprint: dict[str, Any],
+    fields: tuple[str, ...] = CLEANUP_GATE_FIELDS,
+) -> dict[str, dict[str, Any]]:
+    """Name the blocking configuration differences between two passes.
+
+    Args:
+        main_fingerprint: The main pass's fingerprint, from
+            :func:`main_pass_configuration`.
+        candidate_fingerprint: The fingerprint of the pass about to run.
+        fields: The blocking field set (default :data:`CLEANUP_GATE_FIELDS`).
+
+    Returns:
+        ``{field: {"main_pass": <value>, "this_pass": <value>}}`` for each
+        blocking field that differs. A field absent from the main pass's
+        fingerprint is skipped, not reported: a legacy meta that never
+        recorded it cannot be held to it, and refusing on an unknown would
+        block every historical recovery.
+    """
+    differences: dict[str, dict[str, Any]] = {}
+    if not main_fingerprint or not candidate_fingerprint:
+        return differences
+    for field_name in fields:
+        if field_name not in main_fingerprint:
+            continue
+        main_value = main_fingerprint[field_name]
+        candidate_value = candidate_fingerprint.get(field_name)
+        if field_name == "model":
+            if _models_compatible(main_value, candidate_value):
+                continue
+        elif main_value == candidate_value:
+            continue
+        differences[field_name] = {
+            "main_pass": main_value,
+            "this_pass": candidate_value,
+        }
+    return differences
