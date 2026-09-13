@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — grid-2026-08-18
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `c4edf1328`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `47e73b214`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/grid-2026-08-18` · **Registry status**: active · **Purpose**: Post-hoc (E41-class) 2x2 crossing tile size (512/384 px) with tile overlap (12.5/50 %), proposer stage only, ten passes per cell, one configuration throughout. Tests whether the 384 px sweet spot reproduces under a single footprint, and whether extra passes substitute for extra overlap.
 
@@ -188,7 +188,7 @@ Listed in the `deviations` field of an analysis that reads this run:
 
 | Document class | Filename | Count |
 |---|---|---:|
-| per-pass/per-run intent | `experiment_intent.md` | 51 |
+| per-pass/per-run intent | `experiment_intent.md` | 52 |
 
 These classes are in Revision-Policy scope going forward (`docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope").
 
@@ -203,7 +203,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `c4edf1328` |
+| Source commit | `47e73b214` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-08-24T08:26:30Z` |
 

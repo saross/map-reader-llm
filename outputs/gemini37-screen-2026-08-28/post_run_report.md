@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-screen-2026-08-28
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `c4edf1328`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `47e73b214`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-screen-2026-08-28` · **Registry status**: active · **Purpose**: Gemini 3.7 Flash screen on the leading 384 px / 50 % geometry: does a within-vendor model-family step clear the Gemini-3 GS plateau, and in which seat? Predictions G1-G4 committed at PI go (card planning/gemini37-screen-2026-08-28.md). Escalated to K=10 and to two verifier-role swaps (3.7, then 3.8 under card planning/gemini38-screen-2026-09-04.md).
 
@@ -202,7 +202,7 @@ Listed in the `deviations` field of an analysis that reads this run:
 
 | Document class | Filename | Count |
 |---|---|---:|
-| per-pass/per-run intent | `experiment_intent.md` | 25 |
+| per-pass/per-run intent | `experiment_intent.md` | 27 |
 
 These classes are in Revision-Policy scope going forward (`docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope").
 
@@ -221,7 +221,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `c4edf1328` |
+| Source commit | `47e73b214` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-06T05:11:51Z` |
 
