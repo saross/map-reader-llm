@@ -502,6 +502,13 @@ def summarise(entry: dict[str, Any], result: dict[str, Any],
         "contains_K3": 3 in admissible,
         "excludes_K10": 10 in ks and 10 not in admissible,
         "whole_ladder": len(admissible) == len(ks),
+        # A degenerate tie — every candidate byte-identical on every tile — makes
+        # the bootstrapped critical width exactly zero, and Hsu's strict
+        # inequality then rules out even the empirical best, returning an EMPTY
+        # set. Real rungs never are byte-identical, but an empty set must be
+        # legible as the artefact of an exact tie rather than read as "no rung
+        # can be the best".
+        "degenerate_zero_width": float(result["hsu_w_upper"]) == 0.0,
     }
 
 
@@ -586,7 +593,11 @@ def main() -> int:
             record["gates"].append(
                 gate(entry, metric, result, committed_f1, committed_mcc))
             block = summarise(entry, result, k_of)
-            block["artefact"] = str(path.relative_to(BASE_DIR))
+            # A smoke run may point --output-dir at a scratch directory, so the
+            # provenance field degrades to the absolute path rather than raising.
+            block["artefact"] = str(
+                path.relative_to(BASE_DIR)
+                if path.is_relative_to(BASE_DIR) else path)
             record[metric] = block
         first = record.get("f1") or record.get("mcc") or {}
         record["rungs"] = sorted(int(k) for k in first.get("theta_by_K", {}))
