@@ -31,10 +31,28 @@ project state.
 > `load_map_georef` would change the registered selection, archiving it
 > breaks a registration-cited path — the script is frozen and annotated;
 > rule fix / archive / frozen.
-> **(1) Era-2 board RE-SIGNATURE — READY BUT HELD** pending the
-> null-exemplar sensitivity re-score (E86, below; the MCC family the
-> re-signature would newly attest rides on image cells, which are the
-> exposed modality) — rebuilt `ac4355859`, checklist
+> **(1) Era-2 board RE-SIGNATURE — READY (hold lifted)**: the
+> null-exemplar sensitivity re-score landed (`d9ea97c2e`;
+> `results/null-exemplar-sensitivity-2026-09-13/findings.md`, row
+> `null-exemplar-sensitivity-2026-09-13` UNSIGNED). Verdict: **both
+> claims stand and need a disclosure, not a qualifier** — the
+> image-over-text tile-MCC advantage across 59 paired comparisons is
+> +0.0848 on the full frame and +0.0852 with the 20 exposed tiles
+> removed, and the 3.7 image cell keeps F1 rank 1. The leak signature is
+> real but small: image cells' FP rate on exposed tiles is 0.56 × the
+> rest against 0.69 × for text (p < 1e-4, also within one run), yet the
+> largest per-cell ΔF1 is 0.0074 and ΔMCC 0.0120, and the reduction
+> costs image cells LESS than text. On the reduced frame F1 Tier 1 goes
+> 5 → 4 — the cell that drops is the TEXT cell
+> `g37-text-k10-verified-carried-p0.10-k10`, both image cells stay; MCC
+> Tier 1 33 → 28 (7 out, 2 in, none a leader); ranks 1–4 (F1) and 1–7
+> (MCC) unchanged; 0 flips on any Era-1 board. Sign the board as
+> rebuilt `ac4355859`, with E86's disclosure sentence. Also from that
+> job: **7 Era-2 cells' `track` field disagrees with their exposure**
+> (three `proposer-verifier-384 *-image` cells are text-proposer; the
+> four `pv-scale4-optimal` cells are image-bearing, two in MCC Tier 1) —
+> fix the metadata at the next rebuild (checklist 6c). Board rebuilt
+> `ac4355859`, checklist
 > item 6 ticked "awaiting PI re-signature"; proposed outcome in
 > `provenance.json → re_sign_pending`). What it attests: 153 admitted /
 > 150 tiered / 3 withheld; F1 tiering BYTE-IDENTICAL to the 2026-09-13

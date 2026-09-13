@@ -234,6 +234,12 @@ agent work; Fable only for the PI-facing orchestration turns.
     `reports/recovery-drop-fix-2026-09-13.md` § 6.3,
     `results/k-ladder-2026-09-12/recovery-fix-2026-09-13/README.md`
     § Changelog.
+  - [ ] **6c. Board metadata**: 7 Era-2 cells' `track` field disagrees
+    with their model-visible exposure (three `proposer-verifier-384
+    *-image` cells are text-proposer; the four `pv-scale4-optimal` cells
+    are image-bearing, two in MCC Tier 1) — found by the null-exemplar
+    sensitivity job; correct at the next rebuild, no rank moves. Owner:
+    Opus agent.
   - [ ] **6b. PI decision**: one verifier call (≈ US$0.0007) to make
     tier E's K = 5 zero-delta unconditional (candidate_01335 carried 0.10
     across a 1 px crop shift against a 0.15 gate) — or accept as
