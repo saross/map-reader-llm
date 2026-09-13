@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — h10
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `0f6978fbc`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `2fa91cdb1`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h10` · **Registry status**: active · **Purpose**: not supplied
 
@@ -147,7 +147,7 @@ Listed in the `deviations` field of an analysis that reads this run:
 - **E49** — H10 calibration uses cold-start production config instead of preregistered image-only baseline
 - **E50** — H10 holdout expanded from 60 to 327 tiles
 
-### 8.2 Mentioning this run (4)
+### 8.2 Mentioning this run (5)
 
 The entry's text names this run id or its directory path. A mention is a pointer to read the entry, not a claim that the erratum is about this run:
 
@@ -155,6 +155,7 @@ The entry's text names this run id or its directory path. A mention is a pointer
 - **E52** — H12 HP:HN ratio re-run under production carry-forward (384 px / v2 pipeline)
 - **E56** — Verifier probability-threshold operating points are in-sample (test-set-selected), not calibrated
 - **E64** — Five internal contradictions in the lodged registration — operative readings adopted, reasoning stated, post-facto status acknowledged
+- **E86** — The three null exemplars were selected from a superseded training set and never rebuilt when the calibration tiles were re-selected — the exemplars are themselves evaluation tiles, and 25 of the 340 Era-1 tiles overlap null-exemplar pixels
 
 ## 9. Documents and structure in the run directory
 
@@ -182,7 +183,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `0f6978fbc` |
+| Source commit | `2fa91cdb1` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

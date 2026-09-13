@@ -12,6 +12,25 @@ project state.
 
 > **⏰ STATE AT 2026-09-13 ~10:00 UTC (S153-b, the PI's rulings day) —
 > the PI's OPEN decisions, in order (each independent):**
+> **E86/E87 LANDED** (`2fa91cdb1`; report
+> `reports/null-exemplar-errata-2026-09-13.md`; guard
+> `scripts/check_manifest_provenance.py` flags only the null manifest;
+> overlap sidecar `inputs/examples/null-tiles/null_overlap_by_frame.json`,
+> Era-1 25/340 reproduced). Corrections to the drafts: the verifier
+> carries six examples (none null); the null pool is §§ 8.4.2–8.4.3;
+> "361 tiles" was already E64 (ii) — the paper draft carried it forward.
+> **Three PI items from it**: (a) the lodged registration copy cannot be
+> annotated inline (`results/commitments.json` pins it by blob and 702
+> line-anchored commitments broke) — pointers published as
+> `docs/methodology/preregistration/osf/errata-pointers.md`; future
+> registration errata must extend that index; (b) NEW: the corrected
+> counts move 10 of 20 calibration and 27 of 60 holdout tiles between the
+> registered density strata, and 3 + 12 tiles registered as `empty` are
+> not empty — nothing downstream reads the strata, but § 2.5 is no longer
+> readable as tile content; (c) E87 remediation 3 left OPEN: fixing
+> `load_map_georef` would change the registered selection, archiving it
+> breaks a registration-cited path — the script is frozen and annotated;
+> rule fix / archive / frozen.
 > **(1) Era-2 board RE-SIGNATURE — READY BUT HELD** pending the
 > null-exemplar sensitivity re-score (E86, below; the MCC family the
 > re-signature would newly attest rides on image cells, which are the

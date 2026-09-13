@@ -1,6 +1,16 @@
 # Documentation foundation checklist — the preregistration → outcome chain
 
-> **Last revised**: 2026-09-13 (latest — **items 11a and 11b closed**: the
+> **Last revised**: 2026-09-13 (latest — **item 13 added and closed**:
+> errata **E86** (the null exemplars' stale provenance — 25 of the 340
+> Era-1 tiles overlap null-exemplar pixels, nil on measurement, image
+> modality only) and **E87** (the lodged per-tile mound counts — 36 → 50,
+> 79 → 97, and 10 of 20 / 27 of 60 tiles change density stratum) inserted,
+> with a manifest-provenance guard, the Methods corrections and
+> `osf/errata-pointers.md`, which exists because the lodged registration
+> copy turned out to be blob-pinned and line-anchored by 702 commitments and
+> so cannot carry inline pointers. Item **13a**, the sensitivity re-score,
+> is the sibling session's and remains open. Before that — **items 11a and
+> 11b closed**: the
 > generated-file registry rebuilt over `outputs/` as well as `results/` and
 > `reports/` — 3,619 files, 3,318 generated, 0 unattributed — and extended
 > to record the 2026-09-11 ruling's three obligations per generated
@@ -307,12 +317,70 @@ agent work; Fable only for the PI-facing orchestration turns.
   11a landed). Rebuild it (`scripts/build_generated_file_registry.py
   --out reports/verification/generated-file-registry.json`) as the last
   step of every handoff and after any merge that adds documents; consider
-  a pre-commit hook. Owner: the session at handoff.
+  a pre-commit hook. Owner: the session at handoff. **Rebuild from the
+  MAIN checkout only** — a rebuild from an agent worktree dropped 93
+  valid `outputs/` entries (untracked outputs are absent there; found
+  and reverted 2026-09-13, E86/E87 job).
+  **Amendment needed (found 2026-09-13, item 13):** this instruction is
+  **unsafe from a git worktree**. The registry enumerates untracked
+  `outputs/` working files as well as tracked ones, so a rebuild in a
+  fresh worktree silently *deletes* the entries for files only the main
+  checkout has — attempted here, it produced 18 insertions and **938
+  deletions**, dropping 93 `outputs/ab-plus/_work/*.overflow-notes.md`
+  and sibling entries, and was reverted. Restrict the rebuild to the
+  main checkout, or teach the builder to enumerate tracked files only.
+  Detail: `reports/null-exemplar-errata-2026-09-13.md` § 10.
 - [ ] **12. Verdict-model decision (PI)**: a `disclosures` list beside
   `discrepancies` in the run-conditions verifier, so the 12 deliberate
   WARNs (3 `n-passes-over` on the mixed-provenance uplift pool, 9
   `pinned-vintage` disclosures) count as passes and 41 of 41 is
   reachable — it changes what a signature attests, so it is the PI's.
+- [x] **13. E86/E87 handling** — done 2026-09-13, commits `2a270af50`
+  (the provenance guard), `bcf936ad2` (the two errata and their sidecars)
+  and `92745b0c9` (the Methods corrections). The two errata drafted in
+  `map-reader-bench` `wiki/planning/parent-errata-drafts.md` inserted as
+  **E86** and **E87** (register 85 → 87, collision-checked), every
+  anchored claim re-verified here first. **E86**: the three null
+  exemplars were selected 2025-12-23 from a training set re-selected
+  under a new seed on 2026-01-04, and the null manifest was never
+  regenerated, so they were never entered into the exclusion geometry.
+  Exposure recomputed per frame and extended with the Era-1 512 px
+  frame the draft lacked — **25 of 340** (all three exemplars are
+  themselves evaluation tiles there), 3 of the registered 60, 20 of 487,
+  13 of 327, 0 of the 5 verification tiles — ids in
+  `inputs/examples/null-tiles/null_overlap_by_frame.json`. Nil on
+  measurement (0 of 569 references in a null window) and confined to
+  the image modality: 37 of the 41 image-modality configs carry the
+  nulls and the only four that do not are the `verify_*` configs, so the
+  verifier stage is clean by construction. **E87**: the lodged per-tile
+  counts came from a bounding-box approximation — 36 → **50** distinct
+  references over the 20 calibration windows (52 summed, 39 over cores),
+  79 → **97** over the 60 holdout windows — and, new here, the
+  registered density strata move **10 of 20** and **27 of 60** tiles,
+  with 3 + 12 "empty" tiles not empty. Three dispositions departed from
+  the drafts, each recorded in the entry: the lodged registration copy
+  **cannot** be annotated inline (`results/commitments.json` pins it by
+  git blob and anchors 702 commitments to line ranges; the attempt
+  produced 520 locator failures and two tier-1 failures), so the
+  pointers became `osf/errata-pointers.md`; "361 tiles" is already
+  adjudicated by E64 (ii) and was not re-opened; and
+  `select_tiles_phase2.py` is **frozen and annotated** rather than fixed
+  or archived, because either would cost the committed selections'
+  reproducibility. Guard: `scripts/check_manifest_provenance.py` over
+  `inputs/provenance/manifest-dependencies.json`, 8 dependencies, flags
+  exactly the null-tile manifest. Report:
+  `reports/null-exemplar-errata-2026-09-13.md`. **Open for the PI**: the
+  E87 remediation-3 disposition, and whether the H10 rationale sentence
+  should be restated from the mining campaign's actual yield.
+  - [ ] **13a. Null-exemplar sensitivity re-score** — every affected
+    board cell re-scored with the overlapping tiles of the sidecar
+    excluded, landing in
+    `results/null-exemplar-sensitivity-2026-09-13/`. Owner: the sibling
+    session running it in parallel on 2026-09-13; **not this session's
+    work**, and E86's Impact field names it as the quantification of an
+    exposure this session could only bound. Close this item with its
+    commit when the re-score lands, and update E86's Impact if any cell
+    moves.
 
 **Then**: the Results outline pass proper, section by section, with the
 PI ruling per section (the standing "outline first" rule); the
@@ -329,7 +397,47 @@ after that.
 
 ## Changelog
 
-### 2026-09-13 (latest) — items 11a and 11b closed: the registry rebuilt, the neither-regime count closed to 0
+### 2026-09-13 (latest) — item 13 added and closed: E86/E87 handled; 13a left with the sibling
+
+**Trigger**: `map-reader-bench`
+`wiki/planning/parent-errata-drafts.md`, two errata drafted in that
+repository against this one's format and anchored to this repository's
+paths and commits, with PI approval of the handling on 2026-09-13. Every
+anchored claim was re-verified here before landing, and the numbers below
+were computed in this session rather than carried from the drafts.
+
+**Before → after table for numerical claims that moved**:
+
+| Claim | Draft / prior | After | Source recomputed |
+|---|---|---|---|
+| Errata register size | 85 entries | **87** (E86, E87; collision-checked) | `protocol-errata.md`, `### E<n>` headings |
+| Null-exemplar exposure, Era-1 512 px 340-tile frame | not in the draft | **25 of 340**, all three exemplars themselves evaluation tiles | `inputs/tiles/full_evaluation_manifest.json` via `scripts/audit_null_exemplar_overlap.py` |
+| Era-2 487 / Era-2 240 / 512 px 60 / Era-3 327 | 20 / 6 / 3 / 13 | **20 / 6 / 3 / 13** (all four reproduced exactly) | same |
+| Calibration references, affine-correct | 50 | **50 distinct, 52 summed** (the draft's 50 is the union; two references sit in a tile overlap) | `scripts/recount_prereg_tile_mounds.py` |
+| Holdout references, affine-correct | not in the draft | **97 distinct, 106 summed, 82 over cores** (published 79) | same |
+| Approximation vs affine row agreement | "45 of 80 against 7 of 20" | **45 of 80 against 31 of 80** (the draft compared different denominators; per set 10/20 and 35/60 against 7/20 and 24/60) | same |
+| Density strata under corrected counts | not in the draft | **10 of 20 calibration and 27 of 60 holdout tiles change stratum**; 3 + 12 "empty" tiles are not empty | same |
+| Configs transmitting null pixels | "image-modality configs" | **37 of 41**; the only four that do not are the `verify_*` configs | census over `prompts/configs/*.json` with the pipeline's `include_example_images` default |
+
+**Three claims in the drafts that did not survive verification**, each
+corrected in the entry rather than carried: "the verifier config carries
+no examples" (it carries six, none of them null — so the conclusion holds
+and the reason was wrong); the null-pool statement's location, given as
+§ 8.4.1 (it is §§ 8.4.2–8.4.3); and "361 tiles at preregistration line 78"
+as a live minor item (**E64 (ii)** adjudicated it on 2026-07-30 — what was
+actually outstanding is that the paper draft had carried 361 forward
+without that reading, which is what the Methods commit fixes).
+
+**What did NOT change**: no metric, evaluation, board cell, scope
+membership or hypothesis outcome; no example image; no tile manifest
+membership; and the lodged registration copy is byte-identical to before
+(blob `fa221b30f395`, the pin `results/commitments.json` records).
+
+**Landed**: `2a270af50` (guard + registry + 25 tier-1 tests),
+`bcf936ad2` (E86, E87, the two sidecars, the four annotated artefacts,
+`osf/errata-pointers.md`, 46 tier-1 tests) and `92745b0c9` (Methods).
+
+### 2026-09-13 — items 11a and 11b closed: the registry rebuilt, the neither-regime count closed to 0
 
 **Trigger**: § 11.5 of `planning/interim-docs-review.md` made these the
 prerequisites for the second audit pass — the classifier that would answer

@@ -1,6 +1,14 @@
 {
   "description": "Null tiles for few-shot library - empty tiles to calibrate model expectations",
   "created": "2025-12-23",
+  "_note_E86": {
+    "summary": "STALE PROVENANCE. The selection_methodology below is true of the 2025-12-23 training set and false of the committed calibration set. These three tiles were selected from inputs/training_manifest.json as it stood at 3f66fc3f8 (2025-12-23), where all three are members. That set was re-selected on 2026-01-04 (4d011a839, 'Expand holdout set from 20 to 60 tiles') under a new seed: only 3 of the 20 earlier tiles survived and none of these three did. This manifest was never regenerated - it was moved unchanged in a10ed8236 (2026-01-08) - so it still cites seed 20251223 and the December stratification.",
+    "consequence": "Because the evaluation exclusion geometry was built from the CURRENT calibration set, these three tiles were never excluded from evaluation. All three are themselves members of the 340-tile Era-1 evaluation frame. Per-frame overlap counts and the overlapping tile ids: null_overlap_by_frame.json (this directory).",
+    "not_regenerated_deliberately": "Every committed run that used this library used these three exemplars. A rebuilt null set would create a second library version that no committed run used, so the nulls are frozen and the defect is recorded instead (E86 remediation 2, PI ruling 2026-09-13). A future library revision may take the option.",
+    "reference_impact": "Nil on any reference-bearing measurement: 0 of the 569 reference symbols lie inside the three null windows.",
+    "erratum": "docs/methodology/preregistration/protocol-errata.md, E86",
+    "guard": "scripts/check_manifest_provenance.py (dependency id null-tiles-from-calibration) records the declaration-time source blob and reports this staleness rather than letting a reader assume currency."
+  },
   "selection_methodology": {
     "pool": "Training tiles with density=empty (mound_count=0)",
     "content_threshold": "≤75% background pixels",
