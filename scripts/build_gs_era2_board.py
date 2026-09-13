@@ -565,14 +565,27 @@ def finalise(board: Path, membership: dict[str, Any],
             deltas[r["condition_id"]] = {**r, "committed_f1_20": r.get("g2_f1_20")}
     n_opmax = sum(1 for r in opmax_gates.get("cells", []) if r.get("on_board"))
     n_k_ladder = sum(1 for m in membership["members"] if m.get("k_ladder"))
+    # Two kinds of withholding, and they must not be conflated. A cell in
+    # ``withheld_cells`` has no per-tile table on this frame at all, so it is
+    # admitted to the board but ranked and tested nowhere; a cell in
+    # ``mcc_permutation.withheld`` keeps its F1 rank and loses only its MCC.
+    withheld_cells = tiering.get("withheld_cells") or []
     withheld_mcc = ((tiering.get("mcc_permutation") or {}).get("withheld") or [])
     admissible, mcb_path = _mcb_admissible(board)
     ranking = tiering["ranking"]
     n_sig = sum(1 for r in tiering["pairwise"] if r["significant"])
     top = ranking[0]
     tiers = tiering["tiers"]
+    n_admitted = membership["n_members"] + n_opmax
     outcome = (
-        f"{n_sig}/{len(tiering['pairwise'])} pairs significant at BH q = 0.05, {len(tiers)} tiers on the "
+        (f"{len(ranking)} of {n_admitted} admitted cells tiered; "
+         f"{len(withheld_cells)} WITHHELD (the tile-join invariant refuses their "
+         f"per-tile table on this frame, so they are ranked and tested nowhere and "
+         f"only their whole-frame F1 is quoted: "
+         + "; ".join(f"{w.get('label')} F1@20 {w.get('eval_f1'):.4f}"
+                     for w in withheld_cells) + "). "
+         if withheld_cells else "")
+        + f"{n_sig}/{len(tiering['pairwise'])} pairs significant at BH q = 0.05, {len(tiers)} tiers on the "
         f"{FRAME_ID} frame ({tiering['n_tiles']} tiles, 435 reference mounds). Tier 1 (greedy clique) = "
         f"{len(tiers[0]['members'])} cell(s); MCB admissible set = {len(admissible) if admissible else 'not computed'}. "
         f"Top: {top['label']} F1@20 {top['eval_f1']:.4f}. "
@@ -634,10 +647,20 @@ def finalise(board: Path, membership: dict[str, Any],
                         "mcb": mcb_path or "scripts/selection_aware_intervals.py --board (not found in board/mcb)"},
         "gates": {"G1": g1, "G2_G3_G4_G6": {k: v for k, v in gates.items() if k != "cells"}},
         "tiering": {"n_pairs": len(tiering["pairwise"]), "n_significant": n_sig, "n_tiers": len(tiers),
+                    "n_cells_tiered": len(ranking),
+                    "n_cells_withheld": len(withheld_cells),
+                    "withheld_cells": [{"ref": w.get("ref"), "label": w.get("label"),
+                                        "eval_f1": w.get("eval_f1"),
+                                        "recorded_mcc": w.get("recorded_mcc"),
+                                        "arm": w.get("arm"),
+                                        "reason": w.get("reason")} for w in withheld_cells],
                     "mcc_withheld": [{"ref": w.get("ref"), "label": w.get("label"),
                                       "recorded_mcc": w.get("recorded_mcc"),
                                       "reason": w.get("reason")} for w in withheld_mcc],
                     "n_mcc_withheld": len(withheld_mcc),
+                    "mcc_permutation": ({k: v for k, v in tiering["mcc_permutation"].items()
+                                         if k not in ("pairwise", "gates", "withheld")}
+                                        if tiering.get("mcc_permutation") else None),
                     "tie_set": tiers[0]["members"], "mcb_admissible_hsu": admissible,
                     "mcb_two_sided_band_n": (lambda d: len(d.get("mcb_not_ruled_out") or []))(
                         json.loads((REPO_ROOT / mcb_path).read_text(encoding="utf-8")) if mcb_path else {}),
@@ -690,13 +713,18 @@ def finalise(board: Path, membership: dict[str, Any],
              f"Frame: `{FRAME}` (`{FRAME_ID}`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, "
              f"1,402.4 km², 435 curator reference mounds). Instrument: {provenance['instruments']['tiering']}; "
              f"Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).", "",
-             f"{len(ranking)} cells; {n_sig}/{len(tiering['pairwise'])} pairs significant; {len(tiers)} tiers; "
-             f"tie set {len(tiers[0]['members'])}; MCB admissible {len(admissible) if admissible else 'n/a'}."
+             f"**{n_admitted} cells admitted**"
+             + (f", of which **{len(ranking)} are tiered** and "
+                f"**{len(withheld_cells)} withheld** (listed below the table)"
+                if withheld_cells else "")
+             + f"; {n_sig}/{len(tiering['pairwise'])} pairs significant; {len(tiers)} tiers; "
+             f"tie set {len(tiers[0]['members'])}; MCB admissible "
+             f"{len(admissible) if admissible else 'n/a'} of {len(ranking)}."
              + (f" {n_k_ladder} cell(s) admitted by `k-ladder/membership.json` "
                 "with their board-frame evaluations as-is (PI ruling 2026-09-13)."
                 if n_k_ladder else "")
-             + (f" tile-MCC **withheld** for {len(withheld_mcc)} cell(s) the "
-                "tile-join invariant refused (listed below the table)."
+             + (f" tile-MCC additionally **withheld** for {len(withheld_mcc)} ranked "
+                "cell(s) the tile-join invariant refused."
                 if withheld_mcc else ""), "",
              "| rank | cell | tier | MCB | F1@20 (board frame) | committed F1@20 | Δ frame | tile-MCC |",
              "|---:|---|---:|:---:|---:|---:|---:|---:|"]
@@ -706,6 +734,22 @@ def finalise(board: Path, membership: dict[str, Any],
         lines.append(f"| {r['rank']} | `{src}` | {r['tier']} | {'●' if r['ref'] in admissible else ''} | {r['eval_f1']:.4f} | "
                      f"{d.get('committed_f1_20', float('nan')):.4f} | {d.get('delta_board_minus_committed', 0.0):+.4f} | "
                      f"{r['mcc'] if r['mcc'] is not None else '—'} |")
+    if withheld_cells:
+        lines += ["", "**Admitted but WITHHELD** — the tile-join invariant refuses these cells' "
+                  "per-tile table on this frame (their `source_tile` vocabulary is not the frame's), "
+                  "so they are ranked nowhere above and enter no BH family and no admissible set. "
+                  "Their whole-frame F1 is unaffected by the tile join and is quoted for reference; "
+                  "their committed tile-MCC is the pre-invariant value and is NOT published. Admission "
+                  "is the PI's ruling of 2026-09-13; the withholding follows the same ruling's "
+                  "\"withhold and list, never abort the board\", and is lifted only by the corpus-wide "
+                  "tile-join decision (close-out question 4).", "",
+                  "| cell | F1@20 (whole frame) | committed tile-MCC (NOT published) | refusal |",
+                  "|---|---:|---:|---|"]
+        for w in withheld_cells:
+            recorded = w.get("recorded_mcc")
+            recorded_txt = "—" if recorded is None else f"{recorded:.4f}"
+            lines.append(f"| `{w.get('label')}` | {w.get('eval_f1'):.4f} | "
+                         f"{recorded_txt} | {w.get('reason')} |")
     if withheld_mcc:
         lines += ["", "**tile-MCC withheld** (the tile-join invariant refused the cell's "
                   "per-tile classification, so no MCC is published for it; the cell keeps "

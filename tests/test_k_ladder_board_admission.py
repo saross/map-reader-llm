@@ -301,6 +301,36 @@ def test_a_tile_join_refusal_is_told_apart_from_every_other_value_error():
     assert not t.is_tile_join_refusal(FileNotFoundError("detections set missing"))
 
 
+def test_finalise_publishes_wholly_withheld_cells(tmp_path, monkeypatch):
+    """A cell with no per-tile table at all reaches provenance, README and outcome.
+
+    This is the ``withheld_cells`` arm, distinct from the MCC-only arm below: the
+    board must say how many of the cells it ADMITTED it could actually tier.
+    """
+    board = _finalise_fixture(tmp_path, monkeypatch, {"signed_at": "x"})
+    tiering = json.loads((board / "tiering_20m.json").read_text())
+    tiering["withheld_cells"] = [{
+        "ref": "runz::refused", "label": "g37-text-k1-verified-opmax",
+        "eval_f1": 0.8495, "recorded_mcc": 0.1337,
+        "arm": "per-tile F1 (and therefore MCC)",
+        "reason": "per-tile TP/FP/FN table refused: 21 of 475 ... "
+                  "(tile_join_detection_shortfall)"}]
+    (board / "tiering_20m.json").write_text(json.dumps(tiering))
+    b.finalise(board, {"n_members": 1, "members": [
+        {"condition_id": "runx::plain-n5", "k_ladder": False}]},
+        skip_analysis_row=True, re_sign_reason="r")
+    prov = json.loads((board / "provenance.json").read_text())
+    assert prov["tiering"]["n_cells_withheld"] == 1
+    assert prov["tiering"]["n_cells_tiered"] == 1
+    assert prov["tiering"]["withheld_cells"][0]["eval_f1"] == 0.8495
+    readme = (board / "README.md").read_text()
+    assert "Admitted but WITHHELD" in readme
+    assert "g37-text-k1-verified-opmax" in readme
+    # The proposed outcome must carry it, since that is the text the PI signs.
+    assert "WITHHELD" in prov["re_sign_pending"]["proposed_outcome"]
+    assert "1 of 1 admitted cells tiered" in prov["re_sign_pending"]["proposed_outcome"]
+
+
 def test_finalise_publishes_the_withheld_list_from_the_tiering(tmp_path, monkeypatch):
     """``finalise`` lifts ``mcc_permutation.withheld`` into provenance and README."""
     board = _finalise_fixture(tmp_path, monkeypatch, {"signed_at": "x"})
