@@ -991,6 +991,51 @@
           "micro_f1_50": 0.8589904449377472
         }
       ]
+    },
+    "FOURTH-N5": {
+      "n_sweep_points": 135,
+      "argmax": {
+        "family": "FOURTH-N5",
+        "prob_t": 0.96,
+        "min_votes": 5,
+        "n_detections": 4434,
+        "tp": 4139,
+        "fp": 295,
+        "fn": 879,
+        "micro_f1_50": 0.8757934828607703
+      },
+      "top3": [
+        {
+          "family": "FOURTH-N5",
+          "prob_t": 0.96,
+          "min_votes": 5,
+          "n_detections": 4434,
+          "tp": 4139,
+          "fp": 295,
+          "fn": 879,
+          "micro_f1_50": 0.8757934828607703
+        },
+        {
+          "family": "FOURTH-N5",
+          "prob_t": 0.98,
+          "min_votes": 5,
+          "n_detections": 4431,
+          "tp": 4136,
+          "fp": 295,
+          "fn": 882,
+          "micro_f1_50": 0.8754365541327124
+        },
+        {
+          "family": "FOURTH-N5",
+          "prob_t": 0.96,
+          "min_votes": 4,
+          "n_detections": 4779,
+          "tp": 4285,
+          "fp": 494,
+          "fn": 733,
+          "micro_f1_50": 0.8747575788506686
+        }
+      ]
     }
   }
 }
