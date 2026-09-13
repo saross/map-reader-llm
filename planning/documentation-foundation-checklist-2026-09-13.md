@@ -336,6 +336,19 @@ agent work; Fable only for the PI-facing orchestration turns.
   and sibling entries, and was reverted. Restrict the rebuild to the
   main checkout, or teach the builder to enumerate tracked files only.
   Detail: `reports/null-exemplar-errata-2026-09-13.md` § 10.
+- [ ] **14. Runner hardening — `run_pv.py cleanup` overwrites `run.meta.json`
+  with the retry pass's usage only** (found 2026-09-14 by the image
+  campaign's steward: arm 2's true cost is the pre-cleanup backup
+  US$7.6875 + the cleanup meta US$0.0153; a later audit reading only the
+  meta would understate it by three orders of magnitude). This is the
+  mechanism that lost the fourth cell's 57,482-candidate verifier load in
+  August (`reports/r7-gaps-deltas-2026-09-11.md` § 2.5). Fix: cleanup
+  merges usage into the main meta and keeps a `cleanup_passes` list
+  (`configuration_history` pattern from PR #14), with a tier-1 test; the
+  verifier-leg auditor the steward built goes to `scripts/`. Also: never
+  liveness-check a remote process with `pgrep -f` over `ssh` (it matches
+  the remote shell's own command line) — use a log-staleness detector.
+  Owner: Opus agent, after the campaign lands.
 - [ ] **12. Verdict-model decision (PI)**: a `disclosures` list beside
   `discrepancies` in the run-conditions verifier, so the 12 deliberate
   WARNs (3 `n-passes-over` on the mixed-provenance uplift pool, 9
