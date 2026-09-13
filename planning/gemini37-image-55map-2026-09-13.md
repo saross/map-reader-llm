@@ -116,9 +116,10 @@ is ≈ US$261 (B3).
 | GS calibration leg | 1.2 | **1.1221** (arm 1 0.4417 + arm 2 0.6804; union 622, not ≈ 450) |
 | 5-tile mechanism smoke | — | **≈ 0.025** |
 | 55-map proposer, pass 1 | ≈ 79 | **81.9283** — both gates PASS (§ 3.1 below) |
-| 55-map proposer, passes 2–3 | ≈ 158 | projected **≈ 163.9** at pass 1's rate |
+| 55-map proposer, pass 2 | ≈ 79 | **81.8712** — cache 0.810, within 0.07 % of pass 1 |
+| 55-map proposer, pass 3 | ≈ 79 | in flight from 12:47:42 UTC |
 | Four verifier arms, scoring | ≈ 37.4 | not reached |
-| **Running total** | | **≈ 83.08** of a revised ≈ US$285 |
+| **Running total** | | **≈ 164.95** of a revised ≈ US$285 |
 
 ### 3.1 Pass-1 gates — both PASS, read 2026-09-13 10:36 UTC
 

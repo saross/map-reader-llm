@@ -32,9 +32,10 @@ what ran, what the gates measured, and exactly how to resume.
 | GS sweep, both arms, 20 m | **carried points fixed** | 0.00 | anchor gate 0.89614 vs registered 0.8961 |
 | 5-tile mechanism smoke | **PASS** | ≈ 0.025 | payload fingerprint matches the GS run |
 | 55-map proposer pass 1 | **COMPLETE**, 24,561 / 24,561 | **81.9283** | launched ≈ 07:28 UTC, complete 10:32:36 UTC; one recovery round (24,559 + 2) |
-| 55-map proposer passes 2–3 | not started | — | **GO** — both pass-1 gates PASS (§ 2) |
+| 55-map proposer pass 2 | **COMPLETE**, 24,561 / 24,561 | **81.8712** | launched 10:40:55 UTC, complete 12:47:42 UTC (2 h 07 m); one recovery round (24,558 + 3) |
+| 55-map proposer pass 3 | **IN FLIGHT** | pending | launched 12:47:42 UTC, same driver invocation |
 | Unions, four verifier arms, scoring, tests | not started | — | |
-| **Committed so far** | | **≈ 83.08** | against a revised ≈ US$285 envelope (§ 2) |
+| **Committed so far** | | **≈ 164.95** | against a revised ≈ US$285 envelope (§ 2) |
 
 Carried operating points, from the GS K = 3 calibration leg swept at the
 GS-primary 20 m buffer:
