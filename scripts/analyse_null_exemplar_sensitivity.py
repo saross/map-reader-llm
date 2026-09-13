@@ -588,21 +588,31 @@ def stage_filter(inventory: dict[str, Any]) -> dict[str, Any]:
                 seen[key]["boards"].append(board["board"])
                 continue
             slug = cell_slug(cell["ref"])
+            root = OUT_DIR / "detections" / board["frame_id"] / slug
+            # The filtered tree MIRRORS the source layout under the cell's
+            # detections_dir, because a cell's SHAPE is part of its statistic:
+            # a replicate-mean cell is the per-tile MEAN over its pass files
+            # and a single-set cell is one set, so the reduced-frame reader has
+            # to be able to reach the filtered files the same way the committed
+            # evaluation reached the originals (directory + glob, or a list).
+            cond = resolve_condition(CONDITIONS, cell["ref"])
+            source_dir = (cli_of(cond) or {}).get("detections_dir")
             entries = []
             for src in cell["detections"]:
-                dest = OUT_DIR / "detections" / board["frame_id"] / slug / Path(src).name
-                # A pass directory can repeat a file name across runs; keep the
-                # parent directory when that happens.
-                if sum(1 for s in cell["detections"]
-                       if Path(s).name == Path(src).name) > 1:
-                    dest = (OUT_DIR / "detections" / board["frame_id"] / slug
-                            / Path(src).parent.name / Path(src).name)
-                entries.append(filter_one(src, dest, drop, full_bounds))
+                if source_dir:
+                    rel = Path(src).resolve().relative_to(
+                        (BASE_DIR / source_dir).resolve())
+                else:
+                    rel = Path(Path(src).name)
+                entries.append(filter_one(src, root / rel, drop, full_bounds))
             seen[key] = {
                 "boards": [board["board"]],
                 "frame_id": board["frame_id"],
                 "ref": cell["ref"],
                 "slug": slug,
+                "detections_root": str(root.resolve().relative_to(BASE_DIR)),
+                "source_detections_dir": source_dir,
+                "source_glob": (cli_of(cond) or {}).get("glob"),
                 "exposed": cell["exposed"],
                 "n_features": sum(e["n_features"] for e in entries),
                 "n_dropped": sum(e["n_dropped"] for e in entries),
@@ -642,10 +652,18 @@ def score_command(entry: dict[str, Any], bounds_reduced: str,
     Returns:
         The argv list.
     """
-    files = [e["filtered"] for e in entry["files"]]
+    # Preserve the committed invocation's SHAPE: a cell scored from a pass
+    # directory is re-scored from the mirrored filtered directory with the same
+    # glob, so `evaluate_detections.py` resolves and averages the same passes.
+    if entry.get("source_detections_dir"):
+        source = ["--detections-dir", entry["detections_root"]]
+        if entry.get("source_glob"):
+            source += ["--glob", entry["source_glob"]]
+    else:
+        source = ["--detections", *[e["filtered"] for e in entry["files"]]]
     return [
         sys.executable, "scripts/evaluate_detections.py",
-        "--detections", *files,
+        *source,
         "--ground-truth", GROUND_TRUTH,
         "--bounds", bounds_reduced,
         "--buffers", *[str(b) for b in BUFFERS],
@@ -958,6 +976,36 @@ def stage_override(inventory: dict[str, Any]) -> None:
 
 # ── stage: swap (paired tile-swap, full and reduced frames) ───────────────
 
+def reduced_cli(cli: dict, entry: dict[str, Any]) -> dict:
+    """Point a cell's recorded invocation at its FILTERED detections.
+
+    The cell's SHAPE must survive: ``cell_per_tile`` reads a ``detections``
+    LIST as one unioned set and a ``detections_dir`` as the per-tile MEAN over
+    the matched pass files, so a replicate-mean cell handed a list would be
+    silently re-read as a union and its statistic would change by far more
+    than the frame reduction ever could. The filtered tree mirrors the source
+    layout under the cell's ``detections_dir`` precisely so the directory form
+    can be preserved here.
+
+    Args:
+        cli: The cell's committed ``cli_args``.
+        entry: The cell's filter-manifest entry.
+
+    Returns:
+        A copy of ``cli`` naming the filtered detections in the same shape.
+    """
+    out = dict(cli)
+    if entry.get("source_detections_dir"):
+        out["detections_dir"] = entry["detections_root"]
+        out["glob"] = entry.get("source_glob")
+        out["detections"] = None
+    else:
+        out["detections"] = [e["filtered"] for e in entry["files"]]
+        out["detections_dir"] = None
+        out["glob"] = None
+    return out
+
+
 def nearest_text_comparator(board: dict[str, Any],
                             f1_full: dict[str, float]) -> dict[str, str]:
     """Pair each image cell with the text control nearest in full-frame F1.
@@ -1017,11 +1065,8 @@ def stage_swap(inventory: dict[str, Any]) -> dict[str, Any]:
                     cond = resolve_condition(CONDITIONS, cell["ref"])
                     cli = cli_of(cond)
                     if which == "reduced":
-                        entry = filtered[(board["frame_id"], cell["ref"])]
-                        cli = dict(cli)
-                        cli["detections"] = [e["filtered"] for e in entry["files"]]
-                        cli["detections_dir"] = None
-                        cli["glob"] = None
+                        cli = reduced_cli(cli, filtered[(board["frame_id"],
+                                                         cell["ref"])])
                     try:
                         cache[key] = per_tile_tables(cli, gdf_ref, gdf_bounds,
                                                      tile_order)
