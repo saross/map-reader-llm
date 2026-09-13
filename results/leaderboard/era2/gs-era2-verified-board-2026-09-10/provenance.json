@@ -18,6 +18,50 @@
    "outcome",
    "gates.G1.pi_ruling"
   ],
+  "cells_pending_rescore": {
+   "status": "NOTE ONLY \u2014 no rebuild, no re-tiering, no signature change",
+   "raised": "2026-09-13",
+   "trigger": "the recovery-fragment fix 75d7c8d4cd55b6ec8d2a40abff70a31f62b67725 rebuilt five committed merge_passes.py consensus unions that these four cells read; measured in results/k-ladder-2026-09-12/recovery-fix-2026-09-13/",
+   "pi_ruling": "PI ruling 2026-09-13: do NOT rebuild the board or re-tier for this. The next board rebuild, which also adds the tile-MCC permutation family, picks these cells up. This note records the pending numbers; no signature field is touched.",
+   "n_cells": 4,
+   "n_cells_with_moved_f1": 1,
+   "metric": "F1 at 20 m on the era2-b-487 board frame",
+   "blocked_artefact": "g37-text-k3-verified-opmax's own evaluation.json could NOT be regenerated: the tile-join invariant refuses its per-tile table at HEAD and the F1 bootstrap resamples tiles, so the whole evaluation aborts. Its conditions-manifest.json row therefore still reads 0.8870 / 494 and is stale by -0.0010 / -1 detection until the tile-join question is ruled on (reports/tile-mcc-geometric-join-2026-09-12.md).",
+   "cells": [
+    {
+     "ref": "gemini37-screen-2026-08-28::g37-text-k1-verified-opmax",
+     "label": "g37-text-k1-verified-opmax",
+     "eval_f1_before": 0.8495,
+     "eval_f1_after": 0.8495,
+     "delta_f1": 0.0,
+     "reason": "consensus-n1 rebuilt with recovery fragments folded in; the union holds the same 640 candidates and this cell's 502 detections are unchanged, so F1@20 does not move (it moves only at 5 m, 0.4781 -> 0.4760, where one cluster centroid's 3.026 m shift crosses the match radius)."
+    },
+    {
+     "ref": "gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1",
+     "label": "g37-text-k1-verified-carried-p0.10-k1",
+     "eval_f1_before": 0.8338,
+     "eval_f1_after": 0.8338,
+     "delta_f1": 0.0,
+     "reason": "same rebuilt consensus-n1 union at the carried operating point; 558 detections unchanged, F1@20 unchanged (5 m moves 0.4693 -> 0.4673)."
+    },
+    {
+     "ref": "gemini37-screen-2026-08-28::g37-text-k3-verified-opmax",
+     "label": "g37-text-k3-verified-opmax",
+     "eval_f1_before": 0.887,
+     "eval_f1_after": 0.886,
+     "delta_f1": -0.001,
+     "reason": "consensus-n3 rebuilt 757 -> 759 candidates; candidate_00049 is promoted 2 -> 3 votes by a recovery fragment and clears the rung's vote >= 3 gate at probability 1.0, adding one FALSE POSITIVE, so detections go 494 -> 495 and precision falls 0.8340 -> 0.8323 while recall holds at 0.9471. THE ONLY CELL IN THE REPOSITORY WHOSE F1 MOVES."
+    },
+    {
+     "ref": "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+     "label": "g384-ov192-k5-verified-opmax",
+     "eval_f1_before": 0.8905,
+     "eval_f1_after": 0.8905,
+     "delta_f1": 0.0,
+     "reason": "consensus-n5 T5 rebuilt 1,168 -> 1,169; the promoted candidate_01335 carries probability 0.10 against this rung's prob >= 0.15 gate so it does not enter, and the re-evaluation is dict-identical to the committed one on every arm including tile-MCC 0.8139 and the 193/248/10/36 confusion. THE ONLY ONE OF THE FOUR THAT IS TIERED (rank 9, tier 2, MCB-admissible); the other three are already in tiering.withheld_cells."
+    }
+   ]
+  },
   "previous_resolved": {
    "status": "RE-SIGNED 2026-09-12T06:04:30Z by the PI (S153)",
    "reason": "PI ruling R3 (2026-09-12): K = 1 admitted, so the board grew from 79 cells to 103 \u2014 the twenty single-pass proposer-verifier cells, the three K = 3 archived sweep optima promoted from off-board, and the September recovery pair of pv-high-text-t0.0-n3. Re-tiered and the MCB recomputed last. Tier 1 and its five members are unchanged.",

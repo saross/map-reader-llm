@@ -1,6 +1,6 @@
 # The GS Era-2 verified board on one frame — `gs-era2-verified-board-2026-09-10`
 
-> **Last revised**: 2026-09-13 (PI ruling 2026-09-13, item 1: the 46 Phase 2 rungs and the 4 tier E rungs of the K-ladder review admitted by route (a) — a `k-ladder/membership.json` the builder defers to by condition id — so 103 → **153 cells admitted**, of which **150 tiered** and **3 withheld** by the tile-join invariant; re-tiered and the MCB recomputed last; **Tier 1 and its five members unchanged**. The board's analysis row is again NOT amended and the board **awaits the PI's re-signature**, `provenance.json` → `re_sign_pending`; the resolved S153 block is preserved inside it as `previous_resolved`. Deltas: `reports/k-ladder-admission-deltas-2026-09-13.md`. Prior: 2026-09-12, PI ruling R3 — K = 1 admitted, 79 → 103 cells, re-signed 2026-09-12T06:04:30Z; 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10 later still, nine `-opmax` cells re-materialised and re-tiered; later, the symmetry fix 39 → 79 cells; earlier that day, original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-13 (later — **NOTE ONLY, nothing rebuilt or re-signed**: the recovery-fragment fix `75d7c8d4c` rebuilt five consensus unions that four of this board's cells read. Only `g37-text-k3-verified-opmax` moves — F1@20 0.8870 → **0.8860**, one added false positive — and it is one of the three cells already withheld; the single **tiered** cell of the four, `g384-ov192-k5-verified-opmax` at rank 9, re-scores **dict-identically** on every arm, so no rank, tier, pairwise test, BH family, MCB set or signature field changes. Per the PI's ruling the next rebuild picks these up; the pending record is `provenance.json` → `re_sign_pending.cells_pending_rescore` and the changelog entry below. Earlier that day: PI ruling 2026-09-13, item 1: the 46 Phase 2 rungs and the 4 tier E rungs of the K-ladder review admitted by route (a) — a `k-ladder/membership.json` the builder defers to by condition id — so 103 → **153 cells admitted**, of which **150 tiered** and **3 withheld** by the tile-join invariant; re-tiered and the MCB recomputed last; **Tier 1 and its five members unchanged**. The board's analysis row is again NOT amended and the board **awaits the PI's re-signature**, `provenance.json` → `re_sign_pending`; the resolved S153 block is preserved inside it as `previous_resolved`. Deltas: `reports/k-ladder-admission-deltas-2026-09-13.md`. Prior: 2026-09-12, PI ruling R3 — K = 1 admitted, 79 → 103 cells, re-signed 2026-09-12T06:04:30Z; 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10 later still, nine `-opmax` cells re-materialised and re-tiered; later, the symmetry fix 39 → 79 cells; earlier that day, original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
 
 **153 cells admitted**, of which **150 are tiered** and **3 withheld** (listed below the table); 7961/11175 pairs significant; 14 tiers; tie set 5; MCB admissible 65 of 150. 50 cell(s) admitted by `k-ladder/membership.json` with their board-frame evaluations as-is (PI ruling 2026-09-13).
 
@@ -168,6 +168,64 @@
 Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the Era-2-frame reproduction of the archived board's score, or — for the nine re-materialised on 2026-09-10 — of the materialisation registry's registered point). For the K-ladder rows it is +0.0000 by construction: their committed evaluation IS the board-frame evaluation, so G2 is an identity rather than a reproduction. Full pairwise table: `tiering_20m.json`; gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.
 
 ## Changelog
+
+### 2026-09-13 (later) — Four cells pending re-score after the recovery-fragment fix; NOTE ONLY, the board is not rebuilt
+
+**Trigger**: the recovery-fragment fix
+`75d7c8d4cd55b6ec8d2a40abff70a31f62b67725` rebuilt five committed
+`merge_passes.py` consensus unions whose builder had been silently skipping
+`run_<N>_recovery` fragments. Four cells on this board read them. Measured:
+`results/k-ladder-2026-09-12/recovery-fix-2026-09-13/`; reported:
+`reports/recovery-drop-fix-2026-09-13.md`.
+
+**PI ruling 2026-09-13**: do **not** rebuild this board and do **not** re-tier
+for this. The next board rebuild — the one that also adds the tile-MCC
+permutation family — picks these cells up. Nothing here is re-signed, re-ranked
+or re-gated; this entry and `provenance.json` →
+`re_sign_pending.cells_pending_rescore` are the pending record.
+
+| cell | F1@20 before | after | Δ | on this board |
+|---|---:|---:|---:|---|
+| `g37-text-k1-verified-opmax` | 0.8495 | 0.8495 | 0.0000 | withheld (not tiered) |
+| `g37-text-k1-verified-carried-p0.10-k1` | 0.8338 | 0.8338 | 0.0000 | withheld (not tiered) |
+| `g37-text-k3-verified-opmax` | 0.8870 | **0.8860** | **−0.0010** | withheld (not tiered) |
+| `grid-2026-08-18::g384-ov192-k5-verified-opmax` | 0.8905 | 0.8905 | 0.0000 | **tiered — rank 9, tier 2, MCB-admissible** |
+
+**Only one cell's F1 moves, and it is one of the three already withheld.** The
+single tiered cell of the four re-scores **dict-identically** on every arm —
+F1@20 0.8905, tile-MCC 0.8139, confusion 193/248/10/36, BCa CI
+[0.8595, 0.9149], 435 detections — because the candidate the fix promoted to 5
+votes carries probability 0.10 against that rung's prob ≥ 0.15 gate. So no rank,
+no tier, no pairwise comparison, no BH family and no MCB admissible set on this
+board is affected by any number that has actually changed.
+
+`g37-text-k3-verified-opmax`'s −0.0010 comes from one added false positive
+(494 → 495 detections; precision 0.8340 → 0.8323, recall unchanged at 0.9471).
+Its `withheld_cells` entry still reads `eval_f1: 0.8870` and will until the
+rebuild.
+
+**Why this entry exists as well as the provenance block.** `finalise()` rebuilds
+`provenance.json` from scratch and, while the `re_sign_pending` block is
+`PENDING`, overwrites it outright rather than nesting it as
+`previous_resolved` (`scripts/build_gs_era2_board.py:690-694`). A hand-added key
+inside that block therefore does **not** survive the next rebuild, whereas
+`finalise()` explicitly preserves an existing `## Changelog`
+(`scripts/build_gs_era2_board.py:772-779`). This entry is the durable copy.
+
+**Also pending, and blocked rather than merely deferred**:
+`g37-text-k3-verified-opmax`'s own `evaluation.json` could not be regenerated —
+the tile-join invariant refuses its per-tile table at HEAD and the F1 bootstrap
+resamples tiles, so the whole evaluation aborts. Its
+`results/conditions-manifest.json` row therefore still reads 0.8870 / 494.
+Refreshing it needs the tile-join ruling
+(`reports/tile-mcc-geometric-join-2026-09-12.md`, still carrying a STOP).
+
+**What did NOT change**: every signature field — `signed_at` is still
+`2026-09-12T06:04:30Z`, `signature_history` untouched, `gates.G1.pi_ruling`
+untouched, `re_sign_pending.status` still `PENDING — the PI re-signs`; the whole
+`tiering` and `membership` blocks; all 153 admitted and 150 tiered counts; the
+3-cell withheld list; the 14 tiers, 7961/11175 significant pairs, tie set 5 and
+65-of-150 MCB admissible set; and Tier 1 with its five members.
 
 ### 2026-09-13 — The K-ladder cohort admitted (PI ruling, route (a)): 103 → 153 cells admitted, 150 tiered; Tier 1 unchanged
 
