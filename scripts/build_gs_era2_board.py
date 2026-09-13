@@ -749,8 +749,9 @@ def _mcc_tiering_table(mcc_block: dict[str, Any],
     tier1_labels = ", ".join(f"`{by_ref[r]['label']}`" for r in named[:5])
     if len(named) > 5:
         tier1_labels += f", and {len(named) - 5} more — see the table"
+    # No leading blank: the Δ-frame paragraph this follows already ends with
+    # one, and two consecutive blanks fail markdownlint MD012.
     lines = [
-        "",
         "## Tile-level MCC — a second family on the same swap masks (REPORTED, not the tiering)",
         "",
         "PI ruling 2026-09-13 (S153 ruling 7): the round-robin tile-swap carries "

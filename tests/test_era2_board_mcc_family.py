@@ -235,6 +235,21 @@ def test_finalise_renders_the_mcc_tiering_beside_the_f1_one(tmp_path, monkeypatc
     assert "| 2 | `runy::other` | 2 | ● | 0.4313 |" in readme
 
 
+def test_the_rendered_readme_has_no_double_blank_line(tmp_path, monkeypatch):
+    """markdownlint MD012: joining generated blocks must not double the blanks.
+
+    The board README is committed and linted, so a generator that emits two
+    consecutive blank lines between blocks fails the repository's own gate.
+    """
+    board = _board(tmp_path, monkeypatch, mcc_block=MCC_BLOCK,
+                   withheld=[WITHHELD], mcc_mcb={
+                       "candidates": [{"ref": "runy::other"}],
+                       "hsu_not_ruled_out": [0], "mcb_not_ruled_out": [0]})
+    _finalise(board)
+    text = (board / "README.md").read_text()
+    assert "\n\n\n" not in text, "two consecutive blank lines in the README"
+
+
 def test_finalise_records_both_families_in_the_proposed_outcome(tmp_path, monkeypatch):
     """The text the PI signs must state both families and which one tiers."""
     board = _board(tmp_path, monkeypatch, mcc_block=MCC_BLOCK, mcc_mcb={

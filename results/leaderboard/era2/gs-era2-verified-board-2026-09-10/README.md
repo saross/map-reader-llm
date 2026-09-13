@@ -1,6 +1,6 @@
 # The GS Era-2 verified board on one frame — `gs-era2-verified-board-2026-09-10`
 
-> **Last revised**: 2026-09-13 (original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-13 (latest — **REBUILT and awaiting the PI's re-signature**. One rebuild carried three ruled changes for one signature (checklist item 6). (1) The **four recovery-fix cells** are picked up at their current evaluations: `g37-text-k3-verified-opmax` now reads F1@20 **0.8860** / **495 detections** in this board's withheld table and in G6 (from 0.8870 / 494 — one added false positive), its committed tile-MCC is no longer quoted because its re-scored artefact withholds the tile block at source, and the two K = 1 cells and tier E's K = 5 are unchanged; nothing was re-scored here. (2) Ruling 7 — a **tile-MCC permutation family** now runs on the SAME swap masks as F1 (seed 42, one tile order, byte-identical `rng.random(487) < 0.5` stream), BH q = 0.05 within its own family, with its own greedy-clique tiering and its own Hsu MCB set: **2,982/11,175** pairs significant, **6 MCC tiers**, **MCC tie set 33**, **MCC MCB admissible 59 of 150**. It is **reported beside** the preregistered F1 tiering and does NOT replace it — the board's tiering, ranks and Tier 1 are the F1 ones. **The two readings barely agree**: no F1 Tier-1 cell is in MCC Tier 1, and the two admissible sets share only **9** of their 65 and 59 members. (3) Ruling 6 — the **withheld table** now carries each cell's whole-frame F1 point estimate, the statement that its interval is **withdrawn** (tile-resampled bootstrap) with the retracted interval named where one survives, the shortfall counts, both tile vocabularies, and that the name-based `id` join is the published convention. **The F1 arm reproduced EXACTLY**: ranking, tiers, tie set and all 11,175 pairwise records byte-identical, the F1 MCB artefact byte-identical, **Tier 1 and its five members unchanged**; `rebuild-mcc-2026-09-13/f1-arm-identity.json`. Signature discipline: `signed_at`, `signature_history` and `gates.G1.pi_ruling` carried forward, the previous PENDING block nested as `previous_pending`, and **10 signature-bearing paths asserted byte-equal** before and after — `rebuild-mcc-2026-09-13/signature-paths.json`, PASS. Deltas: `reports/era2-board-mcc-family-2026-09-13.md`. Prior: 2026-09-13 later still, the K = 3 cell's evaluation written (note only); earlier that day, four cells pending re-score after the recovery-fragment fix (note only); earlier, PI ruling item 1 — the K-ladder cohort admitted by route (a), 103 → **153 cells admitted**, 150 tiered, 3 withheld, Tier 1 unchanged; 2026-09-12, PI ruling R3 — K = 1 admitted, 79 → 103 cells, re-signed 2026-09-12T06:04:30Z; 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10 later still, nine `-opmax` cells re-materialised and re-tiered; later, the symmetry fix 39 → 79 cells; earlier that day, original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instruments: `scripts/era1_leaderboard_tiering.py --permute-mcc` (round-robin tile-swap permutation, 10,000 draws, seed 42 — micro-F1 **and** tile-MCC on one swap stream, BH q = 0.05 per family, greedy clique, 20 m) and `scripts/selection_aware_intervals.py --board` for each metric's MCB; Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
 
 **153 cells admitted**, of which **150 are tiered** and **3 withheld** (listed below the table); 7961/11175 pairs significant; 14 tiers; tie set 5; MCB admissible 65 of 150. 50 cell(s) admitted by `k-ladder/membership.json` with their board-frame evaluations as-is (PI ruling 2026-09-13). A tile-MCC permutation family is **reported beside** this F1 tiering and does not replace it (PI ruling 2026-09-13, ruling 7): 6 MCC tiers, MCC tie set 33, MCC MCB admissible 59 — see [§ Tile-level MCC](#tile-level-mcc--a-second-family-on-the-same-swap-masks-reported-not-the-tiering).
 
@@ -173,7 +173,6 @@
 
 Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the Era-2-frame reproduction of the archived board's score, or — for the nine re-materialised on 2026-09-10 — of the materialisation registry's registered point). For the K-ladder rows it is +0.0000 by construction: their committed evaluation IS the board-frame evaluation, so G2 is an identity rather than a reproduction. Full pairwise table: `tiering_20m.json`; gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.
 
-
 ## Tile-level MCC — a second family on the same swap masks (REPORTED, not the tiering)
 
 PI ruling 2026-09-13 (S153 ruling 7): the round-robin tile-swap carries **tile-MCC on the same swap masks as F1** — one `numpy.random.default_rng(42)` stream, one tile order, so a ΔF1 and a ΔMCC on a pair are two statistics of one permutation, not two experiments (`tests/test_k_ladder_mcc_instruments.py::test_f1_and_mcc_kernels_draw_identical_swap_masks`) — with Benjamini-Hochberg q = 0.05 **within its own family**. It is reported beside the preregistered F1 tiering and **does not replace it**: the board's tiering, its ranks and its Tier 1 are the F1 ones above. Tile MCC is buffer-invariant (tile truth is intersection with any reference, tile prediction is any detection assigned to the tile), so this table is the same at every buffer. Cells the tile-join invariant withholds are excluded from this family exactly as they are from the F1 one, and are listed above.
@@ -336,6 +335,109 @@ PI ruling 2026-09-13 (S153 ruling 7): the round-robin tile-swap carries **tile-M
 Full MCC pairwise table: `tiering_20m.json` → `mcc_permutation.pairwise`; per-cell confusion gates: `mcc_permutation.gates`; MCC admissible set: `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/mcb/gs-era2-verified-board-2026-09-10_mcc_b20_m1.json`.
 
 ## Changelog
+
+### 2026-09-13 (latest) — REBUILT: three ruled changes in one rebuild; a tile-MCC family beside the F1 tiering; awaiting the PI's re-signature
+
+**Trigger**: checklist item 6
+(`planning/documentation-foundation-checklist-2026-09-13.md`), which gathers
+three PI rulings of 2026-09-13 (S153) into **one** rebuild so the board is
+re-signed **once**: the four cells the recovery-fragment fix re-scored
+(`reports/recovery-drop-fix-2026-09-13.md`, item 6a), ruling 7's tile-MCC
+permutation family, and ruling 6's withheld-cell disclosure. Nothing was
+re-scored here and no API call was made. All compute on sapphire.
+
+| Quantity | before | after |
+|---|---:|---:|
+| Cells admitted / tiered / withheld | 153 / 150 / 3 | **153 / 150 / 3** |
+| F1 pairs significant at BH q = 0.05 | 7,961 / 11,175 | **7,961 / 11,175** (byte-identical) |
+| F1 tiers | 14 | **14** (same sizes) |
+| F1 Tier 1 (greedy clique) | the five 3.7 / 3.8 cells | **the same five, same order, same F1** |
+| F1 tie set | 5 | **5** |
+| Top cell | `g37-image-k5-verified-swap37-p0.90-k5` 0.9233 | **the same cell, 0.9233** |
+| Hsu F1 MCB admissible set | 65 of 150 (w_upper 0.0749) | **65 of 150 (w_upper 0.0749)** — the artefact is byte-identical |
+| F1 two-sided MCB band | 70 | **70** |
+| `g37-text-k3-verified-opmax` withheld row | F1@20 0.8870, tile-MCC 0.1337 | **F1@20 0.8860**, tile-MCC **withheld at source** |
+| Its G6 row | 0.8870 / 494 features | **0.8860 / 495** |
+| tile-MCC permutation family | **none** — the instrument tested F1 only | **2,982 / 11,175 pairs significant; 6 MCC tiers; MCC tie set 33; MCC Hsu admissible 59 of 150 (w_upper 0.0828), band 99** |
+| Withheld-cell disclosure | F1 point + refusal message | **+ interval withdrawn (with the retracted interval named), shortfall counts, both tile vocabularies, the published-convention sentence** |
+| Gates | G2 0 / G3 0 / G4 110 / 110 | **unchanged**; G6 max abs frame delta **0.0078** |
+
+**The F1 arm reproduced exactly, and that was the point of doing it this way.**
+Of the four cells the recovery-fragment fix moved, three are already withheld
+from every statistic and the fourth, `g384-ov192-k5-verified-opmax` at rank 9,
+re-scores dict-identically, so no F1 input changed. `ranking`, `tiers`,
+`tie_set` and all **11,175** pairwise records are byte-identical to the
+committed 2026-09-13 run (blob `f2f1af55a`), and the F1 MCB artefact is
+byte-identical too. The record is
+`rebuild-mcc-2026-09-13/f1-arm-identity.json`.
+
+**What the MCC family says, and it is not a restatement of the F1 tiering.**
+On the same 487 tiles, the same 10,000 permutations and the same swap masks,
+tile-MCC separates **2,982** of 11,175 pairs against F1's 7,961, and cliques
+into **6** tiers against F1's 14 — it resolves far less, the power limitation
+the K-ladder MCC test already recorded for this frame
+(`reports/k-ladder-mcc-test-2026-09-12.md` § 3). Where it does resolve, it
+resolves against the F1 reading:
+
+- **No F1 Tier-1 cell is in MCC Tier 1.** The board's five F1 Tier-1 cells sit
+  at MCC ranks 36, 51, 54, 80 and 119 — MCC tier 2 for four of them and tier 3
+  for `g37-text-k10-verified-carried-p0.10-k10`.
+- **MCC Tier 1 is 33 cells drawn entirely from F1 tiers 6–12** (3 / 7 / 8 / 5 /
+  4 / 3 / 3 across tiers 6 to 12), led by single-pass **image** proposer +
+  verifier baselines: `verified-adv-image-baseline-pro-vf` tops the MCC
+  ranking at tile-MCC **0.8887** while sitting at **F1 rank 119 of 150**, F1
+  tier 9, on an F1@20 of 0.7309.
+- **The two admissible sets share 9 members of 65 and 59** (union 115 of 150).
+  The overlap is five B-geometry grid cells (the K = 1 ×2, 3, 5 and 10 rungs),
+  three of the five 3.7 F1 Tier-1 cells, and `verified-adv-text-min-6of10`. It
+  includes the top F1 cell, which IS MCC-admissible; it excludes the top MCC
+  cell, which is NOT F1-admissible. 56 F1-admissible cells are not
+  MCC-admissible and 50 MCC-admissible cells are not F1-admissible.
+- The MCC argmax is much less stable than the F1 one: **0.420** with 36
+  distinct winners across resamples, against 0.602 with 22; apparent MCC
+  0.8887, optimism +0.0153, corrected **0.8734**.
+
+Read together: **the two metrics select different cells, and the disagreement
+is systematic rather than marginal** — configurations that localise mounds well
+(high F1) are not the configurations that decide which tiles contain a mound
+(high tile-MCC), and on this board the ordering is close to reversed. That is
+the K-ladder review's "the two objectives select different rungs" finding
+measured over a whole board rather than within a ladder, and it is exactly why
+ruling 7 reports the MCC family beside the preregistered tiering instead of
+replacing it. **The board's tiering, its ranks, its Tier 1 and its headline
+remain the F1 ones.**
+
+**The withheld cells, disclosed rather than repaired.** All three Gemini 3.7
+gold-standard text rungs stay admitted-and-withheld under ruling 6: the
+name-based `id` join is the published convention, so they are not re-joined
+geometrically to make them scoreable. Each now publishes its whole-frame F1
+point estimate, the shortfall (22 of 526, 21 of 475, 20 of 467 in-frame
+detections booked), both tile vocabularies — the frame's 487 names against the
+cells' 351 / 319 / 306, of which 12 / 11 / 11 are in the frame's vocabulary —
+and the fact that its interval is **withdrawn, not superseded**, because the
+F1 bootstrap resamples tiles and so takes the refused per-tile table as its
+input. Two of the three still carry a pre-invariant interval in their
+committed artefacts, and the board now names the number it is retracting:
+[0.3684, 0.7709] and [0.2712, 0.6667] on points of 0.8338 and 0.8495. The
+third, `g37-text-k3-verified-opmax`, was re-scored under the invariant in item
+6a and has no interval and no tile-MCC to retract.
+
+**What did NOT change**: every F1 rank, tier, pairwise test, BH verdict and
+MCB member; Tier 1 and its five members; the tie set; the top cell and its F1;
+the 153 admitted / 150 tiered / 3 withheld counts and the identity of the three
+withheld cells; the frame, the reference, the instrument, the seed, the
+permutation count and the buffer; every gate's verdict and G6's maximum frame
+delta; and **every signature field** — `signed_at` is still
+`2026-09-12T06:04:30Z`, `signature_history` and `gates.G1.pi_ruling` are
+untouched, the register's signed analysis row was not written at all, and the
+previous PENDING block is nested as `re_sign_pending.previous_pending` rather
+than overwritten. Ten signature-bearing paths were asserted byte-equal before
+and after (`rebuild-mcc-2026-09-13/signature-paths.json`, PASS).
+
+**The board awaits the PI's re-signature**: `provenance.json` →
+`re_sign_pending`, whose `proposed_outcome` states both families, both
+admissible-set sizes and their overlap, and ends by saying the tiering is the
+F1 one. Deltas: `reports/era2-board-mcc-family-2026-09-13.md`.
 
 ### 2026-09-13 (later still) — the K = 3 cell's evaluation written; NOTE ONLY, the board is still not rebuilt
 
