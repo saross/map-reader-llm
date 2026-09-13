@@ -48,6 +48,7 @@ import argparse
 import json
 import logging
 import math
+import re
 import sys
 from collections import Counter
 from pathlib import Path
@@ -405,6 +406,13 @@ def apply_threshold(
     return FeatureCollection(features)
 
 
+#: A pass directory is ``pass_<N>`` or ``run_<N>``, optionally followed by an
+#: additive-fragment suffix such as ``_recovery`` or ``_recovery2``. The
+#: suffix group is what makes a fragment foldable into pass ``<N>`` rather
+#: than an unparsable name to be dropped.
+_PASS_DIR_RE = re.compile(r"^(?:pass|run)_(?P<num>\d+)(?P<suffix>.*)$")
+
+
 def resolve_pass_files(
     input_dir: Path,
     pass_filter: list[int] | None = None,
@@ -421,18 +429,40 @@ def resolve_pass_files(
 
         input_dir/
             pass_01/*.geojson
+            pass_01_recovery/*.geojson     # additive fragment of pass 1
             pass_02/*.geojson
             ...
 
     Also supports ``run_*`` directory naming as an alternative.
+
+    **Recovery fragments belong to their parent pass.** A storm-interrupted
+    pass is completed by re-running its residual tiles into a sibling
+    ``run_<N>_recovery`` (or ``run_<N>_recovery2``) directory whose tile set is
+    disjoint from the main file's — the two together are ONE pass. Before this
+    function folded them in, ``int("2_recovery")`` raised ``ValueError`` and the
+    fragment was skipped silently, so a largely-recovered pass contributed
+    almost nothing to the union while still counting towards ``total_passes``,
+    corrupting every ``vote_count`` and every vote threshold. The fragment's
+    files are appended AFTER the main directory's, so
+    :func:`deduplicate_within_pass` — which keeps the first of a near-duplicate
+    pair — still prefers the main file's feature. This matches
+    ``grid_prepare_scoring.load_pool_passes``, which has merged fragments
+    explicitly since the grid campaign, and takes seriously the warning
+    ``lib_detection_paths.resolve_pool_passes`` already emits.
+
+    Pass counting is unaffected: a folded fragment adds files to an existing
+    pass id and never creates a new one, so ``len(resolve_pass_files(...))`` is
+    still the number of passes.
 
     Args:
         input_dir: Directory containing pass_XX / run_XX subdirectories.
         pass_filter: Optional list of pass numbers to include (1-indexed).
 
     Returns:
-        Dict mapping pass_id to its detection files in directory-glob
-        order (``*.meta*`` sidecars excluded). Passes with no GeoJSON
+        Dict mapping pass_id to its detection files: the main directory's in
+        directory-glob order, followed by each recovery fragment's in fragment
+        directory-name order (``*.meta*`` sidecars excluded). The pass id is
+        the main directory's name where one exists. Passes with no GeoJSON
         files are omitted.
     """
     pass_dirs = sorted(input_dir.glob("pass_*"))
@@ -445,19 +475,19 @@ def resolve_pass_files(
         logger.warning("No pass_* or run_* directories found in %s", input_dir)
         return {}
 
-    resolved: dict[str, list[Path]] = {}
+    # Group by pass number: the main directory's files first, then each
+    # additive fragment's, so within-pass dedup precedence is unchanged.
+    pass_ids: dict[int, str] = {}
+    main_files: dict[int, list[Path]] = {}
+    fragments: dict[int, list[tuple[str, list[Path]]]] = {}
+
     for pass_dir in pass_dirs:
-        # Extract pass number from directory name
         pass_name = pass_dir.name
-        try:
-            if pass_name.startswith("pass_"):
-                pass_num = int(pass_name.replace("pass_", ""))
-            elif pass_name.startswith("run_"):
-                pass_num = int(pass_name.replace("run_", ""))
-            else:
-                continue
-        except ValueError:
+        match = _PASS_DIR_RE.match(pass_name)
+        if match is None:
             continue
+        pass_num = int(match.group("num"))
+        suffix = match.group("suffix")
 
         # Apply filter if specified
         if pass_filter and pass_num not in pass_filter:
@@ -469,8 +499,27 @@ def resolve_pass_files(
         files = [
             f for f in pass_dir.glob("*.geojson") if ".meta" not in f.name
         ]
+        if not files:
+            continue
+
+        if suffix:
+            fragments.setdefault(pass_num, []).append((pass_name, files))
+            # A fragment names the pass only if no main directory does.
+            pass_ids.setdefault(pass_num, pass_name[: match.start("suffix")])
+            logger.info(
+                "  folding recovery fragment %s into pass %d", pass_name, pass_num
+            )
+        else:
+            main_files.setdefault(pass_num, []).extend(files)
+            pass_ids[pass_num] = pass_name
+
+    resolved: dict[str, list[Path]] = {}
+    for pass_num in sorted(pass_ids):
+        files = list(main_files.get(pass_num, ()))
+        for _, frag_files in sorted(fragments.get(pass_num, ())):
+            files.extend(frag_files)
         if files:
-            resolved[pass_name] = files
+            resolved[pass_ids[pass_num]] = files
 
     return resolved
 

@@ -121,6 +121,10 @@ def storm_pool(tmp_path: Path) -> Path:
     return pool
 
 
+@pytest.mark.skipif(
+    PATCH_APPLIED,
+    reason="characterises the pre-patch defect; the patch landed on main 2026-09-13",
+)
 class TestDefectCharacterisation:
     """Today's behaviour. These tests FAIL once the patch lands — invert them."""
 
