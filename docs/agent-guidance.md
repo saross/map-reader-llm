@@ -130,3 +130,17 @@ The bar for "computationally intensive" is **low**:
 **Workflow**: SSH into sapphire, `cd` to the repo (synced via git), activate the venv, and run the analysis there. Sapphire has a better CPU, GPU, and more memory — analyses complete faster there as well.
 
 **Only fall back to local** if sapphire is confirmed unavailable (e.g., network down, machine offline). Do not assume it is unavailable — check first.
+
+**Never liveness-check a remote process with `pgrep -f <pattern>` over
+`ssh`.** The pattern appears in the remote shell's own command line, so
+`pgrep -f` matches that shell and returns success whether or not the job is
+running: the check always reads ALIVE. This is not a theoretical hazard — the
+image campaign's watch on 2026-09-13 self-matched this way and a four-hour
+stall on the verifier leg went unseen (`outputs/gemini37-image-55map-2026-09-13/post_run_report.md`
+§ 3.1). Use a **log-staleness detector** instead — compare the log file's
+modification time against a threshold, which catches a hang as well as a
+death, where a process check catches only death — or have the remote job
+write a **pid file** and check that pid directly (`kill -0 "$pid"`). If
+`pgrep` is unavoidable, make the pattern unmatchable by its own command line
+(e.g. `pgrep -f '[r]un_pv'`) and still prefer staleness as the primary
+signal.
