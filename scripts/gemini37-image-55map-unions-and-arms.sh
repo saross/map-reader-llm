@@ -63,6 +63,37 @@ ARM1_THINKING=minimal
 ARM2_MODEL=gemini-3.7-flash
 ARM2_THINKING=low
 
+# Stage 0 makes the coverage gate visible in the log rather than only implicit
+# in the union builder's CoverageError. Every pass must reach 24,561 distinct
+# tiles once its recovery fragments are folded in; a pass that does not is a
+# pass whose union would silently under-cover the corpus.
+echo "=== stage 0: pass coverage after the recovery fold $(date -Is)"
+$PY - "$OUT/$CELL" "$MANIFEST" <<'EOF'
+import glob
+import json
+import os
+import sys
+
+cell_dir, manifest_path = sys.argv[1], sys.argv[2]
+pinned = set(json.load(open(manifest_path)))
+runs = sorted({os.path.basename(d).split("_recovery")[0]
+               for d in glob.glob(f"{cell_dir}/run_*")})
+worst = 0
+for run in runs:
+    done: set[str] = set()
+    frags = sorted(glob.glob(f"{cell_dir}/{run}/*.tiles.json")
+                   + glob.glob(f"{cell_dir}/{run}_recovery*/*.tiles.json"))
+    for tj in frags:
+        done |= set(json.load(open(tj))["completed"])
+    missing = len(pinned - done)
+    worst = max(worst, missing)
+    print(f"{run}: {len(done)}/{len(pinned)} tiles across {len(frags)} "
+          f"fragment(s), {missing} missing")
+if worst:
+    sys.exit(f"COVERAGE GATE FAIL: {worst} tile(s) missing from some pass")
+print("coverage gate OK")
+EOF
+
 echo "=== stage 1: unions (stride builder, first-N rule) $(date -Is)"
 for k in 1 3; do
   $PY scripts/stride55_prepare_and_union.py \
