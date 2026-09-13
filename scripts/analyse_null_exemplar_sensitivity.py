@@ -1332,34 +1332,69 @@ def stage_assemble(inventory: dict[str, Any]) -> dict[str, Any]:
                         "delta_reduced": red.get(f"delta_{stat}"),
                     })
 
-    # ── a within-run robustness check on the Era-2 signature ──────────
-    era2_sig = next(b for b in signature["boards"] if b["board"] == "era2-verified")
-    strata = {}
-    for row in era2_sig["cells"]:
-        if "log_ratio" not in row:
+    # ── the within-run robustness check on every board's signature ────
+    # Image and text cells differ in more than example images (model, thinking
+    # level, verifier, pipeline), so the contrast is re-run with the labels
+    # permuted only WITHIN a run. Where a run supplies both kinds of cell, the
+    # comparison there is as close to "same pipeline, images on or off" as the
+    # corpus allows.
+    per_board_strata: dict[str, Any] = {}
+    stratified_pooled: dict[str, Any] = {}
+    for board_sig in signature["boards"]:
+        strata: dict[str, list[dict[str, Any]]] = {}
+        for row in board_sig["cells"]:
+            if "log_ratio" not in row:
+                continue
+            strata.setdefault(row["ref"].split("::", 1)[0], []).append(row)
+        runs: dict[str, Any] = {}
+        usable = []
+        for run, rows in sorted(strata.items()):
+            img = [r["log_ratio"] for r in rows if r["exposed"]]
+            txt = [r["log_ratio"] for r in rows if not r["exposed"]]
+            if not img or not txt:
+                continue
+            labels = np.array([r["exposed"] for r in rows])
+            values = np.array([r["log_ratio"] for r in rows])
+            usable.append((labels, values))
+            observed = float(np.mean(img) - np.mean(txt))
+            rng = np.random.default_rng(SEED)
+            null = np.array([
+                values[s].mean() - values[~s].mean()
+                for s in (rng.permutation(labels) for _ in range(N_PERMUTATIONS))
+            ])
+            runs[run] = {
+                "n_image": len(img), "n_text": len(txt),
+                "mean_log_ratio_image": round(float(np.mean(img)), 6),
+                "mean_log_ratio_text": round(float(np.mean(txt)), 6),
+                "observed_image_minus_text": round(observed, 6),
+                "p_value_image_lower": round(
+                    float((null <= observed + 1e-12).mean()), 6),
+            }
+        per_board_strata[board_sig["board"]] = runs
+        if not usable:
             continue
-        strata.setdefault(row["ref"].split("::", 1)[0], []).append(row)
-    within_run = {}
-    for run, rows in sorted(strata.items()):
-        img = [r["log_ratio"] for r in rows if r["exposed"]]
-        txt = [r["log_ratio"] for r in rows if not r["exposed"]]
-        if not img or not txt:
-            continue
-        observed = float(np.mean(img) - np.mean(txt))
-        labels = np.array([r["exposed"] for r in rows])
-        values = np.array([r["log_ratio"] for r in rows])
+
+        def pooled(label_sets: list[np.ndarray]) -> float:
+            """Mean of the per-stratum image-minus-text differences."""
+            return float(np.mean([
+                values[labels].mean() - values[~labels].mean()
+                for labels, (_l, values) in zip(label_sets, usable)
+            ]))
+
+        observed = pooled([labels for labels, _v in usable])
         rng = np.random.default_rng(SEED)
-        null = np.array([
-            values[s].mean() - values[~s].mean()
-            for s in (rng.permutation(labels) for _ in range(N_PERMUTATIONS))
-        ])
-        within_run[run] = {
-            "n_image": len(img), "n_text": len(txt),
-            "mean_log_ratio_image": round(float(np.mean(img)), 6),
-            "mean_log_ratio_text": round(float(np.mean(txt)), 6),
+        null = np.array([pooled([rng.permutation(labels)
+                                 for labels, _v in usable])
+                         for _ in range(N_PERMUTATIONS)])
+        stratified_pooled[board_sig["board"]] = {
+            "n_strata": len(usable),
             "observed_image_minus_text": round(observed, 6),
-            "p_value_image_lower": round(float((null <= observed + 1e-12).mean()), 6),
+            "p_value_image_lower": round(
+                float((null <= observed + 1e-12).mean()), 6),
+            "p_value_two_sided": round(
+                float((np.abs(null) >= abs(observed) - 1e-12).mean()), 6),
         }
+    within_run = per_board_strata["era2-verified"]
 
     record = {
         "_README": (
@@ -1387,6 +1422,8 @@ def stage_assemble(inventory: dict[str, Any]) -> dict[str, Any]:
                         "n_unexposed_tiles": b["n_unexposed_tiles"],
                         **b["test"]} for b in signature["boards"]],
             "era2_within_run_strata": within_run,
+            "within_run_strata_by_board": per_board_strata,
+            "era1_stratified": stratified_pooled,
         },
         "per_cell": boards_out,
         "era2_tiering": {
