@@ -6,7 +6,11 @@
 
 **Parent project**: `map-reader-llm` burial-mound extraction study
 
-**Provisional framework**: Inspect AI
+**Provisional framework**: Inspect AI — with **Pydantic AI evals** to be
+investigated alongside it (Brian, relayed by the PI 2026-09-13: no
+objection to trying Inspect AI; recommends investigating Pydantic AI for
+evals). A comparison note against this plan's requirements (§§ 5–10) is
+commissioned before the framework is fixed; see § 13.
 
 This document externalises the agreed design and implementation sequence for a
 provider-neutral benchmark of atomic, single-tile map-symbol localisation. It
@@ -537,6 +541,9 @@ infrastructure should be adapted deliberately rather than copied wholesale.
 
 ## 13. Open decisions before implementation
 
+- Evaluation framework: Inspect AI (provisional) versus Pydantic AI evals
+  (Brian's recommendation, 2026-09-13), or a scoring package neutral to
+  both — decided after the comparison note.
 - Final benchmark repository name, ownership, licence, and public/private status.
 - Shared `AGENTS.md` or equivalent cross-agent instruction strategy.
 - Which Claude skills and commands should be adapted for Codex.
