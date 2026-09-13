@@ -252,6 +252,27 @@ def test_finalise_records_both_families_in_the_proposed_outcome(tmp_path, monkey
     assert proposed.endswith("The board's tiering remains the F1 one.")
 
 
+def test_a_long_mcc_tie_set_is_counted_not_silently_elided():
+    """The measured MCC tie set runs to 33 cells; the outcome must stay readable.
+
+    Naming all of them turns a register field into a wall of labels, and
+    dropping them without saying so hides the size of the tie. So the sentence
+    names the leaders, counts the remainder, and points at the artefact.
+    """
+    ranking = [{"rank": i + 1, "ref": f"r::c{i}", "label": f"c{i}",
+                "mcc": 0.9 - i / 100, "eval_f1": 0.5, "mcc_tier": 1}
+               for i in range(9)]
+    block = {"n_significant": 1, "n_pairs": 36, "n_tiers": 2,
+             "tie_set": [r["ref"] for r in ranking], "ranking": ranking}
+    sentence = b._mcc_family_sentence(block, ["r::c0"], ["r::c0", "r::c1"])
+    assert "MCC Tier 1 = 9 cell(s)" in sentence
+    assert sentence.count(" MCC 0.") == 5, "five leaders named"
+    assert "and 4 more — full list in tiering_20m.json -> " \
+        "mcc_permutation.tie_set" in sentence
+    assert "MCC MCB admissible set = 1, of which 1 also in the F1 admissible " \
+        "set" in sentence
+
+
 def test_finalise_records_the_mcc_family_in_provenance(tmp_path, monkeypatch):
     """The MCC tie set and admissible set are provenance fields, not prose only."""
     board = _board(tmp_path, monkeypatch, mcc_block=MCC_BLOCK, mcc_mcb={

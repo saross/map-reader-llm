@@ -613,10 +613,16 @@ def _mcc_family_sentence(mcc_block: dict[str, Any],
     """
     tie_set = mcc_block.get("tie_set") or []
     by_ref = {row["ref"]: row for row in (mcc_block.get("ranking") or [])}
+    named = [r for r in tie_set if r in by_ref]
+    # An MCC tie set can run to dozens of cells, and the outcome is a register
+    # field a human reads. Name the leaders, count the rest, and point at the
+    # artefact that holds the whole list — never elide it silently.
     tier1 = "; ".join(
-        f"{by_ref[r]['label']} MCC {by_ref[r]['mcc']:.4f}"
-        for r in tie_set if r in by_ref
+        f"{by_ref[r]['label']} MCC {by_ref[r]['mcc']:.4f}" for r in named[:5]
     )
+    if len(named) > 5:
+        tier1 += (f"; and {len(named) - 5} more — full list in "
+                  f"tiering_20m.json -> mcc_permutation.tie_set")
     overlap = len(set(mcc_admissible) & set(f1_admissible))
     return (
         f" REPORTED BESIDE, not replacing, the preregistered F1 tiering (PI "
