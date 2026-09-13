@@ -27,9 +27,20 @@
     "frames_agree": true,
     "committed_f1_20": 0.8495,
     "committed_n_detections": 502,
-    "materialised": "/home/shawn/scratch/recovery-drop-fix/rescore/k1-opmax.geojson",
+    "materialised": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/materialised/k1-opmax.geojson",
     "evaluated": false,
-    "evaluation_note": "per-tile table refused by the tile-join invariant; scored on the F1 arm only by f1_only.py"
+    "evaluation_note": "per-tile table refused by the tile-join invariant; scored on the F1 arm only by f1_only.py",
+    "cell_dir": null,
+    "f1_only_measurement": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/f1-only/k1-opmax.json",
+    "new_f1_20": 0.8495,
+    "new_precision_20": 0.7928,
+    "new_recall_20": 0.9149,
+    "new_n_detections": 502,
+    "delta_f1_20": 0.0,
+    "new_f1_ci_20": null,
+    "new_tile_mcc": null,
+    "tile_mcc_withheld": true,
+    "tile_mcc_withheld_reason": "WITHHELD \u2014 tile_join_detection_shortfall under the 'id' join; the cell's 192 px-stride source_tile vocabulary is not the board frame's 336 px-stride one"
   },
   {
     "key": "k1-carried",
@@ -59,9 +70,20 @@
     "frames_agree": true,
     "committed_f1_20": 0.8338,
     "committed_n_detections": 558,
-    "materialised": "/home/shawn/scratch/recovery-drop-fix/rescore/k1-carried.geojson",
+    "materialised": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/materialised/k1-carried.geojson",
     "evaluated": false,
-    "evaluation_note": "per-tile table refused by the tile-join invariant; scored on the F1 arm only by f1_only.py"
+    "evaluation_note": "per-tile table refused by the tile-join invariant; scored on the F1 arm only by f1_only.py",
+    "cell_dir": null,
+    "f1_only_measurement": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/f1-only/k1-carried.json",
+    "new_f1_20": 0.8338,
+    "new_precision_20": 0.7419,
+    "new_recall_20": 0.9517,
+    "new_n_detections": 558,
+    "delta_f1_20": 0.0,
+    "new_f1_ci_20": null,
+    "new_tile_mcc": null,
+    "tile_mcc_withheld": true,
+    "tile_mcc_withheld_reason": "WITHHELD \u2014 tile_join_detection_shortfall under the 'id' join; the cell's 192 px-stride source_tile vocabulary is not the board frame's 336 px-stride one"
   },
   {
     "key": "k3-opmax",
@@ -91,8 +113,70 @@
     "frames_agree": true,
     "committed_f1_20": 0.887,
     "committed_n_detections": 494,
-    "materialised": "/home/shawn/scratch/recovery-drop-fix/rescore/k3-opmax.geojson",
+    "materialised": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/materialised/k3-opmax.geojson",
     "evaluated": false,
-    "evaluation_note": "per-tile table refused by the tile-join invariant; scored on the F1 arm only by f1_only.py"
+    "evaluation_note": "per-tile table refused by the tile-join invariant; scored on the F1 arm only by f1_only.py",
+    "cell_dir": null,
+    "f1_only_measurement": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/f1-only/k3-opmax.json",
+    "new_f1_20": 0.886,
+    "new_precision_20": 0.8323,
+    "new_recall_20": 0.9471,
+    "new_n_detections": 495,
+    "delta_f1_20": -0.001,
+    "new_f1_ci_20": null,
+    "new_tile_mcc": null,
+    "tile_mcc_withheld": true,
+    "tile_mcc_withheld_reason": "WITHHELD \u2014 tile_join_detection_shortfall under the 'id' join; the cell's 192 px-stride source_tile vocabulary is not the board frame's 336 px-stride one"
+  },
+  {
+    "key": "k5",
+    "run_id": "grid-2026-08-18",
+    "label": "g384-ov192-k5-verified-opmax",
+    "committed_point": [
+      5,
+      0.15
+    ],
+    "new_point": [
+      5,
+      0.15
+    ],
+    "point_moved": false,
+    "board_argmax": {
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "f1": 0.8828,
+      "n": 435,
+      "n_ties": 0
+    },
+    "era2_argmax": {
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "f1": 0.8828
+    },
+    "frames_agree": true,
+    "committed_f1_20": 0.8905,
+    "new_f1_20": 0.8905,
+    "new_f1_ci_20": [
+      0.8595,
+      0.9149
+    ],
+    "new_precision_20": 0.913,
+    "new_recall_20": 0.869,
+    "committed_n_detections": 435,
+    "new_n_detections": 435,
+    "new_tile_mcc": 0.8139,
+    "new_tile_confusion": {
+      "tp": 193,
+      "tn": 248,
+      "fp": 10,
+      "fn": 36
+    },
+    "tile_mcc_withheld": null,
+    "tile_mcc_withheld_reason": null,
+    "cell_dir": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/reproduced-k5-evaluation",
+    "materialised": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/materialised/k5.geojson",
+    "evaluated": true,
+    "evaluation_note": "full recorded recipe; summary block is dict-identical to the committed results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.json",
+    "delta_f1_20": 0.0
   }
 ]
