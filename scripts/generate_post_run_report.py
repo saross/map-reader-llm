@@ -1572,23 +1572,37 @@ def _md_table(headers: list[str], rows: list[list]) -> str:
     return "\n".join(lines)
 
 
-def _fmt_mcc_cell(value: Any) -> Any:
+def _fmt_mcc_cell(value: Any, tile: dict | None = None) -> Any:
     """Render a tile-level MCC for a manifest table cell.
 
     ``_md_table`` renders ``None`` as an em dash, which in these tables
     means "not recorded". A ``None`` MCC means something sharper and
-    scientifically load-bearing: the metric is **undefined**, because the
-    2 x 2 tile confusion matrix is degenerate (errata E81). Rendering it
-    as ``undefined`` keeps it distinguishable both from a missing value
-    and — critically — from a measured ``0.0``, which § 4.2 of the
-    preregistration labels "random".
+    scientifically load-bearing, and it has **two** causes that must not
+    be rendered with one word:
+
+    * **undefined** (errata E81) — the metric was computed and the 2 x 2
+      tile confusion matrix turned out degenerate, so the denominator
+      vanishes. The number does not exist for this data.
+    * **withheld** (PI ruling 2026-09-13, Session 153 ruling 6) — the
+      tile-join invariant refused the join that would have built the
+      confusion, so the metric was never computed at all. The number does
+      not exist for this *frame*, and the cell's whole-frame F1 in the
+      neighbouring column is unaffected.
+
+    Both stay distinguishable from a missing value and — critically —
+    from a measured ``0.0``, which § 4.2 of the preregistration labels
+    "random".
 
     Args:
         value: The manifest's ``metrics.tile_classification.mcc``, which
-            is a float, or ``None`` when the metric is undefined.
+            is a float, or ``None`` when the metric is undefined or
+            withheld.
+        tile: The whole ``tile_classification`` block, consulted only to
+            tell the two ``None`` cases apart. ``None`` (the default)
+            preserves the pre-2026-09-13 rendering.
 
     Returns:
-        The value unchanged, or the string ``"undefined"`` for ``None``.
+        The value unchanged, or ``"withheld"`` / ``"undefined"``.
 
     Examples:
         >>> _fmt_mcc_cell(0.0665)
@@ -1597,8 +1611,14 @@ def _fmt_mcc_cell(value: Any) -> Any:
         0.0
         >>> _fmt_mcc_cell(None)
         'undefined'
+        >>> _fmt_mcc_cell(None, {"tile_withheld_reason": "x"})
+        'withheld'
     """
-    return "undefined" if value is None else value
+    if value is not None:
+        return value
+    if (tile or {}).get("tile_withheld_reason"):
+        return "withheld"
+    return "undefined"
 
 
 def _coverage_note(manifest: str, n_rows: int) -> str:
@@ -1639,7 +1659,10 @@ def render_manifest(manifest: str, obj: dict, json_rel: str) -> str:
             ["condition_id", "arch", "agg", "vote", "n", "F1@20m", "MCC", "n_det"],
             [[r["condition_id"], r["architecture"], r["aggregation"], r["vote_threshold"],
               r["n_passes"], r["metrics"]["per_buffer"].get("20", {}).get("f1"),
-              _fmt_mcc_cell(r["metrics"]["tile_classification"]["mcc"]),
+              _fmt_mcc_cell(
+                  r["metrics"]["tile_classification"]["mcc"],
+                  r["metrics"]["tile_classification"],
+              ),
               r["n_detections"]] for r in rows])
     elif manifest == "passes":
         # ``tiles`` renders as an em dash for verifier rows, whose tile count is

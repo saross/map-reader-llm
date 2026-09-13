@@ -63,7 +63,8 @@ from scripts.evaluate_detections import (
     evaluate_single_run,
     write_outputs,
 )
-from scripts.generate_post_run_report import _metrics_from_eval
+from scripts.generate_post_run_report import _fmt_mcc_cell, _metrics_from_eval
+from scripts.generate_run_reports import NOT_SUPPLIED, WITHHELD, _mcc_cell
 from scripts.lib_advanced_metrics import (
     CI_FLAG_BASIS_WITHHELD,
     COVERAGE_STATUS_WITHHELD,
@@ -421,6 +422,30 @@ def test_refused_cell_projects_into_the_manifest_without_inventing_numbers():
     # E81's "undefined MCC" explanation must not be attached to a metric
     # that was withheld rather than computed-and-degenerate.
     assert "mcc_undefined_reason" not in tile
+
+
+def test_the_generated_markdown_says_withheld_not_undefined():
+    """Both manifest renderers keep "withheld" apart from the other nulls.
+
+    ``undefined`` is erratum E81's word for a metric that was computed and
+    came out degenerate; ``not supplied`` means the evaluation does not
+    carry it. Neither describes a metric the invariant refused, and a
+    reader who met either would draw the wrong conclusion about the data.
+    """
+    withheld = {"mcc": None, "tile_withheld_reason": "tile_join_detection_shortfall"}
+    undefined = {"mcc": None, "mcc_undefined_reason": "no populated tiles"}
+
+    # results/conditions-manifest.md
+    assert _fmt_mcc_cell(None, withheld) == "withheld"
+    assert _fmt_mcc_cell(None, undefined) == "undefined"
+    assert _fmt_mcc_cell(None) == "undefined"
+    assert _fmt_mcc_cell(0.0) == 0.0
+
+    # outputs/**/post_run_report.md
+    assert _mcc_cell(withheld) == WITHHELD
+    assert _mcc_cell(undefined) == NOT_SUPPLIED
+    assert _mcc_cell({"mcc": 0.8139}) == "0.8139"
+    assert _mcc_cell({"mcc": 0.0}) == "0.0000"
 
 
 # --------------------------------------------------------------------------

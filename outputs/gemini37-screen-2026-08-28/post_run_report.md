@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-screen-2026-08-28
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `47e73b214`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `a8c03bb9e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-screen-2026-08-28` · **Registry status**: active · **Purpose**: Gemini 3.7 Flash screen on the leading 384 px / 50 % geometry: does a within-vendor model-family step clear the Gemini-3 GS plateau, and in which seat? Predictions G1-G4 committed at PI go (card planning/gemini37-screen-2026-08-28.md). Escalated to K=10 and to two verifier-role swaps (3.7, then 3.8 under card planning/gemini38-screen-2026-09-04.md).
 
@@ -89,7 +89,7 @@ Audit and reconciliation reports whose text names this run or its directory — 
 
 ## 5. Registered conditions (11)
 
-F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment working buffer. Confidence intervals are those the evaluation recorded (method, iterations and seed per condition in the manifest). `mcc` is tile-level. A cell reading *not supplied* means the metric is absent from the condition's evaluation, not that it is zero.
+F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment working buffer. Confidence intervals are those the evaluation recorded (method, iterations and seed per condition in the manifest). `mcc` is tile-level. A cell reading *not supplied* means the metric is absent from the condition's evaluation, not that it is zero; a tile-MCC reading *withheld* means the tile-join invariant REFUSED that condition's per-tile table on this frame, so the tile metrics and the bootstrap intervals were not computed — the condition's whole-frame F1 is unaffected and is reported in full (PI ruling 2026-09-13; the named reason is in the condition's manifest row).
 
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
@@ -97,7 +97,7 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 | `g37-text-k1-verified-opmax` | proposer-verifier | verified | 1 | k=1/pt=0.15 | 502 | 0.8495 [0.2712, 0.6667] | 0.8709 [0.3333, 0.7317] | 0.1337 |
 | `g37-text-k10-verified-carried-p0.10-k10` | proposer-verifier | verified | 10 | k=10/pt=0.1 | 423 | 0.9142 [0.8862, 0.9361] | 0.9377 [0.9147, 0.9550] | 0.7817 |
 | `g37-text-k10-verified-carried-p0.10-k10-era2b` | proposer-verifier | verified | 10 | k=10/pt=0.1 | 423 | 0.9068 [0.8783, 0.9293] | 0.9301 [0.9062, 0.9481] | 0.7675 |
-| `g37-text-k3-verified-opmax` | proposer-verifier | verified | 3 | k=3/pt=0.1 | 494 | 0.8870 [0.3684, 0.7732] | 0.9020 [0.4444, 0.8471] | 0.1337 |
+| `g37-text-k3-verified-opmax` | proposer-verifier | verified | 3 | k=3/pt=0.1 | 495 | 0.8860 | 0.9011 | withheld |
 | `g37-text-k5-verified-carried-p0.10-k5` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 443 | 0.9139 [0.8874, 0.9342] | 0.9277 [0.9049, 0.9453] | 0.7797 |
 | `g37-text-k5-verified-carried-p0.10-k5-era2b` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 443 | 0.9066 [0.8792, 0.9279] | 0.9203 [0.8971, 0.9393] | 0.7651 |
 | `g37-text-k5-verified-swap37-p0.80-k5` | proposer-verifier | verified | 5 | k=5/pt=0.8 | 429 | 0.9265 [0.9010, 0.9461] | 0.9405 [0.9192, 0.9568] | 0.8078 |
@@ -109,7 +109,7 @@ Buffers on file (metres), by how many conditions carry that set:
 
 - 11 condition(s): 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150
 
-Tile-level MCC is on file for 11 of 11 condition(s).
+Tile-level MCC is on file for 10 of 11 condition(s). Of the 1 without one, 1 is WITHHELD by the tile-join invariant (tile_join_detection_shortfall); its whole-frame F1 is unaffected.
 
 ### 5.1 Condition caveats (11 condition(s), 11 distinct caveat(s))
 
@@ -221,9 +221,9 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `47e73b214` |
+| Source commit | `a8c03bb9e` |
 | Manifest extractor | `0.7.1` |
-| Run row last extracted | `2026-09-06T05:11:51Z` |
+| Run row last extracted | `2026-09-13T09:02:37Z` |
 
 Inputs:
 

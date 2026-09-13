@@ -270,6 +270,40 @@ def _f4(value: object) -> str:
     return f"{value:.4f}" if isinstance(value, (int, float)) else NOT_SUPPLIED
 
 
+#: Rendered where a tile-level metric was refused rather than merely
+#: absent. ``NOT_SUPPLIED`` says "this evaluation does not carry the
+#: metric", which is true of a withheld cell but far too weak: the metric
+#: was refused, by a named invariant, on a stated frame, and the reader
+#: needs to know that the condition's whole-frame F1 beside it is
+#: nonetheless sound. The word points at the condition row's
+#: ``tile_withheld_reason``.
+WITHHELD = "withheld"
+
+
+def _mcc_cell(tile: dict) -> str:
+    """Render the tile-MCC column, distinguishing withheld from absent.
+
+    Args:
+        tile: A condition row's ``metrics.tile_classification`` block.
+
+    Returns:
+        The four-decimal MCC; ``"withheld"`` when the block records a
+        tile-join refusal (PI ruling 2026-09-13, Session 153 ruling 6);
+        otherwise :data:`NOT_SUPPLIED`.
+
+    Examples:
+        >>> _mcc_cell({"mcc": 0.8139})
+        '0.8139'
+        >>> _mcc_cell({"mcc": None})
+        'not supplied'
+        >>> _mcc_cell({"mcc": None, "tile_withheld_reason": "x"})
+        'withheld'
+    """
+    if tile.get("mcc") is None and tile.get("tile_withheld_reason"):
+        return WITHHELD
+    return _f4(tile.get("mcc"))
+
+
 def _pipe(text: str) -> str:
     """Escape pipes so a value cannot break a Markdown table row."""
     return str(text).replace("|", "\\|")
@@ -572,7 +606,7 @@ def _condition_metric_row(c: dict) -> str:
     return (f"| `{_pipe(c['label'])}` | {_cell(c.get('architecture'))} "
             f"| {_cell(c.get('aggregation'))} | {_cell(c.get('n_passes'))} | {op} "
             f"| {_cell(c.get('n_detections'))} | {cells[0]} | {cells[1]} "
-            f"| {_f4(tile.get('mcc'))} |")
+            f"| {_mcc_cell(tile)} |")
 
 
 def _section_conditions(run_id: str, corpus: Corpus) -> list[str]:
@@ -589,7 +623,13 @@ def _section_conditions(run_id: str, corpus: Corpus) -> list[str]:
         "(method, iterations and seed per condition in the manifest). `mcc` is "
         "tile-level. A cell reading "
         f"*{NOT_SUPPLIED}* means the metric is absent from the condition's "
-        "evaluation, not that it is zero.", "",
+        "evaluation, not that it is zero; a tile-MCC reading "
+        f"*{WITHHELD}* means the tile-join invariant REFUSED that "
+        "condition's per-tile table on this frame, so the tile metrics and "
+        "the bootstrap intervals were not computed — the condition's "
+        "whole-frame F1 is unaffected and is reported in full (PI ruling "
+        "2026-09-13; the named reason is in the condition's manifest row).",
+        "",
         "| Condition | Architecture | Aggregation | Passes | Operating point "
         "| Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |",
         "|---|---|---|---:|---|---:|---|---|---:|"]
@@ -612,8 +652,29 @@ def _section_conditions(run_id: str, corpus: Corpus) -> list[str]:
     n_mcc = sum(1 for c in conds
                 if ((c.get("metrics") or {}).get("tile_classification") or {})
                 .get("mcc") is not None)
-    out += ["", f"Tile-level MCC is on file for {n_mcc} of {len(conds)} condition(s).",
-            ""]
+    # A condition missing a tile-MCC because the invariant refused its join is
+    # a different fact from one whose evaluation simply never computed the
+    # metric, so the count of refusals is stated rather than folded into the
+    # shortfall.
+    withheld_reasons = sorted({
+        reason for c in conds
+        if (reason := (
+            (c.get("metrics") or {}).get("tile_classification") or {}
+        ).get("tile_withheld_reason"))
+    })
+    n_withheld = sum(1 for c in conds
+                     if ((c.get("metrics") or {}).get("tile_classification")
+                         or {}).get("tile_withheld_reason"))
+    mcc_line = f"Tile-level MCC is on file for {n_mcc} of {len(conds)} condition(s)."
+    if n_withheld:
+        mcc_line += (
+            f" Of the {len(conds) - n_mcc} without one, {n_withheld} "
+            f"{'is' if n_withheld == 1 else 'are'} WITHHELD by the "
+            f"tile-join invariant ({', '.join(withheld_reasons)}); "
+            f"{'its' if n_withheld == 1 else 'their'} whole-frame F1 is "
+            "unaffected."
+        )
+    out += ["", mcc_line, ""]
 
     caveats = _group_by_text(conds, lambda c: c.get("caveat"))
     if caveats:

@@ -2,7 +2,7 @@
 
 # Conditions manifest
 
-> Generated 2026-09-13T01:26:51Z · 593 row(s) · schema v1.0.
+> Generated 2026-09-13T09:02:37Z · 593 row(s) · schema v1.0.
 >
 > **Coverage**: 593 condition(s) across the decomposed runs (sub-step 3b in progress).
 
@@ -584,7 +584,7 @@
 | gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9182 | 0.8079 | 421 |
 | gemini37-screen-2026-08-28::g37-text-k1-verified-opmax | proposer-verifier | verified | 1 | 1 | 0.8495 | 0.1337 | 502 |
 | gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1 | proposer-verifier | verified | 1 | 1 | 0.8338 | 0.1422 | 558 |
-| gemini37-screen-2026-08-28::g37-text-k3-verified-opmax | proposer-verifier | verified | 3 | 3 | 0.887 | 0.1337 | 494 |
+| gemini37-screen-2026-08-28::g37-text-k3-verified-opmax | proposer-verifier | verified | 3 | 3 | 0.886 | withheld | 495 |
 | gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-canonical-gt | proposer-verifier | verified | 5 | 5 | 0.7220050125313283 | 0.6664686403732362 | 5229 |
 | gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-standardised-gt | proposer-verifier | verified | 5 | 5 | 0.7591 | 0.6665 | 5229 |
 | gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-canonical-gt | proposer-verifier | verified | 5 | 5 | 0.7469484049646118 | 0.7072914415212007 | 5003 |
