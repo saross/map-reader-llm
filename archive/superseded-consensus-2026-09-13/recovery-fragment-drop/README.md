@@ -1,7 +1,10 @@
 # Superseded consensus unions — the recovery-fragment drop (2026-09-13)
 
-> **Last revised**: 2026-09-13 (original publication).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-13 (the K = 3 cell's superseded materialised
+> detection set archived, and its evaluation directory here promoted from
+> "as read" to the archived predecessor of a re-scored live cell; prior
+> 2026-09-13: original publication). See [§ Changelog](#changelog) for
+> revision history.
 
 These are the **pre-fix** copies of every committed `merge_passes.py` consensus
 union that the recovery-fragment drop touched. They are preserved here, browsable
@@ -85,6 +88,37 @@ f8367b44be0b56f228de76d0773bf4fac5886f3533d3c8f20b40ecb12061c8df  grid-2026-08-1
 26d30e6a494dd123c7d83359adc6d1caf739668c2f96d07461c8baa5949ef072  grid-2026-08-18__g384_ov192/consensus-n5/voting_summary.json
 ```
 
+## The K = 3 cell's re-score (2026-09-13, checklist item 6a)
+
+The 2026-09-13 re-score work on
+`reports/recovery-drop-fix-2026-09-13.md` § 6.3 could not write
+`gemini37-screen-2026-08-28::g37-text-k3-verified-opmax`'s moved F1 into its
+own `evaluation.json`, because the tile-join invariant aborted the whole
+evaluation of a refused cell. With the invariant softened to withhold the
+per-tile statistics and let the F1 arm proceed
+(`fix(scorer): withhold per-tile statistics instead of aborting the cell`),
+that cell was re-scored on its recorded recipe and its live artefacts were
+replaced. Two more predecessors are therefore archived here:
+
+| archived path | features / what it is | superseded because |
+|---|---|---|
+| `materialised-as-read-2026-09-13/g37-text-k3-verified-opmax.geojson` | **494** detections at (vote 3, prob 0.10) | the rebuilt union promotes `candidate_00049` past the vote ≥ 3 gate, so the live file now holds **495** |
+| `evaluations-as-read-2026-09-13/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/` | the pre-fix `evaluation.{json,csv,md}` | re-scored: F1@20 0.8870 → **0.8860**, and the tile block, which the pre-fix file reports as MCC 0.1337 on a join the invariant now refuses, is **withheld** in the live artefact |
+
+That evaluation directory was archived on 2026-09-13 as an "as read" snapshot
+before anything was known to need replacing; it is byte-identical to the cell
+as it stood immediately before the re-score, so it doubles as the archived
+predecessor and is **not** duplicated under a second name. The other three
+"as read" evaluation snapshots remain snapshots only: those cells' live
+artefacts were not rewritten, because the two K = 1 cells' F1 did not move at
+the headline buffer and the tier-E cell's re-evaluation was dict-identical.
+
+SHA-256 of the newly archived bytes:
+
+```text
+7aeef583a0080ddfe98f0783dca05a7bb5f1fb0717d073d8fbbe9f3a3c1992f1  materialised-as-read-2026-09-13/g37-text-k3-verified-opmax.geojson
+```
+
 ## Where the live files now are
 
 | archived directory | live directory |
@@ -92,8 +126,23 @@ f8367b44be0b56f228de76d0773bf4fac5886f3533d3c8f20b40ecb12061c8df  grid-2026-08-1
 | `gemini37-screen-2026-08-28__g384_ov192_g37/consensus-n1/` | `outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/` |
 | `gemini37-screen-2026-08-28__g384_ov192_g37/consensus-n3/` | `outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/` |
 | `grid-2026-08-18__g384_ov192/consensus-n5/` | `outputs/grid-2026-08-18/g384_ov192/consensus-n5/` |
+| `materialised-as-read-2026-09-13/g37-text-k3-verified-opmax.geojson` | `results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson` |
+| `evaluations-as-read-2026-09-13/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/` | `results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/` |
 
 ## Changelog
+
+### 2026-09-13 — the K = 3 cell's predecessors archived (checklist item 6a)
+
+| claim | before | after |
+|---|---|---|
+| `g37-text-k3-verified-opmax` live materialised set | 494 detections | **495** (the 494 archived here) |
+| that cell's live `evaluation.json` F1@20 | 0.8870 | **0.8860** |
+| that cell's live tile-MCC | 0.1337 | **withheld**, with the refusal named |
+| archived byte streams under this directory | 12 | **13** |
+
+**What did NOT change**: the three other archived evaluation snapshots and
+the cells they snapshot; every consensus union archived here; and the SHA-256
+block above, which is appended to rather than rewritten.
 
 ### 2026-09-13 — Original publication
 
