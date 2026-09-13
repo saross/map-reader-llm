@@ -262,6 +262,10 @@ until § 9 is signed.
 
 ## Changelog
 
+### 2026-09-13 — PI ruling: a tile-MCC permutation family joins the board at its next rebuild
+
+The board's committed instrument tests F1 only. PI ruling 2026-09-13 (S153, ruling 7): at the next rebuild the round-robin tile-swap carries tile-MCC on the same swap masks as F1 (the `--permute-mcc` arm the K-ladder MCC test exercised), BH within its own family, reported beside the F1 tiering and not replacing it; cells the tile-join invariant withholds stay withheld from both. Not applied to the current signed board.
+
 ### 2026-09-11 — `pv-high-text-t0.0-n3`: the union was rebuilt, the sweep was never stale
 
 **Trigger**: PI ruling 2026-09-11 ("re-sweep, re-materialise, re-score,
