@@ -1,6 +1,15 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-13 (later — the PI's two rulings of 2026-09-13
+> **Last revised**: 2026-09-13 (latest — **§ 7.3 amended** after the
+> recovery-fragment fix `75d7c8d4c` rebuilt the three refused rungs' proposer
+> unions: **no number in this document moves**, and the amendment records the
+> sharper finding that the tile-join refusal now **blocks correction** as well as
+> reporting, because `evaluate_detections.py` cannot run on those three cells at
+> all — so the open tile-join ruling is a prerequisite for repairing them. The
+> one figure that did move, the K = 3 rung's F1@20 0.8870 → 0.8860, is not quoted
+> anywhere here. Measured:
+> `results/k-ladder-2026-09-12/recovery-fix-2026-09-13/`; reported:
+> `reports/recovery-drop-fix-2026-09-13.md`. Earlier that day — the PI's two rulings of 2026-09-13
 > executed, and **the row is ready for signature**: **§ 6.1 gains the per-family
 > Hsu MCB admissible sets** for all 22 tiered ladders on F1 and tile-MCC, run
 > with the Era-2 board's own MCB step on each ladder's own frame — K = 3
@@ -967,6 +976,31 @@ account; three things belong here.
    withheld them to avoid, with the arrow reversed — so a coherent restoration
    re-scores the family, which means re-scoring the board.
 
+**Amended 2026-09-13.** The three refused rungs' proposer unions have since been
+rebuilt: `scripts/merge_passes.py` had been silently skipping
+`run_<N>_recovery` storm-recovery fragments, and the fix
+(`75d7c8d4cd55b6ec8d2a40abff70a31f62b67725`) took `consensus-n3` from 757
+candidates to 759 and left `consensus-n1` at 640. **No number in this section
+moves**: the F1@20 of 0.8495 quoted above, its 502 detections, and the tp 10 /
+fn 219 / MCC 0.1337 confusion all belong to the K = 1 opmax rung, whose scored
+detection set is unchanged. The K = 3 rung — whose F1 this section does not
+quote — moves 0.8870 → **0.8860**, one added false positive
+(`results/k-ladder-2026-09-12/recovery-fix-2026-09-13/`;
+`reports/recovery-drop-fix-2026-09-13.md`).
+
+**What the rebuild revealed about this invariant is more consequential than the
+−0.0010.** The refusal does not merely withhold a statistic — **it blocks
+correction.** Because the F1 bootstrap resamples *tiles*, the refusal raises
+inside `bootstrap_ci` and aborts the whole evaluation, so
+`scripts/evaluate_detections.py` **cannot be run at all** on these three cells at
+HEAD. Their committed evaluations predate the invariant (`7ba47b63b`) and can no
+longer be reproduced, let alone refreshed. The consequence is concrete: the K = 3
+rung's F1 has genuinely changed, and its `evaluation.json` — and therefore its
+`results/conditions-manifest.json` row, still reading 0.8870 / 494 — cannot be
+brought up to date until the tile-join question is ruled on. The open ruling of
+point 3 above is now not only a reporting decision but a **prerequisite for
+repairing any of these three cells**, which raises its priority.
+
 ### 7.4 Pareto: K = 10 is almost never worth it, and the 3.7 family shows why
 
 Efficient rungs per family are tabulated in `phase2/ladder-tables.md`; the
@@ -1346,7 +1380,69 @@ caveat about the K = 10 rung's construction applies to the verified row.
 
 ## Changelog
 
-### 2026-09-13 (latest) — § 6.1 gains the per-family Hsu MCB admissible sets; the carried convention settled; the row ready for signature
+### 2026-09-13 (latest) — § 7.3 amended: the refused rungs' unions rebuilt, no number here moves, and the refusal is now shown to block correction
+
+**Trigger**: the PI's "fix properly" ruling of 2026-09-13 on
+`reports/recovery-fragment-drop-2026-09-13.md`. `scripts/merge_passes.py` had
+been deriving a pass number by casting the text after `run_`, so
+`int("2_recovery")` raised and the `except ValueError: continue` silently dropped
+every storm-recovery fragment. The fix
+(`75d7c8d4cd55b6ec8d2a40abff70a31f62b67725`) folds each fragment into its parent
+pass. Five committed consensus unions were rebuilt, four registered conditions
+read them, and three of those four are this run's own Phase 2 rungs.
+
+**Nothing in §§ 2–8 changed.** The claims that were at risk and were checked:
+
+| claim | before | after |
+|---|---|---|
+| § 7.3 F1@20 of the refused K = 1 rung | 0.8495 | 0.8495 — **unchanged** |
+| § 7.3 detections / confusion of that rung | 502 / tp 10, fn 219, MCC 0.1337 | **unchanged** |
+| § 4.3 "3.7 text, GS B geometry" ladder | 0.8495 → 0.9068 (+0.0573) | **unchanged** (both ends are K = 1 and K = 10) |
+| § 8.4 tier-E ladder K = 5 row | 2,932 / (5, 0.15) / 435 / 0.8905 / 0.8139 | **unchanged, dict-identically** |
+| § 7.1 table, §§ 7.2, 7.4, 7.5 | — | **unchanged**; § 7.1's table is aggregated by thinking level and has no per-rung row |
+| the K = 3 GS text rung's F1@20 | 0.8870 | **0.8860** — and this document never quotes it |
+
+The K = 3 movement is one added false positive: `candidate_00049`, promoted from
+2 votes to 3 by a recovery fragment, clearing the rung's vote ≥ 3 gate at
+probability 1.0, so detections go 494 → 495 and precision falls 0.8340 → 0.8323
+while recall holds at 0.9471 exactly. No operating point migrated on any of the
+four cells — 0 ties, and the board and Era-2 frames still agree. The tier-E K = 5
+cell's re-evaluation is **dict-identical** to what is committed, because the
+candidate the fix promoted to 5 votes carries probability 0.10 against that
+rung's prob ≥ 0.15 gate.
+
+**A methodological finding the amendment records, and the reason for this
+entry.** The tile-join refusal is worse than a withheld statistic: because the F1
+bootstrap resamples *tiles*, the refusal raises inside `bootstrap_ci` and aborts
+the entire evaluation, so `scripts/evaluate_detections.py` **cannot be run on
+these three cells at HEAD at all**. Their committed evaluations predate the
+invariant (`7ba47b63b`) and are no longer reproducible. So the K = 3 rung's F1 has
+genuinely moved while its `evaluation.json` — and its
+`results/conditions-manifest.json` row, still 0.8870 / 494 — **cannot be
+refreshed**. The open ruling in § 7.3 point 3 is therefore a prerequisite for
+repairing these cells, not only for reporting them, which raises its priority.
+The three cells were re-scored on the F1 arm of their recorded recipe, with the
+confidence intervals and per-tile block named WITHHELD rather than omitted; every
+"before" was re-derived in the same process as its "after" and reproduces the
+committed value exactly, so a difference is a difference in detections and not in
+the scorer.
+
+**Cost**: 4 verifier calls, **US$0.002784** audited on the corpus flex basis —
+exactly what the PI approved and nothing more.
+
+**Landed in** the branch `worktree-agent-a41b647e2345bdb44`; the rebuild at
+`e9d1db0d0`, the extended verifier stages at `f8e0eb600`, the re-scores at
+`20c0a053f`, the board note at `6291e9938`.
+
+**What did NOT change**: every F1, precision, recall, tile-MCC and cost figure in
+this document; every permutation result, BH p-value and MCB admissible set; the
+22 tiered ladders and the withheld twenty-third; the Era-2 board's ranks, tiers,
+MCB set and every signature field (the PI ruled the next rebuild picks these cells
+up, so the board carries a note only); the uplift supplement, whose board-frame
+exclusion keys on `scope_override.test_set_id`; and the signed
+`k-ladder-2026-09-12` register row, whose `outcome` prose an agent must not amend.
+
+### 2026-09-13 (earlier) — § 6.1 gains the per-family Hsu MCB admissible sets; the carried convention settled; the row ready for signature
 
 **Trigger**: the PI's two rulings of 2026-09-13 (afternoon) — (1) "wait for the
 sets", i.e. supply the per-family Hsu multiple-comparisons-with-the-best
