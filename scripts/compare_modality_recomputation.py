@@ -375,8 +375,15 @@ def render(result: dict[str, Any]) -> str:
             "### 2026-09-14 — Original publication", "",
             "First recomputation of the modality-grouped statistics after the "
             "corpus-wide modality-track audit of 2026-09-14. No prior revision "
-            "to diff against.", ""]
-    return "\n".join(out)
+            "to diff against."]
+    # Collapse any consecutive blanks the section builders left behind, so the
+    # rendered document passes markdownlint MD012.
+    lines: list[str] = []
+    for line in out:
+        if line == "" and lines and lines[-1] == "":
+            continue
+        lines.append(line)
+    return "\n".join(lines)
 
 
 def main() -> int:
