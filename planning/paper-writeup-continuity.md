@@ -12,7 +12,10 @@ project state.
 
 > **⏰ STATE AT 2026-09-13 ~10:00 UTC (S153-b, the PI's rulings day) —
 > the PI's OPEN decisions, in order (each independent):**
-> **(1) Era-2 board RE-SIGNATURE — READY** (rebuilt `ac4355859`, checklist
+> **(1) Era-2 board RE-SIGNATURE — READY BUT HELD** pending the
+> null-exemplar sensitivity re-score (E86, below; the MCC family the
+> re-signature would newly attest rides on image cells, which are the
+> exposed modality) — rebuilt `ac4355859`, checklist
 > item 6 ticked "awaiting PI re-signature"; proposed outcome in
 > `provenance.json → re_sign_pending`). What it attests: 153 admitted /
 > 150 tiered / 3 withheld; F1 tiering BYTE-IDENTICAL to the 2026-09-13
@@ -25,6 +28,28 @@ project state.
 > image PV baselines, tile-MCC 0.889 at F1 rank 119), MCC MCB 59 of 150
 > sharing only 9 members with the F1 set. Signature paths byte-equal 10/10.
 > Report `reports/era2-board-mcc-family-2026-09-13.md`.
+> **(0) E86/E87 — the benchmark repository's Stage 1 provenance audit
+> (`map-reader-bench/wiki/planning/parent-errata-drafts.md`, 2026-09-13)
+> found two parent defects; the PI approved the handling 2026-09-13 and
+> two Opus agents are executing it.** E86: the three null exemplars were
+> selected from the December training set and never rebuilt when the
+> calibration tiles were re-selected on 2026-01-04, so they were never
+> excluded from any evaluation frame — 20 of 487 Era-2 tiles and (the
+> parent session's addition) **25 of 340 Era-1 tiles, all three nulls
+> being Era-1 evaluation tiles themselves**, overlap pixels the model was
+> shown as "no mounds here"; 0 references in the windows, so only FPs can
+> move; transmitted ONLY by image-bearing configs (text configs set
+> `include_example_images: false`; verifier stages carry no examples; the
+> 55-map corpus shares no sheet). Handling: insert E86/E87 with the Era-1
+> and visibility facts; a $0 sensitivity re-score of every image-bearing
+> GS cell with the overlap tiles excluded (F1, tile-MCC, tiering, MCB,
+> MCC family; `results/null-exemplar-sensitivity-2026-09-13/`) BEFORE
+> the board re-signature; Methods fixes ("361 tiles" → 340; the
+> clean-holdout qualifier); provenance anchors extended to manifests
+> (the name-keyed class again); the null set NOT regenerated. E87: the
+> preregistration's per-tile mound counts came from a bounding-box
+> georeferencing approximation (36 → 50 in the calibration tiles);
+> documentation only, no measured result reads them.
 > **(1b) NEW paper-facing question raised by (1)**: the two metrics rank
 > the board close to oppositely, systematically (pipeline checked:
 > 150/150 confusion gates, swap masks pinned, F1 arm reproduced exactly).
