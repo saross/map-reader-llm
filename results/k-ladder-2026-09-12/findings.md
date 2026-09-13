@@ -1,6 +1,12 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-12 (latest — **§ 8 added**: the MINIMAL-ladder
+> **Last revised**: 2026-09-13 (**§ 8.6 added** on the PI's ruling: the
+> verifier-stage reversal stated as a claim with per-number anchors — K = 1 → 10
+> raises F1 by +0.0572 consensus-only with tile-MCC rising +0.0444, and by
+> +0.0340 verified with tile-MCC falling −0.0308, so the verifier absorbs 40.6 %
+> of K's F1 return and reverses the sign of its tile-MCC effect; and **§ 3.3's
+> K = 5 row filled** for stride B under the 3.7 verifier. Prior: 2026-09-12
+> (**§ 8 added**: the MINIMAL-ladder
 > tension measured rather than described. The two corpora agree once resolution
 > is accounted for — 487 tiles resolve a ΔF1 of about 0.03 and above, and the
 > nine MINIMAL ladders sort by effect size rather than by corpus — and § 8.4 adds
@@ -10,7 +16,7 @@
 > tile-MCC question is now measured across all 149 committed cells the board
 > reads, only these three are affected, the scorer refuses rather than
 > emitting, and repair is confirmed to be a corpus-wide decision — see
-> `reports/tile-mcc-geometric-join-2026-09-12.md`). Before that: **§ 7 added:
+> `reports/tile-mcc-geometric-join-2026-09-12.md`)). Before that: **§ 7 added:
 > the fourteen four-rung
 > ladders Phase 2 bought** for US$24.81 over 28 rungs, which closes § 6.3's gap
 > and takes the document from eight ladders to twenty-two; § 4.3 extends § 4's
@@ -1064,9 +1070,97 @@ What is **not** established, stated so the reading is not over-claimed:
   the verified ladders.** It is measured at one thinking level, one temperature,
   one corpus and one modality, and the verified ladders order the other way.
 
+### 8.6 CLAIM — the verifier absorbs about 40 % of K's F1 return and reverses the sign of its tile-MCC effect
+
+Stated as a claim of its own on the PI's ruling of 2026-09-13, because § 8.3 and
+§ 8.4 each measure one half of it and neither is the comparison. The four
+numbers were re-read at source before this section was written, and the anchors
+are given so the next reader need not trust the prose.
+
+**The claim.** On the same candidate pool and the same B geometry (384 px tiles,
+50 % overlap), going from K = 1 to K = 10 proposer passes:
+
+| stage | ΔF1@20, K = 1 → 10 | Δtile-MCC, K = 1 → 10 |
+|---|---:|---:|
+| **consensus only** (no verifier) | **+0.0572** | **+0.0444** |
+| **verified** (Gemini 3 verifier) | **+0.0340** | **−0.0308** |
+
+The verifier therefore **absorbs 40.6 % of K's F1 return** (1 − 0.0340 / 0.0572)
+and **reverses the sign of K's tile-MCC effect**, a swing of **0.0752** MCC.
+
+**Anchors, one per number.**
+
+- Consensus-only — `results/grid-2026-08-18/sweep.csv`, cell `g384_ov192`, best
+  F1@20 over the (corroboration, vote) grid per K, which is the rule
+  `results/grid-2026-08-18/findings.md` reads that sweep by: **K = 1** F1
+  **0.6633**, tile-MCC **0.4465** at (c ≥ 3, k ≥ 1); **K = 10** F1 **0.7205**,
+  tile-MCC **0.4909** at (c ≥ 2, k ≥ 10). These are the 384 px / 50 % row of
+  § 8.3's table.
+- Verified — `results/k-ladder-2026-09-12/tier-e/ladder.json` (`rungs`) and each
+  rung's own committed evaluation: **K = 1**
+  `results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.json`,
+  F1@20 **0.8546**, `summary.tile_classification.mcc.point` **0.8211**, 482
+  detections; **K = 10**
+  `results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.json`,
+  F1@20 **0.8886**, `summary.tile_classification.mcc.point` **0.7903**, 400
+  detections. These are the first and last rows of § 8.4's table.
+
+**The mechanism, in two sentences.** A consensus-only union at a tuned vote
+threshold is precision-starved, so an extra pass mostly adds true positives in
+tiles that were predicted negative, which raises F1 and tile-MCC together. Once
+a verifier has already removed most of the false positives that extra passes
+would have removed, the same extra pass buys less F1, and what it now adds is
+disproportionately false positives in tiles that were correctly negative — so
+tile-MCC falls while F1 still rises.
+
+**What it is evidence for, and its limits.** This is the corpus's cleanest
+evidence that **tile-MCC's response to K is a property of the pipeline stage
+rather than of K** — compare § 4 and § 4.3, where tile-MCC falls on 16 of 21
+verified ladders, against § 8.3's four consensus-only ladders, where it rises at
+every geometry. It is also the first measurement on a K ladder of the partial
+substitution the grid study's registered `grid-postverifier-2026-08-18` analysis
+found between consensus and the verifier. The limits: one geometry, one thinking
+level, one temperature, one modality, one corpus; and the ΔMCC values are **not**
+statistically separated (§ 8.4 — tile-MCC separates on none of the ladder's six
+pairs), so the claim is about the sign and the size of the shift **between
+stages**, not about either ladder's own MCC trend being significant. § 8.4's
+caveat about the K = 10 rung's construction applies to the verified row.
+
 ## Changelog
 
-### 2026-09-12 (latest) — § 8: the tension measured, and tier E's ladder
+### 2026-09-13 (latest) — § 8.6 added (the verifier-stage reversal, as a claim); § 3.3's K = 5 row filled
+
+**Trigger**: the PI's rulings of 2026-09-13 (morning), items 3 and 4 of the
+close-out list in `reports/k-ladder-closeout-deltas-2026-09-12.md` § 10.
+
+**§ 8.6 — new.** The verifier-stage reversal was previously a paragraph inside
+§ 8.4's reading, resting on numbers stated in § 8.3's table. The PI ruled it
+should stand as a claim of its own with an anchor per number. All four were
+re-read at source before the section was written; none moved:
+
+| number | value | source re-read |
+|---|---:|---|
+| consensus-only ΔF1, K = 1 → 10 | +0.0572 | `results/grid-2026-08-18/sweep.csv`, cell `g384_ov192` (0.6633 → 0.7205) |
+| consensus-only Δtile-MCC | +0.0444 | the same rows (0.4465 → 0.4909) |
+| verified ΔF1, K = 1 → 10 | +0.0340 | `tier-e/ladder.json` + the two rung evaluations (0.8546 → 0.8886) |
+| verified Δtile-MCC | −0.0308 | the same two evaluations, `summary.tile_classification.mcc.point` (0.8211 → 0.7903) |
+
+Derived and stated for the first time: the verifier absorbs **40.6 %** of K's
+F1 return (1 − 0.0340 / 0.0572) and the tile-MCC swing between stages is
+**0.0752**. Cross-referenced to § 4 and § 4.3, whose 16-of-21 falling tile-MCC
+this explains as a stage property rather than a K property.
+
+**§ 3.3 — the K = 5 row.** Filled from the completed stride-B-under-3.7 sweep
+(PI ruling item 3). The R1-non-compliant flag on the whole sub-table and the
+"not supplied" verifier cost cell are kept, and the 55-map final board
+(`55map-final-board-r2-2026-09-06`) was NOT re-tiered.
+
+**What did NOT change**: every other number in the document; § 8.3's and § 8.4's
+tables, which § 8.6 only re-reads; the tiering of any board; the analysis row's
+signature status (still UNSIGNED, so its `outcome` was extended with the § 8.6
+claim rather than left for the PI).
+
+### 2026-09-12 — § 8: the tension measured, and tier E's ladder
 
 **Trigger**: the PI's closeout brief. § 7.1 and §§ 3.1–3.2 disagreed about what
 K buys on a MINIMAL configuration, and the document recorded the disagreement
