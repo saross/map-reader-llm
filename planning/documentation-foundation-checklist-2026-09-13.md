@@ -144,6 +144,21 @@ agent work; Fable only for the PI-facing orchestration turns.
   counts move.
 - [ ] **11. Second documentation audit pass** after items 6–10, so the
   scorecard describes the foundation the outline pass starts from.
+  - [ ] **11a.** Rebuild the generated-file registry (built 2026-08-20 at
+    `06f7b8ea5`; short by 814 `results/**.md` and 48 `reports/**.md`;
+    does not enumerate `outputs/`) before item 11. Owner: Opus agent.
+  - [ ] **11b.** Verify a source-commit stamp and a tier-1 drift guard for
+    each of the five register renderings and the six generated documents
+    in neither compliance regime (the Era-2 board's `tiering_20m.md` and
+    `frame-deltas.md`, the four 55-map leaderboard tables); add where
+    missing. Owner: Opus agent.
+  - [ ] **11c.** `PaperImp` blocks on the 15 of 17 findings documents
+    that lack one — on touch during the outline pass, not in bulk.
+- [ ] **12. Verdict-model decision (PI)**: a `disclosures` list beside
+  `discrepancies` in the run-conditions verifier, so the 12 deliberate
+  WARNs (3 `n-passes-over` on the mixed-provenance uplift pool, 9
+  `pinned-vintage` disclosures) count as passes and 41 of 41 is
+  reachable — it changes what a signature attests, so it is the PI's.
 
 **Then**: the Results outline pass proper, section by section, with the
 PI ruling per section (the standing "outline first" rule); the
