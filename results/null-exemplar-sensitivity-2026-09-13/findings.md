@@ -69,10 +69,14 @@ and each verdict is cross-checked in ground space.
 | `era2-b-487` (384 px, 336 px step) | 487 | **20** | 467 | 0.281 / 0.191 / 1.000 | 12 of 435 |
 | `era1-full-340` (512 px, 448 px step) | 340 | **25** | 315 | 0.186 / 0.125 / 1.000 | 52 of 539 |
 
-The three null windows are themselves members of the 340-tile frame. The Era-1
-set is dominated by tiles that merely clip a null window — 24 of its 25 are
-neighbours at one 448 px stride — while the Era-2 set overlaps about 1.5 times
-more deeply.
+The two sets are exposed very differently, and the exposure depth is the
+difference. The three null windows are themselves members of the 340-tile frame
+— 3 of that frame's 25 exposed tiles ARE a null window — and every other tile
+in the Era-1 set merely clips one. Its leaked shares run 10 at 1.6%, 12 at
+12.5%, 3 at 100.0%: the 448 px stride leaves a diagonal neighbour a
+sixty-fourth exposed and an edge neighbour an eighth, and nothing in between.
+The Era-2 set, cut at 384 px on a 336 px step inside a 512 px window, is spread
+from 2.1 % to 45.8 % with 2 tiles lying entirely inside a null window.
 
 ### The cells
 

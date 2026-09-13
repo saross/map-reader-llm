@@ -19,6 +19,7 @@ Licence: Apache 2.0
 from __future__ import annotations
 
 import argparse
+import collections
 import json
 import re
 import textwrap
@@ -423,7 +424,8 @@ def tiering_section(analysis: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def verdict_section(analysis: dict[str, Any], swap: dict[str, Any]) -> str:
+def verdict_section(analysis: dict[str, Any], swap: dict[str, Any],
+                   frames: dict[str, Any]) -> str:
     """Render the verdict on Obs 482 and the 3.7 image Tier-1 placement.
 
     Args:
@@ -496,8 +498,10 @@ def verdict_section(analysis: dict[str, Any], swap: dict[str, Any]) -> str:
         "is frame-specific and should say so. Second, the Era-1 boards show no",
         "signature unstratified and a weak, heterogeneous one stratified by run",
         "(one run strongly negative, one positive), which is consistent with",
-        "their exposed tiles being shallower — mean leaked share 0.186 against",
-        "0.281 — but is not established by this analysis; their reduction is",
+        "their exposed tiles being shallower — mean leaked share "
+        f"{fmt(frames['era1-full-340']['mean_overlap_fraction'], 3)} against "
+        f"{fmt(frames['era2-b-487']['mean_overlap_fraction'], 3)}",
+        "— but is not established by this analysis; their reduction is",
         "dominated by its much larger frame effect either way. Third, the",
         "signature test remains a between-cell contrast even stratified: it",
         "establishes that cells which sent the pixels behave differently on the",
@@ -610,12 +614,27 @@ def render(analysis: dict[str, Any], signature: dict[str, Any],
             f"{fmt(f['median_overlap_fraction'], 3)} / "
             f"{fmt(f['max_overlap_fraction'], 3)} | {refs} |"
         )
+    era1_detail = frames["era1-full-340"]["overlap_detail"]
+    era2_detail = frames["era2-b-487"]["overlap_detail"]
+    n_self = sum(1 for o in era1_detail if o["is_null_window_itself"])
+    era1_hist = collections.Counter(
+        round(o["overlap_fraction_of_tile"], 4) for o in era1_detail)
+    era1_parts = ", ".join(
+        f"{n} at {frac:.1%}" for frac, n in sorted(era1_hist.items()))
+    era2_full = sum(1 for o in era2_detail
+                    if o["overlap_fraction_of_tile"] > 0.999)
     head += [
         "",
-        "The three null windows are themselves members of the 340-tile frame. The",
-        "Era-1 set is dominated by tiles that merely clip a null window — 24 of",
-        "its 25 are neighbours at one 448 px stride — while the Era-2 set overlaps",
-        "about 1.5 times more deeply.",
+        "The two sets are exposed very differently, and the exposure depth is",
+        "the difference. The three null windows are themselves members of the",
+        f"340-tile frame — {n_self} of that frame's {len(era1_detail)} exposed",
+        "tiles ARE a null window — and every other tile in the Era-1 set merely",
+        f"clips one. Its leaked shares run {era1_parts}: the 448 px stride",
+        "leaves a diagonal neighbour a sixty-fourth exposed and an edge",
+        "neighbour an eighth, and nothing in between. The",
+        "Era-2 set, cut at 384 px on a 336 px step inside a 512 px window, is",
+        f"spread from 2.1 % to 45.8 % with {era2_full} tiles lying entirely",
+        "inside a null window.",
         "",
         "### The cells",
         "",
@@ -733,15 +752,16 @@ def render(analysis: dict[str, Any], signature: dict[str, Any],
         "pending the PI's reading.",
         "",
     ]
-    return "\n".join(
+    document = "\n".join(
         head
         + [signature_section(analysis), strat_line, ""]
         + [percell_section(analysis), ""]
         + [swap_section(analysis, swap), ""]
         + [tiering_section(analysis), ""]
-        + [verdict_section(analysis, swap)]
+        + [verdict_section(analysis, swap, frames)]
         + method
     )
+    return document.rstrip("\n") + "\n"
 
 
 def main() -> int:
@@ -753,7 +773,7 @@ def main() -> int:
     analysis = json.loads((OUT_DIR / "analysis.json").read_text())
     signature = json.loads((OUT_DIR / "leak_signature.json").read_text())
     swap = json.loads((OUT_DIR / "paired_tile_swap.json").read_text())
-    text = reflow(render(analysis, signature, swap))
+    text = reflow(render(analysis, signature, swap)).rstrip("\n") + "\n"
     if args.check:
         if not FINDINGS.exists() or FINDINGS.read_text() != text:
             print(f"STALE: {FINDINGS}")
