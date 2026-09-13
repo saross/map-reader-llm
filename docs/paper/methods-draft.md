@@ -25,18 +25,18 @@ against that registration in three machine-checked layers: a
 protocol-errata file, a classified analysis register, and a
 hypothesis-outcome table generated from the register.
 
-Deviations are recorded in a numbered errata file (E1–E78). Under the
+Deviations are recorded in a numbered errata file (E1–E85). Under the
 file's declared three-way scheme, entries with bare labels tally 22
 corrections (implementation brought back into line with the
 registered protocol), 18 deviations (substantive departures, each
 with stated justification), and 12 clarifications (interpretations of
-ambiguous registered text). The remaining 26 entries carry composite
+ambiguous registered text). The remaining 33 entries carry composite
 or qualified labels, including the three entries explicitly labelled
 as recording omissions rather than changes (E74, E75, E78); E59
 likewise records an unexecuted registered condition, under a bare
 deviation label. Any headline count of "deviations" depends on the
 counting rule adopted (defensible tallies at this vintage run from 18
-to 30), so we cite entries individually rather than aggregating them.
+to 31), so we cite entries individually rather than aggregating them.
 
 Every analysis in the study carries one of five preregistration
 statuses in a schema-validated register. An analysis is
@@ -54,9 +54,55 @@ post-hoc under this rule, even where they reuse registered sweep
 machinery. Registered obligations that were never executed carry a
 fifth status (*not-executed*) as first-class register entries, so the
 hypothesis-outcome table (Table [N], Results) derives every cell from
-the register and none by hand. The register holds 32 entries: 3
-confirmatory-with-deviation, 5 registered-exploratory, 18 post-hoc,
-and 6 not-executed.
+the register and none by hand. The register holds 67 entries: 47
+post-hoc, 11 registered-exploratory, 4 confirmatory-with-deviation,
+and 5 not-executed. No analysis carries the bare *confirmatory*
+status: every registered confirmatory test that ran did so under at
+least one disclosed erratum. Sixty-six of the 67 rows carry a human
+signature attesting their outcome prose; the single unsigned row is
+unsigned by design, holding the consensus-calibration curve retained
+as calibration material rather than as a result
+(`results/run-analyses.json`).
+
+Three reporting conventions settled during analysis govern how the
+artefacts this section points at may be read, and are stated here
+rather than left implicit. First, **generated projections carry
+provenance, not a hand revision trail**: a Markdown artefact emitted
+by a generator from registered inputs — the hypothesis-outcome table
+is the type case — is exempt from the project's hand
+banner-and-changelog requirement and instead carries a
+do-not-hand-edit banner naming its generator, the source commit of the
+inputs it was projected from, and a `--check` drift guard run by an
+automated test, so "is this current?" is answered by the drift test;
+a hand-added changelog would break the guard, which is why the
+exemption exists (`docs/methodology/output-directory-standard.md`
+§ "Documents in Revision Policy Scope", ruling of 2026-09-11).
+Second, **tile-level MCC uses the name-based tile join**: a detection
+is assigned to the tile whose identifier it records, not to the tile
+whose polygon contains it, because tile-level MCC scores the
+pipeline's decision on the tile the model was shown and the
+identifier records that exactly. The alternative is not available as
+a single metric — the evaluation frames overlap (384 px tiles at a
+336 px step, a 12.5 % overlap), so a median 30.6 % of a cell's
+detections lie inside more than one frame tile, "the tile containing
+this point" is not a function, and the two defensible geometric rules
+differ from each other by up to 0.05 MCC. A scorer-level invariant
+refuses to emit a tile-level confusion whose join the frame's
+geometry contradicts; three cells of one condition family are refused
+on that basis and are **disclosed rather than dropped** — their
+whole-frame F1, which the tile join does not touch, is reported in
+full, and their per-tile table and tile-level MCC are withheld with a
+named reason (`reports/tile-mcc-geometric-join-2026-09-12.md`).
+Third, **a carried operating point means the calibration ladder's own
+vote shell**: where a condition's operating point is carried from the
+calibration corpus rather than optimised in place, the carried point
+is that ladder's vote shell (k = 1 / 3 / 4 / 8 at K = 1 / 3 / 5 / 10)
+and the literal reading k = K is reported beside it as a disclosed
+column. Both readings are computed and committed and they coincide at
+K ≤ 3; above it the literal reading costs up to 0.2566 F1 where the
+shell reading costs at most 0.0735, so any transfer cost quoted on
+the literal reading is an upper bound
+(`results/k-ladder-2026-09-12/findings.md` § 7.5).
 
 The registered inference method and the method used in practice
 differ, and we disclose rather than conflate them (erratum E45). The
@@ -69,6 +115,29 @@ Permutation testing is arguably better suited to the paired
 tile-level structure of the data, but it cannot be presented as
 registered, so wherever a confirmatory claim rests on a permutation
 result we report the registered bootstrap construction alongside it.
+Two further departures from the registered inferential specification
+are disclosed on the same principle. The registered
+confidence-interval procedure is a 1,000-iteration percentile
+bootstrap (Decision 10); the corpus runs bias-corrected and
+accelerated (BCa) bootstrap at 10,000 iterations — a substitution made
+in April 2026 for a stated statistical reason, undisclosed until
+erratum E82, and defective in its vectorised adapter for sixteen weeks
+thereafter. No point estimate and no published significance verdict
+changes, because the registered rule is defined on difference
+intervals and no difference interval reaches the defective wrapper;
+what moves is the width of single-condition intervals, in both
+directions, across essentially the whole corpus. Separately, the rule
+deciding which conditions are published as statistically
+indistinguishable from the best was an order-dependent sequential rule
+rather than the clique its own documentation promised. It is replaced
+throughout by Hsu's multiple-comparisons-with-the-best procedure,
+which revised published tie-set membership on eight boards in both
+directions and cost one board a claim to a sole leader it does not
+have (E83), again with no point estimate changed. Where both a
+pairwise BH-corrected family and the simultaneous procedure are
+available we report where they disagree, because a non-significant
+pairwise family is not licence to claim that any of its members could
+be the best one.
 The registered family-level correction was executed on 2026-07-30 as
 a single family: one primary p-value per confirmatory hypothesis,
 m = 7 (H6 excluded as never run), with the one input that had never
@@ -88,9 +157,7 @@ each rather than leaving silence for a registry reader to find. H6
 (the Flash-to-Pro transfer protocol) was deferred under a competing
 deadline and the deferral never ratified. The Pro comparison we do
 report is an exploratory extension at a different scope, not H6
-(errata E41, E74). H13 (overlap/stride) was registered in scope and
-silently dropped. Tile overlap was a fixed parameter throughout,
-never a manipulated factor (E75). H14 and H15 (cross-model
+(errata E41, E74). H14 and H15 (cross-model
 consistency and cross-model voting) were registered as deferred at
 lodgement, and the deferral was honoured: no non-Google model was
 ever called, so every generalisation claim in this paper is scoped to
@@ -102,6 +169,22 @@ post-experiment verification of the minimal-thinking decision
 latency component has no coverage anywhere, so the registration's
 anticipated "equivalent at a third the latency" finding is not
 claimed (E78).
+
+One registered obligation was disclosed as dropped and then
+discharged, which the register records and this section states so the
+two do not disagree. H13 (overlap/stride) was registered as a
+three-arm overlap contrast and, for the first six months of execution,
+only the study's fixed baseline tiling ever ran: arms B and C were
+never executed, tile overlap was a fixed parameter at 12.5 % rather
+than a manipulated factor, and no edge-effect assessment existed
+anywhere. Erratum E75 records that omission, dated 2026-08-17. The
+arms were then built and the three registered H13 analyses executed on
+2026-08-17/18, so H13 is a *registered-exploratory* analysis with a
+result rather than a not-executed obligation, and it carries the
+omission's erratum alongside two others (E54, E66, E75). The
+correction is a late execution, not a late claim: the result is
+reported for the single carried configuration the registration frames
+the contrast within, under the project's plateau rule.
 
 Interpretation of what this preregistration record implies about
 LLM-assisted registration practice is taken up in Discussion
@@ -515,7 +598,7 @@ investigation, and the phase was corrected and fully re-run. E26:
 reference deduplication inside bootstrap resampling produced
 confidence intervals that could exclude their own point estimates,
 fixed by pre-computing per-tile TP/FP/FN counts before resampling. The
-complete errata log — 83 entries at the time of drafting, E1–E83, with
+complete errata log — 85 entries at the time of drafting, E1–E85, with
 the by-class accounting and its counting-rule caveat in § M.x — is
 supplied in the supplementary materials alongside the registration.
 
@@ -526,7 +609,7 @@ Framework on 2026-01-31 (12:54 UTC), before confirmatory data
 collection. The registered content is protocol v4.7 with a versioned
 changelog; the posted file's header retains a stale v4.6 label, itself
 disclosed in the errata. Every deviation is documented in a living
-errata log (83 entries at drafting) carrying a classification and an
+errata log (85 entries at drafting) carrying a classification and an
 impact assessment, and § M.x describes the three machine-checked
 layers — errata file, classified analysis register, and generated
 hypothesis-outcome table — through which execution is reported against
@@ -587,6 +670,89 @@ rather than the implementation. Session transcripts are archived at
 planned as a separate contribution.
 
 ## Changelog
+
+### 2026-09-13 (S153) — § M.x brought current to E85 and to the S153 reporting rulings
+
+Trigger: item 4 of `planning/documentation-foundation-checklist-2026-09-13.md`
+— § M.x had been drafted at the E78 errata vintage and the 32-row
+register vintage, and three reporting conventions settled in S153 bear
+on Methods. Every count below was recounted from the artefact this
+session rather than carried from the prior text.
+
+**Before → after table for numerical claims that moved**:
+
+| Claim | Before | After | Source recounted |
+|---|---|---|---|
+| Errata range | E1–E78 | **E1–E85** | `docs/methodology/preregistration/protocol-errata.md`, 85 `### E<n>` entries |
+| Bare-label tallies | 22 / 18 / 12 | **22 / 18 / 12** (unchanged) | same; the two bullet-format entries E31 and E32 counted with the table-format ones |
+| Composite or qualified labels | 26 | **33** | same |
+| Defensible "deviations" range | 18 to 30 | **18 to 31** | same; upper bound is every Type mentioning "Deviation" |
+| Analysis register rows | 32 | **67** | `results/run-analyses.json` |
+| — post-hoc | 18 | **47** | same |
+| — registered-exploratory | 5 | **11** | same |
+| — confirmatory-with-deviation | 3 | **4** | same |
+| — not-executed | 6 | **5** | same |
+| Errata log count in § M.12 | 83 entries, E1–E83 | **85 entries, E1–E85** | same errata file (two places in § M.12, kept consistent with § M.x) |
+
+**One stale claim corrected, and it was load-bearing.** The
+not-executed paragraph asserted that "H13 (overlap/stride) was
+registered in scope and silently dropped" and that tile overlap was
+"never a manipulated factor (E75)". That was true when § M.x was
+drafted on 2026-08-17 and false the next day: the three arms were built
+and all three registered H13 analyses executed on 2026-08-17/18
+(`results/h13-overlap-2026-08-18/findings.md`), so the register holds
+H13 as **registered-exploratory with a result** (row
+`h13-overlap-2026-08-18`, deviations E54, E66, E75) and the generated
+hypothesis-outcome table prints H13 as **executed**. § M.x asserts
+elsewhere that the table derives every cell from the register, so the
+document was contradicting a projection it vouches for. The claim is
+replaced by a paragraph that states the omission, its erratum, and its
+discharge in order, and H13 is removed from the list of five
+never-executed obligations — which now lists exactly five accounts
+(H6, H14, H15, H2 Condition C, the § 8.9 verification), matching the
+register's five `not-executed` rows one for one.
+
+**Prose added.** (1) The signature layer: 66 of the 67 rows signed, the
+one unsigned row unsigned by design, and the observation the counts
+themselves support — that no row carries the bare *confirmatory*
+status, so every registered confirmatory test that ran did so under at
+least one disclosed erratum. (2) Two further departures from the
+registered inferential specification, in the paragraph that already
+discloses the permutation-for-bootstrap substitution: **E82** (BCa
+replaced the registered 1,000-iteration percentile bootstrap
+undisclosed, at 10,000 iterations, its vectorised adapter defective for
+sixteen weeks; no point estimate or significance verdict moves, single-
+condition interval widths move in both directions) and **E83** (the
+tie-set rule replaced by Hsu multiple-comparisons-with-the-best; eight
+boards' membership revised in both directions, one sole-leader claim
+withdrawn), with the rule that a non-significant pairwise family is not
+licence to claim any member could be best. (3) A new paragraph carrying
+the three S153 reporting conventions, each with an inline anchor:
+generated projections carry provenance not a hand revision trail
+(`docs/methodology/output-directory-standard.md`
+§ "Documents in Revision Policy Scope", 2026-09-11); the name-based
+tile join as the published tile-MCC convention, with the frame-overlap
+reason it is not merely a default (384 px tiles at a 336 px step,
+median 30.6 % of detections in more than one tile, the two geometric
+rules up to 0.05 MCC apart) and the refused-cell disclosure — whole-
+frame F1 in full, per-tile table and tile-MCC withheld with a named
+reason (ruling 6; `reports/tile-mcc-geometric-join-2026-09-12.md`);
+and the carried-point convention — the stride ladder's own vote shell
+is the carried point with `k = K` disclosed beside it, the two
+coinciding at K ≤ 3 and diverging to −0.2566 against −0.0735 above it,
+so literal-reading transfer costs are upper bounds
+(`results/k-ladder-2026-09-12/findings.md` § 7.5).
+
+**What did NOT change**: the preregistration facts (v4.7, lodged
+2026-01-31, fifteen hypotheses, eight confirmatory and seven
+exploratory); the cite-individually counting rule and its standing as
+a queued PI call; the five-status definitions and the discharge
+criterion for *post-hoc*; the family-level BH-FDR execution and all
+eight adjusted p-values; the five not-executed accounts (H6, H13, H14
+and H15, H2 Condition C, the § 8.9 minimal-thinking verification) and
+their errata; the Discussion cross-reference; and every other section
+of this document, § M.12's two errata counts excepted. The § 6.3
+session-count [DRAFT NOTE] still gates finalisation.
 
 ### 2026-09-07 (S150) — M.3: the r2 audit paragraph (erratum E84)
 
