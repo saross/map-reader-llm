@@ -89,8 +89,22 @@ agent work; Fable only for the PI-facing orchestration turns.
 **Batch 2 — after the image run lands ($0 except as noted)**
 
 - [ ] **6. Era-2 board rebuild and re-signature**: the four re-scored
-  cells (recovery-fragment fix), the tile-MCC permutation family (ruling 7),
-  one rebuild, one signature (PI: "I'll wait"). Owner: Opus agent; PI signs.
+  cells (recovery-fragment fix, landed `eda4ab70e`: three unchanged, k3
+  0.8870 → 0.8860), the tile-MCC permutation family (ruling 7), one
+  rebuild, one signature (PI: "I'll wait"). Owner: Opus agent; PI signs.
+  - [ ] **6a. Prerequisite**: the tile-join invariant currently raises
+    inside `bootstrap_ci` and aborts the WHOLE evaluation of a refused
+    cell, so the k3 cell's moved F1 cannot be written to its evaluation
+    or register row. Under ruling 6 (name-based join published; refused
+    cells' F1 reported in full, per-tile table withheld) the invariant
+    must withhold the per-tile table and let F1 and its bootstrap proceed.
+    Code fix + test, then write the k3 evaluation. Also promote
+    `carry_probabilities.py` (integer-crop-window coverage test) to
+    `scripts/`. Owner: Opus agent.
+  - [ ] **6b. PI decision**: one verifier call (≈ US$0.0007) to make
+    tier E's K = 5 zero-delta unconditional (candidate_01335 carried 0.10
+    across a 1 px crop shift against a 0.15 gate) — or accept as
+    conditional and disclosed.
 - [ ] **7. 55-map board r2 rebuild**: the K = 5 rung of stride B under the
   3.7 verifier, the image run's cells (K = 1, K = 3, both arms), the MCC
   tiering; signatures. Owner: Opus agent; PI signs.

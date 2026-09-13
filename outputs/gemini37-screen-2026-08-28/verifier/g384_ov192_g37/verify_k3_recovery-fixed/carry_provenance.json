@@ -1,0 +1,806 @@
+{
+  "schema": "verifier-stage-carry/1",
+  "label": "k3",
+  "extends_stage": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k3",
+  "extends_crops": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/crops_k3",
+  "new_crops": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/crops_k3_recovery-fixed",
+  "new_union": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t1.geojson",
+  "old_union": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t1.geojson",
+  "match_tolerance_m": 2.0,
+  "old_candidates": 757,
+  "new_candidates": 759,
+  "carried": 756,
+  "uncovered": 3,
+  "carried_but_displaced": 51,
+  "carried_with_changed_pixel_window": 5,
+  "displaced_detail": [
+    {
+      "new_key": "candidate_00053",
+      "old_key": "candidate_00053",
+      "distance_m": 1.3338,
+      "old_window": [
+        2227,
+        353
+      ],
+      "new_window": [
+        2227,
+        353
+      ],
+      "window_identical": true,
+      "mound_probability": 0.95
+    },
+    {
+      "new_key": "candidate_00048",
+      "old_key": "candidate_00048",
+      "distance_m": 1.232566,
+      "old_window": [
+        2009,
+        1021
+      ],
+      "new_window": [
+        2009,
+        1021
+      ],
+      "window_identical": true,
+      "mound_probability": 0.1
+    },
+    {
+      "new_key": "candidate_00324",
+      "old_key": "candidate_00324",
+      "distance_m": 1.075671,
+      "old_window": [
+        801,
+        2119
+      ],
+      "new_window": [
+        801,
+        2119
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00049",
+      "old_key": "candidate_00049",
+      "distance_m": 0.999444,
+      "old_window": [
+        1886,
+        1236
+      ],
+      "new_window": [
+        1886,
+        1237
+      ],
+      "window_identical": false,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00267",
+      "old_key": "candidate_00267",
+      "distance_m": 0.967556,
+      "old_window": [
+        3701,
+        2336
+      ],
+      "new_window": [
+        3701,
+        2336
+      ],
+      "window_identical": true,
+      "mound_probability": 0.4
+    },
+    {
+      "new_key": "candidate_00272",
+      "old_key": "candidate_00272",
+      "distance_m": 0.829333,
+      "old_window": [
+        3716,
+        2337
+      ],
+      "new_window": [
+        3717,
+        2337
+      ],
+      "window_identical": false,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00330",
+      "old_key": "candidate_00330",
+      "distance_m": 0.737997,
+      "old_window": [
+        527,
+        2354
+      ],
+      "new_window": [
+        527,
+        2354
+      ],
+      "window_identical": true,
+      "mound_probability": 0.95
+    },
+    {
+      "new_key": "candidate_00059",
+      "old_key": "candidate_00059",
+      "distance_m": 0.7106,
+      "old_window": [
+        337,
+        2412
+      ],
+      "new_window": [
+        337,
+        2412
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00003",
+      "old_key": "candidate_00003",
+      "distance_m": 0.607691,
+      "old_window": [
+        277,
+        2278
+      ],
+      "new_window": [
+        277,
+        2278
+      ],
+      "window_identical": true,
+      "mound_probability": 0.1
+    },
+    {
+      "new_key": "candidate_00346",
+      "old_key": "candidate_00346",
+      "distance_m": 0.607662,
+      "old_window": [
+        705,
+        2304
+      ],
+      "new_window": [
+        705,
+        2304
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00092",
+      "old_key": "candidate_00092",
+      "distance_m": 0.579151,
+      "old_window": [
+        3177,
+        3192
+      ],
+      "new_window": [
+        3177,
+        3192
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00348",
+      "old_key": "candidate_00348",
+      "distance_m": 0.579117,
+      "old_window": [
+        821,
+        2340
+      ],
+      "new_window": [
+        820,
+        2340
+      ],
+      "window_identical": false,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00499",
+      "old_key": "candidate_00499",
+      "distance_m": 0.555363,
+      "old_window": [
+        3296,
+        1965
+      ],
+      "new_window": [
+        3296,
+        1965
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00502",
+      "old_key": "candidate_00502",
+      "distance_m": 0.553382,
+      "old_window": [
+        3146,
+        1035
+      ],
+      "new_window": [
+        3146,
+        1035
+      ],
+      "window_identical": true,
+      "mound_probability": 0.95
+    },
+    {
+      "new_key": "candidate_00006",
+      "old_key": "candidate_00006",
+      "distance_m": 0.473732,
+      "old_window": [
+        251,
+        2344
+      ],
+      "new_window": [
+        251,
+        2344
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00349",
+      "old_key": "candidate_00349",
+      "distance_m": 0.473709,
+      "old_window": [
+        743,
+        2394
+      ],
+      "new_window": [
+        743,
+        2394
+      ],
+      "window_identical": true,
+      "mound_probability": 0.15
+    },
+    {
+      "new_key": "candidate_00469",
+      "old_key": "candidate_00469",
+      "distance_m": 0.468971,
+      "old_window": [
+        2811,
+        1423
+      ],
+      "new_window": [
+        2811,
+        1423
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00520",
+      "old_key": "candidate_00520",
+      "distance_m": 0.468744,
+      "old_window": [
+        3891,
+        134
+      ],
+      "new_window": [
+        3891,
+        134
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00347",
+      "old_key": "candidate_00347",
+      "distance_m": 0.414682,
+      "old_window": [
+        795,
+        2349
+      ],
+      "new_window": [
+        795,
+        2349
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00323",
+      "old_key": "candidate_00323",
+      "distance_m": 0.414662,
+      "old_window": [
+        631,
+        2153
+      ],
+      "new_window": [
+        631,
+        2153
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00542",
+      "old_key": "candidate_00542",
+      "distance_m": 0.371787,
+      "old_window": [
+        4054,
+        687
+      ],
+      "new_window": [
+        4054,
+        687
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00052",
+      "old_key": "candidate_00052",
+      "distance_m": 0.347517,
+      "old_window": [
+        388,
+        2425
+      ],
+      "new_window": [
+        388,
+        2425
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00351",
+      "old_key": "candidate_00351",
+      "distance_m": 0.347497,
+      "old_window": [
+        742,
+        2414
+      ],
+      "new_window": [
+        742,
+        2414
+      ],
+      "window_identical": true,
+      "mound_probability": 0.1
+    },
+    {
+      "new_key": "candidate_00291",
+      "old_key": "candidate_00291",
+      "distance_m": 0.347016,
+      "old_window": [
+        595,
+        256
+      ],
+      "new_window": [
+        595,
+        256
+      ],
+      "window_identical": true,
+      "mound_probability": 0.2
+    },
+    {
+      "new_key": "candidate_00436",
+      "old_key": "candidate_00436",
+      "distance_m": 0.343293,
+      "old_window": [
+        467,
+        655
+      ],
+      "new_window": [
+        467,
+        655
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00434",
+      "old_key": "candidate_00434",
+      "distance_m": 0.332493,
+      "old_window": [
+        370,
+        620
+      ],
+      "new_window": [
+        370,
+        620
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00268",
+      "old_key": "candidate_00268",
+      "distance_m": 0.332116,
+      "old_window": [
+        3764,
+        2389
+      ],
+      "new_window": [
+        3764,
+        2389
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00468",
+      "old_key": "candidate_00468",
+      "distance_m": 0.271281,
+      "old_window": [
+        2731,
+        1440
+      ],
+      "new_window": [
+        2731,
+        1440
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00361",
+      "old_key": "candidate_00361",
+      "distance_m": 0.247379,
+      "old_window": [
+        195,
+        617
+      ],
+      "new_window": [
+        195,
+        617
+      ],
+      "window_identical": true,
+      "mound_probability": 0.85
+    },
+    {
+      "new_key": "candidate_00001",
+      "old_key": "candidate_00001",
+      "distance_m": 0.246947,
+      "old_window": [
+        215,
+        2276
+      ],
+      "new_window": [
+        215,
+        2276
+      ],
+      "window_identical": true,
+      "mound_probability": 0.85
+    },
+    {
+      "new_key": "candidate_00269",
+      "old_key": "candidate_00269",
+      "distance_m": 0.246934,
+      "old_window": [
+        3938,
+        2352
+      ],
+      "new_window": [
+        3938,
+        2352
+      ],
+      "window_identical": true,
+      "mound_probability": 0.85
+    },
+    {
+      "new_key": "candidate_00047",
+      "old_key": "candidate_00047",
+      "distance_m": 0.246719,
+      "old_window": [
+        2121,
+        1048
+      ],
+      "new_window": [
+        2122,
+        1048
+      ],
+      "window_identical": false,
+      "mound_probability": 0.95
+    },
+    {
+      "new_key": "candidate_00521",
+      "old_key": "candidate_00521",
+      "distance_m": 0.236947,
+      "old_window": [
+        3791,
+        351
+      ],
+      "new_window": [
+        3791,
+        351
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00027",
+      "old_key": "candidate_00027",
+      "distance_m": 0.236868,
+      "old_window": [
+        281,
+        2451
+      ],
+      "new_window": [
+        281,
+        2452
+      ],
+      "window_identical": false,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00057",
+      "old_key": "candidate_00057",
+      "distance_m": 0.236864,
+      "old_window": [
+        362,
+        2289
+      ],
+      "new_window": [
+        362,
+        2289
+      ],
+      "window_identical": true,
+      "mound_probability": 0.2
+    },
+    {
+      "new_key": "candidate_00273",
+      "old_key": "candidate_00273",
+      "distance_m": 0.236851,
+      "old_window": [
+        3844,
+        2577
+      ],
+      "new_window": [
+        3844,
+        2577
+      ],
+      "window_identical": true,
+      "mound_probability": 0.95
+    },
+    {
+      "new_key": "candidate_00433",
+      "old_key": "candidate_00433",
+      "distance_m": 0.222162,
+      "old_window": [
+        443,
+        533
+      ],
+      "new_window": [
+        443,
+        533
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00004",
+      "old_key": "candidate_00004",
+      "distance_m": 0.222101,
+      "old_window": [
+        198,
+        2368
+      ],
+      "new_window": [
+        198,
+        2368
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00501",
+      "old_key": "candidate_00501",
+      "distance_m": 0.198839,
+      "old_window": [
+        3111,
+        805
+      ],
+      "new_window": [
+        3111,
+        805
+      ],
+      "window_identical": true,
+      "mound_probability": 0.95
+    },
+    {
+      "new_key": "candidate_00005",
+      "old_key": "candidate_00005",
+      "distance_m": 0.198591,
+      "old_window": [
+        234,
+        2347
+      ],
+      "new_window": [
+        234,
+        2347
+      ],
+      "window_identical": true,
+      "mound_probability": 0.2
+    },
+    {
+      "new_key": "candidate_00350",
+      "old_key": "candidate_00350",
+      "distance_m": 0.198585,
+      "old_window": [
+        757,
+        2395
+      ],
+      "new_window": [
+        757,
+        2395
+      ],
+      "window_identical": true,
+      "mound_probability": 0.1
+    },
+    {
+      "new_key": "candidate_00198",
+      "old_key": "candidate_00198",
+      "distance_m": 0.164412,
+      "old_window": [
+        444,
+        487
+      ],
+      "new_window": [
+        444,
+        487
+      ],
+      "window_identical": true,
+      "mound_probability": 0.95
+    },
+    {
+      "new_key": "candidate_00435",
+      "old_key": "candidate_00435",
+      "distance_m": 0.138343,
+      "old_window": [
+        364,
+        647
+      ],
+      "new_window": [
+        364,
+        647
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00522",
+      "old_key": "candidate_00522",
+      "distance_m": 0.13832,
+      "old_window": [
+        3881,
+        379
+      ],
+      "new_window": [
+        3881,
+        379
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00029",
+      "old_key": "candidate_00029",
+      "distance_m": 0.13824,
+      "old_window": [
+        293,
+        2499
+      ],
+      "new_window": [
+        293,
+        2499
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00002",
+      "old_key": "candidate_00002",
+      "distance_m": 0.138233,
+      "old_window": [
+        213,
+        2299
+      ],
+      "new_window": [
+        213,
+        2299
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00331",
+      "old_key": "candidate_00331",
+      "distance_m": 0.138228,
+      "old_window": [
+        617,
+        2362
+      ],
+      "new_window": [
+        617,
+        2362
+      ],
+      "window_identical": true,
+      "mound_probability": 0.75
+    },
+    {
+      "new_key": "candidate_00199",
+      "old_key": "candidate_00199",
+      "distance_m": 0.13816,
+      "old_window": [
+        403,
+        368
+      ],
+      "new_window": [
+        403,
+        368
+      ],
+      "window_identical": true,
+      "mound_probability": 0.95
+    },
+    {
+      "new_key": "candidate_00028",
+      "old_key": "candidate_00028",
+      "distance_m": 0.11105,
+      "old_window": [
+        286,
+        2475
+      ],
+      "new_window": [
+        286,
+        2475
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    },
+    {
+      "new_key": "candidate_00058",
+      "old_key": "candidate_00058",
+      "distance_m": 0.11105,
+      "old_window": [
+        397,
+        2299
+      ],
+      "new_window": [
+        397,
+        2299
+      ],
+      "window_identical": true,
+      "mound_probability": 0.1
+    },
+    {
+      "new_key": "candidate_00322",
+      "old_key": "candidate_00322",
+      "distance_m": 0.082298,
+      "old_window": [
+        627,
+        2056
+      ],
+      "new_window": [
+        627,
+        2056
+      ],
+      "window_identical": true,
+      "mound_probability": 1.0
+    }
+  ],
+  "uncovered_detail": [
+    {
+      "new_key": "candidate_00523",
+      "centroid_x": 334024.1379135775,
+      "centroid_y": 4686328.79935267,
+      "source_tile": "K-35-062-2_Rakovski_x3648_y192.png",
+      "vote_count": 2
+    },
+    {
+      "new_key": "candidate_00706",
+      "centroid_x": 315473.0813369781,
+      "centroid_y": 4684405.414031736,
+      "source_tile": "K-35-062-2_Rakovski_x192_y576.png",
+      "vote_count": 1
+    },
+    {
+      "new_key": "candidate_00707",
+      "centroid_x": 328491.58653161605,
+      "centroid_y": 4682360.618801072,
+      "source_tile": "K-35-062-2_Rakovski_x2688_y1152.png",
+      "vote_count": 1
+    }
+  ]
+}
