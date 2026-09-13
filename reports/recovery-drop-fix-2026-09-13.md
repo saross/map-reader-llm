@@ -387,4 +387,12 @@ its register row until the tile-join question is ruled on.
 
 Landed on branch `worktree-agent-a41b647e2345bdb44`: archive `5a56ad248`, rebuild
 `e9d1db0d0`, verifier stages `f8e0eb600`, re-scores `20c0a053f`, board note
-`6291e9938`, findings amendment `35fe0b0f9`.
+`6291e9938`, findings amendment `35fe0b0f9`, this report and the tier-1 tests
+`fafc18745`, the measurement harness `63f4cac1c`, and the tier-E
+operating-point row restored to `operating-points.json` at `5166ddeda` (the
+re-score driver writes that file wholesale, so the second invocation had
+overwritten the first's row; it was rebuilt from the committed sweeps and
+evaluation, with the argmax asserted against the committed operating point).
+
+Full tier-1 suite on sapphire after the work: **2,512 passed, 4 skipped, 3
+xfailed** in 183 s, including the 16 new tests.
