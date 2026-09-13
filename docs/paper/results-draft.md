@@ -10,7 +10,13 @@
 
 ---
 
-> **Last revised**: 2026-09-12 (Session 153: § R1b added as a heading and
+> **Last revised**: 2026-09-13 (Session 153: the four
+> `[DRAFT, S153 — pending PI ruling]` markers in § R7.3 and the § R4
+> `[DRAFT NOTE, S152]` cleared — each of the five decisions was ruled on
+> 2026-09-12, and the markers now read `[RULED 2026-09-1x: …]` with the
+> ruling named; § R7.3's closing draft note keeps only its open items (the
+> word budget). No figure, point estimate, or verdict changed. Prior:
+> 2026-09-12 (Session 153: § R1b added as a heading and
 > a `[BLOCK PENDING]` pointer on the PI's ruling 5, the GS stride/geometry
 > programme's Results home, and § R7.2's cross-reference re-pointed to it;
 > earlier the same day, reference r2 carried through
@@ -361,7 +367,8 @@ instrument against the whole Era-2 incumbency at once, at both levels.
 The frame itself moved no incumbent's F1 at four decimals and the
 B-geometry cells by 0.007 to 0.008 downward.
 
-[DRAFT NOTE, S152: post-hoc; the analysis row was SIGNED by the PI on
+[RULED 2026-09-12 (ruling 7) — retained for the record: post-hoc; the
+analysis row was SIGNED by the PI on
 2026-09-10 after ruling gate G1 satisfied on the true-input
 reproduction: the archived board rebuilt by the retired builder failed
 as specified on one cell because a stale label-keyed cache had served
@@ -759,14 +766,18 @@ of § R4 — the 487-tile gold-standard frame — the 3.8 cell joins Tier 1 at
 candidate than 3.7 (76 tokens against 106) for about $0.85. The family
 ladder for this task therefore stops at 3.7, and because the 3.8
 proposer seat was never measured, nothing here bears on 3.8 as a
-proposer (Obs 448). [DRAFT, S153 — pending PI ruling]
+proposer (Obs 448). [RULED 2026-09-12: the 3.8 verifier-seat leg is
+reported as drafted.]
 
 On the r2 board the all-3.7 stack takes tier 1: arm 2 N = 5 oracle
 0.8871 and carried 0.8827 (T2). Its carried point alone stands +0.0267
 above the best cell the Gemini 3 board can field, B's own N = 10 oracle
 at 0.8560, and its oracle stands +0.0311 above the same cell — so the
 family clears the incumbent family even when the incumbent is allowed
-its own hindsight. [DRAFT, S153 — pending PI ruling] The
+its own hindsight. [RULED 2026-09-12 (ruling 2, outline § D19): the
+family-clears-incumbent framing stands — the paper's headline is the
+all-3.7 stack, 0.9190 on the Era-2 board frame and 0.9265 on the
+791-candidate screen.] The
 fourth cell scores 0.8728 carried (T3) and 0.8813 oracle (T2) and
 holds the board's highest carried tile-MCC, 0.726 at precision 0.952
 and recall 0.806, the discriminating verifier on the noisier Gemini 3
@@ -784,7 +795,9 @@ Era-2 verified board of § R4 all five Tier-1 cells are Gemini 3.7 or
 3.8, and every Gemini 3 cell falls to Tier 2 or below at both its
 committed and its sweep-optimal operating point, so the family gain
 reads the same way on 487 curated tiles as on 55 deployment sheets.
-[DRAFT, S153 — pending PI ruling]
+[RULED 2026-09-12 (ruling 2): the family step is the headline, so it
+stands on both instruments; whether § R4 or § R7.3 is its single home
+is a compression call for the re-draft, not a ruling.]
 
 The image screen on GS (I1–I5) moves the modality result of §§ R2 and
 R4. The 3.7 image proposer scored 0.9254 at 20 m under the Gemini 3
@@ -821,10 +834,13 @@ billed at about 0.6 × the token basis was an artefact of the run
 metadata's own cost stamps, which priced 3.7 at Gemini 3 rates.
 Thinking volume was 265–277
 tokens per call on the text arms (D4) and 88–157 on image (I4).
-[DRAFT, S153 — pending PI ruling]
+[RULED 2026-09-12: the fourth cell's mixed basis — token-audited
+proposer, invoice-derived verifier — is kept as marked.]
 
-[DRAFT NOTE, S151: (a) chains are named per sentence, canonical for
-the bets and r2 for the board, as the findings documents do; (b) RESOLVED
+[DRAFT NOTE, S151: (a) RESOLVED S153 by ruling 1 (outline § D18) —
+chains are named per sentence, canonical for the bets and r2 for the
+board, as the findings documents do, which is exactly D18's licence to
+name an older chain only where a bet was assessed on it; (b) RESOLVED
 S153 — the two 3.7 arms carry audited token-basis costs ($153 and
 $159; `reports/r7-gaps-deltas-2026-09-11.md` § 2), the fourth cell's
 verifier is taken from the invoice (about $58, day-isolated;
@@ -964,6 +980,36 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-09-13 — The five ruled markers cleared (Session 153)
+
+**Refresh trigger**: item 9 of
+`planning/documentation-foundation-checklist-2026-09-13.md`. All four
+`[DRAFT, S153 — pending PI ruling]` markers in § R7.3, and the § R4
+`[DRAFT NOTE, S152]`, carried decisions the PI had already taken on
+2026-09-12 (recorded at
+`docs/paper/results-claims-inventory-2026-09-12.md` § Rulings 2026-09-12
+and `reports/results-rulings-deltas-2026-09-12.md`). Each marker is
+replaced by the ruling it was waiting for.
+
+| # | passage | before | after |
+|---|---|---|---|
+| 1 | § R7.3, the Gemini 3.8 verifier-seat leg (R7.3-13) | `[DRAFT, S153 — pending PI ruling]` — "whether the 3.8 leg is reported at all" | `[RULED 2026-09-12: the 3.8 verifier-seat leg is reported as drafted.]` |
+| 2 | § R7.3, the r2 tier-1 sentence (R7.3-15) | same marker — "whether the family-clears-incumbent framing stands" | `[RULED 2026-09-12 (ruling 2, outline § D19): … the paper's headline is the all-3.7 stack, 0.9190 on the Era-2 board frame and 0.9265 on the 791-candidate screen.]` |
+| 3 | § R7.3, the gold-standard back-reference (R7.3-20) | same marker | `[RULED 2026-09-12 (ruling 2): the family step is the headline, so it stands on both instruments; whether § R4 or § R7.3 is its single home is a compression call for the re-draft, not a ruling.]` |
+| 4 | § R7.3, the cost paragraph (R7.3-26, R7.3-29) | same marker — "whether the cost paragraph stays in the body" | `[RULED 2026-09-12: the fourth cell's mixed basis — token-audited proposer, invoice-derived verifier — is kept as marked.]` |
+| 5 | § R4, the Era-2 board note | `[DRAFT NOTE, S152: post-hoc; the analysis row was SIGNED …]` | `[RULED 2026-09-12 (ruling 7) — retained for the record: …]`, same body text |
+| 6 | § R7.3, closing draft note, item (a) | "(a) chains are named per sentence, canonical for the bets and r2 for the board" | "(a) RESOLVED S153 by ruling 1 (outline § D18) — … which is exactly D18's licence to name an older chain only where a bet was assessed on it" |
+
+**What did NOT change.** No point estimate, interval, p-value, tier,
+admissible set, registration status, table, or figure. The § R4 note's
+body text is carried verbatim; only its label moved from pending to
+ruled. Two markers are deliberately **left open** because their
+decisions are not in the Rulings section: § R0's
+`[DRAFT NOTE: cross-reference the Methods subsections …]` (blocked on
+Methods prose) and item (d) of § R7.3's closing note (the per-block word
+allocation, which ruling 3 explicitly did not settle). The `[TABLE N]`
+pointer in § R0 is a placement marker, not a decision, and stays.
 
 ### 2026-09-12 (later) — Obs 447 qualification in § R2 and § R4 (Session 153)
 
