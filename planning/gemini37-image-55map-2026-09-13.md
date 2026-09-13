@@ -1,10 +1,12 @@
 # Gemini 3.7 image at deployment scale: the tile-MCC candidate, K = 3
 
-> **Last revised**: 2026-09-13 (**PASS 1 COMPLETE, both gates PASS** — 24,561 /
-> 24,561 tiles, audited US$81.9283 against the US$110 gate, cached share 0.808
-> against the 0.70 gate; the projection is revised upward to ≈ US$285 in § 3.1,
-> above the card's ≈ US$261–276 and inside the US$420 hard stop, so passes 2–3
-> are GO. Earlier: **RELAUNCHED** — B1–B4 all discharged, the GS
+> **Last revised**: 2026-09-13 (**PROPOSER COMPLETE** — all three passes at
+> 24,561 / 24,561, audited US$245.6307 at a flat US$0.00333 per tile-pass, and
+> both unions built (K = 1 6,985, K = 3 8,337; § 3.2). The four verifier arms
+> are in flight and the campaign projects to ≈ US$274–288, inside the US$420
+> hard stop. Earlier: **PASS 1 COMPLETE, both gates PASS** — audited
+> US$81.9283 against the US$110 gate, cached share 0.808 against the 0.70
+> gate (§ 3.1). Earlier: **RELAUNCHED** — B1–B4 all discharged, the GS
 > calibration leg run and the carried operating points fixed in § 2, the
 > mechanism smoke passed, and the 55-map proposer's pass 1 launched;
 > P1–P5 remain
@@ -117,9 +119,45 @@ is ≈ US$261 (B3).
 | 5-tile mechanism smoke | — | **≈ 0.025** |
 | 55-map proposer, pass 1 | ≈ 79 | **81.9283** — both gates PASS (§ 3.1 below) |
 | 55-map proposer, pass 2 | ≈ 79 | **81.8712** — cache 0.810, within 0.07 % of pass 1 |
-| 55-map proposer, pass 3 | ≈ 79 | in flight from 12:47:42 UTC |
-| Four verifier arms, scoring | ≈ 37.4 | not reached |
-| **Running total** | | **≈ 164.95** of a revised ≈ US$285 |
+| 55-map proposer, pass 3 | ≈ 79 | **81.8313** — cache 0.811 |
+| **Proposer, all three passes** | 237 | **245.6307** — 73,683 tile-passes, US$0.00333 each |
+| Four verifier arms, scoring | 37.4 | in flight; projected **27.6–40.9** (§ 3.2) |
+| **Running total** | | **≈ 246.78** of a ≈ US$274–288 envelope |
+
+### 3.2 Union sizes and the four-arm projection
+
+Both unions built by `stride55_prepare_and_union.py` (the ruled builder) after
+the coverage gate passed at 24,561 / 24,561 on every pass:
+
+| Rung | Candidates | Card estimate | Deltas' revised estimate |
+|---|---:|---:|---:|
+| K = 1 | **6,985** | ≈ 5,500 | — |
+| K = 3 | **8,337** | ≈ 8,500 | ≈ 9,000–10,900 |
+
+**The card's original K = 3 estimate was the better one.** The deltas report's
+upward revision to ≈ 9,000–10,900 — built from the measured K = 5 → K = 3
+candidate ratio of 0.923 and pass 1's 0.823 detection density — **overshot**:
+the actual union is 8,337, within 1.9 % of the card's ≈ 8,500 and 7–23 % below
+the revision. The K = 1 estimate, by contrast, was 27 % low.
+
+The reason is visible in the per-pass dedup counts — **7,123 / 7,103 / 7,125**,
+and a three-pass union of only 8,337. A single image pass already contributes
+84 % of the K = 3 union's candidates, so the three passes agree with each other
+far more than the text campaign's did (where the card's assumed K = 1 : K = 3
+ratio of 0.647 came from). The measured ratio here is **0.838**. This is a
+substantive result, not just a costing correction: extra image passes add
+little new geometry and mostly raise vote counts on candidates pass 1 already
+found, which is the mechanism P2 predicts will keep tile-MCC from rising with K.
+
+Four-arm projection on the two available bases, over 2 × 15,322 = 30,644 calls:
+
+| Basis | arm 1 | arm 2 | Four arms |
+|---|---:|---:|---:|
+| Card list rates (US$0.00140 / US$0.00127 per candidate) | 21.45 | 19.46 | **40.91** |
+| GS calibration leg measured (622 candidates: 0.4417 / 0.6804) | 10.88 | 16.76 | **27.64** |
+
+So the campaign lands at **≈ US$274–288**, against the US$420 hard stop —
+US$132 of headroom even on the pessimistic basis.
 
 ### 3.1 Pass-1 gates — both PASS, read 2026-09-13 10:36 UTC
 
@@ -207,6 +245,42 @@ settles the modality question at deployment scale, which the paper
 currently states on the GS only.
 
 ## Changelog
+
+### 2026-09-13 (proposer complete) — three passes, both unions, arms in flight
+
+**Trigger**: passes 2 and 3 ran to completion under the same driver and
+invocation as pass 1, the coverage gate passed on all three, and both unions
+were built by the ruled builder. Every figure audited at source.
+
+| Claim | Before | After |
+|---|---:|---:|
+| Pass 2 | unlaunched | **COMPLETE**, US$81.8712, cache 0.810, 2 h 07 m |
+| Pass 3 | unlaunched | **COMPLETE**, US$81.8313, cache 0.811, 2 h 16 m |
+| Proposer total | projected ≈ 245.8 | **US$245.6307** over 73,683 tile-passes |
+| Per tile-pass | US$0.00334 (pass 1) | **US$0.00333** across all three |
+| K = 1 union | ≈ 5,500 estimated | **6,985** |
+| K = 3 union | ≈ 8,500 card / ≈ 9,000–10,900 deltas | **8,337** |
+| Campaign envelope | ≈ US$285 | **≈ US$274–288** |
+| Running audited total | ≈ US$83.08 | **≈ US$246.78** |
+
+Cost per pass was remarkably flat — US$81.9283, US$81.8712, US$81.8313, a
+spread of 0.12 % — and the cached share held at 0.808 / 0.810 / 0.811 across
+the flex congestion window. Each pass needed exactly one recovery round, of
+2, 3 and 1 tiles.
+
+**Two corrections to the deltas report's sizing, recorded in § 3.2.** Its
+upward revision of the K = 3 union to ≈ 9,000–10,900 overshot; the card's
+original ≈ 8,500 was the better estimate, and the actual 8,337 sits 1.9 %
+under it. The K = 1 estimate of ≈ 5,500 was 27 % low. The cause is high
+inter-pass agreement in the image proposer — per-pass dedup counts of
+7,123 / 7,103 / 7,125 against a three-pass union of 8,337, so one pass supplies
+84 % of the K = 3 candidates and the measured K = 1 : K = 3 ratio is 0.838, not
+the text campaign's 0.647.
+
+**What did NOT change**: the carried operating points, the cells, the scoring
+instrument, the five-test family, the US$420 hard stop, and predictions P1–P5
+(all still **UNTESTED**). No verifier arm has finished, no score exists, and no
+board, tiering, signed row or analysis row was touched.
 
 ### 2026-09-13 (pass-1 gate) — both gates PASS, the projection revised upward
 

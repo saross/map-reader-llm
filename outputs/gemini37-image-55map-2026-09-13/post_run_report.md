@@ -1,9 +1,12 @@
 # Post-run report — Gemini 3.7 image at 55-map scale, K = 3
 
-> **Last revised**: 2026-09-13 (**pass-1 gate applied — both PASS**: 24,561 /
-> 24,561 tiles, audited US$81.9283 against the US$110 gate, cached share 0.808
-> against the 0.70 gate, and the envelope revised to ≈ US$285 inside the
-> US$420 hard stop, so passes 2–3 are GO. Earlier: steward hand-over — the
+> **Last revised**: 2026-09-13 (**proposer COMPLETE** — all three passes at
+> 24,561 / 24,561 for an audited US$245.6307, coverage gate PASS on each, and
+> both unions built at 6,985 (K = 1) and 8,337 (K = 3); the four verifier arms
+> are in flight and the campaign projects to ≈ US$274–288 inside the US$420
+> hard stop. Earlier: **pass-1 gate applied — both PASS**: audited
+> US$81.9283 against the US$110 gate, cached share 0.808
+> against the 0.70 gate. Earlier: steward hand-over — the
 > resume path in § 4 names the two drivers that replace its ad-hoc commands,
 > records the corrected scoring instrument, and § 6 lists what is built and
 > gated ahead of the data. The run is still **IN FLIGHT** at passes 2–3 of 3,
@@ -33,9 +36,14 @@ what ran, what the gates measured, and exactly how to resume.
 | 5-tile mechanism smoke | **PASS** | ≈ 0.025 | payload fingerprint matches the GS run |
 | 55-map proposer pass 1 | **COMPLETE**, 24,561 / 24,561 | **81.9283** | launched ≈ 07:28 UTC, complete 10:32:36 UTC; one recovery round (24,559 + 2) |
 | 55-map proposer pass 2 | **COMPLETE**, 24,561 / 24,561 | **81.8712** | launched 10:40:55 UTC, complete 12:47:42 UTC (2 h 07 m); one recovery round (24,558 + 3) |
-| 55-map proposer pass 3 | **IN FLIGHT** | pending | launched 12:47:42 UTC, same driver invocation |
-| Unions, four verifier arms, scoring, tests | not started | — | |
-| **Committed so far** | | **≈ 164.95** | against a revised ≈ US$285 envelope (§ 2) |
+| 55-map proposer pass 3 | **COMPLETE**, 24,561 / 24,561 | **81.8313** | launched 12:47:42 UTC, complete 15:03:46 UTC (2 h 16 m); one recovery round (24,560 + 1) |
+| **55-map proposer, all three passes** | **COMPLETE**, 73,683 tile-passes | **245.6307** | US$0.00333 per tile-pass; `DRIVER FINISHED passes [2 3]` 15:03:46 UTC |
+| Coverage gate, all three passes | **PASS** | 0.00 | 24,561 / 24,561 each, 0 missing and 0 extra, verified independently and by the driver's stage 0 |
+| K = 1 union (pass 1, first-N) | **built**, 6,985 candidates | 0.00 | `union_k1.geojson` |
+| K = 3 union (first-N) | **built**, 8,337 candidates | 0.00 | `union_k3.geojson` |
+| Four verifier arms | **IN FLIGHT** | pending | from 15:07:59 UTC, `WORKERS=50` |
+| Scoring, tests, registration | not started | — | |
+| **Committed so far** | | **≈ 246.78** | against a ≈ US$274–288 envelope (§ 2) |
 
 Carried operating points, from the GS K = 3 calibration leg swept at the
 GS-primary 20 m buffer:
@@ -109,12 +117,16 @@ before spending anything further.
 #      STOP and report if either fails. Re-apply to passes 2 and 3 as their
 #      metas land: a pass above 1.5 x pass 1 (US$122.9) is a stop-and-report.
 
-# 2. Passes 2 and 3, sequentially (the PI's 2026-08-30 rule: never two
+# 2. Passes 2 and 3 -- DONE. Pass 2 complete 12:47:42 UTC (US$81.8712),
+#    pass 3 complete 15:03:46 UTC (US$81.8313), proposer US$245.6307.
+#    Sequentially (the PI's 2026-08-30 rule: never two
 #    concurrent Gemini 3.7 runs).
 WORKERS=150 nohup bash scripts/gemini37-image-55map-driver.sh 2 3 \
     >> outputs/gemini37-image-55map-2026-09-13/driver.nohup 2>&1 &
 
-# 3. Coverage gate, both unions, both provenance sidecars, crops, and the
+# 3. IN FLIGHT from 15:07:59 UTC. Coverage gate PASS and both unions built
+#    (K=1 6,985, K=3 8,337); crops and the four arms running.
+#    Coverage gate, both unions, both provenance sidecars, crops, and the
 #    four verifier arms — one idempotent driver. Question Q7 is SETTLED
 #    (deltas § 10.2): the stride builder, for text-arm comparability, with
 #    the pass_provenance block emitted as a sidecar over the same resolved
@@ -238,6 +250,40 @@ is discovering a broken instrument after the API spend, not before.
 | Tier-1 suite on sapphire | **2,516 passed**, 4 skipped, 27 deselected, 3 xfailed | `claude-steward`, 193 s |
 
 ## Changelog
+
+### 2026-09-13 (proposer complete) — three passes, coverage gate, both unions
+
+**Trigger**: `DRIVER FINISHED passes [2 3]` at 15:03:46 UTC, which completes
+the proposer leg and unblocks the unions and the four verifier arms.
+
+| Claim | Before | After |
+|---|---:|---:|
+| Pass 2 | not started | **COMPLETE**, US$81.8712, cache 0.810 |
+| Pass 3 | not started | **COMPLETE**, US$81.8313, cache 0.811 |
+| Proposer, audited | US$81.9283 (pass 1) | **US$245.6307**, 73,683 tile-passes |
+| Coverage gate | not run | **PASS** — 24,561 / 24,561 per pass, 0 missing, 0 extra |
+| K = 1 union | unbuilt | **6,985 candidates** |
+| K = 3 union | unbuilt | **8,337 candidates** |
+| Four verifier arms | unbuilt | **IN FLIGHT** from 15:07:59 UTC |
+| Committed audited total | ≈ US$83.08 | **≈ US$246.78** |
+| Envelope | ≈ US$285 | **≈ US$274–288** |
+
+The coverage gate was applied **twice and independently** — once by this
+steward directly against the pinned manifest, once by the driver's own stage 0
+— and agreed: every pass covers all 24,561 tiles exactly after the recovery
+fold, with no extras. Stage 1 then rebuilt both unions deterministically,
+reproducing the counts from the manual build exactly.
+
+Union sizing against the estimates is recorded in the card § 3.2. In short: the
+deltas report's upward revision of the K = 3 union overshot, the card's original
+≈ 8,500 was closer, and the cause — image passes that agree with one another far
+more than the text campaign's did — is itself relevant to P2.
+
+**What did NOT change**: the carried operating points, the scoring instrument,
+the five-test family, the four gates of § 6, the US$420 hard stop. No verifier
+arm has finished, so there is still no score, no permutation test, no P1–P5
+verdict and no analysis row. No board, tiering or signed row was touched;
+nothing on sapphire's main checkout was written.
 
 ### 2026-09-13 (pass-1 gate) — both gates PASS, passes 2–3 GO
 
