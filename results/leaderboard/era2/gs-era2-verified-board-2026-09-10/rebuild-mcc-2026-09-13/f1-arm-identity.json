@@ -1,0 +1,57 @@
+{
+ "what": "whether the F1 arm of the 2026-09-13 MCC-family rebuild reproduced the committed 2026-09-13 F1-only run",
+ "before": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json at 96bdb8629",
+ "before_git_blob": "f2f1af55a0a24418ab4ef626e84c4dbb1dff4bf0",
+ "after": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json",
+ "f1_arm_identical": true,
+ "arms": {
+  "ranking": true,
+  "tiers": true,
+  "tie_set": true,
+  "pairwise": true,
+  "n_cells": true,
+  "n_cells_withheld": true,
+  "n_tiles": true,
+  "n_permutations": true,
+  "seed": true,
+  "fdr_q": true,
+  "replicate_handling": true,
+  "metric": true,
+  "buffer_metres": true
+ },
+ "keys_that_moved": [
+  "withheld_cells"
+ ],
+ "withheld_cells_field_changes": [
+  {
+   "label": "g37-text-k3-verified-opmax",
+   "field": "eval_f1",
+   "before": 0.887,
+   "after": 0.886
+  },
+  {
+   "label": "g37-text-k3-verified-opmax",
+   "field": "recorded_mcc",
+   "before": 0.1337,
+   "after": null
+  }
+ ],
+ "n_significant_before": 7961,
+ "n_significant_after": 7961,
+ "n_tiers_before": 14,
+ "n_tiers_after": 14,
+ "tie_set_before": [
+  "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+  "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+  "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+  "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+  "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b"
+ ],
+ "tie_set_after": [
+  "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+  "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+  "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+  "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+  "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b"
+ ]
+}

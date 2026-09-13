@@ -3,7 +3,7 @@
  "frame": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
  "frame_id": "era2-b-487",
  "card": "planning/gs-era2-verified-board-2026-09-08.md",
- "derived_at_utc": "2026-09-13T00:21:49+00:00",
+ "derived_at_utc": "2026-09-13T09:42:35+00:00",
  "n_members": 110,
  "members": [
   {
@@ -276,7 +276,7 @@
    "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson",
    "eval_path": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json",
    "committed_bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
-   "committed_f1_20": 0.887,
+   "committed_f1_20": 0.886,
    "recipe": {
     "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
     "buffers": [
@@ -4271,6 +4271,10 @@
   },
   {
    "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-canonical-gt",
+   "reason": "55-map corpus cell"
+  },
+  {
+   "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n5-verified37-oracle-p0.96-k5-r2-gt",
    "reason": "55-map corpus cell"
   },
   {

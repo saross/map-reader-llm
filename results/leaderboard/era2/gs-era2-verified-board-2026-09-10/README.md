@@ -1,8 +1,8 @@
 # The GS Era-2 verified board on one frame — `gs-era2-verified-board-2026-09-10`
 
-> **Last revised**: 2026-09-13 (later still — **NOTE ONLY, still nothing rebuilt or re-signed**: the K = 3 cell's own `evaluation.json` is no longer blocked. The tile-join invariant now **withholds** a refused cell's per-tile statistics instead of aborting the cell, so `g37-text-k3-verified-opmax` was re-scored and its artefacts and register row read F1@20 **0.8860** / **495 detections**, with the tile block and every confidence interval marked WITHHELD. Two figures in the tables below still read `0.8870` and are correct as they stand: this board's `withheld_cells` row and `re_sign_pending.proposed_outcome` are signature-bearing and the PI restates them at the rebuild. Earlier that day — the recovery-fragment fix `75d7c8d4c` rebuilt five consensus unions that four of this board's cells read. Only `g37-text-k3-verified-opmax` moves — F1@20 0.8870 → **0.8860**, one added false positive — and it is one of the three cells already withheld; the single **tiered** cell of the four, `g384-ov192-k5-verified-opmax` at rank 9, re-scores **dict-identically** on every arm, so no rank, tier, pairwise test, BH family, MCB set or signature field changes. Per the PI's ruling the next rebuild picks these up; the pending record is `provenance.json` → `re_sign_pending.cells_pending_rescore` and the changelog entry below. Earlier that day: PI ruling 2026-09-13, item 1: the 46 Phase 2 rungs and the 4 tier E rungs of the K-ladder review admitted by route (a) — a `k-ladder/membership.json` the builder defers to by condition id — so 103 → **153 cells admitted**, of which **150 tiered** and **3 withheld** by the tile-join invariant; re-tiered and the MCB recomputed last; **Tier 1 and its five members unchanged**. The board's analysis row is again NOT amended and the board **awaits the PI's re-signature**, `provenance.json` → `re_sign_pending`; the resolved S153 block is preserved inside it as `previous_resolved`. Deltas: `reports/k-ladder-admission-deltas-2026-09-13.md`. Prior: 2026-09-12, PI ruling R3 — K = 1 admitted, 79 → 103 cells, re-signed 2026-09-12T06:04:30Z; 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10 later still, nine `-opmax` cells re-materialised and re-tiered; later, the symmetry fix 39 → 79 cells; earlier that day, original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-13 (original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
 
-**153 cells admitted**, of which **150 are tiered** and **3 withheld** (listed below the table); 7961/11175 pairs significant; 14 tiers; tie set 5; MCB admissible 65 of 150. 50 cell(s) admitted by `k-ladder/membership.json` with their board-frame evaluations as-is (PI ruling 2026-09-13).
+**153 cells admitted**, of which **150 are tiered** and **3 withheld** (listed below the table); 7961/11175 pairs significant; 14 tiers; tie set 5; MCB admissible 65 of 150. 50 cell(s) admitted by `k-ladder/membership.json` with their board-frame evaluations as-is (PI ruling 2026-09-13). A tile-MCC permutation family is **reported beside** this F1 tiering and does not replace it (PI ruling 2026-09-13, ruling 7): 6 MCC tiers, MCC tie set 33, MCC MCB admissible 59 — see [§ Tile-level MCC](#tile-level-mcc--a-second-family-on-the-same-swap-masks-reported-not-the-tiering).
 
 | rank | cell | tier | MCB | F1@20 (board frame) | committed F1@20 | Δ frame | tile-MCC |
 |---:|---|---:|:---:|---:|---:|---:|---:|
@@ -157,15 +157,183 @@
 | 149 | `proposer-verifier-384::verified-adversarial-image` | 13 |  | 0.4943 | 0.4943 | +0.0000 | 0.416 |
 | 150 | `proposer-verifier-384::verified-adversarial-text` | 14 |  | 0.4708 | 0.4708 | +0.0000 | 0.4313 |
 
-**Admitted but WITHHELD** — the tile-join invariant refuses these cells' per-tile table on this frame (their `source_tile` vocabulary is not the frame's), so they are ranked nowhere above and enter no BH family and no admissible set. Their whole-frame F1 is unaffected by the tile join and is quoted for reference; their committed tile-MCC is the pre-invariant value and is NOT published. Admission is the PI's ruling of 2026-09-13; the withholding follows the same ruling's "withhold and list, never abort the board", and is lifted only by the corpus-wide tile-join decision (close-out question 4).
+**Admitted but WITHHELD** — the tile-join invariant refuses these cells' per-tile table on this frame, so they are ranked nowhere above and enter neither BH family (F1 or tile-MCC) and neither admissible set. **The name-based (`id`) tile join is the published convention** — PI ruling 2026-09-13 (S153 ruling 6), `reports/tile-mcc-geometric-join-2026-09-12.md` — so these cells are disclosed rather than re-joined geometrically to make them scoreable. What survives a refusal is the whole-frame F1, precision and recall POINT estimates: F1 is scored map-scoped and the tile join does not touch it. What does not survive is every interval. The F1 bootstrap resamples TILES (Decision 10), so the refused per-tile table is the interval's input too: each cell's interval is **withdrawn, not superseded** — there is no interval for it on this frame. Their committed tile-MCC is the pre-invariant value and is NOT published. The withholding follows the same ruling's "withhold and list, never abort the board", and is lifted only by the corpus-wide tile-join decision (close-out question 4).
 
-| cell | F1@20 (whole frame) | committed tile-MCC (NOT published) | refusal |
-|---|---:|---:|---|
-| `g37-text-k1-verified-carried-p0.10-k1` | 0.8338 | 0.1422 | per-tile TP/FP/FN table refused: 22 of 526 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 504. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join. |
-| `g37-text-k1-verified-opmax` | 0.8495 | 0.1337 | per-tile TP/FP/FN table refused: 21 of 475 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 454. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join. |
-| `g37-text-k3-verified-opmax` | 0.8870 | 0.1337 | per-tile TP/FP/FN table refused: 20 of 467 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 447. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join. |
+| cell | F1@20 (whole frame) | interval | detections booked / in-frame | shortfall | committed tile-MCC (NOT published) |
+|---|---:|---|---:|---:|---:|
+| `g37-text-k1-verified-carried-p0.10-k1` | 0.8338 | interval withdrawn (tile-resampled bootstrap) — was [0.3684, 0.7709] | 22 / 526 | 504 | 0.1422 |
+| `g37-text-k1-verified-opmax` | 0.8495 | interval withdrawn (tile-resampled bootstrap) — was [0.2712, 0.6667] | 21 / 475 | 454 | 0.1337 |
+| `g37-text-k3-verified-opmax` | 0.8860 | interval withdrawn (tile-resampled bootstrap) | 20 / 467 | 447 | — |
+
+**The two tile vocabularies**, per withheld cell — the refusal is a disagreement between the names the detections carry and the names the frame uses, not a numerical anomaly, so both censuses are published:
+
+- `g37-text-k1-verified-carried-p0.10-k1` — **frame**: 487 tiles, 487 distinct names over 4 map sheet(s), e.g. `K-35-052-4_32635_x0_y0.png`, `K-35-052-4_32635_x0_y1008.png`, `K-35-052-4_32635_x0_y1344.png`. **detections**: 558 points naming 351 distinct tiles in column `source_tile`, of which only **12** are in the frame's vocabulary, e.g. `K-35-052-4_32635_x0_y0.png`, `K-35-052-4_32635_x0_y1152.png`, `K-35-052-4_32635_x0_y1536.png`. Refusal: per-tile TP/FP/FN table refused: 22 of 526 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 504. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join.
+- `g37-text-k1-verified-opmax` — **frame**: 487 tiles, 487 distinct names over 4 map sheet(s), e.g. `K-35-052-4_32635_x0_y0.png`, `K-35-052-4_32635_x0_y1008.png`, `K-35-052-4_32635_x0_y1344.png`. **detections**: 502 points naming 319 distinct tiles in column `source_tile`, of which only **11** are in the frame's vocabulary, e.g. `K-35-052-4_32635_x0_y1152.png`, `K-35-052-4_32635_x0_y1536.png`, `K-35-052-4_32635_x0_y192.png`. Refusal: per-tile TP/FP/FN table refused: 21 of 475 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 454. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join.
+- `g37-text-k3-verified-opmax` — **frame**: 487 tiles, 487 distinct names over 4 map sheet(s), e.g. `K-35-052-4_32635_x0_y0.png`, `K-35-052-4_32635_x0_y1008.png`, `K-35-052-4_32635_x0_y1344.png`. **detections**: 495 points naming 306 distinct tiles in column `source_tile`, of which only **11** are in the frame's vocabulary, e.g. `K-35-052-4_32635_x0_y1152.png`, `K-35-052-4_32635_x0_y1536.png`, `K-35-052-4_32635_x0_y192.png`. Refusal: per-tile TP/FP/FN table refused: 20 of 467 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 447. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join.
 
 Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the Era-2-frame reproduction of the archived board's score, or — for the nine re-materialised on 2026-09-10 — of the materialisation registry's registered point). For the K-ladder rows it is +0.0000 by construction: their committed evaluation IS the board-frame evaluation, so G2 is an identity rather than a reproduction. Full pairwise table: `tiering_20m.json`; gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.
+
+
+## Tile-level MCC — a second family on the same swap masks (REPORTED, not the tiering)
+
+PI ruling 2026-09-13 (S153 ruling 7): the round-robin tile-swap carries **tile-MCC on the same swap masks as F1** — one `numpy.random.default_rng(42)` stream, one tile order, so a ΔF1 and a ΔMCC on a pair are two statistics of one permutation, not two experiments (`tests/test_k_ladder_mcc_instruments.py::test_f1_and_mcc_kernels_draw_identical_swap_masks`) — with Benjamini-Hochberg q = 0.05 **within its own family**. It is reported beside the preregistered F1 tiering and **does not replace it**: the board's tiering, its ranks and its Tier 1 are the F1 ones above. Tile MCC is buffer-invariant (tile truth is intersection with any reference, tile prediction is any detection assigned to the tile), so this table is the same at every buffer. Cells the tile-join invariant withholds are excluded from this family exactly as they are from the F1 one, and are listed above.
+
+**150 cells in the MCC family**; 2982/11175 pairs significant; 6 MCC tiers; MCC tie set 33 (`verified-adv-image-baseline-pro-vf-era2b`, `verified-adv-image-baseline-medium-vf-era2b`, `verified-adv-image-baseline-era2b`, `pv-scale4-optimal-n1-opmax`, `pv-high-image-t1.0-n1-opmax`, and 28 more — see the table); MCC MCB admissible 59 of 150, of which **9** are also in the F1 admissible set.
+
+| MCC rank | cell | MCC tier | MCC MCB | tile-MCC | F1 tier | F1@20 (board frame) |
+|---:|---|---:|:---:|---:|---:|---:|
+| 1 | `pv-diag-384::verified-adv-image-baseline-pro-vf` | 1 | ● | 0.8887 | 9 | 0.7309 |
+| 2 | `pv-diag-384::verified-adv-image-baseline-medium-vf` | 1 | ● | 0.8848 | 9 | 0.7300 |
+| 3 | `pv-diag-384::verified-adv-image-baseline` | 1 | ● | 0.8766 | 10 | 0.7167 |
+| 4 | `pv-diag-384::pv-scale4-optimal-n1-opmax` | 1 | ● | 0.8726 | 11 | 0.6376 |
+| 5 | `pv-diag-384::pv-high-image-t1.0-n1-opmax` | 1 | ● | 0.8640 | 12 | 0.6119 |
+| 6 | `pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1` | 1 | ● | 0.8601 | 12 | 0.6098 |
+| 7 | `pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1` | 1 | ● | 0.8599 | 11 | 0.6350 |
+| 8 | `pv-diag-384::verified-adv-pro-image-pro-vf-3of5` | 1 | ● | 0.8499 | 10 | 0.7112 |
+| 9 | `pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1` | 1 | ● | 0.8475 | 8 | 0.7654 |
+| 10 | `pv-diag-384::verified-adv-image-min-3of5` | 1 | ● | 0.8461 | 8 | 0.7673 |
+| 11 | `pv-diag-384::pv-min-image-t0.3-n1-opmax` | 1 | ● | 0.8443 | 8 | 0.7680 |
+| 12 | `pv-diag-384::pv-scale4-optimal-n3-opmax` | 1 | ● | 0.8443 | 9 | 0.7296 |
+| 13 | `pv-diag-384::pv-min-image-t0.7-n1-opmax` | 1 | ● | 0.8437 | 9 | 0.7252 |
+| 14 | `pv-diag-384::pv-high-image-t0.7-n1-opmax` | 1 | ● | 0.8435 | 10 | 0.6909 |
+| 15 | `pv-diag-384::pv-high-image-t0.7-n3-opmax` | 1 | ● | 0.8435 | 8 | 0.7666 |
+| 16 | `pv-diag-384::pv-min-image-t0.3-n5-opmax` | 1 | ● | 0.8416 | 7 | 0.7767 |
+| 17 | `n1-outstanding-384::pv-n1-image-t0-n3-opmax` | 1 | ● | 0.8397 | 8 | 0.7673 |
+| 18 | `pv-diag-384::pv-min-image-t0.7-n5-opmax` | 1 | ● | 0.8383 | 7 | 0.7734 |
+| 19 | `pv-diag-384::pv-min-image-t0.7-n3-opmax` | 1 | ● | 0.8377 | 8 | 0.7599 |
+| 20 | `pv-diag-384::pv-min-image-t0.3-n10-opmax` | 1 | ● | 0.8377 | 7 | 0.7819 |
+| 21 | `pv-diag-384::verified-adv-text-baseline-medium-vf` | 1 | ● | 0.8372 | 6 | 0.8244 |
+| 22 | `pv-diag-384::pv-min-image-t1.0-n1-opmax` | 1 | ● | 0.8360 | 10 | 0.7044 |
+| 23 | `pv-diag-384::pv-high-image-t0.7-n5-opmax` | 1 | ● | 0.8359 | 7 | 0.7868 |
+| 24 | `pv-diag-384::verified-adv-pro-image-baseline-medium-vf` | 1 | ● | 0.8328 | 11 | 0.6281 |
+| 25 | `pv-diag-384::verified-adv-pro-image-baseline-pro-vf` | 1 | ● | 0.8328 | 12 | 0.6178 |
+| 26 | `pv-diag-384::verified-adv-text-baseline` | 1 | ● | 0.8328 | 6 | 0.8142 |
+| 27 | `pv-diag-384::verified-adv-text-baseline-pro-vf` | 1 | ● | 0.8328 | 6 | 0.8263 |
+| 28 | `pv-diag-384::session-78-image-adversarial-opmax` | 1 | ● | 0.8306 | 7 | 0.7866 |
+| 29 | `pv-diag-384::session-78-image-comparative-opmax` | 1 | ● | 0.8306 | 7 | 0.7857 |
+| 30 | `pv-diag-384::pv-scale4-optimal-n5-opmax` | 1 | ● | 0.8306 | 8 | 0.7635 |
+| 31 | `pv-diag-384::session-78-image-brief-opmax` | 1 | ● | 0.8300 | 7 | 0.7844 |
+| 32 | `pv-diag-384::pv-high-image-t1.0-n3-opmax` | 1 | ● | 0.8294 | 9 | 0.7245 |
+| 33 | `pv-diag-384::pv-high-image-t0.3-n10-opmax` | 1 | ● | 0.8294 | 8 | 0.7705 |
+| 34 | `pv-diag-384::pv-high-image-t0.3-n1-opmax` | 2 | ● | 0.8270 | 10 | 0.6925 |
+| 35 | `pv-diag-384::verified-adv-image-3of5` | 2 | ● | 0.8268 | 7 | 0.7778 |
+| 36 | `gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5` | 2 | ● | 0.8264 | 1 | 0.9233 |
+| 37 | `pv-diag-384::pv-high-image-t0.3-n3-opmax` | 2 | ● | 0.8237 | 9 | 0.7215 |
+| 38 | `pv-diag-384::verified-adv-pro-image-baseline` | 2 | ● | 0.8232 | 11 | 0.6196 |
+| 39 | `pv-diag-384::pv-high-image-t1.0-n5-opmax` | 2 | ● | 0.8230 | 9 | 0.7337 |
+| 40 | `pv-diag-384::pv-min-image-t0.7-n10-opmax` | 2 | ● | 0.8223 | 7 | 0.7881 |
+| 41 | `pv-diag-384::session-78-image-checklist-text-opmax` | 2 | ● | 0.8217 | 7 | 0.7852 |
+| 42 | `grid-2026-08-18::g384-ov192-k1-verified-opmax` | 2 | ● | 0.8211 | 5 | 0.8546 |
+| 43 | `pv-diag-384::session-78-image-brief-text-opmax` | 2 | ● | 0.8199 | 7 | 0.7782 |
+| 44 | `pv-diag-384::pv-min-image-t0.3-n3-opmax` | 2 | ● | 0.8178 | 7 | 0.7774 |
+| 45 | `pv-diag-384::pv-min-image-t1.0-n3-opmax` | 2 | ● | 0.8178 | 9 | 0.7288 |
+| 46 | `pv-diag-384::session-78-image-checklist-opmax` | 2 | ● | 0.8172 | 7 | 0.7830 |
+| 47 | `grid-2026-08-18::g384-ov192-k3-verified-opmax` | 2 | ● | 0.8167 | 3 | 0.8840 |
+| 48 | `pv-diag-384::pv-high-text-t1.0-n1-opmax` | 2 | ● | 0.8162 | 7 | 0.7810 |
+| 49 | `pv-diag-384::pv-scale4-optimal-n10-opmax` | 2 | ● | 0.8154 | 8 | 0.7683 |
+| 50 | `grid-2026-08-18::g384-ov192-k5-verified-opmax` | 2 | ● | 0.8139 | 2 | 0.8905 |
+| 51 | `gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5` | 2 | ● | 0.8133 | 1 | 0.9179 |
+| 52 | `grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10` | 2 | ● | 0.8102 | 2 | 0.9062 |
+| 53 | `pv-diag-384::pv-min-text-t1.0-n1-opmax` | 2 | ● | 0.8095 | 6 | 0.8235 |
+| 54 | `gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5` | 2 | ● | 0.8079 | 1 | 0.9182 |
+| 55 | `grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1` | 2 | ● | 0.8079 | 5 | 0.8540 |
+| 56 | `pv-diag-384::pv-min-image-t1.0-n10-opmax` | 2 | ● | 0.8078 | 8 | 0.7428 |
+| 57 | `pv-diag-384::pv-high-text-t1.0-n1-carried-p0.15-k1` | 2 | ● | 0.8071 | 7 | 0.7788 |
+| 58 | `pv-diag-384::verified-adv-text-min-6of10` | 2 | ● | 0.8068 | 3 | 0.8835 |
+| 59 | `pv-diag-384::pv-high-text-t0.3-n1-opmax` | 2 | ● | 0.8068 | 6 | 0.8314 |
+| 60 | `pv-diag-384::pv-high-text-t0.3-n3-opmax` | 2 |  | 0.8053 | 3 | 0.8783 |
+| 61 | `pv-diag-384::pv-high-image-t0.3-n5-opmax` | 2 |  | 0.8049 | 8 | 0.7475 |
+| 62 | `pv-diag-384::pv-min-text-t0.3-n3-opmax` | 2 |  | 0.8040 | 4 | 0.8708 |
+| 63 | `pv-diag-384::pv-min-text-t1.0-n3-opmax` | 2 |  | 0.8040 | 4 | 0.8647 |
+| 64 | `pv-diag-384::verified-adv-image-min-6of10` | 2 |  | 0.8032 | 7 | 0.7890 |
+| 65 | `pv-diag-384::pv-high-text-t0.3-n1-carried-p0.15-k1` | 2 |  | 0.8022 | 6 | 0.8301 |
+| 66 | `pv-diag-384::pv-min-image-t1.0-n5-opmax` | 2 |  | 0.8021 | 8 | 0.7384 |
+| 67 | `pv-diag-384::pv-high-image-t1.0-n10-opmax` | 2 |  | 0.8002 | 8 | 0.7633 |
+| 68 | `pv-diag-384::pv-min-image-t0.7-n3-carried-p0.15-k3` | 2 |  | 0.7994 | 8 | 0.7522 |
+| 69 | `pv-diag-384::pv-high-text-t1.0-n3-opmax` | 2 |  | 0.7986 | 5 | 0.8541 |
+| 70 | `pv-diag-384::pv-min-text-t0.3-n1-opmax` | 2 |  | 0.7986 | 5 | 0.8555 |
+| 71 | `pv-diag-384::pv-high-image-t0.7-n10-opmax` | 2 |  | 0.7980 | 7 | 0.7765 |
+| 72 | `pv-diag-384::pv-high-text-t0.7-n3-opmax` | 2 |  | 0.7979 | 5 | 0.8492 |
+| 73 | `pv-diag-384::session-78-image-adversarial-text-opmax` | 2 |  | 0.7973 | 8 | 0.7718 |
+| 74 | `pv-diag-384::pv-min-text-t1.0-n1-carried-p0.15-k1` | 2 |  | 0.7961 | 6 | 0.8228 |
+| 75 | `pv-diag-384::pv-min-text-t0.7-n5-opmax` | 2 |  | 0.7957 | 4 | 0.8739 |
+| 76 | `pv-diag-384::verified-adv-text-pro-vf-4of5` | 2 |  | 0.7947 | 3 | 0.8792 |
+| 77 | `pv-diag-384::session-78-text-comparative-opmax` | 2 |  | 0.7947 | 2 | 0.8846 |
+| 78 | `pv-diag-384::session-78-text-adversarial-opmax` | 2 |  | 0.7947 | 3 | 0.8833 |
+| 79 | `verifier-robustness::verified-384-16of30-t0-3-n5-opmax` | 2 |  | 0.7941 | 2 | 0.8951 |
+| 80 | `gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5` | 2 |  | 0.7937 | 1 | 0.9190 |
+| 81 | `image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8` | 2 |  | 0.7937 | 6 | 0.8263 |
+| 82 | `image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9` | 3 |  | 0.7927 | 6 | 0.8341 |
+| 83 | `verifier-robustness::verified-384-ge3of5-t0-7-high-n5` | 3 |  | 0.7927 | 4 | 0.8739 |
+| 84 | `pv-diag-384::pv-min-text-t0.7-n3-opmax` | 3 |  | 0.7910 | 4 | 0.8725 |
+| 85 | `pv-diag-384::pv-high-text-t1.0-n10-opmax` | 3 |  | 0.7910 | 3 | 0.8804 |
+| 86 | `pv-diag-384::pv-min-text-t0.3-n10-opmax` | 3 |  | 0.7910 | 4 | 0.8730 |
+| 87 | `pv-diag-384::verified-adv-pro-text-baseline-pro-vf` | 3 |  | 0.7908 | 7 | 0.7861 |
+| 88 | `grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10` | 3 |  | 0.7903 | 2 | 0.8886 |
+| 89 | `pv-diag-384::verified-adv-text-6of10` | 3 |  | 0.7903 | 3 | 0.8769 |
+| 90 | `pv-diag-384::verified-adv-text-consensus-16of30` | 3 |  | 0.7903 | 2 | 0.8902 |
+| 91 | `pv-diag-384::verified-adv-text-min-true-3of5` | 3 |  | 0.7903 | 3 | 0.8784 |
+| 92 | `verifier-robustness::verified-384-ge3of5-t0-3-high-n5` | 3 |  | 0.7890 | 3 | 0.8764 |
+| 93 | `pv-diag-384::pv-min-text-t0.7-n1-opmax` | 3 |  | 0.7881 | 5 | 0.8575 |
+| 94 | `pv-diag-384::pv-min-text-t1.0-n10-opmax` | 3 |  | 0.7881 | 3 | 0.8781 |
+| 95 | `pv-diag-384::verified-adv-text-min-n30lineage-4of5` | 3 |  | 0.7873 | 4 | 0.8708 |
+| 96 | `pv-diag-384::verified-adv-pro-text-baseline-medium-vf` | 3 |  | 0.7872 | 7 | 0.7842 |
+| 97 | `pv-diag-384::pv-high-text-t0.3-n10-opmax` | 3 |  | 0.7872 | 4 | 0.8722 |
+| 98 | `pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax` | 3 |  | 0.7857 | 5 | 0.8508 |
+| 99 | `pv-diag-384::pv-high-text-t1.0-n5-opmax` | 3 |  | 0.7857 | 4 | 0.8688 |
+| 100 | `pv-diag-384::verified-adv-text-t03-4of5` | 3 |  | 0.7834 | 3 | 0.8783 |
+| 101 | `pv-diag-384::pv-min-text-t0.0-n3-opmax` | 3 |  | 0.7834 | 5 | 0.8623 |
+| 102 | `pv-diag-384::verified-adv-pro-text-baseline` | 3 |  | 0.7823 | 8 | 0.7696 |
+| 103 | `pv-diag-384::pv-high-text-t0.3-n5-opmax` | 3 |  | 0.7805 | 2 | 0.8873 |
+| 104 | `pv-diag-384::pv-min-text-t1.0-n5-opmax` | 3 |  | 0.7797 | 4 | 0.8714 |
+| 105 | `pv-diag-384::pv-high-image-t0.3-n3-carried-p0.15-k3` | 3 |  | 0.7788 | 9 | 0.7207 |
+| 106 | `verifier-t-pilot::verified-t0-0` | 3 |  | 0.7778 | 5 | 0.8507 |
+| 107 | `pv-diag-384::pv-min-text-t0.7-n10-opmax` | 3 |  | 0.7768 | 4 | 0.8726 |
+| 108 | `pv-diag-384::pv-high-text-t0.7-n3-carried-p0.15-k3` | 3 |  | 0.7762 | 6 | 0.8408 |
+| 109 | `pv-diag-384::session-78-text-checklist-opmax` | 3 |  | 0.7759 | 3 | 0.8783 |
+| 110 | `pv-diag-384::pv-high-text-t0.0-n3-opmax` | 3 |  | 0.7750 | 6 | 0.8234 |
+| 111 | `pv-diag-384::pv-high-text-t0.7-n1-opmax` | 3 |  | 0.7737 | 7 | 0.8009 |
+| 112 | `pv-diag-384::pv-min-text-t0.3-n5-opmax` | 3 |  | 0.7735 | 3 | 0.8778 |
+| 113 | `verifier-t-pilot::verified-t0-5` | 3 |  | 0.7714 | 5 | 0.8561 |
+| 114 | `verifier-robustness::verified-384-ge3of5-t0-3-n5` | 3 |  | 0.7713 | 4 | 0.8739 |
+| 115 | `verifier-robustness::verified-384-ge3of5-t0-7-n5` | 3 |  | 0.7713 | 4 | 0.8709 |
+| 116 | `pv-diag-384::verified-adv-text-4of5` | 3 |  | 0.7693 | 5 | 0.8641 |
+| 117 | `pv-diag-384::pv-high-text-t0.7-n5-opmax` | 3 |  | 0.7684 | 5 | 0.8634 |
+| 118 | `flash35-pv-2x2::f35prop-f3vf-4of10` | 3 |  | 0.7675 | 5 | 0.8480 |
+| 119 | `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10` | 3 |  | 0.7675 | 1 | 0.9068 |
+| 120 | `flash35-pv-2x2::f3prop-f35vf-6of10` | 3 |  | 0.7666 | 4 | 0.8689 |
+| 121 | `pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3` | 3 |  | 0.7665 | 5 | 0.8629 |
+| 122 | `pv-diag-384::session-78-text-brief-opmax` | 3 |  | 0.7659 | 3 | 0.8762 |
+| 123 | `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5` | 3 |  | 0.7651 | 2 | 0.9066 |
+| 124 | `pv-diag-384::pv-high-text-t0.7-n10-opmax` | 3 |  | 0.7641 | 3 | 0.8744 |
+| 125 | `pv-diag-384::pv-min-image-t1.0-n3-carried-p0.15-k3` | 3 |  | 0.7629 | 10 | 0.7016 |
+| 126 | `verifier-robustness::verified-384-union-t0-0-n5` | 3 |  | 0.7621 | 4 | 0.8722 |
+| 127 | `pv-diag-384::pv-high-image-t0.7-n3-carried-p0.15-k3` | 3 |  | 0.7621 | 10 | 0.7046 |
+| 128 | `pv-diag-384::session-78-text-brief-text-opmax` | 3 |  | 0.7582 | 5 | 0.8519 |
+| 129 | `verifier-t-pilot::verified-t1-0` | 3 |  | 0.7562 | 5 | 0.8422 |
+| 130 | `pv-diag-384::session-78-text-checklist-text-opmax` | 3 |  | 0.7561 | 5 | 0.8639 |
+| 131 | `pv-diag-384::pv-min-text-t0.3-n3-carried-p0.15-k3` | 3 |  | 0.7556 | 5 | 0.8586 |
+| 132 | `pv-diag-384::session-78-text-adversarial-text-opmax` | 4 |  | 0.7534 | 5 | 0.8603 |
+| 133 | `pv-diag-384::pv-high-text-t1.0-n3-carried-p0.15-k3` | 4 |  | 0.7443 | 6 | 0.8220 |
+| 134 | `pv-diag-384::pv-min-text-t1.0-n3-carried-p0.15-k3` | 4 |  | 0.7413 | 6 | 0.8279 |
+| 135 | `pv-diag-384::pv-high-image-t1.0-n3-carried-p0.15-k3` | 4 |  | 0.7389 | 10 | 0.6955 |
+| 136 | `flash35-pv-2x2::f35prop-f35vf-4of10` | 4 |  | 0.7369 | 6 | 0.8362 |
+| 137 | `pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3` | 4 |  | 0.7354 | 10 | 0.7019 |
+| 138 | `pv-diag-384::verified-adv-pro-text-flash-vf-3of5` | 4 |  | 0.7302 | 5 | 0.8491 |
+| 139 | `pv-diag-384::verified-adv-pro-text-medium-vf-3of5` | 4 |  | 0.7302 | 5 | 0.8495 |
+| 140 | `pv-diag-384::verified-adv-pro-text-pro-vf-3of5` | 4 |  | 0.7302 | 5 | 0.8506 |
+| 141 | `pv-diag-384::verified-adv-text-medium-vf-4of5` | 4 |  | 0.7208 | 5 | 0.8545 |
+| 142 | `pv-diag-384::verified-adv-text-high-vf-4of5` | 4 |  | 0.6992 | 5 | 0.8519 |
+| 143 | `proposer-verifier-384::verified-adversarial-text` | 5 |  | 0.4313 | 14 | 0.4708 |
+| 144 | `proposer-verifier-384::verified-cascade-adversarial-checklist` | 5 |  | 0.4313 | 13 | 0.5036 |
+| 145 | `proposer-verifier-384::verified-adversarial-image` | 5 |  | 0.4160 | 13 | 0.4943 |
+| 146 | `proposer-verifier-384::verified-cascade-checklist-adversarial` | 5 |  | 0.4121 | 13 | 0.4950 |
+| 147 | `proposer-verifier-384::verified-brief-text` | 5 |  | 0.3953 | 13 | 0.5142 |
+| 148 | `proposer-verifier-384::verified-checklist-image` | 5 |  | 0.3873 | 12 | 0.5309 |
+| 149 | `proposer-verifier-384::verified-brief-image` | 6 |  | 0.3402 | 13 | 0.5204 |
+| 150 | `proposer-verifier-384::verified-checklist-text` | 6 |  | 0.3154 | 13 | 0.5214 |
+
+Full MCC pairwise table: `tiering_20m.json` → `mcc_permutation.pairwise`; per-cell confusion gates: `mcc_permutation.gates`; MCC admissible set: `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/mcb/gs-era2-verified-board-2026-09-10_mcc_b20_m1.json`.
 
 ## Changelog
 
