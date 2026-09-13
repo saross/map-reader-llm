@@ -225,7 +225,7 @@ def main(argv: list[str] | None = None) -> int:
               f"(p90 {s['onset_p90']:g}, max {s['onset_max']}), "
               f"tail drift {s['tail_drift_median']:+.4f}")
     print(f"late-plateau (>=50 m): {len(outliers)} conditions")
-    print(f"Wrote {out_dir.relative_to(BASE_DIR)}/gs-plateau-characterisation.{{json,md}}")
+    print(f"Wrote {out_dir}/gs-plateau-characterisation.{{json,md}}")
     return 0
 
 
