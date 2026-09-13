@@ -2,7 +2,7 @@
 
 > **GENERATED FILE — do not hand-edit.** Produced by
 > `scripts/generate_hypothesis_outcome_table.py` from
-> `results/analyses-manifest.json` at commit `736c39c0e`; re-run the
+> `results/analyses-manifest.json` at commit `0f6978fbc`; re-run the
 > script after any manifest regeneration. Pure projection per the
 > D17 ruling (`docs/paper/results-outline.md` § D17): no cell is
 > hand-maintained.
@@ -75,6 +75,7 @@ H1–H15 reconciliation:
 - `gemini38-screen-armv-2026-09-04`
 - `grid-postverifier-2026-08-18`
 - `grid-tilesize-overlap-2026-08-18`
+- `null-exemplar-sensitivity-2026-09-13`
 - `obs280-shared-reference`
 - `s8-9-post-experiment-verification`
 - `tile-level-f1`

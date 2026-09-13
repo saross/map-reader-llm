@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — retest-phase2b
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `736c39c0e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `0f6978fbc`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/retest/phase2b` · **Registry status**: active · **Purpose**: not supplied
 
@@ -141,7 +141,7 @@ Scored evaluations under this run that no condition claims, each waived in `resu
   - `results/paper-eval/mcc/512px/p2b-text-t-0-3/evaluation.json`
   - … and 23 more under the same waiver (full list in `results/run-conditions.json`, this run's `_ignored_evals`)
 
-## 6. Analyses that read this run (7)
+## 6. Analyses that read this run (8)
 
 A run is linked to an analysis when the analysis's `conditions_compared` names one of this run's conditions. *Cells* is how many of the analysis's compared conditions come from this run, out of its total. *Signed* is the register's `manually_verified_at` stamp.
 
@@ -151,13 +151,16 @@ A run is linked to an analysis when the analysis's `conditions_compared` names o
 | `era1-single-pass-baseline-matrix` | 10 of 36 | leaderboard | `H1`, `H4`, `H5`, `H7`, `H8` | post-hoc | Results | `E25`, `E27`, `E28`, `E29`, `E30`, `E31`, `E36` | 2026-06-09T01:22:50Z | `results/paper-eval/n1/512px-14buf-mcc` |
 | `family-bh-fdr-confirmatory` | 2 of 12 | comparison | `H1`, `H2`, `H3`, `H4`, `H5`, `H7`, `H8` | confirmatory-with-deviation | Results | `E28`, `E30`, `E36`, `E41`, `E45`, `E51`, `E53`, `E54`, `E58`, `E59`, `E60`, `E64` | 2026-08-14T23:32:30Z | `results/family-fdr/family_fdr.json` |
 | `h7-escalation-2026-08-28` | 2 of 4 | comparison | `H7` | registered-exploratory | Appendix | `Era-1 340-tile corpus per E36 (registered H7 ran the 60-tile holdout); real-time flex vs Batch (both 50% of list).` | 2026-08-28T12:43:12Z | `results/h7-escalation-2026-08-28` |
+| `null-exemplar-sensitivity-2026-09-13` | 12 of 235 | comparison | — | post-hoc | Appendix | — | not supplied | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
 | `tile-size-sweep` | 4 of 35 | sweep | `H11` | registered-exploratory | Results | `E36`, `E41`, `E43`, `E44`, `E56`, `E57`, `E62` | 2026-06-09T01:52:52Z | `results/tile-size-sweep` |
 | `uplift-supplement-flatten` | 12 of 441 | diagnostic | — | post-hoc | Appendix | — | 2026-09-10T22:55:40Z | `results/uplift-supplement/conditions.csv` |
 | `verifier-uplift-pairing` | 2 of 170 | comparison | `H2` | post-hoc | Appendix | — | 2026-09-12T06:04:30Z | `results/uplift-supplement/verifier-uplift.csv` |
 
-## 7. Findings documents (0)
+## 7. Findings documents (1)
 
-No findings document on disk is named by an analysis that reads this run: a findings write-up for this run is **not supplied** from the register. § 6's `output_path` column gives each analysis's artefact directory.
+| Document | Named by |
+|---|---|
+| `results/null-exemplar-sensitivity-2026-09-13/findings.md` | `null-exemplar-sensitivity-2026-09-13` |
 
 ## 8. Protocol errata
 
@@ -221,7 +224,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `736c39c0e` |
+| Source commit | `0f6978fbc` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

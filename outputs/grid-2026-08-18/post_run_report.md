@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — grid-2026-08-18
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `736c39c0e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `0f6978fbc`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/grid-2026-08-18` · **Registry status**: active · **Purpose**: Post-hoc (E41-class) 2x2 crossing tile size (512/384 px) with tile overlap (12.5/50 %), proposer stage only, ten passes per cell, one configuration throughout. Tests whether the 384 px sweet spot reproduces under a single footprint, and whether extra passes substitute for extra overlap.
 
@@ -147,7 +147,7 @@ Scored evaluations under this run that no condition claims, each waived in `resu
 - **1 evaluation(s)** — GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): g384-ov192-k10-verified37-p0.98-k10's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition.
   - `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/grid-2026-08-18__g384-ov192-k10-verified37-p0_98-k10/evaluation.json`
 
-## 6. Analyses that read this run (11)
+## 6. Analyses that read this run (12)
 
 A run is linked to an analysis when the analysis's `conditions_compared` names one of this run's conditions. *Cells* is how many of the analysis's compared conditions come from this run, out of its total. *Signed* is the register's `manually_verified_at` stamp.
 
@@ -161,16 +161,18 @@ A run is linked to an analysis when the analysis's `conditions_compared` names o
 | `gs-era2-verified-board-2026-09-10` | 2 of 103 | leaderboard | `H2`, `H1` | post-hoc | Results | — | 2026-09-12T06:04:30Z | `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json` |
 | `image-b-modality-2026-08-28` | 1 of 2 | comparison | `H1` | registered-exploratory | Results | — | 2026-08-28T12:43:12Z | `results/image-b-gs-2026-08-28/analysis.json` |
 | `k-ladder-2026-09-12` | 4 of 94 | comparison | `H3`, `H13` | post-hoc | Results | `E56`, `E85` | 2026-09-13T06:58:12Z | `results/k-ladder-2026-09-12/findings.md` |
+| `null-exemplar-sensitivity-2026-09-13` | 6 of 235 | comparison | — | post-hoc | Appendix | — | not supplied | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
 | `stride-plateau-2026-08-25` | 4 of 9 | leaderboard | `H13` | post-hoc | Results | — | 2026-08-28T12:16:45Z | `results/stride-2026-08-25/plateau_analyses.json` |
 | `uplift-supplement-flatten` | 9 of 441 | diagnostic | — | post-hoc | Appendix | — | 2026-09-10T22:55:40Z | `results/uplift-supplement/conditions.csv` |
 | `verifier-uplift-pairing` | 5 of 170 | comparison | `H2` | post-hoc | Appendix | — | 2026-09-12T06:04:30Z | `results/uplift-supplement/verifier-uplift.csv` |
 
-## 7. Findings documents (3)
+## 7. Findings documents (4)
 
 | Document | Named by |
 |---|---|
 | `results/image-b-gs-2026-08-28/findings.md` | `image-b-modality-2026-08-28` |
 | `results/k-ladder-2026-09-12/findings.md` | `k-ladder-2026-09-12` |
+| `results/null-exemplar-sensitivity-2026-09-13/findings.md` | `null-exemplar-sensitivity-2026-09-13` |
 | `results/stride-2026-08-25/findings.md` | `stride-plateau-2026-08-25` |
 
 ## 8. Protocol errata
@@ -203,7 +205,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `736c39c0e` |
+| Source commit | `0f6978fbc` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 
