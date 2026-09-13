@@ -1,9 +1,13 @@
 # Gemini 3.7 image at deployment scale: the tile-MCC candidate, K = 3
 
-> **Last revised**: 2026-09-13 (**RELAUNCHED** — B1–B4 all discharged, the GS
+> **Last revised**: 2026-09-13 (**PASS 1 COMPLETE, both gates PASS** — 24,561 /
+> 24,561 tiles, audited US$81.9283 against the US$110 gate, cached share 0.808
+> against the 0.70 gate; the projection is revised upward to ≈ US$285 in § 3.1,
+> above the card's ≈ US$261–276 and inside the US$420 hard stop, so passes 2–3
+> are GO. Earlier: **RELAUNCHED** — B1–B4 all discharged, the GS
 > calibration leg run and the carried operating points fixed in § 2, the
-> mechanism smoke passed, and the 55-map proposer's **pass 1 is in flight**;
-> ≈ US$1.15 audited committed of a ≈ US$261–276 envelope, and P1–P5 remain
+> mechanism smoke passed, and the 55-map proposer's pass 1 launched;
+> P1–P5 remain
 > UNTESTED because passes 2–3 and everything downstream are unbuilt — launch
 > state and resume path in
 > `outputs/gemini37-image-55map-2026-09-13/post_run_report.md`. Earlier:
@@ -111,9 +115,43 @@ is ≈ US$261 (B3).
 |---|---:|---:|
 | GS calibration leg | 1.2 | **1.1221** (arm 1 0.4417 + arm 2 0.6804; union 622, not ≈ 450) |
 | 5-tile mechanism smoke | — | **≈ 0.025** |
-| 55-map proposer, pass 1 | ≈ 79 | **in flight** |
-| Everything downstream | ≈ 181 | not reached |
-| **Running total** | | **≈ 1.15** of ≈ 261–276 |
+| 55-map proposer, pass 1 | ≈ 79 | **81.9283** — both gates PASS (§ 3.1 below) |
+| 55-map proposer, passes 2–3 | ≈ 158 | projected **≈ 163.9** at pass 1's rate |
+| Four verifier arms, scoring | ≈ 37.4 | not reached |
+| **Running total** | | **≈ 83.08** of a revised ≈ US$285 |
+
+### 3.1 Pass-1 gates — both PASS, read 2026-09-13 10:36 UTC
+
+`scripts/audit_proposer_cost.py` on
+`outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img`, re-read at
+source, gives:
+
+| Fragment | Tiles | Cached share | Audited USD |
+|---|---:|---:|---:|
+| `run_1` | 24,559 | **0.808** | 81.9212 |
+| `run_1_recovery_rd1` | 2 | 0.813 | 0.0071 |
+| **Total** | **24,561 / 24,561** | | **81.9283** |
+
+Per tile-pass **US$0.00334**, against the card's basis of US$0.00322 — **+3.7 %**.
+The pass completed at 10:32:36 UTC after one recovery round
+(`driver.log:1119`, "PASS 1 COMPLETE").
+
+- **Cost gate** (≤ US$110): **PASS** at US$81.93, with US$28 of headroom.
+- **Cache gate** (≥ 0.70): **PASS** at 0.808, consistent with the GS image
+  run's 0.79–0.80.
+
+The meta's printed `cost_estimate` of **US$201.0662** is the Gemini-3-rate
+artefact blocker B3 identified; it is never the gate basis.
+
+**Revised projection.** At pass 1's audited rate the proposer's three passes
+come to **≈ US$245.8** (card ≈ US$237), and the whole campaign to
+**≈ US$285** — GS leg 1.12 + smoke 0.03 + proposer 245.8 + four verifier
+arms and scoring ≈ 37.4. That is **above** the card's ≈ US$261–276 and well
+inside the US$420 running hard stop, which remains the operative
+abort rule. Passes 2–3 are therefore **GO**: the go/no-go the card's
+"abort the proposer" rule becomes in practice (§ 3.1 of the deltas report)
+is discharged in favour of proceeding. A pass whose audited cost exceeds
+**1.5 × pass 1** (US$122.9) is a stop-and-report.
 
 Two corrections the run has already established. First, the K = 5 → K = 3
 candidate ratio is **0.923** (674 → 622), not the ≈ 0.67 the card's ≈ 450
@@ -168,6 +206,36 @@ settles the modality question at deployment scale, which the paper
 currently states on the GS only.
 
 ## Changelog
+
+### 2026-09-13 (pass-1 gate) — both gates PASS, the projection revised upward
+
+**Trigger**: pass 1 of the 55-map proposer completed at 10:32:36 UTC
+(`outputs/gemini37-image-55map-2026-09-13/driver.log:1119`), which is the
+moment both pass-1 gates become computable (§ 3.1 of the deltas report: the
+runner writes `*.meta.json` once, at the end). Numbers re-read at source with
+`scripts/audit_proposer_cost.py` at 10:36 UTC by the second steward.
+
+| Claim | Before | After |
+|---|---:|---:|
+| Pass-1 tiles | in flight | **24,561 / 24,561** (24,559 main + 2 recovered, one round) |
+| Pass-1 audited cost | pending | **US$81.9283** vs the US$110 gate — **PASS** |
+| Pass-1 cached share | pending | **0.808** vs the 0.70 gate — **PASS** |
+| Per tile-pass | US$0.00322 (card basis) | **US$0.00334**, +3.7 % |
+| Proposer, three passes | ≈ US$237 | **≈ US$245.8** |
+| Whole envelope | ≈ US$261–276 | **≈ US$285**, inside the US$420 hard stop |
+| Running audited total | ≈ US$1.15 | **≈ US$83.08** |
+| Passes 2–3 | unlaunched, go/no-go pending | **GO** |
+
+The meta's printed `cost_estimate` reads **US$201.0662** for this pass — the
+Gemini-3-rate artefact blocker B3 identified, 2.45 × the audited figure. It was
+not used at the gate, and the discrepancy is the second confirmation of B3 at
+pass scale.
+
+**What did NOT change**: the carried operating points in § 2, the GS
+calibration leg's US$1.1221, the 622-candidate GS union, the cells, the
+predictions P1–P5 (all still **UNTESTED**), and the US$420 hard stop. No
+union, verifier arm, score or analysis row exists yet. No board, no tiering
+and no signed row was touched.
 
 ### 2026-09-13 (relaunch) — blockers cleared, calibration leg run, pass 1 in flight
 

@@ -1,11 +1,14 @@
 # Post-run report — Gemini 3.7 image at 55-map scale, K = 3
 
-> **Last revised**: 2026-09-13 (steward hand-over — the resume path in § 4 now
-> names the two drivers that replace its ad-hoc commands, records the corrected
-> scoring instrument, and § 6 lists what is built and gated ahead of the data;
-> the run is still **IN FLIGHT** at pass 1 of 3, so this remains a launch-state
-> and handover record, not a completed post-run report). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-13 (**pass-1 gate applied — both PASS**: 24,561 /
+> 24,561 tiles, audited US$81.9283 against the US$110 gate, cached share 0.808
+> against the 0.70 gate, and the envelope revised to ≈ US$285 inside the
+> US$420 hard stop, so passes 2–3 are GO. Earlier: steward hand-over — the
+> resume path in § 4 names the two drivers that replace its ad-hoc commands,
+> records the corrected scoring instrument, and § 6 lists what is built and
+> gated ahead of the data. The run is still **IN FLIGHT** at passes 2–3 of 3,
+> so this remains a launch-state and handover record, not a completed post-run
+> report). See [§ Changelog](#changelog) for revision history.
 
 Card: `planning/gemini37-image-55map-2026-09-13.md`. Deltas and blocker status:
 `reports/gemini37-image-55map-deltas-2026-09-13.md`. Pre-launch audit:
@@ -28,10 +31,10 @@ what ran, what the gates measured, and exactly how to resume.
 | GS calibration, arm 2 | **622/622**, 0 failed | 0.6804 | `gemini-3.7-flash`, low, T = 0.0, 893 s, 824 retries |
 | GS sweep, both arms, 20 m | **carried points fixed** | 0.00 | anchor gate 0.89614 vs registered 0.8961 |
 | 5-tile mechanism smoke | **PASS** | ≈ 0.025 | payload fingerprint matches the GS run |
-| 55-map proposer pass 1 | **IN FLIGHT** | pending | launched 2026-09-13 ≈ 07:28 UTC |
-| 55-map proposer passes 2–3 | not started | — | |
+| 55-map proposer pass 1 | **COMPLETE**, 24,561 / 24,561 | **81.9283** | launched ≈ 07:28 UTC, complete 10:32:36 UTC; one recovery round (24,559 + 2) |
+| 55-map proposer passes 2–3 | not started | — | **GO** — both pass-1 gates PASS (§ 2) |
 | Unions, four verifier arms, scoring, tests | not started | — | |
-| **Committed so far** | | **≈ 1.15** | against a ≈ US$261–276 envelope |
+| **Committed so far** | | **≈ 83.08** | against a revised ≈ US$285 envelope (§ 2) |
 
 Carried operating points, from the GS K = 3 calibration leg swept at the
 GS-primary 20 m buffer:
@@ -46,9 +49,29 @@ GS-primary 20 m buffer:
 | Gate | Basis | Reading |
 |---|---|---|
 | Mechanism (smoke, B4-rescoped) | stamped configuration | **PASS** — `gemini-3.7-flash`, thinking `low`, T = 0.7, tile 384, `include_example_images: true`, `system_instruction_hash` `e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12` (the GS payload fingerprint), thinking 228 tokens/call |
-| Pass-1 audited cost ≤ US$110 | `scripts/audit_proposer_cost.py` | **PENDING** — post-pass only (§ 3) |
-| Pass-1 cached share ≥ 0.70 | `usage_stats` | **PENDING** — post-pass only (§ 3) |
-| Running audited total ≤ US$420 | same | ≈ US$1.15 so far |
+| Pass-1 audited cost ≤ US$110 | `scripts/audit_proposer_cost.py` | **PASS** — US$81.9283, US$28 of headroom |
+| Pass-1 cached share ≥ 0.70 | `usage_stats` | **PASS** — 0.808 (`run_1`), 0.813 (recovery) |
+| Running audited total ≤ US$420 | same | ≈ US$83.08 so far; projected ≈ US$285 at completion |
+
+**Pass-1 gate, applied 2026-09-13 10:36 UTC** — re-read at source by the
+second steward, not carried from a hand-over note:
+
+| Fragment | Tiles | Cached share | Audited USD |
+|---|---:|---:|---:|
+| `run_1` | 24,559 | 0.808 | 81.9212 |
+| `run_1_recovery_rd1` | 2 | 0.813 | 0.0071 |
+| **Total** | **24,561 / 24,561** | | **81.9283** |
+
+Per tile-pass **US$0.00334** against the card's US$0.00322 basis, **+3.7 %**.
+The meta's own `cost_estimate` prints **US$201.0662** — the Gemini-3-rate
+artefact of blocker B3, 2.45 × the audited figure, and the second confirmation
+of B3 now at pass scale. It was not used at the gate.
+
+**Consequence for the envelope.** Three proposer passes project to
+**≈ US$245.8** and the whole campaign to **≈ US$285** (GS leg 1.12 + smoke
+0.03 + proposer 245.8 + four arms and scoring ≈ 37.4), above the card's
+≈ US$261–276 and inside the US$420 hard stop. **Passes 2–3 are GO.** A pass
+whose audited cost exceeds **1.5 × pass 1 (US$122.9)** is a stop-and-report.
 
 `library_hash` differs from the GS run's by design: the basis changed to
 `example-bytes+path-label-category/1` on 2026-09-12. Argue identity from
@@ -76,11 +99,14 @@ All commands from the isolated sapphire worktree
 before spending anything further.
 
 ```bash
-# 1. Pass-1 gates, the moment the driver logs "PASS 1 COMPLETE".
+# 1. Pass-1 gates -- DONE 2026-09-13 10:36 UTC, both PASS (see § 2).
+#    US$81.9283 audited against the US$110 gate; cached share 0.808 against
+#    the 0.70 gate; 24,561/24,561 tiles. Resume at step 2.
 .venv/bin/python scripts/audit_proposer_cost.py \
     outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img
 #   -> audited USD must be <= 110, and the per-fragment cache column >= 0.70.
-#      STOP and report if either fails.
+#      STOP and report if either fails. Re-apply to passes 2 and 3 as their
+#      metas land: a pass above 1.5 x pass 1 (US$122.9) is a stop-and-report.
 
 # 2. Passes 2 and 3, sequentially (the PI's 2026-08-30 rule: never two
 #    concurrent Gemini 3.7 runs).
@@ -211,6 +237,32 @@ is discovering a broken instrument after the API spend, not before.
 | Tier-1 suite on sapphire | **2,516 passed**, 4 skipped, 27 deselected, 3 xfailed | `claude-steward`, 193 s |
 
 ## Changelog
+
+### 2026-09-13 (pass-1 gate) — both gates PASS, passes 2–3 GO
+
+**Trigger**: the driver logged "PASS 1 COMPLETE" at 10:32:36 UTC
+(`driver.log:1119`), the moment § 3 says both pass-1 gates become computable.
+A second steward took the campaign over and re-read every figure at source with
+`scripts/audit_proposer_cost.py` rather than carrying the hand-over's numbers.
+
+| Claim | Before | After |
+|---|---:|---:|
+| Pass-1 state | IN FLIGHT | **COMPLETE**, 24,561 / 24,561 (24,559 + 2 recovered) |
+| Pass-1 audited cost | PENDING | **US$81.9283** — PASS against US$110 |
+| Pass-1 cached share | PENDING | **0.808** — PASS against 0.70 |
+| Per tile-pass | US$0.00322 assumed | **US$0.00334**, +3.7 % |
+| Projected envelope | ≈ US$261–276 | **≈ US$285**, inside the US$420 hard stop |
+| Committed audited total | ≈ US$1.15 | **≈ US$83.08** |
+| Passes 2–3 | unlaunched, go/no-go pending | **GO** |
+| Resume entry point | § 4 step 1 | § 4 step 2 |
+
+**What did NOT change**: the carried operating points, the GS calibration leg's
+US$1.1221 and 622-candidate union, the mechanism / F1 / MCC / permutation gates
+in § 6 (all still PASS), the scoring instrument, the five-test family, and the
+US$420 hard stop. Both unions, all four verifier arms, every score and every
+P1–P5 verdict remain **unbuilt and UNTESTED**. No board, no tiering, no signed
+row, no configuration and no committed union was touched; nothing on sapphire's
+main checkout was written.
 
 ### 2026-09-13 (steward hand-over) — resume path rebuilt, instrument corrected
 
