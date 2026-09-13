@@ -1,6 +1,6 @@
 # Phase 2: the fourteen new four-rung K ladders
 
-> **GENERATED — do not edit by hand.** Written by `scripts/build_k_ladder_phase2_tables.py` v1.1.0; regenerate rather than correct. Source commit `ef5cc813b`, generated 2026-09-13T02:35:29+00:00. Per `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope" (2026-08-14 ruling), a generated projection carries a GENERATED banner and a source-commit stamp instead of a hand changelog. The machine-readable form is `ladders.json`.
+> **GENERATED — do not edit by hand.** Written by `scripts/build_k_ladder_phase2_tables.py` v1.1.0; regenerate rather than correct. Source commit `cebae7868`, generated 2026-09-13T02:53:10+00:00. Per `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope" (2026-08-14 ruling), a generated projection carries a GENERATED banner and a source-commit stamp instead of a hand changelog. The machine-readable form is `ladders.json`.
 
 Assembled from `phase2/scores.json`, `phase2/committed-carried/scores.json`, `phase2/g37-opmax/scores.json`, the signed board's `opmax/membership.json` and its `cells/`, and `phase2/spend-ledger.json`. Every rung is on the board frame `era2-b-487`, the Gold Standard curator reference, 14 buffers, 10,000 BCa draws, seed 42, MCC.
 
@@ -197,4 +197,3 @@ A rung is efficient when no cheaper rung of the same ladder scores as well at th
 | Gemini 3 HIGH image 384 px, T 1.0 | 1 @ $2.97 → 0.6119; 3 @ $8.18 → 0.7245; 5 @ $13.42 → 0.7337; 10 @ $26.11 → 0.7633 |
 | Gemini 3 scale-4-optimal 487 | 1 @ $2.87 → 0.6376; 3 @ $7.97 → 0.7296; 5 @ $12.97 → 0.7635; 10 @ $25.40 → 0.7683 |
 | Gemini 3.7 text, GS B geometry | 1 @ $2.17 → 0.8495; 3 @ $5.67 → 0.8870; 5 @ $9.12 → 0.9066; 10 @ $17.77 → 0.9068 |
-

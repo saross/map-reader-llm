@@ -1,0 +1,108 @@
+{
+  "metric": "mcc",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 3,
+  "apparent_f1": 0.7968523012773718,
+  "optimism": 0.004132137088137421,
+  "optimism_mcse": 0.0002546198744592824,
+  "optimism_spread_p2_5_p97_5": [
+    -0.04610318341274799,
+    0.05269382308078477
+  ],
+  "corrected_f1": 0.7927201641892344,
+  "naive_ci": [
+    0.7473605085380128,
+    0.8454519754115563
+  ],
+  "selection_aware_ci": [
+    0.7432283714498754,
+    0.8413198383234188
+  ],
+  "argmax_stability": 0.8023,
+  "n_distinct_argmax": 4,
+  "mcb_critical_width": 0.030591173631941134,
+  "mcb_theta": [
+    -0.013419055824528514,
+    -0.020623257542814355,
+    -0.02174289357556225,
+    0.013419055824528514
+  ],
+  "mcb_lower": [
+    -0.04401022945646965,
+    -0.05121443117475549,
+    -0.05233406720750339,
+    -0.01717211780741262
+  ],
+  "mcb_upper": [
+    0.01717211780741262,
+    0.00996791608912678,
+    0.008848280056378884,
+    0.04401022945646965
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.024195017243327,
+  "hsu_w_lower": 0.030591173631941134,
+  "hsu_lower": [
+    -0.04401022945646965,
+    -0.05121443117475549,
+    -0.05233406720750339,
+    -0.01717211780741262
+  ],
+  "hsu_upper": [
+    0.010775961418798486,
+    0.003571759700512645,
+    0.0024521236677647502,
+    0.03761407306785551
+  ],
+  "hsu_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-gs-stride-a-2026-09-12",
+  "bounds_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-analyses.json",
+  "conditions_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-conditions.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+      "label": "g384-ov128-ladder-n1-verified-p0.15-k1",
+      "eval_f1": 0.8605
+    },
+    {
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+      "label": "g384-ov128-ladder-n3-verified-p0.15-k3",
+      "eval_f1": 0.8834
+    },
+    {
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+      "label": "g384-ov128-ladder-n5-verified-p0.15-k4",
+      "eval_f1": 0.8782
+    },
+    {
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+      "label": "g384-ov128-k10-verified-p0.15-k8",
+      "eval_f1": 0.8905
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

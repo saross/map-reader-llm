@@ -1,0 +1,3518 @@
+{
+  "generated_at_utc": "2026-09-13T02:43:32.896463+00:00",
+  "script": "scripts/k_ladder_mcb.py",
+  "instrument": {
+    "tool": "scripts/selection_aware_intervals.py --board",
+    "construction": "Hsu (1984) / Edwards & Hsu (1983) constrained one-sided MCB on theta_i = stat_i - max_{j != i} stat_j, with the critical value bootstrapped over TILES rather than taken from Dunnett's table; a rung is ruled out as best only when its simultaneous upper bound falls at or below zero",
+    "simultaneous_confidence": 0.95,
+    "bootstrap": 10000,
+    "m_frac": 1.0,
+    "seed": 42,
+    "resampling_unit": "tile (Decision 10)",
+    "same_as": "the Era-2 board's own MCB step \u2014 results/leaderboard/era2/gs-era2-verified-board-2026-09-10/mcb/ and that board's README 2026-09-12 and 2026-09-13 entries"
+  },
+  "n_ladders": 22,
+  "gate_all_passed": true,
+  "roll_up": {
+    "ladders_whose_F1_admissible_set_contains_K3": [
+      "gs-stride-a",
+      "tier-e",
+      "phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "phase2-flash-high-text-n5-text-t0-3",
+      "phase2-flash-high-text-n5-text-t1-0",
+      "phase2-image-n5-image-t0-3",
+      "phase2-image-n5-image-t1-0",
+      "phase2-flash-high-image-n5-image-t0-7",
+      "37arm1-r2",
+      "37arm2-r2"
+    ],
+    "ladders_whose_F1_admissible_set_excludes_K10": [],
+    "ladders_whose_F1_admissible_set_is_the_whole_ladder": [
+      "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "phase2-image-n5-image-t0-3"
+    ],
+    "ladders_whose_MCC_admissible_set_is_the_whole_ladder": [
+      "gs-stride-a",
+      "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "phase2-flash-high-text-n5-text-t0-3",
+      "phase2-flash-high-text-n5-text-t0-7",
+      "phase2-flash-high-text-n5-text-t1-0",
+      "phase2-image-n5-image-t0-3",
+      "phase2-image-n5-image-t0-7",
+      "phase2-image-n5-image-t1-0",
+      "phase2-flash-high-image-n5-image-t0-3",
+      "55map-stride-b-r2",
+      "55map-stride-b-standardised"
+    ],
+    "ladders_whose_MCC_admissible_set_contains_K1": [
+      "gs-stride-a",
+      "tier-e",
+      "phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "phase2-flash-high-text-n5-text-t0-3",
+      "phase2-flash-high-text-n5-text-t0-7",
+      "phase2-flash-high-text-n5-text-t1-0",
+      "phase2-image-n5-image-t0-3",
+      "phase2-image-n5-image-t0-7",
+      "phase2-image-n5-image-t1-0",
+      "phase2-flash-high-image-n5-image-t0-3",
+      "phase2-flash-high-image-n5-image-t0-7",
+      "phase2-flash-high-image-n5-image-t1-0",
+      "phase2-scale-4-optimal-487",
+      "55map-stride-a-r2",
+      "55map-stride-a-standardised",
+      "55map-stride-b-r2",
+      "55map-stride-b-standardised",
+      "55map-stride-b-g37vf-r2",
+      "37arm1-r2",
+      "37arm2-r2"
+    ]
+  },
+  "withheld": {
+    "family": "Gemini 3.7 text, GS B geometry (the 3.7 gold-standard text screen)",
+    "proposer_pool": "g384_ov192_g37",
+    "n_rungs": 4,
+    "n_rungs_withheld": 2,
+    "cells_withheld": [
+      "gemini37-screen-2026-08-28::g37-text-k1-verified-opmax",
+      "gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1",
+      "gemini37-screen-2026-08-28::g37-text-k3-verified-opmax"
+    ],
+    "why": "The tile-join invariant refuses these cells' per-tile TP/FP/FN table on the board frame: their proposer ran on the ov192 tiling, whose source_tile vocabulary is absent from the frame's 336-stride vocabulary, so 20-22 of 467-526 in-frame detections are credited to a tile. The refusal falls on the F1 arm as well as the MCC arm, so neither an F1 nor an MCC admissible set can be computed. With K = 1 and K = 3 withheld the family retains two sound rungs of four, below the review's three-rung bar.",
+    "anchors": [
+      "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md (2026-09-13 entry, 'Admitted but WITHHELD')",
+      "results/k-ladder-2026-09-12/findings.md \u00a7 7.3",
+      "reports/tile-mcc-geometric-join-2026-09-12.md"
+    ],
+    "lifted_by": "the corpus-wide tile-join decision (board close-out question 4), still open with the PI"
+  },
+  "ladders": [
+    {
+      "slug": "gs-stride-a",
+      "group": "gold standard",
+      "analysis_id": "k-ladder-gs-stride-a-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-analyses.json",
+      "conditions": "results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-conditions.json",
+      "bounds_override": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov128-ladder-n1-verified-p0.15-k1",
+              "committed": 0.86052,
+              "reproduced": 0.86052,
+              "abs_delta": 9e-08
+            },
+            {
+              "label": "g384-ov128-ladder-n3-verified-p0.15-k3",
+              "committed": 0.883436,
+              "reproduced": 0.883436,
+              "abs_delta": 4.2e-07
+            },
+            {
+              "label": "g384-ov128-ladder-n5-verified-p0.15-k4",
+              "committed": 0.878166,
+              "reproduced": 0.878166,
+              "abs_delta": 4.7e-07
+            },
+            {
+              "label": "g384-ov128-k10-verified-p0.15-k8",
+              "committed": 0.890511,
+              "reproduced": 0.890511,
+              "abs_delta": 5e-08
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov128-ladder-n1-verified-p0.15-k1",
+              "committed": 0.7834,
+              "reproduced": 0.783433,
+              "abs_delta": 3.325e-05
+            },
+            {
+              "label": "g384-ov128-ladder-n3-verified-p0.15-k3",
+              "committed": 0.7762,
+              "reproduced": 0.776229,
+              "abs_delta": 2.904e-05
+            },
+            {
+              "label": "g384-ov128-ladder-n5-verified-p0.15-k4",
+              "committed": 0.7751,
+              "reproduced": 0.775109,
+              "abs_delta": 9.41e-06
+            },
+            {
+              "label": "g384-ov128-k10-verified-p0.15-k8",
+              "committed": 0.7969,
+              "reproduced": 0.796852,
+              "abs_delta": 4.77e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.890511,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.016022523030457394,
+        "hsu_w_lower": 0.01809408475738925,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.01960140447979831,
+        "theta_by_K": {
+          "1": -0.029991,
+          "3": -0.007075,
+          "5": -0.012344,
+          "10": 0.007075
+        },
+        "statistic_by_K": {
+          "1": 0.86052,
+          "3": 0.883436,
+          "5": 0.878166,
+          "10": 0.890511
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/gs-stride-a/k-ladder-gs-stride-a-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.796852,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.024195017243327,
+        "hsu_w_lower": 0.030591173631941134,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.030591173631941134,
+        "theta_by_K": {
+          "1": -0.013419,
+          "3": -0.020623,
+          "5": -0.021743,
+          "10": 0.013419
+        },
+        "statistic_by_K": {
+          "1": 0.783433,
+          "3": 0.776229,
+          "5": 0.775109,
+          "10": 0.796852
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/gs-stride-a/k-ladder-gs-stride-a-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "GS stride A, exact re-verification (board frame)",
+      "n_rungs": 4
+    },
+    {
+      "slug": "tier-e",
+      "group": "tier E",
+      "analysis_id": "k-ladder-tier-e-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/tier-e/tiering-input/run-analyses.json",
+      "conditions": "results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
+      "bounds_override": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "committed_tiering": "results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov192-k1-verified-opmax",
+              "committed": 0.854586,
+              "reproduced": 0.854586,
+              "abs_delta": 1.3e-07
+            },
+            {
+              "label": "g384-ov192-k3-verified-opmax",
+              "committed": 0.883991,
+              "reproduced": 0.883991,
+              "abs_delta": 2.8e-07
+            },
+            {
+              "label": "g384-ov192-k5-verified-opmax",
+              "committed": 0.890459,
+              "reproduced": 0.890459,
+              "abs_delta": 3.6e-07
+            },
+            {
+              "label": "g384-ov192-k10-verified-p0.15-k10-boardframe",
+              "committed": 0.888623,
+              "reproduced": 0.888623,
+              "abs_delta": 2.5e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov192-k1-verified-opmax",
+              "committed": 0.8211,
+              "reproduced": 0.821093,
+              "abs_delta": 6.58e-06
+            },
+            {
+              "label": "g384-ov192-k3-verified-opmax",
+              "committed": 0.8167,
+              "reproduced": 0.816673,
+              "abs_delta": 2.698e-05
+            },
+            {
+              "label": "g384-ov192-k5-verified-opmax",
+              "committed": 0.8139,
+              "reproduced": 0.813946,
+              "abs_delta": 4.563e-05
+            },
+            {
+              "label": "g384-ov192-k10-verified-p0.15-k10-boardframe",
+              "committed": 0.7903,
+              "reproduced": 0.790252,
+              "abs_delta": 4.762e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 5,
+        "best_statistic": 0.890459,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.015098866513130074,
+        "hsu_w_lower": 0.019644173449282674,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.020143486996528567,
+        "theta_by_K": {
+          "1": -0.035873,
+          "3": -0.006469,
+          "5": 0.001837,
+          "10": -0.001837
+        },
+        "statistic_by_K": {
+          "1": 0.854586,
+          "3": 0.883991,
+          "5": 0.890459,
+          "10": 0.888623
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/tier-e/k-ladder-tier-e-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.821093,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5
+        ],
+        "hsu_w_upper": 0.025910331475689927,
+        "hsu_w_lower": 0.03720685392164535,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.037325808305449036,
+        "theta_by_K": {
+          "1": 0.00442,
+          "3": -0.00442,
+          "5": -0.007148,
+          "10": -0.030841
+        },
+        "statistic_by_K": {
+          "1": 0.821093,
+          "3": 0.816673,
+          "5": 0.813946,
+          "10": 0.790252
+        },
+        "contains_K3": true,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/tier-e/k-ladder-tier-e-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Grid 384 px / 50 % MINIMAL text, verified (tier E)",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t0-3/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-text-t0.3-n1-opmax",
+              "committed": 0.85545,
+              "reproduced": 0.85545,
+              "abs_delta": 2.4e-07
+            },
+            {
+              "label": "pv-min-text-t0.3-n3-opmax",
+              "committed": 0.870813,
+              "reproduced": 0.870813,
+              "abs_delta": 4e-07
+            },
+            {
+              "label": "pv-min-text-t0.3-n5-opmax",
+              "committed": 0.877817,
+              "reproduced": 0.877817,
+              "abs_delta": 3.2e-07
+            },
+            {
+              "label": "pv-min-text-t0.3-n10-opmax",
+              "committed": 0.872979,
+              "reproduced": 0.872979,
+              "abs_delta": 2.1e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-text-t0.3-n1-opmax",
+              "committed": 0.7986,
+              "reproduced": 0.798621,
+              "abs_delta": 2.148e-05
+            },
+            {
+              "label": "pv-min-text-t0.3-n3-opmax",
+              "committed": 0.804,
+              "reproduced": 0.803997,
+              "abs_delta": 3.26e-06
+            },
+            {
+              "label": "pv-min-text-t0.3-n5-opmax",
+              "committed": 0.7735,
+              "reproduced": 0.773514,
+              "abs_delta": 1.419e-05
+            },
+            {
+              "label": "pv-min-text-t0.3-n10-opmax",
+              "committed": 0.791,
+              "reproduced": 0.791011,
+              "abs_delta": 1.098e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 5,
+        "best_statistic": 0.877817,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.018540979961173886,
+        "hsu_w_lower": 0.024339894961847644,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.024811058076372062,
+        "theta_by_K": {
+          "1": -0.022367,
+          "3": -0.007004,
+          "5": 0.004838,
+          "10": -0.004838
+        },
+        "statistic_by_K": {
+          "1": 0.85545,
+          "3": 0.870813,
+          "5": 0.877817,
+          "10": 0.872979
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t0-3/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 3,
+        "best_statistic": 0.803997,
+        "hsu_admissible_K": [
+          1,
+          3,
+          10
+        ],
+        "hsu_w_upper": 0.0269920583090331,
+        "hsu_w_lower": 0.03637965595245393,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.036627016736382495,
+        "theta_by_K": {
+          "1": -0.005375,
+          "3": 0.005375,
+          "5": -0.030483,
+          "10": -0.012986
+        },
+        "statistic_by_K": {
+          "1": 0.798621,
+          "3": 0.803997,
+          "5": 0.773514,
+          "10": 0.791011
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t0-3/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL text 384 px, T 0.3",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-7-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t0-7/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-7/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-text-t0.7-n1-opmax",
+              "committed": 0.857479,
+              "reproduced": 0.857479,
+              "abs_delta": 3.9e-07
+            },
+            {
+              "label": "pv-min-text-t0.7-n3-opmax",
+              "committed": 0.872467,
+              "reproduced": 0.872467,
+              "abs_delta": 2.2e-07
+            },
+            {
+              "label": "pv-min-text-t0.7-n5-opmax",
+              "committed": 0.873929,
+              "reproduced": 0.873929,
+              "abs_delta": 1e-08
+            },
+            {
+              "label": "pv-min-text-t0.7-n10-opmax",
+              "committed": 0.872596,
+              "reproduced": 0.872596,
+              "abs_delta": 1.5e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-text-t0.7-n1-opmax",
+              "committed": 0.7881,
+              "reproduced": 0.78806,
+              "abs_delta": 4.009e-05
+            },
+            {
+              "label": "pv-min-text-t0.7-n3-opmax",
+              "committed": 0.791,
+              "reproduced": 0.790954,
+              "abs_delta": 4.593e-05
+            },
+            {
+              "label": "pv-min-text-t0.7-n5-opmax",
+              "committed": 0.7957,
+              "reproduced": 0.795721,
+              "abs_delta": 2.087e-05
+            },
+            {
+              "label": "pv-min-text-t0.7-n10-opmax",
+              "committed": 0.7768,
+              "reproduced": 0.776798,
+              "abs_delta": 2.46e-06
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 5,
+        "best_statistic": 0.873929,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.01813394426553117,
+        "hsu_w_lower": 0.026588198765082765,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.027131241511922675,
+        "theta_by_K": {
+          "1": -0.01645,
+          "3": -0.001462,
+          "5": 0.001333,
+          "10": -0.001333
+        },
+        "statistic_by_K": {
+          "1": 0.857479,
+          "3": 0.872467,
+          "5": 0.873929,
+          "10": 0.872596
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t0-7/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-7-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 5,
+        "best_statistic": 0.795721,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.025311532828370304,
+        "hsu_w_lower": 0.03656260739130606,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03676930680652015,
+        "theta_by_K": {
+          "1": -0.007661,
+          "3": -0.004767,
+          "5": 0.004767,
+          "10": -0.018923
+        },
+        "statistic_by_K": {
+          "1": 0.78806,
+          "3": 0.790954,
+          "5": 0.795721,
+          "10": 0.776798
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t0-7/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-7-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL text 384 px, T 0.7",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t1-0/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-text-t1.0-n1-opmax",
+              "committed": 0.823529,
+              "reproduced": 0.823529,
+              "abs_delta": 4.1e-07
+            },
+            {
+              "label": "pv-min-text-t1.0-n3-opmax",
+              "committed": 0.864671,
+              "reproduced": 0.864671,
+              "abs_delta": 3.4e-07
+            },
+            {
+              "label": "pv-min-text-t1.0-n5-opmax",
+              "committed": 0.871429,
+              "reproduced": 0.871429,
+              "abs_delta": 4.3e-07
+            },
+            {
+              "label": "pv-min-text-t1.0-n10-opmax",
+              "committed": 0.878107,
+              "reproduced": 0.878107,
+              "abs_delta": 4.9e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-text-t1.0-n1-opmax",
+              "committed": 0.8095,
+              "reproduced": 0.80946,
+              "abs_delta": 3.954e-05
+            },
+            {
+              "label": "pv-min-text-t1.0-n3-opmax",
+              "committed": 0.804,
+              "reproduced": 0.803997,
+              "abs_delta": 3.26e-06
+            },
+            {
+              "label": "pv-min-text-t1.0-n5-opmax",
+              "committed": 0.7797,
+              "reproduced": 0.779656,
+              "abs_delta": 4.372e-05
+            },
+            {
+              "label": "pv-min-text-t1.0-n10-opmax",
+              "committed": 0.7881,
+              "reproduced": 0.78806,
+              "abs_delta": 4.009e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.878107,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.02306863319780699,
+        "hsu_w_lower": 0.027273941762953557,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.028924139313896105,
+        "theta_by_K": {
+          "1": -0.054577,
+          "3": -0.013436,
+          "5": -0.006678,
+          "10": 0.006678
+        },
+        "statistic_by_K": {
+          "1": 0.823529,
+          "3": 0.864671,
+          "5": 0.871429,
+          "10": 0.878107
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t1-0/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.80946,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.03132234265175992,
+        "hsu_w_lower": 0.038598532055808224,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03933770228922269,
+        "theta_by_K": {
+          "1": 0.005464,
+          "3": -0.005464,
+          "5": -0.029804,
+          "10": -0.021401
+        },
+        "statistic_by_K": {
+          "1": 0.80946,
+          "3": 0.803997,
+          "5": 0.779656,
+          "10": 0.78806
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t1-0/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL text 384 px, T 1.0",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-text-n5-text-t0-3",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-text-n5-text-t0-3-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t0-3/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-text-n5-text-t0-3/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-text-t0.3-n1-opmax",
+              "committed": 0.831435,
+              "reproduced": 0.831435,
+              "abs_delta": 8e-08
+            },
+            {
+              "label": "pv-high-text-t0.3-n3-opmax",
+              "committed": 0.878345,
+              "reproduced": 0.878345,
+              "abs_delta": 5e-07
+            },
+            {
+              "label": "pv-high-text-t0.3-n5-opmax",
+              "committed": 0.887307,
+              "reproduced": 0.887307,
+              "abs_delta": 2.4e-07
+            },
+            {
+              "label": "pv-high-text-t0.3-n10-opmax",
+              "committed": 0.872162,
+              "reproduced": 0.872162,
+              "abs_delta": 4.9e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-text-t0.3-n1-opmax",
+              "committed": 0.8068,
+              "reproduced": 0.806841,
+              "abs_delta": 4.098e-05
+            },
+            {
+              "label": "pv-high-text-t0.3-n3-opmax",
+              "committed": 0.8053,
+              "reproduced": 0.805329,
+              "abs_delta": 2.871e-05
+            },
+            {
+              "label": "pv-high-text-t0.3-n5-opmax",
+              "committed": 0.7805,
+              "reproduced": 0.780544,
+              "abs_delta": 4.401e-05
+            },
+            {
+              "label": "pv-high-text-t0.3-n10-opmax",
+              "committed": 0.7872,
+              "reproduced": 0.787218,
+              "abs_delta": 1.81e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 5,
+        "best_statistic": 0.887307,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.018486795656665663,
+        "hsu_w_lower": 0.021001431878044846,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.022595172575330193,
+        "theta_by_K": {
+          "1": -0.055872,
+          "3": -0.008962,
+          "5": 0.008962,
+          "10": -0.015145
+        },
+        "statistic_by_K": {
+          "1": 0.831435,
+          "3": 0.878345,
+          "5": 0.887307,
+          "10": 0.872162
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t0-3/k-ladder-mcc-phase2-flash-high-text-n5-text-t0-3-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.806841,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.03919643821702373,
+        "hsu_w_lower": 0.05096869796523033,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.05105984273987925,
+        "theta_by_K": {
+          "1": 0.001512,
+          "3": -0.001512,
+          "5": -0.026297,
+          "10": -0.019623
+        },
+        "statistic_by_K": {
+          "1": 0.806841,
+          "3": 0.805329,
+          "5": 0.780544,
+          "10": 0.787218
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t0-3/k-ladder-mcc-phase2-flash-high-text-n5-text-t0-3-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH text 384 px, T 0.3",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-text-n5-text-t0-7",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-text-n5-text-t0-7-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t0-7/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-text-n5-text-t0-7/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-text-t0.7-n1-opmax",
+              "committed": 0.80089,
+              "reproduced": 0.80089,
+              "abs_delta": 1.2e-07
+            },
+            {
+              "label": "pv-high-text-t0.7-n3-opmax",
+              "committed": 0.849188,
+              "reproduced": 0.849188,
+              "abs_delta": 6e-08
+            },
+            {
+              "label": "pv-high-text-t0.7-n5-opmax",
+              "committed": 0.863362,
+              "reproduced": 0.863362,
+              "abs_delta": 4.5e-07
+            },
+            {
+              "label": "pv-high-text-t0.7-n10-opmax",
+              "committed": 0.874384,
+              "reproduced": 0.874384,
+              "abs_delta": 2.4e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-text-t0.7-n1-opmax",
+              "committed": 0.7737,
+              "reproduced": 0.773716,
+              "abs_delta": 1.644e-05
+            },
+            {
+              "label": "pv-high-text-t0.7-n3-opmax",
+              "committed": 0.7979,
+              "reproduced": 0.79791,
+              "abs_delta": 9.53e-06
+            },
+            {
+              "label": "pv-high-text-t0.7-n5-opmax",
+              "committed": 0.7684,
+              "reproduced": 0.768371,
+              "abs_delta": 2.88e-05
+            },
+            {
+              "label": "pv-high-text-t0.7-n10-opmax",
+              "committed": 0.7641,
+              "reproduced": 0.764071,
+              "abs_delta": 2.893e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.874384,
+        "hsu_admissible_K": [
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.024568587936882574,
+        "hsu_w_lower": 0.025855167871693528,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.028922436587877257,
+        "theta_by_K": {
+          "1": -0.073494,
+          "3": -0.025196,
+          "5": -0.011023,
+          "10": 0.011023
+        },
+        "statistic_by_K": {
+          "1": 0.80089,
+          "3": 0.849188,
+          "5": 0.863362,
+          "10": 0.874384
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t0-7/k-ladder-mcc-phase2-flash-high-text-n5-text-t0-7-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 3,
+        "best_statistic": 0.79791,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.04192009810563949,
+        "hsu_w_lower": 0.04926310639352954,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.050073232288507255,
+        "theta_by_K": {
+          "1": -0.024193,
+          "3": 0.024193,
+          "5": -0.029538,
+          "10": -0.033838
+        },
+        "statistic_by_K": {
+          "1": 0.773716,
+          "3": 0.79791,
+          "5": 0.768371,
+          "10": 0.764071
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t0-7/k-ladder-mcc-phase2-flash-high-text-n5-text-t0-7-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH text 384 px, T 0.7",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-text-n5-text-t1-0",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-text-n5-text-t1-0-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t1-0/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-text-n5-text-t1-0/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-text-t1.0-n1-opmax",
+              "committed": 0.781038,
+              "reproduced": 0.781038,
+              "abs_delta": 3.7e-07
+            },
+            {
+              "label": "pv-high-text-t1.0-n3-opmax",
+              "committed": 0.854142,
+              "reproduced": 0.854142,
+              "abs_delta": 3.6e-07
+            },
+            {
+              "label": "pv-high-text-t1.0-n5-opmax",
+              "committed": 0.868757,
+              "reproduced": 0.868757,
+              "abs_delta": 2.6e-07
+            },
+            {
+              "label": "pv-high-text-t1.0-n10-opmax",
+              "committed": 0.880372,
+              "reproduced": 0.880372,
+              "abs_delta": 3.4e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-text-t1.0-n1-opmax",
+              "committed": 0.8162,
+              "reproduced": 0.816198,
+              "abs_delta": 1.6e-06
+            },
+            {
+              "label": "pv-high-text-t1.0-n3-opmax",
+              "committed": 0.7986,
+              "reproduced": 0.798621,
+              "abs_delta": 2.148e-05
+            },
+            {
+              "label": "pv-high-text-t1.0-n5-opmax",
+              "committed": 0.7857,
+              "reproduced": 0.785714,
+              "abs_delta": 1.404e-05
+            },
+            {
+              "label": "pv-high-text-t1.0-n10-opmax",
+              "committed": 0.791,
+              "reproduced": 0.791011,
+              "abs_delta": 1.098e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.880372,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.028431497305150925,
+        "hsu_w_lower": 0.03130836669961483,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.0352439467162383,
+        "theta_by_K": {
+          "1": -0.099333,
+          "3": -0.026229,
+          "5": -0.011614,
+          "10": 0.011614
+        },
+        "statistic_by_K": {
+          "1": 0.781038,
+          "3": 0.854142,
+          "5": 0.868757,
+          "10": 0.880372
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t1-0/k-ladder-mcc-phase2-flash-high-text-n5-text-t1-0-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.816198,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.038519651260971226,
+        "hsu_w_lower": 0.046896534838107386,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.04753918977474803,
+        "theta_by_K": {
+          "1": 0.017577,
+          "3": -0.017577,
+          "5": -0.030484,
+          "10": -0.025187
+        },
+        "statistic_by_K": {
+          "1": 0.816198,
+          "3": 0.798621,
+          "5": 0.785714,
+          "10": 0.791011
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t1-0/k-ladder-mcc-phase2-flash-high-text-n5-text-t1-0-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH text 384 px, T 1.0",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-image-n5-image-t0-3",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-image-n5-image-t0-3-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t0-3/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-image-n5-image-t0-3/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t0.3-n1-opmax",
+              "committed": 0.768,
+              "reproduced": 0.768,
+              "abs_delta": 0.0
+            },
+            {
+              "label": "pv-min-image-t0.3-n3-opmax",
+              "committed": 0.777377,
+              "reproduced": 0.777377,
+              "abs_delta": 3.5e-07
+            },
+            {
+              "label": "pv-min-image-t0.3-n5-opmax",
+              "committed": 0.776722,
+              "reproduced": 0.776722,
+              "abs_delta": 9e-08
+            },
+            {
+              "label": "pv-min-image-t0.3-n10-opmax",
+              "committed": 0.781883,
+              "reproduced": 0.781883,
+              "abs_delta": 1.9e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t0.3-n1-opmax",
+              "committed": 0.8443,
+              "reproduced": 0.844263,
+              "abs_delta": 3.654e-05
+            },
+            {
+              "label": "pv-min-image-t0.3-n3-opmax",
+              "committed": 0.8178,
+              "reproduced": 0.817799,
+              "abs_delta": 9.4e-07
+            },
+            {
+              "label": "pv-min-image-t0.3-n5-opmax",
+              "committed": 0.8416,
+              "reproduced": 0.841624,
+              "abs_delta": 2.407e-05
+            },
+            {
+              "label": "pv-min-image-t0.3-n10-opmax",
+              "committed": 0.8377,
+              "reproduced": 0.837738,
+              "abs_delta": 3.778e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.781883,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.019807289204162946,
+        "hsu_w_lower": 0.026854720741598427,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.027479917373187186,
+        "theta_by_K": {
+          "1": -0.013883,
+          "3": -0.004507,
+          "5": -0.005161,
+          "10": 0.004507
+        },
+        "statistic_by_K": {
+          "1": 0.768,
+          "3": 0.777377,
+          "5": 0.776722,
+          "10": 0.781883
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t0-3/k-ladder-mcc-phase2-image-n5-image-t0-3-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.844263,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.027592698756762252,
+        "hsu_w_lower": 0.04040481425936441,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.040414925824851095,
+        "theta_by_K": {
+          "1": 0.002639,
+          "3": -0.026464,
+          "5": -0.002639,
+          "10": -0.006526
+        },
+        "statistic_by_K": {
+          "1": 0.844263,
+          "3": 0.817799,
+          "5": 0.841624,
+          "10": 0.837738
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t0-3/k-ladder-mcc-phase2-image-n5-image-t0-3-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.3",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-image-n5-image-t0-7",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-image-n5-image-t0-7-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t0-7/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-image-n5-image-t0-7/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t0.7-n1-opmax",
+              "committed": 0.725225,
+              "reproduced": 0.725225,
+              "abs_delta": 2.3e-07
+            },
+            {
+              "label": "pv-min-image-t0.7-n3-opmax",
+              "committed": 0.759907,
+              "reproduced": 0.759907,
+              "abs_delta": 2.4e-07
+            },
+            {
+              "label": "pv-min-image-t0.7-n5-opmax",
+              "committed": 0.773364,
+              "reproduced": 0.773364,
+              "abs_delta": 4.9e-07
+            },
+            {
+              "label": "pv-min-image-t0.7-n10-opmax",
+              "committed": 0.788095,
+              "reproduced": 0.788095,
+              "abs_delta": 2.4e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t0.7-n1-opmax",
+              "committed": 0.8437,
+              "reproduced": 0.843722,
+              "abs_delta": 2.225e-05
+            },
+            {
+              "label": "pv-min-image-t0.7-n3-opmax",
+              "committed": 0.8377,
+              "reproduced": 0.837738,
+              "abs_delta": 3.778e-05
+            },
+            {
+              "label": "pv-min-image-t0.7-n5-opmax",
+              "committed": 0.8383,
+              "reproduced": 0.838328,
+              "abs_delta": 2.771e-05
+            },
+            {
+              "label": "pv-min-image-t0.7-n10-opmax",
+              "committed": 0.8223,
+              "reproduced": 0.82229,
+              "abs_delta": 9.99e-06
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.788095,
+        "hsu_admissible_K": [
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.028046522858456584,
+        "hsu_w_lower": 0.03014440636159057,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03366468327787254,
+        "theta_by_K": {
+          "1": -0.06287,
+          "3": -0.028188,
+          "5": -0.014731,
+          "10": 0.014731
+        },
+        "statistic_by_K": {
+          "1": 0.725225,
+          "3": 0.759907,
+          "5": 0.773364,
+          "10": 0.788095
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t0-7/k-ladder-mcc-phase2-image-n5-image-t0-7-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.843722,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.027885404605268636,
+        "hsu_w_lower": 0.04476346846008149,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.04477769988648631,
+        "theta_by_K": {
+          "1": 0.005395,
+          "3": -0.005984,
+          "5": -0.005395,
+          "10": -0.021432
+        },
+        "statistic_by_K": {
+          "1": 0.843722,
+          "3": 0.837738,
+          "5": 0.838328,
+          "10": 0.82229
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t0-7/k-ladder-mcc-phase2-image-n5-image-t0-7-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.7",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-image-n5-image-t1-0",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-image-n5-image-t1-0-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t1-0/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-image-n5-image-t1-0/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t1.0-n1-opmax",
+              "committed": 0.704444,
+              "reproduced": 0.704444,
+              "abs_delta": 4.4e-07
+            },
+            {
+              "label": "pv-min-image-t1.0-n3-opmax",
+              "committed": 0.728754,
+              "reproduced": 0.728754,
+              "abs_delta": 3.7e-07
+            },
+            {
+              "label": "pv-min-image-t1.0-n5-opmax",
+              "committed": 0.738423,
+              "reproduced": 0.738423,
+              "abs_delta": 3e-08
+            },
+            {
+              "label": "pv-min-image-t1.0-n10-opmax",
+              "committed": 0.742788,
+              "reproduced": 0.742788,
+              "abs_delta": 4.6e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t1.0-n1-opmax",
+              "committed": 0.836,
+              "reproduced": 0.835978,
+              "abs_delta": 2.164e-05
+            },
+            {
+              "label": "pv-min-image-t1.0-n3-opmax",
+              "committed": 0.8178,
+              "reproduced": 0.817799,
+              "abs_delta": 9.4e-07
+            },
+            {
+              "label": "pv-min-image-t1.0-n5-opmax",
+              "committed": 0.8021,
+              "reproduced": 0.802077,
+              "abs_delta": 2.345e-05
+            },
+            {
+              "label": "pv-min-image-t1.0-n10-opmax",
+              "committed": 0.8078,
+              "reproduced": 0.807776,
+              "abs_delta": 2.418e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.742788,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.026817177581528594,
+        "hsu_w_lower": 0.0328153775643876,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03393553952445065,
+        "theta_by_K": {
+          "1": -0.038344,
+          "3": -0.014034,
+          "5": -0.004365,
+          "10": 0.004365
+        },
+        "statistic_by_K": {
+          "1": 0.704444,
+          "3": 0.728754,
+          "5": 0.738423,
+          "10": 0.742788
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t1-0/k-ladder-mcc-phase2-image-n5-image-t1-0-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.835978,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.04054565826696621,
+        "hsu_w_lower": 0.04845935308412143,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.04902627961821853,
+        "theta_by_K": {
+          "1": 0.018179,
+          "3": -0.018179,
+          "5": -0.033902,
+          "10": -0.028203
+        },
+        "statistic_by_K": {
+          "1": 0.835978,
+          "3": 0.817799,
+          "5": 0.802077,
+          "10": 0.807776
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t1-0/k-ladder-mcc-phase2-image-n5-image-t1-0-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL image 384 px, T 1.0",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-image-n5-image-t0-3",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-image-n5-image-t0-3-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t0-3/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-image-n5-image-t0-3/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-image-t0.3-n1-opmax",
+              "committed": 0.692478,
+              "reproduced": 0.692478,
+              "abs_delta": 1.2e-07
+            },
+            {
+              "label": "pv-high-image-t0.3-n3-opmax",
+              "committed": 0.721461,
+              "reproduced": 0.721461,
+              "abs_delta": 1.9e-07
+            },
+            {
+              "label": "pv-high-image-t0.3-n5-opmax",
+              "committed": 0.747525,
+              "reproduced": 0.747525,
+              "abs_delta": 2.5e-07
+            },
+            {
+              "label": "pv-high-image-t0.3-n10-opmax",
+              "committed": 0.770473,
+              "reproduced": 0.770473,
+              "abs_delta": 1e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-image-t0.3-n1-opmax",
+              "committed": 0.827,
+              "reproduced": 0.827012,
+              "abs_delta": 1.248e-05
+            },
+            {
+              "label": "pv-high-image-t0.3-n3-opmax",
+              "committed": 0.8237,
+              "reproduced": 0.823713,
+              "abs_delta": 1.261e-05
+            },
+            {
+              "label": "pv-high-image-t0.3-n5-opmax",
+              "committed": 0.8049,
+              "reproduced": 0.804867,
+              "abs_delta": 3.284e-05
+            },
+            {
+              "label": "pv-high-image-t0.3-n10-opmax",
+              "committed": 0.8294,
+              "reproduced": 0.829416,
+              "abs_delta": 1.56e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.770473,
+        "hsu_admissible_K": [
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.03239645309929459,
+        "hsu_w_lower": 0.03327505900489896,
+        "two_sided_band_K": [
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.036713201426850604,
+        "theta_by_K": {
+          "1": -0.077995,
+          "3": -0.049012,
+          "5": -0.022948,
+          "10": 0.022948
+        },
+        "statistic_by_K": {
+          "1": 0.692478,
+          "3": 0.721461,
+          "5": 0.747525,
+          "10": 0.770473
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t0-3/k-ladder-mcc-phase2-flash-high-image-n5-image-t0-3-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.829416,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.03361381076054562,
+        "hsu_w_lower": 0.04967639474962922,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.049765776476122396,
+        "theta_by_K": {
+          "1": -0.002403,
+          "3": -0.005703,
+          "5": -0.024548,
+          "10": 0.002403
+        },
+        "statistic_by_K": {
+          "1": 0.827012,
+          "3": 0.823713,
+          "5": 0.804867,
+          "10": 0.829416
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t0-3/k-ladder-mcc-phase2-flash-high-image-n5-image-t0-3-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH image 384 px, T 0.3",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-image-n5-image-t0-7",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-image-n5-image-t0-7-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t0-7/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-image-n5-image-t0-7/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-image-t0.7-n1-opmax",
+              "committed": 0.690869,
+              "reproduced": 0.690869,
+              "abs_delta": 9e-08
+            },
+            {
+              "label": "pv-high-image-t0.7-n3-opmax",
+              "committed": 0.766551,
+              "reproduced": 0.766551,
+              "abs_delta": 4.8e-07
+            },
+            {
+              "label": "pv-high-image-t0.7-n5-opmax",
+              "committed": 0.786808,
+              "reproduced": 0.786808,
+              "abs_delta": 1e-08
+            },
+            {
+              "label": "pv-high-image-t0.7-n10-opmax",
+              "committed": 0.776501,
+              "reproduced": 0.776501,
+              "abs_delta": 3.6e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-image-t0.7-n1-opmax",
+              "committed": 0.8435,
+              "reproduced": 0.843539,
+              "abs_delta": 3.95e-05
+            },
+            {
+              "label": "pv-high-image-t0.7-n3-opmax",
+              "committed": 0.8435,
+              "reproduced": 0.843503,
+              "abs_delta": 2.6e-06
+            },
+            {
+              "label": "pv-high-image-t0.7-n5-opmax",
+              "committed": 0.8359,
+              "reproduced": 0.83589,
+              "abs_delta": 9.89e-06
+            },
+            {
+              "label": "pv-high-image-t0.7-n10-opmax",
+              "committed": 0.798,
+              "reproduced": 0.798049,
+              "abs_delta": 4.916e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 5,
+        "best_statistic": 0.786808,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.030931093115272906,
+        "hsu_w_lower": 0.03426552347126761,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03713626758335416,
+        "theta_by_K": {
+          "1": -0.095939,
+          "3": -0.020257,
+          "5": 0.010307,
+          "10": -0.010307
+        },
+        "statistic_by_K": {
+          "1": 0.690869,
+          "3": 0.766551,
+          "5": 0.786808,
+          "10": 0.776501
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t0-7/k-ladder-mcc-phase2-flash-high-image-n5-image-t0-7-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.843539,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5
+        ],
+        "hsu_w_upper": 0.0329269286045211,
+        "hsu_w_lower": 0.04723571967762334,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.0472956108868361,
+        "theta_by_K": {
+          "1": 3.7e-05,
+          "3": -3.7e-05,
+          "5": -0.007649,
+          "10": -0.04549
+        },
+        "statistic_by_K": {
+          "1": 0.843539,
+          "3": 0.843503,
+          "5": 0.83589,
+          "10": 0.798049
+        },
+        "contains_K3": true,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t0-7/k-ladder-mcc-phase2-flash-high-image-n5-image-t0-7-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH image 384 px, T 0.7",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-image-n5-image-t1-0",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-image-n5-image-t1-0-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t1-0/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-image-n5-image-t1-0/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-image-t1.0-n1-opmax",
+              "committed": 0.611892,
+              "reproduced": 0.611892,
+              "abs_delta": 1.1e-07
+            },
+            {
+              "label": "pv-high-image-t1.0-n3-opmax",
+              "committed": 0.724502,
+              "reproduced": 0.724502,
+              "abs_delta": 2.4e-07
+            },
+            {
+              "label": "pv-high-image-t1.0-n5-opmax",
+              "committed": 0.733728,
+              "reproduced": 0.733728,
+              "abs_delta": 1.9e-07
+            },
+            {
+              "label": "pv-high-image-t1.0-n10-opmax",
+              "committed": 0.763251,
+              "reproduced": 0.763251,
+              "abs_delta": 1.2e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-image-t1.0-n1-opmax",
+              "committed": 0.864,
+              "reproduced": 0.863968,
+              "abs_delta": 3.194e-05
+            },
+            {
+              "label": "pv-high-image-t1.0-n3-opmax",
+              "committed": 0.8294,
+              "reproduced": 0.829416,
+              "abs_delta": 1.56e-05
+            },
+            {
+              "label": "pv-high-image-t1.0-n5-opmax",
+              "committed": 0.823,
+              "reproduced": 0.822979,
+              "abs_delta": 2.12e-05
+            },
+            {
+              "label": "pv-high-image-t1.0-n10-opmax",
+              "committed": 0.8002,
+              "reproduced": 0.800226,
+              "abs_delta": 2.603e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.763251,
+        "hsu_admissible_K": [
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.032625109700169325,
+        "hsu_w_lower": 0.032826337748790325,
+        "two_sided_band_K": [
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03782066376573207,
+        "theta_by_K": {
+          "1": -0.151359,
+          "3": -0.038749,
+          "5": -0.029523,
+          "10": 0.029523
+        },
+        "statistic_by_K": {
+          "1": 0.611892,
+          "3": 0.724502,
+          "5": 0.733728,
+          "10": 0.763251
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t1-0/k-ladder-mcc-phase2-flash-high-image-n5-image-t1-0-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.863968,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5
+        ],
+        "hsu_w_upper": 0.04531368777176997,
+        "hsu_w_lower": 0.049536612328572205,
+        "two_sided_band_K": [
+          1,
+          3,
+          5
+        ],
+        "two_sided_critical_width": 0.051602253934317714,
+        "theta_by_K": {
+          "1": 0.034552,
+          "3": -0.034552,
+          "5": -0.040989,
+          "10": -0.063742
+        },
+        "statistic_by_K": {
+          "1": 0.863968,
+          "3": 0.829416,
+          "5": 0.822979,
+          "10": 0.800226
+        },
+        "contains_K3": true,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t1-0/k-ladder-mcc-phase2-flash-high-image-n5-image-t1-0-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH image 384 px, T 1.0",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-scale-4-optimal-487",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-scale-4-optimal-487-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-scale-4-optimal-487/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-scale-4-optimal-487/tiering_20m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-scale4-optimal-n1-opmax",
+              "committed": 0.63765,
+              "reproduced": 0.63765,
+              "abs_delta": 3.8e-07
+            },
+            {
+              "label": "pv-scale4-optimal-n3-opmax",
+              "committed": 0.729634,
+              "reproduced": 0.729634,
+              "abs_delta": 0.0
+            },
+            {
+              "label": "pv-scale4-optimal-n5-opmax",
+              "committed": 0.763505,
+              "reproduced": 0.763505,
+              "abs_delta": 4e-07
+            },
+            {
+              "label": "pv-scale4-optimal-n10-opmax",
+              "committed": 0.768322,
+              "reproduced": 0.768322,
+              "abs_delta": 4.9e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-scale4-optimal-n1-opmax",
+              "committed": 0.8726,
+              "reproduced": 0.872557,
+              "abs_delta": 4.281e-05
+            },
+            {
+              "label": "pv-scale4-optimal-n3-opmax",
+              "committed": 0.8443,
+              "reproduced": 0.844253,
+              "abs_delta": 4.721e-05
+            },
+            {
+              "label": "pv-scale4-optimal-n5-opmax",
+              "committed": 0.8306,
+              "reproduced": 0.830634,
+              "abs_delta": 3.44e-05
+            },
+            {
+              "label": "pv-scale4-optimal-n10-opmax",
+              "committed": 0.8154,
+              "reproduced": 0.81536,
+              "abs_delta": 4.033e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.768322,
+        "hsu_admissible_K": [
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.02873514120978395,
+        "hsu_w_lower": 0.03308508229377796,
+        "two_sided_band_K": [
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03518130963408508,
+        "theta_by_K": {
+          "1": -0.130672,
+          "3": -0.038688,
+          "5": -0.004816,
+          "10": 0.004816
+        },
+        "statistic_by_K": {
+          "1": 0.63765,
+          "3": 0.729634,
+          "5": 0.763505,
+          "10": 0.768322
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-scale-4-optimal-487/k-ladder-mcc-phase2-scale-4-optimal-487-2026-09-12_b20_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.872557,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5
+        ],
+        "hsu_w_upper": 0.04265666515746536,
+        "hsu_w_lower": 0.047096061391020565,
+        "two_sided_band_K": [
+          1,
+          3,
+          5
+        ],
+        "two_sided_critical_width": 0.04855462965911179,
+        "theta_by_K": {
+          "1": 0.028304,
+          "3": -0.028304,
+          "5": -0.041923,
+          "10": -0.057198
+        },
+        "statistic_by_K": {
+          "1": 0.872557,
+          "3": 0.844253,
+          "5": 0.830634,
+          "10": 0.81536
+        },
+        "contains_K3": true,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/phase2-scale-4-optimal-487/k-ladder-mcc-phase2-scale-4-optimal-487-2026-09-12_mcc_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 scale-4-optimal 487",
+      "n_rungs": 4
+    },
+    {
+      "slug": "55map-stride-a-r2",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-55map-stride-a-r2-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-a-r2/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-r2/tiering_50m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+              "committed": 0.822674,
+              "reproduced": 0.822674,
+              "abs_delta": 4.6e-07
+            },
+            {
+              "label": "g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+              "committed": 0.832077,
+              "reproduced": 0.832077,
+              "abs_delta": 3.7e-07
+            },
+            {
+              "label": "g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+              "committed": 0.838274,
+              "reproduced": 0.838274,
+              "abs_delta": 4.7e-07
+            },
+            {
+              "label": "g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+              "committed": 0.841876,
+              "reproduced": 0.841876,
+              "abs_delta": 3.6e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+              "committed": 0.7006,
+              "reproduced": 0.700623,
+              "abs_delta": 2.316e-05
+            },
+            {
+              "label": "g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+              "committed": 0.7018,
+              "reproduced": 0.701785,
+              "abs_delta": 1.506e-05
+            },
+            {
+              "label": "g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+              "committed": 0.6907,
+              "reproduced": 0.690733,
+              "abs_delta": 3.281e-05
+            },
+            {
+              "label": "g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+              "committed": 0.6954,
+              "reproduced": 0.695409,
+              "abs_delta": 9e-06
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 10,
+        "best_statistic": 0.841876,
+        "hsu_admissible_K": [
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.004704472908026102,
+        "hsu_w_lower": 0.0047480739771599,
+        "two_sided_band_K": [
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.0055593017817769375,
+        "theta_by_K": {
+          "1": -0.019203,
+          "3": -0.0098,
+          "5": -0.003603,
+          "10": 0.003603
+        },
+        "statistic_by_K": {
+          "1": 0.822674,
+          "3": 0.832077,
+          "5": 0.838274,
+          "10": 0.841876
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/55map-stride-a-r2/k-ladder-mcc-55map-stride-a-r2-2026-09-12_b50_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 3,
+        "best_statistic": 0.701785,
+        "hsu_admissible_K": [
+          1,
+          3
+        ],
+        "hsu_w_upper": 0.005884885898542946,
+        "hsu_w_lower": 0.006796802613433878,
+        "two_sided_band_K": [
+          1,
+          3,
+          10
+        ],
+        "two_sided_critical_width": 0.007276962445991084,
+        "theta_by_K": {
+          "1": -0.001162,
+          "3": 0.001162,
+          "5": -0.011052,
+          "10": -0.006376
+        },
+        "statistic_by_K": {
+          "1": 0.700623,
+          "3": 0.701785,
+          "5": 0.690733,
+          "10": 0.695409
+        },
+        "contains_K3": true,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/55map-stride-a-r2/k-ladder-mcc-55map-stride-a-r2-2026-09-12_mcc_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "55-map stride A, r2",
+      "n_rungs": 4
+    },
+    {
+      "slug": "55map-stride-a-standardised",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-55map-stride-a-standardised-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-a-standardised/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-standardised/tiering_50m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt",
+              "committed": 0.823137,
+              "reproduced": 0.823137,
+              "abs_delta": 1.8e-07
+            },
+            {
+              "label": "g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt",
+              "committed": 0.832551,
+              "reproduced": 0.832551,
+              "abs_delta": 5e-07
+            },
+            {
+              "label": "g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt",
+              "committed": 0.838347,
+              "reproduced": 0.838347,
+              "abs_delta": 4e-08
+            },
+            {
+              "label": "g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt",
+              "committed": 0.841953,
+              "reproduced": 0.841953,
+              "abs_delta": 4.7e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt",
+              "committed": 0.701,
+              "reproduced": 0.701037,
+              "abs_delta": 3.738e-05
+            },
+            {
+              "label": "g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt",
+              "committed": 0.7022,
+              "reproduced": 0.702198,
+              "abs_delta": 1.69e-06
+            },
+            {
+              "label": "g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt",
+              "committed": 0.6911,
+              "reproduced": 0.691145,
+              "abs_delta": 4.549e-05
+            },
+            {
+              "label": "g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt",
+              "committed": 0.6958,
+              "reproduced": 0.695829,
+              "abs_delta": 2.949e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 10,
+        "best_statistic": 0.841953,
+        "hsu_admissible_K": [
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.004716281827164503,
+        "hsu_w_lower": 0.004770528653205551,
+        "two_sided_band_K": [
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.005556683361040297,
+        "theta_by_K": {
+          "1": -0.018816,
+          "3": -0.009401,
+          "5": -0.003605,
+          "10": 0.003605
+        },
+        "statistic_by_K": {
+          "1": 0.823137,
+          "3": 0.832551,
+          "5": 0.838347,
+          "10": 0.841953
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/55map-stride-a-standardised/k-ladder-mcc-55map-stride-a-standardised-2026-09-12_b50_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 3,
+        "best_statistic": 0.702198,
+        "hsu_admissible_K": [
+          1,
+          3
+        ],
+        "hsu_w_upper": 0.005891140834642923,
+        "hsu_w_lower": 0.0067943706118104,
+        "two_sided_band_K": [
+          1,
+          3,
+          10
+        ],
+        "two_sided_critical_width": 0.007281521650862548,
+        "theta_by_K": {
+          "1": -0.001161,
+          "3": 0.001161,
+          "5": -0.011053,
+          "10": -0.006369
+        },
+        "statistic_by_K": {
+          "1": 0.701037,
+          "3": 0.702198,
+          "5": 0.691145,
+          "10": 0.695829
+        },
+        "contains_K3": true,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/55map-stride-a-standardised/k-ladder-mcc-55map-stride-a-standardised-2026-09-12_mcc_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "55-map stride A, standardised",
+      "n_rungs": 4
+    },
+    {
+      "slug": "55map-stride-b-r2",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-55map-stride-b-r2-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-r2/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-r2/tiering_50m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+              "committed": 0.801274,
+              "reproduced": 0.801274,
+              "abs_delta": 2.4e-07
+            },
+            {
+              "label": "g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+              "committed": 0.850664,
+              "reproduced": 0.850664,
+              "abs_delta": 6e-08
+            },
+            {
+              "label": "g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+              "committed": 0.851628,
+              "reproduced": 0.851628,
+              "abs_delta": 2.9e-07
+            },
+            {
+              "label": "g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+              "committed": 0.855959,
+              "reproduced": 0.855959,
+              "abs_delta": 4.1e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+              "committed": 0.7092,
+              "reproduced": 0.709239,
+              "abs_delta": 3.941e-05
+            },
+            {
+              "label": "g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+              "committed": 0.7128,
+              "reproduced": 0.712778,
+              "abs_delta": 2.173e-05
+            },
+            {
+              "label": "g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+              "committed": 0.7098,
+              "reproduced": 0.709814,
+              "abs_delta": 1.444e-05
+            },
+            {
+              "label": "g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+              "committed": 0.7123,
+              "reproduced": 0.712336,
+              "abs_delta": 3.564e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 10,
+        "best_statistic": 0.855959,
+        "hsu_admissible_K": [
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.004727117931588242,
+        "hsu_w_lower": 0.004872929297399524,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.005646457563195787,
+        "theta_by_K": {
+          "1": -0.054685,
+          "3": -0.005295,
+          "5": -0.004332,
+          "10": 0.004332
+        },
+        "statistic_by_K": {
+          "1": 0.801274,
+          "3": 0.850664,
+          "5": 0.851628,
+          "10": 0.855959
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/55map-stride-b-r2/k-ladder-mcc-55map-stride-b-r2-2026-09-12_b50_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 3,
+        "best_statistic": 0.712778,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.0048683530219144995,
+        "hsu_w_lower": 0.006055720776927866,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.006452229014942354,
+        "theta_by_K": {
+          "1": -0.003539,
+          "3": 0.000443,
+          "5": -0.002964,
+          "10": -0.000443
+        },
+        "statistic_by_K": {
+          "1": 0.709239,
+          "3": 0.712778,
+          "5": 0.709814,
+          "10": 0.712336
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/55map-stride-b-r2/k-ladder-mcc-55map-stride-b-r2-2026-09-12_mcc_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "55-map stride B, r2",
+      "n_rungs": 4
+    },
+    {
+      "slug": "55map-stride-b-standardised",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-55map-stride-b-standardised-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-standardised/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-standardised/tiering_50m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt",
+              "committed": 0.801313,
+              "reproduced": 0.801313,
+              "abs_delta": 2.9e-07
+            },
+            {
+              "label": "g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt",
+              "committed": 0.850542,
+              "reproduced": 0.850542,
+              "abs_delta": 1.9e-07
+            },
+            {
+              "label": "g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt",
+              "committed": 0.851504,
+              "reproduced": 0.851504,
+              "abs_delta": 2.4e-07
+            },
+            {
+              "label": "g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt",
+              "committed": 0.85584,
+              "reproduced": 0.85584,
+              "abs_delta": 2e-08
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt",
+              "committed": 0.7097,
+              "reproduced": 0.709697,
+              "abs_delta": 3.36e-06
+            },
+            {
+              "label": "g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt",
+              "committed": 0.7132,
+              "reproduced": 0.713197,
+              "abs_delta": 2.76e-06
+            },
+            {
+              "label": "g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt",
+              "committed": 0.7102,
+              "reproduced": 0.710221,
+              "abs_delta": 2.098e-05
+            },
+            {
+              "label": "g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt",
+              "committed": 0.7127,
+              "reproduced": 0.71275,
+              "abs_delta": 4.958e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 10,
+        "best_statistic": 0.85584,
+        "hsu_admissible_K": [
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.004736544596550756,
+        "hsu_w_lower": 0.0048837749733350025,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.005666522419432614,
+        "theta_by_K": {
+          "1": -0.054527,
+          "3": -0.005298,
+          "5": -0.004336,
+          "10": 0.004336
+        },
+        "statistic_by_K": {
+          "1": 0.801313,
+          "3": 0.850542,
+          "5": 0.851504,
+          "10": 0.85584
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/55map-stride-b-standardised/k-ladder-mcc-55map-stride-b-standardised-2026-09-12_b50_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 3,
+        "best_statistic": 0.713197,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.004872953054378285,
+        "hsu_w_lower": 0.006064973426283881,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.006443564171838643,
+        "theta_by_K": {
+          "1": -0.003501,
+          "3": 0.000448,
+          "5": -0.002976,
+          "10": -0.000448
+        },
+        "statistic_by_K": {
+          "1": 0.709697,
+          "3": 0.713197,
+          "5": 0.710221,
+          "10": 0.71275
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/55map-stride-b-standardised/k-ladder-mcc-55map-stride-b-standardised-2026-09-12_mcc_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "55-map stride B, standardised",
+      "n_rungs": 4
+    },
+    {
+      "slug": "55map-stride-b-g37vf-r2",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-55map-stride-b-g37vf-r2-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-g37vf-r2/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 3,
+          "candidates": [
+            {
+              "label": "g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+              "committed": 0.835152,
+              "reproduced": 0.835152,
+              "abs_delta": 1e-07
+            },
+            {
+              "label": "g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+              "committed": 0.874741,
+              "reproduced": 0.874741,
+              "abs_delta": 2.3e-07
+            },
+            {
+              "label": "g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+              "committed": 0.88132,
+              "reproduced": 0.88132,
+              "abs_delta": 3e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 3,
+          "candidates": [
+            {
+              "label": "g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+              "committed": 0.7471,
+              "reproduced": 0.747084,
+              "abs_delta": 1.634e-05
+            },
+            {
+              "label": "g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+              "committed": 0.7376,
+              "reproduced": 0.737593,
+              "abs_delta": 6.98e-06
+            },
+            {
+              "label": "g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+              "committed": 0.7359,
+              "reproduced": 0.735931,
+              "abs_delta": 3.136e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 3,
+        "n_tiles": 8541,
+        "best_K": 10,
+        "best_statistic": 0.88132,
+        "hsu_admissible_K": [
+          10
+        ],
+        "hsu_w_upper": 0.004681026352539968,
+        "hsu_w_lower": 0.004629781255514388,
+        "two_sided_band_K": [
+          10
+        ],
+        "two_sided_critical_width": 0.0054649863162508396,
+        "theta_by_K": {
+          "1": -0.046168,
+          "3": -0.00658,
+          "10": 0.00658
+        },
+        "statistic_by_K": {
+          "1": 0.835152,
+          "3": 0.874741,
+          "10": 0.88132
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/55map-stride-b-g37vf-r2/k-ladder-mcc-55map-stride-b-g37vf-r2-2026-09-12_b50_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 3,
+        "n_tiles": 8541,
+        "best_K": 1,
+        "best_statistic": 0.747084,
+        "hsu_admissible_K": [
+          1
+        ],
+        "hsu_w_upper": 0.004319342904705473,
+        "hsu_w_lower": 0.0044089417671763125,
+        "two_sided_band_K": [
+          1
+        ],
+        "two_sided_critical_width": 0.00468156700950863,
+        "theta_by_K": {
+          "1": 0.009491,
+          "3": -0.009491,
+          "10": -0.011152
+        },
+        "statistic_by_K": {
+          "1": 0.747084,
+          "3": 0.737593,
+          "10": 0.735931
+        },
+        "contains_K3": false,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/55map-stride-b-g37vf-r2/k-ladder-mcc-55map-stride-b-g37vf-r2-2026-09-12_mcc_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        10
+      ],
+      "family": "55-map stride B, 3.7 verifier",
+      "n_rungs": 3
+    },
+    {
+      "slug": "37arm1-r2",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-37arm1-r2-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm1-r2/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-test/tiering/37arm1-r2/tiering_50m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 3,
+          "candidates": [
+            {
+              "label": "arm1-n1-oracle-p0.20-k1-r2-gt",
+              "committed": 0.841262,
+              "reproduced": 0.841262,
+              "abs_delta": 9e-08
+            },
+            {
+              "label": "arm1-n3-oracle-p0.15-k3-r2-gt",
+              "committed": 0.87048,
+              "reproduced": 0.87048,
+              "abs_delta": 8e-08
+            },
+            {
+              "label": "arm1-n5-oracle-p0.15-k5-r2-gt",
+              "committed": 0.872742,
+              "reproduced": 0.872742,
+              "abs_delta": 3.7e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 3,
+          "candidates": [
+            {
+              "label": "arm1-n1-oracle-p0.20-k1-r2-gt",
+              "committed": 0.7246,
+              "reproduced": 0.724617,
+              "abs_delta": 1.743e-05
+            },
+            {
+              "label": "arm1-n3-oracle-p0.15-k3-r2-gt",
+              "committed": 0.7179,
+              "reproduced": 0.717947,
+              "abs_delta": 4.722e-05
+            },
+            {
+              "label": "arm1-n5-oracle-p0.15-k5-r2-gt",
+              "committed": 0.7147,
+              "reproduced": 0.714713,
+              "abs_delta": 1.317e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 3,
+        "n_tiles": 8541,
+        "best_K": 5,
+        "best_statistic": 0.872742,
+        "hsu_admissible_K": [
+          3,
+          5
+        ],
+        "hsu_w_upper": 0.004816915779635156,
+        "hsu_w_lower": 0.004852457375577367,
+        "two_sided_band_K": [
+          3,
+          5
+        ],
+        "two_sided_critical_width": 0.005665713481392692,
+        "theta_by_K": {
+          "1": -0.03148,
+          "3": -0.002262,
+          "5": 0.002262
+        },
+        "statistic_by_K": {
+          "1": 0.841262,
+          "3": 0.87048,
+          "5": 0.872742
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/37arm1-r2/k-ladder-mcc-37arm1-r2-2026-09-12_b50_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 3,
+        "n_tiles": 8541,
+        "best_K": 1,
+        "best_statistic": 0.724617,
+        "hsu_admissible_K": [
+          1,
+          3
+        ],
+        "hsu_w_upper": 0.007068849582841291,
+        "hsu_w_lower": 0.007095812210071777,
+        "two_sided_band_K": [
+          1,
+          3
+        ],
+        "two_sided_critical_width": 0.007448595782169439,
+        "theta_by_K": {
+          "1": 0.00667,
+          "3": -0.00667,
+          "5": -0.009904
+        },
+        "statistic_by_K": {
+          "1": 0.724617,
+          "3": 0.717947,
+          "5": 0.714713
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/37arm1-r2/k-ladder-mcc-37arm1-r2-2026-09-12_mcc_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5
+      ],
+      "family": "3.7 arm 1",
+      "n_rungs": 3
+    },
+    {
+      "slug": "37arm2-r2",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-37arm2-r2-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm2-r2/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-test/tiering/37arm2-r2/tiering_50m.json",
+      "gates": [
+        {
+          "metric": "f1",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 3,
+          "candidates": [
+            {
+              "label": "arm2-n1-oracle-p0.98-k1-r2-gt",
+              "committed": 0.861042,
+              "reproduced": 0.861042,
+              "abs_delta": 6e-08
+            },
+            {
+              "label": "arm2-n3-oracle-p0.95-k3-r2-gt",
+              "committed": 0.884825,
+              "reproduced": 0.884825,
+              "abs_delta": 4.8e-07
+            },
+            {
+              "label": "arm2-n5-oracle-p0.95-k5-r2-gt",
+              "committed": 0.887145,
+              "reproduced": 0.887145,
+              "abs_delta": 4.4e-07
+            }
+          ]
+        },
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 3,
+          "candidates": [
+            {
+              "label": "arm2-n1-oracle-p0.98-k1-r2-gt",
+              "committed": 0.7422,
+              "reproduced": 0.742189,
+              "abs_delta": 1.085e-05
+            },
+            {
+              "label": "arm2-n3-oracle-p0.95-k3-r2-gt",
+              "committed": 0.7163,
+              "reproduced": 0.71634,
+              "abs_delta": 3.99e-05
+            },
+            {
+              "label": "arm2-n5-oracle-p0.95-k5-r2-gt",
+              "committed": 0.7147,
+              "reproduced": 0.714653,
+              "abs_delta": 4.731e-05
+            }
+          ]
+        }
+      ],
+      "f1": {
+        "metric": "f1",
+        "n_candidates": 3,
+        "n_tiles": 8541,
+        "best_K": 5,
+        "best_statistic": 0.887145,
+        "hsu_admissible_K": [
+          3,
+          5
+        ],
+        "hsu_w_upper": 0.0056393344925583155,
+        "hsu_w_lower": 0.005666690911842292,
+        "two_sided_band_K": [
+          3,
+          5
+        ],
+        "two_sided_critical_width": 0.006757957323597302,
+        "theta_by_K": {
+          "1": -0.026104,
+          "3": -0.002321,
+          "5": 0.002321
+        },
+        "statistic_by_K": {
+          "1": 0.861042,
+          "3": 0.884825,
+          "5": 0.887145
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/37arm2-r2/k-ladder-mcc-37arm2-r2-2026-09-12_b50_m1.json"
+      },
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 3,
+        "n_tiles": 8541,
+        "best_K": 1,
+        "best_statistic": 0.742189,
+        "hsu_admissible_K": [
+          1
+        ],
+        "hsu_w_upper": 0.009605947653443662,
+        "hsu_w_lower": 0.00973217152292155,
+        "two_sided_band_K": [
+          1
+        ],
+        "two_sided_critical_width": 0.010026163570854356,
+        "theta_by_K": {
+          "1": 0.025849,
+          "3": -0.025849,
+          "5": -0.027536
+        },
+        "statistic_by_K": {
+          "1": 0.742189,
+          "3": 0.71634,
+          "5": 0.714653
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcb/37arm2-r2/k-ladder-mcc-37arm2-r2-2026-09-12_mcc_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5
+      ],
+      "family": "3.7 arm 2",
+      "n_rungs": 3
+    }
+  ]
+}

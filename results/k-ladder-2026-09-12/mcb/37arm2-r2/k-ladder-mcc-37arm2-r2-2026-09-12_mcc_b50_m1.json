@@ -1,0 +1,89 @@
+{
+  "metric": "mcc",
+  "n_candidates": 3,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2
+  ],
+  "n_tiles": 8541,
+  "m_out_of_n": 8541,
+  "bootstrap": 10000,
+  "selected_index": 0,
+  "apparent_f1": 0.7421891480811401,
+  "optimism": -2.241042650268402e-05,
+  "optimism_mcse": 6.46729269932e-05,
+  "optimism_spread_p2_5_p97_5": [
+    -0.012421665945687037,
+    0.012865326198083867
+  ],
+  "corrected_f1": 0.7422115585076428,
+  "naive_ci": [
+    0.7297674821354531,
+    0.755054474279224
+  ],
+  "selection_aware_ci": [
+    0.7297898925619557,
+    0.7550768847057266
+  ],
+  "argmax_stability": 1.0,
+  "n_distinct_argmax": 1,
+  "mcb_critical_width": 0.010026163570854356,
+  "mcb_theta": [
+    0.02584925076222777,
+    -0.02584925076222777,
+    -0.02753645376461855
+  ],
+  "mcb_lower": [
+    0.015823087191373417,
+    -0.035875414333082126,
+    -0.037562617335472906
+  ],
+  "mcb_upper": [
+    0.035875414333082126,
+    -0.015823087191373417,
+    -0.017510290193764197
+  ],
+  "mcb_not_ruled_out": [
+    0
+  ],
+  "hsu_w_upper": 0.009605947653443662,
+  "hsu_w_lower": 0.00973217152292155,
+  "hsu_lower": [
+    0.0,
+    -0.03558142228514932,
+    -0.0372686252875401
+  ],
+  "hsu_upper": [
+    0.035455198415671435,
+    0.0,
+    0.0
+  ],
+  "hsu_not_ruled_out": [
+    0
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-mcc-37arm2-r2-2026-09-12",
+  "analyses_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm2-r2/run-analyses.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+      "label": "arm2-n1-oracle-p0.98-k1-r2-gt",
+      "eval_f1": 0.861
+    },
+    {
+      "ref": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+      "label": "arm2-n3-oracle-p0.95-k3-r2-gt",
+      "eval_f1": 0.8848
+    },
+    {
+      "ref": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+      "label": "arm2-n5-oracle-p0.95-k5-r2-gt",
+      "eval_f1": 0.8871
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 50
+}

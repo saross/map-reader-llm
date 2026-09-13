@@ -1,0 +1,104 @@
+{
+  "metric": "f1",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 2,
+  "apparent_f1": 0.7868080094228505,
+  "optimism": 0.00477966202040063,
+  "optimism_mcse": 0.0001968825966149489,
+  "optimism_spread_p2_5_p97_5": [
+    -0.03419476900473195,
+    0.04211549542415452
+  ],
+  "corrected_f1": 0.7820283474024499,
+  "naive_ci": [
+    0.747019788522025,
+    0.8243906995109801
+  ],
+  "selection_aware_ci": [
+    0.7422401265016244,
+    0.8196110374905795
+  ],
+  "argmax_stability": 0.7536,
+  "n_distinct_argmax": 3,
+  "mcb_critical_width": 0.03713626758335416,
+  "mcb_theta": [
+    -0.09593892251415959,
+    -0.020257486774766797,
+    0.0103073708532464,
+    -0.0103073708532464
+  ],
+  "mcb_lower": [
+    -0.13307519009751373,
+    -0.057393754358120955,
+    -0.026828896730107757,
+    -0.04744363843660056
+  ],
+  "mcb_upper": [
+    -0.05880265493080543,
+    0.01687878080858736,
+    0.04744363843660056,
+    0.026828896730107757
+  ],
+  "mcb_not_ruled_out": [
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.030931093115272906,
+  "hsu_w_lower": 0.03426552347126761,
+  "hsu_lower": [
+    -0.1302044459854272,
+    -0.054523010246034405,
+    -0.023958152618021207,
+    -0.04457289432451401
+  ],
+  "hsu_upper": [
+    0.0,
+    0.010673606340506108,
+    0.04123846396851931,
+    0.020623722262026505
+  ],
+  "hsu_not_ruled_out": [
+    1,
+    2,
+    3
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-mcc-phase2-flash-high-image-n5-image-t0-7-2026-09-12",
+  "analyses_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t0-7/run-analyses.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "pv-diag-384::pv-high-image-t0.7-n1-opmax",
+      "label": "pv-high-image-t0.7-n1-opmax",
+      "eval_f1": 0.6909
+    },
+    {
+      "ref": "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+      "label": "pv-high-image-t0.7-n3-opmax",
+      "eval_f1": 0.7666
+    },
+    {
+      "ref": "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+      "label": "pv-high-image-t0.7-n5-opmax",
+      "eval_f1": 0.7868
+    },
+    {
+      "ref": "pv-diag-384::pv-high-image-t0.7-n10-opmax",
+      "label": "pv-high-image-t0.7-n10-opmax",
+      "eval_f1": 0.7765
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

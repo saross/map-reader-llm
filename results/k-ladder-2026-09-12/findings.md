@@ -1,6 +1,16 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-13 (**§ 8.6 added** on the PI's ruling: the
+> **Last revised**: 2026-09-13 (later — the PI's two rulings of 2026-09-13
+> executed, and **the row is ready for signature**: **§ 6.1 gains the per-family
+> Hsu MCB admissible sets** for all 22 tiered ladders on F1 and tile-MCC, run
+> with the Era-2 board's own MCB step on each ladder's own frame — K = 3
+> admissible on 12 of 22 and the cheapest admissible rung on 10, **no** ladder's
+> F1 set excludes K = 10, K = 1 ruled out on F1 on 20 of 22 and admissible on
+> tile-MCC on **22 of 22**, three 3.7 GS text rungs withheld by the tile-join
+> invariant; and **the carried convention is settled** — the stride ladder's own
+> vote shell is the carried point, `k = K` stays as a disclosed column, no number
+> recomputed (§ 7.5, § 3's new disclosure table, `phase2/ladder-tables.md`).
+> Prior: 2026-09-13 (**§ 8.6 added** on the PI's ruling: the
 > verifier-stage reversal stated as a claim with per-number anchors — K = 1 → 10
 > raises F1 by +0.0572 consensus-only with tile-MCC rising +0.0444, and by
 > +0.0340 verified with tile-MCC falling −0.0308, so the verifier absorbs 40.6 %
@@ -137,9 +147,14 @@ metric (1/6 F1 pairs and 0/6 MCC pairs significant at BH q = 0.05), so on this
 frame the ladder greedy-cliques into **two tiers: Tier 1 = {K = 10, K = 3,
 K = 5}, Tier 2 = {K = 1}**. Note that the greedy-clique tier-1 membership is a
 rank band, not an admissible set (defect D20, erratum E83).
-**The Hsu MCB admissible set is still not supplied** — that is a separate
-instrument (`scripts/selection_aware_intervals.py`) and remains a gap in the
-run, not in the data.
+
+**The Hsu MCB admissible set is now supplied too** (2026-09-13, § 6.1): on this
+ladder's F1 it is **{K = 3, K = 5, K = 10}** at `w_upper` 0.0160, and on tile-MCC
+it is the **whole ladder** at `w_upper` 0.0242 —
+`mcb/gs-stride-a/k-ladder-gs-stride-a-2026-09-12{,_mcc}_b20_m1.json`. On this
+ladder the two instruments agree: the admissible set and the greedy-clique
+Tier 1 hold the same three rungs, which they need not, and § 6.1 records two
+ladders where they do not.
 
 ## 3. The 55-map ladders
 
@@ -148,6 +163,31 @@ points are committed per rung where the campaign recorded both: the **carried**
 point (the deployment threshold transferred from the gold standard) and the rung
 **oracle** (that rung's own sweep argmax). Under R2 both are reported; the oracle
 column is the one that would tier, the carried column is the transfer tax.
+
+**Which reading of "carried" these tables use, disclosed 2026-09-13.** The PI
+ruled on 2026-09-13 that the gold-standard stride ladder's own vote shell —
+k = 1 / 3 / 4 / 8 at K = 1 / 3 / 5 / 10 — is *the* carried point, with `k = K`
+kept as a disclosed column (§ 7.5). Reading that ruling back against these
+tables' committed cells shows the two 55-map stride ladders were built on
+**different readings of it**, which had not been recorded anywhere before:
+
+| table | committed carried cells | reading |
+|---|---|---|
+| § 3.1 stride A | `…-n3-carried-posthoc-p0.15-k3`, `…-n5-carried-p0.15-k4`, `…-n10-carried-p0.15-k8` | **the stride shell** |
+| § 3.2 stride B | `…-n3-carried-posthoc-p0.15-k3`, `…-n5-carried-p0.15-k5`, `…-n10-carried-p0.15-k10` | **`k = K`** |
+| § 3.3 stride B, 3.7 vf | `…-n10-verified37-carried-p0.98-k10` only | **`k = K`** |
+| § 3.4 arms 1 and 2 | `arm1-n5-carried-p0.10-k5`, `arm2-n5-carried-p0.80-k5` | **`k = K`** |
+
+Anchor: each cell's `vote_threshold` in `results/run-conditions.json` under
+`stride-55map-2026-08-25` and `gemini37-55map-2026-08-29`. **No number in
+§§ 3.1–3.4 is changed or recomputed**, because a shell-reading carried cell does
+not exist for stride B or for the arms and building one is an API-free rescore
+the PI has not asked for. The consequence is stated rather than hidden: **the
+transfer taxes in § 3.2, § 3.3 and § 3.4 are `k = K` taxes and the ruling's
+convention would make them smaller**, so they should be read as an upper bound on
+the transfer cost, exactly as the Phase 2 disclosure column shows (`k = K` costs
+up to −0.2566 F1@20 where the shell costs at most −0.0735). Stride A's are
+already on the ruling's convention.
 
 ### 3.1 Stride A (`g384_ov128_55map`), r2 reference
 
@@ -560,14 +600,16 @@ saturates" is an economic statement rather than a statistical one.
 
 Named, not glossed. Each is a gap in this run, not in the data.
 
-### 6.1 The pairwise permutation testing — now run; the MCB still outstanding
+### 6.1 The pairwise permutation testing and the MCB — both now run
 
 R2 and the run card ask for paired tile-swap permutation between adjacent rungs
 and against K = 10, BH q = 0.05, and a Hsu MCB admissible set per family.
 **The permutation testing was not run in the original revision; it was run on
-2026-09-12 and is § 4.1.** The MCB admissible sets are still outstanding. For
-the gold-standard ladder everything needed was committed and the command is one
-line (now with the `--permute-mcc` flag the § 4.1 run added):
+2026-09-12 and is § 4.1.** **The MCB admissible sets were run on 2026-09-13, on
+the PI's ruling to "wait for the sets" before signing the review's row, and are
+the table below.** For the gold-standard ladder everything needed was committed
+and the command is one line (now with the `--permute-mcc` flag the § 4.1 run
+added):
 
 ```bash
 python scripts/era1_leaderboard_tiering.py \
@@ -624,6 +666,125 @@ against the materialised r2 reference versus a sign-swap over 55 map sheets
 against the in-process extended reference — so the ruling is a real one, and it
 is put back rather than taken.
 
+#### The Hsu MCB admissible sets, supplied 2026-09-13
+
+**The instrument, first.** The Era-2 board's own MCB step verbatim —
+`scripts/selection_aware_intervals.py --board`, which targets Hsu's quantity
+`theta_i = stat_i - max(j != i) stat_j` and rules a rung out as best only when
+its simultaneous **upper** bound falls at or below zero, with the critical value
+bootstrapped over **tiles** (10,000 resamples, seed 42, m-out-of-n 1.0,
+simultaneous 95 %) rather than read from Dunnett's table, which assumes normal
+homoscedastic means that micro-F1 on correlated tiles does not satisfy. Each
+ladder is run **on its own frame, reference and headline buffer**, the ones its
+committed tiering used: the gold-standard and tier E ladders on the board frame
+by override at 20 m, the thirteen Phase 2 families on the board frame at 20 m,
+the seven 55-map ladders on the 8,541-tile deployment frame against their own r2
+or standardised reference at 50 m. Driver: `scripts/k_ladder_mcb.py`; artefacts
+`mcb/<ladder>/` with the roll-up in `mcb/summary.json` and this table in
+`mcb/table.md`.
+
+**The gate, before any set is read.** Every one of the **44 runs** (22 ladders
+x 2 metrics) had to reproduce its ladder's committed `tiering_<buffer>m.json`
+ranking: the candidate label set exactly, each rung's `observed_micro_f1`, and
+each rung's `mcc`. **170 candidate rows gated, all passed, maximum absolute
+deviation 4.958e-05** (`mcb/summary.json` key `gate_all_passed`, and each
+ladder's `gates`). The reference is the committed tiering rather than the ladder
+inventories on purpose: `ladders.json` records the gold-standard ladder's
+tile-MCC on its **grid-common** frame (0.7894 at K = 1) while this MCB runs it on
+the **board** frame (0.7834), so gating against the inventory would have refused
+a correct run.
+
+| ladder | rungs (K) | F1-admissible set | tile-MCC-admissible set | w_upper (F1 / MCC) |
+|---|---|---|---|---|
+| GS stride A, exact re-verification (board frame) | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0160 / 0.0242 |
+| Grid 384 px / 50 % MINIMAL text, verified (tier E) | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5** | 0.0151 / 0.0259 |
+| Gemini 3 MINIMAL text 384 px, T 0.3 | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **10** | 0.0185 / 0.0270 |
+| Gemini 3 MINIMAL text 384 px, T 0.7 | 1, 3, 5, 10 | **1**, **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0181 / 0.0253 |
+| Gemini 3 MINIMAL text 384 px, T 1.0 | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0231 / 0.0313 |
+| Gemini 3 HIGH text 384 px, T 0.3 | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0185 / 0.0392 |
+| Gemini 3 HIGH text 384 px, T 0.7 | 1, 3, 5, 10 | **5**, **10** | **1**, **3**, **5**, **10** | 0.0246 / 0.0419 |
+| Gemini 3 HIGH text 384 px, T 1.0 | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0284 / 0.0385 |
+| Gemini 3 MINIMAL image 384 px, T 0.3 | 1, 3, 5, 10 | **1**, **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0198 / 0.0276 |
+| Gemini 3 MINIMAL image 384 px, T 0.7 | 1, 3, 5, 10 | **5**, **10** | **1**, **3**, **5**, **10** | 0.0280 / 0.0279 |
+| Gemini 3 MINIMAL image 384 px, T 1.0 | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0268 / 0.0405 |
+| Gemini 3 HIGH image 384 px, T 0.3 | 1, 3, 5, 10 | **5**, **10** | **1**, **3**, **5**, **10** | 0.0324 / 0.0336 |
+| Gemini 3 HIGH image 384 px, T 0.7 | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5** | 0.0309 / 0.0329 |
+| Gemini 3 HIGH image 384 px, T 1.0 | 1, 3, 5, 10 | **5**, **10** | **1**, **3**, **5** | 0.0326 / 0.0453 |
+| Gemini 3 scale-4-optimal 487 | 1, 3, 5, 10 | **5**, **10** | **1**, **3**, **5** | 0.0287 / 0.0427 |
+| 55-map stride A, r2 | 1, 3, 5, 10 | **5**, **10** | **1**, **3** | 0.0047 / 0.0059 |
+| 55-map stride A, standardised | 1, 3, 5, 10 | **5**, **10** | **1**, **3** | 0.0047 / 0.0059 |
+| 55-map stride B, r2 | 1, 3, 5, 10 | **5**, **10** | **1**, **3**, **5**, **10** | 0.0047 / 0.0049 |
+| 55-map stride B, standardised | 1, 3, 5, 10 | **5**, **10** | **1**, **3**, **5**, **10** | 0.0047 / 0.0049 |
+| 55-map stride B, 3.7 verifier | 1, 3, 10 | **10** | **1** | 0.0047 / 0.0043 |
+| 3.7 arm 1 | 1, 3, 5 | **3**, **5** | **1**, **3** | 0.0048 / 0.0071 |
+| 3.7 arm 2 | 1, 3, 5 | **3**, **5** | **1** | 0.0056 / 0.0096 |
+
+Bold marks a rung that **cannot be ruled out as the best rung of its own
+ladder** at simultaneous 95 %. `w_upper` is the one-sided simultaneous width the
+bootstrap put on that ladder's deviations, and is the resolution figure to read
+the set against.
+
+**Five things to read off it.**
+
+1. **K = 3 is admissible on 12 of the 22 ladders, and is the CHEAPEST
+   admissible rung on 10 of them.** Two more admit K = 1 as well (so their
+   cheapest admissible rung is K = 1), nine admit nothing below K = 5, and one
+   admits nothing below K = 10. So the review's Pareto reading — K = 3 is on the
+   efficient set of every ladder — is a *cost* statement that the simultaneous
+   instrument endorses on roughly half the corpus and declines on the other
+   half: on nine ladders a K = 3 rung **can** be ruled out as best, even though
+   it remains the efficient buy.
+2. **No ladder's F1-admissible set excludes K = 10.** All twenty ladders that
+   have a K = 10 rung admit it. That is the formal counterpart of § 7.4's
+   economic finding: the top rung is never statistically *excluded*, it is only
+   never *worth* its price.
+3. **K = 1 is ruled out on F1 on 20 of 22 ladders, and admissible on tile-MCC on
+   22 of 22.** It holds the highest tile-MCC on 13 of the 22 and is never ruled
+   out on it. This is the review's "the two objectives select different rungs"
+   finding stated by the canonical simultaneous instrument instead of by a
+   pairwise count: **on F1 the cheapest rung is almost always ruled out; on
+   tile-level discrimination it never is.**
+4. **The MCC sets are much larger than the F1 sets** — the whole ladder on 12 of
+   22, against 2 of 22 on F1 — which is § 4.1's result in another form: tile-MCC
+   moves rarely separate. Where MCC does resolve it resolves sharply and against
+   K: tier E, both HIGH image T 0.7 and T 1.0, scale-4-optimal, both stride A
+   ladders and stride B under the 3.7 verifier all exclude K = 10 on tile-MCC
+   (7 of the 20 that have it), and on two ladders — 55-map stride B under the
+   3.7 verifier, and 3.7 arm 2 — the MCC-admissible set is **{K = 1} alone**.
+5. **Resolution tracks the corpus, exactly as § 8 measured it.** The
+   simultaneous F1 width is 0.0151 to 0.0326 on the 487-tile gold standard and
+   0.0047 to 0.0056 on the 8,541-tile deployment corpus — three to six times
+   narrower — so a deployment ladder's smaller admissible set reflects its
+   tighter band and not a different response to K.
+
+**The MCB and the greedy clique disagree in BOTH directions, which is what
+erratum E83 warns of.** The committed tie set is a rank band from pairwise
+permutation plus BH plus a greedy clique; the admissible set is simultaneous by
+construction. Compared cell for cell, the F1-admissible set is **smaller** than
+the committed tie set on two ladders and **larger** on six. The sharpest case is
+instructive: § 7.1 reports four MINIMAL ladders that "greedy-clique into a
+single tier, where K buys nothing detectable at all", and under MCB only **two
+of those four** are admissible whole — MINIMAL text T 0.3 and MINIMAL image
+T 1.0 both rule K = 1 out as best ({3, 5, 10}) while their clique retained all
+four rungs. **§ 7.1's statement is not wrong and is not withdrawn**: a
+within-ladder pairwise BH family and a simultaneous comparison against the best
+answer different questions, and the pairwise one is the registered tiering
+instrument. But "one tier" must not be read as "every rung could be the best
+one", and on two of those four ladders it is not.
+
+**Withheld, and listed.** The twenty-third ladder — the Gemini 3.7
+gold-standard text screen (`g384_ov192_g37`) — has **no admissible set on
+either metric**. The tile-join invariant refuses the per-tile TP/FP/FN table of
+three of its four rungs on this frame
+(`gemini37-screen-2026-08-28::g37-text-k1-verified-opmax`,
+`…::g37-text-k1-verified-carried-p0.10-k1`, `…::g37-text-k3-verified-opmax`),
+and the refusal falls on the **F1** arm as well as the MCC arm, leaving two
+sound rungs of four — below the review's three-rung bar. Its whole-frame F1 is
+unaffected and is reported in full in § 4.3 and `phase2/ladder-tables.md`. The
+withholding is the board's own (its README's 2026-09-13 entry, "Admitted but
+WITHHELD") and is lifted only by the corpus-wide tile-join decision, still open
+(§ 7.3; `reports/tile-mcc-geometric-join-2026-09-12.md`).
+
 ### 6.2 No analysis row
 
 The run card asks for one UNSIGNED analysis row `k-ladder-2026-09-12`. It is not
@@ -640,6 +801,14 @@ which rungs are separable — so authoring it now would register the same
 partially-measured claim the original decision avoided. The § 4.1 result is
 committed under `mcc-test/` and cited from this document; the row waits on the
 MCB.
+
+**Authored, and now complete — 2026-09-13.** The row
+`results/run-analyses.json` → `k-ladder-2026-09-12` was authored UNSIGNED by the
+close-out job of 2026-09-12, with its `_signature_note` recording that the MCB
+sets were still missing. § 6.1's MCB half landed on 2026-09-13 and the row's
+outcome now states it. **Both halves of § 6.1 are therefore supplied and the row
+is ready for the PI's signature**; `manually_verified_at` is still `null`,
+because only the PI signs an outcome that is the review's headline claim.
 
 ### 6.3 The Gemini 3 `pv-diag-384` ladders — GAP CLOSED by Phase 2
 
@@ -816,21 +985,36 @@ US$12.94, or about US$1,100 per 0.001 F1.
 
 ### 7.5 What § 7 does not claim
 
-- **No rung joined the Era-2 board.** The board was re-signed on 2026-09-10;
-  admitting 46 new cells is a re-tier and a re-signature, and that is the PI's
-  to authorise under "ladder, then board".
-- **No analysis row was authored or signed.** The tiering read its cell sets
-  from scratch analyses files, so the register gained no placeholder row.
-- **The Hsu MCB admissible set is still not supplied**, exactly as § 6.1 says.
-- **The carried column carries an ambiguity the PI must settle.** The corpus
-  holds two readings of "the carried point" and they diverge sharply above
-  K = 3 — `k = K` taxes F1@20 by up to −0.2566 on the committed rungs while the
-  gold-standard stride ladder's own 1/3/4/8 shell taxes at most −0.0735. Both
-  are computed and committed
-  (`phase2/committed-carried/scores.json`); they coincide at K = 1 and K = 3, so
-  no Phase 2 rung is affected either way.
-- **Nothing in §§ 2–6 moved.** No Phase 1 ladder gained a rung and no Phase 1
-  number changed.
+- **No rung joined the Era-2 board when § 7 was written.** **Superseded
+  2026-09-13**: the PI authorised the admission by route (a) and all 46 Phase 2
+  rungs plus the 4 tier E rungs are now on the board — 103 → **153 cells
+  admitted, 150 tiered, 3 withheld**, Tier 1 and its five members unchanged, the
+  board awaiting the PI's re-signature
+  (`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`,
+  2026-09-13 entry; `reports/k-ladder-admission-deltas-2026-09-13.md`).
+- **No analysis row was authored or signed when § 7 was written.** The tiering
+  read its cell sets from scratch analyses files, so the register gained no
+  placeholder row. **Superseded**: the row `k-ladder-2026-09-12` was authored
+  UNSIGNED on 2026-09-12 and is now complete and awaiting signature (§ 6.2).
+- **The Hsu MCB admissible set is supplied as of 2026-09-13** — § 6.1's table,
+  `mcb/summary.json`, on the PI's ruling to wait for the sets before signing.
+- **The carried convention is settled (PI ruling, 2026-09-13).** The corpus holds
+  two readings of "the carried point" and they diverge sharply above K = 3 —
+  `k = K` taxes F1@20 by up to −0.2566 on the committed rungs while the
+  gold-standard stride ladder's own 1/3/4/8 vote shell taxes at most −0.0735.
+  **The stride ladder's own vote shell IS the carried point; `k = K` stays as a
+  disclosed column.** Both readings remain computed and committed
+  (`phase2/committed-carried/scores.json`), and they coincide at K ≤ 3, so **no
+  number moved** — every ladder table's `carried F1@20` column is now the shell
+  reading and `carried F1@20, k = K (disclosed)` sits beside it
+  (`phase2/ladder-tables.md`, regenerated by
+  `scripts/build_k_ladder_phase2_tables.py` v1.1.0, whose `carried_convention`
+  block in `phase2/ladders.json` records the ruling). Only the committed K = 5
+  and K = 10 rungs of the thirteen `pv-diag-384` families are affected, and for
+  them the two columns swapped places rather than changing value.
+- **Nothing in §§ 2–6 moved** when § 7 was written. Since then § 2.1 and § 6.1
+  gained their MCB sets and § 6.2 records the row; no Phase 1 ladder gained a
+  rung and no Phase 1 F1 or tile-MCC number changed.
 
 ## 8. Tension: MINIMAL ladders on the two corpora
 
@@ -1162,7 +1346,74 @@ caveat about the K = 10 rung's construction applies to the verified row.
 
 ## Changelog
 
-### 2026-09-13 (latest) — § 8.6 added (the verifier-stage reversal, as a claim); § 3.3's K = 5 row filled
+### 2026-09-13 (latest) — § 6.1 gains the per-family Hsu MCB admissible sets; the carried convention settled; the row ready for signature
+
+**Trigger**: the PI's two rulings of 2026-09-13 (afternoon) — (1) "wait for the
+sets", i.e. supply the per-family Hsu multiple-comparisons-with-the-best
+admissible sets before the review's analysis row is signed, and (2) the carried
+convention: the stride ladder's own vote shell is *the* carried point and
+`k = K` stays as a disclosed column. Both executed at US$0 with zero API calls,
+all compute on sapphire in an isolated worktree. Closing report:
+`reports/k-ladder-mcb-deltas-2026-09-13.md`.
+
+**Ruling 1 — the MCB sets.** § 6.1 gains a new subsection with a 22-row table
+(ladder, rungs, F1-admissible set, tile-MCC-admissible set, `w_upper`) and the
+five readings, generated by `scripts/k_ladder_mcb.py` from the Era-2 board's own
+MCB step (`scripts/selection_aware_intervals.py --board`; 10,000 tile bootstrap
+resamples, seed 42, m-out-of-n 1.0, simultaneous 95 %), each ladder on its own
+frame, reference and headline buffer. § 2.1's "still not supplied" is replaced by
+the gold-standard ladder's own two sets; § 6.2 records that the row is ready for
+signature; § 7.5's MCB bullet is replaced.
+
+| claim | before | after |
+|---|---|---|
+| Hsu MCB admissible sets | **not supplied** (§ 2.1, § 6.1, § 6.2, § 7.5) | **supplied for all 22 tiered ladders**, on F1 and tile-MCC |
+| MCB runs, and their gate | — | **44 runs, 170 candidate rows gated, all passed**, max abs delta 4.958e-05 |
+| ladders whose F1 set contains K = 3 | — | **12 of 22** (the cheapest admissible rung on 10) |
+| ladders whose F1 set excludes K = 10 | — | **0 of the 20 that have a K = 10 rung** |
+| ladders whose F1 set contains K = 1 | — | **2 of 22** |
+| ladders whose tile-MCC set contains K = 1 | — | **22 of 22** |
+| ladders admissible WHOLE on F1 / on tile-MCC | — | **2 of 22 / 12 of 22** |
+| ladders with no admissible set | — | **1** (the 3.7 GS text screen; 3 rungs withheld) |
+
+**Ruling 2 — the carried convention.** `scripts/build_k_ladder_phase2_tables.py`
+goes to v1.1.0: the tables' `carried F1@20` column is now the **stride-shell**
+reading and `carried F1@20, k = K (disclosed)` sits beside it, the compatibility
+inventory's carried basis reads the shell reading, and `phase2/ladders.json`
+carries a `carried_convention` block recording the ruling. **No number was
+recomputed** — the two columns swapped places on the committed K = 5 and K = 10
+rungs of the thirteen `pv-diag-384` families and coincide at K ≤ 3 — and both
+readings stay committed in `phase2/committed-carried/scores.json`.
+
+**One thing the ruling surfaced that nothing had recorded.** Read back against
+§ 3's committed cells, the two 55-map stride ladders were built on **different
+readings** of "carried": stride A's cells are the stride shell (k = 3 / 4 / 8)
+while stride B's, stride B's 3.7-verifier cell and both 3.7 arms' are `k = K`
+(anchor: each cell's `vote_threshold` in `results/run-conditions.json`). § 3 now
+carries a disclosure table saying so, and says plainly that §§ 3.2–3.4's transfer
+taxes are therefore `k = K` taxes and should be read as an **upper bound** on the
+transfer cost. No § 3 number changed, because no shell-reading carried cell
+exists for those ladders and building one is a rescore the PI has not asked for.
+
+**A second, methodological finding, flagged rather than smoothed over.** The
+admissible set and the committed greedy-clique tie set disagree in **both**
+directions — the F1 set is smaller than the tie set on two ladders and larger on
+six — which is what erratum E83 and defect D20 warn of. The sharp case: of the
+four MINIMAL ladders § 7.1 reports as a **single tier** where "K buys nothing
+detectable at all", only **two** are admissible whole under MCB; MINIMAL text
+T 0.3 and MINIMAL image T 1.0 both rule K = 1 out as best. § 7.1 is not withdrawn
+— a within-ladder pairwise BH family and a simultaneous comparison against the
+best answer different questions — but § 6.1 now records that "one tier" must not
+be read as "every rung could be the best one".
+
+**What did NOT change**: every F1 and tile-MCC point estimate in §§ 2–8; every
+cost figure (this job spent **US$0**); § 4.1's and § 4.2's permutation results
+and their BH p-values; the tiering, tiers and tie sets of all 22 committed
+ladders; § 8 in its entirety including § 8.6; the Era-2 board (not re-tiered, not
+re-signed, not re-scored); the 55-map final board; and every signature field —
+the row's `manually_verified_at` is still `null`, because only the PI signs it.
+
+### 2026-09-13 — § 8.6 added (the verifier-stage reversal, as a claim); § 3.3's K = 5 row filled
 
 **Trigger**: the PI's rulings of 2026-09-13 (morning), items 3 and 4 of the
 close-out list in `reports/k-ladder-closeout-deltas-2026-09-12.md` § 10.

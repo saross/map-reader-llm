@@ -976,8 +976,9 @@ def tables(payload: dict[str, Any]) -> str:
             f"| {ladder['family']} | "
             f"{'; '.join(efficient) if efficient else '—'} |"
         )
-    lines.append("")
     payload["summary"] = summary_rows
+    # A trailing "" plus the joiner's own newline emitted two blank lines at the
+    # end of the file, which markdownlint refuses (MD012). One trailing newline.
     return "\n".join(lines) + "\n"
 
 

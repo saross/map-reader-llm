@@ -1,0 +1,91 @@
+{
+  "metric": "f1",
+  "n_candidates": 3,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2
+  ],
+  "n_tiles": 8541,
+  "m_out_of_n": 8541,
+  "bootstrap": 10000,
+  "selected_index": 2,
+  "apparent_f1": 0.8871454435727217,
+  "optimism": 0.00015724883130140808,
+  "optimism_mcse": 3.752397648327404e-05,
+  "optimism_spread_p2_5_p97_5": [
+    -0.007440393711875831,
+    0.007315083863871287
+  ],
+  "corrected_f1": 0.8869881947414203,
+  "naive_ci": [
+    0.879444445443258,
+    0.8943747682844543
+  ],
+  "selection_aware_ci": [
+    0.8792871966119565,
+    0.8942175194531529
+  ],
+  "argmax_stability": 0.9389,
+  "n_distinct_argmax": 2,
+  "mcb_critical_width": 0.006757957323597302,
+  "mcb_theta": [
+    -0.02610350712486842,
+    -0.0023209255302105714,
+    0.0023209255302105714
+  ],
+  "mcb_lower": [
+    -0.03286146444846572,
+    -0.009078882853807873,
+    -0.004437031793386731
+  ],
+  "mcb_upper": [
+    -0.019345549801271116,
+    0.004437031793386731,
+    0.009078882853807873
+  ],
+  "mcb_not_ruled_out": [
+    1,
+    2
+  ],
+  "hsu_w_upper": 0.0056393344925583155,
+  "hsu_w_lower": 0.005666690911842292,
+  "hsu_lower": [
+    -0.03177019803671071,
+    -0.007987616442052863,
+    -0.0033457653816317207
+  ],
+  "hsu_upper": [
+    0.0,
+    0.003318408962347744,
+    0.007960260022768888
+  ],
+  "hsu_not_ruled_out": [
+    1,
+    2
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-mcc-37arm2-r2-2026-09-12",
+  "analyses_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm2-r2/run-analyses.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+      "label": "arm2-n1-oracle-p0.98-k1-r2-gt",
+      "eval_f1": 0.861
+    },
+    {
+      "ref": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+      "label": "arm2-n3-oracle-p0.95-k3-r2-gt",
+      "eval_f1": 0.8848
+    },
+    {
+      "ref": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+      "label": "arm2-n5-oracle-p0.95-k5-r2-gt",
+      "eval_f1": 0.8871
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 50
+}

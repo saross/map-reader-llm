@@ -1,6 +1,18 @@
 # K-ladder review: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-13 (latest — the **ADMISSION job** executed: the PI
+> **Last revised**: 2026-09-13 (latest — the **MCB job** executed at zero API
+> cost: the
+> PI's two afternoon rulings landed and the review's analysis row is
+> **ready for signature**. The per-family **Hsu MCB sets are supplied** for all 22
+> tiered ladders on F1 and tile-MCC with the Era-2 board's own MCB step, each
+> ladder on its own frame — K = 3 admissible on 12 of 22 and the cheapest
+> admissible rung on 10, **no** ladder's F1 set excludes K = 10, K = 1 ruled out
+> on F1 on 20 of 22 and admissible on tile-MCC on **22 of 22**, one family
+> withheld — and the **carried convention is settled**: the stride ladder's own
+> vote shell is the carried point, `k = K` stays as a disclosed column, no number
+> recomputed. § 6's step-5 scope note is corrected accordingly; closing report
+> `reports/k-ladder-mcb-deltas-2026-09-13.md`. Before that — the **ADMISSION job**
+> executed: the PI
 > ruled the close-out's morning list and all four items landed at zero API cost:
 > the 46 Phase 2 rungs and the 4 tier E rungs admitted to the Era-2 board by (a)
 > (103 → 153 cells admitted, 150 tiered; Tier 1 unchanged), the signed
@@ -216,6 +228,29 @@ instrument, which is defined on a tile grid and a different scoring engine. A
 per-family Hsu MCB set is supplied for the gold-standard ladder only. What is
 missing is named in the findings document, not glossed.
 
+**Step 5's scope, closed 2026-09-13.** Both gaps that note left open are now
+filled and the two sentences above are superseded:
+
+- The 55-map ladders' pairwise significance **was** re-run under the board's
+  tile-swap instrument on 2026-09-12 (`findings.md` § 4.1,
+  `reports/k-ladder-mcc-test-2026-09-12.md`), gated against the committed board
+  `pairwise` tables on all 25 pairs, with the registered per-map sign-swap
+  reported beside it as the cross-check; the PI's choice of instrument is ruled
+  and recorded in the analysis row.
+- A per-family Hsu MCB set is supplied for **all 22 tiered ladders**, not the
+  gold standard alone, on F1 and on tile-MCC (`findings.md` § 6.1,
+  `results/k-ladder-2026-09-12/mcb/`, driver `scripts/k_ladder_mcb.py`, gate
+  passed on 170 candidate rows). The twenty-third ladder — the Gemini 3.7
+  gold-standard text screen — has none on either metric, because the tile-join
+  invariant withholds three of its four rungs' per-tile table; it is listed
+  rather than dropped.
+
+**With both filled, the review's analysis row `k-ladder-2026-09-12` is ready for
+the PI's signature.** It is still UNSIGNED (`manually_verified_at: null`), its
+outcome now states the MCB result and the carried convention, and its
+`_signature_note` records the one thing still open — the corpus-wide tile-join
+decision — which is the board's question rather than this row's.
+
 ## 7. Phase 2: what landed (2026-09-12)
 
 Executed on branch `worktree-agent-ae87367bcee3e0e5c` against the PI's approval
@@ -362,7 +397,52 @@ adding a statistic family to a signed board is a change the PI did not rule.
 
 ## Changelog
 
-### 2026-09-13 (latest) — the admission job executed at US$0 (§ 9)
+### 2026-09-13 (latest) — the MCB job executed at US$0; the row is ready for signature
+
+**Trigger**: the PI's two rulings of 2026-09-13 (afternoon) — (1) "wait for the
+sets": supply the per-family Hsu multiple-comparisons-with-the-best admissible
+sets before the review's analysis row is signed; (2) the carried convention: the
+stride ladder's own vote shell is *the* carried point and `k = K` stays as a
+disclosed column. Both landed. Zero API calls; all MCB compute ran on sapphire in
+an isolated worktree. Closing report:
+`reports/k-ladder-mcb-deltas-2026-09-13.md`.
+
+**§ 6's step-5 scope note is corrected**, because both gaps it named are now
+filled: the 55-map ladders' pairwise significance was re-run under the board
+instrument on 2026-09-12, and the MCB set is supplied for all 22 tiered ladders
+rather than the gold standard alone.
+
+| claim | before | after |
+|---|---:|---:|
+| ladders with a Hsu MCB admissible set | 1 (the gold standard) | **22** (F1 and tile-MCC each) |
+| MCB runs, and their gate | — | **44 runs, 170 candidate rows, all passed** |
+| ladders whose F1 set contains K = 3 | — | **12 of 22** |
+| ladders whose F1 set excludes K = 10 | — | **0 of the 20 that have one** |
+| ladders whose tile-MCC set contains K = 1 | — | **22 of 22** |
+| ladders with no admissible set | — | **1** (3.7 GS text screen, 3 rungs withheld) |
+| the carried point, as reported | ambiguous (two readings) | **the stride shell**; `k = K` disclosed |
+| the review's analysis row | UNSIGNED, waiting on the MCB | **UNSIGNED, ready for signature** |
+
+**One disclosure the ruling surfaced.** Read back against the 55-map tables,
+stride A's committed carried cells are the stride shell (k = 3 / 4 / 8) while
+stride B's, stride B's 3.7-verifier cell and both 3.7 arms' are `k = K`. No
+number was recomputed; `findings.md` § 3 now carries a disclosure table and says
+those transfer taxes are an upper bound on the transfer cost.
+
+**One methodological finding, flagged for the PI.** The admissible set and the
+committed greedy-clique tie set disagree in both directions (E83, D20): of the
+four MINIMAL ladders `findings.md` § 7.1 reports as a single tier where "K buys
+nothing detectable at all", only **two** are admissible whole under MCB. § 7.1
+stands as a within-ladder pairwise result and is not withdrawn, but "one tier"
+must not be read as "every rung could be the best one".
+
+**What did NOT change**: every F1 and tile-MCC point estimate anywhere in the
+review; every spend figure (this job spent **US$0**); §§ 1–5, 7, 8 and 9 of this
+card; the rulings R1–R5; the Era-2 board (not re-tiered, not re-signed, not
+re-scored) and the 55-map final board; and every signature field, the review
+row's `manually_verified_at` included.
+
+### 2026-09-13 — the admission job executed at US$0 (§ 9)
 
 **Trigger**: the PI's rulings of 2026-09-13 (morning) on the close-out's morning
 list (`reports/k-ladder-closeout-deltas-2026-09-12.md` § 10, questions 1, 2, 5
