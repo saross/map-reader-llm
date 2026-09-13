@@ -56,6 +56,7 @@ Usage::
 from __future__ import annotations
 
 import argparse
+import ast
 import datetime
 import json
 import re
@@ -82,10 +83,12 @@ REGIME2_BANNER_RE = re.compile(r"GENERATED FILE", re.IGNORECASE)
 #: count (e.g. "put before/after notes in the commit message").
 SOURCE_COMMIT_RE = re.compile(r"commit[s]?\s+`?[0-9a-f]{7,40}`?", re.IGNORECASE)
 
-#: ``--check``-family argparse flags declared by a generator. Matches the
-#: literal flag string wherever it appears in the source, which covers both
-#: ``add_argument("--check", ...)`` and subparser spellings.
-CHECK_FLAG_RE = re.compile(r"[\"'](--check[a-z0-9-]*)[\"']")
+#: A ``--check``-family CLI mode is read out of the generator's argparse
+#: declarations, not grepped for: a quoted ``check-…`` string is as likely to
+#: be ``git check-ignore`` as a drift mode (it is, in
+#: ``scripts/evaluate_detections.py``), and crediting 2,396 cell evaluations
+#: with a drift guard on that evidence would make the whole audit worthless.
+CHECK_MODE_PREFIX = "--check"
 
 TESTS_DIR = REPO_ROOT / "tests"
 
@@ -184,17 +187,17 @@ def scan_regime2(path: Path) -> tuple[bool, bool]:
 
 
 def load_test_index(root: Path) -> list[tuple[str, str, bool]]:
-    """Index the test modules that mention a ``--check`` flag.
+    """Index every test module's source, once per build.
 
-    Read once per build and reused for every generator: the alternative
-    (re-walking ``tests/`` per generator) is ~60 × 250 file reads.
+    Read once and reused for every generator: the alternative (re-walking
+    ``tests/`` per generator) is ~60 × 250 file reads.
 
     Args:
         root: Repository root.
 
     Returns:
         List of (repo-relative test path, source text, carries a tier-1
-        marker), for test modules whose source mentions ``--check``.
+        marker), one entry per test module.
     """
     index: list[tuple[str, str, bool]] = []
     tests_root = root / "tests"
@@ -202,11 +205,82 @@ def load_test_index(root: Path) -> list[tuple[str, str, bool]]:
         return index
     for test_path in sorted(tests_root.rglob("test_*.py")):
         text = test_path.read_text(encoding="utf-8", errors="replace")
-        if "--check" not in text:
-            continue
         index.append((test_path.relative_to(root).as_posix(), text,
                       "tier1" in text))
     return index
+
+
+def discover_check_modes(source: str) -> set[str]:
+    """Return the ``check``-family CLI modes a generator's argparse declares.
+
+    Parsed, not grepped. Two spellings count, and only from an
+    ``add_argument`` call:
+
+    * an option whose flag starts with ``--check`` (e.g. ``--check``,
+      ``--check-renderings``);
+    * a subcommand verb in a positional's ``choices`` — ``check`` itself or
+      ``check-<something>``, as ``scripts/build_gs_era2_board.py`` spells
+      ``check-renderings``.
+
+    Args:
+        source: The generator's source text.
+
+    Returns:
+        The declared mode strings. Empty for a file that will not parse
+        (a shell script given a ``.py`` rule, say) — reported as "no
+        check mode", which is the safe direction to be wrong in.
+    """
+    try:
+        tree = ast.parse(source)
+    except (SyntaxError, ValueError):
+        return set()
+    modes: set[str] = set()
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        func = node.func
+        name = func.attr if isinstance(func, ast.Attribute) else getattr(func, "id", "")
+        if name != "add_argument":
+            continue
+        for arg in node.args:
+            if (isinstance(arg, ast.Constant) and isinstance(arg.value, str)
+                    and arg.value.startswith(CHECK_MODE_PREFIX)):
+                modes.add(arg.value)
+        for keyword in node.keywords:
+            if keyword.arg != "choices" or not isinstance(
+                    keyword.value, (ast.List, ast.Tuple, ast.Set)):
+                continue
+            for element in keyword.value.elts:
+                if (isinstance(element, ast.Constant)
+                        and isinstance(element.value, str)
+                        and (element.value == "check"
+                             or element.value.startswith("check-"))):
+                    modes.add(element.value)
+    return modes
+
+
+def check_tokens(flags: set[str]) -> set[str]:
+    """Return the strings a test may use to exercise these CLI check modes.
+
+    A test drives a check mode either through the CLI string
+    (``main(["--check"])``) or through the function the mode calls
+    (``check_renderings(board)``), so a named mode contributes both its CLI
+    spelling and that spelling as an identifier. The bare ``--check``
+    contributes only itself: ``check`` as a substring would match almost
+    any test module.
+
+    Args:
+        flags: CLI check modes found in a generator's source.
+
+    Returns:
+        The set of strings that count as evidence in a test module.
+    """
+    tokens = set(flags)
+    for flag in flags:
+        bare = flag.lstrip("-")
+        if bare != "check":
+            tokens.add(bare.replace("-", "_"))
+    return tokens
 
 
 def generator_guards(root: Path, generator: str,
@@ -215,11 +289,11 @@ def generator_guards(root: Path, generator: str,
     """Report a generator's drift-guard apparatus, read from its own source.
 
     Deterministic and evidence-based, with no hand-maintained list: the
-    ``--check`` verdict is the set of ``--check``-family flag strings in
-    the generator's own source, and a test counts only if it names the
-    generator (by module stem) **and** passes one of that generator's own
-    check flags — so a test that happens to mention some other script's
-    ``--check`` cannot be credited here.
+    ``--check`` verdict is the set of ``--check``-family CLI modes in the
+    generator's own source, and a test counts only if it names the
+    generator (by module stem) **and** uses one of that generator's own
+    check modes (:func:`check_tokens`) — so a test that happens to mention
+    some other script's ``--check`` cannot be credited here.
 
     Args:
         root: Repository root.
@@ -239,15 +313,16 @@ def generator_guards(root: Path, generator: str,
     flags: set[str] = set()
     present = gen_path.is_file()
     if present:
-        flags = set(CHECK_FLAG_RE.findall(
-            gen_path.read_text(encoding="utf-8", errors="replace")))
+        flags = discover_check_modes(
+            gen_path.read_text(encoding="utf-8", errors="replace"))
     stem = Path(generator).stem
+    tokens = check_tokens(flags)
     tier1_tests: list[str] = []
     any_tests: list[str] = []
     for rel, text, is_tier1 in test_index:
         if stem not in text:
             continue
-        if not any(flag in text for flag in flags):
+        if not any(token in text for token in tokens):
             continue
         any_tests.append(rel)
         if is_tier1:

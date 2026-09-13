@@ -22,8 +22,10 @@ import pytest
 
 from scripts.build_generated_file_registry import (
     DEFAULT_OUT,
+    check_tokens,
     count_by_directory,
     count_regime2,
+    discover_check_modes,
     enumerate_mine,
     generator_guards,
     load_generator_map,
@@ -245,6 +247,46 @@ def test_scan_regime2_separates_banner_from_a_bare_generated_line(tmp_path):
 def test_scan_regime2_ignores_a_stamp_below_the_head_window(tmp_path):
     body = "<!-- GENERATED FILE -->\n" + "\n" * 20 + "commit `abcdef1`\n"
     assert scan_regime2(_write(tmp_path / "d.md", body)) == (True, False)
+
+
+@pytest.mark.tier1
+def test_discover_check_modes_reads_argparse_not_prose():
+    """A quoted ``check-…`` string is not evidence of a drift mode.
+
+    ``scripts/evaluate_detections.py`` runs ``git check-ignore``; grepping
+    for the string credited its 2,396 cell evaluations with a guard they
+    do not have, which is why this is parsed out of argparse instead.
+    """
+    option = 'p.add_argument("--check-renderings", action="store_true")'
+    assert discover_check_modes(option) == {"--check-renderings"}
+
+    verb = ('p.add_argument("command", choices=["gates", "renderings",\n'
+            '                                   "check-renderings"])')
+    assert discover_check_modes(verb) == {"check-renderings"}
+
+    decoy = 'subprocess.run(["git", "check-ignore", "-q", rel])'
+    assert discover_check_modes(decoy) == set()
+
+    # Another script's flag passed to a subprocess is not a declaration.
+    borrowed = 'subprocess.run([sys.executable, "other.py", "--check"])'
+    assert discover_check_modes(borrowed) == set()
+
+    # A file that will not parse reports no mode rather than raising.
+    assert discover_check_modes("#!/bin/bash\nexit 0\n") == set()
+
+
+@pytest.mark.tier1
+def test_check_tokens_expand_named_modes_but_not_bare_check():
+    """A named mode is also matched through its function; ``check`` is not.
+
+    ``check`` as a bare substring appears in most test modules, so it
+    would credit any test that merely imports the generator.
+    """
+    assert check_tokens({"--check-renderings"}) == {"--check-renderings",
+                                                   "check_renderings"}
+    assert check_tokens({"check-renderings"}) == {"check-renderings",
+                                                 "check_renderings"}
+    assert check_tokens({"--check"}) == {"--check"}
 
 
 @pytest.mark.tier1

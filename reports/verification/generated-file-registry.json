@@ -1,14 +1,14 @@
 {
  "_meta": {
-  "generated_at": "2026-09-13T11:32:49.476985+00:00",
+  "generated_at": "2026-09-13T11:56:12.128832+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "8e0ea06ea",
+  "git_head": "80e897049",
   "counts": {
-   "total": 3618,
+   "total": 3619,
    "generated": 3318,
    "generated_unattributed": 0,
-   "hand_written": 300,
+   "hand_written": 301,
    "by_directory": {
     "results/": {
      "total": 2864,
@@ -16,9 +16,9 @@
      "hand_written": 141
     },
     "reports/": {
-     "total": 87,
+     "total": 88,
      "generated": 0,
-     "hand_written": 87
+     "hand_written": 88
     },
     "outputs/": {
      "total": 638,
@@ -37,12 +37,12 @@
     }
    },
    "regime2": {
-    "generated_banner": 45,
-    "source_commit_stamp": 45,
-    "check_mode": 40,
-    "tier1_check_test": 40,
-    "compliant": 40,
-    "neither_regime": 3273
+    "generated_banner": 50,
+    "source_commit_stamp": 55,
+    "check_mode": 67,
+    "tier1_check_test": 67,
+    "compliant": 50,
+    "neither_regime": 3268
    }
   }
  },
@@ -11430,6 +11430,16 @@
    "hand_edited": false
   },
   {
+   "path": "reports/generated-file-registry-2026-09-13.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "reports/gs-tile-pool-mapping-2026-05-28.md",
    "stratum": "hand-written",
    "rule_id": null,
@@ -13047,15 +13057,19 @@
    "sources": [
     "results/55map-leaderboard/55map_leaderboard_50m.json"
    ],
-   "marker": null,
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `55map_leaderboard_50m_r2.json` by `scripts/build_55map_leaderboard.py` at commit `b16954d4c`; `--check` is the drift guard (tier-1: `tests/test_55map_leaderboard_renderings.py`), and `--rebuild-md` re-renders from the committed JSON without re-running the permutation tests. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog.",
    "hand_edited": false,
-   "generated_banner": false,
-   "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "generated_banner": true,
+   "source_commit_stamp": true,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_55map_leaderboard_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/55map-leaderboard/55map-leaderboard-50m-standardised.md",
@@ -13066,15 +13080,19 @@
    "sources": [
     "results/55map-leaderboard/55map_leaderboard_50m.json"
    ],
-   "marker": null,
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `55map_leaderboard_50m_standardised.json` by `scripts/build_55map_leaderboard.py` at commit `b16954d4c`; `--check` is the drift guard (tier-1: `tests/test_55map_leaderboard_renderings.py`), and `--rebuild-md` re-renders from the committed JSON without re-running the permutation tests. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog.",
    "hand_edited": false,
-   "generated_banner": false,
-   "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "generated_banner": true,
+   "source_commit_stamp": true,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_55map_leaderboard_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/55map-leaderboard/55map-leaderboard-50m.md",
@@ -13085,15 +13103,19 @@
    "sources": [
     "results/55map-leaderboard/55map_leaderboard_50m.json"
    ],
-   "marker": null,
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `55map_leaderboard_50m.json` by `scripts/build_55map_leaderboard.py` at commit `b16954d4c`; `--check` is the drift guard (tier-1: `tests/test_55map_leaderboard_renderings.py`), and `--rebuild-md` re-renders from the committed JSON without re-running the permutation tests. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog.",
    "hand_edited": false,
-   "generated_banner": false,
-   "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "generated_banner": true,
+   "source_commit_stamp": true,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_55map_leaderboard_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/55map-leaderboard/gs-vs-55map-transfer.md",
@@ -14785,15 +14807,19 @@
    "sources": [
     "results/analyses-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/analyses-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/analyses-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
    "hand_edited": false,
    "generated_banner": true,
-   "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "source_commit_stamp": true,
+   "check_mode": true,
+   "check_flags": [
+    "--check-renderings"
+   ],
+   "check_tests": [
+    "tests/test_manifest_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/ci-metadata-registry.md",
@@ -15024,15 +15050,19 @@
    "sources": [
     "results/conditions-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
    "hand_edited": false,
    "generated_banner": true,
-   "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "source_commit_stamp": true,
+   "check_mode": true,
+   "check_flags": [
+    "--check-renderings"
+   ],
+   "check_tests": [
+    "tests/test_manifest_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/dawid-skene/dawid-skene-results.md",
@@ -16102,10 +16132,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -21482,10 +21517,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23411,10 +23451,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23430,10 +23475,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23449,10 +23499,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23468,10 +23523,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23487,10 +23547,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23506,10 +23571,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23525,10 +23595,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23544,10 +23619,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23563,10 +23643,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23582,10 +23667,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23601,10 +23691,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23620,10 +23715,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23639,10 +23739,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -23802,10 +23907,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -25784,15 +25894,19 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/gates.json"
    ],
-   "marker": "> Generated 2026-09-13T10:46:37+00:00 by `scripts/build_gs_era2_board.py gates`. G2: 0 reproduction failures; G3: 0 frame failures; G4: 110 cells of 110 members.",
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by `scripts/build_gs_era2_board.py gates` at commit `acd4ed054`; `check-renderings` is the drift guard (tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog.",
    "hand_edited": false,
-   "generated_banner": false,
-   "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "generated_banner": true,
+   "source_commit_stamp": true,
+   "check_mode": true,
+   "check_flags": [
+    "check-renderings"
+   ],
+   "check_tests": [
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/flash35-pv-2x2__f35prop-f35vf-4of10/evaluation.md",
@@ -27856,15 +27970,20 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json"
    ],
-   "marker": null,
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `30a27f361` and rendered at commit `acd4ed054`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
-   "generated_banner": false,
-   "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "generated_banner": true,
+   "source_commit_stamp": true,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/limitations-consolidation/report.md",
@@ -31118,10 +31237,15 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -33022,15 +33146,19 @@
    "sources": [
     "results/passes-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
    "hand_edited": false,
    "generated_banner": true,
-   "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "source_commit_stamp": true,
+   "check_mode": true,
+   "check_flags": [
+    "--check-renderings"
+   ],
+   "check_tests": [
+    "tests/test_manifest_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/phase0-recall-levers/tilesize-premise/findings.md",
@@ -56955,15 +57083,19 @@
    "sources": [
     "results/run-registry.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/run-registry.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/run-registry.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
    "hand_edited": false,
    "generated_banner": true,
-   "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "source_commit_stamp": true,
+   "check_mode": true,
+   "check_flags": [
+    "--check-renderings"
+   ],
+   "check_tests": [
+    "tests/test_manifest_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/runs-manifest.md",
@@ -56974,15 +57106,19 @@
    "sources": [
     "results/runs-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/runs-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/runs-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
    "hand_edited": false,
    "generated_banner": true,
-   "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "source_commit_stamp": true,
+   "check_mode": true,
+   "check_flags": [
+    "--check-renderings"
+   ],
+   "check_tests": [
+    "tests/test_manifest_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/sapphire-zbook-cleanup-comparison.md",

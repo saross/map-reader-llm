@@ -1,7 +1,17 @@
 # Documentation foundation checklist — the preregistration → outcome chain
 
-> **Last revised**: 2026-09-13 (latest — **item 6 closed, awaiting PI
-> re-signature**: the Era-2 board rebuilt once carrying all three ruled
+> **Last revised**: 2026-09-13 (latest — **items 11a and 11b closed**: the
+> generated-file registry rebuilt over `outputs/` as well as `results/` and
+> `reports/` — 3,619 files, 3,318 generated, 0 unattributed — and extended
+> to record the 2026-09-11 ruling's three obligations per generated
+> document, so the audit's "six generated documents in neither compliance
+> regime" is now a query that returns **0**: the five register renderings
+> gained a source commit and a tested `--check-renderings`, and the Era-2
+> board's `tiering_20m.md` and `frame-deltas.md` plus the three generated
+> 55-map boards gained a banner, a stamp and a tested `--check`, each
+> regenerated once with zero content drift. Deltas:
+> `reports/generated-file-registry-2026-09-13.md`. Before that — **item 6
+> closed, awaiting PI re-signature**: the Era-2 board rebuilt once carrying all three ruled
 > changes, so the PI signs once. The F1 arm reproduced **byte-identically**
 > (11,175 pairwise records and the F1 MCB artefact; Tier 1 and its five
 > members unchanged); the k3 cell's withheld row and G6 row read **0.8860** /
@@ -40,7 +50,7 @@ agent work; Fable only for the PI-facing orchestration turns.
 | Deviations → errata | `docs/methodology/preregistration/protocol-errata.md` (E1–E85) | complete register | **none** — § M.x brought current to E85 and to the S153 rulings, 2026-09-13 (§ 2 item 4) |
 | Working notes | `docs/notes/working-notes.md` (Obs 1–481) | current | **none** — Obs 477–481 written 2026-09-13 (§ 2 item 3) |
 | Paper-facing | `docs/paper/results-draft.md`, `results-outline.md`, `results-claims-inventory-2026-09-12.md`, `methods-draft.md`, `discussion-outline.md`, `discussion-seeds.md`, `manuscript-skeleton-isprs.md` | outline decisions D1–D22 settled; inventory built for R0–R2, R4–R5, R7–R9; Methods zero-draft; Discussion outline current to August | § 2 items 8–10; D-1..D-5 and D.9 stay DEFERRED |
-| The project's own documentation audit | `planning/interim-docs-review.md` (2026-04-22, § 11 re-score 2026-09-13), `docs/methodology/output-directory-standard.md` compliance table (recounted 2026-09-13, May counts kept as history) | refreshed | six generated documents in neither compliance regime, and a stale generated-file registry (§ 11.5); second pass is § 2 item 11 |
+| The project's own documentation audit | `planning/interim-docs-review.md` (2026-04-22, § 11 re-score 2026-09-13), `docs/methodology/output-directory-standard.md` compliance table (recounted 2026-09-13, May counts kept as history) | refreshed | ~~six generated documents in neither compliance regime, and a stale generated-file registry (§ 11.5)~~ → **both closed 2026-09-13** (items 11a/11b, `86ba12413` + `acd4ed054` + `b16954d4c` + `80e897049`): the registry rebuilt over `outputs/` as well (3,619 files, 0 unattributed, guards recorded per document) and the neither-regime six closed to **0**. Remaining: 11c (`PaperImp` blocks, back-fill on touch) and the 46 `outputs/**/evaluation.md` files named as the ruling's open class |
 
 ## 2. Items (tick with date + commit; never delete)
 
@@ -225,14 +235,36 @@ agent work; Fable only for the PI-facing orchestration turns.
   counts move.
 - [ ] **11. Second documentation audit pass** after items 6–10, so the
   scorecard describes the foundation the outline pass starts from.
-  - [ ] **11a.** Rebuild the generated-file registry (built 2026-08-20 at
-    `06f7b8ea5`; short by 814 `results/**.md` and 48 `reports/**.md`;
-    does not enumerate `outputs/`) before item 11. Owner: Opus agent.
-  - [ ] **11b.** Verify a source-commit stamp and a tier-1 drift guard for
+  - [x] **11a.** Rebuild the generated-file registry — done 2026-09-13,
+    commit `86ba12413`. Charter extended to `outputs/**.md`: **3,619**
+    files (was 2,131 at `06f7b8ea5`) — `results/` 2,864, `reports/` 88 of
+    the 104 present (16 excluded as d17 audit apparatus), `outputs/` 638,
+    `docs/` 29; **3,318** generated, **301** hand-written, **0**
+    unattributed (two files were marker-carrying-but-unattributed under
+    the old map). Generator map v1.1, 100 rules. Every generated row now
+    records the 2026-09-11 ruling's three obligations as evidence — banner,
+    source-commit stamp, `--check` mode read out of the generator's
+    argparse, and the tier-1 test that runs it — so `--gaps` answers
+    "which documents are in neither regime?" as a query. The registry
+    carries its own guard (`_meta.git_head`, `--check`, tier-1 test).
+  - [x] **11b.** Verify a source-commit stamp and a tier-1 drift guard for
     each of the five register renderings and the six generated documents
-    in neither compliance regime (the Era-2 board's `tiering_20m.md` and
-    `frame-deltas.md`, the four 55-map leaderboard tables); add where
-    missing. Owner: Opus agent.
+    in neither compliance regime — done 2026-09-13, commits `acd4ed054`
+    (register renderings), `b16954d4c` (Era-2 board), `80e897049` (55-map
+    boards). **Neither-regime count: 6 → 0.** The five renderings had a
+    banner but no source commit and no `--check` at all; both added
+    (`--check-renderings`, `tests/test_manifest_renderings.py`). The Era-2
+    board's `tiering_20m.md` and `frame-deltas.md` and the three generated
+    55-map boards took a banner, a stamp and a tested `--check`. Each of
+    the ten documents was regenerated once with **zero content drift** —
+    the diff is the banner. One correction: the audit's fourth "55-map
+    table", `gs-vs-55map-transfer.md`, is hand-written (no generator, no
+    sidecar JSON) and took regime 1's banner + Changelog instead, so the
+    four split across both regimes. Left named, not closed: the 46
+    `outputs/**/evaluation.md` files (the ruling's open class) and 17
+    further `tiering_20m.md`-family documents for earlier analyses, one
+    `--render-md` away. Deltas:
+    `reports/generated-file-registry-2026-09-13.md`.
   - [ ] **11c.** `PaperImp` blocks on the 15 of 17 findings documents
     that lack one — on touch during the outline pass, not in bulk.
 - [ ] **12. Verdict-model decision (PI)**: a `disclosures` list beside
@@ -256,7 +288,37 @@ after that.
 
 ## Changelog
 
-### 2026-09-13 (latest) — item 6 closed: one rebuild, three ruled changes, awaiting the PI's re-signature
+### 2026-09-13 (latest) — items 11a and 11b closed: the registry rebuilt, the neither-regime count closed to 0
+
+**Trigger**: § 11.5 of `planning/interim-docs-review.md` made these the
+prerequisites for the second audit pass — the classifier that would answer
+"which generated documents are in neither compliance regime?" was stale and
+blind to `outputs/`, so the answer rested on a reading pass.
+
+| Claim | Before | After |
+|---|---|---|
+| Registry corpus | 2,131 files at `06f7b8ea5` (2026-08-20), `outputs/` not enumerated | **3,619** — `results/` 2,864, `reports/` 88 of 104, `outputs/` 638, `docs/` 29 |
+| Strata | 1,952 generated / 179 hand-written | **3,318** / **301**, 0 unattributed |
+| Generator map | 89 rules, v1.0 | **100** rules, v1.1 |
+| Generated documents meeting all three obligations | 45 claimed, 5 of them unverified | **50**, six generators, each with its check mode and tier-1 test named |
+| Generated documents in neither regime (the audit's six) | 6 | **0** |
+
+**What did NOT change**: every register row, board cell, rank, tier, tie
+set, withheld-cell disclosure and signature field; the ten regenerated
+documents moved by exactly their banner and stamp (zero content drift), and
+the 150-cell tiering table and three 28-pair 55-map boards re-rendered
+byte-identically from their committed JSON — which is itself the evidence
+they were pure projections. `docs/paper/results-draft.md` and the claims
+inventory were untouched (item 9 was running in parallel).
+
+**Correction carried into the standard**: the audit's "four 55-map
+leaderboard tables" are three generated boards plus one hand-written
+transfer table, which took regime 1's banner and Changelog instead.
+
+**Commits**: `86ba12413` (11a), `acd4ed054`, `b16954d4c`, `80e897049` (11b),
+plus this entry's own commit.
+
+### 2026-09-13 — item 6 closed: one rebuild, three ruled changes, awaiting the PI's re-signature
 
 | Claim | Before | After |
 |---|---|---|
