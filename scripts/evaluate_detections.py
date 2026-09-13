@@ -62,16 +62,21 @@ from scripts.lib_content_anchor import git_blob_hash  # noqa: E402
 from scripts.lib_detection_paths import resolve_pool_passes  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     CI_FLAG_BASIS_FULL,
+    CI_FLAG_BASIS_WITHHELD,
     COVERAGE_STATUS_NORMAL,
     COVERAGE_STATUS_PARTIAL,
     COVERAGE_STATUS_SPARSE,
+    COVERAGE_STATUS_WITHHELD,
     DEFAULT_CRS,
     TILE_JOIN_DEFAULT,
+    TILE_JOIN_WITHHELD_QUANTITIES,
     TILE_JOINS,
+    TileJoinRefusalError,
     bootstrap_ci,
     bootstrap_tile_classification_ci,
     calculate_f1_internal,
     calculate_tile_classification,
+    describe_tile_join_refusal,
     measured_exclusion,
     read_processed_tiles,
 )
@@ -81,10 +86,16 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
 #: set does not cover the bounds it is scored against) outranks
 #: ``sparse_cross_grid`` (the CIs are shaky) because it invalidates the
 #: point estimate itself, not just its interval.
+# ``withheld`` sits at the top not because it is the worst finding but
+# because it is the absence of one: the per-tile table coverage is
+# measured from was refused, so no coverage verdict was reached at all.
+# A cell-level rollup must surface that in preference to a "normal" it
+# cannot have earned.
 _COVERAGE_SEVERITY: dict[str, int] = {
     COVERAGE_STATUS_NORMAL: 0,
     COVERAGE_STATUS_SPARSE: 1,
     COVERAGE_STATUS_PARTIAL: 2,
+    COVERAGE_STATUS_WITHHELD: 3,
 }
 
 
@@ -111,6 +122,14 @@ def _worst_coverage_status(statuses: list[str]) -> str:
 # E81 is that no numeral on the MCC scale can stand in for "undefined"
 # without asserting something the data do not support.
 UNDEFINED_DISPLAY = "undefined"
+
+# Rendered wherever a quantity was not computed because the tile-join
+# invariant refused the table it would have been computed from. Distinct
+# from ``undefined``: that word means "the data make this metric
+# meaningless"; this one means "this metric was not reported, and the
+# document says why". Both are words rather than numerals for the same
+# reason (erratum E81).
+WITHHELD_DISPLAY = "WITHHELD"
 
 
 def _observed_metric(block: Any) -> float | None:
@@ -306,6 +325,29 @@ def aggregate_tile_classification(
         >>> agg["mcc"]["point"], agg["mcc"]["n_runs_defined"]
         (0.0665, 1)
     """
+    # A pass whose per-tile table the tile-join invariant refused carries a
+    # WITHHELD block: present, but with every metric ``None`` rather than a
+    # sub-dict. Such a pass contributes nothing to average, and averaging
+    # the rest would publish a mean over an unstated subset — so if any
+    # pass is withheld the aggregate is withheld too, naming the reason and
+    # the count. (An undefined pass is different: it is a measurement that
+    # came out degenerate, and E81's rule is to average the defined ones.)
+    withheld = [m for m in mcc_results if m.get("withheld")]
+    if withheld:
+        return {
+            "mcc": None,
+            "sensitivity": None,
+            "specificity": None,
+            "withheld": True,
+            "withheld_reason": withheld[0].get("withheld_reason"),
+            "withheld_detail": withheld[0].get("withheld_detail"),
+            "withheld_quantities": list(TILE_JOIN_WITHHELD_QUANTITIES),
+            "n_runs": len(mcc_results),
+            "n_runs_withheld": len(withheld),
+            "confusion": {},
+            "confusion_source": "withheld",
+        }
+
     avg: dict[str, Any] = {}
     for metric in ("mcc", "sensitivity", "specificity"):
         values = [m[metric] for m in mcc_results if metric in m]
@@ -901,6 +943,85 @@ def assess_ci_reliability(
     return (coverage_status == COVERAGE_STATUS_PARTIAL or excludes), excludes
 
 
+def _withheld_buffer_row(
+    buffer_m: int,
+    f1: float,
+    precision: float,
+    recall: float,
+    refusal: dict[str, Any],
+) -> dict[str, Any]:
+    """Build one buffer row for a cell whose per-tile table was refused.
+
+    The row carries the three POINT estimates — which a tile-join refusal
+    does not touch, because
+    :func:`lib_advanced_metrics.calculate_f1_internal` matches detections
+    to references geometrically and consults no tile — and ``None`` in
+    every interval field. ``None`` rather than ``0.0`` is the whole point:
+    it serialises to JSON ``null``, renders as an empty CSV cell, and
+    cannot be mistaken for a measured bound (the same reasoning as erratum
+    E81 for an undefined MCC).
+
+    ``ci_unreliable`` is ``True``, but for a third reason beyond the two
+    :func:`assess_ci_reliability` knows about, so the row's
+    ``ci_flag_basis`` says which:
+    :data:`lib_advanced_metrics.CI_FLAG_BASIS_WITHHELD`. Here it means
+    "there is no interval", not "the interval excludes its point".
+
+    Args:
+        buffer_m: The buffer radius in metres this row reports.
+        f1: F1 point estimate at that buffer.
+        precision: Precision point estimate.
+        recall: Recall point estimate.
+        refusal: The record from
+            :func:`lib_advanced_metrics.describe_tile_join_refusal`.
+
+    Returns:
+        A buffer row in the same shape the bootstrapped path produces,
+        with every interval field ``None`` and the refusal named.
+
+    Examples:
+        >>> row = _withheld_buffer_row(
+        ...     20, 0.886, 0.8323, 0.9471,
+        ...     {"reason": "tile_join_detection_shortfall", "detail": "x"},
+        ... )
+        >>> row["f1"], row["f1_ci_lower"], row["ci_withheld"]
+        (0.886, None, True)
+    """
+    return {
+        "buffer_metres": buffer_m,
+        "f1": round(f1, 4),
+        "f1_point": round(f1, 4),
+        "f1_ci_lower": None,
+        "f1_ci_upper": None,
+        "f1_ci_method": None,
+        "precision": round(precision, 4),
+        "p_point": round(precision, 4),
+        "p_ci_lower": None,
+        "p_ci_upper": None,
+        "p_ci_method": None,
+        "recall": round(recall, 4),
+        "r_point": round(recall, 4),
+        "r_ci_lower": None,
+        "r_ci_upper": None,
+        "r_ci_method": None,
+        # The bootstrap was not run, so no coverage diagnostics exist:
+        # ``_compute_coverage`` reads the same per-tile table the
+        # invariant refused. ``None`` plus the ``withheld`` status records
+        # that, where a zero-filled block would claim a measurement.
+        "coverage": None,
+        "coverage_status": COVERAGE_STATUS_WITHHELD,
+        "ci_withheld": True,
+        "ci_withheld_reason": refusal.get("reason"),
+        "ci_withheld_detail": refusal.get("detail"),
+        "ci_unreliable": True,
+        # Not measurable without an interval; ``None`` distinguishes
+        # "not assessed" from a measured ``False``.
+        "ci_excludes_point": None,
+        "sparse_coverage": False,
+        "ci_flag_basis": CI_FLAG_BASIS_WITHHELD,
+    }
+
+
 def evaluate_single_run(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
@@ -942,6 +1063,45 @@ def evaluate_single_run(
     n_det = len(gdf_det)
     buffer_results = []
 
+    # ── The tile-join invariant, asked before any metric is computed ──
+    #
+    # Until 2026-09-13 this question was answered only by tripping over
+    # it: ``compute_per_tile_tp_fp_fn`` raised inside ``bootstrap_ci``,
+    # which is called per buffer, so a refused cell aborted the WHOLE
+    # evaluation and its F1 — a quantity the refusal does not touch —
+    # could not be written at all. The PI's ruling of 2026-09-13 (S153
+    # ruling 6) is that such a cell publishes its whole-frame F1 in full
+    # and withholds its per-tile statistics, so the question has to be
+    # asked up front.
+    #
+    # What is withheld and what proceeds is decided by what the quantity
+    # is computed FROM, not by what it is an estimate OF. The bootstrap
+    # intervals are intervals on F1, precision and recall, whose point
+    # estimates survive — but ``bootstrap_ci`` resamples TILES (Decision
+    # 10, and ``_metadata.bootstrap.resampling_unit`` in every committed
+    # artefact says so), and the per-tile table it resamples is exactly
+    # what the invariant refuses. They are therefore withheld with the
+    # tile block, and the row carries the point estimate alone.
+    tile_join_refusal = (
+        describe_tile_join_refusal(gdf_det, gdf_ref, gdf_bounds, tile_join)
+        if n_det > 0
+        else None
+    )
+    if tile_join_refusal is not None:
+        shortfall = tile_join_refusal["shortfall"]
+        logger.warning(
+            "  PER-TILE STATISTICS WITHHELD (%s): %d of %d in-frame %s "
+            "booked under the '%s' join (shortfall %d). Withheld: %s. "
+            "F1, precision and recall point estimates proceed.",
+            tile_join_refusal["reason"],
+            shortfall["n_booked"],
+            shortfall["n_inside_union"],
+            shortfall["axis"],
+            tile_join_refusal["tile_join"],
+            shortfall["shortfall"],
+            ", ".join(TILE_JOIN_WITHHELD_QUANTITIES),
+        )
+
     for buffer_m in buffers:
         if n_det == 0:
             buffer_results.append({
@@ -956,14 +1116,69 @@ def evaluate_single_run(
             gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_m,
         )
 
+        if tile_join_refusal is not None:
+            # Point estimates only. Nothing that reads the per-tile table
+            # is computed, and every interval field is ``None`` rather
+            # than zero — see ``_withheld_buffer_row``.
+            buffer_results.append(_withheld_buffer_row(
+                buffer_m, f1, precision, recall, tile_join_refusal,
+            ))
+            logger.info(
+                "  %dm: F1=%.3f, P=%.3f, R=%.3f "
+                "[bootstrap CI WITHHELD: %s]",
+                buffer_m, f1, precision, recall,
+                tile_join_refusal["reason"],
+            )
+            continue
+
         # Bootstrap CIs
-        ci = bootstrap_ci(
-            gdf_det, gdf_ref, gdf_bounds,
-            n_iterations=n_bootstrap,
-            random_seed=seed,
-            buffer_metres=buffer_m,
-            processed_tiles=processed_tiles,
-        )
+        try:
+            ci = bootstrap_ci(
+                gdf_det, gdf_ref, gdf_bounds,
+                n_iterations=n_bootstrap,
+                random_seed=seed,
+                buffer_metres=buffer_m,
+                processed_tiles=processed_tiles,
+            )
+        except TileJoinRefusalError as exc:
+            # Defence in depth. The pre-flight probe above asks the
+            # confusion-level question; ``compute_per_tile_tp_fp_fn`` asks
+            # a narrower one of its own (it counts only detections that
+            # survived the per-map scoping), so in principle the table can
+            # refuse where the probe passed. If that ever happens the
+            # evaluation must still degrade to point estimates rather than
+            # abort — but it must also say so unmistakably, because it
+            # means the two checks disagree.
+            logger.warning(
+                "  per-tile table refused at %d m where the pre-flight "
+                "probe passed — degrading to point estimates. %s",
+                buffer_m, exc,
+            )
+            tile_join_refusal = {
+                "withheld": True,
+                "reason": exc.reason,
+                "detail": str(exc),
+                "tile_join": exc.tile_join,
+                "shortfall": {
+                    "axis": "detections",
+                    "n_booked": exc.n_booked,
+                    "n_inside_union": exc.n_considered,
+                    "n_outside_union": None,
+                    "n_multi_tile": None,
+                    "shortfall": exc.shortfall,
+                },
+                "vocabularies": None,
+                "withheld_quantities": list(TILE_JOIN_WITHHELD_QUANTITIES),
+                "tile_join_diagnostics": exc.diagnostics,
+                "detected_by": "per_tile_table_not_preflight_probe",
+            }
+            # Rows already written for earlier buffers came from the same
+            # table this buffer's check refuses. One artefact must not mix
+            # bootstrapped rows with withheld ones, so they are discarded
+            # and every buffer is redone on the point-estimate-only path
+            # below.
+            buffer_results = []
+            break
 
         # Mitigation 3 (sparse-coverage transparency): surface the coverage
         # block on each buffer entry so MD/CSV writers can suppress
@@ -1056,6 +1271,18 @@ def evaluate_single_run(
             ),
         )
 
+    # Only reachable when the late refusal above cleared the rows: rebuild
+    # every buffer on the point-estimate-only path so the artefact is
+    # internally consistent.
+    if tile_join_refusal is not None and not buffer_results and n_det > 0:
+        for buffer_m in buffers:
+            precision, recall, f1 = calculate_f1_internal(
+                gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_m,
+            )
+            buffer_results.append(_withheld_buffer_row(
+                buffer_m, f1, precision, recall, tile_join_refusal,
+            ))
+
     # Cell-level rollup (Mitigation 3, per-cell flag): if ANY buffer's
     # bootstrap distribution flagged sparse coverage, flag the whole cell.
     # This gives consumers a one-shot boolean per cell without scanning
@@ -1078,6 +1305,16 @@ def evaluate_single_run(
         "coverage_status": cell_coverage_status,
     }
 
+    # The cell-level record of the refusal. It sits beside the metrics
+    # rather than inside any one of them, because it governs which of them
+    # exist: a reader who meets a null interval or a missing tile block
+    # must be able to find, in the same document, what was withheld, why,
+    # by how much the join fell short, and between which two tile
+    # vocabularies. It is written whether or not ``--mcc`` was asked for,
+    # since the bootstrap is withheld either way.
+    if tile_join_refusal is not None:
+        result["tile_join_withheld"] = tile_join_refusal
+
     # Tile-level MCC (optional)
     if compute_mcc and n_det > 0:
         tile_class = calculate_tile_classification(
@@ -1087,16 +1324,22 @@ def evaluate_single_run(
             # The tile join does not describe this frame (most often a
             # source_tile vocabulary that is not the frame's). Record the
             # refusal in the evaluation instead of a plausible-looking
-            # number, and do not bootstrap around it.
+            # number, and do not bootstrap around it. Unlike before
+            # 2026-09-13 this is NOT the end of the evaluation: the buffer
+            # rows above already carry the F1, precision and recall point
+            # estimates the ruling says to publish in full.
             logger.warning(
                 "  tile-MCC WITHHELD (%s): %s",
                 tile_class.get("reason"), tile_class["error"],
             )
             result["tile_classification"] = {
                 "mcc": None,
+                "sensitivity": None,
+                "specificity": None,
                 "withheld": True,
                 "withheld_reason": tile_class.get("reason"),
                 "withheld_detail": tile_class["error"],
+                "withheld_quantities": list(TILE_JOIN_WITHHELD_QUANTITIES),
                 "tile_join": tile_join,
                 "tile_join_diagnostics": tile_class.get(
                     "tile_join_diagnostics",
@@ -1222,8 +1465,25 @@ def evaluate_multi_run_mean(
     for buffer_m in sorted(by_buffer.keys()):
         entries = by_buffer[buffer_m]
         avg: dict[str, Any] = {"buffer_metres": buffer_m}
+        # If ANY contributing pass had its interval withheld (the tile-join
+        # invariant refused the per-tile table its bootstrap resamples),
+        # the aggregate has no interval either: averaging the passes that
+        # do have one would publish a mean over an unstated subset. The
+        # point estimates still average over every pass, because they are
+        # matched geometrically and the refusal does not touch them.
+        any_withheld = any(e.get("ci_withheld") for e in entries)
+        bound_keys = {
+            "f1_ci_lower", "f1_ci_upper",
+            "p_ci_lower", "p_ci_upper",
+            "r_ci_lower", "r_ci_upper",
+        }
         for key in metric_keys:
-            values = [e[key] for e in entries if key in e]
+            if any_withheld and key in bound_keys:
+                avg[key] = None
+                continue
+            values = [
+                e[key] for e in entries if key in e and e[key] is not None
+            ]
             avg[key] = round(float(np.mean(values)), 4) if values else 0.0
 
         coverage_statuses = [
@@ -1253,6 +1513,23 @@ def evaluate_multi_run_mean(
             avg["coverage_status"] == COVERAGE_STATUS_SPARSE
         )
         avg["ci_flag_basis"] = CI_FLAG_BASIS_FULL
+        if any_withheld:
+            withheld_entry = next(
+                e for e in entries if e.get("ci_withheld")
+            )
+            avg["ci_withheld"] = True
+            avg["ci_withheld_reason"] = withheld_entry.get(
+                "ci_withheld_reason",
+            )
+            avg["ci_withheld_detail"] = withheld_entry.get(
+                "ci_withheld_detail",
+            )
+            avg["ci_withheld_n_passes"] = sum(
+                1 for e in entries if e.get("ci_withheld")
+            )
+            avg["ci_unreliable"] = True
+            avg["ci_excludes_point"] = None
+            avg["ci_flag_basis"] = CI_FLAG_BASIS_WITHHELD
 
         # Worst-case coverage diagnostics across runs: max
         # zero-fraction (highest sparsity), min n_tiles (smallest
@@ -1275,25 +1552,38 @@ def evaluate_multi_run_mean(
                 zero_fractions.append(float(zf))
             if nt is not None:
                 n_tiles_values.append(int(nt))
-        avg["ci_zero_fraction"] = (
-            round(max(zero_fractions), 6) if zero_fractions else 0.0
-        )
-        avg["ci_n_tiles"] = (
-            min(n_tiles_values) if n_tiles_values else 0
-        )
+        # On a withheld aggregate these diagnostics were never computed;
+        # ``None`` says so, where ``0.0`` / ``0`` would assert "no sparsity,
+        # measured across no tiles".
+        if any_withheld:
+            avg["ci_zero_fraction"] = None
+            avg["ci_n_tiles"] = None
+        else:
+            avg["ci_zero_fraction"] = (
+                round(max(zero_fractions), 6) if zero_fractions else 0.0
+            )
+            avg["ci_n_tiles"] = (
+                min(n_tiles_values) if n_tiles_values else 0
+            )
 
         avg_buffers.append(avg)
 
         logger.info(
-            "  Mean across %d runs @ %dm: F1=%.3f [%.3f, %.3f], "
+            "  Mean across %d runs @ %dm: F1=%.3f [%s, %s], "
             "P=%.3f, R=%.3f%s",
             n_runs, buffer_m,
-            avg["f1"], avg["f1_ci_lower"], avg["f1_ci_upper"],
+            avg["f1"],
+            _fmt_metric(avg["f1_ci_lower"]),
+            _fmt_metric(avg["f1_ci_upper"]),
             avg["precision"], avg["recall"],
             (
-                f" [sparse coverage: max zero-fraction "
-                f"{avg['ci_zero_fraction']:.1%}]"
-                if avg["ci_unreliable"] else ""
+                f" [CI WITHHELD: {avg.get('ci_withheld_reason')}]"
+                if any_withheld
+                else (
+                    f" [sparse coverage: max zero-fraction "
+                    f"{avg['ci_zero_fraction']:.1%}]"
+                    if avg["ci_unreliable"] else ""
+                )
             ),
         )
 
@@ -1316,6 +1606,21 @@ def evaluate_multi_run_mean(
         "coverage_status": cell_coverage_status,
     }
 
+    # Carry the refusal record up to the aggregated cell. A reader who
+    # meets a null interval on an averaged row needs the reason in the same
+    # document as the row, exactly as on a single-run cell. The first
+    # refusing pass supplies it; ``n_passes`` records how many refused.
+    withheld_passes = [
+        r["tile_join_withheld"] for r in run_results
+        if r.get("tile_join_withheld")
+    ]
+    if withheld_passes:
+        result["tile_join_withheld"] = {
+            **withheld_passes[0],
+            "n_passes_withheld": len(withheld_passes),
+            "n_passes": n_runs,
+        }
+
     # Average tile-level MCC across runs (if computed)
     mcc_results = [
         r["tile_classification"] for r in run_results
@@ -1325,7 +1630,7 @@ def evaluate_multi_run_mean(
         avg_mcc = aggregate_tile_classification(mcc_results)
         result["tile_classification"] = avg_mcc
 
-        mcc_block = avg_mcc.get("mcc", {})
+        mcc_block = avg_mcc.get("mcc") or {}
         logger.info(
             # D30: the observed statistic, averaged over the defined
             # passes — not the mean of the bootstrap distributions.
@@ -1486,6 +1791,17 @@ def write_outputs(
     # remain byte-identical.
     tc = results.get("tile_classification") or {}
     has_mcc = bool(tc)
+    # A withheld tile block is present but holds no numbers. Every metric
+    # sub-block is ``None`` rather than a dict, so the accessors below take
+    # ``or {}`` and every cell resolves to the empty string (CSV) or the
+    # word WITHHELD (Markdown). Before 2026-09-13 no artefact ever reached
+    # these writers in the withheld state, because the refusal aborted the
+    # evaluation first.
+    tile_withheld = bool(tc.get("withheld"))
+    # Buffer rows whose interval was withheld rather than merely flagged.
+    withheld_buffers = [
+        buf for buf in results["buffers"] if buf.get("ci_withheld")
+    ]
 
     # Mitigation 3 (sparse coverage): emit machine-readable diagnostics
     # columns alongside the numeric CI bounds. Downstream consumers that
@@ -1529,9 +1845,9 @@ def write_outputs(
         for buf in results["buffers"]:
             row = {"label": results["label"], **buf}
             if has_mcc:
-                mcc = tc.get("mcc", {})
-                sens = tc.get("sensitivity", {})
-                spec = tc.get("specificity", {})
+                mcc = tc.get("mcc") or {}
+                sens = tc.get("sensitivity") or {}
+                spec = tc.get("specificity") or {}
                 # MCC is buffer-invariant; repeated per row for tabular
                 # convenience. E81: an undefined value is written as an
                 # empty cell, never as ``0``. ``csv`` renders ``None`` as
@@ -1554,13 +1870,24 @@ def write_outputs(
                 })
             if has_coverage:
                 cov = buf.get("coverage", {}) or {}
+                # On a withheld row the coverage diagnostics do not exist:
+                # they are read off the same per-tile table the invariant
+                # refused. The historical ``0.0`` / ``0`` defaults would
+                # publish "0 % of tiles are empty, across 0 tiles" as
+                # though measured, so an empty cell is written instead.
                 row.update({
                     "coverage_status": buf.get(
                         "coverage_status", COVERAGE_STATUS_NORMAL,
                     ),
                     "ci_unreliable": bool(buf.get("ci_unreliable", False)),
-                    "ci_zero_fraction": cov.get("zero_fraction", 0.0),
-                    "ci_n_tiles": cov.get("n_tiles", 0),
+                    "ci_zero_fraction": (
+                        "" if buf.get("ci_withheld")
+                        else cov.get("zero_fraction", 0.0)
+                    ),
+                    "ci_n_tiles": (
+                        "" if buf.get("ci_withheld")
+                        else cov.get("n_tiles", 0)
+                    ),
                     "coverage_source": cov.get("coverage_source", ""),
                     "n_unprocessed_tiles": (
                         "" if cov.get("n_unprocessed_tiles") is None
@@ -1586,9 +1913,9 @@ def write_outputs(
         # ``tile_classification`` block; sensitivity and specificity are
         # likewise repeated across rows.
         if has_mcc:
-            mcc = tc.get("mcc", {})
-            sens = tc.get("sensitivity", {})
-            spec = tc.get("specificity", {})
+            mcc = tc.get("mcc") or {}
+            sens = tc.get("sensitivity") or {}
+            spec = tc.get("specificity") or {}
             f.write(
                 "| Buffer | F1 | F1 CI | P | P CI | R | R CI "
                 "| MCC | MCC CI | Sens | Spec |\n",
@@ -1605,12 +1932,35 @@ def write_outputs(
         # output. The JSON copy retains the bounds for downstream tooling.
         any_sparse = False
         for buf in results["buffers"]:
+            ci_withheld = bool(buf.get("ci_withheld"))
             ci_unreliable = bool(buf.get("ci_unreliable", False))
-            if ci_unreliable:
+            # A withheld row also carries ``ci_unreliable``, but it is not
+            # a sparse-coverage suppression and must not draw that
+            # footnote: sparse suppression hides bounds that exist, where
+            # here there are none to hide.
+            if ci_unreliable and not ci_withheld:
                 any_sparse = True
 
-            def _ci(lo: float, hi: float, suppress: bool) -> str:
-                """Format a CI cell as ``[lo, hi]`` or ``N/A *`` when sparse."""
+            def _ci(
+                lo: float | None,
+                hi: float | None,
+                suppress: bool,
+                withheld: bool = ci_withheld,
+            ) -> str:
+                """Format a CI cell, or name why there is nothing to format.
+
+                Args:
+                    lo: Lower bound, or ``None`` when withheld.
+                    hi: Upper bound, or ``None`` when withheld.
+                    suppress: Render ``N/A *`` (sparse-coverage rule).
+                    withheld: Render ``WITHHELD *`` — no interval was
+                        computed at all.
+
+                Returns:
+                    The cell text.
+                """
+                if withheld or lo is None or hi is None:
+                    return f"{WITHHELD_DISPLAY} *" if withheld else "N/A *"
                 if suppress:
                     return "N/A *"
                 return f"[{lo:.3f}, {hi:.3f}]"
@@ -1632,21 +1982,35 @@ def write_outputs(
                 # footnote emitted below the table.
                 mcc_lo = mcc.get("ci_lower")
                 mcc_hi = mcc.get("ci_upper")
-                if mcc_lo is None or mcc_hi is None:
+                if tile_withheld:
+                    # "undefined" would say the tile confusion is
+                    # degenerate. It is not: it was never built.
+                    mcc_ci_cell = f"{WITHHELD_DISPLAY} *"
+                elif mcc_lo is None or mcc_hi is None:
                     mcc_ci_cell = UNDEFINED_DISPLAY
                 else:
-                    mcc_ci_cell = _ci(mcc_lo, mcc_hi, ci_unreliable)
+                    mcc_ci_cell = _ci(
+                        mcc_lo, mcc_hi, ci_unreliable, withheld=False,
+                    )
                 # D30: the MCC / Sens / Spec columns carry the OBSERVED
                 # statistic. The resample mean is a bootstrap diagnostic
                 # and belongs in the CSV's ``*_boot_mean`` columns and
                 # the JSON, not under a column header that names the
                 # statistic itself.
-                mcc_cells = (
-                    f"| {_fmt_metric(_observed_metric(mcc))} "
-                    f"| {mcc_ci_cell} "
-                    f"| {_fmt_metric(_observed_metric(sens))} "
-                    f"| {_fmt_metric(_observed_metric(spec))} "
-                )
+                if tile_withheld:
+                    mcc_cells = (
+                        f"| {WITHHELD_DISPLAY} * "
+                        f"| {mcc_ci_cell} "
+                        f"| {WITHHELD_DISPLAY} * "
+                        f"| {WITHHELD_DISPLAY} * "
+                    )
+                else:
+                    mcc_cells = (
+                        f"| {_fmt_metric(_observed_metric(mcc))} "
+                        f"| {mcc_ci_cell} "
+                        f"| {_fmt_metric(_observed_metric(sens))} "
+                        f"| {_fmt_metric(_observed_metric(spec))} "
+                    )
                 f.write(row_body + mcc_cells + "|\n")
             else:
                 f.write(row_body + "|\n")
@@ -1668,7 +2032,61 @@ def write_outputs(
             detail for buf in partial_buffers
             if (detail := (buf.get("coverage") or {}).get("coverage_detail"))
         }) or ["tile-level detail not retained in this aggregation"]
-        if partial_buffers:
+        if withheld_buffers or tile_withheld:
+            withheld_record = results.get("tile_join_withheld") or {}
+            reason = (
+                withheld_record.get("reason")
+                or tc.get("withheld_reason")
+                or "tile_join_refusal"
+            )
+            shortfall = withheld_record.get("shortfall") or {}
+            vocab = withheld_record.get("vocabularies") or {}
+            frame_vocab = vocab.get("frame") or {}
+            det_vocab = vocab.get("detections") or {}
+            shortfall_clause = (
+                f"{shortfall['n_booked']} of {shortfall['n_inside_union']} "
+                f"in-frame {shortfall.get('axis', 'detections')} were "
+                f"booked to a tile (shortfall {shortfall['shortfall']}, "
+                f"{shortfall.get('n_outside_union')} outside the frame "
+                f"entirely, {shortfall.get('n_multi_tile')} inside more "
+                f"than one tile)"
+                if shortfall.get("n_inside_union") is not None
+                else "the booked count fell short of the in-frame count"
+            )
+            vocab_clause = (
+                " The two tile vocabularies: the frame carries "
+                f"{frame_vocab.get('n_distinct_tile_names')} names under "
+                f"map prefixes {frame_vocab.get('map_prefixes')} (e.g. "
+                f"{frame_vocab.get('sample_tile_names')}); the detections "
+                f"carry {det_vocab.get('n_distinct_tile_names')} names "
+                f"under {det_vocab.get('map_prefixes')} (e.g. "
+                f"{det_vocab.get('sample_tile_names')}), of which "
+                f"{det_vocab.get('n_names_in_frame_vocabulary')} are in "
+                "the frame's vocabulary."
+                if vocab
+                else ""
+            )
+            f.write(
+                "\n\\* **Per-tile statistics WITHHELD** — the tile-join "
+                f"invariant refused this cell's per-tile table "
+                f"(`{reason}`): {shortfall_clause}."
+                f"{vocab_clause}"
+                " Withheld, and named rather than silently omitted: "
+                f"{', '.join(TILE_JOIN_WITHHELD_QUANTITIES)}. The "
+                "bootstrap confidence intervals are withheld with the "
+                "tile block because they resample TILES (the resampling "
+                "unit fixed in Decision 10), not matched pairs, so the "
+                "refused table is their input too. **Reported in full, "
+                "and unaffected**: the F1, precision and recall POINT "
+                "estimates in the columns above — "
+                "`lib_advanced_metrics.calculate_f1_internal` matches "
+                "detections to references geometrically per map sheet and "
+                "consults no tile. Per the PI's ruling of 2026-09-13 "
+                "(Session 153, ruling 6); see "
+                "`reports/tile-mcc-geometric-join-2026-09-12.md` and "
+                "`reports/recovery-drop-fix-2026-09-13.md` § 6.3.\n",
+            )
+        elif partial_buffers:
             f.write(
                 "\n\\* **Partial coverage** — the detection set does not "
                 "cover the evaluation bounds it is scored against "
@@ -1702,8 +2120,13 @@ def write_outputs(
         # the coverage footnotes above: an undefined MCC is a different
         # diagnosis from a sparse or partial CI, and a reader who sees the
         # word "undefined" in a metric column is owed the reason.
-        if has_mcc:
-            mcc_block = tc.get("mcc", {})
+        # A withheld block is skipped here: "undefined" and "withheld" are
+        # different diagnoses, and the withheld footnote above has already
+        # given this cell's reason. Writing the E81 text as well would tell
+        # the reader the confusion matrix is degenerate when it was never
+        # built.
+        if has_mcc and not tile_withheld:
+            mcc_block = tc.get("mcc") or {}
             undefined_fields = [
                 name for name in ("point", "mean", "ci_lower", "ci_upper")
                 if name in mcc_block and mcc_block[name] is None
@@ -1846,9 +2269,12 @@ def write_batch_summary(
                 "r_ci_upper": buf.get("r_ci_upper", 0),
             }
             if has_mcc and tc:
-                mcc = tc.get("mcc", {})
-                sens = tc.get("sensitivity", {})
-                spec = tc.get("specificity", {})
+                # ``or {}`` rather than a ``{}`` default: a withheld tile
+                # block carries these keys set to ``None``, so the default
+                # never fires and the accessors below would raise.
+                mcc = tc.get("mcc") or {}
+                sens = tc.get("sensitivity") or {}
+                spec = tc.get("specificity") or {}
                 # E81: preserve ``None`` (undefined) all the way to the
                 # renderers — the batch summary must not be the place
                 # where an undefined MCC quietly becomes a zero.

@@ -806,6 +806,15 @@ def _metrics_from_eval(summary: dict, bootstrap: dict | None = None) -> dict:
             per_buffer[str(b["buffer_metres"])]["ci_flag_basis"] = (
                 b["ci_flag_basis"]
             )
+        # A null ``ci`` has two very different causes, and the register must
+        # tell them apart: an evaluation that never bootstrapped, and one
+        # whose interval was WITHHELD because the tile-join invariant
+        # refused the per-tile table the bootstrap resamples (PI ruling
+        # 2026-09-13, S153 ruling 6). Only the second names a reason.
+        if b.get("ci_withheld_reason") is not None:
+            per_buffer[str(b["buffer_metres"])]["ci_withheld_reason"] = (
+                b["ci_withheld_reason"]
+            )
     tc = summary.get("tile_classification", {})
     conf = tc.get("confusion", {})
     tile = {
@@ -832,6 +841,15 @@ def _metrics_from_eval(summary: dict, bootstrap: dict | None = None) -> dict:
         conf.get(k) is not None for k in ("tp", "tn", "fp", "fn")
     ):
         tile["mcc_undefined_reason"] = _mcc_undefined_reason(conf)
+    # A WITHHELD tile block is a third state beside "reported" and
+    # "undefined": the confusion matrix was never built, because the
+    # tile-join invariant refused the join that would have built it. Its
+    # cells are null, and ``mcc_undefined_reason`` deliberately does not
+    # fire (there is no vanishing marginal to name) — so the reason is
+    # carried under its own key, or the register would show four nulls with
+    # nothing to explain them.
+    if tc.get("withheld"):
+        tile["tile_withheld_reason"] = tc.get("withheld_reason")
     return {"per_buffer": per_buffer, "tile_classification": tile}
 
 

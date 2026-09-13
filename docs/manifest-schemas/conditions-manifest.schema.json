@@ -151,8 +151,12 @@
         },
         "ci_flag_basis": {
           "type": "string",
-          "enum": ["measured-exclusion-or-partial-coverage", "measured-exclusion-only"],
-          "description": "Which rule produced ci_unreliable, copied from the source evaluation so the register is readable without knowing the artefact's vintage. 'measured-exclusion-only' marks adapter-written rows whose committed fields carry no coverage status, so the E72 partial-coverage ground was unevaluable."
+          "enum": ["measured-exclusion-or-partial-coverage", "measured-exclusion-only", "ci-withheld-tile-join-refusal"],
+          "description": "Which rule produced ci_unreliable, copied from the source evaluation so the register is readable without knowing the artefact's vintage. 'measured-exclusion-only' marks adapter-written rows whose committed fields carry no coverage status, so the E72 partial-coverage ground was unevaluable. 'ci-withheld-tile-join-refusal' marks a row with NO interval at all, because the tile-join invariant refused the per-tile table the bootstrap resamples — there ci_unreliable means 'there is no interval', not 'the interval is untrustworthy'."
+        },
+        "ci_withheld_reason": {
+          "type": "string",
+          "description": "Present only where ci is null BECAUSE the interval was withheld: the named tile-join refusal reason (a TILE_JOIN_REASON_* constant). Distinguishes a withheld interval from one that was simply never computed. The F1/precision/recall point estimates on the same row are unaffected and are reported in full — they are matched geometrically and consult no tile (PI ruling 2026-09-13, Session 153 ruling 6; reports/tile-mcc-geometric-join-2026-09-12.md)."
         }
       },
       "required": ["f1", "precision", "recall"],
@@ -160,15 +164,16 @@
     },
     "tileClassification": {
       "type": "object",
-      "description": "Buffer-agnostic tile-level classification. MCC is reported wherever it is defined; where the tile confusion matrix is degenerate it is null with mcc_undefined_reason set, never 0.0 (erratum E81).",
+      "description": "Buffer-agnostic tile-level classification. MCC is reported wherever it is defined; where the tile confusion matrix is degenerate it is null with mcc_undefined_reason set, never 0.0 (erratum E81); and where the tile-join invariant REFUSED the join that would have built the confusion, every cell is null with tile_withheld_reason set (PI ruling 2026-09-13, Session 153 ruling 6). Those three states are distinct and the register keeps them distinct.",
       "properties": {
         "mcc": { "type": ["number", "null"], "minimum": -1, "maximum": 1 },
         "sensitivity": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
         "specificity": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
-        "tp": { "type": "integer", "minimum": 0 },
-        "tn": { "type": "integer", "minimum": 0 },
-        "fp": { "type": "integer", "minimum": 0 },
-        "fn": { "type": "integer", "minimum": 0 },
+        "tp": { "type": ["integer", "null"], "minimum": 0 },
+        "tn": { "type": ["integer", "null"], "minimum": 0 },
+        "fp": { "type": ["integer", "null"], "minimum": 0 },
+        "fn": { "type": ["integer", "null"], "minimum": 0 },
+        "tile_withheld_reason": { "type": "string", "description": "Present only where the whole tile block is withheld: the named tile-join refusal reason (a TILE_JOIN_REASON_* constant). A withheld block has null confusion cells and no mcc_undefined_reason, because there is no vanishing marginal to name — the confusion was never built. The condition's whole-frame F1 is unaffected and is reported in full." },
         "mcc_n_runs": { "type": "integer", "minimum": 1, "description": "Passes averaged into the reported MCC (erratum E81)." },
         "mcc_n_runs_defined": { "type": "integer", "minimum": 0, "description": "Of mcc_n_runs, how many had a defined MCC. Below mcc_n_runs means the reported value averages fewer passes than the condition ran; 0 means the MCC is null (erratum E81)." },
         "mcc_undefined_reason": { "type": "string", "description": "Present only where mcc is null: names the vanishing confusion-matrix marginal, so a null is never read as a zero (erratum E81)." }

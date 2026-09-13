@@ -140,6 +140,97 @@ TILE_JOIN_REASON_REFERENCE_SHORTFALL: str = "tile_join_reference_shortfall"
 TILE_JOIN_REASON_NO_TILES: str = "no_tiles_in_bounds"
 TILE_JOIN_REASON_NO_SOURCE_TILE: str = "detections_have_no_source_tile"
 
+#: Every quantity a tile-join refusal withholds, and why. The PI's ruling
+#: of 2026-09-13 (S153 ruling 6, recorded in the banner of
+#: ``reports/tile-mcc-geometric-join-2026-09-12.md``) is that the
+#: name-based ``id`` join is the published tile-MCC convention and that a
+#: cell the invariant refuses has its **whole-frame F1 reported in full**
+#: and its **per-tile statistics withheld**. This tuple is the machine
+#: readable boundary between those two sets, and it is what the scorer
+#: writes into the artefact so a reader never has to infer which numbers
+#: were suppressed.
+#:
+#: The bootstrap confidence intervals are on the withheld side, which is
+#: the one judgement in this list that is not obvious. They are intervals
+#: on F1, precision and recall — quantities whose POINT estimates survive
+#: a refusal — but :func:`bootstrap_ci` resamples **tiles** (the unit
+#: fixed pre-lodgement in Decision 10, ``decisions-log.md:337``, and
+#: echoed in every artefact's ``_metadata.bootstrap.resampling_unit``),
+#: and the per-tile table it resamples is exactly what the invariant
+#: refuses. A refused cell therefore has no interval, only a point.
+TILE_JOIN_WITHHELD_QUANTITIES: tuple[str, ...] = (
+    "tile_classification",
+    "tile_mcc",
+    "tile_sensitivity",
+    "tile_specificity",
+    "per_tile_table",
+    "bootstrap_ci_f1",
+    "bootstrap_ci_precision",
+    "bootstrap_ci_recall",
+    "per_tile_permutation_tests",
+    "coverage_diagnostics",
+)
+
+#: What a refusal leaves standing: the buffer-matched point estimates.
+#: :func:`calculate_f1_internal` matches detections to references
+#: geometrically (Hungarian, per map sheet) and consults no tile, so a
+#: mismatched tile vocabulary does not touch it. The one caveat is the
+#: per-map-sheet SCOPING inside that function, which is a ``source_tile``
+#: string prefix — see ``reports/tile-mcc-geometric-join-2026-09-12.md``
+#: § 5.1(a); the refused Gemini 3.7 cells share the frame's map prefixes,
+#: so their F1 is sound, but a cell from a differently-named sheet set
+#: would lose detections from F1 as quietly as from the tile table. The
+#: refusal record therefore reports both map-prefix vocabularies.
+TILE_JOIN_REPORTED_QUANTITIES: tuple[str, ...] = (
+    "f1_point",
+    "precision_point",
+    "recall_point",
+    "n_detections",
+)
+
+
+class TileJoinRefusalError(ValueError):
+    """The tile-join invariant refused a per-tile table.
+
+    Subclasses :class:`ValueError` so that callers written against the
+    original bare ``raise ValueError(...)`` — and the tier-1 tests that
+    assert it — keep working unchanged. What the subclass adds is the
+    refusal as *data*: a caller that wants to carry on and publish the
+    quantities a refusal leaves standing (the buffer-matched F1,
+    precision and recall point estimates) can read the reason and the
+    shortfall counts off the exception instead of parsing its message.
+
+    Attributes:
+        reason: One of the ``TILE_JOIN_REASON_*`` constants.
+        tile_join: The rule in force when the refusal fired.
+        n_booked: In-frame points that reached a tile.
+        n_considered: In-frame points that should have reached one.
+        diagnostics: The ``tile_join_diagnostics`` block, or ``None``.
+    """
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        reason: str,
+        tile_join: str,
+        n_booked: int,
+        n_considered: int,
+        diagnostics: dict[str, Any] | None = None,
+    ) -> None:
+        super().__init__(message)
+        self.reason = reason
+        self.tile_join = tile_join
+        self.n_booked = n_booked
+        self.n_considered = n_considered
+        self.diagnostics = diagnostics
+
+    @property
+    def shortfall(self) -> int:
+        """How many in-frame points were never credited to a tile."""
+        return self.n_considered - self.n_booked
+
+
 # Mitigation 3 (sparse-coverage transparency) constants --------------------
 #
 # When ``zero_fraction`` (proportion of tiles with TP+FP+FN == 0) exceeds
@@ -177,6 +268,14 @@ COVERAGE_STATUS_NORMAL: str = "normal"
 COVERAGE_STATUS_SPARSE: str = "sparse_cross_grid"
 COVERAGE_STATUS_PARTIAL: str = "partial_coverage"
 
+#: Coverage was not assessed, because assessing it needs the per-tile
+#: table the tile-join invariant refused. This is distinct from
+#: :data:`COVERAGE_STATUS_NORMAL`, which is a positive finding: a refused
+#: cell's coverage is UNKNOWN, and recording it as "normal" would assert
+#: a check that never ran (the D17 principle — an absent parameter is not
+#: evidence of the standard one).
+COVERAGE_STATUS_WITHHELD: str = "withheld"
+
 #: How ``coverage_status`` was decided — direct evidence or inference.
 COVERAGE_SOURCE_PROCESSED_TILES: str = "processed_tiles"
 COVERAGE_SOURCE_HEURISTIC: str = "zero_fraction_heuristic"
@@ -189,6 +288,14 @@ COVERAGE_SOURCE_HEURISTIC: str = "zero_fraction_heuristic"
 #: exclusion ground could be tested.
 CI_FLAG_BASIS_FULL: str = "measured-exclusion-or-partial-coverage"
 CI_FLAG_BASIS_EXCLUSION_ONLY: str = "measured-exclusion-only"
+
+#: A third basis, for a buffer row that has no interval at all because
+#: the tile-join invariant refused the per-tile table the bootstrap
+#: resamples. Neither measured ground is evaluable on such a row, and
+#: ``ci_unreliable`` there does not mean "the interval is untrustworthy"
+#: but "there is no interval" — which a reader must be able to tell apart
+#: from a measured exclusion.
+CI_FLAG_BASIS_WITHHELD: str = "ci-withheld-tile-join-refusal"
 
 #: (point key, lower-bound key, upper-bound key) triples as committed in
 #: evaluation buffer rows.
@@ -1077,9 +1184,14 @@ def compute_per_tile_tp_fp_fn(
         DataFrame with columns [tile_name, tp, fp, fn], one row per tile.
 
     Raises:
-        ValueError: If the booked TP + FP count falls short of the
-            detections geometrically inside the frame, which means the
-            join is not describing this frame.
+        TileJoinRefusalError: If the booked TP + FP count falls short of
+            the detections geometrically inside the frame, which means the
+            join is not describing this frame. A :class:`ValueError`
+            subclass, so pre-existing ``except ValueError`` handling still
+            catches it; the subclass carries the reason and the shortfall
+            counts as attributes so a caller can publish the quantities a
+            refusal leaves standing instead of aborting outright (see
+            :func:`describe_tile_join_refusal`).
     """
     tile_counts: dict[str, dict[str, int]] = {
         row["tile_name"]: {"tp": 0, "fp": 0, "fn": 0}
@@ -1240,14 +1352,19 @@ def compute_per_tile_tp_fp_fn(
     # describing this frame, and a table of pure false negatives must not
     # be handed to a bootstrap or a permutation test.
     if n_booked < n_considered:
-        raise ValueError(
+        raise TileJoinRefusalError(
             f"per-tile TP/FP/FN table refused: {n_booked} of "
             f"{n_considered} in-frame detections were credited to a "
             f"tile under the '{tile_join}' tile join, a shortfall of "
             f"{n_considered - n_booked}. "
             f"({TILE_JOIN_REASON_DETECTION_SHORTFALL}) Most often the "
             f"cell's source_tile vocabulary is not this frame's; re-run "
-            f"with a geometric tile_join."
+            f"with a geometric tile_join.",
+            reason=TILE_JOIN_REASON_DETECTION_SHORTFALL,
+            tile_join=tile_join,
+            n_booked=n_booked,
+            n_considered=n_considered,
+            diagnostics={"detections": _diagnostics(det_booking)},
         )
 
     # A *separate* failure, warned rather than raised because it is wider
@@ -2546,6 +2663,191 @@ def _diagnostics(assignment: dict[str, Any]) -> dict[str, Any]:
         key: value
         for key, value in assignment.items()
         if key not in ("tiles_with_point", "counts")
+    }
+
+
+def _vocabulary_census(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    *,
+    id_column: str = "source_tile",
+    n_sample: int = 3,
+) -> dict[str, Any]:
+    """Describe the two tile vocabularies a refusal is a disagreement between.
+
+    A tile-join refusal is not a numerical anomaly; it is the scorer
+    reporting that the detection set was named on one tiling and is being
+    scored against another. The only way a reader can act on that is to
+    see both vocabularies, so the refusal record carries a census of each:
+    how many distinct tile names, which map-sheet prefixes, and a few
+    literal names to eyeball. The measured case reads
+    ``K-35-052-4_32635_x0_y1152.png`` (a 192 px stride) against
+    ``K-35-052-4_32635_x0_y1008.png`` (a 336 px stride) — same sheet, same
+    naming scheme, different offsets, which is exactly why the mismatch
+    was invisible for a year.
+
+    Args:
+        gdf_det: The detections, whose ``id_column`` holds the recorded
+            tile name.
+        gdf_bounds: The scoring frame, whose ``tile_name`` column is the
+            vocabulary the detections are being joined against.
+        id_column: Column holding the recorded tile name.
+        n_sample: How many literal names to quote from each vocabulary.
+            Sorted, so the sample is deterministic.
+
+    Returns:
+        ``{"frame": {...}, "detections": {...}}``. Both sub-dicts carry
+        ``n_distinct_tile_names``, ``map_prefixes`` and
+        ``sample_tile_names``; the detection side adds
+        ``n_names_in_frame_vocabulary``, which is the count the shortfall
+        is a consequence of.
+
+    Example:
+        >>> census = _vocabulary_census(dets, bounds)  # doctest: +SKIP
+        >>> census["detections"]["n_names_in_frame_vocabulary"]  # doctest: +SKIP
+        7
+    """
+    frame_names = sorted({str(name) for name in gdf_bounds["tile_name"]})
+    if id_column in gdf_det.columns:
+        det_names = sorted({
+            str(name) for name in gdf_det[id_column].dropna()
+        })
+    else:
+        det_names = []
+    frame_set = set(frame_names)
+    return {
+        "frame": {
+            "n_tiles": int(len(gdf_bounds)),
+            "n_distinct_tile_names": len(frame_names),
+            "map_prefixes": sorted({get_map_name(n) for n in frame_names}),
+            "sample_tile_names": frame_names[:n_sample],
+        },
+        "detections": {
+            "n_detections": int(len(gdf_det)),
+            "id_column": id_column,
+            "id_column_present": id_column in gdf_det.columns,
+            "n_distinct_tile_names": len(det_names),
+            "n_names_in_frame_vocabulary": sum(
+                1 for n in det_names if n in frame_set
+            ),
+            "map_prefixes": sorted({get_map_name(n) for n in det_names}),
+            "sample_tile_names": det_names[:n_sample],
+        },
+    }
+
+
+def describe_tile_join_refusal(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    tile_join: str = TILE_JOIN_DEFAULT,
+) -> dict[str, Any] | None:
+    """Ask, before scoring, whether this frame's tile join is interpretable.
+
+    The invariant of § 3 of ``reports/tile-mcc-geometric-join-2026-09-12.md``
+    used to be discoverable only by tripping over it: a refused cell raised
+    inside :func:`bootstrap_ci` and took the entire evaluation with it, so
+    the cell's F1 — a quantity the refusal does not touch — could not be
+    written at all. The PI's ruling of 2026-09-13 is that such a cell
+    publishes its whole-frame F1 in full and withholds its per-tile
+    statistics. That requires asking the question *up front*, which is
+    what this function is for.
+
+    It performs exactly the assignment :func:`calculate_tile_classification`
+    performs — the same rule on detections, the containment rule on
+    references whenever the detection rule is ``id``, so the two axes of
+    the confusion are built the same way — and runs
+    :func:`check_tile_join_invariant` over the result. It computes no
+    metric and spends no bootstrap draw.
+
+    Args:
+        gdf_det: GeoDataFrame of detections.
+        gdf_ref: GeoDataFrame of reference mounds.
+        gdf_bounds: GeoDataFrame of the scoring frame's tile polygons.
+        tile_join: One of :data:`TILE_JOINS`; defaults to
+            :data:`TILE_JOIN_DEFAULT`.
+
+    Returns:
+        ``None`` when the join is sound and every per-tile quantity may be
+        computed. Otherwise a record of the refusal, ready to serialise
+        into an artefact:
+
+        ``withheld``
+            Always ``True``, so a consumer can test one key.
+        ``reason``
+            One of the ``TILE_JOIN_REASON_*`` constants.
+        ``detail``
+            The scorer's own human-readable refusal message.
+        ``tile_join`` / ``reference_join``
+            The rules that were in force on each axis.
+        ``shortfall``
+            ``n_booked``, ``n_inside_union``, ``n_outside_union``,
+            ``n_multi_tile`` and ``shortfall`` for whichever axis failed,
+            plus ``axis`` naming it.
+        ``vocabularies``
+            The two tile vocabularies (:func:`_vocabulary_census`).
+        ``withheld_quantities`` / ``reported_quantities``
+            :data:`TILE_JOIN_WITHHELD_QUANTITIES` and
+            :data:`TILE_JOIN_REPORTED_QUANTITIES`, so the artefact states
+            the boundary rather than leaving a reader to infer it.
+        ``tile_join_diagnostics``
+            The full per-axis diagnostics block.
+
+    Example:
+        >>> describe_tile_join_refusal(dets, refs, bounds) is None  # doctest: +SKIP
+        True
+    """
+    if len(gdf_bounds) == 0:
+        return None
+    reference_join = (
+        TILE_JOIN_GEOMETRIC_CONTAINS
+        if tile_join == TILE_JOIN_ID
+        else tile_join
+    )
+    det_assignment = assign_points_to_tiles(gdf_det, gdf_bounds, tile_join)
+    ref_assignment = assign_points_to_tiles(
+        gdf_ref, gdf_bounds, reference_join,
+    )
+    refusal = check_tile_join_invariant(det_assignment, ref_assignment)
+    if refusal is None:
+        return None
+
+    # Which axis failed decides which counts describe the shortfall. The
+    # reference axis can only fail under a rule that is not ``id``, but it
+    # is reported the same way when it does.
+    if refusal["reason"] == TILE_JOIN_REASON_REFERENCE_SHORTFALL:
+        axis, assignment = "references", ref_assignment
+    else:
+        axis, assignment = "detections", det_assignment
+
+    return {
+        "withheld": True,
+        "reason": refusal["reason"],
+        "detail": refusal["error"],
+        "tile_join": tile_join,
+        "reference_join": reference_join,
+        "shortfall": {
+            "axis": axis,
+            "n_booked": assignment.get("n_assigned", 0),
+            "n_inside_union": assignment.get("n_inside_union", 0),
+            "n_outside_union": assignment.get("n_outside_union", 0),
+            "n_multi_tile": assignment.get("n_multi_tile", 0),
+            "shortfall": (
+                assignment.get("n_inside_union", 0)
+                - assignment.get("n_assigned", 0)
+            ),
+        },
+        "vocabularies": _vocabulary_census(gdf_det, gdf_bounds),
+        "withheld_quantities": list(TILE_JOIN_WITHHELD_QUANTITIES),
+        "reported_quantities": list(TILE_JOIN_REPORTED_QUANTITIES),
+        "tile_join_diagnostics": refusal.get("tile_join_diagnostics"),
+        "ruling": (
+            "PI ruling 2026-09-13 (S153 ruling 6): the name-based 'id' "
+            "tile join is the published tile-MCC convention; a cell the "
+            "invariant refuses reports its whole-frame F1 in full and "
+            "withholds its per-tile statistics. See "
+            "reports/tile-mcc-geometric-join-2026-09-12.md."
+        ),
     }
 
 
