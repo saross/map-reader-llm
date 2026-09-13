@@ -63,6 +63,25 @@ they exist to answer — "is this current?" — is answered strictly better by
 The standard's scope table and its § "generated projections" paragraph were
 updated to say so, and the standard's own Changelog carries the before→after.
 
+**The guard caught a bug in itself, which is the best evidence it works.**
+`--check` blanks the source-commit stamp before comparing, because regenerating at
+a new HEAD must not read as drift when the projection is unchanged. The first
+`_neutralise` blanked the banner's "source commit `<hash>`" but missed § 10's table
+cell, "| Source commit | `<hash>` |", where the pipe and spaces break the
+contiguous *commit-then-backtick* match the regex needed. That is not cosmetic: the
+stamp is
+written by the commit that
+LANDS the reports, so from that moment HEAD has moved past it and an
+un-neutralised site never matches again. The guard would have fired on every run,
+for every report, for ever — reporting drift that did not exist and masking drift
+that did. It surfaced the first time the full tier-1 suite ran after the landing
+commit (`c4edf1328`), reporting all 39 reports stale while `--check` passed by hand
+minutes earlier. Fixed by neutralising both sites, with
+`test_drift_check_ignores_the_commit_stamp_everywhere` asserting each site is
+blanked and that a real content change is still visible. The reports themselves
+were not regenerated: their stamps correctly name the commit they were projected
+at, and churning 39 files for one token would have been the wrong fix.
+
 ### 2.3 Anti-confabulation, and the three places it bit
 
 Every figure in a report is read from a file named in that report's § 10. Three

@@ -929,14 +929,31 @@ def runs_to_project(corpus: Corpus) -> list[str]:
     return [rid for rid in corpus.registry if rid not in HAND_AUTHORED]
 
 
-def _neutralise(text: str) -> str:
-    """Blank the source-commit stamp for drift comparison.
+#: Every place a report writes the source-commit stamp. ``--check`` blanks all of
+#: them before comparing, because regenerating at a new HEAD must not read as drift
+#: when the projection itself is unchanged — the same neutralisation the
+#: hypothesis-outcome table's ``--check`` uses.
+#:
+#: There are TWO sites, and missing one is not a cosmetic slip. The stamp is written
+#: by the commit that lands the reports, so from the moment that commit exists HEAD
+#: has moved past it and an un-neutralised site NEVER matches again: the guard fires
+#: on every run, for every report, for ever, reporting drift that does not exist and
+#: hiding drift that does. The first version of this function neutralised only
+#: ``source commit `…` `` in the banner and missed the § 10 table cell, where the
+#: pipe and spaces break the contiguous ``commit `` match — caught by the full
+#: tier-1 suite the first time it ran after the landing commit, which is the guard
+#: working on itself.
+_STAMP_PATTERNS: tuple[tuple[str, str], ...] = (
+    (r"source commit `[^`]+`", "source commit `X`"),          # the banner
+    (r"\| Source commit \| `[^`]+` \|", "| Source commit | `X` |"),  # § 10's table
+)
 
-    Regenerating at a new HEAD must not read as drift when the projection itself
-    is unchanged — the same neutralisation the hypothesis-outcome table's
-    ``--check`` uses.
-    """
-    return re.sub(r"commit `[^`]+`", "commit `X`", text)
+
+def _neutralise(text: str) -> str:
+    """Blank every source-commit stamp so only real content differences remain."""
+    for pattern, replacement in _STAMP_PATTERNS:
+        text = re.sub(pattern, replacement, text)
+    return text
 
 
 def main(argv: list[str] | None = None) -> int:

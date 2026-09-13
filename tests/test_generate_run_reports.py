@@ -43,6 +43,29 @@ def test_no_drift_in_committed_reports():
 
 
 @pytest.mark.tier1
+def test_drift_check_ignores_the_commit_stamp_everywhere(corpus):
+    """The guard must be blind to the stamp and to nothing else.
+
+    The stamp is written by the commit that lands the reports, so HEAD has moved
+    past it from that moment on. Any stamp site the neutralisation misses therefore
+    NEVER matches again — the guard would fire on every run for every report for
+    ever, reporting drift that does not exist and masking drift that does. That is
+    exactly what happened to the first version, which neutralised the banner and
+    missed § 10's table cell, where the pipe and spaces break a contiguous
+    ``commit `` match. Both sites are asserted, and a real content change is
+    asserted still to be visible.
+    """
+    a = grr.render_report("h13", corpus, "aaaaaaaaa")
+    b = grr.render_report("h13", corpus, "bbbbbbbbb")
+    assert a != b                                      # the stamp really differs
+    assert "| Source commit | `aaaaaaaaa` |" in a      # § 10's table cell
+    assert "source commit `aaaaaaaaa`" in a            # the banner
+    assert grr._neutralise(a) == grr._neutralise(b)    # and both are neutralised
+    assert grr._neutralise(a) != grr._neutralise(
+        a.replace("| Tile size (px) | 512 |", "| Tile size (px) | 384 |"))
+
+
+@pytest.mark.tier1
 def test_every_registered_run_has_a_report(corpus):
     """41 registered runs, 41 reports: 39 projected plus 2 hand-authored."""
     registry = json.loads(
