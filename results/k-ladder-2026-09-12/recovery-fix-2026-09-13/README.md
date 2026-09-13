@@ -1,6 +1,9 @@
 # Re-scoring the four cells the recovery-fragment fix touched
 
-> **Last revised**: 2026-09-13 (original publication). See
+> **Last revised**: 2026-09-13 (the K = 3 cell's `evaluation.json` is no
+> longer blocked and has been written — 0.8860 / 495 detections, per-tile
+> statistics withheld; `carry_probabilities.py` promoted to `scripts/`;
+> prior 2026-09-13: original publication). See
 > [§ Changelog](#changelog) for revision history.
 
 The recovery-fragment fix (`75d7c8d4cd55b6ec8d2a40abff70a31f62b67725`) rebuilt
@@ -73,7 +76,7 @@ that these two cells are untouched.
 | `f1-only/*.json` | per-buffer precision/recall/F1 for before and after, all 14 buffers, plus the deltas and the explicit withheld block |
 | `materialised/*.geojson` | the "after" detection sets, materialised at each cell's operating point |
 | `reproduced-k5-evaluation/` | the tier-E cell's full re-evaluation — **dict-identical** to the committed `evaluation.json` summary |
-| `harness/` | the six scripts that produced everything above, kept so the numbers are re-derivable |
+| `harness/` | the six scripts that produced everything above, kept so the numbers are re-derivable — one of the six has since been promoted to `scripts/` and one added (see below) |
 
 ### The harness
 
@@ -84,29 +87,36 @@ single-purpose to this fix. They are `ruff`-clean and documented.
 |---|---|
 | `compare_unions.py` | positional diff of a pre-fix union against its rebuilt counterpart, in EPSG:32635 |
 | `shift_hist.py` | the displacement census — how many matched candidates moved, and by how much |
-| `carry_probabilities.py` | re-keys a committed `probabilities.json` onto a rebuilt union's numbering, reports what is uncovered, and re-derives each candidate's integer crop window |
+| ~~`carry_probabilities.py`~~ → **`scripts/carry_probabilities.py`** | re-keys a committed `probabilities.json` onto a rebuilt union's numbering, reports what is uncovered, and re-derives each candidate's integer crop window. **Promoted 2026-09-13**; the copy that produced this directory's carries is archived at `archive/deprecated-scripts/carry_probabilities-recovery-fix-harness.py` |
 | `rescore_recovery_fixed.py` | the re-score driver; **imports** `argmax_at_headline`, `cell_dir_name` and `reassign_carrier_tiles` from the committed drivers rather than restating them |
 | `f1_only.py` | the F1 arm for cells the tile-join invariant refuses, scoring before and after in one process |
 | `add_board_note.py` | inserts the board note, refusing unless 16 signature paths are byte-equal |
+| `resolve_board_note_block.py` | **added 2026-09-13 (later)** — replaces that note's `blocked_artefact` claim with a `resolved` record once the K = 3 cell became scoreable, under the same 16-path signature guard |
 
-**`carry_probabilities.py` is the one worth promoting to `scripts/`** if another
-union is ever rebuilt — re-keying probabilities onto a new candidate numbering is a
-general need, and testing coverage on the integer crop window rather than on metric
-distance is the lesson of § 6.1 of the report. Left here for the PI to decide.
+**`carry_probabilities.py` was promoted to `scripts/` on 2026-09-13**, under
+checklist item 6a — re-keying probabilities onto a new candidate numbering is a
+general need whenever a union is rebuilt, and testing coverage on the integer crop
+window rather than on metric distance is the lesson of § 6.1 of the report. The
+matching and window logic are unchanged, so this directory's committed
+`carry_provenance.json` files remain reproducible (asserted by
+`tests/test_carry_probabilities.py`); the promoted copy adds an injectable window
+resolver, a `--dry-run` coverage census, and 13 tier-1 tests. The original is
+archived at `archive/deprecated-scripts/carry_probabilities-recovery-fix-harness.py`
+because it, not the promoted copy, produced the carries here.
 
 The pre-fix evaluations are snapshotted at
 `archive/superseded-consensus-2026-09-13/recovery-fragment-drop/evaluations-as-read-2026-09-13/`.
 
-## Why three cells have an F1 arm only, and what that blocks
+## Why three cells have an F1 arm only — and how that was unblocked
 
-`scripts/evaluate_detections.py` **cannot run at HEAD** for the three
-`gemini37-screen-2026-08-28` cells. The tile-join invariant
+**When this directory was written** `scripts/evaluate_detections.py` could not run
+at all for the three `gemini37-screen-2026-08-28` cells. The tile-join invariant
 (`lib_advanced_metrics.compute_per_tile_tp_fp_fn`) refuses their per-tile table —
 their proposer ran on the 192 px-stride `inputs/tiles_384_ov192` vocabulary, not
 the board frame's 336 px-stride one, so only ~21 of ~475 in-frame detections book
-to a frame tile. Because the F1 bootstrap resamples **tiles**, that refusal
-aborts the whole evaluation, not merely the tile-MCC block. Their committed
-evaluations predate the invariant (`7ba47b63b`).
+to a frame tile. Because the F1 bootstrap resamples **tiles**, the refusal raised
+inside `bootstrap_ci` and aborted the whole evaluation, not merely the tile-MCC
+block. Their committed evaluations predate the invariant (`7ba47b63b`).
 
 So this directory reports, for those three, exactly what the invariant permits and
 names what it does not:
@@ -119,17 +129,36 @@ names what it does not:
 This is consistent with the board, which already lists these three as
 `tiering.withheld_cells` and publishes only their whole-frame F1.
 
-**The consequence the PI needs to weigh.** `g37-text-k3-verified-opmax`'s F1 has
-genuinely moved, but its `evaluation.json` **cannot be regenerated** at HEAD, so
-its committed evaluation — and therefore
-`results/conditions-manifest.json`'s row, which carries `per_buffer["20"].f1 =
-0.8870` sourced from it — could not be refreshed by this job. Correcting that
-artefact is **blocked on the tile-join ruling** (`reports/tile-mcc-geometric-join-2026-09-12.md`,
-still carrying a STOP). Until then the committed 0.8870 is stale by −0.0010, and
-this document is the record of the true value.
+**Since then the scorer does the same thing itself.** Under checklist item 6a
+(`planning/documentation-foundation-checklist-2026-09-13.md`) the invariant was
+softened to match the PI's ruling of 2026-09-13 (S153 ruling 6): a refused cell
+**withholds** its per-tile table, tile confusion, tile-MCC and every bootstrap
+interval — recording the reason, the shortfall counts and both tile vocabularies
+in the evaluation JSON and Markdown — and **reports its whole-frame F1,
+precision and recall in full**. The withheld/reported split above is now the
+scorer's own behaviour rather than this harness's workaround, and `f1_only.py` is
+kept as the record of how these numbers were first obtained.
+
+**So the blocked artefact is written.** `g37-text-k3-verified-opmax` was
+re-scored on its recorded recipe from a clean tree, and
+`results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/`
+now reads F1@20 **0.8860**, precision 0.8323, recall 0.9471, **495** detections,
+with the tile block and every interval marked WITHHELD. `results/conditions-manifest.json`'s
+row matches and is no longer stale. Two figures that still read 0.8870 are
+correct as they stand and are the PI's to restate at the next board rebuild: the
+Era-2 board's `tiering.withheld_cells` row and its
+`re_sign_pending.proposed_outcome`, both signature-bearing.
+
+**The interval is withdrawn, not replaced.** The CI this cell used to carry on
+F1@20, [0.3684, 0.7732], was resampled from a per-tile table the invariant
+refuses. There is no interval for this cell on this frame, and the artefact says
+so rather than offering a substitute.
 
 The tier-E cell needed no update at all: its re-evaluation is dict-identical to
-what is committed, so the committed artefact is already correct.
+what is committed, so the committed artefact is already correct. That was
+re-confirmed under the softened invariant — its summary dict, CSV and Markdown all
+reproduce byte-identically — which is the regression that shows the change touches
+only refused cells.
 
 ## How to reproduce
 
@@ -152,6 +181,35 @@ Run on sapphire, 2026-09-13, in an isolated worktree at
 `~/worktrees/map-reader-llm/claude-unions`.
 
 ## Changelog
+
+### 2026-09-13 (later) — the blocked artefact written; the carry script promoted
+
+**Trigger**: checklist item 6a
+(`planning/documentation-foundation-checklist-2026-09-13.md`). This document's
+one open consequence — that `g37-text-k3-verified-opmax`'s `evaluation.json`
+could not be regenerated, because the tile-join invariant aborted the whole
+evaluation of a refused cell — was removed by softening the invariant to match
+the PI's ruling of 2026-09-13 (S153 ruling 6): withhold the per-tile statistics,
+report the whole-frame F1 in full.
+
+| claim | before | after |
+|---|---|---|
+| the K = 3 cell's own `evaluation.json` | could not be regenerated | **written**: F1@20 0.8860, P 0.8323, R 0.9471, 495 detections |
+| its tile block and intervals | unwritable | **withheld**, with the reason, the shortfall counts and both vocabularies named |
+| `results/conditions-manifest.json` row | 0.8870 / 494, stale | **0.8860 / 495** |
+| the board's `withheld_cells` row and `proposed_outcome` | 0.8870 | **0.8870 — unchanged by design**, signature-bearing, the PI's to restate |
+| `carry_probabilities.py` | in `harness/`, "left here for the PI to decide" | **promoted** to `scripts/carry_probabilities.py` with 13 tier-1 tests |
+| the harness | six scripts | **seven** (`resolve_board_note_block.py` added) |
+
+**What did NOT change**: every number this document reports. The four cells'
+before → after F1, the operating points, the tie counts, the frame agreements,
+the 5 m movements, the verifier calls and the US$0.002784 are all as published.
+The three other cells' live artefacts were not rewritten. Tier E's dict-identical
+re-evaluation was re-confirmed under the softened invariant — summary, CSV and
+Markdown all byte-identical — which is the regression showing the change reaches
+refused cells only. The promoted carry script's matching and window logic are
+unchanged, so this directory's committed `carry_provenance.json` files remain
+reproducible, and `tests/test_carry_probabilities.py` asserts their counts.
 
 ### 2026-09-13 — Original publication
 
