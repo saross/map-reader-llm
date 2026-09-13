@@ -491,6 +491,46 @@ within-campaign **K = 1 versus K = 3** contrast, which P2 requires a test for
 in any case. Benjamini–Hochberg at q = 0.05 runs across those five, separately
 on MCC and on F1.
 
+### 10.5 What P1 actually requires, read off the comparators' confusion matrices
+
+Stated before any 55-map score exists, because it is the kind of reading that
+is worthless once the numbers are in.
+
+The deltas report already noted (§ 5) that on the Gold Standard the top-MCC
+image cells are "tight, high-specificity single-pass cells and their MCC rank
+is largely a precision artefact". The same mechanism is visible at deployment,
+in the four comparators' own committed tile confusion matrices — read from each
+cell's `evaluation.json` `summary.tile_classification.confusion` on 2026-09-13,
+over the same 8,541 tiles:
+
+| Cell | tp | fp | fn | tn | sens | spec | MCC |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `FOURTH-N1-oracle` | 2,473 | **45** | 1,056 | 4,967 | 0.7008 | **0.9910** | **0.7471** |
+| `ARM2-N3-oracle` | 2,534 | 198 | 995 | 4,814 | 0.7181 | 0.9605 | 0.7163 |
+| `ARM2-N5-oracle` | 2,502 | 178 | 1,027 | 4,834 | 0.7090 | 0.9645 | 0.7147 |
+| `IM-k3` | 2,486 | 178 | 1,043 | 4,834 | 0.7044 | 0.9645 | 0.7110 |
+
+Sensitivity and specificity are recomputed here from the committed counts (each
+row sums to 8,541); the engine's own rounded points agree — `IM-k3` reads
+0.704 / 0.965 on `results/metric-leaderboards/55map-mcc-tiering-r2.md`.
+
+The leader does **not** find more mound-bearing tiles than the field: its
+sensitivity, 0.7008, is the *lowest* of the four. Its whole advantage is
+false-positive tile suppression — 45 FP tiles against 178 for the two text
+cells and for the incumbent image campaign. So the target P1 has to clear is a
+specificity target, not a recall target, and there are only two routes to it:
+lift sensitivity well above 0.7181 — the field's best — while holding FP tiles
+near 180, or push FP tiles down towards 45. The second is what a tighter, higher-threshold image
+cell does, and it is the route the carried points — both at unanimity — are
+pointed at.
+
+This also sharpens the informative-failure reading the card already allows. If
+the K = 3 image cell lands at ≤ +0.01, the result is not "image does not
+transfer": it is that the 55-map MCC ceiling is being set by FP-tile
+suppression, which a K = 3 consensus at unanimity buys only so much of. Either
+way the campaign settles the modality question at deployment scale, which is
+what card § 6 says it is for.
+
 ## Changelog
 
 ### 2026-09-13 (steward hand-over) — § 10: two open questions closed, one new delta
@@ -506,6 +546,7 @@ instrument the rungs are scored on.
 | Q7, union builder | recommendation, unassented | **settled** — `stride55_prepare_and_union.py` + `emit_union_pass_provenance.py` sidecar |
 | Scoring engine | brief said `compute_corrected_f1_multi_buffer.py` | **`evaluate_detections.py`**, the r2 board's own recipe (§ 10.3) |
 | Five-test family | four comparators named, fifth unwritten | **declared** — four external + the K = 1 vs K = 3 contrast (§ 10.4) |
+| P1's required mechanism | "the image MCC advantage transfers" | **a specificity target** — the leader has the field's LOWEST sensitivity (§ 10.5) |
 | Spend committed | US$1.15 | **US$1.15** — nothing new spent for this revision |
 
 **What did NOT change**: pass 1 is still in flight and passes 2–3 are still
