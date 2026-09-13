@@ -141,6 +141,14 @@ RUNGS = (1, 3)
 GS_VERIFIER = (
     PROJECT_ROOT / "outputs/gemini37-image-gs-2026-09-01/verifier/g384_ov192_g37img"
 )
+#: The committed r2 board, and the pair whose permutation result gate 4
+#: reproduces. This pair is chosen because its committed p-value is 0.1208
+#: rather than 0.0: a saturated verdict would pass even with a broken null.
+COMMITTED_BOARD = Path(
+    "results/55map-final-board-r2-2026-09-06/final_board_50m.json"
+)
+PAIRWISE_GATE_PAIR = ("ARM2-N5-oracle", "ARM2-N3-oracle")
+
 GS_CALIBRATION = {
     "arm1": {"verify": "verify_k3_arm1", "point": (0.10, 3), "n": 444},
     "arm2": {"verify": "verify_k3_arm2", "point": (0.88, 3), "n": 433},
@@ -706,6 +714,36 @@ def stage_selftest() -> int:
                     comp.label, got_conf, want_conf, "OK" if conf_ok else "FAIL")
         if not conf_ok:
             failures.append(f"confusion {comp.label}: {got_conf} != {want_conf}")
+
+    # Gate 4 — the paired F1 test itself reproduces a committed pairwise result.
+    # The pair chosen is the board's only non-degenerate one among the
+    # comparators (p = 0.1208, not 0.0), so the null distribution is actually
+    # being compared, not just a saturated verdict.
+    board = json.loads((PROJECT_ROOT / COMMITTED_BOARD).read_text())
+    want = next(
+        (p for p in board["pairwise"]
+         if {p["a"], p["b"]} == set(PAIRWISE_GATE_PAIR)), None)
+    if want is None:
+        failures.append(f"no committed pairwise record for {PAIRWISE_GATE_PAIR}")
+    else:
+        cells = {c.label: c for c in COMPARATORS}
+        arrays = {}
+        for label in (want["a"], want["b"]):
+            det = read_detections(PROJECT_ROOT / cells[label].detections)
+            arrays[label] = per_tile_arrays(det, ref, bounds, tile_index)
+        a_tp, a_fp, a_fn = arrays[want["a"]]
+        b_tp, b_fp, b_fn = arrays[want["b"]]
+        got = permutation_test_float(a_tp, a_fp, a_fn, b_tp, b_fp, b_fn,
+                                     n_permutations=N_PERMS, seed=SEED)
+        for key, tol in (("observed_diff", 1e-4), ("p_value", 1e-9),
+                         ("null_mean", 1e-4), ("null_std", 1e-4)):
+            ok = abs(got[key] - want[key]) <= tol
+            logger.info("gate 4 perm  %-18s %s: %s vs committed %s — %s",
+                        f"{want['a']}|{want['b']}", key, got[key], want[key],
+                        "OK" if ok else "FAIL")
+            if not ok:
+                failures.append(
+                    f"permutation {key}: {got[key]} != {want[key]}")
 
     if failures:
         for f in failures:
