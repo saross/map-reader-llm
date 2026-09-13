@@ -46,6 +46,7 @@ from scripts.lib_llm_metadata import (  # noqa: E402
 )
 from scripts.run_pv import (  # noqa: E402
     _cleanup_configuration_gate,
+    _save_probabilities_incremental,
     _write_verification_outputs,
     cmd_cleanup,
 )
@@ -477,8 +478,87 @@ class TestNoCleanupRegression:
         assert (stage / "run.meta.pre-cleanup-1.json").exists()
 
 
+class TestCleanupHistoryCarry:
+    """``cleanup_history`` in ``probabilities.json`` survives a later pass.
+
+    Both writers of the results file rebuild it from scratch, so a resume
+    used to erase the record of every cleanup the stage had had. The fourth
+    cell's stage holds a 29-item meta and no history left to explain it,
+    which is why that overwrite cannot even be attributed to a subcommand.
+    """
+
+    def _write(
+        self,
+        stage: Path,
+        *,
+        pass_kind: str = "resume",
+    ) -> dict[str, Any]:
+        """Write verification outputs into *stage* and return the results file."""
+        _write_verification_outputs(
+            parsed_results={"candidate_00000": {"mound_probability": 0.7}},
+            manifest={"candidates": [{"candidate_id": 0}]},
+            config=_make_config(),
+            output_dir=stage,
+            iterations=1,
+            mode="realtime",
+            metadata_tracker=None,
+            model_name="gemini-3.7-flash",
+            strict=False,
+            pass_kind=pass_kind,
+        )
+        return json.loads((stage / "probabilities.json").read_text())
+
+    def test_history_is_carried_forward(self, tmp_path: Path) -> None:
+        """A pass over a stage with history preserves every entry."""
+        stage = tmp_path / "verified"
+        self._write(stage)
+        probs = json.loads((stage / "probabilities.json").read_text())
+        probs["cleanup_history"] = [
+            {"initial_missing": 13, "recovered": 13, "still_missing": 0},
+        ]
+        with open(stage / "probabilities.json", "w") as f:
+            json.dump(probs, f)
+
+        rewritten = self._write(stage, pass_kind="cleanup")
+        assert rewritten["cleanup_history"] == probs["cleanup_history"]
+
+    def test_no_history_key_is_added_when_there_is_none(
+        self, tmp_path: Path,
+    ) -> None:
+        """A first pass's results file keeps its original key set."""
+        probs = self._write(tmp_path / "verified")
+        assert "cleanup_history" not in probs
+        assert list(probs) == [
+            "version",
+            "mode",
+            "verifier_config",
+            "iterations",
+            "total_results",
+            "results",
+        ]
+
+    def test_incremental_save_also_carries_history(
+        self, tmp_path: Path,
+    ) -> None:
+        """The mid-pass writer must not erase it either."""
+        stage = tmp_path / "verified"
+        stage.mkdir()
+        history = [{"initial_missing": 2, "recovered": 2}]
+        with open(stage / "probabilities.json", "w") as f:
+            json.dump({"results": {}, "cleanup_history": history}, f)
+        _save_probabilities_incremental(
+            {"candidate_00000": {"mound_probability": 0.1}},
+            stage,
+            "verify-adversarial-text-v1",
+            "realtime",
+            1,
+        )
+        probs = json.loads((stage / "probabilities.json").read_text())
+        assert probs["cleanup_history"] == history
+
+
 # ─────────────────────────────────────────────────────────────────────
-# 4. The configuration gate
+# 5. The configuration gate
 # ─────────────────────────────────────────────────────────────────────
 
 

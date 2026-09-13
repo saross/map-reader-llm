@@ -1143,6 +1143,34 @@ def _log_cleanup_failures_to_meta(
     )
 
 
+def _carry_cleanup_history(prob_path: Path) -> list[Any]:
+    """Read the ``cleanup_history`` an existing results file already holds.
+
+    Both writers of ``probabilities.json`` rebuild the file from scratch, so
+    the history has to be carried forward explicitly or a later pass erases
+    it. It is the record of every cleanup a stage has had, and
+    ``scripts/audit_verifier_completeness.py`` reads it to surface residual
+    gaps; the fourth cell's stage holds a 29-item meta with no history left
+    to explain it.
+
+    Args:
+        prob_path: Path to the existing ``probabilities.json``, which need
+            not exist.
+
+    Returns:
+        The recorded history, or an empty list when there is none or the
+        file cannot be read.
+    """
+    if not prob_path.exists():
+        return []
+    try:
+        with open(prob_path) as handle:
+            history = json.load(handle).get("cleanup_history")
+    except (json.JSONDecodeError, OSError, AttributeError):
+        return []
+    return history if isinstance(history, list) else []
+
+
 def _save_probabilities_incremental(
     results: dict[str, dict],
     output_dir: Path,
@@ -1156,6 +1184,10 @@ def _save_probabilities_incremental(
     killed mid-write. Called periodically from the ``as_completed()``
     loop so that partial results survive process termination.
 
+    Any ``cleanup_history`` already in the file is carried forward — this
+    writer rebuilds the file from scratch and runs mid-pass, so without the
+    carry a resume erases the record of every cleanup the stage has had.
+
     Args:
         results: Current results dict (candidate keys → result dicts).
         output_dir: Directory to write probabilities.json.
@@ -1163,7 +1195,8 @@ def _save_probabilities_incremental(
         mode: Execution mode (``"realtime"`` or ``"batch"``).
         iterations: Number of verifier iterations per candidate.
     """
-    probs = {
+    out_path = output_dir / "probabilities.json"
+    probs: dict[str, Any] = {
         "version": "1.0",
         "mode": mode,
         "verifier_config": config_version,
@@ -1171,7 +1204,9 @@ def _save_probabilities_incremental(
         "total_results": len(results),
         "results": results,
     }
-    out_path = output_dir / "probabilities.json"
+    carried_history = _carry_cleanup_history(out_path)
+    if carried_history:
+        probs["cleanup_history"] = carried_history
     tmp_path = out_path.with_suffix(".json.tmp")
     with open(tmp_path, "w") as f:
         json.dump(probs, f)
@@ -1517,17 +1552,26 @@ def _write_verification_outputs(
         strict=strict,
     )
 
-    # Probabilities
+    # Probabilities. Any ``cleanup_history`` an earlier cleanup wrote is
+    # carried forward: this writer rebuilds the file from scratch, so
+    # without the carry a later resume ERASES the record of every cleanup
+    # the stage has had — which is how the fourth cell's stage came to hold
+    # a 29-item meta with no history explaining it, and what
+    # ``audit_verifier_completeness.py`` reads to surface residual gaps.
     prob_path = output_dir / "probabilities.json"
+    carried_history = _carry_cleanup_history(prob_path)
+    payload: dict[str, Any] = {
+        "version": "1.0",
+        "mode": mode,
+        "verifier_config": config.get("version", "unknown"),
+        "iterations": iterations,
+        "total_results": len(parsed_results),
+        "results": parsed_results,
+    }
+    if carried_history:
+        payload["cleanup_history"] = carried_history
     with open(prob_path, "w") as f:
-        json.dump({
-            "version": "1.0",
-            "mode": mode,
-            "verifier_config": config.get("version", "unknown"),
-            "iterations": iterations,
-            "total_results": len(parsed_results),
-            "results": parsed_results,
-        }, f, indent=2)
+        json.dump(payload, f, indent=2)
     logger.info("Probabilities written: %s", prob_path)
 
     # Consensus aggregation (if multiple iterations)
