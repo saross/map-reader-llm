@@ -531,6 +531,42 @@ suppression, which a K = 3 consensus at unanimity buys only so much of. Either
 way the campaign settles the modality question at deployment scale, which is
 what card § 6 says it is for.
 
+### 10.6 The difference-in-differences, pre-specified from the text arms
+
+Card § 2 says the two verifier arms "mirror the 3.7 text 2×2
+(`gemini37-55map-grid-2026-08-31`) so the modality difference-in-differences
+exists at deployment". The text side of that 2×2 is already committed on the r2
+board, and writing it down now fixes what the contrast will be computed against
+— read from `results/55map-final-board-r2-2026-09-06/final_board_50m.json` on
+2026-09-13:
+
+| Rung | Text arm 1 (Gemini 3 verifier) | Text arm 2 (3.7 verifier) | verifier effect, arm 2 − arm 1 |
+|---|---|---|---|
+| K = 1 | `ARM1-N1-oracle` F1 0.8413 / MCC 0.7246 | `ARM2-N1-oracle` F1 0.8610 / MCC 0.7422 | F1 **+0.0197**, MCC **+0.0176** |
+| K = 3 | `ARM1-N3-oracle` F1 0.8705 / MCC 0.7179 | `ARM2-N3-oracle` F1 0.8848 / MCC 0.7163 | F1 **+0.0143**, MCC **−0.0016** |
+| K = 5 | `ARM1-N5-oracle` F1 0.8727 / MCC 0.7147 | `ARM2-N5-oracle` F1 0.8871 / MCC 0.7147 | F1 **+0.0144**, MCC **0.0000** |
+
+The difference-in-differences is therefore, per rung and per metric,
+(image arm 2 − image arm 1) − (text arm 2 − text arm 1), computed at matched K
+on the same 8,541-tile frame. At K = 3 the text baseline for the verifier seat
+is **−0.0016 MCC**, which is what P4's "arm 2 beats arm 1 on MCC by ≥ +0.01"
+has to be read against: on text, at this rung, the 3.7 verifier seat buys F1
+and nothing at all on MCC.
+
+**Two priors this table supplies, both stated before the image numbers exist.**
+
+- **P2 already holds on every committed deployment ladder.** Tile-MCC falls
+  monotonically with K while F1 rises, on all three: text arm 1 (0.7246 →
+  0.7179 → 0.7147), text arm 2 (0.7422 → 0.7163 → 0.7147), and the fourth cell
+  (`FOURTH-N1` 0.7471 → `FOURTH-N3` 0.7376 → `FOURTH-N10` 0.7359, F1 0.8352 →
+  0.8747 → 0.8813). P2 is thus a low-risk prediction, and its interest is in
+  the size of the K = 1 → K = 3 MCC drop for an image pool, not its sign.
+- **P1's comparator is the K = 1 corner of a ladder whose K = 3 rung it beats
+  by 0.0095.** `FOURTH-N1-oracle` 0.7471 leads `FOURTH-N3-oracle` 0.7376. A
+  K = 3 image cell is being asked to beat a K = 1 cell by ≥ 0.02 on a metric
+  that every ladder says K = 3 pays a penalty on — which is the tension § 10.5
+  describes from the confusion-matrix side, seen from the K axis.
+
 ## Changelog
 
 ### 2026-09-13 (steward hand-over) — § 10: two open questions closed, one new delta
