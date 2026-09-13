@@ -1,8 +1,11 @@
 # Post-run report — Gemini 3.7 image at 55-map scale, K = 3
 
-> **Last revised**: 2026-09-13 (original publication — the run is **IN FLIGHT**;
-> this is a launch-state and handover record, not a completed post-run report).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-13 (steward hand-over — the resume path in § 4 now
+> names the two drivers that replace its ad-hoc commands, records the corrected
+> scoring instrument, and § 6 lists what is built and gated ahead of the data;
+> the run is still **IN FLIGHT** at pass 1 of 3, so this remains a launch-state
+> and handover record, not a completed post-run report). See
+> [§ Changelog](#changelog) for revision history.
 
 Card: `planning/gemini37-image-55map-2026-09-13.md`. Deltas and blocker status:
 `reports/gemini37-image-55map-deltas-2026-09-13.md`. Pre-launch audit:
@@ -84,37 +87,57 @@ before spending anything further.
 WORKERS=150 nohup bash scripts/gemini37-image-55map-driver.sh 2 3 \
     >> outputs/gemini37-image-55map-2026-09-13/driver.nohup 2>&1 &
 
-# 3. Unions. See the open question in the deltas report § 7 (B2) FIRST:
-#    stride55 gives text-arm comparability, merge_passes --sweep gives
-#    pass_provenance, and no single builder gives both.
-.venv/bin/python scripts/stride55_prepare_and_union.py \
-    --root outputs/gemini37-image-55map-2026-09-13 \
-    --cell g384_ov192_55map_g37img \
-    --manifest inputs/stride-55map-2026-08-25/g384_ov192_55map_manifest.json \
-    --k 1 --write
-#    ... and again with --k 3.
+# 3. Coverage gate, both unions, both provenance sidecars, crops, and the
+#    four verifier arms — one idempotent driver. Question Q7 is SETTLED
+#    (deltas § 10.2): the stride builder, for text-arm comparability, with
+#    the pass_provenance block emitted as a sidecar over the same resolved
+#    fragment set. A finished arm is skipped on a resumed run, so this never
+#    re-spends.
+WORKERS=50 nohup bash scripts/gemini37-image-55map-unions-and-arms.sh \
+    >> outputs/gemini37-image-55map-2026-09-13/arms.nohup 2>&1 &
 
-# 4. Crops, then the four verifier arms (K = 1 and K = 3, each under both
-#    arms), on the pattern the GS calibration leg used:
-.venv/bin/python scripts/run_pv.py extract \
-    --proposer <union>.geojson --output-dir <crops-dir> \
-    --tiles-dir inputs/tiles_384_ov192_55maps --padding 75
-.venv/bin/python scripts/run_pv.py verify \
-    --crops-dir <crops-dir> \
-    --verifier-config prompts/configs/verify_adversarial-text.json \
-    --output-dir <verify-dir> --mode realtime \
-    --model gemini-3-flash-preview --thinking-level minimal \
-    --temperature 0.0 --service-tier flex --workers 50
-#    arm 2: --model gemini-3.7-flash --thinking-level low
+# 4. Sweeps, materialisation, scoring, and the five-test family. Run the
+#    gates FIRST — they reproduce all four comparators' committed F1 and tile
+#    confusion through this campaign's own code path, and passed on
+#    2026-09-13 before any 55-map data existed.
+.venv/bin/python scripts/gemini37_image_55map_r2.py --stage selftest
+.venv/bin/python scripts/gemini37_image_55map_r2.py --stage sweep --workers 12
+.venv/bin/python scripts/gemini37_image_55map_r2.py --stage materialise
+#    COMMIT the materialised detections here: the engine's
+#    --require-clean-inputs exits 4 on an untracked input.
+.venv/bin/python scripts/gemini37_image_55map_r2.py --stage score \
+    --workers 5 --jobs 4
+.venv/bin/python scripts/gemini37_image_55map_r2.py --stage tests
 ```
 
-Scoring then follows the 55-map board's recipe under
-`results/55map-final-board-r2-2026-09-06/` — reference r2 at 50 m with the
-corrected-F1 engine and tile-MCC on 8,541 tiles, at the carried points above
-and at each rung's oracle — and the paired tile-swap (10,000 draws, seed 42) on
-MCC and F1 against `FOURTH-N1-oracle` (MCC 0.7471, F1 0.8352), `ARM2-N3-oracle`
-(0.7163 / 0.8848), `ARM2-N5-oracle` (0.7147 / 0.8871) and `IM-k3` (0.7110 /
-0.8008), Benjamini–Hochberg within that five-test family.
+**The scoring instrument, corrected.** Scoring is
+`scripts/evaluate_detections.py` against
+`inputs/vectors/references/best-available-gt-55maps-r2.geojson` over
+`inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson` — 14 buffers,
+bootstrap 10,000, seed 42, `--mcc`, `--require-clean-inputs` — which is the r2
+board's own stage-2 recipe, NOT the canonical Track-2 corrected-F1 engine. The
+two are different references and different matching chains, and every
+prediction P1–P5 is a difference against a cell on the r2 board, so the
+Track-2 engine would have made each one a cross-instrument comparison and the
+paired tile-swap incoherent. Reasoning and anchors:
+`reports/gemini37-image-55map-deltas-2026-09-13.md` § 10.3. The recipe is
+pinned by a tier-1 test against a committed board cell's own `cli_args`.
+
+Cells are scored at the carried points above **and** at each rung's oracle,
+where the sweep records both an F1 oracle (the board's convention) and an MCC
+oracle (this campaign's primary metric). The paired tile-swap runs at 10,000
+draws, seed 42, on tile-MCC and on micro-F1 @ 50 m, against `FOURTH-N1-oracle`
+(MCC 0.7471, F1 0.8352), `ARM2-N3-oracle` (0.7163 / 0.8848), `ARM2-N5-oracle`
+(0.7147 / 0.8871) and `IM-k3` (0.7110 / 0.8008), plus the within-campaign
+K = 1 versus K = 3 contrast that P2 requires — the five-test family declared in
+the deltas report § 10.4 before any score existed. Benjamini–Hochberg at
+q = 0.05 runs across those five, separately per metric.
+
+`IM-k3`'s detection set is **not** under its evaluation directory: the MCC
+tiering scored `outputs/55maps-image-generalisation/verified/verified_detections.geojson`
+in place, and that file — not the board's re-serialised `IM-oracle` copy, which
+has the same 4,680 features but a different CRS and property names — is the one
+its committed confusion matrix belongs to.
 
 **Do not** re-tier the 55-map board or the tile-MCC tiering, and touch no
 signed row.
@@ -131,8 +154,57 @@ signed row.
 - `.pre-merge-backup/` holds the twelve calibration artefacts as first
   generated, before the byte-identical committed versions were checked out over
   them (md5 parity verified both ways). Archived, not deleted.
+- Second sapphire worktree `~/worktrees/map-reader-llm/claude-steward`, added
+  2026-09-13 (detached, `.venv` and `.env` symlinked): everything that is not
+  the campaign's own state runs there, so the campaign worktree is never
+  fast-forwarded or otherwise disturbed while a pass is writing. The mechanism
+  gates and the tier-1 suite ran there.
+
+## 6. What is built and gated, ahead of the data
+
+Recorded because the campaign outlasts a session and the expensive failure mode
+is discovering a broken instrument after the API spend, not before.
+
+| Piece | State | Evidence |
+|---|---|---|
+| Union builder ruling (Q7) | settled | deltas § 10.2 |
+| `scripts/emit_union_pass_provenance.py` | landed, 7 tier-1 tests | schema `consensus-pass-provenance/1` |
+| `scripts/gemini37-image-55map-unions-and-arms.sh` | landed | coverage gate, idempotent arms |
+| `scripts/gemini37_image_55map_r2.py` | landed, 13 tier-1 tests | four stages |
+| Materialiser identity gate | **PASS** | reproduces the calibration leg's 444 and 433 |
+| F1 mechanism gate | **PASS** | all four comparators' committed F1 @ 50 m to 1e-4 |
+| MCC mechanism gate | **PASS** | all four comparators' committed tile confusion, exactly |
+| Cost auditor, in this session's hands | **validated** | reproduces the GS leg's US$22.5004 / 0.00322 / 0.7948 |
+| Tier-1 suite on sapphire | **2,516 passed**, 4 skipped, 27 deselected, 3 xfailed | `claude-steward`, 193 s |
 
 ## Changelog
+
+### 2026-09-13 (steward hand-over) — resume path rebuilt, instrument corrected
+
+**Trigger**: the campaign acquired a named owner for passes 2–3 onward
+(question Q5 of the deltas report), and the resume path as published named
+ad-hoc commands plus an unresolved open question where it now needs two
+reviewed drivers and a settled ruling.
+
+| Claim | Before | After |
+|---|---|---|
+| Union builder | "open question … no single builder gives both" | **settled** — stride builder + provenance sidecar (deltas § 10.2) |
+| Resume steps 3–4 | ad-hoc command fragments | two drivers, both idempotent |
+| Scoring engine | "the corrected-F1 engine" | **`evaluate_detections.py`** on the r2 board's recipe (deltas § 10.3) |
+| Test family | four comparators | **five**, the fifth declared (deltas § 10.4) |
+| `IM-k3` detection set | unstated | named, with the `IM-oracle` near-miss recorded |
+| Gates ahead of the data | none run | **three PASS** + cost auditor validated (§ 6) |
+| Tier-1 on sapphire | 2,496 passed | **2,516 passed** (20 new tests) |
+
+**Numerical claims that moved**: none of the campaign's own. The carried
+operating points, the calibration leg's US$1.1221, the 622-candidate GS union
+and the ≈ US$1.15 committed total are unchanged; no 55-map number exists yet.
+
+**What did NOT change**: pass 1 is still in flight and passes 2–3 unlaunched,
+so both pass-1 gates remain PENDING, both unions and all four verifier arms
+remain unbuilt, and P1–P5 remain UNTESTED. No board, no tiering, no signed row,
+no configuration and no committed union was touched. Nothing on sapphire's main
+checkout was written.
 
 ### 2026-09-13 — Original publication
 
