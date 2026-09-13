@@ -320,7 +320,9 @@ python3 -m pytest tests/test_generate_run_reports.py \
 ### 2026-09-13 — Original publication (Session 153)
 
 Written with Batch 1 items 1 and 2 of
-`planning/documentation-foundation-checklist-2026-09-13.md`. Landed across three
-commits: `f4fd90c71` (verifier instrument corrections), `e88fd5bfa` (annotations
-and manifest rebuild), `c4edf1328` (the 39 generated reports, the two banners and
-the standard's scope-table update).
+`planning/documentation-foundation-checklist-2026-09-13.md`. Landed across five
+commits on `worktree-agent-ac61dfb2fc08e0949`: `f4fd90c71` (verifier instrument
+corrections), `e88fd5bfa` (annotations and manifest rebuild), `c4edf1328` (the 39
+generated reports, the two banners and the standard's scope-table update),
+`cca28cc5c` (the token double-count disclosure, this report and the checklist
+tick), `840e0d401` (the drift guard's own commit-stamp bug).
