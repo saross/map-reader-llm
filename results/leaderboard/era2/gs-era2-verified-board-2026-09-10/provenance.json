@@ -4,26 +4,44 @@
  "frame": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
  "frame_id": "era2-b-487",
  "re_sign_pending": {
-  "status": "RE-SIGNED 2026-09-12T06:04:30Z by the PI (S153)",
-  "reason": "PI ruling R3 (2026-09-12): K = 1 admitted, so the board grew from 79 cells to 103 — the twenty single-pass proposer-verifier cells, the three K = 3 archived sweep optima promoted from off-board, and the September recovery pair of pv-high-text-t0.0-n3. Re-tiered and the MCB recomputed last. Tier 1 and its five members are unchanged.",
-  "signed_outcome": "1845/3081 pairs significant at BH q = 0.05, 7 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 28. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 39/39; G6 max |delta| 0.0078.",
-  "proposed_outcome": "3651/5253 pairs significant at BH q = 0.05, 12 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 49. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 60/60; G6 max |delta| 0.0078.",
-  "signed_n_conditions_compared": 79,
-  "proposed_n_conditions_compared": 103,
-  "tiering_membership_source": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering-input/run-analyses.json — the register's row was NOT amended; see scripts/build_board_tiering_input.py",
+  "status": "PENDING \u2014 the PI re-signs",
+  "reason": "PI ruling 2026-09-13 (morning), item 1: the 46 Phase 2 rungs and the 4 tier E rungs of the K-ladder review are admitted by route (a) \u2014 a k-ladder/membership.json the builder defers to by condition id before its frame and scope rules \u2014 so the board grew from 103 cells to 153 admitted. Three of the admitted cells (the Gemini 3.7 gold-standard text rungs) are WITHHELD from every statistic because the tile-join invariant refuses their per-tile table on this frame, so 150 cells are tiered. Re-tiered and the MCB recomputed last. Tier 1 and its five members are unchanged.",
+  "signed_outcome": "3651/5253 pairs significant at BH q = 0.05, 12 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 49. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 60/60; G6 max |delta| 0.0078. [AMENDED 2026-09-12, S153: 79 -> 103 cells \u2014 the twenty single-pass (K = 1) proposer-verifier cells admitted under PI ruling R3, three K = 3 archived sweep optima promoted from off-board, and the September recovery pair pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax; re-tiered, MCB recomputed last; Tier 1, its order and its F1 unchanged; the archived-count fix of reports/name-keyed-cache-audit-2026-09-12.md fix 3 landed in the same rebuild. Signed text at 2026-09-10: '1845/3081 pairs significant at BH q = 0.05, 7 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 28. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 39/39; G6 max |delta| 0.0078.']",
+  "proposed_outcome": "150 of 153 admitted cells tiered; 3 WITHHELD (the tile-join invariant refuses their per-tile table on this frame, so they are ranked and tested nowhere and only their whole-frame F1 is quoted: g37-text-k1-verified-carried-p0.10-k1 F1@20 0.8338; g37-text-k1-verified-opmax F1@20 0.8495; g37-text-k3-verified-opmax F1@20 0.8870). 7961/11175 pairs significant at BH q = 0.05, 14 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 65. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 110/110; G6 max |delta| 0.0078.",
+  "signed_n_conditions_compared": 103,
+  "proposed_n_conditions_compared": 153,
+  "tiering_membership_source": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering-input/run-analyses.json \u2014 the register's row was NOT amended; see scripts/build_board_tiering_input.py",
   "untouched_fields": [
    "manually_verified_at",
    "_signature_note",
    "conditions_compared",
    "outcome",
    "gates.G1.pi_ruling"
-  ]
+  ],
+  "previous_resolved": {
+   "status": "RE-SIGNED 2026-09-12T06:04:30Z by the PI (S153)",
+   "reason": "PI ruling R3 (2026-09-12): K = 1 admitted, so the board grew from 79 cells to 103 \u2014 the twenty single-pass proposer-verifier cells, the three K = 3 archived sweep optima promoted from off-board, and the September recovery pair of pv-high-text-t0.0-n3. Re-tiered and the MCB recomputed last. Tier 1 and its five members are unchanged.",
+   "signed_outcome": "1845/3081 pairs significant at BH q = 0.05, 7 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 28. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 39/39; G6 max |delta| 0.0078.",
+   "proposed_outcome": "3651/5253 pairs significant at BH q = 0.05, 12 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 49. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 60/60; G6 max |delta| 0.0078.",
+   "signed_n_conditions_compared": 79,
+   "proposed_n_conditions_compared": 103,
+   "tiering_membership_source": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering-input/run-analyses.json \u2014 the register's row was NOT amended; see scripts/build_board_tiering_input.py",
+   "untouched_fields": [
+    "manually_verified_at",
+    "_signature_note",
+    "conditions_compared",
+    "outcome",
+    "gates.G1.pi_ruling"
+   ]
+  }
  },
  "frame_provenance": "inputs/vectors/bounds/384/era2_b_intersection_bounds.provenance.json",
  "membership": {
-  "n": 103,
-  "rule": "card § 3 under the § 2 frame rule; see membership.json",
+  "n": 153,
+  "rule": "card \u00a7 3 under the \u00a7 2 frame rule; see membership.json",
   "n_era2b": 60,
+  "n_k_ladder": 50,
+  "k_ladder": "admitted by results/leaderboard/era2/gs-era2-verified-board-2026-09-10/k-ladder/membership.json (PI ruling 2026-09-13, route (a)): already scored on the board frame, so admitted with those evaluations as-is and under their own condition ids",
   "n_opmax": 43,
   "opmax": "the archived Era-2 PV board's sweep-optimal cells (opmax/membership.json)"
  },
@@ -192,7 +210,7 @@
      }
     ],
     "tiers_changed": "tiers 5 and 6 (the bottom of the image block) re-cut: archived 6 + 4 cells, rebuilt 9 + 1; tiers 1-4 identical member-for-member",
-    "reading": "43 of 44 cells reproduce F1@20 exactly and 945 of 946 pairs keep their verdict; one image PV cell moves +0.0015 F1 under the current evaluator (builder git 005e6c71 on 2026-08-20 vs be01df377 today), enough to lift one BH-adjusted p across 0.05 and merge the two bottom image tiers. Instrument drift in the RETIRED builder on one archived input; the new board is scored and tiered by the register-driven chain, whose reproduction gate is G2. Publication decision (card § 6: nothing published unless all gates pass) is the PI's."
+    "reading": "43 of 44 cells reproduce F1@20 exactly and 945 of 946 pairs keep their verdict; one image PV cell moves +0.0015 F1 under the current evaluator (builder git 005e6c71 on 2026-08-20 vs be01df377 today), enough to lift one BH-adjusted p across 0.05 and merge the two bottom image tiers. Instrument drift in the RETIRED builder on one archived input; the new board is scored and tiered by the register-driven chain, whose reproduction gate is G2. Publication decision (card \u00a7 6: nothing published unless all gates pass) is the PI's."
    },
    "verdict": "FAIL as specified (archived inputs are not, for one cell, the inputs the archived board scored); PASS from the inputs actually scored (confirmatory rebuild 817de06a0: 44/44, 946/946, tiers identical); no evaluator drift - see bisect",
    "bisect": {
@@ -257,7 +275,7 @@
     "evaluator_drift": "none on this input: 15 commits touched the evaluator chain between 005e6c71 and HEAD (evaluate_detections.py, lib_advanced_metrics.py, lib_detection_paths.py, build_tiered_leaderboard.py); GT and both bounds blobs identical at 005e6c71 and HEAD; the archived numbers reproduce to 4 dp today",
     "mechanism": "stale label-keyed evaluation cache (wrong-source cache): the archived board's score for this cell was computed from a 372-feature blob that its own archived input no longer is; the class of feedback_feature_count_crosscheck (cache n_detections 372 != archived feature count 373)",
     "date_correction": "the original reading's '005e6c71 on 2026-08-20' was wrong: 005e6c71 is dated 2026-05-06; 2026-08-20 is b69d8af4b, the archive move",
-    "reading": "G1's premise (archived inputs = the inputs the archived board scored) is false for one cell. From the blob it actually scored, the archived board reproduces 44 of 44 under today's evaluator; the retired builder has not drifted. The +0.0015, the one BH flip and the Tier 5-6 re-cut are what the archived board WOULD have shown on 2026-05-06 had its cache been invalidated. Publication ruling remains the PI's under card § 6.",
+    "reading": "G1's premise (archived inputs = the inputs the archived board scored) is false for one cell. From the blob it actually scored, the archived board reproduces 44 of 44 under today's evaluator; the retired builder has not drifted. The +0.0015, the one BH flip and the Tier 5-6 re-cut are what the archived board WOULD have shown on 2026-05-06 had its cache been invalidated. Publication ruling remains the PI's under card \u00a7 6.",
     "sidecar": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g1-bisect-rescore.json",
     "script": "scripts/g1_drift_bisect_rescore.py",
     "confirmatory_rebuild": {
@@ -298,20 +316,52 @@
   },
   "G2_G3_G4_G6": {
    "board_id": "gs-era2-verified-board-2026-09-10",
-   "checked_at_utc": "2026-09-12T01:03:26+00:00",
+   "checked_at_utc": "2026-09-13T00:22:00+00:00",
+   "n_k_ladder_identity_cells": 50,
    "G2_reproduction_failures": 0,
    "G3_frame_failures": 0,
-   "G4_cells": 60,
-   "G4_members": 60,
+   "G4_cells": 110,
+   "G4_members": 110,
    "G4_ok": true,
    "missing": 0,
    "passed": true
   }
  },
  "tiering": {
-  "n_pairs": 5253,
-  "n_significant": 3651,
-  "n_tiers": 12,
+  "n_pairs": 11175,
+  "n_significant": 7961,
+  "n_tiers": 14,
+  "n_cells_tiered": 150,
+  "n_cells_withheld": 3,
+  "withheld_cells": [
+   {
+    "ref": "gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1",
+    "label": "g37-text-k1-verified-carried-p0.10-k1",
+    "eval_f1": 0.8338,
+    "recorded_mcc": 0.1422,
+    "arm": "per-tile F1 (and therefore MCC)",
+    "reason": "per-tile TP/FP/FN table refused: 22 of 526 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 504. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join."
+   },
+   {
+    "ref": "gemini37-screen-2026-08-28::g37-text-k1-verified-opmax",
+    "label": "g37-text-k1-verified-opmax",
+    "eval_f1": 0.8495,
+    "recorded_mcc": 0.1337,
+    "arm": "per-tile F1 (and therefore MCC)",
+    "reason": "per-tile TP/FP/FN table refused: 21 of 475 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 454. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join."
+   },
+   {
+    "ref": "gemini37-screen-2026-08-28::g37-text-k3-verified-opmax",
+    "label": "g37-text-k3-verified-opmax",
+    "eval_f1": 0.887,
+    "recorded_mcc": 0.1337,
+    "arm": "per-tile F1 (and therefore MCC)",
+    "reason": "per-tile TP/FP/FN table refused: 20 of 467 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 447. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join."
+   }
+  ],
+  "mcc_withheld": [],
+  "n_mcc_withheld": 0,
+  "mcc_permutation": null,
   "tie_set": [
    "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
@@ -330,6 +380,8 @@
    "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b",
    "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
    "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b",
+   "pv-diag-384::verified-adv-pro-text-flash-vf-3of5-era2b",
+   "pv-diag-384::verified-adv-pro-text-medium-vf-3of5-era2b",
    "pv-diag-384::verified-adv-pro-text-pro-vf-3of5-era2b",
    "pv-diag-384::verified-adv-text-4of5-era2b",
    "pv-diag-384::verified-adv-text-6of10-era2b",
@@ -349,6 +401,20 @@
    "verifier-robustness::verified-384-union-t0-0-n5-era2b",
    "verifier-t-pilot::verified-t0-0-era2b",
    "verifier-t-pilot::verified-t0-5-era2b",
+   "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+   "grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1",
+   "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+   "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+   "pv-diag-384::pv-high-text-t0.3-n3-opmax",
+   "pv-diag-384::pv-high-text-t0.7-n3-opmax",
+   "pv-diag-384::pv-high-text-t1.0-n3-opmax",
+   "pv-diag-384::pv-min-text-t0.3-n1-opmax",
+   "pv-diag-384::pv-min-text-t0.3-n3-carried-p0.15-k3",
+   "pv-diag-384::pv-min-text-t0.3-n3-opmax",
+   "pv-diag-384::pv-min-text-t0.7-n1-opmax",
+   "pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3",
+   "pv-diag-384::pv-min-text-t0.7-n3-opmax",
+   "pv-diag-384::pv-min-text-t1.0-n3-opmax",
    "pv-diag-384::pv-high-text-t0.3-n5-opmax",
    "pv-diag-384::session-78-text-comparative-opmax",
    "pv-diag-384::session-78-text-adversarial-opmax",
@@ -370,24 +436,26 @@
    "pv-diag-384::session-78-text-adversarial-text-opmax",
    "pv-diag-384::session-78-text-brief-text-opmax"
   ],
-  "mcb_two_sided_band_n": 55,
-  "git_commit": "f31e7470e",
-  "generated_at_utc": "2026-09-12T01:23:36.138692+00:00"
+  "mcb_two_sided_band_n": 70,
+  "git_commit": "35d56402a",
+  "generated_at_utc": "2026-09-13T02:00:51.643814+00:00"
  },
- "finalised_at_utc": "2026-09-12T01:30:17+00:00",
+ "finalised_at_utc": "2026-09-13T02:06:07+00:00",
  "signed_at": "2026-09-12T06:04:30Z",
- "_carried_forward": {
-  "fields": [
-   "signed_at",
-   "gates.G1.pi_ruling"
-  ],
-  "why": "no gate artefact records these, so finalise carries them from the previous provenance.json rather than rebuilding them away; they are the PI's and only the PI sets them"
- },
  "signature_history": [
   {
    "signed_at": "2026-09-10T12:34:56Z",
    "n_conditions_compared": 79,
    "note": "original signature; text preserved in the register row"
   }
- ]
+ ],
+ "_carried_forward": {
+  "fields": [
+   "signed_at",
+   "signature_history",
+   "re_sign_pending (resolved, nested as previous_resolved)",
+   "gates.G1.pi_ruling"
+  ],
+  "why": "no gate artefact records these, so finalise carries them from the previous provenance.json rather than rebuilding them away; they are the PI's and only the PI sets them"
+ }
 }

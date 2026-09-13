@@ -1,8 +1,8 @@
 # The GS Era-2 verified board on one frame — `gs-era2-verified-board-2026-09-10`
 
-> **Last revised**: 2026-09-12 (PI ruling R3: K = 1 admitted, 79 → 103 cells, re-tiered and the MCB recomputed last — Tier 1 and its five members unchanged; **the board's analysis row is NOT amended and the board awaits the PI's re-signature**, `provenance.json` → `re_sign_pending`. Prior: 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10 later still, nine `-opmax` cells re-materialised and re-tiered; later, the symmetry fix 39 → 79 cells; earlier that day, original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-13 (PI ruling 2026-09-13, item 1: the 46 Phase 2 rungs and the 4 tier E rungs of the K-ladder review admitted by route (a) — a `k-ladder/membership.json` the builder defers to by condition id — so 103 → **153 cells admitted**, of which **150 tiered** and **3 withheld** by the tile-join invariant; re-tiered and the MCB recomputed last; **Tier 1 and its five members unchanged**. The board's analysis row is again NOT amended and the board **awaits the PI's re-signature**, `provenance.json` → `re_sign_pending`; the resolved S153 block is preserved inside it as `previous_resolved`. Deltas: `reports/k-ladder-admission-deltas-2026-09-13.md`. Prior: 2026-09-12, PI ruling R3 — K = 1 admitted, 79 → 103 cells, re-signed 2026-09-12T06:04:30Z; 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10 later still, nine `-opmax` cells re-materialised and re-tiered; later, the symmetry fix 39 → 79 cells; earlier that day, original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
 
-103 cells; 3651/5253 pairs significant; 12 tiers; tie set 5; MCB admissible 49.
+**153 cells admitted**, of which **150 are tiered** and **3 withheld** (listed below the table); 7961/11175 pairs significant; 14 tiers; tie set 5; MCB admissible 65 of 150. 50 cell(s) admitted by `k-ladder/membership.json` with their board-frame evaluations as-is (PI ruling 2026-09-13).
 
 | rank | cell | tier | MCB | F1@20 (board frame) | committed F1@20 | Δ frame | tile-MCC |
 |---:|---|---:|:---:|---:|---:|---:|---:|
@@ -14,105 +14,246 @@
 | 6 | `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5` | 2 | ● | 0.9066 | 0.9139 | -0.0073 | 0.7651 |
 | 7 | `grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10` | 2 | ● | 0.9062 | 0.9140 | -0.0078 | 0.8102 |
 | 8 | `verifier-robustness::verified-384-16of30-t0-3-n5-opmax` | 2 | ● | 0.8951 | 0.8951 | +0.0000 | 0.7941 |
-| 9 | `pv-diag-384::verified-adv-text-consensus-16of30` | 2 | ● | 0.8902 | 0.8902 | +0.0000 | 0.7903 |
-| 10 | `grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10` | 2 | ● | 0.8886 | 0.8961 | -0.0075 | 0.7903 |
-| 11 | `pv-diag-384::pv-high-text-t0.3-n5-opmax` | 2 | ● | 0.8873 | 0.8873 | +0.0000 | 0.7805 |
-| 12 | `pv-diag-384::session-78-text-comparative-opmax` | 2 | ● | 0.8846 | 0.8846 | +0.0000 | 0.7947 |
-| 13 | `pv-diag-384::verified-adv-text-min-6of10` | 2 | ● | 0.8835 | 0.8835 | +0.0000 | 0.8068 |
-| 14 | `pv-diag-384::session-78-text-adversarial-opmax` | 2 | ● | 0.8833 | 0.8833 | +0.0000 | 0.7947 |
-| 15 | `pv-diag-384::pv-high-text-t1.0-n10-opmax` | 2 | ● | 0.8804 | 0.8804 | +0.0000 | 0.791 |
-| 16 | `pv-diag-384::verified-adv-text-pro-vf-4of5` | 2 | ● | 0.8792 | 0.8792 | +0.0000 | 0.7947 |
-| 17 | `pv-diag-384::verified-adv-text-min-true-3of5` | 2 | ● | 0.8784 | 0.8784 | +0.0000 | 0.7903 |
-| 18 | `pv-diag-384::verified-adv-text-t03-4of5` | 2 | ● | 0.8783 | 0.8783 | +0.0000 | 0.7834 |
-| 19 | `pv-diag-384::session-78-text-checklist-opmax` | 2 | ● | 0.8783 | 0.8783 | +0.0000 | 0.7759 |
-| 20 | `pv-diag-384::pv-min-text-t1.0-n10-opmax` | 2 | ● | 0.8781 | 0.8781 | +0.0000 | 0.7881 |
-| 21 | `pv-diag-384::pv-min-text-t0.3-n5-opmax` | 2 | ● | 0.8778 | 0.8778 | +0.0000 | 0.7735 |
-| 22 | `pv-diag-384::verified-adv-text-6of10` | 3 | ● | 0.8769 | 0.8769 | +0.0000 | 0.7903 |
-| 23 | `verifier-robustness::verified-384-ge3of5-t0-3-high-n5` | 3 | ● | 0.8764 | 0.8764 | +0.0000 | 0.789 |
-| 24 | `pv-diag-384::session-78-text-brief-opmax` | 3 | ● | 0.8762 | 0.8762 | +0.0000 | 0.7659 |
-| 25 | `pv-diag-384::pv-high-text-t0.7-n10-opmax` | 3 | ● | 0.8744 | 0.8744 | +0.0000 | 0.7641 |
-| 26 | `verifier-robustness::verified-384-ge3of5-t0-3-n5` | 3 | ● | 0.8739 | 0.8739 | +0.0000 | 0.7713 |
-| 27 | `verifier-robustness::verified-384-ge3of5-t0-7-high-n5` | 3 | ● | 0.8739 | 0.8739 | +0.0000 | 0.7927 |
-| 28 | `pv-diag-384::pv-min-text-t0.7-n5-opmax` | 3 | ● | 0.8739 | 0.8739 | +0.0000 | 0.7957 |
-| 29 | `pv-diag-384::pv-min-text-t0.3-n10-opmax` | 3 | ● | 0.8730 | 0.8730 | +0.0000 | 0.791 |
-| 30 | `pv-diag-384::pv-min-text-t0.7-n10-opmax` | 3 | ● | 0.8726 | 0.8726 | +0.0000 | 0.7768 |
-| 31 | `verifier-robustness::verified-384-union-t0-0-n5` | 3 | ● | 0.8722 | 0.8722 | +0.0000 | 0.7621 |
-| 32 | `pv-diag-384::pv-high-text-t0.3-n10-opmax` | 3 | ● | 0.8722 | 0.8722 | +0.0000 | 0.7872 |
-| 33 | `pv-diag-384::pv-min-text-t1.0-n5-opmax` | 3 | ● | 0.8714 | 0.8714 | +0.0000 | 0.7797 |
-| 34 | `verifier-robustness::verified-384-ge3of5-t0-7-n5` | 3 | ● | 0.8709 | 0.8709 | +0.0000 | 0.7713 |
-| 35 | `pv-diag-384::verified-adv-text-min-n30lineage-4of5` | 3 | ● | 0.8708 | 0.8708 | +0.0000 | 0.7873 |
-| 36 | `flash35-pv-2x2::f3prop-f35vf-6of10` | 3 | ● | 0.8689 | 0.8689 | +0.0000 | 0.7666 |
-| 37 | `pv-diag-384::pv-high-text-t1.0-n5-opmax` | 3 | ● | 0.8688 | 0.8688 | +0.0000 | 0.7857 |
-| 38 | `pv-diag-384::verified-adv-text-4of5` | 4 | ● | 0.8641 | 0.8641 | +0.0000 | 0.7693 |
-| 39 | `pv-diag-384::session-78-text-checklist-text-opmax` | 4 | ● | 0.8639 | 0.8639 | +0.0000 | 0.7561 |
-| 40 | `pv-diag-384::pv-high-text-t0.7-n5-opmax` | 4 | ● | 0.8634 | 0.8634 | +0.0000 | 0.7684 |
-| 41 | `pv-diag-384::pv-min-text-t0.0-n3-opmax` | 4 | ● | 0.8623 | 0.8623 | +0.0000 | 0.7834 |
-| 42 | `pv-diag-384::session-78-text-adversarial-text-opmax` | 4 | ● | 0.8603 | 0.8603 | +0.0000 | 0.7534 |
-| 43 | `verifier-t-pilot::verified-t0-5` | 4 | ● | 0.8561 | 0.8561 | +0.0000 | 0.7714 |
-| 44 | `pv-diag-384::verified-adv-text-medium-vf-4of5` | 4 | ● | 0.8545 | 0.8545 | +0.0000 | 0.7208 |
-| 45 | `pv-diag-384::verified-adv-text-high-vf-4of5` | 4 | ● | 0.8519 | 0.8519 | +0.0000 | 0.6992 |
-| 46 | `pv-diag-384::session-78-text-brief-text-opmax` | 4 | ● | 0.8519 | 0.8519 | +0.0000 | 0.7582 |
-| 47 | `pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax` | 4 | ● | 0.8508 | 0.8508 | +0.0000 | 0.7857 |
-| 48 | `verifier-t-pilot::verified-t0-0` | 4 | ● | 0.8507 | 0.8507 | +0.0000 | 0.7778 |
-| 49 | `pv-diag-384::verified-adv-pro-text-pro-vf-3of5` | 4 | ● | 0.8506 | 0.8506 | +0.0000 | 0.7302 |
-| 50 | `pv-diag-384::verified-adv-pro-text-medium-vf-3of5` | 4 |  | 0.8495 | 0.8495 | +0.0000 | 0.7302 |
-| 51 | `pv-diag-384::verified-adv-pro-text-flash-vf-3of5` | 4 |  | 0.8491 | 0.8491 | +0.0000 | 0.7302 |
-| 52 | `flash35-pv-2x2::f35prop-f3vf-4of10` | 4 |  | 0.8480 | 0.8480 | +0.0000 | 0.7675 |
-| 53 | `verifier-t-pilot::verified-t1-0` | 4 |  | 0.8422 | 0.8422 | +0.0000 | 0.7562 |
-| 54 | `flash35-pv-2x2::f35prop-f35vf-4of10` | 4 |  | 0.8362 | 0.8362 | +0.0000 | 0.7369 |
-| 55 | `image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9` | 4 |  | 0.8341 | 0.8412 | -0.0071 | 0.7927 |
-| 56 | `image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8` | 5 |  | 0.8263 | 0.8333 | -0.0070 | 0.7937 |
-| 57 | `pv-diag-384::verified-adv-text-baseline-pro-vf` | 5 |  | 0.8263 | 0.8263 | +0.0000 | 0.8328 |
-| 58 | `pv-diag-384::verified-adv-text-baseline-medium-vf` | 5 |  | 0.8244 | 0.8244 | +0.0000 | 0.8372 |
-| 59 | `pv-diag-384::pv-high-text-t0.0-n3-opmax` | 5 |  | 0.8234 | 0.8234 | +0.0000 | 0.775 |
-| 60 | `pv-diag-384::verified-adv-text-baseline` | 5 |  | 0.8142 | 0.8142 | +0.0000 | 0.8328 |
-| 61 | `pv-diag-384::verified-adv-image-min-6of10` | 5 |  | 0.7890 | 0.7890 | +0.0000 | 0.8032 |
-| 62 | `pv-diag-384::pv-min-image-t0.7-n10-opmax` | 5 |  | 0.7881 | 0.7881 | +0.0000 | 0.8223 |
-| 63 | `pv-diag-384::pv-high-image-t0.7-n5-opmax` | 5 |  | 0.7868 | 0.7868 | +0.0000 | 0.8359 |
-| 64 | `pv-diag-384::session-78-image-adversarial-opmax` | 5 |  | 0.7866 | 0.7866 | +0.0000 | 0.8306 |
-| 65 | `pv-diag-384::verified-adv-pro-text-baseline-pro-vf` | 5 |  | 0.7861 | 0.7861 | +0.0000 | 0.7908 |
-| 66 | `pv-diag-384::session-78-image-comparative-opmax` | 5 |  | 0.7857 | 0.7857 | +0.0000 | 0.8306 |
-| 67 | `pv-diag-384::session-78-image-checklist-text-opmax` | 5 |  | 0.7852 | 0.7852 | +0.0000 | 0.8217 |
-| 68 | `pv-diag-384::session-78-image-brief-opmax` | 5 |  | 0.7844 | 0.7844 | +0.0000 | 0.83 |
-| 69 | `pv-diag-384::verified-adv-pro-text-baseline-medium-vf` | 5 |  | 0.7842 | 0.7842 | +0.0000 | 0.7872 |
-| 70 | `pv-diag-384::session-78-image-checklist-opmax` | 5 |  | 0.7830 | 0.7830 | +0.0000 | 0.8172 |
-| 71 | `pv-diag-384::pv-min-image-t0.3-n10-opmax` | 6 |  | 0.7819 | 0.7819 | +0.0000 | 0.8377 |
-| 72 | `pv-diag-384::session-78-image-brief-text-opmax` | 6 |  | 0.7782 | 0.7782 | +0.0000 | 0.8199 |
-| 73 | `pv-diag-384::verified-adv-image-3of5` | 6 |  | 0.7778 | 0.7778 | +0.0000 | 0.8268 |
-| 74 | `pv-diag-384::pv-min-image-t0.3-n5-opmax` | 6 |  | 0.7767 | 0.7767 | +0.0000 | 0.8416 |
-| 75 | `pv-diag-384::pv-high-image-t0.7-n10-opmax` | 6 |  | 0.7765 | 0.7765 | +0.0000 | 0.798 |
-| 76 | `pv-diag-384::pv-min-image-t0.7-n5-opmax` | 6 |  | 0.7734 | 0.7734 | +0.0000 | 0.8383 |
-| 77 | `pv-diag-384::session-78-image-adversarial-text-opmax` | 6 |  | 0.7718 | 0.7718 | +0.0000 | 0.7973 |
-| 78 | `pv-diag-384::pv-high-image-t0.3-n10-opmax` | 6 |  | 0.7705 | 0.7705 | +0.0000 | 0.8294 |
-| 79 | `pv-diag-384::verified-adv-pro-text-baseline` | 6 |  | 0.7696 | 0.7696 | +0.0000 | 0.7823 |
-| 80 | `pv-diag-384::pv-scale4-optimal-n10-opmax` | 6 |  | 0.7683 | 0.7683 | +0.0000 | 0.8154 |
-| 81 | `pv-diag-384::verified-adv-image-min-3of5` | 6 |  | 0.7673 | 0.7673 | +0.0000 | 0.8461 |
-| 82 | `n1-outstanding-384::pv-n1-image-t0-n3-opmax` | 6 |  | 0.7673 | 0.7673 | +0.0000 | 0.8397 |
-| 83 | `pv-diag-384::pv-scale4-optimal-n5-opmax` | 6 |  | 0.7635 | 0.7635 | +0.0000 | 0.8306 |
-| 84 | `pv-diag-384::pv-high-image-t1.0-n10-opmax` | 6 |  | 0.7633 | 0.7633 | +0.0000 | 0.8002 |
-| 85 | `pv-diag-384::pv-high-image-t0.3-n5-opmax` | 6 |  | 0.7475 | 0.7475 | +0.0000 | 0.8049 |
-| 86 | `pv-diag-384::pv-min-image-t1.0-n10-opmax` | 7 |  | 0.7428 | 0.7428 | +0.0000 | 0.8078 |
-| 87 | `pv-diag-384::pv-min-image-t1.0-n5-opmax` | 7 |  | 0.7384 | 0.7384 | +0.0000 | 0.8021 |
-| 88 | `pv-diag-384::pv-high-image-t1.0-n5-opmax` | 7 |  | 0.7337 | 0.7337 | +0.0000 | 0.823 |
-| 89 | `pv-diag-384::verified-adv-image-baseline-pro-vf` | 7 |  | 0.7309 | 0.7309 | +0.0000 | 0.8887 |
-| 90 | `pv-diag-384::verified-adv-image-baseline-medium-vf` | 7 |  | 0.7300 | 0.7300 | +0.0000 | 0.8848 |
-| 91 | `pv-diag-384::verified-adv-image-baseline` | 8 |  | 0.7167 | 0.7167 | +0.0000 | 0.8766 |
-| 92 | `pv-diag-384::verified-adv-pro-image-pro-vf-3of5` | 8 |  | 0.7112 | 0.7112 | +0.0000 | 0.8499 |
-| 93 | `pv-diag-384::verified-adv-pro-image-baseline-medium-vf` | 9 |  | 0.6281 | 0.6281 | +0.0000 | 0.8328 |
-| 94 | `pv-diag-384::verified-adv-pro-image-baseline` | 9 |  | 0.6196 | 0.6196 | +0.0000 | 0.8232 |
-| 95 | `pv-diag-384::verified-adv-pro-image-baseline-pro-vf` | 10 |  | 0.6178 | 0.6178 | +0.0000 | 0.8328 |
-| 96 | `proposer-verifier-384::verified-checklist-image` | 10 |  | 0.5309 | 0.5309 | +0.0000 | 0.3873 |
-| 97 | `proposer-verifier-384::verified-checklist-text` | 11 |  | 0.5214 | 0.5214 | +0.0000 | 0.3154 |
-| 98 | `proposer-verifier-384::verified-brief-image` | 11 |  | 0.5204 | 0.5204 | +0.0000 | 0.3402 |
-| 99 | `proposer-verifier-384::verified-brief-text` | 11 |  | 0.5142 | 0.5142 | +0.0000 | 0.3953 |
-| 100 | `proposer-verifier-384::verified-cascade-adversarial-checklist` | 11 |  | 0.5036 | 0.5036 | +0.0000 | 0.4313 |
-| 101 | `proposer-verifier-384::verified-cascade-checklist-adversarial` | 11 |  | 0.4950 | 0.4950 | +0.0000 | 0.4121 |
-| 102 | `proposer-verifier-384::verified-adversarial-image` | 11 |  | 0.4943 | 0.4943 | +0.0000 | 0.416 |
-| 103 | `proposer-verifier-384::verified-adversarial-text` | 12 |  | 0.4708 | 0.4708 | +0.0000 | 0.4313 |
+| 9 | `grid-2026-08-18::g384-ov192-k5-verified-opmax` | 2 | ● | 0.8905 | 0.8905 | +0.0000 | 0.8139 |
+| 10 | `pv-diag-384::verified-adv-text-consensus-16of30` | 2 | ● | 0.8902 | 0.8902 | +0.0000 | 0.7903 |
+| 11 | `grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10` | 2 | ● | 0.8886 | 0.8961 | -0.0075 | 0.7903 |
+| 12 | `pv-diag-384::pv-high-text-t0.3-n5-opmax` | 2 | ● | 0.8873 | 0.8873 | +0.0000 | 0.7805 |
+| 13 | `pv-diag-384::session-78-text-comparative-opmax` | 2 | ● | 0.8846 | 0.8846 | +0.0000 | 0.7947 |
+| 14 | `grid-2026-08-18::g384-ov192-k3-verified-opmax` | 3 | ● | 0.8840 | 0.8840 | +0.0000 | 0.8167 |
+| 15 | `pv-diag-384::verified-adv-text-min-6of10` | 3 | ● | 0.8835 | 0.8835 | +0.0000 | 0.8068 |
+| 16 | `pv-diag-384::session-78-text-adversarial-opmax` | 3 | ● | 0.8833 | 0.8833 | +0.0000 | 0.7947 |
+| 17 | `pv-diag-384::pv-high-text-t1.0-n10-opmax` | 3 | ● | 0.8804 | 0.8804 | +0.0000 | 0.791 |
+| 18 | `pv-diag-384::verified-adv-text-pro-vf-4of5` | 3 | ● | 0.8792 | 0.8792 | +0.0000 | 0.7947 |
+| 19 | `pv-diag-384::verified-adv-text-min-true-3of5` | 3 | ● | 0.8784 | 0.8784 | +0.0000 | 0.7903 |
+| 20 | `pv-diag-384::verified-adv-text-t03-4of5` | 3 | ● | 0.8783 | 0.8783 | +0.0000 | 0.7834 |
+| 21 | `pv-diag-384::pv-high-text-t0.3-n3-opmax` | 3 | ● | 0.8783 | 0.8783 | +0.0000 | 0.8053 |
+| 22 | `pv-diag-384::session-78-text-checklist-opmax` | 3 | ● | 0.8783 | 0.8783 | +0.0000 | 0.7759 |
+| 23 | `pv-diag-384::pv-min-text-t1.0-n10-opmax` | 3 | ● | 0.8781 | 0.8781 | +0.0000 | 0.7881 |
+| 24 | `pv-diag-384::pv-min-text-t0.3-n5-opmax` | 3 | ● | 0.8778 | 0.8778 | +0.0000 | 0.7735 |
+| 25 | `pv-diag-384::verified-adv-text-6of10` | 3 | ● | 0.8769 | 0.8769 | +0.0000 | 0.7903 |
+| 26 | `verifier-robustness::verified-384-ge3of5-t0-3-high-n5` | 3 | ● | 0.8764 | 0.8764 | +0.0000 | 0.789 |
+| 27 | `pv-diag-384::session-78-text-brief-opmax` | 3 | ● | 0.8762 | 0.8762 | +0.0000 | 0.7659 |
+| 28 | `pv-diag-384::pv-high-text-t0.7-n10-opmax` | 3 | ● | 0.8744 | 0.8744 | +0.0000 | 0.7641 |
+| 29 | `verifier-robustness::verified-384-ge3of5-t0-3-n5` | 4 | ● | 0.8739 | 0.8739 | +0.0000 | 0.7713 |
+| 30 | `verifier-robustness::verified-384-ge3of5-t0-7-high-n5` | 4 | ● | 0.8739 | 0.8739 | +0.0000 | 0.7927 |
+| 31 | `pv-diag-384::pv-min-text-t0.7-n5-opmax` | 4 | ● | 0.8739 | 0.8739 | +0.0000 | 0.7957 |
+| 32 | `pv-diag-384::pv-min-text-t0.3-n10-opmax` | 4 | ● | 0.8730 | 0.8730 | +0.0000 | 0.791 |
+| 33 | `pv-diag-384::pv-min-text-t0.7-n10-opmax` | 4 | ● | 0.8726 | 0.8726 | +0.0000 | 0.7768 |
+| 34 | `pv-diag-384::pv-min-text-t0.7-n3-opmax` | 4 | ● | 0.8725 | 0.8725 | +0.0000 | 0.791 |
+| 35 | `verifier-robustness::verified-384-union-t0-0-n5` | 4 | ● | 0.8722 | 0.8722 | +0.0000 | 0.7621 |
+| 36 | `pv-diag-384::pv-high-text-t0.3-n10-opmax` | 4 | ● | 0.8722 | 0.8722 | +0.0000 | 0.7872 |
+| 37 | `pv-diag-384::pv-min-text-t1.0-n5-opmax` | 4 | ● | 0.8714 | 0.8714 | +0.0000 | 0.7797 |
+| 38 | `verifier-robustness::verified-384-ge3of5-t0-7-n5` | 4 | ● | 0.8709 | 0.8709 | +0.0000 | 0.7713 |
+| 39 | `pv-diag-384::verified-adv-text-min-n30lineage-4of5` | 4 | ● | 0.8708 | 0.8708 | +0.0000 | 0.7873 |
+| 40 | `pv-diag-384::pv-min-text-t0.3-n3-opmax` | 4 | ● | 0.8708 | 0.8708 | +0.0000 | 0.804 |
+| 41 | `flash35-pv-2x2::f3prop-f35vf-6of10` | 4 | ● | 0.8689 | 0.8689 | +0.0000 | 0.7666 |
+| 42 | `pv-diag-384::pv-high-text-t1.0-n5-opmax` | 4 | ● | 0.8688 | 0.8688 | +0.0000 | 0.7857 |
+| 43 | `pv-diag-384::pv-min-text-t1.0-n3-opmax` | 4 | ● | 0.8647 | 0.8647 | +0.0000 | 0.804 |
+| 44 | `pv-diag-384::verified-adv-text-4of5` | 5 | ● | 0.8641 | 0.8641 | +0.0000 | 0.7693 |
+| 45 | `pv-diag-384::session-78-text-checklist-text-opmax` | 5 | ● | 0.8639 | 0.8639 | +0.0000 | 0.7561 |
+| 46 | `pv-diag-384::pv-high-text-t0.7-n5-opmax` | 5 | ● | 0.8634 | 0.8634 | +0.0000 | 0.7684 |
+| 47 | `pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3` | 5 | ● | 0.8629 | 0.8629 | +0.0000 | 0.7665 |
+| 48 | `pv-diag-384::pv-min-text-t0.0-n3-opmax` | 5 | ● | 0.8623 | 0.8623 | +0.0000 | 0.7834 |
+| 49 | `pv-diag-384::session-78-text-adversarial-text-opmax` | 5 | ● | 0.8603 | 0.8603 | +0.0000 | 0.7534 |
+| 50 | `pv-diag-384::pv-min-text-t0.3-n3-carried-p0.15-k3` | 5 | ● | 0.8586 | 0.8586 | +0.0000 | 0.7556 |
+| 51 | `pv-diag-384::pv-min-text-t0.7-n1-opmax` | 5 | ● | 0.8575 | 0.8575 | +0.0000 | 0.7881 |
+| 52 | `verifier-t-pilot::verified-t0-5` | 5 | ● | 0.8561 | 0.8561 | +0.0000 | 0.7714 |
+| 53 | `pv-diag-384::pv-min-text-t0.3-n1-opmax` | 5 | ● | 0.8555 | 0.8555 | +0.0000 | 0.7986 |
+| 54 | `grid-2026-08-18::g384-ov192-k1-verified-opmax` | 5 | ● | 0.8546 | 0.8546 | +0.0000 | 0.8211 |
+| 55 | `pv-diag-384::verified-adv-text-medium-vf-4of5` | 5 | ● | 0.8545 | 0.8545 | +0.0000 | 0.7208 |
+| 56 | `pv-diag-384::pv-high-text-t1.0-n3-opmax` | 5 | ● | 0.8541 | 0.8541 | +0.0000 | 0.7986 |
+| 57 | `grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1` | 5 | ● | 0.8540 | 0.8540 | +0.0000 | 0.8079 |
+| 58 | `pv-diag-384::verified-adv-text-high-vf-4of5` | 5 | ● | 0.8519 | 0.8519 | +0.0000 | 0.6992 |
+| 59 | `pv-diag-384::session-78-text-brief-text-opmax` | 5 | ● | 0.8519 | 0.8519 | +0.0000 | 0.7582 |
+| 60 | `pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax` | 5 | ● | 0.8508 | 0.8508 | +0.0000 | 0.7857 |
+| 61 | `verifier-t-pilot::verified-t0-0` | 5 | ● | 0.8507 | 0.8507 | +0.0000 | 0.7778 |
+| 62 | `pv-diag-384::verified-adv-pro-text-pro-vf-3of5` | 5 | ● | 0.8506 | 0.8506 | +0.0000 | 0.7302 |
+| 63 | `pv-diag-384::verified-adv-pro-text-medium-vf-3of5` | 5 | ● | 0.8495 | 0.8495 | +0.0000 | 0.7302 |
+| 64 | `pv-diag-384::pv-high-text-t0.7-n3-opmax` | 5 | ● | 0.8492 | 0.8492 | +0.0000 | 0.7979 |
+| 65 | `pv-diag-384::verified-adv-pro-text-flash-vf-3of5` | 5 | ● | 0.8491 | 0.8491 | +0.0000 | 0.7302 |
+| 66 | `flash35-pv-2x2::f35prop-f3vf-4of10` | 5 |  | 0.8480 | 0.8480 | +0.0000 | 0.7675 |
+| 67 | `verifier-t-pilot::verified-t1-0` | 5 |  | 0.8422 | 0.8422 | +0.0000 | 0.7562 |
+| 68 | `pv-diag-384::pv-high-text-t0.7-n3-carried-p0.15-k3` | 6 |  | 0.8408 | 0.8408 | +0.0000 | 0.7762 |
+| 69 | `flash35-pv-2x2::f35prop-f35vf-4of10` | 6 |  | 0.8362 | 0.8362 | +0.0000 | 0.7369 |
+| 70 | `image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9` | 6 |  | 0.8341 | 0.8412 | -0.0071 | 0.7927 |
+| 71 | `pv-diag-384::pv-high-text-t0.3-n1-opmax` | 6 |  | 0.8314 | 0.8314 | +0.0000 | 0.8068 |
+| 72 | `pv-diag-384::pv-high-text-t0.3-n1-carried-p0.15-k1` | 6 |  | 0.8301 | 0.8301 | +0.0000 | 0.8022 |
+| 73 | `pv-diag-384::pv-min-text-t1.0-n3-carried-p0.15-k3` | 6 |  | 0.8279 | 0.8279 | +0.0000 | 0.7413 |
+| 74 | `image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8` | 6 |  | 0.8263 | 0.8333 | -0.0070 | 0.7937 |
+| 75 | `pv-diag-384::verified-adv-text-baseline-pro-vf` | 6 |  | 0.8263 | 0.8263 | +0.0000 | 0.8328 |
+| 76 | `pv-diag-384::verified-adv-text-baseline-medium-vf` | 6 |  | 0.8244 | 0.8244 | +0.0000 | 0.8372 |
+| 77 | `pv-diag-384::pv-min-text-t1.0-n1-opmax` | 6 |  | 0.8235 | 0.8235 | +0.0000 | 0.8095 |
+| 78 | `pv-diag-384::pv-high-text-t0.0-n3-opmax` | 6 |  | 0.8234 | 0.8234 | +0.0000 | 0.775 |
+| 79 | `pv-diag-384::pv-min-text-t1.0-n1-carried-p0.15-k1` | 6 |  | 0.8228 | 0.8228 | +0.0000 | 0.7961 |
+| 80 | `pv-diag-384::pv-high-text-t1.0-n3-carried-p0.15-k3` | 6 |  | 0.8220 | 0.8220 | +0.0000 | 0.7443 |
+| 81 | `pv-diag-384::verified-adv-text-baseline` | 6 |  | 0.8142 | 0.8142 | +0.0000 | 0.8328 |
+| 82 | `pv-diag-384::pv-high-text-t0.7-n1-opmax` | 7 |  | 0.8009 | 0.8009 | +0.0000 | 0.7737 |
+| 83 | `pv-diag-384::verified-adv-image-min-6of10` | 7 |  | 0.7890 | 0.7890 | +0.0000 | 0.8032 |
+| 84 | `pv-diag-384::pv-min-image-t0.7-n10-opmax` | 7 |  | 0.7881 | 0.7881 | +0.0000 | 0.8223 |
+| 85 | `pv-diag-384::pv-high-image-t0.7-n5-opmax` | 7 |  | 0.7868 | 0.7868 | +0.0000 | 0.8359 |
+| 86 | `pv-diag-384::session-78-image-adversarial-opmax` | 7 |  | 0.7866 | 0.7866 | +0.0000 | 0.8306 |
+| 87 | `pv-diag-384::verified-adv-pro-text-baseline-pro-vf` | 7 |  | 0.7861 | 0.7861 | +0.0000 | 0.7908 |
+| 88 | `pv-diag-384::session-78-image-comparative-opmax` | 7 |  | 0.7857 | 0.7857 | +0.0000 | 0.8306 |
+| 89 | `pv-diag-384::session-78-image-checklist-text-opmax` | 7 |  | 0.7852 | 0.7852 | +0.0000 | 0.8217 |
+| 90 | `pv-diag-384::session-78-image-brief-opmax` | 7 |  | 0.7844 | 0.7844 | +0.0000 | 0.83 |
+| 91 | `pv-diag-384::verified-adv-pro-text-baseline-medium-vf` | 7 |  | 0.7842 | 0.7842 | +0.0000 | 0.7872 |
+| 92 | `pv-diag-384::session-78-image-checklist-opmax` | 7 |  | 0.7830 | 0.7830 | +0.0000 | 0.8172 |
+| 93 | `pv-diag-384::pv-min-image-t0.3-n10-opmax` | 7 |  | 0.7819 | 0.7819 | +0.0000 | 0.8377 |
+| 94 | `pv-diag-384::pv-high-text-t1.0-n1-opmax` | 7 |  | 0.7810 | 0.7810 | +0.0000 | 0.8162 |
+| 95 | `pv-diag-384::pv-high-text-t1.0-n1-carried-p0.15-k1` | 7 |  | 0.7788 | 0.7788 | +0.0000 | 0.8071 |
+| 96 | `pv-diag-384::session-78-image-brief-text-opmax` | 7 |  | 0.7782 | 0.7782 | +0.0000 | 0.8199 |
+| 97 | `pv-diag-384::verified-adv-image-3of5` | 7 |  | 0.7778 | 0.7778 | +0.0000 | 0.8268 |
+| 98 | `pv-diag-384::pv-min-image-t0.3-n3-opmax` | 7 |  | 0.7774 | 0.7774 | +0.0000 | 0.8178 |
+| 99 | `pv-diag-384::pv-min-image-t0.3-n5-opmax` | 7 |  | 0.7767 | 0.7767 | +0.0000 | 0.8416 |
+| 100 | `pv-diag-384::pv-high-image-t0.7-n10-opmax` | 7 |  | 0.7765 | 0.7765 | +0.0000 | 0.798 |
+| 101 | `pv-diag-384::pv-min-image-t0.7-n5-opmax` | 7 |  | 0.7734 | 0.7734 | +0.0000 | 0.8383 |
+| 102 | `pv-diag-384::session-78-image-adversarial-text-opmax` | 8 |  | 0.7718 | 0.7718 | +0.0000 | 0.7973 |
+| 103 | `pv-diag-384::pv-high-image-t0.3-n10-opmax` | 8 |  | 0.7705 | 0.7705 | +0.0000 | 0.8294 |
+| 104 | `pv-diag-384::verified-adv-pro-text-baseline` | 8 |  | 0.7696 | 0.7696 | +0.0000 | 0.7823 |
+| 105 | `pv-diag-384::pv-scale4-optimal-n10-opmax` | 8 |  | 0.7683 | 0.7683 | +0.0000 | 0.8154 |
+| 106 | `pv-diag-384::pv-min-image-t0.3-n1-opmax` | 8 |  | 0.7680 | 0.7680 | +0.0000 | 0.8443 |
+| 107 | `pv-diag-384::verified-adv-image-min-3of5` | 8 |  | 0.7673 | 0.7673 | +0.0000 | 0.8461 |
+| 108 | `n1-outstanding-384::pv-n1-image-t0-n3-opmax` | 8 |  | 0.7673 | 0.7673 | +0.0000 | 0.8397 |
+| 109 | `pv-diag-384::pv-high-image-t0.7-n3-opmax` | 8 |  | 0.7666 | 0.7666 | +0.0000 | 0.8435 |
+| 110 | `pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1` | 8 |  | 0.7654 | 0.7654 | +0.0000 | 0.8475 |
+| 111 | `pv-diag-384::pv-scale4-optimal-n5-opmax` | 8 |  | 0.7635 | 0.7635 | +0.0000 | 0.8306 |
+| 112 | `pv-diag-384::pv-high-image-t1.0-n10-opmax` | 8 |  | 0.7633 | 0.7633 | +0.0000 | 0.8002 |
+| 113 | `pv-diag-384::pv-min-image-t0.7-n3-opmax` | 8 |  | 0.7599 | 0.7599 | +0.0000 | 0.8377 |
+| 114 | `pv-diag-384::pv-min-image-t0.7-n3-carried-p0.15-k3` | 8 |  | 0.7522 | 0.7522 | +0.0000 | 0.7994 |
+| 115 | `pv-diag-384::pv-high-image-t0.3-n5-opmax` | 8 |  | 0.7475 | 0.7475 | +0.0000 | 0.8049 |
+| 116 | `pv-diag-384::pv-min-image-t1.0-n10-opmax` | 8 |  | 0.7428 | 0.7428 | +0.0000 | 0.8078 |
+| 117 | `pv-diag-384::pv-min-image-t1.0-n5-opmax` | 8 |  | 0.7384 | 0.7384 | +0.0000 | 0.8021 |
+| 118 | `pv-diag-384::pv-high-image-t1.0-n5-opmax` | 9 |  | 0.7337 | 0.7337 | +0.0000 | 0.823 |
+| 119 | `pv-diag-384::verified-adv-image-baseline-pro-vf` | 9 |  | 0.7309 | 0.7309 | +0.0000 | 0.8887 |
+| 120 | `pv-diag-384::verified-adv-image-baseline-medium-vf` | 9 |  | 0.7300 | 0.7300 | +0.0000 | 0.8848 |
+| 121 | `pv-diag-384::pv-scale4-optimal-n3-opmax` | 9 |  | 0.7296 | 0.7296 | +0.0000 | 0.8443 |
+| 122 | `pv-diag-384::pv-min-image-t1.0-n3-opmax` | 9 |  | 0.7288 | 0.7288 | +0.0000 | 0.8178 |
+| 123 | `pv-diag-384::pv-min-image-t0.7-n1-opmax` | 9 |  | 0.7252 | 0.7252 | +0.0000 | 0.8437 |
+| 124 | `pv-diag-384::pv-high-image-t1.0-n3-opmax` | 9 |  | 0.7245 | 0.7245 | +0.0000 | 0.8294 |
+| 125 | `pv-diag-384::pv-high-image-t0.3-n3-opmax` | 9 |  | 0.7215 | 0.7215 | +0.0000 | 0.8237 |
+| 126 | `pv-diag-384::pv-high-image-t0.3-n3-carried-p0.15-k3` | 9 |  | 0.7207 | 0.7207 | +0.0000 | 0.7788 |
+| 127 | `pv-diag-384::verified-adv-image-baseline` | 10 |  | 0.7167 | 0.7167 | +0.0000 | 0.8766 |
+| 128 | `pv-diag-384::verified-adv-pro-image-pro-vf-3of5` | 10 |  | 0.7112 | 0.7112 | +0.0000 | 0.8499 |
+| 129 | `pv-diag-384::pv-high-image-t0.7-n3-carried-p0.15-k3` | 10 |  | 0.7046 | 0.7046 | +0.0000 | 0.7621 |
+| 130 | `pv-diag-384::pv-min-image-t1.0-n1-opmax` | 10 |  | 0.7044 | 0.7044 | +0.0000 | 0.836 |
+| 131 | `pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3` | 10 |  | 0.7019 | 0.7019 | +0.0000 | 0.7354 |
+| 132 | `pv-diag-384::pv-min-image-t1.0-n3-carried-p0.15-k3` | 10 |  | 0.7016 | 0.7016 | +0.0000 | 0.7629 |
+| 133 | `pv-diag-384::pv-high-image-t1.0-n3-carried-p0.15-k3` | 10 |  | 0.6955 | 0.6955 | +0.0000 | 0.7389 |
+| 134 | `pv-diag-384::pv-high-image-t0.3-n1-opmax` | 10 |  | 0.6925 | 0.6925 | +0.0000 | 0.827 |
+| 135 | `pv-diag-384::pv-high-image-t0.7-n1-opmax` | 10 |  | 0.6909 | 0.6909 | +0.0000 | 0.8435 |
+| 136 | `pv-diag-384::pv-scale4-optimal-n1-opmax` | 11 |  | 0.6376 | 0.6376 | +0.0000 | 0.8726 |
+| 137 | `pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1` | 11 |  | 0.6350 | 0.6350 | +0.0000 | 0.8599 |
+| 138 | `pv-diag-384::verified-adv-pro-image-baseline-medium-vf` | 11 |  | 0.6281 | 0.6281 | +0.0000 | 0.8328 |
+| 139 | `pv-diag-384::verified-adv-pro-image-baseline` | 11 |  | 0.6196 | 0.6196 | +0.0000 | 0.8232 |
+| 140 | `pv-diag-384::verified-adv-pro-image-baseline-pro-vf` | 12 |  | 0.6178 | 0.6178 | +0.0000 | 0.8328 |
+| 141 | `pv-diag-384::pv-high-image-t1.0-n1-opmax` | 12 |  | 0.6119 | 0.6119 | +0.0000 | 0.864 |
+| 142 | `pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1` | 12 |  | 0.6098 | 0.6098 | +0.0000 | 0.8601 |
+| 143 | `proposer-verifier-384::verified-checklist-image` | 12 |  | 0.5309 | 0.5309 | +0.0000 | 0.3873 |
+| 144 | `proposer-verifier-384::verified-checklist-text` | 13 |  | 0.5214 | 0.5214 | +0.0000 | 0.3154 |
+| 145 | `proposer-verifier-384::verified-brief-image` | 13 |  | 0.5204 | 0.5204 | +0.0000 | 0.3402 |
+| 146 | `proposer-verifier-384::verified-brief-text` | 13 |  | 0.5142 | 0.5142 | +0.0000 | 0.3953 |
+| 147 | `proposer-verifier-384::verified-cascade-adversarial-checklist` | 13 |  | 0.5036 | 0.5036 | +0.0000 | 0.4313 |
+| 148 | `proposer-verifier-384::verified-cascade-checklist-adversarial` | 13 |  | 0.4950 | 0.4950 | +0.0000 | 0.4121 |
+| 149 | `proposer-verifier-384::verified-adversarial-image` | 13 |  | 0.4943 | 0.4943 | +0.0000 | 0.416 |
+| 150 | `proposer-verifier-384::verified-adversarial-text` | 14 |  | 0.4708 | 0.4708 | +0.0000 | 0.4313 |
 
-Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the Era-2-frame reproduction of the archived board's score, or — for the nine re-materialised on 2026-09-10 — of the materialisation registry's registered point). Full pairwise table: `tiering_20m.json`; gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.
+**Admitted but WITHHELD** — the tile-join invariant refuses these cells' per-tile table on this frame (their `source_tile` vocabulary is not the frame's), so they are ranked nowhere above and enter no BH family and no admissible set. Their whole-frame F1 is unaffected by the tile join and is quoted for reference; their committed tile-MCC is the pre-invariant value and is NOT published. Admission is the PI's ruling of 2026-09-13; the withholding follows the same ruling's "withhold and list, never abort the board", and is lifted only by the corpus-wide tile-join decision (close-out question 4).
+
+| cell | F1@20 (whole frame) | committed tile-MCC (NOT published) | refusal |
+|---|---:|---:|---|
+| `g37-text-k1-verified-carried-p0.10-k1` | 0.8338 | 0.1422 | per-tile TP/FP/FN table refused: 22 of 526 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 504. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join. |
+| `g37-text-k1-verified-opmax` | 0.8495 | 0.1337 | per-tile TP/FP/FN table refused: 21 of 475 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 454. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join. |
+| `g37-text-k3-verified-opmax` | 0.8870 | 0.1337 | per-tile TP/FP/FN table refused: 20 of 467 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 447. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join. |
+
+Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the Era-2-frame reproduction of the archived board's score, or — for the nine re-materialised on 2026-09-10 — of the materialisation registry's registered point). For the K-ladder rows it is +0.0000 by construction: their committed evaluation IS the board-frame evaluation, so G2 is an identity rather than a reproduction. Full pairwise table: `tiering_20m.json`; gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.
 
 ## Changelog
+
+### 2026-09-13 — The K-ladder cohort admitted (PI ruling, route (a)): 103 → 153 cells admitted, 150 tiered; Tier 1 unchanged
+
+**Trigger**: the PI's ruling of 2026-09-13 (morning) on question 1 of
+`reports/k-ladder-closeout-deltas-2026-09-12.md` § 10 — **route (a)**: a third
+membership source this builder defers to by condition id, exactly as it already
+defers to `opmax/membership.json`. The cohort is the **46 Phase 2 rungs** and the
+**4 tier E rungs** of `planning/k-ladder-review-2026-09-11.md`, all 50 of which
+`derive_membership()` had refused on two rules that are correct for the rows they
+were written for but that refuse these cells **for already being on the board's
+own frame**.
+
+**The mechanism, and what it did not relax.**
+`k-ladder/membership.json` names the 50 ids with a reason each, derived from the
+register by `scripts/author_k_ladder_board_membership.py` (every verified
+condition whose committed `eval_path` is under `results/k-ladder-2026-09-12/` and
+whose `scope_override` names `era2-b-487`, with each evaluation opened and its
+bounds checked; 0 refused). The deferral is checked **before** the frame and
+`scope_override` rules, and **both rules still apply to every other row** — the
+exclusion list still records 160 refusals with their reasons, 60 of them the
+frame rule on this builder's own `-era2b` rows. **Nothing was re-scored** (these
+evaluations already carry the board frame, the curator reference, 14 buffers, a
+10,000-draw bootstrap, seed 42 and `--mcc`), and **no `-era2b` row was minted**:
+that suffix records a second scoring, there is none here, and two register rows
+must not claim one evaluation file — so the cohort joins under its own condition
+ids. G2 is therefore an identity and G6's delta is 0.0000 by construction for
+these 50 cells; G3 is still read off each file.
+
+| Quantity | before | after |
+|---|---:|---:|
+| Cells **admitted** | 103 | **153** |
+| Cells **tiered** | 103 | **150** |
+| Cells **withheld** | 0 | **3** |
+| — by builder source | 60 `-era2b` + 43 `-opmax` | **60 `-era2b` + 50 K-ladder + 43 `-opmax`** |
+| Pairs significant at BH q = 0.05 | 1,845 / 3,081 → 3,651 / 5,253 | **7,961 / 11,175** |
+| Tiers (count) | 12 | **14** |
+| Tier 1 (greedy clique) | the five 3.7/3.8 cells | **the same five, same order, same F1** |
+| Tie set | 5 | **5** |
+| Top cell | `g37-image-k5-verified-swap37-p0.90-k5` 0.9233 | **the same cell, 0.9233** |
+| Hsu MCB admissible set | 49 of 103 (w_upper 0.0736) | **65 of 150 (w_upper 0.0749)** |
+| Two-sided MCB band | 55 | **70** |
+| Gates | G2 0 / G3 0 / G4 60 + 43 | **G2 0 / G3 0 / G4 110 / 110** |
+| G6 max abs frame delta | 0.0078 | 0.0078 |
+
+**Three cells are admitted and WITHHELD, and this is not what the close-out
+predicted.** That report expected the three Gemini 3.7 gold-standard text rungs
+to abort the tiering through an uncaught `ConfusionGateError` on the MCC arm, so
+that catching it would leave their F1 intact with tile-MCC withheld. They in fact
+abort earlier, on the **F1** arm, in `compute_per_tile_tp_fp_fn`, with a plain
+`ValueError` stamped `tile_join_detection_shortfall` — `assign_source_tiles`
+preserves a non-null `source_tile` column instead of re-joining it to the frame,
+so a stale vocabulary reaches the booking step and 20–22 of 467–526 in-frame
+detections are credited to a tile. Their whole **per-tile table** is therefore
+unavailable on this frame: no permutation test, no BH family, no admissible set.
+Their whole-frame F1 is unaffected (F1 is scored map-scoped) and is quoted in the
+table below the ranking; their committed tile-MCC is the pre-invariant value and
+is **not** published. Measured across all 50 admitted cells, exactly these three
+refuse: the four tier E cells carry **no** `source_tile` and are joined
+geometrically from the frame, and the 43 `pv-diag-384` cells already speak the
+frame's vocabulary. Lifting the withholding needs the corpus-wide tile-join
+decision (close-out question 4, still open).
+
+**The MCB grew again, and again because the candidate set did.** 49 of 103 → 65
+of 150, upper width 0.0736 → 0.0749. The 2026-09-12 entry below explains the
+mechanism: a simultaneous band widened to cover more candidates admits more of
+them. The added cells here are a mixture rather than uniformly weak, so the width
+moved much less than it did when the twenty K = 1 cells joined.
+
+**Two instrument choices, recorded because a later reader will ask.** (1) The
+tiering was run **without** `--permute-mcc`, exactly as the committed 2026-09-12
+run was: the tile-MCC column here is read from each cell's evaluation, and adding
+an MCC permutation family to a signed board is a change the PI did not rule.
+(2) `finalise` now carries `signature_history` forward and nests the **resolved**
+`re_sign_pending` inside the fresh PENDING one — without that fix this rebuild
+would have destroyed the record of the board's original 2026-09-10 signature.
+The run's own output confirms it: "carried forward from the previous
+provenance.json: signed_at, signature_history, re_sign_pending (resolved, nested
+as previous_resolved), gates.G1.pi_ruling".
+
+**What did NOT change**: Tier 1 and its five members; the tie set; the top cell
+and its F1; every gate's verdict; G6's maximum frame delta; the frame, the
+reference, the instrument, the seed and the permutation count; and every
+signature field. No incumbent cell left the board and none changed its F1. The
+analysis row was not amended — the tiering and the MCB read their membership from
+`tiering-input/run-analyses.json` (153 ids) — so the board awaits the PI's
+re-signature.
 
 ### 2026-09-12 — K = 1 admitted (PI ruling R3): 79 → 103 cells; Tier 1 unchanged
 
