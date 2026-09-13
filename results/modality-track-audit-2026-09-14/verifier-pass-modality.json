@@ -1,0 +1,2218 @@
+{
+ "_README": "The register's verifier_passes[...].modality field under both candidate readings \u2014 the VERIFIER's own exemplar modality, and the TRACK (the proposer pool's modality) the stage belongs to. Reported, not resolved: the field's meaning is inconsistent across runs and settling it is the PI's.",
+ "n_stages": 186,
+ "n_matching_verifier_reading": 119,
+ "n_contradicting_verifier_reading": 55,
+ "n_matching_track_reading": 92,
+ "n_contradicting_track_reading": 8,
+ "stages": [
+  {
+   "run_id": "gold-standard-v2",
+   "stage": "verified-v1",
+   "recorded": "image",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": "text",
+   "matches_verifier_reading": null,
+   "matches_track_reading": false
+  },
+  {
+   "run_id": "e47-propose-brief",
+   "stage": "verified-flash-high-text-1of5-recovery-2026-09-08",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "e47-propose-brief",
+   "stage": "verified-flash-high-text-1of5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "e47-propose-brief",
+   "stage": "verified-text-baseline",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "n1-outstanding-384",
+   "stage": "image-t0-verified-v1-n3",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.0-verified-v1-n10",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.3-verified-v1-n10",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.3-verified-v1-n5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial"
+   ],
+   "verifier_reading": "image",
+   "track_reading": "image",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_brief"
+   ],
+   "verifier_reading": "image",
+   "track_reading": "image",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_brief-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_checklist"
+   ],
+   "verifier_reading": "image",
+   "track_reading": "image",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_checklist-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.7-session-78-matrix-verified-comparative",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_comparative"
+   ],
+   "verifier_reading": "image",
+   "track_reading": "image",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.7-verified-v1-n10",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.7-verified-v1-n5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t1.0-verified-v1-n10",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t1.0-verified-v1-n5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.0-verified-v1-n3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.3-verified-v1-n10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.3-verified-v1-n5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial"
+   ],
+   "verifier_reading": "image",
+   "track_reading": "text",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial-text",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_brief"
+   ],
+   "verifier_reading": "image",
+   "track_reading": "text",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief-text",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_brief-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_checklist"
+   ],
+   "verifier_reading": "image",
+   "track_reading": "text",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_checklist-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.7-session-78-matrix-verified-comparative",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_comparative"
+   ],
+   "verifier_reading": "image",
+   "track_reading": "text",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.7-verified-v1-n10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.7-verified-v1-n5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t1.0-verified-v1-n10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t1.0-verified-v1-n5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t0.0-verified-v1-n3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t0.3-verified-v1-n10",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t0.3-verified-v1-n5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t0.7-verified-v1-n10",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t0.7-verified-v1-n5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t1.0-verified-v1-n10",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t1.0-verified-v1-n5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "scale-4-optimal-487-verified-v1-n10",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "scale-4-optimal-487-verified-v1-n5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-flash-high-image-1of5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-flash-high-text-1of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-flash-high-text-1of30",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-flash-high-text-1of5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-flash-high-text-1of5-flash-high-verifier",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-flash-high-text-1of5-flash-medium-verifier",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-flash-high-text-1of5-pro-verifier",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-flash-minimal-image-medium-verifier",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-flash-minimal-text-medium-verifier",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-flash-minimal-text-t07-1of5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-image-1of10",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-image-1of5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-image-2of5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-image-3of5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-image-4of5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-image-5of5",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-image-baseline",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-image-baseline-pro-verifier",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-pro-high-image-1of5-pro-verifier",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-pro-high-text-1of5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-pro-high-text-1of5-flash-minimal-verifier",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-pro-high-text-1of5-pro-verifier",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-pro-image-medium-verifier",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-pro-image-minimal-verifier",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-pro-medium-image-baseline-pro-verifier",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-pro-medium-text-baseline-pro-verifier",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-pro-text-medium-verifier",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-pro-text-minimal-verifier",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-10of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-1of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-1of5",
+   "recorded": "text",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": null,
+   "matches_verifier_reading": null,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-2of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-2of5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-3of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-3of5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-4of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-4of5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-5of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-5of5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-6of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-7of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-8of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-9of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-baseline",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "verified-text-baseline-pro-verifier",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n1",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n1",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n1",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.3-verified-v1-n1",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.3-verified-v1-n3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.7-verified-v1-n1",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t0.7-verified-v1-n3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t1.0-verified-v1-n1",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-text-n5-text-t1.0-verified-v1-n3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t0.3-verified-v1-n1",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t0.3-verified-v1-n3",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t0.7-verified-v1-n1",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t0.7-verified-v1-n3",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t1.0-verified-v1-n1",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "image-n5-image-t1.0-verified-v1-n3",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.3-verified-v1-n1",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.3-verified-v1-n3",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.7-verified-v1-n1",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t0.7-verified-v1-n3",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t1.0-verified-v1-n1",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "flash-high-image-n5-image-t1.0-verified-v1-n3",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "scale-4-optimal-487-verified-v1-n1",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": true,
+   "matches_track_reading": false
+  },
+  {
+   "run_id": "pv-diag-384",
+   "stage": "scale-4-optimal-487-verified-v1-n3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": true,
+   "matches_track_reading": false
+  },
+  {
+   "run_id": "h8-v2",
+   "stage": "scale-4-verified",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "h8-v2",
+   "stage": "wbf-scale-4-verified",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "h8-v2",
+   "stage": "wbf-scale-8-verified",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": false,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "h10",
+   "stage": "pool_020-verified",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "h10",
+   "stage": "pool_160-verified",
+   "recorded": "image",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": false,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "proposer-verifier-384",
+   "stage": "verified-adversarial-text",
+   "recorded": "text",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": "text",
+   "matches_verifier_reading": null,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "proposer-verifier-384",
+   "stage": "verified-adversarial-image",
+   "recorded": "image",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": "text",
+   "matches_verifier_reading": null,
+   "matches_track_reading": false
+  },
+  {
+   "run_id": "proposer-verifier-384",
+   "stage": "verified-brief-text",
+   "recorded": "text",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": "text",
+   "matches_verifier_reading": null,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "proposer-verifier-384",
+   "stage": "verified-brief-image",
+   "recorded": "image",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": "text",
+   "matches_verifier_reading": null,
+   "matches_track_reading": false
+  },
+  {
+   "run_id": "proposer-verifier-384",
+   "stage": "verified-checklist-text",
+   "recorded": "text",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": "text",
+   "matches_verifier_reading": null,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "proposer-verifier-384",
+   "stage": "verified-checklist-image",
+   "recorded": "image",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": "text",
+   "matches_verifier_reading": null,
+   "matches_track_reading": false
+  },
+  {
+   "run_id": "proposer-verifier-384",
+   "stage": "verified-cascade-adversarial-checklist",
+   "recorded": "text",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": "text",
+   "matches_verifier_reading": null,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "proposer-verifier-384",
+   "stage": "verified-cascade-checklist-adversarial",
+   "recorded": "image",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": "text",
+   "matches_verifier_reading": null,
+   "matches_track_reading": false
+  },
+  {
+   "run_id": "proposer-verifier-512",
+   "stage": "verified-adversarial-text",
+   "recorded": "text",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": "text",
+   "matches_verifier_reading": null,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "55maps-generalisation",
+   "stage": "verified",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "55maps-generalisation",
+   "stage": "verified-v2",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text_v2"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "55maps-image-generalisation",
+   "stage": "verified",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "image",
+   "matches_verifier_reading": true,
+   "matches_track_reading": false
+  },
+  {
+   "run_id": "55maps-text-high-generalisation",
+   "stage": "verified",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "55maps-text-high-t0-3-generalisation",
+   "stage": "verified",
+   "recorded": "text",
+   "verify_configs": [],
+   "verifier_reading": null,
+   "track_reading": "text",
+   "matches_verifier_reading": null,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "55maps-text-min-generalisation",
+   "stage": "verified",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "verifier-t-pilot",
+   "stage": "t0-5",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "verifier-t-pilot",
+   "stage": "t1-0",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "verifier-robustness",
+   "stage": "384-union-t0-0",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "verifier-robustness",
+   "stage": "256-union-t0-0",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "verifier-robustness",
+   "stage": "384-ge3of5-t0-3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "verifier-robustness",
+   "stage": "256-ge3of5-t0-3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "verifier-robustness",
+   "stage": "384-ge3of5-t0-7",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "verifier-robustness",
+   "stage": "384-ge3of5-t0-3-high",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "verifier-robustness",
+   "stage": "384-ge3of5-t0-7-high",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "verifier-robustness",
+   "stage": "384-16of30-t0-3",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": "text",
+   "matches_verifier_reading": true,
+   "matches_track_reading": true
+  },
+  {
+   "run_id": "flash35-pv-2x2",
+   "stage": "verified-f3vf",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "flash35-pv-2x2",
+   "stage": "verified-f35vf",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "flash35-pv-2x2",
+   "stage": "min-f3-verified-f35vf",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "55maps-text-min-n10-uplift",
+   "stage": "verified-3of10",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "grid-2026-08-18",
+   "stage": "g512_ov064-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "grid-2026-08-18",
+   "stage": "g512_ov256-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "grid-2026-08-18",
+   "stage": "g384_ov048-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "grid-2026-08-18",
+   "stage": "g384_ov192-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "grid-2026-08-18",
+   "stage": "g384_ov192-union-k10-verify37",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "grid-2026-08-18",
+   "stage": "g384_ov192-k-ladder-k1-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "grid-2026-08-18",
+   "stage": "g384_ov192-k-ladder-k3-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "grid-2026-08-18",
+   "stage": "g384_ov192-k-ladder-k5-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "stride-phaseb-2026-08-25",
+   "stage": "g512_ov176-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "stride-phaseb-2026-08-25",
+   "stage": "g384_ov128-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "stride-phaseb-2026-08-25",
+   "stage": "g256_ov064-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "stride-phaseb-2026-08-25",
+   "stage": "g512_ov320-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "stride-phaseb-2026-08-25",
+   "stage": "g384_ov128-union-k1-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "stride-phaseb-2026-08-25",
+   "stage": "g384_ov128-union-k3-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "stride-phaseb-2026-08-25",
+   "stage": "g384_ov128-union-k5-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "stride-phasec-2026-08-25",
+   "stage": "g384_ov240-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "stride-55map-2026-08-25",
+   "stage": "g384_ov128_55map-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "stride-55map-2026-08-25",
+   "stage": "g384_ov192_55map-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "stride-55map-2026-08-25",
+   "stage": "g384_ov192_55map-union-k10-verify37",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "image-b-gs-2026-08-28",
+   "stage": "g384_ov192_image-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "image-b-gs-2026-08-28",
+   "stage": "g384_ov192_image_high-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "gemini37-screen-2026-08-28",
+   "stage": "g384_ov192_g37-union-k5-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "gemini37-screen-2026-08-28",
+   "stage": "g384_ov192_g37-union-k10-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "gemini37-screen-2026-08-28",
+   "stage": "g384_ov192_g37-union-k5-verify-swap37",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "gemini37-screen-2026-08-28",
+   "stage": "g384_ov192_g37-union-k5-verify-swap38",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "gemini37-screen-2026-08-28",
+   "stage": "g384_ov192_g37-union-k1-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "gemini37-screen-2026-08-28",
+   "stage": "g384_ov192_g37-union-k3-verify",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "gemini37-image-gs-2026-09-01",
+   "stage": "g384_ov192_g37img-union-k5-verify-arm1",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "gemini37-image-gs-2026-09-01",
+   "stage": "g384_ov192_g37img-union-k5-verify-arm2",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "gemini37-55map-2026-08-29",
+   "stage": "g384_ov192_55map_g37-union-k5-verify-arm1",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  },
+  {
+   "run_id": "gemini37-55map-2026-08-29",
+   "stage": "g384_ov192_55map_g37-union-k5-verify-arm2",
+   "recorded": "text",
+   "verify_configs": [
+    "verify_adversarial-text"
+   ],
+   "verifier_reading": "text",
+   "track_reading": null,
+   "matches_verifier_reading": true,
+   "matches_track_reading": null
+  }
+ ]
+}

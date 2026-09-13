@@ -72,10 +72,20 @@ import argparse
 import json
 import re
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+# Modality is a preregistered factor (H1) and View 2 GROUPS by it, so it must
+# be derived from the configuration each proposer transmitted rather than read
+# off a label. See scripts/derive_condition_modality.py (audit 2026-09-14).
+from scripts.derive_condition_modality import condition_modality  # noqa: E402
+
 DEFAULT_CONDITIONS = BASE_DIR / "results" / "run-conditions.json"
 DEFAULT_OUTPUT = BASE_DIR / "results" / "tile-size-sweep"
 HEADLINE_BUFFER_M = 20
@@ -177,10 +187,24 @@ def tile_mcc(eval_path: Path) -> float | None:
         return None
 
 
-def parse_modality_temp(label: str, pool: str) -> tuple[str, str | None]:
-    """Infer (modality, temperature) from a condition label/proposer pool.
+def parse_modality_temp(run: str, label: str, pool: str) -> tuple[str, str | None]:
+    """Derive the modality and infer the temperature for one condition.
+
+    MODALITY is derived from what the proposer pool actually transmitted —
+    ``include_example_images`` plus a non-empty exemplar list — via
+    ``scripts/derive_condition_modality.condition_modality``. It used to be a
+    substring test on ``label + pool``, which assigned
+    ``retest-phase2e::canonical-last`` (an exemplar-ORDERING variant whose pool
+    carries neither token) to the **text** leg of View 2's
+    ``by_arch_modality`` grid, although its config sends the exemplar images.
+    Modality is a preregistered factor (H1) and View 2 groups by it, so a
+    name-derived level is not good enough.
+
+    TEMPERATURE stays name-derived: it is encoded in the label by convention
+    and is not a grouping variable the audit touched.
 
     Args:
+        run: The condition's run id.
         label: The condition label.
         pool: The condition's proposer_pool string (may be empty).
 
@@ -188,14 +212,13 @@ def parse_modality_temp(label: str, pool: str) -> tuple[str, str | None]:
         ``(modality, temperature)`` where modality is "text"/"image" and
         temperature is e.g. "0.7" or None if not encoded in the label.
     """
-    s = f"{label} {pool}".lower()
-    if "image" in s and "text" not in s:
-        modality = "image"
-    elif "text" in s and "image" not in s:
-        modality = "text"
-    else:
+    modality, _basis = condition_modality(run, pool or "")
+    if modality is None:
+        # No route can speak: keep the historical fallback rather than drop the
+        # cell from the grid, and let the label say what it can.
+        s = f"{label} {pool}".lower()
         modality = "image" if "image" in s else "text"
-    m = re.search(r"t([01]\.\d)", s)
+    m = re.search(r"t([01]\.\d)", f"{label} {pool}".lower())
     return modality, (m.group(1) if m else None)
 
 
@@ -214,7 +237,8 @@ def load_cells(conditions_path: Path) -> list[dict]:
     for run, size in RUN_SIZE.items():
         for c in decomposition.get(run, {}).get("conditions", []):
             ref = f"{run}::{c['label']}"
-            modality, temp = parse_modality_temp(c["label"], c.get("proposer_pool") or "")
+            modality, temp = parse_modality_temp(
+                run, c["label"], c.get("proposer_pool") or "")
             thinking = RUN_THINKING.get(run)
             if thinking is None:  # per-label (replication) or unknown (256)
                 low = c["label"].lower()

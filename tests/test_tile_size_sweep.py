@@ -35,17 +35,36 @@ from scripts.tile_size_sweep import (  # noqa: E402
 
 
 @pytest.mark.tier1
-@pytest.mark.parametrize("label,pool,exp_mod,exp_temp", [
-    ("text-t0.0", "brief-text", "text", "0.0"),
-    ("image-t0.7-n5-4of5", "track1-image-t0.7", "image", "0.7"),
-    ("flash-high-text-n5-text-t1.0-consensus-9of10", "", "text", "1.0"),
-    ("canonical-last", "", "text", None),  # no temp encoded
+@pytest.mark.parametrize("run,label,pool,derived,exp_mod,exp_temp", [
+    ("retest-phase2b", "text-t0.0", "brief-text", "text", "text", "0.0"),
+    ("retest-phase3a", "image-t0.7-n5-4of5", "track1-image-t0.7",
+     "image", "image", "0.7"),
+    ("pv-diag-384", "flash-high-text-n5-text-t1.0-consensus-9of10", "",
+     "text", "text", "1.0"),
+    # The audit case (2026-09-14): an exemplar-ORDERING variant whose pool
+    # carries neither token. The retired substring test called it "text";
+    # the derivation reads the config and calls it image.
+    ("retest-phase2e", "canonical-last", "canonical-last",
+     "image", "image", None),
 ])
-def test_parse_modality_temp(label, pool, exp_mod, exp_temp) -> None:
-    """Modality + temperature are parsed from the label/pool."""
-    mod, temp = parse_modality_temp(label, pool)
+def test_parse_modality_temp(monkeypatch, run, label, pool, derived,
+                             exp_mod, exp_temp) -> None:
+    """Modality is DERIVED from the pool's config; temperature from the label."""
+    import scripts.tile_size_sweep as t
+    monkeypatch.setattr(t, "condition_modality", lambda r, p: (derived, "stub"))
+    mod, temp = parse_modality_temp(run, label, pool)
     assert mod == exp_mod
     assert temp == exp_temp
+
+
+@pytest.mark.tier1
+def test_parse_modality_temp_falls_back_to_the_label_when_nothing_can_be_derived(
+        monkeypatch) -> None:
+    """An undeterminable pool keeps the cell in the grid rather than dropping it."""
+    import scripts.tile_size_sweep as t
+    monkeypatch.setattr(t, "condition_modality", lambda r, p: (None, "undetermined"))
+    assert parse_modality_temp("r", "image-t0.7", "")[0] == "image"
+    assert parse_modality_temp("r", "mystery", "")[0] == "text"
 
 
 # --------------------------------------------------------------------------- #

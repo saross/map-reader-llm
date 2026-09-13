@@ -929,6 +929,101 @@ def derive() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     return records, pool_records
 
 
+# ── the verifier stage's own modality ────────────────────────────────────
+
+def verify_stage_dirs(run: str, key: str, spec: Any) -> list[str]:
+    """Locate a registered verifier stage's output directory.
+
+    Args:
+        run: Run id.
+        key: The ``verifier_passes`` key.
+        spec: Its recorded spec (a bare modality string or a dict with ``path``).
+
+    Returns:
+        Existing repository-relative directories, most specific first.
+    """
+    path = spec.get("path") if isinstance(spec, dict) else None
+    cands: list[str] = []
+    for name in ([path] if path else []) + [key]:
+        if not name:
+            continue
+        for root in POOL_ROOTS:
+            cands.append(f"{root}/{run}/{name}")
+        if run.startswith("retest-"):
+            cands.append(f"outputs/retest/{run[len('retest-'):]}/{name}")
+    return [c for c in cands if (BASE_DIR / c).is_dir()]
+
+
+def verifier_pass_audit() -> list[dict[str, Any]]:
+    """Audit the register's ``verifier_passes[...].modality`` against two readings.
+
+    The field turns out to be ambiguous across runs, and the audit of
+    2026-09-14 reports the ambiguity rather than resolving it (what the field
+    means is the PI's to settle). The two candidate readings are:
+
+    * **verifier** — the modality of the verify config the stage ran, by the
+      same rule the proposer uses (``include_example_images`` and a non-empty
+      exemplar list). ``verify_{adversarial,brief,checklist,comparative}``
+      carry six exemplars; their ``*-text`` variants carry none.
+    * **track** — the modality of the PROPOSER pool the stage sits beneath,
+      i.e. which arm of the experiment the pass belongs to.
+
+    Returns:
+        One record per registered verifier stage, with the recorded value, both
+        readings, and which of them it matches.
+    """
+    decomposition = _decomposition()
+    conditions = json.loads(
+        (BASE_DIR / CONDITIONS_MANIFEST).read_text(encoding="utf-8"))["conditions"]
+    by_run: dict[str, list[dict[str, Any]]] = collections.defaultdict(list)
+    for cond in conditions:
+        by_run[cond["run_id"]].append(cond)
+
+    rows: list[dict[str, Any]] = []
+    for run, entry in decomposition.items():
+        for key, spec in (entry.get("verifier_passes") or {}).items():
+            recorded = spec if isinstance(spec, str) else spec.get("modality")
+            metas: list[dict[str, Any]] = []
+            for stage_dir in verify_stage_dirs(run, key, spec):
+                root = BASE_DIR / stage_dir
+                for p in sorted(glob.glob(str(root / "*.meta.json"))
+                                + glob.glob(str(root / "*/*.meta.json"))):
+                    meta = read_meta(p)
+                    if meta and str(meta.get("config") or "").startswith("verify_"):
+                        metas.append(meta)
+            metas = dedupe(metas)
+            verifier_reading = modality_of(metas)
+
+            # The track: the modality of every proposer pool whose conditions
+            # name this stage, plus the pool the stage's path sits under.
+            pools = set()
+            head = (spec.get("path") or "").split("/")[0] if isinstance(spec, dict) else ""
+            if head:
+                pools.add(head)
+            for cond in by_run.get(run, []):
+                if key in cond["label"]:
+                    pools.add(cond.get("proposer_pool") or "")
+            derived = {condition_modality(run, p)[0] for p in pools if p}
+            derived.discard(None)
+            track_reading = derived.pop() if len(derived) == 1 else None
+
+            rows.append({
+                "run_id": run,
+                "stage": key,
+                "recorded": recorded,
+                "verify_configs": sorted({str(m["config"]) for m in metas}),
+                "verifier_reading": verifier_reading,
+                "track_reading": track_reading,
+                "matches_verifier_reading": (
+                    None if not verifier_reading or not comparable(recorded)
+                    else comparable(recorded) == verifier_reading),
+                "matches_track_reading": (
+                    None if not track_reading or not comparable(recorded)
+                    else comparable(recorded) == track_reading),
+            })
+    return rows
+
+
 # ── reporting ────────────────────────────────────────────────────────────
 
 CSV_COLUMNS = [
@@ -1026,6 +1121,7 @@ def main() -> int:
     args = ap.parse_args()
 
     records, pool_records = derive()
+    verifier_rows = verifier_pass_audit()
     mismatched = [r for r in records if r["mismatches"]]
     pool_mismatched = [r for r in pool_records if r["mismatch"]]
     summary = artefact_summary(records)
@@ -1050,6 +1146,15 @@ def main() -> int:
     print(f"conditions with a recorded/derived mismatch: {len(mismatched)}")
     print(f"pool-keyed labels checked: {len(pool_records)}, "
           f"mismatched: {len(pool_mismatched)}")
+    print(f"registered verifier stages: {len(verifier_rows)} — "
+          f"agree with the VERIFIER reading "
+          f"{sum(1 for r in verifier_rows if r['matches_verifier_reading'] is True)}, "
+          f"contradict it "
+          f"{sum(1 for r in verifier_rows if r['matches_verifier_reading'] is False)}; "
+          f"agree with the TRACK reading "
+          f"{sum(1 for r in verifier_rows if r['matches_track_reading'] is True)}, "
+          f"contradict it "
+          f"{sum(1 for r in verifier_rows if r['matches_track_reading'] is False)}")
     for artefact, counts in sorted(summary.items()):
         print(f"  {artefact}: {counts['records_carrying_a_modality']} recorded, "
               f"{counts['checked_against_a_derivation']} checkable, "
@@ -1102,6 +1207,24 @@ def main() -> int:
     }, indent=1) + "\n", encoding="utf-8")
     (out / "artefact-summary.json").write_text(
         json.dumps(summary, indent=1) + "\n", encoding="utf-8")
+    (out / "verifier-pass-modality.json").write_text(json.dumps({
+        "_README": (
+            "The register's verifier_passes[...].modality field under both "
+            "candidate readings — the VERIFIER's own exemplar modality, and "
+            "the TRACK (the proposer pool's modality) the stage belongs to. "
+            "Reported, not resolved: the field's meaning is inconsistent "
+            "across runs and settling it is the PI's."),
+        "n_stages": len(verifier_rows),
+        "n_matching_verifier_reading": sum(
+            1 for r in verifier_rows if r["matches_verifier_reading"] is True),
+        "n_contradicting_verifier_reading": sum(
+            1 for r in verifier_rows if r["matches_verifier_reading"] is False),
+        "n_matching_track_reading": sum(
+            1 for r in verifier_rows if r["matches_track_reading"] is True),
+        "n_contradicting_track_reading": sum(
+            1 for r in verifier_rows if r["matches_track_reading"] is False),
+        "stages": verifier_rows,
+    }, indent=1) + "\n", encoding="utf-8")
     with (out / "derived-modality.csv").open("w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=CSV_COLUMNS)
         writer.writeheader()
