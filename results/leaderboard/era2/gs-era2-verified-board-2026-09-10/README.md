@@ -1,6 +1,6 @@
 # The GS Era-2 verified board on one frame — `gs-era2-verified-board-2026-09-10`
 
-> **Last revised**: 2026-09-13 (later — **NOTE ONLY, nothing rebuilt or re-signed**: the recovery-fragment fix `75d7c8d4c` rebuilt five consensus unions that four of this board's cells read. Only `g37-text-k3-verified-opmax` moves — F1@20 0.8870 → **0.8860**, one added false positive — and it is one of the three cells already withheld; the single **tiered** cell of the four, `g384-ov192-k5-verified-opmax` at rank 9, re-scores **dict-identically** on every arm, so no rank, tier, pairwise test, BH family, MCB set or signature field changes. Per the PI's ruling the next rebuild picks these up; the pending record is `provenance.json` → `re_sign_pending.cells_pending_rescore` and the changelog entry below. Earlier that day: PI ruling 2026-09-13, item 1: the 46 Phase 2 rungs and the 4 tier E rungs of the K-ladder review admitted by route (a) — a `k-ladder/membership.json` the builder defers to by condition id — so 103 → **153 cells admitted**, of which **150 tiered** and **3 withheld** by the tile-join invariant; re-tiered and the MCB recomputed last; **Tier 1 and its five members unchanged**. The board's analysis row is again NOT amended and the board **awaits the PI's re-signature**, `provenance.json` → `re_sign_pending`; the resolved S153 block is preserved inside it as `previous_resolved`. Deltas: `reports/k-ladder-admission-deltas-2026-09-13.md`. Prior: 2026-09-12, PI ruling R3 — K = 1 admitted, 79 → 103 cells, re-signed 2026-09-12T06:04:30Z; 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10 later still, nine `-opmax` cells re-materialised and re-tiered; later, the symmetry fix 39 → 79 cells; earlier that day, original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-13 (later still — **NOTE ONLY, still nothing rebuilt or re-signed**: the K = 3 cell's own `evaluation.json` is no longer blocked. The tile-join invariant now **withholds** a refused cell's per-tile statistics instead of aborting the cell, so `g37-text-k3-verified-opmax` was re-scored and its artefacts and register row read F1@20 **0.8860** / **495 detections**, with the tile block and every confidence interval marked WITHHELD. Two figures in the tables below still read `0.8870` and are correct as they stand: this board's `withheld_cells` row and `re_sign_pending.proposed_outcome` are signature-bearing and the PI restates them at the rebuild. Earlier that day — the recovery-fragment fix `75d7c8d4c` rebuilt five consensus unions that four of this board's cells read. Only `g37-text-k3-verified-opmax` moves — F1@20 0.8870 → **0.8860**, one added false positive — and it is one of the three cells already withheld; the single **tiered** cell of the four, `g384-ov192-k5-verified-opmax` at rank 9, re-scores **dict-identically** on every arm, so no rank, tier, pairwise test, BH family, MCB set or signature field changes. Per the PI's ruling the next rebuild picks these up; the pending record is `provenance.json` → `re_sign_pending.cells_pending_rescore` and the changelog entry below. Earlier that day: PI ruling 2026-09-13, item 1: the 46 Phase 2 rungs and the 4 tier E rungs of the K-ladder review admitted by route (a) — a `k-ladder/membership.json` the builder defers to by condition id — so 103 → **153 cells admitted**, of which **150 tiered** and **3 withheld** by the tile-join invariant; re-tiered and the MCB recomputed last; **Tier 1 and its five members unchanged**. The board's analysis row is again NOT amended and the board **awaits the PI's re-signature**, `provenance.json` → `re_sign_pending`; the resolved S153 block is preserved inside it as `previous_resolved`. Deltas: `reports/k-ladder-admission-deltas-2026-09-13.md`. Prior: 2026-09-12, PI ruling R3 — K = 1 admitted, 79 → 103 cells, re-signed 2026-09-12T06:04:30Z; 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10 later still, nine `-opmax` cells re-materialised and re-tiered; later, the symmetry fix 39 → 79 cells; earlier that day, original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
 
 **153 cells admitted**, of which **150 are tiered** and **3 withheld** (listed below the table); 7961/11175 pairs significant; 14 tiers; tie set 5; MCB admissible 65 of 150. 50 cell(s) admitted by `k-ladder/membership.json` with their board-frame evaluations as-is (PI ruling 2026-09-13).
 
@@ -169,6 +169,49 @@
 
 ## Changelog
 
+### 2026-09-13 (later still) — the K = 3 cell's evaluation written; NOTE ONLY, the board is still not rebuilt
+
+**Trigger**: the previous entry recorded one thing as *blocked* rather than
+merely deferred — `g37-text-k3-verified-opmax`'s own `evaluation.json` could
+not be regenerated, because the tile-join invariant refused its per-tile table
+and, since the F1 bootstrap resamples **tiles**, the refusal aborted the whole
+evaluation. Under checklist item 6a
+(`planning/documentation-foundation-checklist-2026-09-13.md`) the invariant was
+softened to match the PI's ruling of 2026-09-13 (S153 ruling 6): a refused cell
+**withholds** its per-tile table, tile confusion, tile-MCC and every bootstrap
+interval — naming the reason, the shortfall counts and both tile vocabularies —
+and **reports its whole-frame F1, precision and recall in full**.
+
+| artefact | before | after |
+|---|---|---|
+| the cell's `evaluation.json` F1@20 | 0.8870 (stale, unwritable) | **0.8860** |
+| the cell's detections | 494 | **495** |
+| the cell's tile-MCC | 0.1337 | **withheld**, reason named |
+| the cell's bootstrap CIs | reported | **withheld** (they resample tiles) |
+| `results/conditions-manifest.json` row | 0.8870 / 494 | **0.8860 / 495** |
+| this board's `withheld_cells` row | 0.8870 | **0.8870 — unchanged, by design** |
+| `re_sign_pending.proposed_outcome` | quotes 0.8870 | **unchanged, by design** |
+
+The last two are the point of the entry. Both are **signature-bearing** and
+were deliberately left alone: the PI restates them at the rebuild that picks
+these cells up. Sixteen signature-bearing paths in `provenance.json` were
+asserted byte-equal before and after the note was amended
+(`results/k-ladder-2026-09-12/recovery-fix-2026-09-13/harness/resolve_board_note_block.py`),
+and `re_sign_pending.cells_pending_rescore.blocked_artefact` was replaced by a
+`resolved` record that states the discrepancy rather than papering over it.
+
+**The previous CI is withdrawn, not superseded.** This cell used to carry a BCa
+interval on F1@20 of [0.3684, 0.7732]. It was resampled from a per-tile table
+the invariant refuses, so it is not replaced by a better interval — there is no
+interval for this cell on this frame, and the artefact says so.
+
+**What did NOT change**: every rank, tier, pairwise test, BH family, MCB
+admissible set and signature field on this board; the 153 admitted / 150 tiered
+counts and the 3-cell withheld list; the 14 tiers, 7961/11175 significant
+pairs, tie set 5 and 65-of-150 MCB set; Tier 1 and its five members; and the
+other three cells of the recovery-fragment set, whose live artefacts were not
+rewritten.
+
 ### 2026-09-13 (later) — Four cells pending re-score after the recovery-fragment fix; NOTE ONLY, the board is not rebuilt
 
 **Trigger**: the recovery-fragment fix
@@ -212,7 +255,8 @@ inside that block therefore does **not** survive the next rebuild, whereas
 `finalise()` explicitly preserves an existing `## Changelog`
 (`scripts/build_gs_era2_board.py:772-779`). This entry is the durable copy.
 
-**Also pending, and blocked rather than merely deferred**:
+**Also pending, and blocked rather than merely deferred** — ⚠ **resolved later
+the same day; see the entry above this one**:
 `g37-text-k3-verified-opmax`'s own `evaluation.json` could not be regenerated —
 the tile-join invariant refuses its per-tile table at HEAD and the F1 bootstrap
 resamples tiles, so the whole evaluation aborts. Its

@@ -26,7 +26,6 @@
    "n_cells": 4,
    "n_cells_with_moved_f1": 1,
    "metric": "F1 at 20 m on the era2-b-487 board frame",
-   "blocked_artefact": "g37-text-k3-verified-opmax's own evaluation.json could NOT be regenerated: the tile-join invariant refuses its per-tile table at HEAD and the F1 bootstrap resamples tiles, so the whole evaluation aborts. Its conditions-manifest.json row therefore still reads 0.8870 / 494 and is stale by -0.0010 / -1 detection until the tile-join question is ruled on (reports/tile-mcc-geometric-join-2026-09-12.md).",
    "cells": [
     {
      "ref": "gemini37-screen-2026-08-28::g37-text-k1-verified-opmax",
@@ -60,7 +59,15 @@
      "delta_f1": 0.0,
      "reason": "consensus-n5 T5 rebuilt 1,168 -> 1,169; the promoted candidate_01335 carries probability 0.10 against this rung's prob >= 0.15 gate so it does not enter, and the re-evaluation is dict-identical to the committed one on every arm including tile-MCC 0.8139 and the 193/248/10/36 confusion. THE ONLY ONE OF THE FOUR THAT IS TIERED (rank 9, tier 2, MCB-admissible); the other three are already in tiering.withheld_cells."
     }
-   ]
+   ],
+   "resolved": {
+    "was": "g37-text-k3-verified-opmax's own evaluation.json could NOT be regenerated: the tile-join invariant refused its per-tile table at HEAD and the F1 bootstrap resamples tiles, so the whole evaluation aborted. Its conditions-manifest.json row therefore read 0.8870 / 494 and was stale by -0.0010 / -1 detection.",
+    "resolved_on": "2026-09-13",
+    "resolved_by": "planning/documentation-foundation-checklist-2026-09-13.md item 6a: the invariant now WITHHOLDS the per-tile table, tile confusion, tile-MCC and every bootstrap interval of a refused cell \u2014 with the reason, the shortfall counts and both tile vocabularies recorded in the artefact \u2014 and lets the buffer-matched F1, precision and recall point estimates proceed, per PI ruling 2026-09-13 (S153 ruling 6).",
+    "artefact_state": "The cell was re-scored on its recorded recipe (curator reference, era2_b_intersection_bounds, 14 buffers, 10,000 BCa draws, seed 42, --mcc) from a clean tree. Its evaluation.json, evaluation.csv and evaluation.md now read F1@20 0.8860, precision 0.8323, recall 0.9471, 495 detections, with the tile block and every confidence interval marked WITHHELD (tile_join_detection_shortfall: 20 of 467 in-frame detections booked, shortfall 447). results/conditions-manifest.json's row matches, and is no longer stale.",
+    "still_pending_for_the_pi": "re_sign_pending.proposed_outcome above quotes this cell's whole-frame F1 as 0.8870, which is the pre-fix figure. That text is signature-bearing and was deliberately NOT edited here; the PI restates it at the rebuild that picks these cells up. The current value is 0.8860. The bootstrap confidence interval this cell previously carried is withdrawn rather than superseded: it was resampled from a per-tile table the invariant refuses.",
+    "board_impact": "None. This cell is one of tiering.withheld_cells \u2014 ranked and tested nowhere, its whole-frame F1 quoted as reference \u2014 so no rank, tier, pairwise test, BH family or MCB admissible set depends on it."
+   }
   },
   "previous_resolved": {
    "status": "RE-SIGNED 2026-09-12T06:04:30Z by the PI (S153)",
