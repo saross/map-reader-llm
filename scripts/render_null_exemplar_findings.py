@@ -20,6 +20,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
+import textwrap
 from pathlib import Path
 from typing import Any
 
@@ -70,6 +72,39 @@ def p_fmt(value: float | None, n_permutations: int = 10_000) -> str:
     if value == 0:
         return f"< {1 / n_permutations:g}"
     return f"{value:.4f}"
+
+
+def reflow(text: str, width: int = 79) -> str:
+    """Re-wrap the document's prose paragraphs to a fixed width.
+
+    The sections are assembled from short source lines with numbers
+    substituted into them, which leaves the prose raggedly wrapped. This
+    reflows each plain-prose block and leaves every block that has meaningful
+    line structure — headings, tables, block quotes, list items, indented code
+    — exactly as written.
+
+    Args:
+        text: The assembled document.
+        width: Target line width.
+
+    Returns:
+        The document with its prose paragraphs re-wrapped.
+    """
+    out: list[str] = []
+    for block in text.split("\n\n"):
+        lines = block.split("\n")
+        structured = any(
+            line.startswith(("#", "|", ">", "-", "*", "    "))
+            or re.match(r"^\d+\.\s", line)
+            for line in lines if line.strip()
+        )
+        if structured or not block.strip():
+            out.append(block)
+            continue
+        out.append(textwrap.fill(" ".join(line.strip() for line in lines),
+                                 width=width, break_long_words=False,
+                                 break_on_hyphens=False))
+    return "\n\n".join(out)
 
 
 def signature_section(analysis: dict[str, Any]) -> str:
@@ -149,8 +184,8 @@ def signature_section(analysis: dict[str, Any]) -> str:
         f"p {p_fmt(pv['p_value_image_lower'])}. Where image and text cells differ",
         "only in whether the pixels went out, the signature is still there.",
         "",
-        "On the Era-1 boards the unstratified test is null, and stratifying by run",
-        "moves `era1-leaderboard` to",
+        "On the Era-1 boards the unstratified test is null. Stratifying by run",
+        "lifts it without settling it:",
     ]
     return "\n".join(lines)
 
@@ -715,7 +750,7 @@ def main() -> int:
     analysis = json.loads((OUT_DIR / "analysis.json").read_text())
     signature = json.loads((OUT_DIR / "leak_signature.json").read_text())
     swap = json.loads((OUT_DIR / "paired_tile_swap.json").read_text())
-    text = render(analysis, signature, swap)
+    text = reflow(render(analysis, signature, swap))
     if args.check:
         if not FINDINGS.exists() or FINDINGS.read_text() != text:
             print(f"STALE: {FINDINGS}")
