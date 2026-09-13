@@ -282,6 +282,28 @@ def test_reduced_cli_keeps_a_single_set_cell_a_list():
     assert out["glob"] is None
 
 
+def test_committed_findings_matches_a_rerender():
+    """The committed findings.md must match a regeneration from its artefacts.
+
+    The document's numbers are substituted from `analysis.json`,
+    `leak_signature.json` and `paired_tile_swap.json`, so this is the drift
+    guard the project's generated documents carry: a re-computation that was
+    not followed by a re-render fails here rather than leaving stale numbers
+    in a cited document.
+    """
+    import render_null_exemplar_findings as render
+
+    needed = [render.OUT_DIR / name for name in
+              ("analysis.json", "leak_signature.json", "paired_tile_swap.json",
+               "overlap_tiles.json", "cell_inventory.json", "findings.md")]
+    missing = [p.name for p in needed if not p.exists()]
+    if missing:
+        pytest.skip(f"sensitivity artefacts absent: {', '.join(missing)}")
+    assert render.main(["--check"]) == 0, (
+        "results/null-exemplar-sensitivity-2026-09-13/findings.md is stale — "
+        "re-run scripts/render_null_exemplar_findings.py")
+
+
 def test_mcc_from_confusion_matches_the_definition():
     """The MCC helper agrees with the closed form and guards a zero margin."""
     import analyse_null_exemplar_sensitivity as sens

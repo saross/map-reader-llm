@@ -764,12 +764,20 @@ def render(analysis: dict[str, Any], signature: dict[str, Any],
     return document.rstrip("\n") + "\n"
 
 
-def main() -> int:
-    """CLI entry point."""
+def main(argv: list[str] | None = None) -> int:
+    """CLI entry point.
+
+    Args:
+        argv: Argument list, for the tier-1 drift guard to call --check
+            in process. ``None`` reads ``sys.argv``.
+
+    Returns:
+        0 on success, 1 when --check finds the committed document stale.
+    """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true",
                         help="Exit 1 if the committed findings.md is stale.")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     analysis = json.loads((OUT_DIR / "analysis.json").read_text())
     signature = json.loads((OUT_DIR / "leak_signature.json").read_text())
     swap = json.loads((OUT_DIR / "paired_tile_swap.json").read_text())
