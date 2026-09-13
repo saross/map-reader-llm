@@ -12,12 +12,26 @@ project state.
 
 > **⏰ STATE AT 2026-09-13 ~10:00 UTC (S153-b, the PI's rulings day) —
 > the PI's OPEN decisions, in order (each independent):**
-> **(1) Era-2 board re-signature** at its next rebuild (the PI: "I'll
-> wait"): one rebuild carrying the four recovery-fix cells (k3 0.8870 →
-> 0.8860 once item 6a lands), the tile-MCC permutation family (ruling 7),
-> and the withheld-cell disclosure; proposed outcome will sit in
-> `provenance.json → re_sign_pending`. Board today: 153 admitted / 150
-> tiered / 3 withheld, Tier 1 unchanged.
+> **(1) Era-2 board RE-SIGNATURE — READY** (rebuilt `ac4355859`, checklist
+> item 6 ticked "awaiting PI re-signature"; proposed outcome in
+> `provenance.json → re_sign_pending`). What it attests: 153 admitted /
+> 150 tiered / 3 withheld; F1 tiering BYTE-IDENTICAL to the 2026-09-13
+> admission rebuild (Tier 1 the same five cells, tie set 5, F1 MCB 65 of
+> 150, 7,961/11,175 pairs); the four recovery-fix cells at their current
+> evaluations (k3 0.8860 / 495, interval withdrawn); the withheld-cell
+> disclosure under ruling 6; and the NEW tile-MCC permutation family
+> beside the F1 tiering (ruling 7): 2,982/11,175 pairs, 6 MCC tiers,
+> **MCC Tier 1 = 33 cells, none an F1 Tier-1 cell** (led by single-pass
+> image PV baselines, tile-MCC 0.889 at F1 rank 119), MCC MCB 59 of 150
+> sharing only 9 members with the F1 set. Signature paths byte-equal 10/10.
+> Report `reports/era2-board-mcc-family-2026-09-13.md`.
+> **(1b) NEW paper-facing question raised by (1)**: the two metrics rank
+> the board close to oppositely, systematically (pipeline checked:
+> 150/150 confusion gates, swap masks pinned, F1 arm reproduced exactly).
+> Which ranking does Results lead with? Recommended: F1 stays the
+> preregistered tiering and the headline; the MCC family is reported
+> beside it as the presence/absence result, with the disjoint Tier 1s
+> stated as a finding (the image-run campaign is its deployment test).
 > **(2) 55-map board r2 rebuild + signatures** once the image campaign
 > lands (stride B K = 5 under the 3.7 verifier, the image cells, the MCC
 > tiering); the image run's row `gemini37-image-55map-2026-09-13`.
