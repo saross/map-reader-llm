@@ -307,6 +307,19 @@ def main() -> int:
             )
             if not hits:
                 continue
+            # How DEEPLY the tile is exposed: the share of its own window
+            # covered by null-exemplar pixels. A tile that clips a null window
+            # by one stride carries far less leaked content than one sitting
+            # almost inside it, and the two frames differ sharply here.
+            covered = 0
+            for null in nulls:
+                if null["tile_name"] not in hits:
+                    continue
+                dx = (min(x_px + size_px, null["x_px"] + null["size_px"])
+                      - max(x_px, null["x_px"]))
+                dy = (min(y_px + size_px, null["y_px"] + null["size_px"])
+                      - max(y_px, null["y_px"]))
+                covered += dx * dy
             overlaps.append({
                 "tile_name": name,
                 "map_name": map_name,
@@ -314,6 +327,8 @@ def main() -> int:
                 "y_px": y_px,
                 "overlaps_null": hits,
                 "is_null_window_itself": name in null_names,
+                "overlap_px": covered,
+                "overlap_fraction_of_tile": round(covered / (size_px * size_px), 6),
                 "committed_polygon_also_intersects": sorted(
                     n["tile_name"] for n in nulls
                     if n["map_name"] == map_name
@@ -321,9 +336,16 @@ def main() -> int:
                 ),
             })
 
+        fractions = sorted(o["overlap_fraction_of_tile"] for o in overlaps)
+        mean_fraction = (sum(fractions) / len(fractions)) if fractions else 0.0
         print(f"{frame_id}: {len(overlaps)} of {len(names)} tiles overlap a null "
-              f"window ({size_px} px on a {step_px} px step)")
+              f"window ({size_px} px on a {step_px} px step); leaked share of "
+              f"an exposed tile: mean {mean_fraction:.3f}, median "
+              f"{fractions[len(fractions) // 2]:.3f}, max {fractions[-1]:.3f}")
         frames_out.append({
+            "mean_overlap_fraction": round(mean_fraction, 6),
+            "median_overlap_fraction": round(fractions[len(fractions) // 2], 6),
+            "max_overlap_fraction": round(fractions[-1], 6),
             "frame_id": frame_id,
             "bounds": rel_bounds,
             "n_tiles": len(names),
