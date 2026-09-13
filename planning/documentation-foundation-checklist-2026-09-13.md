@@ -234,12 +234,58 @@ agent work; Fable only for the PI-facing orchestration turns.
     `reports/recovery-drop-fix-2026-09-13.md` § 6.3,
     `results/k-ladder-2026-09-12/recovery-fix-2026-09-13/README.md`
     § Changelog.
-  - [ ] **6c. Board metadata**: 7 Era-2 cells' `track` field disagrees
-    with their model-visible exposure (three `proposer-verifier-384
-    *-image` cells are text-proposer; the four `pv-scale4-optimal` cells
-    are image-bearing, two in MCC Tier 1) — found by the null-exemplar
-    sensitivity job; correct at the next rebuild, no rank moves. Owner:
-    Opus agent.
+  - [x] **6c. Board metadata** — **characterised and corrected at the
+    source 2026-09-14**, on the PI's ruling of that morning. Report:
+    `reports/modality-track-audit-2026-09-14.md`; artefacts
+    `results/modality-track-audit-2026-09-14/`; derivation
+    `scripts/derive_condition_modality.py`.
+    **Characterised, corpus-wide**: of 593 registered conditions 591 are
+    derivable and 547 from a transmitted configuration, with **zero**
+    routes contradicting one another. **Eight conditions and one proposer
+    pool** carry a wrong recorded label, across **four** artefacts — the
+    board's `membership.json` `track` (7 of 110),
+    `results/working-precision/gs-plateau-characterisation.json`
+    `modality` (3 of 263), `results/tile-size-sweep/tile_size_sweep.json`
+    `modality` (1 of 16, `retest-phase2e::canonical-last`), and
+    `results/k-ladder-2026-09-12/phase2/unions.json` `modality` (1 pool
+    of 14, `scale-4-optimal-487`). Clean: the register (0 of 459), the
+    passes manifest (0 of 447), the opmax membership (0 of 86), the
+    uplift supplement (0 of 357 + 0 of 357), `ladders.json` (0 of 14).
+    The mechanism is a substring test on the condition label, in four
+    scripts, failing two ways: the token naming the **verifier** over a
+    text proposer, and **no** token falling through to `"text"`.
+    **Reach**: 5 analyses UNAFFECTED, 2 LABEL-ONLY (the signed Era-2
+    board and the signed K-ladder — neither groups by the field; the
+    board's `tiering_20m.json` carries zero `track` occurrences and the
+    tiering instruments never read it), 3 NUMBER-AT-RISK.
+    **Recomputed** ($0, sapphire): the plateau tabulation's every group
+    statistic **holds** (image onset median 75 m / p90 100 / max 150,
+    text 30 / 75 / 150, before and after; all five sibling summaries
+    byte-identical); the tile-size sweep moves exactly **2 of 15** legs,
+    both at 512 px single-pass, with Views 1 and 3 byte-identical; and
+    `era1-single-pass-baseline-matrix`'s image group goes from **17
+    computable cells at MCC 0.094–0.291** to **21 of 22 at
+    0.0665–0.2907**, the four phase-2e ordering cells having been in
+    neither group.
+    **No preregistered outcome and no hypothesis-outcome row changes** —
+    H1's confirmatory contrast groups the five phase-2a conditions, all
+    correctly labelled. **Two unsigned-but-verified registered outcomes**
+    (`era1-single-pass-baseline-matrix`, `tile-size-sweep`) and the paper
+    sentence at `docs/paper/results-draft.md:195-196` plus claims row
+    R2-06 quote a figure that moves: **not amended**, erratum **E88**
+    drafted in § 7 of the report for the PI.
+    **The board is NOT rebuilt** (re-signature pending) and no signature
+    was touched. The next rebuild will carry the three
+    `verified-*-image` cells as **text**, the four `pv-scale4-optimal`
+    cells as **image**, and a new `track_basis` field on all 110
+    members; no rank, tier, tie set, Hsu set or metric moves.
+    **New, for the register's owner**: the register's
+    `verifier_passes[...].modality` field is **ambiguous, not wrong** —
+    119 of 174 entries fit the "verifier's own exemplars" reading and 92
+    of 100 resolvable ones fit the "track" reading, and the
+    `scale-4-optimal-487` family is split across both conventions inside
+    one run. Not actioned; nothing numerical rests on it. Owner: Opus
+    agent (done); PI to rule on E88 and on the field's meaning.
   - [ ] **6b. PI decision**: one verifier call (≈ US$0.0007) to make
     tier E's K = 5 zero-delta unconditional (candidate_01335 carried 0.10
     across a 1 px crop shift against a 0.15 gate) — or accept as
