@@ -108,6 +108,37 @@ WORKERS=50 nohup bash scripts/gemini37-image-55map-unions-and-arms.sh \
 .venv/bin/python scripts/gemini37_image_55map_r2.py --stage score \
     --workers 5 --jobs 4
 .venv/bin/python scripts/gemini37_image_55map_r2.py --stage tests
+
+# 5. Registration, through the generated-manifest flow. FOUR hand-authored
+#    inputs, then two machine steps. There is no generic registrar:
+#    scripts/register_r2_conditions.py is a one-shot r1-to-r2 migration tool
+#    with its run ids as module constants, so it is a worked example of the
+#    row shape, NOT a script to point at this run.
+#      (a) results/run-registry.json  — one entry: run_id, directory_path,
+#          status "active", notes.
+#      (b) results/run-facts.json     — the sibling the drift check pairs with
+#          the registry (a registry entry without one drifts): purpose,
+#          tile_size_px 384, corpus "55-map", gt_reference, scope
+#          {test_set_id "55maps-8541", bounds_path, n_test_tiles 8541},
+#          headline_condition_id, headline_rationale.
+#      (c) results/run-conditions.json — the decomposition: proposer_pools,
+#          verifier_passes (one per arm per rung), and one condition per
+#          scored cell. Each condition's eval_path names an evaluation.json
+#          FILE and `detections` its sibling geojson; metrics are NOT
+#          hand-authored, the generator extracts them from eval_path.
+#          Precedent shape: the gemini37-55map-2026-08-29 -r2-gt rows.
+#      (d) results/run-analyses.json   — ONE row, analysis_id
+#          gemini37-image-55map-2026-09-13, manually_verified_at null
+#          (UNSIGNED, per the card).
+.venv/bin/python scripts/verify_run_conditions.py \
+    --run gemini37-image-55map-2026-09-13
+#    -> "N run(s): 1 pass, 0 partial, 0 fail"
+.venv/bin/python scripts/generate_post_run_report.py --all
+#    -> "ALL VALID (...)" and NO "=== registry <-> facts drift ===" block.
+#       An analysis row naming a condition id that does not exist surfaces
+#       there as a WARNING, not a failure, so read the block, do not just
+#       trust the exit status.
+.venv/bin/python scripts/generate_post_run_report.py --all --write
 ```
 
 **The scoring instrument, corrected.** Scoring is
