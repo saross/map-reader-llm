@@ -117,4 +117,3 @@ Isolation views (View 1 / View 3, which hold modality fixed rather than grouping
 ### 2026-09-14 — Original publication
 
 First recomputation of the modality-grouped statistics after the corpus-wide modality-track audit of 2026-09-14. No prior revision to diff against.
-
