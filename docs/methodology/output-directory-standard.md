@@ -1,8 +1,10 @@
 # Output Directory Standard
 
-> **Last revised**: 2026-09-11 (governance: generated projections carry
-> machine provenance, not a hand changelog — PI ruling, Session 153;
-> prior 2026-08-03: `docs/methodology/reports/**` split-by-citation rule). See
+> **Last revised**: 2026-09-13 (post-run reports back-filled for all 41
+> registered runs — 39 as generated projections, 2 hand-authored; the
+> scope table's `post_run_report.md` row re-counted and its compliance
+> cell corrected; prior 2026-09-11: generated projections carry machine
+> provenance, not a hand changelog — PI ruling, Session 153). See
 > [§ Changelog](#changelog) for revision history.
 
 ## Purpose
@@ -318,21 +320,36 @@ CLAUDE.md wording covers these via "analogous post-run summary docs
 under `outputs/`"; this section is the authoritative enumeration —
 CLAUDE.md cross-references back here for the canonical path list.
 
-| Path pattern | Class | Count (2026-05-26) | Count (post-audit target) | Compliance |
+| Path pattern | Class | Count (2026-05-26) | Count (2026-09-13) | Compliance |
 |---|---|---:|---:|---|
 | `results/**.md` (anchor docs only — see audit plan § 5.2) | Paper-citation working docs | ~35–50 | ~35–50 | Mostly non-compliant; back-fill on touch |
 | `reports/**.md` | Internal reports authored by Claude Code | varies | varies | Mostly compliant |
-| `outputs/**/post_run_report.md` | Per-run post-run reports | 2 + 1 retrospective | ~22 | 2 compliant; 15 missing entirely; back-fill in audit Phase 3 |
+| `outputs/**/post_run_report.md` | Per-run post-run reports | 2 + 1 retrospective | 41 + 1 retrospective | Complete: one per registered run. 39 are **generated projections** emitted by `scripts/generate_run_reports.py` and governed by the generated-projections rule below, not by banner-and-changelog; 2 are hand-authored (`55maps-image-generalisation`, `55maps-text-min-generalisation`) and carry the banner + Changelog from 2026-09-13 |
 | `outputs/**/experiment_intent.md` | Per-pass / per-run intent files | 139 | 139 | Informal; in scope going forward |
 | `outputs/**/evaluation.md` | Per-run evaluation summaries | 11 | 11 | Informal; in scope going forward |
 | `outputs/**/pre_launch_audit.md` | audit-config skill outputs | 1 (`55maps-text-high-t0.3-generalisation`) | varies | In scope going forward |
 
 **Back-fill rule**: per CLAUDE.md, "back-fill on touch only" — when you
 edit one of these documents, attach the banner + Changelog stub. Do not
-bulk back-fill unchanged documents. The "Count (post-audit target)"
-column is the expected file count once Phase 3 authoring lands, not a
-compliance target; banner compliance follows the back-fill-on-touch
-rule.
+bulk back-fill unchanged documents.
+
+**One standing exception, discharged 2026-09-13**: the PI asked on
+2026-09-13 for the missing per-run post-run reports to be back-filled in
+bulk (`planning/documentation-foundation-checklist-2026-09-13.md`, Batch 1
+item 1), which supersedes back-fill-on-touch for the
+`outputs/**/post_run_report.md` row and for that row only. It was
+discharged the same day: every one of the 41 runs in
+`results/run-registry.json` now has a report. The 39 that had none are
+generated projections — regenerate with
+`python3 scripts/generate_run_reports.py --all --write`, drift-check with
+`--check` (a tier-1 test in `tests/test_generate_run_reports.py` runs it) —
+and the 2 hand-authored narrative reports were left as prose and given the
+banner + Changelog instead, because their Dawid-Skene corrections, paired
+comparisons and per-map extrema are not re-derivable from the manifests
+and a projection would have destroyed them. Their pre-2026-09-13 state
+also corrected a claim in the row above: they existed but carried neither
+a banner nor a Changelog, so the former "2 compliant" cell described
+existence, not banner compliance.
 
 **Out of scope**: `docs/notes/reflections/*.md` (append-only historical
 records), `docs/methodology/preregistration/*.md` (governed separately
@@ -341,10 +358,22 @@ by the preregistration process), `docs/methodology/research/*.md`
 
 **Generated projections — provenance, not a hand changelog (PI ruling
 2026-09-11, Session 153)**: a Markdown file under an in-scope path that
-is emitted by a generator from registered inputs (for example
-`results/hypothesis-outcome-table/hypothesis-outcome-table.md`, a pure
-projection of `results/analyses-manifest.json`) is OUT of the
-banner-and-changelog requirement and IN a stricter one. The principle:
+is emitted by a generator from registered inputs is OUT of the
+banner-and-changelog requirement and IN a stricter one. Two families are
+governed by this rule today:
+
+- `results/hypothesis-outcome-table/hypothesis-outcome-table.md` — a pure
+  projection of `results/analyses-manifest.json`
+  (`scripts/generate_hypothesis_outcome_table.py --check`).
+- the 39 generated `outputs/<run>/post_run_report.md` files
+  (`scripts/generate_run_reports.py --check`, added 2026-09-13), projected
+  from the run registry, the runs / conditions / passes / analyses
+  manifests, `results/run-conditions.json`, `results/run-analyses.json`
+  and the errata register. Each names its generator, its version and the
+  source commit; a hand edit fails the drift guard and is destroyed on the
+  next regeneration.
+
+The principle:
 a hand-edited document's history is human, so a human writes it down; a
 generated document's history is its inputs' and its generator's git
 history, so the file must make that traceable by machine instead. Every
@@ -436,6 +465,22 @@ directory with a README documenting the run configuration, cost, and
 the ground truth filtering applied (hairy-only symbols from student data).
 
 ## Changelog
+
+### 2026-09-13 — Post-run reports back-filled for all 41 runs (Session 153, Batch 1 item 1)
+
+**Trigger**: the PI's 2026-09-13 request to back-fill the missing per-run post-run reports in bulk (`planning/documentation-foundation-checklist-2026-09-13.md`, Batch 1 item 1), which supersedes back-fill-on-touch for the `outputs/**/post_run_report.md` row only. Taken via the generated-projection route the 2026-09-11 ruling opened, so the reports carry provenance and a tested drift guard instead of 39 hand changelogs that would each have gone stale on the next manifest rebuild.
+
+| Claim | Before | After |
+|---|---|---|
+| Scope table, `outputs/**/post_run_report.md` count | 2 + 1 retrospective (2026-05-26); "~22" post-audit target | 41 + 1 retrospective — one per registered run |
+| Same row, compliance cell | "2 compliant; 15 missing entirely" | Complete: 39 generated projections under the generated-projections rule, 2 hand-authored with banner + Changelog |
+| Governed generated-projection families | 1 (the hypothesis-outcome table) | 2 (+ the 39 generated post-run reports) |
+
+**Correction the back-fill surfaced**: the "2 compliant" cell was wrong on its own terms. Both hand-authored reports existed, but neither carried a Revision-Policy banner or a Changelog, so the cell described existence rather than banner compliance. Both were given the pattern on 2026-09-13 (their own Changelogs record it) and the cell is restated.
+
+**What did NOT change**: the run count (41 registered runs, unchanged), any metric, and the 2026-09-11 ruling itself — this entry applies it rather than amending it. The registered counts for `experiment_intent.md` (139), `evaluation.md` (11) and `pre_launch_audit.md` (1) are 2026-05-26 censuses and were **not** re-counted in this pass; they stay as dated figures rather than being refreshed without an audit.
+
+**Landed in**: the commit whose message begins `docs(outputs): back-fill post-run reports for all 41 registered runs`.
 
 ### 2026-09-11 — Governance: generated projections carry provenance, not a changelog (Session 153)
 
