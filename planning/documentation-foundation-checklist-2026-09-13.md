@@ -1,6 +1,18 @@
 # Documentation foundation checklist — the preregistration → outcome chain
 
-> **Last revised**: 2026-09-13 (latest — **item 13 added and closed**:
+> **Last revised**: 2026-09-14 (latest — **item 14 closed**: the cleanup
+> metadata overwrite fixed permanently. `run.meta.json` now carries the sum
+> across the main pass and every cleanup or resume pass, with `main_pass`
+> verbatim, a `cleanup_passes` list and a never-overwritten sidecar; a
+> cleanup under a changed configuration is refused before any API call; the
+> verifier-leg auditor is `scripts/audit_verifier_cost.py`, gated on the GS
+> arms' US$0.4417 / US$0.6804. Two findings beyond the brief: the fourth
+> cell's overwrite cannot be attributed to `cleanup` (no `cleanup_history`
+> survives, and the results-file rewrite that erased it is now fixed too),
+> and the retrospective census found **29** affected stages — 3 recoverable,
+> 26 not, the fourth cell and its GS leg among them. No committed meta was
+> rewritten. Deltas: `reports/cleanup-meta-fix-2026-09-14.md`. Before
+> that — 2026-09-13, **item 13 added and closed**:
 > errata **E86** (the null exemplars' stale provenance — 25 of the 340
 > Era-1 tiles overlap null-exemplar pixels, nil on measurement, image
 > modality only) and **E87** (the lodged per-tile mound counts — 36 → 50,
@@ -336,19 +348,59 @@ agent work; Fable only for the PI-facing orchestration turns.
   and sibling entries, and was reverted. Restrict the rebuild to the
   main checkout, or teach the builder to enumerate tracked files only.
   Detail: `reports/null-exemplar-errata-2026-09-13.md` § 10.
-- [ ] **14. Runner hardening — `run_pv.py cleanup` overwrites `run.meta.json`
-  with the retry pass's usage only** (found 2026-09-14 by the image
-  campaign's steward: arm 2's true cost is the pre-cleanup backup
+- [x] **14. Runner hardening — `run_pv.py cleanup` overwrites `run.meta.json`
+  with the retry pass's usage only** — done 2026-09-14, commits
+  `94bc5c7d9` (the merge and the configuration gate), `3e0cc9d8d` (the
+  `cleanup_history` carry), `dc5cf5656` (the auditor) and `1a8bebc0e`
+  (the `pgrep` process note). Found 2026-09-14 by the image campaign's
+  steward: arm 2's true cost is the pre-cleanup backup
   US$7.6875 + the cleanup meta US$0.0153; a later audit reading only the
-  meta would understate it by three orders of magnitude). This is the
+  meta would understate it by three orders of magnitude. This is the
   mechanism that lost the fourth cell's 57,482-candidate verifier load in
-  August (`reports/r7-gaps-deltas-2026-09-11.md` § 2.5). Fix: cleanup
-  merges usage into the main meta and keeps a `cleanup_passes` list
-  (`configuration_history` pattern from PR #14), with a tier-1 test; the
-  verifier-leg auditor the steward built goes to `scripts/`. Also: never
-  liveness-check a remote process with `pgrep -f` over `ssh` (it matches
-  the remote shell's own command line) — use a log-staleness detector.
-  Owner: Opus agent, after the campaign lands.
+  August (`reports/r7-gaps-deltas-2026-09-11.md` § 2.5). **Fixed
+  permanently**: the written `run.meta.json` now carries the SUM of usage
+  and execution stats across the main pass and every later pass, a
+  `main_pass` block holding the original verbatim, and a `cleanup_passes`
+  list (one entry per pass with its own usage block, counts,
+  configuration fingerprint and the gate's evidence — the
+  `configuration_history` pattern from PR #14); the pre-merge file is
+  copied to an indexed `run.meta.pre-<kind>-<N>.json` sidecar that is
+  never overwritten, so the operator's ad-hoc convention became the
+  tool's own. `verify`'s resume path had the same shape and is fixed by
+  the same writer; `4_detect_mounds_batch.py` was already merging
+  (line 1349), so no defect there. A cleanup whose effective
+  configuration differs from the main pass's is now **refused before any
+  API call** unless `--allow-config-change` declares it — which makes
+  `--safe-mode-tokens` a declared change, so
+  `planning/run-phase3a-recovery.sh` (line 228) would now need the flag.
+  The steward's verifier-leg auditor is
+  `scripts/audit_verifier_cost.py`, gated on the GS calibration arms'
+  committed US$0.4417 / US$0.6804 (reproduced exactly) and on the
+  campaign's K = 1 arm 2 from BOTH files (skips while that tree is only
+  on sapphire). **Two findings beyond the brief.** (i) The fourth cell's
+  overwrite cannot be pinned on `cleanup`: its `probabilities.json`
+  carries no `cleanup_history`, and `cleanup` always writes one — either
+  it was a `verify` resume (no backup discipline at all) or a cleanup
+  whose history a later resume erased, because both writers of
+  `probabilities.json` rebuilt the file and dropped the key. That second
+  defect is now fixed too, and it had been degrading
+  `audit_verifier_completeness.py`. (ii) **Retrospective: 29 stages** in
+  `outputs/**` carry the signature — **3 RECOVERABLE** (`verify_swap38`
+  US$0.8469 from its in-directory `run.meta.main-2026-09-04.json`, and
+  `verify_k1_recovery-fixed` US$0.4529 / `verify_k3_recovery-fixed`
+  US$0.5349 reconstructed from adjudicated sibling stages) and **26
+  UNRECOVERABLE**, the fourth cell and its GS leg among them. Largest
+  money loss is not the largest count: `verifier-robustness/
+  384-flash-high-text-ge3of5/T0.3/verified` records US$1.9116 for 2,775
+  of 4,275 — a plausible-looking meta understating by half. No committed
+  meta was rewritten. Report:
+  `reports/cleanup-meta-fix-2026-09-14.md`. **Open for the PI**: whether
+  a `--temperature` override should be written into the meta's
+  `configuration` block (it currently is not, on either side of the gate,
+  so the gate cannot see a temperature change and records it under
+  `cli_overrides` instead), and whether a Gemini Pro rate card with a
+  verified cache-read rate should be added so the sweep's three
+  Pro-verifier stages can be priced.
 - [ ] **12. Verdict-model decision (PI)**: a `disclosures` list beside
   `discrepancies` in the run-conditions verifier, so the 12 deliberate
   WARNs (3 `n-passes-over` on the mixed-provenance uplift pool, 9
@@ -416,7 +468,70 @@ after that.
 
 ## Changelog
 
-### 2026-09-13 (latest) — item 13 added and closed: E86/E87 handled; 13a left with the sibling
+### 2026-09-14 (latest) — item 14 closed: the cleanup metadata overwrite fixed permanently
+
+**Refresh trigger**: the PI's 2026-09-14 ruling "fix permanently" on item 14,
+raised by the image campaign's steward when its K = 1 arm 2 came out of a
+503 storm with its cost split across two files.
+
+**The fix** (`94bc5c7d9`): `run_pv.py`'s verifier writer no longer replaces a
+prior pass's metadata. `run.meta.json` carries the sum of usage, execution
+and cost across the main pass and every later pass; `main_pass` holds the
+original verbatim; `cleanup_passes` lists one entry per pass with its own
+usage block, counts, configuration fingerprint and the configuration gate's
+evidence; the pre-merge file is copied to an indexed
+`run.meta.pre-<kind>-<N>.json` sidecar that is never overwritten. `verify`'s
+resume path is fixed by the same writer; batch mode preserves without summing
+(it redoes the whole set). A cleanup whose effective configuration differs
+from the main pass's is refused before any API call unless
+`--allow-config-change` declares it. `4_detect_mounds_batch.py` was already
+merging on resume (line 1349) — no defect there.
+
+**The auditor** (`dc5cf5656`): `scripts/audit_verifier_cost.py`, the
+steward's method promoted from an ad-hoc import, gated on the GS calibration
+arms' committed **US$0.4417 / US$0.6804** (reproduced exactly, leg
+US$1.1221, per-candidate 0.000710 / 0.001094, and the meta's own figure
+confirmed at exactly 2× the audited one — the flex correction) and on the
+campaign's K = 1 arm 2 as main + cleanup from BOTH files, which skips while
+that tree is only on sapphire.
+
+**Numbers this entry adds** (none revised; both inherited figures reproduce):
+
+| Claim | Before | After |
+|---|---|---|
+| Stages known to carry the overwrite | 2 (the fourth cell and its GS leg, § 2.5) | **29** enumerated — 3 recoverable, 26 not |
+| `verify_swap38`'s audited cost | not audited; its meta reads US$0.0039 | **US$0.8469** (219× the meta), summed from its in-directory prior meta |
+| `verify_k1_recovery-fixed` / `verify_k3_recovery-fixed` | not audited | **US$0.4529** / **US$0.5349**, reconstructed from adjudicated sibling stages |
+| Worst money understatement | assumed to be the largest count | `verifier-robustness/384-flash-high-text-ge3of5/T0.3`: **US$1.9116 for 2,775 of 4,275** — understates by about half and looks plausible |
+
+**Two findings beyond the brief.** The fourth cell's overwrite cannot be
+attributed to `cleanup`: its `probabilities.json` carries no
+`cleanup_history`, which `cleanup` always writes — so either the pass was a
+`verify` resume (which had no backup discipline at all; the ad-hoc meta copy
+lived only in `cmd_cleanup`, added 2026-08-31 in `2ce4536ea`) or a cleanup
+whose history a later resume erased, because both writers of
+`probabilities.json` rebuilt the file and dropped the key. That second defect
+is fixed in `3e0cc9d8d`, and it had been degrading
+`scripts/audit_verifier_completeness.py`, which reads the history to surface
+residual gaps.
+
+**What did NOT change**: no committed `run.meta.json` was rewritten — the
+reconstructions live in the report, and every `outputs/` directory is
+byte-for-byte as it was; no result, evaluation or board cell moved; a stage
+that never sees a second pass writes exactly what it wrote before (a tier-1
+regression test, not an assurance); nothing on sapphire or on the campaign
+branch was touched. Process note `1a8bebc0e` adds the `pgrep -f` over `ssh`
+prohibition to `docs/agent-guidance.md` § Compute Location.
+
+**Open for the PI**: whether a `--temperature` override should be recorded in
+the meta's `configuration` block (it is not, on either side of the gate, so a
+temperature change is disclosed under `cli_overrides` rather than blocked),
+and whether a Gemini Pro rate card with a verified cache-read rate should be
+added so the sweep's three Pro-verifier stages can be priced.
+
+**Report**: `reports/cleanup-meta-fix-2026-09-14.md`.
+
+### 2026-09-13 — item 13 added and closed: E86/E87 handled; 13a left with the sibling
 
 **Trigger**: `map-reader-bench`
 `wiki/planning/parent-errata-drafts.md`, two errata drafted in that
