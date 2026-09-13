@@ -14190,6 +14190,27 @@
      "eval_path": "results/stride55-2026-08-27/g384_ov192_55map/n5-companion/eval/evaluation.json",
      "detections": "results/55map-final-board-r2-2026-09-06/cells/B-N5-carried/detections.geojson",
      "_note": "Canonical-chain companion of the B N=5 carried cell (PI ruling 2026-09-06, planning/reference-revision-2026-09-06.md section 3a): the same first-5 union with inherited K=10 Gemini-3 verification at (0.15, k5), materialised by the r2 sweep (pass-pinned, geometry-gated to the committed primary) and scored on the canonical chain by the Track-2 engine (canonical review, buffers 20/30/50, B=10,000, seed 42). corrected-F1@50 0.8437752627 == results/stride55-2026-08-27/ladder.json N=5 carried, |d| 0 (gate 1e-6). Registered so the 3.7 campaign's canonical-chain comparisons (D1 dead heat; the Obs 444 five-test family) cite a registered condition."
+    },
+    {
+     "label": "g384-ov192-55map-n5-verified37-oracle-p0.96-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 57482,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 5,
+     "prob_threshold": 0.96,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-oracle/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-oracle/detections.geojson",
+     "_note": "r2 board cell FOURTH-N5-oracle (oracle (r2-reference argmax), tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
     }
    ],
    "_ignored_evals": [

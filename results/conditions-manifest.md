@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-09-12T14:24:08Z · 592 row(s) · schema v1.0.
+> Generated 2026-09-13T01:26:51Z · 593 row(s) · schema v1.0.
 >
-> **Coverage**: 592 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 593 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -567,6 +567,7 @@
 | stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7027 | 0.6876 | 4400 |
 | stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7182 | 0.702 | 4971 |
 | stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-canonical-gt | proposer-verifier | verified | 5 | 5 | 0.6796034591858258 | 0.7013882811101221 | 4736 |
+| stride-55map-2026-08-25::g384-ov192-55map-n5-verified37-oracle-p0.96-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7452 | 0.7326 | 4434 |
 | image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9 | proposer-verifier | verified | 9 | 10 | 0.8412 | 0.7985 | 397 |
 | image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8 | proposer-verifier | verified | 8 | 10 | 0.8333 | 0.7993 | 400 |
 | image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b | proposer-verifier | verified | 8 | 10 | 0.8263 | 0.7937 | 400 |

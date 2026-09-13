@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-12T14:24:08Z",
+  "generated_at": "2026-09-13T01:26:51Z",
   "generator_version": "0.7.1",
   "conditions": [
     {
@@ -9000,10 +9000,10 @@
       "n_reference_mounds": null,
       "provenance": {
         "source_files": [
-          "results/uplift-supplement/verifier-pairing/verifier-t-pilot__verified-t1-0/evaluation.json",
+          "results/uplift-supplement/verifier-pairing/verifier-t-pilot__verified-t0-5/evaluation.json",
           "outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson"
         ],
-        "last_extracted_at": "2026-09-12T14:24:08Z",
+        "last_extracted_at": "2026-09-13T01:26:51Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -137174,6 +137174,274 @@
           "results/stride55-2026-08-27/g384_ov192_55map/n5-companion/eval/evaluation.json"
         ],
         "last_extracted_at": "2026-09-12T14:24:08Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "stride-55map-2026-08-25::g384-ov192-55map-n5-verified37-oracle-p0.96-k5-r2-gt",
+      "run_id": "stride-55map-2026-08-25",
+      "label": "g384-ov192-55map-n5-verified37-oracle-p0.96-k5-r2-gt",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "g384_ov192_55map",
+      "n_passes": 5,
+      "vote_threshold": 5,
+      "prob_threshold": 0.96,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3.7-flash",
+        "thinking_level": "low",
+        "temperature": 0.0,
+        "iterations": 1
+      },
+      "scope_override": null,
+      "caveat": "r2 board cell FOURTH-N5-oracle (oracle (r2-reference argmax), tier via final_board_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain.",
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.154,
+            "precision": 0.1642,
+            "recall": 0.1451,
+            "ci": {
+              "low": 0.1441,
+              "high": 0.1651,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.4035,
+            "precision": 0.4301,
+            "recall": 0.38,
+            "ci": {
+              "low": 0.3891,
+              "high": 0.4182,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.6157,
+            "precision": 0.6563,
+            "recall": 0.5799,
+            "ci": {
+              "low": 0.6013,
+              "high": 0.6303,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.7452,
+            "precision": 0.7943,
+            "recall": 0.7019,
+            "ci": {
+              "low": 0.7327,
+              "high": 0.7575,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.8176,
+            "precision": 0.8714,
+            "recall": 0.77,
+            "ci": {
+              "low": 0.807,
+              "high": 0.8274,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.8517,
+            "precision": 0.9078,
+            "recall": 0.8021,
+            "ci": {
+              "low": 0.8425,
+              "high": 0.8604,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.8633,
+            "precision": 0.9202,
+            "recall": 0.8131,
+            "ci": {
+              "low": 0.8548,
+              "high": 0.8716,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.8726,
+            "precision": 0.9301,
+            "recall": 0.8218,
+            "ci": {
+              "low": 0.8647,
+              "high": 0.8803,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.8749,
+            "precision": 0.9326,
+            "recall": 0.824,
+            "ci": {
+              "low": 0.867,
+              "high": 0.8824,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.8758,
+            "precision": 0.9335,
+            "recall": 0.8248,
+            "ci": {
+              "low": 0.8679,
+              "high": 0.8832,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.8775,
+            "precision": 0.9353,
+            "recall": 0.8264,
+            "ci": {
+              "low": 0.8698,
+              "high": 0.8849,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.8785,
+            "precision": 0.9364,
+            "recall": 0.8274,
+            "ci": {
+              "low": 0.8709,
+              "high": 0.8859,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.8794,
+            "precision": 0.9373,
+            "recall": 0.8282,
+            "ci": {
+              "low": 0.8718,
+              "high": 0.8869,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.8796,
+            "precision": 0.9375,
+            "recall": 0.8284,
+            "ci": {
+              "low": 0.8721,
+              "high": 0.8871,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": 1.0,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.7326,
+          "sensitivity": 0.6781,
+          "specificity": 0.993,
+          "tp": 2393,
+          "tn": 4977,
+          "fp": 35,
+          "fn": 1136
+        }
+      },
+      "n_detections": 4434,
+      "n_candidates": 57482,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-oracle/evaluation.json"
+        ],
+        "last_extracted_at": "2026-09-13T01:26:51Z",
         "extractor_version": "0.7.1"
       }
     },

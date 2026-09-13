@@ -177,6 +177,7 @@ under a 3.7 verifier.
 |---:|---:|---|---:|---:|---:|---:|
 | 1 | 0.8352 | (0.96, k1) | — | — | 0.7471 | $30.99 † |
 | 3 | 0.8747 | (0.96, k3) | — | — | 0.7376 | $65.48 † |
+| 5 | 0.8758 | (0.96, k5) | — ‡ | — ‡ | **0.7326** | $97.22 † |
 | 10 | 0.8813 | (0.96, k9) | 0.8728 | −0.0085 | 0.7359 | $173.59 † |
 
 † The proposer leg is the same as § 3.2's, so the cost figure is the Gemini 3
@@ -185,8 +186,41 @@ overwritten by a 29-item cleanup pass, so its 57,482-candidate token load is not
 on file (`reports/r7-gaps-deltas-2026-09-11.md` § 2.5). A simulated figure for
 the K = 10 rung is about $64.7 on arm 2's per-candidate rate, giving about $238
 all-in; it is recorded there, deliberately not in this table, because every other
-cost cell here is audited. The K = 5 rung is absent (`zero-usd-inherited`, never
-built).
+cost cell here is audited.
+
+‡ **The K = 5 rung, built 2026-09-13 on the PI's ruling.** It was absent from this
+table as `zero-usd-inherited, never built` until then, for a reason that turned
+out to be a one-line asymmetry rather than a data limit:
+`scripts/final_board_sweeps.py`'s `build_g37_families` looped `for n in (1, 3)`,
+which is right for the two five-pass arms (a rung at N = 5 would *be* their full
+union) and wrong for this cell, which re-verified stride B's **ten** passes. The
+rungs are now derived from each family's own `k_max`, so the arms keep exactly
+the rungs they had and this cell gains N = 5. The rung is
+`stride-55map-2026-08-25::g384-ov192-55map-n5-verified37-oracle-p0.96-k5-r2-gt`,
+`results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-oracle/evaluation.json`
+— F1@50 **0.8758** (BCa 95 % CI 0.8679–0.8832), tile-MCC **0.7326**, 4,434
+detections, r2 reference, the chain's one engine. Its verifier leg is **not
+supplied** for the same reason as every other row here. **No carried figure is
+given**, because this family's rungs have no carried cells: the carried column is
+"—" at K = 1 and K = 3 too, and the only post-hoc carried nominations on this
+board are Runs A and B at N = 3 (PI direction 2026-08-28,
+`scripts/final_board_n3_carried.py`). For a reader who wants the transferred
+point anyway, `sweep_FOURTH-N5.csv` scores (0.98, k5) — the K = 10 rung's
+committed point with k scaled to the rung — at micro-F1@50 **0.8754** over 4,431
+detections, against the oracle's micro-F1@50 0.8758; that is a sweep row on the
+light scorer, not a registered cell, and it is not a claim.
+
+**What the rung says.** F1 rises 0.8352 → 0.8747 → 0.8758 → 0.8813: the step from
+K = 3 to K = 5 buys **+0.0011**, less than a tenth of the +0.0395 that K = 1 → 3
+bought, so this ladder saturates between K = 3 and K = 5 exactly as the other
+twenty-two do. Tile-MCC is **0.7326**, the *lowest* of the four rungs — below even
+K = 10's 0.7359 — so the family's tile-MCC does not fall monotonically, but it is
+below K = 1's 0.7471 at every rung above K = 1, which is § 4's pattern. Neither
+step is separation-tested: this sub-table is R1-non-compliant and reported
+outside the review's instrument, and **the 55-map final board was not re-tiered**
+(`results/55map-final-board-r2-2026-09-06/final_board_50m.json`, its tiering and
+its 595-pair BH family are untouched; `scripts/final_board_build.py` was not
+run), per the PI's ruling on close-out question 5.
 
 ### 3.4 Gemini 3.7 arms, r2 reference
 
