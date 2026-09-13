@@ -1,8 +1,8 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->
 
 # Passes manifest
 
-> Generated 2026-09-12T14:24:08Z · 1317 row(s) · schema v1.0.
+> Generated 2026-09-12T14:24:08Z · 1317 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `86ba12413`.
 >
 > **Coverage**: 1317 pass(es) across the decomposed runs (sub-step 3b in progress).
 

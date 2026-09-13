@@ -1,8 +1,8 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/analyses-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/analyses-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->
 
 # Analyses manifest
 
-> Generated 2026-09-13T07:49:43Z · 67 row(s) · schema v1.0.
+> Generated 2026-09-13T07:49:43Z · 67 row(s) · schema v1.0 · rendered from `results/analyses-manifest.json` at commit `86ba12413`.
 >
 > **Coverage**: 67 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
 

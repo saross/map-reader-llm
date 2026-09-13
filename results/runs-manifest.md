@@ -1,8 +1,8 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/runs-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/runs-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->
 
 # Runs manifest
 
-> Generated 2026-09-13T09:02:37Z · 41 row(s) · schema v1.0.
+> Generated 2026-09-13T09:02:37Z · 41 row(s) · schema v1.0 · rendered from `results/runs-manifest.json` at commit `86ba12413`.
 >
 > **Coverage**: all 41 runs (run-level facts; conditions/passes added as 3b batches land).
 
