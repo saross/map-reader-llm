@@ -44,18 +44,26 @@ candidates fall off with K faster than they do: at K = 5 the vote histogram is
 so dropping two passes removes only 52 candidates — a K = 5 → K = 3 ratio of
 **0.923**, where the card's ≈ 450 implies 0.67.
 
-**The same arithmetic raises the 55-map verifier legs.** The card scaled
-per-tile from the GS: 674 candidates per 1,398 tiles at K = 5, then applied
-its own K = 3 reduction to reach ≈ 8,500 over 24,561. Scaling the *measured*
-K = 3 density instead — 622 / 1,398 = 0.4449 per tile — gives **≈ 10,900** at
-K = 3 and ≈ 8,400 at K = 1, which moves the two K = 3 arms from US$14.1 to
-≈ US$18.1 and the two K = 1 arms from US$9.1 to ≈ US$13.9. Total envelope
-≈ US$270 rather than ≈ US$261 — still well inside the US$420 running stop.
-This is an extrapolation across corpora, not a measurement: the 55-map maps
-need not carry the GS's mound density, and the committed 3.7 **text** 55-map
-union ran to 12,715 candidates on the same geometry. It is recorded here so
-the verifier stage is priced from the union that actually gets built, not from
-the card's line.
+**What this does and does not do to the 55-map verifier legs.** Transferring the
+measured K = 3 density straight across — 622 / 1,398 = 0.4449 candidates per
+tile — would put the 55-map K = 3 union at ≈ 10,900 rather than the card's
+≈ 8,500. But that transfer assumes the two corpora propose at the same rate per
+tile, and pass 1 is already measuring that they do not. Over its first 1,572
+tiles the 55-map pass returns **0.9726 raw detections per tile** against the GS
+pass 1's **1.1824** (main plus recovery, 1,653 over 1,398) — a density ratio of
+**0.823**. Folding that in gives **≈ 9,000** at K = 3, which is close to the
+card's ≈ 8,500 and comfortably inside its cost line.
+
+So the card's number survives, but for a different reason than it gave: it
+under-estimated the K = 5 → K = 3 ratio (0.67 assumed, 0.923 measured) and
+over-estimated the 55-map detection density (GS-equal assumed, 0.823 measured),
+and the two errors largely cancel. The corrected components are what should be
+carried forward, not the coincidence. Two caveats on the 0.823: it rests on
+6 % of the pass, and the manifest is walked in map order, so early maps need
+not represent the corpus. The committed 3.7 **text** 55-map union ran to 12,715
+candidates on this same geometry, which is the reminder that modality moves
+this number too. Price the verifier stage from the union that actually gets
+built.
 
 ## 2. The cost basis — reproduced exactly, and a stop rule that would misfire
 
@@ -162,8 +170,8 @@ patch periodic meta flushing into the runner; that is not on this card.
 |---|---:|---:|
 | GS K = 5 first-N (the B2 verification) | 674 committed | **674 — byte-identical** |
 | GS K = 3 first-N (the calibration leg) | ≈ 450 | **622** (votes {1: 105, 2: 57, 3: 460}) |
-| 55-map K = 1 | ≈ 5,500 | not reached (≈ 8,400 on the measured density, § 1) |
-| 55-map K = 3 | ≈ 8,500 | not reached (≈ 10,900 on the measured density, § 1) |
+| 55-map K = 1 | ≈ 5,500 | not reached (≈ 6,900 on the measured ratios, § 1) |
+| 55-map K = 3 | ≈ 8,500 | not reached (≈ 9,000 on the measured ratios, § 1) |
 
 The GS K = 5 rebuild is the load-bearing one: run through the same chain that
 produced the committed artefact, with the fixed code, it reproduces
@@ -358,11 +366,12 @@ What remains, plus what the relaunch added:
   recommendation is the first plus a provenance sidecar from the second
   (§ 7, B2). This needs settling **before** the unions are built, because
   rebuilding them later re-fixes the operating points.
-- **Q8 (new) — should the verifier legs be re-priced before they run?** New. The GS
-  K = 5 → K = 3 candidate ratio is 0.923, not the 0.67 the card assumed, which
-  on the measured density puts the 55-map K = 3 union nearer ≈ 10,900 than
-  ≈ 8,500 (§ 1). Pricing from the union actually built costs nothing and
-  removes the guess.
+- **Q8 (new) — should the verifier legs be re-priced from the union actually
+  built?** The card's ≈ 8,500 survives, but on two cancelling errors: the
+  K = 5 → K = 3 candidate ratio is 0.923 where the card assumed ≈ 0.67, and the
+  55-map detection density is 0.823 of the GS's where the card assumed parity
+  (§ 1). Reading the built union's count before the arms run costs nothing and
+  removes both guesses.
 
 ## 9. What passed, so it is not re-litigated
 
@@ -414,7 +423,8 @@ passed decisively: the rebuilt K = 5 first-N union reproduces the committed
 | Carried point, arm 1 | not fixed | **(prob_t 0.10, k 3)**, GS F1@20 0.9197 |
 | Carried point, arm 2 | not fixed | **(prob_t 0.88, k 3)**, GS F1@20 0.9245 |
 | 5-tile smoke cache share | 0.163 (GS probe) | **0.488** (prefix pre-warmed) |
-| 55-map K = 3 union, expected | ≈ 8,500 | ≈ 10,900 on the measured density |
+| 55-map K = 3 union, expected | ≈ 8,500 | ≈ 9,000 on the measured ratios |
+| 55-map raw detections per tile | assumed GS-equal | **0.823 of the GS's** (pass 1, first 1,572 tiles) |
 | Spend committed | US$0.00 | **US$1.15** |
 
 Two deltas the first audit did not catch, both recorded above: **§ 3.1**, that
@@ -432,8 +442,22 @@ this session's); any committed union's content; and anything in sapphire's main
 checkout. P1–P5 remain **UNTESTED** — pass 1 of three is in flight and
 everything downstream of the proposer is unbuilt.
 
+Also re-derives the verifier-leg sizing. The card's ≈ 8,500 survives, but on
+two cancelling errors: the K = 5 → K = 3 candidate ratio is **0.923** where the
+card assumed ≈ 0.67, and pass 1's measured detection density is **0.823** of the
+GS's where the card assumed parity. The corrected components should be carried
+forward, not the coincidence.
+
+Tier-1 suite on sapphire after the changes: **2,496 passed, 4 skipped, 27
+deselected, 3 xfailed**. `ruff check` clean on
+`scripts/audit_proposer_cost.py`, `scripts/merge_passes.py` and
+`scripts/stride55_prepare_and_union.py`; `markdownlint-cli2` clean on the card,
+this report and the post-run record.
+
 Commits: `c9294473d` (driver), `30e36bcd1` (calibration leg), `5a91463dc`
-(card carried points), and the commit that lands this revision.
+(card carried points), `e2fa3fc99` (this report's first relaunch revision),
+`05349e9ff` (post-run launch-state record), `713a8c617` (card audited actuals),
+and the commit that lands this correction.
 
 ### 2026-09-13 — Original publication
 
