@@ -92,14 +92,32 @@ features that the model mistakenly identifies as mounds.
 
 ## Null Tiles (Examples 15-17)
 
-Training tiles containing no mound symbols. Selected from regions with typical map
-features (contours, roads, settlements) but confirmed empty.
+Whole tiles containing no mound symbols, from regions with typical map features
+(contours, roads, settlements) but confirmed empty.
+
+**Corrected 2026-09-13 under erratum E86.** These three were selected from the
+**2025-12-23 training set** (`inputs/training_manifest.json` at `3f66fc3f8`),
+which was **superseded on 2026-01-04** (`4d011a839`) when the set was
+re-selected under a new seed. They are **not** members of the committed
+20-tile calibration set, and because the evaluation exclusion geometry was
+built from that committed set they were never excluded from evaluation: all
+three are themselves tiles of the 340-tile Era-1 evaluation frame, and 25 of
+its 340 tiles overlap null-exemplar pixels. Per-frame counts and ids:
+`null-tiles/null_overlap_by_frame.json`. No reference symbol lies inside a
+null window, so no reference-bearing measurement changes; what the model was
+shown, as "no mounds here", is ground it was later scored on. The nulls are
+**deliberately frozen** — every committed run used these three — so this
+entry records the defect rather than replacing the files.
+
+The hard positives (05-08) and hard negatives (11-14, 18-29) are unaffected:
+every source tile named in their tables above is a member of the committed
+calibration manifest (re-verified 2026-09-13, 20 of 20).
 
 | Neutral Name | Actual File | Category | Source |
 |--------------|-------------|----------|--------|
-| example_15.png | null-tiles/null_lesovo.png | null | Training tile (empty) |
-| example_16.png | null-tiles/null_elenovo.png | null | Training tile (empty) |
-| example_17.png | null-tiles/null_32635.png | null | Training tile (empty) |
+| example_15.png | null-tiles/null_lesovo.png | null | 2025-12-23 training tile (empty); not in the committed calibration set (E86) |
+| example_16.png | null-tiles/null_elenovo.png | null | 2025-12-23 training tile (empty); not in the committed calibration set (E86) |
+| example_17.png | null-tiles/null_32635.png | null | 2025-12-23 training tile (empty); not in the committed calibration set (E86) |
 
 ---
 
@@ -179,10 +197,13 @@ all 4 appear in every pass due to pool exhaustion.
 | 05-08 | Revised (2026-02-02) | Hard positives from Phase 1 FN analysis — recognition failures; 2 Rakovski, 2 Elenovo (see Decision 4) |
 | 09-10 | Created | Canonical negatives from legend |
 | 11-14 | Revised (2026-02-02) | Hard negatives (core) from Phase 1 FP analysis — vote 5/5 hallucinations, one per sheet; re-extracted as 128×128 crops from GeoTIFFs centred on FP detection coordinates |
-| 15-17 | Created | Null tiles selected |
+| 15-17 | Created; provenance corrected (2026-09-13) | Null tiles selected from the 2025-12-23 training set, superseded 2026-01-04 and never rebuilt — see § Null Tiles and erratum E86 |
 | 18-29 | Created (2026-02-02) | Hard negatives (expanded pool) for H9 diversity rotation — vote 4/5 to 1/5 FPs ranked by vote count and distance, >50m from nearest reference |
 
-**Last updated**: 2026-02-02 (expanded HN pool extracted for H9 diversity rotation; 12 new crops added as examples 18-29)
+**Last updated**: 2026-09-13 (null-exemplar provenance corrected under erratum
+E86 — documentation only; no image file was changed). Before that: 2026-02-02
+(expanded HN pool extracted for H9 diversity rotation; 12 new crops added as
+examples 18-29).
 
 ---
 
