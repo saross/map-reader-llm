@@ -115,6 +115,7 @@ import json
 import os
 import re
 import shlex
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -453,8 +454,30 @@ def run_gates(board: Path, membership: dict[str, Any]) -> tuple[dict[str, Any], 
     return report, report["passed"]
 
 
-def render_deltas(report: dict[str, Any]) -> str:
+def render_deltas(report: dict[str, Any], source_commit: str | None = None) -> str:
+    """Render the G6 frame-delta table from the gates report.
+
+    A pure projection of ``gates.json``, which is what lets
+    ``check-renderings`` verify the committed document without re-scoring
+    a single cell.
+
+    Args:
+        report: The gates report (as written, or as committed in
+            ``<board>/gates.json``).
+        source_commit: Short hash to stamp as the render commit; defaults
+            to HEAD.
+
+    Returns:
+        The full Markdown document, newline-terminated.
+    """
     lines = [f"# G6 — committed-frame versus board-frame F1 at 20 m ({BOARD_ID})", "",
+             f"> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by "
+             f"`scripts/build_gs_era2_board.py gates` at commit "
+             f"`{source_commit or _git_head()}`; `check-renderings` is the drift guard "
+             f"(tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of "
+             f"2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents "
+             f"in Revision Policy Scope\") this projection carries provenance instead of "
+             f"a hand changelog.", "",
              f"> Generated {report['checked_at_utc']} by `scripts/build_gs_era2_board.py gates`. "
              f"G2: {report['G2_reproduction_failures']} reproduction failures; G3: {report['G3_frame_failures']} frame failures; "
              f"G4: {report['G4_cells']} cells of {report['G4_members']} members.", "",
@@ -464,6 +487,68 @@ def render_deltas(report: dict[str, Any]) -> str:
         lines.append(f"| `{r['condition_id']}` | {r['committed_bounds']} | {r['committed_f1_20']:.4f} | {r['board_f1_20']:.4f} | "
                      f"{r['delta_board_minus_committed']:+.4f} | {r['n_features']} | {r['n_detections_committed']} | {r['n_detections_board']} |")
     return "\n".join(lines) + "\n"
+
+
+def _git_head() -> str:
+    """Return the short HEAD hash for the render stamp (or ``unknown``)."""
+    try:
+        return subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"], cwd=REPO_ROOT,
+            capture_output=True, text=True, check=True, timeout=10,
+        ).stdout.strip() or "unknown"
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, OSError):
+        return "unknown"
+
+
+#: Neutralises the render stamp for drift comparison (see the manifests guard
+#: in ``scripts/generate_post_run_report.py`` for the same pattern).
+_RENDER_STAMP_RE = re.compile(r"at commit `[^`]+`")
+
+
+def check_renderings(board: Path) -> int:
+    """Drift guard for the board's generated Markdown projections.
+
+    Covers ``frame-deltas.md`` (rendered from ``gates.json``) and
+    ``membership.txt`` (rendered from ``membership.json``). Neither needs
+    a cell re-scored: both are renderings of committed JSON, so the guard
+    answers "is this current?" for a few milliseconds of work.
+
+    Args:
+        board: The board directory.
+
+    Returns:
+        Process exit code: 0 when every rendering matches, 1 otherwise.
+    """
+    checked = 0
+    stale: list[str] = []
+    gates_path, deltas_path = board / "gates.json", board / "frame-deltas.md"
+    if gates_path.exists() and deltas_path.exists():
+        fresh = render_deltas(json.loads(gates_path.read_text(encoding="utf-8")))
+        committed = deltas_path.read_text(encoding="utf-8")
+        checked += 1
+        if _RENDER_STAMP_RE.sub("", committed) != _RENDER_STAMP_RE.sub("", fresh):
+            stale.append(deltas_path.relative_to(REPO_ROOT).as_posix())
+    else:
+        print(f"MISSING: {gates_path.name} or {deltas_path.name}", file=sys.stderr)
+        return 1
+    mem_path, listing_path = board / "membership.json", board / "membership.txt"
+    if mem_path.exists() and listing_path.exists():
+        fresh_listing = render_listing(json.loads(
+            mem_path.read_text(encoding="utf-8"))) + "\n"
+        checked += 1
+        if listing_path.read_text(encoding="utf-8") != fresh_listing:
+            stale.append(listing_path.relative_to(REPO_ROOT).as_posix())
+    for rel in stale:
+        print(f"DRIFT: {rel} differs from a rendering of its committed JSON",
+              file=sys.stderr)
+    if stale:
+        print("Re-render with `build_gs_era2_board.py renderings` (frame-deltas, "
+              "from the committed gates.json — rewrites no JSON). Re-run `gates` "
+              "or `membership` only when the JSON itself is what is stale: both "
+              "rewrite their JSON as well as the document.", file=sys.stderr)
+        return 1
+    print(f"{checked} board rendering(s) current (render stamp neutralised)")
+    return 0
 
 
 def register(membership: dict[str, Any], write: bool) -> list[str]:
@@ -1047,7 +1132,8 @@ def finalise(board: Path, membership: dict[str, Any],
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    parser.add_argument("command", choices=["membership", "jobs", "gates", "register", "finalise"])
+    parser.add_argument("command", choices=["membership", "jobs", "gates", "register",
+                                            "finalise", "renderings", "check-renderings"])
     parser.add_argument("--write", action="store_true", help="register: persist to the register files")
     parser.add_argument("--no-analysis-row", action="store_true",
                         help=("register / finalise: do NOT write to the board's "
@@ -1061,6 +1147,24 @@ def main(argv: list[str] | None = None) -> int:
     board = REPO_ROOT / BOARD_DIR
     board.mkdir(parents=True, exist_ok=True)
     mpath = board / "membership.json"
+
+    if args.command == "check-renderings":
+        return check_renderings(board)
+    if args.command == "renderings":
+        # Re-render the generated projections from the COMMITTED JSON. Kept
+        # apart from `gates` on purpose: `gates` rewrites gates.json (with a
+        # fresh checked_at_utc) as well as the document, so using it to add a
+        # banner would move a gate report nobody asked to move.
+        gates_path = board / "gates.json"
+        if not gates_path.exists():
+            print(f"no committed {gates_path.name}", file=sys.stderr)
+            return 1
+        deltas_path = board / "frame-deltas.md"
+        deltas_path.write_text(
+            render_deltas(json.loads(gates_path.read_text(encoding="utf-8"))),
+            encoding="utf-8")
+        print(f"rendered {deltas_path.relative_to(REPO_ROOT)}")
+        return 0
 
     if args.command == "membership":
         membership = derive_membership()

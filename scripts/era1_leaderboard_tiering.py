@@ -126,6 +126,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from itertools import combinations
@@ -1048,16 +1049,34 @@ def load_cells(
 def main() -> int:
     """CLI entry point: load the board, round-robin, tier, and write results."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--analysis-id", type=str, required=True,
+    parser.add_argument("--analysis-id", type=str, default=None,
                         help="run-analyses.json analysis whose conditions_compared "
-                             "defines the board membership.")
+                             "defines the board membership. Required except for "
+                             "--render-md / --check, which read a committed "
+                             "tiering JSON instead of rebuilding a board.")
     parser.add_argument("--conditions", type=Path, default=DEFAULT_CONDITIONS)
     parser.add_argument("--analyses", type=Path, default=DEFAULT_ANALYSES)
     parser.add_argument("--ground-truth", type=Path, default=None,
                         help="Optional override; else derived from the cells' evals.")
     parser.add_argument("--bounds", type=Path, default=None,
                         help="Optional override; else derived from the cells' evals.")
-    parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--output-dir", type=Path, default=None,
+                        help="Where the tiering JSON and Markdown are written. "
+                             "Required except for --render-md / --check, which "
+                             "take the board directory as their own argument.")
+    parser.add_argument(
+        "--render-md", type=Path, default=None, metavar="BOARD_DIR",
+        help="Re-render tiering_<buffer>m.md from the COMMITTED "
+             "tiering_<buffer>m.json in BOARD_DIR and exit. Recomputes "
+             "nothing — no permutation, no evaluation, no detection file read "
+             "— because the Markdown is a pure projection of that JSON.",
+    )
+    parser.add_argument(
+        "--check", type=Path, default=None, metavar="BOARD_DIR",
+        help="Drift guard: re-render tiering_<buffer>m.md from the committed "
+             "JSON in memory and compare with the committed document, with the "
+             "rendered-at-commit stamp neutralised. Exit 1 on drift.",
+    )
     parser.add_argument("--n-permutations", type=int, default=N_PERMUTATIONS)
     parser.add_argument("--seed", type=int, default=SEED)
     parser.add_argument(
@@ -1084,6 +1103,17 @@ def main() -> int:
              "tile_classification.confusion to gate against.",
     )
     args = parser.parse_args()
+
+    if args.check is not None:
+        return check_rendering(args.check, args.buffer)
+    if args.render_md is not None:
+        path = write_markdown_from_json(args.render_md, args.buffer)
+        print(f"rendered {path}", flush=True)
+        return 0
+    for name in ("analysis_id", "output_dir"):
+        if getattr(args, name) is None:
+            parser.error(f"--{name.replace('_', '-')} is required unless "
+                         f"--render-md or --check is given")
 
     withheld_cells: list[dict] = []
     cells, _gdf_ref, _gdf_bounds, tile_order = load_cells(
@@ -1257,22 +1287,123 @@ def main() -> int:
     print(f"Wrote {json_path}", flush=True)
 
     md_path = args.output_dir / f"tiering_{args.buffer}m.md"
-    _write_markdown(md_path, result, ordered, tier_of)
+    md_path.write_text(render_markdown(result), encoding="utf-8")
     print(f"Wrote {md_path}", flush=True)
     return 0
 
 
-def _write_markdown(md_path: Path, result: dict, ordered: list[dict],
-                    tier_of: dict[str, int]) -> None:
-    """Write the human-readable tiering Markdown."""
+#: Neutralises the render-time stamp for drift comparison: re-rendering at a
+#: new commit must not read as drift when the projection is unchanged. The
+#: *computed-at* commit is taken from the JSON and is deliberately NOT
+#: neutralised — a board recomputed at a different commit IS a different board.
+_RENDER_STAMP_RE = re.compile(r"rendered at commit `[^`]+`")
+
+
+def tiering_paths(board_dir: Path, buffer_metres: int) -> tuple[Path, Path]:
+    """Return the (JSON, Markdown) tiering paths for a board directory.
+
+    Args:
+        board_dir: Directory holding ``tiering_<buffer>m.json``.
+        buffer_metres: The buffer the board's headline is computed at.
+
+    Returns:
+        Tuple of (JSON path, Markdown path).
+    """
+    return (board_dir / f"tiering_{buffer_metres}m.json",
+            board_dir / f"tiering_{buffer_metres}m.md")
+
+
+def write_markdown_from_json(board_dir: Path, buffer_metres: int) -> Path:
+    """Re-render a board's tiering Markdown from its committed JSON.
+
+    Args:
+        board_dir: Directory holding the committed tiering JSON.
+        buffer_metres: Buffer selecting the pair of files.
+
+    Returns:
+        The Markdown path written.
+
+    Raises:
+        SystemExit: If the JSON is absent.
+    """
+    json_path, md_path = tiering_paths(board_dir, buffer_metres)
+    if not json_path.exists():
+        raise SystemExit(f"no committed tiering JSON at {json_path}")
+    result = json.loads(json_path.read_text(encoding="utf-8"))
+    md_path.write_text(render_markdown(result), encoding="utf-8")
+    return md_path
+
+
+def check_rendering(board_dir: Path, buffer_metres: int) -> int:
+    """Drift guard for a board's tiering Markdown.
+
+    Args:
+        board_dir: Directory holding the committed pair of files.
+        buffer_metres: Buffer selecting the pair.
+
+    Returns:
+        Process exit code: 0 when the committed Markdown equals a
+        rendering of the committed JSON (render stamp neutralised), 1 on
+        drift or a missing file.
+    """
+    json_path, md_path = tiering_paths(board_dir, buffer_metres)
+    for path in (json_path, md_path):
+        if not path.exists():
+            print(f"MISSING: {path}", file=sys.stderr)
+            return 1
+    result = json.loads(json_path.read_text(encoding="utf-8"))
+    fresh = render_markdown(result)
+    committed = md_path.read_text(encoding="utf-8")
+    if _RENDER_STAMP_RE.sub("", committed) != _RENDER_STAMP_RE.sub("", fresh):
+        print(f"DRIFT: {md_path} differs from a rendering of {json_path.name}",
+              file=sys.stderr)
+        print("Re-render with --render-md (the Markdown is a pure projection; "
+              "no permutation is re-run).", file=sys.stderr)
+        return 1
+    print(f"{md_path.name} current: {len(result['ranking'])} ranked cell(s), "
+          f"{len(result['tiers'])} tiers (render stamp neutralised)")
+    return 0
+
+
+def render_markdown(result: dict, source_commit: str | None = None) -> str:
+    """Render the human-readable tiering Markdown from the tiering result.
+
+    A pure projection of ``result`` — the same object written to
+    ``tiering_<buffer>m.json`` — which is what lets ``--check`` verify the
+    committed document without re-running a 10,000-permutation test. The
+    rank table is read from ``result["ranking"]``, whose rows carry their
+    own tier, so no ordering decision is made here.
+
+    Args:
+        result: The tiering result object (as written, or as committed).
+        source_commit: Short hash to stamp as the render commit; defaults
+            to HEAD. The commit the board was *computed* at comes from
+            ``result["git_commit"]``.
+
+    Returns:
+        The full Markdown document, newline-terminated.
+    """
+    ordered = result["ranking"]
     n_sp = sum(1 for c in ordered if c["kind"] == "single-pass")
     n_con = sum(1 for c in ordered if c["kind"] == "consensus")
     n_pv = sum(1 for c in ordered if c["kind"] == "verified-PV")
     n_sig = sum(1 for r in result["pairwise"] if r["significant"])
     pv_frag = f" + {n_pv} verified-PV" if n_pv else ""
+    json_name = f"tiering_{result['buffer_metres']}m.json"
     lines = [
         f"# Era-1 leaderboard — statistical tiering "
         f"({result['buffer_metres']} m) — `{result['analysis_id']}`",
+        "",
+        f"> **GENERATED FILE — do not hand-edit.** Rendered from `{json_name}` "
+        f"by `scripts/era1_leaderboard_tiering.py`, computed at commit "
+        f"`{result.get('git_commit', 'unknown')}` and rendered at commit "
+        f"`{source_commit or git_commit()}`. Per the PI ruling of 2026-09-11 "
+        f"(`docs/methodology/output-directory-standard.md` § \"Documents in "
+        f"Revision Policy Scope\") this projection carries provenance instead "
+        f"of a hand changelog: \"is this current?\" is answered by "
+        f"`--check <board dir>` and its tier-1 test, and `--render-md <board "
+        f"dir>` re-renders it from the committed JSON without re-running the "
+        f"permutation.",
         "",
         f"- **Cells**: {len(ordered)} ({n_sp} single-pass + {n_con} consensus{pv_frag}), "
         f"{result['n_tiles']} evaluation tiles",
@@ -1307,7 +1438,7 @@ def _write_markdown(md_path: Path, result: dict, ordered: list[dict],
         lines.append(
             f"| {i} | `{c['label']}` | {c['kind']} | {c['n_passes']} | "
             f"{c['eval_f1']:.3f} | {c['observed_micro_f1']:.3f} | "
-            f"{c['f1_gap']:+.3f} | {mcc} | {tier_of[c['ref']]} |"
+            f"{c['f1_gap']:+.3f} | {mcc} | {c['tier']} |"
         )
     if result.get("mcc_permutation"):
         mcc_block = result["mcc_permutation"]
@@ -1361,7 +1492,7 @@ def _write_markdown(md_path: Path, result: dict, ordered: list[dict],
                 f"{r['p_value']:.4f} | {r['bh_adjusted_p']:.4f} | "
                 f"{'yes' if r['significant'] else 'no'} |"
             )
-    md_path.write_text("\n".join(lines) + "\n")
+    return "\n".join(lines) + "\n"
 
 
 if __name__ == "__main__":
