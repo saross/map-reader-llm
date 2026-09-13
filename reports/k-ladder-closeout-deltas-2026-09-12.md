@@ -1,7 +1,12 @@
 # K-ladder closeout: claims with anchors, and what is left for the PI
 
-> **Last revised**: 2026-09-12 (original publication — the closing report of the
-> K-ladder closeout job). Controlling card:
+> **Last revised**: 2026-09-13 (§ 10 marked — questions 1, 2, 5 and 8 RULED and
+> DONE, questions 3, 4, 6 and 7 still open; and one claim of § 8 corrected in
+> question 1's note: the three Gemini 3.7 cells abort the tiering on the **F1**
+> arm, not the MCC arm, so they are admitted and withheld from every statistic
+> rather than published with a withheld MCC. Deltas:
+> `reports/k-ladder-admission-deltas-2026-09-13.md`. Prior: 2026-09-12, original
+> publication — the closing report of the K-ladder closeout job). Controlling card:
 > `planning/k-ladder-review-2026-09-11.md` (rulings R1–R5). Companions:
 > `reports/k-ladder-phase1-deltas-2026-09-12.md`,
 > `reports/k-ladder-phase2-deltas-2026-09-12.md`,
@@ -472,6 +477,13 @@ by reading rather than by running:
 
 Numbered, recommended answer first.
 
+> **RULED 2026-09-13 (morning).** Questions **1, 2, 5 and 8** are answered and
+> the work they asked for is **DONE** — deltas in
+> `reports/k-ladder-admission-deltas-2026-09-13.md`, and a note under each
+> question below. Questions **3, 4, 6 and 7 remain open**; question 4 in
+> particular now blocks three cells' whole statistics on the Era-2 board, not
+> only their tile-MCC (see question 1's note).
+
 **1. The Era-2 board rebuild: which admission mechanism?**
 *Recommended: route (a), a `k-ladder/membership.json` the main builder defers to
 by condition id, exactly as it already defers to `opmax/membership.json`.* It
@@ -484,6 +496,29 @@ snapshot `signature_history` and the resolved `re_sign_pending` before
 `finalise` runs. Also worth knowing: admitting the 46 would roughly halve the
 board's Gemini 3 F1 floor, several K = 1 image rungs scoring 0.61–0.69.
 
+> **RULED — route (a), and DONE 2026-09-13.**
+> `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/k-ladder/membership.json`
+> now names the 50 condition ids (46 Phase 2 + 4 tier E) with a reason each, and
+> `derive_membership()` defers to it by condition id before both refusal rules,
+> which are kept for everything else. Nothing was re-scored and no `-era2b` row
+> was minted: the cohort joins under its own ids with its board-frame
+> evaluations, so G2 is an identity and G6's delta is 0.0000 by construction.
+> Both further blockers this section names are fixed — `finalise` now carries
+> `signature_history` (and nests a resolved `re_sign_pending` inside the fresh
+> one), and the tiering catches the refusal per cell instead of aborting.
+> **One thing this section got wrong, and it matters:** the three 3.7 cells do
+> not abort on the MCC arm through `ConfusionGateError`. They abort earlier, on
+> the **F1** arm, through a plain `ValueError` from
+> `compute_per_tile_tp_fp_fn` stamped `tile_join_detection_shortfall`, because
+> `assign_source_tiles` preserves a non-null `source_tile` column rather than
+> re-joining it to the frame. So their whole per-tile table is unavailable on
+> this frame, not only their MCC: they are **admitted and withheld** — ranked
+> nowhere, in no BH family, listed with their (sound) whole-frame F1 — which is
+> where question 4 already left them. Measured on all 50 cells: exactly these
+> three refuse; the four tier E cells carry no `source_tile` at all and so are
+> joined geometrically from the frame, and the 43 `pv-diag-384` cells already
+> speak the frame's vocabulary.
+
 **2. The signed `uplift-supplement-flatten` row's five renamed ids — confirm?**
 *Recommended: yes, confirm the rename as made.* The five ids name the same five
 artefacts with the same five measured values; leaving them stale would break the
@@ -492,6 +527,14 @@ register's foreign-key guard and a tier-1 test. The row's `outcome`,
 `_conditions_note` records the change. If you would rather a signed row were
 never edited even for a rename, the alternative is to keep the old labels as
 aliases, which the register has no mechanism for.
+
+> **RULED — CONFIRMED, and DONE 2026-09-13.** The rename stands as made.
+> Re-verified at source: 441 `conditions_compared`, all five ids in the `…of5`
+> form with no `of30` id left, `manually_verified_at` still
+> 2026-09-10T22:55:40Z, `outcome` untouched. The only edit was
+> `_conditions_note`, which now records the confirmation and its date. The
+> foreign-key guard passes (`build_manifests` returns `warnings == []`) and so
+> does its tier-1 test.
 
 **3. Tier E's K = 10 rung is built by a different rule — leave it, or rebuild?**
 *Recommended: leave it and cite § 2.2 wherever the ladder is reported.* The
@@ -517,6 +560,14 @@ re-tiering costs is a grown BH family on a committed board whose pairwise
 p-values `findings.md` § 4.1 gates against. Treating the 55-map board's
 membership as its own decision, as you did for Era-2, keeps the two separable.
 
+> **RULED — finish and register, do NOT re-tier; DONE 2026-09-13.** The rung is
+> swept on r2 at 50 m, registered through the generated-manifest flow, and
+> § 3.3's K = 5 row is filled with its R1-non-compliant flag and its "not
+> supplied" cost cell kept. `results/55map-final-board-r2-2026-09-06`'s
+> `final_board_50m.json`, its tiering and its 595-pair BH family are untouched:
+> `scripts/final_board_build.py` was not run. Figures in
+> `reports/k-ladder-admission-deltas-2026-09-13.md`.
+
 **6. The h10 `consensus_t3/t4/t5` — rebuild, or leave?**
 *Recommended: leave them.* They reproduce at identical counts and the only
 difference is one cluster centroid 0.444 m from its re-derivation; `t4` is a
@@ -535,7 +586,35 @@ by this job, so the `verifier-uplift-pairing` row needs no amendment. Tier E's
 six rows are board-frame rows, excluded from the supplement by your 2026-09-10
 rule, exactly as Phase 2's 46 were.
 
+> **ACKNOWLEDGED 2026-09-13, and still true after the admission.** Admitting the
+> 46 Phase 2 rungs and the 4 tier E rungs to the Era-2 board changed no
+> supplement input: they remain board-frame rows, still excluded by the
+> 2026-09-10 rule, so `verifier-uplift-pairing` still needs no amendment. The
+> one register edit of this job that touches the supplement's family is the
+> question-2 rename, and it moved no measured value.
+
 ## Changelog
+
+### 2026-09-13 — § 10 marked: questions 1, 2, 5 and 8 ruled and done
+
+**Trigger**: the PI's rulings of 2026-09-13 (morning) and the admission job that
+executed them (`reports/k-ladder-admission-deltas-2026-09-13.md`).
+
+**Body edits, all inside § 10**: a banner over the question list naming which are
+closed, and a RULED / DONE note under questions 1, 2, 5 and 8. Questions 3, 4, 6
+and 7 are left exactly as written, because they are still open.
+
+**One claim of this report is CORRECTED in question 1's note** — the only
+numerical or mechanical claim that moved:
+
+| claim | as published 2026-09-12 | as measured 2026-09-13 |
+|---|---|---|
+| How the three 3.7 cells abort the tiering | an uncaught `ConfusionGateError` on the MCC arm (§ 8) | a plain `ValueError` on the **F1** arm, from `compute_per_tile_tp_fp_fn`, stamped `tile_join_detection_shortfall` |
+| What can therefore be published for them | their F1, with tile-MCC withheld | **neither**: the whole per-tile table is unavailable on this frame, so they are admitted and withheld from every statistic, with only their (sound) whole-frame F1 quoted |
+| How many of the 50 admitted cells refuse | three (correct) | three, confirmed by measuring all 50 — the four tier E cells carry no `source_tile` and are joined geometrically, the 43 `pv-diag-384` cells match the frame's vocabulary |
+
+**What did NOT change**: §§ 1–9 in their entirety, every spend figure, every
+gate verdict, and the recommendations under questions 3, 4, 6 and 7.
 
 ### 2026-09-12 — Original publication
 
