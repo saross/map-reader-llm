@@ -1,6 +1,20 @@
 # K-ladder review: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-13 (latest — the **MCB job** executed at zero API
+> **Last revised**: 2026-09-13 (latest — the review's **three withheld rungs
+> and its MCC reading both reach the Era-2 board**, which was REBUILT under
+> checklist item 6 and awaits the PI's re-signature. The board now carries a
+> **tile-MCC permutation family** on the same swap masks as F1 (ruling 7),
+> reported beside the preregistered F1 tiering and not replacing it: 2,982 of
+> 11,175 pairs significant, 6 MCC tiers, MCC tie set 33, MCC MCB 59 of 150. It
+> **corroborates § 4 and the MCB job's PARETO MCC SET reading at board scale** —
+> no F1 Tier-1 cell is in MCC Tier 1, MCC Tier 1 is 33 cells drawn entirely
+> from F1 tiers 6–12 and led by single-pass image cells, and the two admissible
+> sets share only 9 members of 65 and 59. The three Gemini 3.7 gold-standard
+> text rungs stay admitted-and-withheld from BOTH families under ruling 6, now
+> with the shortfall counts and both tile vocabularies published; the K = 3
+> rung's board figure is corrected to F1@20 **0.8860** / 495. Deltas:
+> `reports/era2-board-mcc-family-2026-09-13.md`. Before that — the **MCB job**
+> executed at zero API
 > cost: the PI's two afternoon rulings landed and the review's analysis row is
 > **ready for signature**. The per-family **Hsu MCB sets are supplied** for all 22
 > tiered ladders on F1 and tile-MCC with the Era-2 board's own MCB step, each
@@ -396,7 +410,29 @@ adding a statistic family to a signed board is a change the PI did not rule.
 
 ## Changelog
 
-### 2026-09-13 (latest) — the MCB job executed at US$0; the row is ready for signature
+### 2026-09-13 (latest) — the review's MCC reading corroborated at board scale; the three withheld rungs disclosed
+
+**Trigger**: checklist item 6
+(`planning/documentation-foundation-checklist-2026-09-13.md`) rebuilt the GS
+Era-2 verified board, which holds this review's 46 Phase 2 rungs and 4 tier E
+rungs. Nothing in this card's own numbers changed; what changed is that two of
+its findings now have a board-scale counterpart, and one of its cells has a
+corrected figure.
+
+| Claim | this card's reading | the board's, on 150 cells |
+|---|---|---|
+| tile-MCC's resolution | the MCC-admissible set is the whole ladder on 12 of 22 ladders; tile-MCC separates on none of tier E's six pairs | tile-MCC separates **2,982 of 11,175** pairs against F1's 7,961, and cliques into **6** tiers against F1's 14 |
+| the two objectives select different rungs | K = 1 ruled out on F1 on 20 of 22 ladders, admissible on tile-MCC on **22 of 22**, highest tile-MCC on 13 | **no F1 Tier-1 cell is in MCC Tier 1**; MCC Tier 1 is 33 cells drawn entirely from F1 tiers 6–12, led by single-pass image cells; the two Hsu sets share **9** members of 65 and 59 |
+| the three withheld 3.7 GS text rungs | tile-MCC withheld with a named reason; raw 0.1337 / 0.1422 / 0.1337 quoted as not-published | withheld from **both** families, with the shortfall counts (22 of 526, 21 of 475, 20 of 467 booked) and **both tile vocabularies** published, and each interval stated **withdrawn** rather than superseded |
+| `g37-text-k3-verified-opmax` F1@20 | 0.8870 | **0.8860** / 495 detections (the recovery-fragment fix; its raw tile-MCC is no longer quoted, because its re-scored artefact withholds the tile block at source) |
+
+**What this does NOT change in this card**: no ladder's ΔF1 or ΔMCC, no
+BH verdict, no per-family MCB set, no admissible rung, no cost figure, and no
+signature — the review's analysis row was signed 2026-09-13T06:58:12Z and was
+not touched. The board's own F1 arm reproduced byte-identically, so the
+review's ladder rungs keep the board-frame F1 they were admitted with.
+
+### 2026-09-13 — the MCB job executed at US$0; the row is ready for signature
 
 **Trigger**: the PI's two rulings of 2026-09-13 (afternoon) — (1) "wait for the
 sets": supply the per-family Hsu multiple-comparisons-with-the-best admissible

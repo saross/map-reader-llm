@@ -1,6 +1,19 @@
 # The GS Era-2 verified board: the Gemini 3.7 and 3.8 GS cells on one frame with the incumbents
 
-> **Last revised**: 2026-09-11 (`pv-high-text-t0.0-n3`: the union under it was
+> **Last revised**: 2026-09-13 (the board is **REBUILT and awaits the PI's
+> re-signature**: one rebuild carried three ruled changes — the four
+> recovery-fix cells at their current evaluations (`g37-text-k3-verified-opmax`
+> 0.8870 → **0.8860** / 495, the other three unchanged), ruling 7's **tile-MCC
+> permutation family** on the same swap masks (2,982/11,175 pairs significant,
+> 6 MCC tiers, MCC tie set 33, MCC MCB 59 of 150, reported BESIDE the
+> preregistered F1 tiering and not replacing it), and ruling 6's withheld-cell
+> disclosure. The **F1 arm reproduced exactly** — all 11,175 pairwise records
+> and the F1 MCB artefact byte-identical, **Tier 1 and its five members
+> unchanged** — and the two metrics turn out to select different cells: no F1
+> Tier-1 cell is in MCC Tier 1, and the two admissible sets share 9 members of
+> 65 and 59. Ten signature-bearing paths asserted byte-equal; no signature
+> field touched. Deltas: `reports/era2-board-mcc-family-2026-09-13.md`. Prior:
+> 2026-09-11 (`pv-high-text-t0.0-n3`: the union under it was
 > rebuilt, the sweep was never stale — the 410 was a cross-vintage join
 > artefact; the argmax (3, 0.15) holds on both vintages; off-board, not
 > repointed, the call is the PI's; a vintage guard now runs before the filter.
@@ -15,7 +28,7 @@
 > Era-2 ∩ B-union, 435 mounds; § 3 membership and G6 follow; earlier the
 > same day: frame description corrected, same carrier tiles, 80 clipped; prior: 2026-09-08 original publication, drafted
 > overnight in Session 151 on the PI's instruction; **DRAFT — awaits PI
-> sign-off, § 9**).
+> sign-off, § 9**)).
 > Controls one $0 API block (re-scoring and tiering on sapphire). Split out
 > of the r2 recompute chain by PI ruling (S149; `planning/reference-revision-2026-09-06.md`
 > § 4 step 4 and its pre-run audit fork 2). See [§ Changelog](#changelog).
@@ -261,6 +274,46 @@ until § 9 is signed.
       79-cell board with the nine opmax cells corrected.
 
 ## Changelog
+
+### 2026-09-13 (latest) — rulings 6 and 7 executed in ONE rebuild; awaiting the PI's re-signature
+
+The rebuild the two rulings below deferred to has run, on sapphire, at US$0 and
+with no API call (checklist item 6,
+`planning/documentation-foundation-checklist-2026-09-13.md`). It carried three
+changes at once so the board is re-signed once:
+
+1. **The four recovery-fix cells at their current evaluations**, not re-scored
+   here: `g37-text-k3-verified-opmax` reads F1@20 **0.8860** / 495 detections
+   (from 0.8870 / 494) in the withheld table and in G6, with its committed
+   tile-MCC no longer quoted because its own re-scored artefact withholds the
+   tile block at source; the two K = 1 cells and tier E's K = 5 are unchanged.
+2. **Ruling 7's tile-MCC family**: 2,982/11,175 pairs significant at BH
+   q = 0.05 within its own family, **6 MCC tiers**, **MCC tie set 33**, **MCC
+   Hsu admissible 59 of 150** (w_upper 0.0828), on swap masks byte-identical to
+   the F1 test's. Reported beside the preregistered F1 tiering; the board's
+   tiering, ranks and Tier 1 remain the F1 ones.
+3. **Ruling 6's disclosure**: the withheld table now carries each cell's
+   whole-frame F1 point, its interval **withdrawn** (tile-resampled bootstrap)
+   with the retracted interval named where one survives, the shortfall counts,
+   both tile vocabularies, and the published-convention sentence.
+
+**The F1 arm reproduced exactly** — `ranking`, `tiers`, `tie_set` and all
+11,175 pairwise records byte-identical to the committed run, the F1 MCB
+artefact byte-identical, Tier 1 and its five members unchanged, gates and G6's
+0.0078 unchanged.
+
+**The finding worth the PI's attention** is that the two metrics do not agree.
+No F1 Tier-1 cell is in MCC Tier 1; MCC Tier 1 is 33 cells drawn entirely from
+F1 tiers 6–12, led by single-pass **image** proposer + verifier baselines
+(`verified-adv-image-baseline-pro-vf`, tile-MCC 0.8887, F1 rank 119 of 150);
+and the two admissible sets share **9** members of 65 and 59. That is § 4's
+"the two objectives select different rungs" measured over a whole board, and it
+is the argument for ruling 7's "reported, not replacing".
+
+Ten signature-bearing paths asserted byte-equal before and after
+(`rebuild-mcc-2026-09-13/signature-paths.json`, PASS); no signature field was
+altered and the signed analysis row was not written. Deltas:
+`reports/era2-board-mcc-family-2026-09-13.md`.
 
 ### 2026-09-13 — PI ruling: the name-based tile join is the published convention
 
