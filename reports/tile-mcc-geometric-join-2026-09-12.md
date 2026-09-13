@@ -1,8 +1,11 @@
 # The tile join: making it geometric, and what that costs
 
-> **Last revised**: 2026-09-12 (original publication — the response to the
-> PI's 2026-09-12 ruling on `reports/k-ladder-phase2-deltas-2026-09-12.md`
-> § 6.3). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-13 (PI RULING: the name-based `id` join is the
+> published tile-MCC convention — accurate on each cell's own tiling,
+> principled as the per-tile decision the model actually made; the
+> geometric variants stay implemented as a supplement sensitivity option;
+> cells the invariant refuses are disclosed as withheld. Earlier:
+> original publication 2026-09-12). See [§ Changelog](#changelog).
 
 ## 0. Headline, and a STOP
 
@@ -439,6 +442,10 @@ defect is diagnosed, whether the repair and the diagnosis rest on the same
 unexamined premise.
 
 ## Changelog
+
+### 2026-09-13 — PI ruling on the join rule
+
+The PI approved the name-based join as the published convention (S153, ruling 6), on the reasoning that tile-MCC scores the pipeline's decision on the tile the model saw, which the tile identifier records exactly, while a geometric assignment on an overlapping frame (384 px tiles at a 336 px step, 12.5 % overlap) is not a single-valued function of the point. The three withheld cells stay withheld and disclosed; the geometric variants remain available for a supplement sensitivity row.
 
 ### 2026-09-12 — Original publication
 
