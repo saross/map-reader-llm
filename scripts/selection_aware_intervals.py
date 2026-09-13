@@ -429,14 +429,25 @@ def build_board_tile_counts(
 
     Returns:
         ``(specs, counts)`` with ``counts`` shaped ``(n_cells, n_tiles, 3)``.
+        A cell the tile-join invariant refuses is WITHHELD — left out of the
+        candidate set and logged — rather than aborting the run, because the
+        admissible set must be computed over the same cells the tiering ranked,
+        and the tiering withholds those cells too (PI ruling 2026-09-13).
     """
     from scripts.era1_leaderboard_tiering import load_cells  # noqa: PLC0415
 
+    withheld: list[dict[str, Any]] = []
     cells, gdf_ref, gdf_bounds, tile_order = load_cells(
         conditions_path or PROJECT_ROOT / "results/run-conditions.json",
         analyses_path or PROJECT_ROOT / "results/run-analyses.json",
         analysis_id, bounds_override, gt_override, buffer_metres,
+        withheld=withheld,
     )
+    if withheld:
+        logger.warning(
+            "board %s: %d candidate(s) WITHHELD by the tile-join invariant and "
+            "excluded from the admissible set: %s", analysis_id, len(withheld),
+            ", ".join(w["label"] for w in withheld))
     specs = [{"ref": c["ref"], "label": c["label"], "eval_f1": c["eval_f1"]}
              for c in cells]
     counts = np.stack([

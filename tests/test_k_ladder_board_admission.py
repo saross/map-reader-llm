@@ -281,6 +281,26 @@ def test_confusion_gate_error_is_the_type_the_withhold_path_catches():
                             "references": {}})
 
 
+def test_a_tile_join_refusal_is_told_apart_from_every_other_value_error():
+    """The F1 arm raises a plain ValueError, so the reason CODE is the signal.
+
+    Discovered on 2026-09-13: the invariant refuses the per-tile F1 table as
+    well as the tile classification, and it does so with a ``ValueError`` from
+    ``lib_advanced_metrics``. Catching ``ValueError`` broadly would have
+    swallowed a missing detections set or an un-scoreable cell, so the withhold
+    path tests the stamped reason code instead.
+    """
+    from scripts import era1_leaderboard_tiering as t
+
+    assert t.is_tile_join_refusal(ValueError(
+        "per-tile TP/FP/FN table refused: 22 of 526 in-frame detections ... "
+        "(tile_join_detection_shortfall) ..."))
+    assert t.is_tile_join_refusal(t.ConfusionGateError("tile join refused"))
+    assert not t.is_tile_join_refusal(ValueError(
+        "cli_args declare neither a detections set nor a detections_dir"))
+    assert not t.is_tile_join_refusal(FileNotFoundError("detections set missing"))
+
+
 def test_finalise_publishes_the_withheld_list_from_the_tiering(tmp_path, monkeypatch):
     """``finalise`` lifts ``mcc_permutation.withheld`` into provenance and README."""
     board = _finalise_fixture(tmp_path, monkeypatch, {"signed_at": "x"})

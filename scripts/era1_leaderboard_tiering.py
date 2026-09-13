@@ -136,6 +136,9 @@ from n1_baseline_leaderboard_tiering import (  # noqa: E402
 
 from apply_fdr_correction import apply_bh_correction  # noqa: E402
 from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_REASON_DETECTION_SHORTFALL,
+    TILE_JOIN_REASON_NO_SOURCE_TILE,
+    TILE_JOIN_REASON_REFERENCE_SHORTFALL,
     calculate_tile_classification,
     compute_per_tile_classification,
     compute_per_tile_tp_fp_fn,
@@ -583,6 +586,38 @@ def check_confusion_gate(label: str, rebuilt: dict, recorded: dict | None,
             "passed": True}
 
 
+#: Reason codes the tile-join invariant stamps into its refusal messages. A
+#: ``ValueError`` carrying one of these is a REFUSAL — the cell's per-tile table
+#: does not describe this frame — and is distinguishable from every other
+#: ``ValueError`` the per-tile path can raise (an un-scoreable cell, a missing
+#: file), which must still fail loud.
+TILE_JOIN_REFUSAL_CODES = (
+    TILE_JOIN_REASON_DETECTION_SHORTFALL,
+    TILE_JOIN_REASON_REFERENCE_SHORTFALL,
+    TILE_JOIN_REASON_NO_SOURCE_TILE,
+)
+
+
+def is_tile_join_refusal(error: Exception) -> bool:
+    """Whether an exception is the tile-join invariant refusing a cell.
+
+    The invariant raises a plain ``ValueError`` from
+    ``lib_advanced_metrics.compute_per_tile_tp_fp_fn`` (the F1 arm) and a
+    :class:`ConfusionGateError` from the tile-classification arm, so the F1
+    arm's refusal has to be told apart from every other ``ValueError`` by its
+    stamped reason code rather than by type.
+
+    Args:
+        error: The exception raised while building a cell's per-tile table.
+
+    Returns:
+        True when the message carries one of :data:`TILE_JOIN_REFUSAL_CODES`.
+    """
+    if isinstance(error, ConfusionGateError):
+        return True
+    return any(code in str(error) for code in TILE_JOIN_REFUSAL_CODES)
+
+
 def mcc_family(cells: list[dict]) -> tuple[list[int], list[dict]]:
     """Split a loaded board into the MCC-testable cells and the withheld ones.
 
@@ -615,6 +650,7 @@ def load_cells(
     gt_override: Path | None,
     buffer_metres: int = HEADLINE_BUFFER_M,
     want_mcc: bool = False,
+    withheld: list[dict] | None = None,
 ) -> tuple[list[dict], gpd.GeoDataFrame, gpd.GeoDataFrame, list[str]]:
     """Load every board cell with per-tile stats, F1 and MCC.
 
@@ -634,13 +670,23 @@ def load_cells(
         want_mcc: Also rebuild each cell's per-tile one-hot tile classification
             (and gate it against the committed confusion), so the MCC
             permutation can run on the same tile order as the F1 one.
+        withheld: Optional sink for cells the tile-join invariant REFUSES. When
+            a list is supplied, such a cell is appended to it (ref, label, its
+            committed F1, the recorded MCC, and the refusal reason) and left out
+            of the returned cells rather than raising — the board is then tiered
+            over the cells that do have a per-tile table on this frame, and the
+            withheld ones are published as withheld (PI ruling 2026-09-13).
+            ``None`` keeps the fail-loud behaviour, which is what a caller
+            without a place to publish a withholding wants.
 
     Returns:
         ``(cells, gdf_ref, gdf_bounds, tile_order)``.
 
     Raises:
         ValueError: if the cells disagree on ground truth / bounds and no
-            override is supplied (a silent-scope-mix guard).
+            override is supplied (a silent-scope-mix guard); or if a cell's
+            per-tile table cannot be built for any reason other than a
+            tile-join refusal, or for that reason with no ``withheld`` sink.
     """
     refs = load_board_refs(analyses_path, analysis_id)
 
@@ -702,8 +748,30 @@ def load_cells(
     cells: list[dict] = []
     for r in resolved:
         cond, eval_path, cli = r["cond"], r["eval_path"], r["cli"]
-        tp, fp, fn, n_passes = cell_per_tile(cli, gdf_ref, gdf_bounds, tile_order,
-                                             buffer_metres)
+        # The tile-join invariant can refuse the F1 arm as well as the MCC arm:
+        # a cell whose source_tile vocabulary is not this frame's has no
+        # per-tile decomposition on it, only a sound whole-frame F1. When the
+        # caller supplies a ``withheld`` sink, such a cell is WITHHELD from the
+        # statistics and listed rather than aborting the board (PI ruling
+        # 2026-09-13); without a sink the old fail-loud behaviour stands, which
+        # is what every other caller of this function still wants.
+        try:
+            tp, fp, fn, n_passes = cell_per_tile(cli, gdf_ref, gdf_bounds,
+                                                 tile_order, buffer_metres)
+        except (ValueError, ConfusionGateError) as error:
+            if withheld is None or not is_tile_join_refusal(error):
+                raise
+            withheld.append({
+                "ref": r["ref"], "label": cond["label"],
+                "eval_f1": round(float(board_f1_at_20m(eval_path, buffer_metres)), 6),
+                "recorded_mcc": read_tile_mcc(eval_path),
+                "arm": "per-tile F1 (and therefore MCC)",
+                "reason": str(error),
+                "ruling": ("PI ruling 2026-09-13: withhold and list, never "
+                           "abort the board"),
+            })
+            print(f"  WITHHELD {cond['label']}: {error}", flush=True)
+            continue
         # Kind label: distinguish the three Era-1 architectures so the board
         # does not mislabel proposer-verifier cells as single-pass.
         kind = {
@@ -804,6 +872,15 @@ def main() -> int:
              "board's headline is 50.",
     )
     parser.add_argument(
+        "--strict-tile-join", action="store_true",
+        help="Abort on the FIRST cell the tile-join invariant refuses, instead "
+             "of withholding it and tiering the rest. The default (withhold "
+             "and list) is the PI ruling of 2026-09-13: a board must not be "
+             "destroyed by one cell whose vocabulary its frame cannot join. "
+             "Pass this when you want the refusal to be fatal — auditing a "
+             "board that is supposed to have no refused cell, for instance.",
+    )
+    parser.add_argument(
         "--permute-mcc", action="store_true",
         help="Also run the tile-swap permutation on tile-level MCC, through "
              "the same per-tile swap masks as the F1 test (same seed, same "
@@ -813,11 +890,17 @@ def main() -> int:
     )
     args = parser.parse_args()
 
+    withheld_cells: list[dict] = []
     cells, _gdf_ref, _gdf_bounds, tile_order = load_cells(
         args.conditions, args.analyses, args.analysis_id,
         args.bounds, args.ground_truth, buffer_metres=args.buffer,
         want_mcc=args.permute_mcc,
+        withheld=None if args.strict_tile_join else withheld_cells,
     )
+    if withheld_cells:
+        print(f"WITHHELD {len(withheld_cells)} cell(s) the tile-join invariant "
+              f"refused; they are listed in the output and are NOT tiered: "
+              + ", ".join(w["label"] for w in withheld_cells), flush=True)
     print(f"Loaded {len(cells)} cells "
           f"({sum(c['kind'] == 'single-pass' for c in cells)} single-pass + "
           f"{sum(c['kind'] == 'consensus' for c in cells)} consensus + "
@@ -906,6 +989,9 @@ def main() -> int:
         "seed": args.seed,
         "fdr_q": FDR_Q,
         "n_tiles": len(tile_order),
+        "n_cells": len(cells),
+        "n_cells_withheld": len(withheld_cells),
+        "withheld_cells": withheld_cells,
         "replicate_handling": (
             "single-set cells: integer per-tile of one aggregated set; "
             "replicate-mean cells (single-pass K runs, phase3c 5 replications): "
@@ -982,6 +1068,20 @@ def _write_markdown(md_path: Path, result: dict, ordered: list[dict],
         f"**{len(result['tiers'])} tiers**",
         f"- **Tie set (Tier 1)**: {', '.join('`' + r + '`' for r in result['tie_set'])}",
         "",
+    ]
+    if result.get("withheld_cells"):
+        lines += [
+            f"- **{len(result['withheld_cells'])} cell(s) WITHHELD** — the "
+            f"tile-join invariant refuses their per-tile table on this frame, "
+            f"so they are neither ranked nor tested here. Their whole-frame F1 "
+            f"is unaffected and is quoted for reference:",
+            "",
+        ]
+        lines += [f"  - `{w['label']}` (F1@{result['buffer_metres']} m "
+                  f"{w['eval_f1']:.4f}) — {w['reason']}"
+                  for w in result["withheld_cells"]]
+        lines += [""]
+    lines += [
         "| rank | condition | kind | passes | F1@20m | micro-F1 | gap | MCC | tier |",
         "|---:|---|---|---:|---:|---:|---:|---:|---:|",
     ]
