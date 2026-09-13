@@ -53,6 +53,25 @@ cost of one more verifier pass.
 | Passes | K = 3 (run_1..3); K = 1 read from run_1 | first-N rule |
 | Verifier arms | arm 1: carried `gemini-3-flash` (`verify_adversarial-text`, T = 0.0, MINIMAL, n = 1); arm 2: `gemini-3.7-flash` low, same config | mirrors the 3.7 text 2×2 (`gemini37-55map-grid-2026-08-31`) so the modality difference-in-differences exists at deployment |
 | Operating points | CARRIED from a GS K = 3 calibration leg (below), not an argmax; oracle reported beside it | the fourth-cell precedent |
+
+**Carried operating points — FIXED 2026-09-13, before any 55-map scoring.**
+The GS calibration leg ran as § 5 step 1 specifies: the K = 3 first-N union
+of the committed GS 3.7 image passes (622 candidates, votes
+{1: 105, 2: 57, 3: 460}), both verifier arms at 622/622 with zero failures,
+swept on the grid-common frame at the GS-primary 20 m buffer.
+
+| Arm | Verifier | Carried (prob_t, k) | GS F1@20 | P | R |
+|---|---|---|---:|---:|---:|
+| arm 1 | `gemini-3-flash-preview`, `verify_adversarial-text`, T = 0.0, MINIMAL | **(0.10, k3)** | 0.9197 | 0.9032 | 0.9369 |
+| arm 2 | `gemini-3.7-flash`, same config, thinking `low` | **(0.88, k3)** | 0.9245 | 0.9192 | 0.9299 |
+
+Anchor gate passed (text-B rescored 0.89614 against the registered 0.8961).
+Both arms select unanimity, so the K = 1 rung carries `prob_t` only and k
+collapses to 1. Artefacts: `outputs/gemini37-image-gs-2026-09-01/verifier/g384_ov192_g37img/union_k3.geojson`,
+`verify_k3_arm{1,2}/`, `results/gemini37-image-55map-2026-09-13/gs-calibration/`.
+Audited cost of the leg US$1.12 (arm 1 US$0.4417 + arm 2 US$0.6804, flex,
+3.7 rate card) against the card's US$1.2 — the union came in at 622 rather
+than the estimated ≈ 450.
 | Reference, buffer | r2, 50 m; tile-MCC on the 8,541-tile corpus | the board's instrument |
 | Cost basis | token-basis flex, audited per `reports/token-load-audit-2026-06-12.md` § 2; billed reconciliation within 2 % on the August 3.7 leg | `reports/billing-reconciliation-2026-09-11.md` § 3 |
 
@@ -101,7 +120,9 @@ is ≈ US$261 (B3).
    smoke (its cached share is by construction low — 16 % at 5 tiles,
    54 % at 15 — so the ≥ 70 % cache gate is judged on PASS 1, not the
    smoke; B4); the GS calibration leg (≈ US$1.2) → carried points fixed
-   — BLOCKED until `merge_passes.py` includes recovery fragments (B2).
+   — **DONE 2026-09-13**, points in § 2; B2 discharged at the artefact
+   (the rebuilt K = 5 first-N union reproduces the committed 674
+   byte-identically, so the K = 3 union beside it is trustworthy).
 2. Pass 1 on sapphire; audited cost check against the stop rule.
 3. Passes 2–3; union; K = 1 and K = 3 unions with `pass_provenance`.
 4. Both verifier arms on both unions; sweep; score at carried and oracle
