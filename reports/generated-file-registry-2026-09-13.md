@@ -227,7 +227,16 @@ do-not-hand-edit banner).
    `results/student-gt-fn-rate-analysis/report.md`). Half-way to regime 2
    and cheap to finish; not in this item's scope.
 
-## 8. Reproduction
+## 8. Tier 1
+
+**2,622 passed, 4 skipped, 3 xfailed, 27 deselected in 190 s** — the full
+`-m tier1` suite at commit `7ae1c62e2`, run on sapphire in an isolated
+worktree (`~/worktrees/map-reader-llm/claude-registry`, since removed) per
+the project's compute-location rule. 41 of those tests are the four guard
+modules this pass added or extended: 20 registry (2 new), 6 register
+renderings, 8 Era-2 board, 7 55-map boards.
+
+## 9. Reproduction
 
 ```bash
 # The registry: rebuild, drift-check, and the regime-2 gap list
