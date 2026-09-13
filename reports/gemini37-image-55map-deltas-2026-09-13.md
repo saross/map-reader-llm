@@ -1,9 +1,13 @@
 # Gemini 3.7 image, 55-map K = 3 — launch deltas and what the gates measured
 
-> **Last revised**: 2026-09-13 (relaunch — blockers B1–B4 all discharged, the
-> Gold Standard calibration leg run and the carried operating points fixed,
-> the 55-map proposer's pass 1 launched; the campaign is **IN FLIGHT and
-> incomplete**, so P1–P5 remain UNTESTED). See
+> **Last revised**: 2026-09-13 (steward hand-over — § 10 added: Q1 discharged
+> by dated addenda, Q7 settled with a provenance sidecar, and a NEW delta —
+> the brief's "corrected-F1 engine" is not the r2 board's engine, so scoring
+> follows the board's `evaluate_detections.py` recipe; the five-test family
+> declared before any score exists. Earlier: relaunch — blockers B1–B4 all
+> discharged, the Gold Standard calibration leg run and the carried operating
+> points fixed, the 55-map proposer's pass 1 launched. The campaign is **IN
+> FLIGHT and incomplete**, so P1–P5 remain UNTESTED). See
 > [§ Changelog](#changelog) for revision history.
 
 Report on the run specified by `planning/gemini37-image-55map-2026-09-13.md`.
@@ -395,7 +399,121 @@ content hash on 2026-09-12, so a new run will not reproduce the GS value
 identical images. Argue identity from `system_instruction_hash` and the blob
 comparison, and read `configuration.library_hash_basis` first.
 
+## 10. Deltas the steward session found, before any further spend
+
+Three, recorded as they were settled rather than at the end, because the
+campaign spans more wall clock than one session.
+
+### 10.1 Q1 discharged — the contradictory record is annotated
+
+`planning/paper-writeup-continuity.md` S152 item 4 and
+`results/gemini37-image-gs-2026-09-01/findings.md`'s escalation section each
+carry a **dated addendum** (2026-09-13) saying that the decline they record was
+on **F1** grounds and still stands, and that the PI's approval of this campaign
+is on **tile-MCC** grounds — a different question, with the deployment-scale
+case set out in the card § 1. Neither original sentence was rewritten. The GS
+findings document took a revision-policy banner and changelog entry recording
+that no numerical claim moved.
+
+### 10.2 Q7 settled — stride builder plus a provenance sidecar
+
+The parent session ruled the recommendation of § 7 (B2): build both 55-map
+unions with `scripts/stride55_prepare_and_union.py`, for text-arm
+comparability, and emit the `pass_provenance` block as a **sidecar**. The
+sidecar tool is `scripts/emit_union_pass_provenance.py`, which imports
+`stride55_prepare_and_union.resolve_pass_paths` (rather than re-implementing
+pass resolution) and hands the resolved set to
+`merge_passes.build_pass_provenance`, so the union and its provenance record
+cannot describe different files. It writes
+`union_k<K>_pass_provenance.json` beside each union, carrying the
+`consensus-pass-provenance/1` keys the existing guard
+`build_all_consensus.compare_pass_provenance` reads, plus the union described,
+its feature count and the builder. Seven tier-1 tests; `ruff` clean.
+
+### 10.3 NEW — the brief's scoring engine is not the r2 board's engine
+
+The steward brief specified scoring "on r2 at 50 m with the corrected-F1
+engine (`scripts/compute_corrected_f1_multi_buffer.py --compute-mcc`), the
+recipe under `results/55map-final-board-r2-2026-09-06/`". Those two clauses
+name different instruments, and the second is the one that matters.
+
+Read at source, the r2 board's recipe is **`scripts/evaluate_detections.py`**,
+driven per cell by `scripts/r2_score_cells.py --stage board`:
+
+> Stage 2: `evaluate_detections.py`, 14 buffers, tile-level BCa bootstrap
+> 10,000 / seed 42, `--mcc`, `--require-clean-inputs`, per cell
+> (`r2_score_cells.py --stage board`).
+> — `results/55map-final-board-r2-2026-09-06/final-board-50m.md` § "Provenance and gates"
+
+with `--ground-truth inputs/vectors/references/best-available-gt-55maps-r2.geojson`
+and `--bounds inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`;
+every cell's `score.log` records `Reference: 5018 mounds, 8541 evaluation
+tiles`, and `cells/FOURTH-N1-oracle/evaluation.json` stamps
+`"script_path": "scripts/evaluate_detections.py"`.
+
+`compute_corrected_f1_multi_buffer.py` is the **canonical adjudicated
+extended-GT (Track 2)** engine — a different reference and a different
+matching chain. `planning/reference-revision-2026-09-06.md` § 2 places it
+explicitly on the other side of the r2 revision ("The existing 'corrected F1'
+… corrects against a REVIEWED extended GT"), and its § 4f records the one
+companion cell scored on that chain as "the only one not on r2".
+`scripts/gemini37_sweep_oracle.py`'s own header states the hazard in terms for
+this campaign's predecessor: "Cross-reference comparisons … mix instruments
+and are not valid deltas".
+
+**Consequence, and the call taken.** P1–P5 are all differences against cells
+on the r2 board (`FOURTH-N1-oracle` 0.7471, `ARM2-N3-oracle`, `ARM2-N5-oracle`,
+`IM-k3`). Scoring this campaign's rungs with the Track-2 engine would compare
+them across instruments, which is exactly the error the predecessor script
+warns against, and the paired tile-swap would be incoherent — its per-tile
+vectors would come from two different references. The campaign therefore scores
+on **the board's recipe**: `evaluate_detections.py`, 14 buffers, bootstrap
+10,000, seed 42, `--mcc`, `--require-clean-inputs`, against r2 and the
+8,541-tile bounds. The brief's clause naming the corrected-F1 engine is read as
+a slip for "the r2 board's engine", and this subsection is the minute of that
+reading. Anyone who wants the Track-2 figures as well can have them as a
+secondary column; they are not the instrument P1–P5 are stated in.
+
+A consequence for sequencing, from the same reading: `--require-clean-inputs`
+aborts with exit 4 on any `modified` or `untracked` input
+(`evaluate_detections.py`, `enforce_input_hygiene`), so every materialised
+detections file must be **committed before it is scored**.
+
+### 10.4 The five-test family, declared before the numbers exist
+
+The card § 5 step 4 names four comparators and calls the family a "five-test
+family". The fifth is not written down. The predecessor text campaign's family
+was "the four 2×2 edges plus the all-3.7 vs incumbent diagonal"
+(`scripts/gemini37_sweep_oracle.py` header), i.e. external edges plus one
+within-campaign contrast. This campaign therefore declares its family, **before
+any 55-map score exists**, as the four named comparators plus the
+within-campaign **K = 1 versus K = 3** contrast, which P2 requires a test for
+in any case. Benjamini–Hochberg at q = 0.05 runs across those five, separately
+on MCC and on F1.
+
 ## Changelog
+
+### 2026-09-13 (steward hand-over) — § 10: two open questions closed, one new delta
+
+**Trigger**: the campaign acquired a named owner for passes 2–3 onward
+(question Q5), and that owner's first act had to be to settle the two
+questions that block the unions and the scoring — Q7 (which builder) and the
+instrument the rungs are scored on.
+
+| Claim | Before | After |
+|---|---|---|
+| Q1, contradictory record | open | **closed** — dated addenda in both documents, originals unrewritten |
+| Q7, union builder | recommendation, unassented | **settled** — `stride55_prepare_and_union.py` + `emit_union_pass_provenance.py` sidecar |
+| Scoring engine | brief said `compute_corrected_f1_multi_buffer.py` | **`evaluate_detections.py`**, the r2 board's own recipe (§ 10.3) |
+| Five-test family | four comparators named, fifth unwritten | **declared** — four external + the K = 1 vs K = 3 contrast (§ 10.4) |
+| Spend committed | US$1.15 | **US$1.15** — nothing new spent for this revision |
+
+**What did NOT change**: pass 1 is still in flight and passes 2–3 are still
+unlaunched, so the pass-1 gate verdict, both unions, all four verifier arms,
+every score and every P1–P5 verdict remain as § 5 and § 6 record them —
+UNTESTED and unbuilt. No board, no tiering, no signed row, no configuration
+and no committed union was touched. The GS findings document was edited, but
+only to append an addendum and its changelog; no figure in it moved.
 
 ### 2026-09-13 (relaunch) — blockers discharged, calibration leg run, pass 1 in flight
 
