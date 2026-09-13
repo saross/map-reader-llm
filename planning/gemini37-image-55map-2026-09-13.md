@@ -1,6 +1,13 @@
 # Gemini 3.7 image at deployment scale: the tile-MCC candidate, K = 3
 
-> **Last revised**: 2026-09-13 (later: **API GATE APPROVED by the PI**,
+> **Last revised**: 2026-09-13 (**RELAUNCHED** — B1–B4 all discharged, the GS
+> calibration leg run and the carried operating points fixed in § 2, the
+> mechanism smoke passed, and the 55-map proposer's **pass 1 is in flight**;
+> ≈ US$1.15 audited committed of a ≈ US$261–276 envelope, and P1–P5 remain
+> UNTESTED because passes 2–3 and everything downstream are unbuilt — launch
+> state and resume path in
+> `outputs/gemini37-image-55map-2026-09-13/post_run_report.md`. Earlier:
+> **API GATE APPROVED by the PI**,
 > 2026-09-13 morning, in session, on the condition that caching is in
 > effect — confirmed at source: the GS 3.7 image run's full passes show
 > 79–80 % of input tokens cached via Gemini's implicit prefix caching,
@@ -98,6 +105,27 @@ read US$126 for a US$79 pass (blocker B3). The verifier legs in § 3 are
 on the list basis; `run_pv.py verify` defaults to flex, so the envelope
 is ≈ US$261 (B3).
 
+**Audited actuals, 2026-09-13** (running; the campaign is in flight):
+
+| Leg | Card | Audited actual |
+|---|---:|---:|
+| GS calibration leg | 1.2 | **1.1221** (arm 1 0.4417 + arm 2 0.6804; union 622, not ≈ 450) |
+| 5-tile mechanism smoke | — | **≈ 0.025** |
+| 55-map proposer, pass 1 | ≈ 79 | **in flight** |
+| Everything downstream | ≈ 181 | not reached |
+| **Running total** | | **≈ 1.15** of ≈ 261–276 |
+
+Two corrections the run has already established. First, the K = 5 → K = 3
+candidate ratio is **0.923** (674 → 622), not the ≈ 0.67 the card's ≈ 450
+implied, so on the measured density the 55-map K = 3 union is nearer ≈ 10,900
+than ≈ 8,500 and the four verifier arms nearer US$32 than US$23 — the envelope
+moves to ≈ US$270, still well inside the US$420 running stop. Second, **both
+pass-1 gates are post-pass, not in-flight**: `4_detect_mounds_batch.py` writes
+`*.meta.json` once at the end, so the audited cost and the cached share are
+computable only when a pass finishes, and the "abort the proposer" rule above
+operates as a go/no-go on passes 2–3. Detail in
+`reports/gemini37-image-55map-deltas-2026-09-13.md` §§ 1 and 3.1.
+
 ## 4. Predictions, stated before the run
 
 - **P1 (primary, MCC)**: the all-3.7 image K = 3 carried cell's tile-MCC
@@ -140,6 +168,31 @@ settles the modality question at deployment scale, which the paper
 currently states on the GS only.
 
 ## Changelog
+
+### 2026-09-13 (relaunch) — blockers cleared, calibration leg run, pass 1 in flight
+
+B1–B4 all discharged and the run relaunched on branch
+`gemini37-image-55map-2026-09-13`. B2's discharge carries a correction: the GS
+calibration leg never ran through `merge_passes.resolve_pass_files`, because
+`image_b_prepare_and_union.py` resolves passes through the
+always-fragment-inclusive `stride_prepare_and_union.resolve_pass_paths` — so the
+leg was blocked on a defect that did not reach it. The verification demanded
+before trusting the K = 3 union passed decisively anyway: the rebuilt K = 5
+first-N union reproduces the committed 674-candidate `union_k5.geojson`
+**byte-identically**, all five passes gated at 1,398/1,398 after the recovery
+fold. `merge_passes.py` still matters downstream, as the only source of
+`pass_provenance`.
+
+Carried operating points fixed in § 2 — arm 1 (0.10, k3) at GS F1@20 0.9197,
+arm 2 (0.88, k3) at 0.9245, from a 622-candidate K = 3 union with the anchor
+gate at 0.89614. Mechanism smoke passed on the GS payload fingerprint
+`e169b723…`; pass 1 launched ≈ 07:28 UTC under
+`scripts/gemini37-image-55map-driver.sh`. ≈ US$1.15 audited committed. P1–P5
+remain UNTESTED; no board or tiering re-tiered, no signed row touched, no
+analysis row authored. Launch state and resume path:
+`outputs/gemini37-image-55map-2026-09-13/post_run_report.md`. Open with the PI:
+who owns passes 2–3 onward, which builder produces the 55-map unions, and
+whether the contradictory S152 "DECLINED" record is annotated.
 
 ### 2026-09-13 (later) — approved, then blocked at the audit for US$0
 
