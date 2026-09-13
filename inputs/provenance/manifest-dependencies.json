@@ -1,0 +1,147 @@
+{
+ "schema": "manifest-provenance-registry/1",
+ "created": "2026-09-13",
+ "erratum": "E86",
+ "purpose": "Content anchors for input manifests and the few-shot example library that declare provenance from another set. Checked by scripts/check_manifest_provenance.py; see that script's docstring for the two check modes and why there are two.",
+ "anchor_basis_values": {
+  "declaration-time": "The blob hash the source actually had when the dependent artefact was built, established by reading the source at the commit named in declared_at_commit. The strong form.",
+  "registry-creation": "The source's blob hash when this registry was written (2026-09-13). The dependent artefact's build predates the registry, so this anchor cannot prove the past; it catches every FUTURE re-selection under the same name, which is the event the guard exists for.",
+  "restamped": "Re-recorded by --restamp after a deliberate, documented rebuild."
+ },
+ "dependencies": [
+  {
+   "id": "null-tiles-from-calibration",
+   "artefact": "inputs/examples/null-tiles/null_tiles_manifest.json",
+   "declares": "selection_methodology.pool = 'Training tiles with density=empty (mound_count=0)', random_seed 20251223",
+   "expect": "STALE",
+   "erratum": "E86",
+   "note": "The demonstrated instance. Declared against the 2025-12-23 training set; that set was re-selected on 2026-01-04 (4d011a839) under a new seed and none of the three null tiles survived. Deliberately NOT repaired: every committed run used these three exemplars, so a rebuilt null set would create a second library version no run used (E86 remediation 2). The STALE verdict is the record, not a to-do.",
+   "sources": [
+    {
+     "path": "inputs/tiles/calibration_manifest.json",
+     "declared_blob": "c5056693d505263854f870b6da1b41cb7d87033f",
+     "anchor_basis": "declaration-time",
+     "declared_at": "2025-12-23",
+     "declared_at_commit": "a2ad75c98",
+     "declared_source_path": "inputs/training_manifest.json",
+     "declared_source_note": "The path above is the successor of inputs/training_manifest.json, which held this blob at 3f66fc3f8 (2025-12-23). Renamed calibration_manifest.json in the 2026-01-08 inputs reorganisation (a10ed8236); the 'holdout'->'validation' family rename followed under E20."
+    }
+   ]
+  },
+  {
+   "id": "hard-example-library-from-calibration",
+   "artefact": "inputs/examples/neutral-naming/MANIFEST.md",
+   "declares": "Examples 05-08 (hard positives, mined from calibration false negatives), 11-14 (core hard negatives) and 18-29 (expanded hard-negative pool) are crops whose named source tile is a member of the calibration set.",
+   "expect": "CURRENT",
+   "note": "All 20 hard-example source tiles named in MANIFEST.md are members of the committed 20-tile calibration manifest (re-verified 2026-09-13). Unlike the nulls, these crops were re-extracted on 2026-02-02, after the 2026-01-04 re-selection, so they declare the set they were drawn from.",
+   "sources": [
+    {
+     "path": "inputs/tiles/calibration_manifest.json",
+     "declared_blob": "0d61aa81a45adccd198f9e2d3526e6847ff4a754",
+     "anchor_basis": "declaration-time",
+     "declared_at": "2026-01-04",
+     "declared_at_commit": "4d011a839",
+     "declared_source_note": "Content unchanged since 4d011a839 (verified byte-identical to git show 4d011a839:inputs/training_manifest.json); the later commit cfc10c133 moved the path, not the content."
+    }
+   ]
+  },
+  {
+   "id": "era1-full-evaluation-frame-from-calibration",
+   "artefact": "inputs/tiles/full_evaluation_manifest.json",
+   "declares": "The Era-1 512 px evaluation frame is the 360 physical tiles minus the 20 calibration tiles (verified as an exact set difference, 340 tiles, 0 exceptions either way).",
+   "expect": "CURRENT",
+   "sources": [
+    {
+     "path": "inputs/tiles/calibration_manifest.json",
+     "declared_blob": "0d61aa81a45adccd198f9e2d3526e6847ff4a754",
+     "anchor_basis": "declaration-time",
+     "declared_at": "2026-01-04",
+     "declared_at_commit": "4d011a839"
+    }
+   ]
+  },
+  {
+   "id": "era1-validation-from-reference",
+   "artefact": "inputs/tiles/validation_manifest.json",
+   "declares": "60 tiles, 15 per sheet, stratified by mound density with holdout seed 1767425239 (preregistration section 8.6). The density strata are computed from the reference layer.",
+   "expect": "CURRENT",
+   "sources": [
+    {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "declared_blob": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+     "anchor_basis": "registry-creation",
+     "declared_at": "2026-09-13",
+     "declared_source_note": "569 reference symbols. The selection predates the registry, so this anchor is forward-looking: it catches a future reference revision that would silently invalidate the registered density strata."
+    }
+   ]
+  },
+  {
+   "id": "era2-384-full-evaluation-from-calibration",
+   "artefact": "inputs/tiles_384/full_evaluation_manifest.json",
+   "declares": "487 tiles: the 611-tile 384 px grid minus the 124 tiles that geographically touch a calibration tile.",
+   "expect": "CURRENT",
+   "sources": [
+    {
+     "path": "inputs/tiles/calibration_manifest.json",
+     "declared_blob": "0d61aa81a45adccd198f9e2d3526e6847ff4a754",
+     "anchor_basis": "declaration-time",
+     "declared_at": "2026-03-22",
+     "declared_at_commit": "8b52ab63b"
+    }
+   ]
+  },
+  {
+   "id": "era2-384-validation-from-bounds",
+   "artefact": "inputs/tiles_384/validation_manifest.json",
+   "declares": "inputs/tiles_384/tile_selection_metadata.json parameters.reference_bounds = inputs/vectors/bounds/validation_bounds.geojson, selection_method geographic_overlap, min_overlap 0.1 (240 of 611 tiles).",
+   "expect": "CURRENT",
+   "sources": [
+    {
+     "path": "inputs/vectors/bounds/validation_bounds.geojson",
+     "declared_blob": "16cb0c2df5c019df3ed363ec979ef42375fcf82d",
+     "anchor_basis": "declaration-time",
+     "declared_at": "2026-03-14",
+     "declared_at_commit": "496dde29b",
+     "declared_source_note": "The bounds file was last changed on 2026-02-05 under E19 (496dde29b), before the 2026-03-14 selection; checked because the sibling 384 px bounds file WAS regenerated on 2026-03-22."
+    }
+   ]
+  },
+  {
+   "id": "h10-384-pools-and-test-from-bounds-and-reference",
+   "artefact": "inputs/calibration/h10-384/test_manifest.json",
+   "declares": "inputs/calibration/h10-384/tile_selection_metadata.json parameters: bounds_path inputs/vectors/bounds/384/full_evaluation_bounds.geojson, reference_path inputs/vectors/references/mounds-reference.geojson, seed 42, nested pools 20 subset 40 subset 80 subset 160, test set 327 tiles.",
+   "expect": "CURRENT",
+   "sources": [
+    {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "declared_blob": "a223dc7e8c4e42af5a6d8c2f9dc5bb00b4ce97a5",
+     "anchor_basis": "declaration-time",
+     "declared_at": "2026-04-11",
+     "declared_at_commit": "8b52ab63b"
+    },
+    {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "declared_blob": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+     "anchor_basis": "declaration-time",
+     "declared_at": "2026-04-11",
+     "declared_at_commit": "cfc10c133"
+    }
+   ]
+  },
+  {
+   "id": "era2-384-bounds-from-manifest",
+   "artefact": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "declares": "Generated by scripts/generate_tile_bounds.py --manifest inputs/tiles_384/full_evaluation_manifest.json --name full_evaluation --tile-size 384; one polygon per manifest tile.",
+   "expect": "CURRENT",
+   "sources": [
+    {
+     "path": "inputs/tiles_384/full_evaluation_manifest.json",
+     "declared_blob": "5f9ce922aec1e2f1ea9d510af11e2c40ebd8cee7",
+     "anchor_basis": "declaration-time",
+     "declared_at": "2026-03-22",
+     "declared_at_commit": "8b52ab63b"
+    }
+   ]
+  }
+ ]
+}
