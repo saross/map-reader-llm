@@ -48,9 +48,15 @@
 # For every ladder and every metric, the MCB's rebuilt per-candidate statistic
 # must equal the number the committed artefact already publishes:
 #
-#   * F1 — each rung's `f1` in the committed `tiering_<buffer>m.json` ranking,
-#     to 1e-4 (the precision the ranking records);
-#   * MCC — each rung's `tile_mcc` in the ladder inventory, to 1e-4.
+#   * F1 — each rung's `observed_micro_f1` in the committed
+#     `tiering_<buffer>m.json` ranking, to 1e-4;
+#   * MCC — each rung's `mcc` in the SAME ranking, to 1e-4.
+#
+# Both references come from the committed tiering rather than from the ladder
+# inventories, because the inventories record the gold-standard ladder on its
+# grid-common frame (tile-MCC 0.7894 at K = 1) while this MCB runs it on the
+# board frame (0.7834), and gating a correct run against another frame's number
+# would refuse it.
 #
 # The candidate LABEL SET must also equal the committed tiering's ranking
 # labels exactly. Together these prove the admissible set was computed over the
@@ -108,9 +114,9 @@ PHASE1_INVENTORY = K_LADDER_DIR / "ladders.json"
 PHASE2_INVENTORY = K_LADDER_DIR / "phase2" / "ladders-compat.json"
 TIER_E_INVENTORY = K_LADDER_DIR / "tier-e" / "ladder.json"
 
-#: Gate tolerances. The committed tiering ranking records F1 to 4 decimal
-#: places and the inventories record tile-MCC to 4, so the gate is set at a
-#: unit in the last place: an exact reproduction to the recorded precision.
+#: Gate tolerances. The committed tiering ranking records `observed_micro_f1`
+#: to 6 decimal places and `mcc` to 4, so a unit in the last recorded place is
+#: an exact reproduction to the precision available.
 F1_GATE_TOL = 1e-4
 MCC_GATE_TOL = 1e-4
 
@@ -312,45 +318,38 @@ def label_to_k() -> dict[str, int]:
     return mapping
 
 
-def inventory_tile_mcc() -> dict[str, float]:
-    """Map every rung label to its committed tile-MCC, for the MCC gate.
+def committed_ranking(tiering_path: Path) -> dict[str, dict[str, float]]:
+    """Read a committed tiering's per-rung F1 and tile-MCC, keyed by label.
 
-    Returns:
-        Label to committed tile-MCC, omitting rungs whose tile-MCC is withheld
-        or absent.
-    """
-    out: dict[str, float] = {}
-    for rel in (PHASE1_INVENTORY, PHASE2_INVENTORY):
-        data = json.loads((BASE_DIR / rel).read_text(encoding="utf-8"))
-        for ladder in data["ladders"]:
-            for rung in ladder["rungs"]:
-                if rung.get("tile_mcc") is not None:
-                    out[rung["condition_id"].split("::", 1)[-1]] = float(
-                        rung["tile_mcc"])
-    tier_e = json.loads((BASE_DIR / TIER_E_INVENTORY).read_text(encoding="utf-8"))
-    for rung in tier_e["rungs"]:
-        if rung.get("tile_mcc") is not None:
-            out[rung["label"]] = float(rung["tile_mcc"])
-    return out
-
-
-def committed_ranking(tiering_path: Path) -> dict[str, float]:
-    """Read a committed tiering's per-rung F1, keyed by label.
+    The committed tiering is the right gate reference for BOTH metrics because
+    it ran on the same frame, over the same cells, at the same operating points
+    the MCB is asked about. The ladder inventories are NOT: the gold-standard
+    ladder's inventory records its grid-common tile-MCC (0.7894 at K = 1) while
+    the board frame this MCB runs on gives 0.7834, and gating against the wrong
+    frame's number would refuse a correct run.
 
     Args:
         tiering_path: Repo-relative path to a ``tiering_<buffer>m.json``.
 
     Returns:
-        Label to the F1 the committed ranking records.
+        Label to ``{"f1": ..., "mcc": ...}``, using the ranking's 6-decimal
+        ``observed_micro_f1`` where it is recorded and its 4-decimal ``eval_f1``
+        otherwise, and omitting a metric the ranking does not carry.
     """
     data = json.loads((BASE_DIR / tiering_path).read_text(encoding="utf-8"))
-    out: dict[str, float] = {}
+    out: dict[str, dict[str, float]] = {}
     for row in data["ranking"]:
         label = row.get("label") or str(row.get("ref"))
-        for key in ("f1", "eval_f1", "f1_headline"):
+        entry: dict[str, float] = {}
+        for key in ("observed_micro_f1", "eval_f1", "f1", "f1_headline"):
             if row.get(key) is not None:
-                out[label] = float(row[key])
+                entry["f1"] = float(row[key])
                 break
+        for key in ("mcc", "tile_mcc"):
+            if row.get(key) is not None:
+                entry["mcc"] = float(row[key])
+                break
+        out[label] = entry
     return out
 
 
@@ -421,16 +420,15 @@ def run_mcb(entry: dict[str, Any], metric: str, out_dir: Path,
 
 
 def gate(entry: dict[str, Any], metric: str, result: dict[str, Any],
-         committed_f1: dict[str, float],
-         committed_mcc: dict[str, float]) -> dict[str, Any]:
-    """Gate one MCB run against the committed artefacts.
+         committed: dict[str, dict[str, float]]) -> dict[str, Any]:
+    """Gate one MCB run against the ladder's committed tiering.
 
     Args:
         entry: The registry entry.
         metric: ``f1`` or ``mcc``.
         result: The parsed MCB artefact.
-        committed_f1: Label to committed tiering F1 for this ladder.
-        committed_mcc: Label to committed inventory tile-MCC.
+        committed: Label to ``{"f1": ..., "mcc": ...}`` from
+            :func:`committed_ranking`.
 
     Returns:
         A gate record with one row per candidate.
@@ -441,20 +439,20 @@ def gate(entry: dict[str, Any], metric: str, result: dict[str, Any],
     """
     kept = result["kept_indices"]
     labels = [result["candidates"][i]["label"] for i in kept]
-    if set(labels) != set(committed_f1):
+    if set(labels) != set(committed):
         raise ValueError(
             f"{entry['slug']} {metric}: candidate labels {sorted(labels)} do "
-            f"not match the committed tiering's {sorted(committed_f1)}")
+            f"not match the committed tiering's {sorted(committed)}")
 
-    reference = committed_f1 if metric == "f1" else committed_mcc
     tolerance = F1_GATE_TOL if metric == "f1" else MCC_GATE_TOL
     stats = recover_statistics(result)
     rows: list[dict[str, Any]] = []
     for label, value in zip(labels, stats, strict=True):
-        expected = reference.get(label)
+        expected = (committed.get(label) or {}).get(metric)
         if expected is None:
             raise ValueError(
-                f"{entry['slug']} {metric}: no committed {metric} for {label}")
+                f"{entry['slug']} {metric}: the committed tiering records no "
+                f"{metric} for {label}")
         delta = abs(value - expected)
         rows.append({"label": label, "committed": round(expected, 6),
                      "reproduced": round(value, 6), "abs_delta": round(delta, 8)})
@@ -565,7 +563,6 @@ def main() -> int:
             parser.error(f"unknown ladder slug(s): {sorted(missing)}")
 
     k_of = label_to_k()
-    committed_mcc = inventory_tile_mcc()
     names = display_names()
     out_root = args.output_dir
     out_root.mkdir(parents=True, exist_ok=True)
@@ -574,7 +571,7 @@ def main() -> int:
     for entry in registry:
         print(f"\n=== MCB {entry['slug']} "
               f"@ {entry['buffer_m']} m ===", flush=True)
-        committed_f1 = committed_ranking(entry["tiering"])
+        committed = committed_ranking(entry["tiering"])
         record: dict[str, Any] = {
             "slug": entry["slug"],
             "group": entry["group"],
@@ -590,8 +587,7 @@ def main() -> int:
         for metric in args.metrics:
             path, result = run_mcb(entry, metric, out_root / entry["slug"],
                                    args.bootstrap)
-            record["gates"].append(
-                gate(entry, metric, result, committed_f1, committed_mcc))
+            record["gates"].append(gate(entry, metric, result, committed))
             block = summarise(entry, result, k_of)
             # A smoke run may point --output-dir at a scratch directory, so the
             # provenance field degrades to the absolute path rather than raising.
@@ -602,7 +598,7 @@ def main() -> int:
         first = record.get("f1") or record.get("mcc") or {}
         record["rungs"] = sorted(int(k) for k in first.get("theta_by_K", {}))
         record["family"] = names.get(entry["slug"], entry["slug"])
-        record["n_rungs"] = len(committed_f1)
+        record["n_rungs"] = len(committed)
         collated.append(record)
 
     payload = {

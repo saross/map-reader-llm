@@ -191,9 +191,10 @@ def test_recover_statistics_reproduces_every_rung_statistic() -> None:
 # ── the gate ──────────────────────────────────────────────────────────
 
 
-def _committed(counts: np.ndarray) -> dict[str, float]:
-    """The committed per-rung F1 a real tiering artefact would record."""
-    return {label: round(float(value), 4) for label, value
+def _committed(counts: np.ndarray) -> dict[str, dict[str, float]]:
+    """The per-rung statistics a real tiering artefact's ranking would record."""
+    return {label: {"f1": round(float(value), 6), "mcc": 0.5}
+            for label, value
             in zip(RUNG_LABELS, sai.f1_from_counts(counts), strict=True)}
 
 
@@ -201,7 +202,7 @@ def test_gate_passes_on_a_faithful_reproduction() -> None:
     """A run over the committed cells at the committed points must pass."""
     counts = _separated_ladder()
     record = mcb.gate({"slug": "synthetic"}, "f1", _result(counts),
-                      _committed(counts), {})
+                      _committed(counts))
     assert record["passed"] is True
     assert record["n_candidates_gated"] == 4
     assert all(row["abs_delta"] <= mcb.F1_GATE_TOL
@@ -212,27 +213,45 @@ def test_gate_refuses_a_changed_candidate_set() -> None:
     """An admissible set over the wrong cells is worse than none at all."""
     counts = _separated_ladder()
     committed = _committed(counts)
-    committed["an-extra-rung-that-was-not-run"] = 0.5
+    committed["an-extra-rung-that-was-not-run"] = {"f1": 0.5, "mcc": 0.5}
     with pytest.raises(ValueError, match="do not match the committed tiering"):
-        mcb.gate({"slug": "synthetic"}, "f1", _result(counts), committed, {})
+        mcb.gate({"slug": "synthetic"}, "f1", _result(counts), committed)
 
 
 def test_gate_refuses_a_drifted_statistic() -> None:
     """A rung scoring differently than its committed evaluation must abort."""
     counts = _separated_ladder()
     committed = _committed(counts)
-    committed[RUNG_LABELS[0]] += 0.01
+    committed[RUNG_LABELS[0]]["f1"] += 0.01
     with pytest.raises(ValueError, match="against committed"):
-        mcb.gate({"slug": "synthetic"}, "f1", _result(counts), committed, {})
+        mcb.gate({"slug": "synthetic"}, "f1", _result(counts), committed)
 
 
-def test_mcc_gate_reads_the_inventory_not_the_f1_ranking() -> None:
+def test_mcc_gate_reads_the_rankings_mcc_column() -> None:
     """The MCC arm is gated against tile-MCC, so a missing one must abort."""
     counts = _separated_ladder()
     result = _result(counts)
     result["metric"] = "mcc"
-    with pytest.raises(ValueError, match="no committed mcc"):
-        mcb.gate({"slug": "synthetic"}, "mcc", result, _committed(counts), {})
+    committed = _committed(counts)
+    for row in committed.values():
+        del row["mcc"]
+    with pytest.raises(ValueError, match="records no mcc"):
+        mcb.gate({"slug": "synthetic"}, "mcc", result, committed)
+
+
+def test_gate_reference_comes_from_the_tiering_not_the_inventory() -> None:
+    """The gold-standard ladder's frames disagree on tile-MCC; the gate must
+    read the frame the MCB actually runs on.
+
+    Its committed tiering is on the board frame (K = 1 tile-MCC 0.7834) while
+    `ladders.json` records the grid-common frame (0.7894). Gating against the
+    inventory would refuse a correct run, so this pins the source.
+    """
+    ranking = mcb.committed_ranking(
+        mcb.K_LADDER_DIR / "mcc-test/tiering/gs-stride-a/tiering_20m.json")
+    k1 = ranking["g384-ov128-ladder-n1-verified-p0.15-k1"]
+    assert k1["mcc"] == pytest.approx(0.7834, abs=1e-4)
+    assert k1["f1"] == pytest.approx(0.8605, abs=1e-4)
 
 
 # ── the registry ──────────────────────────────────────────────────────

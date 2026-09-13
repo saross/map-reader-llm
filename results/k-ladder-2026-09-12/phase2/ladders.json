@@ -1,9 +1,15 @@
 {
-  "generated_at_utc": "2026-09-12T08:51:22+00:00",
+  "generated_at_utc": "2026-09-13T02:35:29+00:00",
   "script": "scripts/build_k_ladder_phase2_tables.py",
-  "script_version": "1.0.0",
+  "script_version": "1.1.0",
   "card": "planning/k-ladder-review-2026-09-11.md",
   "costing": "reports/k-ladder-phase2-costing-2026-09-12.md",
+  "carried_convention": {
+    "reported": "stride-shell",
+    "disclosed": "k-equals-K",
+    "ruling": "PI, 2026-09-13",
+    "note": "The stride ladder's own vote shell (k = 1/3/4/8 at K = 1/3/5/10) is THE carried point; ruling R2's literal k = K stays as a disclosed column. The two coincide at K <= 3, so no Phase 2 rung's number moved \u2014 only the committed K = 5 and K = 10 rungs are affected, and both readings were already computed in phase2/committed-carried/scores.json"
+  },
   "cost_model": {
     "min_pass_usd": 0.266,
     "high_pass_usd": 2.29,

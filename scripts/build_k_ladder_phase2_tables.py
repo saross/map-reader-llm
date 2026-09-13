@@ -23,6 +23,20 @@ Description:
       because the corpus holds two and they diverge sharply above K = 3; see
       ``scripts/derive_k_ladder_committed_carried.py``.
 
+    **The carried convention, settled by the PI on 2026-09-13.** Of the two
+    readings, **the stride ladder's own vote shell** (k = 1 / 3 / 4 / 8 at
+    K = 1 / 3 / 5 / 10, the four ``stride-phaseb-2026-08-25`` rungs' own ``k``
+    column) is **the carried point**; the literal ``k = K`` reading of ruling
+    R2's text stays as a **disclosed column** beside it, because it is what
+    several committed cells were built at and dropping it would hide a
+    transfer tax of up to −0.2566 F1@20 that a reader may want to see. So the
+    table's ``carried F1@20`` column is the shell reading and ``carried F1@20,
+    k = K`` is the disclosure; the compatibility inventory tiers on the shell
+    reading too. The two coincide at K ≤ 3, so no Phase 2 rung's number moves —
+    only K = 5 and K = 10 of the thirteen ``pv-diag-384`` families are affected,
+    and for them both readings were already computed and committed
+    (``phase2/committed-carried/scores.json``).
+
     **Cost.** Every rung's verifier leg is audited flex: measured from this
     run's own metas at K = 1 and K = 3, and priced at the audit's
     ``VF_CALL_USD`` for the committed rungs. The proposer leg uses the cost
@@ -78,7 +92,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 logger = logging.getLogger(__name__)
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
+
+#: Which of the two readings of "the carried point" the tables REPORT, settled
+#: by the PI on 2026-09-13: the gold-standard stride ladder's own vote shell
+#: (k = 1 / 3 / 4 / 8 at K = 1 / 3 / 5 / 10). The other reading, ruling R2's
+#: literal ``k = K``, stays in the tables as a disclosed column and in
+#: ``phase2/committed-carried/scores.json`` in full. They coincide at K <= 3.
+CARRIED_READING = "stride-shell"
+
+#: The reading disclosed beside it, never as the headline.
+CARRIED_READING_DISCLOSED = "k-equals-K"
 
 PHASE2 = BASE_DIR / "results" / "k-ladder-2026-09-12" / "phase2"
 BOARD = (
@@ -585,6 +609,20 @@ def build() -> dict[str, Any]:
         "script_version": __version__,
         "card": "planning/k-ladder-review-2026-09-11.md",
         "costing": "reports/k-ladder-phase2-costing-2026-09-12.md",
+        "carried_convention": {
+            "reported": CARRIED_READING,
+            "disclosed": CARRIED_READING_DISCLOSED,
+            "ruling": "PI, 2026-09-13",
+            "note": (
+                "The stride ladder's own vote shell (k = 1/3/4/8 at "
+                "K = 1/3/5/10) is THE carried point; ruling R2's literal "
+                "k = K stays as a disclosed column. The two coincide at "
+                "K <= 3, so no Phase 2 rung's number moved — only the "
+                "committed K = 5 and K = 10 rungs are affected, and both "
+                "readings were already computed in "
+                "phase2/committed-carried/scores.json"
+            ),
+        },
         "cost_model": {
             "min_pass_usd": MIN_PASS_USD,
             "high_pass_usd": HIGH_PASS_USD,
@@ -619,7 +657,10 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
       committed K = 5 and K = 10 rungs are registered at their carried point
       and their opmax cells were derived at US$0 without being registered. For
       that family the two points coincide at K = 5 and K = 10 anyway, so the
-      basis choice costs nothing.
+      basis choice costs nothing. The carried basis reads the
+      ``stride-shell`` reading, per the PI's ruling of 2026-09-13; for this
+      family the two readings coincide at every rung, so the re-sourcing moves
+      no number and only makes the basis say which reading it means.
 
     A family with fewer than three register-resolvable rungs on one basis is
     omitted, with the reason recorded.
@@ -643,7 +684,11 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
         for rung in ladder["rungs"]:
             point = rung.get(basis)
             if basis == "carried":
-                point = (rung.get("carried") or {}).get("k-equals-K")
+                # The carried point is the stride shell (PI ruling 2026-09-13).
+                # For the one family that tiers on the carried basis the two
+                # readings coincide at every rung, so this re-sourcing moves no
+                # number — it makes the basis say which reading it means.
+                point = (rung.get("carried") or {}).get(CARRIED_READING)
             if not point or point.get("f1_20") is None:
                 continue
             condition_id = rung.get("condition_id")
@@ -729,6 +774,7 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
                 "family": f"{ladder['family']} [{basis}]",
                 "family_base": ladder["family"],
                 "operating_point_basis": basis,
+                "carried_reading": CARRIED_READING if basis == "carried" else None,
                 "run_id": ladder["run_id"],
                 "proposer_pool": ladder["proposer_pool"],
                 "corpus": ladder["corpus"],
@@ -803,16 +849,17 @@ def tables(payload: dict[str, Any]) -> str:
         lines.append("")
         lines.append(
             "| K | source | candidates | opmax (k, p) | opmax F1@20 | "
-            "opmax tile-MCC | n | carried k=K F1@20 | carried shell F1@20 | "
-            "proposer US$ | verifier US$ | all-in US$ |"
+            "opmax tile-MCC | n | carried F1@20 | carried F1@20, k = K "
+            "(disclosed) | proposer US$ | verifier US$ | all-in US$ |"
         )
         lines.append(
             "|---:|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|"
         )
         for rung in ladder["rungs"]:
             opmax = rung.get("opmax") or {}
-            kk = (rung.get("carried") or {}).get("k-equals-K") or {}
-            shell = (rung.get("carried") or {}).get("stride-shell") or {}
+            carried = rung.get("carried") or {}
+            kk = carried.get(CARRIED_READING_DISCLOSED) or {}
+            shell = carried.get(CARRIED_READING) or {}
             point = (
                 f"({opmax.get('vote_t')}, {opmax.get('prob_t')})"
                 if opmax
@@ -823,7 +870,9 @@ def tables(payload: dict[str, Any]) -> str:
                 f"{fmt(rung.get('candidates'), 0)} | {point} | "
                 f"{fmt(opmax.get('f1_20'))} | {fmt(opmax.get('tile_mcc'))} | "
                 f"{fmt(opmax.get('n_detections'), 0)} | "
-                f"{fmt(kk.get('f1_20'))} | {fmt(shell.get('f1_20'))} | "
+                # The stride shell IS the carried point (PI ruling 2026-09-13);
+                # k = K follows it as the disclosed column.
+                f"{fmt(shell.get('f1_20'))} | {fmt(kk.get('f1_20'))} | "
                 f"{fmt(rung.get('proposer_flex_usd'), 2)} | "
                 f"{fmt(rung.get('verifier_flex_usd'), 2)} | "
                 f"**{fmt(rung.get('all_in_flex_usd'), 2)}** |"
