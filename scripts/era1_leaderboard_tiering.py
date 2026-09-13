@@ -71,10 +71,17 @@
 # ``rng.random(n_tiles) < 0.5`` mask per iteration from
 # ``default_rng(seed)``, so with one seed and one tile order the F1 and MCC
 # tests see BYTE-IDENTICAL swap masks: two statistics of one permutation, with
-# a separate BH-FDR family each. Tiering itself stays on F1 — MCC is tested,
-# not tiered, because the board's ranked headline is the preregistered F1.
-# MCC needs one detection SET per cell, so a replicate-mean cell
-# (``detections_dir``) raises rather than being silently collapsed.
+# a separate BH-FDR family each. MCC needs one detection SET per cell, so a
+# replicate-mean cell (``detections_dir``) raises rather than being silently
+# collapsed.
+#
+# Since 2026-09-13 (PI ruling, S153 ruling 7), ``--permute-mcc`` also emits an
+# MCC TIERING — the same ``greedy_clique_tiers`` instrument, over cells ordered
+# by tile-MCC and cliqued on the MCC family's own BH verdicts — under
+# ``mcc_permutation.ranking`` / ``.tiers`` / ``.tie_set``. It is REPORTED
+# BESIDE the F1 tiering and does not replace it: the board's ranked headline
+# stays the preregistered F1, and ``tiers`` / ``tie_set`` at the top level are
+# always the F1 ones.
 #
 # Since 2026-09-13 (PI ruling), a cell the tile-join invariant REFUSES has its
 # MCC withheld instead of aborting the board: the ``ConfusionGateError`` is
@@ -83,6 +90,17 @@
 # ``mcc_permutation.withheld`` with the refusal reason. Before this, one
 # refused cell killed the whole run — which is why the Era-2 board could not
 # admit the three Gemini 3.7 gold-standard text rungs at all.
+#
+# A cell the invariant refuses on the F1 ARM has no per-tile table on this
+# frame at all, so it is withheld from BOTH families and listed under the
+# top-level ``withheld_cells``. Each such record carries ruling 6's full
+# disclosure: the whole-frame F1 point estimate that survives, the statement
+# that its interval is WITHDRAWN (the bootstrap resamples tiles, so the refused
+# table is the interval's input too), the interval being withdrawn where the
+# committed artefact still carries one, the shortfall counts, and BOTH tile
+# vocabularies — from ``lib_advanced_metrics.describe_tile_join_refusal``, the
+# same describer ``evaluate_detections.py`` writes into a refused cell's own
+# artefact.
 #
 # COMPUTE LOCATION
 # ----------------
@@ -136,12 +154,14 @@ from n1_baseline_leaderboard_tiering import (  # noqa: E402
 
 from apply_fdr_correction import apply_bh_correction  # noqa: E402
 from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_DEFAULT,
     TILE_JOIN_REASON_DETECTION_SHORTFALL,
     TILE_JOIN_REASON_NO_SOURCE_TILE,
     TILE_JOIN_REASON_REFERENCE_SHORTFALL,
     calculate_tile_classification,
     compute_per_tile_classification,
     compute_per_tile_tp_fp_fn,
+    describe_tile_join_refusal,
 )
 from lib_detection_paths import resolve_pool_passes  # noqa: E402
 from pairwise_permutation_test import (  # noqa: E402
@@ -642,6 +662,173 @@ def mcc_family(cells: list[dict]) -> tuple[list[int], list[dict]]:
     return indices, withheld
 
 
+#: What a withheld cell's confidence interval is, and why. A refused cell's
+#: interval is not replaced by a better one: ``bootstrap_ci`` resamples TILES
+#: (Decision 10; every artefact's ``_metadata.bootstrap.resampling_unit`` says
+#: so), so the per-tile table the invariant refuses is the interval's input
+#: too. The cell therefore has a point and no interval on this frame, and any
+#: interval it used to carry is WITHDRAWN rather than superseded.
+INTERVAL_WITHDRAWN: str = "interval withdrawn (tile-resampled bootstrap)"
+INTERVAL_WITHDRAWN_DETAIL: str = (
+    "the F1 bootstrap resamples tiles, so its input is the same per-tile table "
+    "the tile-join invariant refuses; the cell has a whole-frame point estimate "
+    "and no interval on this frame, and any interval it previously carried is "
+    "withdrawn rather than superseded"
+)
+
+
+def committed_interval_f1(eval_path: Path, buffer_metres: int
+                          ) -> list[float] | None:
+    """The interval a withheld cell's committed evaluation still carries, if any.
+
+    Two of the Era-2 board's three withheld cells were scored BEFORE the
+    tile-join invariant existed, so their committed evaluations still hold a
+    BCa interval on F1 — one resampled from a per-tile table the invariant now
+    refuses. Naming that interval in the board's disclosure is the difference
+    between "withdrawn" and "was never there": a reader who has the old
+    artefact in hand must be able to see which number the board is retracting.
+
+    Args:
+        eval_path: Path to the cell's ``evaluation.json``.
+        buffer_metres: Buffer whose interval to read.
+
+    Returns:
+        ``[lower, upper]`` when the committed artefact carries both bounds at
+        that buffer, else ``None`` (a re-scored cell writes nulls there).
+    """
+    try:
+        summary = json.loads(eval_path.read_text())["summary"]
+    except (OSError, ValueError, KeyError):
+        return None
+    for block in summary.get("buffers", []):
+        if block.get("buffer_metres") != buffer_metres:
+            continue
+        lower, upper = block.get("f1_ci_lower"), block.get("f1_ci_upper")
+        if lower is None or upper is None:
+            return None
+        return [float(lower), float(upper)]
+    return None
+
+
+def refusal_disclosure(
+    cli_args: dict,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+) -> dict | None:
+    """The shortfall counts and both tile vocabularies behind one refusal.
+
+    PI ruling 2026-09-13 (S153 ruling 6) is that the name-based ``id`` tile
+    join is the published convention and that a refused cell is disclosed
+    rather than quietly dropped. A disclosure a reader can act on has to name
+    the two vocabularies the refusal is a disagreement between, not just the
+    count that went missing — so this reuses
+    :func:`lib_advanced_metrics.describe_tile_join_refusal`, the same
+    describer ``evaluate_detections.py`` writes into a refused cell's own
+    artefact, rather than re-deriving a second dialect of the same facts.
+
+    Args:
+        cli_args: The cell's ``evaluation.json[_metadata][cli_args]``.
+        gdf_ref: Reference mounds in ``TARGET_CRS``.
+        gdf_bounds: The board frame's tile polygons in ``TARGET_CRS``.
+
+    Returns:
+        The refusal record (``shortfall``, ``vocabularies``, ``tile_join``,
+        ``reference_join``, ``ruling``, …), or ``None`` when the detections
+        cannot be rebuilt at all — a replicate-mean cell, say — in which case
+        the refusal message remains the whole of what is known.
+    """
+    try:
+        gdf_det = cell_detections(cli_args, gdf_bounds)
+    except (ValueError, FileNotFoundError, OSError):
+        return None
+    try:
+        return describe_tile_join_refusal(
+            gdf_det, gdf_ref, gdf_bounds, TILE_JOIN_DEFAULT
+        )
+    except (ValueError, KeyError):
+        return None
+
+
+def mcc_point(cell: dict) -> float | None:
+    """A cell's tile-MCC point estimate, from its evaluation or its arrays.
+
+    ``cell["mcc"]`` is the committed, gate-checked number and is what the board
+    publishes. A cell whose evaluation records no ``tile_classification`` still
+    has one-hot arrays here (that is what the gate rebuilt), so the fallback
+    recomputes the point rather than dropping the cell out of the MCC ordering.
+
+    Args:
+        cell: A loaded cell from :func:`load_cells`.
+
+    Returns:
+        The MCC point estimate, or ``None`` when neither source has one.
+    """
+    if cell.get("mcc") is not None:
+        return float(cell["mcc"])
+    if "tp_c" not in cell:
+        return None
+    value = compute_mcc_or_none(
+        tp=int(cell["tp_c"].sum()), tn=int(cell["tn_c"].sum()),
+        fp=int(cell["fp_c"].sum()), fn=int(cell["fn_c"].sum()),
+    )
+    return None if value is None else float(value)
+
+
+def mcc_tiering(
+    cells: list[dict],
+    have_mcc: list[int],
+    pairwise_mcc: list[dict],
+) -> tuple[list[dict], list[list[str]]]:
+    """Tier the MCC family by the same greedy clique the F1 tiering uses.
+
+    PI ruling 2026-09-13 (S153 ruling 7): the tile-MCC permutation family is
+    reported BESIDE the preregistered F1 tiering and does not replace it. So
+    this produces a second ranking and a second tier assignment over the same
+    cells — ordered by tile-MCC descending, cliqued on the MCC family's own
+    BH verdicts — and the caller keeps both. The instrument is identical
+    (``greedy_clique_tiers``, imported verbatim from the canonical chain); only
+    the statistic and the BH family differ, which is the whole point of
+    reporting them side by side.
+
+    Args:
+        cells: Loaded cells from :func:`load_cells`.
+        have_mcc: Positions in ``cells`` that entered the MCC family.
+        pairwise_mcc: The MCC family's pairwise records, each carrying
+            ``ref_a``, ``ref_b`` and a BH ``significant`` verdict.
+
+    Returns:
+        ``(ranking, tiers)`` — one ranking row per MCC-tested cell (rank, ref,
+        label, mcc, and the F1 tier for side-by-side reading, which the caller
+        fills in), and the tiers as lists of refs with ``tiers[0]`` the MCC
+        tie set.
+    """
+    significant = {
+        frozenset({r["ref_a"], r["ref_b"]}): bool(r["significant"])
+        for r in pairwise_mcc
+    }
+    scored = [(mcc_point(cells[i]), cells[i]) for i in have_mcc]
+    # A cell with no MCC at all cannot be ordered against one that has one;
+    # it is already outside the family, so it is outside the ranking too.
+    ordered = sorted(
+        (pair for pair in scored if pair[0] is not None),
+        key=lambda pair: pair[0], reverse=True,
+    )
+    tiers = greedy_clique_tiers([c["ref"] for _, c in ordered], significant)
+    tier_of = {ref: t for t, members in enumerate(tiers, 1) for ref in members}
+    ranking = [
+        {
+            "rank": i + 1,
+            "ref": cell["ref"],
+            "label": cell["label"],
+            "mcc": round(point, 6),
+            "eval_f1": cell["eval_f1"],
+            "mcc_tier": tier_of[cell["ref"]],
+        }
+        for i, (point, cell) in enumerate(ordered)
+    ]
+    return ranking, tiers
+
+
 def load_cells(
     conditions_path: Path,
     analyses_path: Path,
@@ -769,6 +956,14 @@ def load_cells(
                 "reason": str(error),
                 "ruling": ("PI ruling 2026-09-13: withhold and list, never "
                            "abort the board"),
+                # Ruling 6's disclosure, carried as data so the board's README
+                # can publish the shortfall counts and both tile vocabularies
+                # instead of only the one-line refusal message.
+                "interval_status": INTERVAL_WITHDRAWN,
+                "interval_detail": INTERVAL_WITHDRAWN_DETAIL,
+                "withdrawn_interval_f1": committed_interval_f1(
+                    eval_path, buffer_metres),
+                "disclosure": refusal_disclosure(cli, gdf_ref, gdf_bounds),
             })
             print(f"  WITHHELD {cond['label']}: {error}", flush=True)
             continue
@@ -934,6 +1129,8 @@ def main() -> int:
     # pair are two statistics of one permutation, not two separate experiments.
     pairwise_mcc: list[dict] = []
     withheld_mcc: list[dict] = []
+    mcc_ranking: list[dict] = []
+    mcc_tiers: list[list[str]] = []
     if args.permute_mcc:
         # Cells whose tile join the invariant refused carry no per-tile
         # classification arrays, so they cannot enter the MCC family. The BH
@@ -964,6 +1161,13 @@ def main() -> int:
         n_sig_mcc = sum(1 for r in pairwise_mcc if r["significant"])
         print(f"MCC FDR: {n_sig_mcc}/{len(pairwise_mcc)} pairs significant "
               f"at q={FDR_Q}", flush=True)
+        # Ruling 7's "reported beside the F1 tiering": the MCC family gets its
+        # own greedy-clique tiers, over its own BH verdicts. The board's
+        # tiering stays the preregistered F1 one — this is a second reading of
+        # the same cells, not a replacement ranking.
+        mcc_ranking, mcc_tiers = mcc_tiering(cells, have_mcc, pairwise_mcc)
+        print(f"MCC tiering: {len(mcc_tiers)} tiers; MCC tie set = "
+              f"{len(mcc_tiers[0]) if mcc_tiers else 0} cell(s)", flush=True)
 
     # --- Sort by the eval-reported F1@20 m (the ranked headline) and tier ---
     ordered = sorted(cells, key=lambda c: c["eval_f1"], reverse=True)
@@ -1032,6 +1236,19 @@ def main() -> int:
             "withheld": withheld_mcc,
             "n_pairs": len(pairwise_mcc),
             "n_significant": sum(1 for r in pairwise_mcc if r["significant"]),
+            "reported_not_tiering": (
+                "PI ruling 2026-09-13 (S153 ruling 7): the MCC family is "
+                "reported BESIDE the preregistered F1 tiering and does not "
+                "replace it. The board's tiering is the F1 one."
+            ),
+            "n_tiers": len(mcc_tiers),
+            "tie_set": mcc_tiers[0] if mcc_tiers else [],
+            "tiers": [{"tier": i + 1, "members": m}
+                      for i, m in enumerate(mcc_tiers)],
+            "ranking": [
+                {**row, "f1_tier": tier_of.get(row["ref"])}
+                for row in mcc_ranking
+            ],
             "gates": {c["ref"]: c.get("mcc_gate") for c in cells},
             "pairwise": pairwise_mcc,
         }
@@ -1114,6 +1331,24 @@ def _write_markdown(md_path: Path, result: dict, ordered: list[dict],
             ]
             lines += [f"  - `{w['label']}` — {w['reason']}"
                       for w in mcc_block["withheld"]]
+        if mcc_block.get("ranking"):
+            lines += [
+                "",
+                f"- **MCC tiers**: {mcc_block['n_tiers']}; MCC tie set "
+                f"{len(mcc_block['tie_set'])} cell(s). Reported beside the F1 "
+                f"tiering, which remains the board's tiering (ruling 7).",
+                "",
+                "| MCC rank | condition | tile-MCC | MCC tier | F1 tier | F1@20m |",
+                "|---:|---|---:|---:|---:|---:|",
+            ]
+            for row in mcc_block["ranking"]:
+                f1_tier = row.get("f1_tier")
+                lines.append(
+                    f"| {row['rank']} | `{row['label']}` | {row['mcc']:.4f} | "
+                    f"{row['mcc_tier']} | "
+                    f"{f1_tier if f1_tier is not None else '—'} | "
+                    f"{row['eval_f1']:.4f} |"
+                )
         lines += [
             "",
             "| a | b | MCC a | MCC b | ΔMCC | raw p | BH p | significant |",
