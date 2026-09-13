@@ -301,6 +301,13 @@ agent work; Fable only for the PI-facing orchestration turns.
     `reports/generated-file-registry-2026-09-13.md`.
   - [ ] **11c.** `PaperImp` blocks on the 15 of 17 findings documents
     that lack one — on touch during the outline pass, not in bulk.
+- [ ] **11d. Registry currency discipline**: the registry enumerates the
+  file tree, so its tier-1 `--check` fails whenever any Markdown file is
+  added or removed by a later commit (it did on the first merge after
+  11a landed). Rebuild it (`scripts/build_generated_file_registry.py
+  --out reports/verification/generated-file-registry.json`) as the last
+  step of every handoff and after any merge that adds documents; consider
+  a pre-commit hook. Owner: the session at handoff.
 - [ ] **12. Verdict-model decision (PI)**: a `disclosures` list beside
   `discrepancies` in the run-conditions verifier, so the 12 deliberate
   WARNs (3 `n-passes-over` on the mixed-provenance uplift pool, 9
