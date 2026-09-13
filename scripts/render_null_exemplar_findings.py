@@ -94,8 +94,8 @@ def reflow(text: str, width: int = 79) -> str:
     for block in text.split("\n\n"):
         lines = block.split("\n")
         structured = any(
-            line.startswith(("#", "|", ">", "-", "*", "    "))
-            or re.match(r"^\d+\.\s", line)
+            line.startswith(("#", "|", ">", "    "))
+            or re.match(r"^([-*+]|\d+\.)\s", line)
             for line in lines if line.strip()
         )
         if structured or not block.strip():
@@ -343,7 +343,10 @@ def tiering_section(analysis: dict[str, Any]) -> str:
         f"| {t['n_pairs_significant_before']} | {t['n_pairs_significant_after']} |",
         f"| **F1 tiers** | **{t['n_tiers_before']}** | **{t['n_tiers_after']}** |",
         f"| F1 tie set | {len(t['tie_set_before'])} | {len(t['tie_set_after'])} |",
-        f"| **cells changing F1 tier** | — | **{t['n_cells_changing_tier']}** |",
+        f"| cells whose F1 tier *label* changes (see note) | — "
+        f"| {t['n_cells_changing_tier']} |",
+        f"| cells moving by more than one F1 tier | — "
+        f"| **{rs['n_moving_more_than_one_tier']}** |",
         f"| F1 Hsu MCB admissible | {mcb['f1']['n_admissible_before']} "
         f"| {mcb['f1']['n_admissible_after']} |",
         f"| tile-MCC pairs significant | {m['n_significant_before']} "
