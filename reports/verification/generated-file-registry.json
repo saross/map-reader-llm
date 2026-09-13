@@ -1,19 +1,19 @@
 {
  "_meta": {
-  "generated_at": "2026-09-13T13:50:26.051056+00:00",
+  "generated_at": "2026-09-13T15:11:17.951029+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "2fa91cdb1",
+  "git_head": "d9ea97c2e",
   "counts": {
-   "total": 3713,
-   "generated": 3318,
+   "total": 3950,
+   "generated": 3554,
    "generated_unattributed": 0,
-   "hand_written": 395,
+   "hand_written": 396,
    "by_directory": {
     "results/": {
-     "total": 2864,
-     "generated": 2723,
-     "hand_written": 141
+     "total": 3101,
+     "generated": 2959,
+     "hand_written": 142
     },
     "reports/": {
      "total": 89,
@@ -37,12 +37,12 @@
     }
    },
    "regime2": {
-    "generated_banner": 50,
-    "source_commit_stamp": 55,
-    "check_mode": 67,
-    "tier1_check_test": 67,
-    "compliant": 50,
-    "neither_regime": 3268
+    "generated_banner": 51,
+    "source_commit_stamp": 56,
+    "check_mode": 68,
+    "tier1_check_test": 68,
+    "compliant": 51,
+    "neither_regime": 3503
    }
   }
  },
@@ -29059,6 +29059,4505 @@
    "check_tests": [],
    "tier1_check_test": false,
    "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2a__brief-text/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2a__brief-text/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:00.441270+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2a__brief-text-image/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2a__brief-text-image/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:00:58.767960+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2a__image-only/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2a__image-only/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:02.263816+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2a__verbose-text/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2a__verbose-text/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:20.114510+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2a__verbose-text-image/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2a__verbose-text-image/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:00:52.168725+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__image-t0.0/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__image-t0.0/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:15.855358+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__image-t0.3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__image-t0.3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:00:54.167858+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__image-t0.7/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__image-t0.7/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:01.573572+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__image-t1.0/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__image-t1.0/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:26.694458+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__image-t1.3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__image-t1.3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:17.931947+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__text-t0.0/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__text-t0.0/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:19.193523+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__text-t0.3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__text-t0.3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:09.791526+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__text-t0.7/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__text-t0.7/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:31.001315+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__text-t1.0/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__text-t1.0/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:41.819317+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__text-t1.3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__text-t1.3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:53.727640+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__verified-adv-image-t0.0/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__verified-adv-image-t0.0/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:05:07.222714+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__verified-adv-text-t0.0/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2b__verified-adv-text-t0.0/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:05:03.192762+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-canonical/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-canonical/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:34.390146+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-exploratory-pure-positive-2hp/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-exploratory-pure-positive-2hp/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:52.810147+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-exploratory-pure-positive-4hp/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-exploratory-pure-positive-4hp/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:59.450478+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-exploratory-pure-positive-canon/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-exploratory-pure-positive-canon/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:57.109668+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-plus-hp/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-plus-hp/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:39.952891+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-pure-positive-canon/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-pure-positive-canon/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:41.914576+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-scale-4/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-scale-4/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:38.220487+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-scale-8/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__image-scale-8/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:41.338499+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__text-canonical/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__text-canonical/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:56.784346+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__text-plus-hp/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__text-plus-hp/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:01:59.311441+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__text-pure-positive-canon/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__text-pure-positive-canon/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:12.302318+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__text-scale-4/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__text-scale-4/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:19.309043+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__text-scale-8/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2c__text-scale-8/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:11.108126+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2d__image-terse/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2d__image-terse/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:19.949587+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2d__image-verbose/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2d__image-verbose/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:16.908616+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2d__text-terse/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2d__text-terse/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:20.923338+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2d__text-verbose/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2d__text-verbose/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:20.990490+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2e__canonical-first/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2e__canonical-first/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:16.428390+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2e__canonical-last/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2e__canonical-last/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:36.472521+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2e__config-default/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2e__config-default/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:40.873608+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2e__random/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase2e__random/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:40.246240+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.3-n10-8of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.3-n10-8of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:14.086774+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.3-n30-23of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.3-n30-23of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:14.894525+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.3-n5-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.3-n5-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:19.052682+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.7-n10-7of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.7-n10-7of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:25.779267+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.7-n30-22of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.7-n30-22of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:24.196521+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.7-n5-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t0.7-n5-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:20.907597+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t1.0-n10-8of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t1.0-n10-8of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:34.898656+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t1.0-n30-23of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t1.0-n30-23of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:35.558413+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t1.0-n5-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__text-high-t1.0-n5-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:28.774753+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__verified-adv-text-high-t1.0-n30-23of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-high__verified-adv-text-high-t1.0-n30-23of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:04:06.909035+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-high-t0.7-n10-8of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-high-t0.7-n10-8of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:39.931935+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-high-t0.7-n30-21of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-high-t0.7-n30-21of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:44.634490+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-high-t0.7-n5-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-high-t0.7-n5-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:44.003890+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-minimal-t0.7-n10-8of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-minimal-t0.7-n10-8of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:41.957869+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-minimal-t0.7-n30-25of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-minimal-t0.7-n30-25of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:46.619678+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-minimal-t0.7-n5-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a-replication__text-minimal-t0.7-n5-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:51.655652+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.3-n10-8of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.3-n10-8of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:31.461503+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.3-n30-22of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.3-n30-22of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:39.211530+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.3-n5-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.3-n5-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:26.108261+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.7-n10-7of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.7-n10-7of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:44.789764+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.7-n30-18of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.7-n30-18of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:50.450184+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.7-n5-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t0.7-n5-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:43.062488+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t1.0-n10-7of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t1.0-n10-7of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:44.691928+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t1.0-n30-19of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t1.0-n30-19of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:48.994189+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t1.0-n5-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__image-t1.0-n5-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:45.819398+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.3-n10-8of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.3-n10-8of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:58.755382+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.3-n30-23of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.3-n30-23of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:06.826943+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.3-n5-5of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.3-n5-5of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:02:52.964398+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.7-n10-8of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.7-n10-8of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:14.083763+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.7-n30-24of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.7-n30-24of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:10.777187+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.7-n5-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t0.7-n5-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:08.371670+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t1.0-n10-7of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t1.0-n10-7of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:11.623161+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t1.0-n30-22of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t1.0-n30-22of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:16.607566+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t1.0-n5-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__text-t1.0-n5-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:03:15.476882+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__verified-adv-image-t0.7-n30-18of30/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3a__verified-adv-image-t0.7-n30-18of30/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:04:07.057274+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__image-h9-a-diversity-3of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__image-h9-a-diversity-3of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:05:25.463110+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__image-h9-b-diversity-3of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__image-h9-b-diversity-3of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:05:16.642549+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__image-h9-c-diversity-3of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__image-h9-c-diversity-3of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:05:33.650356+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__image-h9-d-diversity-3of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__image-h9-d-diversity-3of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:05:27.065079+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__image-h9-e-diversity-3of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__image-h9-e-diversity-3of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:05:31.612231+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__text-h9-a-diversity-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__text-h9-a-diversity-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:05:29.577541+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__text-h9-b-diversity-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__text-h9-b-diversity-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:05:23.463400+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__text-h9-d-diversity-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__text-h9-d-diversity-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:05:42.220869+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__text-h9-e-diversity-4of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era1-full-340/retest-phase3c__text-h9-e-diversity-4of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T14:05:36.262166+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/flash35-pv-2x2__f35prop-f35vf-4of10-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/flash35-pv-2x2__f35prop-f35vf-4of10-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:54:53.390730+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/flash35-pv-2x2__f35prop-f3vf-4of10-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/flash35-pv-2x2__f35prop-f3vf-4of10-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:54:54.130640+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/flash35-pv-2x2__f3prop-f35vf-6of10-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/flash35-pv-2x2__f3prop-f35vf-6of10-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:54:54.317118+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-image-gs-2026-09-01__g37-image-k5-verified-carried-p0.10-k5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-image-gs-2026-09-01__g37-image-k5-verified-carried-p0.10-k5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:04.800588+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-image-gs-2026-09-01__g37-image-k5-verified-swap37-p0.90-k5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-image-gs-2026-09-01__g37-image-k5-verified-swap37-p0.90-k5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:54:58.599462+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0.10-k1/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0.10-k1/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:20.075338+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:22.394480+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k10-verified-carried-p0.10-k10-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k10-verified-carried-p0.10-k10-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:06.040012+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:21.360248+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k5-verified-carried-p0.10-k5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k5-verified-carried-p0.10-k5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:04.463724+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k5-verified-swap37-p0.80-k5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k5-verified-swap37-p0.80-k5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:54:55.917548+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k5-verified-swap38-p0.88-k5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k5-verified-swap38-p0.88-k5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:54:57.249092+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:45.222496+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k1-verified-p0.15-k1/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k1-verified-p0.15-k1/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:44.313771+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k10-verified-p0.15-k10-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k10-verified-p0.15-k10-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:00.455892+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k10-verified37-p0.98-k10-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k10-verified37-p0.98-k10-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:02.941650+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k3-verified-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k3-verified-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:50.212269+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:43.542036+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/image-b-gs-2026-08-28__g384-ov192-image-high-k10-verified-p0.20-k8-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/image-b-gs-2026-08-28__g384-ov192-image-high-k10-verified-p0.20-k8-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:54:55.033492+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/image-b-gs-2026-08-28__g384-ov192-image-min-k10-verified-p0.15-k9-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/image-b-gs-2026-08-28__g384-ov192-image-min-k10-verified-p0.15-k9-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:54:54.429790+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/n1-outstanding-384__pv-n1-image-t0-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/n1-outstanding-384__pv-n1-image-t0-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:17.557984+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-adversarial-image-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-adversarial-image-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:54:59.262251+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-adversarial-text-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-adversarial-text-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:10.856328+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-brief-image-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-brief-image-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:18.435359+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-brief-text-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-brief-text-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:16.109759+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-cascade-adversarial-checklist-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-cascade-adversarial-checklist-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:12.460748+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-cascade-checklist-adversarial-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-cascade-checklist-adversarial-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:17.087791+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-checklist-image-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-checklist-image-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:20.072311+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-checklist-text-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/proposer-verifier-384__verified-checklist-text-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:22.740294+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.3-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.3-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:47.428135+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.3-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.3-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:13.215012+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.3-n3-carried-p0.15-k3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.3-n3-carried-p0.15-k3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:48.893054+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.3-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.3-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:48.052949+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.3-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.3-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:20.869290+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.7-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.7-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:57.956023+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.7-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.7-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:04.964117+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.7-n3-carried-p0.15-k3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.7-n3-carried-p0.15-k3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:47.461759+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.7-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.7-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:58.278921+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.7-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t0.7-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:45.088230+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n1-carried-p0.15-k1/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n1-carried-p0.15-k1/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:56.834991+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:00.652799+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:20.719364+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n3-carried-p0.15-k3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n3-carried-p0.15-k3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:56.116879+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:04.130756+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-image-t1.0-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:28.920605+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.0-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.0-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:42.947020+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:24.627657+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.3-n1-carried-p0.15-k1/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.3-n1-carried-p0.15-k1/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:09.388632+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.3-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.3-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:11.287544+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.3-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.3-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:32.161787+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.3-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.3-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:07.918223+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.3-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.3-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:10.428624+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.7-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.7-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:14.715628+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.7-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.7-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:22.837021+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.7-n3-carried-p0.15-k3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.7-n3-carried-p0.15-k3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:11.699479+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.7-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.7-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:14.982482+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.7-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t0.7-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:36.840139+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n1-carried-p0.15-k1/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n1-carried-p0.15-k1/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:18.319482+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:20.076282+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:14.056953+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n3-carried-p0.15-k3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n3-carried-p0.15-k3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:17.692826+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:22.719702+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-high-text-t1.0-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:39.848755+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.3-n1-carried-p0.15-k1/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.3-n1-carried-p0.15-k1/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:28.088029+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.3-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.3-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:25.158358+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.3-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.3-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:02.562549+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.3-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.3-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:24.367313+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.3-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.3-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:02.459015+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.7-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.7-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:29.238817+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.7-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.7-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:46.905363+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.7-n3-carried-p0.15-k3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.7-n3-carried-p0.15-k3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:34.202880+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.7-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.7-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:38.963530+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.7-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t0.7-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:03.393718+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t1.0-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t1.0-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:41.530606+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t1.0-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t1.0-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:23.968198+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t1.0-n3-carried-p0.15-k3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t1.0-n3-carried-p0.15-k3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:33.191597+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t1.0-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t1.0-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:42.968880+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t1.0-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-image-t1.0-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:25.988252+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.0-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.0-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:36.857379+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.3-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.3-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:39.774788+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.3-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.3-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:32.941552+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.3-n3-carried-p0.15-k3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.3-n3-carried-p0.15-k3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:43.451311+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.3-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.3-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:44.031493+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.3-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.3-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:17.317878+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.7-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.7-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:47.385175+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.7-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.7-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:27.357690+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.7-n3-carried-p0.15-k3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.7-n3-carried-p0.15-k3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:45.070802+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.7-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.7-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:50.880955+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.7-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t0.7-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:29.027758+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n1-carried-p0.15-k1/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n1-carried-p0.15-k1/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:50.981661+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:54.816573+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:17.133662+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n3-carried-p0.15-k3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n3-carried-p0.15-k3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:57:53.817366+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:00.470669+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-min-text-t1.0-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:28.594171+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n1-carried-p0.15-k1/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n1-carried-p0.15-k1/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:04.876079+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n1-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n1-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:08.685679+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n10-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n10-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:09.190588+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n3-carried-p0.15-k3/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n3-carried-p0.15-k3/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:00.960692+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n3-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n3-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:04.345884+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n5-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__pv-scale4-optimal-n5-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:19.807999+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-adversarial-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-adversarial-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:53.720583+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-adversarial-text-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-adversarial-text-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:09.098889+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-brief-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-brief-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:58.179928+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-brief-text-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-brief-text-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:59:03.761729+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-checklist-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-checklist-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:59.242335+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-checklist-text-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-checklist-text-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:57.171725+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-comparative-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-image-comparative-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:55.330849+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-adversarial-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-adversarial-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:10.288333+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-adversarial-text-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-adversarial-text-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:37.263508+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-brief-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-brief-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:18.445509+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-brief-text-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-brief-text-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:44.255828+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-checklist-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-checklist-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:13.409794+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-checklist-text-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-checklist-text-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:36.446040+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-comparative-opmax/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__session-78-text-comparative-opmax/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:58:09.685847+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-3of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-3of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:26.757971+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-baseline-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-baseline-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:29.427886+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-baseline-medium-vf-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-baseline-medium-vf-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:33.085679+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-baseline-pro-vf-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-baseline-pro-vf-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:31.371388+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-min-3of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-min-3of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:31.875327+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-min-6of10-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-image-min-6of10-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:33.142249+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-image-baseline-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-image-baseline-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:42.996584+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-image-baseline-medium-vf-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-image-baseline-medium-vf-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:40.526951+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-image-baseline-pro-vf-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-image-baseline-pro-vf-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:44.567798+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-image-pro-vf-3of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-image-pro-vf-3of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:43.158252+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-baseline-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-baseline-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:40.604175+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-baseline-medium-vf-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-baseline-medium-vf-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:48.215505+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-baseline-pro-vf-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-baseline-pro-vf-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:47.641280+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-flash-vf-3of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-flash-vf-3of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:46.878704+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-medium-vf-3of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-medium-vf-3of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:51.312102+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-pro-vf-3of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-pro-text-pro-vf-3of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:52.020968+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-4of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-4of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:57.079297+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-6of10-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-6of10-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:55:58.338172+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-baseline-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-baseline-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:00.699114+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-baseline-medium-vf-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-baseline-medium-vf-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:03.178152+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-baseline-pro-vf-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-baseline-pro-vf-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:11.538812+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-consensus-16of30-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-consensus-16of30-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:05.906517+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-high-vf-4of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-high-vf-4of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:10.321762+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-medium-vf-4of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-medium-vf-4of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:08.181591+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-min-6of10-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-min-6of10-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:09.958980+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-min-n30lineage-4of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-min-n30lineage-4of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:11.715137+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-min-true-3of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-min-true-3of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:11.577560+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-pro-vf-4of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-pro-vf-4of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:13.737103+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-t03-4of5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/pv-diag-384__verified-adv-text-t03-4of5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:14.981535+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-16of30-t0-3-n5-opmax-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-16of30-t0-3-n5-opmax-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:19.924154+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-ge3of5-t0-3-high-n5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-ge3of5-t0-3-high-n5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:21.968963+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-ge3of5-t0-3-n5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-ge3of5-t0-3-n5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:26.530083+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-ge3of5-t0-7-high-n5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-ge3of5-t0-7-high-n5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:26.755150+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-ge3of5-t0-7-n5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-ge3of5-t0-7-n5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:28.316610+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-union-t0-0-n5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-robustness__verified-384-union-t0-0-n5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:31.113541+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-t-pilot__verified-t0-0-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-t-pilot__verified-t0-0-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:32.075324+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-t-pilot__verified-t0-5-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-t-pilot__verified-t0-5-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:33.897367+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-t-pilot__verified-t1-0-era2b/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/verifier-t-pilot__verified-t1-0-era2b/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-13T13:56:35.086078+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/findings.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/null-exemplar-sensitivity-2026-09-13/tiering-reduced/tiering_20m.md",
+   "stratum": "generated",
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/null-exemplar-sensitivity-2026-09-13/tiering-reduced/tiering_20m.json"
+   ],
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `3b82540cc` and rendered at commit `3b82540cc`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
+   "hand_edited": false,
+   "generated_banner": true,
+   "source_commit_stamp": true,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/obs407-ink-colour-adhesion/findings.md",

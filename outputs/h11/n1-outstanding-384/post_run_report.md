@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — n1-outstanding-384
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `2fa91cdb1`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `d9ea97c2e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/n1-outstanding-384` · **Registry status**: active · **Purpose**: not supplied
 
@@ -200,7 +200,7 @@ Scored evaluations under this run that no condition claims, each waived in `resu
 - **1 evaluation(s)** — Superseded pre-recovery scoring. This 2026-05-31 rescore scored outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus\_t3.geojson — the same detections the registered condition pro-text-high-t0-consensus-3of3 now scores at results/recovery-reeval-2026-09-08/n1-outstanding-384/pro-text-high-t0-consensus-3of3/evaluation.json after the E71 dead-tile recovery (99ae28ec4) rewrote the file. Kept as the pre-recovery record per ruling 3a (PI, 2026-09-07); not a second condition.
   - `results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t3/evaluation.json`
 
-## 6. Analyses that read this run (6)
+## 6. Analyses that read this run (7)
 
 A run is linked to an analysis when the analysis's `conditions_compared` names one of this run's conditions. *Cells* is how many of the analysis's compared conditions come from this run, out of its total. *Signed* is the register's `manually_verified_at` stamp.
 
@@ -211,11 +211,14 @@ A run is linked to an analysis when the analysis's `conditions_compared` names o
 | `h6-a07-voting-thresholds` | 6 of 6 | sweep | `H6` | post-hoc | Methods | `E74`, `E57`, `E71` | 2026-09-10T06:56:15Z | `results/h6-registered-analyses` |
 | `h6-a09-cost-gate` | 2 of 4 | diagnostic | `H6` | post-hoc | Methods | `E74`, `E57`, `E71` | 2026-09-08T01:53:31Z | `results/h6-registered-analyses` |
 | `n1-baseline-matrix-384` | 3 of 18 | leaderboard | `H1`, `H7` | post-hoc | Results | `E57` | 2026-06-04T02:05:31Z | `results/paper-eval/n1/384px-14buf-mcc` |
+| `null-exemplar-sensitivity-2026-09-13` | 1 of 235 | comparison | — | post-hoc | Appendix | — | not supplied | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
 | `uplift-supplement-flatten` | 48 of 441 | diagnostic | — | post-hoc | Appendix | — | 2026-09-10T22:55:40Z | `results/uplift-supplement/conditions.csv` |
 
-## 7. Findings documents (0)
+## 7. Findings documents (1)
 
-No findings document on disk is named by an analysis that reads this run: a findings write-up for this run is **not supplied** from the register. § 6's `output_path` column gives each analysis's artefact directory.
+| Document | Named by |
+|---|---|
+| `results/null-exemplar-sensitivity-2026-09-13/findings.md` | `null-exemplar-sensitivity-2026-09-13` |
 
 ## 8. Protocol errata
 
@@ -255,7 +258,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `2fa91cdb1` |
+| Source commit | `d9ea97c2e` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 
