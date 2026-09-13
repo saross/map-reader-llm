@@ -1,6 +1,13 @@
 # Documentation foundation checklist — the preregistration → outcome chain
 
-> **Last revised**: 2026-09-13 (latest — **item 6 closed, awaiting PI
+> **Last revised**: 2026-09-13 (latest — **item 9 closed**: five ruled
+> markers cleared from the Results draft, so it carries zero open PI
+> decisions in its own notes, and the claims inventory extended to
+> §§ R1b, R3 and R6 — 181 claims over 10 of 12 blocks → **237 over 12 of
+> 12**, 214 VERIFIED / 19 DRIFTED / 1 SUPERSEDED / 3 UNANCHORED, plus **10
+> ladder findings verified at anchor that no draft sentence makes**. § R6's
+> cost table is one signature behind `pass-budget-pareto-v2` and §§ R3/R6
+> drift only by reference vintage. Before that — **item 6 closed, awaiting PI
 > re-signature**: the Era-2 board rebuilt once carrying all three ruled
 > changes, so the PI signs once. The F1 arm reproduced **byte-identically**
 > (11,175 pairwise records and the F1 MCB artefact; Tier 1 and its five
@@ -216,10 +223,36 @@ agent work; Fable only for the PI-facing orchestration turns.
 - [ ] **8. The image run's analysis row** `gemini37-image-55map-2026-09-13`
   and findings; P1–P5 verdicts; the deployment-scale modality result into
   the Results inventory. PI signs.
-- [ ] **9. Results draft housekeeping**: clear the four `[DRAFT, S153 —
-  pending PI ruling]` markers now ruled; extend the claims inventory to
-  R3, R6 and R1b against the ladder findings; regenerate the cross-section
-  summary. Owner: Opus agent.
+- [x] **9. Results draft housekeeping** — done 2026-09-13, commits
+  `384b80025` (part A) and `61bada6cb` (part B). **Five** markers cleared,
+  not four: the four `[DRAFT, S153 — pending PI ruling]` markers in § R7.3
+  (the 3.8 verifier-seat leg, the r2 tier-1 sentence, the gold-standard
+  back-reference, the cost paragraph) plus the § R4 `[DRAFT NOTE, S152]`,
+  each replaced by the ruling it was waiting for, and item (a) of § R7.3's
+  closing note resolved by ruling 1 / § D18. The draft now carries **zero**
+  open PI decisions in its own markers, down from four; the two that remain
+  wait on Methods prose and on the word allocation, neither a ruling.
+  The claims inventory went from **181 claims over 10 of 12 blocks to 237
+  over 12 of 12** — 214 VERIFIED, 19 DRIFTED, 1 SUPERSEDED (a status this
+  pass adds), 3 UNANCHORED, and **10 verified at a committed anchor that no
+  sentence of the draft makes**, every one a K-ladder finding. § R1b's
+  twenty-three outline claims reproduce whole; §§ R3 and R6 drift only by
+  reference vintage and by two Era-1 claims, and neither section states the
+  ladder's shape, price, MCB sets, tile-MCC direction, verifier-stage
+  reversal or resolution result. § R6's cost table is **one signature
+  behind** `pass-budget-pareto-v2`, re-signed 2026-09-12T09:03:09Z with a
+  tile-MCC column whose efficient set is {min6, min11} rather than the F1
+  set's four rungs. Cross-section summary regenerated for all twelve
+  blocks, with the two new ladder Pareto figures, the MCB and Phase-2
+  ladder tables, the board's 150-cell tile-MCC table, and twelve new
+  jargon glosses. Also surfaced: § R1b's registration note calls three
+  register rows unsigned that were signed 2026-09-12, and two
+  `hypothesis-tracking.md` items are stale or unapplied (the U12
+  propagation warning; the PI's 2026-08-28 H9 disclose-only ruling,
+  recorded and NOT applied). US$0, no compute beyond reads and two
+  recomputations from committed artefacts. Anchors:
+  `docs/paper/results-claims-inventory-2026-09-12.md` § Changelog
+  2026-09-13 and `docs/paper/results-draft.md` § Changelog 2026-09-13.
 - [ ] **10. Uplift supplement currency**: re-pair if any new verified cell
   gains a twin by construction; amend and re-sign the pairing row only if
   counts move.
@@ -256,7 +289,57 @@ after that.
 
 ## Changelog
 
-### 2026-09-13 (latest) — item 6 closed: one rebuild, three ruled changes, awaiting the PI's re-signature
+### 2026-09-13 (latest) — item 9 closed: the ruled markers cleared, and every Results block inventoried
+
+**Refresh trigger**: item 9. Commits `384b80025` (part A, the markers) and
+`61bada6cb` (part B, the inventory).
+
+| Claim | Before | After |
+|---|---|---|
+| `[DRAFT, S153 — pending PI ruling]` markers in the draft | 4 | **0** |
+| Open PI decisions in the draft's own markers | 4 | **0** (two markers remain, waiting on Methods prose and on the word allocation) |
+| Blocks in the claims inventory | 10 of 12 (R3, R6 placeholders; R1b never inventoried) | **12 of 12** |
+| Claims recorded | 181 | **237** (214 V / 19 D / 1 SUPERSEDED / 3 U) |
+| Ladder findings verified at anchor but absent from the draft | not counted | **10** |
+| Prose words inventoried | 6,389 of 7,186 | **7,186 — all of it** |
+| Figures/tables existing but uncited | 3 figures + 1 table | **10 rows**, five new |
+
+**The markers were all ruled, and one more than the card expected.** The card
+named four; there were five, because the § R4 `[DRAFT NOTE, S152]` was also
+settled by ruling 7. Each now names its ruling: the 3.8 verifier-seat leg
+reported as drafted; the family-clears-incumbent framing and the
+gold-standard back-reference standing on ruling 2 / § D19 (headline = the
+all-3.7 stack, 0.9190 board frame / 0.9265 screen); the fourth cell's mixed
+token-basis/invoice cost kept as marked; the § R4 board note retained
+verbatim under ruling 7; and item (a) of § R7.3's closing note resolved by
+ruling 1 / § D18.
+
+**What the K-ladder did to §§ R3 and R6 was not to correct them.** Neither
+section was found numerically wrong by it. It **replaced the basis** of one
+claim — "the diversity dividend is obsolete once a verifier stage exists" is
+superseded, because on the fourteen verified `pv-diag-384` ladders the return
+on K is still thinking-governed (significant on 7 of 7 HIGH, 2 of 6 MINIMAL,
+all four single-tier ladders MINIMAL) — and it **supplied ten findings
+neither section states**: the front-loaded shape (K = 3 on every ladder's
+efficient set, 37–93 % of the gain for 31–64 % of the cost), the Hsu MCB sets
+(K = 3 admissible on 12 of 22, no F1 set excluding K = 10, K = 1 ruled out on
+F1 on 20 of 22 and admissible on tile-MCC on 22 of 22), tile-MCC never rising
+with K and falling significantly on four ladders, the verifier absorbing
+40.6 % of K's F1 return while reversing the sign of its tile-MCC effect, the
+two corpora reconciled as a 487-tile resolution effect, the tile-factor
+projection's 10.7 % overstatement, and the MCC-efficient set {min6, min11}.
+§§ R3 and R6's own drift is **entirely reference vintage** plus two Era-1
+claims.
+
+**Three things the pass surfaced that were not in its brief.** § R1b's
+registration note calls three register rows unsigned that were signed
+2026-09-12T09:03:09Z; `hypothesis-tracking.md`'s warning that D17 finding
+U12 contaminated the draft is now stale, the draft having recorded the
+correction; and the same file records the PI's 2026-08-28 H9 "disclose only"
+ruling as **recorded, NOT applied**, while § R3 reports H9 as executed and
+rejected without that disclosure.
+
+### 2026-09-13 — item 6 closed: one rebuild, three ruled changes, awaiting the PI's re-signature
 
 | Claim | Before | After |
 |---|---|---|
