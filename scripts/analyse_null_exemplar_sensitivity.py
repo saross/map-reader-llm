@@ -1064,7 +1064,7 @@ def stage_swap(inventory: dict[str, Any]) -> dict[str, Any]:
                     block.update({
                         "mcc_image": round(float(mcc["mcc_a"]), 6),
                         "mcc_text": round(float(mcc["mcc_b"]), 6),
-                        "delta_mcc": round(float(mcc["observed_diff"]), 6),
+                        "delta_mcc": round(float(mcc["observed_mcc_diff"]), 6),
                         "p_value_mcc": round(float(mcc["p_value"]), 6),
                     })
                 row[which] = block
