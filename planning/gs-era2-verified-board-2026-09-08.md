@@ -262,6 +262,10 @@ until § 9 is signed.
 
 ## Changelog
 
+### 2026-09-13 — PI ruling: the name-based tile join is the published convention
+
+Ruling 6 (S153): `id` join published; the three withheld 3.7 text-screen rungs stay admitted-and-withheld with their whole-frame F1; see `reports/tile-mcc-geometric-join-2026-09-12.md`.
+
 ### 2026-09-13 — PI ruling: a tile-MCC permutation family joins the board at its next rebuild
 
 The board's committed instrument tests F1 only. PI ruling 2026-09-13 (S153, ruling 7): at the next rebuild the round-robin tile-swap carries tile-MCC on the same swap masks as F1 (the `--permute-mcc` arm the K-ladder MCC test exercised), BH within its own family, reported beside the F1 tiering and not replacing it; cells the tile-join invariant withholds stay withheld from both. Not applied to the current signed board.
