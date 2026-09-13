@@ -85,6 +85,10 @@
           ],
           "description": "As-evaluated scope when it diverges from the run's nominal scope (rare, ~2%, e.g. a bounds-filtered companion). Null/absent means the run's scope applies."
         },
+        "caveat": {
+          "type": ["string", "null"],
+          "description": "Free-text caveat or erratum carried from the register's condition _note, so a reader of the manifest alone sees any 'do not cite' warning attached to these figures (E72 remediation item 4, discharged 2026-09-12). Optional and nullable: most conditions carry none."
+        },
         "metrics": { "$ref": "#/$defs/metrics" },
         "n_candidates": { "type": ["integer", "null"], "minimum": 0 },
         "n_detections": { "type": ["integer", "null"], "minimum": 0 },

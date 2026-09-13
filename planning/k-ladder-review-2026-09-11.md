@@ -1,6 +1,9 @@
 # K-ladder review: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-12 (later still — **Phase 2 EXECUTED at
+> **Last revised**: 2026-09-12 (latest — the CLOSEOUT job executed: tier E at
+> US$4.9595 against a US$5.02 approval, the tension analyses answered, the
+> analysis row authored UNSIGNED, two items stopped; per-item outcome in
+> [§ 8](#8-the-closeout-what-landed-2026-09-12). Before that — **Phase 2 EXECUTED at
 > US$24.8065** against the PI's US$24.84 approval of tiers A–D; per-step
 > outcome in [§ 7](#7-phase-2-what-landed-2026-09-12). Earlier the same day:
 > **Phase 1 EXECUTED at US$0**, steps 0–7, per-step outcome in
@@ -248,7 +251,71 @@ rung", making five rungs possible. They do not: both K = 30 cells are
 `aggregation: "consensus"` with `verifier_config: null`, so ruling R1 excludes
 them. The correction is in the costing's own changelog.
 
+## 8. The closeout: what landed (2026-09-12)
+
+Executed on branch `worktree-agent-ae1e65fd9508397ec`. Eight items briefed;
+**five landed complete, one partially, two stopped.** The only API spend was
+tier E, approved by the PI that evening at US$5.02 and executed for
+**US$4.9595** — 7,239 of 7,239 candidates verified, 0 failed, hard stop US$7.00
+never approached. Closing report:
+`reports/k-ladder-closeout-deltas-2026-09-12.md`.
+
+| # | Item | Outcome | Artefact |
+|---:|---|---|---|
+| 1 | Tier E: the grid 384/50 MINIMAL text K = 1, 3, 5 rungs | **landed** — US$4.9595 audited flex; all three union counts reproduce the PI's approved figures exactly (delta +0); READY audit, 0 blockers | `results/k-ladder-2026-09-12/tier-e/`, `scripts/run_k_ladder_tier_e.py` |
+| 2 | The K = 5 fill for stride B under the 3.7 verifier | **partial** — the generator defect found and fixed, the sweep regenerated with every gate passing; the register row and the 55-map board re-tier are put back | `scripts/final_board_sweeps.py`, deltas § 5 |
+| 3 | The tension analyses | **landed, and they answer the question** — the two corpora agree once resolution is accounted for | `results/k-ladder-2026-09-12/tension/`, `findings.md` § 8 |
+| 4 | The analysis row | **landed, UNSIGNED** — `conditions_compared` derived from the ladder inventories, every id checked against the register | `results/run-analyses.json` row `k-ladder-2026-09-12` |
+| 5 | The five stale T = 1.0 unions | **landed** — relabelled `consensus-{1..5}of5` with `n_passes: 5`, propagated, erratum **E85** | `docs/methodology/preregistration/protocol-errata.md` |
+| 6 | The two stale h10 consensus files | **landed** — archived and rebuilt to 1,474 / 477, reproducing the retrospective's prediction exactly; `t3`–`t5` deliberately left | `archive/superseded-consensus-2026-09-12/` |
+| 7 | E72 propagation | **landed** — a nullable `caveat` field through the manifest generator and its schema, and the register caveat into the supplement's `notes` | `scripts/generate_post_run_report.py`, `scripts/build_uplift_supplement.py` |
+| 8 | The Era-2 board rebuild | **STOPPED** — the builder refuses all 46 cells by two rules that are correct behaviour; admitting them is a design decision | deltas § 8 |
+
+**What the closeout settled that this card could not.** § 4's ruling R2 and the
+Phase 2 § 7 note both left open whether the gold standard's MINIMAL null results
+meant K does not pay there or that 487 tiles cannot see it. The subsample test
+answers it: the deployment ladders' **own cells**, scored on random 487-tile
+subsets of their own 8,541 tiles, keep BH significance in 197 of 200 draws at
+ΔF1 +0.0547 and in only 39 of 200 at +0.0192. **At 487 tiles the instrument
+resolves a ΔF1 of about 0.03 and above, and not below** — and the nine MINIMAL
+ladders sort by effect size rather than by corpus.
+
+**Three expectations in the brief did not survive execution**, recorded here as
+§ 6 and § 7 recorded Phase 1's and Phase 2's.
+
+- The brief named `scripts/gemini37_fourth_cell_ladder.py` as the script that
+  built § 3.3's ladder. It is not: that script's own committed output computes
+  different numbers against a different reference. The provenance is
+  `final_board_sweeps.build_g37_families`, and the missing K = 5 rung was a
+  one-line asymmetry in its rung loop (deltas § 5).
+- The brief supposed the Era-2 board could be rebuilt with the 46 Phase 2 cells
+  admitted. The builder refuses **all 46**, on the frame rule and the
+  `scope_override` rule, and both refusals are correct: the cells are already
+  scored on the board's own frame, which is what those rules exist to exclude.
+  Admission needs a mechanism, and the choice has consequences (deltas § 8).
+- The brief supposed tier E's cells would score cleanly. They did not: the tile-
+  join invariant refused all six, because the grid pool's proposer ran on the
+  192 px stride ov192 tiling and only **12 of 308** of its tile names appear in
+  the board frame's 336 px stride vocabulary. The remedy was already in use on
+  this family — the committed K = 10 rung is re-keyed to the carrier grid by
+  `materialise_grid_unions.py` — so tier E's cells are now re-keyed the same
+  way, and the invariant earned its place by catching it.
+
+**One number in this card is now superseded.** § 2's inventory table quotes the
+grid K-ladder as "consensus-only until the 2026-08-24 verifier stage; only
+K = 10 verified". Tier E verified its K = 1, 3 and 5 rungs, so that family is a
+four-rung verified ladder.
+
 ## Changelog
+
+### 2026-09-12 (latest) — the closeout job executed; tier E at US$4.9595 (§ 8)
+
+Eight items: five landed, one partial, two stopped. Tier E was the only API
+spend, approved at US$5.02 and executed for US$4.9595 with 0 failures. The
+tension the card's § 7 left open is answered by measurement rather than argued.
+Three of the brief's expectations did not survive execution and are recorded in
+§ 8 rather than left standing. No signature field was altered anywhere; the
+Era-2 board was not rebuilt and the 55-map board was not re-tiered.
 
 ### 2026-09-12 (later still) — Phase 2 executed at US$24.8065 (§ 7)
 

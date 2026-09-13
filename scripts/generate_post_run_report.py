@@ -1018,6 +1018,12 @@ def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
             "prob_threshold": spec.get("prob_threshold"),
             "verifier_config": spec.get("verifier_config"),
             "scope_override": spec.get("scope_override"),
+            # E72 remediation item 4, discharged 2026-09-12: the register's
+            # free-text caveat travels into the manifest. Until now a condition
+            # whose ``_note`` said "do not cite this cell's figures" published
+            # those figures through the manifest with nothing attached, and the
+            # manifest schema had no field to carry the warning.
+            "caveat": spec.get("_note"),
             "metrics": _metrics_from_eval(summary, eval_bootstrap),
             "n_detections": summary.get("n_detections"),
             "n_candidates": spec.get("n_candidates"),

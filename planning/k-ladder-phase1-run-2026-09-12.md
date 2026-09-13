@@ -1,8 +1,11 @@
 # K-ladder Phase 1 run card — $0, no API calls (2026-09-12)
 
-> **Last revised**: 2026-09-12 (original publication, written before any
-> step ran). Controlling card: `planning/k-ladder-review-2026-09-11.md`
-> (§ 4 rulings R1–R5, § 5 the B3 ruling). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-12 (later — the run's stop states and verification
+> discipline were exercised again by the CLOSEOUT job, and three of them fired;
+> recorded in [§ 7](#7-what-the-closeout-job-did-with-this-card). Before that:
+> original publication, written before any step ran). Controlling card:
+> `planning/k-ladder-review-2026-09-11.md` (§ 4 rulings R1–R5, § 5 the B3
+> ruling). See [§ Changelog](#changelog).
 
 **Scope.** Phase 1 of the K-ladder review: everything that costs US$0 in
 API calls. **No API call of any kind is made.** Any step that would need
@@ -129,7 +132,53 @@ a stop in Step 3 means the board is rebuilt without it and says so.
    Where both would otherwise sit on the board for one configuration, the
    September cell is the representative and the board's changelog says so.
 
+## 7. What the closeout job did with this card
+
+This card governed Phase 1 only, but its § 3 stop states and § 5 verification
+discipline were carried into the closeout job (branch
+`worktree-agent-ae1e65fd9508397ec`, report
+`reports/k-ladder-closeout-deltas-2026-09-12.md`). **Three of the stop states
+fired, and each of them stopped something that would otherwise have been
+published.** Recorded here because a stop state that never fires is untested.
+
+| stop state | fired on | what it prevented |
+|---|---|---|
+| § 3.2 — a materialised artefact whose count disagrees with its source | **no** — every tier E union reproduced the PI's approved count exactly (delta +0 on all three), and every h10 rebuild reproduced the retrospective's predicted count | — |
+| § 3.3 — a re-tier that changes a signed board | **yes, pre-emptively** — item 8 stopped before rebuilding the Era-2 board, and item 2 stopped before re-tiering the 55-map board | two board re-tiers taken on a guess |
+| § 3.1 — a nominal ladder whose rungs do not share fixed parameters | **yes** — tier E's K = 10 sibling is built by a different rule from its other three rungs (carrier-filtered, 3,319 against a native 3,591), which was measured before the spend rather than found after it | a four-rung ladder published as if uniformly constructed |
+| § 5's "read the number back from the artefact" rule | **yes, twice** — the tension analysis's per-tile rebuild gate refused at micro-F1 0.0000 before any subsample was drawn, and the tile-join invariant refused all six tier E cells before any tile-MCC was reported | a published ΔF1 distribution computed from a table of pure false negatives, and six cells' meaningless tile-MCC |
+
+**The two gates worth naming individually**, because both were added by other
+sessions and both earned their place here:
+
+- **The per-tile rebuild gate** (this card's § 5 discipline, applied to a new
+  analysis) caught that the committed 55-map cells' detections are EPSG:4326
+  while their reference and frame are EPSG:32635, so a 50 m tolerance was being
+  applied in degrees. Without the gate the subsample test would have published a
+  ΔF1 distribution built from a table with zero true positives.
+- **The tile-join invariant**
+  (`reports/tile-mcc-geometric-join-2026-09-12.md` § 3, landed by pull request
+  #16) refused all six tier E cells, because the grid pool's proposer ran on the
+  192 px stride tiling and only 12 of 308 of its tile names appear in the board
+  frame's 336 px stride vocabulary. It is the first time the invariant has fired
+  on a cell it was not written for, and the remedy was already in use on that
+  family — re-keying to the carrier grid, as `materialise_grid_unions.py` does
+  for the committed K = 10 rung.
+
+**One thing this card's § 6 note 2 anticipated correctly.** "Best available per
+configuration applies to the board, not the register" is exactly the distinction
+item 8 ran into from the other side: the 46 Phase 2 cells and tier E's six are
+registered and register-resolvable, and whether they are the board's
+representatives is a separate decision the builder's own rules decline to take.
+
 ## Changelog
+
+### 2026-09-12 (later) — the closeout job exercised this card's stop states
+
+Three fired (§ 7), and two gates added by other sessions — the per-tile rebuild
+gate and the tile-join invariant — each refused a number before it was
+published. No step of the Phase 1 run itself was re-run or revised; this entry
+records what the card's discipline caught when applied to new work.
 
 ### 2026-09-12 — Original publication
 

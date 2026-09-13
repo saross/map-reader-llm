@@ -2,7 +2,7 @@
 
 > **GENERATED FILE — do not hand-edit.** Produced by
 > `scripts/generate_hypothesis_outcome_table.py` from
-> `results/analyses-manifest.json` at commit `54ae2dc03`; re-run the
+> `results/analyses-manifest.json` at commit `5167b9a5c`; re-run the
 > script after any manifest regeneration. Pure projection per the
 > D17 ruling (`docs/paper/results-outline.md` § D17): no cell is
 > hand-maintained.
@@ -43,7 +43,7 @@ themselves.
 |-----|------------------------------------------|
 | H1 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc]; gemini37-image-gs-2026-09-01 [post-hoc]; gs-era2-verified-board-2026-09-10 [post-hoc]; n1-baseline-matrix-384 [post-hoc] |
 | H2 | era1-leaderboard [post-hoc]; flash35-model-roles [post-hoc]; gs-era2-verified-board-2026-09-10 [post-hoc]; min-vs-high-thinking-pv [post-hoc]; pass-budget-pareto [post-hoc]; pass-budget-pareto-v2 [post-hoc]; unswept-pools-completeness [post-hoc]; verifier-robustness-matrix [post-hoc]; verifier-uplift-pairing [post-hoc] |
-| H3 | 55map-final-board-2026-08-27 [post-hoc]; 55map-final-board-r2-2026-09-06 [post-hoc]; era1-leaderboard [post-hoc]; min-vs-high-thinking-pv [post-hoc]; pass-budget-pareto [post-hoc]; pass-budget-pareto-v2 [post-hoc]; phase3a-high-consensus-calibration [post-hoc]; phase3a-replication-thinking-calibration [post-hoc]; pv-diag-384-consensus-calibration [post-hoc]; stride-winner-ladder-exact-2026-08-25 [post-hoc] |
+| H3 | 55map-final-board-2026-08-27 [post-hoc]; 55map-final-board-r2-2026-09-06 [post-hoc]; era1-leaderboard [post-hoc]; k-ladder-2026-09-12 [post-hoc]; min-vs-high-thinking-pv [post-hoc]; pass-budget-pareto [post-hoc]; pass-budget-pareto-v2 [post-hoc]; phase3a-high-consensus-calibration [post-hoc]; phase3a-replication-thinking-calibration [post-hoc]; pv-diag-384-consensus-calibration [post-hoc]; stride-winner-ladder-exact-2026-08-25 [post-hoc] |
 | H4 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc] |
 | H5 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc] |
 | H6 | h6-a06-decision-rule [post-hoc]; h6-a07-voting-thresholds [post-hoc]; h6-a09-cost-gate [post-hoc] |
@@ -53,7 +53,7 @@ themselves.
 | H10 | sensitivity-mde-2026-08-28 [post-hoc]; sensitivity-mde-r2 [post-hoc] |
 | H11 | unswept-pools-completeness [post-hoc] |
 | H12 | sensitivity-mde-2026-08-28 [post-hoc]; sensitivity-mde-r2 [post-hoc] |
-| H13 | 55map-final-board-2026-08-27 [post-hoc]; 55map-final-board-r2-2026-09-06 [post-hoc]; 55map-r2-leaderboard-50m [post-hoc]; 55map-r2-leaderboard-mcc-50m [post-hoc]; estimated-correction-r2 [post-hoc]; obs280-shared-reference-r2 [post-hoc]; stride-plateau-2026-08-25 [post-hoc]; stride-winner-ladder-exact-2026-08-25 [post-hoc]; stride55-a5-vs-b5-2026-08-27 [post-hoc]; student-baseline-r2 [post-hoc]; tile-level-f1-r2 [post-hoc] |
+| H13 | 55map-final-board-2026-08-27 [post-hoc]; 55map-final-board-r2-2026-09-06 [post-hoc]; 55map-r2-leaderboard-50m [post-hoc]; 55map-r2-leaderboard-mcc-50m [post-hoc]; estimated-correction-r2 [post-hoc]; k-ladder-2026-09-12 [post-hoc]; obs280-shared-reference-r2 [post-hoc]; stride-plateau-2026-08-25 [post-hoc]; stride-winner-ladder-exact-2026-08-25 [post-hoc]; stride55-a5-vs-b5-2026-08-27 [post-hoc]; student-baseline-r2 [post-hoc]; tile-level-f1-r2 [post-hoc] |
 | H14 | — |
 | H15 | — |
 

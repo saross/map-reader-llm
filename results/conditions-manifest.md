@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-09-12T08:51:04Z · 588 row(s) · schema v1.0.
+> Generated 2026-09-12T14:24:08Z · 592 row(s) · schema v1.0.
 >
-> **Coverage**: 588 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 592 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -49,11 +49,11 @@
 | h10::greedy-pool-080 | consensus | greedy | 4 | 5 | 0.6618 | 0.6919 | 234 |
 | h10::greedy-pool-160 | consensus | greedy | 4 | 5 | 0.7171 | 0.7168 | 236 |
 | h10::verified-pool-160 | proposer-verifier | verified | 4 | 5 | 0.7223 | 0.7602 | 232 |
-| consensus-384-t1-0::consensus-1of30 | consensus | consensus | 1 | 30 | 0.3038 | 0.0608 | 974 |
-| consensus-384-t1-0::consensus-2of30 | consensus | consensus | 2 | 30 | 0.3977 | 0.0951 | 616 |
-| consensus-384-t1-0::consensus-3of30 | consensus | consensus | 3 | 30 | 0.4331 | 0.1164 | 484 |
-| consensus-384-t1-0::consensus-4of30 | consensus | consensus | 4 | 30 | 0.4554 | 0.1458 | 395 |
-| consensus-384-t1-0::consensus-5of30 | consensus | consensus | 5 | 30 | 0.4712 | 0.2565 | 295 |
+| consensus-384-t1-0::consensus-1of5 | consensus | consensus | 1 | 5 | 0.3038 | 0.0608 | 974 |
+| consensus-384-t1-0::consensus-2of5 | consensus | consensus | 2 | 5 | 0.3977 | 0.0951 | 616 |
+| consensus-384-t1-0::consensus-3of5 | consensus | consensus | 3 | 5 | 0.4331 | 0.1164 | 484 |
+| consensus-384-t1-0::consensus-4of5 | consensus | consensus | 4 | 5 | 0.4554 | 0.1458 | 395 |
+| consensus-384-t1-0::consensus-5of5 | consensus | consensus | 5 | 5 | 0.4712 | 0.2565 | 295 |
 | consensus-384-t1-0::single-pass-run_1 | single-pass | none | — | 1 | 0.39 | 0.0341 | 570 |
 | consensus-384-t1-0::single-pass-run_2 | single-pass | none | — | 1 | 0.3891 | 0.0298 | 593 |
 | consensus-384-t1-0::single-pass-run_3 | single-pass | none | — | 1 | 0.3767 | 0.0341 | 579 |
@@ -510,6 +510,10 @@
 | grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10 | proposer-verifier | verified | 10 | 10 | 0.914 | 0.8239 | 386 |
 | grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b | proposer-verifier | verified | 10 | 10 | 0.8886 | 0.7903 | 400 |
 | grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b | proposer-verifier | verified | 10 | 10 | 0.9062 | 0.8102 | 386 |
+| grid-2026-08-18::g384-ov192-k1-verified-opmax | proposer-verifier | verified | 1 | 1 | 0.8546 | 0.8211 | 482 |
+| grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1 | proposer-verifier | verified | 1 | 1 | 0.854 | 0.8079 | 493 |
+| grid-2026-08-18::g384-ov192-k3-verified-opmax | proposer-verifier | verified | 3 | 3 | 0.884 | 0.8167 | 450 |
+| grid-2026-08-18::g384-ov192-k5-verified-opmax | proposer-verifier | verified | 5 | 5 | 0.8905 | 0.8139 | 435 |
 | h13::arm-a-overlap-12-5 | single-pass | none | — | 3 | 0.558 | 0.1058 | — |
 | h13::arm-b-overlap-25 | single-pass | none | — | 3 | 0.5198 | 0.2579 | — |
 | h13::arm-c-overlap-50 | single-pass | none | — | 3 | 0.4024 | 0.0593 | — |

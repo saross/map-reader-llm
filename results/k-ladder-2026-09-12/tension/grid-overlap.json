@@ -1,0 +1,153 @@
+{
+  "generated_at_utc": "2026-09-12T13:59:02+00:00",
+  "source": "results/grid-2026-08-18/sweep.csv",
+  "scope": "consensus-only K ladders at four (tile size x overlap) geometries, fixed MINIMAL text T 0.7, best F1@20 over the (corroboration, vote) grid per K, on the grid-common 487-tile footprint",
+  "n_cells": 4,
+  "cells": [
+    {
+      "cell": "g384_ov192",
+      "label": "384 px / 50 %",
+      "tile_px": 384,
+      "overlap_frac": 0.5,
+      "rungs": {
+        "1": {
+          "f1_20": 0.663304,
+          "mcc": 0.446497,
+          "operating_point": "c>=3, k>=1",
+          "n_detections": 365
+        },
+        "3": {
+          "f1_20": 0.683744,
+          "mcc": 0.448508,
+          "operating_point": "c>=2, k>=3",
+          "n_detections": 587
+        },
+        "5": {
+          "f1_20": 0.704545,
+          "mcc": 0.457593,
+          "operating_point": "c>=2, k>=5",
+          "n_detections": 540
+        },
+        "10": {
+          "f1_20": 0.720524,
+          "mcc": 0.490858,
+          "operating_point": "c>=2, k>=10",
+          "n_detections": 488
+        }
+      },
+      "K_best": 10,
+      "delta_f1_k1_to_best": 0.05722,
+      "delta_f1_k1_to_k10": 0.05722,
+      "delta_mcc_k1_to_best": 0.044361
+    },
+    {
+      "cell": "g512_ov256",
+      "label": "512 px / 50 %",
+      "tile_px": 512,
+      "overlap_frac": 0.5,
+      "rungs": {
+        "1": {
+          "f1_20": 0.712121,
+          "mcc": 0.551535,
+          "operating_point": "c>=2, k>=1",
+          "n_detections": 496
+        },
+        "3": {
+          "f1_20": 0.742857,
+          "mcc": 0.606201,
+          "operating_point": "c>=2, k>=3",
+          "n_detections": 412
+        },
+        "5": {
+          "f1_20": 0.743972,
+          "mcc": 0.568185,
+          "operating_point": "c>=2, k>=4",
+          "n_detections": 443
+        },
+        "10": {
+          "f1_20": 0.751756,
+          "mcc": 0.589723,
+          "operating_point": "c>=2, k>=8",
+          "n_detections": 426
+        }
+      },
+      "K_best": 10,
+      "delta_f1_k1_to_best": 0.039635,
+      "delta_f1_k1_to_k10": 0.039635,
+      "delta_mcc_k1_to_best": 0.038189
+    },
+    {
+      "cell": "g384_ov048",
+      "label": "384 px / 12.5 %",
+      "tile_px": 384,
+      "overlap_frac": 0.125,
+      "rungs": {
+        "1": {
+          "f1_20": 0.502104,
+          "mcc": 0.159408,
+          "operating_point": "c>=1, k>=1",
+          "n_detections": 998
+        },
+        "3": {
+          "f1_20": 0.597603,
+          "mcc": 0.293556,
+          "operating_point": "c>=1, k>=3",
+          "n_detections": 740
+        },
+        "5": {
+          "f1_20": 0.61762,
+          "mcc": 0.286417,
+          "operating_point": "c>=1, k>=5",
+          "n_detections": 673
+        },
+        "10": {
+          "f1_20": 0.647525,
+          "mcc": 0.313715,
+          "operating_point": "c>=1, k>=10",
+          "n_detections": 582
+        }
+      },
+      "K_best": 10,
+      "delta_f1_k1_to_best": 0.145421,
+      "delta_f1_k1_to_k10": 0.145421,
+      "delta_mcc_k1_to_best": 0.154307
+    },
+    {
+      "cell": "g512_ov064",
+      "label": "512 px / 12.5 %",
+      "tile_px": 512,
+      "overlap_frac": 0.125,
+      "rungs": {
+        "1": {
+          "f1_20": 0.584507,
+          "mcc": 0.445819,
+          "operating_point": "c>=1, k>=1",
+          "n_detections": 708
+        },
+        "3": {
+          "f1_20": 0.676275,
+          "mcc": 0.505504,
+          "operating_point": "c>=1, k>=3",
+          "n_detections": 474
+        },
+        "5": {
+          "f1_20": 0.673554,
+          "mcc": 0.500813,
+          "operating_point": "c>=1, k>=4",
+          "n_detections": 540
+        },
+        "10": {
+          "f1_20": 0.675936,
+          "mcc": 0.538328,
+          "operating_point": "c>=1, k>=8",
+          "n_detections": 507
+        }
+      },
+      "K_best": 3,
+      "delta_f1_k1_to_best": 0.091768,
+      "delta_f1_k1_to_k10": 0.091429,
+      "delta_mcc_k1_to_best": 0.059685
+    }
+  ],
+  "tier_e_verified_b_geometry": null
+}

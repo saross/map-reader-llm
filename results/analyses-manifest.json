@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-12T00:39:12Z",
+  "generated_at": "2026-09-12T14:24:08Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -805,7 +805,7 @@
         "verifier-robustness::verified-384-16of30-t0-3-n5-opmax",
         "verifier-robustness::verified-384-ge3of5-t0-3-n5"
       ],
-      "outcome": "All seven rungs remain ONE statistical tier (0/21 pairs significant after BH-FDR) \u2014 extra spend cannot be shown to buy F1 on this instrument. [REVISED 2026-08-19, erratum E83: under MCB 6 of the 7 rungs cannot be ruled out as best; verified-adv-text-4of5 (0.8641) is excluded. See the tie-set note at the end of this outcome.] Pareto-efficient set: min6 $2.43/0.8784, min11 $4.00/0.8835, high31 $69.21/0.8902, high35 $71.23/0.8951; DOMINATED: high6 ($14.04/0.8641 \u2014 v1's 'cheap6' is in fact the third most expensive way to buy ~0.87), high5+5vf ($14.41/0.8739), high11 ($26.97/0.8769). 55-map production column (tile factor 8541/487, crops/tile from the GS pools \u2014 slight upper bounds): min6 ~$43, min11 ~$70, high31 ~$1,214, high35 ~$1,249. Costs REBUILT 2026-06-12 from per-item token metadata (token-load audit): the 2026-06-11 calibration sat on a 2x double-counted cost manifest (minimal passes priced 2x too high) and an extrapolated 'HIGH = 3x minimal' that left proposer thinking tokens unbilled (HIGH passes priced 1.4x too LOW); the efficient set was UNCHANGED by the audit (min got cheaper and HIGH dearer monotonically). SCOPE (Obs 362): the F1 column is GS-characterised; at deployment the minimal rungs degrade hardest (transfer deltas on the canonical-reference vintage, smallest to largest magnitude: HIGH-T0.7 -0.048, HIGH-T0.3 -0.057, image -0.078, MIN -0.087; the results-draft transfer table quotes the standardised-reference vintage, which differs by up to 0.008), so the min rungs are NOT production recommendations without the findings SS 16 qualification. [TIE SET REVISED 2026-08-19, erratum E83] The tie set above is now the Hsu multiple-comparisons-with-the-best (MCB) admissible set at simultaneous 95 %: the conditions that cannot be ruled out as THE best. It replaces the sequential greedy-clique tier-1 membership, which was order-dependent and understated or overstated the set depending on where a marginal result fell (defect D20). Was 7 condition(s), now 6. Remaining tiers are retained as DESCRIPTIVE RANK BANDS ordered by point estimate, kept to show what did not work as well as what did; they carry no claim of statistical separation.",
+      "outcome": "All seven rungs remain ONE statistical tier (0/21 pairs significant after BH-FDR) \u2014 extra spend cannot be shown to buy F1 on this instrument. [REVISED 2026-08-19, erratum E83: under MCB 6 of the 7 rungs cannot be ruled out as best; verified-adv-text-4of5 (0.8641) is excluded. See the tie-set note at the end of this outcome.] Pareto-efficient set: min6 $2.43/0.8784, min11 $4.00/0.8835, high31 $69.21/0.8902, high35 $71.23/0.8951; DOMINATED: high6 ($14.04/0.8641 \u2014 v1's 'cheap6' is in fact the third most expensive way to buy ~0.87), high5+5vf ($14.41/0.8739), high11 ($26.97/0.8769). 55-map production column (tile factor 8541/487, crops/tile from the GS pools \u2014 slight upper bounds): min6 ~$43, min11 ~$70, high31 ~$1,214, high35 ~$1,249. Costs REBUILT 2026-06-12 from per-item token metadata (token-load audit): the 2026-06-11 calibration sat on a 2x double-counted cost manifest (minimal passes priced 2x too high) and an extrapolated 'HIGH = 3x minimal' that left proposer thinking tokens unbilled (HIGH passes priced 1.4x too LOW); the efficient set was UNCHANGED by the audit (min got cheaper and HIGH dearer monotonically). SCOPE (Obs 362): the F1 column is GS-characterised; at deployment the minimal rungs degrade hardest (transfer deltas on the canonical-reference vintage, smallest to largest magnitude: HIGH-T0.7 -0.048, HIGH-T0.3 -0.057, image -0.078, MIN -0.087; the results-draft transfer table quotes the standardised-reference vintage, which differs by up to 0.008), so the min rungs are NOT production recommendations without the findings SS 16 qualification. [TIE SET REVISED 2026-08-19, erratum E83] The tie set above is now the Hsu multiple-comparisons-with-the-best (MCB) admissible set at simultaneous 95 %: the conditions that cannot be ruled out as THE best. It replaces the sequential greedy-clique tier-1 membership, which was order-dependent and understated or overstated the set depending on where a marginal result fell (defect D20). Was 7 condition(s), now 6. Remaining tiers are retained as DESCRIPTIVE RANK BANDS ordered by point estimate, kept to show what did not work as well as what did; they carry no claim of statistical separation. [AMENDED 2026-09-12, tile-MCC column added per PI ruling: the board now carries tile-level MCC beside F1@20 m on the same Era-2 487-tile frame, and the MCC-efficient set is NOT the F1-efficient set. F1-efficient is unchanged \u2014 min6 $2.43/0.8784, min11 $4.00/0.8835, high31 $69.21/0.8902, high35 $71.23/0.8951 \u2014 but MCC-efficient is min6 ($2.43/0.7903) and min11 ($4.00/0.8068) alone: both HIGH rungs on the F1 frontier are MCC-dominated, and min11 is the MCC maximum of all seven rungs, 0.0127 above high35's 0.7941 at 5.6 % of its cost. The one-tier verdict extends to the new metric: the C(7,2) round-robin on tile-MCC (10,000 permutations, seed 42, identical swap masks to the F1 test, BH q = 0.05) returns 0/21 significant, so the MCC-efficient set is a point-estimate ordering on a single tier, exactly as the F1 set is, and neither licenses a separation claim. Two caveats belong with it: tile-MCC is buffer-invariant here, so this column is not a second reading of the 20 m buffer but a different question; and on 487 tiles min6, high11 and high31 share one identical tile confusion (188/247/11/41), so the metric cannot rank fine-grained rungs on this frame. The practical consequence is narrow but real \u2014 nothing in the cost range above min11 can be shown to buy tile-level discrimination, which strengthens rather than weakens the existing \"extra spend cannot be shown to buy F1 on this instrument\" reading. Artefacts: results/verifier-robustness/pareto/pareto_v2.{json,png}; script scripts/build_pareto_v2.py.]",
       "paper_section": "Results",
       "output_path": "results/verifier-robustness/pareto",
       "working_notes_obs": [
@@ -813,13 +813,13 @@
         "Obs 359 \u2014 minimal-thinking parity (why the min rungs exist)",
         "Obs 362 \u2014 deployment reversal (the scope qualification on the F1 column)"
       ],
-      "manually_verified_at": "2026-06-12T06:59:01Z",
+      "manually_verified_at": "2026-09-12T09:03:09Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/verifier-robustness/pareto"
         ],
-        "last_extracted_at": "2026-08-20T05:19:33Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1643,13 +1643,13 @@
       "paper_section": "Results",
       "output_path": "results/grid-2026-08-18",
       "working_notes_obs": [],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-09-12T09:03:09Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/grid-2026-08-18"
         ],
-        "last_extracted_at": "2026-08-19T06:50:29Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1677,13 +1677,13 @@
       "working_notes_obs": [
         "Obs 433 \u2014 the grid's tile-size ranking reverses under the verifier (384 beats 512 at both overlaps, sig at 12.5%) while the overlap reversal survives at half margin; consensus and verifier are complements"
       ],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-09-12T09:03:09Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/grid-2026-08-18"
         ],
-        "last_extracted_at": "2026-08-24T09:03:42Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1711,13 +1711,13 @@
       "paper_section": "Results",
       "output_path": "results/h13-overlap-2026-08-18",
       "working_notes_obs": [],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-09-12T09:03:09Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/h13-overlap-2026-08-18"
         ],
-        "last_extracted_at": "2026-08-20T05:19:33Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1749,13 +1749,13 @@
         "Obs 425 \u2014 the $0 like-for-like tile-level comparison with Landauer & Klassen, flagged there as derivable from committed confusion matrices; this analysis executes it",
         "Obs 423 \u2014 the reproduce-a-committed-value gate that catches wrong-but-plausible re-derivations; this derivation's MCC reproduction check implements it"
       ],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-09-12T09:03:09Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/tile-level-f1"
         ],
-        "last_extracted_at": "2026-08-21T23:19:53Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -2148,13 +2148,13 @@
       "working_notes_obs": [
         "Obs 441 \u2014 Gemini 3.7 Flash clears the Gemini 3 plateau but resolves only in the verifier role"
       ],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-09-12T09:03:09Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/gemini37-screen-2026-08-28"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -2183,13 +2183,13 @@
       "working_notes_obs": [
         "Obs 444 \u2014 the complete proposer x verifier 2x2: the family gain lives in the verifier seat"
       ],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-09-12T09:03:09Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/gemini37-55map-2026-08-31"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -2217,13 +2217,13 @@
       "working_notes_obs": [
         "Obs 444 \u2014 the complete proposer x verifier 2x2: the family gain lives in the verifier seat"
       ],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-09-12T09:03:09Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/gemini37-55map-2026-08-31/grid-board"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -2252,13 +2252,13 @@
       "working_notes_obs": [
         "Obs 447 \u2014 the modality gap is eliminated at Gemini 3.7"
       ],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-09-12T09:03:09Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/gemini37-image-gs-2026-09-01"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -2281,13 +2281,13 @@
       "working_notes_obs": [
         "Obs 444 \u2014 the complete proposer x verifier 2x2: the family gain lives in the verifier seat"
       ],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-09-12T09:03:09Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/gemini37-fourth-cell/gs-leg"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -2314,13 +2314,13 @@
       "working_notes_obs": [
         "Obs 448 \u2014 Gemini 3.8 Flash ties the 3.7 stack in the verifier seat"
       ],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-09-12T09:03:09Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/gemini38-screen-2026-09-04/armV"
         ],
-        "last_extracted_at": "2026-09-06T05:11:51Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -2702,15 +2702,36 @@
         "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
         "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b",
         "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b",
+        "proposer-verifier-384::verified-adversarial-image-era2b",
+        "proposer-verifier-384::verified-adversarial-text-era2b",
+        "proposer-verifier-384::verified-brief-image-era2b",
+        "proposer-verifier-384::verified-brief-text-era2b",
+        "proposer-verifier-384::verified-cascade-adversarial-checklist-era2b",
+        "proposer-verifier-384::verified-cascade-checklist-adversarial-era2b",
+        "proposer-verifier-384::verified-checklist-image-era2b",
+        "proposer-verifier-384::verified-checklist-text-era2b",
+        "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b",
         "pv-diag-384::verified-adv-image-3of5-era2b",
+        "pv-diag-384::verified-adv-image-baseline-era2b",
+        "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
         "pv-diag-384::verified-adv-image-min-3of5-era2b",
         "pv-diag-384::verified-adv-image-min-6of10-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b",
         "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b",
+        "pv-diag-384::verified-adv-pro-text-baseline-era2b",
+        "pv-diag-384::verified-adv-pro-text-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-pro-text-baseline-pro-vf-era2b",
         "pv-diag-384::verified-adv-pro-text-flash-vf-3of5-era2b",
         "pv-diag-384::verified-adv-pro-text-medium-vf-3of5-era2b",
         "pv-diag-384::verified-adv-pro-text-pro-vf-3of5-era2b",
         "pv-diag-384::verified-adv-text-4of5-era2b",
         "pv-diag-384::verified-adv-text-6of10-era2b",
+        "pv-diag-384::verified-adv-text-baseline-era2b",
+        "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b",
         "pv-diag-384::verified-adv-text-consensus-16of30-era2b",
         "pv-diag-384::verified-adv-text-high-vf-4of5-era2b",
         "pv-diag-384::verified-adv-text-medium-vf-4of5-era2b",
@@ -2744,9 +2765,11 @@
         "pv-diag-384::pv-min-text-t0.3-n10-opmax",
         "pv-diag-384::session-78-text-checklist-text-opmax",
         "pv-diag-384::pv-high-text-t0.7-n5-opmax",
+        "pv-diag-384::pv-min-text-t0.0-n3-opmax",
         "pv-diag-384::pv-high-text-t1.0-n5-opmax",
         "pv-diag-384::session-78-text-adversarial-text-opmax",
         "pv-diag-384::session-78-text-brief-text-opmax",
+        "pv-diag-384::pv-high-text-t0.0-n3-opmax",
         "pv-diag-384::pv-min-image-t0.7-n10-opmax",
         "pv-diag-384::pv-high-image-t0.7-n5-opmax",
         "pv-diag-384::session-78-image-adversarial-opmax",
@@ -2762,6 +2785,7 @@
         "pv-diag-384::session-78-image-adversarial-text-opmax",
         "pv-diag-384::pv-high-image-t0.3-n10-opmax",
         "pv-diag-384::pv-scale4-optimal-n10-opmax",
+        "n1-outstanding-384::pv-n1-image-t0-n3-opmax",
         "pv-diag-384::pv-high-image-t1.0-n10-opmax",
         "pv-diag-384::pv-scale4-optimal-n5-opmax",
         "pv-diag-384::pv-high-image-t0.3-n5-opmax",
@@ -2778,17 +2802,17 @@
       "predicted_outcome": null,
       "predicted_outcome_amended": null,
       "tie_set": [],
-      "outcome": "1845/3081 pairs significant at BH q = 0.05, 7 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 28. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 39/39; G6 max |delta| 0.0078.",
+      "outcome": "3651/5253 pairs significant at BH q = 0.05, 12 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 49. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 60/60; G6 max |delta| 0.0078. [AMENDED 2026-09-12, S153: 79 -> 103 cells \u2014 the twenty single-pass (K = 1) proposer-verifier cells admitted under PI ruling R3, three K = 3 archived sweep optima promoted from off-board, and the September recovery pair pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax; re-tiered, MCB recomputed last; Tier 1, its order and its F1 unchanged; the archived-count fix of reports/name-keyed-cache-audit-2026-09-12.md fix 3 landed in the same rebuild. Signed text at 2026-09-10: '1845/3081 pairs significant at BH q = 0.05, 7 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 28. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 39/39; G6 max |delta| 0.0078.']",
       "paper_section": "Results",
       "output_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json",
       "working_notes_obs": [],
-      "manually_verified_at": "2026-09-10T12:34:56Z",
+      "manually_verified_at": "2026-09-12T06:04:30Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json"
         ],
-        "last_extracted_at": "2026-09-10T12:34:57Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -2831,11 +2855,11 @@
         "55maps-text-min-n10-uplift::verified-5of10-canonical-gt",
         "55maps-text-min-n10-uplift::verified-5of10-r2-gt",
         "55maps-text-min-n10-uplift::verified-5of10-standardised-gt",
-        "consensus-384-t1-0::consensus-1of30",
-        "consensus-384-t1-0::consensus-2of30",
-        "consensus-384-t1-0::consensus-3of30",
-        "consensus-384-t1-0::consensus-4of30",
-        "consensus-384-t1-0::consensus-5of30",
+        "consensus-384-t1-0::consensus-1of5",
+        "consensus-384-t1-0::consensus-2of5",
+        "consensus-384-t1-0::consensus-3of5",
+        "consensus-384-t1-0::consensus-4of5",
+        "consensus-384-t1-0::consensus-5of5",
         "consensus-384-t1-0::single-pass-run_1",
         "consensus-384-t1-0::single-pass-run_10",
         "consensus-384-t1-0::single-pass-run_11",
@@ -3254,7 +3278,7 @@
           "results/run-analyses.json",
           "results/uplift-supplement/conditions.csv"
         ],
-        "last_extracted_at": "2026-09-10T22:55:41Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -3300,10 +3324,14 @@
         "flash35-pv-2x2::f35prop-f35vf-4of10",
         "flash35-pv-2x2::f35prop-f3vf-4of10",
         "flash35-pv-2x2::f3prop-f35vf-6of10",
+        "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
         "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-canonical-gt",
         "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-r2-gt",
         "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-standardised-gt",
         "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
         "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-canonical-gt",
         "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-r2-gt",
         "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-standardised-gt",
@@ -3326,7 +3354,6 @@
         "h8-v2::verified-wbf-scale-8",
         "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8",
         "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9",
-        "n1-outstanding-384::pv-n1-image-t0-n3-opmax",
         "proposer-verifier-384::verified-adversarial-image",
         "proposer-verifier-384::verified-adversarial-text",
         "proposer-verifier-384::verified-brief-image",
@@ -3337,8 +3364,7 @@
         "proposer-verifier-384::verified-checklist-text",
         "proposer-verifier-512::verified-adversarial-text",
         "pv-diag-256::verified-adv-text-consensus-5of5",
-        "pv-diag-384::pv-high-text-t0.0-n3-opmax",
-        "pv-diag-384::pv-min-text-t0.0-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax",
         "pv-diag-384::verified-adv-image-3of5",
         "pv-diag-384::verified-adv-image-baseline",
         "pv-diag-384::verified-adv-image-baseline-medium-vf",
@@ -3372,20 +3398,43 @@
         "retest-phase2b::verified-adv-text-t0.0",
         "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30",
         "retest-phase3a::verified-adv-image-t0.7-n30-18of30",
+        "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt",
         "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt",
         "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-standardised-gt",
         "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
         "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt",
         "stride-55map-2026-08-25::g384-ov128-55map-verified-carried-p0.15-k8-canonical-gt",
         "stride-55map-2026-08-25::g384-ov128-55map-verified-oracle-p0.15-k7-canonical-gt",
         "stride-55map-2026-08-25::g384-ov192-55map-k10-verified37-p0.98-k10-canonical-gt",
         "stride-55map-2026-08-25::g384-ov192-55map-k10-verified37-p0.98-k10-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
         "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt",
         "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-standardised-gt",
         "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
         "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt",
         "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt",
         "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-canonical-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt",
         "stride-55map-2026-08-25::g384-ov192-55map-verified-carried-p0.15-k10-canonical-gt",
         "stride-55map-2026-08-25::g384-ov192-55map-verified-oracle-p0.20-k9-canonical-gt",
         "stride-phaseb-2026-08-25::g256-ov064-k10-verified-p0.15-k8",
@@ -3416,17 +3465,142 @@
       "predicted_outcome": null,
       "predicted_outcome_amended": null,
       "tie_set": [],
-      "outcome": "145 of 172 pairs computed on F1 and 144 on tile MCC (27 blocked, disclosed with reasons: all first-N ladder rungs whose universe was never committed; one further MCC pair undefined because its twin's MCC is undefined). F1 uplift median +0.201, range -0.0366 to +0.486, 2 negative (h8-v2::verified-wbf-scale-4 -0.0003; proposer-verifier-512::verified-adversarial-text -0.0366, the run sidelined in S107, whose verifier cut recall on an already-precise twin); MCC uplift median +0.427, range -0.023 to +0.841, 3 negative. By frame (F1 n, median): 55-map strata 59, +0.353; GS Era-2 53, +0.138; grid-common 21, +0.194; Era-1 5, +0.037; Era-3 4, +0.005; px256 3, +0.398. The paper headline pv-diag-384::verified-adv-text-consensus-16of30 (0.8902) gains +0.2132 F1 / +0.3928 MCC over its 16-of-30 consensus. [AMENDED 2026-09-11, S153: 85 -> 128 by the four absence-refusal rules of 2026-09-10, -> 129 by the 44th ready twin, -> 145 by two null-vote-threshold rules (single-pass cells route to the single-pass rule at k = 1; k-of-N pool names are parsed). Signed text at 2026-09-10: '85 of 172 pairs computed on F1 and MCC (86 blocked, disclosed with reasons). F1 uplift median +0.212, range -0.0003 to +0.486, 1 negative; GS Era-2 frame 19 pairs (median +0.138), 55-map strata 41 pairs (median +0.300).']",
+      "outcome": "170 of 170 pairs computed on F1 and 169 of 170 on tile MCC (0 blocked; the one MCC pair pending has an undefined twin MCC). F1 uplift median +0.2631, range -0.0366 to +0.5265, 2 negative; MCC uplift median +0.4975, range -0.0230 to +0.8410, 3 negative. By frame (F1 n, median): 55maps-8541 86, +0.368; era-2-487 51, +0.132; grid-common-487 21, +0.194; era-1-340 5, +0.037; era-3-327 4, +0.005; px256-1032 3, +0.398. The 27 first-N ladder-rung twins were derived inside the K-ladder job (PI ruling B3, 2026-09-12) and are all positive. Total 170 not 172: three K = 3 archived sweep optima became Era-2 board members (excluded by the board-frame rule) and the September recovery pair joined. [AMENDED 2026-09-12, S153, second amendment: 145 -> 170. Signed text at 2026-09-11: '145 of 172 pairs computed on F1 and 144 on tile MCC (27 blocked, disclosed with reasons: all first-N ladder rungs whose universe was never committed; one further MCC pair undefined because its twin's MCC is undefined). F1 uplift median +0.201, range -0.0366 to +0.486, 2 negative (h8-v2::verified-wbf-scale-4 -0.0003; proposer-verifier-512::verified-adversarial-text -0.0366, the run sidelined in S107, whose verifier cut recall on an already-precise twin); MCC uplift median +0.427, range -0.023 to +0.841, 3 negative. By frame (F1 n, median): 55-map strata 59, +0.353; GS Era-2 53, +0.138; grid-common 21, +0.194; Era-1 5, +0.037; Era-3 4, +0.005; px256 3, +0.398. The paper headline pv-diag-384::verified-adv-text-consensus-16of30 (0.8902) gains +0.2132 F1 / +0.3928 MCC over its 16-of-30 consensus. [AMENDED 2026-09-11, S153: 85 -> 128 by the four absence-refusal rules of 2026-09-10, -> 129 by the 44th ready twin, -> 145 by two null-vote-threshold rules (single-pass cells route to the single-pass rule at k = 1; k-of-N pool names are parsed). Signed text at 2026-09-10: '85 of 172 pairs computed on F1 and MCC (86 blocked, disclosed with reasons). F1 uplift median +0.212, range -0.0003 to +0.486, 1 negative; GS Era-2 frame 19 pairs (median +0.138), 55-map strata 41 pairs (median +0.300).']']",
       "paper_section": "Appendix",
       "output_path": "results/uplift-supplement/verifier-uplift.csv",
       "working_notes_obs": [],
-      "manually_verified_at": "2026-09-11T07:03:41Z",
+      "manually_verified_at": "2026-09-12T06:04:30Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/uplift-supplement/verifier-uplift.csv"
         ],
-        "last_extracted_at": "2026-09-12T00:39:12Z",
+        "last_extracted_at": "2026-09-12T14:24:08Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "k-ladder-2026-09-12",
+      "type": "comparison",
+      "conditions_compared": [
+        "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n5-carried-p0.10-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+        "gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1",
+        "gemini37-screen-2026-08-28::g37-text-k1-verified-opmax",
+        "gemini37-screen-2026-08-28::g37-text-k3-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1",
+        "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-high-image-t0.3-n3-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-high-text-t0.3-n1-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n1-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-high-text-t0.7-n3-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-high-text-t1.0-n1-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-high-text-t1.0-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-min-image-t0.3-n1-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-min-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+        "pv-diag-384::pv-min-text-t0.3-n1-opmax",
+        "pv-diag-384::pv-min-text-t0.3-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-min-text-t0.3-n3-opmax",
+        "pv-diag-384::pv-min-text-t0.7-n1-opmax",
+        "pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-min-text-t0.7-n3-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-min-text-t1.0-n1-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-min-text-t1.0-n3-opmax",
+        "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-scale4-optimal-n1-opmax",
+        "pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-scale4-optimal-n3-opmax",
+        "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-carried-p0.15-k8-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-carried-p0.15-k10-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-carried-p0.98-k10-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-carried-p0.15-k5-standardised-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt",
+        "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+        "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+        "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+        "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4"
+      ],
+      "hypothesis_refs": [
+        "H3",
+        "H13"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E56",
+        "E85"
+      ],
+      "predicted_outcome": "K's F1 return saturates early (the registered pass-budget Pareto's reading), and K = 3 is on the efficient set.",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "The pass-count ladder K at otherwise fixed parameters, on 23 ladders: the gold-standard stride A ladder (the only one whose every rung is an exact re-verification of its own first-N union), the thirteen Gemini 3 pv-diag-384 families and the 3.7 gold-standard text screen that Phase 2 completed to four rungs for US$24.8065, the grid 384 px / 50 % MINIMAL text ladder tier E completed for US$4.9595, and the seven 55-map deployment ladders. SHAPE: the return is FRONT-LOADED and K = 3 is on the efficient set of every ladder in the corpus \u2014 37 % to 93 % of a ladder's total F1 gain for 31 % to 64 % of its top rung's cost \u2014 while the last step is the worst buy on every ladder, at US$1,100 to US$43,000 per 0.001 F1 (the 3.7 family's K = 5 -> K = 10 step buys +0.0002 F1@20 for US$8.65). WHAT GOVERNS THE RETURN: the proposer's thinking level, and within a level its temperature. The K = 1 -> best-rung F1 gain is significant on 7 of 7 HIGH-thinking ladders and 2 of 6 MINIMAL ones; four ladders, every one of them MINIMAL, greedy-clique into a SINGLE tier in which K buys nothing detectable; and on both HIGH tracks the gain rises monotonically with temperature (text +0.0559 -> +0.0735 -> +0.0994, image +0.0780 -> +0.0959 -> +0.1514 across T 0.3 -> 0.7 -> 1.0). Read as the diversity dividend (Obs 141) measured on a K ladder: K buys sampling diversity, and pays in proportion to how much the configuration already generates. TILE-MCC DOES NOT FOLLOW F1. Across the 21 verified ladders with an interpretable tile-MCC, F1 rises on all 21 and tile-MCC falls on 16, and NO ladder shows a significant tile-MCC RISE; the gold-standard ladder's +0.0135, \u00a7 4 of the findings' one apparent counter-example, tests at BH p = 0.7678. Significant FALLS are found on four ladders \u2014 the 3.7-verifier stride B (-0.0112), 3.7 arm 1 (-0.0099), 3.7 arm 2 (-0.0275) and HIGH image T 1.0 (-0.0637, BH p = 0.0420, the family with the largest F1 gain). More passes buy localisation inside already-positive tiles, not tile-level discrimination, which matters for any application whose unit is the tile rather than the mound. CAVEAT on the MCC column: tile-MCC is computed by a string join on source_tile, and three cells of the 3.7 gold-standard text family are scored on a frame whose tile vocabulary is not their proposer's, so their tile-MCC is WITHHELD with a named reason rather than reported (g37-text-k1-verified-opmax, g37-text-k1-verified-carried-p0.10-k1, g37-text-k3-verified-opmax; raw 0.1337 / 0.1422 / 0.1337). The corpus-wide exposure is measured at 3 of 149 committed cells the Era-2 board reads, no published board MCC is affected, and the repair is a corpus-wide decision with the PI because the 384 px frames overlap (reports/tile-mcc-geometric-join-2026-09-12.md). Their F1 is sound and is reported in full. INSTRUMENT (PI ruling): the board's round-robin tile-swap micro-F1 permutation is THE instrument \u2014 10,000 permutations, seed 42, BH q = 0.05 within each ladder's own round-robin, tile-MCC swapped on byte-identical masks so a \u0394F1 and a \u0394MCC are two statistics of one permutation \u2014 and the registered per-map paired sign-swap is the CROSS-CHECK. Where both cover a pair (8 pairs, 2 ladders) all eight tile-MCC significance calls AGREE, with \u0394MCC estimates within 0.0006; one marginal F1 call differs (stride A's K = 3 -> 5, BH p 0.0079 against 0.0655), so the instrument choice is live for marginal F1 claims and immaterial to the MCC conclusion. THE TWO CORPORA AGREE once resolution is accounted for. The deployment MINIMAL ladders' own cells, scored on random 487-tile subsets of their own 8,541 tiles (200 draws, seed 42, same instrument), keep BH significance in 197 of 200 draws at \u0394F1 +0.0547 and in only 39 of 200 at +0.0192 \u2014 a subsampling standard deviation of ~0.0114 either way \u2014 so 487 tiles resolve a \u0394F1 of about 0.03 and above and not below. The nine MINIMAL ladders sort by effect size rather than by corpus (every one at or above +0.0546 separates, every one at or below +0.0223 does not), and the deployment range +0.0192..+0.0547 sits INSIDE the gold-standard range +0.0139..+0.0629. So 'K buys nothing detectable' on four MINIMAL configurations is a statement about 487 tiles, not about K. PARETO MCC SET: on tile-MCC no rung above K = 1 is ever the admissible choice \u2014 K = 1 holds the highest tile-MCC on 13 of the 21 interpretable ladders and is never significantly beaten on it \u2014 so the MCC-efficient rung is K = 1 wherever tile-level discrimination is the objective, while the F1-efficient rung is K = 3. The two objectives select different rungs, and that is the review's practical finding. A GEOMETRY EFFECT, consensus-only: at fixed MINIMAL text T 0.7 the grid study's K = 1 -> 10 gain is about 2.4x larger at 12.5 % overlap than at 50 % (+0.1454 against +0.0572 at 384 px; +0.0914 against +0.0396 at 512 px), and tile-MCC RISES with K on all four consensus-only cells (+0.038..+0.154) \u2014 the opposite of the verified ladders, consistent with the same mechanism. Overlap and pass count buy the same redundancy. The pattern does not survive to the verified deployment ladders, which order the other way. NOT CLAIMED: no Hsu MCB admissible set per family (a different instrument, scripts/selection_aware_intervals.py, still outstanding); no MCC RANKING of rungs, tiering stays on the preregistered F1; and the five non-separating ladders' MCC moves are not shown to be zero. Findings: results/k-ladder-2026-09-12/findings.md (all sections); tension analyses results/k-ladder-2026-09-12/tension/; spend reports/k-ladder-phase2-deltas-2026-09-12.md and results/k-ladder-2026-09-12/tier-e/.",
+      "paper_section": "Results",
+      "output_path": "results/k-ladder-2026-09-12/findings.md",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/k-ladder-2026-09-12/findings.md"
+        ],
+        "last_extracted_at": "2026-09-12T14:24:08Z",
         "extractor_version": "0.7.1"
       }
     }

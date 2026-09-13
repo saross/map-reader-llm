@@ -1,6 +1,9 @@
 # Union-staleness retrospective — is any committed consensus union stale against its pool?
 
-> **Last revised**: 2026-09-12 (original publication). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-12 (later — the PI's rulings on § 3.3 and § 4.1
+> executed: the five stale T = 1.0 unions relabelled N = 5 with an erratum, and
+> the § 4.1 near-miss's two stale h10 siblings archived and rebuilt. Before that:
+> original publication). See [§ Changelog](#changelog) for revision history.
 
 **Verdict in one line.** Of the **106** consensus unions that a registered
 condition reads, **64 REPRODUCE**, **36 are SUBPOOL-CONSISTENT**, **1 is
@@ -509,6 +512,47 @@ threshold, but only these are in scope).
   result this report tabulates.
 
 ## Changelog
+
+### 2026-09-12 (later) — the PI's rulings on § 3.3 and § 4.1 executed
+
+**Trigger**: the PI ruled on this report's two open dispositions. For § 3.3, on
+**option 1 plus option 4** — relabel the five conditions and record an erratum,
+changing no measured value. For § 4.1's near-miss, **rebuild and archive**.
+
+**What landed, § 4.1 (the h10 near-miss).** The two stale siblings
+`outputs/h10/evaluation-v2/pool_160_hp4hn4/consensus/consensus_t{1,2}.geojson`
+were archived to `archive/superseded-consensus-2026-09-12/h10-pool_160_hp4hn4/`
+with a README recording the diagnosis, and rebuilt from the full five-pass pool
+with the current `scripts/merge_passes.py`, which now writes a
+`pass_provenance` block with a `git_blob_hash` per pass.
+
+| union | committed (stale) | rebuilt | § 4.1's predicted re-derivation |
+|---|---:|---:|---:|
+| `consensus_t1.geojson` | 1,454 | **1,474** | 1,474 |
+| `consensus_t2.geojson` | 474 | **477** | 477 |
+| `voting_summary.json` | `{total_passes, thresholds}` | + `pass_provenance_schema`, `pass_ids`, `pass_provenance` | — |
+
+The rebuild reproduces § 4.1's predicted counts exactly. **No registered
+condition reads either file** — re-verified this session across
+`results/run-conditions.json`, `results/conditions-manifest.json` and `results/`
+generally — so no registered number moved.
+
+**What did NOT change there, and why it is a question rather than an omission.**
+`consensus_t3/t4/t5.geojson` were **not** rebuilt. They reproduce at identical
+counts (313 / 236 / 163), so none is stale in the sense `t1` and `t2` were; but
+`consensus_t4.geojson` is the detections file of the registered condition
+`h10::greedy-pool-160`, and § 4.1 records that its re-derivation differs by one
+matched pair **0.444 m** apart. Rewriting a registered condition's detections
+file for a 0.444 m centroid shift is a PI decision, so it was left and is put
+back. Consequence stated plainly: the installed `voting_summary.json` carries the
+rebuild's provenance and truthful threshold counts, while `t3`–`t5` on disk are
+the original build of the same five passes.
+
+**What landed, § 3.3 (the five stale T = 1.0 unions).** Option 1 + option 4, as
+ruled — the relabel, its propagation through the generated manifests and the
+uplift supplement, and the erratum. The artefacts themselves are unchanged: no
+union, evaluation, or measured value was touched. Details and the before→after
+figures are in `reports/k-ladder-closeout-deltas-2026-09-12.md`.
 
 ### 2026-09-12 — Original publication
 
