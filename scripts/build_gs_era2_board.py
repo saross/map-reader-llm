@@ -743,9 +743,12 @@ def _mcc_tiering_table(mcc_block: dict[str, Any],
     tie_set = mcc_block.get("tie_set") or []
     overlap = sorted(set(mcc_admissible) & set(f1_admissible))
     by_ref = {row["ref"]: row for row in ranking}
-    tier1_labels = ", ".join(
-        f"`{by_ref[r]['label']}`" for r in tie_set if r in by_ref
-    )
+    # The table below lists every member, so the summary names the leaders and
+    # counts the rest rather than repeating 33 labels in a sentence.
+    named = [r for r in tie_set if r in by_ref]
+    tier1_labels = ", ".join(f"`{by_ref[r]['label']}`" for r in named[:5])
+    if len(named) > 5:
+        tier1_labels += f", and {len(named) - 5} more — see the table"
     lines = [
         "",
         "## Tile-level MCC — a second family on the same swap masks (REPORTED, not the tiering)",
