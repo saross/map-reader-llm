@@ -1,26 +1,31 @@
-# Gemini 3.7 image, 55-map K = 3 — pre-launch deltas and morning questions
+# Gemini 3.7 image, 55-map K = 3 — launch deltas and what the gates measured
 
-> **Last revised**: 2026-09-13 (original publication). See
+> **Last revised**: 2026-09-13 (relaunch — blockers B1–B4 all discharged, the
+> Gold Standard calibration leg run and the carried operating points fixed,
+> the 55-map proposer's pass 1 launched; the campaign is **IN FLIGHT and
+> incomplete**, so P1–P5 remain UNTESTED). See
 > [§ Changelog](#changelog) for revision history.
 
-Report on the pre-launch stage of the run specified by
-`planning/gemini37-image-55map-2026-09-13.md`. The audit verdict is **BLOCKED**;
-**no Application Programming Interface (API) call was made** and **US$0 was
-spent**. The full audit is
-`outputs/gemini37-image-55map-2026-09-13/pre_launch_audit.md`. Every claim below
-carries its anchor; figures were read on 2026-09-13 at worktree commit
-`dd5baf771`.
+Report on the run specified by `planning/gemini37-image-55map-2026-09-13.md`.
+The first attempt was correctly **BLOCKED** at the pre-launch audit at US$0
+(`outputs/gemini37-image-55map-2026-09-13/pre_launch_audit.md`); this revision
+records the relaunch. **All four blockers are discharged** (§ 7), the GS
+calibration leg has run, the carried operating points are fixed in the card
+§ 2, and **pass 1 of the 55-map proposer is in flight**. Every claim below
+carries its anchor; the original figures were read on 2026-09-13 at worktree
+commit `dd5baf771`, the relaunch figures at `5a91463dc` on branch
+`gemini37-image-55map-2026-09-13`.
 
 ## 1. Audited spend per leg
 
-| Leg | Card | Audited / corrected | Basis |
-|---|---:|---:|---|
-| GS calibration leg | US$1.2 | **US$0.75** | flex, 3.7 rate card, ≈ 450 candidates × 2 arms |
-| 55-map proposer, 3 × 24,561 | US$237 | **US$237** | confirmed — see § 2 |
-| K = 3 union, two arms (≈ 8,500) | US$22.7 | **US$14.1** | card is on the list basis; verify runs flex |
-| K = 1 union, two arms (≈ 5,500) | US$9.1 (card: 14.7) | **US$9.1** | same correction |
-| **Total** | **US$276** | **≈ US$261** | |
-| **Actually spent this session** | — | **US$0.00** | nothing launched |
+| Leg | Card | Audited / corrected | Actual | Basis |
+|---|---:|---:|---:|---|
+| GS calibration leg | US$1.2 | US$0.75 (est. ≈ 450 cands) | **US$1.1221** | flex, 3.7 rate card; the union came in at **622**, not ≈ 450 |
+| 5-tile mechanism smoke | — | — | **≈ US$0.025** | 101,278 tokens; the meta's US$0.0398 is on the wrong rate card |
+| 55-map proposer, 3 × 24,561 | US$237 | US$237 | **pass 1 in flight** | confirmed — see § 2 |
+| K = 3 union, two arms (≈ 8,500) | US$22.7 | **US$14.1** | not reached | card is on the list basis; verify runs flex |
+| K = 1 union, two arms (≈ 5,500) | US$9.1 (card: 14.7) | **US$9.1** | not reached | same correction |
+| **Total** | **US$276** | **≈ US$261** | **US$1.15 committed so far** | |
 
 The card's envelope holds; the corrections are all in the favourable
 direction. The verifier legs are on the list basis in the card because the
@@ -29,6 +34,36 @@ verify path stamps `cost_basis: list, discount 1.0`, which the card notes;
 half the stamped ones. Corrected per-candidate, flex: arm 1 (Gemini 3)
 ≈ US$0.00071, arm 2 (3.7) ≈ US$0.00095 — arm 2's stamped figure additionally
 carries the rate-card error of § 2.
+
+**The one adverse correction** is the GS calibration leg, at US$1.1221
+(arm 1 US$0.4417 + arm 2 US$0.6804) against the audit's US$0.75 estimate,
+because the K = 3 first-N union holds **622** candidates where the card
+extrapolated ≈ 450 from the K = 5 union's 674. The extrapolation assumed
+candidates fall off with K faster than they do: at K = 5 the vote histogram is
+{1: 115, 2: 50, 3: 34, 4: 30, 5: 445}, at K = 3 it is {1: 105, 2: 57, 3: 460},
+so dropping two passes removes only 52 candidates — a K = 5 → K = 3 ratio of
+**0.923**, where the card's ≈ 450 implies 0.67.
+
+**What this does and does not do to the 55-map verifier legs.** Transferring the
+measured K = 3 density straight across — 622 / 1,398 = 0.4449 candidates per
+tile — would put the 55-map K = 3 union at ≈ 10,900 rather than the card's
+≈ 8,500. But that transfer assumes the two corpora propose at the same rate per
+tile, and pass 1 is already measuring that they do not. Over its first 1,572
+tiles the 55-map pass returns **0.9726 raw detections per tile** against the GS
+pass 1's **1.1824** (main plus recovery, 1,653 over 1,398) — a density ratio of
+**0.823**. Folding that in gives **≈ 9,000** at K = 3, which is close to the
+card's ≈ 8,500 and comfortably inside its cost line.
+
+So the card's number survives, but for a different reason than it gave: it
+under-estimated the K = 5 → K = 3 ratio (0.67 assumed, 0.923 measured) and
+over-estimated the 55-map detection density (GS-equal assumed, 0.823 measured),
+and the two errors largely cancel. The corrected components are what should be
+carried forward, not the coincidence. Two caveats on the 0.823: it rests on
+6 % of the pass, and the manifest is walked in map order, so early maps need
+not represent the corpus. The committed 3.7 **text** 55-map union ran to 12,715
+candidates on this same geometry, which is the reminder that modality moves
+this number too. Price the verifier stage from the union that actually gets
+built.
 
 ## 2. The cost basis — reproduced exactly, and a stop rule that would misfire
 
@@ -77,8 +112,8 @@ cost within 2 % of the audited basis in USD.
 
 ## 3. Cache share per pass
 
-No 55-map pass ran, so these are the GS anchors that the gate must be read
-against.
+Pass 1 is in flight, so its share is not yet measurable (§ 3.1). These are the
+GS anchors that the gate must be read against.
 
 | Fragment | Tiles | Cached / input |
 |---|---:|---:|
@@ -104,18 +139,52 @@ smoke would stop the campaign on an expected, harmless reading. The gate is
 sound at pass scale, where the GS floor across eight substantive fragments is
 **0.751**; the smoke's gate should be mechanism-only.
 
+The relaunch's own 5-tile smoke read **0.488** cached — three times the GS
+probe's 0.163 at the same tile count, because the GS calibration leg had
+already warmed the prefix. This confirms the mechanism engages and confirms
+that a smoke reading is a function of what ran before it, not of the
+configuration: exactly why B4's rescoping to a pass-scale gate is right.
+
+### 3.1 Both pass-1 gates are POST-pass, not in-flight
+
+A delta the audit did not catch. `4_detect_mounds_batch.py` saves the
+detections GeoJSON incrementally after every tile (`_save_geojson`, called at
+line 1255), but writes `*.meta.json` — the only place `usage_stats` and
+therefore `total_cached_tokens` and the token counts live — **once, at the end**
+(line 1355). So while a pass runs, neither the audited cost nor the cache share
+can be computed; only the completed-tile count is observable.
+
+Consequence for the card's § 3 wording: "**abort** the proposer if pass 1
+exceeds US$110 on the audited basis" cannot execute as an in-flight abort. It
+operates as a **go/no-go gate on passes 2–3**, applied the moment pass 1's meta
+lands. The exposure this leaves unguarded is bounded and small: on the audited
+GS basis pass 1 costs US$79, and for it to reach US$110 the per-tile cost would
+have to run 39 % above the GS basis — which is the same thing as the cache
+share collapsing, so the two gates fail together and are read together, once,
+at pass end. An operator wanting a genuine in-flight tripwire would have to
+patch periodic meta flushing into the runner; that is not on this card.
+
 ## 4. Union sizes
 
-None built — deliberately. The union builder is defective for this data
-(§ 5, B2), so building the GS K = 3 calibration union first would have
-silently produced a wrong artefact and fixed the carried operating points on
-it. Expected sizes remain the card's ≈ 5,500 (K = 1) and ≈ 8,500 (K = 3).
+| Union | Card | Built |
+|---|---:|---:|
+| GS K = 5 first-N (the B2 verification) | 674 committed | **674 — byte-identical** |
+| GS K = 3 first-N (the calibration leg) | ≈ 450 | **622** (votes {1: 105, 2: 57, 3: 460}) |
+| 55-map K = 1 | ≈ 5,500 | not reached (≈ 6,900 on the measured ratios, § 1) |
+| 55-map K = 3 | ≈ 8,500 | not reached (≈ 9,000 on the measured ratios, § 1) |
+
+The GS K = 5 rebuild is the load-bearing one: run through the same chain that
+produced the committed artefact, with the fixed code, it reproduces
+`union_k5.geojson` **byte for byte**, with all five passes gated at 1,398/1,398
+tiles after the recovery fold. That is what licenses trusting the K = 3 union
+built beside it, and it is the verification the brief asked for before the
+calibration leg was allowed to fix the carried points.
 
 ## 5. P1–P5 verdicts
 
-**All five are UNTESTED.** No proposer pass, no verifier arm, no score. The
-predictions stand as written in the card. Two observations bear on how they
-should be read when the run does happen:
+**All five are UNTESTED.** Pass 1 of three is in flight; no union, no 55-map
+verifier arm, no score, no permutation test. The predictions stand as written
+in the card. Three observations bear on how they should be read:
 
 - **P1's mechanism is weaker than card § 1 implies.** The nine top-MCC GS
   cells are indeed all image, but they carry F1 0.7112–0.7767 in tiers 6–8:
@@ -133,28 +202,49 @@ should be read when the run does happen:
   second "the 55-map MCC leader today" in adjacent rows; they are two
   populations. The five-test family in step 7 covers both, and the findings
   document should say so explicitly.
+- **Both carried points select unanimity, which loads the dice against P2 and
+  P5.** The GS calibration leg put arm 1 at (prob_t 0.10, k 3) and arm 2 at
+  (0.88, k 3) — both at k = K, so the carried 55-map K = 3 cell is a
+  3-of-3 consensus. P2 predicts the K = 1 rung's MCC is at least the K = 3
+  rung's; but the K = 1 rung cannot carry k = 3, so its k collapses to 1 and the
+  comparison is no longer a clean one-factor contrast in pass count — it varies
+  the vote threshold too. P5's carried-versus-oracle tax is also likelier to
+  bind at a corner of the sweep grid than in its interior. Neither invalidates
+  the prediction; both should be stated when the rungs are read, so the
+  interpretation is not chosen after the numbers exist.
 
 ## 6. What did NOT change
 
-- **No API call, no spend, nothing launched.** US$0.00.
-- **No union, no verifier run, no score, no permutation test.**
-- **The card is untouched** — no banner change, no § 2 carried points, no § 3
-  actuals, no changelog entry. Fixing § 2 in advance of the PI's ruling would
-  be recording a decision that has not been made.
+- **No 55-map union, no 55-map verifier run, no score, no permutation test,
+  no P1–P5 verdict.** Pass 1 of three is in flight; everything downstream of
+  the proposer is untouched.
 - **The 55-map board and the MCC tiering are untouched**; no re-tiering, no
-  signed row touched, no analysis row authored.
-- **`scripts/merge_passes.py` is untouched.** The defect in § 7 is real and
-  demonstrated, but fixing `resolve_pass_files` changes what any rebuilt union
-  contains, which reaches committed artefacts across the project. That is a
-  PI call, not an audit fix, and it is outside what the card approves.
-- **`prompts/`, `inputs/` and every configuration are untouched.** The audit
-  was read-only over them; the only files added are the audit, this report and
-  `scripts/audit_proposer_cost.py`.
+  MCC re-tiering, no signed row touched, no analysis row authored. The single
+  UNSIGNED analysis row `gemini37-image-55map-2026-09-13` the card calls for
+  cannot be written until the rungs are scored.
+- **`prompts/`, `inputs/` and every configuration are untouched.** The
+  configuration is byte-identical to the GS image run, re-confirmed live this
+  session: the smoke's `system_instruction_hash` is
+  `e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12`, the same
+  payload fingerprint the audit's dry run reproduced, with
+  `include_example_images: true`, thinking `low`, T = 0.7 and tile size 384.
+- **`scripts/merge_passes.py` was not touched by this session.** The fix is the
+  PI's, landed as `75d7c8d4c` on `main` after the ruling recorded in
+  `reports/recovery-fragment-drop-2026-09-13.md`; this session only verified it
+  (§ 7, B2) and ran its tier-1 tests.
+- **No committed union was rebuilt or overwritten.** The GS `union_k5.geojson`
+  rebuild is byte-identical, so the committed artefact is unchanged in content
+  as well as in fact.
+- **Nothing on sapphire's main checkout was written, moved or removed.** All
+  work ran in the isolated worktree `~/worktrees/map-reader-llm/claude-image55`,
+  reading the main checkout's tiles, rasters and GS pass directories through
+  symlinks and one 95 MB copy.
 
-## 7. Why it is blocked
+## 7. Blocker status — all four discharged
 
-Two governance-and-tooling blockers, and two gate definitions that would
-misfire. Full detail in the audit; in brief:
+Two governance-and-tooling blockers and two gate definitions that would
+misfire. All four are now closed; the detail of the original findings stands in
+the audit, and what follows records both the finding and its discharge.
 
 **B1 — approval provenance.** The card's banner still reads "awaiting the PI's
 API-gate approval". The only committed record of a PI decision on a 55-map 3.7
@@ -168,6 +258,15 @@ committed GS MCC crown.)"
 at K = 3 for US$276 is a new and reasonable argument, and it may well have
 carried — but a ~102,000-call campaign should not start while the repository's
 record reads "declined" and the card reads "awaiting".
+
+> **DISCHARGED.** The PI's approval of 2026-09-13, given in session on the
+> condition that caching is in effect, is now minuted in the card's banner and
+> its changelog, with the caching condition confirmed at source (the GS 3.7
+> image run's full passes read 0.751–0.806 cached). The self-contradiction the
+> audit flagged is *not* resolved: `planning/paper-writeup-continuity.md`
+> S152 item 4 still reads "COSTED AND DECLINED" and the GS findings' escalation
+> sentence still reads "trigger … is NOT met". Annotating those two is a PI
+> call this session did not take, and it remains open as question 1 of § 8.
 
 **B2 — the union builder drops recovery fragments, silently and plausibly.**
 `resolve_pass_files` parses the pass number as
@@ -187,40 +286,92 @@ Related: the single-merge path (`--output`) computes `pass_provenance` and then
 discards it — `main()` ignores the return value. Only `--sweep --output-dir`
 writes it, into `voting_summary.json`. Unions must be built via the sweep path.
 
-**B3, B4** are the stop-rule basis (§ 2) and the smoke cache gate (§ 3).
+> **DISCHARGED, and with a correction to how the blocker was framed.** The fix
+> landed on `main` as `75d7c8d4c`: `_PASS_DIR_RE` now folds `run_<N><suffix>`
+> into pass `<N>`, main files first so within-pass dedup precedence is
+> unchanged, and `tests/test_merge_passes_recovery.py` passes 9 with 3
+> characterisation tests skipping now the patch is present.
+>
+> **The correction.** The GS calibration leg was never actually gated by this
+> defect. `merge_passes.resolve_pass_files` is not on the path that built the
+> committed GS union: `image_b_prepare_and_union.py` resolves its passes through
+> `stride_prepare_and_union.resolve_pass_paths`, which globs `{run}_recovery`
+> and has always been fragment-inclusive — exactly as
+> `reports/recovery-fragment-drop-2026-09-13.md` § 2.2 concluded when it found
+> the drop's reach into committed unions to be 0 MATERIAL / 5 NEGLIGIBLE / 23
+> UNAFFECTED. Rebuilding the K = 5 union through that chain reproduces the
+> committed 674 **byte-identically** (the verification the brief required), and
+> the K = 3 union built the same way is therefore sound. The audit's live
+> demonstration of 650-against-674 was a demonstration of what
+> `merge_passes.py` *would* have produced had it been used, not of a defect in
+> the artefact the calibration leg depends on. `merge_passes.py` still matters
+> downstream: it is where the 55-map `pass_provenance` has to come from.
+>
+> **An open design question it leaves.** The 55-map unions face a conflict the
+> card does not resolve. Comparability with the 3.7 **text** arms — which the
+> card's deployment-scale modality difference-in-differences depends on —
+> requires `stride55_prepare_and_union.py`, the builder those arms used (no
+> carrier clip, full-extent scoring). But that builder writes no
+> `pass_provenance`; only `merge_passes.py --sweep --output-dir` does. Building
+> the image unions with `merge_passes.py` to get the provenance block would make
+> the modality contrast a comparison across two builders. The recommendation is
+> to build with `stride55_prepare_and_union.py` and emit the provenance record
+> as a sidecar from `merge_passes.build_pass_provenance` over the same resolved
+> fragment set — same union geometry, provenance requirement met. It needs the
+> PI's assent because it is a deviation from the card's literal wording, and it
+> is question 7 of § 8.
 
-## 8. Morning questions
+**B3 — the stop-rule basis.** **DISCHARGED.** `scripts/audit_proposer_cost.py`
+runs clean over the ten committed GS fragments and returns **US$22.5004 over
+6,990 tile-passes = US$0.00322 per tile-pass**, against the metas' own
+US$35.8176 — reproducing the committed basis to four decimal places and
+confirming the tool is the gate. § 3.1 above records the one thing this does
+not buy: the figure is only computable once a pass finishes.
 
-1. **Is the API gate approved, and is the card's banner to be updated to say
-   so?** Recording the ruling in the card as the
-   `gs-era2-verified-board-2026-09-10` sign-off was recorded would close B1. If
-   it is approved, does the PI want the S152 decline and the GS findings'
-   escalation sentence annotated, so the record is not self-contradictory?
-2. **Which basis does the US$110 stop measure?** Recommend: the audited basis,
-   computed with `scripts/audit_proposer_cost.py`, pinned in the card in those
-   words. On that basis pass 1 is ≈ US$79; on the meta's own figure it is
-   US$126 and the run aborts.
-3. **How should `merge_passes.py` be repaired?** Recommend folding `run_N*`
-   into pass N with a tier-1 test, then re-deriving the GS K = 3 union and
-   checking it against the K = 5 union of 674. The wider question is whether
-   any committed union was built through the defective path — the GS
-   `union_k5.geojson` (674) was not, since the defective path yields 650, so
-   some other builder produced it and should be identified before the fix
-   changes anything.
-4. **Does the smoke gate become mechanism-only?** Recommend yes: model,
-   thinking, temperature and tier stamped, `include_example_images` true, 17
-   examples, tile size 384 — with the ≥ 70 % cache gate applying from pass 1
-   onwards, where the GS floor is 0.751.
-5. **What is the schedule and who finishes it?** Clean-window throughput was
-   **3,884–4,608 tiles/h** at `--workers 150`, so a pass is **5.3–6.3 h**;
-   inside the flex-storm window it fell to **0.5–60 tiles/h**. Three passes
-   plus crop extraction, four verifier arms and the scoring and permutation
-   work is 24–48 h of wall clock. This needs a storm-resilient driver on the
-   GS pattern and a named handover; it cannot be one session.
-6. **Should P1's interpretation be pre-committed given § 5?** The image-MCC
-   advantage on the GS is carried by F1-poor single-pass cells, and the two
-   comparators are not co-tiered. Worth settling before the numbers exist, so
-   the reading is not chosen after seeing them.
+**B4 — the smoke cache gate.** **DISCHARGED.** The card's § 5 step 1 now scopes
+the ≥ 70 % gate to pass 1 and makes the smoke mechanism-only. The smoke duly
+read 0.488 — a figure that would have failed the original gate and told nobody
+anything useful.
+
+## 8. Open questions after the relaunch
+
+Questions 2, 3 and 4 of the original list are answered and closed (§ 7, B2–B4).
+What remains, plus what the relaunch added:
+
+- **Q1 — does the PI want the contradictory record annotated?** The approval is
+  minuted in the card, but `planning/paper-writeup-continuity.md` S152 item 4
+  still reads "COSTED AND DECLINED" and
+  `results/gemini37-image-gs-2026-09-01/findings.md` still reads "the
+  pre-agreed trigger … is NOT met". A reader arriving at either first will
+  conclude this campaign should not have run. One annotated sentence in each
+  would close it.
+- **Q5 — who finishes it?** Still the binding question, and still unanswered. The
+  storm-resilient driver exists now
+  (`scripts/gemini37-image-55map-driver.sh`, W3 closed) and **pass 1 is in
+  flight**, its first 699 tiles clearing at ≈ 5,200 tiles/h — above the
+  3,884–4,608 the audit measured, which would land pass 1 in ≈ 4.7 h rather
+  than 5.3–6.3, on the strength of an eight-minute sample. But the flex queue is
+  measurably more congested than it was during the GS run — the GS calibration
+  leg's arm 2 logged **824 server-error retries in 893 s for 622 candidates**
+  against the GS run's 420 for 674 — and the storm window opens ≈ 13:00 UTC.
+  Passes 2–3, four verifier arms, scoring and the permutation family remain
+  **24–48 h of work that this session cannot finish**, and the driver applies
+  no gate of its own: it records and continues. This needs a named owner.
+- **Q6 — should P1's interpretation be pre-committed given § 5?** Unchanged, and
+  now with a third strand: both carried points select unanimity, so the K = 1
+  rung varies the vote threshold as well as the pass count.
+- **Q7 (new) — which builder produces the 55-map unions?** New. Comparability with the
+  text arms points at `stride55_prepare_and_union.py`; the card's
+  `pass_provenance` requirement points at `merge_passes.py --sweep`. The
+  recommendation is the first plus a provenance sidecar from the second
+  (§ 7, B2). This needs settling **before** the unions are built, because
+  rebuilding them later re-fixes the operating points.
+- **Q8 (new) — should the verifier legs be re-priced from the union actually
+  built?** The card's ≈ 8,500 survives, but on two cancelling errors: the
+  K = 5 → K = 3 candidate ratio is 0.923 where the card assumed ≈ 0.67, and the
+  55-map detection density is 0.823 of the GS's where the card assumed parity
+  (§ 1). Reading the built union's count before the arms run costs nothing and
+  removes both guesses.
 
 ## 9. What passed, so it is not re-litigated
 
@@ -245,6 +396,68 @@ identical images. Argue identity from `system_instruction_hash` and the blob
 comparison, and read `configuration.library_hash_basis` first.
 
 ## Changelog
+
+### 2026-09-13 (relaunch) — blockers discharged, calibration leg run, pass 1 in flight
+
+**Trigger**: the PI's API-gate approval minuted in the card banner, and the
+`merge_passes.py` recovery-fragment fix landing on `main` as `75d7c8d4c`
+(itself the ruling recorded in `reports/recovery-fragment-drop-2026-09-13.md`),
+which together lifted B1 and B2. Work ran on branch
+`gemini37-image-55map-2026-09-13` in the isolated sapphire worktree
+`~/worktrees/map-reader-llm/claude-image55`.
+
+All four blockers discharged (§ 7). B2's discharge came with a **correction to
+how the blocker was framed**: the GS calibration leg never ran through
+`merge_passes.resolve_pass_files` at all — `image_b_prepare_and_union.py`
+resolves passes through the always-fragment-inclusive
+`stride_prepare_and_union.resolve_pass_paths` — so the leg was blocked on a
+defect that did not reach it. The verification the brief required nevertheless
+passed decisively: the rebuilt K = 5 first-N union reproduces the committed
+674-candidate `union_k5.geojson` **byte-identically**.
+
+| Claim | Before | After |
+|---|---:|---:|
+| GS K = 3 first-N union | ≈ 450 (card estimate) | **622** |
+| GS calibration leg, audited | US$0.75 (estimate) | **US$1.1221** |
+| GS K = 5 rebuild vs committed 674 | 650 via the defective path | **674, byte-identical** |
+| Carried point, arm 1 | not fixed | **(prob_t 0.10, k 3)**, GS F1@20 0.9197 |
+| Carried point, arm 2 | not fixed | **(prob_t 0.88, k 3)**, GS F1@20 0.9245 |
+| 5-tile smoke cache share | 0.163 (GS probe) | **0.488** (prefix pre-warmed) |
+| 55-map K = 3 union, expected | ≈ 8,500 | ≈ 9,000 on the measured ratios |
+| 55-map raw detections per tile | assumed GS-equal | **0.823 of the GS's** (pass 1, first 1,572 tiles) |
+| Spend committed | US$0.00 | **US$1.15** |
+
+Two deltas the first audit did not catch, both recorded above: **§ 3.1**, that
+the pass-1 audited-cost and cache-share gates are only computable once a pass
+finishes, because `4_detect_mounds_batch.py` writes `*.meta.json` once at the
+end — so the card's "abort the proposer" is in practice a go/no-go on passes
+2–3; and **§ 7 B2's design question**, that the 55-map unions cannot satisfy
+both text-arm comparability and the card's `pass_provenance` requirement from a
+single builder.
+
+**What did NOT change**: the 55-map board and the MCC tiering (no re-tiering of
+either, no signed row touched, no analysis row authored); every configuration
+in `prompts/` and `inputs/`; `scripts/merge_passes.py` (the fix is the PI's, not
+this session's); any committed union's content; and anything in sapphire's main
+checkout. P1–P5 remain **UNTESTED** — pass 1 of three is in flight and
+everything downstream of the proposer is unbuilt.
+
+Also re-derives the verifier-leg sizing. The card's ≈ 8,500 survives, but on
+two cancelling errors: the K = 5 → K = 3 candidate ratio is **0.923** where the
+card assumed ≈ 0.67, and pass 1's measured detection density is **0.823** of the
+GS's where the card assumed parity. The corrected components should be carried
+forward, not the coincidence.
+
+Tier-1 suite on sapphire after the changes: **2,496 passed, 4 skipped, 27
+deselected, 3 xfailed**. `ruff check` clean on
+`scripts/audit_proposer_cost.py`, `scripts/merge_passes.py` and
+`scripts/stride55_prepare_and_union.py`; `markdownlint-cli2` clean on the card,
+this report and the post-run record.
+
+Commits: `c9294473d` (driver), `30e36bcd1` (calibration leg), `5a91463dc`
+(card carried points), `e2fa3fc99` (this report's first relaunch revision),
+`05349e9ff` (post-run launch-state record), `713a8c617` (card audited actuals),
+and the commit that lands this correction.
 
 ### 2026-09-13 — Original publication
 
