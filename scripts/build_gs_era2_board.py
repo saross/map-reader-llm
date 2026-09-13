@@ -68,6 +68,31 @@ A registered condition joins when all of these hold:
   short of the frame; they stay on the grid and stride boards).
 
 Every exclusion is listed with its reason in ``membership.json``.
+
+The K-ladder deferral (PI ruling 2026-09-13, route (a))
+-------------------------------------------------------
+A condition id named in ``<board>/k-ladder/membership.json`` joins BEFORE the
+two rules immediately above are applied — the frame rule and the
+``scope_override`` rule. Those two refuse the K-ladder cohort (the 46 Phase 2
+rungs and the 4 tier E rungs of ``planning/k-ladder-review-2026-09-11.md``) for
+being *already on the board frame*: each carries a committed evaluation whose
+``cli_args.bounds`` is the board frame itself and a ``scope_override`` naming
+``era2-b-487``. Both refusals are correct for a cell whose committed score is on
+a DIFFERENT frame, which is what they were written for, so they are kept for
+every other row and the cohort is admitted by an explicit, reasoned membership
+file instead.
+
+Consequences, all deliberate:
+
+* **Nothing is re-scored.** These cells' committed evaluations already carry the
+  board frame, the curator reference, 14 buffers, a 10,000-draw bootstrap,
+  seed 42 and MCC, so they are admitted as-is and ``jobs`` writes no job.
+* **No ``-era2b`` row is minted.** That suffix records a SECOND scoring; there
+  is none here, and two register rows must not claim one evaluation file. The
+  cohort joins the board under its own condition ids.
+* **G2 is an identity and G6's delta is 0.0000 by construction.** G3 is still
+  read off the file, because "the committed evaluation names the board frame" is
+  the premise the whole deferral rests on.
 """
 
 from __future__ import annotations
@@ -102,6 +127,17 @@ SINGLE_PASS_PV_RUN = "proposer-verifier-384"
 #: and gated by ``scripts/build_gs_era2_board_opmax.py``, so this builder must
 #: not admit the same condition a second time.
 OPMAX_MEMBERSHIP = f"{BOARD_DIR}/opmax/membership.json"
+#: The K-ladder cohort's membership, a THIRD membership source this builder
+#: defers to by condition id (PI ruling 2026-09-13, route (a) of
+#: ``reports/k-ladder-closeout-deltas-2026-09-12.md`` § 8). Its cells are the
+#: 46 Phase 2 rungs and the 4 tier E rungs of the K-ladder review
+#: (``planning/k-ladder-review-2026-09-11.md``): they were scored ON the board
+#: frame in the first place, so the two refusal rules below — "committed
+#: evaluation on another frame" and "carries a scope_override" — refuse them
+#: for being what the board wants rather than for missing it. The deferral is
+#: by condition id and is checked BEFORE those two rules; every other row still
+#: meets them.
+K_LADDER_MEMBERSHIP = f"{BOARD_DIR}/k-ladder/membership.json"
 #: Smallest proposer pool the board admits. 1 since 2026-09-12 (PI ruling R3):
 #: every verified cell on the frame joins, whatever its pass count. The
 #: constant is kept rather than inlined so the rule stays one edit wide.
@@ -171,11 +207,36 @@ def opmax_owned() -> set[str]:
             if "condition_id" in row}
 
 
+def k_ladder_admitted() -> dict[str, str]:
+    """Condition ids the PI admitted from the K-ladder cohort, with reasons.
+
+    Read from ``k-ladder/membership.json`` rather than pattern-matched on a
+    run id or a label, for the same reason ``opmax_owned()`` reads the opmax
+    membership: admission is a recorded ruling, not a guess from a name. The
+    file is authored by ``scripts/author_k_ladder_board_membership.py``.
+
+    Returns:
+        ``{condition_id: reason}``, or an empty mapping when the file is
+        absent — in which case the two frame/scope refusal rules apply to
+        every row exactly as they did before the ruling.
+    """
+    path = REPO_ROOT / K_LADDER_MEMBERSHIP
+    if not path.is_file():
+        print(f"NOTE: {K_LADDER_MEMBERSHIP} is absent, so no K-ladder cell is "
+              "admitted; the frame and scope rules apply to every row",
+              file=sys.stderr)
+        return {}
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    return {row["condition_id"]: row.get("reason", "")
+            for row in doc.get("members", []) if "condition_id" in row}
+
+
 def derive_membership() -> dict[str, Any]:
     """Apply the § 3 rule to the register; return members and exclusions."""
     dec = json.loads(RUN_CONDITIONS.read_text(encoding="utf-8"))["decomposition"]
     facts = json.loads(RUN_FACTS.read_text(encoding="utf-8"))["facts"]
     owned_by_opmax = opmax_owned()
+    admitted_by_k_ladder = k_ladder_admitted()
     members: list[dict[str, Any]] = []
     excluded: list[dict[str, Any]] = []
     for run_id, entry in dec.items():
@@ -221,23 +282,44 @@ def derive_membership() -> dict[str, Any]:
                 continue
             cli = dict(doc.get("_metadata", {}).get("cli_args") or {})
             bounds = os.path.basename(cli.get("bounds") or "")
+            det = cond.get("detections") or ""
+
+            def member(**extra: Any) -> dict[str, Any]:
+                return {
+                    "condition_id": cid, "run_id": run_id, "label": label, "k": k,
+                    "detections": det, "eval_path": cond["eval_path"],
+                    "committed_bounds": cli.get("bounds"), "committed_f1_20": f1_at(doc),
+                    "recipe": {kk: cli.get(kk) for kk in ("ground_truth", "buffers", "bootstrap", "seed")},
+                    "track": "image" if "image" in label else "text",
+                    **extra,
+                }
+
+            # The K-ladder deferral, BEFORE the frame and scope rules (PI
+            # ruling 2026-09-13). These cells' committed evaluations ARE
+            # board-frame evaluations with the board's own recipe, so they join
+            # with those evaluations as-is: nothing is re-scored, and no
+            # '-era2b' row is minted, because there is no second scoring for a
+            # second row to record. Everything else still meets both rules.
+            if cid in admitted_by_k_ladder:
+                if not (REPO_ROOT / det).exists():
+                    out("K-ladder member whose detections file is missing on disk")
+                    continue
+                members.append(member(
+                    k_ladder=True,
+                    admitted_via=K_LADDER_MEMBERSHIP,
+                    admission_reason=admitted_by_k_ladder[cid],
+                ))
+                continue
             if bounds not in (ERA2_FRAME, B_FRAME):
                 out(f"committed evaluation on {bounds or 'an unknown frame'}, neither the Era-2 frame nor grid-common")
                 continue
             if cond.get("scope_override"):
                 out(f"scope override {cond['scope_override'].get('test_set_id')}")
                 continue
-            det = cond.get("detections") or ""
             if not (REPO_ROOT / det).exists():
                 out("detections file missing on disk")
                 continue
-            members.append({
-                "condition_id": cid, "run_id": run_id, "label": label, "k": k,
-                "detections": det, "eval_path": cond["eval_path"],
-                "committed_bounds": cli.get("bounds"), "committed_f1_20": f1_at(doc),
-                "recipe": {kk: cli.get(kk) for kk in ("ground_truth", "buffers", "bootstrap", "seed")},
-                "track": "image" if "image" in label else "text",
-            })
+            members.append(member())
     members.sort(key=lambda m: m["condition_id"])
     return {
         "board_id": BOARD_ID, "frame": FRAME, "frame_id": FRAME_ID, "card": CARD,
@@ -247,9 +329,13 @@ def derive_membership() -> dict[str, Any]:
 
 
 def render_listing(membership: dict[str, Any]) -> str:
-    lines = [f"{membership['n_members']} members ({membership['frame_id']}):"]
+    n_kl = sum(1 for m in membership["members"] if m.get("k_ladder"))
+    lines = [f"{membership['n_members']} members ({membership['frame_id']}); "
+             f"{membership['n_members'] - n_kl} re-scored on the frame, "
+             f"{n_kl} admitted by k-ladder/membership.json:"]
     for m in membership["members"]:
-        lines.append(f"  {m['condition_id']:75s} K={m['k']:>2} F1@20={m['committed_f1_20']:.4f} on {os.path.basename(m['committed_bounds'])}")
+        tag = " [k-ladder]" if m.get("k_ladder") else ""
+        lines.append(f"  {m['condition_id']:75s} K={m['k']:>2} F1@20={m['committed_f1_20']:.4f} on {os.path.basename(m['committed_bounds'])}{tag}")
     from collections import Counter
     reasons = Counter(e["reason"].split(" (")[0] for e in membership["excluded"])
     lines.append(f"{len(membership['excluded'])} excluded: " + "; ".join(f"{n} × {r}" for r, n in reasons.most_common()))
@@ -277,13 +363,26 @@ def write_jobs(board: Path, membership: dict[str, Any]) -> Path:
              "# Run on sapphire from the repository root. Each job is independent; failures are collected.",
              "set -uo pipefail", "FAILED=()",
              'run() { echo "+ ${*:1:6} …"; if ! "$@"; then echo "FAILED: $1 $2 $3 $4" >&2; FAILED+=("$4"); fi; }', ""]
+    n_skipped = 0
     for m in membership["members"]:
+        if m.get("k_ladder"):
+            # Already scored on the board frame with the board's recipe; the
+            # PI ruling admits those evaluations as-is, so re-scoring would
+            # spend CPU to reproduce a file we already have.
+            lines.append(f"# {m['condition_id']} — NO JOBS: admitted with its "
+                         "board-frame evaluation as-is (k-ladder/membership.json)")
+            lines.append("")
+            n_skipped += 1
+            continue
         s = slug(m["condition_id"])
         lines.append(f"# {m['condition_id']}")
         lines.append("run " + _eval_command(m, m["committed_bounds"], f"{BOARD_DIR}/g2/{s}", G2_BOOTSTRAP, f"{s}-g2"))
         lines.append("run " + _eval_command(m, FRAME, f"{BOARD_DIR}/cells/{s}", int(m["recipe"].get("bootstrap") or 10000), s))
         lines.append("")
     lines += ['if [ ${#FAILED[@]} -gt 0 ]; then echo "FAILED jobs: ${FAILED[*]}" >&2; exit 1; fi', 'echo "ALL DONE $(date -u +%FT%TZ)"']
+    if n_skipped:
+        lines.insert(2, f"# {n_skipped} K-ladder member(s) have NO jobs: their "
+                        "committed evaluations are already board-frame.")
     path = board / "score-commands.sh"
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     path.chmod(0o755)
@@ -296,9 +395,19 @@ def run_gates(board: Path, membership: dict[str, Any]) -> tuple[dict[str, Any], 
     g2_fail = g3_fail = missing = 0
     for m in membership["members"]:
         s = slug(m["condition_id"])
-        g2 = _eval_meta(f"{BOARD_DIR}/g2/{s}/evaluation.json")
-        cell = _eval_meta(f"{BOARD_DIR}/cells/{s}/evaluation.json")
         committed = _eval_meta(m["eval_path"])
+        if m.get("k_ladder"):
+            # G2 asks whether the evaluator reproduces the committed score on
+            # the cell's OWN frame. For a K-ladder member the own frame IS the
+            # board frame and the committed evaluation IS the board-frame
+            # evaluation, so the reproduction is an identity and the G6 frame
+            # delta is 0.0000 by construction, not by measurement. G3 is still
+            # checked against the file, because "the committed evaluation names
+            # the board frame" is the premise the deferral rests on.
+            g2 = cell = committed
+        else:
+            g2 = _eval_meta(f"{BOARD_DIR}/g2/{s}/evaluation.json")
+            cell = _eval_meta(f"{BOARD_DIR}/cells/{s}/evaluation.json")
         if g2 is None or cell is None:
             missing += 1
             rows.append({"condition_id": m["condition_id"], "status": "missing"})
@@ -318,10 +427,13 @@ def run_gates(board: Path, membership: dict[str, Any]) -> tuple[dict[str, Any], 
                      "n_features": n_geo, "n_detections_committed": n_com, "n_detections_g2": n_g2,
                      "n_detections_board": cell.get("summary", {}).get("n_detections"),
                      "committed_bounds": os.path.basename(m["committed_bounds"]), "board_bounds": cell_bounds,
-                     "g2_ok": g2_ok, "g3_ok": g3_ok})
+                     "g2_ok": g2_ok, "g3_ok": g3_ok,
+                     **({"basis": "k-ladder: committed evaluation IS the board-frame "
+                                  "evaluation; G2 is an identity"} if m.get("k_ladder") else {})})
     n_cells = sum(1 for r in rows if r["status"] != "missing")
     g4_ok = n_cells == membership["n_members"] and missing == 0
     report = {"board_id": BOARD_ID, "checked_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+              "n_k_ladder_identity_cells": sum(1 for m in membership["members"] if m.get("k_ladder")),
               "G2_reproduction_failures": g2_fail, "G3_frame_failures": g3_fail,
               "G4_cells": n_cells, "G4_members": membership["n_members"], "G4_ok": g4_ok,
               "missing": missing, "passed": g2_fail == 0 and g3_fail == 0 and g4_ok, "cells": rows}
@@ -349,6 +461,14 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
     new_ids: list[str] = []
     added = 0
     for m in membership["members"]:
+        if m.get("k_ladder"):
+            # No row is minted: a '-era2b' row exists to record a SECOND
+            # scoring of a cell (its committed recipe with the bounds swapped),
+            # and a K-ladder member has no second scoring — its one committed
+            # evaluation is already the board-frame one. Minting a copy would
+            # put two register rows on one evaluation file.
+            new_ids.append(m["condition_id"])
+            continue
         run = dec[m["run_id"]]
         src = next(c for c in run["conditions"] if c["label"] == m["label"])
         new_label = m["label"] + SUFFIX
@@ -371,6 +491,8 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
     # disclosed rather than unclaimed.
     waived = 0
     for m in membership["members"]:
+        if m.get("k_ladder"):
+            continue  # no G2 artefact exists for an identity reproduction
         run = dec[m["run_id"]]
         g2_path = f"{BOARD_DIR}/g2/{slug(m['condition_id'])}/evaluation.json"
         ignored = run.setdefault("_ignored_evals", [])
@@ -442,6 +564,8 @@ def finalise(board: Path, membership: dict[str, Any],
         if r.get("on_board"):
             deltas[r["condition_id"]] = {**r, "committed_f1_20": r.get("g2_f1_20")}
     n_opmax = sum(1 for r in opmax_gates.get("cells", []) if r.get("on_board"))
+    n_k_ladder = sum(1 for m in membership["members"] if m.get("k_ladder"))
+    withheld_mcc = ((tiering.get("mcc_permutation") or {}).get("withheld") or [])
     admissible, mcb_path = _mcb_admissible(board)
     ranking = tiering["ranking"]
     n_sig = sum(1 for r in tiering["pairwise"] if r["significant"])
@@ -456,6 +580,10 @@ def finalise(board: Path, membership: dict[str, Any],
         + ". Gates: G1 " + ("PASS" if g1.get("passed") else "see provenance") + f", G2 {gates['G2_reproduction_failures']} failures, "
         f"G3 {gates['G3_frame_failures']} failures, G4 {gates['G4_cells']}/{gates['G4_members']}; G6 max |delta| "
         f"{max(abs(r['delta_board_minus_committed']) for r in gates['cells'] if r.get('delta_board_minus_committed') is not None):.4f}."
+        + (f" tile-MCC WITHHELD for {len(withheld_mcc)} cell(s) the tile-join "
+           f"invariant refused ({', '.join(w.get('label', '?') for w in withheld_mcc)}); "
+           f"they keep their F1 rank and are outside the MCC BH family."
+           if withheld_mcc else "")
     )
     ra = json.loads(RUN_ANALYSES.read_text(encoding="utf-8"))
     rows = ra["analyses"] if isinstance(ra, dict) else ra
@@ -491,7 +619,14 @@ def finalise(board: Path, membership: dict[str, Any],
         "frame_provenance": "inputs/vectors/bounds/384/era2_b_intersection_bounds.provenance.json",
         "membership": {"n": membership["n_members"] + n_opmax,
                        "rule": "card § 3 under the § 2 frame rule; see membership.json",
-                       "n_era2b": membership["n_members"], "n_opmax": n_opmax,
+                       "n_era2b": membership["n_members"] - n_k_ladder,
+                       "n_k_ladder": n_k_ladder,
+                       "k_ladder": (f"admitted by {K_LADDER_MEMBERSHIP} (PI ruling "
+                                    "2026-09-13, route (a)): already scored on the "
+                                    "board frame, so admitted with those evaluations "
+                                    "as-is and under their own condition ids"
+                                    if n_k_ladder else None),
+                       "n_opmax": n_opmax,
                        "opmax": "the archived Era-2 PV board's sweep-optimal cells (opmax/membership.json)" if n_opmax else None},
         "gates_opmax": {k: v for k, v in opmax_gates.items() if k != "cells"} if opmax_gates else None,
         "instruments": {"per_cell_scoring": "scripts/evaluate_detections.py (each member's committed recipe, bounds swapped)",
@@ -499,24 +634,41 @@ def finalise(board: Path, membership: dict[str, Any],
                         "mcb": mcb_path or "scripts/selection_aware_intervals.py --board (not found in board/mcb)"},
         "gates": {"G1": g1, "G2_G3_G4_G6": {k: v for k, v in gates.items() if k != "cells"}},
         "tiering": {"n_pairs": len(tiering["pairwise"]), "n_significant": n_sig, "n_tiers": len(tiers),
+                    "mcc_withheld": [{"ref": w.get("ref"), "label": w.get("label"),
+                                      "recorded_mcc": w.get("recorded_mcc"),
+                                      "reason": w.get("reason")} for w in withheld_mcc],
+                    "n_mcc_withheld": len(withheld_mcc),
                     "tie_set": tiers[0]["members"], "mcb_admissible_hsu": admissible,
                     "mcb_two_sided_band_n": (lambda d: len(d.get("mcb_not_ruled_out") or []))(
                         json.loads((REPO_ROOT / mcb_path).read_text(encoding="utf-8")) if mcb_path else {}),
                     "git_commit": tiering.get("git_commit"), "generated_at_utc": tiering.get("generated_at_utc")},
         "finalised_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
-    # Carry forward the fields no gate artefact holds: the PI's signature and
-    # the PI's G1 ruling. `finalise` rebuilds this file from the gates, so
-    # without this a re-finalise erases them — which on a signed board would
-    # quietly delete the record of the signature it is meant to preserve.
+    # Carry forward the fields no gate artefact holds: the PI's signature, the
+    # PI's signature HISTORY, and the PI's G1 ruling. `finalise` rebuilds this
+    # file from the gates, so without this a re-finalise erases them — which on
+    # a signed board would quietly delete the record of the signature it is
+    # meant to preserve. ``signature_history`` was added to the carry list on
+    # 2026-09-13: the K-ladder close-out found that a rebuild would have
+    # destroyed the array recording the original 2026-09-10 signature, because
+    # only ``signed_at``/``signed_by`` were carried.
     prior_path = board / "provenance.json"
     if prior_path.is_file():
         prior = json.loads(prior_path.read_text(encoding="utf-8"))
         carried: list[str] = []
-        for field in ("signed_at", "signed_by"):
+        for field in ("signed_at", "signed_by", "signature_history"):
             if field in prior and field not in provenance:
                 provenance[field] = prior[field]
                 carried.append(field)
+        # A RESOLVED re_sign_pending block is the record of a past
+        # re-signature. A fresh rebuild replaces it with a new PENDING block,
+        # so the resolved one is carried INSIDE the new block rather than
+        # dropped.
+        prior_re_sign = prior.get("re_sign_pending")
+        if isinstance(re_sign, dict) and isinstance(prior_re_sign, dict) \
+                and not str(prior_re_sign.get("status", "")).startswith("PENDING"):
+            re_sign["previous_resolved"] = prior_re_sign
+            carried.append("re_sign_pending (resolved, nested as previous_resolved)")
         prior_ruling = ((prior.get("gates") or {}).get("G1") or {}).get("pi_ruling")
         current_g1 = (provenance.get("gates") or {}).get("G1")
         if prior_ruling is not None and isinstance(current_g1, dict) \
@@ -539,7 +691,13 @@ def finalise(board: Path, membership: dict[str, Any],
              f"1,402.4 km², 435 curator reference mounds). Instrument: {provenance['instruments']['tiering']}; "
              f"Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).", "",
              f"{len(ranking)} cells; {n_sig}/{len(tiering['pairwise'])} pairs significant; {len(tiers)} tiers; "
-             f"tie set {len(tiers[0]['members'])}; MCB admissible {len(admissible) if admissible else 'n/a'}.", "",
+             f"tie set {len(tiers[0]['members'])}; MCB admissible {len(admissible) if admissible else 'n/a'}."
+             + (f" {n_k_ladder} cell(s) admitted by `k-ladder/membership.json` "
+                "with their board-frame evaluations as-is (PI ruling 2026-09-13)."
+                if n_k_ladder else "")
+             + (f" tile-MCC **withheld** for {len(withheld_mcc)} cell(s) the "
+                "tile-join invariant refused (listed below the table)."
+                if withheld_mcc else ""), "",
              "| rank | cell | tier | MCB | F1@20 (board frame) | committed F1@20 | Δ frame | tile-MCC |",
              "|---:|---|---:|:---:|---:|---:|---:|---:|"]
     for r in ranking:
@@ -548,10 +706,17 @@ def finalise(board: Path, membership: dict[str, Any],
         lines.append(f"| {r['rank']} | `{src}` | {r['tier']} | {'●' if r['ref'] in admissible else ''} | {r['eval_f1']:.4f} | "
                      f"{d.get('committed_f1_20', float('nan')):.4f} | {d.get('delta_board_minus_committed', 0.0):+.4f} | "
                      f"{r['mcc'] if r['mcc'] is not None else '—'} |")
+    if withheld_mcc:
+        lines += ["", "**tile-MCC withheld** (the tile-join invariant refused the cell's "
+                  "per-tile classification, so no MCC is published for it; the cell keeps "
+                  "its F1 rank and is excluded from the MCC BH family — PI ruling 2026-09-13):", ""]
+        lines += [f"- `{w.get('label')}` — {w.get('reason')}" for w in withheld_mcc]
     lines += ["", "Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 "
               "frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the "
               "Era-2-frame reproduction of the archived board's score, or — for the nine re-materialised on "
-              "2026-09-10 — of the materialisation registry's registered point). Full pairwise table: `tiering_20m.json`; "
+              "2026-09-10 — of the materialisation registry's registered point). For the K-ladder rows it is "
+              "+0.0000 by construction: their committed evaluation IS the board-frame evaluation, so G2 is an "
+              "identity rather than a reproduction. Full pairwise table: `tiering_20m.json`; "
               "gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: "
               "`cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.", ""]
     # Keep an existing changelog across rebuilds: the body is regenerated, the
@@ -593,7 +758,10 @@ def main(argv: list[str] | None = None) -> int:
     membership = json.loads(mpath.read_text(encoding="utf-8"))
     if args.command == "jobs":
         path = write_jobs(board, membership)
-        print(f"wrote {path.relative_to(REPO_ROOT)} ({2 * membership['n_members']} jobs)")
+        n_scored = sum(1 for m in membership["members"] if not m.get("k_ladder"))
+        print(f"wrote {path.relative_to(REPO_ROOT)} ({2 * n_scored} jobs for "
+              f"{n_scored} re-scored members; "
+              f"{membership['n_members'] - n_scored} K-ladder members need none)")
         return 0
     if args.command == "gates":
         report, ok = run_gates(board, membership)

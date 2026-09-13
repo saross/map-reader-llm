@@ -76,6 +76,14 @@
 # MCC needs one detection SET per cell, so a replicate-mean cell
 # (``detections_dir``) raises rather than being silently collapsed.
 #
+# Since 2026-09-13 (PI ruling), a cell the tile-join invariant REFUSES has its
+# MCC withheld instead of aborting the board: the ``ConfusionGateError`` is
+# caught per cell, the cell keeps its F1 rank with ``mcc: null``, it is left
+# out of the MCC BH family, and it is listed under
+# ``mcc_permutation.withheld`` with the refusal reason. Before this, one
+# refused cell killed the whole run — which is why the Era-2 board could not
+# admit the three Gemini 3.7 gold-standard text rungs at all.
+#
 # COMPUTE LOCATION
 # ----------------
 # A round-robin permutation sweep -- "computationally intensive" per the project
@@ -575,6 +583,30 @@ def check_confusion_gate(label: str, rebuilt: dict, recorded: dict | None,
             "passed": True}
 
 
+def mcc_family(cells: list[dict]) -> tuple[list[int], list[dict]]:
+    """Split a loaded board into the MCC-testable cells and the withheld ones.
+
+    A cell whose tile join the invariant refused carries no per-tile
+    classification arrays, so it cannot enter the MCC permutation family. It is
+    NOT dropped from the board: it keeps its F1 rank and is listed here so the
+    board can publish what is not known about it (PI ruling 2026-09-13).
+
+    Args:
+        cells: Loaded cells from :func:`load_cells`, each optionally carrying
+            ``tp_c`` (the per-tile classification survived) or
+            ``mcc_withheld`` (the invariant refused it).
+
+    Returns:
+        ``(indices, withheld)`` — positions in ``cells`` that can be MCC-tested,
+        and one record per withheld cell carrying its ``ref``, ``label``,
+        ``recorded_mcc`` and ``reason``.
+    """
+    indices = [i for i, c in enumerate(cells) if "tp_c" in c]
+    withheld = [{"ref": c["ref"], "label": c["label"], **c["mcc_withheld"]}
+                for c in cells if "mcc_withheld" in c]
+    return indices, withheld
+
+
 def load_cells(
     conditions_path: Path,
     analyses_path: Path,
@@ -698,24 +730,48 @@ def load_cells(
             }
         )
         if want_mcc:
-            gdf_det = cell_detections(cli, gdf_bounds)
-            tp_c, tn_c, fp_c, fn_c, join_diagnostics = (
-                cell_per_tile_classification(
-                    gdf_det, gdf_ref, gdf_bounds, tile_order
+            # A cell the tile-join invariant refuses has its MCC WITHHELD and
+            # is dropped from the MCC family — it does NOT abort the board.
+            # PI ruling 2026-09-13: a board must not be destroyed by one cell
+            # whose vocabulary the frame cannot join, and withholding is the
+            # honest record of what is not known (the alternative, publishing
+            # the committed pre-invariant number, is the defect the gate was
+            # written to catch). The F1 side is unaffected: it is computed
+            # from the buffered per-tile counts, not from the tile join.
+            try:
+                gdf_det = cell_detections(cli, gdf_bounds)
+                tp_c, tn_c, fp_c, fn_c, join_diagnostics = (
+                    cell_per_tile_classification(
+                        gdf_det, gdf_ref, gdf_bounds, tile_order
+                    )
                 )
-            )
-            rebuilt = {"tp": int(tp_c.sum()), "tn": int(tn_c.sum()),
-                       "fp": int(fp_c.sum()), "fn": int(fn_c.sum())}
-            mcc_rebuilt = compute_mcc_or_none(**rebuilt)
-            gate = check_confusion_gate(
-                cond["label"], rebuilt, read_tile_confusion(eval_path),
-                None if mcc_rebuilt is None else round(float(mcc_rebuilt), 6),
-                cells[-1]["mcc"],
-                geometry_check=join_diagnostics,
-            )
-            cells[-1].update({"tp_c": tp_c, "tn_c": tn_c, "fp_c": fp_c,
-                              "fn_c": fn_c, "mcc_gate": gate,
-                              "n_detections": int(len(gdf_det))})
+                rebuilt = {"tp": int(tp_c.sum()), "tn": int(tn_c.sum()),
+                           "fp": int(fp_c.sum()), "fn": int(fn_c.sum())}
+                mcc_rebuilt = compute_mcc_or_none(**rebuilt)
+                gate = check_confusion_gate(
+                    cond["label"], rebuilt, read_tile_confusion(eval_path),
+                    None if mcc_rebuilt is None else round(float(mcc_rebuilt), 6),
+                    cells[-1]["mcc"],
+                    geometry_check=join_diagnostics,
+                )
+            except ConfusionGateError as error:
+                cells[-1].update({
+                    "mcc_withheld": {
+                        "recorded_mcc": cells[-1]["mcc"],
+                        "reason": str(error),
+                        "ruling": ("PI ruling 2026-09-13: withhold and list, "
+                                   "never abort the board"),
+                    },
+                    "mcc_gate": {"passed": False, "withheld": True,
+                                 "reason": str(error)},
+                })
+                cells[-1]["mcc"] = None
+                print(f"    MCC WITHHELD for {cond['label']}: {error}",
+                      flush=True)
+            else:
+                cells[-1].update({"tp_c": tp_c, "tn_c": tn_c, "fp_c": fp_c,
+                                  "fn_c": fn_c, "mcc_gate": gate,
+                                  "n_detections": int(len(gdf_det))})
         print(
             f"  {kind:12s} {cond['label']:34s} passes={n_passes:2d} "
             f"eval-F1={cells[-1]['eval_f1']:.4f} "
@@ -794,10 +850,21 @@ def main() -> int:
     # identical per-tile swap mask the F1 test saw, so a ΔF1 and a ΔMCC on one
     # pair are two statistics of one permutation, not two separate experiments.
     pairwise_mcc: list[dict] = []
+    withheld_mcc: list[dict] = []
     if args.permute_mcc:
-        print(f"Running {len(pairs)} pairwise MCC permutation tests "
+        # Cells whose tile join the invariant refused carry no per-tile
+        # classification arrays, so they cannot enter the MCC family. The BH
+        # family is therefore the pairs among the cells that DO have one, and
+        # the withheld cells are listed rather than silently dropped.
+        have_mcc, withheld_mcc = mcc_family(cells)
+        mcc_pairs = list(combinations(have_mcc, 2))
+        if withheld_mcc:
+            print(f"MCC withheld for {len(withheld_mcc)} of {len(cells)} cells; "
+                  f"the MCC family is {len(mcc_pairs)} pairs of "
+                  f"{len(pairs)}", flush=True)
+        print(f"Running {len(mcc_pairs)} pairwise MCC permutation tests "
               f"({args.n_permutations} perms, seed {args.seed}) ...", flush=True)
-        for a, b in pairs:
+        for a, b in mcc_pairs:
             ca, cb = cells[a], cells[b]
             res = permutation_test_mcc_arrays(
                 ca["tp_c"], ca["tn_c"], ca["fp_c"], ca["fn_c"],
@@ -874,8 +941,12 @@ def main() -> int:
             "swap_mask": "identical to the F1 test's (same seed, same tile "
                          "order, same rng.random(n_tiles) < 0.5 stream)",
             "fdr_q": FDR_Q,
+            "n_cells_with_mcc": sum(1 for c in cells if "tp_c" in c),
+            "n_cells_withheld": len(withheld_mcc),
+            "withheld": withheld_mcc,
+            "n_pairs": len(pairwise_mcc),
             "n_significant": sum(1 for r in pairwise_mcc if r["significant"]),
-            "gates": {c["ref"]: c["mcc_gate"] for c in cells},
+            "gates": {c["ref"]: c.get("mcc_gate") for c in cells},
             "pairwise": pairwise_mcc,
         }
     json_path = args.output_dir / f"tiering_{args.buffer}m.json"
@@ -933,6 +1004,17 @@ def _write_markdown(md_path: Path, result: dict, ordered: list[dict],
             f"board; swap masks identical to the F1 test's",
             f"- **Pairs**: {len(mcc_block['pairwise'])} "
             f"({mcc_block['n_significant']} significant)",
+        ]
+        if mcc_block.get("withheld"):
+            lines += [
+                f"- **MCC WITHHELD** for {len(mcc_block['withheld'])} cell(s) "
+                f"the tile-join invariant refused; they are ranked on F1 and "
+                f"excluded from this BH family:",
+                "",
+            ]
+            lines += [f"  - `{w['label']}` — {w['reason']}"
+                      for w in mcc_block["withheld"]]
+        lines += [
             "",
             "| a | b | MCC a | MCC b | ΔMCC | raw p | BH p | significant |",
             "|---|---|---:|---:|---:|---:|---:|:--:|",

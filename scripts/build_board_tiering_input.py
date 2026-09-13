@@ -70,7 +70,11 @@ def membership_condition_ids(board: Path) -> tuple[list[str], dict[str, int]]:
     Returns:
         ``(ids, counts)`` — every member's condition id (the main builder's
         members as their ``-era2b`` rows, the opmax builder's as its own
-        ``condition_id``), and a count per source.
+        ``condition_id``), and a count per source. A main-builder member
+        flagged ``k_ladder`` also joins as its OWN condition id: the PI ruling
+        of 2026-09-13 admits that cohort with its committed board-frame
+        evaluations as-is, so no ``-era2b`` row is minted for it and appending
+        the suffix would name a row that does not exist.
 
     Raises:
         FileNotFoundError: If either membership file is missing; a partial
@@ -85,9 +89,13 @@ def membership_condition_ids(board: Path) -> tuple[list[str], dict[str, int]]:
                 "tiering input, or the board would be tiered short")
     main = json.loads(main_path.read_text(encoding="utf-8"))
     opmax = json.loads(opmax_path.read_text(encoding="utf-8"))
-    era2b = [m["condition_id"] + ERA2B_SUFFIX for m in main["members"]]
+    era2b = [m["condition_id"] + ERA2B_SUFFIX for m in main["members"]
+             if not m.get("k_ladder")]
+    k_ladder = [m["condition_id"] for m in main["members"] if m.get("k_ladder")]
     opmax_ids = [m["condition_id"] for m in opmax["members"] if m.get("on_board")]
-    return era2b + opmax_ids, {"era2b": len(era2b), "opmax": len(opmax_ids)}
+    return (era2b + k_ladder + opmax_ids,
+            {"era2b": len(era2b), "k_ladder": len(k_ladder),
+             "opmax": len(opmax_ids)})
 
 
 def build(board: Path, analysis_id: str) -> dict[str, Any]:
@@ -106,7 +114,9 @@ def build(board: Path, analysis_id: str) -> dict[str, Any]:
         f"scripts/build_board_tiering_input.py. The register's own row holds "
         f"{signed_n} conditions_compared and is PI-SIGNED; this copy substitutes "
         f"the board's current membership ({len(ids)} cells: {counts['era2b']} "
-        f"'-era2b' rows from membership.json and {counts['opmax']} '-opmax' rows "
+        f"'-era2b' rows from membership.json, {counts['k_ladder']} K-ladder rows "
+        f"admitted under their own ids by k-ladder/membership.json (PI ruling "
+        f"2026-09-13) and {counts['opmax']} '-opmax' rows "
         f"from opmax/membership.json) so scripts/era1_leaderboard_tiering.py can "
         f"tier the board PI ruling R3 enlarged, without amending a signed row. "
         f"Never copy this file over results/run-analyses.json.")
