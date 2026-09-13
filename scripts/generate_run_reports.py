@@ -64,7 +64,14 @@ REPO_ROOT: Path = Path(__file__).resolve().parents[1]
 
 #: Semantic version of this generator, written into every report. Bump on any
 #: change to the rendered content.
-GENERATOR_VERSION: str = "1.0.0"
+#:
+#: 1.1.0 (2026-09-13): § 4 gained the per-run token-load audit block
+#: (:data:`TOKEN_AUDIT`). Added because 1.0.0 printed the manifest's token totals as
+#: plain fact, and the audit had already established that the ``usage_stats`` block
+#: those totals come from is 2× or 3× double-counted on three of the 55-map runs — a
+#: figure wrong in a known direction is exactly what this generator's
+#: anti-confabulation contract forbids.
+GENERATOR_VERSION: str = "1.1.0"
 
 #: The committed inputs every report is projected from. Listed in each report's
 #: § 10 so a reader can re-derive it, and named here so the set is one thing.
@@ -87,6 +94,60 @@ AUDIT_REPORTS: tuple[str, ...] = (
     "reports/k-ladder-phase2-deltas-2026-09-12.md",
     "reports/billing-reconciliation-2026-09-11.md",
 )
+
+#: Per-run verdicts from ``reports/token-load-audit-2026-06-12.md``, transcribed
+#: verbatim with the section each figure comes from.
+#:
+#: This table is load-bearing for honesty, not decoration. The passes manifest
+#: takes a pass's ``tokens`` from the meta's ``usage_stats`` block
+#: (``generate_post_run_report.py:567,671`` → ``_tokens_from_usage``), and the audit
+#: established by per-item recomputation that ``usage_stats`` is DOUBLE-COUNTED on
+#: three of these runs — a 2026-05-02/03 recovery merge summed the original run's
+#: usage into the post-recovery cumulative total, and on the image run the manifest
+#: generator then added the pre-recovery backups on top again. So for those runs the
+#: token figures § 4 reports from the manifest are themselves inflated by the stated
+#: factor, and a report that printed them without saying so would publish numbers
+#: wrong by 2× or 3× in a known direction.
+#:
+#: Fields: ``(audit section, manifest-vs-clean, live-metas-vs-clean,
+#: trustworthy source, clean per-pass figures)``. Deliberately NO derived run
+#: total: the audit's pass count and the manifest's pass count need not agree (the
+#: text-high run has 6 pass rows against the audit's 5), so multiplying here would
+#: manufacture a figure no file carries.
+TOKEN_AUDIT: dict[str, tuple[str, str, str, str, str]] = {
+    "55maps-text-min-generalisation": (
+        "§ 3.1", "2.0× inflated", "clean (factor 1.000 on all axes)",
+        "live `*.meta.json`",
+        "5 passes; clean flex cost US$4.67/pass (mean US$4.6723); per pass input "
+        "12,828,582 (exactly 1,502/tile), output mean 976,791 (range "
+        "972,669–980,412), thinking 0"),
+    "55maps-text-high-generalisation": (
+        "§ 3.2", "2.0× inflated", "2.0× inflated (factors 2.003–2.016 across axes)",
+        "`per_item_metadata`",
+        "5 passes; clean flex cost US$40.19/pass (range US$39.92–40.45), of which "
+        "thinking is ~US$34.51; clean per pass input 12,828,582, output mean "
+        "1,647,744, thinking mean 23,005,025 (2,693/tile)"),
+    "55maps-text-high-t0-3-generalisation": (
+        "§ 3.3", "clean (1.0×)", "clean (factors 1.0001–1.0012; no recovery merge)",
+        "either",
+        "5 passes; clean flex cost US$50.82/pass (range US$49.94–51.64); per pass "
+        "input 12,828,582, output mean 1,461,601, thinking mean 30,283,306 "
+        "(3,546/tile — T=0.3 thinks ~32 % more than T=0.7)"),
+    "55maps-image-generalisation": (
+        "§ 3.4", "3.0× inflated", "2.0× inflated (same recovery-merge mechanism)",
+        "`per_item_metadata`",
+        "5 passes; clean flex cost US$39.07/pass (range US$38.78–39.27); clean per "
+        "pass input 133,743,514 of which cached 124,211,741 (the explicit PV-library "
+        "context cache, 14,549 tokens, TTL 1 h), non-cached input 9,531,773, output "
+        "mean 1,283,956, thinking mean 19,033,673 (2,228/tile); cache storage "
+        "excluded as negligible (< US$0.15 across the run)"),
+    "55maps-text-min-n10-uplift": (
+        "§ 3.5", "not assessed", "clean (factors ≤ 1.0001)", "either",
+        "proposer runs 6–10: clean flex cost US$4.65/pass (mean US$4.6531); per pass "
+        "input 12,828,582 (1,502/tile), output mean 963,967, thinking 0. Verifier "
+        "(`verified-3of10/run.meta.json`): 16,482 calls, input 29,535,744 (exactly "
+        "1,792/call), output 2,588,179, flex US$11.27 (US$0.000684/call)"),
+}
 
 #: Runs whose ``post_run_report.md`` is HAND-AUTHORED and must not be replaced by
 #: a projection. Mapped to the reason, which the summary prints.
@@ -442,8 +503,27 @@ def _section_cost(run_id: str, corpus: Corpus) -> list[str]:
              f"{sum(walls) / 3600:,.2f} h over {len(walls)} pass(es)"
              if walls else NOT_SUPPLIED),
         ])
+        audit = TOKEN_AUDIT.get(run_id)
+        if audit:
+            section, manifest_v, metas_v, source, clean = audit
+            out += [
+                "",
+                f"> **Audited: the token figures above are inflated by a measured "
+                f"factor.** `reports/token-load-audit-2026-06-12.md` {section} "
+                f"recomputed this run's load from `per_item_metadata` and found its "
+                f"`usage_stats` block — which is exactly where the manifest takes a "
+                f"pass's `tokens` from (`_tokens_from_usage`) — **{metas_v}**; its "
+                f"`cost_manifest.json` is **{manifest_v}**. The trustworthy source is "
+                f"{source}. Audited clean figures, quoted from {section}: {clean}. No "
+                f"run total is derived here: the audit's pass count and this "
+                f"manifest's need not agree, so multiplying would manufacture a "
+                f"figure no file carries.",
+            ]
+        # A bare blank line between two blockquotes splits them and trips MD028; a
+        # ">" line keeps the audit verdict and the pricing caveat as two paragraphs
+        # of ONE quote, which is also how they should read.
         out += [
-            "",
+            ">" if audit else "",
             "> **The recorded cost is NOT this run's cost.** Each `cost_usd` above is "
             "the pass meta's own `cost_estimate.total_cost_usd`, lifted verbatim by "
             "`scripts/generate_post_run_report.py`. The token-load audit of "

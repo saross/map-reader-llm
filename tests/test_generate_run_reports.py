@@ -118,6 +118,32 @@ def test_cost_is_labelled_recorded_not_audited(corpus):
 
 
 @pytest.mark.tier1
+def test_double_counted_token_totals_are_disclosed(corpus):
+    """The manifest's token totals are 2×/3× inflated on three of the 55-map runs.
+
+    A pass's ``tokens`` come from the meta's ``usage_stats``
+    (``generate_post_run_report.py`` → ``_tokens_from_usage``), and the token-load
+    audit recomputed from ``per_item_metadata`` that the 2026-05 recovery merge
+    doubled that block on the text-high and image runs. Printing those totals as
+    plain fact would publish figures wrong by a known factor, so every run in
+    TOKEN_AUDIT must carry its verdict, the trustworthy source and the audited
+    clean per-pass figures.
+    """
+    text = grr.render_report("55maps-text-high-generalisation", corpus, "abc1234")
+    assert "Audited: the token figures above are inflated by a measured factor." in text
+    assert "2.0× inflated (factors 2.003–2.016 across axes)" in text
+    assert "US$40.19/pass" in text
+    assert "The trustworthy source is `per_item_metadata`" in text
+    # and no derived run total is manufactured from a per-pass figure
+    assert "No run total is derived here" in text
+    # a clean run states that it is clean rather than staying silent
+    clean = grr.render_report("55maps-text-high-t0-3-generalisation", corpus, "abc1234")
+    assert "clean (factors 1.0001–1.0012; no recovery merge)" in clean
+    # a run with no audit entry gets no audit block at all
+    assert "Audited: the token figures" not in grr.render_report("h13", corpus, "abc")
+
+
+@pytest.mark.tier1
 def test_audit_citation_only_where_the_report_names_the_run(corpus):
     """A run with no audit mention says so; a run with one lists it.
 

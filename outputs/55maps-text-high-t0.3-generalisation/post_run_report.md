@@ -1,7 +1,7 @@
-<!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.0.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
+<!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — 55maps-text-high-t0-3-generalisation
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.0.0 at source commit `e88fd5bfa`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `c4edf1328`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/55maps-text-high-t0.3-generalisation` · **Registry status**: active · **Purpose**: 55-map generalisation: text HIGH, T=0.3
 
@@ -70,6 +70,8 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 | Passes with no `cost_usd` | 0 |
 | Summed wall clock | 8.06 h over 6 pass(es) |
 
+> **Audited: the token figures above are inflated by a measured factor.** `reports/token-load-audit-2026-06-12.md` § 3.3 recomputed this run's load from `per_item_metadata` and found its `usage_stats` block — which is exactly where the manifest takes a pass's `tokens` from (`_tokens_from_usage`) — **clean (factors 1.0001–1.0012; no recovery merge)**; its `cost_manifest.json` is **clean (1.0×)**. The trustworthy source is either. Audited clean figures, quoted from § 3.3: 5 passes; clean flex cost US$50.82/pass (range US$49.94–51.64); per pass input 12,828,582, output mean 1,461,601, thinking mean 30,283,306 (3,546/tile — T=0.3 thinks ~32 % more than T=0.7). No run total is derived here: the audit's pass count and this manifest's need not agree, so multiplying would manufacture a figure no file carries.
+>
 > **The recorded cost is NOT this run's cost.** Each `cost_usd` above is the pass meta's own `cost_estimate.total_cost_usd`, lifted verbatim by `scripts/generate_post_run_report.py`. The token-load audit of 2026-06-12 established that those self-reported estimates price at STANDARD rates although the audited runs executed at `--service-tier flex` (half price) and omit thinking tokens although Gemini bills thinking at the output rate (`reports/token-load-audit-2026-06-12.md` § 1, § 2). The sum is reproduced here as the recorded figure and as an input to a reconciliation, not as a total to cite.
 
 Audit and reconciliation reports whose text names this run or its directory — consult these for audited figures; a mention is a pointer, not a claim that the report audits this run in full:
@@ -200,8 +202,8 @@ This report is a projection. Every figure above is read from one of the committe
 
 | Field | Value |
 |---|---|
-| Generator | `scripts/generate_run_reports.py` v1.0.0 |
-| Source commit | `e88fd5bfa` |
+| Generator | `scripts/generate_run_reports.py` v1.1.0 |
+| Source commit | `c4edf1328` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-08-03T02:32:37Z` |
 

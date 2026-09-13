@@ -1,8 +1,9 @@
 # Documentation foundation checklist — the preregistration → outcome chain
 
-> **Last revised**: 2026-09-13 (original publication, Session 153; the PI
-> asked for the chain's remaining documentation to be externalised as a
-> checklist to work through before the paper's outline pass). See
+> **Last revised**: 2026-09-13 (Batch 1 items 1 and 2 closed; prior
+> 2026-09-13: original publication, Session 153, the PI asked for the
+> chain's remaining documentation to be externalised as a checklist to
+> work through before the paper's outline pass). See
 > [§ Changelog](#changelog).
 
 **Purpose**: make sure every primary and intermediate document on the
@@ -17,8 +18,8 @@ agent work; Fable only for the PI-facing orchestration turns.
 | Link | Artefact | State | Gap |
 |---|---|---|---|
 | Preregistration → hypotheses | `results/hypothesis-outcome-table/` (generated, drift-guarded) | complete: 15 hypotheses, every row with analyses, status, errata | none (paper sentence on H6 not-executed rests on E40/E41/E74) |
-| Experiments → runs and conditions | `results/runs-manifest.json`, `results/conditions-manifest.json`, `scripts/verify_run_conditions.py` | 41 runs, 593 conditions all with metrics; verifier 22 pass / 19 partial / 0 fail | the 19 partials are WARNs, mostly cross-run pools lacking a `source_run` note (§ 2 item 2) |
-| Runs → post-run reports | `outputs/**/post_run_report.md` | 2 of 36 run directories | § 2 item 1 |
+| Experiments → runs and conditions | `results/runs-manifest.json`, `results/conditions-manifest.json`, `scripts/verify_run_conditions.py` | 41 runs, 593 conditions all with metrics; verifier ~~22 pass / 19 partial~~ → **38 pass / 3 partial / 0 fail** (2026-09-13, `f4fd90c71` + `e88fd5bfa`) | closed to the annotation limit (§ 2 item 2); the 3 remaining partials are by-design disclosures, and reaching 41 needs a PI verdict-model call |
+| Runs → post-run reports | `outputs/**/post_run_report.md` | ~~2 of 36 run directories~~ → **41 of 41** (2026-09-13, `c4edf1328`): 39 generated projections + 2 hand-authored | closed (§ 2 item 1) |
 | Results → analyses → signatures | `results/run-analyses.json`; findings documents | 67 rows, 66 signed, 1 unsigned by design; every findings doc bannered | boards pending one rebuild each (§ 2 items 4–5); the image run's row (§ 2 item 6) |
 | Deviations → errata | `docs/methodology/preregistration/protocol-errata.md` (E1–E85) | complete register | Methods amendments section currency to E85 (§ 2 item 7) |
 | Working notes | `docs/notes/working-notes.md` (Obs 1–476) | current | four or five Obs from 2026-09-12/13 (§ 2 item 3) |
@@ -29,17 +30,47 @@ agent work; Fable only for the PI-facing orchestration turns.
 
 **Batch 1 — $0, Opus agents, can run now**
 
-- [ ] **1. Post-run reports for every run directory** (34 missing of 36):
-  generated from the manifests, metas and intent files with the
-  revision-policy banner; bulk back-fill requested by the PI 2026-09-13
-  ("can the post-run reports be done with Opus agents?" — yes; it
-  supersedes "back-fill on touch" for this item only).
-  Owner: Opus agent. Anchor: `docs/methodology/output-directory-standard.md`
-  § "Documents in Revision Policy Scope".
-- [ ] **2. Resolve the 19 partial runs**: add `source_run` notes for
-  cross-run proposer pools and clear every other WARN class the verifier
-  reports (`scripts/verify_run_conditions.py --run <id>`), until 41 pass;
-  no metric changes. Owner: Opus agent.
+- [x] **1. Post-run reports for every run directory** — done 2026-09-13,
+  commit `c4edf1328`. The gap was **39 of 41**, not 34 of 36: the registry
+  holds 41 runs at 41 distinct directory paths, all present and tracked,
+  and 2 carried a report. Taken via the GENERATED-PROJECTION route the
+  2026-09-11 ruling opened — 39 reports emitted by the new
+  `scripts/generate_run_reports.py` with a GENERATED banner, a
+  source-commit stamp and a `--check` drift guard run by a tier-1 test,
+  rather than 39 hand changelogs that would each go stale at the next
+  manifest rebuild. The 2 hand-authored narrative reports were NOT
+  overwritten (their Dawid-Skene corrections and paired comparisons are
+  not re-derivable from the manifests) and took the banner + Changelog
+  instead — which corrected the standard's "2 compliant" cell, since
+  neither had carried either. Deltas:
+  `reports/documentation-batch1-deltas-2026-09-13.md` § 2.
+  Anchor: `docs/methodology/output-directory-standard.md`
+  § "Documents in Revision Policy Scope" (scope table and changelog
+  updated in the same commit).
+- [x] **2. Resolve the 19 partial runs** — done 2026-09-13, commits
+  `f4fd90c71` (verifier) and `e88fd5bfa` (annotations). Verifier
+  **22 pass / 19 partial → 38 pass / 3 partial / 0 fail**; 221 open WARNs
+  → 12. Cleared: 115 `pool-unresolved` by `source_run` annotation across
+  seven runs (each with its filesystem or authoring-script anchor), 13
+  `unclaimed-eval` by `_ignored_evals` waivers with reasons, and 81
+  instrument false positives by two verifier corrections — 79
+  `geojson-missing` that were directory-valued detections (aggregated
+  multi-pass cells, all present) and 2 `pool-dir-not-found` that were
+  materialised pool files. No metric, evaluation, detection or threshold
+  changed; every runs/conditions/passes manifest row is identical modulo
+  extraction timestamps.
+  **Target was 41 pass; 38 is the honest maximum by annotation.** The
+  remaining 3 runs hold 12 WARNs that are by-design disclosures the
+  project has already settled — `n-passes-over` on
+  `55maps-text-min-n10-uplift` (the mixed-provenance pool's "honest
+  by-design signal", S106) and `pinned-vintage` on `e47-propose-brief`
+  and `n1-outstanding-384` (ruling 3a, raised only when the pin CHECKS
+  OUT). Clearing either would delete a disclosure. **Open for the PI**: a
+  verdict-model change — a third `disclosures` list beside
+  `discrepancies`, with PASS defined over `discrepancies` alone — would
+  reach 41 pass without losing the disclosures, but it changes what a
+  signature attests, so it was flagged rather than done
+  (`reports/documentation-batch1-deltas-2026-09-13.md` § 3.4).
 - [ ] **3. Obs for the 2026-09-12/13 findings**: the tile-join class (a
   metric keyed by a name beside one keyed by geometry; overlapping frames);
   the recovery-fragment class (a count can hold while the set changes; a
@@ -90,6 +121,24 @@ after that.
 - Compute on sapphire; at most three live worktrees on the local disk.
 
 ## Changelog
+
+### 2026-09-13 — Batch 1 items 1 and 2 closed (Session 153)
+
+| Claim | Before | After |
+|---|---|---|
+| Run directories with a post-run report | 2 of 36 (card's figure) | 41 of 41 — the registry holds 41 runs at 41 distinct paths, so the gap was 39 |
+| Verifier verdicts | 22 pass / 19 partial / 0 fail | 38 pass / 3 partial / 0 fail |
+| Open verifier WARNs | 221 | 12, all by-design disclosures |
+
+**What did NOT change**: no metric, evaluation, detection, threshold or
+signature; 41 runs and 593 conditions before and after. Deltas with anchors:
+`reports/documentation-batch1-deltas-2026-09-13.md`.
+
+**Raised for the PI** (not actioned): reaching 41 pass needs a verifier
+verdict-model change — a `disclosures` list beside `discrepancies`, with PASS
+defined over `discrepancies` alone — because the remaining 12 WARNs are
+satisfied checks the model has nowhere to put. That changes what a signature
+attests, so it is a PI call, not an agent's.
 
 ### 2026-09-13 — Original publication (Session 153)
 
