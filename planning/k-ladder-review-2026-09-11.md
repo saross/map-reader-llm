@@ -1,6 +1,14 @@
 # K-ladder review: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-12 (latest — the CLOSEOUT job executed: tier E at
+> **Last revised**: 2026-09-13 (latest — the **ADMISSION job** executed: the PI
+> ruled the close-out's morning list and all four items landed at zero API cost:
+> the 46 Phase 2 rungs and the 4 tier E rungs admitted to the Era-2 board by (a)
+> (103 → 153 cells admitted, 150 tiered; Tier 1 unchanged), the signed
+> `uplift-supplement-flatten` rename confirmed, the stride-B K = 5 rung under the
+> 3.7 verifier finished and registered without re-tiering the 55-map board, and
+> the verifier-stage tile-MCC reversal stated as a claim in `findings.md` § 8.6;
+> per-item outcome in [§ 9](#9-the-admission-job-what-landed-2026-09-13). Before
+> that — the CLOSEOUT job executed: tier E at
 > US$4.9595 against a US$5.02 approval, the tension analyses answered, the
 > analysis row authored UNSIGNED, two items stopped; per-item outcome in
 > [§ 8](#8-the-closeout-what-landed-2026-09-12). Before that — **Phase 2 EXECUTED at
@@ -177,7 +185,7 @@ scoring, permutation, bootstrap, clustering and tiering step ran on sapphire.
 | 1 | **landed** — 187 (run, pool, verifier, frame, reference) groups; 24 with ≥ 2 rungs; **8 ladders with ≥ 3 of {1, 3, 5, 10}, all already committed**; 30 gaps need a verifier pass and **none is fillable at US$0 exactly** | `results/k-ladder-2026-09-12/inventory.md` + `.json` + `inventory-tables.md` + `subpool-coverage-probe.json` |
 | 2 | **landed** — all 9 distinct first-N rungs materialised and gated; the worklist's 27 `blocked` rows are `ready` on basis `first-n-recluster`; 170 rows, **0 blocked** | `scripts/materialise_first_n_ladder_twin.py`, `results/uplift-supplement/verifier-pairing/first-n/`, regenerated worklist and uplift CSVs |
 | 3 | **landed** — the September pair registered as `pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax`; the April cell untouched | `results/run-conditions.json`, `docs/methodology/notation-key.md` § 7.2 |
-| 4 | **landed** — K = 1 admitted; board 79 → **103** cells; all gates pass; re-tiered and MCB recomputed; `re_sign_pending` recorded | the board directory; `archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-79cell-pre-k1/` |
+| 4 | **landed** — K = 1 admitted; board 79 → **103** cells; all gates pass; re-tiered and MCB recomputed; `re_sign_pending` recorded. **Superseded 2026-09-13** by the admission job (§ 9): the board is now **153 cells admitted, 150 tiered** | the board directory; `archive/superseded-leaderboards/gs-era2-verified-board-2026-09-10-79cell-pre-k1/` |
 | 5 | **partial** — see the scope note below | `results/k-ladder-2026-09-12/findings.md` |
 | 6 | **landed** — 28 rungs, 35,844 candidates, **US$24.84** at the audited Gemini 3 verifier rate; R4 re-verification exposure **nil** | `reports/k-ladder-phase2-costing-2026-09-12.md` |
 | 7 | **landed** | `reports/k-ladder-phase1-deltas-2026-09-12.md` |
@@ -306,9 +314,77 @@ grid K-ladder as "consensus-only until the 2026-08-24 verifier stage; only
 K = 10 verified". Tier E verified its K = 1, 3 and 5 rungs, so that family is a
 four-rung verified ladder.
 
+## 9. The admission job: what landed (2026-09-13)
+
+The PI ruled on the close-out's morning list
+(`reports/k-ladder-closeout-deltas-2026-09-12.md` § 10) on the morning of
+2026-09-13. Four items; **all four landed**. Zero API calls; every scoring,
+sweep, permutation and tiering step ran on sapphire in an isolated worktree.
+Closing report: `reports/k-ladder-admission-deltas-2026-09-13.md`.
+
+| # | Ruling | Outcome | Artefact |
+|---:|---|---|---|
+| 1 (question 1) | Board admission of the 46 Phase 2 rungs and tier E — **route (a)** | **landed** — a third membership source the builder defers to by condition id before its two refusal rules; board 103 → **153 cells admitted, 150 tiered, 3 withheld**; Tier 1 and its five members **unchanged** | `…/gs-era2-verified-board-2026-09-10/k-ladder/membership.json`, `scripts/build_gs_era2_board.py`, `scripts/author_k_ladder_board_membership.py` |
+| 2 (question 2) | The five renamed ids in the signed `uplift-supplement-flatten` row — **confirmed** | **landed** — `_conditions_note` records the confirmation; 441 ids, all `…of5`, signature fields untouched; the FK guard and its tier-1 test pass | `results/run-analyses.json` |
+| 3 (question 5) | Stride B K = 5 under the 3.7 verifier — **finish and register, do NOT re-tier** | **landed** — swept, scored and registered; § 3.3's K = 5 row filled (F1@50 **0.8758**, tile-MCC **0.7326**); the 55-map board untouched | `results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-oracle/`, `findings.md` § 3.3 |
+| 4 (question 4 of the list's numbering, item 4 of the ruling) | The verifier-stage reversal of tile-MCC's response to K — **add as a claim** | **landed** — `findings.md` **§ 8.6**, four numbers re-read at source, mechanism in two sentences, added to the UNSIGNED analysis row's outcome | `results/k-ladder-2026-09-12/findings.md` § 8.6 |
+
+**Two things the rulings did not anticipate, both found by measuring.**
+
+- **The tile-join invariant refuses the F1 arm, not only the MCC arm.** § 8 of
+  the close-out expected an uncaught `ConfusionGateError` on the MCC side. The
+  three Gemini 3.7 gold-standard text rungs in fact abort in
+  `compute_per_tile_tp_fp_fn`, with a plain `ValueError` stamped
+  `tile_join_detection_shortfall`, because `assign_source_tiles` preserves a
+  non-null `source_tile` column instead of re-joining it to the frame. Their
+  whole per-tile table is therefore unavailable on this frame, so they are
+  **admitted and withheld** — ranked nowhere, in no BH family, in no admissible
+  set, with only their (sound) whole-frame F1 quoted. Measured across all 50
+  admitted cells: exactly these three refuse. The four tier E cells carry **no**
+  `source_tile` and so are joined geometrically from the frame; the 43
+  `pv-diag-384` cells already speak the frame's vocabulary. This is close-out
+  question 4 — the corpus-wide tile-join decision — now blocking three cells'
+  whole statistics rather than only their MCC.
+- **Regenerating the 55-map r2 sweep dropped two committed board cells from the
+  manifest.** `final_board_sweeps.py` writes `cells_manifest.json` from stage 1
+  alone, and the emergent post-hoc `A-N3-carried` / `B-N3-carried` cells come
+  from a later step (`final_board_n3_carried.py`, PI direction 2026-08-28), so
+  any regeneration silently shrank the board by two cells. The generator now
+  carries post-hoc cells forward. Nothing published was affected — the defect
+  was caught in the diff before anything was committed.
+
+**What the admission job did NOT do**, because no ruling covered it: it did not
+re-tier the 55-map final board (question 5's ruling), did not re-score any
+admitted cell, did not touch a signature field anywhere, did not adopt a
+geometric tile join, and did not add the MCC permutation family to the Era-2
+board — the board's committed instrument does not include `--permute-mcc`, and
+adding a statistic family to a signed board is a change the PI did not rule.
+
 ## Changelog
 
-### 2026-09-12 (latest) — the closeout job executed; tier E at US$4.9595 (§ 8)
+### 2026-09-13 (latest) — the admission job executed at US$0 (§ 9)
+
+**Trigger**: the PI's rulings of 2026-09-13 (morning) on the close-out's morning
+list (`reports/k-ladder-closeout-deltas-2026-09-12.md` § 10, questions 1, 2, 5
+and 8 — questions 3, 4, 6 and 7 stay open).
+
+**New § 9** records all four items. **§ 6's step-4 row** is annotated as
+superseded, because the board it reports at 103 cells is now 153 admitted.
+
+| claim | before | after |
+|---|---:|---:|
+| Era-2 board cells admitted | 103 | **153** |
+| — of which tiered | 103 | **150** (3 withheld) |
+| Tier 1 (greedy clique) | the five 3.7/3.8 cells | **the same five, same order, same F1** |
+| findings.md § 3.3's rungs | K = 1, 3, 10 | **K = 1, 3, 5, 10** |
+| findings.md § 8 sections | 8.1–8.5 | **8.1–8.6** |
+
+**What did NOT change**: §§ 1–5, 7 and 8 in their entirety; every spend figure
+(this job spent **US$0**); every ruling R1–R5; the 55-map final board's tiering
+and its 595-pair BH family; and every signature field in the register and in the
+board's provenance.
+
+### 2026-09-12 — the closeout job executed; tier E at US$4.9595 (§ 8)
 
 Eight items: five landed, one partial, two stopped. Tier E was the only API
 spend, approved at US$5.02 and executed for US$4.9595 with 0 failures. The
