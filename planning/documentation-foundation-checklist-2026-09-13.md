@@ -317,7 +317,10 @@ agent work; Fable only for the PI-facing orchestration turns.
   11a landed). Rebuild it (`scripts/build_generated_file_registry.py
   --out reports/verification/generated-file-registry.json`) as the last
   step of every handoff and after any merge that adds documents; consider
-  a pre-commit hook. Owner: the session at handoff.
+  a pre-commit hook. Owner: the session at handoff. **Rebuild from the
+  MAIN checkout only** — a rebuild from an agent worktree dropped 93
+  valid `outputs/` entries (untracked outputs are absent there; found
+  and reverted 2026-09-13, E86/E87 job).
   **Amendment needed (found 2026-09-13, item 13):** this instruction is
   **unsafe from a git worktree**. The registry enumerates untracked
   `outputs/` working files as well as tracked ones, so a rebuild in a
