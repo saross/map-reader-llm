@@ -1,5 +1,7 @@
 # Post-Run Report — 55-Map Text MIN Generalisation
 
+> **Last revised**: 2026-09-13 (revision-policy banner and Changelog attached; body unchanged). See [§ Changelog](#changelog) for revision history.
+
 **Run name**: `55maps-text-min-generalisation`
 **Completed**: 2026-04-18 12:21 UTC
 **Host**: sapphire (192.168.1.150)
@@ -57,8 +59,8 @@ prior 55-map corrections (text HIGH: 0.790 → 0.814; image HIGH:
 student ground-truth incompleteness rate, independent of pipeline
 configuration.
 
-The shared item set breaks down as 3,276 matched + 1,494 student-only
-+ 585 VLM-only. D-S assigns an aggregate posterior P(true=1) = 0.295
+The shared item set breaks down as 3,276 matched + 1,494
+student-only + 585 VLM-only. D-S assigns an aggregate posterior P(true=1) = 0.295
 to the VLM-only set, implying ~172 of those 585 are real mounds that
 student annotators missed. EM converged in 14 iterations.
 
@@ -392,3 +394,30 @@ one that ran. Mitigations:
   see working-notes Obs 258 amendment) in
   `docs/notes/reflections/working-notes.md` after the paper section
   using it is drafted.
+
+## Changelog
+
+### 2026-09-13 — Revision-policy pattern attached (Session 153, Batch 1 item 1)
+
+**Trigger**: the documentation-foundation checklist's bulk back-fill of post-run
+reports (`planning/documentation-foundation-checklist-2026-09-13.md`, item 1). The
+other 39 registered runs now carry GENERATED projections emitted by
+`scripts/generate_run_reports.py`, which are exempt from the banner-and-changelog
+rule and carry provenance plus a `--check` drift guard instead (PI ruling
+2026-09-11, `docs/methodology/output-directory-standard.md` § "Documents in
+Revision Policy Scope"). This report is HAND-AUTHORED and stays in full
+Revision-Policy scope, so it takes the banner and Changelog the rule asks for.
+
+**What changed**: the banner below the H1 and this section. **No figure, table,
+claim or sentence of the body was touched** — the paired HIGH-vs-MIN
+comparison, the Dawid-Skene correction, the launcher-provenance caveat and the
+limitations all stand as written.
+
+### 2026-04-18 — Original publication
+
+Authored with the run itself (`f0f7158e7`, revised 2026-04-19 at `9f399d9d8`):
+the text-MIN 55-map generalisation run's measured and corrected results, the
+paired HIGH-vs-MIN comparison that is the run's scientific question, the
+three-run side-by-side, cost accounting, per-map extrema, timeline, the
+launcher-provenance reproducibility caveat, limitations and follow-ups. No
+banner or Changelog, which is what the 2026-09-13 entry fixes.
