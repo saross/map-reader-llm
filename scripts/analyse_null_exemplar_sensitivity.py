@@ -1091,6 +1091,315 @@ def stage_swap(inventory: dict[str, Any]) -> dict[str, Any]:
     return record
 
 
+# ── stage: assemble ──────────────────────────────────────────────────────
+
+def read_eval(path: Path) -> dict[str, Any]:
+    """Read F1/precision/recall at the headline buffer and the tile-MCC.
+
+    Args:
+        path: An ``evaluation.json`` written by ``evaluate_detections.py``.
+
+    Returns:
+        ``{"f1","precision","recall","mcc","n_detections","confusion"}``, with
+        None wherever the quantity is withheld or absent.
+    """
+    doc = json.loads(path.read_text())
+    summary = doc["summary"]
+    row = next((b for b in summary["buffers"]
+                if b.get("buffer_metres") == HEADLINE_BUFFER), None)
+    classification = summary.get("tile_classification")
+    mcc = None
+    confusion = None
+    if isinstance(classification, dict):
+        confusion = classification.get("confusion")
+        raw = classification.get("mcc")
+        mcc = raw.get("point") if isinstance(raw, dict) else raw
+    return {
+        "f1": None if row is None else row.get("f1_point", row.get("f1")),
+        "precision": None if row is None else row.get("p_point"),
+        "recall": None if row is None else row.get("r_point"),
+        "mcc": mcc,
+        "n_detections": summary.get("n_detections"),
+        "confusion": confusion,
+    }
+
+
+def summarise_deltas(rows: list[dict[str, Any]], key: str) -> dict[str, Any]:
+    """Summarise a delta column over image and text cells.
+
+    Args:
+        rows: Per-cell before/after rows.
+        key: The delta key, e.g. ``"delta_f1"``.
+
+    Returns:
+        Mean and extreme delta per group, with the cell that carries the extreme.
+    """
+    out: dict[str, Any] = {}
+    for name, want in (("image", True), ("text", False)):
+        vals = [(r[key], r["ref"]) for r in rows
+                if r["exposed"] is want and r.get(key) is not None]
+        if not vals:
+            out[name] = None
+            continue
+        arr = np.array([v for v, _ in vals])
+        worst = max(vals, key=lambda v: abs(v[0]))
+        out[name] = {
+            "n": len(vals),
+            "mean": round(float(arr.mean()), 6),
+            "median": round(float(np.median(arr)), 6),
+            "min": round(float(arr.min()), 6),
+            "max": round(float(arr.max()), 6),
+            "largest_absolute": {"ref": worst[1], "delta": round(worst[0], 6)},
+        }
+    if out.get("image") and out.get("text"):
+        out["image_minus_text_mean"] = round(
+            out["image"]["mean"] - out["text"]["mean"], 6)
+    return out
+
+
+def stage_assemble(inventory: dict[str, Any]) -> dict[str, Any]:
+    """Build the before/after comparison and write ``analysis.json``.
+
+    Args:
+        inventory: The cell inventory.
+
+    Returns:
+        The analysis record.
+    """
+    signature = json.loads((OUT_DIR / "leak_signature.json").read_text())
+    swap = json.loads((OUT_DIR / "paired_tile_swap.json").read_text())
+    manifest = json.loads((OUT_DIR / "detections_manifest.json").read_text())
+    dropped = {(e["frame_id"], e["ref"]): e for e in manifest["cells"]}
+
+    # ── per-cell before -> after ──────────────────────────────────────
+    boards_out = []
+    for board in inventory["boards"]:
+        rows = []
+        for cell in board["cells"]:
+            before = read_eval(BASE_DIR / cell["eval_path"])
+            after_path = (OUT_DIR / "cells" / board["frame_id"]
+                          / cell_slug(cell["ref"]) / "evaluation.json")
+            after = read_eval(after_path)
+            entry = dropped[(board["frame_id"], cell["ref"])]
+            row = {
+                "ref": cell["ref"],
+                "exposed": cell["exposed"],
+                "n_detections_before": before["n_detections"],
+                "n_detections_after": after["n_detections"],
+                "n_features_dropped": entry["n_dropped"],
+                "f1_before": before["f1"],
+                "f1_after": after["f1"],
+                "mcc_before": before["mcc"],
+                "mcc_after": after["mcc"],
+            }
+            if before["f1"] is not None and after["f1"] is not None:
+                row["delta_f1"] = round(after["f1"] - before["f1"], 6)
+            if before["mcc"] is not None and after["mcc"] is not None:
+                row["delta_mcc"] = round(after["mcc"] - before["mcc"], 6)
+            rows.append(row)
+        boards_out.append({
+            "board": board["board"],
+            "frame_id": board["frame_id"],
+            "n_cells": len(rows),
+            "delta_f1": summarise_deltas(rows, "delta_f1"),
+            "delta_mcc": summarise_deltas(rows, "delta_mcc"),
+            "cells": rows,
+        })
+
+    # ── the Era-2 board's tiering, MCB and MCC family ─────────────────
+    committed = json.loads(
+        (BASE_DIR / ERA2_BOARD / "tiering_20m.json").read_text())
+    reduced = json.loads(
+        (OUT_DIR / "tiering-reduced" / "tiering_20m.json").read_text())
+
+    def tier_of(doc: dict[str, Any]) -> dict[str, int]:
+        return {r["ref"]: r["tier"] for r in doc["ranking"]}
+
+    def mcc_tier_of(doc: dict[str, Any]) -> dict[str, int]:
+        return {r["ref"]: r["mcc_tier"]
+                for r in doc["mcc_permutation"]["ranking"]}
+
+    before_tier, after_tier = tier_of(committed), tier_of(reduced)
+    moved = sorted(ref for ref in before_tier
+                   if ref in after_tier and before_tier[ref] != after_tier[ref])
+    before_mcc_tier, after_mcc_tier = mcc_tier_of(committed), mcc_tier_of(reduced)
+    moved_mcc = sorted(ref for ref in before_mcc_tier
+                       if ref in after_mcc_tier
+                       and before_mcc_tier[ref] != after_mcc_tier[ref])
+
+    def tier1(doc: dict[str, Any]) -> list[str]:
+        return sorted(next(t["members"] for t in doc["tiers"] if t["tier"] == 1))
+
+    def mcc_tier1(doc: dict[str, Any]) -> list[str]:
+        return sorted(next(t["members"] for t in doc["mcc_permutation"]["tiers"]
+                           if t["tier"] == 1))
+
+    mcb = {}
+    for metric, committed_name, reduced_name in (
+        ("f1", "gs-era2-verified-board-2026-09-10_b20_m1.json",
+         "reduced_f1_b20_m1.json"),
+        ("mcc", "gs-era2-verified-board-2026-09-10_mcc_b20_m1.json",
+         "reduced_mcc_b20_m1.json"),
+    ):
+        before_doc = json.loads(
+            (BASE_DIR / ERA2_BOARD / "mcb" / committed_name).read_text())
+        after_doc = json.loads(
+            (OUT_DIR / "mcb-reduced" / reduced_name).read_text())
+
+        def admissible(doc: dict[str, Any]) -> list[str]:
+            refs = [c if isinstance(c, str) else c.get("ref", c.get("label"))
+                    for c in doc["candidates"]]
+            return sorted(r for r, keep in zip(refs, doc["hsu_not_ruled_out"])
+                          if keep)
+
+        a_before, a_after = admissible(before_doc), admissible(after_doc)
+        mcb[metric] = {
+            "n_candidates_before": before_doc["n_candidates"],
+            "n_candidates_after": after_doc["n_candidates"],
+            "n_tiles_before": before_doc["n_tiles"],
+            "n_tiles_after": after_doc["n_tiles"],
+            "n_admissible_before": len(a_before),
+            "n_admissible_after": len(a_after),
+            "admitted_by_reduction": sorted(set(a_after) - set(a_before)),
+            "dropped_by_reduction": sorted(set(a_before) - set(a_after)),
+            "n_unchanged": len(set(a_before) & set(a_after)),
+        }
+
+    # ── swap verdict flips ────────────────────────────────────────────
+    flips = []
+    for board in swap["boards"]:
+        for pair in board["pairs"]:
+            full, red = pair.get("full"), pair.get("reduced")
+            if not full or not red or full.get("withheld") or red.get("withheld"):
+                continue
+            for stat in ("f1", "mcc"):
+                pf, pr = full.get(f"p_value_{stat}"), red.get(f"p_value_{stat}")
+                if pf is None or pr is None:
+                    continue
+                if (pf < 0.05) != (pr < 0.05):
+                    flips.append({
+                        "board": board["board"],
+                        "image_cell": pair["image_cell"],
+                        "text_cell": pair["text_cell"],
+                        "statistic": stat,
+                        "p_full": pf, "p_reduced": pr,
+                        "delta_full": full.get(f"delta_{stat}"),
+                        "delta_reduced": red.get(f"delta_{stat}"),
+                    })
+
+    # ── a within-run robustness check on the Era-2 signature ──────────
+    era2_sig = next(b for b in signature["boards"] if b["board"] == "era2-verified")
+    strata = {}
+    for row in era2_sig["cells"]:
+        if "log_ratio" not in row:
+            continue
+        strata.setdefault(row["ref"].split("::", 1)[0], []).append(row)
+    within_run = {}
+    for run, rows in sorted(strata.items()):
+        img = [r["log_ratio"] for r in rows if r["exposed"]]
+        txt = [r["log_ratio"] for r in rows if not r["exposed"]]
+        if not img or not txt:
+            continue
+        observed = float(np.mean(img) - np.mean(txt))
+        labels = np.array([r["exposed"] for r in rows])
+        values = np.array([r["log_ratio"] for r in rows])
+        rng = np.random.default_rng(SEED)
+        null = np.array([
+            values[s].mean() - values[~s].mean()
+            for s in (rng.permutation(labels) for _ in range(N_PERMUTATIONS))
+        ])
+        within_run[run] = {
+            "n_image": len(img), "n_text": len(txt),
+            "mean_log_ratio_image": round(float(np.mean(img)), 6),
+            "mean_log_ratio_text": round(float(np.mean(txt)), 6),
+            "observed_image_minus_text": round(observed, 6),
+            "p_value_image_lower": round(float((null <= observed + 1e-12).mean()), 6),
+        }
+
+    record = {
+        "_README": (
+            "Null-exemplar leak sensitivity analysis, 2026-09-13. Machine-"
+            "readable companion to findings.md. Nothing under "
+            "results/leaderboard/** is modified: every 'after' number here "
+            "comes from this directory's own re-scores on the reduced frames."
+        ),
+        "analysis_id": "null-exemplar-sensitivity-2026-09-13",
+        "generated_by": "scripts/analyse_null_exemplar_sensitivity.py --stage assemble",
+        "recipe": {
+            "ground_truth": GROUND_TRUTH,
+            "buffers": BUFFERS,
+            "headline_buffer_m": HEADLINE_BUFFER,
+            "bootstrap": BOOTSTRAP,
+            "seed": SEED,
+            "n_permutations": N_PERMUTATIONS,
+            "tile_join": "id (name-based), the published convention",
+            "reduction": ("the exposed tiles are dropped from the frame AND "
+                          "every detection booked to one is dropped with them"),
+        },
+        "leak_signature": {
+            "boards": [{"board": b["board"], "frame_id": b["frame_id"],
+                        "n_exposed_tiles": b["n_exposed_tiles"],
+                        "n_unexposed_tiles": b["n_unexposed_tiles"],
+                        **b["test"]} for b in signature["boards"]],
+            "era2_within_run_strata": within_run,
+        },
+        "per_cell": boards_out,
+        "era2_tiering": {
+            "n_tiles_before": committed["n_tiles"],
+            "n_tiles_after": reduced["n_tiles"],
+            "n_cells_before": committed["n_cells"],
+            "n_cells_after": reduced["n_cells"],
+            "n_withheld_before": committed["n_cells_withheld"],
+            "n_withheld_after": reduced["n_cells_withheld"],
+            "n_pairs_significant_before": sum(1 for p in committed["pairwise"]
+                                              if p.get("significant")),
+            "n_pairs_significant_after": sum(1 for p in reduced["pairwise"]
+                                             if p.get("significant")),
+            "n_tiers_before": len(committed["tiers"]),
+            "n_tiers_after": len(reduced["tiers"]),
+            "tie_set_before": sorted(committed["tie_set"]),
+            "tie_set_after": sorted(reduced["tie_set"]),
+            "tier1_before": tier1(committed),
+            "tier1_after": tier1(reduced),
+            "tier1_unchanged": tier1(committed) == tier1(reduced),
+            "n_cells_changing_tier": len(moved),
+            "cells_changing_tier": [
+                {"ref": r, "tier_before": before_tier[r], "tier_after": after_tier[r]}
+                for r in moved],
+        },
+        "era2_mcc_family": {
+            "n_significant_before": committed["mcc_permutation"]["n_significant"],
+            "n_significant_after": reduced["mcc_permutation"]["n_significant"],
+            "n_tiers_before": committed["mcc_permutation"]["n_tiers"],
+            "n_tiers_after": reduced["mcc_permutation"]["n_tiers"],
+            "tie_set_size_before": len(committed["mcc_permutation"]["tie_set"]),
+            "tie_set_size_after": len(reduced["mcc_permutation"]["tie_set"]),
+            "tier1_before": mcc_tier1(committed),
+            "tier1_after": mcc_tier1(reduced),
+            "tier1_unchanged": mcc_tier1(committed) == mcc_tier1(reduced),
+            "n_cells_changing_mcc_tier": len(moved_mcc),
+            "cells_changing_mcc_tier": [
+                {"ref": r, "tier_before": before_mcc_tier[r],
+                 "tier_after": after_mcc_tier[r]} for r in moved_mcc],
+        },
+        "era2_mcb": mcb,
+        "paired_tile_swap_flips": flips,
+    }
+    (OUT_DIR / "analysis.json").write_text(json.dumps(record, indent=2) + "\n")
+    LOG.info("wrote %s", (OUT_DIR / "analysis.json").relative_to(BASE_DIR))
+    LOG.info("F1 tiers %d -> %d; Tier 1 unchanged: %s; cells changing tier: %d",
+             record["era2_tiering"]["n_tiers_before"],
+             record["era2_tiering"]["n_tiers_after"],
+             record["era2_tiering"]["tier1_unchanged"],
+             record["era2_tiering"]["n_cells_changing_tier"])
+    LOG.info("MCB admissible F1 %d -> %d; MCC %d -> %d",
+             mcb["f1"]["n_admissible_before"], mcb["f1"]["n_admissible_after"],
+             mcb["mcc"]["n_admissible_before"], mcb["mcc"]["n_admissible_after"])
+    LOG.info("MCC Tier 1 unchanged: %s; swap verdict flips: %d",
+             record["era2_mcc_family"]["tier1_unchanged"], len(flips))
+    return record
+
+
 # ── CLI ──────────────────────────────────────────────────────────────────
 
 def main() -> int:
@@ -1098,7 +1407,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--stage", required=True,
                         choices=("inventory", "filter", "rescore", "signature",
-                                 "override", "swap"),
+                                 "override", "swap", "assemble"),
                         help="Which stage to run.")
     parser.add_argument("--workers", type=int, default=1,
                         help="Concurrent scoring subprocesses for --stage rescore.")
@@ -1121,6 +1430,8 @@ def main() -> int:
         stage_override(inventory)
     elif args.stage == "swap":
         stage_swap(inventory)
+    elif args.stage == "assemble":
+        stage_assemble(inventory)
     return 0
 
 
