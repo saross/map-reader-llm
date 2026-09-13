@@ -78,10 +78,20 @@ from typing import Any
 #: NOT be applied to it. Discounting the cache read is a 19 per cent
 #: understatement on a cache-heavy image leg: it returns US$18.33 where the
 #: committed GS figure is US$22.50.
+#: ``gemini-3.8-flash`` was published 2026-09-02 at 3.7's list price. Its
+#: 0.75 / 3.75 rates are the same two numbers the project's own pricing table
+#: carries, where they are recorded as "verified 2026-09-04 against
+#: ai.google.dev/gemini-api/docs/pricing" (``scripts/lib_llm_metadata.py``,
+#: the ``google_gemini`` block of ``PRICING``), and
+#: ``reports/r7-gaps-deltas-2026-09-11.md`` line 35 states the same. Added
+#: 2026-09-14 so the S144 3.8 swap arm
+#: (``outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/
+#: verify_swap38``) can be audited at all instead of erroring out.
 RATE_CARDS: dict[str, dict[str, float]] = {
     "gemini-3-flash": {"input": 0.50, "output": 3.00, "cache": 0.05},
     "gemini-3-flash-preview": {"input": 0.50, "output": 3.00, "cache": 0.05},
     "gemini-3.7-flash": {"input": 0.75, "output": 3.75, "cache": 0.075},
+    "gemini-3.8-flash": {"input": 0.75, "output": 3.75, "cache": 0.075},
 }
 
 #: Flex and batch both bill at half of list; standard bills at list.
