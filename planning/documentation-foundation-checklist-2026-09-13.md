@@ -1,6 +1,18 @@
 # Documentation foundation checklist — the preregistration → outcome chain
 
-> **Last revised**: 2026-09-13 (later still — item 6a closed: the
+> **Last revised**: 2026-09-13 (latest — **item 6 closed, awaiting PI
+> re-signature**: the Era-2 board rebuilt once carrying all three ruled
+> changes, so the PI signs once. The F1 arm reproduced **byte-identically**
+> (11,175 pairwise records and the F1 MCB artefact; Tier 1 and its five
+> members unchanged); the k3 cell's withheld row and G6 row read **0.8860** /
+> 495; ruling 7's tile-MCC family is reported beside the F1 tiering
+> (2,982/11,175 significant, 6 MCC tiers, MCC tie set 33, MCC MCB 59 of 150)
+> and **disagrees with it systematically** — no F1 Tier-1 cell is in MCC
+> Tier 1 and the two admissible sets share 9 members of 65 and 59; ruling 6's
+> withheld-cell disclosure carries the shortfall counts and both tile
+> vocabularies. Ten signature-bearing paths byte-equal, no signature field
+> touched. Deltas: `reports/era2-board-mcc-family-2026-09-13.md`. Before that
+> — item 6a closed: the
 > tile-join invariant now withholds rather than aborts, the k3 cell's
 > evaluation is written at 0.8860 / 495, and `carry_probabilities.py` is
 > promoted to `scripts/`; earlier: Batch 1's five documentation items all
@@ -24,7 +36,7 @@ agent work; Fable only for the PI-facing orchestration turns.
 | Preregistration → hypotheses | `results/hypothesis-outcome-table/` (generated, drift-guarded) | complete: 15 hypotheses, every row with analyses, status, errata | none (paper sentence on H6 not-executed rests on E40/E41/E74) |
 | Experiments → runs and conditions | `results/runs-manifest.json`, `results/conditions-manifest.json`, `scripts/verify_run_conditions.py` | 41 runs, 593 conditions all with metrics; verifier ~~22 pass / 19 partial~~ → **38 pass / 3 partial / 0 fail** (2026-09-13, `f4fd90c71` + `e88fd5bfa`) | closed to the annotation limit (§ 2 item 2); the 3 remaining partials are by-design disclosures, and reaching 41 needs a PI verdict-model call |
 | Runs → post-run reports | `outputs/**/post_run_report.md` | ~~2 of 36 run directories~~ → **41 of 41** (2026-09-13, `c4edf1328`): 39 generated projections + 2 hand-authored | closed (§ 2 item 1) |
-| Results → analyses → signatures | `results/run-analyses.json`; findings documents | 67 rows, 66 signed, 1 unsigned by design; every findings doc bannered | boards pending one rebuild each (§ 2 items 4–5); the image run's row (§ 2 item 6) |
+| Results → analyses → signatures | `results/run-analyses.json`; findings documents | 67 rows, 66 signed, 1 unsigned by design; every findings doc bannered | the **Era-2 board is rebuilt** and awaits ONE PI re-signature (§ 2 item 6, done 2026-09-13); the 55-map board still pending its r2 rebuild (§ 2 item 7); the image run's row (§ 2 item 8) |
 | Deviations → errata | `docs/methodology/preregistration/protocol-errata.md` (E1–E85) | complete register | **none** — § M.x brought current to E85 and to the S153 rulings, 2026-09-13 (§ 2 item 4) |
 | Working notes | `docs/notes/working-notes.md` (Obs 1–481) | current | **none** — Obs 477–481 written 2026-09-13 (§ 2 item 3) |
 | Paper-facing | `docs/paper/results-draft.md`, `results-outline.md`, `results-claims-inventory-2026-09-12.md`, `methods-draft.md`, `discussion-outline.md`, `discussion-seeds.md`, `manuscript-skeleton-isprs.md` | outline decisions D1–D22 settled; inventory built for R0–R2, R4–R5, R7–R9; Methods zero-draft; Discussion outline current to August | § 2 items 8–10; D-1..D-5 and D.9 stay DEFERRED |
@@ -112,10 +124,49 @@ agent work; Fable only for the PI-facing orchestration turns.
 
 **Batch 2 — after the image run lands ($0 except as noted)**
 
-- [ ] **6. Era-2 board rebuild and re-signature**: the four re-scored
-  cells (recovery-fragment fix, landed `eda4ab70e`: three unchanged, k3
-  0.8870 → 0.8860), the tile-MCC permutation family (ruling 7), one
-  rebuild, one signature (PI: "I'll wait"). Owner: Opus agent; PI signs.
+- [x] **6. Era-2 board rebuild and re-signature** — **DONE 2026-09-13,
+  AWAITING PI RE-SIGNATURE**, commits `30a27f361` + `c1285136d` +
+  `736c39c0e` (the MCC family in the instrument and the builder, 18 tier-1
+  tests), `b3c56a221` (the rebuilt board), `a7ab9c1c0` (the generated
+  reports and the hypothesis table regenerated, zero content drift),
+  `9a440644d` (the board README's banner and changelog), `fc0aaf38f` (both
+  cards), `ab1f33fd3` (the deltas report). One rebuild carried all three
+  ruled changes so the PI signs **once**: the four re-scored cells at their
+  current evaluations (`g37-text-k3-verified-opmax` 0.8870 → **0.8860** /
+  495 in the withheld table and in G6, its committed tile-MCC no longer
+  quoted because its own re-scored artefact withholds the tile block at
+  source; the two K = 1 cells and tier E's K = 5 unchanged, nothing
+  re-scored here), ruling 7's tile-MCC permutation family, and ruling 6's
+  withheld-cell disclosure. US$0, no API call, all compute on sapphire.
+  **The F1 arm reproduced byte-identically** — `ranking`, `tiers`,
+  `tie_set` and all **11,175** pairwise records identical to the committed
+  run (blob `f2f1af55a`), the F1 MCB artefact identical too, **Tier 1 and
+  its five members unchanged**, 7,961/11,175 significant, 14 tiers, tie set
+  5, MCB 65 of 150 (w_upper 0.0749), G2 0 / G3 0 / G4 110 / 110, G6 max
+  |delta| 0.0078. Record:
+  `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/rebuild-mcc-2026-09-13/f1-arm-identity.json`.
+  **The MCC family is the finding, not the formality**: 2,982/11,175 pairs
+  significant, **6 MCC tiers**, **MCC tie set 33**, **MCC MCB 59 of 150**
+  (w_upper 0.0828) — and it ranks the board almost the opposite way.
+  **No F1 Tier-1 cell is in MCC Tier 1**; MCC Tier 1 is 33 cells drawn
+  entirely from F1 tiers 6–12, led by single-pass **image** proposer +
+  verifier baselines (`verified-adv-image-baseline-pro-vf`, tile-MCC 0.8887,
+  F1 rank 119 of 150); the two admissible sets share **9** members of 65 and
+  59 (union 115 of 150); the MCC argmax is unstable at this resolution
+  (stability 0.420, 36 distinct winners, against F1's 0.602 / 22). Reported
+  BESIDE the preregistered F1 tiering and NOT replacing it, per ruling 7 —
+  the board's tiering, ranks and Tier 1 remain the F1 ones.
+  **Signature discipline**: `signed_at`, `signature_history` and
+  `gates.G1.pi_ruling` carried forward, the previous PENDING block nested as
+  `previous_pending` rather than overwritten (a gap this job closed), and
+  **10 signature-bearing paths asserted byte-equal** before and after,
+  register file included — `rebuild-mcc-2026-09-13/signature-paths.json`,
+  PASS. No signature field altered; the signed analysis row not written.
+  **Open for the PI**: the re-signature itself
+  (`provenance.json` → `re_sign_pending`, whose `proposed_outcome` states
+  both families and their overlap), plus a paper-facing call on which
+  ranking the Results section leads with. Deltas:
+  `reports/era2-board-mcc-family-2026-09-13.md`.
   - [x] **6a. Prerequisite** — done 2026-09-13, commits `3eeaf96f4`
     (scorer + 8 tier-1 tests), `987534c03` (the rebuilt 495-detection set,
     the 494 archived), `a8c03bb9e` (the re-score), `977df2995` (manifests
@@ -204,6 +255,47 @@ after that.
 - Compute on sapphire; at most three live worktrees on the local disk.
 
 ## Changelog
+
+### 2026-09-13 (latest) — item 6 closed: one rebuild, three ruled changes, awaiting the PI's re-signature
+
+| Claim | Before | After |
+|---|---|---|
+| The Era-2 board's state | signed 2026-09-12 on 103 cells, with a PENDING 153-cell proposal and four cells noted as pending re-score | **rebuilt** on the current evaluations; one fresh PENDING proposal stating BOTH statistic families |
+| The board's instrument | F1 only; ruling 7 "not applied to the current signed board" | **F1 and tile-MCC on byte-identical swap masks**, BH q = 0.05 per family, each with its own greedy-clique tiering and Hsu MCB set |
+| `g37-text-k3-verified-opmax` on the board | withheld row 0.8870, tile-MCC 0.1337 quoted-as-not-published; G6 row 0.8870 / 494 | **0.8860**; tile-MCC **withheld at source**; G6 **0.8860 / 495** |
+| The F1 tiering | 7,961/11,175 significant, 14 tiers, tie set 5, MCB 65 of 150 | **identical — byte for byte**, on ranking, tiers, tie set, all 11,175 pairwise records and the MCB artefact |
+| tile-MCC on the board | a reported column, untested | **2,982/11,175 pairs significant, 6 MCC tiers, MCC tie set 33, MCC MCB 59 of 150** (w_upper 0.0828, band 99) |
+| Withheld-cell disclosure | F1 point + one-line refusal | **+ interval withdrawn (with the retracted interval named), shortfall counts, both tile vocabularies, the published-convention sentence** |
+| Generated reports and the hypothesis table | current | regenerated, `--check`-clean, **zero content drift** — only the source-commit stamp moved in all 40 files |
+
+**The card's expectation held this time.** It asked for "one rebuild, one
+signature", and that is what happened: three separately ruled changes landed
+together, the F1 arm reproduced exactly, and one `re_sign_pending` block is
+waiting.
+
+**What the rebuild found that the card did not anticipate.** The MCC family is
+not a second opinion on the F1 ordering — it is close to its reverse. **No F1
+Tier-1 cell is in MCC Tier 1**; MCC Tier 1 is 33 cells drawn entirely from F1
+tiers 6–12, led by single-pass **image** proposer + verifier baselines; the two
+Hsu admissible sets share **9** members of 65 and 59 (union 115 of 150); and the
+MCC argmax is unstable at this resolution (0.420 stability, 36 distinct winners,
+against F1's 0.602 / 22). That is the K-ladder review's "the two objectives
+select different rungs" measured over a whole board, and it raises a
+paper-facing question — which ranking the Results section leads with — that is
+the PI's, not an agent's.
+
+**One gap closed on the way**: `finalise` used to **overwrite** a PENDING
+`re_sign_pending` block, which is why the recovery-fragment note had to keep a
+durable copy of its numbers in the board README's changelog. A rebuild landing
+on a pending block now nests it as `previous_pending`.
+
+**What did NOT change**: every F1 rank, tier, pairwise test, BH verdict and MCB
+member; Tier 1 and its five members; the 153 / 150 / 3 counts; the frame,
+reference, seed, permutation count and buffer; every gate's verdict and G6's
+0.0078; the register, byte for byte; and every signature field — 10
+signature-bearing paths asserted byte-equal
+(`rebuild-mcc-2026-09-13/signature-paths.json`, PASS). Deltas:
+`reports/era2-board-mcc-family-2026-09-13.md`.
 
 ### 2026-09-13 — item 6a closed: the invariant withholds, the k3 cell is written
 
