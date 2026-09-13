@@ -1,0 +1,740 @@
+{
+  "_README": "Evaluation tiles whose windows overlap a few-shot null exemplar window. Produced by scripts/compute_null_exemplar_overlap.py for the null-exemplar leak sensitivity analysis of 2026-09-13.",
+  "generated_by": "scripts/compute_null_exemplar_overlap.py",
+  "null_exemplars": [
+    {
+      "tile_name": "K-35-078-1_Lesovo_x2240_y2688.png",
+      "map_name": "K-35-078-1_Lesovo",
+      "x_px": 2240,
+      "y_px": 2688,
+      "size_px": 512,
+      "ground_envelope": [
+        469624.37166304,
+        4633751.7008528,
+        472200.485414592,
+        4636327.814604352
+      ]
+    },
+    {
+      "tile_name": "K-35-053-3_Elenovo_x3584_y1344.png",
+      "map_name": "K-35-053-3_Elenovo",
+      "x_px": 3584,
+      "y_px": 1344,
+      "size_px": 512,
+      "ground_envelope": [
+        435441.509933376,
+        4696435.044345217,
+        438006.629838144,
+        4699000.164249985
+      ]
+    },
+    {
+      "tile_name": "K-35-052-4_32635_x896_y1792.png",
+      "map_name": "K-35-052-4_32635",
+      "x_px": 896,
+      "y_px": 1792,
+      "size_px": 512,
+      "ground_envelope": [
+        401378.162525472,
+        4694462.603863073,
+        403943.389511456,
+        4697027.830849056
+      ]
+    }
+  ],
+  "null_window_px": 512,
+  "geometry": {
+    "method": "axis-aligned overlap of tile WINDOWS in pixel space on the same map sheet, cross-checked in ground space",
+    "tile_name_encodes": "<map>_x<X>_y<Y>.png gives the window's top-left PIXEL offset on that sheet",
+    "overlap_rule": "x_tile < x_null + 512 and x_tile + size > x_null, and likewise in y (strictly positive area)",
+    "exposure_is_the_window": "exposure to the leak is a property of the window the model was shown, so a tile counts as exposed when its window overlaps, whether or not its committed (clipped) scoring polygon does",
+    "affine_source": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "affine_per_sheet": {
+      "K-35-052-4_32635": {
+        "m_per_px": 5.010208957,
+        "origin_x": 396889.0153,
+        "origin_y_top": 4706006.1253
+      },
+      "K-35-053-3_Elenovo": {
+        "m_per_px": 5.009999814,
+        "origin_x": 417485.6706,
+        "origin_y_top": 4705733.604
+      },
+      "K-35-062-2_Rakovski": {
+        "m_per_px": 5.018839395,
+        "origin_x": 314011.2695,
+        "origin_y_top": 4689194.5425
+      },
+      "K-35-078-1_Lesovo": {
+        "m_per_px": 5.031472171,
+        "origin_x": 458353.874,
+        "origin_y_top": 4649852.4118
+      }
+    },
+    "validity": "one resolution and one origin fit all 85 tiles of each sheet in the 512 px frame exactly (asserted), and every tile of every frame under test is either exactly its nominal window under that same affine or a clipped subset of it (asserted), so the frames share one pixel grid and the pixel-space test is exact"
+  },
+  "frames": [
+    {
+      "frame_id": "era2-b-487",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "tile_size_px": 384,
+      "tile_step_px": 336,
+      "n_tiles_exact_window": 455,
+      "n_tiles_clipped": 32,
+      "n_overlap": 20,
+      "n_reduced": 467,
+      "overlap_tiles": [
+        "K-35-052-4_32635_x672_y1680.png",
+        "K-35-052-4_32635_x672_y2016.png",
+        "K-35-053-3_Elenovo_x3360_y1008.png",
+        "K-35-053-3_Elenovo_x3360_y1344.png",
+        "K-35-053-3_Elenovo_x3360_y1680.png",
+        "K-35-053-3_Elenovo_x3696_y1008.png",
+        "K-35-053-3_Elenovo_x3696_y1344.png",
+        "K-35-053-3_Elenovo_x3696_y1680.png",
+        "K-35-053-3_Elenovo_x4032_y1008.png",
+        "K-35-053-3_Elenovo_x4032_y1344.png",
+        "K-35-053-3_Elenovo_x4032_y1680.png",
+        "K-35-078-1_Lesovo_x2016_y2352.png",
+        "K-35-078-1_Lesovo_x2016_y2688.png",
+        "K-35-078-1_Lesovo_x2016_y3024.png",
+        "K-35-078-1_Lesovo_x2352_y2352.png",
+        "K-35-078-1_Lesovo_x2352_y2688.png",
+        "K-35-078-1_Lesovo_x2352_y3024.png",
+        "K-35-078-1_Lesovo_x2688_y2352.png",
+        "K-35-078-1_Lesovo_x2688_y2688.png",
+        "K-35-078-1_Lesovo_x2688_y3024.png"
+      ],
+      "overlap_detail": [
+        {
+          "tile_name": "K-35-052-4_32635_x672_y1680.png",
+          "map_name": "K-35-052-4_32635",
+          "x_px": 672,
+          "y_px": 1680,
+          "overlaps_null": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-052-4_32635_x672_y2016.png",
+          "map_name": "K-35-052-4_32635",
+          "x_px": 672,
+          "y_px": 2016,
+          "overlaps_null": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3360_y1008.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3360,
+          "y_px": 1008,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3360_y1344.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3360,
+          "y_px": 1344,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3360_y1680.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3360,
+          "y_px": 1680,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3696_y1008.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3696,
+          "y_px": 1008,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3696_y1344.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3696,
+          "y_px": 1344,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3696_y1680.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3696,
+          "y_px": 1680,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x4032_y1008.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 4032,
+          "y_px": 1008,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x4032_y1344.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 4032,
+          "y_px": 1344,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x4032_y1680.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 4032,
+          "y_px": 1680,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2016_y2352.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2016,
+          "y_px": 2352,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2016_y2688.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2016,
+          "y_px": 2688,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2016_y3024.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2016,
+          "y_px": 3024,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y2352.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2352,
+          "y_px": 2352,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y2688.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2352,
+          "y_px": 2688,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2352,
+          "y_px": 3024,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2688_y2352.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2688,
+          "y_px": 2352,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2688_y2688.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2688,
+          "y_px": 2688,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2688_y3024.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2688,
+          "y_px": 3024,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        }
+      ],
+      "reduced_bounds": "results/null-exemplar-sensitivity-2026-09-13/bounds/era2-b-487_minus_null_overlap.geojson"
+    },
+    {
+      "frame_id": "era1-full-340",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "n_tiles": 340,
+      "tile_size_px": 512,
+      "tile_step_px": 448,
+      "n_tiles_exact_window": 340,
+      "n_tiles_clipped": 0,
+      "n_overlap": 25,
+      "n_reduced": 315,
+      "overlap_tiles": [
+        "K-35-052-4_32635_x1344_y1792.png",
+        "K-35-052-4_32635_x448_y1344.png",
+        "K-35-052-4_32635_x448_y1792.png",
+        "K-35-052-4_32635_x448_y2240.png",
+        "K-35-052-4_32635_x896_y1344.png",
+        "K-35-052-4_32635_x896_y1792.png",
+        "K-35-052-4_32635_x896_y2240.png",
+        "K-35-053-3_Elenovo_x3136_y1344.png",
+        "K-35-053-3_Elenovo_x3136_y1792.png",
+        "K-35-053-3_Elenovo_x3136_y896.png",
+        "K-35-053-3_Elenovo_x3584_y1344.png",
+        "K-35-053-3_Elenovo_x3584_y1792.png",
+        "K-35-053-3_Elenovo_x3584_y896.png",
+        "K-35-053-3_Elenovo_x4032_y1344.png",
+        "K-35-053-3_Elenovo_x4032_y1792.png",
+        "K-35-053-3_Elenovo_x4032_y896.png",
+        "K-35-078-1_Lesovo_x1792_y2240.png",
+        "K-35-078-1_Lesovo_x1792_y2688.png",
+        "K-35-078-1_Lesovo_x1792_y3136.png",
+        "K-35-078-1_Lesovo_x2240_y2240.png",
+        "K-35-078-1_Lesovo_x2240_y2688.png",
+        "K-35-078-1_Lesovo_x2240_y3136.png",
+        "K-35-078-1_Lesovo_x2688_y2240.png",
+        "K-35-078-1_Lesovo_x2688_y2688.png",
+        "K-35-078-1_Lesovo_x2688_y3136.png"
+      ],
+      "overlap_detail": [
+        {
+          "tile_name": "K-35-052-4_32635_x1344_y1792.png",
+          "map_name": "K-35-052-4_32635",
+          "x_px": 1344,
+          "y_px": 1792,
+          "overlaps_null": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-052-4_32635_x448_y1344.png",
+          "map_name": "K-35-052-4_32635",
+          "x_px": 448,
+          "y_px": 1344,
+          "overlaps_null": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-052-4_32635_x448_y1792.png",
+          "map_name": "K-35-052-4_32635",
+          "x_px": 448,
+          "y_px": 1792,
+          "overlaps_null": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-052-4_32635_x448_y2240.png",
+          "map_name": "K-35-052-4_32635",
+          "x_px": 448,
+          "y_px": 2240,
+          "overlaps_null": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-052-4_32635_x896_y1344.png",
+          "map_name": "K-35-052-4_32635",
+          "x_px": 896,
+          "y_px": 1344,
+          "overlaps_null": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-052-4_32635_x896_y1792.png",
+          "map_name": "K-35-052-4_32635",
+          "x_px": 896,
+          "y_px": 1792,
+          "overlaps_null": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ],
+          "is_null_window_itself": true,
+          "committed_polygon_also_intersects": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-052-4_32635_x896_y2240.png",
+          "map_name": "K-35-052-4_32635",
+          "x_px": 896,
+          "y_px": 2240,
+          "overlaps_null": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-052-4_32635_x896_y1792.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3136_y1344.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3136,
+          "y_px": 1344,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3136_y1792.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3136,
+          "y_px": 1792,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3136_y896.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3136,
+          "y_px": 896,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3584_y1344.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3584,
+          "y_px": 1344,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": true,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3584_y1792.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3584,
+          "y_px": 1792,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x3584_y896.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 3584,
+          "y_px": 896,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x4032_y1344.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 4032,
+          "y_px": 1344,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x4032_y1792.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 4032,
+          "y_px": 1792,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-053-3_Elenovo_x4032_y896.png",
+          "map_name": "K-35-053-3_Elenovo",
+          "x_px": 4032,
+          "y_px": 896,
+          "overlaps_null": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-053-3_Elenovo_x3584_y1344.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x1792_y2240.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 1792,
+          "y_px": 2240,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x1792_y2688.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 1792,
+          "y_px": 2688,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x1792_y3136.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 1792,
+          "y_px": 3136,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2240_y2240.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2240,
+          "y_px": 2240,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2240_y2688.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2240,
+          "y_px": 2688,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": true,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2240_y3136.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2240,
+          "y_px": 3136,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2688_y2240.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2688,
+          "y_px": 2240,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2688_y2688.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2688,
+          "y_px": 2688,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        },
+        {
+          "tile_name": "K-35-078-1_Lesovo_x2688_y3136.png",
+          "map_name": "K-35-078-1_Lesovo",
+          "x_px": 2688,
+          "y_px": 3136,
+          "overlaps_null": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ],
+          "is_null_window_itself": false,
+          "committed_polygon_also_intersects": [
+            "K-35-078-1_Lesovo_x2240_y2688.png"
+          ]
+        }
+      ],
+      "reduced_bounds": "results/null-exemplar-sensitivity-2026-09-13/bounds/era1-full-340_minus_null_overlap.geojson"
+    }
+  ]
+}
