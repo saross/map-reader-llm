@@ -122,6 +122,16 @@ from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+# Modality is a preregistered factor (H1), so the board's `track` field must be
+# DERIVED from the configuration each pool transmitted, never inferred from a
+# label. See scripts/derive_condition_modality.py for the mechanism and for the
+# seven cells a label-substring test got wrong before 2026-09-14.
+from scripts.derive_condition_modality import condition_modality  # noqa: E402
+
 RUN_CONDITIONS = REPO_ROOT / "results/run-conditions.json"
 RUN_ANALYSES = REPO_ROOT / "results/run-analyses.json"
 RUN_FACTS = REPO_ROOT / "results/run-facts.json"
@@ -298,13 +308,20 @@ def derive_membership() -> dict[str, Any]:
             bounds = os.path.basename(cli.get("bounds") or "")
             det = cond.get("detections") or ""
 
+            # The board's modality label. DERIVED from the proposer pool's
+            # transmitted configuration, never from the label: a label may name
+            # the VERIFIER's modality over a text proposer, and a label with no
+            # modality token at all used to fall through to "text". Both shapes
+            # occur on this board (7 cells, audit of 2026-09-14).
+            track, track_basis = condition_modality(run_id, cond.get("proposer_pool") or "")
+
             def member(**extra: Any) -> dict[str, Any]:
                 return {
                     "condition_id": cid, "run_id": run_id, "label": label, "k": k,
                     "detections": det, "eval_path": cond["eval_path"],
                     "committed_bounds": cli.get("bounds"), "committed_f1_20": f1_at(doc),
                     "recipe": {kk: cli.get(kk) for kk in ("ground_truth", "buffers", "bootstrap", "seed")},
-                    "track": "image" if "image" in label else "text",
+                    "track": track, "track_basis": track_basis,
                     **extra,
                 }
 

@@ -1,0 +1,555 @@
+{
+ "_README": "Every recorded modality label that disagrees with the derivation, with the mechanism that produced it.",
+ "n_conditions_with_a_mismatch": 8,
+ "conditions": [
+  {
+   "condition_id": "proposer-verifier-384::verified-adversarial-image",
+   "run_id": "proposer-verifier-384",
+   "label": "verified-adversarial-image",
+   "architecture": "proposer-verifier",
+   "aggregation": "verified",
+   "proposer_pool": "detect_brief-text",
+   "derived": {
+    "modality": "text",
+    "basis": "config-file",
+    "from_transmitted_configuration": true,
+    "routes_disagree": false,
+    "pass_metadata": {
+     "modality": null,
+     "configs": [],
+     "recorded_pass_modality": [],
+     "n_passes": 0,
+     "n_metas_read": 0
+    },
+    "run_metadata": {
+     "modality": null,
+     "configs": [],
+     "pool_output_dir": null,
+     "matched_basename": null
+    },
+    "config_file": {
+     "modality": "text",
+     "configs": [
+      {
+       "config": "detect_brief-text",
+       "include_example_images": false,
+       "n_examples": 17,
+       "n_null_examples": 3,
+       "meta_path": "prompts/configs/detect_brief-text.json"
+      }
+     ]
+    }
+   },
+   "recorded": {
+    "register_pool_modality": null,
+    "register_verifier_modality": "image",
+    "passes_manifest_modality": [],
+    "pool_token": "text",
+    "label_token": "image",
+    "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json::track": "image",
+    "results/working-precision/gs-plateau-characterisation.json::modality": "image"
+   },
+   "mismatches": [
+    {
+     "artefact": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json",
+     "field": "track",
+     "recorded": "image",
+     "derived": "text",
+     "mechanism": "label substring test: the label's 'image' token names the VERIFIER's modality, not the proposer's (pool 'detect_brief-text' is text)"
+    },
+    {
+     "artefact": "results/working-precision/gs-plateau-characterisation.json",
+     "field": "modality",
+     "recorded": "image",
+     "derived": "text",
+     "mechanism": "label substring test: the label's 'image' token names the VERIFIER's modality, not the proposer's (pool 'detect_brief-text' is text)"
+    }
+   ]
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-brief-image",
+   "run_id": "proposer-verifier-384",
+   "label": "verified-brief-image",
+   "architecture": "proposer-verifier",
+   "aggregation": "verified",
+   "proposer_pool": "detect_brief-text",
+   "derived": {
+    "modality": "text",
+    "basis": "config-file",
+    "from_transmitted_configuration": true,
+    "routes_disagree": false,
+    "pass_metadata": {
+     "modality": null,
+     "configs": [],
+     "recorded_pass_modality": [],
+     "n_passes": 0,
+     "n_metas_read": 0
+    },
+    "run_metadata": {
+     "modality": null,
+     "configs": [],
+     "pool_output_dir": null,
+     "matched_basename": null
+    },
+    "config_file": {
+     "modality": "text",
+     "configs": [
+      {
+       "config": "detect_brief-text",
+       "include_example_images": false,
+       "n_examples": 17,
+       "n_null_examples": 3,
+       "meta_path": "prompts/configs/detect_brief-text.json"
+      }
+     ]
+    }
+   },
+   "recorded": {
+    "register_pool_modality": null,
+    "register_verifier_modality": "image",
+    "passes_manifest_modality": [],
+    "pool_token": "text",
+    "label_token": "image",
+    "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json::track": "image",
+    "results/working-precision/gs-plateau-characterisation.json::modality": "image"
+   },
+   "mismatches": [
+    {
+     "artefact": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json",
+     "field": "track",
+     "recorded": "image",
+     "derived": "text",
+     "mechanism": "label substring test: the label's 'image' token names the VERIFIER's modality, not the proposer's (pool 'detect_brief-text' is text)"
+    },
+    {
+     "artefact": "results/working-precision/gs-plateau-characterisation.json",
+     "field": "modality",
+     "recorded": "image",
+     "derived": "text",
+     "mechanism": "label substring test: the label's 'image' token names the VERIFIER's modality, not the proposer's (pool 'detect_brief-text' is text)"
+    }
+   ]
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-checklist-image",
+   "run_id": "proposer-verifier-384",
+   "label": "verified-checklist-image",
+   "architecture": "proposer-verifier",
+   "aggregation": "verified",
+   "proposer_pool": "detect_brief-text",
+   "derived": {
+    "modality": "text",
+    "basis": "config-file",
+    "from_transmitted_configuration": true,
+    "routes_disagree": false,
+    "pass_metadata": {
+     "modality": null,
+     "configs": [],
+     "recorded_pass_modality": [],
+     "n_passes": 0,
+     "n_metas_read": 0
+    },
+    "run_metadata": {
+     "modality": null,
+     "configs": [],
+     "pool_output_dir": null,
+     "matched_basename": null
+    },
+    "config_file": {
+     "modality": "text",
+     "configs": [
+      {
+       "config": "detect_brief-text",
+       "include_example_images": false,
+       "n_examples": 17,
+       "n_null_examples": 3,
+       "meta_path": "prompts/configs/detect_brief-text.json"
+      }
+     ]
+    }
+   },
+   "recorded": {
+    "register_pool_modality": null,
+    "register_verifier_modality": "image",
+    "passes_manifest_modality": [],
+    "pool_token": "text",
+    "label_token": "image",
+    "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json::track": "image",
+    "results/working-precision/gs-plateau-characterisation.json::modality": "image"
+   },
+   "mismatches": [
+    {
+     "artefact": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json",
+     "field": "track",
+     "recorded": "image",
+     "derived": "text",
+     "mechanism": "label substring test: the label's 'image' token names the VERIFIER's modality, not the proposer's (pool 'detect_brief-text' is text)"
+    },
+    {
+     "artefact": "results/working-precision/gs-plateau-characterisation.json",
+     "field": "modality",
+     "recorded": "image",
+     "derived": "text",
+     "mechanism": "label substring test: the label's 'image' token names the VERIFIER's modality, not the proposer's (pool 'detect_brief-text' is text)"
+    }
+   ]
+  },
+  {
+   "condition_id": "pv-diag-384::pv-scale4-optimal-n1-opmax",
+   "run_id": "pv-diag-384",
+   "label": "pv-scale4-optimal-n1-opmax",
+   "architecture": "proposer-verifier",
+   "aggregation": "verified",
+   "proposer_pool": "scale-4-optimal-487",
+   "derived": {
+    "modality": "image",
+    "basis": "pass-metadata",
+    "from_transmitted_configuration": true,
+    "routes_disagree": false,
+    "pass_metadata": {
+     "modality": "image",
+     "configs": [
+      {
+       "config": "detect_h8_scale-4_v2",
+       "include_example_images": true,
+       "n_examples": 13,
+       "n_null_examples": 3,
+       "meta_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json"
+      }
+     ],
+     "recorded_pass_modality": [
+      "image"
+     ],
+     "n_passes": 10,
+     "n_metas_read": 1
+    },
+    "run_metadata": {
+     "modality": "image",
+     "configs": [
+      {
+       "config": "detect_h8_scale-4_v2",
+       "include_example_images": true,
+       "n_examples": 13,
+       "n_null_examples": 3,
+       "meta_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json"
+      }
+     ],
+     "pool_output_dir": "outputs/h11/pv-diag-384/scale-4-optimal-487",
+     "matched_basename": "scale-4-optimal-487"
+    },
+    "config_file": {
+     "modality": null,
+     "configs": []
+    }
+   },
+   "recorded": {
+    "register_pool_modality": "image",
+    "register_verifier_modality": null,
+    "passes_manifest_modality": [
+     "image"
+    ],
+    "pool_token": null,
+    "label_token": null,
+    "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json::track": "text"
+   },
+   "mismatches": [
+    {
+     "artefact": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json",
+     "field": "track",
+     "recorded": "text",
+     "derived": "image",
+     "mechanism": "label substring test with no modality token in the label: `'image' in label` was false, so the test fell through to its 'text' default (pool 'scale-4-optimal-487' is image)"
+    }
+   ]
+  },
+  {
+   "condition_id": "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1",
+   "run_id": "pv-diag-384",
+   "label": "pv-scale4-optimal-n1-carried-p0.15-k1",
+   "architecture": "proposer-verifier",
+   "aggregation": "verified",
+   "proposer_pool": "scale-4-optimal-487",
+   "derived": {
+    "modality": "image",
+    "basis": "pass-metadata",
+    "from_transmitted_configuration": true,
+    "routes_disagree": false,
+    "pass_metadata": {
+     "modality": "image",
+     "configs": [
+      {
+       "config": "detect_h8_scale-4_v2",
+       "include_example_images": true,
+       "n_examples": 13,
+       "n_null_examples": 3,
+       "meta_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json"
+      }
+     ],
+     "recorded_pass_modality": [
+      "image"
+     ],
+     "n_passes": 10,
+     "n_metas_read": 1
+    },
+    "run_metadata": {
+     "modality": "image",
+     "configs": [
+      {
+       "config": "detect_h8_scale-4_v2",
+       "include_example_images": true,
+       "n_examples": 13,
+       "n_null_examples": 3,
+       "meta_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json"
+      }
+     ],
+     "pool_output_dir": "outputs/h11/pv-diag-384/scale-4-optimal-487",
+     "matched_basename": "scale-4-optimal-487"
+    },
+    "config_file": {
+     "modality": null,
+     "configs": []
+    }
+   },
+   "recorded": {
+    "register_pool_modality": "image",
+    "register_verifier_modality": null,
+    "passes_manifest_modality": [
+     "image"
+    ],
+    "pool_token": null,
+    "label_token": null,
+    "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json::track": "text"
+   },
+   "mismatches": [
+    {
+     "artefact": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json",
+     "field": "track",
+     "recorded": "text",
+     "derived": "image",
+     "mechanism": "label substring test with no modality token in the label: `'image' in label` was false, so the test fell through to its 'text' default (pool 'scale-4-optimal-487' is image)"
+    }
+   ]
+  },
+  {
+   "condition_id": "pv-diag-384::pv-scale4-optimal-n3-opmax",
+   "run_id": "pv-diag-384",
+   "label": "pv-scale4-optimal-n3-opmax",
+   "architecture": "proposer-verifier",
+   "aggregation": "verified",
+   "proposer_pool": "scale-4-optimal-487",
+   "derived": {
+    "modality": "image",
+    "basis": "pass-metadata",
+    "from_transmitted_configuration": true,
+    "routes_disagree": false,
+    "pass_metadata": {
+     "modality": "image",
+     "configs": [
+      {
+       "config": "detect_h8_scale-4_v2",
+       "include_example_images": true,
+       "n_examples": 13,
+       "n_null_examples": 3,
+       "meta_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json"
+      }
+     ],
+     "recorded_pass_modality": [
+      "image"
+     ],
+     "n_passes": 10,
+     "n_metas_read": 1
+    },
+    "run_metadata": {
+     "modality": "image",
+     "configs": [
+      {
+       "config": "detect_h8_scale-4_v2",
+       "include_example_images": true,
+       "n_examples": 13,
+       "n_null_examples": 3,
+       "meta_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json"
+      }
+     ],
+     "pool_output_dir": "outputs/h11/pv-diag-384/scale-4-optimal-487",
+     "matched_basename": "scale-4-optimal-487"
+    },
+    "config_file": {
+     "modality": null,
+     "configs": []
+    }
+   },
+   "recorded": {
+    "register_pool_modality": "image",
+    "register_verifier_modality": null,
+    "passes_manifest_modality": [
+     "image"
+    ],
+    "pool_token": null,
+    "label_token": null,
+    "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json::track": "text"
+   },
+   "mismatches": [
+    {
+     "artefact": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json",
+     "field": "track",
+     "recorded": "text",
+     "derived": "image",
+     "mechanism": "label substring test with no modality token in the label: `'image' in label` was false, so the test fell through to its 'text' default (pool 'scale-4-optimal-487' is image)"
+    }
+   ]
+  },
+  {
+   "condition_id": "pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3",
+   "run_id": "pv-diag-384",
+   "label": "pv-scale4-optimal-n3-carried-p0.15-k3",
+   "architecture": "proposer-verifier",
+   "aggregation": "verified",
+   "proposer_pool": "scale-4-optimal-487",
+   "derived": {
+    "modality": "image",
+    "basis": "pass-metadata",
+    "from_transmitted_configuration": true,
+    "routes_disagree": false,
+    "pass_metadata": {
+     "modality": "image",
+     "configs": [
+      {
+       "config": "detect_h8_scale-4_v2",
+       "include_example_images": true,
+       "n_examples": 13,
+       "n_null_examples": 3,
+       "meta_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json"
+      }
+     ],
+     "recorded_pass_modality": [
+      "image"
+     ],
+     "n_passes": 10,
+     "n_metas_read": 1
+    },
+    "run_metadata": {
+     "modality": "image",
+     "configs": [
+      {
+       "config": "detect_h8_scale-4_v2",
+       "include_example_images": true,
+       "n_examples": 13,
+       "n_null_examples": 3,
+       "meta_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json"
+      }
+     ],
+     "pool_output_dir": "outputs/h11/pv-diag-384/scale-4-optimal-487",
+     "matched_basename": "scale-4-optimal-487"
+    },
+    "config_file": {
+     "modality": null,
+     "configs": []
+    }
+   },
+   "recorded": {
+    "register_pool_modality": "image",
+    "register_verifier_modality": null,
+    "passes_manifest_modality": [
+     "image"
+    ],
+    "pool_token": null,
+    "label_token": null,
+    "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json::track": "text"
+   },
+   "mismatches": [
+    {
+     "artefact": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json",
+     "field": "track",
+     "recorded": "text",
+     "derived": "image",
+     "mechanism": "label substring test with no modality token in the label: `'image' in label` was false, so the test fell through to its 'text' default (pool 'scale-4-optimal-487' is image)"
+    }
+   ]
+  },
+  {
+   "condition_id": "retest-phase2e::canonical-last",
+   "run_id": "retest-phase2e",
+   "label": "canonical-last",
+   "architecture": "single-pass",
+   "aggregation": "none",
+   "proposer_pool": "canonical-last",
+   "derived": {
+    "modality": "image",
+    "basis": "pass-metadata",
+    "from_transmitted_configuration": true,
+    "routes_disagree": false,
+    "pass_metadata": {
+     "modality": "image",
+     "configs": [
+      {
+       "config": "library_plus-hp",
+       "include_example_images": true,
+       "n_examples": 13,
+       "n_null_examples": 3,
+       "meta_path": "outputs/retest/phase2e/canonical-last/run_1/detections_canonical-last_run01.meta.json"
+      }
+     ],
+     "recorded_pass_modality": [
+      "image"
+     ],
+     "n_passes": 1,
+     "n_metas_read": 1
+    },
+    "run_metadata": {
+     "modality": "image",
+     "configs": [
+      {
+       "config": "library_plus-hp",
+       "include_example_images": true,
+       "n_examples": 13,
+       "n_null_examples": 3,
+       "meta_path": "outputs/retest/phase2e/canonical-last/run_1/detections_canonical-last_run01.meta.json"
+      }
+     ],
+     "pool_output_dir": "outputs/retest/phase2e/canonical-last",
+     "matched_basename": "canonical-last"
+    },
+    "config_file": {
+     "modality": null,
+     "configs": []
+    }
+   },
+   "recorded": {
+    "register_pool_modality": "image",
+    "register_verifier_modality": null,
+    "passes_manifest_modality": [
+     "image"
+    ],
+    "pool_token": null,
+    "label_token": null,
+    "results/uplift-supplement/conditions.csv::modality": "image",
+    "results/uplift-supplement/conditions-by-buffer.csv::modality": "image",
+    "results/tile-size-sweep/tile_size_sweep.json::modality": "text"
+   },
+   "mismatches": [
+    {
+     "artefact": "results/tile-size-sweep/tile_size_sweep.json",
+     "field": "modality",
+     "recorded": "text",
+     "derived": "image",
+     "mechanism": "label substring test with no modality token in the label: `'image' in label` was false, so the test fell through to its 'text' default (pool 'canonical-last' is image)"
+    }
+   ]
+  }
+ ],
+ "n_pool_labels_with_a_mismatch": 1,
+ "pool_labels": [
+  {
+   "artefact": "results/k-ladder-2026-09-12/phase2/unions.json",
+   "field": "modality",
+   "run_id": "pv-diag-384",
+   "proposer_pool": "scale-4-optimal-487",
+   "recorded": "text",
+   "recorded_as_binary_factor": "text",
+   "derived": "image",
+   "basis": "pass-metadata",
+   "mismatch": true,
+   "refinement": false
+  }
+ ]
+}

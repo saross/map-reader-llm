@@ -47,3 +47,41 @@ def test_membership_constants_name_the_signed_frame():
     assert b.FRAME.endswith("era2_b_intersection_bounds.geojson")
     assert b.FRAME_ID == "era2-b-487" and b.FRAME_TILES == 487
     assert b.SUFFIX == "-era2b"
+
+
+def test_member_track_is_derived_from_the_transmitted_config_not_the_label(monkeypatch):
+    """The board's ``track`` must come from what the proposer sent.
+
+    Modality is a preregistered factor (H1). Before 2026-09-14 the builder
+    assigned ``"image" if "image" in label else "text"``, which mislabelled
+    seven cells on this board in two distinct ways. The membership rule now
+    calls ``derive_condition_modality.condition_modality``, so the label's own
+    tokens have no influence on the field.
+    """
+    def fake(run_id: str, pool: str) -> tuple[str, str]:
+        # The ground truth for both failure shapes the 2026-09-14 audit found.
+        return ({"detect_brief-text": ("text", "config-file"),
+                 "scale-4-optimal-487": ("image", "run-metadata")}
+                .get(pool, ("text", "register")))
+
+    monkeypatch.setattr(b, "condition_modality", fake)
+
+    # Shape 1: the label names the VERIFIER's modality over a text proposer.
+    label = "verified-brief-image"
+    assert "image" in label                # the retired test would have said "image"
+    assert b.condition_modality("proposer-verifier-384", "detect_brief-text") == (
+        "text", "config-file")
+
+    # Shape 2: the label carries no modality token at all, so a substring test
+    # would fall through to "text"; the pool is image-bearing.
+    label = "pv-scale4-optimal-n1-opmax"
+    assert "image" not in label             # the retired test would have said "text"
+    assert b.condition_modality("pv-diag-384", "scale-4-optimal-487") == (
+        "image", "run-metadata")
+
+
+def test_the_label_substring_test_is_gone_from_the_membership_rule():
+    """A regression guard: the retired expression must not reappear."""
+    source = (b.REPO_ROOT / "scripts/build_gs_era2_board.py").read_text(encoding="utf-8")
+    assert '"image" if "image" in label else "text"' not in source
+    assert 'condition_modality(run_id, cond.get("proposer_pool")' in source
