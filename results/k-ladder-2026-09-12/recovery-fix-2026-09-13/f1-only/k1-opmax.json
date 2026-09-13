@@ -1,0 +1,261 @@
+{
+  "label": "g37-text-k1-verified-opmax",
+  "recipe": {
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+    "buffers": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      75,
+      100,
+      125,
+      150
+    ],
+    "evaluation_crs": "EPSG:32635",
+    "metric_function": "scripts/lib_advanced_metrics.py::calculate_f1_internal"
+  },
+  "withheld": {
+    "bootstrap_ci": "WITHHELD \u2014 the tile-join invariant refuses this cell's per-tile table, and the F1 bootstrap resamples tiles",
+    "tile_classification": "WITHHELD \u2014 tile_join_detection_shortfall under the 'id' join; the cell's 192 px-stride source_tile vocabulary is not the board frame's 336 px-stride one"
+  },
+  "n_reference_mounds": 569,
+  "n_frame_tiles": 487,
+  "sets": {
+    "before": {
+      "path": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k1-verified-opmax.geojson",
+      "n_detections": 502,
+      "per_buffer": {
+        "5": {
+          "precision": 0.4462,
+          "recall": 0.5149,
+          "f1": 0.4781
+        },
+        "10": {
+          "precision": 0.7331,
+          "recall": 0.846,
+          "f1": 0.7855
+        },
+        "15": {
+          "precision": 0.7829,
+          "recall": 0.9034,
+          "f1": 0.8388
+        },
+        "20": {
+          "precision": 0.7928,
+          "recall": 0.9149,
+          "f1": 0.8495
+        },
+        "25": {
+          "precision": 0.8048,
+          "recall": 0.9287,
+          "f1": 0.8623
+        },
+        "30": {
+          "precision": 0.8068,
+          "recall": 0.931,
+          "f1": 0.8645
+        },
+        "35": {
+          "precision": 0.8068,
+          "recall": 0.931,
+          "f1": 0.8645
+        },
+        "40": {
+          "precision": 0.8068,
+          "recall": 0.931,
+          "f1": 0.8645
+        },
+        "45": {
+          "precision": 0.8088,
+          "recall": 0.9333,
+          "f1": 0.8666
+        },
+        "50": {
+          "precision": 0.8127,
+          "recall": 0.9379,
+          "f1": 0.8709
+        },
+        "75": {
+          "precision": 0.8127,
+          "recall": 0.9379,
+          "f1": 0.8709
+        },
+        "100": {
+          "precision": 0.8187,
+          "recall": 0.9448,
+          "f1": 0.8773
+        },
+        "125": {
+          "precision": 0.8187,
+          "recall": 0.9448,
+          "f1": 0.8773
+        },
+        "150": {
+          "precision": 0.8187,
+          "recall": 0.9448,
+          "f1": 0.8773
+        }
+      }
+    },
+    "after": {
+      "path": "/home/shawn/scratch/recovery-drop-fix/rescore/k1-opmax.geojson",
+      "n_detections": 502,
+      "per_buffer": {
+        "5": {
+          "precision": 0.4442,
+          "recall": 0.5126,
+          "f1": 0.476
+        },
+        "10": {
+          "precision": 0.7331,
+          "recall": 0.846,
+          "f1": 0.7855
+        },
+        "15": {
+          "precision": 0.7829,
+          "recall": 0.9034,
+          "f1": 0.8388
+        },
+        "20": {
+          "precision": 0.7928,
+          "recall": 0.9149,
+          "f1": 0.8495
+        },
+        "25": {
+          "precision": 0.8048,
+          "recall": 0.9287,
+          "f1": 0.8623
+        },
+        "30": {
+          "precision": 0.8068,
+          "recall": 0.931,
+          "f1": 0.8645
+        },
+        "35": {
+          "precision": 0.8068,
+          "recall": 0.931,
+          "f1": 0.8645
+        },
+        "40": {
+          "precision": 0.8068,
+          "recall": 0.931,
+          "f1": 0.8645
+        },
+        "45": {
+          "precision": 0.8088,
+          "recall": 0.9333,
+          "f1": 0.8666
+        },
+        "50": {
+          "precision": 0.8127,
+          "recall": 0.9379,
+          "f1": 0.8709
+        },
+        "75": {
+          "precision": 0.8127,
+          "recall": 0.9379,
+          "f1": 0.8709
+        },
+        "100": {
+          "precision": 0.8187,
+          "recall": 0.9448,
+          "f1": 0.8773
+        },
+        "125": {
+          "precision": 0.8187,
+          "recall": 0.9448,
+          "f1": 0.8773
+        },
+        "150": {
+          "precision": 0.8187,
+          "recall": 0.9448,
+          "f1": 0.8773
+        }
+      }
+    }
+  },
+  "delta": {
+    "basis": "after minus before",
+    "n_detections": 0,
+    "per_buffer": {
+      "5": {
+        "precision": -0.002,
+        "recall": -0.0023,
+        "f1": -0.0021
+      },
+      "10": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "15": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "20": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "25": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "30": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "35": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "40": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "45": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "50": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "75": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "100": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "125": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "150": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    }
+  }
+}
