@@ -1272,6 +1272,24 @@ def stage_assemble(inventory: dict[str, Any]) -> dict[str, Any]:
                        if ref in after_mcc_tier
                        and before_mcc_tier[ref] != after_mcc_tier[ref])
 
+    # Rank stability. A tier LABEL shifts wholesale when the tier count
+    # changes, so "changed tier" over-reports; the rank correlation and the
+    # number of cells moving more than one tier say what actually moved.
+    rank_before = {r["ref"]: r["rank"] for r in committed["ranking"]}
+    rank_after = {r["ref"]: r["rank"] for r in reduced["ranking"]}
+    shared = sorted(set(rank_before) & set(rank_after))
+    ranks_b = np.array([rank_before[r] for r in shared])
+    ranks_a = np.array([rank_after[r] for r in shared])
+    rank_stability = {
+        "n_cells": len(shared),
+        "spearman": round(float(np.corrcoef(
+            ranks_b.argsort().argsort(), ranks_a.argsort().argsort())[0, 1]), 6),
+        "max_abs_rank_shift": int(np.abs(ranks_b - ranks_a).max()),
+        "n_moving_more_than_3_ranks": int((np.abs(ranks_b - ranks_a) > 3).sum()),
+        "n_moving_more_than_one_tier": len(
+            [r for r in moved if abs(after_tier[r] - before_tier[r]) > 1]),
+    }
+
     def tier1(doc: dict[str, Any]) -> list[str]:
         return sorted(next(t["members"] for t in doc["tiers"] if t["tier"] == 1))
 
@@ -1444,6 +1462,9 @@ def stage_assemble(inventory: dict[str, Any]) -> dict[str, Any]:
             "tier1_before": tier1(committed),
             "tier1_after": tier1(reduced),
             "tier1_unchanged": tier1(committed) == tier1(reduced),
+            "tier1_left": sorted(set(tier1(committed)) - set(tier1(reduced))),
+            "tier1_joined": sorted(set(tier1(reduced)) - set(tier1(committed))),
+            "rank_stability": rank_stability,
             "n_cells_changing_tier": len(moved),
             "cells_changing_tier": [
                 {"ref": r, "tier_before": before_tier[r], "tier_after": after_tier[r]}
@@ -1459,6 +1480,12 @@ def stage_assemble(inventory: dict[str, Any]) -> dict[str, Any]:
             "tier1_before": mcc_tier1(committed),
             "tier1_after": mcc_tier1(reduced),
             "tier1_unchanged": mcc_tier1(committed) == mcc_tier1(reduced),
+            "tier1_left": sorted(set(mcc_tier1(committed)) - set(mcc_tier1(reduced))),
+            "tier1_joined": sorted(set(mcc_tier1(reduced)) - set(mcc_tier1(committed))),
+            "top_ranks_before": [r["ref"] for r in
+                                 committed["mcc_permutation"]["ranking"][:7]],
+            "top_ranks_after": [r["ref"] for r in
+                                reduced["mcc_permutation"]["ranking"][:7]],
             "n_cells_changing_mcc_tier": len(moved_mcc),
             "cells_changing_mcc_tier": [
                 {"ref": r, "tier_before": before_mcc_tier[r],

@@ -292,6 +292,7 @@ def tiering_section(analysis: dict[str, Any]) -> str:
     t = analysis["era2_tiering"]
     m = analysis["era2_mcc_family"]
     mcb = analysis["era2_mcb"]
+    rs = t["rank_stability"]
     lines = [
         "## The Era-2 board rebuilt on the reduced frame",
         "",
@@ -318,42 +319,68 @@ def tiering_section(analysis: dict[str, Any]) -> str:
         f"| tile-MCC Hsu MCB admissible | {mcb['mcc']['n_admissible_before']} "
         f"| {mcb['mcc']['n_admissible_after']} |",
         "",
-        f"**F1 Tier 1 is unchanged**: {'yes' if t['tier1_unchanged'] else 'NO'} — "
-        f"{len(t['tier1_after'])} members, "
-        + ("the same five cells in the same tier"
-           if t["tier1_unchanged"] else "MEMBERSHIP MOVED, see analysis.json")
-        + ". **tile-MCC Tier 1 is unchanged**: "
-        + f"{'yes' if m['tier1_unchanged'] else 'NO'} — "
-        + f"{len(m['tier1_after'])} members"
-        + ("" if m["tier1_unchanged"] else ", MEMBERSHIP MOVED")
-        + ".",
+        "**Things do move, at the tie-set boundaries.** The answer to the PI's",
+        "question is not \"nothing changed\":",
         "",
-        "The admissible sets move by single members:",
+    ]
+    left = t["tier1_left"]
+    lines += [
+        f"- **F1 Tier 1 loses one member** ({len(t['tier1_before'])} → "
+        f"{len(t['tier1_after'])}): "
+        + ", ".join(f"`{r.split('::', 1)[1]}`" for r in left)
+        + (" — a **text** cell — drops to Tier 2." if len(left) == 1 else "."),
+        "  Both image cells in Tier 1 stay, as do the other two text cells. The",
+        "  demoted cell is the one whose F1@20 fell furthest of the five",
+        "  (−0.0066, to 0.9002), and the cell at rank 5 (0.9013) passed it.",
+        f"- **The F1 tier count falls {t['n_tiers_before']} → "
+        f"{t['n_tiers_after']}** and {t['n_pairs_significant_before']} → "
+        f"{t['n_pairs_significant_after']} pairs are significant: 20 fewer tiles",
+        "  is a little less power, and a tier boundary merges.",
+        f"- **tile-MCC Tier 1 loses {len(m['tier1_left'])} and gains "
+        f"{len(m['tier1_joined'])}** ({m['tie_set_size_before']} → "
+        f"{m['tie_set_size_after']} cells), and the MCC tier count rises "
+        f"{m['n_tiers_before']} → {m['n_tiers_after']} on "
+        f"{m['n_significant_before']} → {m['n_significant_after']} significant",
+        "  pairs. **Every cell that leaves and every cell that joins is an image",
+        "  cell** — the family is image-dominated at the top either way.",
+        f"- **The Hsu admissible sets move by a member or two**: F1 "
+        f"{mcb['f1']['n_admissible_before']} → "
+        f"{mcb['f1']['n_admissible_after']} "
+        f"({len(mcb['f1']['admitted_by_reduction'])} admitted, "
+        f"{len(mcb['f1']['dropped_by_reduction'])} dropped, "
+        f"{mcb['f1']['n_unchanged']} carried over); tile-MCC "
+        f"{mcb['mcc']['n_admissible_before']} → "
+        f"{mcb['mcc']['n_admissible_after']} "
+        f"({len(mcb['mcc']['admitted_by_reduction'])} admitted, "
+        f"{len(mcb['mcc']['dropped_by_reduction'])} dropped, "
+        f"{mcb['mcc']['n_unchanged']} carried over). The two dropped from the",
+        "  tile-MCC set are text cells; the one added to the F1 set is an image",
+        "  cell.",
         "",
-        f"- **F1**: {mcb['f1']['n_unchanged']} of "
-        f"{mcb['f1']['n_admissible_before']} members carried over; "
-        f"{len(mcb['f1']['admitted_by_reduction'])} admitted by the reduction, "
-        f"{len(mcb['f1']['dropped_by_reduction'])} dropped.",
-        f"- **tile-MCC**: {mcb['mcc']['n_unchanged']} of "
-        f"{mcb['mcc']['n_admissible_before']} carried over; "
-        f"{len(mcb['mcc']['admitted_by_reduction'])} admitted, "
-        f"{len(mcb['mcc']['dropped_by_reduction'])} dropped.",
-        "",
-        "In both metrics the selection-aware argmax picks the **same winning cell**",
-        "on the reduced frame as on the full one.",
+        "These are boundary effects, not a re-ordering. A tie set is a clique of",
+        "cells a permutation test cannot separate, so its edge is exactly where a",
+        "4 % change in the resampling unit should show up, and a tier *label* moves",
+        f"for {t['n_cells_changing_tier']} of {rs['n_cells']} cells simply because",
+        "the tier count changed. What the ranks say is that the board is the same",
+        f"board: Spearman correlation {fmt(rs['spearman'], 4)} between the two",
+        f"rankings, largest rank shift {rs['max_abs_rank_shift']} places, "
+        f"{rs['n_moving_more_than_3_ranks']} cells moving more than three places,",
+        f"and only {rs['n_moving_more_than_one_tier']} cells moving by more than",
+        "one tier.",
         "",
         "### What did NOT change",
         "",
-        "- The F1 tier count, the F1 tie set, and F1 Tier 1 and its members.",
-        "- The rank order at the top of the F1 board: the five Gemini 3.7 K = 5–10",
-        "  consensus cells stay in the same order, each losing 0.005–0.007 of",
-        "  F1@20, image and text alike.",
-        "- The tile-MCC tier count, the tile-MCC Tier 1, and its leading cells'",
-        "  MCC to within 0.0035.",
-        "- The three cells the tile-join invariant withholds — the same three, for",
-        "  the same reason, on both frames.",
-        "- The selection-aware winner under both metrics.",
-        "- Every Era-1 board's paired tile-swap verdict: zero flips.",
+        "- **The top of the F1 board.** Ranks 1–4 are the same four cells in the",
+        "  same order, each losing 0.005–0.007 of F1@20 — image and text alike —",
+        "  and the leading cell is still the Gemini 3.7 image cell.",
+        "- **The top of the tile-MCC ranking.** Ranks 1–7 are the same seven cells",
+        "  in the same order, their MCC moving by at most 0.0035, three of the",
+        "  seven upwards.",
+        "- **The selection-aware winner** under both metrics: the same argmax cell",
+        "  on the reduced frame as on the full one.",
+        "- **The withholding**: the same three cells, refused by the tile-join",
+        "  invariant for the same reason on both frames.",
+        "- **Every Era-1 board's paired tile-swap verdict**: zero flips.",
     ]
     return "\n".join(lines)
 
@@ -376,47 +403,69 @@ def verdict_section(analysis: dict[str, Any], swap: dict[str, Any]) -> str:
     red = sum(p["reduced"]["delta_mcc"] for p in pairs) / len(pairs)
     m = analysis["era2_mcc_family"]
     t = analysis["era2_tiering"]
+    sig = analysis["leak_signature"]
+    era2 = next(b for b in sig["boards"] if b["board"] == "era2-verified")
     return "\n".join([
         "## Verdict: do Obs 482 and the 3.7 image Tier-1 placement need a qualifier?",
         "",
-        "**Both claims stand, and both should carry a one-sentence disclosure of",
-        "the leak rather than a qualifier on the finding.** Obs 482's reading —",
-        "that tile-MCC is led by single-pass image proposer-verifier baselines",
-        "while the F1 board is led by Gemini 3.7 consensus cells — is exactly the",
-        "claim most exposed to this leak, because the leak's only possible effect",
-        "is to suppress false positives, and a suppressed false positive is",
-        "precisely what lifts a tile-level metric by keeping an empty tile empty.",
-        "The measurement says the leak did do that, and that it did not do enough",
-        "to matter. Across the 59 image cells of the Era-2 board paired against",
-        "their nearest text comparators, the image-over-text tile-MCC advantage is",
-        f"{fmt(full, 4, True)} on the full frame and {fmt(red, 4, True)} on the",
-        f"reduced one — a change of {fmt(red - full, 4, True)}, about half a",
-        "percent of the advantage itself. The three cells at the head of the",
-        "tile-MCC ranking move by −0.0002, −0.0005 and +0.0035, two of the three",
-        "**upwards**, and each sheds at most one or two false positives across all",
-        f"20 leaked tiles. tile-MCC Tier 1 is unchanged ({len(m['tier1_after'])}",
-        "members), as is its ordering at the top. On the F1 side the 3.7 image",
-        "cell keeps rank 1 and Tier 1, losing 0.0062 of F1@20 while the two 3.7",
-        "text cells immediately behind it lose 0.0052 — the gap narrows by 0.0010",
-        f"and F1 Tier 1 and its {len(t['tier1_after'])} members are unchanged. So",
-        "the honest form of the disclosure is: a known leak of three empty",
-        "exemplar tiles into 20 of the Era-2 frame's 487 tiles measurably",
-        "suppressed image-bearing cells' false positives on that ground",
-        "(FP-rate ratio 0.56 against the text controls' 0.68, within one run,",
-        "p < 1e-4), and removing those tiles changes no tier, no Tier-1",
-        "membership, and no cell's headline F1@20 or tile-MCC by more than 0.007",
-        "and 0.011 respectively.",
+        "**Both claims survive, and what they need is a one-sentence disclosure of",
+        "the leak with its measured size, not a qualifier on the finding.**",
         "",
-        "Two caveats belong with that. First, the Era-1 boards show no signature",
-        "unstratified and a weak, heterogeneous one stratified by run, which is",
-        "consistent with their exposed tiles being shallower (mean leaked share",
-        "0.186 against 0.281) but is not established; the Era-1 reduction is",
-        "dominated by its much larger frame effect either way. Second, the",
-        "signature test is a between-cell contrast even when stratified: it shows",
-        "that cells which sent the pixels behave differently on the leaked ground,",
-        "not that any individual cell's number is wrong by a stated amount. The",
-        "per-cell re-scores are the answer to that question, and they are",
-        "thousandths.",
+        "Obs 482's reading — that tile-MCC is led by single-pass image",
+        "proposer-verifier baselines while the F1 board is led by Gemini 3.7",
+        "consensus cells — is the claim most exposed to this leak, because the",
+        "leak's only possible effect is to suppress false positives, and a",
+        "suppressed false positive is precisely what lifts a tile-level metric by",
+        "keeping an empty tile empty. The measurement says the leak did do that",
+        "and did not do nearly enough to carry the claim. Across the 59 image cells",
+        "of the Era-2 board paired against their nearest text comparators, the",
+        f"image-over-text tile-MCC advantage is {fmt(full, 4, True)} on the full",
+        f"frame and {fmt(red, 4, True)} on the reduced one — a change of",
+        f"{fmt(red - full, 4, True)}, under half a percent of the advantage",
+        "itself. The seven cells at the head of the tile-MCC ranking are the same",
+        "seven in the same order on both frames, their MCC moving by at most",
+        "0.0035 and three of the seven **upwards**; the top three shed one or",
+        "fewer false positives each across all 20 leaked tiles (13 → 12, 16 → 15,",
+        "17 → 16). tile-MCC Tier 1 does shrink, from",
+        f"{m['tie_set_size_before']} cells to {m['tie_set_size_after']}, but the",
+        "seven that leave and the two that join are all image cells and none is",
+        "among the leaders: the tie set tightens, it does not change character.",
+        "",
+        "The 3.7 image Tier-1 placement also holds. `g37-image-k5-verified-swap37"
+        "-p0.90-k5` keeps rank 1 and Tier 1, losing 0.0062 of F1@20 while the two",
+        "3.7 text cells immediately behind it lose 0.0052 each, so its lead",
+        "narrows by 0.0010 and its ordering is unchanged. The one real movement at",
+        "the top is on the **text** side: F1 Tier 1 goes from five cells to four",
+        "because `g37-text-k10-verified-carried-p0.10-k10` falls out of the tie",
+        "set. Removing the leaked tiles therefore demotes a text cell and leaves",
+        "both image cells in place — the opposite of what a leak inflating image",
+        "scores would do.",
+        "",
+        "So the disclosure to carry is: three empty exemplar tiles leaked into 20",
+        "of the Era-2 frame's 487 tiles, and image-bearing cells measurably",
+        "suppressed false positives on that ground — an FP-rate ratio of",
+        f"{fmt(era2['pooled_image']['ratio'], 2)} against the text controls'",
+        f"{fmt(era2['pooled_text']['ratio'], 2)}, within a single run, at",
+        f"p {p_fmt(era2['p_value_image_lower'])} — but removing those tiles moves",
+        "no cell's headline F1@20 by more than 0.0074 or its tile-MCC by more than",
+        "0.0120, leaves the top of both rankings in place, and costs the image",
+        "cells less than the text controls rather than more.",
+        "",
+        "Three caveats belong with that. First, the tie sets DO move at their",
+        f"edges — F1 Tier 1 {len(t['tier1_before'])} → {len(t['tier1_after'])},",
+        f"tile-MCC Tier 1 {m['tie_set_size_before']} → {m['tie_set_size_after']},",
+        "the Hsu sets by one and two — so any text that quotes a tie-set *size*",
+        "is frame-specific and should say so. Second, the Era-1 boards show no",
+        "signature unstratified and a weak, heterogeneous one stratified by run",
+        "(one run strongly negative, one positive), which is consistent with",
+        "their exposed tiles being shallower — mean leaked share 0.186 against",
+        "0.281 — but is not established by this analysis; their reduction is",
+        "dominated by its much larger frame effect either way. Third, the",
+        "signature test remains a between-cell contrast even stratified: it",
+        "establishes that cells which sent the pixels behave differently on the",
+        "leaked ground, not that any individual cell's published number is wrong",
+        "by a stated amount. The per-cell re-scores answer that question, and they",
+        "answer it in thousandths.",
     ])
 
 
@@ -454,18 +503,26 @@ def render(analysis: dict[str, Any], signature: dict[str, Any],
         "modified, and every \"after\" number below comes from this directory's own",
         "re-scores.",
         "",
-        "**The short answer.** The leak is real and measurable where it must show",
-        "up first — on the Era-2 board, image-bearing cells suppress false",
-        "positives on the leaked tiles about a fifth more than text controls do,",
-        "within a single run, at "
-        f"p {p_fmt(era2_sig['test']['p_value_image_lower'])} — and it is too small",
-        "to move anything the boards report, because the leaked tiles are "
-        f"{frames['era2-b-487']['n_overlap']} of "
-        f"{frames['era2-b-487']['n_tiles']} tiles carrying 12 of 435 reference",
-        "mounds. No F1 tier changes, no cell moves tier, tile-MCC Tier 1 is",
-        "unchanged, and the two Hsu admissible sets move by a member or two. The",
-        "largest per-cell effect anywhere on the Era-2 board is 0.0068 in F1@20",
-        "and 0.0110 in tile-MCC.",
+        "**The short answer, in three parts.**",
+        "",
+        "1. **The leak is real and it is measurable where it must show up first.**",
+        "   On the Era-2 board, image-bearing cells suppress false positives on the",
+        "   leaked tiles about a fifth more than text controls do — FP-rate ratio",
+        f"   {fmt(era2_sig['test']['pooled_image']['ratio'], 3)} against",
+        f"   {fmt(era2_sig['test']['pooled_text']['ratio'], 3)} — and the contrast",
+        "   survives restriction to a single run, at",
+        f"   p {p_fmt(era2_sig['test']['p_value_image_lower'])}.",
+        "2. **No cell's published number moves more than a hundredth.** The largest",
+        "   movement of any Era-2 cell is 0.0074 in F1@20 and 0.0120 in tile-MCC,",
+        "   and the reduction costs the image cells *less* than the text controls,",
+        "   not more, because the leaked tiles hold 12 of the frame's 435 reference",
+        "   mounds as well as the quiet ground.",
+        "3. **The tie sets do move at their edges, and that is worth disclosing.**",
+        "   F1 Tier 1 goes from five cells to four — the cell it loses is a *text*",
+        "   cell — the F1 tier count from 14 to 13, tile-MCC Tier 1 from 33 cells",
+        "   to 28, and the two Hsu admissible sets by one and two members. The top",
+        "   of both rankings, and the selection-aware winner under both metrics,",
+        "   are unchanged.",
         "",
         "## The leak, established at the byte level",
         "",
