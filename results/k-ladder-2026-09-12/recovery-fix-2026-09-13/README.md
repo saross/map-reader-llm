@@ -73,6 +73,26 @@ that these two cells are untouched.
 | `f1-only/*.json` | per-buffer precision/recall/F1 for before and after, all 14 buffers, plus the deltas and the explicit withheld block |
 | `materialised/*.geojson` | the "after" detection sets, materialised at each cell's operating point |
 | `reproduced-k5-evaluation/` | the tier-E cell's full re-evaluation — **dict-identical** to the committed `evaluation.json` summary |
+| `harness/` | the six scripts that produced everything above, kept so the numbers are re-derivable |
+
+### The harness
+
+Committed beside its outputs rather than in `scripts/`, because five of the six are
+single-purpose to this fix. They are `ruff`-clean and documented.
+
+| script | what it does |
+|---|---|
+| `compare_unions.py` | positional diff of a pre-fix union against its rebuilt counterpart, in EPSG:32635 |
+| `shift_hist.py` | the displacement census — how many matched candidates moved, and by how much |
+| `carry_probabilities.py` | re-keys a committed `probabilities.json` onto a rebuilt union's numbering, reports what is uncovered, and re-derives each candidate's integer crop window |
+| `rescore_recovery_fixed.py` | the re-score driver; **imports** `argmax_at_headline`, `cell_dir_name` and `reassign_carrier_tiles` from the committed drivers rather than restating them |
+| `f1_only.py` | the F1 arm for cells the tile-join invariant refuses, scoring before and after in one process |
+| `add_board_note.py` | inserts the board note, refusing unless 16 signature paths are byte-equal |
+
+**`carry_probabilities.py` is the one worth promoting to `scripts/`** if another
+union is ever rebuilt — re-keying probabilities onto a new candidate numbering is a
+general need, and testing coverage on the integer crop window rather than on metric
+distance is the lesson of § 6.1 of the report. Left here for the PI to decide.
 
 The pre-fix evaluations are snapshotted at
 `archive/superseded-consensus-2026-09-13/recovery-fragment-drop/evaluations-as-read-2026-09-13/`.
