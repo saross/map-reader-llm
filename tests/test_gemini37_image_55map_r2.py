@@ -11,13 +11,18 @@ no candidate sits on it, and the rung labelling the stages round-trip through.
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import geopandas as gpd
 import pytest
 from shapely.geometry import Point
 
 from scripts.gemini37_image_55map_r2 import (
     CARRIED,
+    PROJECT_ROOT,
     achievable_points,
+    engine_command,
     materialise,
     rung_label,
     with_carried,
@@ -124,3 +129,35 @@ def test_rung_labels_round_trip_to_their_pass_count(
     assert label == expected
     assert int(label.rsplit("K", 1)[1]) == k
     assert ("ARM1" in label) == (arm == "arm1")
+
+
+#: A committed r2 board cell, whose own ``cli_args`` block is the recipe this
+#: campaign must reproduce. Reading the recipe from the artefact rather than
+#: from prose is the point: a board rebuild that changed it would fail here.
+_COMMITTED_CELL = Path(
+    "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-oracle/evaluation.json"
+)
+
+
+def test_engine_command_reproduces_the_committed_recipe() -> None:
+    """Every scoring parameter matches a committed r2 board cell's own record."""
+    committed = json.loads((PROJECT_ROOT / _COMMITTED_CELL).read_text())
+    want = committed["_metadata"]["cli_args"]
+    cmd = engine_command("d.geojson", "out", "CELL", workers=5)
+
+    def value_after(flag: str) -> str:
+        return cmd[cmd.index(flag) + 1]
+
+    assert value_after("--ground-truth") == want["ground_truth"]
+    assert value_after("--bounds") == want["bounds"]
+    assert int(value_after("--bootstrap")) == want["bootstrap"]
+    assert int(value_after("--seed")) == want["seed"]
+    assert "--mcc" in cmd
+    assert "--require-clean-inputs" in cmd
+    start = cmd.index("--buffers") + 1
+    buffers = []
+    for token in cmd[start:]:
+        if token.startswith("--"):
+            break
+        buffers.append(int(token))
+    assert buffers == want["buffers"]

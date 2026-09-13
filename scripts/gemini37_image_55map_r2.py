@@ -54,6 +54,8 @@ Usage::
     python scripts/gemini37_image_55map_r2.py --stage selftest
     python scripts/gemini37_image_55map_r2.py --stage sweep --workers 12
     python scripts/gemini37_image_55map_r2.py --stage materialise
+    # commit the materialised detections, then:
+    python scripts/gemini37_image_55map_r2.py --stage score --workers 5 --jobs 4
     python scripts/gemini37_image_55map_r2.py --stage tests
 
 Zero API. Run on sapphire (Hungarian matching over 8,541 tiles per sweep
@@ -567,6 +569,96 @@ def stage_materialise() -> int:
 
 
 # ---------------------------------------------------------------------------
+# Scoring: the engine, on the board's recipe, unchanged.
+# ---------------------------------------------------------------------------
+
+#: The r2 board's stage-2 recipe, read from a committed cell's own
+#: ``evaluation.json`` ``cli_args`` block rather than retyped from prose
+#: (``results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-oracle``).
+ENGINE_BUFFERS = (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150)
+ENGINE_BOOTSTRAP = 10_000
+GROUND_TRUTH = "inputs/vectors/references/best-available-gt-55maps-r2.geojson"
+
+
+def engine_command(det: str, out_dir: str, label: str, workers: int) -> list[str]:
+    """The scoring command for one cell.
+
+    Args:
+        det: Repository-relative detections path.
+        out_dir: Repository-relative output directory.
+        label: The evaluation label to stamp.
+        workers: Engine parallelism.
+
+    Returns:
+        The argument vector, for ``subprocess.run``.
+    """
+    return [
+        ".venv/bin/python", "scripts/evaluate_detections.py",
+        "--detections", det,
+        "--buffers", *[str(b) for b in ENGINE_BUFFERS],
+        "--ground-truth", GROUND_TRUTH,
+        "--bounds", str(Path(BOUNDS).relative_to(PROJECT_ROOT)),
+        "--bootstrap", str(ENGINE_BOOTSTRAP),
+        "--seed", str(SEED),
+        "--output-dir", out_dir,
+        "--label", f"{label}-image-55map-r2",
+        "--mcc", "--workers", str(workers),
+        "--require-clean-inputs",
+    ]
+
+
+def stage_score(workers: int, jobs: int) -> int:
+    """Score every materialised cell with the engine, on the board's recipe.
+
+    ``--require-clean-inputs`` makes the engine refuse a detections file that
+    is untracked or modified, so this stage checks git state first and says
+    plainly what to commit rather than letting the engine exit 4 per cell.
+
+    Args:
+        workers: Engine parallelism per cell.
+        jobs: Cells scored concurrently.
+
+    Returns:
+        A process exit status.
+    """
+    import subprocess
+    from concurrent.futures import ThreadPoolExecutor
+
+    manifest = json.loads((RESULTS_HOME / "cells_manifest.json").read_text())
+    cells = manifest["cells"]
+    dirty = subprocess.run(
+        ["git", "status", "--porcelain", "--", *[c["det"] for c in cells]],
+        cwd=PROJECT_ROOT, capture_output=True, text=True, check=False,
+    ).stdout.strip()
+    if dirty:
+        logger.error(
+            "detections not committed — the engine's --require-clean-inputs "
+            "would refuse them. Commit these first:\n%s", dirty)
+        return 4
+
+    def run_one(cell: dict[str, Any]) -> tuple[str, int]:
+        out_dir = str((RESULTS_HOME / "cells" / cell["label"]).relative_to(PROJECT_ROOT))
+        cmd = engine_command(cell["det"], out_dir, cell["label"], workers)
+        log = RESULTS_HOME / "cells" / cell["label"] / "score.log"
+        proc = subprocess.run(cmd, cwd=PROJECT_ROOT, capture_output=True,
+                              text=True, check=False)
+        log.write_text(proc.stdout + proc.stderr)
+        return cell["label"], proc.returncode
+
+    failed: list[str] = []
+    with ThreadPoolExecutor(max_workers=jobs) as pool:
+        for label, rc in pool.map(run_one, cells):
+            logger.info("scored %-28s rc=%d", label, rc)
+            if rc != 0:
+                failed.append(label)
+    if failed:
+        logger.error("scoring FAILED for %s — see each cell's score.log", failed)
+        return 1
+    logger.info("scored %d cells", len(cells))
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # Gates.
 # ---------------------------------------------------------------------------
 
@@ -717,9 +809,11 @@ def main() -> int:
     """Entry point. Returns a process exit status."""
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--stage", required=True,
-                    choices=["selftest", "sweep", "materialise", "tests"])
+                    choices=["selftest", "sweep", "materialise", "score", "tests"])
     ap.add_argument("--workers", type=int, default=8,
-                    help="Sweep parallelism (default 8)")
+                    help="Sweep parallelism, or engine workers per cell (default 8)")
+    ap.add_argument("--jobs", type=int, default=3,
+                    help="Cells scored concurrently in --stage score (default 3)")
     ap.add_argument("--primary", default=None,
                     help="Cell under test for --stage tests")
     args = ap.parse_args()
@@ -730,6 +824,8 @@ def main() -> int:
         return stage_sweep(args.workers)
     if args.stage == "materialise":
         return stage_materialise()
+    if args.stage == "score":
+        return stage_score(args.workers, args.jobs)
     return stage_tests(args.primary)
 
 
