@@ -86,6 +86,11 @@ if str(BASE_DIR) not in sys.path:
 # off a label. See scripts/derive_condition_modality.py (audit 2026-09-14).
 from scripts.derive_condition_modality import condition_modality  # noqa: E402
 
+#: Set by ``--legacy-modality``. Reinstates the retired name-substring rule so
+#: the 2026-09-14 modality-track audit can measure its effect on identical
+#: data. Never set in normal use.
+LEGACY_MODALITY = False
+
 DEFAULT_CONDITIONS = BASE_DIR / "results" / "run-conditions.json"
 DEFAULT_OUTPUT = BASE_DIR / "results" / "tile-size-sweep"
 HEADLINE_BUFFER_M = 20
@@ -212,6 +217,18 @@ def parse_modality_temp(run: str, label: str, pool: str) -> tuple[str, str | Non
         ``(modality, temperature)`` where modality is "text"/"image" and
         temperature is e.g. "0.7" or None if not encoded in the label.
     """
+    if LEGACY_MODALITY:
+        # The retired rule, kept ONLY so the audit can isolate its effect on
+        # identical data (scripts/compare_modality_recomputation.py).
+        s = f"{label} {pool}".lower()
+        if "image" in s and "text" not in s:
+            modality = "image"
+        elif "text" in s and "image" not in s:
+            modality = "text"
+        else:
+            modality = "image" if "image" in s else "text"
+        m = re.search(r"t([01]\.\d)", s)
+        return modality, (m.group(1) if m else None)
     modality, _basis = condition_modality(run, pool or "")
     if modality is None:
         # No route can speak: keep the historical fallback rather than drop the
@@ -434,7 +451,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--conditions", type=Path, default=DEFAULT_CONDITIONS)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--legacy-modality", action="store_true",
+                        help="Reinstate the retired name-substring modality "
+                             "rule. For the 2026-09-14 audit's A/B only — it "
+                             "reproduces a known defect.")
     args = parser.parse_args()
+    global LEGACY_MODALITY
+    LEGACY_MODALITY = args.legacy_modality
 
     cells = load_cells(args.conditions)
     views = build_views(cells)

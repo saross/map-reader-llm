@@ -53,6 +53,11 @@ RUNS = BASE_DIR / "results" / "runs-manifest.json"
 DEFAULT_OUT_DIR = BASE_DIR / "results" / "working-precision"
 STEP_NOISE = 0.005  # the verifier-robustness §2 noise floor
 
+#: Set by ``--legacy-modality``. Reinstates the retired name-substring rule so
+#: the 2026-09-14 audit can measure its effect on identical data. Never set in
+#: normal use.
+LEGACY_MODALITY = False
+
 
 def derive_tags(cond: dict) -> dict:
     """Modality (derived) plus best-effort thinking/temperature tags.
@@ -79,8 +84,15 @@ def derive_tags(cond: dict) -> dict:
         ``{"modality", "modality_basis", "thinking", "temperature"}``.
     """
     text = f"{cond['label']} {cond.get('proposer_pool', '')}".lower()
-    modality, modality_basis = condition_modality(
-        cond["run_id"], cond.get("proposer_pool") or "")
+    if LEGACY_MODALITY:
+        # The retired rule, kept ONLY so the audit can isolate its effect on
+        # identical data (scripts/compare_modality_recomputation.py).
+        modality = ("image" if "image" in text else
+                    "text" if "text" in text else "unknown")
+        modality_basis = "legacy-name-substring"
+    else:
+        modality, modality_basis = condition_modality(
+            cond["run_id"], cond.get("proposer_pool") or "")
     thinking = ("high" if "high" in text else
                 "medium" if "medium" in text else
                 "minimal" if ("min" in text or "minimal" in text) else "unknown")
@@ -119,7 +131,13 @@ def main(argv: list[str] | None = None) -> int:
                     help="Directory for the two output artefacts. Point it "
                          "elsewhere to recompute without touching the published "
                          "tabulation.")
+    ap.add_argument("--legacy-modality", action="store_true",
+                    help="Reinstate the retired name-substring modality rule. "
+                         "For the 2026-09-14 audit's A/B only — it reproduces a "
+                         "known defect.")
     args = ap.parse_args(argv)
+    global LEGACY_MODALITY
+    LEGACY_MODALITY = args.legacy_modality
     out_dir = args.out_dir
     out_dir.mkdir(parents=True, exist_ok=True)
     conds = json.loads(CONDITIONS.read_text())["conditions"]

@@ -186,18 +186,23 @@ def phase2_mcc_groups() -> dict[str, Any]:
     decomposition = json.loads(
         (BASE_DIR / "results/run-conditions.json").read_text(
             encoding="utf-8"))["decomposition"]
-    # Map a cell directory name (p2a-brief-text) back to its condition.
+    # Map a cell directory name (p2a-brief-text, p2b-image-t-0-0) back to its
+    # condition. The directory slug drops "." and inserts "-" inconsistently
+    # ("image-t0.0" -> "image-t-0-0"), so both sides are compared with every
+    # non-alphanumeric character removed.
+    def key(text: str) -> str:
+        return "".join(ch for ch in text.lower() if ch.isalnum())
+
     by_label: dict[str, tuple[str, str]] = {}
     for run in PHASE2_RUNS:
         stem = "p2" + run[len("retest-phase2"):]
         for cond in (decomposition.get(run) or {}).get("conditions", []):
-            slug = cond["label"].replace(".", "-")
-            by_label[f"{stem}-{slug}"] = (run, cond["label"])
+            by_label[key(f"{stem}-{cond['label']}")] = (run, cond["label"])
 
     cells = []
     for path in sorted(glob.glob(str(BASE_DIR / PHASE2_MCC_DIR / "*/evaluation.json"))):
         name = Path(path).parent.name
-        run_label = by_label.get(name)
+        run_label = by_label.get(key(name))
         doc = json.loads(Path(path).read_text(encoding="utf-8"))
         mcc = tile_mcc_of(doc)
         f1 = f1_at_20m_of(doc)
@@ -235,27 +240,24 @@ def phase2_mcc_groups() -> dict[str, Any]:
 
 
 def tile_mcc_of(doc: dict) -> float | None:
-    """Read a cell evaluation's tile-level MCC, tolerating both layouts.
+    """Read a cell evaluation's tile-level MCC point estimate.
+
+    ``evaluate_detections.py`` writes it at
+    ``summary.tile_classification.mcc.point``, and leaves it null with
+    ``method: "undefined"`` when the tile confusion matrix has an empty row or
+    column (a cell that flags every tile positive has no true negatives, so MCC
+    is undefined rather than zero — the distinction § R2 of the paper draft
+    turns on).
 
     Args:
         doc: A parsed ``evaluation.json``.
 
     Returns:
-        The tile MCC, or None when the evaluation does not carry one.
+        The tile MCC point estimate, or None when it is undefined or absent.
     """
-    adv = doc.get("advanced_metrics") or {}
-    for key in ("tile_mcc", "mcc"):
-        if isinstance(adv.get(key), (int, float)):
-            return float(adv[key])
-    tile = doc.get("tile_level") or {}
-    if isinstance(tile.get("mcc"), (int, float)):
-        return float(tile["mcc"])
-    for buf in (doc.get("summary") or {}).get("buffers") or []:
-        if buf.get("buffer_metres") == 20 or buf.get("buffer_m") == 20:
-            for key in ("tile_mcc", "mcc"):
-                if isinstance(buf.get(key), (int, float)):
-                    return float(buf[key])
-    return None
+    mcc = ((doc.get("summary") or {}).get("tile_classification") or {}).get("mcc") or {}
+    point = mcc.get("point")
+    return None if not isinstance(point, (int, float)) else float(point)
 
 
 def f1_at_20m_of(doc: dict) -> float | None:
@@ -299,7 +301,8 @@ def render(result: dict[str, Any]) -> str:
     if plateau is None:
         out += ["Not recomputed in this run.", ""]
     else:
-        out += [f"Conditions analysed: {plateau['n_analysed']['before']} → "
+        out += [f"Comparison basis: {plateau.get('comparison_basis', '—')}.", "",
+                f"Conditions analysed: {plateau['n_analysed']['before']} → "
                 f"{plateau['n_analysed']['after']}.", "",
                 "| group | n | onset median | p90 | max | tail drift (median) |",
                 "|---|---:|---:|---:|---:|---:|"]
@@ -332,7 +335,8 @@ def render(result: dict[str, Any]) -> str:
     if sweep is None:
         out += ["Not recomputed in this run.", ""]
     else:
-        out += ["| size | leg | before (ref, F1, MCC) | after (ref, F1, MCC) |",
+        out += [f"Comparison basis: {sweep.get('comparison_basis', '—')}.", "",
+                "| size | leg | before (ref, F1, MCC) | after (ref, F1, MCC) |",
                 "|---|---|---|---|"]
         for row in sweep["by_arch_modality"]:
             def cell(value: dict | None) -> str:
@@ -397,17 +401,34 @@ def main() -> int:
         "generated_by": "scripts/compare_modality_recomputation.py",
     }
 
-    plateau_new = recomputed / "working-precision/gs-plateau-characterisation.json"
-    if plateau_new.exists():
-        result["plateau"] = plateau_delta(BASE_DIR / PLATEAU_PUBLISHED, plateau_new)
+    # BEFORE is the legacy labelling rule re-run on TODAY'S register, not the
+    # published artefact: both published tabulations predate register growth
+    # (the plateau one covers 306 conditions against today's 459), so diffing
+    # against them would conflate that growth with the modality correction.
+    # The A/B below changes exactly one thing.
+    plateau_before = recomputed / "working-precision-legacy/gs-plateau-characterisation.json"
+    plateau_after = recomputed / "working-precision/gs-plateau-characterisation.json"
+    if plateau_before.exists() and plateau_after.exists():
+        result["plateau"] = plateau_delta(plateau_before, plateau_after)
+        result["plateau"]["comparison_basis"] = (
+            "legacy name-substring rule vs derived modality, both on the "
+            f"register at this commit; the published {PLATEAU_PUBLISHED} is "
+            "older and is not the baseline")
     else:
-        print(f"skipping plateau: {plateau_new} not found")
+        print(f"skipping plateau: need both {plateau_before} and {plateau_after}")
 
-    sweep_new = recomputed / "tile-size-sweep/tile_size_sweep.json"
-    if sweep_new.exists():
-        result["sweep"] = sweep_delta(BASE_DIR / SWEEP_PUBLISHED, sweep_new)
+    sweep_before = recomputed / "tile-size-sweep-legacy/tile_size_sweep.json"
+    sweep_after = recomputed / "tile-size-sweep/tile_size_sweep.json"
+    if sweep_before.exists() and sweep_after.exists():
+        result["sweep"] = sweep_delta(sweep_before, sweep_after)
+        result["sweep"]["comparison_basis"] = (
+            "legacy name-substring rule vs derived modality, both on the "
+            f"register at this commit; the published {SWEEP_PUBLISHED} is "
+            "compared separately below")
+        result["sweep"]["vs_published"] = sweep_delta(
+            BASE_DIR / SWEEP_PUBLISHED, sweep_after)
     else:
-        print(f"skipping sweep: {sweep_new} not found")
+        print(f"skipping sweep: need both {sweep_before} and {sweep_after}")
 
     if (BASE_DIR / PHASE2_MCC_DIR).is_dir():
         result["phase2_mcc"] = phase2_mcc_groups()
