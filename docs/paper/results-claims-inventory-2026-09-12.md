@@ -1,9 +1,19 @@
 # Results claims-with-anchors inventory — `results-draft.md`, 2026-09-12
 
-> **Last revised**: 2026-09-12 (later: the PI's seven rulings on this
-> inventory recorded at [§ Rulings 2026-09-12](#rulings-2026-09-12), with
-> execution status; prior: original publication, the outline-first claims
-> inventory for the PI's section-by-section Results review). See
+> **Last revised**: 2026-09-13 (**extended to §§ R1b, R3 and R6**, so every
+> Results block is now inventoried and no placeholder remains: 181 claims
+> → **237**, of which 214 VERIFIED, 19 DRIFTED, 1 SUPERSEDED, 3 UNANCHORED,
+> and **10 verified at a committed anchor that no sentence of the draft
+> makes** — all ten K-ladder findings. §§ R3 and R6 are read against the
+> K-ladder review, whose row `k-ladder-2026-09-12` was signed
+> 2026-09-13T06:58:12Z, and against `pass-budget-pareto-v2`, re-signed
+> 2026-09-12T09:03:09Z with a tile-MCC column. The cross-section summary is
+> regenerated for all twelve blocks, with the new ladder figures and the
+> MCC-family tables added. Prior: 2026-09-12 (later: the PI's seven rulings
+> on this inventory recorded at
+> [§ Rulings 2026-09-12](#rulings-2026-09-12), with execution status;
+> prior: original publication, the outline-first claims inventory for the
+> PI's section-by-section Results review). See
 > [§ Changelog](#changelog) for revision history.
 
 ## Rulings 2026-09-12
@@ -35,12 +45,18 @@ Results section is reduced to a list of the empirical claims it actually
 makes, each claim tied to a source the assistant re-read and re-checked, so
 the PI can rule section by section on what stays, what goes, and what is not
 yet supported. This document is that list for
-`docs/paper/results-draft.md` sections R0, R1, R2, R4, R5, R7 (all three
-sub-blocks), R8, and R9.
+`docs/paper/results-draft.md` sections R0, R1, **R1b**, R2, **R3**, R4, R5,
+**R6**, R7 (all three sub-blocks), R8, and R9 — **every block, as of
+2026-09-13**.
 
-**Sections R3 and R6 are deliberately not inventoried** — a K-ladder
-(pass-count) job running in parallel will change their claims. Placeholders
-stand in their place.
+**§§ R3, R6 and R1b were added on 2026-09-13.** R3 and R6 were held back on
+2026-09-12 because a K-ladder (pass-count) job running in parallel would
+change their claims; it has landed and its row is signed, so both are now
+inventoried against it, and every draft sentence the ladder supersedes or
+qualifies is marked. R1b did not exist on 2026-09-12 — it was created by the
+PI's ruling 5 the same day, and its twenty-three outline claims are
+inventoried here as the block's claims table because the draft carries no
+prose for it.
 
 **Anchor discipline.** Every `anchor` cell names a file this session opened
 and a value read out of it. The draft itself is never an anchor, and
@@ -50,6 +66,9 @@ failure. Statuses:
 
 - **VERIFIED** — the anchor reproduces the number as the draft states it.
 - **DRIFTED** — the anchor gives a different value; both are shown.
+- **SUPERSEDED** — a later signed analysis replaces the claim's basis, not
+  merely its value; the draft's claim and the finding's are both given
+  (added 2026-09-13, for §§ R3 and R6 against the K-ladder review).
 - **UNANCHORED** — no source located for the number.
 - **REGISTERED** / **SIGNED** / **POST-HOC** — the registration standing the
   row's register entry carries (`preregistered` and `manually_verified_at` in
@@ -198,6 +217,116 @@ that is).
 
 ---
 
+## R1b — Tile geometry: tile size × overlap × pass count, and the stride ladders
+
+**Section question.** *The detector reads the map in square tiles. Does it
+matter how big those tiles are, how much they overlap, and how many times
+each one is looked at — and if so, which of those three is the lever worth
+paying for?*
+
+**Overlap** is how much of each tile is also covered by its neighbours;
+**stride** is the same fact stated as how far the tiling window moves
+between tiles. A tile that overlaps its neighbours is read more than once,
+so a mound near a tile edge gets a second chance — and any location two
+overlapping tiles both report is **corroborated** without a second model
+pass.
+
+**Prose word count: 0** — the block is an 85-word `[BLOCK PENDING]` pointer
+(`docs/paper/results-draft.md` § R1b), excluded by this inventory's
+convention, which drops `[DRAFT …]` markers. The outline's word table
+records it as "100 (pointer)" against a 150-word target.
+
+*Registration status the block asserts*: post-hoc (E41-class) throughout,
+with one registered leg — **H13** (overlap/stride) is
+`registered-exploratory` and is discharged here, the only place in Results
+where it is.
+
+The twenty-three claims below are `docs/paper/results-outline.md` § R1b
+(PI ruling 5, 2026-09-12; outline § D21), re-verified claim by claim at
+their own anchors this session. Because the draft carries no prose, the
+outline's list *is* the block's claims table.
+
+| # | claim | anchor | status | note |
+|---|---|---|---|---|
+| R1b-01 | A clean 2 × 2 crossing tile size (384, 512 px) with overlap (12.5 %, 50 %) at K = 10 proposer passes, one configuration throughout (`detect_brief-text`, `gemini-3-flash-preview`, MINIMAL, T = 0.7), so only the two geometry factors vary; 30,130 calls, **$18.53 billed flex**, scoring $0. | `results/grid-2026-08-18/findings.md:10-22` (the design and the "only things that vary" clause; scoring cost $0) and `:215` (total 30,130 calls, $37.0603 list / **$18.5302** flex) | VERIFIED | The single-factor discipline the study's own experimental-control rule demands, met exactly. |
+| R1b-02 | At a single pass both bigger tiles and less overlap win: 50 % overlap costs +0.1200 F1 at 512 px and +0.1348 at 384 px; 384 px costs −0.0824 at 12.5 % overlap and −0.0972 at 50 %. All four exclude zero (paired tile bootstrap, B = 10,000, seed 42, E82). | same file `:77-80` — the four contrast rows verbatim, each with its CI95 and p = 0.0001 (floor) | VERIFIED | These are **mean single-pass** contrasts on unfiltered detection sets; the K = 1 rows of R1b-06/07 are at each cell's best (corroboration, vote) point, which is why 50 % wins there. Different estimands, as `:168-175` states. |
+| R1b-03 | The interaction is unresolved: difference-of-differences −0.0148 [−0.0552, +0.0268], p = 0.4902 — the two factors are additive to within the instrument's resolution. | same file `:81` | VERIFIED | — |
+| R1b-04 | **Mechanism — overlap manufactures its own consensus.** Corroborated detections (c ≥ 2) are 7.0 % / 7.7 % of the 12.5 % cells but **40.8 % / 41.7 %** of the 50 % cells; at 12.5 % the same filter is demolition rather than filtering, while at 50 % it keeps recall near 0.87–0.89 and lifts precision 0.156 → 0.531 (512 px). | same file `:101-107` (the c-distribution table, all four cells) and `:110-117` (the demolition/filter passage: recall 0.124 / 0.159 at 12.5 %; 0.156 → 0.531 and 0.123 → 0.367 at 50 %) | VERIFIED | The block's load-bearing mechanism, and what makes R1b-07 more than a curiosity. |
+| R1b-05 | **Under aggregation the overlap ranking inverts and the tile-size ranking does not.** Best cell per configuration at K = 10: 512/50 % **0.7518**, 384/50 % 0.7205, 512/12.5 % 0.6759, 384/12.5 % 0.6475. | same file `:133-140` (the consensus-only board, ranks 1–4); register `grid-tilesize-overlap-2026-08-18` | VERIFIED; POST-HOC, **SIGNED 2026-09-12T09:03:09Z** | The outline calls this row load-bearing, and it is. |
+| R1b-06 | **Passes do not substitute for overlap**, on all three counts at once: 384/12.5 % at K = 10 (union recall 0.8925, best F1 0.6475, $2.91) loses to 512/50 % at K = 3 (0.9229, 0.7429, $1.60). More overlap is better *and* cheaper. | same file `:176-185` — the head-to-head table, Δ −0.0304 recall / −0.0953 F1 / +$1.3040 | VERIFIED | — |
+| R1b-07 | Sharper still: **one single pass** of 512/50 % (F1 0.7121, $0.53) beats **ten** passes of either 12.5 % cell (0.6759 at $1.90; 0.6475 at $2.91). | same file `:163` (512/50 % K = 1: 832 calls, $0.5340, F1 0.7121) and `:187-191` | VERIFIED | — |
+| R1b-08 | **The verifier stage reverses the tile-size ranking.** Post-verifier board (best F1@20 m per cell, 9,133/9,133 candidates verified, zero failures): 384/50 % **0.8961**, 512/50 % 0.8815, 384/12.5 % 0.8677, 512/12.5 % 0.8311. | same file `:337-345` — the post-verifier board, ranks 1–4 with CI95 and tile MCC; register `grid-postverifier-2026-08-18` | VERIFIED; POST-HOC, **SIGNED 2026-09-12T09:03:09Z** | — |
+| R1b-09 | **The overlap reversal survives the verifier, at about half the margin**: (12.5 − 50) = −0.0504, p = 0.0004 at 512 px and −0.0285, p = 0.0208 at 384 px, against a K = 10 consensus baseline of −0.0758, p = 0.0004 and −0.0730, p = 0.0026. | same file `:360-366` (the contrast table, both arms) and `:389-397` (Question 2) | VERIFIED | — |
+| R1b-10 | **The like-for-like baseline is what makes the reversal statable**: the pre-verifier arm is the registered K = 10 consensus operating points scored as single sets on the same instrument — (384 − 512) = −0.0284, p = 0.281 at 12.5 % and −0.0312, p = 0.089 at 50 %, both non-significant — so aggregation alone erodes 512 px's single-pass advantage to non-significance, and the verifier then flips the sign, significantly at 12.5 % (+0.0366, p = 0.034) and unresolved at 50 % (+0.0147, p = 0.231). | same file `:351-366` (the baseline's definition and its gate at 5 × 10⁻⁴) and `:368-375` (the reversal read precisely) | VERIFIED | The methodological care here is a contribution in its own right and compresses badly — it is the reason the reversal is not an artefact of comparing two estimands. |
+| R1b-11 | The verifier's gain over the consensus-only board is **+0.130 to +0.220**, largest exactly where consensus-only was worst (the two 384 px cells, +0.220 and +0.176), because the verifier recovers the precision 384 px lacked while its higher union-recall ceilings (0.8925 / 0.9509 against 0.8715 / 0.9416) are the resource a verifier cannot create. | same file `:347-349` (the range and the 384 px cells) and `:376-388` (the mechanism, the ceilings, the Obs 352 256 px rescue) | VERIFIED | **→ D12 callback to R5's recall-ceiling hub.** |
+| R1b-12 | **Consensus and verifier are complements, not substitutes**: every cell's best operating point keeps a vote threshold (k ≥ 5..10) on top of the probability threshold, and the pure-verifier k = 1 board tops out at 0.8153, trailing the stacked optimum in every cell by 0.052–0.203. | same file `:399-404`; register `grid-postverifier-2026-08-18` | VERIFIED | Now corroborated at ladder scale by the K-ladder review's § 8.6 — see R6-16. |
+| R1b-13 | **Stride is not the lever.** The nine-cell verified board's iso-stride contrasts are all non-significant, but the direction is consistent: at fixed stride, 384 px is at or above every alternative at every stride tested, and never below. | `results/stride-2026-08-25/findings.md:44-53`; Obs 435, `docs/notes/working-notes.md:28698` | VERIFIED | — |
+| R1b-14 | **The optimum is interior.** The 384 px ladder reads 0.8677 (stride 336) → **0.8982** (256) → 0.8961 (192) → 0.8860 (144): 336 → 256 is significant (+0.0305 [+0.0052, +0.0564], p = 0.020), the top is flat (256 vs 192: +0.0020, p = 0.862), and the 144 rung falls away (p = 0.297 / 0.360). The stop rule fired at stride 144. | same file `:55-61` | VERIFIED | — |
+| R1b-15 | **The exit criterion resolves to plateau, not winner.** 13-cell tiered board: **6 of 78 pairs significant, all involving 512/12.5 %**, Tier 1 holding the other twelve cells including all four incumbents; the best new cell ties the grid winner (+0.0020, p = 0.862) and at 30 m the top three are indistinguishable to the third decimal. **No new GS F1 high comes from geometry** — the leading shelf stays ~0.896–0.898 @ 20 m, ~0.903 @ 30 m. | same file `:63-70` (question 3) and `:144-146` (the tiered board); register `stride-plateau-2026-08-25` | VERIFIED; POST-HOC, SIGNED 2026-08-28T12:16:45Z | — |
+| R1b-16 | **What geometry bought was cost, not F1.** 384/33.3 % runs 820 tiles per pass against the grid winner's 1,398 — the same performance at ~59 % of the calls — for ≈ $6.6 all-in against ≈ $10.7 (384/50 %) and ~$50-class for the HIGH-thinking incumbents that share the 30 m shelf. | same file `:72-81`, the passage verbatim; Obs 435 | VERIFIED | The findings document's own closing reading: "a **cost case, not an F1 case**". |
+| R1b-17 | **The exact winner ladder** (384/33.3 %, N ∈ {1, 3, 5, 10}, exactly re-verified, 4,958/4,958 candidates, zero failures): F1@20 m 0.8677 / **0.8911** / 0.8856 / 0.8982 at $1.38 / **$2.64** / $3.81 / $6.56 all-in flex. N = 3 reaches 0.8911 for $2.64 — within 0.007 of the full K = 10 winner at 40 % of its cost, and ~19× cheaper than the $50-class incumbents. | same file `:149-163` — the four-rung table and the efficiency reading ("$3.407 flex measured vs $3.41 priced"); register `stride-winner-ladder-exact-2026-08-25`; `results/stride-2026-08-25/plateau_analyses.json` → `winner_ladder_exact` | VERIFIED; POST-HOC, SIGNED 2026-08-28T12:16:45Z | **This is the gold-standard K ladder the K-ladder review re-scored on the board frame.** The same four rungs read 0.8605 / 0.8834 / 0.8782 / 0.8905 there, at a uniform frame tax of −0.0072 to −0.0077 (`results/k-ladder-2026-09-12/findings.md:108-113`) — see R3-11 and R6-13. |
+| R1b-18 | **The GS ladder § R7.2's carried points were selected on, made checkable.** At prob_t 0.15 the A geometry's k-curve argmax is **k = 8** with a flat top at k 6–9, and the B geometry's is **k = 10** with a single-point top — exactly the (0.15, k8) and (0.15, k10) operating points § R7.2 says were declared before launch. | `results/stride-2026-08-25/plateau_analyses.json` → `k_curves.g384_ov128` (`prob_t` 0.15, `best_k` **8**, `k_within_0p005` **[6, 7, 8, 9]**) and `k_curves.g384_ov192` (`prob_t` 0.15, `best_k` **10**, `k_within_0p005` **[10]**), both re-read this session; `results/stride-2026-08-25/findings.md:147-148` | VERIFIED | The anchor a reader needs to check that the deployment carried points were chosen on GS, not on the deployment sweeps. The PI's 2026-09-13 carried-convention ruling makes this shell (k = 1/3/4/8) *the* carried point — see R3-13. |
+| R1b-19 | **H13, the registered leg: prediction split.** The registered *mechanism* is confirmed and the registered *performance* claim falsified. F1 falls monotonically as overlap rises — arm A (12.5 %) 0.5578, arm B (25 %) 0.5198, arm C (50 %) 0.4025 — all three paired contrasts excluding zero. Recall behaves exactly as registered (0.7379 → 0.7844 → 0.8717); precision falls faster (0.4484 → 0.3887 → 0.2616). | register `h13-overlap-2026-08-18` outcome, all nine figures verbatim (A–B +0.0380 [+0.0009, +0.0708]; A–C +0.1554; B–C +0.1174) | VERIFIED; **REGISTERED-EXPLORATORY, SIGNED 2026-09-12T09:03:09Z** | The **outline's registration note is now stale**: it records this row and the two grid rows as unsigned. All three were signed on 2026-09-12 after a written walkthrough (`_signature_note`: "approved as drafted"). |
+| R1b-20 | H13's edge mechanism **localises and is real but small**: the ten mounds arm A could only ever see within 100 m of a tile edge go from recall 0.2667 (A) to 0.7667 (B) to 0.9333 (C), against 0.7468 → 0.7847 → 0.8706 for the other 528; the gain is concentrated in under 2 % of mounds, so **every additional API dollar spent on overlap buys negative F1**. | same register row (the edge subgroup verbatim; cost-efficiency A→B −0.2019 F1 per additional billed $, B→C −0.1043; basis corrected 2026-08-20 for defect D13) | VERIFIED | The register adds a point the outline does not carry and the paper should: the precision collapse is **not** a deduplication artefact — after removing every duplicate, arm C still books 1,323.7 false positives per pass against arm A's 488.3. |
+| R1b-21 | The registration's own cost multiplier for H13 arm C (~2×) was **wrong before any result existed**: arm C needs **2.99×** the tiles. | same register row's `predicted_outcome` (authoring disclosure, verbatim: "arm C needs 2.99x the tiles, not ~2x (S135 phase gate)") | VERIFIED | A disclosure-grade point about the registration, not the result — and the `predicted_outcome` itself carries an authoring disclosure (written after the computation), which is how every other `predicted_outcome` in the register should be read. |
+| R1b-22 | **Selection caveat, stated once for both boards**: every operating point is F1-selected on the same 487 tiles it is scored on, and the post-verifier sweep offers ~4–5× the consensus sweep's selection space, so the contrasts condition on that selection (E41-class). | `results/grid-2026-08-18/findings.md:384-388`; register `grid-postverifier-2026-08-18` | VERIFIED | — |
+| R1b-23 | **Hand-off to § R7.2, one clause, no re-telling**: the two geometries selected here went to the 55-map corpus, where their GS-selected carried points transferred with taxes of +0.0036 (A) and +0.0081 (B) against the incumbent's +0.0324, and B beat A — the pre-named P6 failure. | `results/stride55-2026-08-27/findings.md:40-42` (A 0.8326 → 0.8362, +0.0036; B 0.8422 → 0.8503, +0.0081; incumbent +0.0324) and `:75-76` (A − B −0.0096 at the carried primaries, −0.0141 at the oracles) | VERIFIED; the three `stride55-*` rows REGISTERED-EXPLORATORY / POST-HOC, all signed 2026-08-28T12:16:45Z | — |
+
+**Twenty-three claims, twenty-three VERIFIED, none DRIFTED, none
+UNANCHORED** — the only Results block that reproduces whole. That is
+expected rather than impressive: it was written three weeks after its
+sources and has not yet been through a prose draft, which is where this
+inventory's other fourteen drifted claims were introduced.
+
+**Gaps.**
+
+- **The block's own registration note is stale.** It says three of the
+  five governing register rows are unsigned. All three —
+  `grid-tilesize-overlap-2026-08-18`, `grid-postverifier-2026-08-18`,
+  `h13-overlap-2026-08-18` — carry `manually_verified_at`
+  **2026-09-12T09:03:09Z**. The outline should be corrected; no claim
+  moves.
+- **No prose exists.** Per ruling 3 that is a complete state for this
+  pass, but the block has therefore never been counted against its
+  150-word target, and eleven of its twenty-three claims are numeric
+  tables that 150 words of prose cannot carry. The D22 plan answers this
+  (one figure, one table); neither has been made.
+- **The K-ladder overlap.** R1b-17's exact winner ladder is now also the
+  spine of the K-ladder review (`k-ladder-2026-09-12`, signed
+  2026-09-13), which re-scores its four rungs on the Era-2 board frame,
+  tests them, and supplies an MCB admissible set. R1b excludes the pass
+  ladder as a *cost* object by design, but the two blocks now share four
+  cells and no sentence allocates them. **The anti-double-telling
+  convention needs a ruling here.**
+- **R1b-02's estimand.** The single-pass contrasts and the K = 1 ladder
+  rows disagree in sign on overlap because they are different estimands.
+  The outline states both without naming the difference; a reader who
+  compares them will think one is wrong.
+- **H13's `predicted_outcome` authoring disclosure** — written after the
+  computation, and saying so — is a transparency practice the paper does
+  not mention anywhere, and it bears on how every other
+  `predicted_outcome` in the register should be read.
+
+**Rulings needed.**
+
+1. Correct the block's registration note to record the three rows as
+   signed 2026-09-12? **Recommended: yes** — it is the one factual error
+   in the block, and it understates the evidence base.
+2. Who owns the four shared rungs of R1b-17 / the gold-standard K ladder
+   — § R1b as geometry, or § R3 as pass count? **Recommended: § R3 owns
+   the ladder, § R1b keeps one clause naming the geometry it ran on** —
+   the finding is about K, and R1b's own scope note already excludes pass
+   count as a cost object.
+3. Does the E41-class selection caveat (R1b-22) stay in the body?
+   **Recommended: yes, one clause** — every number in the block
+   conditions on it, and it is what a reviewer checks for.
+4. Is H13's edge-mechanism subgroup (R1b-20) in the body or the
+   supplement? **Recommended: body, one sentence** — a registered
+   hypothesis whose mechanism is confirmed while its performance claim is
+   falsified is a more interesting result than either half alone.
+
+---
+
 ## R2 — Single-pass baselines: a broad statistical tie at modest performance
 
 **Section question.** *One model call per map tile, no second opinion: how
@@ -268,19 +397,116 @@ post-hoc.
 
 ---
 
-## R3 — Consensus voting *(NOT INVENTORIED)*
+## R3 — Consensus voting buys real performance; its mechanism is pass diversity
 
-**Placeholder.** R3's claims turn on pass count and the diversity dividend,
-and a K-ladder (pass-count) job running in parallel will change them. The
-section is deliberately excluded from this inventory; it must be inventoried
-against the ladder's outputs once they land. Current prose word count:
-**303**. Register rows that will govern it:
-`diversity-dividend-384` (confirmatory-with-deviation, verified
-2026-06-06), `phase3a-consensus-calibration`,
-`phase3a-high-consensus-calibration`,
-`phase3a-replication-thinking-calibration`,
-`phase3c-diversity-calibration` — none of the last four is cited by the
-present draft.
+> **Inventoried 2026-09-13** against the K-ladder review, which the
+> 2026-09-12 placeholder reserved this section for. The review's row
+> `k-ladder-2026-09-12` was **signed 2026-09-13T06:58:12Z**, so the ladder
+> is now evidence rather than work-in-progress, and four of R3's eight
+> claim rows change status because of it.
+
+**Section question.** *Running the detector several times over the same tile
+and keeping only what enough of the runs agree on — how much does that buy,
+and is it the repetition that buys it or the variety between the
+repetitions?*
+
+**K** is the number of independent passes; **k-of-N** is the vote rule that
+keeps a candidate only if at least k of the N passes found it. **Thinking
+level** (MINIMAL, HIGH) is how much internal reasoning the model is asked
+to spend per call; higher thinking and higher temperature both make one
+pass more different from its siblings, which is what a vote can exploit.
+
+**Prose word count: 303** (target ≈ 200; 1.5× over — one of the three
+blocks already close to budget).
+
+*Registration status the section asserts*: H3 confirmatory and rejecting in
+the family FDR; H9 registered-exploratory with its prediction unsupported;
+the thinking-level dividend post-hoc.
+
+| # | claim | anchor | status | note |
+|---|---|---|---|---|
+| R3-01 | H3 is confirmatory and rejects in the registered family FDR: voting improves on single-pass, adjusted p = 0.00035. | `results/family-fdr/family_fdr.json` → `inputs_ranked` rank 2, H3 `numeric_p` 9.999e-05 ("p < 1e-4, permutation floor"), `bh_critical` 0.01428, `adjusted_p` **0.00034996500349965**, `rejected: true`; H3 is in `rejected_at_q` | VERIFIED; **SIGNED** (`diversity-dividend-384`, `confirmatory-with-deviation`, `manually_verified_at` 2026-06-06T00:07:40Z) | — |
+| R3-02 | The consensus-beats-single-pass comparison is the registered H3 test, and every consensus champion significantly beats its matched within-pool single-pass baseline. | `results/run-analyses.json` → `diversity-dividend-384` outcome, claim (2): "+0.13 to +0.43 F1, all BH-p<0.001", and the lift persists at the production N = 5 point (text 4-of-5, image 3-of-5; +0.09 to +0.33) | VERIFIED; SIGNED | The draft states the p-value but not the effect range; D20 would put the range in a table. |
+| R3-03 | Pooling N passes and thresholding on cross-pass vote count lifts the text pipeline from the single-pass tie (~0.63) to **0.69–0.77** at each pool's best (N, threshold) operating point. | lower end: `phase3a-consensus-calibration` outcome (MINIMAL, Era-1 340-tile: "ranges 0.639-0.692 across configs"; best text T0.3 N30 23-of-30 F1 **0.6921**); upper end: `phase3a-high-consensus-calibration` outcome (HIGH text "cluster tightly near F1 0.77 at N=30"; T1.0 23-of-30 **0.7747**) | VERIFIED | The range is the union of **two** register rows on two thinking levels, neither cited by the draft. The draft reads as one board; it is two. |
+| R3-04 | HIGH-thinking passes reach ~0.77 where minimal-thinking passes reach ~0.69 at matched N — the "diversity dividend". | `phase3a-high-consensus-calibration` outcome: "~+0.08 F1 above the matched MINIMAL-thinking phase3a text consensus (~0.69) and substantially higher MCC (0.57-0.64 vs 0.15-0.33)" | VERIFIED; POST-HOC (`manually_verified_at` 2026-06-08T04:19:07Z) | The MCC half of the dividend (0.57–0.64 against 0.15–0.33) is **larger and cleaner than the F1 half** and the draft does not report it — a D3 (F1-versus-MCC) instance going spare. |
+| R3-05 | The thinking-level dividend is a post-registration discovery — the registration fixed thinking at MINIMAL (§ 8.9) — with the direct contrast reading +0.067 F1 and +0.234 MCC. | `diversity-dividend-384` outcome (the fence: "the registration fixes thinking_level=minimal (osf:1211-1212, 2135) … D17 sweep U5; fence applied at the S134 PI walk"); `phase3a-replication-thinking-calibration` outcome (N = 30, T = 0.7 text: HIGH 21-of-30 F1 **0.7705**, MCC **0.5466** against MINIMAL 25-of-30 **0.7033**, **0.3130** — "+0.067 F1 and +0.234 MCC") | VERIFIED; POST-HOC | The registration fence is exemplary and is the reason the claim cannot be reported as confirmatory. |
+| R3-06 | H9: all five conditions — baseline A plus the engineered text-, image- and temperature-diversity variants B–E — were executed, run twice (60-tile pilot then the 340-tile Era-1 retest; erratum E63), and none shows a significant gain over the same-variant baseline pool. | `phase3c-diversity-calibration` outcome: "H9 is REJECTED: at the best-F1@20m operating point each diverse condition is statistically indistinguishable from the identical-pass baseline A"; image 3-of-5 A 0.6640 vs B 0.6682 / C 0.6713 / D 0.6688 / E 0.6705; text 4-of-5 A 0.7171 vs B 0.6862 / D 0.7301 / E 0.6943 | VERIFIED; REGISTERED-EXPLORATORY (`manually_verified_at` 2026-06-08T04:19:07Z) | — |
+| R3-07 | The largest observed diversity gain is ΔF1 +0.014 at p = 0.63, with all image p > 0.37 and all text p > 0.06. | the +0.014 / p = 0.63 pair: `results/phase3c-diversity/phase3c-comprehensive-results-report.md:92-93` ("the largest observed improvement is ΔF1=+0.014 (Temperature diversity on **Track 1**, p=0.63)"); the "> 0.37 image" and "> 0.06 text" figures: `phase3c-diversity-calibration` outcome and `results/phase3c-diversity/track2-text/diversity-analysis-summary.md:36` (D vs A +0.0138, p = **0.1812**; B vs A and E vs A both p = 0.0610) | **DRIFTED** (vintage mix) | One sentence, two vintages and two tracks. +0.014 / p = 0.63 is the **60-tile pilot's Track 1 (image)** figure; "all p > 0.37 image" is the **340-tile retest's**, on which the image arm's largest Δ is ~0.007, not +0.014. On the retest the +0.0138 belongs to the **text** track's temperature-diversity D at p = **0.1812**, and "> 0.06 text" is B-vs-A and E-vs-A at 0.0610. The conclusion (H9 rejected) is unaffected; the pairing of numbers is not reproducible from either vintage alone. |
+| R3-08 | The S143 artefact audit corrected the earlier D17 audit finding U12, which had recorded H9-B/C/E as never run. | `docs/methodology/preregistration/hypothesis-tracking.md:355-372` — U12 audited the tracking file's own text rather than the artefacts, and is "superseded on this point by both an earlier and a later source" (`reports/d17-inventory/d17-inventory-h9-h12.md` § 7 item 1, "Believe the artefacts"; erratum E63, which documents the 225-pass execution) | VERIFIED | The same tracking file's `:373-378` still warns that the U12 wording "appears to have propagated into the paper draft at `docs/paper/results-draft.md:214-219`". **That warning is now stale** — the draft's current § R3 records the correction. A tracking-file hygiene item, not a draft error. |
+| R3-09 | Strict unanimity hurts; permissive-to-mid thresholds win. | recomputed this session from `results/retest/phase3a-consensus/track2-text/consensus-sweep-results.csv` (T0.3, Era-1 340-tile, MINIMAL): best vote threshold **23-of-30** (F1 0.6921) against unanimity 30-of-30 (0.6588, **−0.0333**); **8-of-10** (0.6871) against 10-of-10 (0.6821, −0.0050); at N = 5 the best threshold **is** unanimity, 5-of-5 (0.6855) | **DRIFTED** | The first half holds and the second does not. The winning thresholds are 77 %, 80 % and 100 % of N — **strict but not unanimous**, not "permissive-to-mid" — and at N = 5 unanimity is the optimum, so the claim is false as a general statement about vote rules. The clean "permissive beats strict" result in the corpus is the **verifier's** consensus, not the proposer's (`verifier-robustness-matrix`: "a PERMISSIVE consensus … beats the expected single pass by ~+0.012; strict/unanimous voting hurts"), which is § R5's material. |
+| R3-10 | The consensus-era "buy diversity with HIGH thinking" reading is revised but not contradicted by § R5: the dividend is real for consensus-*only* architectures and obsolete once a verifier stage exists. | draft's claim; the GS parity result is `min-vs-high-thinking-pv` outcome ("at equal pass count under PV, MINIMAL reaches statistical parity with HIGH: min6 0.8708 vs high6 0.8641 p=0.656 … min11 0.8835 vs high11 0.8769 p=0.591"), signed 2026-06-12T06:59:01Z | **SUPERSEDED in part** | Draft: the dividend is *obsolete* under a verifier. Finding: on the fourteen **verified** `pv-diag-384` ladders the return on K is still governed by thinking level — the K = 1 → best-rung F1 gain is significant on **7 of 7 HIGH** ladders and **2 of 6 MINIMAL** ones, and all four ladders that collapse to a single tier are MINIMAL (`results/k-ladder-2026-09-12/findings.md:857-875`; register `k-ladder-2026-09-12` outcome, "WHAT GOVERNS THE RETURN"). What `min-vs-high-thinking-pv` established is **level parity at equal pass count**; what the ladder establishes is **thinking-governed return on additional passes**. These are different quantities and only the first is obsolete under PV. |
+| R3-11 | *(the ladder's claim, not yet in the draft)* **The return on a proposer pass is front-loaded.** K = 3 is on the efficient set of every ladder in the corpus, taking **37 % to 93 %** of a ladder's total F1 gain for **31 % to 64 %** of its top rung's cost; the last step is the worst buy on every ladder, at **US$1,100 to US$43,000 per 0.001 F1**. | register `k-ladder-2026-09-12` outcome, "SHAPE"; `results/k-ladder-2026-09-12/findings.md:72-85` (Phase 1: 49–93 % of the gain for 38–64 % of the cost), `:1009-1010` (Phase 2: 37–92 % for 31–44 %), `:599-606` (US$17,400 per 0.001 F1 on 55-map stride B) and `:1012-1018` (US$43,000 on the 3.7 family, US$1,100 on HIGH text T 1.0) | VERIFIED at anchor; **ABSENT from the draft** | The single most quotable pass-count result in the corpus, and § R3 does not contain it. The ladder's shape claim is a **cost** claim; see R3-12 for what the simultaneous instrument says about it. |
+| R3-12 | *(the ladder's claim)* Under the canonical simultaneous instrument the front-loaded reading is endorsed on about half the corpus: **K = 3 is Hsu-MCB-admissible on 12 of 22 ladders and the cheapest admissible rung on 10**; **no ladder's F1-admissible set excludes K = 10** (all twenty that have the rung admit it); and **K = 1 is ruled out on F1 on 20 of 22 ladders while being admissible on tile-MCC on 22 of 22**, holding the highest tile-MCC on 13. | `results/k-ladder-2026-09-12/findings.md:706-729` (the 22-row MCB table) and `:736-770` (the five readings); gate at `:695-703` (44 runs, 170 candidate rows, max abs deviation 4.958e-05, `mcb/summary.json` → `gate_all_passed`); register outcome, "HSU MCB ADMISSIBLE SETS" | VERIFIED at anchor; ABSENT from the draft | The instrument also disagrees with the committed greedy-clique tie sets **in both directions** (F1 set smaller on two ladders, larger on six), exactly as erratum E83 / defect D20 warn — and two of the four "single tier" MINIMAL ladders rule K = 1 out as best, so "one tier" must not be read as "any rung could be best" (Obs 480). |
+| R3-13 | *(the ladder's claim)* **Tile-MCC never rises with K.** Across the 21 verified ladders with an interpretable tile-MCC, F1 rises on all 21 and tile-MCC falls on 16; **no ladder shows a significant tile-MCC rise**, and the one apparent counter-example — the gold-standard ladder's +0.0135 — tests at BH p = 0.7678. Significant **falls** on four ladders: 3.7-verifier stride B −0.0112, 3.7 arm 1 −0.0099, 3.7 arm 2 −0.0275, HIGH image T 1.0 −0.0637 (BH p = 0.0420). | `results/k-ladder-2026-09-12/findings.md:317-327` (§ 4's eight-ladder table), `:407-437` (§ 4.1's tested table, both metrics on byte-identical swap masks) , `:445-475` ("What survives"), `:551-565` (§ 4.3's fourteen) and `:889-902` (§ 7.2); register outcome, "TILE-MCC DOES NOT FOLLOW F1" | VERIFIED at anchor; ABSENT from the draft | The three GS 3.7 text rungs' tile-MCC is **withheld at source** by the tile-join invariant, not reported low — the name-based join is the published convention (PI ruling 6, Obs 477), and their F1 is unaffected. |
+| R3-14 | *(the ladder's claim)* **The pipeline stage, not K, decides tile-MCC's sign.** On one pool and one geometry, K = 1 → 10 raises F1@20 by +0.0572 with tile-MCC **rising** +0.0444 consensus-only, and by only +0.0340 with tile-MCC **falling** −0.0308 once the same pool is verified: the verifier absorbs **40.6 %** of K's F1 return and reverses the sign of its tile-MCC effect, a swing of 0.0752. | `results/k-ladder-2026-09-12/findings.md:1325-1380` (§ 8.6, with one anchor per number: `results/grid-2026-08-18/sweep.csv` cell `g384_ov192` at K = 1 0.6633 / 0.4465 and K = 10 0.7205 / 0.4909; `tier-e/ladder.json` plus each rung's evaluation at 0.8546 / 0.8211 and 0.8886 / 0.7903); Obs 479; register outcome, "THE VERIFIER STAGE REVERSES" | VERIFIED at anchor; ABSENT from the draft | Stated by the findings document as a claim with its limits attached: one geometry, one thinking level, one temperature, one modality, one corpus, and the ladder's own ΔMCC steps are not individually significant — so the claim is about the **sign and size of the shift between stages**, not about either ladder's own trend. |
+| R3-15 | *(the ladder's claim)* **The two corpora agree once resolution is accounted for**, so "K buys nothing detectable on four MINIMAL configurations" is a statement about 487 tiles rather than about K. The deployment ladders' own cells, re-scored on random 487-tile subsets of their own 8,541, keep BH significance in **197 of 200** draws at ΔF1 +0.0547 and **39 of 200** at +0.0192 (subsampling sd ≈ 0.0114 either way), so 487 tiles resolve a ΔF1 of about **0.03 and above**; the nine MINIMAL ladders sort by effect size rather than by corpus, and the deployment range +0.0192..+0.0547 sits **inside** the gold-standard range +0.0139..+0.0629. | `results/k-ladder-2026-09-12/findings.md:1073-1108` (§ 8.1, with its EPSG gate failure recorded), `:1110-1138` (§ 8.2's nine-ladder table) and `:1283-1323` (§ 8.5, which reading the data favour, with four named limits); register outcome, "THE TWO CORPORA AGREE" | VERIFIED at anchor; ABSENT from the draft | This is the resolution figure § R6's "the 487-tile GS instrument cannot resolve ±0.03" asserted as a heuristic (Obs 347) and now **measured** — see R6-14. The same limit is visible in the MCB's own units: simultaneous F1 width 0.0151–0.0326 on 487 tiles against 0.0047–0.0056 on 8,541. |
+
+**Ten draft claims and five ladder claims.** Of the draft's ten:
+**seven VERIFIED**, **two DRIFTED** (R3-07, R3-09) and **one SUPERSEDED in
+part** (R3-10). All five ladder claims (R3-11 to R3-15) have no counterpart
+sentence anywhere in the draft.
+
+**Gaps.**
+
+- **The ladder is the section's largest absence.** § R3 is about pass
+  count and says nothing about how much a pass is worth, where the return
+  stops, or what it costs — the five ladder claims above. The register row
+  is signed; the material is free.
+- **Four register rows the section rests on are uncited** —
+  `phase3a-consensus-calibration`, `phase3a-high-consensus-calibration`,
+  `phase3a-replication-thinking-calibration`,
+  `phase3c-diversity-calibration` — exactly as the 2026-09-12 placeholder
+  predicted. R3-03's range and R3-05's +0.067 / +0.234 both come from
+  them, and a reviewer checking the Open Science Framework record against
+  the paper will find the numbers unsourced.
+- **The MCC half of the dividend is missing** (R3-04): MCC 0.57–0.64
+  against 0.15–0.33 is a larger and cleaner separation than the F1 half,
+  and D3 made the F1-versus-MCC trade a recurring theme with R2 as its
+  home. R3 is where the theme's strongest instance sits unreported.
+- **The tile-MCC direction contradicts the section's implicit promise.**
+  R3 sells consensus as buying performance; on the tile-level metric the
+  pass-count lever buys nothing and sometimes costs (R3-13). For survey
+  triage — presence or absence per tile, which is what a field director
+  reads — that reverses the recommendation. Obs 482 states the same
+  reversal board-wide.
+- **H9's disclose-only erratum.** The PI ruled "Tier A: I approve disclose
+  only" on 2026-08-28 and the tracking file records that ruling as **NOT
+  applied** (`docs/methodology/preregistration/hypothesis-tracking.md`
+  § "PI ruling of 2026-08-28 — recorded, NOT applied"). R3 reports H9 as
+  executed and rejected without the disclosure the ruling contemplated.
+- **No figure.** D22 assigns R3 a figure (the vote-threshold × N surface)
+  and notes the dividend figure is to be made; the existing
+  `results/inter-pass-agreement/figures/` assets measure agreement, not
+  the dividend. The K-ladder job has since produced **two** Pareto
+  figures that would serve the pass-count half (see the cross-section
+  figures table).
+
+**Rulings needed.**
+
+1. Does § R3 absorb the K ladder, or does the ladder live in § R6 as a
+   cost object with R3 keeping one sentence? **Recommended: split on the
+   axis the claim is about** — R3 takes the *shape* and the *mechanism*
+   (R3-11's front-loading, R3-12's admissible sets, R3-10's
+   thinking-governed return), R6 takes the *price* (the dollars per 0.001
+   F1 and the Pareto sets). The ladder's own finding is that these are
+   two different statements about the same rungs, and R6 already exists to
+   hold the second.
+2. Is the tile-MCC result (R3-13, R3-14) reported in § R3, or held for the
+   metric discussion? **Recommended: § R3, two sentences, with the
+   verifier-stage reversal named** — the standing instruction is to report
+   MCC beside F1 wherever inputs allow, and a pass-count section that
+   reports only the metric that rises is the omission that instruction
+   exists to prevent.
+3. Fix R3-07 and R3-09. **Recommended: yes** — R3-07 by quoting one
+   vintage (the 340-tile retest, which is the instrument every other
+   Era-1 claim uses) and R3-09 by restating it as "unanimity hurts at
+   N = 10 and N = 30 and is optimal at N = 5; the winning rules are strict
+   but not unanimous", with the permissive-consensus result left to § R5
+   where its anchor is.
+4. Does the H9 disclose-only ruling get applied before R3 is drafted as
+   prose? **Recommended: ask the PI** — it is a registered hypothesis's
+   disposition, and the tracking file records the ruling as taken and not
+   executed.
 
 ---
 
@@ -431,17 +657,122 @@ registered hypothesis is adjudicated here.
 
 ---
 
-## R6 — The cost frontier *(NOT INVENTORIED)*
+## R6 — The cost frontier, and what deployment does to it
 
-**Placeholder.** R6 prices the pass ladder and is the section a parallel
-K-ladder (pass-count) job will change: its seven-rung table, its
-efficient/dominated split, and its transfer table all key off pass counts.
-Deliberately excluded; must be inventoried against the ladder's outputs.
-Current prose word count: **494** plus a seven-row cost table and a
-four-row transfer table. Governing register row: `pass-budget-pareto-v2`
-(post-hoc, verified 2026-06-12), whose own outcome already flags that the
-draft's transfer table quotes the **standardised**-reference vintage while
-the row's deltas are canonical-vintage, "which differs by up to 0.008".
+> **Inventoried 2026-09-13** against the K-ladder review. Two things moved
+> under this section since the 2026-09-12 placeholder: the governing
+> register row `pass-budget-pareto-v2` was **amended and re-signed
+> 2026-09-12T09:03:09Z** with a tile-MCC column the draft's table does not
+> have, and the review's own row `k-ladder-2026-09-12` was **signed
+> 2026-09-13T06:58:12Z** with a pass-ladder result the section does not
+> carry.
+
+**Section question.** *What does each step up the quality ladder actually
+cost in dollars, which steps are worth buying, and does the answer we got
+on four calibration sheets survive on fifty-five real ones?*
+
+The **frontier** (or Pareto set) is the set of recipes such that nothing
+cheaper scores as well; a **dominated** rung is one that something cheaper
+already matches. A **rung** here is a whole recipe — so many proposer
+passes at a given thinking level, plus the verifier.
+
+**Prose word count: 494** (target ≈ 200; 2.5× over), plus a seven-row cost
+table and a four-row transfer table.
+
+*Registration status the section asserts*: post-hoc; the registered H3
+cost-efficiency analysis is the nearest antecedent, and neither the
+proposer–verifier extension nor the measured-token dollar costing is
+registered.
+
+| # | claim | anchor | status | note |
+|---|---|---|---|---|
+| R6-01 | Dollar re-pricing rests on per-item token metadata at June-2026 flex rates with thinking billed at the output rate, and a HIGH-thinking deployment pass costs ~8.6× a minimal one (token-load audit, 2026-06-12). | `results/verifier-robustness/pareto/pareto_v2.json` → `cost_model` (`min_pass_usd` 0.266, `high_pass_usd` 2.29, `vf_call_usd` 0.000693; basis note naming `reports/token-load-audit-2026-06-12.md` and the two corrected errors); register `pass-budget-pareto-v2` `_note` ("true min:HIGH ratio 8.6x") | VERIFIED; POST-HOC | 2.29 / 0.266 = 8.61. The audit's own history — a 2× double-counted minimal rate and an extrapolated "HIGH = 3× minimal" that left proposer thinking unbilled — is a disclosure the section does not make. |
+| R6-02 | Re-pricing collapses the frontier onto four rungs. | `pareto_v2.json` → `pareto_efficient` = **`["min6", "min11", "high31", "high35"]`**; register outcome, "Pareto-efficient set: min6 $2.43/0.8784, min11 $4.00/0.8835, high31 $69.21/0.8902, high35 $71.23/0.8951" | VERIFIED | — |
+| R6-03 | No pairwise F1 separation anywhere on the ladder (0/21 pairs), though the MCB admissible set is six of the seven rungs — the 0.8641 rung is ruled out as best (E83). | register outcome ("All seven rungs remain ONE statistical tier (0/21 pairs significant after BH-FDR)"; "[REVISED 2026-08-19, erratum E83: under MCB 6 of the 7 rungs cannot be ruled out as best; verified-adv-text-4of5 (0.8641) is excluded]"); `tie_set` length 6 | VERIFIED (E83) | — |
+| R6-04 | The seven-rung table: min6 0.8784 / $2.43 / ~$43 (efficient); min11 0.8835 / $4.00 / ~$70 (efficient); high6 0.8641 / $14.04 / ~$246 (dominated); high5+5vf 0.8739 / $14.41 / ~$253 (dominated); high11 0.8769 / $26.97 / ~$473 (dominated); high31 0.8902 / $69.21 / ~$1,214 (efficient); high35 0.8951 / $71.23 / ~$1,249 (efficient). | `pareto_v2.json` → `rungs`, all seven rows re-read this session: `f1` / `est_cost_usd` / `est_cost_55map_usd` = 0.8784/2.43/**42.60**; 0.8835/4.00/**70.22**; 0.8641/14.04/**246.22**; 0.8739/14.41/**252.77**; 0.8769/26.97/**472.91**; 0.8902/69.21/**1213.72**; 0.8951/71.23/**1249.16** | VERIFIED | Every one of the twenty-one figures reproduces. The table is the most reliable thing in § R6. |
+| R6-05 | Read naively the table says buy minimal thinking, and the entire HIGH ladder is dominated. | draft's own framing sentence; the naive reading is what R6-02's efficient set would license if cost were the only axis | VERIFIED (as a framing device) | The sentence exists to be overturned by R6-06, and does its job. |
+| R6-06 | Deployment says otherwise: the min6 recipe had already run at production scale, and on the 55-map board it scores **0.8109 (Tier 3)**, two tiers below the HIGH-thinking equivalent at the matched threshold (TH7-k3, **0.8387, Tier 1**) — the GS tie, where minimal was numerically ahead, reverses by **−0.028** on the instrument with the power to resolve it (Obs 362). | `results/55maps-standardised-ref-2026-08-14/TM-k3/summary.json` and `.../TH7-k3/summary.json`, both at `R_m` 50: F1 **0.8109** and **0.8387** (recomputed this session); tiers from `results/55map-leaderboard/55map-leaderboard-50m-standardised.md:8,12` (TH7-k3 rank 2 Tier 1; TM-k3 rank 6 Tier 3); register `min-vs-high-thinking-pv` outcome (the SCOPE clause, Obs 362) | **DRIFTED** (reference vintage, per D18) | Both values verify — **on the standardised reference**. Ruling 1 puts the whole of Results on **r2**, where the same two cells read **0.8102 (Tier 3)** and **0.8380 (Tier 1)** (`results/55map-leaderboard/55map-leaderboard-50m-r2.md:8,12`). The reversal's magnitude is unchanged at −0.0278, so the *claim* survives re-pointing intact; only the two point estimates move. The register row quotes a third vintage again (canonical: TM-k3 0.8127, TH7-k3 0.8425). |
+| R6-07 | The transfer table makes the pattern systematic — every configuration degrades from GS to deployment and they do not degrade equally: text HIGH T0.7 0.8908 → 0.8387 (−0.052); text HIGH T0.3 0.9045 → 0.8393 (−0.065); image HIGH T0.7 0.8771 → 0.8010 (−0.076); text MIN T0.7 0.8996 → 0.8109 (−0.089). | GS column: `results/55map-leaderboard/gs-vs-55map-transfer.md:7-10` (0.9045, 0.8908, 0.8996, 0.8771 verbatim). 55-map column, recomputed this session from the standardised summaries at `R_m` 50: TH7-k3 **0.8387**, T03-k3 **0.8393**, IM-k3 **0.8010**, TM-k3 **0.8109** | **DRIFTED** (reference vintage, per D18) | Internally consistent and arithmetically exact on the standardised board. Under r2 the four 55-map values are **0.8380 / 0.8387 / 0.8008 / 0.8102** (r2 board rows 2, 1, 7, 6), giving deltas −0.0528 / −0.0658 / −0.0763 / −0.0894 — the ordering and every conclusion below survive. Note the trap the draft already flags: `gs-vs-55map-transfer.md`'s own 55-map column is **canonical**-vintage (0.8425 / 0.8476 / 0.7987 / 0.8127), so the document cited for the GS side must not be read for the 55-map side. |
+| R6-08 | The deployment champion started higher on GS and degraded more; HIGH-T0.7 transfers best; GS clustering at 0.88–0.90 concealed differential deployment robustness. | arithmetic on R6-07's rows (T0.3 starts highest at 0.9045 and loses most of the two HIGH text cells, −0.065 against −0.052); the GS column spans 0.8771–0.9045 | VERIFIED | Holds on all three reference vintages. |
+| R6-09 | The GS T0.3 comparator — the deployment champion's proposer, characterised at $2.06 — completed the transfer table. | `results/55map-leaderboard/gs-vs-55map-transfer.md:3` ("T0.3 GS comparator added 2026-06-11 (Run A)") | **UNANCHORED** (the dollar figure) | The comparator's addition is anchored; **$2.06 is not** — it is not in the transfer document and was not located this session. The one genuinely unsourced number in § R6. |
+| R6-10 | The cost meta-rule (Obs 357) is scope-qualified: it holds only where the tie's instrument could have detected a difference of consequence, and deployment evidence overrides characterisation ties. | Obs 357, `docs/notes/working-notes.md:19322`; Obs 362, `:20044`; register `pass-budget-pareto-v2` outcome, the SCOPE (Obs 362) block ("the min rungs are NOT production recommendations without the findings §§ 16 qualification") | VERIFIED | The section's most transferable methodological claim. |
+| R6-11 | The 487-tile GS instrument cannot resolve ±0.03. | the draft states this as a heuristic (Obs 347, GS-plateau resolving power); it is now **measured** — `results/k-ladder-2026-09-12/findings.md:1073-1108` (§ 8.1: 200 draws, seed 42, of 487-tile subsets of the deployment ladders' own 8,541 tiles; subsampling sd of ΔF1 ≈ **0.0114** on both ladders; +0.0192 detected in 39 of 200 draws, +0.0547 in 197 of 200) and `:1104-1108` ("At 487 tiles this instrument resolves a ΔF1 of roughly 0.03 and above, and does not resolve one below it") | VERIFIED, and now **measured rather than asserted** | The ladder confirms the draft's number to the figure quoted. The MCB arm says the same in its own units: simultaneous F1 width 0.0151–0.0326 on 487 tiles against 0.0047–0.0056 on 8,541 (`findings.md:736-770`, reading 5). This is a strengthening, and § R6 should cite the measurement rather than the heuristic. |
+| R6-12 | The gap is partly buyable: doubling the minimal pass count (Run B, as-run ≈ $35 at audited flex) closes about half of it — the 10-minimal-pass uplift cell scores **0.8279** at 50 m, significantly above the 5-pass minimal deployment (+0.0170, p < 10⁻⁴) and significantly below the HIGH-thinking cell (−0.0108, BH p = 0.018) — converting the thinking choice into a priced cost/quality trade (~$58 for 0.828 against ~$207 for 0.839) rather than a tie (Obs 364). | `results/55maps-standardised-ref-2026-08-14/TM-n10-k5/summary.json` at `R_m` 50: F1 **0.8279** (recomputed this session); Obs 364, `docs/notes/working-notes.md:20400`; 0.8279 − 0.8109 = +0.0170 | **DRIFTED** (reference vintage, per D18) | On r2 the same cell is **0.8274 (Tier 2)** and the step above TM-k3's 0.8102 is **+0.0172** (`results/55map-leaderboard/55map-leaderboard-50m-r2.md:10`). Both p-values are quoted from Obs 364 and were not re-derived on r2 — see Gaps. |
+| R6-13 | The confusion-matrix decomposition (Obs 365, re-measured on the standardised reference with Obs 365's own endpoints) shows the two purchases differ in kind: the pass-count step (min5 → min10) is a strict improvement (**+113 mounds and −31 false positives** for ~$26), while the step to the board-leading HIGH configuration (T0.3 × 3-of-5, which moves thinking level, temperature and threshold together) trades precision for recall (**+282 mounds at +262 false positives** for ~$203). | recomputed this session from the three standardised summaries at `R_m` 50 — TM-k3 TP 3,766 / FP 513, TM-n10-k5 TP 3,879 / FP 482, T03-k3 TP 4,161 / FP 744, all at `n_ref_extended` 5,010: step 1 **+113 / −31**, step 2 **+282 / +262**. Obs 365's own canonical figures are +111 / −29 and +319 / +225 (`docs/notes/working-notes.md:20570` ff.) | VERIFIED (standardised); **DRIFTED** against D18 | The draft's numbers were re-derived in Session 132 and had no committed artefact cited; they **do** reproduce exactly from the standardised summaries, so this row moves from a probable-UNANCHORED to VERIFIED. There is **no r2 re-measurement** of the decomposition — ruling 1 cannot be executed on this row without one. |
+| R6-14 | *(the ladder's claim, not yet in the draft)* The 8,541 / 487 tile-factor projection that fills R6-04's "55-map production (est.)" column **overstates for at least one geometry by 10.7 %**: `g384_ov128` runs 820 tiles per pass on the gold standard rather than 487, so the K = 10 rung projects to $115.05 against a **measured** 55-map cost of $103.91. | `pareto_v2.json` → `cost_model.production_scale` (`tiles_gs` 487, `tiles_55map` 8541, `factor` **17.54**, with its own "slight upper bound" note); `results/k-ladder-2026-09-12/findings.md:135-141` (the projection read against `results/55map-final-board-r2-2026-09-06/final_board_50m.json` cells `A-N1/3/5/10-oracle`; "the projection column is kept for comparability with the registered Pareto row; the measured column is the one to cite") | VERIFIED at anchor; ABSENT from the draft | The draft's four `~$` deployment figures are projections presented beside measured GS dollars with no marker distinguishing them. The ladder supplies measured 55-map costs for a comparable geometry and a measured overstatement. **This is the single most consequential correction the ladder makes to § R6.** |
+| R6-15 | *(the ladder's claim)* **The MCC-efficient set is not the F1-efficient set.** F1-efficient is unchanged (min6, min11, high31, high35) but MCC-efficient is **{min6, min11} alone**: both HIGH rungs on the F1 frontier are MCC-dominated, and **min11 is the tile-MCC maximum of all seven rungs at 0.8068**, 0.0127 above high35's 0.7941 at 5.6 % of its cost. | `pareto_v2.json` → `mcc.pareto_efficient` = **`["min6", "min11"]`**, `mcc.n_significant` **0**, `mcc.tiers` a single tier of all seven, and each rung's `mcc` (min11 **0.806796**, high35 **0.7941**); register `pass-budget-pareto-v2` outcome, the `[AMENDED 2026-09-12, tile-MCC column added per PI ruling]` block; `reports/k-ladder-mcc-test-2026-09-12.md` § 5 (the gate: all seven rungs' MCC re-derived from their own geojsons, "All seven pass exactly") | VERIFIED at anchor; **ABSENT from the draft** | The row was **re-signed 2026-09-12T09:03:09Z** carrying this amendment (`_signature_note`), so the draft's R6 table is one signature behind its own governing row. Two caveats travel with it: nothing separates (0/21 MCC pairs, one tier, so this is a point-estimate ordering exactly as the F1 frontier is), and on 487 tiles min6, high11 and high31 share one identical tile confusion (188/247/11/41) and therefore one MCC — the metric cannot rank fine-grained rungs on this frame. |
+| R6-16 | *(the ladder's claim)* **The last step is the worst buy on every ladder in the corpus, and the price of it is quotable**: US$17,400 per 0.001 F1 for 55-map stride B's K = 5 → K = 10, and US$43,000 per 0.001 F1 for the 3.7 family's, against US$1,100 for HIGH text T 1.0's — so "the ladder saturates" is an economic statement rather than a statistical one. K = 3 is on the efficient set of **every** ladder. | `results/k-ladder-2026-09-12/findings.md:599-606` (§ 5, K = 5 off the GS efficient set, K = 10 on every set it exists in and always by the smallest margin, US$17,400) and `:1009-1018` (§ 7.4, every one of the fourteen has K = 3 on its efficient set; +0.0002 F1 for US$8.65 ≈ US$43,000; US$1,100 for comparison); register `k-ladder-2026-09-12` outcome, "SHAPE" and "ON THE LAST STEP" | VERIFIED at anchor; ABSENT from the draft | The formal counterpart, from the same row: **no ladder's F1-admissible set excludes K = 10** — the top rung is never statistically ruled out, only never worth its price. That pairing is the cleanest cost/statistics distinction the study has, and § R6 is its home. |
+| R6-17 | *(the ladder's claim)* The pass-count and verifier stages are **partially redundant and the verifier takes the larger share**: on one pool and geometry the verifier absorbs **40.6 %** of K's F1 return (+0.0572 consensus-only against +0.0340 verified) and reverses the sign of its tile-MCC effect (+0.0444 against −0.0308). | `results/k-ladder-2026-09-12/findings.md:1325-1380` (§ 8.6, one anchor per number); Obs 479, `docs/notes/working-notes.md:35095` | VERIFIED at anchor; ABSENT from the draft | A **cost** reading § R6 does not have: paying for extra passes on top of a verifier buys less than the same passes would buy without one, and on the tile metric buys the wrong sign. R1b-12's "complements, not substitutes" is the same finding measured at the geometry stage. |
+| R6-18 | *(the ladder's claim)* The two objectives select different rungs: the F1-efficient rung is K = 3, the tile-MCC-efficient rung is K = 1 — which is admissible on tile-MCC on **22 of 22** ladders and holds the highest tile-MCC on 13 of them, while being ruled out on F1 on 20 of 22. | register `k-ladder-2026-09-12` outcome, "PARETO MCC SET" and "ON THE TWO OBJECTIVES"; `results/k-ladder-2026-09-12/findings.md:706-729` (the MCB table's tile-MCC column) and `:736-770` (reading 3) | VERIFIED at anchor; ABSENT from the draft | Board-wide corroboration: Obs 482 — on the Era-2 board no F1 Tier-1 cell is in tile-MCC Tier 1, and the two admissible sets share 9 members of 65 and 59. The two objectives disagree at the ladder grain *and* at the board grain. |
+
+**Thirteen draft claims and five ladder claims.** Of the draft's thirteen:
+**nine VERIFIED**, **three DRIFTED** (R6-06, R6-07, R6-12 — all three by
+reference vintage under ruling 1, none by arithmetic) and **one UNANCHORED
+in part** (R6-09's "$2.06"). R6-13 is counted VERIFIED because it reproduces
+exactly on the standardised reference, with the D18 exposure noted rather
+than double-counted. All five ladder claims (R6-14 to R6-18) are absent from
+the draft.
+
+**Gaps.**
+
+- **The draft's cost table is one signature behind its own register row.**
+  `pass-budget-pareto-v2` was amended and re-signed on 2026-09-12 with a
+  tile-MCC column and an MCC-efficient set of {min6, min11}; the draft's
+  seven-row table has no MCC column. D22 assigns R6 the Pareto **figure**,
+  and `results/verifier-robustness/pareto/pareto_v2.png` now has **two**
+  panels (cost × F1 and cost × tile-MCC) — so the exhibit exists and
+  carries the new column already.
+- **Projected and measured dollars are interleaved without a marker.**
+  R6-04's GS column is measured; its 55-map column is a 17.54× tile-factor
+  projection, which the ladder shows overstating by 10.7 % on a comparable
+  geometry (R6-14). A reader cannot tell the two kinds of number apart.
+- **Ruling 1 cannot be fully executed on R6-13.** The confusion-matrix
+  decomposition exists on the canonical (Obs 365) and standardised
+  (recomputed here) references and **not on r2**. Either the row stays
+  standardised with a named exception, or an r2 re-measurement is needed —
+  it is an API-free rescore.
+- **Three p-values are quoted across a reference change.** R6-12's
+  +0.0170 / p < 10⁻⁴ and −0.0108 / BH p = 0.018 come from Obs 364 on the
+  standardised board; the r2 step is +0.0172 and neither test was re-run.
+- **The $2.06 GS T0.3 characterisation cost (R6-09) has no anchor.** It is
+  not in `gs-vs-55map-transfer.md` and was not located this session — the
+  one genuinely unsourced number in § R6.
+- **The K ladder's own cost frontier is absent** (R6-14 to R6-18), and with
+  it the two figures the review produced,
+  `results/k-ladder-2026-09-12/figures/k-ladder-pareto.png` and
+  `k-ladder-pareto-phase2.png`.
+- **Per D4 the transfer table, the reversal and the buyable gap are *not*
+  supposed to be here** — they are § R7. Three of R6's thirteen claims
+  (R6-07, R6-12, R6-13) are the material D4 allocated elsewhere, and § R6
+  is 2.5× its target largely because of them.
+
+**Rulings needed.**
+
+1. Does the draft's cost table gain the tile-MCC column its register row
+   now carries? **Recommended: yes** — the row is signed with it, the
+   two-panel figure already exists, and the finding (nothing above min11
+   can be shown to buy tile-level discrimination) strengthens rather than
+   complicates the section's existing argument.
+2. How are the 55-map dollar figures labelled? **Recommended: mark the
+   column "projected (tile factor 17.54)" and cite the ladder's measured
+   comparison** — the projection overstates by 10.7 % on the one geometry
+   where a measured figure exists, and an unmarked projection beside
+   measured GS dollars is the kind of number a reviewer will treat as
+   measured.
+3. Is the decomposition (R6-13) re-measured on r2, or kept on the
+   standardised reference as a named exception to ruling 1?
+   **Recommended: keep it standardised with the exception named, and say
+   why** — it is an unsigned API-free rescore otherwise, and the claim is
+   about the *kind* of purchase, which no reference revision changes.
+4. Does the K ladder's cost half live here? **Recommended: yes, and it is
+   § R6's best compression opportunity** — R6-16's US$1,100-to-US$43,000
+   per 0.001 F1 with "no admissible set excludes K = 10" replaces several
+   sentences of the existing frontier prose and states the section's point
+   better than the seven-rung table does.
+5. Does D4's allocation stand, moving R6-07, R6-12 and R6-13 to § R7?
+   **Recommended: revisit it** — D4 was settled before the deployment
+   reversal became "one of the study's central findings", and the reversal
+   is unreadable without the GS frontier immediately before it.
 
 ---
 
@@ -833,27 +1164,53 @@ and score each run against a reference that contains none of its own output.
 
 ### Counts per section
 
-| section | claims | VERIFIED | DRIFTED | UNANCHORED | prose words | vs ≈200-word share |
-|---|---:|---:|---:|---:|---:|---|
-| R0 | 9 | 8 | 1 | 0 | 447 | 2.2× |
-| R1 | 11 | 8 | 3 | 0 | 235 | 1.2× |
-| R2 | 15 | 15 | 0 | 0 | 543 | 2.7× |
-| R3 | *not inventoried* | — | — | — | 303 | 1.5× |
-| R4 | 29 | 23 | 6 | 0 | 864 | 4.3× |
-| R5 | 16 | 14 | 1 | 1 | 662 | 3.3× |
-| R6 | *not inventoried* | — | — | — | 494 | 2.5× |
-| R7 lead | 2 | 2 | 0 | 0 | 71 | 0.4× |
-| R7.1 | 15 | 14 | 1 | 0 | 562 | 2.8× |
-| R7.2 | 35 | 33 | 2 | 0 | 879 | 4.4× |
-| R7.3 | 29 | 29 | 0 | 0 | 1,284 | 6.4× |
-| R8 | 7 | 6 | 0 | 1 | 255 | 1.3× |
-| R9 | 13 | 13 | 0 | 0 | 587 | 2.9× |
-| **total (inventoried)** | **181** | **165** | **14** | **2** | **6,389** | — |
-| **all eleven blocks** | — | — | — | — | **7,186** | **3.3× the 2,200-word budget** |
+**Regenerated 2026-09-13**, with §§ R1b, R3 and R6 now inventoried. Every
+Results block is covered; there are no placeholders left.
 
-"vs ≈200-word share" is the section's prose against an even split of 2,200
-words across the eleven blocks; it is a diagnostic, not a proposed
-allocation.
+| section | claims | VERIFIED | DRIFTED | SUPERSEDED | UNANCHORED | absent from draft | prose words | vs ≈200-word share |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| R0 | 9 | 8 | 1 | 0 | 0 | 0 | 447 | 2.2× |
+| R1 | 11 | 8 | 3 | 0 | 0 | 0 | 235 | 1.2× |
+| R1b | 23 | 23 | 0 | 0 | 0 | 0 | 0 | 0.0× |
+| R2 | 15 | 15 | 0 | 0 | 0 | 0 | 543 | 2.7× |
+| R3 | 15 | 12 | 2 | 1 | 0 | 5 | 303 | 1.5× |
+| R4 | 29 | 23 | 6 | 0 | 0 | 0 | 864 | 4.3× |
+| R5 | 16 | 14 | 1 | 0 | 1 | 0 | 662 | 3.3× |
+| R6 | 18 | 14 | 3 | 0 | 1 | 5 | 494 | 2.5× |
+| R7 lead | 2 | 2 | 0 | 0 | 0 | 0 | 71 | 0.4× |
+| R7.1 | 15 | 14 | 1 | 0 | 0 | 0 | 562 | 2.8× |
+| R7.2 | 35 | 33 | 2 | 0 | 0 | 0 | 879 | 4.4× |
+| R7.3 | 29 | 29 | 0 | 0 | 0 | 0 | 1,284 | 6.4× |
+| R8 | 7 | 6 | 0 | 0 | 1 | 0 | 255 | 1.3× |
+| R9 | 13 | 13 | 0 | 0 | 0 | 0 | 587 | 2.9× |
+| **total** | **237** | **214** | **19** | **1** | **3** | **10** | **7,186** | **3.3× the 2,200-word budget** |
+
+**The twelve blocks.** The word budget is read across R0, R1, **R1b**, R2,
+R3, R4, R5, R6, the D1 **seam** (0 words — it does not exist), R7 (its
+lead-in and three sub-blocks counted as one block), R8 and R9: eleven
+before ruling 5, twelve with R1b, as
+`reports/results-rulings-deltas-2026-09-12.md` § 7 item 4 records. The
+"vs ≈200-word share" column is kept against **200** words — 2,200 / 11, the
+2026-09-12 divisor — so the column stays comparable with the previous pass;
+across twelve blocks an even split would be ≈ 183.
+
+**Reading the statuses.** The fourteen DRIFTED and two UNANCHORED rows of
+the 2026-09-12 pass were **corrected in the draft the same day** under
+ruling 4 (`reports/results-rulings-deltas-2026-09-12.md` § 1); they are
+retained here at their published values because they are the evidence the
+rulings were taken on. The nineteen DRIFTED, one SUPERSEDED and three
+UNANCHORED above are therefore the **union** of the 2026-09-12 pass's
+already-corrected rows (14 D, 2 U) and this pass's new ones (5 D, 1 S,
+1 U). The "absent from draft" column counts claims verified at a committed
+anchor that no sentence of the draft makes — all ten are K-ladder findings
+in §§ R3 and R6.
+
+**R1b's zero.** § R1b's prose count is 0 because the block is an 85-word
+`[BLOCK PENDING]` pointer, which this inventory's convention excludes with
+every other `[DRAFT …]` marker. Its twenty-three claims are real and
+anchored; its prose does not yet exist. The total prose figure is therefore
+unchanged from 2026-09-12 at 7,186 words even though the inventoried claim
+count rose from 181 to 237.
 
 ### Every DRIFTED claim, both values
 
@@ -882,29 +1239,67 @@ on the same fix list: § R4's heading still asserts the claim erratum E83
 retracted, and § R7.2's "(§ R1, Obs 435)" cross-reference points at a
 section that does not contain the GS geometry grid.
 
+### New DRIFTED and SUPERSEDED claims, 2026-09-13 pass (§§ R1b, R3, R6)
+
+Six rows, all in §§ R3 and R6; § R1b produced none. Unlike the fourteen
+above, **these are not yet corrected in the draft.**
+
+| # | claim | draft value | finding's value | anchor |
+|---|---|---|---|---|
+| R3-07 | H9's largest diversity gain | +0.014 at p = 0.63 with "all p > 0.37 image, > 0.06 text" — one sentence over two vintages and two tracks | the pair +0.014 / p = 0.63 is the **60-tile pilot's image track**; on the 340-tile retest the image arm's largest Δ is ~0.007 and the +0.0138 belongs to the **text** track's temperature-diversity D at p = **0.1812** | `results/phase3c-diversity/phase3c-comprehensive-results-report.md:92-93`; `results/phase3c-diversity/track2-text/diversity-analysis-summary.md:36`; register `phase3c-diversity-calibration` |
+| R3-09 | vote thresholds | "strict unanimity hurts; **permissive-to-mid** thresholds win" | the winning rules are **strict but not unanimous** — 23-of-30 (0.6921), 8-of-10 (0.6871) — and at N = 5 unanimity **is** the optimum (5-of-5, 0.6855); unanimity costs −0.0333 at N = 30 and −0.0050 at N = 10 | recomputed from `results/retest/phase3a-consensus/track2-text/consensus-sweep-results.csv` (T0.3) |
+| R3-10 | the diversity dividend under a verifier | "obsolete once a verifier stage exists" | **SUPERSEDED in part**: on the fourteen verified `pv-diag-384` ladders the return on K is still thinking-governed — significant on **7 of 7 HIGH** and **2 of 6 MINIMAL**, with all four single-tier ladders MINIMAL. Level *parity* at equal pass count is obsolete under PV; the *return on extra passes* is not | `results/k-ladder-2026-09-12/findings.md:857-875`; register `k-ladder-2026-09-12` outcome, "WHAT GOVERNS THE RETURN"; `min-vs-high-thinking-pv` outcome |
+| R6-06 | the deployment reversal's two cells | TM-k3 **0.8109** (T3) against TH7-k3 **0.8387** (T1), standardised reference | on **r2**, which ruling 1 mandates: **0.8102** (T3) and **0.8380** (T1); the reversal's magnitude is unchanged at −0.0278 | `results/55map-leaderboard/55map-leaderboard-50m-r2.md:8,12` |
+| R6-07 | the four-row transfer table's 55-map column | 0.8387 / 0.8393 / 0.8010 / 0.8109 (standardised) | on r2: **0.8380 / 0.8387 / 0.8008 / 0.8102**, giving deltas −0.0528 / −0.0658 / −0.0763 / −0.0894; the ordering and every conclusion survive | same file, rows 2, 1, 7, 6 |
+| R6-12 | the min11 uplift cell | **0.8279** at 50 m, +0.0170 over the 5-pass deployment | on r2: **0.8274** (T2), step **+0.0172**; neither p-value was re-derived on r2 | `results/55map-leaderboard/55map-leaderboard-50m-r2.md:10` |
+
+R6-13 belongs on the same list with a qualification: its four numbers
+(+113 / −31 and +282 / +262) **reproduce exactly** from the standardised
+summaries recomputed this session, so the row is VERIFIED rather than
+UNANCHORED — but there is **no r2 re-measurement of the decomposition at
+all**, so ruling 1 cannot be executed on it without one.
+
+**Ten further claims are neither drifted nor unanchored but simply
+absent** — K-ladder findings, every one verified at a committed anchor,
+that no sentence of the draft makes: R3-11 to R3-15 (the front-loaded
+shape; the Hsu MCB admissible sets; tile-MCC never rising with K; the
+verifier-stage reversal; the two corpora reconciled as a 487-tile
+resolution effect) and R6-14 to R6-18 (the tile-factor projection's 10.7 %
+overstatement; the MCC-efficient set {min6, min11}; the price of the last
+rung; the verifier absorbing 40.6 % of K's return; the two objectives
+selecting different rungs).
+
 ### UNANCHORED claims
 
 | # | claim | note |
 |---|---|---|
-| R5-01 | the verifier-robustness programme cost "≈ $54 flex as-run, recorded at run time" | The findings document carries per-cell and per-pass costs but no programme total, and the register row carries none. |
-| R8-07 | the "+3 %/+5 %" deployment-recall sensitivity band | The four-event basis is anchored; the band's endpoints are not, and do not follow arithmetically from the measured 2.4–2.7 %. |
+| R5-01 | the verifier-robustness programme cost "≈ $54 flex as-run, recorded at run time" | The findings document carries per-cell and per-pass costs but no programme total, and the register row carries none. **Resolved 2026-09-12** under ruling 4: the four stage costs sum to $54.04 and are now cited inline (`reports/results-rulings-deltas-2026-09-12.md` § 1.2). |
+| R8-07 | the "+3 %/+5 %" deployment-recall sensitivity band | The four-event basis is anchored; the band's endpoints are not, and do not follow arithmetically from the measured 2.4–2.7 %. **Anchored 2026-09-12** under the same ruling rather than cut. |
+| R6-09 | the GS T0.3 comparator "characterised at $2.06" | **New, and open.** The comparator's addition to the transfer table is anchored (`gs-vs-55map-transfer.md:3`); the dollar figure is in no artefact located this session. |
 
 ### Open `[DRAFT NOTE]` / `[DRAFT …]` markers
 
-| section | marker | what it asks |
-|---|---|---|
-| R0 | `[DRAFT NOTE: cross-reference the Methods subsections for GT construction, the matching algorithm (Hungarian, per map), and bootstrap CIs once Methods prose lands.]` | blocked on Methods prose |
-| R0 | `[TABLE N: results/hypothesis-outcome-table/hypothesis-outcome-table.md — the generated table, placed here per D16.]` | placement confirmed; the table exists |
-| R4 | `[DRAFT NOTE, S152: …]` | Era-2 board's signature status, the G1 ruling, and the nine `-opmax` rebuilds — see DRIFTED rows R4-28 and R4-29 |
-| R7.3 | `[DRAFT, S153 — pending PI ruling]` after the 3.8 leg (R7.3-13) | whether the 3.8 leg is reported at all |
-| R7.3 | `[DRAFT, S153 — pending PI ruling]` after the r2 tier-1 sentence (R7.3-15) | whether the family-clears-incumbent framing stands |
-| R7.3 | `[DRAFT, S153 — pending PI ruling]` after the cost paragraph (R7.3-29) | whether the cost paragraph stays in the body |
-| R7.3 | `[DRAFT NOTE, S151: (a) chains named per sentence … (d) §§ R7.2–R7.3 run to about 1,700 words against the 2,200-word budget]` | (a) open; (b), (c) marked RESOLVED S153; (d) open — the measured figure is 2,163 words |
+**Regenerated 2026-09-13.** All four `[DRAFT, S153 — pending PI ruling]`
+markers and the § R4 `[DRAFT NOTE, S152]` were cleared under item 9 of
+`planning/documentation-foundation-checklist-2026-09-13.md`, each replaced
+by the ruling it was waiting for (draft § Changelog, 2026-09-13). Two
+markers remain open, and neither is a PI decision that has been taken.
 
-Seven markers, of which **six are open** (the `[TABLE N]` placement is
-satisfied). Three of the six are the identical S153 pending-ruling marker in
-R7.3, so the PI has **four distinct decisions** outstanding in the draft's
-own notes.
+| section | marker | state |
+|---|---|---|
+| R0 | `[DRAFT NOTE: cross-reference the Methods subsections for GT construction, the matching algorithm (Hungarian, per map), and bootstrap CIs once Methods prose lands.]` | **OPEN** — blocked on Methods prose, not on a ruling |
+| R7.3 | `[DRAFT NOTE, S151: … (d) §§ R7.2–R7.3 run to about 1,700 words against the 2,200-word budget]` | **OPEN on (d) only** — (a) resolved 2026-09-13 by ruling 1 / § D18, (b) and (c) resolved S153; (d) is the per-block word allocation, which ruling 3 explicitly did not settle. The measured figure is **2,163 words**, not 1,700 |
+| R0 | `[TABLE N: results/hypothesis-outcome-table/hypothesis-outcome-table.md — the generated table, placed here per D16.]` | not a decision — a placement marker, and the table exists |
+| R4 | `[RULED 2026-09-12 (ruling 7) — retained for the record: …]` | CLEARED; body text carried verbatim |
+| R7.3 | after the 3.8 leg (R7.3-13) | CLEARED — `[RULED 2026-09-12: the 3.8 verifier-seat leg is reported as drafted.]` |
+| R7.3 | after the r2 tier-1 sentence (R7.3-15) | CLEARED — ruling 2 / § D19: the headline is the all-3.7 stack, 0.9190 board frame / 0.9265 screen |
+| R7.3 | after the gold-standard back-reference (R7.3-20) | CLEARED — ruling 2; the § R4 overlap is a compression call, not a ruling |
+| R7.3 | after the cost paragraph (R7.3-26, R7.3-29) | CLEARED — the fourth cell's mixed basis kept as marked |
+
+So the draft's own notes now carry **one and a half open decisions** where
+they carried four, and neither of the remaining two is waiting on the PI:
+one waits on Methods prose and one on the word allocation, which is
+recommendation 3 of [§ The three rulings](#the-three-rulings-the-pi-should-give-first).
 
 The `[Resolved 2026-06-13: …]` markers in R2, R7.1, and R8 are historical
 records of Session-114 decisions and are not open items.
@@ -939,29 +1334,63 @@ records of Session-114 decisions and are not open items.
 | Efron–Gong optimism | how much picking the best of many operating points flatters the score |
 | flex rates | the vendor's discounted asynchronous pricing tier |
 | lean-deploy cost | the cost excluding passes a production run would not need |
-| E-numbers (E56, E59, E81, E82, E83, E84) | numbered errata against the preregistration |
+| E-numbers (E56, E59, E81, E82, E83, E84, E85) | numbered errata against the preregistration |
+| K ladder | the same recipe run at several pass counts with everything else held fixed, so only K varies |
+| rung | one pass count on such a ladder, priced and scored as a whole recipe |
+| front-loaded | most of what extra passes buy is bought by the first few of them |
+| efficient / dominated rung | efficient: nothing cheaper scores as well; dominated: something cheaper already matches it |
+| admissible set (on a ladder) | the rungs that cannot be ruled out as that ladder's best |
+| board frame / frame tax | re-scoring a cell on a different tile footprint, and the score it loses by the move |
+| overlap / corroboration (c ≥ 2) | how much neighbouring tiles share; a detection two overlapping tiles both reported |
+| interior optimum | the best setting lies inside the range tested, not at either end |
+| carried point / vote shell | the operating point committed in advance; the ladder's own k = 1/3/4/8 rule rather than the literal k = K |
+| tile-join invariant | the check that a cell's per-tile table belongs to the frame it is being scored on; a refused cell is disclosed, not re-joined |
+| withheld (a metric) | the scorer refused to emit it and the reason is named, as against reporting a low value |
+| resolution limit | the smallest difference a given tile count can detect at all, measured rather than assumed |
 
 ### Figures and tables: promised versus existing
 
+**Regenerated 2026-09-13**, adding the artefacts the K-ladder review and the
+Era-2 board rebuild produced. The 2026-09-12 pass's premise — "no paper
+figure has been made" — was corrected by the outline's § Figures and tables:
+`docs/paper/figures/` holds only `review-app-examples/`, but `results/`
+carries about a hundred committed figures, several of them serving the ISPRS
+skeleton's three exhibits directly.
+
 | promised in the draft | exists? | where |
 |---|---|---|
-| `Table [N]` — the hypothesis-outcome table | **yes** | `results/hypothesis-outcome-table/hypothesis-outcome-table.md`, generated at commit `54ae2dc03`, 15 hypotheses |
-| R6 seven-rung cost table (inline) | inline only | not inventoried (K-ladder pending) |
-| R6 four-row transfer table (inline) | inline only | not inventoried |
+| `Table [N]` — the hypothesis-outcome table | **yes** | `results/hypothesis-outcome-table/hypothesis-outcome-table.md`, generated, 15 hypotheses |
+| R6 seven-rung cost table (inline) | inline; source exists, and is now **one column short** | `results/verifier-robustness/pareto/pareto_v2.json` → `rungs` (all seven verified this session) plus `mcc` — the register row was re-signed 2026-09-12 with a tile-MCC column the draft's table does not carry (R6-15) |
+| R6 four-row transfer table (inline) | inline; GS side anchored, 55-map side standardised-vintage | GS: `results/55map-leaderboard/gs-vs-55map-transfer.md:7-10`; 55-map r2 equivalents: `results/55map-leaderboard/55map-leaderboard-50m-r2.md` rows 1, 2, 6, 7 (R6-07) |
 | R7.1 eight-cell board table (inline) | inline; source exists | `results/55map-leaderboard/55map-leaderboard-50m-r2.md` |
 | R7.2 ten-row family table (inline) | inline; rendered by script | `scripts/render_r7_family_table.py` from `results/55map-final-board-r2-2026-09-06/final_board_50m.json` |
-| **no figure is promised anywhere in Results** | — | — |
+| R1b's twenty-three claims | **no exhibit at all** | D22 assigns one figure (F1 against cost across the geometry cells) and one table (the nine-cell stride board); both to be made from committed numbers at $0 |
+| **no figure is promised anywhere in Results** | still true of the draft | — |
 
-Existing figure assets the draft does not use:
+**Figures and tables that now exist and are cited nowhere in the draft.**
+Five of the eight are new since the 2026-09-12 pass.
 
-- `results/55map-final-board-r2-2026-09-06/significance-groups.png` — the
-  35-cell dot-and-interval plot with significance groups. The obvious
-  candidate for the deployment exhibit.
-- `results/figures/phase3d-pr-curves.png`,
-  `results/figures/phase3d-cross-modal-venn.png` — Phase-3d assets,
-  referenced nowhere in the draft.
-- `docs/paper/figures/` contains only `review-app-examples/` — no paper
-  figure has been made.
+| artefact | what it carries | new? |
+|---|---|---|
+| `results/k-ladder-2026-09-12/figures/k-ladder-pareto.png` | audited all-in cost (log axis) against headline F1, one line per Phase-1 ladder, each point labelled with its K — the front-loaded shape and the saturating last step in one image | **new** |
+| `results/k-ladder-2026-09-12/figures/k-ladder-pareto-phase2.png` | the same for the fourteen Phase-2 ladders, which is where the thinking-level and temperature governance of K's return is visible | **new** |
+| `results/verifier-robustness/pareto/pareto_v2.png` | **now two panels** — (a) cost × F1@20 m, (b) cost × tile-MCC — so exhibit (ii) already carries R6-15's MCC-efficient set | amended |
+| `results/k-ladder-2026-09-12/mcb/table.md` | the 22-ladder Hsu MCB table, F1 and tile-MCC admissible sets with each ladder's `w_upper`; roll-up in `mcb/summary.json` | **new** |
+| `results/k-ladder-2026-09-12/phase2/ladder-tables.md` | per-family four-rung tables, both operating points, cost per rung, the carried-convention disclosure column, and the Pareto section § 7.4 reads | **new** |
+| `results/k-ladder-2026-09-12/mcc-test/` | the per-ladder MCC permutation artefacts and the underlying round-robins (`tiering/<ladder>/tiering_<buffer>m.{json,md}`), with the gate record and the instrument used | **new** |
+| `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md` § "Tile-level MCC" | the 150-cell tile-MCC rank table beside the F1 tiering — 2,982/11,175 pairs significant, 6 MCC tiers, MCC tie set 33, MCC MCB 59 of 150, of which 9 are also F1-admissible; the pairwise table is `tiering_20m.json` → `mcc_permutation.pairwise` and the admissible set `mcb/gs-era2-verified-board-2026-09-10_mcc_b20_m1.json` | **new** |
+| `results/55map-final-board-r2-2026-09-06/significance-groups.png` | the 35-cell dot-and-interval plot with significance groups — the obvious deployment exhibit (iii) | existing |
+| `results/gs-fp-classification/figures/cross_corpus_comparison.png`, `category_distribution.png` | the error-mode comparison the outline names as the third adopted exhibit | existing |
+| `results/figures/phase3d-pr-curves.png`, `phase3d-cross-modal-venn.png` | Phase-3d assets, referenced nowhere | existing |
+
+**The MCC-family tables change what an exhibit has to say.** Obs 482
+records that on the Era-2 board **no F1 Tier-1 cell is in tile-MCC Tier 1**,
+that MCC Tier 1 is 33 cells drawn entirely from F1 tiers 6–12, and that the
+two admissible sets share **9** members of 65 and 59 — with the F1 arm of
+that rebuild reproducing the signed board byte-identically, so the
+disagreement is a property of the two metrics and not of the harness. Any
+Results exhibit that shows the F1 ordering alone therefore shows one of two
+orderings without saying so.
 
 The ISPRS skeleton § 5 organises Results "around three exhibits" — (i) the
 GS verified board plus the stride/geometry programme, (ii) the Pareto
@@ -995,6 +1424,38 @@ fixed before Results prose is final.
    `gemini38-screen-armv-2026-09-04`.
 5. `results/gtfree-selection/` (§ R9) has no register row at all.
 
+**Added by the 2026-09-13 pass**, and two of the five above are now closed.
+
+1. **Closed** — item 4's three § R1b rows are no longer unsigned:
+   `grid-tilesize-overlap-2026-08-18`, `grid-postverifier-2026-08-18` and
+   `h13-overlap-2026-08-18` all carry `manually_verified_at`
+   **2026-09-12T09:03:09Z** ("approved as drafted" after a written
+   walkthrough). They remain **uncited by the draft** — § R1b is an outline,
+   not prose — so the citation half of item 4 stands.
+2. **Closed** — `pass-budget-pareto-v2` is re-signed
+   **2026-09-12T09:03:09Z** with the tile-MCC amendment, and
+   `k-ladder-2026-09-12` is signed **2026-09-13T06:58:12Z**. § R6's
+   governing rows are current; the **draft** is what is behind them.
+3. **New** — the outline's § R1b registration note still records those three
+   rows as unsigned. A one-line correction in
+   `docs/paper/results-outline.md`, not a claim change.
+4. **New** —
+   `docs/methodology/preregistration/hypothesis-tracking.md:373-378` still
+   warns that D17 finding U12's wording "appears to have propagated into the
+   paper draft at `docs/paper/results-draft.md:214-219`". The draft's § R3
+   now records the correction, so the warning is stale and should be closed
+   in the tracking file.
+5. **New** — the same file records the PI's 2026-08-28 H9 ruling ("Tier A:
+   I approve disclose only") as **recorded, NOT applied**. § R3 reports H9
+   as executed and rejected without the disclosure that ruling
+   contemplated.
+6. **New** — the Era-2 board is **rebuilt and awaiting the PI's
+   re-signature**: `provenance.json` → `re_sign_pending` is `PENDING`, with
+   ten signature-bearing paths asserted byte-equal. Item 3 above is
+   superseded by this state rather than resolved — every board figure §§ R4
+   and R7.3 quote is now from a rebuild that no signature attests, even
+   though the F1 arm reproduced byte-identically.
+
 ### The three rulings the PI should give first
 
 1. **One reference revision for the whole of Results.** §§ R0 and R8
@@ -1016,9 +1477,105 @@ fixed before Results prose is final.
    reconciliation, the per-axis robustness detail, the E81 mechanism, and
    the GS screen routed to Supplements S1/S2.
 
+**Status, 2026-09-13.** Ruling 1 was given (r2 throughout, § D18) and
+ruling 2 was given in the other direction from the recommendation above —
+the headline **is** the Gemini 3.7 stack, with the Gemini 3 board as the
+calibration story (§ D19). Ruling 3 is still open, and the eleven blocks it
+asks about are now **twelve**: the allocation above already lists R1b's
+share implicitly at 0, so it needs one more line.
+
+### The three rulings §§ R3 and R6 need first
+
+Added 2026-09-13, now that both sections are inventoried against a signed
+K-ladder row. These are additional to, not instead of, the three above.
+
+1. **Where does the K ladder live — § R3, § R6, or split?** The ladder is
+   one body of evidence making two kinds of statement about the same rungs,
+   and ten inventoried claims currently have no home
+   (R3-11 to R3-15, R6-14 to R6-18). Recommended: **split on the axis the
+   claim is about** — § R3 takes the shape and the mechanism (front-loading,
+   the admissible sets, the thinking-governed return), § R6 takes the price
+   (dollars per 0.001 F1, the two Pareto sets). Nothing else in the two
+   sections can be drafted until this is settled, because it decides which
+   block compresses and which grows.
+2. **Does Results report tile-MCC beside F1 as a finding, or as a column?**
+   Three separate instruments now say the two metrics select different
+   configurations: the ladders (K = 1 admissible on tile-MCC on 22 of 22
+   and ruled out on F1 on 20 of 22), the Pareto board (MCC-efficient
+   {min6, min11} against F1-efficient {min6, min11, high31, high35}), and
+   the Era-2 board itself (no F1 Tier-1 cell in tile-MCC Tier 1; admissible
+   sets sharing 9 of 65 and 59, Obs 482). Recommended: **F1 stays the
+   preregistered tiering and the headline, and the disagreement is stated
+   in text as a finding** — presence-or-absence per tile is the
+   survey-triage objective, so a reader given only the F1 board would draw
+   a materially different conclusion about which configurations are good.
+   This is the PI's open continuity item 1b.
+3. **Which reference revision do § R6's deployment numbers quote?** Ruling
+   1 says r2; § R6's reversal, transfer table and uplift cell are all
+   standardised-vintage (R6-06, R6-07, R6-12 — re-pointing costs five
+   numbers and changes no conclusion), and its confusion-matrix
+   decomposition (R6-13) **has no r2 measurement at all**. Recommended:
+   **re-point the five, and keep R6-13 standardised as a named exception**,
+   because the claim there is about the *kind* of purchase, which no
+   reference revision changes — with the exception stated rather than left
+   for a reader to notice.
+
 ---
 
 ## Changelog
+
+### 2026-09-13 — Extended to §§ R1b, R3 and R6; cross-section summary regenerated (Session 153)
+
+**Refresh trigger**: item 9 of
+`planning/documentation-foundation-checklist-2026-09-13.md`. The 2026-09-12
+pass left R3 and R6 as placeholders pending a parallel K-ladder job; that
+job landed, its analysis row `k-ladder-2026-09-12` was **signed
+2026-09-13T06:58:12Z**, and `pass-budget-pareto-v2` was **re-signed
+2026-09-12T09:03:09Z** carrying a tile-MCC column. R1b, created by ruling 5
+on 2026-09-12, had never been inventoried at all.
+
+| Claim | Before | After |
+|---|---|---|
+| Blocks inventoried | 10 of 12 (R3, R6 placeholders; R1b absent) | **12 of 12** |
+| Claims recorded | 181 | **237** |
+| VERIFIED | 165 | **214** |
+| DRIFTED | 14 | **19** (the 14 already corrected in the draft under ruling 4, plus 5 new) |
+| SUPERSEDED | — (status did not exist) | **1** (R3-10) |
+| UNANCHORED | 2 | **3** (both originals anchored under ruling 4; R6-09's "$2.06" is new) |
+| Verified but absent from the draft | not counted | **10** — R3-11..R3-15 and R6-14..R6-18, every one a K-ladder finding |
+| Prose words inventoried | 6,389 (of 7,186 across the blocks) | **7,186 — all of it** |
+| § R1b's status | outline only, never inventoried | **23 claims, 23 VERIFIED, 0 DRIFTED, 0 UNANCHORED** |
+| § R3 | "*not inventoried*" | 10 draft claims (7 V, 2 D, 1 SUPERSEDED) + 5 ladder claims |
+| § R6 | "*not inventoried*" | 13 draft claims (9 V, 3 D, 1 U) + 5 ladder claims |
+| Open PI decisions in the draft's own markers | 4 | **0** — cleared under part A of the same item; two non-ruling markers remain |
+| Figures and tables existing but uncited | 3 figures + 1 table | **10 rows**, five of them new (two ladder Pareto figures, the MCB table, the Phase-2 ladder tables, the MCC-test artefacts, and the board's 150-cell tile-MCC table; `pareto_v2.png` now two-panel) |
+| Jargon glosses | 27 terms | **39** — twelve pass-count, frame and tile-join terms added |
+
+**What the ladder did to §§ R3 and R6.** Nothing numerical in either
+section was found wrong by it. What it did was **replace the basis** of one
+claim (R3-10: the diversity dividend is not "obsolete" under a verifier —
+the return on K is still thinking-governed on 7 of 7 HIGH verified ladders
+and 2 of 6 MINIMAL) and **supply ten findings neither section states** —
+the front-loaded shape and its price, the Hsu MCB admissible sets, tile-MCC
+never rising with K, the verifier absorbing 40.6 % of K's F1 return and
+reversing the sign of its tile-MCC effect, the two corpora reconciled as a
+487-tile resolution effect, the tile-factor projection's 10.7 %
+overstatement, and the MCC-efficient set {min6, min11}. The two sections'
+own drift is **entirely reference-vintage** (R6-06, R6-07, R6-12 quote the
+standardised board where ruling 1 mandates r2) plus two Era-1 claims in R3
+that mix vintages or overstate a vote-threshold result.
+
+**What did NOT change.** No claim row, count, anchor or status in §§ R0,
+R1, R2, R4, R5, R7, R8 or R9 — including the fourteen DRIFTED and two
+UNANCHORED rows of the 2026-09-12 pass, which are retained at their
+published values because they are the evidence the PI's rulings were taken
+on. No point estimate, tier, admissible set, registration status or
+hypothesis verdict anywhere. No results artefact was read-modified: this
+pass is reads plus edits to this file, `docs/paper/results-draft.md`
+(part A) and the checklist (part C). US$0 API, no compute beyond reading
+committed files and two small recomputations from committed CSV and JSON
+(the Era-1 vote-threshold sweep behind R3-09 and the three standardised
+confusion tables behind R6-13).
 
 ### 2026-09-12 (later) — The PI's seven rulings recorded (Session 153)
 
