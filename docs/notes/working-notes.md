@@ -35419,3 +35419,191 @@ epistemic shape in a scoring instrument rather than a cost claim);
 **Obs 472** (check a regression gate's premise before reading its
 failure, the neighbouring lesson about trusting a check's output over its
 setup).
+
+## Observation 482: Two metrics, one board, near-opposite orderings — no F1 Tier-1 cell is in tile-MCC Tier 1, and the admissible sets share 9 of 65 and 59 (Session 153, 2026-09-13)
+
+**The finding.** The Gold Standard (GS) Era-2 verified board was rebuilt on
+2026-09-13 carrying a **tile-MCC permutation family beside** the
+preregistered micro-F1 tiering (Principal Investigator (PI) ruling 7,
+S153): the same 487-tile frame, the same 10,000 round-robin tile-swap
+draws, the **same swap masks** (one `rng.random(487) < 0.5` stream, seed
+42, one tile order), Benjamini–Hochberg (BH) q = 0.05 within its own
+family. It does not replace the F1 tiering. It also barely agrees with it.
+
+| Claim | Figure |
+|---|---:|
+| F1 Tier-1 cells that are in MCC Tier 1 | **0 of 5** |
+| MCC ranks of the five F1 Tier-1 cells | **36, 51, 54, 80, 119** |
+| MCC Tier 1 | **33 cells, every one from F1 tiers 6–12** |
+| — its F1-tier histogram (tiers 6→12) | 3 / 7 / 8 / 5 / 4 / 3 / 3 |
+| Hsu admissible sets shared | **9** of 65 (F1) and 59 (MCC) |
+| — union / F1-only / MCC-only | 115 of 150 / 56 / 50 |
+| top F1 cell is MCC-admissible | yes (MCC rank 36) |
+| top MCC cell is F1-admissible | **no** |
+| argmax stability, F1 → MCC | 0.6017 (22 winners) → **0.4202 (36)** |
+
+**MCC Tier 1 is led by single-pass image proposer-verifier baselines** —
+`pv-diag-384::verified-adv-image-baseline-pro-vf` tops the MCC ranking at
+tile-MCC **0.8887** while sitting at **F1 rank 119 of 150**, F1 tier 9,
+board-frame F1@20 **0.7309**; ranks 2–3 are its medium-thinking and
+unverified twins. The F1 Tier 1 is the five Gemini 3.7 K = 5–10 consensus
+cells, top cell F1@20 0.9233. **The two orderings are close to reversed at
+the top**, and the nine cells both instruments admit are a narrow,
+specific set: five `g384-ov192` B-geometry grid rungs (K = 1 twice, 3, 5,
+10), three of the five F1 Tier-1 cells, and
+`verified-adv-text-min-6of10`.
+
+**The mechanism, priced in tiles.** At the tile grain the MCC leader is
+simply the better classifier: on the same 487 tiles it books
+**215 / 13 / 14 / 245** (true positive / false positive / false negative /
+true negative) against the F1-headline text cell's **188 / 11 / 41 / 247** —
+tile recall 0.9389 against 0.8210, tile-F1 0.9409 against 0.8785 — while
+losing to it 0.7309 against 0.8902 on object F1@20. A detection-level
+metric rewards extra true positives inside tiles that are already
+positive, which move no tile; a tile-level metric punishes the extra false
+positives that flip empty tiles. So K-scaled consensus buys localisation
+at the price of tile-level discrimination, and the price is visible only
+when the second metric is computed.
+
+**This is not a new phenomenon; the news is that it is systematic and
+board-scale.** Obs 280 recorded the divergence across strata, Obs 369/370
+resolved it statistically at deployment scale (`IM-k3` sole MCC Tier 1 on
+the 55-map r2 board, tile-MCC 0.7110 [0.696, 0.725], significantly above
+all seven other cells, while sitting F1 Tier 4). What 482 adds is the
+measurement over **150 cells at once under one permutation stream**, with
+**disjoint Tier 1s** and near-disjoint admissible sets as the statement.
+
+**The pipeline was checked before the claim was accepted**, per
+`docs/agent-guidance.md` § Research Finding Calibration: the MCC per-cell
+confusion gate passes **150 of 150** with zero withholdings beyond the
+three tile-join refusals; the swap masks are pinned byte-identical to the
+F1 kernel's by a tier-1 test
+(`tests/test_k_ladder_mcc_instruments.py::test_f1_and_mcc_kernels_draw_identical_swap_masks`);
+and the **F1 arm computed in the same run reproduced the signed board
+exactly** — ranking, tiers, tie set and all 11,175 pairwise records
+byte-identical, the F1 Hsu artefact byte-identical. A harness that
+reproduces one arm byte-for-byte did not misconfigure the other. The
+disagreement is a property of the two metrics.
+
+**Why this matters.** **Presence or absence of a mound per tile is the
+survey-triage unit** — it is what a field director reads off a model
+before allocating a season — so tile-MCC is not a diagnostic side-metric
+here, it is the objective for one real use of the system. The paper
+therefore cannot report F1 as the headline and MCC as a supporting column
+without saying, in text, that **the two objectives select different
+configurations**, because a reader given only the F1 board would draw a
+materially different conclusion about which configurations are good: the
+best presence/absence configurations on this board sit in the F1
+ranking's bottom half. That is the PI's open decision, continuity item
+1b (`planning/paper-writeup-continuity.md`), whose recommendation is F1
+as the preregistered tiering and headline with the MCC family reported
+beside it and the disjoint Tier 1s stated as a finding. It is the same
+conclusion the canonical simultaneous instrument reaches on the K
+ladders — **K = 1 is ruled out on F1 on 20 of 22 ladders and admissible
+on tile-MCC on 22 of 22, holding the highest tile-MCC on 13** — and the
+running Gemini 3.7 image K = 3 campaign
+(`planning/gemini37-image-55map-2026-09-13.md`) is the deployment-scale
+test of whether a configuration chosen **for** tile-MCC beats everything
+deployed so far on its own objective.
+
+**Caveats.** The board's tile-MCC rests on the **name-based (`id`) tile
+join**, which is the published convention by ruling 6 and not a
+geometrically verified one (Obs 477); a cell the invariant refuses is
+disclosed rather than re-joined, and **three cells** — all three Gemini
+3.7 GS text rungs — are withheld from both families, so neither
+admissible set is over the full 153 admitted cells. **The MCC family
+resolves much less than the F1 one**: 2,982 of 11,175 pairs separate
+against F1's 7,961, giving 6 greedy-clique tiers against 14, and the MCC
+argmax is unstable (stability 0.4202, 36 distinct winners; selection
+optimism +0.0153, apparent 0.8887 → corrected 0.8734). So **"MCC Tier 1"
+is a set of 33, not a winner**: naming a single best tile-MCC
+configuration from this board would be over-reading it, and the same
+resolution limit means the *absence* of agreement between the sets is
+partly an absence of MCC power rather than pure disagreement. The rebuilt
+board **awaits the PI's re-signature** — `provenance.json` →
+`re_sign_pending` is `PENDING`, ten signature-bearing paths asserted
+byte-equal, so no figure here is signed-attested yet. Finally, MCC Tier 1
+being dominated by single-pass image cells is a statement about this
+487-tile GS frame; the 55-map corroboration is a different corpus, a
+different reference and a 50 m buffer.
+
+**Findable later**: two metrics rank the Era-2 board oppositely, no F1
+Tier-1 cell in MCC Tier 1, MCC ranks 36 51 54 80 119, MCC Tier 1 is 33
+cells from F1 tiers 6–12, admissible sets share 9 of 65 and 59, union 115
+of 150, `verified-adv-image-baseline-pro-vf` tile-MCC 0.8887 at F1 rank
+119 of 150, F1@20 0.7309, argmax stability 0.4202 against 0.6017, 36
+winners against 22, 2,982 of 11,175 against 7,961, 6 MCC tiers against
+14, 215/13/14/245 against 188/11/41/247, tile recall 0.9389 against
+0.8210, same swap masks one rng stream seed 42, 150 of 150 confusion
+gates, F1 arm byte-identical, presence/absence is the survey-triage unit,
+continuity item 1b, ruling 7 reported not replacing, ruling 6 name-based
+join, K = 1 admissible on tile-MCC on 22 of 22.
+
+Sources: `reports/era2-board-mcc-family-2026-09-13.md` (read 2026-09-13:
+§ 4's claims table — the 0-of-5, the MCC ranks 36/51/54/80/119, MCC Tier
+1's 33 cells and its 3/7/8/5/4/3/3 histogram, the leader's 0.8887 / F1
+rank 119 / F1@20 0.7309, the 9-of-65-and-59 overlap with its union 115 and
+56/50 split and its composition, the argmax-stability and optimism rows;
+§ 4's "How to read it" mechanism and its surprise flag with the three
+pipeline checks; § 3's before→after table for the unchanged F1 quantities
+and the new MCC rows; § 9's verification table; § 5 for the three withheld
+cells; § 6 for the pending re-signature and the ten byte-equal signature
+paths); `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md`
+(read 2026-09-13: the 2026-09-13 revision banner and § "Tile-level MCC —
+a second family on the same swap masks (REPORTED, not the tiering)", its
+MCC table rows 1–12 giving `pv-diag-384::verified-adv-image-baseline-pro-vf`
+0.8887 / F1 tier 9 / F1@20 0.7309, the F1 table rows 1–5 for Tier 1, and
+the § Changelog entry's five-bullet MCC reading);
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json`
+(read 2026-09-13: `mcc_permutation` — `n_pairs` 11,175, `n_significant`
+2,982, `n_tiers` 6, tier sizes 33/48/50/11/6/2, `tie_set` 33, `gates` 150
+entries all `passed: true`, `withheld` empty, `swap_mask` and `statistic`
+strings; and the F1 arm's 14 tiers 5/8/15/15/24/14/20/16/9/9/4/4/6/1,
+7,961 of 11,175 significant, seed 42, 10,000 permutations, 487 tiles);
+the two Hsu artefacts under the same board's `mcb/` (read 2026-09-13:
+`…_b20_m1.json` — F1, 65 admissible, `argmax_stability` 0.6017,
+`n_distinct_argmax` 22, optimism 0.00515; `…_mcc_b20_m1.json` — MCC, 59
+admissible, stability 0.4202, 36 winners, apparent 0.88870, corrected
+0.87342, `hsu_w_upper` 0.08282, `hsu_w_lower` 0.10114 — the overlap of 9,
+union 115 and the nine members' names computed directly from their
+`hsu_not_ruled_out` index sets against `candidates`);
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/provenance.json`
+(read 2026-09-13: `re_sign_pending.status` "PENDING — the PI re-signs" and
+`proposed_outcome`, which states both families, both admissible-set sizes,
+their 9-member overlap and closes "The board's tiering remains the F1
+one."; `signed_at` 2026-09-12T06:04:30Z);
+`results/k-ladder-2026-09-12/findings.md` § 6.1 (read 2026-09-13: the
+Hsu roll-up item 3 — K = 1 ruled out on F1 on 20 of 22 ladders, admissible
+on tile-MCC on 22 of 22, highest tile-MCC on 13, never ruled out on it;
+item 4's MCC sets whole-ladder on 12 of 22 against 2 of 22 on F1);
+`results/tile-level-f1/findings.md` § 3.1 (read 2026-09-13: the two GS
+rows' confusion counts 215/13/14/245 and 188/11/41/247, tile-P/R/F1
+0.9430 / 0.9389 / 0.9409 and 0.9447 / 0.8210 / 0.8785, and the orientation
+paragraph's object F1@20 of 0.8902 and 0.7309);
+`results/metric-leaderboards/55map-mcc-tiering-r2.md` (read 2026-09-13:
+`IM-k3` sole Tier 1, tile-MCC 0.7110 [0.696, 0.725], 20 of 28 pairs
+significant, 5 tiers, its seven BH-significant pairwise rows +0.0221 to
++0.0713, and the 8-of-8 confusion gate) with
+`results/analyses-manifest.md` line 68's signed row
+`55map-r2-leaderboard-mcc-50m`; `planning/gemini37-image-55map-2026-09-13.md`
+(read 2026-09-13: the question — presence/absence as the unit of survey
+triage — and § 1's evidence table naming the GS board's top nine tile-MCC
+cells as all image cells and `IM-k3` 0.7110 as the 55-map sole MCC
+Tier 1); `planning/paper-writeup-continuity.md` (read 2026-09-13: the
+S153-b state block, decision (1) and the open question (1b) with its
+recommendation); `tests/test_k_ladder_mcc_instruments.py` line 166 (read
+2026-09-13: `test_f1_and_mcc_kernels_draw_identical_swap_masks`); rebuild
+commit `ac4355859`.
+Related: **Obs 479** (the verifier stage reverses the sign of tile-MCC's
+response to K while absorbing 40.6 % of its F1 return — the
+stage-resolved mechanism behind this board's disagreement);
+**Obs 480** (the MCB and the greedy clique disagree in both directions, and
+the same K = 1 result stated by the simultaneous instrument — the reason
+both instruments are reported here rather than the agreeable one);
+**Obs 476** (the verifier is a tile classifier before it is a detector,
+the single-cell version of the same contrast); **Obs 477** (the
+name-based tile join that this board's MCC rests on, and the three cells
+it withholds); **Obs 280** and **Obs 369/370** (the divergence first
+recorded across strata, then statistically resolved at deployment scale
+with `IM-k3` sole MCC Tier 1 — 482 is the same finding measured over 150
+cells under one permutation stream).
