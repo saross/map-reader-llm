@@ -41,9 +41,11 @@ what ran, what the gates measured, and exactly how to resume.
 | Coverage gate, all three passes | **PASS** | 0.00 | 24,561 / 24,561 each, 0 missing and 0 extra, verified independently and by the driver's stage 0 |
 | K = 1 union (pass 1, first-N) | **built**, 6,985 candidates | 0.00 | `union_k1.geojson` |
 | K = 3 union (first-N) | **built**, 8,337 candidates | 0.00 | `union_k3.geojson` |
-| Four verifier arms | **IN FLIGHT** | pending | from 15:07:59 UTC, `WORKERS=50` |
+| K = 1 arm 1 (`gemini-3-flash`, MINIMAL) | **6,985 / 6,985** | **4.9626** | 15:11–15:20 UTC, 0 retries |
+| K = 1 arm 2 (`gemini-3.7-flash`, low) | **6,985 / 6,985** after cleanup | **7.7028** | main 6,972 at 12,247 retries (503 storm, § 3.1); 13 recovered by cleanup |
+| K = 3 arms 1 and 2 | **IN FLIGHT** | pending | relaunched 23:03:21 UTC after the storm stopped the driver |
 | Scoring, tests, registration | not started | — | |
-| **Committed so far** | | **≈ 246.78** | against a ≈ US$274–288 envelope (§ 2) |
+| **Committed so far** | | **≈ 259.44** | against a ≈ US$274–276 envelope (§ 3.1) |
 
 Carried operating points, from the GS K = 3 calibration leg swept at the
 GS-primary 20 m buffer:
@@ -99,6 +101,63 @@ moment pass 1's meta lands. Exposure left unguarded is bounded: pass 1 costs
 US$79 on the audited GS basis, and reaching US$110 would require the per-tile
 cost to run 39 % high, which is the same event as the cache share collapsing —
 so the two gates fail together and are read together, once.
+
+### 3.1 The 503 storm on the K = 1 arm 2, and the 13-candidate gap
+
+This is the flex-congestion hazard the first steward flagged when it chose a
+storm-resilient driver for the proposer, arriving instead on a **verifier** leg,
+where the driver has no recovery discipline.
+
+What happened. `verify_k1_arm1` (`gemini-3-flash-preview`, MINIMAL) finished
+6,985 / 6,985 in nine minutes with **zero** retries. `verify_k1_arm2`
+(`gemini-3.7-flash`, low) ran 15:20 → 18:37 UTC and ended with **6,972 verified
+and 13 FAILED**, each having exhausted 15 attempts with 503s, against
+**12,247 retries** over the leg. `run_pv.py verify` in strict mode returned
+non-zero, `set -euo pipefail` stopped the arms driver there, and
+`verify_k3_arm1` and `verify_k3_arm2` never started.
+
+The 13, read from the crop manifest against `probabilities.json`:
+`candidate_01460`, `02713`, `02909`, `02937`, `04072`, `04197`, `04253`,
+`04310`, `05556`, `06824`, `06885`, `06949`, `06954`.
+
+How it was closed. `run_pv.py cleanup` over `verify_k1_arm2`, with the
+configuration held **byte-identical to the main pass** — same model, thinking
+level, temperature and tier, and deliberately **no** `--safe-mode-tokens`, so
+that all 6,985 candidates in the arm are verified under one configuration
+rather than 13 of them under a relaxed output budget. All 13 recovered on the
+**first** attempt (23:02:45 UTC, 16 retries, US$0.0153): the storm had passed.
+
+Both metas are kept, per the fourth-cell precedent — the cleanup rewrites
+`run.meta.json` with the retry pass's usage only, so the main run's usage
+survives beside it:
+
+| File | Holds |
+|---|---|
+| `run.meta.json` | the cleanup pass, 13 items |
+| `run.meta.json.pre-cleanup-20260913T225915.backup` | the main pass, 6,972 items |
+| `probabilities.json` | all 6,985, plus a `cleanup_history` entry |
+| `probabilities.json.pre-cleanup-20260913T225915.backup` | the 6,972 as they stood |
+
+The arm's audited cost is therefore the **sum of both metas**, US$7.6875 +
+US$0.0153 = **US$7.7028**, and any later audit of this arm that reads only
+`run.meta.json` will understate it by three orders of magnitude. That is the
+one trap this recovery leaves behind, and it is why both files are named here.
+
+**Verifier-leg audit method.** The arms are not `run_*` fragments, so
+`audit_proposer_cost.py` cannot be pointed at them; its `rates()` and
+`audited_cost()` were imported and applied to each arm's `usage_stats`
+instead. The method was gated first by reproducing the GS calibration leg's
+committed arm costs — **US$0.4417 and US$0.6804, exactly**. The arms take no
+prefix caching (cache share 0.000 throughout: every crop is a distinct image),
+and each arm's meta prints exactly **2 ×** the audited figure, which is the
+flex correction — `run_pv.py verify` bills at flex while the meta prices at
+list.
+
+Measured per-candidate rates, now the better basis than either estimate:
+arm 1 **US$0.000711**, arm 2 **US$0.001103**. These reproduce the GS-derived
+projection (0.000710 / 0.001094) to within 1 %, so the four arms land at
+**≈ US$27.8** and the campaign at **≈ US$274.6** — the optimistic end of the
+§ 3.2 range in the card, and US$145 clear of the US$420 hard stop.
 
 ## 4. How to resume
 
