@@ -323,3 +323,131 @@ def test_malformed_vintage_stamp_surfaces():
     codes = {d["code"] for d in discs}
     assert "input-vintage-malformed" in codes
     assert "eval-detections-mismatch" in codes
+
+
+# --------------------------------------------------------------------------- #
+# The two instrument corrections of 2026-09-13 (Session 153, Batch 1 item 2)
+# --------------------------------------------------------------------------- #
+
+
+@pytest.mark.tier1
+def test_directory_valued_detections_is_not_geojson_missing():
+    """An aggregated multi-pass cell must NOT be reported as missing detections.
+
+    ``detections`` naming a DIRECTORY is the aggregated-cell shape: the evaluation
+    was pointed at the directory and ``summary.n_detections`` is the post-aggregation
+    count, so there is no single file whose features could be counted. Before the
+    correction this raised ``geojson-missing`` — "detections missing/unreadable" —
+    about 79 directories that were all present, which made eleven runs PARTIAL on an
+    instrument defect. Real case: retest-phase2b's T=0.0 image cell.
+    """
+    discs = verify_condition(
+        {"label": "image-t0.0",
+         "architecture": "single-pass",
+         "aggregation": "none",
+         "n_passes": 3,
+         "eval_path": ("results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-0-0/"
+                       "evaluation.json"),
+         "detections": "outputs/retest/phase2b/track1-image/T0.0"},
+        None, {}, "outputs/retest/phase2b", _g._build_eval_index())
+    codes = {d["code"] for d in discs}
+    assert "geojson-missing" not in codes, discs
+    assert "detections-dir-empty" not in codes, discs
+
+
+@pytest.mark.tier1
+def test_absent_detections_still_reported_missing():
+    """Regression guard for the other half of the branch: a genuinely absent path
+    must still raise ``geojson-missing``. The correction narrowed the WARN to real
+    absence; it must not have removed it."""
+    discs = verify_condition(
+        {"label": "ghost",
+         "architecture": "single-pass",
+         "aggregation": "none",
+         "n_passes": 1,
+         "eval_path": ("results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-0-0/"
+                       "evaluation.json"),
+         "detections": "outputs/retest/phase2b/track1-image/T0.0/does-not-exist.geojson"},
+        None, {}, "outputs/retest/phase2b", _g._build_eval_index())
+    assert "geojson-missing" in {d["code"] for d in discs}, discs
+
+
+@pytest.mark.tier1
+def test_empty_detections_directory_is_flagged(tmp_path, monkeypatch):
+    """An aggregated cell whose directory holds no geojson HAS lost its inputs —
+    the signal the directory branch keeps."""
+    import json as _json
+    monkeypatch.setattr(_g, "REPO_ROOT", tmp_path)
+    (tmp_path / "empty-cell").mkdir()
+    # a minimal eval that names the directory as its input, as the real ones do
+    (tmp_path / "eval.json").write_text(_json.dumps({
+        "_metadata": {"input_files": {"detections": ["empty-cell"]}},
+        "summary": {"n_detections": None, "buffers": [{"buffer_metres": 20, "f1": 0.5}]},
+    }), encoding="utf-8")
+    discs = verify_condition(
+        {"label": "empty", "architecture": "single-pass", "aggregation": "none",
+         "n_passes": 1, "detections": "empty-cell", "eval_path": "eval.json"},
+        None, {}, "outputs/synthetic", {})
+    assert "detections-dir-empty" in {d["code"] for d in discs}, discs
+
+
+@pytest.mark.tier1
+def test_materialised_pool_path_is_not_pool_dir_not_found():
+    """A pool whose registered ``path`` resolves to a FILE is a materialised pool.
+
+    flash35-pv-2x2's ``f3-min-text-1of10`` is the cross-run pv-diag-384 text-n10
+    minimal lineage merged into one committed geojson, so pass resolution has nothing
+    to count — but the artefact is present, which "not found" denied.
+    """
+    discs = verify_condition(
+        {"label": "f3prop-f35vf-6of10",
+         "architecture": "proposer-verifier",
+         "aggregation": "verified",
+         "proposer_pool": "f3-min-text-1of10",
+         "n_passes": 10,
+         "source_run": "pv-diag-384"},
+        None,
+        {"f3-min-text-1of10": {"modality": "text",
+                               "path": "consensus/f3-min-text-1of10-with-passes.geojson"}},
+        "outputs/flash35-pv-2x2", _g._build_eval_index())
+    assert "pool-dir-not-found" not in {d["code"] for d in discs}, discs
+
+
+@pytest.mark.tier1
+def test_absent_pool_path_still_reported_not_found():
+    """Regression guard: a pool path that is neither a directory nor a file still
+    raises ``pool-dir-not-found``."""
+    discs = verify_condition(
+        {"label": "ghost-pool",
+         "architecture": "consensus",
+         "aggregation": "consensus",
+         "proposer_pool": "nowhere",
+         "n_passes": 5},
+        None, {"nowhere": {"modality": "text", "path": "proposer/nowhere"}},
+        "outputs/flash35-pv-2x2", _g._build_eval_index())
+    assert "pool-dir-not-found" in {d["code"] for d in discs}, discs
+
+
+@pytest.mark.tier1
+def test_partial_runs_are_exactly_the_three_by_design_disclosures():
+    """After the 2026-09-13 annotation pass, the only PARTIAL runs are the three
+    whose WARNs are by-design disclosures the project has already settled:
+
+    * ``55maps-text-min-n10-uplift`` — ``n-passes-over`` on a MIXED-PROVENANCE pool
+      (passes 1-5 from the deployment run, 6-10 from this one), which the run's own
+      ``_note`` calls "the honest by-design signal, per the S106 settled position";
+    * ``e47-propose-brief`` and ``n1-outstanding-384`` — ``pinned-vintage``, the
+      ruling-3a (PI, 2026-09-07) disclosure that a row's eval scored a
+      vintage-frozen copy, raised only when the pin CHECKS OUT.
+
+    A new PARTIAL run is therefore a real finding, and this test is the tripwire.
+    """
+    reports = verify_all()
+    partial = {r["run_id"]: {d["code"] for d in r["discrepancies"]}
+               for r in reports if r["verdict"] == "PARTIAL"}
+    assert not [r for r in reports if r["verdict"] == "FAIL"]
+    assert set(partial) == {"55maps-text-min-n10-uplift", "e47-propose-brief",
+                            "n1-outstanding-384"}, partial
+    assert partial["55maps-text-min-n10-uplift"] == {"n-passes-over"}
+    assert partial["e47-propose-brief"] == {"pinned-vintage"}
+    assert partial["n1-outstanding-384"] == {"pinned-vintage"}

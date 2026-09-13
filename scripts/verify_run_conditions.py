@@ -11,11 +11,20 @@ schema-valid but wrong:
   condition's ``scope_override`` (the 327-vs-487 leakage trap);
 * **feature count** — the detection geojson's feature count equals the eval's
   ``n_detections`` (a wrong-source signal that has caught real errors before —
-  ``feedback_feature_count_crosscheck``);
+  ``feedback_feature_count_crosscheck``). A condition whose ``detections`` names a
+  DIRECTORY is an aggregated multi-pass cell: the eval scored the directory and
+  ``n_detections`` is the post-aggregation count, so there is no single file to
+  count and the check is inapplicable by construction. Such a row is checked for
+  emptiness instead (``detections-dir-empty``), not reported as
+  ``geojson-missing`` — see the comment at the branch;
 * **pool resolves** — the condition's ``proposer_pool`` is one of the run's pools
-  (or a flagged cross-run reference), and ``n_passes`` EQUALS the number of pass
-  files on disk (either direction of disagreement is reported: an undercount is
-  as much a signal as an overcount);
+  (or a flagged cross-run reference, declared by a ``source_run`` note), and
+  ``n_passes`` EQUALS the number of pass files on disk (either direction of
+  disagreement is reported: an undercount is as much a signal as an overcount). A
+  pool whose registered ``path`` resolves to a FILE is a materialised pool — its
+  passes were merged into one committed geojson — so pass resolution has nothing
+  to count and no discrepancy is raised; ``pool-dir-not-found`` is reserved for a
+  path that is genuinely absent;
 * **completeness** — every scored evaluation under the run is either claimed by a
   condition or explicitly waived in ``_ignored_evals`` (catches silent omissions);
 * **pinned vintage** — a row stamped ``input_vintage`` (ruling 3a, 2026-09-07:
@@ -282,9 +291,36 @@ def verify_condition(spec: dict, scope_bounds: str | None,
                                    f"{label}: geojson has {fc_v} features at "
                                    f"{pinned['detections_commit']} but eval n_detections={n_det}"))
         elif fc is None:
-            discs.append(_disc(WARN, "geojson-missing",
-                               f"{label}: detections missing/unreadable — feature check skipped "
-                               f"({detections})"))
+            # ``fc is None`` has TWO causes that the single ``geojson-missing`` WARN
+            # conflated (2026-09-13, Session 153 Batch 1 item 2):
+            #
+            # (a) ``detections`` names a DIRECTORY — an aggregated multi-pass cell.
+            #     The evaluation was pointed at the directory and aggregated the
+            #     per-pass files inside it, so ``input_files.detections`` records the
+            #     DIRECTORY and ``summary.n_detections`` is the POST-aggregation count
+            #     (verified on all 79 affected rows: every eval lists exactly one
+            #     input, the directory itself; 54 carry no ``n_detections`` at all).
+            #     There is no single file whose features could be counted, and the
+            #     per-pass files do not sum to the aggregate, so the feature-count
+            #     cross-check is inapplicable BY CONSTRUCTION — not blocked by a
+            #     missing artefact. Saying "detections missing/unreadable" about 79
+            #     directories that are all present was a false positive, and it made
+            #     eleven runs PARTIAL on an instrument defect rather than a finding.
+            #     The signal worth keeping for this shape is emptiness: a cell whose
+            #     directory holds no geojson at all has genuinely lost its passes.
+            # (b) the path is genuinely absent or unparseable — the original signal,
+            #     preserved unchanged in the else branch.
+            det_path = g.REPO_ROOT / detections
+            if det_path.is_dir():
+                if not any(det_path.rglob("*.geojson")):
+                    discs.append(_disc(
+                        WARN, "detections-dir-empty",
+                        f"{label}: detections directory holds no geojson — the "
+                        f"aggregated cell has no per-pass inputs on disk ({detections})"))
+            else:
+                discs.append(_disc(WARN, "geojson-missing",
+                                   f"{label}: detections missing/unreadable — feature "
+                                   f"check skipped ({detections})"))
         elif n_det is not None and n_det != fc:
             # divergence is a SIGNAL for adjudication (stale eval vs benign drift),
             # NOT a hard error — the verifier surfaces; the human decides re-run vs accept
@@ -311,11 +347,25 @@ def verify_condition(spec: dict, scope_bounds: str | None,
         rel = path or f"proposer/{pool}"
         pool_dir = g.REPO_ROOT / run_dir_rel / rel
         if not pool_dir.is_dir():
-            # a string-form pool with no explicit path can resolve to a non-existent
-            # proposer/<pool> dir — surface it rather than silently skipping n_passes
-            discs.append(_disc(WARN, "pool-dir-not-found",
-                               f"{label}: pool path '{rel}' not found under {run_dir_rel} "
-                               f"— n_passes uncheckable"))
+            if pool_dir.is_file():
+                # A MATERIALISED pool: its passes were merged into one committed
+                # geojson rather than left as run_* directories (flash35-pv-2x2's
+                # ``f3-min-text-1of10`` = ``consensus/f3-min-text-1of10-with-passes
+                # .geojson``, the cross-run pv-diag-384 text-n10 minimal lineage
+                # re-cropped in-run — ``scripts/author_second_wave_registration.py``
+                # _flags). A materialised pool has no per-pass files to resolve, so
+                # ``n_passes`` is uncheckable by pass resolution — but the artefact is
+                # PRESENT, which "not found" denied. Reported as nothing rather than a
+                # discrepancy: an explicitly-pathed pool that resolves to a real file
+                # is a legitimate pool form, not a signal. (2026-09-13, Session 153.)
+                pass
+            else:
+                # a string-form pool with no explicit path can resolve to a
+                # non-existent proposer/<pool> dir — surface it rather than silently
+                # skipping n_passes
+                discs.append(_disc(WARN, "pool-dir-not-found",
+                                   f"{label}: pool path '{rel}' not found under "
+                                   f"{run_dir_rel} — n_passes uncheckable"))
         else:
             # Count PASS FILES, not run_* directories, and report EITHER
             # direction of disagreement. Counting directories tolerated a run
