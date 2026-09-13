@@ -1,7 +1,9 @@
 # K-ladder Phase 2: what US$24.81 bought
 
-> **Last revised**: 2026-09-12 (original publication — the Phase 2 run's
-> closing report). Controlling card:
+> **Last revised**: 2026-09-12 (later — § 6.3 corrected and § 3's withheld
+> footnote amended after the tile-join work the PI ruled for:
+> `reports/tile-mcc-geometric-join-2026-09-12.md`). Before that: original
+> publication — the Phase 2 run's closing report. Controlling card:
 > `planning/k-ladder-review-2026-09-11.md` (rulings R1–R5); gate and costing:
 > `reports/k-ladder-phase2-costing-2026-09-12.md`; pre-launch audit:
 > `results/k-ladder-2026-09-12/phase2/pre_launch_audit.md`; findings:
@@ -121,6 +123,12 @@ the carried point is the same cell as the sweep-optimal one.
 † tile-MCC withheld, not missing: this family's `source_tile` vocabulary is not
 the board frame's, and tile-MCC is computed by string match rather than
 geometrically. `findings.md` § 7.3 and § 6.1 below. F1 is unaffected.
+**Still withheld as of 2026-09-12 (later)**, now enforced by the scorer rather
+than by hand, and the corpus-wide question is answered: of the **149** committed
+cells the board reads, only these three are affected. Repair is confirmed to be
+a corpus-wide decision rather than a local fix, because the frames overlap and a
+geometric join raises MCC on 146 of 146 sound cells —
+`reports/tile-mcc-geometric-join-2026-09-12.md`.
 
 **Three things worth noting about the operating points.**
 
@@ -316,6 +324,31 @@ the family is excluded from the permutation testing. `findings.md` § 7.3 states
 it for the paper-facing reader; § 8 below puts the repair and the corpus-wide
 question to the PI.
 
+**Followed up the same day, and the follow-up widened it.**
+`reports/tile-mcc-geometric-join-2026-09-12.md` records the response to the PI's
+ruling. Four corrections to this section belong here.
+
+- **The third cell's raw value is 0.1422**, not 0.1337. This section names only
+  0.1337, which is the value of the two `-opmax` rungs.
+- **The exposure was never tile-MCC alone.** The same string join booked TPs and
+  FPs in `compute_per_tile_tp_fp_fn`, the per-tile table the bootstrap
+  confidence intervals and the pairwise permutation tests resample. A
+  vocabulary-mismatched cell loses **every** TP and FP there, leaving pure false
+  negatives and a micro-F1 of 0.0000. This family escaped that only because
+  § 4 above excluded it from the permutation testing for an unrelated reason.
+- **The corpus-wide count is 3 of 149.** Every committed cell the board reads —
+  its own 103 plus this run's 46 — was re-scored under all three joins
+  (`scripts/audit_tile_join_variants.py`, `results/tile-join-audit/`): 146
+  reproduce their committed confusion and MCC exactly, and only these three are
+  refused. No published board MCC was affected.
+- **Repair is not the local fix this section supposed.** "Re-keying by spatial
+  containment would reproduce what the family's committed unions already do" is
+  wrong: the board frame's tiles **overlap** (384 px on a 336 px stride; the 487
+  tile areas sum to 1.2783x their union, and a median 30.6 % of detections lie
+  in more than one tile), so a geometric join raises MCC on **146 of 146**
+  correctly-joined cells, by +0.106 mean. Adopting one is a change to every
+  published MCC, not a repair of three cells.
+
 ### 6.4 A pre-existing one-line drift in the conditions manifest
 
 Regenerating the manifests surfaces one change that is **not** this run's: in
@@ -391,6 +424,27 @@ Every gate this run passed, with the artefact that records it.
 - **The 55-map ladders' instrument.** Unchanged and still with the PI.
 
 ## Changelog
+
+### 2026-09-12 (later) — § 6.3 corrected after the tile-join work
+
+**Trigger**: the PI's ruling on § 6.3 — make the tile assignment geometric,
+re-score the withheld cells, generalise. Response and full account:
+`reports/tile-mcc-geometric-join-2026-09-12.md`.
+
+**What moved**: § 6.3 gains four corrections and § 3's `†` footnote an
+amendment. No figure in §§ 1–5, § 7 or § 8 changed.
+
+| Claim | before | after |
+|---|---|---|
+| Cells affected corpus-wide | "the wider question is open" | **3 of 149** committed cells the board reads |
+| The three cells' raw MCC | 0.1337 (one value given) | 0.1337, 0.1337 and **0.1422** |
+| What the defect corrupts | tile-MCC | tile-MCC **and** the per-tile TP/FP/FN table the bootstrap CIs and permutation tests resample |
+| "Re-keying by spatial containment would reproduce what the committed unions do" | asserted | **wrong** — the frames overlap, so a geometric join raises MCC on 146 of 146 sound cells (+0.106 mean) |
+| Whether tile-MCC can fail silently again | yes, nothing warns | **no** — the scorer refuses with a named reason; the board gate now checks geometry, not a rebuild of itself |
+
+**What did NOT change**: every spend figure, the 28-rung table's F1 and MCC
+columns, the § 4 deltas and BH p-values, § 5's "what did NOT change", and § 7's
+fifteen verification rows. No committed evaluation was rewritten.
 
 ### 2026-09-12 — Original publication (K-ladder Phase 2)
 

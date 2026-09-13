@@ -66,6 +66,8 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     COVERAGE_STATUS_PARTIAL,
     COVERAGE_STATUS_SPARSE,
     DEFAULT_CRS,
+    TILE_JOIN_DEFAULT,
+    TILE_JOINS,
     bootstrap_ci,
     bootstrap_tile_classification_ci,
     calculate_f1_internal,
@@ -909,6 +911,7 @@ def evaluate_single_run(
     label: str = "",
     compute_mcc: bool = False,
     processed_tiles: set[str] | None = None,
+    tile_join: str = TILE_JOIN_DEFAULT,
 ) -> dict:
     """Evaluate a single detection run at multiple buffer distances.
 
@@ -927,6 +930,9 @@ def evaluate_single_run(
             counted directly against the evaluation bounds and a shortfall
             flags ``coverage_status = "partial_coverage"``. ``None``
             preserves the pre-E72 zero-fraction-only behaviour.
+        tile_join: How points are booked to evaluation-frame tiles when
+            computing the tile confusion — one of
+            ``lib_advanced_metrics.TILE_JOINS``. See ``--tile-join``.
 
     Returns:
         Dict with metadata and per-buffer results including F1, P, R
@@ -1075,15 +1081,37 @@ def evaluate_single_run(
     # Tile-level MCC (optional)
     if compute_mcc and n_det > 0:
         tile_class = calculate_tile_classification(
-            gdf_det, gdf_ref, gdf_bounds,
+            gdf_det, gdf_ref, gdf_bounds, tile_join=tile_join,
         )
+        if "error" in tile_class:
+            # The tile join does not describe this frame (most often a
+            # source_tile vocabulary that is not the frame's). Record the
+            # refusal in the evaluation instead of a plausible-looking
+            # number, and do not bootstrap around it.
+            logger.warning(
+                "  tile-MCC WITHHELD (%s): %s",
+                tile_class.get("reason"), tile_class["error"],
+            )
+            result["tile_classification"] = {
+                "mcc": None,
+                "withheld": True,
+                "withheld_reason": tile_class.get("reason"),
+                "withheld_detail": tile_class["error"],
+                "tile_join": tile_join,
+                "tile_join_diagnostics": tile_class.get(
+                    "tile_join_diagnostics",
+                ),
+            }
+            return result
         tile_ci = bootstrap_tile_classification_ci(
             gdf_det, gdf_ref, gdf_bounds,
             n_iterations=n_bootstrap, random_seed=seed,
+            tile_join=tile_join,
         )
         result["tile_classification"] = build_tile_classification_block(
             tile_class, tile_ci,
         )
+        result["tile_classification"]["tile_join"] = tile_join
         # E81: every field here can legitimately be ``None`` when the
         # tile confusion matrix is degenerate, so the log line is built
         # from the None-safe formatter rather than ``%.3f``.
@@ -2045,6 +2073,27 @@ def main() -> int:
         ),
     )
     parser.add_argument(
+        "--tile-join", type=str, default=TILE_JOIN_DEFAULT,
+        choices=list(TILE_JOINS),
+        help=(
+            "How a detection or reference becomes a tile of the evaluation "
+            "frame, for the tile confusion matrix behind MCC. "
+            "'id' (the default) matches the detection's source_tile STRING "
+            "against the frame's tile_name — the legacy rule, kept so "
+            "published numbers reproduce; it encodes which tile the model "
+            "was shown rather than where the point is, and the scorer now "
+            "refuses to report an MCC when it does not describe the frame. "
+            "'geometric-primary' books each point to the frame tile whose "
+            "centroid is nearest among those it intersects. "
+            "'geometric-contains' books it to every tile that contains it, "
+            "symmetric with the reference side's long-standing rule. "
+            "The three are NOT interchangeable: the 384 px frames overlap "
+            "on a 336 px stride, so they give different confusions even "
+            "where the vocabulary matches — see "
+            "reports/tile-mcc-geometric-join-2026-09-12.md."
+        ),
+    )
+    parser.add_argument(
         "--require-clean-inputs", action="store_true",
         help=(
             "Refuse to score when any recipe input carries uncommitted "
@@ -2093,6 +2142,7 @@ def _evaluate_condition(
     output_dir: Path | None = None,
     compute_mcc: bool = False,
     metadata: dict[str, Any] | None = None,
+    tile_join: str = TILE_JOIN_DEFAULT,
 ) -> dict:
     """Evaluate a single condition (one or more detection files).
 
@@ -2159,6 +2209,7 @@ def _evaluate_condition(
             label=run_label,
             compute_mcc=compute_mcc,
             processed_tiles=processed_tiles,
+            tile_join=tile_join,
         )
         run_results.append(result)
 
@@ -2229,6 +2280,7 @@ def _run_single_mode(args: argparse.Namespace) -> int:
         output_dir=args.output_dir,
         compute_mcc=args.mcc,
         metadata=run_metadata,
+        tile_join=args.tile_join,
     )
 
     if not args.output_dir:
@@ -2288,6 +2340,7 @@ def _evaluate_condition_worker(task: dict[str, Any]) -> tuple[int, dict]:
         output_dir=task["output_dir"],
         compute_mcc=task["compute_mcc"],
         metadata=task["metadata"],
+        tile_join=task.get("tile_join", TILE_JOIN_DEFAULT),
     )
     return task["index"], summary
 
@@ -2385,6 +2438,7 @@ def _build_condition_tasks(
             "label": label,
             "output_dir": args.output_dir / slugify(label),
             "compute_mcc": args.mcc,
+            "tile_join": args.tile_join,
             "metadata": cond_metadata,
         })
 
@@ -2486,6 +2540,7 @@ def _run_batch_mode(args: argparse.Namespace) -> int:
                 output_dir=task["output_dir"],
                 compute_mcc=task["compute_mcc"],
                 metadata=task["metadata"],
+                tile_join=task.get("tile_join", TILE_JOIN_DEFAULT),
             )
             results[task["index"]] = summary
     else:

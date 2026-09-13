@@ -128,6 +128,7 @@ from n1_baseline_leaderboard_tiering import (  # noqa: E402
 
 from apply_fdr_correction import apply_bh_correction  # noqa: E402
 from lib_advanced_metrics import (  # noqa: E402
+    calculate_tile_classification,
     compute_per_tile_classification,
     compute_per_tile_tp_fp_fn,
 )
@@ -440,7 +441,7 @@ def cell_per_tile_classification(
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     tile_order: list[str],
-) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, dict]:
     """Per-tile one-hot (TP, TN, FP, FN) classification aligned to ``tile_order``.
 
     Wraps ``lib_advanced_metrics.compute_per_tile_classification`` — the house
@@ -456,8 +457,22 @@ def cell_per_tile_classification(
         tile_order: Fixed list of ``tile_name`` values defining array positions.
 
     Returns:
-        Tuple ``(tp, tn, fp, fn)`` of integer arrays, length ``len(tile_order)``.
+        Tuple ``(tp, tn, fp, fn, diagnostics)`` — four integer arrays of
+        length ``len(tile_order)``, plus the tile-join assignment
+        diagnostics the confusion gate's geometric arm checks against.
+
+    Raises:
+        ConfusionGateError: if the tile join is refused for this frame, so
+            that a mislabelled per-tile table never reaches the
+            permutation harness.
     """
+    tile_class = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
+    if "error" in tile_class:
+        raise ConfusionGateError(
+            f"tile join refused ({tile_class.get('reason')}): "
+            f"{tile_class['error']}"
+        )
+    diagnostics = tile_class.get("tile_join_diagnostics") or {}
     per_tile = compute_per_tile_classification(gdf_det, gdf_ref, gdf_bounds)
     tile_index = {name: i for i, name in enumerate(tile_order)}
     n_tiles = len(tile_order)
@@ -468,18 +483,34 @@ def cell_per_tile_classification(
             continue
         for k in arrays:
             arrays[k][idx] = int(row[k])
-    return arrays["tp"], arrays["tn"], arrays["fp"], arrays["fn"]
+    return (arrays["tp"], arrays["tn"], arrays["fp"], arrays["fn"],
+            diagnostics)
 
 
 def check_confusion_gate(label: str, rebuilt: dict, recorded: dict | None,
                          mcc_rebuilt: float | None, mcc_recorded: float | None,
+                         geometry_check: dict | None = None,
                          ) -> dict:
-    """Hard-gate a rebuilt tile confusion against the cell's committed record.
+    """Hard-gate a rebuilt tile confusion against geometry AND its own record.
 
     The MCC permutation is only trustworthy if the per-tile labels it swaps
     aggregate to the confusion matrix and MCC the published evaluation reported.
     A disagreement means the harness is not reproducing the scored cell, so it
     raises rather than reporting a number.
+
+    **Reproduction alone is not enough, and that is what let the 2026-09-12
+    tile-join defect through.** This gate rebuilds the confusion by calling
+    the same ``calculate_tile_classification`` that produced the committed
+    number, so where that function was wrong the gate reproduced the same
+    wrong confusion and passed it. Three Gemini 3.7 rungs went through it
+    with 21 of 475 in-frame detections booked and an MCC of 0.1337.
+
+    The fix is a check against something other than itself: ``geometry_check``
+    carries the tile-join assignment diagnostics, and every point lying
+    inside the frame's tile union must have been booked to some tile. That
+    is an appeal to the frame's polygons, not to a prior computation, so a
+    join that does not describe the frame fails here even when the rebuild
+    agrees with the record perfectly.
 
     Args:
         label: Cell label, for the error message.
@@ -487,14 +518,43 @@ def check_confusion_gate(label: str, rebuilt: dict, recorded: dict | None,
         recorded: ``{tp, tn, fp, fn}`` from the evaluation, or None if absent.
         mcc_rebuilt: MCC recomputed from ``rebuilt`` (None when undefined).
         mcc_recorded: ``tile_classification.mcc.point`` from the evaluation.
+        geometry_check: ``tile_join_diagnostics``-shaped dict with
+            ``detections`` and ``references`` sub-dicts carrying
+            ``n_assigned`` and ``n_inside_union``. ``None`` skips the
+            geometric arm, which should only happen for a cell whose
+            detections could not be loaded.
 
     Returns:
-        A gate-record dict for the output JSON.
+        A gate-record dict for the output JSON, including the geometric
+        arm's counts so a reader can see it actually ran.
 
     Raises:
-        ConfusionGateError: on any cell-count disagreement, or an MCC
-            disagreement beyond the recorded 4-dp rounding.
+        ConfusionGateError: on a geometric shortfall, on any cell-count
+            disagreement, or on an MCC disagreement beyond the recorded
+            4-dp rounding.
     """
+    geometry_record: dict | None = None
+    if geometry_check is not None:
+        geometry_record = {}
+        for noun in ("detections", "references"):
+            side = geometry_check.get(noun) or {}
+            assigned = side.get("n_assigned")
+            inside = side.get("n_inside_union")
+            geometry_record[noun] = {
+                "n_assigned": assigned,
+                "n_inside_union": inside,
+                "n_outside_union": side.get("n_outside_union"),
+            }
+            if assigned is None or inside is None:
+                continue
+            if assigned < inside:
+                raise ConfusionGateError(
+                    f"{label}: tile join lost {inside - assigned} of "
+                    f"{inside} in-frame {noun} — the confusion does not "
+                    f"describe this frame's geometry, whether or not it "
+                    f"reproduces the committed record"
+                )
+
     if recorded is None:
         raise ConfusionGateError(
             f"{label}: evaluation records no tile_classification.confusion, so "
@@ -511,7 +571,8 @@ def check_confusion_gate(label: str, rebuilt: dict, recorded: dict | None,
             f"{mcc_recorded:.6f}"
         )
     return {"confusion": rebuilt, "mcc_rebuilt": mcc_rebuilt,
-            "mcc_recorded": mcc_recorded, "passed": True}
+            "mcc_recorded": mcc_recorded, "geometry": geometry_record,
+            "passed": True}
 
 
 def load_cells(
@@ -638,8 +699,10 @@ def load_cells(
         )
         if want_mcc:
             gdf_det = cell_detections(cli, gdf_bounds)
-            tp_c, tn_c, fp_c, fn_c = cell_per_tile_classification(
-                gdf_det, gdf_ref, gdf_bounds, tile_order
+            tp_c, tn_c, fp_c, fn_c, join_diagnostics = (
+                cell_per_tile_classification(
+                    gdf_det, gdf_ref, gdf_bounds, tile_order
+                )
             )
             rebuilt = {"tp": int(tp_c.sum()), "tn": int(tn_c.sum()),
                        "fp": int(fp_c.sum()), "fn": int(fn_c.sum())}
@@ -648,6 +711,7 @@ def load_cells(
                 cond["label"], rebuilt, read_tile_confusion(eval_path),
                 None if mcc_rebuilt is None else round(float(mcc_rebuilt), 6),
                 cells[-1]["mcc"],
+                geometry_check=join_diagnostics,
             )
             cells[-1].update({"tp_c": tp_c, "tn_c": tn_c, "fp_c": fp_c,
                               "fn_c": fn_c, "mcc_gate": gate,

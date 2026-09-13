@@ -1,0 +1,4791 @@
+{
+  "n_cells": 47,
+  "joins": [
+    "id",
+    "geometric-primary",
+    "geometric-contains"
+  ],
+  "counts": {
+    "REFUSED": 3,
+    "NO-BASELINE": 44
+  },
+  "mechanism": "calculate_tile_classification books points to frame tiles under a named rule; 'id' is the legacy string join, the two geometric rules use the frame's polygons",
+  "cells": [
+    {
+      "label": "g37-text-k1-verified-carried-p0.10-k1",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k1-verified-carried-p0.10-k1.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 558,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": true,
+          "reason": "tile_join_detection_shortfall",
+          "detail": "tile confusion refused: 22 of 526 in-frame detections were booked to a tile under the 'id' tile join, a shortfall of 504. The join is not describing this frame \u2014 most often because the cell's source_tile vocabulary is not the frame's. MCC is withheld rather than reported.",
+          "diagnostics": {
+            "detections": {
+              "n_points": 558,
+              "n_assigned": 22,
+              "n_inside_union": 526,
+              "n_outside_union": 32,
+              "n_multi_tile": 140,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            }
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 196,
+            "tn": 268,
+            "fp": 20,
+            "fn": 3
+          },
+          "mcc": 0.9059,
+          "diagnostics": {
+            "detections": {
+              "n_points": 558,
+              "n_assigned": 526,
+              "n_inside_union": 526,
+              "n_outside_union": 32,
+              "n_multi_tile": 140,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 224,
+            "tn": 232,
+            "fp": 26,
+            "fn": 5
+          },
+          "mcc": 0.8761,
+          "diagnostics": {
+            "detections": {
+              "n_points": 558,
+              "n_assigned": 526,
+              "n_inside_union": 526,
+              "n_outside_union": 32,
+              "n_multi_tile": 140,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "REFUSED"
+    },
+    {
+      "label": "g37-text-k1-verified-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k1-verified-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 502,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": true,
+          "reason": "tile_join_detection_shortfall",
+          "detail": "tile confusion refused: 21 of 475 in-frame detections were booked to a tile under the 'id' tile join, a shortfall of 454. The join is not describing this frame \u2014 most often because the cell's source_tile vocabulary is not the frame's. MCC is withheld rather than reported.",
+          "diagnostics": {
+            "detections": {
+              "n_points": 502,
+              "n_assigned": 21,
+              "n_inside_union": 475,
+              "n_outside_union": 27,
+              "n_multi_tile": 129,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            }
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 195,
+            "tn": 281,
+            "fp": 7,
+            "fn": 4
+          },
+          "mcc": 0.9535,
+          "diagnostics": {
+            "detections": {
+              "n_points": 502,
+              "n_assigned": 475,
+              "n_inside_union": 475,
+              "n_outside_union": 27,
+              "n_multi_tile": 129,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 223,
+            "tn": 246,
+            "fp": 12,
+            "fn": 6
+          },
+          "mcc": 0.9262,
+          "diagnostics": {
+            "detections": {
+              "n_points": 502,
+              "n_assigned": 475,
+              "n_inside_union": 475,
+              "n_outside_union": 27,
+              "n_multi_tile": 129,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "REFUSED"
+    },
+    {
+      "label": "g37-text-k3-verified-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 494,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": true,
+          "reason": "tile_join_detection_shortfall",
+          "detail": "tile confusion refused: 20 of 467 in-frame detections were booked to a tile under the 'id' tile join, a shortfall of 447. The join is not describing this frame \u2014 most often because the cell's source_tile vocabulary is not the frame's. MCC is withheld rather than reported.",
+          "diagnostics": {
+            "detections": {
+              "n_points": 494,
+              "n_assigned": 20,
+              "n_inside_union": 467,
+              "n_outside_union": 27,
+              "n_multi_tile": 129,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            }
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 193,
+            "tn": 273,
+            "fp": 15,
+            "fn": 6
+          },
+          "mcc": 0.9121,
+          "diagnostics": {
+            "detections": {
+              "n_points": 494,
+              "n_assigned": 467,
+              "n_inside_union": 467,
+              "n_outside_union": 27,
+              "n_multi_tile": 129,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 222,
+            "tn": 238,
+            "fp": 20,
+            "fn": 7
+          },
+          "mcc": 0.8903,
+          "diagnostics": {
+            "detections": {
+              "n_points": 494,
+              "n_assigned": 467,
+              "n_inside_union": 467,
+              "n_outside_union": 27,
+              "n_multi_tile": 129,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "REFUSED"
+    },
+    {
+      "label": "pv-high-image-t0.3-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.3-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 469,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 204,
+            "tn": 241,
+            "fp": 17,
+            "fn": 25
+          },
+          "mcc": 0.827,
+          "diagnostics": {
+            "detections": {
+              "n_points": 469,
+              "n_assigned": 469,
+              "n_inside_union": 469,
+              "n_outside_union": 0,
+              "n_multi_tile": 166,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 192,
+            "tn": 270,
+            "fp": 18,
+            "fn": 7
+          },
+          "mcc": 0.8956,
+          "diagnostics": {
+            "detections": {
+              "n_points": 469,
+              "n_assigned": 469,
+              "n_inside_union": 469,
+              "n_outside_union": 0,
+              "n_multi_tile": 166,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 221,
+            "tn": 233,
+            "fp": 25,
+            "fn": 8
+          },
+          "mcc": 0.8667,
+          "diagnostics": {
+            "detections": {
+              "n_points": 469,
+              "n_assigned": 469,
+              "n_inside_union": 469,
+              "n_outside_union": 0,
+              "n_multi_tile": 166,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-image-t0.3-n3-carried-p0.15-k3",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.3-n3-carried-p0.15-k3.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 342,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 180,
+            "tn": 251,
+            "fp": 7,
+            "fn": 49
+          },
+          "mcc": 0.7788,
+          "diagnostics": {
+            "detections": {
+              "n_points": 342,
+              "n_assigned": 342,
+              "n_inside_union": 342,
+              "n_outside_union": 0,
+              "n_multi_tile": 103,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 177,
+            "tn": 282,
+            "fp": 6,
+            "fn": 22
+          },
+          "mcc": 0.8816,
+          "diagnostics": {
+            "detections": {
+              "n_points": 342,
+              "n_assigned": 342,
+              "n_inside_union": 342,
+              "n_outside_union": 0,
+              "n_multi_tile": 103,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 210,
+            "tn": 247,
+            "fp": 11,
+            "fn": 19
+          },
+          "mcc": 0.8766,
+          "diagnostics": {
+            "detections": {
+              "n_points": 342,
+              "n_assigned": 342,
+              "n_inside_union": 342,
+              "n_outside_union": 0,
+              "n_multi_tile": 103,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-image-t0.3-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.3-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 441,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 200,
+            "tn": 244,
+            "fp": 14,
+            "fn": 29
+          },
+          "mcc": 0.8237,
+          "diagnostics": {
+            "detections": {
+              "n_points": 441,
+              "n_assigned": 441,
+              "n_inside_union": 441,
+              "n_outside_union": 0,
+              "n_multi_tile": 149,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 193,
+            "tn": 274,
+            "fp": 14,
+            "fn": 6
+          },
+          "mcc": 0.9161,
+          "diagnostics": {
+            "detections": {
+              "n_points": 441,
+              "n_assigned": 441,
+              "n_inside_union": 441,
+              "n_outside_union": 0,
+              "n_multi_tile": 149,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 223,
+            "tn": 233,
+            "fp": 25,
+            "fn": 6
+          },
+          "mcc": 0.8755,
+          "diagnostics": {
+            "detections": {
+              "n_points": 441,
+              "n_assigned": 441,
+              "n_inside_union": 441,
+              "n_outside_union": 0,
+              "n_multi_tile": 149,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-image-t0.7-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.7-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 474,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 206,
+            "tn": 243,
+            "fp": 15,
+            "fn": 23
+          },
+          "mcc": 0.8435,
+          "diagnostics": {
+            "detections": {
+              "n_points": 474,
+              "n_assigned": 474,
+              "n_inside_union": 474,
+              "n_outside_union": 0,
+              "n_multi_tile": 176,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 195,
+            "tn": 272,
+            "fp": 16,
+            "fn": 4
+          },
+          "mcc": 0.917,
+          "diagnostics": {
+            "detections": {
+              "n_points": 474,
+              "n_assigned": 474,
+              "n_inside_union": 474,
+              "n_outside_union": 0,
+              "n_multi_tile": 176,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 223,
+            "tn": 233,
+            "fp": 25,
+            "fn": 6
+          },
+          "mcc": 0.8755,
+          "diagnostics": {
+            "detections": {
+              "n_points": 474,
+              "n_assigned": 474,
+              "n_inside_union": 474,
+              "n_outside_union": 0,
+              "n_multi_tile": 176,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-image-t0.7-n3-carried-p0.15-k3",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.7-n3-carried-p0.15-k3.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 303,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 170,
+            "tn": 255,
+            "fp": 3,
+            "fn": 59
+          },
+          "mcc": 0.7621,
+          "diagnostics": {
+            "detections": {
+              "n_points": 303,
+              "n_assigned": 303,
+              "n_inside_union": 303,
+              "n_outside_union": 0,
+              "n_multi_tile": 96,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 165,
+            "tn": 285,
+            "fp": 3,
+            "fn": 34
+          },
+          "mcc": 0.8467,
+          "diagnostics": {
+            "detections": {
+              "n_points": 303,
+              "n_assigned": 303,
+              "n_inside_union": 303,
+              "n_outside_union": 0,
+              "n_multi_tile": 96,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 198,
+            "tn": 251,
+            "fp": 7,
+            "fn": 31
+          },
+          "mcc": 0.8467,
+          "diagnostics": {
+            "detections": {
+              "n_points": 303,
+              "n_assigned": 303,
+              "n_inside_union": 303,
+              "n_outside_union": 0,
+              "n_multi_tile": 96,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-image-t0.7-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.7-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 426,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 196,
+            "tn": 252,
+            "fp": 6,
+            "fn": 33
+          },
+          "mcc": 0.8435,
+          "diagnostics": {
+            "detections": {
+              "n_points": 426,
+              "n_assigned": 426,
+              "n_inside_union": 426,
+              "n_outside_union": 0,
+              "n_multi_tile": 144,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 188,
+            "tn": 283,
+            "fp": 5,
+            "fn": 11
+          },
+          "mcc": 0.932,
+          "diagnostics": {
+            "detections": {
+              "n_points": 426,
+              "n_assigned": 426,
+              "n_inside_union": 426,
+              "n_outside_union": 0,
+              "n_multi_tile": 144,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 217,
+            "tn": 244,
+            "fp": 14,
+            "fn": 12
+          },
+          "mcc": 0.8929,
+          "diagnostics": {
+            "detections": {
+              "n_points": 426,
+              "n_assigned": 426,
+              "n_inside_union": 426,
+              "n_outside_union": 0,
+              "n_multi_tile": 144,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-image-t1.0-n1-carried-p0.15-k1",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t1.0-n1-carried-p0.15-k1.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 503,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 214,
+            "tn": 239,
+            "fp": 19,
+            "fn": 15
+          },
+          "mcc": 0.8601,
+          "diagnostics": {
+            "detections": {
+              "n_points": 503,
+              "n_assigned": 503,
+              "n_inside_union": 503,
+              "n_outside_union": 0,
+              "n_multi_tile": 192,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 196,
+            "tn": 270,
+            "fp": 18,
+            "fn": 3
+          },
+          "mcc": 0.9136,
+          "diagnostics": {
+            "detections": {
+              "n_points": 503,
+              "n_assigned": 503,
+              "n_inside_union": 503,
+              "n_outside_union": 0,
+              "n_multi_tile": 192,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 226,
+            "tn": 230,
+            "fp": 28,
+            "fn": 3
+          },
+          "mcc": 0.8776,
+          "diagnostics": {
+            "detections": {
+              "n_points": 503,
+              "n_assigned": 503,
+              "n_inside_union": 503,
+              "n_outside_union": 0,
+              "n_multi_tile": 192,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-image-t1.0-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t1.0-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 490,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 212,
+            "tn": 242,
+            "fp": 16,
+            "fn": 17
+          },
+          "mcc": 0.864,
+          "diagnostics": {
+            "detections": {
+              "n_points": 490,
+              "n_assigned": 490,
+              "n_inside_union": 490,
+              "n_outside_union": 0,
+              "n_multi_tile": 188,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 193,
+            "tn": 273,
+            "fp": 15,
+            "fn": 6
+          },
+          "mcc": 0.9121,
+          "diagnostics": {
+            "detections": {
+              "n_points": 490,
+              "n_assigned": 490,
+              "n_inside_union": 490,
+              "n_outside_union": 0,
+              "n_multi_tile": 188,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 224,
+            "tn": 235,
+            "fp": 23,
+            "fn": 5
+          },
+          "mcc": 0.8875,
+          "diagnostics": {
+            "detections": {
+              "n_points": 490,
+              "n_assigned": 490,
+              "n_inside_union": 490,
+              "n_outside_union": 0,
+              "n_multi_tile": 188,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-image-t1.0-n3-carried-p0.15-k3",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t1.0-n3-carried-p0.15-k3.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 281,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 162,
+            "tn": 256,
+            "fp": 2,
+            "fn": 67
+          },
+          "mcc": 0.7389,
+          "diagnostics": {
+            "detections": {
+              "n_points": 281,
+              "n_assigned": 281,
+              "n_inside_union": 281,
+              "n_outside_union": 0,
+              "n_multi_tile": 89,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 160,
+            "tn": 284,
+            "fp": 4,
+            "fn": 39
+          },
+          "mcc": 0.8219,
+          "diagnostics": {
+            "detections": {
+              "n_points": 281,
+              "n_assigned": 281,
+              "n_inside_union": 281,
+              "n_outside_union": 0,
+              "n_multi_tile": 89,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 192,
+            "tn": 249,
+            "fp": 9,
+            "fn": 37
+          },
+          "mcc": 0.8146,
+          "diagnostics": {
+            "detections": {
+              "n_points": 281,
+              "n_assigned": 281,
+              "n_inside_union": 281,
+              "n_outside_union": 0,
+              "n_multi_tile": 89,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-image-t1.0-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t1.0-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 418,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 197,
+            "tn": 248,
+            "fp": 10,
+            "fn": 32
+          },
+          "mcc": 0.8294,
+          "diagnostics": {
+            "detections": {
+              "n_points": 418,
+              "n_assigned": 418,
+              "n_inside_union": 418,
+              "n_outside_union": 0,
+              "n_multi_tile": 137,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 186,
+            "tn": 278,
+            "fp": 10,
+            "fn": 13
+          },
+          "mcc": 0.9021,
+          "diagnostics": {
+            "detections": {
+              "n_points": 418,
+              "n_assigned": 418,
+              "n_inside_union": 418,
+              "n_outside_union": 0,
+              "n_multi_tile": 137,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 216,
+            "tn": 242,
+            "fp": 16,
+            "fn": 13
+          },
+          "mcc": 0.8806,
+          "diagnostics": {
+            "detections": {
+              "n_points": 418,
+              "n_assigned": 418,
+              "n_inside_union": 418,
+              "n_outside_union": 0,
+              "n_multi_tile": 137,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-text-t0.3-n1-carried-p0.15-k1",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.3-n1-carried-p0.15-k1.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 454,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 201,
+            "tn": 238,
+            "fp": 20,
+            "fn": 28
+          },
+          "mcc": 0.8022,
+          "diagnostics": {
+            "detections": {
+              "n_points": 454,
+              "n_assigned": 454,
+              "n_inside_union": 454,
+              "n_outside_union": 0,
+              "n_multi_tile": 147,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 194,
+            "tn": 271,
+            "fp": 17,
+            "fn": 5
+          },
+          "mcc": 0.9086,
+          "diagnostics": {
+            "detections": {
+              "n_points": 454,
+              "n_assigned": 454,
+              "n_inside_union": 454,
+              "n_outside_union": 0,
+              "n_multi_tile": 147,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 220,
+            "tn": 230,
+            "fp": 28,
+            "fn": 9
+          },
+          "mcc": 0.8508,
+          "diagnostics": {
+            "detections": {
+              "n_points": 454,
+              "n_assigned": 454,
+              "n_inside_union": 454,
+              "n_outside_union": 0,
+              "n_multi_tile": 147,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-text-t0.3-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.3-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 443,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 199,
+            "tn": 241,
+            "fp": 17,
+            "fn": 30
+          },
+          "mcc": 0.8068,
+          "diagnostics": {
+            "detections": {
+              "n_points": 443,
+              "n_assigned": 443,
+              "n_inside_union": 443,
+              "n_outside_union": 0,
+              "n_multi_tile": 141,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 193,
+            "tn": 273,
+            "fp": 15,
+            "fn": 6
+          },
+          "mcc": 0.9121,
+          "diagnostics": {
+            "detections": {
+              "n_points": 443,
+              "n_assigned": 443,
+              "n_inside_union": 443,
+              "n_outside_union": 0,
+              "n_multi_tile": 141,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 219,
+            "tn": 232,
+            "fp": 26,
+            "fn": 10
+          },
+          "mcc": 0.8541,
+          "diagnostics": {
+            "detections": {
+              "n_points": 443,
+              "n_assigned": 443,
+              "n_inside_union": 443,
+              "n_outside_union": 0,
+              "n_multi_tile": 141,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-text-t0.3-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.3-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 387,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 182,
+            "tn": 255,
+            "fp": 3,
+            "fn": 47
+          },
+          "mcc": 0.8053,
+          "diagnostics": {
+            "detections": {
+              "n_points": 387,
+              "n_assigned": 387,
+              "n_inside_union": 387,
+              "n_outside_union": 0,
+              "n_multi_tile": 112,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 183,
+            "tn": 284,
+            "fp": 4,
+            "fn": 16
+          },
+          "mcc": 0.9154,
+          "diagnostics": {
+            "detections": {
+              "n_points": 387,
+              "n_assigned": 387,
+              "n_inside_union": 387,
+              "n_outside_union": 0,
+              "n_multi_tile": 112,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 213,
+            "tn": 251,
+            "fp": 7,
+            "fn": 16
+          },
+          "mcc": 0.9056,
+          "diagnostics": {
+            "detections": {
+              "n_points": 387,
+              "n_assigned": 387,
+              "n_inside_union": 387,
+              "n_outside_union": 0,
+              "n_multi_tile": 112,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-text-t0.7-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.7-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 464,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 195,
+            "tn": 237,
+            "fp": 21,
+            "fn": 34
+          },
+          "mcc": 0.7737,
+          "diagnostics": {
+            "detections": {
+              "n_points": 464,
+              "n_assigned": 464,
+              "n_inside_union": 464,
+              "n_outside_union": 0,
+              "n_multi_tile": 148,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 190,
+            "tn": 267,
+            "fp": 21,
+            "fn": 9
+          },
+          "mcc": 0.8748,
+          "diagnostics": {
+            "detections": {
+              "n_points": 464,
+              "n_assigned": 464,
+              "n_inside_union": 464,
+              "n_outside_union": 0,
+              "n_multi_tile": 148,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 219,
+            "tn": 229,
+            "fp": 29,
+            "fn": 10
+          },
+          "mcc": 0.8426,
+          "diagnostics": {
+            "detections": {
+              "n_points": 464,
+              "n_assigned": 464,
+              "n_inside_union": 464,
+              "n_outside_union": 0,
+              "n_multi_tile": 148,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-text-t0.7-n3-carried-p0.15-k3",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.7-n3-carried-p0.15-k3.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 369,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 178,
+            "tn": 252,
+            "fp": 6,
+            "fn": 51
+          },
+          "mcc": 0.7762,
+          "diagnostics": {
+            "detections": {
+              "n_points": 369,
+              "n_assigned": 369,
+              "n_inside_union": 369,
+              "n_outside_union": 0,
+              "n_multi_tile": 112,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 181,
+            "tn": 281,
+            "fp": 7,
+            "fn": 18
+          },
+          "mcc": 0.8939,
+          "diagnostics": {
+            "detections": {
+              "n_points": 369,
+              "n_assigned": 369,
+              "n_inside_union": 369,
+              "n_outside_union": 0,
+              "n_multi_tile": 112,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 211,
+            "tn": 247,
+            "fp": 11,
+            "fn": 18
+          },
+          "mcc": 0.8806,
+          "diagnostics": {
+            "detections": {
+              "n_points": 369,
+              "n_assigned": 369,
+              "n_inside_union": 369,
+              "n_outside_union": 0,
+              "n_multi_tile": 112,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-text-t0.7-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t0.7-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 427,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 190,
+            "tn": 247,
+            "fp": 11,
+            "fn": 39
+          },
+          "mcc": 0.7979,
+          "diagnostics": {
+            "detections": {
+              "n_points": 427,
+              "n_assigned": 427,
+              "n_inside_union": 427,
+              "n_outside_union": 0,
+              "n_multi_tile": 131,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 191,
+            "tn": 278,
+            "fp": 10,
+            "fn": 8
+          },
+          "mcc": 0.9237,
+          "diagnostics": {
+            "detections": {
+              "n_points": 427,
+              "n_assigned": 427,
+              "n_inside_union": 427,
+              "n_outside_union": 0,
+              "n_multi_tile": 131,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 221,
+            "tn": 243,
+            "fp": 15,
+            "fn": 8
+          },
+          "mcc": 0.9057,
+          "diagnostics": {
+            "detections": {
+              "n_points": 427,
+              "n_assigned": 427,
+              "n_inside_union": 427,
+              "n_outside_union": 0,
+              "n_multi_tile": 131,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-text-t1.0-n1-carried-p0.15-k1",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t1.0-n1-carried-p0.15-k1.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 469,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 198,
+            "tn": 242,
+            "fp": 16,
+            "fn": 31
+          },
+          "mcc": 0.8071,
+          "diagnostics": {
+            "detections": {
+              "n_points": 469,
+              "n_assigned": 469,
+              "n_inside_union": 469,
+              "n_outside_union": 0,
+              "n_multi_tile": 154,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 192,
+            "tn": 272,
+            "fp": 16,
+            "fn": 7
+          },
+          "mcc": 0.9036,
+          "diagnostics": {
+            "detections": {
+              "n_points": 469,
+              "n_assigned": 469,
+              "n_inside_union": 469,
+              "n_outside_union": 0,
+              "n_multi_tile": 154,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 221,
+            "tn": 232,
+            "fp": 26,
+            "fn": 8
+          },
+          "mcc": 0.8628,
+          "diagnostics": {
+            "detections": {
+              "n_points": 469,
+              "n_assigned": 469,
+              "n_inside_union": 469,
+              "n_outside_union": 0,
+              "n_multi_tile": 154,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-text-t1.0-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t1.0-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 451,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 197,
+            "tn": 245,
+            "fp": 13,
+            "fn": 32
+          },
+          "mcc": 0.8162,
+          "diagnostics": {
+            "detections": {
+              "n_points": 451,
+              "n_assigned": 451,
+              "n_inside_union": 451,
+              "n_outside_union": 0,
+              "n_multi_tile": 148,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 191,
+            "tn": 274,
+            "fp": 14,
+            "fn": 8
+          },
+          "mcc": 0.9073,
+          "diagnostics": {
+            "detections": {
+              "n_points": 451,
+              "n_assigned": 451,
+              "n_inside_union": 451,
+              "n_outside_union": 0,
+              "n_multi_tile": 148,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 220,
+            "tn": 238,
+            "fp": 20,
+            "fn": 9
+          },
+          "mcc": 0.8817,
+          "diagnostics": {
+            "detections": {
+              "n_points": 451,
+              "n_assigned": 451,
+              "n_inside_union": 451,
+              "n_outside_union": 0,
+              "n_multi_tile": 148,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-text-t1.0-n3-carried-p0.15-k3",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t1.0-n3-carried-p0.15-k3.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 346,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 165,
+            "tn": 255,
+            "fp": 3,
+            "fn": 64
+          },
+          "mcc": 0.7443,
+          "diagnostics": {
+            "detections": {
+              "n_points": 346,
+              "n_assigned": 346,
+              "n_inside_union": 346,
+              "n_outside_union": 0,
+              "n_multi_tile": 105,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 169,
+            "tn": 285,
+            "fp": 3,
+            "fn": 30
+          },
+          "mcc": 0.8627,
+          "diagnostics": {
+            "detections": {
+              "n_points": 346,
+              "n_assigned": 346,
+              "n_inside_union": 346,
+              "n_outside_union": 0,
+              "n_multi_tile": 105,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 200,
+            "tn": 249,
+            "fp": 9,
+            "fn": 29
+          },
+          "mcc": 0.8455,
+          "diagnostics": {
+            "detections": {
+              "n_points": 346,
+              "n_assigned": 346,
+              "n_inside_union": 346,
+              "n_outside_union": 0,
+              "n_multi_tile": 105,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-high-text-t1.0-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-high-text-t1.0-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 422,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 189,
+            "tn": 248,
+            "fp": 10,
+            "fn": 40
+          },
+          "mcc": 0.7986,
+          "diagnostics": {
+            "detections": {
+              "n_points": 422,
+              "n_assigned": 422,
+              "n_inside_union": 422,
+              "n_outside_union": 0,
+              "n_multi_tile": 133,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 191,
+            "tn": 282,
+            "fp": 6,
+            "fn": 8
+          },
+          "mcc": 0.9405,
+          "diagnostics": {
+            "detections": {
+              "n_points": 422,
+              "n_assigned": 422,
+              "n_inside_union": 422,
+              "n_outside_union": 0,
+              "n_multi_tile": 133,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 219,
+            "tn": 241,
+            "fp": 17,
+            "fn": 10
+          },
+          "mcc": 0.8893,
+          "diagnostics": {
+            "detections": {
+              "n_points": 422,
+              "n_assigned": 422,
+              "n_inside_union": 422,
+              "n_outside_union": 0,
+              "n_multi_tile": 133,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-image-t0.3-n1-carried-p0.15-k1",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.3-n1-carried-p0.15-k1.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 456,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 209,
+            "tn": 241,
+            "fp": 17,
+            "fn": 20
+          },
+          "mcc": 0.8475,
+          "diagnostics": {
+            "detections": {
+              "n_points": 456,
+              "n_assigned": 456,
+              "n_inside_union": 456,
+              "n_outside_union": 0,
+              "n_multi_tile": 154,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 196,
+            "tn": 272,
+            "fp": 16,
+            "fn": 3
+          },
+          "mcc": 0.9215,
+          "diagnostics": {
+            "detections": {
+              "n_points": 456,
+              "n_assigned": 456,
+              "n_inside_union": 456,
+              "n_outside_union": 0,
+              "n_multi_tile": 154,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 226,
+            "tn": 235,
+            "fp": 23,
+            "fn": 3
+          },
+          "mcc": 0.8964,
+          "diagnostics": {
+            "detections": {
+              "n_points": 456,
+              "n_assigned": 456,
+              "n_inside_union": 456,
+              "n_outside_union": 0,
+              "n_multi_tile": 154,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-image-t0.3-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.3-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 440,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 203,
+            "tn": 246,
+            "fp": 12,
+            "fn": 26
+          },
+          "mcc": 0.8443,
+          "diagnostics": {
+            "detections": {
+              "n_points": 440,
+              "n_assigned": 440,
+              "n_inside_union": 440,
+              "n_outside_union": 0,
+              "n_multi_tile": 149,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 193,
+            "tn": 277,
+            "fp": 11,
+            "fn": 6
+          },
+          "mcc": 0.9283,
+          "diagnostics": {
+            "detections": {
+              "n_points": 440,
+              "n_assigned": 440,
+              "n_inside_union": 440,
+              "n_outside_union": 0,
+              "n_multi_tile": 149,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 221,
+            "tn": 240,
+            "fp": 18,
+            "fn": 8
+          },
+          "mcc": 0.8939,
+          "diagnostics": {
+            "detections": {
+              "n_points": 440,
+              "n_assigned": 440,
+              "n_inside_union": 440,
+              "n_outside_union": 0,
+              "n_multi_tile": 149,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-image-t0.3-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.3-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 396,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 194,
+            "tn": 248,
+            "fp": 10,
+            "fn": 35
+          },
+          "mcc": 0.8178,
+          "diagnostics": {
+            "detections": {
+              "n_points": 396,
+              "n_assigned": 396,
+              "n_inside_union": 396,
+              "n_outside_union": 0,
+              "n_multi_tile": 120,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 187,
+            "tn": 277,
+            "fp": 11,
+            "fn": 12
+          },
+          "mcc": 0.9022,
+          "diagnostics": {
+            "detections": {
+              "n_points": 396,
+              "n_assigned": 396,
+              "n_inside_union": 396,
+              "n_outside_union": 0,
+              "n_multi_tile": 120,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 218,
+            "tn": 241,
+            "fp": 17,
+            "fn": 11
+          },
+          "mcc": 0.885,
+          "diagnostics": {
+            "detections": {
+              "n_points": 396,
+              "n_assigned": 396,
+              "n_inside_union": 396,
+              "n_outside_union": 0,
+              "n_multi_tile": 120,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-image-t0.7-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.7-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 453,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 205,
+            "tn": 244,
+            "fp": 14,
+            "fn": 24
+          },
+          "mcc": 0.8437,
+          "diagnostics": {
+            "detections": {
+              "n_points": 453,
+              "n_assigned": 453,
+              "n_inside_union": 453,
+              "n_outside_union": 0,
+              "n_multi_tile": 154,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 194,
+            "tn": 275,
+            "fp": 13,
+            "fn": 5
+          },
+          "mcc": 0.9245,
+          "diagnostics": {
+            "detections": {
+              "n_points": 453,
+              "n_assigned": 453,
+              "n_inside_union": 453,
+              "n_outside_union": 0,
+              "n_multi_tile": 154,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 223,
+            "tn": 237,
+            "fp": 21,
+            "fn": 6
+          },
+          "mcc": 0.8908,
+          "diagnostics": {
+            "detections": {
+              "n_points": 453,
+              "n_assigned": 453,
+              "n_inside_union": 453,
+              "n_outside_union": 0,
+              "n_multi_tile": 154,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-image-t0.7-n3-carried-p0.15-k3",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.7-n3-carried-p0.15-k3.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 344,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 183,
+            "tn": 253,
+            "fp": 5,
+            "fn": 46
+          },
+          "mcc": 0.7994,
+          "diagnostics": {
+            "detections": {
+              "n_points": 344,
+              "n_assigned": 344,
+              "n_inside_union": 344,
+              "n_outside_union": 0,
+              "n_multi_tile": 106,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 183,
+            "tn": 284,
+            "fp": 4,
+            "fn": 16
+          },
+          "mcc": 0.9154,
+          "diagnostics": {
+            "detections": {
+              "n_points": 344,
+              "n_assigned": 344,
+              "n_inside_union": 344,
+              "n_outside_union": 0,
+              "n_multi_tile": 106,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 210,
+            "tn": 249,
+            "fp": 9,
+            "fn": 19
+          },
+          "mcc": 0.8851,
+          "diagnostics": {
+            "detections": {
+              "n_points": 344,
+              "n_assigned": 344,
+              "n_inside_union": 344,
+              "n_outside_union": 0,
+              "n_multi_tile": 106,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-image-t0.7-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t0.7-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 423,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 198,
+            "tn": 249,
+            "fp": 9,
+            "fn": 31
+          },
+          "mcc": 0.8377,
+          "diagnostics": {
+            "detections": {
+              "n_points": 423,
+              "n_assigned": 423,
+              "n_inside_union": 423,
+              "n_outside_union": 0,
+              "n_multi_tile": 140,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 192,
+            "tn": 280,
+            "fp": 8,
+            "fn": 7
+          },
+          "mcc": 0.9363,
+          "diagnostics": {
+            "detections": {
+              "n_points": 423,
+              "n_assigned": 423,
+              "n_inside_union": 423,
+              "n_outside_union": 0,
+              "n_multi_tile": 140,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 220,
+            "tn": 241,
+            "fp": 17,
+            "fn": 9
+          },
+          "mcc": 0.8935,
+          "diagnostics": {
+            "detections": {
+              "n_points": 423,
+              "n_assigned": 423,
+              "n_inside_union": 423,
+              "n_outside_union": 0,
+              "n_multi_tile": 140,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-image-t1.0-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t1.0-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 465,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 202,
+            "tn": 245,
+            "fp": 13,
+            "fn": 27
+          },
+          "mcc": 0.836,
+          "diagnostics": {
+            "detections": {
+              "n_points": 465,
+              "n_assigned": 465,
+              "n_inside_union": 465,
+              "n_outside_union": 0,
+              "n_multi_tile": 170,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 192,
+            "tn": 276,
+            "fp": 12,
+            "fn": 7
+          },
+          "mcc": 0.9198,
+          "diagnostics": {
+            "detections": {
+              "n_points": 465,
+              "n_assigned": 465,
+              "n_inside_union": 465,
+              "n_outside_union": 0,
+              "n_multi_tile": 170,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 220,
+            "tn": 236,
+            "fp": 22,
+            "fn": 9
+          },
+          "mcc": 0.8739,
+          "diagnostics": {
+            "detections": {
+              "n_points": 465,
+              "n_assigned": 465,
+              "n_inside_union": 465,
+              "n_outside_union": 0,
+              "n_multi_tile": 170,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-image-t1.0-n3-carried-p0.15-k3",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t1.0-n3-carried-p0.15-k3.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 329,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 177,
+            "tn": 250,
+            "fp": 8,
+            "fn": 52
+          },
+          "mcc": 0.7629,
+          "diagnostics": {
+            "detections": {
+              "n_points": 329,
+              "n_assigned": 329,
+              "n_inside_union": 329,
+              "n_outside_union": 0,
+              "n_multi_tile": 101,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 178,
+            "tn": 280,
+            "fp": 8,
+            "fn": 21
+          },
+          "mcc": 0.8769,
+          "diagnostics": {
+            "detections": {
+              "n_points": 329,
+              "n_assigned": 329,
+              "n_inside_union": 329,
+              "n_outside_union": 0,
+              "n_multi_tile": 101,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 206,
+            "tn": 242,
+            "fp": 16,
+            "fn": 23
+          },
+          "mcc": 0.8393,
+          "diagnostics": {
+            "detections": {
+              "n_points": 329,
+              "n_assigned": 329,
+              "n_inside_union": 329,
+              "n_outside_union": 0,
+              "n_multi_tile": 101,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-image-t1.0-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-image-t1.0-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 424,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 194,
+            "tn": 248,
+            "fp": 10,
+            "fn": 35
+          },
+          "mcc": 0.8178,
+          "diagnostics": {
+            "detections": {
+              "n_points": 424,
+              "n_assigned": 424,
+              "n_inside_union": 424,
+              "n_outside_union": 0,
+              "n_multi_tile": 140,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 189,
+            "tn": 276,
+            "fp": 12,
+            "fn": 10
+          },
+          "mcc": 0.9067,
+          "diagnostics": {
+            "detections": {
+              "n_points": 424,
+              "n_assigned": 424,
+              "n_inside_union": 424,
+              "n_outside_union": 0,
+              "n_multi_tile": 140,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 216,
+            "tn": 239,
+            "fp": 19,
+            "fn": 13
+          },
+          "mcc": 0.8686,
+          "diagnostics": {
+            "detections": {
+              "n_points": 424,
+              "n_assigned": 424,
+              "n_inside_union": 424,
+              "n_outside_union": 0,
+              "n_multi_tile": 140,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-text-t0.3-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.3-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 409,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 189,
+            "tn": 248,
+            "fp": 10,
+            "fn": 40
+          },
+          "mcc": 0.7986,
+          "diagnostics": {
+            "detections": {
+              "n_points": 409,
+              "n_assigned": 409,
+              "n_inside_union": 409,
+              "n_outside_union": 0,
+              "n_multi_tile": 122,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 189,
+            "tn": 279,
+            "fp": 9,
+            "fn": 10
+          },
+          "mcc": 0.9192,
+          "diagnostics": {
+            "detections": {
+              "n_points": 409,
+              "n_assigned": 409,
+              "n_inside_union": 409,
+              "n_outside_union": 0,
+              "n_multi_tile": 122,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 217,
+            "tn": 239,
+            "fp": 19,
+            "fn": 12
+          },
+          "mcc": 0.8728,
+          "diagnostics": {
+            "detections": {
+              "n_points": 409,
+              "n_assigned": 409,
+              "n_inside_union": 409,
+              "n_outside_union": 0,
+              "n_multi_tile": 122,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-text-t0.3-n3-carried-p0.15-k3",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.3-n3-carried-p0.15-k3.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 364,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 175,
+            "tn": 250,
+            "fp": 8,
+            "fn": 54
+          },
+          "mcc": 0.7556,
+          "diagnostics": {
+            "detections": {
+              "n_points": 364,
+              "n_assigned": 364,
+              "n_inside_union": 364,
+              "n_outside_union": 0,
+              "n_multi_tile": 107,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 177,
+            "tn": 280,
+            "fp": 8,
+            "fn": 22
+          },
+          "mcc": 0.8727,
+          "diagnostics": {
+            "detections": {
+              "n_points": 364,
+              "n_assigned": 364,
+              "n_inside_union": 364,
+              "n_outside_union": 0,
+              "n_multi_tile": 107,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 207,
+            "tn": 241,
+            "fp": 17,
+            "fn": 22
+          },
+          "mcc": 0.8392,
+          "diagnostics": {
+            "detections": {
+              "n_points": 364,
+              "n_assigned": 364,
+              "n_inside_union": 364,
+              "n_outside_union": 0,
+              "n_multi_tile": 107,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-text-t0.3-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.3-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 401,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 188,
+            "tn": 250,
+            "fp": 8,
+            "fn": 41
+          },
+          "mcc": 0.804,
+          "diagnostics": {
+            "detections": {
+              "n_points": 401,
+              "n_assigned": 401,
+              "n_inside_union": 401,
+              "n_outside_union": 0,
+              "n_multi_tile": 116,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 189,
+            "tn": 279,
+            "fp": 9,
+            "fn": 10
+          },
+          "mcc": 0.9192,
+          "diagnostics": {
+            "detections": {
+              "n_points": 401,
+              "n_assigned": 401,
+              "n_inside_union": 401,
+              "n_outside_union": 0,
+              "n_multi_tile": 116,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 219,
+            "tn": 240,
+            "fp": 18,
+            "fn": 10
+          },
+          "mcc": 0.8853,
+          "diagnostics": {
+            "detections": {
+              "n_points": 401,
+              "n_assigned": 401,
+              "n_inside_union": 401,
+              "n_outside_union": 0,
+              "n_multi_tile": 116,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-text-t0.7-n1-carried-p0.15-k1",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.7-n1-carried-p0.15-k1.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 414,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 185,
+            "tn": 249,
+            "fp": 9,
+            "fn": 44
+          },
+          "mcc": 0.7881,
+          "diagnostics": {
+            "detections": {
+              "n_points": 414,
+              "n_assigned": 414,
+              "n_inside_union": 414,
+              "n_outside_union": 0,
+              "n_multi_tile": 128,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 186,
+            "tn": 279,
+            "fp": 9,
+            "fn": 13
+          },
+          "mcc": 0.9064,
+          "diagnostics": {
+            "detections": {
+              "n_points": 414,
+              "n_assigned": 414,
+              "n_inside_union": 414,
+              "n_outside_union": 0,
+              "n_multi_tile": 128,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 212,
+            "tn": 238,
+            "fp": 20,
+            "fn": 17
+          },
+          "mcc": 0.8477,
+          "diagnostics": {
+            "detections": {
+              "n_points": 414,
+              "n_assigned": 414,
+              "n_inside_union": 414,
+              "n_outside_union": 0,
+              "n_multi_tile": 128,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-text-t0.7-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.7-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 414,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 185,
+            "tn": 249,
+            "fp": 9,
+            "fn": 44
+          },
+          "mcc": 0.7881,
+          "diagnostics": {
+            "detections": {
+              "n_points": 414,
+              "n_assigned": 414,
+              "n_inside_union": 414,
+              "n_outside_union": 0,
+              "n_multi_tile": 128,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 186,
+            "tn": 279,
+            "fp": 9,
+            "fn": 13
+          },
+          "mcc": 0.9064,
+          "diagnostics": {
+            "detections": {
+              "n_points": 414,
+              "n_assigned": 414,
+              "n_inside_union": 414,
+              "n_outside_union": 0,
+              "n_multi_tile": 128,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 212,
+            "tn": 238,
+            "fp": 20,
+            "fn": 17
+          },
+          "mcc": 0.8477,
+          "diagnostics": {
+            "detections": {
+              "n_points": 414,
+              "n_assigned": 414,
+              "n_inside_union": 414,
+              "n_outside_union": 0,
+              "n_multi_tile": 128,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-text-t0.7-n3-carried-p0.15-k3",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.7-n3-carried-p0.15-k3.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 360,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 174,
+            "tn": 253,
+            "fp": 5,
+            "fn": 55
+          },
+          "mcc": 0.7665,
+          "diagnostics": {
+            "detections": {
+              "n_points": 360,
+              "n_assigned": 360,
+              "n_inside_union": 360,
+              "n_outside_union": 0,
+              "n_multi_tile": 104,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 179,
+            "tn": 282,
+            "fp": 6,
+            "fn": 20
+          },
+          "mcc": 0.8899,
+          "diagnostics": {
+            "detections": {
+              "n_points": 360,
+              "n_assigned": 360,
+              "n_inside_union": 360,
+              "n_outside_union": 0,
+              "n_multi_tile": 104,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 207,
+            "tn": 245,
+            "fp": 13,
+            "fn": 22
+          },
+          "mcc": 0.856,
+          "diagnostics": {
+            "detections": {
+              "n_points": 360,
+              "n_assigned": 360,
+              "n_inside_union": 360,
+              "n_outside_union": 0,
+              "n_multi_tile": 104,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-text-t0.7-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.7-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 404,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 182,
+            "tn": 252,
+            "fp": 6,
+            "fn": 47
+          },
+          "mcc": 0.791,
+          "diagnostics": {
+            "detections": {
+              "n_points": 404,
+              "n_assigned": 404,
+              "n_inside_union": 404,
+              "n_outside_union": 0,
+              "n_multi_tile": 120,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 186,
+            "tn": 281,
+            "fp": 7,
+            "fn": 13
+          },
+          "mcc": 0.9149,
+          "diagnostics": {
+            "detections": {
+              "n_points": 404,
+              "n_assigned": 404,
+              "n_inside_union": 404,
+              "n_outside_union": 0,
+              "n_multi_tile": 120,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 212,
+            "tn": 243,
+            "fp": 15,
+            "fn": 17
+          },
+          "mcc": 0.8681,
+          "diagnostics": {
+            "detections": {
+              "n_points": 404,
+              "n_assigned": 404,
+              "n_inside_union": 404,
+              "n_outside_union": 0,
+              "n_multi_tile": 120,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-text-t1.0-n1-carried-p0.15-k1",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t1.0-n1-carried-p0.15-k1.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 423,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 193,
+            "tn": 244,
+            "fp": 14,
+            "fn": 36
+          },
+          "mcc": 0.7961,
+          "diagnostics": {
+            "detections": {
+              "n_points": 423,
+              "n_assigned": 423,
+              "n_inside_union": 423,
+              "n_outside_union": 0,
+              "n_multi_tile": 133,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 188,
+            "tn": 274,
+            "fp": 14,
+            "fn": 11
+          },
+          "mcc": 0.8941,
+          "diagnostics": {
+            "detections": {
+              "n_points": 423,
+              "n_assigned": 423,
+              "n_inside_union": 423,
+              "n_outside_union": 0,
+              "n_multi_tile": 133,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 220,
+            "tn": 237,
+            "fp": 21,
+            "fn": 9
+          },
+          "mcc": 0.8778,
+          "diagnostics": {
+            "detections": {
+              "n_points": 423,
+              "n_assigned": 423,
+              "n_inside_union": 423,
+              "n_outside_union": 0,
+              "n_multi_tile": 133,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-text-t1.0-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t1.0-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 415,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 193,
+            "tn": 247,
+            "fp": 11,
+            "fn": 36
+          },
+          "mcc": 0.8095,
+          "diagnostics": {
+            "detections": {
+              "n_points": 415,
+              "n_assigned": 415,
+              "n_inside_union": 415,
+              "n_outside_union": 0,
+              "n_multi_tile": 132,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 188,
+            "tn": 277,
+            "fp": 11,
+            "fn": 11
+          },
+          "mcc": 0.9065,
+          "diagnostics": {
+            "detections": {
+              "n_points": 415,
+              "n_assigned": 415,
+              "n_inside_union": 415,
+              "n_outside_union": 0,
+              "n_multi_tile": 132,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 220,
+            "tn": 240,
+            "fp": 18,
+            "fn": 9
+          },
+          "mcc": 0.8896,
+          "diagnostics": {
+            "detections": {
+              "n_points": 415,
+              "n_assigned": 415,
+              "n_inside_union": 415,
+              "n_outside_union": 0,
+              "n_multi_tile": 132,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-text-t1.0-n3-carried-p0.15-k3",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t1.0-n3-carried-p0.15-k3.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 338,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 167,
+            "tn": 253,
+            "fp": 5,
+            "fn": 62
+          },
+          "mcc": 0.7413,
+          "diagnostics": {
+            "detections": {
+              "n_points": 338,
+              "n_assigned": 338,
+              "n_inside_union": 338,
+              "n_outside_union": 0,
+              "n_multi_tile": 100,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 171,
+            "tn": 282,
+            "fp": 6,
+            "fn": 28
+          },
+          "mcc": 0.8569,
+          "diagnostics": {
+            "detections": {
+              "n_points": 338,
+              "n_assigned": 338,
+              "n_inside_union": 338,
+              "n_outside_union": 0,
+              "n_multi_tile": 100,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 202,
+            "tn": 244,
+            "fp": 14,
+            "fn": 27
+          },
+          "mcc": 0.8317,
+          "diagnostics": {
+            "detections": {
+              "n_points": 338,
+              "n_assigned": 338,
+              "n_inside_union": 338,
+              "n_outside_union": 0,
+              "n_multi_tile": 100,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-min-text-t1.0-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t1.0-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 400,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 188,
+            "tn": 250,
+            "fp": 8,
+            "fn": 41
+          },
+          "mcc": 0.804,
+          "diagnostics": {
+            "detections": {
+              "n_points": 400,
+              "n_assigned": 400,
+              "n_inside_union": 400,
+              "n_outside_union": 0,
+              "n_multi_tile": 117,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 189,
+            "tn": 280,
+            "fp": 8,
+            "fn": 10
+          },
+          "mcc": 0.9234,
+          "diagnostics": {
+            "detections": {
+              "n_points": 400,
+              "n_assigned": 400,
+              "n_inside_union": 400,
+              "n_outside_union": 0,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 218,
+            "tn": 241,
+            "fp": 17,
+            "fn": 11
+          },
+          "mcc": 0.885,
+          "diagnostics": {
+            "detections": {
+              "n_points": 400,
+              "n_assigned": 400,
+              "n_inside_union": 400,
+              "n_outside_union": 0,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-scale4-optimal-n1-carried-p0.15-k1",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-scale4-optimal-n1-carried-p0.15-k1.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 491,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 209,
+            "tn": 244,
+            "fp": 14,
+            "fn": 20
+          },
+          "mcc": 0.8599,
+          "diagnostics": {
+            "detections": {
+              "n_points": 491,
+              "n_assigned": 491,
+              "n_inside_union": 491,
+              "n_outside_union": 0,
+              "n_multi_tile": 184,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 193,
+            "tn": 274,
+            "fp": 14,
+            "fn": 6
+          },
+          "mcc": 0.9161,
+          "diagnostics": {
+            "detections": {
+              "n_points": 491,
+              "n_assigned": 491,
+              "n_inside_union": 491,
+              "n_outside_union": 0,
+              "n_multi_tile": 184,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 223,
+            "tn": 237,
+            "fp": 21,
+            "fn": 6
+          },
+          "mcc": 0.8908,
+          "diagnostics": {
+            "detections": {
+              "n_points": 491,
+              "n_assigned": 491,
+              "n_inside_union": 491,
+              "n_outside_union": 0,
+              "n_multi_tile": 184,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-scale4-optimal-n1-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-scale4-optimal-n1-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 484,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 209,
+            "tn": 247,
+            "fp": 11,
+            "fn": 20
+          },
+          "mcc": 0.8726,
+          "diagnostics": {
+            "detections": {
+              "n_points": 484,
+              "n_assigned": 484,
+              "n_inside_union": 484,
+              "n_outside_union": 0,
+              "n_multi_tile": 182,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 193,
+            "tn": 277,
+            "fp": 11,
+            "fn": 6
+          },
+          "mcc": 0.9283,
+          "diagnostics": {
+            "detections": {
+              "n_points": 484,
+              "n_assigned": 484,
+              "n_inside_union": 484,
+              "n_outside_union": 0,
+              "n_multi_tile": 182,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 223,
+            "tn": 241,
+            "fp": 17,
+            "fn": 6
+          },
+          "mcc": 0.9064,
+          "diagnostics": {
+            "detections": {
+              "n_points": 484,
+              "n_assigned": 484,
+              "n_inside_union": 484,
+              "n_outside_union": 0,
+              "n_multi_tile": 182,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-scale4-optimal-n3-carried-p0.15-k3",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-scale4-optimal-n3-carried-p0.15-k3.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 283,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 161,
+            "tn": 256,
+            "fp": 2,
+            "fn": 68
+          },
+          "mcc": 0.7354,
+          "diagnostics": {
+            "detections": {
+              "n_points": 283,
+              "n_assigned": 283,
+              "n_inside_union": 283,
+              "n_outside_union": 0,
+              "n_multi_tile": 90,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 154,
+            "tn": 285,
+            "fp": 3,
+            "fn": 45
+          },
+          "mcc": 0.803,
+          "diagnostics": {
+            "detections": {
+              "n_points": 283,
+              "n_assigned": 283,
+              "n_inside_union": 283,
+              "n_outside_union": 0,
+              "n_multi_tile": 90,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 195,
+            "tn": 251,
+            "fp": 7,
+            "fn": 34
+          },
+          "mcc": 0.8352,
+          "diagnostics": {
+            "detections": {
+              "n_points": 283,
+              "n_assigned": 283,
+              "n_inside_union": 283,
+              "n_outside_union": 0,
+              "n_multi_tile": 90,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    },
+    {
+      "label": "pv-scale4-optimal-n3-opmax",
+      "evaluation": null,
+      "detections": [
+        "results/k-ladder-2026-09-12/phase2/materialised/pv-scale4-optimal-n3-opmax.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_detections": 412,
+      "n_frame_tiles": 487,
+      "joins": {
+        "id": {
+          "refused": false,
+          "confusion": {
+            "tp": 195,
+            "tn": 253,
+            "fp": 5,
+            "fn": 34
+          },
+          "mcc": 0.8443,
+          "diagnostics": {
+            "detections": {
+              "n_points": 412,
+              "n_assigned": 412,
+              "n_inside_union": 412,
+              "n_outside_union": 0,
+              "n_multi_tile": 142,
+              "tile_join": "id"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        },
+        "geometric-primary": {
+          "refused": false,
+          "confusion": {
+            "tp": 187,
+            "tn": 282,
+            "fp": 6,
+            "fn": 12
+          },
+          "mcc": 0.9235,
+          "diagnostics": {
+            "detections": {
+              "n_points": 412,
+              "n_assigned": 412,
+              "n_inside_union": 412,
+              "n_outside_union": 0,
+              "n_multi_tile": 142,
+              "tile_join": "geometric-primary"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-primary"
+            },
+            "reference_join": "geometric-primary"
+          }
+        },
+        "geometric-contains": {
+          "refused": false,
+          "confusion": {
+            "tp": 215,
+            "tn": 246,
+            "fp": 12,
+            "fn": 14
+          },
+          "mcc": 0.8928,
+          "diagnostics": {
+            "detections": {
+              "n_points": 412,
+              "n_assigned": 412,
+              "n_inside_union": 412,
+              "n_outside_union": 0,
+              "n_multi_tile": 142,
+              "tile_join": "geometric-contains"
+            },
+            "references": {
+              "n_points": 569,
+              "n_assigned": 435,
+              "n_inside_union": 435,
+              "n_outside_union": 134,
+              "n_multi_tile": 117,
+              "tile_join": "geometric-contains"
+            },
+            "reference_join": "geometric-contains"
+          }
+        }
+      },
+      "baseline_confusion": null,
+      "baseline_mcc": null,
+      "id_reproduction": "NO-BASELINE"
+    }
+  ]
+}
