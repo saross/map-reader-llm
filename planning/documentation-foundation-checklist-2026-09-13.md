@@ -318,6 +318,15 @@ agent work; Fable only for the PI-facing orchestration turns.
   --out reports/verification/generated-file-registry.json`) as the last
   step of every handoff and after any merge that adds documents; consider
   a pre-commit hook. Owner: the session at handoff.
+  **Amendment needed (found 2026-09-13, item 13):** this instruction is
+  **unsafe from a git worktree**. The registry enumerates untracked
+  `outputs/` working files as well as tracked ones, so a rebuild in a
+  fresh worktree silently *deletes* the entries for files only the main
+  checkout has — attempted here, it produced 18 insertions and **938
+  deletions**, dropping 93 `outputs/ab-plus/_work/*.overflow-notes.md`
+  and sibling entries, and was reverted. Restrict the rebuild to the
+  main checkout, or teach the builder to enumerate tracked files only.
+  Detail: `reports/null-exemplar-errata-2026-09-13.md` § 10.
 - [ ] **12. Verdict-model decision (PI)**: a `disclosures` list beside
   `discrepancies` in the run-conditions verifier, so the 12 deliberate
   WARNs (3 `n-passes-over` on the mixed-provenance uplift pool, 9

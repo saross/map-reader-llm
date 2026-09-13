@@ -316,11 +316,24 @@ owned elsewhere.
   (`a7ab9c1c0`) and unmodified here, and the generator reads no path under
   `inputs/` (grep), so the drift is inherited from `main` at `e9bb1b03c`.
 - `tests/test_build_generated_file_registry.py::test_committed_registry_matches_a_rebuild`
-  — expected: the registry enumerates the Markdown file tree, so its `--check`
-  fails whenever a Markdown file is added, which checklist item **11d** already
-  documents. This session adds three (`osf/errata-pointers.md`,
-  `osf/tile-mound-counts-recomputed-2026-09-13.md`, this report), and rebuilds
-  the registry as its last step per that item.
+  — expected in kind: the registry enumerates the Markdown file tree, so its
+  `--check` fails whenever a Markdown file is added, which checklist item
+  **11d** already documents. This session adds one file the registry counts
+  (this report; the two new `docs/methodology/preregistration/osf/` documents
+  fall outside the paths it scans).
+
+  **The rebuild was NOT done here, and item 11d needs amending.** Running
+  `scripts/build_generated_file_registry.py` in this worktree produced 3,620
+  files against the committed 3,619, but as **18 insertions and 938 deletions**:
+  it dropped **93 `outputs/` entries** — `outputs/ab-plus/_work/*.overflow-notes.md`
+  and siblings — that exist in the main checkout (526 files in that directory
+  there) but are untracked working files a fresh worktree does not have. The
+  rebuild was reverted. So item 11d's standing instruction ("rebuild it as the
+  last step of every handoff") is **unsafe from a worktree**: the registry
+  enumerates untracked `outputs/` content, so only the main checkout can
+  rebuild it faithfully. Flagged for the PI as an amendment to that item; the
+  rebuild for this session's one added file belongs to whoever merges this
+  branch in the main checkout.
 
 ## Changelog
 
