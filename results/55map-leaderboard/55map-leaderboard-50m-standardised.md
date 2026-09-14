@@ -1,5 +1,7 @@
 # 55-map generalisation leaderboard — standardised reference @ 50 m
 
+> **GENERATED FILE — do not hand-edit.** Rendered from `55map_leaderboard_50m_standardised.json` by `scripts/build_55map_leaderboard.py` at commit `b16954d4c`; `--check` is the drift guard (tier-1: `tests/test_55map_leaderboard_renderings.py`), and `--rebuild-md` re-renders from the committed JSON without re-running the permutation tests. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope") this projection carries provenance instead of a hand changelog.
+
 > Working buffer 50 m per the noise-floor derivation (`results/working-precision/55maps-csr-noise-floor.json`). Round-robin tile-swap permutation (10k, seed 42) + BH-FDR q=0.05 + greedy-clique tiers; 24/28 pairs significant.
 
 | rank | cell | tier | F1@50 | 95% CI | P@50 | R@50 | tile-MCC | n |

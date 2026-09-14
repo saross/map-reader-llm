@@ -1,6 +1,8 @@
 # G6 — committed-frame versus board-frame F1 at 20 m (gs-era2-verified-board-2026-09-10)
 
-> Generated 2026-09-13T00:22:00+00:00 by `scripts/build_gs_era2_board.py gates`. G2: 0 reproduction failures; G3: 0 frame failures; G4: 110 cells of 110 members.
+> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by `scripts/build_gs_era2_board.py gates` at commit `70b47979a`; `check-renderings` is the drift guard (tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope") this projection carries provenance instead of a hand changelog.
+
+> Generated 2026-09-14T02:26:23+00:00 by `scripts/build_gs_era2_board.py gates`. G2: 0 reproduction failures; G3: 0 frame failures; G4: 110 cells of 110 members.
 
 | condition | committed frame | committed F1@20 | board F1@20 | Δ (board − committed) | n features | n det. committed | n det. board |
 |---|---|---:|---:|---:|---:|---:|---:|
@@ -15,7 +17,7 @@
 | `grid-2026-08-18::g384-ov192-k5-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8905 | 0.8905 | +0.0000 | 435 | 435 | 435 |
 | `pv-diag-384::verified-adv-text-consensus-16of30` | full_evaluation_bounds.geojson | 0.8902 | 0.8902 | +0.0000 | 412 | 412 | 412 |
 | `grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10` | grid_common_bounds.geojson | 0.8961 | 0.8886 | -0.0075 | 400 | 400 | 400 |
-| `gemini37-screen-2026-08-28::g37-text-k3-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8870 | 0.8870 | +0.0000 | 494 | 494 | 494 |
+| `gemini37-screen-2026-08-28::g37-text-k3-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8860 | 0.8860 | +0.0000 | 495 | 495 | 495 |
 | `grid-2026-08-18::g384-ov192-k3-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8840 | 0.8840 | +0.0000 | 450 | 450 | 450 |
 | `pv-diag-384::verified-adv-text-min-6of10` | full_evaluation_bounds.geojson | 0.8835 | 0.8835 | +0.0000 | 389 | 389 | 389 |
 | `pv-diag-384::verified-adv-text-pro-vf-4of5` | full_evaluation_bounds.geojson | 0.8792 | 0.8792 | +0.0000 | 393 | 393 | 393 |

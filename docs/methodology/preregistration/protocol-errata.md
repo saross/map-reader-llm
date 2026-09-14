@@ -4,7 +4,11 @@
 
 **Associated preregistration**: `preregistration.md` v4.7 (2026-01-31)
 
-**See also**: `osf/execution-checklist.md` for execution tracking
+**See also**: `osf/execution-checklist.md` for execution tracking;
+`osf/errata-pointers.md` for the reverse index — from a passage of the lodged
+registration to the erratum that corrects it. The lodged copy cannot carry
+inline pointers: `results/commitments.json` pins it by git blob and anchors 702
+commitments to line ranges inside it (see E87 remediation 1).
 
 ---
 
@@ -5256,5 +5260,472 @@ block (the parent study); `reports/union-staleness-retrospective-2026-09-12.md`
 §§ 3, 3.1, 3.2 and 3.3 (the measurement and the options); `reports/e43-coverage-confound-remediation-2026-08-02.md`
 (E72's investigation); `reports/k-ladder-closeout-deltas-2026-09-12.md` (the
 before→after figures and the open question about the signed row).
+
+---
+
+### E86: The three null exemplars were selected from a superseded training set and never rebuilt when the calibration tiles were re-selected — the exemplars are themselves evaluation tiles, and 25 of the 340 Era-1 tiles overlap null-exemplar pixels
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-09-13 (identified by the `map-reader-bench` Stage 1 provenance audit; that plan's § 3.2 had recorded the filename mismatch on 2026-08-19 without a cause; PI ruling on the handling, 2026-09-13) |
+| Type | Provenance defect in a model-visible artefact (stale manifest); scope of the calibration/evaluation exclusion |
+| Commit | this entry's commit |
+| Files | `inputs/examples/null-tiles/null_tiles_manifest.json` (created `a2ad75c98`, 2025-12-23, seed 20251223; moved unchanged in `a10ed8236`); `inputs/tiles/calibration_manifest.json` (re-selected in `4d011a839`, 2026-01-04, superseding the `inputs/training_manifest.json` of `3f66fc3f8`, 2025-12-23); `inputs/examples/neutral-naming/MANIFEST.md` § "Null Tiles (Examples 15-17)"; `osf/preregistration.md` § 8.4.2 (the library-composition table's "Source: Training set") and § 8.4.3 (the null-tile pool and the three selected tiles); the frames measured below — `inputs/tiles/{full_evaluation,validation,verification}_manifest.json`, `inputs/tiles_384/{full_evaluation,validation}_manifest.json`, `inputs/calibration/h10-384/test_manifest.json`. New: `inputs/examples/null-tiles/null_overlap_by_frame.json`, `inputs/provenance/manifest-dependencies.json`, `scripts/audit_null_exemplar_overlap.py`, `scripts/check_manifest_provenance.py` |
+| Impact | Nil on any reference-bearing measurement: **0 of the 569 reference symbols lie inside the three null windows**, so no precision, recall, F1 or Matthews correlation coefficient (MCC) value changes. Medium on the exclusion logic and on the documentation of the few-shot library. The exposure is confined to the **image modality on the Gold Standard boards**: text cells, verifier stages and every deployment cell are unaffected (see "Which cells could have seen the pixels" below) |
+
+**Description**: preregistration § 8.4.2 gives the null category's source as
+"Training set" and § 8.4.3 gives its pool as "Training tiles with
+density=empty (mound_count=0)", seed 20251223; `MANIFEST.md` said "Training
+tiles containing no mound symbols". The benchmark's plan (2026-08-19) recorded
+that the three filenames in `null_tiles_manifest.json` do not occur in the
+committed 20-tile `calibration_manifest.json` and asked that this be
+investigated rather than normalised. The cause is a stale manifest:
+
+- At `3f66fc3f8` (2025-12-23) the training set was
+  `inputs/training_manifest.json`, 20 tiles selected by
+  `select_tiles_phase2.py`. **All three null tiles are members of that set**
+  (`K-35-078-1_Lesovo_x2240_y2688`, `K-35-053-3_Elenovo_x3584_y1344`,
+  `K-35-052-4_32635_x896_y1792`). The null selection (`a2ad75c98`, the same
+  day) was therefore correct when made.
+- At `4d011a839` (2026-01-04, "Expand holdout set from 20 to 60 tiles") the
+  set was re-selected with a new seed. **Only 3 of the 20 earlier tiles
+  survived, and none of the three null tiles did.** (Re-verified 2026-09-13 by
+  reading both manifests at those commits; the survivors are
+  `K-35-052-4_32635_x1344_y2240`, `K-35-062-2_Rakovski_x448_y2688` and
+  `K-35-078-1_Lesovo_x1344_y0`.) The committed
+  `inputs/tiles/calibration_manifest.json` is byte-identical to what
+  `4d011a839` wrote; the later `cfc10c133` moved the path, not the content.
+- `null_tiles_manifest.json` was never regenerated. It was moved in
+  `a10ed8236` (2026-01-08) with its content unchanged, and its
+  `selection_methodology` block still cites seed 20251223 and the December
+  stratification.
+- The evaluation exclusion geometry was built from the *current* calibration
+  set. The null tiles, being outside that set, were never excluded.
+
+The documentation statement is therefore true of the December set and false of
+the committed set. Nothing else in the library is affected: **all 20
+hard-example crops** (examples 05–08, 11–14 and the 18–29 rotation pool) name a
+source tile that is a member of the committed calibration manifest — 20 of 20,
+re-verified 2026-09-13 against `MANIFEST.md`'s own provenance tables.
+
+**Exposure by frame** (recomputed for this entry from the manifests, not
+carried over; generator `scripts/audit_null_exemplar_overlap.py`, sidecar
+`inputs/examples/null-tiles/null_overlap_by_frame.json`, tier-1 test
+`tests/test_null_exemplar_overlap.py`). Overlap is decided in each sheet's own
+pixel space, from the offsets in the tile filenames: a frame tile counts when
+it shares **any** pixel with a null exemplar's 512 px window. Era-1 frames are
+512 px on a 448 px stride, so a null exemplar is itself a frame member and its
+eight immediate neighbours overlap it; the 384 px frames step 336 px.
+
+| Frame | Tile size | Tiles | Overlapping | Note |
+|-------|----------:|------:|------------:|------|
+| Era-1 `tiles/full_evaluation` | 512 px | 340 | **25** | all three exemplars are themselves evaluation tiles here |
+| Era-1 `tiles/validation` (the registered holdout) | 512 px | 60 | 3 | none is an exemplar itself |
+| Era-1 `tiles/verification` | 512 px | 5 | 0 | — |
+| Era-2 `tiles_384/full_evaluation` | 384 px | 487 | 20 | — |
+| Era-2 `tiles_384/validation` | 384 px | 240 | 6 | — |
+| Era-3 `calibration/h10-384/test` | 384 px | 327 | 13 | — |
+| Era-1 `tiles/calibration` | 512 px | 20 | 2 | reported for completeness; calibration tiles are excluded from scoring, so an overlap here is by design |
+
+The Era-1 512 px row is the one the drafted entry did not carry, and it is the
+sharpest form of the defect: on that frame the leaked tiles are not merely
+neighbours of a shown tile, they **are** the shown tiles. The three ids are
+`K-35-078-1_Lesovo_x2240_y2688.png`, `K-35-053-3_Elenovo_x3584_y1344.png` and
+`K-35-052-4_32635_x896_y1792.png`; the remaining 22 are their stride-448
+neighbours. Every id is listed in the sidecar so a sensitivity check with those
+tiles excluded runs offline, with no re-inference.
+
+**Which cells could have seen the pixels.** The null exemplars are whole
+tiles, transmitted as images only where a configuration actually sends example
+images. `scripts/4_detect_mounds_batch.py:885` reads
+`config.get("include_example_images", True)`, so an **absent** key means the
+images were sent:
+
+| Class | Configs | Nulls in the example list | Pixels transmitted |
+|-------|--------:|---------------------------|--------------------|
+| Image modality (`include_example_images` `true` or absent) **and** nulls listed | **37** | yes (examples 15–17) | **yes** |
+| Image modality, nulls **not** listed — exactly the four `verify_*.json` verifier configs (their 6-example library is 01–04, 09, 10) | 4 | no | **no** |
+| Text modality (`include_example_images: false`) | 22 | yes in 21 of 22; `detect_brief-text_high-recall.json` carries 10 examples and no nulls | **no** — only the labels travel |
+| No example library at all — `library_scale-{16,32}.json` (deferred, never executed) and the four text verifier configs | 6 | n/a | **no** |
+
+Named instances of the exposed class, for the record:
+`detect_brief-text-image.json` (`true`, explicit), `detect_image-only*.json`
+and `detect_verbose-text-image*.json` (key absent, default `true`), the
+`library_*` image variants, and the `phase3c-t1-*` Track 1 configs. The
+unexposed text track is `detect_brief-text.json`,
+`detect_brief-text-high.json`, `detect_verbose-text.json`, the
+`detect_brief-text_{terse,verbose,safemode}.json` family,
+`propose_brief-text.json`, the `library_*-text.json` variants and the
+`phase3c-t2-*` Track 2 configs.
+
+Three consequences follow. First, the text track never saw the pixels: those
+configs carry all 17 examples in their `examples` array, so the library
+composition is comparable across the modality contrast, but with
+`include_example_images: false` only the labels travel. Second, the verifier
+stage is clean by construction: of the 41 image-modality configs, the only four
+carrying no null exemplar are the four verifier configs (the drafted entry's
+"the verifier config carries no examples" was wrong in form — the verifier
+carries six examples, none of them null). Third, the 55-map
+deployment corpus shares no sheet with the three null tiles, which are on
+Lesovo, Elenovo and K-35-052-4 of the four Gold Standard sheets, so no
+deployment cell is exposed on any frame.
+
+**Protocol impact**: no reference-bearing figure changes, because no reference
+lies in a null-tile window. Two things do change. First, the description of
+the library: the nulls are not "from the training set" as committed. Second,
+the clean-holdout claim: it holds for positives and hard negatives, and fails
+for the three negatives — on 25 of the 340 Era-1 tiles, 20 of the 487 Era-2
+tiles, 13 of the 327 Era-3 tiles, and 3 of the registered 60-tile holdout. Any
+statement that evaluation tiles were never shown to the model needs the
+qualifier; `docs/paper/methods-draft.md` § M.10 carries it as of this entry's
+commit. What leaks is labelled-negative evidence: the model was shown, as "no
+mounds here", ground it was then scored on — which, if it acts at all, acts to
+**suppress** detections on those tiles and so cannot have inflated recall
+there. The quantification is the sensitivity re-score in
+`results/null-exemplar-sensitivity-2026-09-13/` (the same-day sibling job:
+every affected board cell re-scored with the overlapping tiles excluded, on the
+ids in the sidecar). The benchmark's own decision on the 20 Era-2 tiles is
+recorded in `map-reader-bench` `wiki/continuity.md`.
+
+**Remediation (PI ruling, 2026-09-13 — draft options 1, 3 and 4 taken; 2
+recorded, not taken)**:
+
+1. **Annotate, and correct the library documentation.** Done:
+   `null_tiles_manifest.json` carries a `_note_E86` block giving the true
+   provenance, the consequence, the nil reference impact and the guard;
+   `MANIFEST.md` § "Null Tiles" now reads "selected from the 2025-12-23
+   training set (`3f66fc3f8`), superseded on 2026-01-04 (`4d011a839`); not
+   members of the committed calibration set", with the exposure and the
+   unaffected hard examples stated beside it.
+2. **Do not regenerate the nulls — recorded as an option, not taken.** Every
+   run that used the library was run with these three tiles, and a rebuilt null
+   set would create a second library version that no committed run used. The
+   option stands for a future library revision, which would be a new library
+   version with its own registration, not a repair of this one.
+3. **Flagged subset, per frame.** Done:
+   `inputs/examples/null-tiles/null_overlap_by_frame.json` records every frame's
+   total, its overlapping ids and the geometry used, so the sensitivity check
+   needs no re-inference. Regenerable and drift-guarded
+   (`scripts/audit_null_exemplar_overlap.py --check`).
+4. **Rebuild guard.** Done, and generalised beyond this instance:
+   `scripts/check_manifest_provenance.py` plus the registry
+   `inputs/provenance/manifest-dependencies.json` record, for every manifest
+   that declares provenance from another set, the source's blob hash at
+   declaration time, and report `STALE` when the source's current hash differs.
+   Eight dependencies are registered; the run flags exactly one —
+   `null-tiles-from-calibration` — and passes the other seven. The absence of
+   such a guard is the mechanism here: nothing errored when the source was
+   re-selected under the same name. This extends the content-anchor discipline
+   of `reports/name-keyed-cache-audit-2026-09-12.md` and pull request #14 from
+   derived artefacts (caches, unions, evaluations) to **input** manifests and
+   the example library, a class that audit's candidate table did not cover.
+   Two check modes, because this staleness is permanent by ruling: `--check`
+   fails on any stale declaration (the honest raw state), `--check-expected`
+   fails only when an observation differs from the registry's own expectation
+   (the tier-1 gate, which stays green on the documented divergence and turns
+   red on a new one). A registered staleness must name an erratum or the
+   registry refuses to load.
+
+Cross-references: **E87** (filed together, from the same audit, on the same
+`select_tiles_phase2.py` provenance chain); **E20** (the holdout → validation
+rename that renamed this defect's source path); **E36** (the executed
+evaluation scopes, which is why the exposure has to be reported per frame
+rather than once); `osf/errata-pointers.md` (the reverse index, which carries
+this entry's pointer into §§ 8.4.2–8.4.3 of the lodged text — see E87
+remediation 1 for why it cannot be written into that text);
+`reports/null-exemplar-errata-2026-09-13.md` (the claims-with-anchors record for
+both entries); `reports/name-keyed-cache-audit-2026-09-12.md` § 1 (the defect
+class).
+
+---
+
+### E87: The per-tile mound counts in preregistration §§ 2.3–2.5 came from a bounding-box approximation of each sheet's georeferencing — "36 mounds in the 20 training tiles" is 50
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-09-13 (identified by the `map-reader-bench` Stage 1 provenance audit; PI ruling on the handling, 2026-09-13) |
+| Type | Correction of documented counts (the tile selections themselves are unchanged; no measured result reads the counts) |
+| Commit | this entry's commit |
+| Files | `osf/preregistration.md` § 2.3 (per-sheet training-tile tables from `:106`; "Training set summary: 20 tiles, 36 mounds total", `:146`), § 2.4 (holdout tables from `:154`; "60 tiles, 79 mounds total", `:234`), § 2.5 (the density distribution derived from those counts, `:238`), § H8 "Availability constraint" (`:815`, "The training set contains 36 mounds across 20 tiles"); `scripts/select_tiles_phase2.py` `load_map_georef` (now `:205`) and `count_mounds_in_tile` (now `:250`); `inputs/tiles/tile_selection_metadata.json` (the same counts, as `mound_count` and `density`). New: `docs/methodology/preregistration/osf/tile-mound-counts-recomputed-2026-09-13.{json,md}`, `scripts/recount_prereg_tile_mounds.py` |
+| Impact | Nil on any measured result: no hypothesis, run, board or paper figure reads these counts, and the 80 tile *filenames* in the tables match the committed manifests exactly. Low-to-medium on the registered description of the calibration and holdout sets, on § 2.5's density strata, and on the § H8 availability-constraint reasoning that motivates H10 |
+
+**Description**: `select_tiles_phase2.py` estimates each sheet's map extent
+from the **bounding box of that sheet's reference points** (`load_map_georef`)
+and its pixel dimensions from tile filenames (`get_map_dimensions`); it never
+reads the GeoTIFF affine. Because the references do not reach the sheet edges,
+the inferred extent is smaller than the sheet and every tile's map-coordinate
+window is shifted and scaled. The counts written into the tables were computed
+under that approximation.
+
+The affine-correct counts are published beside the originals in
+`osf/tile-mound-counts-recomputed-2026-09-13.md` (per tile, both sets),
+generated by `scripts/recount_prereg_tile_mounds.py`. That generator reads the
+published counts **out of the lodged tables** rather than transcribing them,
+takes each tile's window from `inputs/tiles/<sheet>/metadata.json` — the
+affine-derived origins `generate_tile_bounds.py` uses for every bounds file the
+evaluation pipeline scores against — and reproduces the superseded
+approximation by importing `select_tiles_phase2`'s own three functions, so the
+demonstration cannot drift from the script that wrote the tables.
+
+| Set | § | Tiles | Published | Affine-correct, 512 px window | Affine-correct, 448 px core |
+|-----|---|------:|----------:|------------------------------:|----------------------------:|
+| Training / calibration | 2.3 | 20 | **36** | **50** distinct (52 as a sum of per-tile counts) | **39** |
+| Holdout / validation | 2.4 | 60 | **79** | **97** distinct (106 as a sum) | **82** |
+
+Two conventions are reported because they answer different questions. Adjacent
+tiles share a 64 px overlap, so a **sum** of per-tile counts double-counts a
+reference in that band while a **union** counts distinct references; the 448 px
+**core** is the tile minus its overlap, and cores tile each sheet exactly. The
+generator asserts that identity as a geometry self-check — the cores of all 360
+physical tiles account for the 569 reference symbols exactly once — which is
+what licenses the affine arithmetic. None of 36, and none of 79, is any of
+these.
+
+**The mechanism, demonstrated.** Re-running the superseded approximation
+reproduces **45 of the 80** published per-tile counts exactly (10 of 20
+calibration, 35 of 60 holdout), against **31 of 80** for the affine-correct
+512 px computation (7 of 20, 24 of 60). The approximation is the better
+explanation of the tables by a wide margin, which identifies it as the method
+that produced them. It does not reproduce all 80, so a second and smaller
+source of divergence remains — candidates are a reference-layer revision since
+2025-12-23 and `get_map_dimensions`'s own estimate of each sheet's pixel
+extent — and this entry does not attribute the residue.
+
+**Protocol impact**: no hypothesis, run, or board reads these counts; the tile
+selections and every downstream artefact are unchanged, and § 2.1's analysis
+scope ("F1, precision, recall and MCC are computed on holdout tiles only") is
+untouched. Three things do change:
+
+- The §§ 2.3–2.4 tables must not be reused as counts, and § 2.5's density
+  distribution (8/7/5 training, 30/18/12 holdout) inherits the error, because
+  `categorise_density` reads the same approximate counts. **This is the
+  entry's most consequential number and was not in the drafted version**:
+  applying the registered density rule (`empty` 0, `sparse` 1–2, `dense` 3+) to
+  the affine-correct 512 px counts moves **10 of the 20 training tiles and 27 of
+  the 60 holdout tiles** into a different stratum (8 and 23 over their 448 px
+  cores), and **3 training and 12 holdout tiles registered as `empty` are not
+  empty**. The stratified sample is unchanged — these were the strata the
+  registered seeds drew from — so § 2.5 is the record of *how the selection was
+  made*, not a description of the tiles' mound content, and no claim that reads
+  it as the latter survives. Nothing downstream does: the executed evaluation
+  scopes (E36) are frame-defined and score against the reference layer directly,
+  never against these strata.
+- The § H8 availability-constraint reasoning (`:815`) — 36 mounds bounding the
+  hard-positive supply, which is what "motivates H10 (training pool size)" in
+  the lodged text — was made on an **undercount**. The constraint was looser
+  than stated: 50 references in the 20 calibration windows, not 36. That does
+  not reverse the H10 motivation (the binding constraint was the *yield* of the mining
+  campaign, not the mound total: `inputs/examples/neutral-naming/MANIFEST.md:39`
+  records that all 24 calibration false negatives were complete misses, of which
+  4 became hard positives, and E64 (i) records the pool exhaustion that froze
+  examples 05–08), but the sentence's arithmetic is wrong, and the H10 rationale
+  should be restated from the campaign's actual yield rather than from a
+  design-time mound count.
+- The paper draft inherited neither number: `docs/paper/` and `paper/` contain
+  **zero** occurrences of "36 mounds" (grep, 2026-09-13), and the § H8
+  availability-constraint sentence is not carried into Methods, so there was no
+  paper-facing count to correct here. The paper-facing corrections under this
+  entry are the corpus-size sentences instead (next paragraph).
+
+**The paper-facing consequence, and what is already adjudicated.**
+`docs/paper/methods-draft.md:439` said "tiles more than 75 % background were
+filtered out, leaving a corpus of 361 tiles across the four sheets", and
+`:21` and `:195` carry the same 361. The committed tree holds **360** physical
+tiles (90 per sheet) and the Era-1 evaluation manifest holds **340**, which is
+exactly those 360 minus the 20 calibration tiles (verified as a set
+difference, 0 exceptions either way). The 361 is **not** a new defect: **E64
+(ii)** already catalogued the registration's 361-versus-"~360" contradiction at
+`:78` and `:1921` and adopted "the 360 physical tiles" as the operative
+reading, and § H10's constraint block (`:936-938`, "Total tiles available:
+361 … Maximum training pool: ~301 tiles") is the same already-adjudicated
+figure. What this entry adds is that the **paper draft carried 361 forward
+without E64 (ii)'s operative reading**; the three sentences are corrected under
+this entry's commit, naming the 340 and the exclusion that produces it.
+
+**Remediation (PI ruling, 2026-09-13 — draft options 1 and 2 taken; option 3
+replaced, see below)**:
+
+1. **Erratum pointers published as a companion index, NOT written into the
+   lodged copy — the intended approach turned out to be forbidden.** The
+   remediation as drafted was to annotate `osf/preregistration.md` §§ 2.3–2.5
+   and the § H8 paragraph inline with blockquote pointers. That was attempted,
+   and it broke the project's own integrity tripwire: `results/commitments.json`
+   pins all three lodged documents by git blob (`preregistration.md` at
+   `fa221b30f395`) and anchors **702 extracted commitments** to verbatim
+   statements at specific line ranges inside them
+   (`scripts/validate_commitments.py` checks 1–5). Inserting the blockquotes
+   shifted every line number below each insertion and produced **520
+   verbatim-locator failures** and two tier-1 failures in
+   `tests/test_validate_commitments.py`. The registration copy is not merely
+   immutable by convention: it is pinned, and the pin is load-bearing. The
+   annotations were reverted (the file is back at blob `fa221b30f395`; the
+   ledger and its tier-1 tests are green) and became
+   `osf/errata-pointers.md` instead — a section-by-section index from a lodged
+   passage, with its line locator, to the erratum that corrects it. Twelve rows
+   at publication, covering the passages E86 and E87 correct plus the E64, E20
+   and E73 adjudications a reader of those passages needs; linked from this
+   register's header and from `osf/README.md`, so a reader of the companion set
+   meets it. **This is the generalisable finding of the remediation**: a
+   line-anchored, blob-pinned document cannot carry its own errata, and any
+   future erratum landing on the registration must extend the companion index
+   rather than the text. It is also why this file had no prior erratum-pointer
+   convention — not an oversight, a constraint.
+2. **Publish the corrected counts, clearly labelled.** Done:
+   `osf/tile-mound-counts-recomputed-2026-09-13.md` (per-tile table for both
+   sets, with the approximation column beside it) and its `.json` sibling, both
+   headed POST-HOC CORRECTION, both regenerable, both drift-guarded by
+   `scripts/recount_prereg_tile_mounds.py --check` and a tier-1 test.
+3. **`load_map_georef` frozen and annotated, NOT fixed and NOT archived** — a
+   third disposition in place of the draft's two, on the draft's own criterion
+   of keeping the committed selections reproducible. Both offered options fail
+   it: *correcting* the geometry would change the counts that feed
+   `categorise_density`, so the stratified sample would select different tiles
+   under the registered seeds, against § 8.6's "Re-running with same seeds
+   produces identical selection"; *archiving* the script would break a
+   registration-cited reproduction path (§ 8.6 names its output artefacts,
+   `scripts/README.md` names it as their producer), repeating a defect class the
+   project has already recorded. So the script keeps its arithmetic as the
+   historical record of how the committed selections were made, and carries a
+   FROZEN block in the module docstring plus warnings on both functions, naming
+   this erratum and pointing at the affine route instead. **Open for the PI**: a
+   rebuilt selection under corrected geometry would be a new selection with a
+   new seed record and its own erratum, not a repair of this one.
+
+**Three minor items, disposed of here**:
+
+- `inputs/tiles/tile_selection_metadata.json` labels the 448 px **stride** as
+  `parameters.tile_size`. Annotated with a `_note_E87` block rather than
+  renamed, because other code reads the key by name. The script has since been
+  corrected independently: `select_tiles_phase2.py:585-593` now writes
+  `tile_size: 512` alongside `tile_overlap: 64` and `tile_stride: 448`, so the
+  mislabel survives only in this committed artefact, which is deliberately not
+  regenerated (that would rewrite the registered selection record).
+- "361 tiles" at `osf/preregistration.md:78` — **already adjudicated by E64
+  (ii)**, not re-opened here. The line carries a pointer to E64 (ii) for a
+  reader who arrives at it from §§ 2.3–2.5.
+- `inputs/tiles_384/calibration_manifest.json` is the literal `[]` (added in
+  the bulk commit `03a233da6`, 2026-03-17). Its role is now documented in
+  `inputs/README.md`: it is a **required placeholder, not an omission**. The
+  384 px grid has no calibration set of its own — the exclusion geometry is
+  derived from the 512 px calibration tiles' footprint — but
+  `generate_tile_bounds.py` requires the file in its default mode
+  (`--tiles-dir inputs/tiles_384`) and exits if it is absent, so the empty array
+  yields the zero-feature `calibration_bounds.geojson` the default mode expects
+  (verified by running it, 2026-09-13). Not archived: archiving it would break
+  that command.
+
+Cross-references: **E86** (filed together, same audit, same provenance chain);
+**E64 (ii)** (the 361-versus-360 corpus-size contradiction and its operative
+reading — this entry does not re-open it); **E64 (i)** (the same `:815`
+paragraph's K and candidacy-filter contradiction, and the hard-positive
+exhaustion that the availability constraint anticipated); **E4** (the y-axis
+inversion in the affine metadata, whose convention the recomputation follows);
+`reports/null-exemplar-errata-2026-09-13.md` (the claims-with-anchors record).
+
+---
+
+### E88: Modality — a preregistered factor — was assigned by a substring test on the condition label in four scripts; eight conditions and one pool were mislabelled, and two registered outcomes quote an image-group range that moves
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-09-14 (identified by the null-exemplar sensitivity job of 2026-09-13 for seven cells; characterised corpus-wide on the PI's ruling of 2026-09-14) |
+| Type | Correction of a derived factor label (no cell re-scored; group membership only) |
+| Commit | `eb34ecbcc` (the derivation and the board builder's derived `track` + `track_basis`), `cb9b1d7f2` (the plateau, tile-size-sweep, K-ladder-registry and pool-registry fixes), `36b9821c4` (the plateau `--out-dir` fix), `c1b151bce` / `23158fc3c` / `d5eaeb1ee` (the legacy-rule A/B recomputation), `22e69c00c` (the audit report); this entry's commit carries the erratum, and the outcome amendments, the paper and claims-inventory corrections, the verifier-convention change and the Era-2 board rebuild land in the same session's ruling commits |
+| Files | `scripts/build_gs_era2_board.py` (the `track` assignment, was `:307`), `scripts/characterise_gs_plateau.py` (`derive_tags`), `scripts/tile_size_sweep.py` (`parse_modality_temp`), `scripts/register_k_ladder_phase2_conditions.py` (`modality`), `scripts/build_k_ladder_phase2_unions.py` (`POOL_REGISTRY`); artefacts `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json`, `results/working-precision/gs-plateau-characterisation.{json,md}`, `results/tile-size-sweep/tile_size_sweep.{json,md}`, `results/k-ladder-2026-09-12/phase2/unions.json`; outcomes `era1-single-pass-baseline-matrix` and `tile-size-sweep` in `results/run-analyses.json`; `docs/paper/results-draft.md:195-196` and `:1240`; `docs/paper/results-claims-inventory-2026-09-12.md` R2-06. New: `scripts/derive_condition_modality.py`, `scripts/compare_modality_recomputation.py`, `results/modality-track-audit-2026-09-14/`, `reports/modality-track-audit-2026-09-14.md`, `reports/modality-rulings-deltas-2026-09-14.md` |
+| Impact | **Nil on every preregistered outcome.** H1's confirmatory contrast groups the five phase-2a conditions, all correctly labelled; the confirmatory family's per-hypothesis *p* values are unrecomputed; no hypothesis-outcome row changes. **Nil on the signed Era-2 board, the signed uplift supplement, the signed verifier-uplift pairing and the signed K-ladder analysis** — none of them groups by the field. **Two unsigned but verified registered outcomes quote a figure that moves**, and one paper sentence with them |
+
+**Description**. Modality — few-shot exemplars sent as images or as text labels
+only — is a preregistered factor (H1; lodged registration § H1 `:410`, `:432`,
+the factorial table `:1740`). Four scripts assigned it by testing the condition
+label or pool key for the substring `image`. That fails when a label names the
+**verifier's** modality over a text proposer, and again when a label carries no
+modality token at all and the test falls through to `text`. The ground truth is
+`include_example_images` over a non-empty exemplar list in the configuration the
+proposer transmitted (`scripts/4_detect_mounds_batch.py:885,901`), now derived
+corpus-wide by `scripts/derive_condition_modality.py`.
+
+Of 593 registered conditions, 591 are derivable and 547 from a transmitted
+configuration, with no route contradicting another. Eight conditions and one
+proposer pool carried a wrong recorded label across four artefacts; the
+register's `proposer_pools[...].modality`, the passes manifest, the opmax
+membership and the uplift supplement are clean.
+
+**The figures that move.**
+
+| claim | before | after |
+|---|---|---|
+| `era1-single-pass-baseline-matrix` outcome: "image cells span 0.094-0.291" | 17 computable image-bearing cells, MCC 0.0942–0.2907 | **21 of 22**, MCC **0.0665–0.2907** |
+| `docs/paper/results-draft.md:195-196` and `:1240`; claims inventory R2-06 | "MCC 0.094–0.291 across the seventeen computable image-bearing cells" | **0.0665–0.2907 across the twenty-one** |
+| `tile_size_sweep.json` `by_arch_modality` 512 `single-pass/image` | `image-terse` 0.6052 / 0.2239 | **`canonical-last` 0.6314 / 0.2132** |
+| `tile_size_sweep.json` `by_arch_modality` 512 `single-pass/text` | `canonical-last` 0.6314 / 0.2132 | **`text-scale-4` 0.6094 / undefined** |
+| `tile-size-sweep` outcome: the single-pass ceiling ladder | 512 (0.631) > 384 (0.520) > 256 (0.342) | **0.609 > 0.520 > 0.342** read as the `single-pass/text` leg, which is what two of the three published entries are; **0.631 > 0.600 > 0.342** read as the overall per-size ceiling. The ordering 512 > 384 > 256 survives either reading |
+
+**What does not move.** The direction of the metric trade-off (20 of the 21
+computable image-bearing cells are strictly above every computable text-only
+cell's 0.0665, and the twenty-first, `retest-phase2e::random`, ties it); the
+text-only side entirely (14 cells, 8 undefined, 0.0665 on the other 6); the
+text-only F1 range 0.5016–0.6094; the single-pass tile-size isolation
+(0.342 < 0.520 < 0.606) and the consensus+verifier head-to-head, both
+byte-identical; every plateau-tabulation group statistic (image onset median
+75 m / p90 100 / max 150, text 30 / 75 / 150, before and after, with all five
+sibling summaries byte-identical); the Era-2 board's ranking, tiers, tie sets,
+Hsu sets and tile-MCC family; Obs 351, Obs 352, Obs 447 and Obs 482.
+
+**Protocol impact**: nil on the preregistered analyses. The affected statistics
+are post-hoc characterisations that GROUP cells by modality; the registered
+contrasts either hold modality fixed or group only correctly-labelled
+conditions. The corrective is a change of source rather than of naming: four of
+the five derivation routes read the configuration that was transmitted, and
+where two of them could both speak they never once disagreed across 593
+conditions.
+
+**Remediation (PI rulings, 2026-09-14 — four, all executed this session)**:
+
+1. **This entry**, with its pointer rows in
+   `osf/errata-pointers.md` (the lodged copy cannot carry inline pointers — it
+   is blob-pinned and line-anchored by 702 commitments; see E87 remediation 1).
+2. **The two registered-but-unsigned outcomes amended in place**, each with an
+   `[AMENDED 2026-09-14, E88: …]` clause that preserves the prior text verbatim,
+   and the paper prose (`docs/paper/results-draft.md`), the claims-inventory row
+   R2-06 and the `results/tile-size-sweep/` and
+   `results/working-precision/gs-plateau-characterisation.{json,md}` tabulations
+   brought to the corrected figures. Neither row carries a PI signature
+   (`_signature_note` absent on both); both carry a 2026-06-09 authoring
+   verification stamp, which is what this erratum's revision markers attach to,
+   exactly as E81 and E83 did on the same two rows.
+3. **The register's `verifier_passes[...].modality` convention settled as the
+   verifier stage's OWN exemplar modality** — what the verifier itself was sent
+   — and made to derive from the verify configuration rather than be hand-
+   authored. The field had been used both ways, and the
+   `pv-diag-384::scale-4-optimal-487-verified-v1-{n1,n3,n5,n10}` family was
+   split across both conventions inside a single run. 55 of the 186 registered
+   stages change value (51 from `image` to `text`, 4 from `text` to `image`);
+   12 stages whose verify configuration no route can read keep their recorded
+   value. Nothing numerical rests on the field — no analysis in the corpus
+   groups by it. Convention recorded in `docs/methodology/notation-key.md` § 7.
+4. **The Era-2 board rebuilt with derived labels** — the three
+   `proposer-verifier-384::verified-{adversarial,brief,checklist}-image` cells
+   as **text**, the four `pv-diag-384::pv-scale4-optimal` cells as **image**,
+   and a `track_basis` field on all 110 members — and presented for
+   re-signature. No rank, tier, tie set, Hsu set or metric moves: the tiering
+   never reads `track`.
+
+`results/k-ladder-2026-09-12/phase2/unions.json` is **not** regenerated: doing
+so would rebuild the consensus unions and rewrite `experiment_intent.md` files
+inside a signed analysis. The source constant is fixed, and the artefact's two
+scale-4 rungs correct at the next Phase 2 union rebuild.
+
+Cross-references: **E86** (the null-exemplar overlap, whose sensitivity job
+found the first seven cells, and whose exposure disclosure the rebuilt board's
+README now carries); **E81** (undefined tile MCC published as `0.0` — the same
+§ R2 passage's prior correction, and the reason the text side is stated as
+undefined rather than near-zero; its own consumer note quotes the superseded
+0.094–0.291 and the "four phase-2e ordering variants sit in neither group"
+parenthesis, both of which this entry supersedes without rewriting the
+historical entry); **E83** (the tie-set revision that the same two outcomes
+carry); **E56** (the in-sample-argmax class the `-opmax` cells belong to);
+`reports/modality-track-audit-2026-09-14.md` (the corpus-wide characterisation);
+`reports/modality-rulings-deltas-2026-09-14.md` (the claims-with-anchors record
+of the four rulings).
 
 ---

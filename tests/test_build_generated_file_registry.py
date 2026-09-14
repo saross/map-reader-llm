@@ -1,26 +1,42 @@
 """Tier-1 tests for ``scripts/build_generated_file_registry.py``.
 
 Covers the pure classification machinery — marker scanning, rule
-matching (ordering, scope, ``requires_marker``), source resolution, and
-map validation — against synthetic trees. The full-corpus build is
-exercised at run time by the script's own ``--check`` drift mode; no
-2,000-file walk belongs in tier 1.
+matching (ordering, scope, ``requires_marker``), source resolution, map
+validation, and (from 2026-09-13) the regime-2 audit fields — against
+synthetic trees.
+
+The full-corpus build is also exercised here from 2026-09-13: the
+registry is itself a generated artefact under the 2026-09-11 ruling, so
+its own ``--check`` drift guard needs a test, and the walk costs ~2 s
+(the same bargain ``tests/test_generate_run_reports.py`` strikes for the
+41 committed run reports).
 """
 
 from __future__ import annotations
 
+import io
 import json
 from pathlib import Path
 
 import pytest
 
 from scripts.build_generated_file_registry import (
+    DEFAULT_OUT,
+    check_tokens,
+    count_by_directory,
+    count_regime2,
+    discover_check_modes,
     enumerate_mine,
+    generator_guards,
     load_generator_map,
+    load_test_index,
+    main,
     match_rule,
+    print_regime2_gaps,
     registry_body,
     resolve_sources,
     scan_head,
+    scan_regime2,
 )
 
 
@@ -168,6 +184,12 @@ def test_enumerate_mine_scope(tmp_path):
         "docs/methodology/transparency/t.md",
         "docs/methodology/preregistration/protocol-errata.md",
         "docs/methods-outline.md",
+        # 2026-09-13 charter extension (item 11a): outputs/ is enumerated in
+        # full, so the three registered outputs/ document classes — and the
+        # literature notes beside them — all get a classification.
+        "outputs/run-a/post_run_report.md",
+        "outputs/run-a/proposer/run_1/experiment_intent.md",
+        "outputs/ab-plus/some_paper_2024.md",
     ]
     drop = [
         "reports/d17-inventory/x.md",           # audit apparatus exclusion
@@ -190,3 +212,212 @@ def test_registry_body_drops_volatile_meta():
     assert "generated_at" not in body["_meta"]
     assert "git_head" not in body["_meta"]
     assert body["files"] == reg["files"]
+
+
+# --------------------------------------------------------------------------- #
+# Regime-2 audit fields (2026-09-11 ruling; checklist item 11a/11b)
+# --------------------------------------------------------------------------- #
+
+
+@pytest.mark.tier1
+def test_scan_regime2_separates_banner_from_a_bare_generated_line(tmp_path):
+    """A ``**Generated**:`` timestamp is not the ruling's banner.
+
+    This is the distinction the audit drew over the 46
+    ``outputs/**/evaluation.md`` files: they say *when* they were written,
+    which is not a do-not-hand-edit banner naming a generator.
+    """
+    bare = _write(tmp_path / "a.md", "# E\n\n**Generated**: 2026-04-27T01:47:18+00:00\n")
+    assert scan_regime2(bare) == (False, False)
+
+    full = _write(tmp_path / "b.md",
+                  "<!-- GENERATED FILE — do not hand-edit. -->\n# R\n\n"
+                  "> Produced by `scripts/x.py` at source commit `736c39c0e`.\n")
+    assert scan_regime2(full) == (True, True)
+
+    # A banner with no hash is a banner without a stamp; prose about commit
+    # messages must not be read as a stamp.
+    no_stamp = _write(tmp_path / "c.md",
+                      "<!-- GENERATED FILE — DO NOT EDIT. -->\n# R\n\n"
+                      "> put before/after notes in the commit message\n")
+    assert scan_regime2(no_stamp) == (True, False)
+
+
+@pytest.mark.tier1
+def test_scan_regime2_ignores_a_stamp_below_the_head_window(tmp_path):
+    body = "<!-- GENERATED FILE -->\n" + "\n" * 20 + "commit `abcdef1`\n"
+    assert scan_regime2(_write(tmp_path / "d.md", body)) == (True, False)
+
+
+@pytest.mark.tier1
+def test_discover_check_modes_reads_argparse_not_prose():
+    """A quoted ``check-…`` string is not evidence of a drift mode.
+
+    ``scripts/evaluate_detections.py`` runs ``git check-ignore``; grepping
+    for the string credited its 2,396 cell evaluations with a guard they
+    do not have, which is why this is parsed out of argparse instead.
+    """
+    option = 'p.add_argument("--check-renderings", action="store_true")'
+    assert discover_check_modes(option) == {"--check-renderings"}
+
+    verb = ('p.add_argument("command", choices=["gates", "renderings",\n'
+            '                                   "check-renderings"])')
+    assert discover_check_modes(verb) == {"check-renderings"}
+
+    decoy = 'subprocess.run(["git", "check-ignore", "-q", rel])'
+    assert discover_check_modes(decoy) == set()
+
+    # Another script's flag passed to a subprocess is not a declaration.
+    borrowed = 'subprocess.run([sys.executable, "other.py", "--check"])'
+    assert discover_check_modes(borrowed) == set()
+
+    # A file that will not parse reports no mode rather than raising.
+    assert discover_check_modes("#!/bin/bash\nexit 0\n") == set()
+
+
+@pytest.mark.tier1
+def test_check_tokens_expand_named_modes_but_not_bare_check():
+    """A named mode is also matched through its function; ``check`` is not.
+
+    ``check`` as a bare substring appears in most test modules, so it
+    would credit any test that merely imports the generator.
+    """
+    assert check_tokens({"--check-renderings"}) == {"--check-renderings",
+                                                   "check_renderings"}
+    assert check_tokens({"check-renderings"}) == {"check-renderings",
+                                                 "check_renderings"}
+    assert check_tokens({"--check"}) == {"--check"}
+
+
+@pytest.mark.tier1
+def test_generator_guards_credits_only_a_test_using_that_generators_flag(tmp_path):
+    """A test earns the guard credit only by naming the script and its flag.
+
+    Without the flag condition, any tier-1 test that merely mentioned some
+    other script's ``--check`` would silently certify a generator that has
+    no drift mode at all.
+    """
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts" / "gen_a.py").write_text(
+        'ap.add_argument("--check", action="store_true")\n', encoding="utf-8")
+    (tmp_path / "scripts" / "gen_b.py").write_text("no flags here\n", encoding="utf-8")
+    tests = tmp_path / "tests"
+    tests.mkdir()
+    (tests / "test_gen_a.py").write_text(
+        'import pytest\n@pytest.mark.tier1\ndef test_x():\n'
+        '    assert gen_a.main(["--check"]) == 0\n', encoding="utf-8")
+    # Mentions gen_b and a --check flag, but not one of gen_b's own flags
+    # (gen_b declares none), so gen_b earns no credit.
+    (tests / "test_gen_b.py").write_text(
+        'import pytest\n@pytest.mark.tier1\ndef test_y():\n'
+        '    assert gen_b.main([]) == 0  # a sibling script has --checkpoints\n',
+        encoding="utf-8")
+
+    index = load_test_index(tmp_path)
+    guards_a = generator_guards(tmp_path, "scripts/gen_a.py", index)
+    assert guards_a["check_mode"] is True
+    assert guards_a["check_flags"] == ["--check"]
+    assert guards_a["tier1_check_test"] is True
+    assert guards_a["check_tests"] == ["tests/test_gen_a.py"]
+
+    guards_b = generator_guards(tmp_path, "scripts/gen_b.py", index)
+    assert guards_b["check_mode"] is False
+    assert guards_b["tier1_check_test"] is False
+    assert guards_b["check_tests"] == []
+
+    # A missing generator is reported, not raised on.
+    absent = generator_guards(tmp_path, "scripts/nope.py", index)
+    assert absent["generator_present"] is False
+
+
+@pytest.mark.tier1
+def test_generator_guards_cache_is_used():
+    cache: dict[str, dict] = {"scripts/x.py": {"sentinel": True}}
+    assert generator_guards(Path("/nonexistent"), "scripts/x.py", [], cache) == {
+        "sentinel": True
+    }
+
+
+@pytest.mark.tier1
+def test_count_by_directory_buckets_every_row():
+    entries = [
+        {"path": "results/a.md", "stratum": "generated"},
+        {"path": "reports/b.md", "stratum": "hand-written"},
+        {"path": "outputs/run/c.md", "stratum": "generated"},
+        {"path": "docs/methodology/d.md", "stratum": "hand-written"},
+        {"path": "elsewhere/e.md", "stratum": "hand-written"},
+    ]
+    counts = count_by_directory(entries)
+    assert counts["results/"] == {"total": 1, "generated": 1, "hand_written": 0}
+    assert counts["outputs/"] == {"total": 1, "generated": 1, "hand_written": 0}
+    assert counts["other"]["total"] == 1
+    assert sum(b["total"] for b in counts.values()) == len(entries)
+
+
+@pytest.mark.tier1
+def test_count_regime2_conjunction_and_neither_regime():
+    def row(banner, stamp, check, t1):
+        return {"generated_banner": banner, "source_commit_stamp": stamp,
+                "check_mode": check, "tier1_check_test": t1,
+                "regime2_compliant": bool(banner and stamp and check and t1)}
+
+    generated = [row(True, True, True, True), row(True, False, False, False),
+                 row(False, False, False, False)]
+    counts = count_regime2(generated)
+    assert counts["compliant"] == 1
+    assert counts["generated_banner"] == 2
+    assert counts["neither_regime"] == 1
+
+
+@pytest.mark.tier1
+def test_print_regime2_gaps_groups_by_generator_and_names_what_is_missing():
+    registry = {"files": [
+        {"path": "results/a.md", "stratum": "generated", "generator": "scripts/g.py",
+         "generated_banner": False, "source_commit_stamp": False,
+         "check_mode": False, "tier1_check_test": False, "regime2_compliant": False},
+        {"path": "results/b.md", "stratum": "generated", "generator": "scripts/g.py",
+         "generated_banner": False, "source_commit_stamp": False,
+         "check_mode": False, "tier1_check_test": False, "regime2_compliant": False},
+        {"path": "results/c.md", "stratum": "generated", "generator": "scripts/ok.py",
+         "generated_banner": True, "source_commit_stamp": True,
+         "check_mode": True, "tier1_check_test": True, "regime2_compliant": True},
+        {"path": "results/d.md", "stratum": "hand-written", "generator": None},
+    ]}
+    stream = io.StringIO()
+    assert print_regime2_gaps(registry, stream) == 2
+    text = stream.getvalue()
+    assert "scripts/g.py" in text
+    assert "scripts/ok.py" not in text
+    assert "--check mode" in text and "tier-1 check test" in text
+
+
+# --------------------------------------------------------------------------- #
+# The registry as a generated artefact: its own drift guard
+# --------------------------------------------------------------------------- #
+
+
+@pytest.mark.tier1
+def test_committed_registry_matches_a_rebuild():
+    """``--check`` over the committed registry: the guard the ruling asks for.
+
+    Fails when the mine gains, loses or re-classifies a document without
+    the registry being rebuilt — the staleness that
+    ``planning/interim-docs-review.md`` § 11.5 item 3 found (814
+    ``results/**.md`` and 48 ``reports/**.md`` short of the tree).
+    """
+    assert DEFAULT_OUT.exists(), "the registry must be committed"
+    assert main(["--check"]) == 0
+
+
+@pytest.mark.tier1
+def test_committed_registry_has_no_unattributed_generated_rows():
+    """Every marker-carrying file resolves to a map rule (the ``--strict`` bar).
+
+    Reads the committed registry rather than rebuilding: the rebuild is
+    covered by the test above.
+    """
+    registry = json.loads(DEFAULT_OUT.read_text(encoding="utf-8"))
+    unattributed = [e["path"] for e in registry["files"]
+                    if e["stratum"] == "generated" and e["rule_id"] is None]
+    assert unattributed == []
+    assert registry["_meta"]["counts"]["generated_unattributed"] == 0

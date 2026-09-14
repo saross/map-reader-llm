@@ -1,6 +1,40 @@
 # K-ladder review: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-13 (latest — the **MCB job** executed at zero API
+> **Last revised**: 2026-09-14 (latest — **two of this review's own labels were
+> wrong, and erratum E88 corrects them**. The `scale-4-optimal-487` proposer pool
+> is **image-bearing**, not text: its config `detect_h8_scale-4_v2` runs
+> instruction `detect_brief-text-image.md` with `include_example_images` true
+> over 13 exemplars, which is what the sibling family table in
+> `scripts/build_k_ladder_phase2_tables.py` already had as `text+image` and what
+> `POOL_REGISTRY` in `scripts/build_k_ladder_phase2_unions.py` had as `text`.
+> `register_k_ladder_phase2_conditions.modality` assigned the same value by a
+> substring test on the pool slug and now derives. **On the Era-2 board the four
+> `pv-scale4-optimal` cells are relabelled text → image** (board rebuilt
+> 2026-09-14, ruling 4), and **two of them are in tile-MCC Tier 1** — so this
+> review's MCC reading is not merely corroborated at board scale, it is
+> corrected in the review's favour: two more Tier-1 MCC members are correctly
+> named image. **No number in this review moves.**
+> `results/k-ladder-2026-09-12/phase2/unions.json` is deliberately NOT
+> regenerated — it sits inside a SIGNED analysis and regenerating it would
+> rebuild the consensus unions and rewrite `experiment_intent.md` files — so its
+> two scale-4 rungs still read `text` and correct at the next Phase 2 union
+> rebuild; `ladders.json` (`text+image`) and `tension/effect-sizes.json` were
+> already right. Deltas: `reports/modality-rulings-deltas-2026-09-14.md`. Prior:
+> 2026-09-13 — the review's **three withheld rungs
+> and its MCC reading both reach the Era-2 board**, which was REBUILT under
+> checklist item 6 and awaits the PI's re-signature. The board now carries a
+> **tile-MCC permutation family** on the same swap masks as F1 (ruling 7),
+> reported beside the preregistered F1 tiering and not replacing it: 2,982 of
+> 11,175 pairs significant, 6 MCC tiers, MCC tie set 33, MCC MCB 59 of 150. It
+> **corroborates § 4 and the MCB job's PARETO MCC SET reading at board scale** —
+> no F1 Tier-1 cell is in MCC Tier 1, MCC Tier 1 is 33 cells drawn entirely
+> from F1 tiers 6–12 and led by single-pass image cells, and the two admissible
+> sets share only 9 members of 65 and 59. The three Gemini 3.7 gold-standard
+> text rungs stay admitted-and-withheld from BOTH families under ruling 6, now
+> with the shortfall counts and both tile vocabularies published; the K = 3
+> rung's board figure is corrected to F1@20 **0.8860** / 495. Deltas:
+> `reports/era2-board-mcc-family-2026-09-13.md`. Before that — the **MCB job**
+> executed at zero API
 > cost: the PI's two afternoon rulings landed and the review's analysis row is
 > **ready for signature**. The per-family **Hsu MCB sets are supplied** for all 22
 > tiered ladders on F1 and tile-MCC with the Era-2 board's own MCB step, each
@@ -396,7 +430,53 @@ adding a statistic family to a signed board is a change the PI did not rule.
 
 ## Changelog
 
-### 2026-09-13 (latest) — the MCB job executed at US$0; the row is ready for signature
+### 2026-09-14 (latest) — the scale-4 pool is image-bearing (erratum E88); two more MCC Tier-1 members correctly named
+
+**Trigger**: the corpus-wide modality-track audit
+(`reports/modality-track-audit-2026-09-14.md`) and the PI's four rulings of
+2026-09-14. Two of this review's artefacts recorded the
+`pv-diag-384::scale-4-optimal-487` pool's modality as `text`.
+
+| | before | after |
+|---|---|---|
+| `scripts/build_k_ladder_phase2_unions.py` `POOL_REGISTRY` | hand-authored `text` | **`text+image`** (fixed at `cb9b1d7f2`, matching the sibling table in `build_k_ladder_phase2_tables.py`) |
+| `register_k_ladder_phase2_conditions.modality` | `"image" if "image" in pool_slug else "text"` | **derives** — now the verifier stage's own modality (ruling 3), with the pool's derived modality as fallback |
+| `results/k-ladder-2026-09-12/phase2/unions.json` two scale-4 rungs | `text` | **still `text` — deliberately not regenerated** (signed analysis; see the banner) |
+| `results/k-ladder-2026-09-12/phase2/ladders.json`, `tension/effect-sizes.json` | `text+image` / correct | **unchanged — they were already right** |
+| The four `pv-scale4-optimal` cells on the Era-2 board | `track` `text` | **`image`** |
+| Registered verifier stages `scale-4-optimal-487-verified-v1-{n1,n3,n5,n10}` | split: n5/n10 `image`, n1/n3 `text` | **all four `text`** — they ran the identical `verify_adversarial-text` config, and this family is the one that proved the field ambiguous (§ 6 of the audit) |
+
+**What did NOT change**: no F1, tile-MCC, interval, rung, tier, tie set,
+admissible set or Pareto reading in this review. The review treats the scale-4
+family **by name** throughout and never places it in a text or image track; its
+by-track statements (§ 7.1's "both HIGH tracks") name the six HIGH text/image
+families and exclude it. The correction's only consequence for the review is
+that two members of the Era-2 board's tile-MCC Tier 1 are now correctly named
+image, which strengthens rather than qualifies § 4's reading.
+
+### 2026-09-13 — the review's MCC reading corroborated at board scale; the three withheld rungs disclosed
+
+**Trigger**: checklist item 6
+(`planning/documentation-foundation-checklist-2026-09-13.md`) rebuilt the GS
+Era-2 verified board, which holds this review's 46 Phase 2 rungs and 4 tier E
+rungs. Nothing in this card's own numbers changed; what changed is that two of
+its findings now have a board-scale counterpart, and one of its cells has a
+corrected figure.
+
+| Claim | this card's reading | the board's, on 150 cells |
+|---|---|---|
+| tile-MCC's resolution | the MCC-admissible set is the whole ladder on 12 of 22 ladders; tile-MCC separates on none of tier E's six pairs | tile-MCC separates **2,982 of 11,175** pairs against F1's 7,961, and cliques into **6** tiers against F1's 14 |
+| the two objectives select different rungs | K = 1 ruled out on F1 on 20 of 22 ladders, admissible on tile-MCC on **22 of 22**, highest tile-MCC on 13 | **no F1 Tier-1 cell is in MCC Tier 1**; MCC Tier 1 is 33 cells drawn entirely from F1 tiers 6–12, led by single-pass image cells; the two Hsu sets share **9** members of 65 and 59 |
+| the three withheld 3.7 GS text rungs | tile-MCC withheld with a named reason; raw 0.1337 / 0.1422 / 0.1337 quoted as not-published | withheld from **both** families, with the shortfall counts (22 of 526, 21 of 475, 20 of 467 booked) and **both tile vocabularies** published, and each interval stated **withdrawn** rather than superseded |
+| `g37-text-k3-verified-opmax` F1@20 | 0.8870 | **0.8860** / 495 detections (the recovery-fragment fix; its raw tile-MCC is no longer quoted, because its re-scored artefact withholds the tile block at source) |
+
+**What this does NOT change in this card**: no ladder's ΔF1 or ΔMCC, no
+BH verdict, no per-family MCB set, no admissible rung, no cost figure, and no
+signature — the review's analysis row was signed 2026-09-13T06:58:12Z and was
+not touched. The board's own F1 arm reproduced byte-identically, so the
+review's ladder rungs keep the board-frame F1 they were admitted with.
+
+### 2026-09-13 — the MCB job executed at US$0; the row is ready for signature
 
 **Trigger**: the PI's two rulings of 2026-09-13 (afternoon) — (1) "wait for the
 sets": supply the per-family Hsu multiple-comparisons-with-the-best admissible

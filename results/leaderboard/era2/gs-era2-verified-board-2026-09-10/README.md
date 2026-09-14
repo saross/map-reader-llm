@@ -1,8 +1,8 @@
 # The GS Era-2 verified board on one frame — `gs-era2-verified-board-2026-09-10`
 
-> **Last revised**: 2026-09-13 (later still — **NOTE ONLY, still nothing rebuilt or re-signed**: the K = 3 cell's own `evaluation.json` is no longer blocked. The tile-join invariant now **withholds** a refused cell's per-tile statistics instead of aborting the cell, so `g37-text-k3-verified-opmax` was re-scored and its artefacts and register row read F1@20 **0.8860** / **495 detections**, with the tile block and every confidence interval marked WITHHELD. Two figures in the tables below still read `0.8870` and are correct as they stand: this board's `withheld_cells` row and `re_sign_pending.proposed_outcome` are signature-bearing and the PI restates them at the rebuild. Earlier that day — the recovery-fragment fix `75d7c8d4c` rebuilt five consensus unions that four of this board's cells read. Only `g37-text-k3-verified-opmax` moves — F1@20 0.8870 → **0.8860**, one added false positive — and it is one of the three cells already withheld; the single **tiered** cell of the four, `g384-ov192-k5-verified-opmax` at rank 9, re-scores **dict-identically** on every arm, so no rank, tier, pairwise test, BH family, MCB set or signature field changes. Per the PI's ruling the next rebuild picks these up; the pending record is `provenance.json` → `re_sign_pending.cells_pending_rescore` and the changelog entry below. Earlier that day: PI ruling 2026-09-13, item 1: the 46 Phase 2 rungs and the 4 tier E rungs of the K-ladder review admitted by route (a) — a `k-ladder/membership.json` the builder defers to by condition id — so 103 → **153 cells admitted**, of which **150 tiered** and **3 withheld** by the tile-join invariant; re-tiered and the MCB recomputed last; **Tier 1 and its five members unchanged**. The board's analysis row is again NOT amended and the board **awaits the PI's re-signature**, `provenance.json` → `re_sign_pending`; the resolved S153 block is preserved inside it as `previous_resolved`. Deltas: `reports/k-ladder-admission-deltas-2026-09-13.md`. Prior: 2026-09-12, PI ruling R3 — K = 1 admitted, 79 → 103 cells, re-signed 2026-09-12T06:04:30Z; 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10 later still, nine `-opmax` cells re-materialised and re-tiered; later, the symmetry fix 39 → 79 cells; earlier that day, original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instrument: scripts/era1_leaderboard_tiering.py (round-robin tile-swap micro-F1 permutation, BH q = 0.05, greedy clique, 20 m); Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-14 (latest — **REBUILT AGAIN and still awaiting the PI's re-signature, now over both rebuilds' changes**. Ruling 4 of the PI's four rulings of 2026-09-14 on the modality-track audit (erratum **E88**): the membership `track` field now **derives from the transmitted proposer configuration** instead of testing the condition label for the substring `image`, and a new **`track_basis`** field on all **110** members names the route. **Seven labels are corrected** — `verified-adversarial-image`, `verified-brief-image` and `verified-checklist-image` are **text** (their proposer is `detect_brief-text`, which sent no example pixels; the token names the image VERIFIER), and the four `pv-scale4-optimal` cells are **image** (their labels name neither modality, so the retired test fell through to `text`). **Nothing numerical moved**: the tiering instrument never reads `track`, and every rank, tier, tie set, Hsu admissible set, gate verdict and metric reproduced — `rebuild-track-2026-09-14/`. **E86's null-exemplar exposure is now disclosed on this page** (20 of the 487 frame tiles; the sensitivity analysis is `results/null-exemplar-sensitivity-2026-09-13/findings.md`). Prior: 2026-09-13 — **REBUILT and awaiting the PI's re-signature**: one rebuild carried three ruled changes for one signature (checklist item 6) — the four recovery-fix cells at their current evaluations (`g37-text-k3-verified-opmax` 0.8870 → **0.8860** / 495), ruling 7's tile-MCC permutation family on the same swap masks (2,982/11,175 pairs significant, 6 MCC tiers, MCC tie set 33, MCC MCB 59 of 150, reported BESIDE the preregistered F1 tiering and not replacing it), and ruling 6's withheld-cell disclosure; the F1 arm reproduced exactly and 10 signature-bearing paths were asserted byte-equal (`rebuild-mcc-2026-09-13/`). Earlier: 2026-09-13, the K-ladder cohort admitted by route (a), 103 → **153 cells admitted**, 150 tiered, 3 withheld; 2026-09-12, K = 1 admitted, 79 → 103 cells, re-signed 2026-09-12T06:04:30Z; 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10, nine `-opmax` cells re-materialised and re-tiered, the symmetry fix 39 → 79 cells, original publication.) Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instruments: `scripts/era1_leaderboard_tiering.py --permute-mcc` (round-robin tile-swap permutation, 10,000 draws, seed 42 — micro-F1 **and** tile-MCC on one swap stream, BH q = 0.05 per family, greedy clique, 20 m) and `scripts/selection_aware_intervals.py --board` for each metric's MCB; Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
 
-**153 cells admitted**, of which **150 are tiered** and **3 withheld** (listed below the table); 7961/11175 pairs significant; 14 tiers; tie set 5; MCB admissible 65 of 150. 50 cell(s) admitted by `k-ladder/membership.json` with their board-frame evaluations as-is (PI ruling 2026-09-13).
+**153 cells admitted**, of which **150 are tiered** and **3 withheld** (listed below the table); 7961/11175 pairs significant; 14 tiers; tie set 5; MCB admissible 65 of 150. 50 cell(s) admitted by `k-ladder/membership.json` with their board-frame evaluations as-is (PI ruling 2026-09-13). A tile-MCC permutation family is **reported beside** this F1 tiering and does not replace it (PI ruling 2026-09-13, ruling 7): 6 MCC tiers, MCC tie set 33, MCC MCB admissible 59 — see [§ Tile-level MCC](#tile-level-mcc--a-second-family-on-the-same-swap-masks-reported-not-the-tiering).
 
 | rank | cell | tier | MCB | F1@20 (board frame) | committed F1@20 | Δ frame | tile-MCC |
 |---:|---|---:|:---:|---:|---:|---:|---:|
@@ -157,17 +157,421 @@
 | 149 | `proposer-verifier-384::verified-adversarial-image` | 13 |  | 0.4943 | 0.4943 | +0.0000 | 0.416 |
 | 150 | `proposer-verifier-384::verified-adversarial-text` | 14 |  | 0.4708 | 0.4708 | +0.0000 | 0.4313 |
 
-**Admitted but WITHHELD** — the tile-join invariant refuses these cells' per-tile table on this frame (their `source_tile` vocabulary is not the frame's), so they are ranked nowhere above and enter no BH family and no admissible set. Their whole-frame F1 is unaffected by the tile join and is quoted for reference; their committed tile-MCC is the pre-invariant value and is NOT published. Admission is the PI's ruling of 2026-09-13; the withholding follows the same ruling's "withhold and list, never abort the board", and is lifted only by the corpus-wide tile-join decision (close-out question 4).
+**Admitted but WITHHELD** — the tile-join invariant refuses these cells' per-tile table on this frame, so they are ranked nowhere above and enter neither BH family (F1 or tile-MCC) and neither admissible set. **The name-based (`id`) tile join is the published convention** — PI ruling 2026-09-13 (S153 ruling 6), `reports/tile-mcc-geometric-join-2026-09-12.md` — so these cells are disclosed rather than re-joined geometrically to make them scoreable. What survives a refusal is the whole-frame F1, precision and recall POINT estimates: F1 is scored map-scoped and the tile join does not touch it. What does not survive is every interval. The F1 bootstrap resamples TILES (Decision 10), so the refused per-tile table is the interval's input too: each cell's interval is **withdrawn, not superseded** — there is no interval for it on this frame. Their committed tile-MCC is the pre-invariant value and is NOT published. The withholding follows the same ruling's "withhold and list, never abort the board", and is lifted only by the corpus-wide tile-join decision (close-out question 4).
 
-| cell | F1@20 (whole frame) | committed tile-MCC (NOT published) | refusal |
-|---|---:|---:|---|
-| `g37-text-k1-verified-carried-p0.10-k1` | 0.8338 | 0.1422 | per-tile TP/FP/FN table refused: 22 of 526 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 504. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join. |
-| `g37-text-k1-verified-opmax` | 0.8495 | 0.1337 | per-tile TP/FP/FN table refused: 21 of 475 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 454. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join. |
-| `g37-text-k3-verified-opmax` | 0.8870 | 0.1337 | per-tile TP/FP/FN table refused: 20 of 467 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 447. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join. |
+| cell | F1@20 (whole frame) | interval | detections booked / in-frame | shortfall | committed tile-MCC (NOT published) |
+|---|---:|---|---:|---:|---:|
+| `g37-text-k1-verified-carried-p0.10-k1` | 0.8338 | interval withdrawn (tile-resampled bootstrap) — was [0.3684, 0.7709] | 22 / 526 | 504 | 0.1422 |
+| `g37-text-k1-verified-opmax` | 0.8495 | interval withdrawn (tile-resampled bootstrap) — was [0.2712, 0.6667] | 21 / 475 | 454 | 0.1337 |
+| `g37-text-k3-verified-opmax` | 0.8860 | interval withdrawn (tile-resampled bootstrap) | 20 / 467 | 447 | — |
+
+**The two tile vocabularies**, per withheld cell — the refusal is a disagreement between the names the detections carry and the names the frame uses, not a numerical anomaly, so both censuses are published:
+
+- `g37-text-k1-verified-carried-p0.10-k1` — **frame**: 487 tiles, 487 distinct names over 4 map sheet(s), e.g. `K-35-052-4_32635_x0_y0.png`, `K-35-052-4_32635_x0_y1008.png`, `K-35-052-4_32635_x0_y1344.png`. **detections**: 558 points naming 351 distinct tiles in column `source_tile`, of which only **12** are in the frame's vocabulary, e.g. `K-35-052-4_32635_x0_y0.png`, `K-35-052-4_32635_x0_y1152.png`, `K-35-052-4_32635_x0_y1536.png`. Refusal: per-tile TP/FP/FN table refused: 22 of 526 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 504. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join.
+- `g37-text-k1-verified-opmax` — **frame**: 487 tiles, 487 distinct names over 4 map sheet(s), e.g. `K-35-052-4_32635_x0_y0.png`, `K-35-052-4_32635_x0_y1008.png`, `K-35-052-4_32635_x0_y1344.png`. **detections**: 502 points naming 319 distinct tiles in column `source_tile`, of which only **11** are in the frame's vocabulary, e.g. `K-35-052-4_32635_x0_y1152.png`, `K-35-052-4_32635_x0_y1536.png`, `K-35-052-4_32635_x0_y192.png`. Refusal: per-tile TP/FP/FN table refused: 21 of 475 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 454. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join.
+- `g37-text-k3-verified-opmax` — **frame**: 487 tiles, 487 distinct names over 4 map sheet(s), e.g. `K-35-052-4_32635_x0_y0.png`, `K-35-052-4_32635_x0_y1008.png`, `K-35-052-4_32635_x0_y1344.png`. **detections**: 495 points naming 306 distinct tiles in column `source_tile`, of which only **11** are in the frame's vocabulary, e.g. `K-35-052-4_32635_x0_y1152.png`, `K-35-052-4_32635_x0_y1536.png`, `K-35-052-4_32635_x0_y192.png`. Refusal: per-tile TP/FP/FN table refused: 20 of 467 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 447. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join.
 
 Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the Era-2-frame reproduction of the archived board's score, or — for the nine re-materialised on 2026-09-10 — of the materialisation registry's registered point). For the K-ladder rows it is +0.0000 by construction: their committed evaluation IS the board-frame evaluation, so G2 is an identity rather than a reproduction. Full pairwise table: `tiering_20m.json`; gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.
 
+**Null-exemplar exposure on this frame (erratum E86), disclosed.** Three "null"
+(empty) exemplar tiles in the few-shot library (`inputs/examples/null-tiles/`)
+were never excluded from the Gold-Standard evaluation frames, so every
+configuration that transmitted the example **images** was shown those pixels
+labelled "no mounds here" and was then scored on them. On this board's frame the
+exposure is **20 of the 487 tiles**
+(`inputs/examples/null-tiles/null_overlap_by_frame.json`; E86 in
+`docs/methodology/preregistration/protocol-errata.md`). **No reference symbol
+lies inside a null window**, so no precision, recall, F1 or tile-MCC value above
+is invalid. The sensitivity analysis that removes the exposed tiles —
+`results/null-exemplar-sensitivity-2026-09-13/findings.md` — is a sensitivity
+analysis **beside** this board and not a replacement for it; nothing under
+`results/leaderboard/**` is scored on the reduced frame, and which frame the
+paper reports is the PI's call. What it found:
+
+- **The leak is measurable.** Image-bearing cells suppress false positives on
+  the 20 exposed tiles about a fifth more than text controls do — FP-rate ratio
+  **0.561** against **0.685**, mean log ratio −0.1433 against −0.0552,
+  difference **−0.0881** at *p* < 0.0001, and **−0.0773** at *p* < 0.0001
+  restricted to the single `pv-diag-384` run.
+- **No cell's published number moves more than a hundredth.** The largest
+  movement of any Era-2 cell is **0.0074** in F1@20 and **0.0120** in tile-MCC,
+  and the reduction costs the image cells *less* than the text controls, because
+  the leaked tiles hold 12 of the frame's 435 reference mounds as well as the
+  quiet ground.
+- **The tie sets move at their edges.** On the reduced frame F1 Tier 1 goes from
+  five cells to **four** — the cell it loses is a *text* cell — the F1 tier
+  count from 14 to **13**, tile-MCC Tier 1 from 33 cells to **28**, and the two
+  Hsu admissible sets by one and two members. The top of both rankings, and the
+  selection-aware winner under both metrics, are unchanged.
+
+The exposure is confined to the image modality (of the 41 configurations that
+transmit example images, 37 include the three null exemplars; the 22
+text-modality configurations carry the nulls as labels only), which is exactly
+why **E88's seven corrected `track` labels matter to the reading of that
+sensitivity result and not to this board's numbers**: the sensitivity job
+derived each cell's exposure from run metadata itself and used the corrected
+classification throughout, so it needs no re-reading. Had it used this board's
+former `track`, three text controls would have been counted as image-bearing and
+four image cells as controls.
+
+## Tile-level MCC — a second family on the same swap masks (REPORTED, not the tiering)
+
+PI ruling 2026-09-13 (S153 ruling 7): the round-robin tile-swap carries **tile-MCC on the same swap masks as F1** — one `numpy.random.default_rng(42)` stream, one tile order, so a ΔF1 and a ΔMCC on a pair are two statistics of one permutation, not two experiments (`tests/test_k_ladder_mcc_instruments.py::test_f1_and_mcc_kernels_draw_identical_swap_masks`) — with Benjamini-Hochberg q = 0.05 **within its own family**. It is reported beside the preregistered F1 tiering and **does not replace it**: the board's tiering, its ranks and its Tier 1 are the F1 ones above. Tile MCC is buffer-invariant (tile truth is intersection with any reference, tile prediction is any detection assigned to the tile), so this table is the same at every buffer. Cells the tile-join invariant withholds are excluded from this family exactly as they are from the F1 one, and are listed above.
+
+**150 cells in the MCC family**; 2982/11175 pairs significant; 6 MCC tiers; MCC tie set 33 (`verified-adv-image-baseline-pro-vf-era2b`, `verified-adv-image-baseline-medium-vf-era2b`, `verified-adv-image-baseline-era2b`, `pv-scale4-optimal-n1-opmax`, `pv-high-image-t1.0-n1-opmax`, and 28 more — see the table); MCC MCB admissible 59 of 150, of which **9** are also in the F1 admissible set.
+
+| MCC rank | cell | MCC tier | MCC MCB | tile-MCC | F1 tier | F1@20 (board frame) |
+|---:|---|---:|:---:|---:|---:|---:|
+| 1 | `pv-diag-384::verified-adv-image-baseline-pro-vf` | 1 | ● | 0.8887 | 9 | 0.7309 |
+| 2 | `pv-diag-384::verified-adv-image-baseline-medium-vf` | 1 | ● | 0.8848 | 9 | 0.7300 |
+| 3 | `pv-diag-384::verified-adv-image-baseline` | 1 | ● | 0.8766 | 10 | 0.7167 |
+| 4 | `pv-diag-384::pv-scale4-optimal-n1-opmax` | 1 | ● | 0.8726 | 11 | 0.6376 |
+| 5 | `pv-diag-384::pv-high-image-t1.0-n1-opmax` | 1 | ● | 0.8640 | 12 | 0.6119 |
+| 6 | `pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1` | 1 | ● | 0.8601 | 12 | 0.6098 |
+| 7 | `pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1` | 1 | ● | 0.8599 | 11 | 0.6350 |
+| 8 | `pv-diag-384::verified-adv-pro-image-pro-vf-3of5` | 1 | ● | 0.8499 | 10 | 0.7112 |
+| 9 | `pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1` | 1 | ● | 0.8475 | 8 | 0.7654 |
+| 10 | `pv-diag-384::verified-adv-image-min-3of5` | 1 | ● | 0.8461 | 8 | 0.7673 |
+| 11 | `pv-diag-384::pv-min-image-t0.3-n1-opmax` | 1 | ● | 0.8443 | 8 | 0.7680 |
+| 12 | `pv-diag-384::pv-scale4-optimal-n3-opmax` | 1 | ● | 0.8443 | 9 | 0.7296 |
+| 13 | `pv-diag-384::pv-min-image-t0.7-n1-opmax` | 1 | ● | 0.8437 | 9 | 0.7252 |
+| 14 | `pv-diag-384::pv-high-image-t0.7-n1-opmax` | 1 | ● | 0.8435 | 10 | 0.6909 |
+| 15 | `pv-diag-384::pv-high-image-t0.7-n3-opmax` | 1 | ● | 0.8435 | 8 | 0.7666 |
+| 16 | `pv-diag-384::pv-min-image-t0.3-n5-opmax` | 1 | ● | 0.8416 | 7 | 0.7767 |
+| 17 | `n1-outstanding-384::pv-n1-image-t0-n3-opmax` | 1 | ● | 0.8397 | 8 | 0.7673 |
+| 18 | `pv-diag-384::pv-min-image-t0.7-n5-opmax` | 1 | ● | 0.8383 | 7 | 0.7734 |
+| 19 | `pv-diag-384::pv-min-image-t0.7-n3-opmax` | 1 | ● | 0.8377 | 8 | 0.7599 |
+| 20 | `pv-diag-384::pv-min-image-t0.3-n10-opmax` | 1 | ● | 0.8377 | 7 | 0.7819 |
+| 21 | `pv-diag-384::verified-adv-text-baseline-medium-vf` | 1 | ● | 0.8372 | 6 | 0.8244 |
+| 22 | `pv-diag-384::pv-min-image-t1.0-n1-opmax` | 1 | ● | 0.8360 | 10 | 0.7044 |
+| 23 | `pv-diag-384::pv-high-image-t0.7-n5-opmax` | 1 | ● | 0.8359 | 7 | 0.7868 |
+| 24 | `pv-diag-384::verified-adv-pro-image-baseline-medium-vf` | 1 | ● | 0.8328 | 11 | 0.6281 |
+| 25 | `pv-diag-384::verified-adv-pro-image-baseline-pro-vf` | 1 | ● | 0.8328 | 12 | 0.6178 |
+| 26 | `pv-diag-384::verified-adv-text-baseline` | 1 | ● | 0.8328 | 6 | 0.8142 |
+| 27 | `pv-diag-384::verified-adv-text-baseline-pro-vf` | 1 | ● | 0.8328 | 6 | 0.8263 |
+| 28 | `pv-diag-384::session-78-image-adversarial-opmax` | 1 | ● | 0.8306 | 7 | 0.7866 |
+| 29 | `pv-diag-384::session-78-image-comparative-opmax` | 1 | ● | 0.8306 | 7 | 0.7857 |
+| 30 | `pv-diag-384::pv-scale4-optimal-n5-opmax` | 1 | ● | 0.8306 | 8 | 0.7635 |
+| 31 | `pv-diag-384::session-78-image-brief-opmax` | 1 | ● | 0.8300 | 7 | 0.7844 |
+| 32 | `pv-diag-384::pv-high-image-t1.0-n3-opmax` | 1 | ● | 0.8294 | 9 | 0.7245 |
+| 33 | `pv-diag-384::pv-high-image-t0.3-n10-opmax` | 1 | ● | 0.8294 | 8 | 0.7705 |
+| 34 | `pv-diag-384::pv-high-image-t0.3-n1-opmax` | 2 | ● | 0.8270 | 10 | 0.6925 |
+| 35 | `pv-diag-384::verified-adv-image-3of5` | 2 | ● | 0.8268 | 7 | 0.7778 |
+| 36 | `gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5` | 2 | ● | 0.8264 | 1 | 0.9233 |
+| 37 | `pv-diag-384::pv-high-image-t0.3-n3-opmax` | 2 | ● | 0.8237 | 9 | 0.7215 |
+| 38 | `pv-diag-384::verified-adv-pro-image-baseline` | 2 | ● | 0.8232 | 11 | 0.6196 |
+| 39 | `pv-diag-384::pv-high-image-t1.0-n5-opmax` | 2 | ● | 0.8230 | 9 | 0.7337 |
+| 40 | `pv-diag-384::pv-min-image-t0.7-n10-opmax` | 2 | ● | 0.8223 | 7 | 0.7881 |
+| 41 | `pv-diag-384::session-78-image-checklist-text-opmax` | 2 | ● | 0.8217 | 7 | 0.7852 |
+| 42 | `grid-2026-08-18::g384-ov192-k1-verified-opmax` | 2 | ● | 0.8211 | 5 | 0.8546 |
+| 43 | `pv-diag-384::session-78-image-brief-text-opmax` | 2 | ● | 0.8199 | 7 | 0.7782 |
+| 44 | `pv-diag-384::pv-min-image-t0.3-n3-opmax` | 2 | ● | 0.8178 | 7 | 0.7774 |
+| 45 | `pv-diag-384::pv-min-image-t1.0-n3-opmax` | 2 | ● | 0.8178 | 9 | 0.7288 |
+| 46 | `pv-diag-384::session-78-image-checklist-opmax` | 2 | ● | 0.8172 | 7 | 0.7830 |
+| 47 | `grid-2026-08-18::g384-ov192-k3-verified-opmax` | 2 | ● | 0.8167 | 3 | 0.8840 |
+| 48 | `pv-diag-384::pv-high-text-t1.0-n1-opmax` | 2 | ● | 0.8162 | 7 | 0.7810 |
+| 49 | `pv-diag-384::pv-scale4-optimal-n10-opmax` | 2 | ● | 0.8154 | 8 | 0.7683 |
+| 50 | `grid-2026-08-18::g384-ov192-k5-verified-opmax` | 2 | ● | 0.8139 | 2 | 0.8905 |
+| 51 | `gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5` | 2 | ● | 0.8133 | 1 | 0.9179 |
+| 52 | `grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10` | 2 | ● | 0.8102 | 2 | 0.9062 |
+| 53 | `pv-diag-384::pv-min-text-t1.0-n1-opmax` | 2 | ● | 0.8095 | 6 | 0.8235 |
+| 54 | `gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5` | 2 | ● | 0.8079 | 1 | 0.9182 |
+| 55 | `grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1` | 2 | ● | 0.8079 | 5 | 0.8540 |
+| 56 | `pv-diag-384::pv-min-image-t1.0-n10-opmax` | 2 | ● | 0.8078 | 8 | 0.7428 |
+| 57 | `pv-diag-384::pv-high-text-t1.0-n1-carried-p0.15-k1` | 2 | ● | 0.8071 | 7 | 0.7788 |
+| 58 | `pv-diag-384::verified-adv-text-min-6of10` | 2 | ● | 0.8068 | 3 | 0.8835 |
+| 59 | `pv-diag-384::pv-high-text-t0.3-n1-opmax` | 2 | ● | 0.8068 | 6 | 0.8314 |
+| 60 | `pv-diag-384::pv-high-text-t0.3-n3-opmax` | 2 |  | 0.8053 | 3 | 0.8783 |
+| 61 | `pv-diag-384::pv-high-image-t0.3-n5-opmax` | 2 |  | 0.8049 | 8 | 0.7475 |
+| 62 | `pv-diag-384::pv-min-text-t0.3-n3-opmax` | 2 |  | 0.8040 | 4 | 0.8708 |
+| 63 | `pv-diag-384::pv-min-text-t1.0-n3-opmax` | 2 |  | 0.8040 | 4 | 0.8647 |
+| 64 | `pv-diag-384::verified-adv-image-min-6of10` | 2 |  | 0.8032 | 7 | 0.7890 |
+| 65 | `pv-diag-384::pv-high-text-t0.3-n1-carried-p0.15-k1` | 2 |  | 0.8022 | 6 | 0.8301 |
+| 66 | `pv-diag-384::pv-min-image-t1.0-n5-opmax` | 2 |  | 0.8021 | 8 | 0.7384 |
+| 67 | `pv-diag-384::pv-high-image-t1.0-n10-opmax` | 2 |  | 0.8002 | 8 | 0.7633 |
+| 68 | `pv-diag-384::pv-min-image-t0.7-n3-carried-p0.15-k3` | 2 |  | 0.7994 | 8 | 0.7522 |
+| 69 | `pv-diag-384::pv-high-text-t1.0-n3-opmax` | 2 |  | 0.7986 | 5 | 0.8541 |
+| 70 | `pv-diag-384::pv-min-text-t0.3-n1-opmax` | 2 |  | 0.7986 | 5 | 0.8555 |
+| 71 | `pv-diag-384::pv-high-image-t0.7-n10-opmax` | 2 |  | 0.7980 | 7 | 0.7765 |
+| 72 | `pv-diag-384::pv-high-text-t0.7-n3-opmax` | 2 |  | 0.7979 | 5 | 0.8492 |
+| 73 | `pv-diag-384::session-78-image-adversarial-text-opmax` | 2 |  | 0.7973 | 8 | 0.7718 |
+| 74 | `pv-diag-384::pv-min-text-t1.0-n1-carried-p0.15-k1` | 2 |  | 0.7961 | 6 | 0.8228 |
+| 75 | `pv-diag-384::pv-min-text-t0.7-n5-opmax` | 2 |  | 0.7957 | 4 | 0.8739 |
+| 76 | `pv-diag-384::verified-adv-text-pro-vf-4of5` | 2 |  | 0.7947 | 3 | 0.8792 |
+| 77 | `pv-diag-384::session-78-text-comparative-opmax` | 2 |  | 0.7947 | 2 | 0.8846 |
+| 78 | `pv-diag-384::session-78-text-adversarial-opmax` | 2 |  | 0.7947 | 3 | 0.8833 |
+| 79 | `verifier-robustness::verified-384-16of30-t0-3-n5-opmax` | 2 |  | 0.7941 | 2 | 0.8951 |
+| 80 | `gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5` | 2 |  | 0.7937 | 1 | 0.9190 |
+| 81 | `image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8` | 2 |  | 0.7937 | 6 | 0.8263 |
+| 82 | `image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9` | 3 |  | 0.7927 | 6 | 0.8341 |
+| 83 | `verifier-robustness::verified-384-ge3of5-t0-7-high-n5` | 3 |  | 0.7927 | 4 | 0.8739 |
+| 84 | `pv-diag-384::pv-min-text-t0.7-n3-opmax` | 3 |  | 0.7910 | 4 | 0.8725 |
+| 85 | `pv-diag-384::pv-high-text-t1.0-n10-opmax` | 3 |  | 0.7910 | 3 | 0.8804 |
+| 86 | `pv-diag-384::pv-min-text-t0.3-n10-opmax` | 3 |  | 0.7910 | 4 | 0.8730 |
+| 87 | `pv-diag-384::verified-adv-pro-text-baseline-pro-vf` | 3 |  | 0.7908 | 7 | 0.7861 |
+| 88 | `grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10` | 3 |  | 0.7903 | 2 | 0.8886 |
+| 89 | `pv-diag-384::verified-adv-text-6of10` | 3 |  | 0.7903 | 3 | 0.8769 |
+| 90 | `pv-diag-384::verified-adv-text-consensus-16of30` | 3 |  | 0.7903 | 2 | 0.8902 |
+| 91 | `pv-diag-384::verified-adv-text-min-true-3of5` | 3 |  | 0.7903 | 3 | 0.8784 |
+| 92 | `verifier-robustness::verified-384-ge3of5-t0-3-high-n5` | 3 |  | 0.7890 | 3 | 0.8764 |
+| 93 | `pv-diag-384::pv-min-text-t0.7-n1-opmax` | 3 |  | 0.7881 | 5 | 0.8575 |
+| 94 | `pv-diag-384::pv-min-text-t1.0-n10-opmax` | 3 |  | 0.7881 | 3 | 0.8781 |
+| 95 | `pv-diag-384::verified-adv-text-min-n30lineage-4of5` | 3 |  | 0.7873 | 4 | 0.8708 |
+| 96 | `pv-diag-384::verified-adv-pro-text-baseline-medium-vf` | 3 |  | 0.7872 | 7 | 0.7842 |
+| 97 | `pv-diag-384::pv-high-text-t0.3-n10-opmax` | 3 |  | 0.7872 | 4 | 0.8722 |
+| 98 | `pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax` | 3 |  | 0.7857 | 5 | 0.8508 |
+| 99 | `pv-diag-384::pv-high-text-t1.0-n5-opmax` | 3 |  | 0.7857 | 4 | 0.8688 |
+| 100 | `pv-diag-384::verified-adv-text-t03-4of5` | 3 |  | 0.7834 | 3 | 0.8783 |
+| 101 | `pv-diag-384::pv-min-text-t0.0-n3-opmax` | 3 |  | 0.7834 | 5 | 0.8623 |
+| 102 | `pv-diag-384::verified-adv-pro-text-baseline` | 3 |  | 0.7823 | 8 | 0.7696 |
+| 103 | `pv-diag-384::pv-high-text-t0.3-n5-opmax` | 3 |  | 0.7805 | 2 | 0.8873 |
+| 104 | `pv-diag-384::pv-min-text-t1.0-n5-opmax` | 3 |  | 0.7797 | 4 | 0.8714 |
+| 105 | `pv-diag-384::pv-high-image-t0.3-n3-carried-p0.15-k3` | 3 |  | 0.7788 | 9 | 0.7207 |
+| 106 | `verifier-t-pilot::verified-t0-0` | 3 |  | 0.7778 | 5 | 0.8507 |
+| 107 | `pv-diag-384::pv-min-text-t0.7-n10-opmax` | 3 |  | 0.7768 | 4 | 0.8726 |
+| 108 | `pv-diag-384::pv-high-text-t0.7-n3-carried-p0.15-k3` | 3 |  | 0.7762 | 6 | 0.8408 |
+| 109 | `pv-diag-384::session-78-text-checklist-opmax` | 3 |  | 0.7759 | 3 | 0.8783 |
+| 110 | `pv-diag-384::pv-high-text-t0.0-n3-opmax` | 3 |  | 0.7750 | 6 | 0.8234 |
+| 111 | `pv-diag-384::pv-high-text-t0.7-n1-opmax` | 3 |  | 0.7737 | 7 | 0.8009 |
+| 112 | `pv-diag-384::pv-min-text-t0.3-n5-opmax` | 3 |  | 0.7735 | 3 | 0.8778 |
+| 113 | `verifier-t-pilot::verified-t0-5` | 3 |  | 0.7714 | 5 | 0.8561 |
+| 114 | `verifier-robustness::verified-384-ge3of5-t0-3-n5` | 3 |  | 0.7713 | 4 | 0.8739 |
+| 115 | `verifier-robustness::verified-384-ge3of5-t0-7-n5` | 3 |  | 0.7713 | 4 | 0.8709 |
+| 116 | `pv-diag-384::verified-adv-text-4of5` | 3 |  | 0.7693 | 5 | 0.8641 |
+| 117 | `pv-diag-384::pv-high-text-t0.7-n5-opmax` | 3 |  | 0.7684 | 5 | 0.8634 |
+| 118 | `flash35-pv-2x2::f35prop-f3vf-4of10` | 3 |  | 0.7675 | 5 | 0.8480 |
+| 119 | `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10` | 3 |  | 0.7675 | 1 | 0.9068 |
+| 120 | `flash35-pv-2x2::f3prop-f35vf-6of10` | 3 |  | 0.7666 | 4 | 0.8689 |
+| 121 | `pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3` | 3 |  | 0.7665 | 5 | 0.8629 |
+| 122 | `pv-diag-384::session-78-text-brief-opmax` | 3 |  | 0.7659 | 3 | 0.8762 |
+| 123 | `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5` | 3 |  | 0.7651 | 2 | 0.9066 |
+| 124 | `pv-diag-384::pv-high-text-t0.7-n10-opmax` | 3 |  | 0.7641 | 3 | 0.8744 |
+| 125 | `pv-diag-384::pv-min-image-t1.0-n3-carried-p0.15-k3` | 3 |  | 0.7629 | 10 | 0.7016 |
+| 126 | `verifier-robustness::verified-384-union-t0-0-n5` | 3 |  | 0.7621 | 4 | 0.8722 |
+| 127 | `pv-diag-384::pv-high-image-t0.7-n3-carried-p0.15-k3` | 3 |  | 0.7621 | 10 | 0.7046 |
+| 128 | `pv-diag-384::session-78-text-brief-text-opmax` | 3 |  | 0.7582 | 5 | 0.8519 |
+| 129 | `verifier-t-pilot::verified-t1-0` | 3 |  | 0.7562 | 5 | 0.8422 |
+| 130 | `pv-diag-384::session-78-text-checklist-text-opmax` | 3 |  | 0.7561 | 5 | 0.8639 |
+| 131 | `pv-diag-384::pv-min-text-t0.3-n3-carried-p0.15-k3` | 3 |  | 0.7556 | 5 | 0.8586 |
+| 132 | `pv-diag-384::session-78-text-adversarial-text-opmax` | 4 |  | 0.7534 | 5 | 0.8603 |
+| 133 | `pv-diag-384::pv-high-text-t1.0-n3-carried-p0.15-k3` | 4 |  | 0.7443 | 6 | 0.8220 |
+| 134 | `pv-diag-384::pv-min-text-t1.0-n3-carried-p0.15-k3` | 4 |  | 0.7413 | 6 | 0.8279 |
+| 135 | `pv-diag-384::pv-high-image-t1.0-n3-carried-p0.15-k3` | 4 |  | 0.7389 | 10 | 0.6955 |
+| 136 | `flash35-pv-2x2::f35prop-f35vf-4of10` | 4 |  | 0.7369 | 6 | 0.8362 |
+| 137 | `pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3` | 4 |  | 0.7354 | 10 | 0.7019 |
+| 138 | `pv-diag-384::verified-adv-pro-text-flash-vf-3of5` | 4 |  | 0.7302 | 5 | 0.8491 |
+| 139 | `pv-diag-384::verified-adv-pro-text-medium-vf-3of5` | 4 |  | 0.7302 | 5 | 0.8495 |
+| 140 | `pv-diag-384::verified-adv-pro-text-pro-vf-3of5` | 4 |  | 0.7302 | 5 | 0.8506 |
+| 141 | `pv-diag-384::verified-adv-text-medium-vf-4of5` | 4 |  | 0.7208 | 5 | 0.8545 |
+| 142 | `pv-diag-384::verified-adv-text-high-vf-4of5` | 4 |  | 0.6992 | 5 | 0.8519 |
+| 143 | `proposer-verifier-384::verified-adversarial-text` | 5 |  | 0.4313 | 14 | 0.4708 |
+| 144 | `proposer-verifier-384::verified-cascade-adversarial-checklist` | 5 |  | 0.4313 | 13 | 0.5036 |
+| 145 | `proposer-verifier-384::verified-adversarial-image` | 5 |  | 0.4160 | 13 | 0.4943 |
+| 146 | `proposer-verifier-384::verified-cascade-checklist-adversarial` | 5 |  | 0.4121 | 13 | 0.4950 |
+| 147 | `proposer-verifier-384::verified-brief-text` | 5 |  | 0.3953 | 13 | 0.5142 |
+| 148 | `proposer-verifier-384::verified-checklist-image` | 5 |  | 0.3873 | 12 | 0.5309 |
+| 149 | `proposer-verifier-384::verified-brief-image` | 6 |  | 0.3402 | 13 | 0.5204 |
+| 150 | `proposer-verifier-384::verified-checklist-text` | 6 |  | 0.3154 | 13 | 0.5214 |
+
+Full MCC pairwise table: `tiering_20m.json` → `mcc_permutation.pairwise`; per-cell confusion gates: `mcc_permutation.gates`; MCC admissible set: `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/mcb/gs-era2-verified-board-2026-09-10_mcc_b20_m1.json`.
+
 ## Changelog
+
+### 2026-09-14 (latest) — REBUILT with derived `track` labels and a `track_basis` field; E86's exposure disclosed; nothing numerical moved
+
+**Trigger**: ruling 4 of the PI's four rulings of 2026-09-14 on the
+corpus-wide modality-track audit
+(`reports/modality-track-audit-2026-09-14.md`; checklist item 6c), which
+inserted erratum **E88**. Modality is a preregistered factor (H1), and
+`scripts/build_gs_era2_board.py` had assigned this board's `track` field with
+`"image" if "image" in label else "text"` — a substring test that fails twice
+over: a proposer–verifier label names BOTH stages, so the verifier's modality
+can win, and a label that varies a different factor names neither modality and
+falls through to `"text"`. Both shapes occur here. Nothing was re-scored and no
+API call was made; all compute on sapphire.
+
+| Quantity | before | after |
+|---|---:|---:|
+| Members / excluded | 110 / 161 | **110 / 161** (identical id sets) |
+| `track` labels corrected | — | **7** |
+| `track_basis` field | absent | **on all 110 members** — `pass-metadata` 57, `run-metadata` 23, `config-file` 17, `pool-name-token` 12, `register` 1 |
+| Other member fields changed | — | **0** |
+| Cells admitted / tiered / withheld | 153 / 150 / 3 | ****153 / 150 / 3** (identical)** |
+| F1 pairs significant at BH q = 0.05 | 7,961 / 11,175 | ****7,961 / 11,175** (byte-identical)** |
+| F1 tiers | 14 | ****14** (same sizes)** |
+| F1 Tier 1 / tie set | the five 3.7 / 3.8 cells / 5 | ****the same five, same order, same F1** / **5**** |
+| Top cell | `g37-image-k5-verified-swap37-p0.90-k5` 0.9233 | ****the same cell, 0.9233**** |
+| Hsu F1 MCB admissible set | 65 of 150 (w_upper 0.0749) | ****65 of 150** — the artefact is byte-identical (`git diff` reports no change)** |
+| MCC pairs significant / tiers / tie set | 2,982 / 11,175 · 6 · 33 | ****2,982 / 11,175 · 6 · 33** (byte-identical)** |
+| Hsu tile-MCC MCB admissible set | 59 of 150 (w_upper 0.0828) | ****59 of 150** — the artefact is byte-identical** |
+| Withheld cells | the three Gemini 3.7 GS text rungs | ****the same three, at the same F1** (0.8338, 0.8495, 0.8860)** |
+| Gates | G2 0 / G3 0 / G4 110 / 110; G6 max abs delta 0.0078 | ****unchanged** — G2 0 / G3 0 / G4 110 / 110; G6 max abs delta **0.0078**** |
+| E86 exposure disclosure | not on this page | **published above the MCC section** — 20 of 487 tiles, the FP-rate ratio contrast, the ≤ 0.0120 movement bound, and the reduced-frame tie-set edges |
+
+**The seven corrected labels, and why each was wrong.**
+
+| cell | before | after | mechanism |
+|---|---|---|---|
+| `proposer-verifier-384::verified-adversarial-image` | image | **text** | the label's token names the image **verifier**; the proposer is `detect_brief-text`, `include_example_images` false |
+| `proposer-verifier-384::verified-brief-image` | image | **text** | as above |
+| `proposer-verifier-384::verified-checklist-image` | image | **text** | as above |
+| `pv-diag-384::pv-scale4-optimal-n1-opmax` | text | **image** | no modality token in the label; the substring test fell through. The proposer is `detect_h8_scale-4_v2`, instruction `detect_brief-text-image.md`, `include_example_images` true over 13 exemplars |
+| `pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1` | text | **image** | as above |
+| `pv-diag-384::pv-scale4-optimal-n3-opmax` | text | **image** | as above |
+| `pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3` | text | **image** | as above |
+
+Two of the four `pv-scale4-optimal` cells sit in tile-MCC Tier 1, so the
+correction changes how that tier reads — MCC Tier 1 is "led by single-pass image
+proposer + verifier baselines" and two more of its members are now correctly
+named image — without changing a single one of its numbers.
+
+**Why no number could move, and that was checked rather than asserted.**
+`track` is metadata: `scripts/era1_leaderboard_tiering.py` and
+`scripts/selection_aware_intervals.py` never read it, `tiering_20m.json`
+contains zero `track` occurrences, and no rendered board table has a track
+column. The rebuild ran the full chain anyway — membership, tiering input,
+`era1_leaderboard_tiering --permute-mcc` (10,000 permutations, seed 42, both
+families on one swap stream), both MCB arms with the F1 arm last, gates and
+`finalise --no-analysis-row` — and the record is
+`rebuild-track-2026-09-14/`: `track-deltas.json` (the membership delta, 7 label
+changes, 110 `track_basis` additions, **0** other member field changes),
+`both-arms-identity.json` (`f1_arm_identical` **true**, `mcc_arm_identical` **true**,
+`keys_that_moved` **empty**, so even the withheld-cell block is unmoved) and
+`signature-paths.json`. Both MCB artefacts came back byte-identical under `git diff`,
+and the MCC MCB was recomputed BEFORE the F1 one so that the F1 admissible set — the
+one the board cites — is computed last over the final membership, as the PI's standing
+rule requires. The only things that moved anywhere in `tiering_20m.json`,
+`frame-deltas.md`, `gates.json` and `tiering_20m.md` are run stamps and the source
+commit. The before state is not duplicated in the job directory: git holds it, and
+`track-deltas.json` records the blob hashes (`membership.json` `e9900fa370f2`,
+`tiering_20m.json` `b4a39f3a4350`, `provenance.json` `1aecf12352ae`,
+`results/run-analyses.json` `fd5ffb3136ac`).
+
+**Signature discipline.** `finalise --no-analysis-row` carries `signed_at`,
+`signature_history` and `gates.G1.pi_ruling` forward and nests the previous
+PENDING block rather than overwriting it; the board's signed analysis row was
+not written at all. **Ten signature-bearing paths were asserted byte-equal** before and after —
+`signed_at` still `2026-09-12T06:04:30Z`, `signed_by`, `signature_history`,
+`gates.G1.pi_ruling`, `re_sign_pending.previous_pending`, the whole of
+`results/run-analyses.json` and every field of this board's signed analysis row —
+`rebuild-track-2026-09-14/signature-paths.json`, **PASS**. The register comparison is
+against the register as this session's ruling-2 commit left it: the two rows amended
+under E88 are `era1-single-pass-baseline-matrix` and `tile-size-sweep`, neither of
+which is this board's row and neither of which is signed.
+
+**What did NOT change**: every F1 rank, tier, pairwise test, BH verdict and MCB
+member; Tier 1 and its members; the tie sets of both families; the top cell and
+its F1; the admitted / tiered / withheld counts and the identity of the three
+withheld cells; the frame, reference, instrument, seed, permutation count and
+buffer; every gate verdict; and every signature field.
+
+**The board awaits the PI's re-signature**, now over both the 2026-09-13
+rebuild's three ruled changes and this one's corrected metadata:
+`provenance.json` → `re_sign_pending`. Deltas:
+`reports/modality-rulings-deltas-2026-09-14.md`.
+
+### 2026-09-13 — REBUILT: three ruled changes in one rebuild; a tile-MCC family beside the F1 tiering; awaiting the PI's re-signature
+
+**Trigger**: checklist item 6
+(`planning/documentation-foundation-checklist-2026-09-13.md`), which gathers
+three PI rulings of 2026-09-13 (S153) into **one** rebuild so the board is
+re-signed **once**: the four cells the recovery-fragment fix re-scored
+(`reports/recovery-drop-fix-2026-09-13.md`, item 6a), ruling 7's tile-MCC
+permutation family, and ruling 6's withheld-cell disclosure. Nothing was
+re-scored here and no API call was made. All compute on sapphire.
+
+| Quantity | before | after |
+|---|---:|---:|
+| Cells admitted / tiered / withheld | 153 / 150 / 3 | **153 / 150 / 3** |
+| F1 pairs significant at BH q = 0.05 | 7,961 / 11,175 | **7,961 / 11,175** (byte-identical) |
+| F1 tiers | 14 | **14** (same sizes) |
+| F1 Tier 1 (greedy clique) | the five 3.7 / 3.8 cells | **the same five, same order, same F1** |
+| F1 tie set | 5 | **5** |
+| Top cell | `g37-image-k5-verified-swap37-p0.90-k5` 0.9233 | **the same cell, 0.9233** |
+| Hsu F1 MCB admissible set | 65 of 150 (w_upper 0.0749) | **65 of 150 (w_upper 0.0749)** — the artefact is byte-identical |
+| F1 two-sided MCB band | 70 | **70** |
+| `g37-text-k3-verified-opmax` withheld row | F1@20 0.8870, tile-MCC 0.1337 | **F1@20 0.8860**, tile-MCC **withheld at source** |
+| Its G6 row | 0.8870 / 494 features | **0.8860 / 495** |
+| tile-MCC permutation family | **none** — the instrument tested F1 only | **2,982 / 11,175 pairs significant; 6 MCC tiers; MCC tie set 33; MCC Hsu admissible 59 of 150 (w_upper 0.0828), band 99** |
+| Withheld-cell disclosure | F1 point + refusal message | **+ interval withdrawn (with the retracted interval named), shortfall counts, both tile vocabularies, the published-convention sentence** |
+| Gates | G2 0 / G3 0 / G4 110 / 110 | **unchanged**; G6 max abs frame delta **0.0078** |
+
+**The F1 arm reproduced exactly, and that was the point of doing it this way.**
+Of the four cells the recovery-fragment fix moved, three are already withheld
+from every statistic and the fourth, `g384-ov192-k5-verified-opmax` at rank 9,
+re-scores dict-identically, so no F1 input changed. `ranking`, `tiers`,
+`tie_set` and all **11,175** pairwise records are byte-identical to the
+committed 2026-09-13 run (blob `f2f1af55a`), and the F1 MCB artefact is
+byte-identical too. The record is
+`rebuild-mcc-2026-09-13/f1-arm-identity.json`.
+
+**What the MCC family says, and it is not a restatement of the F1 tiering.**
+On the same 487 tiles, the same 10,000 permutations and the same swap masks,
+tile-MCC separates **2,982** of 11,175 pairs against F1's 7,961, and cliques
+into **6** tiers against F1's 14 — it resolves far less, the power limitation
+the K-ladder MCC test already recorded for this frame
+(`reports/k-ladder-mcc-test-2026-09-12.md` § 3). Where it does resolve, it
+resolves against the F1 reading:
+
+- **No F1 Tier-1 cell is in MCC Tier 1.** The board's five F1 Tier-1 cells sit
+  at MCC ranks 36, 51, 54, 80 and 119 — MCC tier 2 for four of them and tier 3
+  for `g37-text-k10-verified-carried-p0.10-k10`.
+- **MCC Tier 1 is 33 cells drawn entirely from F1 tiers 6–12** (3 / 7 / 8 / 5 /
+  4 / 3 / 3 across tiers 6 to 12), led by single-pass **image** proposer +
+  verifier baselines: `verified-adv-image-baseline-pro-vf` tops the MCC
+  ranking at tile-MCC **0.8887** while sitting at **F1 rank 119 of 150**, F1
+  tier 9, on an F1@20 of 0.7309.
+- **The two admissible sets share 9 members of 65 and 59** (union 115 of 150).
+  The overlap is five B-geometry grid cells (the K = 1 ×2, 3, 5 and 10 rungs),
+  three of the five 3.7 F1 Tier-1 cells, and `verified-adv-text-min-6of10`. It
+  includes the top F1 cell, which IS MCC-admissible; it excludes the top MCC
+  cell, which is NOT F1-admissible. 56 F1-admissible cells are not
+  MCC-admissible and 50 MCC-admissible cells are not F1-admissible.
+- The MCC argmax is much less stable than the F1 one: **0.420** with 36
+  distinct winners across resamples, against 0.602 with 22; apparent MCC
+  0.8887, optimism +0.0153, corrected **0.8734**.
+
+Read together: **the two metrics select different cells, and the disagreement
+is systematic rather than marginal** — configurations that localise mounds well
+(high F1) are not the configurations that decide which tiles contain a mound
+(high tile-MCC), and on this board the ordering is close to reversed. That is
+the K-ladder review's "the two objectives select different rungs" finding
+measured over a whole board rather than within a ladder, and it is exactly why
+ruling 7 reports the MCC family beside the preregistered tiering instead of
+replacing it. **The board's tiering, its ranks, its Tier 1 and its headline
+remain the F1 ones.**
+
+**The withheld cells, disclosed rather than repaired.** All three Gemini 3.7
+gold-standard text rungs stay admitted-and-withheld under ruling 6: the
+name-based `id` join is the published convention, so they are not re-joined
+geometrically to make them scoreable. Each now publishes its whole-frame F1
+point estimate, the shortfall (22 of 526, 21 of 475, 20 of 467 in-frame
+detections booked), both tile vocabularies — the frame's 487 names against the
+cells' 351 / 319 / 306, of which 12 / 11 / 11 are in the frame's vocabulary —
+and the fact that its interval is **withdrawn, not superseded**, because the
+F1 bootstrap resamples tiles and so takes the refused per-tile table as its
+input. Two of the three still carry a pre-invariant interval in their
+committed artefacts, and the board now names the number it is retracting:
+[0.3684, 0.7709] and [0.2712, 0.6667] on points of 0.8338 and 0.8495. The
+third, `g37-text-k3-verified-opmax`, was re-scored under the invariant in item
+6a and has no interval and no tile-MCC to retract.
+
+**What did NOT change**: every F1 rank, tier, pairwise test, BH verdict and
+MCB member; Tier 1 and its five members; the tie set; the top cell and its F1;
+the 153 admitted / 150 tiered / 3 withheld counts and the identity of the three
+withheld cells; the frame, the reference, the instrument, the seed, the
+permutation count and the buffer; every gate's verdict and G6's maximum frame
+delta; and **every signature field** — `signed_at` is still
+`2026-09-12T06:04:30Z`, `signature_history` and `gates.G1.pi_ruling` are
+untouched, the register's signed analysis row was not written at all, and the
+previous PENDING block is nested as `re_sign_pending.previous_pending` rather
+than overwritten. Ten signature-bearing paths were asserted byte-equal before
+and after (`rebuild-mcc-2026-09-13/signature-paths.json`, PASS).
+
+**The board awaits the PI's re-signature**: `provenance.json` →
+`re_sign_pending`, whose `proposed_outcome` states both families, both
+admissible-set sizes and their overlap, and ends by saying the tiering is the
+F1 one. Deltas: `reports/era2-board-mcc-family-2026-09-13.md`.
 
 ### 2026-09-13 (later still) — the K = 3 cell's evaluation written; NOTE ONLY, the board is still not rebuilt
 

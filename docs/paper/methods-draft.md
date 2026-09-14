@@ -9,6 +9,9 @@
 > was regenerated from the analyses register in S142 (2026-08-24; five
 > register-vs-old-table disagreements flagged in place); one [DRAFT
 > NOTE] item gates finalisation: the § 6.3 session-count refresh.
+>
+> **Last revised**: 2026-09-13 (corpus size corrected to 340/360 and the
+> clean-holdout claim qualified, under errata E86 and E87).
 > See [§ Changelog](#changelog).
 
 ## M.x Preregistration, amendments, and analysis status
@@ -18,19 +21,21 @@ The study was preregistered on the Open Science Framework
 eight confirmatory (H1–H8) and seven exploratory (H9–H15), the latter
 registered as hypothesis-generating and excluded from
 false-discovery-rate (FDR) correction. The registration committed to
-a two-stage trial framework over a 361-tile corpus drawn from four
-map sheets, per-hypothesis analysis plans, and Benjamini–Hochberg FDR
+a two-stage trial framework over a four-sheet corpus of 360 tiles
+(the registration says 361; erratum E64 (ii) adjudicates the
+discrepancy in favour of the 360 tiles that physically exist),
+per-hypothesis analysis plans, and Benjamini–Hochberg FDR
 at q = 0.05 across the confirmatory family. We report execution
 against that registration in three machine-checked layers: a
 protocol-errata file, a classified analysis register, and a
 hypothesis-outcome table generated from the register.
 
-Deviations are recorded in a numbered errata file (E1–E85). Under the
+Deviations are recorded in a numbered errata file (E1–E87). Under the
 file's declared three-way scheme, entries with bare labels tally 22
 corrections (implementation brought back into line with the
 registered protocol), 18 deviations (substantive departures, each
 with stated justification), and 12 clarifications (interpretations of
-ambiguous registered text). The remaining 33 entries carry composite
+ambiguous registered text). The remaining 35 entries carry composite
 or qualified labels, including the three entries explicitly labelled
 as recording omissions rather than changes (E74, E75, E78); E59
 likewise records an unexecuted registered condition, under a bare
@@ -192,10 +197,17 @@ LLM-assisted registration practice is taken up in Discussion
 
 ## M.2 Evaluation corpora and scopes (outline target: new § 2.5; MD2)
 
-The registration allocated the 361-tile four-sheet corpus as 20
+The registration allocated the four-sheet corpus — 360 tiles, 90 per
+sheet, which the registration states as 361 (E64 (ii)) — as 20
 calibration tiles (contaminated by prompt development, excluded from
-evaluation), a 60-tile stratified holdout (30 empty, 18 sparse, 12
-dense, carrying 79 mound symbols), and a 281-tile reserve. Execution
+evaluation), a 60-tile stratified holdout (registered as 30 empty, 18
+sparse and 12 dense, carrying 79 mound symbols; those strata and that
+count come from a superseded approximation of each sheet's
+georeferencing and are corrected by erratum E87, which puts 97
+reference symbols in the 60 tiles and moves 27 of them between
+strata — the sample itself is unchanged, because those are the strata
+the registered seeds drew from), and the remaining 280 tiles as a
+reserve (registered as 281, the same off-by-one). Execution
 departed from this allocation (erratum E36): confirmatory-phase
 evaluation ran on the full non-calibration corpus at reduced
 replication, and later phases re-tiled it, so results accrue on three
@@ -435,8 +447,13 @@ symbol's own face.
 
 **Tile generation.** Sheets were cut into 512 × 512-pixel tiles with a
 64-pixel overlap (stride 448 px), each covering roughly 2.57 × 2.57 km
-of ground; tiles more than 75 % background were filtered out, leaving a
-corpus of 361 tiles across the four sheets.
+of ground; tiles more than 75 % background were filtered out, leaving
+**360 tiles** across the four sheets — 90 per sheet. Removing the 20
+calibration tiles from these leaves the **340-tile Era-1 evaluation
+frame** of § M.2, an exact set difference with no exceptions in either
+direction. The registration states the corpus as 361; erratum E64 (ii)
+adjudicates that against the registration's own "~360" and adopts the
+360 tiles that exist.
 
 **Ground truth.** 569 mound symbols were annotated across the corpus:
 an initial student annotation campaign using the FAIMS v2.6 mobile
@@ -453,11 +470,41 @@ deployment references — are specified in § M.2 and § M.3.
 calibration set used for prompt development and hard-example selection;
 they are contaminated by construction and excluded from every
 evaluation. The confirmatory instrument is a 60-tile holdout (fifteen
-per sheet), stratified by mound density — thirty empty, eighteen sparse
-(one to two mounds), and twelve dense (three or more) — carrying 79
-mound symbols. The remaining 281 tiles were held untouched as a reserve
-pool for later validation. Tile selection used documented random seeds
-within the density strata.
+per sheet), stratified by mound density — registered as thirty empty,
+eighteen sparse (one to two mounds), and twelve dense (three or more),
+carrying 79 mound symbols. The remaining 280 tiles were held untouched
+as a reserve pool for later validation. Tile selection used documented
+random seeds within the density strata, applied to those strata as
+registered; the strata and the 79 are corrected by erratum E87 (the
+counts came from a bounding-box approximation of each sheet's
+georeferencing that did not read the raster affine), so they describe
+how the selection was made rather than the tiles' mound content.
+
+**One qualification on the exclusion.** The calibration exclusion is
+not quite a clean holdout, and the exception is documented as erratum
+E86. Three of the seventeen few-shot examples are whole empty tiles —
+the "null" exemplars, present to establish a no-mounds baseline — and
+they were selected from a training set that was re-selected under a new
+seed on 2026-01-04 without the null manifest being regenerated. They
+are therefore not members of the committed calibration set, were never
+entered into the exclusion geometry, and are themselves tiles of the
+340-tile Era-1 frame. Counting each frame's tiles that share any pixel
+with one of the three: 25 of 340 at Era 1 (including the three tiles
+themselves), 3 of the registered 60-tile holdout, 20 of 487 at Era 2,
+and 13 of 327 at Era 3. The leakage is bounded in three ways. It
+carries **no reference information**: none of the 569 reference symbols
+falls inside a null window, so no precision, recall, F1 or MCC value is
+computed over leaked positives. It is confined to the **image
+modality** — of the forty-one configurations that transmit example
+images, thirty-seven include the nulls, while the twenty-two text-only
+configurations carry them as labels alone and the verifier's
+six-example library contains none — so text cells, every verifier stage
+and all 55-map deployment cells are unaffected. And its direction is
+conservative: what the model saw, labelled "no mounds here", is ground
+it was later scored on, which can only suppress detections there. The
+affected tile identifiers are published in
+`inputs/examples/null-tiles/null_overlap_by_frame.json`, and the
+sensitivity re-score with them excluded is reported in Results.
 
 ## M.10 VLM detection pipeline (outline § 3)
 
@@ -480,7 +527,9 @@ specification), a configurable library of few-shot examples, and the
 target tile as a 512 × 512 px PNG. Examples are drawn from labelled
 calibration tiles in positive, negative, and null categories, and are
 presented as images, text descriptions, or both, according to the
-modality condition. Content is assembled as sequential `types.Part`
+modality condition. (The three null exemplars are the exception to
+"calibration tiles": see the qualification on the exclusion in § M.9
+and erratum E86.) Content is assembled as sequential `types.Part`
 objects via the google-genai SDK (v1alpha), with JSON output forced
 through `response_mime_type="application/json"` and an 8,192-token
 output ceiling that accommodates thinking tokens alongside the
@@ -670,6 +719,56 @@ rather than the implementation. Session transcripts are archived at
 planned as a separate contribution.
 
 ## Changelog
+
+### 2026-09-13 (later) — corpus size corrected to 340/360, and the clean-holdout claim qualified (E86, E87)
+
+**Trigger**: errata **E86** and **E87**, filed the same day from the
+`map-reader-bench` Stage 1 provenance audit. E86 found that the three
+null few-shot exemplars were selected from a training set that was
+re-selected under a new seed on 2026-01-04 without the null manifest
+being regenerated, so they were never entered into the calibration
+exclusion geometry and are themselves Era-1 evaluation tiles. E87
+found that the registration's per-tile mound counts came from a
+bounding-box approximation of each sheet's georeferencing that never
+reads the raster affine. Both bear on Methods: the first on § M.9's
+exclusion claim, the second on the corpus and holdout figures § M.x,
+§ M.2 and § M.9 carry forward from the registration.
+
+**Before → after table for numerical claims that moved**:
+
+| Claim | Before | After | Source recounted |
+|---|---|---|---|
+| Corpus size (§§ M.x, M.2, M.9) | 361 tiles | **360 tiles** (90 per sheet), with the 361 named as the registration's figure and E64 (ii) as the adjudication | `ls inputs/tiles/*/*.png`; E64 (ii) |
+| Era-1 evaluation frame in § M.9 | not stated | **340** = 360 − 20 calibration, verified as an exact set difference with 0 exceptions either way | `inputs/tiles/full_evaluation_manifest.json` against `calibration_manifest.json` |
+| Reserve pool | 281 tiles | **280** tiles, with 281 named as the same off-by-one | arithmetic on the 360 |
+| Holdout mound symbols | 79 (unqualified) | **79 as registered, corrected to 97 by E87**; 27 of the 60 tiles change density stratum | `docs/methodology/preregistration/osf/tile-mound-counts-recomputed-2026-09-13.json` |
+| Errata range | E1–E85 | **E1–E87** | `protocol-errata.md`, 87 `### E<n>` entries |
+| Composite or qualified labels | 33 | **35** | same; bare tallies 22 / 18 / 12 and the 18-to-31 deviations range are unchanged, both recounted |
+
+**What was added, not corrected**: a new "One qualification on the
+exclusion" paragraph in § M.9, because the draft's "they are
+contaminated by construction and excluded from every evaluation"
+implied a clean holdout that E86 shows is not quite clean. It states
+the per-frame overlap (25 of 340 at Era 1, 3 of the registered
+60-tile holdout, 20 of 487 at Era 2, 13 of 327 at Era 3) and the three
+bounds on it: no reference symbol lies in a null window, the exposure
+is the image modality only (37 of 41 image configurations carry the
+nulls; the 22 text configurations carry labels alone and the verifier's
+library carries none), and the direction is conservative. § M.10's
+"Examples are drawn from labelled calibration tiles … null categories"
+takes a cross-reference to it.
+
+**What did NOT change**: no metric, no scope membership, no
+hypothesis outcome, and no sentence about the executed evaluation
+frames — the Era-1/2/3 tile counts (340 / 487 / 327) and their mound
+counts (539 / 435 / 319) in § M.2 are measured against the reference
+layer directly, never against the registered strata, so E87 does not
+reach them. The "36 mounds" of the registration's § H8 availability
+constraint appears **nowhere** in any paper draft (grep across
+`docs/paper/` and `paper/`), so E87 had no other paper-facing count to
+correct.
+
+Landed in the commit that carries this entry.
 
 ### 2026-09-13 (S153) — § M.x brought current to E85 and to the S153 reporting rulings
 

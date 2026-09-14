@@ -1,0 +1,14 @@
+# Leak-filtered detection copies for the null-exemplar sensitivity analysis.
+#
+# These are a DETERMINISTIC function of committed inputs (each cell's committed
+# detection GeoJSON, the committed overlap tile set, and
+# scripts/analyse_null_exemplar_sensitivity.py --stage filter), so they are
+# regenerated rather than stored: the set runs to ~120 MB across the four
+# boards. Every per-file feature count in and out is recorded in the committed
+# ../detections_manifest.json, and every evaluation computed from them is
+# committed under ../cells/, so the analysis is auditable without them.
+#
+# Regenerate with:
+#   python scripts/analyse_null_exemplar_sensitivity.py --stage filter
+*
+!.gitignore

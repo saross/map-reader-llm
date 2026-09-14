@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — retest-phase3a
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9fd928af3`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9f5fec777`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/retest/phase3a` · **Registry status**: active · **Purpose**: not supplied
 
@@ -312,21 +312,24 @@ Scored evaluations under this run that no condition claims, each waived in `resu
   - `results/uplift-supplement/k1-gapfill/retest-phase3a__text-t0_3-n5-5of5/evaluation.json`
   - … and 6 more under the same waiver (full list in `results/run-conditions.json`, this run's `_ignored_evals`)
 
-## 6. Analyses that read this run (5)
+## 6. Analyses that read this run (6)
 
 A run is linked to an analysis when the analysis's `conditions_compared` names one of this run's conditions. *Cells* is how many of the analysis's compared conditions come from this run, out of its total. *Signed* is the register's `manually_verified_at` stamp.
 
 | Analysis | Cells | Type | Hypotheses | Registration | Paper section | Deviations | Signed | Output |
 |---|---|---|---|---|---|---|---|---|
 | `era1-leaderboard` | 19 of 82 | leaderboard | `H2`, `H1`, `H3`, `H4`, `H5`, `H7`, `H8`, `H9` | post-hoc | Results | `E25`, `E27`, `E28`, `E29`, `E30`, `E31`, `E36`, `E37`, `E58` | 2026-06-09T01:22:50Z | `results/era1-leaderboard` |
+| `null-exemplar-sensitivity-2026-09-13` | 19 of 235 | comparison | — | post-hoc | Appendix | — | not supplied | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
 | `phase3a-consensus-calibration` | 18 of 18 | sweep | `H3` | registered-exploratory | Results | `E32`, `E36`, `E53` | 2026-06-08T04:19:07Z | `results/rescore-2026-06-07/phase3` |
 | `tile-size-sweep` | 5 of 35 | sweep | `H11` | registered-exploratory | Results | `E36`, `E41`, `E43`, `E44`, `E56`, `E57`, `E62` | 2026-06-09T01:52:52Z | `results/tile-size-sweep` |
 | `uplift-supplement-flatten` | 19 of 441 | diagnostic | — | post-hoc | Appendix | — | 2026-09-10T22:55:40Z | `results/uplift-supplement/conditions.csv` |
 | `verifier-uplift-pairing` | 1 of 170 | comparison | `H2` | post-hoc | Appendix | — | 2026-09-12T06:04:30Z | `results/uplift-supplement/verifier-uplift.csv` |
 
-## 7. Findings documents (0)
+## 7. Findings documents (1)
 
-No findings document on disk is named by an analysis that reads this run: a findings write-up for this run is **not supplied** from the register. § 6's `output_path` column gives each analysis's artefact directory.
+| Document | Named by |
+|---|---|
+| `results/null-exemplar-sensitivity-2026-09-13/findings.md` | `null-exemplar-sensitivity-2026-09-13` |
 
 ## 8. Protocol errata
 
@@ -381,7 +384,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `9fd928af3` |
+| Source commit | `9f5fec777` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

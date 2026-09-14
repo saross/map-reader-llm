@@ -1,0 +1,72 @@
+{
+ "board_id": "gs-era2-verified-board-2026-09-10",
+ "n_paths_checked": 10,
+ "n_violations": 0,
+ "violations": [],
+ "passed": true,
+ "paths": [
+  {
+   "path": "provenance.signed_at",
+   "byte_equal": true,
+   "value": "2026-09-12T06:04:30Z",
+   "before": null,
+   "after": null
+  },
+  {
+   "path": "provenance.signed_by",
+   "byte_equal": true,
+   "value": "<<ABSENT>>",
+   "before": null,
+   "after": null
+  },
+  {
+   "path": "provenance.signature_history",
+   "byte_equal": true,
+   "value": [
+    {
+     "signed_at": "2026-09-10T12:34:56Z",
+     "n_conditions_compared": 79,
+     "note": "original signature; text preserved in the register row"
+    }
+   ],
+   "before": null,
+   "after": null
+  },
+  {
+   "path": "provenance.gates.G1.pi_ruling",
+   "byte_equal": true,
+   "value": {
+    "ruled_at": "2026-09-10T12:34:56Z",
+    "ruling": "satisfied on the true-input reproduction",
+    "text": "PI ruling 2026-09-10 (S152, in session): G1 is SATISFIED on the true-input reproduction. As specified, the gate rebuilt the archived 44-cell board from its ARCHIVED inputs and one cell differed (0.7460 -> 0.7475) because the archived board had scored a 372-feature blob served from a stale label-keyed cache while the archived file holds 373 features; from the inputs the archived board actually scored it reproduces 44/44 cells and 946/946 pairs with tiers identical (g1-regression.json 'bisect' and g1-confirmatory-rebuild.json; Obs 464). The clause 'nothing published unless all gates pass' is read as reproduction from the true inputs, which passes; the as-specified failure and its cause stay on record."
+   },
+   "before": null,
+   "after": null
+  },
+  {
+   "path": "provenance.re_sign_pending.previous_pending",
+   "byte_equal": true,
+   "note": "the previous PENDING block, nested verbatim rather than overwritten"
+  },
+  {
+   "path": "results/run-analyses.json (whole file)",
+   "byte_equal": true
+  },
+  {
+   "path": "run-analyses[gs-era2-verified-board-2026-09-10].manually_verified_at",
+   "byte_equal": true
+  },
+  {
+   "path": "run-analyses[gs-era2-verified-board-2026-09-10]._signature_note",
+   "byte_equal": true
+  },
+  {
+   "path": "run-analyses[gs-era2-verified-board-2026-09-10].conditions_compared",
+   "byte_equal": true
+  },
+  {
+   "path": "run-analyses[gs-era2-verified-board-2026-09-10].outcome",
+   "byte_equal": true
+  }
+ ]
+}

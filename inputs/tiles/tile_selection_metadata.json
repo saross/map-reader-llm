@@ -1,5 +1,10 @@
 {
   "created": "2026-01-03T07:27:30.571168+00:00",
+  "_note_E87": {
+    "parameters.tile_size": "MISLABELLED. The value 448 is the tile STRIDE, not the tile size: Era-1 tiles are 512 x 512 px with a 64 px overlap, so tile origins step 448 px (config.py TILE_SIZE 512, OVERLAP 64, STRIDE 448). The key is NOT renamed here because other code reads it by name; read it as the stride. scripts/select_tiles_phase2.py has since been corrected and now writes tile_size 512 alongside tile_overlap 64 and tile_stride 448 (see the metadata block at :585-593), so regenerating this file would emit all three keys with the right values. It has deliberately not been regenerated: that would rewrite the registered selection record.",
+    "per_tile_mound_counts": "The mound_count and density values in the calibration and validation blocks below were computed by the superseded bounding-box approximation described in erratum E87 and are wrong. Affine-correct counts, published as a post-hoc correction beside the originals: docs/methodology/preregistration/osf/tile-mound-counts-recomputed-2026-09-13.{json,md}. The tile SELECTIONS are unchanged and no measured result reads these counts.",
+    "erratum": "docs/methodology/preregistration/protocol-errata.md, E87"
+  },
   "parameters": {
     "calibration_samples_per_map": 5,
     "validation_samples_per_map": 15,

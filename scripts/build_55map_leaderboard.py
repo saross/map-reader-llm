@@ -32,6 +32,8 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -100,6 +102,84 @@ RUN_CONDS = BASE_DIR / "results/run-conditions.json"
 OUT_DIR = BASE_DIR / "results/55map-leaderboard"
 BUFFER_M = 50
 GATE_TOL = 0.003
+
+#: The three references this generator writes a board for. Each pair of
+#: output files is named by :func:`json_name_for` / :func:`md_name_for`.
+REFERENCES = ("canonical", "standardised", "r2")
+
+#: Neutralises the render-time commit stamp for drift comparison: re-rendering
+#: at a new commit must not read as drift when no number moved.
+RENDER_STAMP_RE = re.compile(r"at commit `[^`]+`")
+
+
+def _suffix(reference: str) -> str:
+    """Return the filename suffix for a reference (``""`` for canonical)."""
+    return {"standardised": "_standardised", "r2": "_r2"}.get(reference, "")
+
+
+def json_name_for(reference: str) -> str:
+    """Return the board JSON filename for a reference."""
+    return f"55map_leaderboard_50m{_suffix(reference)}.json"
+
+
+def md_name_for(reference: str) -> str:
+    """Return the board Markdown filename for a reference.
+
+    The stem uses hyphens where the JSON uses underscores — a historical
+    mismatch the generator map records rather than corrects.
+    """
+    return f"55map-leaderboard-50m{_suffix(reference).replace('_', '-')}.md"
+
+
+def _git_head() -> str:
+    """Return the short HEAD hash for the render stamp (or ``unknown``)."""
+    try:
+        return subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"], cwd=BASE_DIR,
+            capture_output=True, text=True, check=True, timeout=10,
+        ).stdout.strip() or "unknown"
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, OSError):
+        return "unknown"
+
+
+def check_renderings(references: tuple[str, ...] = REFERENCES) -> int:
+    """Drift guard for the board Markdown views.
+
+    For each reference whose JSON is committed, re-render in memory and
+    compare with the committed document, the render stamp neutralised. Runs
+    no permutation test and reads no detection file.
+
+    Args:
+        references: Which references to check.
+
+    Returns:
+        Process exit code: 0 when every committed board matches, 1 otherwise.
+    """
+    stale: list[str] = []
+    checked = 0
+    for reference in references:
+        json_path = OUT_DIR / json_name_for(reference)
+        md_path = OUT_DIR / md_name_for(reference)
+        if not json_path.exists():
+            continue
+        if not md_path.exists():
+            stale.append(f"{md_path.name} (missing)")
+            continue
+        fresh = render_md(json.loads(json_path.read_text())) + "\n"
+        committed = md_path.read_text()
+        checked += 1
+        if RENDER_STAMP_RE.sub("", committed) != RENDER_STAMP_RE.sub("", fresh):
+            stale.append(md_path.name)
+    for name in stale:
+        print(f"DRIFT: {name} differs from a rendering of its committed JSON",
+              file=sys.stderr)
+    if stale:
+        print("Re-render with --rebuild-md --reference <ref> (no number is "
+              "recomputed).", file=sys.stderr)
+        return 1
+    print(f"{checked} 55-map board rendering(s) current "
+          f"(render stamp neutralised)")
+    return 0
 
 # Short display names for the board cells, keyed by (run_id, label).
 # Matches the S105 findings-doc naming. The standardised board (Session
@@ -270,17 +350,22 @@ def reference_gt(reference: str) -> gpd.GeoDataFrame:
     return canonical_gt_at(BUFFER_M)
 
 
-def render_md(payload: dict) -> str:
+def render_md(payload: dict, source_commit: str | None = None) -> str:
     """Render the F1 board markdown from the results dict (== the committed JSON).
 
     Split out from the compute path so the citable document can be regenerated
     verbatim — e.g. after a methodological note is revised — without re-running
     the permutation tests. ``main(rebuild_md_only=True)`` uses this against the
-    committed ``55map_leaderboard_50m.json``.
+    committed ``55map_leaderboard_50m.json``, and ``--check`` compares that
+    rendering with the committed document (the 2026-09-11 generated-projections
+    ruling's drift guard).
 
     Args:
         payload: The mapping written to ``55map_leaderboard_50m.json``. Must
             carry ``cells`` (F1-descending), ``pairwise`` and ``tiers``.
+        source_commit: Short git hash to stamp as the render commit; defaults
+            to HEAD. Neutralised by ``--check``, so a re-render at a new
+            commit does not read as drift.
 
     Returns:
         The full markdown document as a single string (no trailing newline).
@@ -303,6 +388,16 @@ def render_md(payload: dict) -> str:
         "standardised": STANDARDISED_ATTRIBUTION_NOTE,
     }.get(ref, ATTRIBUTION_RESOLUTION_NOTE)
     md = [title,
+          "",
+          f"> **GENERATED FILE — do not hand-edit.** Rendered from "
+          f"`{json_name_for(ref)}` by `scripts/build_55map_leaderboard.py` at "
+          f"commit `{source_commit or _git_head()}`; `--check` is the drift "
+          f"guard (tier-1: `tests/test_55map_leaderboard_renderings.py`), and "
+          f"`--rebuild-md` re-renders from the committed JSON without re-running "
+          f"the permutation tests. Per the PI ruling of 2026-09-11 "
+          f"(`docs/methodology/output-directory-standard.md` § \"Documents in "
+          f"Revision Policy Scope\") this projection carries provenance instead "
+          f"of a hand changelog.",
           "",
           f"> Working buffer 50 m per the noise-floor derivation "
           f"(`results/working-precision/55maps-csr-noise-floor.json`). "
@@ -339,19 +434,18 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
             conditions).
     """
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    suffix = {"standardised": "_standardised", "r2": "_r2"}.get(reference, "")
+    md_name = md_name_for(reference)
+    json_name = json_name_for(reference)
     # The committed canonical and standardised boards are the G3/G4 gate
     # targets (final_board_build / final_board_sweeps compare against
     # 55map_leaderboard_50m_standardised.json at 1e-9 / 0.003). Rewriting
     # them is a deliberate act, never a side effect of a default invocation
     # (H15; audit-2 MAJOR 5).
     if reference != "r2" and not rebuild_md_only and not force_r1 \
-            and (OUT_DIR / f"55map_leaderboard_50m{suffix}.json").exists():
-        sys.exit(f"{OUT_DIR.relative_to(BASE_DIR)}/55map_leaderboard_50m{suffix}.json "
+            and (OUT_DIR / json_name).exists():
+        sys.exit(f"{OUT_DIR.relative_to(BASE_DIR)}/{json_name} "
                  f"is a committed r1 board and a regression-gate target; refusing "
                  f"to rewrite it. Use --reference r2, --rebuild-md, or --force-r1.")
-    md_name = f"55map-leaderboard-50m{suffix.replace('_', '-')}.md"
-    json_name = f"55map_leaderboard_50m{suffix}.json"
 
     if rebuild_md_only:
         src = OUT_DIR / json_name
@@ -481,7 +575,15 @@ if __name__ == "__main__":
         "--force-r1", action="store_true",
         help="Permit rewriting a committed r1 board (a regression-gate target).",
     )
+    parser.add_argument(
+        "--check", action="store_true",
+        help="Drift guard: re-render every committed board's markdown from its "
+             "committed JSON in memory and compare, with the render-commit "
+             "stamp neutralised. Recomputes nothing. Exit 1 on drift.",
+    )
     _args = parser.parse_args()
+    if _args.check:
+        raise SystemExit(check_renderings())
     raise SystemExit(main(
         rebuild_md_only=_args.rebuild_md, reference=_args.reference,
         force_r1=_args.force_r1,

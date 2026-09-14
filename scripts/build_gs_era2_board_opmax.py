@@ -101,6 +101,11 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+from scripts.derive_condition_modality import (  # noqa: E402
+    verifier_stage_modality,
+)
 from materialise_opmax_cells import (  # noqa: E402
     classify_vintage,
     sweep_universe,
@@ -642,8 +647,17 @@ def register(membership: dict[str, Any], write: bool,
         # image-t0 verified-v1-n3 stage never was (that run has no stages).
         stages = run.setdefault("verifier_passes", {})
         if m["stage_id"] not in stages:
-            stages[m["stage_id"]] = {"modality": m["modality"],
-                                     "path": "/".join(Path(m["probabilities_path"]).parts[3:-1])}
+            # The register's verifier-stage modality is the VERIFIER's own
+            # exemplar modality, not the track (the PI's ruling of 2026-09-14,
+            # erratum E88), so it derives from the verify config the stage
+            # transmitted. The membership row's own `modality` -- which is the
+            # PROPOSER pool's -- is the fallback for a stage whose metadata
+            # cannot be read.
+            stage_path = "/".join(Path(m["probabilities_path"]).parts[3:-1])
+            derived, _configs = verifier_stage_modality(
+                m["run_id"], m["stage_id"], {"path": stage_path})
+            stages[m["stage_id"]] = {"modality": derived or m["modality"],
+                                     "path": stage_path}
         existing = next((c for c in run["conditions"] if c["label"] == new_label), None)
         if existing is not None:
             resolved += _resolve_existing_row(existing, m)

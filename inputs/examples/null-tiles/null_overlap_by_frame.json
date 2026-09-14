@@ -1,0 +1,186 @@
+{
+ "schema": "null-exemplar-overlap-by-frame/1",
+ "erratum": "E86",
+ "generated_by": "scripts/audit_null_exemplar_overlap.py",
+ "purpose": "Tiles of each frame whose pixel window intersects one of the three null-exemplar windows. Supports an offline sensitivity check (re-score with these tiles excluded) without re-inference.",
+ "method": "Half-open axis-aligned intersection in each sheet's own pixel space, from the pixel offsets in the tile filenames. A tile is counted when it shares any pixel with a null window. Era-1 frames are 512 px on a 448 px stride; the 384 px frames step 336 px. No georeferencing is read.",
+ "null_exemplars": {
+  "K-35-052-4_32635": {
+   "x": 896,
+   "y": 1792,
+   "size_px": 512
+  },
+  "K-35-053-3_Elenovo": {
+   "x": 3584,
+   "y": 1344,
+   "size_px": 512
+  },
+  "K-35-078-1_Lesovo": {
+   "x": 2240,
+   "y": 2688,
+   "size_px": 512
+  }
+ },
+ "frames": {
+  "era1-512-full-evaluation": {
+   "manifest": "inputs/tiles/full_evaluation_manifest.json",
+   "tile_size_px": 512,
+   "n_tiles": 340,
+   "n_overlapping": 25,
+   "overlapping_by_sheet": {
+    "K-35-052-4_32635": 7,
+    "K-35-053-3_Elenovo": 9,
+    "K-35-078-1_Lesovo": 9
+   },
+   "overlapping_tiles": [
+    "K-35-052-4_32635_x1344_y1792.png",
+    "K-35-052-4_32635_x448_y1344.png",
+    "K-35-052-4_32635_x448_y1792.png",
+    "K-35-052-4_32635_x448_y2240.png",
+    "K-35-052-4_32635_x896_y1344.png",
+    "K-35-052-4_32635_x896_y1792.png",
+    "K-35-052-4_32635_x896_y2240.png",
+    "K-35-053-3_Elenovo_x3136_y1344.png",
+    "K-35-053-3_Elenovo_x3136_y1792.png",
+    "K-35-053-3_Elenovo_x3136_y896.png",
+    "K-35-053-3_Elenovo_x3584_y1344.png",
+    "K-35-053-3_Elenovo_x3584_y1792.png",
+    "K-35-053-3_Elenovo_x3584_y896.png",
+    "K-35-053-3_Elenovo_x4032_y1344.png",
+    "K-35-053-3_Elenovo_x4032_y1792.png",
+    "K-35-053-3_Elenovo_x4032_y896.png",
+    "K-35-078-1_Lesovo_x1792_y2240.png",
+    "K-35-078-1_Lesovo_x1792_y2688.png",
+    "K-35-078-1_Lesovo_x1792_y3136.png",
+    "K-35-078-1_Lesovo_x2240_y2240.png",
+    "K-35-078-1_Lesovo_x2240_y2688.png",
+    "K-35-078-1_Lesovo_x2240_y3136.png",
+    "K-35-078-1_Lesovo_x2688_y2240.png",
+    "K-35-078-1_Lesovo_x2688_y2688.png",
+    "K-35-078-1_Lesovo_x2688_y3136.png"
+   ],
+   "role": "evaluation"
+  },
+  "era1-512-validation": {
+   "manifest": "inputs/tiles/validation_manifest.json",
+   "tile_size_px": 512,
+   "n_tiles": 60,
+   "n_overlapping": 3,
+   "overlapping_by_sheet": {
+    "K-35-052-4_32635": 1,
+    "K-35-053-3_Elenovo": 1,
+    "K-35-078-1_Lesovo": 1
+   },
+   "overlapping_tiles": [
+    "K-35-052-4_32635_x448_y1344.png",
+    "K-35-053-3_Elenovo_x3136_y1344.png",
+    "K-35-078-1_Lesovo_x2240_y3136.png"
+   ],
+   "role": "evaluation"
+  },
+  "era1-512-verification": {
+   "manifest": "inputs/tiles/verification_manifest.json",
+   "tile_size_px": 512,
+   "n_tiles": 5,
+   "n_overlapping": 0,
+   "overlapping_by_sheet": {},
+   "overlapping_tiles": [],
+   "role": "evaluation"
+  },
+  "era1-512-calibration": {
+   "manifest": "inputs/tiles/calibration_manifest.json",
+   "tile_size_px": 512,
+   "n_tiles": 20,
+   "n_overlapping": 2,
+   "overlapping_by_sheet": {
+    "K-35-052-4_32635": 2
+   },
+   "overlapping_tiles": [
+    "K-35-052-4_32635_x1344_y1344.png",
+    "K-35-052-4_32635_x1344_y2240.png"
+   ],
+   "role": "calibration"
+  },
+  "era2-384-full-evaluation": {
+   "manifest": "inputs/tiles_384/full_evaluation_manifest.json",
+   "tile_size_px": 384,
+   "n_tiles": 487,
+   "n_overlapping": 20,
+   "overlapping_by_sheet": {
+    "K-35-052-4_32635": 2,
+    "K-35-053-3_Elenovo": 9,
+    "K-35-078-1_Lesovo": 9
+   },
+   "overlapping_tiles": [
+    "K-35-052-4_32635_x672_y1680.png",
+    "K-35-052-4_32635_x672_y2016.png",
+    "K-35-053-3_Elenovo_x3360_y1008.png",
+    "K-35-053-3_Elenovo_x3360_y1344.png",
+    "K-35-053-3_Elenovo_x3360_y1680.png",
+    "K-35-053-3_Elenovo_x3696_y1008.png",
+    "K-35-053-3_Elenovo_x3696_y1344.png",
+    "K-35-053-3_Elenovo_x3696_y1680.png",
+    "K-35-053-3_Elenovo_x4032_y1008.png",
+    "K-35-053-3_Elenovo_x4032_y1344.png",
+    "K-35-053-3_Elenovo_x4032_y1680.png",
+    "K-35-078-1_Lesovo_x2016_y2352.png",
+    "K-35-078-1_Lesovo_x2016_y2688.png",
+    "K-35-078-1_Lesovo_x2016_y3024.png",
+    "K-35-078-1_Lesovo_x2352_y2352.png",
+    "K-35-078-1_Lesovo_x2352_y2688.png",
+    "K-35-078-1_Lesovo_x2352_y3024.png",
+    "K-35-078-1_Lesovo_x2688_y2352.png",
+    "K-35-078-1_Lesovo_x2688_y2688.png",
+    "K-35-078-1_Lesovo_x2688_y3024.png"
+   ],
+   "role": "evaluation"
+  },
+  "era2-384-validation": {
+   "manifest": "inputs/tiles_384/validation_manifest.json",
+   "tile_size_px": 384,
+   "n_tiles": 240,
+   "n_overlapping": 6,
+   "overlapping_by_sheet": {
+    "K-35-052-4_32635": 1,
+    "K-35-053-3_Elenovo": 2,
+    "K-35-078-1_Lesovo": 3
+   },
+   "overlapping_tiles": [
+    "K-35-052-4_32635_x672_y1680.png",
+    "K-35-053-3_Elenovo_x3360_y1344.png",
+    "K-35-053-3_Elenovo_x3360_y1680.png",
+    "K-35-078-1_Lesovo_x2016_y3024.png",
+    "K-35-078-1_Lesovo_x2352_y3024.png",
+    "K-35-078-1_Lesovo_x2688_y3024.png"
+   ],
+   "role": "evaluation"
+  },
+  "h10-384-test": {
+   "manifest": "inputs/calibration/h10-384/test_manifest.json",
+   "tile_size_px": 384,
+   "n_tiles": 327,
+   "n_overlapping": 13,
+   "overlapping_by_sheet": {
+    "K-35-052-4_32635": 1,
+    "K-35-053-3_Elenovo": 7,
+    "K-35-078-1_Lesovo": 5
+   },
+   "overlapping_tiles": [
+    "K-35-052-4_32635_x672_y1680.png",
+    "K-35-053-3_Elenovo_x3360_y1008.png",
+    "K-35-053-3_Elenovo_x3360_y1680.png",
+    "K-35-053-3_Elenovo_x3696_y1344.png",
+    "K-35-053-3_Elenovo_x3696_y1680.png",
+    "K-35-053-3_Elenovo_x4032_y1008.png",
+    "K-35-053-3_Elenovo_x4032_y1344.png",
+    "K-35-053-3_Elenovo_x4032_y1680.png",
+    "K-35-078-1_Lesovo_x2016_y2352.png",
+    "K-35-078-1_Lesovo_x2016_y3024.png",
+    "K-35-078-1_Lesovo_x2352_y2688.png",
+    "K-35-078-1_Lesovo_x2352_y3024.png",
+    "K-35-078-1_Lesovo_x2688_y2688.png"
+   ],
+   "role": "evaluation"
+  }
+ }
+}

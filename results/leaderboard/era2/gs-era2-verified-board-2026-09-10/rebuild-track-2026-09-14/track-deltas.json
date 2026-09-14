@@ -1,0 +1,73 @@
+{
+ "_README": "Ruling 4 of the PI's four rulings of 2026-09-14: the Era-2 board rebuilt with the membership 'track' field DERIVED from the transmitted proposer configuration (scripts/derive_condition_modality.py) instead of a substring test on the condition label, and a new 'track_basis' sibling naming the derivation route. This is the membership delta, computed before vs after over the same 110 members; every other member field is asserted unchanged, and the tiering never reads 'track', so no rank, tier, tie set, Hsu set or metric can move. Erratum E88.",
+ "board_id": "gs-era2-verified-board-2026-09-10",
+ "n_members_before": 110,
+ "n_members_after": 110,
+ "member_ids_added": [],
+ "member_ids_removed": [],
+ "n_excluded_before": 161,
+ "n_excluded_after": 161,
+ "n_track_labels_changed": 7,
+ "track_labels_changed": [
+  {
+   "condition_id": "proposer-verifier-384::verified-adversarial-image",
+   "field": "track",
+   "before": "image",
+   "after": "text"
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-brief-image",
+   "field": "track",
+   "before": "image",
+   "after": "text"
+  },
+  {
+   "condition_id": "proposer-verifier-384::verified-checklist-image",
+   "field": "track",
+   "before": "image",
+   "after": "text"
+  },
+  {
+   "condition_id": "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1",
+   "field": "track",
+   "before": "text",
+   "after": "image"
+  },
+  {
+   "condition_id": "pv-diag-384::pv-scale4-optimal-n1-opmax",
+   "field": "track",
+   "before": "text",
+   "after": "image"
+  },
+  {
+   "condition_id": "pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3",
+   "field": "track",
+   "before": "text",
+   "after": "image"
+  },
+  {
+   "condition_id": "pv-diag-384::pv-scale4-optimal-n3-opmax",
+   "field": "track",
+   "before": "text",
+   "after": "image"
+  }
+ ],
+ "n_track_basis_added": 110,
+ "track_basis_distribution": {
+  "pass-metadata": 57,
+  "register": 1,
+  "config-file": 17,
+  "run-metadata": 23,
+  "pool-name-token": 12
+ },
+ "n_other_member_field_changes": 0,
+ "other_member_field_changes": [],
+ "passed": true,
+ "before_git_blobs": {
+  "membership.json": "e9900fa370f25cb51c27d9b1277ea3ff3a4651d5",
+  "tiering_20m.json": "b4a39f3a4350fa3654a29055a70152c88fba661a",
+  "provenance.json": "1aecf12352ae3de9158b36b9f3737378dea67ad1",
+  "results/run-analyses.json": "fd5ffb3136ac7d9d3999a56c0656ded9e9c8b894"
+ },
+ "_before_files_note": "The before copies are not kept in this directory: git holds them, and the blob hashes above are what to re-extract, so every claim here stays checkable without a duplicate. Same convention as rebuild-mcc-2026-09-13."
+}

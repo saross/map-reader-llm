@@ -1,6 +1,7 @@
 # Notation and abbreviation key (canonical)
 
-> **Last revised**: 2026-08-29 (original publication; PI-commissioned
+> **Last revised**: 2026-09-14 (§ 7 gains the register's modality-field
+> convention, erratum E88). Created 2026-08-29 (PI-commissioned
 > — "codify it a little more strongly than a terminology note").
 > This is the SINGLE canonical key for symbols, abbreviations, labels,
 > and dataset column names across the paper, supplements, findings
@@ -121,6 +122,16 @@ Board JSONs (`final_board_50m.json` and kin): `label`, `basis`,
 Registry ids: conditions are `run_id::label` (kebab-case); passes are
 `run_id::pool::runN`.
 
+Register modality fields (`results/run-conditions.json`):
+`proposer_pools[...].modality` is the **proposer's** exemplar modality and
+`verifier_passes[...].modality` is the **verifier stage's own** — what that
+stage itself was sent — never the track the pass belongs to (settled by the PI
+2026-09-14, erratum **E88**); both are `image` when the transmitted
+configuration set `include_example_images` over a non-empty exemplar list and
+`text` otherwise, and both are derived by
+`scripts/derive_condition_modality.py`, never from a substring of a label.
+`text+image` is a refinement of `image`, not a third level.
+
 ### 7.1 Uplift-supplement dataset columns
 
 Sanctioned 2026-09-10 (PI ruling 2(i) of the supplement's registration walk-through) from the builder's declared extensions (`results/uplift-supplement/notation-extension-proposal.md`, 2026-08-29 → 2026-09-10). Each column names the key section it extends; "anti-confabulation" marks an operational provenance column with no symbol behind it.
@@ -237,6 +248,29 @@ condition label within its run; it never changes what the configuration IS.
 | $/mound | Run cost per true-positive detection at the operating point (the per-mound economics) |
 
 ## Changelog
+
+### 2026-09-14 — § 7 gains the register's modality-field convention (erratum E88)
+
+**Trigger**: ruling 3 of the PI's four rulings of 2026-09-14 on the
+modality-track audit (`reports/modality-track-audit-2026-09-14.md` § 6). The
+register's `verifier_passes[...].modality` field had been used under two
+different meanings — the verifier stage's own exemplars in some runs, the track
+the pass belongs to in others, and the
+`pv-diag-384::scale-4-optimal-487-verified-v1-{n1,n3,n5,n10}` family split
+across both conventions inside a single run. The PI settled it as the
+**verifier's own exemplars**, and the field now derives.
+
+| | before | after |
+|---|---|---|
+| `verifier_passes[...].modality` meaning | undocumented; used both ways (119 of 174 resolvable entries fit the verifier reading, 92 of 100 the track reading) | **the verifier stage's own exemplar modality**, derived |
+| Registered stages carrying the settled value | 119 of 174 resolvable | **174 of 174** (55 changed: 51 `image` → `text`, 4 `text` → `image`; 12 unresolvable stages keep their recorded value) |
+
+**What did NOT change**: no metric, rank, tier or interval — no analysis in the
+corpus groups by this field. `proposer_pools[...].modality` was already clean
+(0 of 459 mismatched) and its definition is unchanged; this entry only writes it
+down beside the verifier field.
+
+Commit: this entry's commit.
 
 ### 2026-09-12 — § 7.1 `pairing_basis` extended; § 7.2 condition-label suffixes added
 

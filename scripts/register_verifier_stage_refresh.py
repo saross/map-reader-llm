@@ -43,6 +43,11 @@ from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.derive_condition_modality import verifier_stage_modality  # noqa: E402
+
 RUN_CONDITIONS = REPO_ROOT / "results" / "run-conditions.json"
 OUTPUTS = REPO_ROOT / "outputs" / "h11"
 
@@ -56,11 +61,20 @@ REFRESH_DATE = "2026-09-08"
 #: run's output directory, expected candidate count from the card § 1 table, key of
 #: the pre-recovery stage it sits beside — None where the original was never
 #: registered).
+#:
+#: ``modality`` is the **verifier stage's own** exemplar modality — what that
+#: stage itself was sent — per the convention the PI settled on 2026-09-14
+#: (erratum E88). All three of these stages ran a ``verify_*-text`` config and
+#: so carry no exemplar pixels; the first entry read ``image`` until then,
+#: because it had been authored under the retired "track" reading (its proposer
+#: pool IS the image arm). :func:`apply` derives the value at write time and
+#: falls back to the constant only when the stage's verify metadata cannot be
+#: read, so the constant can no longer be the authority.
 STAGES: tuple[dict[str, Any], ...] = (
     {
         "run_id": "pv-diag-384",
         "key": "flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08",
-        "modality": "image",
+        "modality": "text",
         "path": "flash-high-image-n5/image-t0.0/verified-v1-n10-recovery-2026-09-08",
         "n_candidates": 889,
         "beside": "flash-high-image-n5-image-t0.0-verified-v1-n10",
@@ -189,8 +203,10 @@ def apply(rc: dict[str, Any], actions: list[dict[str, Any]]) -> None:
     for action in actions:
         run = rc["decomposition"][action["run_id"]]
         if action["kind"] == "row":
+            derived, _configs = verifier_stage_modality(
+                action["run_id"], action["key"], {"path": action["path"]})
             run["verifier_passes"][action["key"]] = {
-                "modality": action["modality"], "path": action["path"]}
+                "modality": derived or action["modality"], "path": action["path"]}
         elif action["kind"] == "note":
             current = run.get("_note") or ""
             run["_note"] = f"{current} | {action['note']}" if current else action["note"]

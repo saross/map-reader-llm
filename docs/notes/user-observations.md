@@ -1279,3 +1279,36 @@ sequence, and an overnight close-out job.
   overnight block; the close-out job's brief carries every ruled item
   and routes every unruled one to a numbered morning list. Candidate:
   the morning-questions list is the handoff unit for overnight work.
+
+## S153-b/c candidates (pending review, 2026-09-14, drafted at handoff) — silence never discards
+
+S150 → S153 above are still pending (the PI deferred the review). This
+stretch: the rulings day of 2026-09-13, the benchmark repository's errata
+arriving from another instance, the modality audit, and the handover.
+
+- **C1 — "This error sounds serious."** A passing note about seven
+  mislabelled board cells that I had filed as metadata; Shawn's prior on
+  anything touching a preregistered factor was the right one, and the
+  corpus-wide probe he asked for found the mechanism and bounded the
+  reach. Candidate: his severity prior on registered factors beats mine;
+  answer it with a derivation-from-source and a reach table, not
+  reassurance.
+- **C2 — "Has the problem been fixed permanently? If not, we should do
+  so."** On the cleanup-overwrite defect I had scheduled for after the
+  campaign, he moved it to now. Candidate: "clear up rather than defer"
+  applies to runner defects as much as to data — cost it and do it the
+  day it is found.
+- **C3 — "Use agents where possible to manage Fable token consumption."**
+  Stated twice, then made concrete: restart in Opus until Thursday, keep
+  the tasks mundane, leave messages for both lanes. Candidate: he
+  allocates model tiers to task kinds deliberately; the beacon is a
+  two-reader document when credit is the constraint.
+- **C4 — "Can any of the other metadata be recovered via git history?
+  Otherwise, do you need more Google Cloud reports?"** Two recovery
+  routes offered before I had asked for either. Candidate: when I report
+  a loss as unrecoverable, he expects the alternatives enumerated; git
+  history and the billing console are now standing routes.
+- **C5 — The signature held four times, deliberately.** "I'll wait" each
+  time a change he had already ruled was about to land in the board, so
+  one state gets one signature. Candidate: a re-signature is presented
+  once per stable state, never per rebuild.

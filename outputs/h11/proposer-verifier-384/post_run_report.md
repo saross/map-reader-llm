@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — proposer-verifier-384
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9fd928af3`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9f5fec777`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/proposer-verifier-384` · **Registry status**: active · **Purpose**: not supplied
 
@@ -178,27 +178,31 @@ Scored evaluations under this run that no condition claims, each waived in `resu
 - **1 evaluation(s)** — GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): verified-checklist-text's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition.
   - `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/proposer-verifier-384__verified-checklist-text/evaluation.json`
 
-## 6. Analyses that read this run (3)
+## 6. Analyses that read this run (4)
 
 A run is linked to an analysis when the analysis's `conditions_compared` names one of this run's conditions. *Cells* is how many of the analysis's compared conditions come from this run, out of its total. *Signed* is the register's `manually_verified_at` stamp.
 
 | Analysis | Cells | Type | Hypotheses | Registration | Paper section | Deviations | Signed | Output |
 |---|---|---|---|---|---|---|---|---|
 | `gs-era2-verified-board-2026-09-10` | 8 of 103 | leaderboard | `H2`, `H1` | post-hoc | Results | — | 2026-09-12T06:04:30Z | `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json` |
+| `null-exemplar-sensitivity-2026-09-13` | 8 of 235 | comparison | — | post-hoc | Appendix | — | not supplied | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
 | `uplift-supplement-flatten` | 8 of 441 | diagnostic | — | post-hoc | Appendix | — | 2026-09-10T22:55:40Z | `results/uplift-supplement/conditions.csv` |
 | `verifier-uplift-pairing` | 8 of 170 | comparison | `H2` | post-hoc | Appendix | — | 2026-09-12T06:04:30Z | `results/uplift-supplement/verifier-uplift.csv` |
 
-## 7. Findings documents (0)
+## 7. Findings documents (1)
 
-No findings document on disk is named by an analysis that reads this run: a findings write-up for this run is **not supplied** from the register. § 6's `output_path` column gives each analysis's artefact directory.
+| Document | Named by |
+|---|---|
+| `results/null-exemplar-sensitivity-2026-09-13/findings.md` | `null-exemplar-sensitivity-2026-09-13` |
 
 ## 8. Protocol errata
 
-### 8.2 Mentioning this run (1)
+### 8.2 Mentioning this run (2)
 
 The entry's text names this run id or its directory path. A mention is a pointer to read the entry, not a claim that the erratum is about this run:
 
 - **E65** — Registered verifier prompt `verify\_brief.md` edited post-lodgement (commit `5e7601d77`) — the one prompt-divergence commit with no contemporaneous erratum
+- **E88** — Modality — a preregistered factor — was assigned by a substring test on the condition label in four scripts; eight conditions and one pool were mislabelled, and two registered outcomes quote an image-group range that moves
 
 ## 9. Documents and structure in the run directory
 
@@ -215,7 +219,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `9fd928af3` |
+| Source commit | `9f5fec777` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

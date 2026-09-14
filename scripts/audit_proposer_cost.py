@@ -78,10 +78,46 @@ from typing import Any
 #: NOT be applied to it. Discounting the cache read is a 19 per cent
 #: understatement on a cache-heavy image leg: it returns US$18.33 where the
 #: committed GS figure is US$22.50.
+#: ``gemini-3.8-flash`` was published 2026-09-02 at 3.7's list price. Its
+#: 0.75 / 3.75 rates are the same two numbers the project's own pricing table
+#: carries, where they are recorded as "verified 2026-09-04 against
+#: ai.google.dev/gemini-api/docs/pricing" (``scripts/lib_llm_metadata.py``,
+#: the ``google_gemini`` block of ``PRICING``), and
+#: ``reports/r7-gaps-deltas-2026-09-11.md`` line 35 states the same. Added
+#: 2026-09-14 so the S144 3.8 swap arm
+#: (``outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/
+#: verify_swap38``) can be audited at all instead of erroring out.
 RATE_CARDS: dict[str, dict[str, float]] = {
     "gemini-3-flash": {"input": 0.50, "output": 3.00, "cache": 0.05},
     "gemini-3-flash-preview": {"input": 0.50, "output": 3.00, "cache": 0.05},
     "gemini-3.7-flash": {"input": 0.75, "output": 3.75, "cache": 0.075},
+    "gemini-3.8-flash": {"input": 0.75, "output": 3.75, "cache": 0.075},
+    # 3.1 Pro (preview): standard tier, prompts <= 200K tokens, read
+    # 2026-09-14 from ai.google.dev/gemini-api/docs/pricing (the page states
+    # "Last updated 2026-09-11 UTC"), which prices the exact model id
+    # `gemini-3.1-pro-preview`: input $2.00, output $12.00 (thinking tokens
+    # billed as output), context-caching read $0.20, cache storage $4.50 per
+    # 1M tokens per hour. Batch and flex are both half of standard ($1.00 /
+    # $6.00), which TIER_DISCOUNT applies. The three Pro verifier stages this
+    # card exists for ran on 2026-05-06 and their own metadata recorded
+    # 2.00 / 12.00 as the rates in force that day
+    # (`outputs/h11/pv-diag-384/verified/*-pro-verifier/run.meta.json`,
+    # cost_estimate.pricing_used), so the input and output rates are anchored
+    # at run time and only the cache read rate comes from the later page —
+    # harmless here, as those stages' cached share is 0.000.
+    "gemini-3.1-pro-preview": {"input": 2.00, "output": 12.00, "cache": 0.20},
+}
+
+#: Rates for prompts ABOVE the 200K-token tier boundary, where a model has
+#: one. Recorded for completeness and as a tripwire: no pass in this project
+#: approaches a 200K-token prompt (the largest verifier crop prompt is about
+#: 8.5K tokens), so :func:`rates` prices the <= 200K tier unconditionally. A
+#: future long-context pass would need this table wired in.
+LONG_PROMPT_RATE_CARDS: dict[str, dict[str, float]] = {
+    # Same source and date as the `gemini-3.1-pro-preview` entry above:
+    # "$4.00, prompts > 200k tokens" input and "$18.00, prompts > 200k"
+    # output, caching read $0.40.
+    "gemini-3.1-pro-preview": {"input": 4.00, "output": 18.00, "cache": 0.40},
 }
 
 #: Flex and batch both bill at half of list; standard bills at list.

@@ -1,8 +1,8 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/run-registry.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/run-registry.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->
 
 # Run registry
 
-> Generated 2026-05-30T08:03:46Z · 41 row(s) · schema v1.0.
+> Generated 2026-05-30T08:03:46Z · 41 row(s) · schema v1.0 · rendered from `results/run-registry.json` at commit `60b07ffcc`.
 >
 > **Coverage**: all 41 runs (hand-verified input).
 

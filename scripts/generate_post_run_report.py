@@ -44,6 +44,7 @@ import functools
 import gzip
 import json
 import re
+import subprocess
 import sys
 import textwrap
 from datetime import datetime, timezone
@@ -1632,21 +1633,59 @@ def _coverage_note(manifest: str, n_rows: int) -> str:
     }.get(manifest, f"{n_rows} row(s)")
 
 
-def render_manifest(manifest: str, obj: dict, json_rel: str) -> str:
-    """Render a human-readable Markdown view of a manifest (do-not-edit)."""
+def _git_head() -> str:
+    """Return the short HEAD hash for the source-commit stamp (or ``unknown``).
+
+    Never raises: a rendering outside a git checkout (a tarball, a
+    container) must still produce the document, with the stamp saying
+    plainly that it could not be determined.
+    """
+    try:
+        return subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"], cwd=REPO_ROOT,
+            capture_output=True, text=True, check=True, timeout=10,
+        ).stdout.strip() or "unknown"
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, OSError):
+        return "unknown"
+
+
+def render_manifest(manifest: str, obj: dict, json_rel: str,
+                    source_commit: str | None = None) -> str:
+    """Render a human-readable Markdown view of a manifest (do-not-edit).
+
+    The rendering is a pure function of the committed manifest JSON plus
+    the source-commit stamp, which is what lets ``--check-renderings``
+    detect drift without re-extracting anything from ``outputs/``.
+
+    Args:
+        manifest: One of ``runs``, ``conditions``, ``passes``,
+            ``analyses``, ``run-registry``.
+        obj: The manifest object (as committed, or as freshly assembled).
+        json_rel: Repo-relative path of the source JSON, named in the banner.
+        source_commit: Short git hash to stamp; defaults to HEAD. The
+            2026-09-11 ruling asks a generated projection for a
+            source-commit stamp, and this is it — the commit whose
+            ``json_rel`` this document was rendered from.
+
+    Returns:
+        The full Markdown document.
+    """
     rows = obj[_array_key(manifest)]
     titles = {
         "runs": "Runs manifest", "conditions": "Conditions manifest",
         "passes": "Passes manifest", "analyses": "Analyses manifest",
         "run-registry": "Run registry",
     }
+    commit = source_commit or _git_head()
     head = (
         f"<!-- GENERATED FILE — DO NOT EDIT. Rendered from {json_rel} by "
         f"scripts/generate_post_run_report.py v{GENERATOR_VERSION}. Edit the "
-        f"source-of-truth files and regenerate. -->\n\n"
+        f"source-of-truth files and regenerate; --check-renderings is the "
+        f"drift guard (tier-1: tests/test_manifest_renderings.py). -->\n\n"
         f"# {titles[manifest]}\n\n"
         f"> Generated {obj['generated_at']} · {len(rows)} row(s) · schema "
-        f"v{obj['schema_version']}.\n>\n"
+        f"v{obj['schema_version']} · rendered from `{json_rel}` at commit "
+        f"`{commit}`.\n>\n"
         f"> **Coverage**: {_coverage_note(manifest, len(rows))}.\n\n"
     )
     if manifest == "runs":
@@ -2079,6 +2118,83 @@ def _self_test() -> int:
 # --------------------------------------------------------------------------- #
 
 
+#: Regex neutralising the source-commit stamp for drift comparison. A
+#: regeneration at a new commit must not count as drift when the projection
+#: itself is unchanged.
+_STAMP_RE = re.compile(r"at commit `[^`]+`")
+
+
+def manifest_md_path(manifest: str) -> Path:
+    """Absolute path of a manifest's rendered Markdown view.
+
+    Args:
+        manifest: A key of :data:`MANIFEST_FILES`.
+
+    Returns:
+        The ``.md`` sibling of the manifest's JSON.
+    """
+    return (REPO_ROOT / MANIFEST_FILES[manifest]).with_suffix(".md")
+
+
+def render_committed_manifests(source_commit: str | None = None) -> dict[str, str]:
+    """Re-render all five register views from the COMMITTED manifest JSONs.
+
+    The renderings are projections, so this touches no ``outputs/`` file
+    and recomputes no metric: it reads the five committed JSONs and
+    returns what their Markdown views should be. That is what makes the
+    drift guard cheap enough for tier 1 and safe to run without a rebuild.
+
+    Args:
+        source_commit: Stamp to use; defaults to HEAD.
+
+    Returns:
+        Mapping manifest key → rendered Markdown.
+    """
+    commit = source_commit or _git_head()
+    out: dict[str, str] = {}
+    for manifest, json_rel in MANIFEST_FILES.items():
+        obj = _load_json(REPO_ROOT / json_rel)
+        out[manifest] = render_manifest(manifest, obj, json_rel, commit)
+    return out
+
+
+def check_renderings() -> tuple[list[str], list[str]]:
+    """Compare the committed register renderings with a fresh projection.
+
+    The source-commit stamp is neutralised on both sides, so only a
+    content difference counts as drift.
+
+    Returns:
+        Tuple of (drifted repo-relative paths, missing repo-relative paths).
+    """
+    drifted: list[str] = []
+    missing: list[str] = []
+    for manifest, text in render_committed_manifests().items():
+        md_path = manifest_md_path(manifest)
+        rel = md_path.relative_to(REPO_ROOT).as_posix()
+        if not md_path.exists():
+            missing.append(rel)
+            continue
+        committed = md_path.read_text(encoding="utf-8")
+        if _STAMP_RE.sub("", committed) != _STAMP_RE.sub("", text):
+            drifted.append(rel)
+    return drifted, missing
+
+
+def write_renderings() -> list[str]:
+    """Re-render the five register views in place from the committed JSONs.
+
+    Returns:
+        The repo-relative paths written.
+    """
+    written: list[str] = []
+    for manifest, text in render_committed_manifests().items():
+        md_path = manifest_md_path(manifest)
+        md_path.write_text(text, encoding="utf-8")
+        written.append(md_path.relative_to(REPO_ROOT).as_posix())
+    return written
+
+
 def build_arg_parser() -> argparse.ArgumentParser:
     """Construct the command-line interface."""
     parser = argparse.ArgumentParser(
@@ -2119,6 +2235,19 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="Write the validated manifests (JSON + rendered MD) to results/. Refuses to write "
              "if any row or manifest fails validation. Never rewrites run-registry.json (the "
              "hand-authored input) — only its rendered .md view.",
+    )
+    parser.add_argument(
+        "--render-manifests",
+        action="store_true",
+        help="Re-render the five register .md views from the COMMITTED manifest JSONs and exit. "
+             "Recomputes nothing and reads no outputs/ file — use it to refresh the "
+             "source-commit stamp or a banner without rebuilding the manifests.",
+    )
+    parser.add_argument(
+        "--check-renderings",
+        action="store_true",
+        help="Drift guard for the five register .md views: re-render from the committed JSONs "
+             "in memory and compare, with the source-commit stamp neutralised. Exit 1 on drift.",
     )
     return parser
 
@@ -2333,6 +2462,26 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.self_test:
         return _self_test()
+
+    if args.check_renderings:
+        drifted, missing = check_renderings()
+        for rel in missing:
+            print(f"MISSING rendering: {rel}", file=sys.stderr)
+        for rel in drifted:
+            print(f"DRIFT: {rel} differs from a rendering of its committed JSON",
+                  file=sys.stderr)
+        if drifted or missing:
+            print("Re-render with --render-manifests (content) or --all --write "
+                  "(if the manifests themselves are stale).", file=sys.stderr)
+            return 1
+        print(f"{len(MANIFEST_FILES)} register rendering(s) current "
+              f"(source-commit stamp neutralised)")
+        return 0
+
+    if args.render_manifests:
+        for rel in write_renderings():
+            print(f"rendered {rel}")
+        return 0
 
     if args.draft_run:
         try:

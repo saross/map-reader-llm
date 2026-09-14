@@ -299,6 +299,26 @@ def gen_config_to_sdk(
 # =========================================================================
 
 
+def system_instruction_path(config: dict) -> Path | None:
+    """Resolve a verifier config's system-instruction file path.
+
+    Single resolution site, so a caller that needs the file itself (to
+    digest its bytes, for instance) cannot drift from the one that reads
+    its text.
+
+    Args:
+        config: Verifier config dict with an ``instruction_file`` key.
+
+    Returns:
+        The path under ``prompts/system-instructions/``, or None when the
+        config names no instruction file.
+    """
+    instruction_file = config.get("instruction_file", "")
+    if not instruction_file:
+        return None
+    return _INSTRUCTIONS_DIR / instruction_file
+
+
 def load_system_instruction(config: dict) -> str:
     """Load verifier system instruction text from file.
 
@@ -308,10 +328,9 @@ def load_system_instruction(config: dict) -> str:
     Returns:
         System instruction text, or empty string if not found.
     """
-    instruction_file = config.get("instruction_file", "")
-    if not instruction_file:
+    path = system_instruction_path(config)
+    if path is None:
         return ""
-    path = _INSTRUCTIONS_DIR / instruction_file
     if not path.exists():
         logger.warning("Instruction file not found: %s", path)
         return ""

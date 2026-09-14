@@ -10,7 +10,19 @@
 
 ---
 
-> **Last revised**: 2026-09-12 (Session 153: § R1b added as a heading and
+> **Last revised**: 2026-09-14 (**§ R2's image-bearing tile-MCC range
+> corrected under erratum E88** — MCC 0.0665–0.291 across the twenty-one
+> computable of twenty-two image-bearing cells, from 0.094–0.291 across
+> seventeen; the four phase-2e exemplar-ordering cells are image-bearing and
+> had been in neither modality group. Direction, text-only side, every F1 and
+> every tier unchanged. See [§ Changelog](#changelog).) Prior:
+> 2026-09-13 (Session 153: the four
+> `[DRAFT, S153 — pending PI ruling]` markers in § R7.3 and the § R4
+> `[DRAFT NOTE, S152]` cleared — each of the five decisions was ruled on
+> 2026-09-12, and the markers now read `[RULED 2026-09-1x: …]` with the
+> ruling named; § R7.3's closing draft note keeps only its open items (the
+> word budget). No figure, point estimate, or verdict changed. Prior:
+> 2026-09-12 (Session 153: § R1b added as a heading and
 > a `[BLOCK PENDING]` pointer on the PI's ruling 5, the GS stride/geometry
 > programme's Results home, and § R7.2's cross-reference re-pointed to it;
 > earlier the same day, reference r2 carried through
@@ -186,8 +198,9 @@ Gemini 3.7 the within-family text − image gap closes from +0.0549
 (p = 0.001) to −0.0115 (p = 0.25; § R7.3, Obs 447) — and a
 metric trade-off recurs in which text-only cells reach F1 ≈ 0.60 with
 essentially no tile-level discrimination while image-bearing cells trade
-F1 for markedly better discrimination (MCC 0.094–0.291 across the
-seventeen computable image-bearing cells). For the text-only cells that
+F1 for markedly better discrimination (MCC 0.0665–0.291 across the
+twenty-one computable of the twenty-two image-bearing cells)
+[E88]. For the text-only cells that
 "essentially none" is literal rather than numerical: eight of the
 fourteen returned at least one detection on every one of the 340
 evaluation tiles, which empties the predicted-negative column of the
@@ -361,7 +374,8 @@ instrument against the whole Era-2 incumbency at once, at both levels.
 The frame itself moved no incumbent's F1 at four decimals and the
 B-geometry cells by 0.007 to 0.008 downward.
 
-[DRAFT NOTE, S152: post-hoc; the analysis row was SIGNED by the PI on
+[RULED 2026-09-12 (ruling 7) — retained for the record: post-hoc; the
+analysis row was SIGNED by the PI on
 2026-09-10 after ruling gate G1 satisfied on the true-input
 reproduction: the archived board rebuilt by the retired builder failed
 as specified on one cell because a stale label-keyed cache had served
@@ -759,14 +773,18 @@ of § R4 — the 487-tile gold-standard frame — the 3.8 cell joins Tier 1 at
 candidate than 3.7 (76 tokens against 106) for about $0.85. The family
 ladder for this task therefore stops at 3.7, and because the 3.8
 proposer seat was never measured, nothing here bears on 3.8 as a
-proposer (Obs 448). [DRAFT, S153 — pending PI ruling]
+proposer (Obs 448). [RULED 2026-09-12: the 3.8 verifier-seat leg is
+reported as drafted.]
 
 On the r2 board the all-3.7 stack takes tier 1: arm 2 N = 5 oracle
 0.8871 and carried 0.8827 (T2). Its carried point alone stands +0.0267
 above the best cell the Gemini 3 board can field, B's own N = 10 oracle
 at 0.8560, and its oracle stands +0.0311 above the same cell — so the
 family clears the incumbent family even when the incumbent is allowed
-its own hindsight. [DRAFT, S153 — pending PI ruling] The
+its own hindsight. [RULED 2026-09-12 (ruling 2, outline § D19): the
+family-clears-incumbent framing stands — the paper's headline is the
+all-3.7 stack, 0.9190 on the Era-2 board frame and 0.9265 on the
+791-candidate screen.] The
 fourth cell scores 0.8728 carried (T3) and 0.8813 oracle (T2) and
 holds the board's highest carried tile-MCC, 0.726 at precision 0.952
 and recall 0.806, the discriminating verifier on the noisier Gemini 3
@@ -784,7 +802,9 @@ Era-2 verified board of § R4 all five Tier-1 cells are Gemini 3.7 or
 3.8, and every Gemini 3 cell falls to Tier 2 or below at both its
 committed and its sweep-optimal operating point, so the family gain
 reads the same way on 487 curated tiles as on 55 deployment sheets.
-[DRAFT, S153 — pending PI ruling]
+[RULED 2026-09-12 (ruling 2): the family step is the headline, so it
+stands on both instruments; whether § R4 or § R7.3 is its single home
+is a compression call for the re-draft, not a ruling.]
 
 The image screen on GS (I1–I5) moves the modality result of §§ R2 and
 R4. The 3.7 image proposer scored 0.9254 at 20 m under the Gemini 3
@@ -821,10 +841,13 @@ billed at about 0.6 × the token basis was an artefact of the run
 metadata's own cost stamps, which priced 3.7 at Gemini 3 rates.
 Thinking volume was 265–277
 tokens per call on the text arms (D4) and 88–157 on image (I4).
-[DRAFT, S153 — pending PI ruling]
+[RULED 2026-09-12: the fourth cell's mixed basis — token-audited
+proposer, invoice-derived verifier — is kept as marked.]
 
-[DRAFT NOTE, S151: (a) chains are named per sentence, canonical for
-the bets and r2 for the board, as the findings documents do; (b) RESOLVED
+[DRAFT NOTE, S151: (a) RESOLVED S153 by ruling 1 (outline § D18) —
+chains are named per sentence, canonical for the bets and r2 for the
+board, as the findings documents do, which is exactly D18's licence to
+name an older chain only where a bet was assessed on it; (b) RESOLVED
 S153 — the two 3.7 arms carry audited token-basis costs ($153 and
 $159; `reports/r7-gaps-deltas-2026-09-11.md` § 2), the fourth cell's
 verifier is taken from the invoice (about $58, day-isolated;
@@ -964,6 +987,76 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-09-14 — § R2's image-bearing tile-MCC range corrected (erratum E88)
+
+**Trigger**: the corpus-wide modality-track audit
+(`reports/modality-track-audit-2026-09-14.md`) and ruling 2 of the PI's four
+rulings of 2026-09-14. Modality — a preregistered factor (H1) — had been
+assigned in four analysis scripts by testing a condition label for the
+substring `image`. The four phase-2e exemplar-ORDERING cells
+(`canonical-first`, `canonical-last`, `config-default`, `random`) name neither
+modality, so they fell into *neither* group although all four transmitted an
+image-bearing configuration (instruction `detect_brief-text-image.md`,
+`include_example_images` true, `example_count` 13). The image group was
+therefore short by four cells, and its lower bound was the wrong cell's value.
+
+**Before → after** (derived from the transmitted configuration by
+`scripts/derive_condition_modality.py`; recomputed from the same 36
+`results/paper-eval/phase2/512px-14buf-mcc/` evaluations, US$0, no cell
+re-scored):
+
+| Claim | Before | After |
+|---|---|---|
+| Image-bearing cells | 18, of which **17** have a defined tile MCC | 22, of which **21** do |
+| Image-bearing tile-MCC range | **0.094–0.291** (0.0942–0.2907) | **0.0665–0.291** (0.0665–0.2907) |
+| Cells in neither modality group | 4 (`retest-phase2e::{canonical-first,canonical-last,config-default,random}`) | **0** |
+
+**What did NOT change**: the direction of the metric trade-off — 20 of the 21
+computable image-bearing cells sit strictly above every computable text-only
+cell's 0.0665 and the twenty-first (`retest-phase2e::random`, 0.0665) ties it;
+the text-only side entirely (14 cells, MCC undefined on eight, 0.0665 on the
+other six, F1 ≈ 0.60); every F1, precision, recall and confidence interval in
+the draft; the `canonical-last` anchor (F1 0.631, MCC 0.213); the
+`image-verbose` (0.603 / 0.281) and `verbose-text-image` (0.517 / 0.291)
+anchors; every rank, tier and Hsu admissible set on every board (no tiering
+instrument reads modality); and every hypothesis-outcome row, H1's confirmatory
+contrast included — it groups the five phase-2a conditions, all correctly
+labelled.
+
+The upstream register row `era1-single-pass-baseline-matrix` carries the same
+correction as an `[AMENDED 2026-09-14, E88]` clause, and claims-inventory row
+R2-06 is re-anchored to the corrected figures. Commit: this entry's commit.
+
+### 2026-09-13 — The five ruled markers cleared (Session 153)
+
+**Refresh trigger**: item 9 of
+`planning/documentation-foundation-checklist-2026-09-13.md`. All four
+`[DRAFT, S153 — pending PI ruling]` markers in § R7.3, and the § R4
+`[DRAFT NOTE, S152]`, carried decisions the PI had already taken on
+2026-09-12 (recorded at
+`docs/paper/results-claims-inventory-2026-09-12.md` § Rulings 2026-09-12
+and `reports/results-rulings-deltas-2026-09-12.md`). Each marker is
+replaced by the ruling it was waiting for.
+
+| # | passage | before | after |
+|---|---|---|---|
+| 1 | § R7.3, the Gemini 3.8 verifier-seat leg (R7.3-13) | `[DRAFT, S153 — pending PI ruling]` — "whether the 3.8 leg is reported at all" | `[RULED 2026-09-12: the 3.8 verifier-seat leg is reported as drafted.]` |
+| 2 | § R7.3, the r2 tier-1 sentence (R7.3-15) | same marker — "whether the family-clears-incumbent framing stands" | `[RULED 2026-09-12 (ruling 2, outline § D19): … the paper's headline is the all-3.7 stack, 0.9190 on the Era-2 board frame and 0.9265 on the 791-candidate screen.]` |
+| 3 | § R7.3, the gold-standard back-reference (R7.3-20) | same marker | `[RULED 2026-09-12 (ruling 2): the family step is the headline, so it stands on both instruments; whether § R4 or § R7.3 is its single home is a compression call for the re-draft, not a ruling.]` |
+| 4 | § R7.3, the cost paragraph (R7.3-26, R7.3-29) | same marker — "whether the cost paragraph stays in the body" | `[RULED 2026-09-12: the fourth cell's mixed basis — token-audited proposer, invoice-derived verifier — is kept as marked.]` |
+| 5 | § R4, the Era-2 board note | `[DRAFT NOTE, S152: post-hoc; the analysis row was SIGNED …]` | `[RULED 2026-09-12 (ruling 7) — retained for the record: …]`, same body text |
+| 6 | § R7.3, closing draft note, item (a) | "(a) chains are named per sentence, canonical for the bets and r2 for the board" | "(a) RESOLVED S153 by ruling 1 (outline § D18) — … which is exactly D18's licence to name an older chain only where a bet was assessed on it" |
+
+**What did NOT change.** No point estimate, interval, p-value, tier,
+admissible set, registration status, table, or figure. The § R4 note's
+body text is carried verbatim; only its label moved from pending to
+ruled. Two markers are deliberately **left open** because their
+decisions are not in the Rulings section: § R0's
+`[DRAFT NOTE: cross-reference the Methods subsections …]` (blocked on
+Methods prose) and item (d) of § R7.3's closing note (the per-block word
+allocation, which ruling 3 explicitly did not settle). The `[TABLE N]`
+pointer in § R0 is a placement marker, not a decision, and stays.
 
 ### 2026-09-12 (later) — Obs 447 qualification in § R2 and § R4 (Session 153)
 
@@ -1191,14 +1284,16 @@ load-bearing, so it could not be left standing.
 | Claim | Before | After |
 |---|---|---|
 | Text-only-cell tile MCC | "near-zero" | undefined on 8 of the 14 phase-2 text-only cells; 0.0665 on the other 6 |
-| Image-bearing-cell tile MCC | "far better tile discrimination" (unquantified) | MCC 0.094–0.291 over the 17 computable image-bearing cells |
+| Image-bearing-cell tile MCC | "far better tile discrimination" (unquantified) | MCC 0.094–0.291 over the 17 computable image-bearing cells — **superseded 2026-09-14 by E88: 0.0665–0.2907 over the 21 computable of 22**, the four phase-2e ordering cells having been in neither group |
 | Text-only-cell F1 | ≈ 0.60 | ≈ 0.60 (unchanged) |
 
 **What did not change**: no F1, precision, recall, or confidence interval
 anywhere in the draft; the `canonical-last` anchor (F1 0.631, MCC 0.213)
 is untouched, as are the `image-verbose` (0.603 / 0.281) and
 `verbose-text-image` (0.517 / 0.291) anchors quoted from the
-`era1-single-pass-baseline-matrix` outcome. The **direction** of the
+`era1-single-pass-baseline-matrix` outcome. [E88, 2026-09-14: the four
+phase-2e ordering cells this entry placed in neither modality group are
+image-bearing — see the Changelog entry of that date.] The **direction** of the
 metric trade-off survives — image cells genuinely do discriminate better
 at tile level — and no registered hypothesis verdict, tie set, or tier
 ranking moves. What changed is that the text side of the contrast is now

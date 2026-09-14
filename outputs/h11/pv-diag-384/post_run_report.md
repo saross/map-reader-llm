@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — pv-diag-384
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9fd928af3`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9f5fec777`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/pv-diag-384` · **Registry status**: active · **Purpose**: not supplied
 
@@ -259,40 +259,40 @@
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
 |---|---:|---|---|---|---:|---|---:|---:|
-| `flash-high-image-n5-image-t0.0-verified-v1-n10` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 460 | 0 |
-| `flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 889 | 1 |
-| `flash-high-image-n5-image-t0.3-verified-v1-n1` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 872 | 0 |
-| `flash-high-image-n5-image-t0.3-verified-v1-n10` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 3412 | 0 |
-| `flash-high-image-n5-image-t0.3-verified-v1-n3` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1619 | 0 |
-| `flash-high-image-n5-image-t0.3-verified-v1-n5` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 11 | 0 |
+| `flash-high-image-n5-image-t0.0-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 460 | 0 |
+| `flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 889 | 1 |
+| `flash-high-image-n5-image-t0.3-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 872 | 0 |
+| `flash-high-image-n5-image-t0.3-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3412 | 0 |
+| `flash-high-image-n5-image-t0.3-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1619 | 0 |
+| `flash-high-image-n5-image-t0.3-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 11 | 0 |
 | `flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 2017 | 0 |
-| `flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 26 | 0 |
+| `flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 26 | 0 |
 | `flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 2017 | 0 |
-| `flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 19 | 0 |
+| `flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 19 | 0 |
 | `flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1 | 0 |
-| `flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 19 | 0 |
+| `flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 19 | 0 |
 | `flash-high-image-n5-image-t0.7-session-78-matrix-verified-comparative` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 2017 | 0 |
-| `flash-high-image-n5-image-t0.7-verified-v1-n1` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 771 | 0 |
-| `flash-high-image-n5-image-t0.7-verified-v1-n10` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 3211 | 0 |
-| `flash-high-image-n5-image-t0.7-verified-v1-n3` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1522 | 0 |
-| `flash-high-image-n5-image-t0.7-verified-v1-n5` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1 | 0 |
-| `flash-high-image-n5-image-t1.0-verified-v1-n1` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 982 | 4 |
-| `flash-high-image-n5-image-t1.0-verified-v1-n10` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 4638 | 0 |
-| `flash-high-image-n5-image-t1.0-verified-v1-n3` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1887 | 90 |
-| `flash-high-image-n5-image-t1.0-verified-v1-n5` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1 | 0 |
+| `flash-high-image-n5-image-t0.7-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 771 | 0 |
+| `flash-high-image-n5-image-t0.7-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3211 | 0 |
+| `flash-high-image-n5-image-t0.7-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1522 | 0 |
+| `flash-high-image-n5-image-t0.7-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1 | 0 |
+| `flash-high-image-n5-image-t1.0-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 982 | 4 |
+| `flash-high-image-n5-image-t1.0-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 4638 | 0 |
+| `flash-high-image-n5-image-t1.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1887 | 90 |
+| `flash-high-image-n5-image-t1.0-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1 | 0 |
 | `flash-high-text-n5-text-t0.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1267 | 0 |
 | `flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1319 | 0 |
 | `flash-high-text-n5-text-t0.3-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1326 | 30 |
 | `flash-high-text-n5-text-t0.3-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 4413 | 0 |
 | `flash-high-text-n5-text-t0.3-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2201 | 0 |
 | `flash-high-text-n5-text-t0.3-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2954 | 0 |
-| `flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3736 | 0 |
+| `flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 3736 | 0 |
 | `flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial-text` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 41 | 0 |
-| `flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3736 | 0 |
+| `flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 3736 | 0 |
 | `flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief-text` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 27 | 0 |
-| `flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3736 | 0 |
+| `flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 3736 | 0 |
 | `flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 21 | 0 |
-| `flash-high-text-n5-text-t0.7-session-78-matrix-verified-comparative` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3736 | 0 |
+| `flash-high-text-n5-text-t0.7-session-78-matrix-verified-comparative` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 3736 | 0 |
 | `flash-high-text-n5-text-t0.7-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1370 | 0 |
 | `flash-high-text-n5-text-t0.7-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 5953 | 0 |
 | `flash-high-text-n5-text-t0.7-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2755 | 143 |
@@ -314,47 +314,47 @@
 | `flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2486 | 0 |
 | `flash-minimal-text-n30-t07-text-t1.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1588 | 70 |
 | `flash-minimal-text-n30-t07-text-t1.0-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1926 | 0 |
-| `image-n5-image-t0.3-verified-v1-n1` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 729 | 32 |
-| `image-n5-image-t0.3-verified-v1-n10` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1114 | 0 |
-| `image-n5-image-t0.3-verified-v1-n3` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 885 | 0 |
-| `image-n5-image-t0.3-verified-v1-n5` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1039 | 0 |
-| `image-n5-image-t0.7-verified-v1-n1` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 694 | 0 |
-| `image-n5-image-t0.7-verified-v1-n10` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1450 | 0 |
-| `image-n5-image-t0.7-verified-v1-n3` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 950 | 0 |
-| `image-n5-image-t0.7-verified-v1-n5` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1126 | 0 |
-| `image-n5-image-t1.0-verified-v1-n1` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 792 | 0 |
-| `image-n5-image-t1.0-verified-v1-n10` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1975 | 0 |
-| `image-n5-image-t1.0-verified-v1-n3` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1174 | 1 |
-| `image-n5-image-t1.0-verified-v1-n5` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1456 | 0 |
+| `image-n5-image-t0.3-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 729 | 32 |
+| `image-n5-image-t0.3-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1114 | 0 |
+| `image-n5-image-t0.3-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 885 | 0 |
+| `image-n5-image-t0.3-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1039 | 0 |
+| `image-n5-image-t0.7-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 694 | 0 |
+| `image-n5-image-t0.7-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1450 | 0 |
+| `image-n5-image-t0.7-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 950 | 0 |
+| `image-n5-image-t0.7-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1126 | 0 |
+| `image-n5-image-t1.0-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 792 | 0 |
+| `image-n5-image-t1.0-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1975 | 0 |
+| `image-n5-image-t1.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1174 | 1 |
+| `image-n5-image-t1.0-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1456 | 0 |
 | `scale-4-optimal-487-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 830 | 0 |
-| `scale-4-optimal-487-verified-v1-n10` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1 | 0 |
+| `scale-4-optimal-487-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1 | 0 |
 | `scale-4-optimal-487-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1586 | 0 |
-| `scale-4-optimal-487-verified-v1-n5` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 2218 | 0 |
-| `verified-flash-high-image-1of5` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 0 | 0 |
+| `scale-4-optimal-487-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2218 | 0 |
+| `verified-flash-high-image-1of5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 0 | 0 |
 | `verified-flash-high-text-1of10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 0 | 0 |
 | `verified-flash-high-text-1of30` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 0 | 0 |
 | `verified-flash-high-text-1of5` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
 | `verified-flash-high-text-1of5-flash-high-verifier` | 1 | gemini-3-flash-preview | text | high | 0.0 | ok | 3736 | 0 |
 | `verified-flash-high-text-1of5-flash-medium-verifier` | 1 | gemini-3-flash-preview | text | medium | 0.0 | ok | 1 | 0 |
 | `verified-flash-high-text-1of5-pro-verifier` | 1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 0 | 0 |
-| `verified-flash-minimal-image-medium-verifier` | 1 | gemini-3-flash | image | medium | 0.0 | ok | 0 | 0 |
+| `verified-flash-minimal-image-medium-verifier` | 1 | gemini-3-flash | text | medium | 0.0 | ok | 0 | 0 |
 | `verified-flash-minimal-text-medium-verifier` | 1 | gemini-3-flash | text | medium | 0.0 | ok | 0 | 0 |
 | `verified-flash-minimal-text-t07-1of5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 0 | 0 |
-| `verified-image-1of10` | 1 | gemini-3-flash | image | minimal | 0.0 | ok | 0 | 0 |
-| `verified-image-1of5` | 1 | gemini-3-flash | image | minimal | 0.0 | ok | 0 | 0 |
-| `verified-image-2of5` | 1 | gemini-3-flash | image | minimal | 0.0 | ok | 0 | 0 |
-| `verified-image-3of5` | 1 | gemini-3-flash | image | minimal | 0.0 | ok | 0 | 0 |
-| `verified-image-4of5` | 1 | gemini-3-flash | image | minimal | 0.0 | ok | 0 | 0 |
-| `verified-image-5of5` | 1 | gemini-3-flash | image | minimal | 0.0 | ok | 0 | 0 |
-| `verified-image-baseline` | 1 | gemini-3-flash | image | minimal | 0.0 | ok | 0 | 0 |
-| `verified-image-baseline-pro-verifier` | 1 | gemini-3.1-pro-preview | image | medium | 0.0 | ok | 0 | 0 |
-| `verified-pro-high-image-1of5-pro-verifier` | 1 | gemini-3.1-pro-preview | image | medium | 0.0 | ok | 8 | 0 |
+| `verified-image-1of10` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
+| `verified-image-1of5` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
+| `verified-image-2of5` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
+| `verified-image-3of5` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
+| `verified-image-4of5` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
+| `verified-image-5of5` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
+| `verified-image-baseline` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
+| `verified-image-baseline-pro-verifier` | 1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 0 | 0 |
+| `verified-pro-high-image-1of5-pro-verifier` | 1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 8 | 0 |
 | `verified-pro-high-text-1of5` | 1 | gemini-3-flash | text | medium | 0.0 | ok | 0 | 0 |
 | `verified-pro-high-text-1of5-flash-minimal-verifier` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 504 | 0 |
 | `verified-pro-high-text-1of5-pro-verifier` | 1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 504 | 0 |
-| `verified-pro-image-medium-verifier` | 1 | gemini-3-flash | image | medium | 0.0 | ok | 0 | 0 |
-| `verified-pro-image-minimal-verifier` | 1 | gemini-3-flash | image | minimal | 0.0 | ok | 0 | 0 |
-| `verified-pro-medium-image-baseline-pro-verifier` | 1 | gemini-3.1-pro-preview | image | medium | 0.0 | ok | 10 | 0 |
+| `verified-pro-image-medium-verifier` | 1 | gemini-3-flash | text | medium | 0.0 | ok | 0 | 0 |
+| `verified-pro-image-minimal-verifier` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
+| `verified-pro-medium-image-baseline-pro-verifier` | 1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 10 | 0 |
 | `verified-pro-medium-text-baseline-pro-verifier` | 1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 0 | 0 |
 | `verified-pro-text-medium-verifier` | 1 | gemini-3-flash | text | medium | 0.0 | ok | 0 | 0 |
 | `verified-pro-text-minimal-verifier` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
@@ -1090,7 +1090,7 @@ Scored evaluations under this run that no condition claims, each waived in `resu
 - **1 evaluation(s)** — GS Era-2 board symmetry fix (planning/gs-era2-verified-board-2026-09-08.md): pv-high-text-t0.0-n3-opmax's archived geojson re-scored on the Era-2 frame with a 200-draw bootstrap to prove the archived F1 reproduces; a gate artefact, not a condition.
   - `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/g2/pv-diag-384__pv-high-text-t0_0-n3-opmax/evaluation.json`
 
-## 6. Analyses that read this run (20)
+## 6. Analyses that read this run (21)
 
 A run is linked to an analysis when the analysis's `conditions_compared` names one of this run's conditions. *Cells* is how many of the analysis's compared conditions come from this run, out of its total. *Signed* is the register's `manually_verified_at` stamp.
 
@@ -1106,6 +1106,7 @@ A run is linked to an analysis when the analysis's `conditions_compared` names o
 | `k-ladder-2026-09-12` | 43 of 94 | comparison | `H3`, `H13` | post-hoc | Results | `E56`, `E85` | 2026-09-13T06:58:12Z | `results/k-ladder-2026-09-12/findings.md` |
 | `min-vs-high-thinking-pv` | 6 of 7 | leaderboard | `H2`, `H3` | post-hoc | Results | `E56`, `E62` | 2026-06-12T06:59:01Z | `results/verifier-robustness` |
 | `n1-baseline-matrix-384` | 10 of 18 | leaderboard | `H1`, `H7` | post-hoc | Results | `E57` | 2026-06-04T02:05:31Z | `results/paper-eval/n1/384px-14buf-mcc` |
+| `null-exemplar-sensitivity-2026-09-13` | 115 of 235 | comparison | — | post-hoc | Appendix | — | not supplied | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
 | `pass-budget-pareto` | 3 of 5 | leaderboard | `H2`, `H3` | post-hoc | Results | `E56`, `E62` | 2026-06-12T06:59:01Z | `results/verifier-robustness/pareto` |
 | `pass-budget-pareto-v2` | 5 of 7 | leaderboard | `H2`, `H3` | post-hoc | Results | `E56`, `E62` | 2026-09-12T09:03:09Z | `results/verifier-robustness/pareto` |
 | `pv-diag-384-consensus-calibration` | 29 of 29 | sweep | `H3` | post-hoc | Results | `E71` | not supplied | `results/rescore-2026-06-05/pv-diag-384/consensus-sweep` |
@@ -1117,12 +1118,13 @@ A run is linked to an analysis when the analysis's `conditions_compared` names o
 | `verifier-robustness-matrix` | 1 of 6 | leaderboard | `H2` | post-hoc | Results | `E56`, `E62` | 2026-06-12T06:59:01Z | `results/verifier-robustness` |
 | `verifier-uplift-pairing` | 30 of 170 | comparison | `H2` | post-hoc | Appendix | — | 2026-09-12T06:04:30Z | `results/uplift-supplement/verifier-uplift.csv` |
 
-## 7. Findings documents (4)
+## 7. Findings documents (5)
 
 | Document | Named by |
 |---|---|
 | `results/e43-matched-temperature/findings.md` | `e43-matched-temperature` |
 | `results/k-ladder-2026-09-12/findings.md` | `k-ladder-2026-09-12` |
+| `results/null-exemplar-sensitivity-2026-09-13/findings.md` | `null-exemplar-sensitivity-2026-09-13` |
 | `results/tile-level-f1/findings.md` | `tile-level-f1` |
 | `results/verifier-robustness/verifier-robustness-findings.md` | `verifier-robustness-matrix` |
 
@@ -1158,7 +1160,7 @@ Listed in the `deviations` field of an analysis that reads this run:
 - **None for the operating-point selection: the registered H3 analysis plan (osf/preregistration.md:519-521) specifies 'Generate threshold sweep curves', 'Identify optimal (N, threshold)', and 'Compare single-pass mean F1 vs voted F1' against the test tiles, so the best-operating- point characterisation is the preregistered method (not in-sample/E56 -- that rule governs the verifier prob_t diagnostics, a distinct case; see E56 Update 2026-06-06).** — not supplied
 - **Production operating point reported alongside best: text 4-of-5, image 3-of-5 (the 55maps deployment thresholds); the best-minus-N5 delta is the within-test operating-point sensitivity.** — not supplied
 
-### 8.2 Mentioning this run (5)
+### 8.2 Mentioning this run (6)
 
 The entry's text names this run id or its directory path. A mention is a pointer to read the entry, not a claim that the erratum is about this run:
 
@@ -1167,6 +1169,7 @@ The entry's text names this run id or its directory path. A mention is a pointer
 - **E79** — Order-dependent tile assignment in `evaluate\_detections.py` — a scoring sensitivity of ~0.01 F1 on the 123 conditions whose detection artefact carries no `source\_tile`
 - **E80** — No within-pass deduplication in the scoring path — a comparability confound on 155 of 333 conditions, preregistration-compliant but asymmetric across architectures
 - **E83** — Tier-1 membership was decided by an order-dependent sequential rule, not by the clique its docstring promised — eight boards' tie sets revised to Hsu MCB, including one that published a sole leader it does not have
+- **E88** — Modality — a preregistered factor — was assigned by a substring test on the condition label in four scripts; eight conditions and one pool were mislabelled, and two registered outcomes quote an image-group range that moves
 
 ## 9. Documents and structure in the run directory
 
@@ -1214,7 +1217,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `9fd928af3` |
+| Source commit | `9f5fec777` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

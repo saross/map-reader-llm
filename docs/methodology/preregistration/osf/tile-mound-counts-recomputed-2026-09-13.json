@@ -1,0 +1,611 @@
+{
+ "schema": "prereg-tile-mound-counts-recomputed/1",
+ "erratum": "E87",
+ "status": "POST-HOC CORRECTION. The Open Science Framework registration is immutable; these counts do not replace the lodged tables of preregistration sections 2.3-2.5, they correct them on the errata register.",
+ "generated_by": "scripts/recount_prereg_tile_mounds.py",
+ "reference_layer": "inputs/vectors/references/mounds-reference.geojson",
+ "reference_total": 569,
+ "geometry_self_check": "the 448 px cores of all 360 physical tiles account for 569 of 569 references exactly once",
+ "sets": {
+  "calibration": {
+   "prereg_section": "2.3",
+   "manifest": "inputs/tiles/calibration_manifest.json",
+   "n_tiles": 20,
+   "totals": {
+    "published": 36,
+    "affine_512px_sum": 52,
+    "affine_512px_union": 50,
+    "affine_448px_core_sum": 39,
+    "affine_448px_core_union": 39,
+    "approximation_reproduced_sum": 53
+   },
+   "exact_row_agreement_with_published": {
+    "approximation": 10,
+    "affine_512px": 7,
+    "affine_448px_core": 7
+   },
+   "rows": [
+    {
+     "tile": "K-35-052-4_32635_x1344_y1344.png",
+     "published": 0,
+     "affine_512px": 7,
+     "affine_448px_core": 5,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-052-4_32635_x1344_y2240.png",
+     "published": 2,
+     "affine_512px": 2,
+     "affine_448px_core": 2,
+     "approximation_reproduced": 3
+    },
+    {
+     "tile": "K-35-052-4_32635_x2240_y2240.png",
+     "published": 1,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-052-4_32635_x2240_y3584.png",
+     "published": 3,
+     "affine_512px": 2,
+     "affine_448px_core": 2,
+     "approximation_reproduced": 3
+    },
+    {
+     "tile": "K-35-052-4_32635_x3136_y896.png",
+     "published": 0,
+     "affine_512px": 3,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x1792_y2240.png",
+     "published": 4,
+     "affine_512px": 10,
+     "affine_448px_core": 9,
+     "approximation_reproduced": 6
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x2240_y2240.png",
+     "published": 11,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 13
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x2240_y3584.png",
+     "published": 1,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 3
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x3136_y3136.png",
+     "published": 0,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x896_y1344.png",
+     "published": 2,
+     "affine_512px": 8,
+     "affine_448px_core": 3,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x0_y1792.png",
+     "published": 2,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 4
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x0_y3136.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x448_y2688.png",
+     "published": 3,
+     "affine_512px": 2,
+     "affine_448px_core": 2,
+     "approximation_reproduced": 5
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x896_y2688.png",
+     "published": 1,
+     "affine_512px": 3,
+     "affine_448px_core": 2,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x896_y3136.png",
+     "published": 4,
+     "affine_512px": 8,
+     "affine_448px_core": 8,
+     "approximation_reproduced": 7
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x1344_y0.png",
+     "published": 2,
+     "affine_512px": 3,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x1344_y896.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 1
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x3136_y2688.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x3584_y3136.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x896_y3136.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    }
+   ]
+  },
+  "holdout": {
+   "prereg_section": "2.4",
+   "manifest": "inputs/tiles/validation_manifest.json",
+   "n_tiles": 60,
+   "totals": {
+    "published": 79,
+    "affine_512px_sum": 106,
+    "affine_512px_union": 97,
+    "affine_448px_core_sum": 82,
+    "affine_448px_core_union": 82,
+    "approximation_reproduced_sum": 117
+   },
+   "exact_row_agreement_with_published": {
+    "approximation": 35,
+    "affine_512px": 24,
+    "affine_448px_core": 28
+   },
+   "rows": [
+    {
+     "tile": "K-35-052-4_32635_x0_y0.png",
+     "published": 1,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 1
+    },
+    {
+     "tile": "K-35-052-4_32635_x0_y1344.png",
+     "published": 1,
+     "affine_512px": 4,
+     "affine_448px_core": 3,
+     "approximation_reproduced": 1
+    },
+    {
+     "tile": "K-35-052-4_32635_x0_y2240.png",
+     "published": 9,
+     "affine_512px": 13,
+     "affine_448px_core": 11,
+     "approximation_reproduced": 13
+    },
+    {
+     "tile": "K-35-052-4_32635_x1344_y3136.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-052-4_32635_x2240_y1344.png",
+     "published": 1,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 1
+    },
+    {
+     "tile": "K-35-052-4_32635_x2688_y0.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-052-4_32635_x3136_y0.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-052-4_32635_x3136_y2240.png",
+     "published": 1,
+     "affine_512px": 3,
+     "affine_448px_core": 2,
+     "approximation_reproduced": 1
+    },
+    {
+     "tile": "K-35-052-4_32635_x3136_y3584.png",
+     "published": 0,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-052-4_32635_x3584_y3136.png",
+     "published": 2,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 5
+    },
+    {
+     "tile": "K-35-052-4_32635_x3584_y3584.png",
+     "published": 3,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 3
+    },
+    {
+     "tile": "K-35-052-4_32635_x448_y1344.png",
+     "published": 1,
+     "affine_512px": 4,
+     "affine_448px_core": 4,
+     "approximation_reproduced": 3
+    },
+    {
+     "tile": "K-35-052-4_32635_x448_y3136.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-052-4_32635_x448_y896.png",
+     "published": 0,
+     "affine_512px": 3,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-052-4_32635_x896_y3136.png",
+     "published": 0,
+     "affine_512px": 1,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x0_y0.png",
+     "published": 0,
+     "affine_512px": 2,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x0_y1344.png",
+     "published": 0,
+     "affine_512px": 1,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 1
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x0_y2688.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 1
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x0_y3136.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x1792_y448.png",
+     "published": 2,
+     "affine_512px": 2,
+     "affine_448px_core": 2,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x2240_y448.png",
+     "published": 1,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x2688_y1344.png",
+     "published": 0,
+     "affine_512px": 2,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x3136_y1344.png",
+     "published": 0,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+     "published": 3,
+     "affine_512px": 7,
+     "affine_448px_core": 6,
+     "approximation_reproduced": 6
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x448_y0.png",
+     "published": 1,
+     "affine_512px": 5,
+     "affine_448px_core": 3,
+     "approximation_reproduced": 3
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x448_y2688.png",
+     "published": 8,
+     "affine_512px": 4,
+     "affine_448px_core": 2,
+     "approximation_reproduced": 10
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x448_y3136.png",
+     "published": 3,
+     "affine_512px": 2,
+     "affine_448px_core": 2,
+     "approximation_reproduced": 4
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x448_y448.png",
+     "published": 4,
+     "affine_512px": 4,
+     "affine_448px_core": 3,
+     "approximation_reproduced": 4
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x896_y2240.png",
+     "published": 3,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 5
+    },
+    {
+     "tile": "K-35-053-3_Elenovo_x896_y448.png",
+     "published": 1,
+     "affine_512px": 2,
+     "affine_448px_core": 2,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x1792_y0.png",
+     "published": 5,
+     "affine_512px": 5,
+     "affine_448px_core": 4,
+     "approximation_reproduced": 7
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x1792_y3584.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 1
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+     "published": 5,
+     "affine_512px": 5,
+     "affine_448px_core": 5,
+     "approximation_reproduced": 6
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x2240_y448.png",
+     "published": 1,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x2688_y1344.png",
+     "published": 4,
+     "affine_512px": 5,
+     "affine_448px_core": 5,
+     "approximation_reproduced": 5
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x2688_y2240.png",
+     "published": 1,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x2688_y2688.png",
+     "published": 0,
+     "affine_512px": 3,
+     "affine_448px_core": 3,
+     "approximation_reproduced": 1
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x3136_y1344.png",
+     "published": 2,
+     "affine_512px": 1,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 3
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x3136_y1792.png",
+     "published": 2,
+     "affine_512px": 3,
+     "affine_448px_core": 3,
+     "approximation_reproduced": 3
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x3136_y2240.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x3136_y3136.png",
+     "published": 3,
+     "affine_512px": 2,
+     "affine_448px_core": 2,
+     "approximation_reproduced": 3
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x3136_y896.png",
+     "published": 2,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x3584_y1344.png",
+     "published": 0,
+     "affine_512px": 4,
+     "affine_448px_core": 3,
+     "approximation_reproduced": 1
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x3584_y448.png",
+     "published": 2,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 3
+    },
+    {
+     "tile": "K-35-062-2_Rakovski_x448_y896.png",
+     "published": 4,
+     "affine_512px": 5,
+     "affine_448px_core": 4,
+     "approximation_reproduced": 5
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x0_y2688.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x0_y3136.png",
+     "published": 2,
+     "affine_512px": 3,
+     "affine_448px_core": 3,
+     "approximation_reproduced": 2
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x1344_y2240.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x2240_y1344.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x2688_y1792.png",
+     "published": 0,
+     "affine_512px": 1,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x2688_y896.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x3136_y1344.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x3136_y1792.png",
+     "published": 1,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 1
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x3136_y448.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x3584_y0.png",
+     "published": 0,
+     "affine_512px": 2,
+     "affine_448px_core": 1,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x3584_y1344.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x3584_y448.png",
+     "published": 0,
+     "affine_512px": 1,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x448_y1792.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    },
+    {
+     "tile": "K-35-078-1_Lesovo_x896_y1792.png",
+     "published": 0,
+     "affine_512px": 0,
+     "affine_448px_core": 0,
+     "approximation_reproduced": 0
+    }
+   ]
+  }
+ }
+}

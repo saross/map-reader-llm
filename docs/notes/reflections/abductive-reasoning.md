@@ -8429,3 +8429,43 @@ close), on which the geometric and string joins coincide — there the
 Before ruling that a metric should be re-keyed by geometry, check whether
 the geometry partitions the space. Two of us ruled on the join without
 looking at the frame; the regression run looked.
+
+## Entry — 2026-09-14 (Session 153-c, map-reader-llm): "Seven mislabelled cells" was four scripts assigning a preregistered factor by substring
+
+**Session:** 18e4f52f-97a8-432d-87f9-4c5541c051b3
+**Instance:** primary
+
+### Surprising fact
+
+A sensitivity job noted in passing that seven Era-2 board cells carried a
+modality `track` that disagreed with what the model had been shown. The
+PI read it as serious; I had read it as board metadata.
+
+### Probe
+
+Derive modality for every registered condition from the transmitted
+configuration (`include_example_images` over a non-empty exemplar list)
+rather than from any label, then diff against every recorded label, then
+trace every analysis that groups by modality and recompute the ones at
+risk with the same instruments.
+
+### Belief revision
+
+Before: a label defect on one board. After: a mechanism in four scripts
+(a substring test for "image" on the label), a corpus-wide count (8
+conditions and 1 pool, four artefacts), a reach that stopped short of
+every preregistered and signed outcome, and two registered-but-unsigned
+outcomes that move. The PI's "sounds serious" was right about the class
+and the probe was what showed the reach was narrow; neither reading
+alone would have produced the erratum.
+
+### What would change this belief
+
+A modality-grouped registered outcome whose group contains one of the
+eight cells — the recomputation found none.
+
+### Implications for practice
+
+A factor is derived from what was sent, never from a name; and a
+label-only finding in one artefact is a prompt to ask where else the
+same derivation runs.

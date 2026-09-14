@@ -1,10 +1,19 @@
 # Output Directory Standard
 
-> **Last revised**: 2026-09-13 (two passes the same day. Items 3–5 of the
-> documentation-foundation checklist: the compliance table recounted to
+> **Last revised**: 2026-09-13 (three passes the same day. Items 11a and
+> 11b of the documentation-foundation checklist: the generated-file
+> registry rebuilt over `outputs/` as well as `results/` and `reports/`
+> (3,619 files, 0 unattributed) and extended to record the
+> generated-projections ruling's three obligations per document, so the
+> compliance table's "neither regime" claim is now a query rather than an
+> audit note; the **six** generated documents in neither regime are
+> **closed to 0** — the five register renderings verified and guarded, and
+> the Era-2 board's two tables plus the three generated 55-map boards given
+> a banner, a source-commit stamp and a tested `--check`. Earlier the same
+> day — items 3–5: the compliance table recounted to
 > today on every row and the generated-projections ruling's reach
 > recorded — `evaluation.md` reclassified as generated, a denominator note
-> on the stale generated-file registry. Item 1: post-run reports
+> on the then-stale generated-file registry. Item 1: post-run reports
 > back-filled for all 41 registered runs — 39 as generated projections, 2
 > hand-authored — and that row's count and compliance cell corrected.
 > Prior 2026-09-11: generated projections carry machine provenance, not a
@@ -330,9 +339,9 @@ CLAUDE.md cross-references back here for the canonical path list.
 | `results/**.md` (anchor docs only — see audit plan § 5.2) | Paper-citation working docs | **2,864** files, of which **80** carry a revision banner | ~35–50 (anchor docs) | Compliant on the classes that carry today's results — **17 of 17** `findings.md` and **4 of 4** uplift-supplement documents have banner + changelog. The 2,864 is the whole tree, most of it generated per-cell output, so it is not the denominator; see the registry note below |
 | `reports/**.md` | Internal reports authored by Claude Code | **101** files, **62** bannered | varies | Compliant on current work: **18 of 18** reports dated 2026-09-11/12/13 have banner + changelog. The 39 unbannered are older reports under back-fill-on-touch |
 | `outputs/**/post_run_report.md` | Per-run post-run reports | **41 + 1** retrospective — one per registered run | 2 + 1 retrospective | Complete. **39** are **generated projections** emitted by `scripts/generate_run_reports.py` and governed by the generated-projections rule below, not by banner-and-changelog; **2** are hand-authored (`55maps-image-generalisation`, `55maps-text-min-generalisation`) and carry the banner + Changelog from 2026-09-13. Back-filled under the standing exception below |
-| `outputs/**/experiment_intent.md` | Per-pass / per-run intent files | **432** files, **35** bannered | 139 | Informal; in scope. Grew 139 → 432 since May |
-| `outputs/**/evaluation.md` | Per-run evaluation summaries | **46** files, **0** bannered; **46 of 46** carry a `**Generated**:` stamp | 11 | **Reclassified**: these are generated projections, so the 2026-09-11 generated-projections ruling below governs them, not the banner rule. None yet carries that regime's banner, source commit or drift guard — a generator change, not a document edit |
-| `outputs/**/pre_launch_audit.md` | audit-config skill outputs | **2** files, **1** bannered | 1 (`55maps-text-high-t0.3-generalisation`) | In scope going forward |
+| `outputs/**/experiment_intent.md` | Per-pass / per-run intent files | **432** files, **35** bannered | 139 | Informal; in scope. Grew 139 → 432 since May. **Classified 2026-09-13** (item 11a): **397 generated** — 393 written at launch by `scripts/lib_experiment_intent.py`, 4 by `scripts/run_generalisation.py` — and **35 hand-authored** stage intents for steps with no launcher. The 35 hand-authored are exactly the 35 bannered, so this row's banner count is already complete on the documents that owe one |
+| `outputs/**/evaluation.md` | Per-run evaluation summaries | **46** files, **0** bannered; **46 of 46** carry a `**Generated**:` stamp | 11 | **Reclassified**: these are generated projections, so the 2026-09-11 generated-projections ruling below governs them, not the banner rule. Registered as generated 2026-09-13 (rule `gen-outputs-evaluation`, generator `scripts/evaluate_detections.py`); still the ruling's one **open** class — none carries that regime's banner, source commit or drift guard, and closing it is a generator change, not a document edit |
+| `outputs/**/pre_launch_audit.md` | audit-config skill outputs | **2** files, **1** bannered | 1 (`55maps-text-high-t0.3-generalisation`) | In scope going forward. Classified hand-written 2026-09-13, so both owe regime 1 |
 
 All 2026-09-13 counts are file counts taken in a worktree at `main` on
 that date; the banner counts are files matching `^> **Last revised**`.
@@ -345,16 +354,33 @@ so the two are not comparable and neither is wrong.
 hand-written documents owe a banner and changelog; generated ones owe the
 regime below instead. The project's own classifier is
 `reports/verification/generated-file-registry.json`, built by
-`scripts/build_generated_file_registry.py`, which at its last build
-(`2026-08-20T08:24:18`, `git_head` `06f7b8ea5`) held 2,131 files — 1,952
-generated, 179 hand-written — of which 2,050 were `results/**.md` (98
-hand-written) and 53 were `reports/**.md` (all hand-written). It is now
-stale against this table by 814 `results/**.md` and 48 `reports/**.md`,
-and by its charter (§ 2 of the script) it does **not** enumerate
-`outputs/`, so the three `outputs/` rows above have no
-generated-versus-hand-written classification at all. Rebuild it before
-treating any ratio in this table as a compliance rate. One further
-caution: its marker test matches `**Generated**:` anywhere in a file's
+`scripts/build_generated_file_registry.py`.
+
+**Rebuilt 2026-09-13** (checklist item 11a; deltas
+`reports/generated-file-registry-2026-09-13.md`). It had been built on
+`2026-08-20T08:24:18` at `git_head` `06f7b8ea5` and held 2,131 files, and
+by charter it enumerated `results/`, `reports/` and part of
+`docs/methodology` but **not** `outputs/` — so the three `outputs/` rows
+above had no generated-versus-hand-written classification at all. The
+charter now extends to `outputs/**.md` and the rebuild holds **3,619**
+files — **3,318** generated, **301** hand-written, **0** unattributed:
+`results/` 2,864 (2,723 generated), `reports/` 88 of the 104 present (16
+under the `reports/d17-inventory/` audit-apparatus exclusion), `outputs/`
+638 (595 generated), `docs/` 29 (all hand-written). So the denominator for
+this table's `results/**.md` row is **141**, not 2,864: the other 2,723 are
+generated per-cell output that owes the regime below.
+
+Each generated row also records that regime's three obligations —
+`generated_banner`, `source_commit_stamp`, `check_mode` (read out of the
+generator's argparse, not grepped) and `tier1_check_test` with the test
+path — so "which generated documents are in neither regime?" is a query
+(`--gaps`) rather than a hand audit. The registry is itself generated and
+now carries its own guard: `_meta.git_head` is the stamp, `--check` the
+drift mode, and `tests/test_build_generated_file_registry.py` runs that
+check against the committed file.
+
+One further caution, unchanged by the rebuild: its marker test matches
+`**Generated**:` anywhere in a file's
 first fifteen lines, and at least six hand-authored `results/**.md`
 documents carry such a line as a provenance note rather than a generator
 stamp (`results/evaluation-scopes.md`,
@@ -396,9 +422,10 @@ by the preregistration process), `docs/methodology/research/*.md`
 **Generated projections — provenance, not a hand changelog (PI ruling
 2026-09-11, Session 153)**: a Markdown file under an in-scope path that
 is emitted by a generator from registered inputs is OUT of the
-banner-and-changelog requirement and IN a stricter one. Three families are
-governed by this rule today (the third added by the same-day recount in
-"Which files this reaches" below):
+banner-and-changelog requirement and IN a stricter one. **Six** families
+are governed by this rule as of 2026-09-13 — the table in "Which files this
+reaches" below is the authoritative list, recounted from the registry; the
+two worked examples that established the rule were:
 
 - `results/hypothesis-outcome-table/hypothesis-outcome-table.md` — a pure
   projection of `results/analyses-manifest.json`
@@ -425,31 +452,48 @@ not by a changelog. Before→after notes for a regeneration go in the
 commit message and, when the change is paper-relevant, in the session's
 report under `reports/`.
 
-**Which files this reaches, recorded 2026-09-13** so the ruling is not
-read as applying only to its worked examples. The **third family** is the
-five register renderings — `results/analyses-manifest.md`,
-`results/conditions-manifest.md`, `results/passes-manifest.md`,
-`results/runs-manifest.md` and `results/run-registry.md` — each carrying
-a `GENERATED FILE — DO NOT EDIT` banner that names its generator and
-version (`scripts/generate_post_run_report.py`); whether each also
-carries a source commit and a tier-1 drift guard, as requirements (2) and
-(3) ask, was **not** verified in this pass and should be checked before
-they are cited as compliant. With the hypothesis-outcome table and the 39
-generated post-run reports, that is **45 documents** in the regime. At
-least six more in-scope documents are visibly generated and satisfy
-**neither**
-regime — no hand banner and changelog, and no GENERATED banner, source
-commit or drift guard: the Era-2 board's `tiering_20m.md` and
-`frame-deltas.md` (the latter stamped
-"Generated 2026-09-13T00:22:00+00:00 by `scripts/build_gs_era2_board.py`
-gates") and the four `results/55map-leaderboard/*.md` tables. **All 46**
-`outputs/**/evaluation.md` files are in the same state, and the
-compliance table's row for that class is amended accordingly. These
-carry ranks and per-cell numbers, which is precisely where "is this
-current?" has to be answerable, so closing the gap is a generator change
-(emit the banner, stamp the source commit, add a `--check` mode) rather
-than a document edit. Audit trail:
-`planning/interim-docs-review.md` § 11.4.
+**Which files this reaches — recounted from the registry, 2026-09-13**
+(checklist item 11b; deltas `reports/generated-file-registry-2026-09-13.md`),
+so the ruling is not read as applying only to its worked examples. Every
+figure here is a query over
+`reports/verification/generated-file-registry.json`, not a reading pass.
+
+**50 documents, six generators, all three obligations met**:
+
+| Documents | Generator | Check mode | Tier-1 test |
+|---:|---|---|---|
+| 39 `outputs/<run>/post_run_report.md` | `scripts/generate_run_reports.py` | `--check` | `tests/test_generate_run_reports.py` |
+| 5 register renderings (`results/{runs,conditions,passes,analyses}-manifest.md`, `results/run-registry.md`) | `scripts/generate_post_run_report.py` | `--check-renderings` | `tests/test_manifest_renderings.py` |
+| 3 55-map boards (`results/55map-leaderboard/55map-leaderboard-50m{,-standardised,-r2}.md`) | `scripts/build_55map_leaderboard.py` | `--check` | `tests/test_55map_leaderboard_renderings.py` |
+| 1 `results/hypothesis-outcome-table/hypothesis-outcome-table.md` | `scripts/generate_hypothesis_outcome_table.py` | `--check` | `tests/test_generate_hypothesis_outcome_table.py` |
+| 1 Era-2 board `tiering_20m.md` | `scripts/era1_leaderboard_tiering.py` | `--check <board dir>` | `tests/test_era2_board_renderings.py` |
+| 1 Era-2 board `frame-deltas.md` | `scripts/build_gs_era2_board.py` | `check-renderings` | `tests/test_era2_board_renderings.py` |
+
+**The six documents in neither regime are closed to 0.** The five register
+renderings carried the banner but no source commit, and their generator had
+no `--check` at all; they now have both. The Era-2 board's two tables and
+the three generated 55-map boards were given a banner, a source-commit
+stamp and a tested `--check`, each regenerated once with **zero content
+drift** — the diff is the banner. The audit's fourth "55-map table",
+`results/55map-leaderboard/gs-vs-55map-transfer.md`, is **hand-written**
+(no generator, no sidecar JSON; rule `hw-gs-55map-transfer`): it owes
+regime 1 and now carries a banner and a Changelog, so the four tables split
+across both regimes rather than sitting in one.
+
+**What remains, named**: (a) the **46** `outputs/**/evaluation.md` files —
+the ruling's one open class, `scripts/evaluate_detections.py`, still with
+no banner, stamp or check mode; (b) **17** further
+`tiering_20m.md`-family documents written by
+`scripts/era1_leaderboard_tiering.py` for earlier analyses, which are now
+one `--render-md <board dir>` away from the regime (the generator carries
+the guard; only their committed text predates it) and are deliberately left
+for back-fill-on-touch, since re-rendering another analysis's board is that
+analysis's business; (c) the remaining generated corpus — 3,268 of 3,318
+generated documents carry no `GENERATED FILE` banner, almost all of it
+per-cell `results/**` output. (c) is a statement of the tree's shape, not a
+backlog: the ruling reaches paper-facing projections, and the standing rule
+for the rest is back-fill on touch. Audit trail:
+`planning/interim-docs-review.md` § 11.4, and `--gaps` for the live list.
 
 **`docs/methodology/reports/**` — split by citation (PI ruling
 2026-08-03, closing the governance gap this directory sat in)**: scope
@@ -529,6 +573,28 @@ directory with a README documenting the run configuration, cost, and
 the ground truth filtering applied (hairy-only symbols from student data).
 
 ## Changelog
+
+### 2026-09-13 — Registry rebuilt over `outputs/`; the "neither regime" count closed to 0 (Session 154, items 11a and 11b)
+
+**Trigger**: items 11a and 11b of `planning/documentation-foundation-checklist-2026-09-13.md`, which the 2026-09-13 re-score (`planning/interim-docs-review.md` § 11.5) had made prerequisites for a second documentation audit pass: the generated-file registry was stale and did not enumerate `outputs/` at all, so the "six generated documents in neither compliance regime" finding rested on a reading pass rather than on the project's own classifier.
+
+| Claim | Before | After |
+|---|---|---|
+| Registry corpus | 2,131 files at `git_head` `06f7b8ea5` (2026-08-20); `outputs/` not enumerated | **3,619** files — `results/` 2,864, `reports/` 88 of 104 present, `outputs/` 638, `docs/` 29 |
+| Registry strata | 1,952 generated / 179 hand-written / 0 unattributed | **3,318** generated / **301** hand-written / **0** unattributed (two files that were marker-carrying-but-unattributed under the old map are now attributed) |
+| Generator map | 89 rules, v1.0 | **100** rules, v1.1 — nine `outputs/` rules, two attributions, one widened |
+| Denominator for the `results/**.md` row | "2,864 files, 80 bannered" with no classification | **141** hand-written owe a banner; the other 2,723 are generated |
+| Generated documents in the 2026-09-11 regime | 45 documents, 3 families, 5 of them unverified on requirements (2) and (3) | **50** documents, **6** generators, all three obligations met and each named with its check mode and tier-1 test |
+| Generated documents in **neither** regime (the audit's six) | 6 | **0** |
+| `outputs/**/experiment_intent.md` classification | none | 397 generated / 35 hand-authored — and the 35 hand-authored are exactly the 35 bannered |
+
+**What changed in the documents**: ten generated documents were regenerated once so they carry the banner and stamp — the five register renderings, the Era-2 board's `tiering_20m.md` and `frame-deltas.md`, and the three 55-map boards. **Content drift was zero in every case**: the diff is the banner and the stamp, two lines per file. That the 150-cell tiering table and the three 28-pair boards re-render byte-identically from their committed JSON is itself the evidence that they were pure projections. One hand-written document, `results/55map-leaderboard/gs-vs-55map-transfer.md`, gained a Revision-Policy banner and Changelog; no figure in it moved.
+
+**Correction to the audit's framing**: the re-score counted "the four 55-map leaderboard tables" as one generated class. Three are generated boards; the fourth has no generator and no sidecar JSON and was already filed hand-written in the generator map. The four split across both regimes.
+
+**What did NOT change**: the 2026-09-11 ruling itself (this entry applies it), every register row, board cell, rank, tier, tie set, withheld-cell disclosure and signature field, the committed r1 55-map board JSONs (G3/G4 regression-gate targets — `--rebuild-md` is a render-only path), and the May 2026 counts retained as history. The `results/**.md` and `reports/**.md` row counts from this morning's pass were not re-taken.
+
+**Landed in**: `86ba12413` (registry), `acd4ed054` (register renderings), `b16954d4c` (Era-2 board tables), `80e897049` (55-map boards), and this entry's own commit.
 
 ### 2026-09-13 — Post-run reports back-filled for all 41 runs (Session 153, Batch 1 item 1)
 

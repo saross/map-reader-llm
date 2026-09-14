@@ -43,6 +43,19 @@ Subcommands (run in this order)
     (the board table with tiers, MCB membership, and the G6 frame delta per
     cell).
 
+    From 2026-09-13 (PI ruling, S153 rulings 6 and 7) it also renders two
+    further blocks, both REPORTED rather than ranking the board:
+
+    * the **tile-MCC tiering table and MCC MCB admissible set**, beside the F1
+      tiering, read from ``tiering_20m.json`` → ``mcc_permutation`` (written by
+      ``era1_leaderboard_tiering.py --permute-mcc``) and
+      ``mcb/<board>_mcc_b20_m1.json`` (``selection_aware_intervals.py --board
+      --metric mcc``). The preregistered F1 tiering stays the board's tiering;
+    * the **withheld-cell disclosure**, which names each refused cell's
+      whole-frame F1 point estimate, that its interval is WITHDRAWN rather than
+      superseded, the shortfall counts, both tile vocabularies, and that the
+      name-based ``id`` join is the published convention.
+
 The membership rule (card § 3, restated under the frame rule of § 2)
 -------------------------------------------------------------------
 A registered condition joins when all of these hold:
@@ -102,12 +115,23 @@ import json
 import os
 import re
 import shlex
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+# Modality is a preregistered factor (H1), so the board's `track` field must be
+# DERIVED from the configuration each pool transmitted, never inferred from a
+# label. See scripts/derive_condition_modality.py for the mechanism and for the
+# seven cells a label-substring test got wrong before 2026-09-14.
+from scripts.derive_condition_modality import condition_modality  # noqa: E402
+
 RUN_CONDITIONS = REPO_ROOT / "results/run-conditions.json"
 RUN_ANALYSES = REPO_ROOT / "results/run-analyses.json"
 RUN_FACTS = REPO_ROOT / "results/run-facts.json"
@@ -284,13 +308,20 @@ def derive_membership() -> dict[str, Any]:
             bounds = os.path.basename(cli.get("bounds") or "")
             det = cond.get("detections") or ""
 
+            # The board's modality label. DERIVED from the proposer pool's
+            # transmitted configuration, never from the label: a label may name
+            # the VERIFIER's modality over a text proposer, and a label with no
+            # modality token at all used to fall through to "text". Both shapes
+            # occur on this board (7 cells, audit of 2026-09-14).
+            track, track_basis = condition_modality(run_id, cond.get("proposer_pool") or "")
+
             def member(**extra: Any) -> dict[str, Any]:
                 return {
                     "condition_id": cid, "run_id": run_id, "label": label, "k": k,
                     "detections": det, "eval_path": cond["eval_path"],
                     "committed_bounds": cli.get("bounds"), "committed_f1_20": f1_at(doc),
                     "recipe": {kk: cli.get(kk) for kk in ("ground_truth", "buffers", "bootstrap", "seed")},
-                    "track": "image" if "image" in label else "text",
+                    "track": track, "track_basis": track_basis,
                     **extra,
                 }
 
@@ -440,8 +471,30 @@ def run_gates(board: Path, membership: dict[str, Any]) -> tuple[dict[str, Any], 
     return report, report["passed"]
 
 
-def render_deltas(report: dict[str, Any]) -> str:
+def render_deltas(report: dict[str, Any], source_commit: str | None = None) -> str:
+    """Render the G6 frame-delta table from the gates report.
+
+    A pure projection of ``gates.json``, which is what lets
+    ``check-renderings`` verify the committed document without re-scoring
+    a single cell.
+
+    Args:
+        report: The gates report (as written, or as committed in
+            ``<board>/gates.json``).
+        source_commit: Short hash to stamp as the render commit; defaults
+            to HEAD.
+
+    Returns:
+        The full Markdown document, newline-terminated.
+    """
     lines = [f"# G6 — committed-frame versus board-frame F1 at 20 m ({BOARD_ID})", "",
+             f"> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by "
+             f"`scripts/build_gs_era2_board.py gates` at commit "
+             f"`{source_commit or _git_head()}`; `check-renderings` is the drift guard "
+             f"(tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of "
+             f"2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents "
+             f"in Revision Policy Scope\") this projection carries provenance instead of "
+             f"a hand changelog.", "",
              f"> Generated {report['checked_at_utc']} by `scripts/build_gs_era2_board.py gates`. "
              f"G2: {report['G2_reproduction_failures']} reproduction failures; G3: {report['G3_frame_failures']} frame failures; "
              f"G4: {report['G4_cells']} cells of {report['G4_members']} members.", "",
@@ -451,6 +504,68 @@ def render_deltas(report: dict[str, Any]) -> str:
         lines.append(f"| `{r['condition_id']}` | {r['committed_bounds']} | {r['committed_f1_20']:.4f} | {r['board_f1_20']:.4f} | "
                      f"{r['delta_board_minus_committed']:+.4f} | {r['n_features']} | {r['n_detections_committed']} | {r['n_detections_board']} |")
     return "\n".join(lines) + "\n"
+
+
+def _git_head() -> str:
+    """Return the short HEAD hash for the render stamp (or ``unknown``)."""
+    try:
+        return subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"], cwd=REPO_ROOT,
+            capture_output=True, text=True, check=True, timeout=10,
+        ).stdout.strip() or "unknown"
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, OSError):
+        return "unknown"
+
+
+#: Neutralises the render stamp for drift comparison (see the manifests guard
+#: in ``scripts/generate_post_run_report.py`` for the same pattern).
+_RENDER_STAMP_RE = re.compile(r"at commit `[^`]+`")
+
+
+def check_renderings(board: Path) -> int:
+    """Drift guard for the board's generated Markdown projections.
+
+    Covers ``frame-deltas.md`` (rendered from ``gates.json``) and
+    ``membership.txt`` (rendered from ``membership.json``). Neither needs
+    a cell re-scored: both are renderings of committed JSON, so the guard
+    answers "is this current?" for a few milliseconds of work.
+
+    Args:
+        board: The board directory.
+
+    Returns:
+        Process exit code: 0 when every rendering matches, 1 otherwise.
+    """
+    checked = 0
+    stale: list[str] = []
+    gates_path, deltas_path = board / "gates.json", board / "frame-deltas.md"
+    if gates_path.exists() and deltas_path.exists():
+        fresh = render_deltas(json.loads(gates_path.read_text(encoding="utf-8")))
+        committed = deltas_path.read_text(encoding="utf-8")
+        checked += 1
+        if _RENDER_STAMP_RE.sub("", committed) != _RENDER_STAMP_RE.sub("", fresh):
+            stale.append(deltas_path.relative_to(REPO_ROOT).as_posix())
+    else:
+        print(f"MISSING: {gates_path.name} or {deltas_path.name}", file=sys.stderr)
+        return 1
+    mem_path, listing_path = board / "membership.json", board / "membership.txt"
+    if mem_path.exists() and listing_path.exists():
+        fresh_listing = render_listing(json.loads(
+            mem_path.read_text(encoding="utf-8"))) + "\n"
+        checked += 1
+        if listing_path.read_text(encoding="utf-8") != fresh_listing:
+            stale.append(listing_path.relative_to(REPO_ROOT).as_posix())
+    for rel in stale:
+        print(f"DRIFT: {rel} differs from a rendering of its committed JSON",
+              file=sys.stderr)
+    if stale:
+        print("Re-render with `build_gs_era2_board.py renderings` (frame-deltas, "
+              "from the committed gates.json — rewrites no JSON). Re-run `gates` "
+              "or `membership` only when the JSON itself is what is stale: both "
+              "rewrite their JSON as well as the document.", file=sys.stderr)
+        return 1
+    print(f"{checked} board rendering(s) current (render stamp neutralised)")
+    return 0
 
 
 def register(membership: dict[str, Any], write: bool) -> list[str]:
@@ -532,13 +647,39 @@ def register(membership: dict[str, Any], write: bool) -> list[str]:
     return new_ids
 
 
-def _mcb_admissible(board: Path) -> tuple[list[str], str | None]:
+def _mcb_admissible(board: Path, metric: str = "f1") -> tuple[list[str], str | None]:
     """The Hsu-constrained MCB admissible set from selection_aware_intervals --board.
 
     The tool writes ``hsu_not_ruled_out`` (and the two-sided ``mcb_not_ruled_out``)
     as indices into ``candidates``; E83 reports Tier-1 membership as the Hsu set.
+
+    Two admissible sets live in ``mcb/`` from 2026-09-13 (PI ruling, S153
+    ruling 7): the preregistered F1 one and the reported tile-MCC one. The
+    tool stamps the metric into the filename for everything but F1
+    (``<board>_mcc_b20_m1.json`` against ``<board>_b20_m1.json``), so the file
+    is chosen on that stamp rather than on ``sorted()`` order — a board with
+    both files must never hand an MCC set to a caller that asked for F1, and
+    filename order is not a contract.
+
+    Args:
+        board: The board directory.
+        metric: ``f1`` or ``mcc``.
+
+    Returns:
+        ``(refs, path)`` — the admissible set as condition refs and the
+        artefact's repository-relative path, or ``([], None)`` when no file for
+        that metric is present.
     """
+    stamp = "" if metric == "f1" else f"_{metric}"
     for path in sorted((board / "mcb").glob("*.json")):
+        # The F1 artefact carries no metric stamp, so it is identified by the
+        # ABSENCE of every other metric's stamp rather than by a pattern.
+        stem = path.stem
+        if metric == "f1":
+            if "_mcc_" in stem:
+                continue
+        elif f"{stamp}_" not in stem:
+            continue
         try:
             doc = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
@@ -548,6 +689,211 @@ def _mcb_admissible(board: Path) -> tuple[list[str], str | None]:
         if isinstance(idx, list) and cands:
             return [str(cands[i]["ref"]) for i in idx if i < len(cands)], str(path.relative_to(REPO_ROOT))
     return [], None
+
+
+def _mcc_family_sentence(mcc_block: dict[str, Any],
+                         mcc_admissible: list[str],
+                         f1_admissible: list[str]) -> str:
+    """One sentence stating the MCC family, for the outcome the PI signs.
+
+    PI ruling 2026-09-13 (S153 ruling 7) admits a tile-MCC permutation family
+    BESIDE the preregistered F1 tiering. An outcome that named only the F1
+    family would leave a register reader unable to tell that the board carries
+    two statistics — and, worse, unable to tell which one is its tiering. So
+    the sentence says both: how many pairs the MCC family holds, how many are
+    significant, how many MCC tiers there are, who is in MCC Tier 1, the size
+    of the MCC admissible set, how much of it overlaps the F1 one, and that the
+    F1 tiering is still the board's.
+
+    Args:
+        mcc_block: ``tiering_20m.json`` → ``mcc_permutation``.
+        mcc_admissible: The MCC Hsu admissible set, as condition refs.
+        f1_admissible: The F1 Hsu admissible set, as condition refs.
+
+    Returns:
+        The sentence, leading with a space so it appends to the outcome text.
+    """
+    tie_set = mcc_block.get("tie_set") or []
+    by_ref = {row["ref"]: row for row in (mcc_block.get("ranking") or [])}
+    named = [r for r in tie_set if r in by_ref]
+    # An MCC tie set can run to dozens of cells, and the outcome is a register
+    # field a human reads. Name the leaders, count the rest, and point at the
+    # artefact that holds the whole list — never elide it silently.
+    tier1 = "; ".join(
+        f"{by_ref[r]['label']} MCC {by_ref[r]['mcc']:.4f}" for r in named[:5]
+    )
+    if len(named) > 5:
+        tier1 += (f"; and {len(named) - 5} more — full list in "
+                  f"tiering_20m.json -> mcc_permutation.tie_set")
+    overlap = len(set(mcc_admissible) & set(f1_admissible))
+    return (
+        f" REPORTED BESIDE, not replacing, the preregistered F1 tiering (PI "
+        f"ruling 2026-09-13, S153 ruling 7): a tile-MCC permutation family on "
+        f"the SAME swap masks (same seed, same tile order), BH q = 0.05 within "
+        f"its own family — {mcc_block.get('n_significant')}/"
+        f"{mcc_block.get('n_pairs')} pairs significant, "
+        f"{mcc_block.get('n_tiers')} MCC tiers over "
+        f"{len(mcc_block.get('ranking') or [])} cells; MCC Tier 1 = "
+        f"{len(tie_set)} cell(s) ({tier1}); MCC MCB admissible set = "
+        f"{len(mcc_admissible) if mcc_admissible else 'not computed'}"
+        + (f", of which {overlap} also in the F1 admissible set"
+           if mcc_admissible and f1_admissible else "")
+        + ". The board's tiering remains the F1 one."
+    )
+
+
+def _withheld_table(withheld_cells: list[dict[str, Any]]) -> list[str]:
+    """Ruling 6's withheld-cell disclosure, as README lines.
+
+    PI ruling 2026-09-13 (S153 ruling 6) published the name-based ``id`` tile
+    join as the convention and left the three Gemini 3.7 gold-standard text
+    rungs admitted-and-withheld. A disclosure a reader can act on names five
+    things per cell, and this renders all five: the whole-frame F1 point
+    estimate that survives the refusal, the fact that the cell's interval is
+    WITHDRAWN rather than replaced (with the interval being withdrawn, where
+    the committed artefact still carries one), the shortfall counts, and the
+    two tile vocabularies the refusal is a disagreement between.
+
+    Args:
+        withheld_cells: ``tiering_20m.json`` → ``withheld_cells``.
+
+    Returns:
+        README lines: the explanatory paragraph, the table, and one
+        vocabulary block per cell.
+    """
+    lines = [
+        "",
+        "**Admitted but WITHHELD** — the tile-join invariant refuses these cells' "
+        "per-tile table on this frame, so they are ranked nowhere above and enter "
+        "neither BH family (F1 or tile-MCC) and neither admissible set. **The "
+        "name-based (`id`) tile join is the published convention** — PI ruling "
+        "2026-09-13 (S153 ruling 6), `reports/tile-mcc-geometric-join-2026-09-12.md` "
+        "— so these cells are disclosed rather than re-joined geometrically to "
+        "make them scoreable. What survives a refusal is the whole-frame F1, "
+        "precision and recall POINT estimates: F1 is scored map-scoped and the "
+        "tile join does not touch it. What does not survive is every interval. "
+        "The F1 bootstrap resamples TILES (Decision 10), so the refused per-tile "
+        "table is the interval's input too: each cell's interval is **withdrawn, "
+        "not superseded** — there is no interval for it on this frame. Their "
+        "committed tile-MCC is the pre-invariant value and is NOT published. "
+        "The withholding follows the same ruling's \"withhold and list, never "
+        "abort the board\", and is lifted only by the corpus-wide tile-join "
+        "decision (close-out question 4).",
+        "",
+        "| cell | F1@20 (whole frame) | interval | detections booked / in-frame | shortfall | committed tile-MCC (NOT published) |",
+        "|---|---:|---|---:|---:|---:|",
+    ]
+    for w in withheld_cells:
+        recorded = w.get("recorded_mcc")
+        recorded_txt = "—" if recorded is None else f"{recorded:.4f}"
+        short = ((w.get("disclosure") or {}).get("shortfall") or {})
+        booked, inside = short.get("n_booked"), short.get("n_inside_union")
+        booked_txt = "—" if booked is None else f"{booked} / {inside}"
+        shortfall = short.get("shortfall")
+        shortfall_txt = "—" if shortfall is None else str(shortfall)
+        withdrawn = w.get("withdrawn_interval_f1")
+        interval = w.get("interval_status") or "interval withdrawn"
+        if withdrawn:
+            interval += f" — was [{withdrawn[0]:.4f}, {withdrawn[1]:.4f}]"
+        lines.append(
+            f"| `{w.get('label')}` | {w.get('eval_f1'):.4f} | {interval} | "
+            f"{booked_txt} | {shortfall_txt} | {recorded_txt} |"
+        )
+    lines += [
+        "",
+        "**The two tile vocabularies**, per withheld cell — the refusal is a "
+        "disagreement between the names the detections carry and the names the "
+        "frame uses, not a numerical anomaly, so both censuses are published:",
+        "",
+    ]
+    for w in withheld_cells:
+        vocab = ((w.get("disclosure") or {}).get("vocabularies") or {})
+        frame, dets = vocab.get("frame") or {}, vocab.get("detections") or {}
+        if not frame and not dets:
+            lines.append(f"- `{w.get('label')}` — {w.get('reason')}")
+            continue
+        lines.append(
+            f"- `{w.get('label')}` — **frame**: {frame.get('n_tiles')} tiles, "
+            f"{frame.get('n_distinct_tile_names')} distinct names over "
+            f"{len(frame.get('map_prefixes') or [])} map sheet(s), e.g. "
+            + ", ".join(f"`{n}`" for n in (frame.get('sample_tile_names') or []))
+            + f". **detections**: {dets.get('n_detections')} points naming "
+            f"{dets.get('n_distinct_tile_names')} distinct tiles in column "
+            f"`{dets.get('id_column')}`, of which only "
+            f"**{dets.get('n_names_in_frame_vocabulary')}** are in the frame's "
+            f"vocabulary, e.g. "
+            + ", ".join(f"`{n}`" for n in (dets.get('sample_tile_names') or []))
+            + f". Refusal: {w.get('reason')}"
+        )
+    return lines
+
+
+def _mcc_tiering_table(mcc_block: dict[str, Any],
+                       mcc_admissible: list[str],
+                       f1_admissible: list[str]) -> list[str]:
+    """The tile-MCC tiering table, beside the F1 one, as README lines.
+
+    Args:
+        mcc_block: ``tiering_20m.json`` → ``mcc_permutation``.
+        mcc_admissible: The MCC Hsu admissible set, as condition refs.
+        f1_admissible: The F1 Hsu admissible set, as condition refs.
+
+    Returns:
+        README lines: heading, headline paragraph, and the table.
+    """
+    ranking = mcc_block.get("ranking") or []
+    tie_set = mcc_block.get("tie_set") or []
+    overlap = sorted(set(mcc_admissible) & set(f1_admissible))
+    by_ref = {row["ref"]: row for row in ranking}
+    # The table below lists every member, so the summary names the leaders and
+    # counts the rest rather than repeating 33 labels in a sentence.
+    named = [r for r in tie_set if r in by_ref]
+    tier1_labels = ", ".join(f"`{by_ref[r]['label']}`" for r in named[:5])
+    if len(named) > 5:
+        tier1_labels += f", and {len(named) - 5} more — see the table"
+    # No leading blank: the Δ-frame paragraph this follows already ends with
+    # one, and two consecutive blanks fail markdownlint MD012.
+    lines = [
+        "## Tile-level MCC — a second family on the same swap masks (REPORTED, not the tiering)",
+        "",
+        "PI ruling 2026-09-13 (S153 ruling 7): the round-robin tile-swap carries "
+        "**tile-MCC on the same swap masks as F1** — one "
+        "`numpy.random.default_rng(42)` stream, one tile order, so a ΔF1 and a "
+        "ΔMCC on a pair are two statistics of one permutation, not two "
+        "experiments (`tests/test_k_ladder_mcc_instruments.py::"
+        "test_f1_and_mcc_kernels_draw_identical_swap_masks`) — with "
+        "Benjamini-Hochberg q = 0.05 **within its own family**. It is reported "
+        "beside the preregistered F1 tiering and **does not replace it**: the "
+        "board's tiering, its ranks and its Tier 1 are the F1 ones above. Tile "
+        "MCC is buffer-invariant (tile truth is intersection with any reference, "
+        "tile prediction is any detection assigned to the tile), so this table "
+        "is the same at every buffer. Cells the tile-join invariant withholds "
+        "are excluded from this family exactly as they are from the F1 one, and "
+        "are listed above.",
+        "",
+        f"**{len(ranking)} cells in the MCC family**; "
+        f"{mcc_block.get('n_significant')}/{mcc_block.get('n_pairs')} pairs "
+        f"significant; {mcc_block.get('n_tiers')} MCC tiers; MCC tie set "
+        f"{len(tie_set)}"
+        + (f" ({tier1_labels})" if tier1_labels else "")
+        + f"; MCC MCB admissible "
+        f"{len(mcc_admissible) if mcc_admissible else 'n/a'} of {len(ranking)}, "
+        f"of which **{len(overlap)}** are also in the F1 admissible set.",
+        "",
+        "| MCC rank | cell | MCC tier | MCC MCB | tile-MCC | F1 tier | F1@20 (board frame) |",
+        "|---:|---|---:|:---:|---:|---:|---:|",
+    ]
+    for row in ranking:
+        src = row["ref"].replace(SUFFIX, "")
+        f1_tier = row.get("f1_tier")
+        lines.append(
+            f"| {row['rank']} | `{src}` | {row['mcc_tier']} | "
+            f"{'●' if row['ref'] in mcc_admissible else ''} | "
+            f"{row['mcc']:.4f} | "
+            f"{f1_tier if f1_tier is not None else '—'} | "
+            f"{row['eval_f1']:.4f} |"
+        )
+    return lines
 
 
 def finalise(board: Path, membership: dict[str, Any],
@@ -570,8 +916,10 @@ def finalise(board: Path, membership: dict[str, Any],
     # admitted to the board but ranked and tested nowhere; a cell in
     # ``mcc_permutation.withheld`` keeps its F1 rank and loses only its MCC.
     withheld_cells = tiering.get("withheld_cells") or []
-    withheld_mcc = ((tiering.get("mcc_permutation") or {}).get("withheld") or [])
+    mcc_block = tiering.get("mcc_permutation") or {}
+    withheld_mcc = mcc_block.get("withheld") or []
     admissible, mcb_path = _mcb_admissible(board)
+    mcc_admissible, mcc_mcb_path = _mcb_admissible(board, metric="mcc")
     ranking = tiering["ranking"]
     n_sig = sum(1 for r in tiering["pairwise"] if r["significant"])
     top = ranking[0]
@@ -597,6 +945,11 @@ def finalise(board: Path, membership: dict[str, Any],
            f"invariant refused ({', '.join(w.get('label', '?') for w in withheld_mcc)}); "
            f"they keep their F1 rank and are outside the MCC BH family."
            if withheld_mcc else "")
+        # Ruling 7: the outcome the PI signs must state BOTH families, so a
+        # reader of the register knows the board carries two statistics and
+        # which of them is its tiering.
+        + (_mcc_family_sentence(mcc_block, mcc_admissible, admissible)
+           if mcc_block.get("ranking") else "")
     )
     ra = json.loads(RUN_ANALYSES.read_text(encoding="utf-8"))
     rows = ra["analyses"] if isinstance(ra, dict) else ra
@@ -658,9 +1011,14 @@ def finalise(board: Path, membership: dict[str, Any],
                                       "recorded_mcc": w.get("recorded_mcc"),
                                       "reason": w.get("reason")} for w in withheld_mcc],
                     "n_mcc_withheld": len(withheld_mcc),
-                    "mcc_permutation": ({k: v for k, v in tiering["mcc_permutation"].items()
-                                         if k not in ("pairwise", "gates", "withheld")}
-                                        if tiering.get("mcc_permutation") else None),
+                    "mcc_permutation": ({k: v for k, v in mcc_block.items()
+                                         if k not in ("pairwise", "gates",
+                                                      "withheld", "ranking",
+                                                      "tiers")}
+                                        if mcc_block else None),
+                    "mcc_tie_set": mcc_block.get("tie_set") if mcc_block else None,
+                    "mcc_mcb_admissible_hsu": mcc_admissible or None,
+                    "mcc_mcb": mcc_mcb_path,
                     "tie_set": tiers[0]["members"], "mcb_admissible_hsu": admissible,
                     "mcb_two_sided_band_n": (lambda d: len(d.get("mcb_not_ruled_out") or []))(
                         json.loads((REPO_ROOT / mcb_path).read_text(encoding="utf-8")) if mcb_path else {}),
@@ -692,6 +1050,20 @@ def finalise(board: Path, membership: dict[str, Any],
                 and not str(prior_re_sign.get("status", "")).startswith("PENDING"):
             re_sign["previous_resolved"] = prior_re_sign
             carried.append("re_sign_pending (resolved, nested as previous_resolved)")
+        # A PENDING block is a record too. Until 2026-09-13 finalise overwrote
+        # one outright, which is why the 2026-09-13 note had to keep a durable
+        # copy of its numbers in the README changelog
+        # (`reports/recovery-drop-fix-2026-09-13.md`, and this board's changelog
+        # entry "Why this entry exists as well as the provenance block"). A
+        # rebuild that lands ON a pending block therefore nests it as
+        # ``previous_pending``: it carries the previous proposal's text, the
+        # cells it had pending, and — one level further in — the resolved block
+        # of the signature before that. Nothing in it is a signature FIELD; it
+        # is the trail of what was proposed and why, and deleting it loses
+        # history the project's rules say to keep.
+        elif isinstance(re_sign, dict) and isinstance(prior_re_sign, dict):
+            re_sign["previous_pending"] = prior_re_sign
+            carried.append("re_sign_pending (pending, nested as previous_pending)")
         prior_ruling = ((prior.get("gates") or {}).get("G1") or {}).get("pi_ruling")
         current_g1 = (provenance.get("gates") or {}).get("G1")
         if prior_ruling is not None and isinstance(current_g1, dict) \
@@ -725,7 +1097,14 @@ def finalise(board: Path, membership: dict[str, Any],
                 if n_k_ladder else "")
              + (f" tile-MCC additionally **withheld** for {len(withheld_mcc)} ranked "
                 "cell(s) the tile-join invariant refused."
-                if withheld_mcc else ""), "",
+                if withheld_mcc else "")
+             + (f" A tile-MCC permutation family is **reported beside** this "
+                f"F1 tiering and does not replace it (PI ruling 2026-09-13, "
+                f"ruling 7): {mcc_block.get('n_tiers')} MCC tiers, MCC tie set "
+                f"{len(mcc_block.get('tie_set') or [])}, MCC MCB admissible "
+                f"{len(mcc_admissible) if mcc_admissible else 'n/a'} — see "
+                f"[§ Tile-level MCC](#tile-level-mcc--a-second-family-on-the-same-swap-masks-reported-not-the-tiering)."
+                if mcc_block.get("ranking") else ""), "",
              "| rank | cell | tier | MCB | F1@20 (board frame) | committed F1@20 | Δ frame | tile-MCC |",
              "|---:|---|---:|:---:|---:|---:|---:|---:|"]
     for r in ranking:
@@ -735,21 +1114,7 @@ def finalise(board: Path, membership: dict[str, Any],
                      f"{d.get('committed_f1_20', float('nan')):.4f} | {d.get('delta_board_minus_committed', 0.0):+.4f} | "
                      f"{r['mcc'] if r['mcc'] is not None else '—'} |")
     if withheld_cells:
-        lines += ["", "**Admitted but WITHHELD** — the tile-join invariant refuses these cells' "
-                  "per-tile table on this frame (their `source_tile` vocabulary is not the frame's), "
-                  "so they are ranked nowhere above and enter no BH family and no admissible set. "
-                  "Their whole-frame F1 is unaffected by the tile join and is quoted for reference; "
-                  "their committed tile-MCC is the pre-invariant value and is NOT published. Admission "
-                  "is the PI's ruling of 2026-09-13; the withholding follows the same ruling's "
-                  "\"withhold and list, never abort the board\", and is lifted only by the corpus-wide "
-                  "tile-join decision (close-out question 4).", "",
-                  "| cell | F1@20 (whole frame) | committed tile-MCC (NOT published) | refusal |",
-                  "|---|---:|---:|---|"]
-        for w in withheld_cells:
-            recorded = w.get("recorded_mcc")
-            recorded_txt = "—" if recorded is None else f"{recorded:.4f}"
-            lines.append(f"| `{w.get('label')}` | {w.get('eval_f1'):.4f} | "
-                         f"{recorded_txt} | {w.get('reason')} |")
+        lines += _withheld_table(withheld_cells)
     if withheld_mcc:
         lines += ["", "**tile-MCC withheld** (the tile-join invariant refused the cell's "
                   "per-tile classification, so no MCC is published for it; the cell keeps "
@@ -763,6 +1128,12 @@ def finalise(board: Path, membership: dict[str, Any],
               "identity rather than a reproduction. Full pairwise table: `tiering_20m.json`; "
               "gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: "
               "`cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.", ""]
+    if mcc_block.get("ranking"):
+        lines += _mcc_tiering_table(mcc_block, mcc_admissible, admissible)
+        lines += ["", f"Full MCC pairwise table: `tiering_20m.json` → "
+                  f"`mcc_permutation.pairwise`; per-cell confusion gates: "
+                  f"`mcc_permutation.gates`; MCC admissible set: "
+                  f"`{mcc_mcb_path or 'not computed'}`.", ""]
     # Keep an existing changelog across rebuilds: the body is regenerated, the
     # revision trail is not (document revision policy, docs/agent-guidance.md).
     old_readme = (board / "README.md").read_text(encoding="utf-8") if (board / "README.md").exists() else ""
@@ -778,7 +1149,8 @@ def finalise(board: Path, membership: dict[str, Any],
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    parser.add_argument("command", choices=["membership", "jobs", "gates", "register", "finalise"])
+    parser.add_argument("command", choices=["membership", "jobs", "gates", "register",
+                                            "finalise", "renderings", "check-renderings"])
     parser.add_argument("--write", action="store_true", help="register: persist to the register files")
     parser.add_argument("--no-analysis-row", action="store_true",
                         help=("register / finalise: do NOT write to the board's "
@@ -792,6 +1164,24 @@ def main(argv: list[str] | None = None) -> int:
     board = REPO_ROOT / BOARD_DIR
     board.mkdir(parents=True, exist_ok=True)
     mpath = board / "membership.json"
+
+    if args.command == "check-renderings":
+        return check_renderings(board)
+    if args.command == "renderings":
+        # Re-render the generated projections from the COMMITTED JSON. Kept
+        # apart from `gates` on purpose: `gates` rewrites gates.json (with a
+        # fresh checked_at_utc) as well as the document, so using it to add a
+        # banner would move a gate report nobody asked to move.
+        gates_path = board / "gates.json"
+        if not gates_path.exists():
+            print(f"no committed {gates_path.name}", file=sys.stderr)
+            return 1
+        deltas_path = board / "frame-deltas.md"
+        deltas_path.write_text(
+            render_deltas(json.loads(gates_path.read_text(encoding="utf-8"))),
+            encoding="utf-8")
+        print(f"rendered {deltas_path.relative_to(REPO_ROOT)}")
+        return 0
 
     if args.command == "membership":
         membership = derive_membership()
