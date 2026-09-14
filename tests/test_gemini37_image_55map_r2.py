@@ -161,3 +161,103 @@ def test_engine_command_reproduces_the_committed_recipe() -> None:
             break
         buffers.append(int(token))
     assert buffers == want["buffers"]
+
+
+# ---------------------------------------------------------------------------
+# The scoring-frame tile assignment.
+#
+# Regression cover for the defect that the four original mechanism gates could
+# not see: they all consume comparator detection sets, which already carry
+# scoring-frame ``source_tile`` names, so none of them exercises a campaign
+# rung whose names come from the proposer's 192 px-stride tiling. Under the
+# published ``id`` join such a rung books almost nothing and the per-tile
+# invariant refuses.
+# ---------------------------------------------------------------------------
+
+
+def test_assign_eval_frame_tiles_rewrites_onto_the_frame_and_keeps_origin(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The rule replaces ``source_tile`` and preserves the proposer's tile."""
+    from scripts import gemini37_image_55map_r2 as mod
+
+    # Two proposer-vocabulary origins on one map; a stub index stands in for
+    # the real 8,541-tile frame so the test stays tier-1 (no data files).
+    monkeypatch.setattr(mod, "build_map_constrained_index", lambda: {"MAPA": {}})
+    monkeypatch.setattr(
+        mod, "assign_standard_tile",
+        lambda index, origin, x, y: f"MAPA_x{int(x)}_y{int(y)}.png",
+    )
+    frame = gpd.GeoDataFrame(
+        {
+            "vote_count": [1, 3],
+            "mound_probability": [0.9, 0.5],
+            "source_tile": ["MAPA_x1152_y2880.png", "MAPA_x1344_y1344.png"],
+        },
+        geometry=[Point(10, 20), Point(30, 40)],
+        crs="EPSG:32635",
+    )
+
+    out = mod.assign_eval_frame_tiles(frame)
+
+    assert list(out["source_tile"]) == ["MAPA_x10_y20.png", "MAPA_x30_y40.png"]
+    assert list(out["origin_source_tile"]) == [
+        "MAPA_x1152_y2880.png",
+        "MAPA_x1344_y1344.png",
+    ]
+    # The input is not mutated: the caller's frame must survive intact.
+    assert list(frame["source_tile"]) == [
+        "MAPA_x1152_y2880.png",
+        "MAPA_x1344_y1344.png",
+    ]
+    assert "origin_source_tile" not in frame.columns
+
+
+def test_assign_eval_frame_tiles_passes_the_origin_tile_for_the_map_constraint(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The origin tile reaches the assigner, which needs it for the map.
+
+    The map constraint is the part of the rule that matters most: the sheet
+    rasters overlap, and an unconstrained nearest-centroid assignment flips
+    about 10 per cent of candidates to the adjacent sheet.
+    """
+    from scripts import gemini37_image_55map_r2 as mod
+
+    seen: list[str] = []
+
+    def spy(index: object, origin: str, x: float, y: float) -> str:
+        seen.append(origin)
+        return "T.png"
+
+    monkeypatch.setattr(mod, "build_map_constrained_index", lambda: {})
+    monkeypatch.setattr(mod, "assign_standard_tile", spy)
+    frame = gpd.GeoDataFrame(
+        {
+            "vote_count": [1],
+            "mound_probability": [0.9],
+            "source_tile": ["K-35-042-3_x1152_y2880.png"],
+        },
+        geometry=[Point(1, 2)],
+        crs="EPSG:32635",
+    )
+
+    mod.assign_eval_frame_tiles(frame)
+
+    assert seen == ["K-35-042-3_x1152_y2880.png"]
+
+
+def test_assign_eval_frame_tiles_handles_an_empty_frame() -> None:
+    """An operating point that retains nothing must not raise here."""
+    from scripts import gemini37_image_55map_r2 as mod
+
+    empty = gpd.GeoDataFrame(
+        {"vote_count": [], "mound_probability": [], "source_tile": []},
+        geometry=[],
+        crs="EPSG:32635",
+    )
+
+    out = mod.assign_eval_frame_tiles(empty)
+
+    assert len(out) == 0
+    assert "origin_source_tile" in out.columns

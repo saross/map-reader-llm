@@ -100,6 +100,10 @@ from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     micro_f1,
     permutation_test_float,
 )
+from scripts.stride55_score import (  # noqa: E402
+    assign_standard_tile,
+    build_map_constrained_index,
+)
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -325,8 +329,63 @@ def tile_vectors(
 # ---------------------------------------------------------------------------
 
 
+def assign_eval_frame_tiles(frame: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """Re-stamp ``source_tile`` from the proposer's tiling onto the scoring frame.
+
+    **Why this exists.** The proposer runs on ``g384_ov192_55map`` — 384 px
+    tiles on a 192 px stride, 24,561 of them — while the scoring frame
+    ``55maps_evaluation_bounds.geojson`` is 384 px tiles on a **336 px**
+    stride, 8,541 of them. Only 660 tile names are common to the two. The
+    published tile-MCC convention is the name-based ``id`` join (PI ruling,
+    ``reports/tile-mcc-geometric-join-2026-09-12.md``), which is well defined
+    only when a cell's ``source_tile`` names tiles **of the scoring frame**. A
+    union frame carrying the proposer's origin tiles therefore books almost
+    nothing: measured here, 192 of 6,250 detections, and the invariant in
+    ``lib_advanced_metrics`` rightly refuses the resulting table.
+
+    Every other 55-map cell went through this step. The rule is
+    ``stride55_score.assign_standard_tile`` over
+    ``stride55_score.build_map_constrained_index``: the nearest standard-grid
+    tile centroid **within the origin raster's own map**. The map constraint is
+    not cosmetic — the sheet rasters overlap, and an unconstrained
+    nearest-centroid assignment flips about 10 % of candidates to the adjacent
+    sheet and moves corrected F1 by ~0.04 (``stride55_score.py`` lines 119-127).
+
+    The rule is confirmed, not assumed: re-applying it to the committed
+    ``FOURTH-N1-oracle``, ``ARM2-N3-oracle`` and ``ARM2-N5-oracle`` detection
+    sets reproduces their stored ``source_tile`` for **100 %** of features, so
+    it is provably the writer that produced the cells P1-P5 are stated against.
+    ``stage_selftest`` gates that idempotency on every run.
+
+    The proposer's origin tile is preserved as ``origin_source_tile`` so a
+    detection can still be traced to the tile the model actually saw.
+
+    Args:
+        frame: A rung frame whose ``source_tile`` holds proposer origin tiles.
+
+    Returns:
+        The frame with ``source_tile`` on the scoring frame's vocabulary and
+        ``origin_source_tile`` carrying what it replaced.
+    """
+    index = build_map_constrained_index()
+    out = frame.copy()
+    origin = out["source_tile"].astype(str).to_numpy()
+    xs = out.geometry.x.to_numpy()
+    ys = out.geometry.y.to_numpy()
+    out["origin_source_tile"] = origin
+    out["source_tile"] = [
+        assign_standard_tile(index, origin[i], float(xs[i]), float(ys[i]))
+        for i in range(len(out))
+    ]
+    return out
+
+
 def rung_frame(arm: str, k: int) -> gpd.GeoDataFrame:
     """The candidate frame for one rung: union geometry plus arm probabilities.
+
+    ``source_tile`` is re-stamped onto the scoring frame's vocabulary by
+    :func:`assign_eval_frame_tiles`; without that the per-tile machinery cannot
+    book the campaign's detections at all.
 
     Args:
         arm: ``arm1`` or ``arm2``.
@@ -334,10 +393,12 @@ def rung_frame(arm: str, k: int) -> gpd.GeoDataFrame:
 
     Returns:
         A GeoDataFrame in EPSG:32635 with ``vote_count``,
-        ``mound_probability`` and ``source_tile``, one row per candidate.
+        ``mound_probability``, ``source_tile`` (scoring frame) and
+        ``origin_source_tile`` (proposer tiling), one row per candidate.
     """
     vroot = CAMPAIGN_ROOT / "verifier" / CAMPAIGN_CELL
-    return load_manifest_probs(vroot / f"crops_k{k}", vroot / f"verify_k{k}_{arm}")
+    raw = load_manifest_probs(vroot / f"crops_k{k}", vroot / f"verify_k{k}_{arm}")
+    return assign_eval_frame_tiles(raw)
 
 
 def materialise(frame: gpd.GeoDataFrame, prob_t: float, min_votes: int) -> gpd.GeoDataFrame:
@@ -744,6 +805,64 @@ def stage_selftest() -> int:
             if not ok:
                 failures.append(
                     f"permutation {key}: {got[key]} != {want[key]}")
+
+    # Gate 5 — the tile-assignment rule is the one that wrote the comparators.
+    # Gates 2-4 above all consume comparator detection sets, which already carry
+    # scoring-frame source_tile names, so NONE of them can detect a campaign
+    # rung whose source_tile is on the proposer's tiling instead. That is
+    # exactly the defect this gate exists to catch: re-applying
+    # assign_eval_frame_tiles' rule to a committed comparator must be a fixed
+    # point, or the rule is not the writer's and the campaign's cells are not
+    # comparable with the cells P1-P5 are stated against.
+    #
+    # IM-k3 is deliberately excluded and checked separately: the MCC tiering
+    # scored the original verified file in place, so it never went through this
+    # writer and reproduces at ~84 %. That is a property of the committed
+    # comparator, not of this rule.
+    index = build_map_constrained_index()
+    for comp in COMPARATORS:
+        det = read_detections(PROJECT_ROOT / comp.detections)
+        origin = det["source_tile"].astype(str).to_numpy()
+        xs, ys = det.geometry.x.to_numpy(), det.geometry.y.to_numpy()
+        fresh = [assign_standard_tile(index, origin[i], float(xs[i]), float(ys[i]))
+                 for i in range(len(det))]
+        same = sum(1 for a, b in zip(fresh, origin, strict=True) if a == b)
+        share = same / max(len(det), 1)
+        if comp.label == "IM-k3":
+            logger.info("gate 5 tile-join %-18s idempotent %d/%d (%.2f%%) — "
+                        "EXPECTED partial, scored in place by the MCC tiering",
+                        comp.label, same, len(det), 100 * share)
+            continue
+        ok = same == len(det)
+        logger.info("gate 5 tile-join %-18s idempotent %d/%d (%.2f%%) — %s",
+                    comp.label, same, len(det), 100 * share,
+                    "OK" if ok else "FAIL")
+        if not ok:
+            failures.append(
+                f"tile-join rule not idempotent on {comp.label}: "
+                f"{same}/{len(det)}"
+            )
+
+    # Gate 6 — every campaign rung books its detections on the scoring frame.
+    # Runs only once the arms exist, so the gate is informative before the data
+    # and binding after it.
+    for arm in ARM_MODEL:
+        for k in RUNGS:
+            label = rung_label(arm, k)
+            try:
+                frame = rung_frame(arm, k)
+            except Exception as exc:  # noqa: BLE001 - pre-data run, report only
+                logger.info("gate 6 booking  %-14s not yet built (%s)",
+                            label, type(exc).__name__)
+                continue
+            in_frame = int(frame["source_tile"].isin(set(bounds["tile_name"])).sum())
+            ok = in_frame == len(frame)
+            logger.info("gate 6 booking  %-14s %d/%d candidates on the scoring "
+                        "frame — %s", label, in_frame, len(frame),
+                        "OK" if ok else "FAIL")
+            if not ok:
+                failures.append(
+                    f"booking {label}: {in_frame}/{len(frame)} on the frame")
 
     if failures:
         for f in failures:
