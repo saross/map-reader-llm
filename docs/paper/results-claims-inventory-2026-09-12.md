@@ -1,6 +1,13 @@
 # Results claims-with-anchors inventory — `results-draft.md`, 2026-09-12
 
-> **Last revised**: 2026-09-13 (**extended to §§ R1b, R3 and R6**, so every
+> **Last revised**: 2026-09-14 (**row R2-06 re-anchored under erratum
+> E88** — image-bearing tile MCC **0.0665–0.291 across the twenty-one
+> computable of twenty-two** cells, from 0.094–0.291 across seventeen; the
+> four phase-2e exemplar-ordering cells are image-bearing and had been in
+> neither modality group. Status stays **VERIFIED** — the anchor moves from
+> `tiering_20m.json` read under the retired label rule to the audit's
+> recomputation — so the 237 / 214 / 19 / 1 / 3 census is unchanged.)
+> Prior: 2026-09-13 (**extended to §§ R1b, R3 and R6**, so every
 > Results block is now inventoried and no placeholder remains: 181 claims
 > → **237**, of which 214 VERIFIED, 19 DRIFTED, 1 SUPERSEDED, 3 UNANCHORED,
 > and **10 verified at a committed anchor that no sentence of the draft
@@ -347,7 +354,7 @@ post-hoc.
 | R2-03 | 227/630 pairs significant. | same `tiering_20m.json`: 227 of 630 pairwise rows `significant: true` (recounted this session) | VERIFIED | — |
 | R2-04 | The five registered single-factor manipulations (H1 modality/elaboration, H4 ordering, H5 negative text, H7 temperature, H8 library composition) all land inside or near the tie. | `results/hypothesis-outcome-table/hypothesis-outcome-table.md` rows H1, H4, H5, H7, H8 (all "executed", registered as confirmatory) | VERIFIED; REGISTERED | — |
 | R2-05 | Text-modality prompts dominate image-only prompts at the bottom of the board. | `tiering_20m.json` Tier 4 = `image-t1.3` 0.4920 and `image-only` 0.4696, the two lowest cells | VERIFIED | — |
-| R2-06 | Text-only cells reach F1 ≈ 0.60 with essentially no tile-level discrimination; image-bearing cells trade F1 for markedly better discrimination, **MCC 0.094–0.291 across the seventeen computable image-bearing cells**. | `tiering_20m.json`: 17 image-bearing cells have a non-null MCC, range **0.0942–0.2907** (recomputed this session) | VERIFIED | — |
+| R2-06 | Text-only cells reach F1 ≈ 0.60 with essentially no tile-level discrimination; image-bearing cells trade F1 for markedly better discrimination, **MCC 0.0665–0.291 across the twenty-one computable of twenty-two image-bearing cells** `[E88]`. | `results/modality-track-audit-2026-09-14/recomputation.md` § 3 and `recomputation.json` (over the same 36 `tiering_20m.json` cells, with modality derived from the transmitted configuration by `scripts/derive_condition_modality.py`): image-bearing **22** cells, **21** with a defined tile MCC, range **0.0665–0.2907**; text-only 14 cells, 6 defined, all at 0.0665. The register row's `[AMENDED 2026-09-14, E88]` clause carries the same figures | VERIFIED | Re-anchored 2026-09-14 under **E88**: the prior anchor (17 cells, 0.0942–0.2907) was right about its own group and the group was wrong — the four phase-2e exemplar-ordering cells are image-bearing and had been in neither group. Direction preserved: 20 of the 21 are strictly above every computable text cell and the twenty-first (`retest-phase2e::random`) ties at 0.0665 |
 | R2-07 | Eight of the fourteen text-only cells returned at least one detection on every one of the 340 evaluation tiles, emptying the predicted-negative column and leaving MCC undefined. | `docs/methodology/preregistration/protocol-errata.md` § E81, table at `:4247-4268` — nine conditions at confusion matrix TP 204 / TN 0 / FP 136 / FN 0, of which eight are text | VERIFIED (E81) | — |
 | R2-08 | The six computable text cells all sit at 0.0665, the value of leaving exactly one of the **136 reference-empty tiles** alone. | E81 at `:4247` ("TN + FP is the count of reference-empty tiles, 136") and `:4271-4274` (the 0.0665 cells) | VERIFIED (E81) | — |
 | R2-09 | H1's registered pooled modality contrast returns a null: Δ = +0.0238, 95 % CI −0.0104 to +0.0585, two-sided paired bootstrap p = 0.1774, adjusted p = 0.248. | `results/family-fdr/h1_cmt0106_pooled_modality.json` via register row `h1-cmt0106-pooled-modality` (delta +0.0238, CI95 [−0.0104, +0.0585], p 0.1774); `results/family-fdr/family_fdr.json` H1 `adjusted_p` 0.24836 | VERIFIED; **SIGNED** (`confirmatory-with-deviation`, `manually_verified_at` 2026-08-14) | — |
@@ -1523,6 +1530,30 @@ K-ladder row. These are additional to, not instead of, the three above.
 ---
 
 ## Changelog
+
+### 2026-09-14 — Row R2-06 re-anchored under erratum E88
+
+**Trigger**: the corpus-wide modality-track audit
+(`reports/modality-track-audit-2026-09-14.md` § 5.1) and ruling 2 of the PI's
+four rulings of 2026-09-14. Modality — a preregistered factor (H1) — had been
+assigned in four analysis scripts by a substring test on the condition label,
+which left the four phase-2e exemplar-ORDERING cells in *neither* modality
+group although all four transmitted an image-bearing configuration.
+
+| | before | after |
+|---|---|---|
+| R2-06 claim | MCC **0.094–0.291** across the **seventeen** computable image-bearing cells | MCC **0.0665–0.291** across the **twenty-one** computable of **twenty-two** |
+| R2-06 anchor | `tiering_20m.json`, 17 non-null MCC cells, 0.0942–0.2907 | `results/modality-track-audit-2026-09-14/recomputation.{json,md}` § 3 over the same 36 cells, modality derived from the transmitted configuration |
+| R2-06 status | VERIFIED | **VERIFIED** (unchanged) |
+
+**What did NOT change**: the census (237 claims; 214 VERIFIED, 19 DRIFTED, 1
+SUPERSEDED, 3 UNANCHORED) and every per-block count, because the row stays
+VERIFIED; every other R2 row, R2-07 and R2-08 included (both rest on E81's
+undefined-MCC table, which this correction does not touch); and the direction
+of the claim — 20 of the 21 computable image-bearing cells are strictly above
+every computable text-only cell's 0.0665, and the twenty-first ties it.
+
+Commit: this entry's commit.
 
 ### 2026-09-13 — Extended to §§ R1b, R3 and R6; cross-section summary regenerated (Session 153)
 

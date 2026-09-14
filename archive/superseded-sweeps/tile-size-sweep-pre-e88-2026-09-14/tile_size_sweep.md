@@ -48,11 +48,10 @@ Model-matched (gemini-3-flash) so the ceilings compare tile size, not model.
 | 512 | consensus/text | `text-high-t1.0-n30-23of30` | 0.775 | 0.642 |
 | 512 | proposer-verifier/image | `verified-adv-image-t0.7-n30-18of30` | 0.728 | 0.785 |
 | 512 | proposer-verifier/text | `verified-adv-text-high-t1.0-n30-23of30` | 0.792 | 0.676 |
-| 512 | single-pass/image | `canonical-last` | 0.631 | 0.213 |
-| 512 | single-pass/text | `text-scale-4` | 0.609 | — |
+| 512 | single-pass/image | `image-terse` | 0.605 | 0.224 |
+| 512 | single-pass/text | `canonical-last` | 0.631 | 0.213 |
 | 384 | consensus/image | `flash-high-image-n5-image-t0.7-consensus-7of10` | 0.750 | 0.678 |
 | 384 | consensus/text | `flash-high-text-n5-text-t0.7-consensus-26of30` | 0.814 | 0.620 |
-| 384 | proposer-verifier/image | `verified-adv-image-min-6of10` | 0.789 | 0.803 |
 | 384 | proposer-verifier/text | `verified-adv-text-consensus-16of30` | 0.890 | 0.790 |
 | 384 | single-pass/image | `baseline-flash-image-minimal-t-0-0` | 0.600 | 0.312 |
 | 384 | single-pass/text | `baseline-flash-text-minimal-t-0-0-pv-baseline` | 0.520 | -0.004 |
@@ -64,7 +63,5 @@ Model-matched (gemini-3-flash) so the ceilings compare tile size, not model.
 
 | size/arch/modality | cell | F1@20m | MCC |
 |---|---|---:|---:|
-| 384/proposer-verifier/image | `verified-adv-image-baseline-pro-vf` | 0.731 | 0.889 |
-| 384/proposer-verifier/text | `verified-adv-text-pro-vf-4of5` | 0.879 | 0.795 |
 | 384/single-pass/image | `baseline-pro-image-medium-t-0-0` | 0.655 | 0.868 |
 | 384/single-pass/text | `baseline-pro-text-medium-t-0-0` | 0.792 | 0.790 |

@@ -13,8 +13,8 @@
     "256 px consensus+verifier IS now tested (Stage-D, Obs 352, View 3: F1 0.856); its proposer is the plain text 5-of-5 (N=5) family, whereas 384/512 share the HIGH-text N=30 lineage (HIGH-text was not run at 256), so the 256 PV cell is its own thin-provenance anchor.",
     "image HIGH-thinking consensus exists at 384 but not 512 (phase3a-high image track never ran)."
   ],
-  "generated_at_utc": "2026-09-14T01:23:25.408491+00:00",
-  "git_commit": "5570447b9",
+  "generated_at_utc": "2026-06-09T01:38:31.335580+00:00",
+  "git_commit": "48b56fdd6",
   "single_pass_isolation": [
     {
       "architecture": "single-pass",
@@ -42,7 +42,7 @@
         "512": {
           "ref": "retest-phase2b::text-t0.0",
           "f1": 0.6055,
-          "mcc": null,
+          "mcc": 0.0,
           "thin_provenance": false
         }
       },
@@ -67,7 +67,7 @@
         "512": {
           "ref": "retest-phase2b::text-t0.7",
           "f1": 0.5842,
-          "mcc": null,
+          "mcc": 0.0,
           "thin_provenance": false
         }
       },
@@ -111,7 +111,7 @@
         "384": {
           "ref": "pv-diag-384::baseline-flash-image-minimal-t-0-7",
           "f1": 0.5534,
-          "mcc": 0.3296,
+          "mcc": 0.3295,
           "thin_provenance": false
         },
         "512": {
@@ -569,29 +569,13 @@
           "f1": 0.8902,
           "mcc": 0.7903,
           "thin_provenance": false
-        },
-        "proposer-verifier/image": {
-          "ref": "pv-diag-384::verified-adv-image-min-6of10",
-          "run": "pv-diag-384",
-          "label": "verified-adv-image-min-6of10",
-          "size": 384,
-          "architecture": "proposer-verifier",
-          "model": "flash",
-          "modality": "image",
-          "thinking": null,
-          "temperature": null,
-          "n_passes": 10,
-          "vote": 6,
-          "f1": 0.789,
-          "mcc": 0.8032,
-          "thin_provenance": false
         }
       },
       "512": {
         "single-pass/text": {
-          "ref": "retest-phase2c::text-scale-4",
-          "run": "retest-phase2c",
-          "label": "text-scale-4",
+          "ref": "retest-phase2e::canonical-last",
+          "run": "retest-phase2e",
+          "label": "canonical-last",
           "size": 512,
           "architecture": "single-pass",
           "model": "flash",
@@ -600,14 +584,14 @@
           "temperature": null,
           "n_passes": 1,
           "vote": null,
-          "f1": 0.6094,
-          "mcc": null,
+          "f1": 0.6314,
+          "mcc": 0.2132,
           "thin_provenance": false
         },
         "single-pass/image": {
-          "ref": "retest-phase2e::canonical-last",
-          "run": "retest-phase2e",
-          "label": "canonical-last",
+          "ref": "retest-phase2d::image-terse",
+          "run": "retest-phase2d",
+          "label": "image-terse",
           "size": 512,
           "architecture": "single-pass",
           "model": "flash",
@@ -616,8 +600,8 @@
           "temperature": null,
           "n_passes": 1,
           "vote": null,
-          "f1": 0.6314,
-          "mcc": 0.2132,
+          "f1": 0.6052,
+          "mcc": 0.2239,
           "thin_provenance": false
         },
         "proposer-verifier/text": {
@@ -717,38 +701,6 @@
         "vote": null,
         "f1": 0.7921,
         "mcc": 0.7903,
-        "thin_provenance": false
-      },
-      "384/proposer-verifier/text": {
-        "ref": "pv-diag-384::verified-adv-text-pro-vf-4of5",
-        "run": "pv-diag-384",
-        "label": "verified-adv-text-pro-vf-4of5",
-        "size": 384,
-        "architecture": "proposer-verifier",
-        "model": "pro",
-        "modality": "text",
-        "thinking": null,
-        "temperature": null,
-        "n_passes": 5,
-        "vote": 4,
-        "f1": 0.8792,
-        "mcc": 0.7947,
-        "thin_provenance": false
-      },
-      "384/proposer-verifier/image": {
-        "ref": "pv-diag-384::verified-adv-image-baseline-pro-vf",
-        "run": "pv-diag-384",
-        "label": "verified-adv-image-baseline-pro-vf",
-        "size": 384,
-        "architecture": "proposer-verifier",
-        "model": "pro",
-        "modality": "image",
-        "thinking": null,
-        "temperature": null,
-        "n_passes": 1,
-        "vote": 1,
-        "f1": 0.7309,
-        "mcc": 0.8887,
         "thin_provenance": false
       }
     }

@@ -10,7 +10,13 @@
 
 ---
 
-> **Last revised**: 2026-09-13 (Session 153: the four
+> **Last revised**: 2026-09-14 (**§ R2's image-bearing tile-MCC range
+> corrected under erratum E88** — MCC 0.0665–0.291 across the twenty-one
+> computable of twenty-two image-bearing cells, from 0.094–0.291 across
+> seventeen; the four phase-2e exemplar-ordering cells are image-bearing and
+> had been in neither modality group. Direction, text-only side, every F1 and
+> every tier unchanged. See [§ Changelog](#changelog).) Prior:
+> 2026-09-13 (Session 153: the four
 > `[DRAFT, S153 — pending PI ruling]` markers in § R7.3 and the § R4
 > `[DRAFT NOTE, S152]` cleared — each of the five decisions was ruled on
 > 2026-09-12, and the markers now read `[RULED 2026-09-1x: …]` with the
@@ -192,8 +198,9 @@ Gemini 3.7 the within-family text − image gap closes from +0.0549
 (p = 0.001) to −0.0115 (p = 0.25; § R7.3, Obs 447) — and a
 metric trade-off recurs in which text-only cells reach F1 ≈ 0.60 with
 essentially no tile-level discrimination while image-bearing cells trade
-F1 for markedly better discrimination (MCC 0.094–0.291 across the
-seventeen computable image-bearing cells). For the text-only cells that
+F1 for markedly better discrimination (MCC 0.0665–0.291 across the
+twenty-one computable of the twenty-two image-bearing cells)
+[E88]. For the text-only cells that
 "essentially none" is literal rather than numerical: eight of the
 fourteen returned at least one detection on every one of the 340
 evaluation tiles, which empties the predicted-negative column of the
@@ -981,6 +988,46 @@ and density diagnostics) is specified in the findings document, § 5.
 
 ## Changelog
 
+### 2026-09-14 — § R2's image-bearing tile-MCC range corrected (erratum E88)
+
+**Trigger**: the corpus-wide modality-track audit
+(`reports/modality-track-audit-2026-09-14.md`) and ruling 2 of the PI's four
+rulings of 2026-09-14. Modality — a preregistered factor (H1) — had been
+assigned in four analysis scripts by testing a condition label for the
+substring `image`. The four phase-2e exemplar-ORDERING cells
+(`canonical-first`, `canonical-last`, `config-default`, `random`) name neither
+modality, so they fell into *neither* group although all four transmitted an
+image-bearing configuration (instruction `detect_brief-text-image.md`,
+`include_example_images` true, `example_count` 13). The image group was
+therefore short by four cells, and its lower bound was the wrong cell's value.
+
+**Before → after** (derived from the transmitted configuration by
+`scripts/derive_condition_modality.py`; recomputed from the same 36
+`results/paper-eval/phase2/512px-14buf-mcc/` evaluations, US$0, no cell
+re-scored):
+
+| Claim | Before | After |
+|---|---|---|
+| Image-bearing cells | 18, of which **17** have a defined tile MCC | 22, of which **21** do |
+| Image-bearing tile-MCC range | **0.094–0.291** (0.0942–0.2907) | **0.0665–0.291** (0.0665–0.2907) |
+| Cells in neither modality group | 4 (`retest-phase2e::{canonical-first,canonical-last,config-default,random}`) | **0** |
+
+**What did NOT change**: the direction of the metric trade-off — 20 of the 21
+computable image-bearing cells sit strictly above every computable text-only
+cell's 0.0665 and the twenty-first (`retest-phase2e::random`, 0.0665) ties it;
+the text-only side entirely (14 cells, MCC undefined on eight, 0.0665 on the
+other six, F1 ≈ 0.60); every F1, precision, recall and confidence interval in
+the draft; the `canonical-last` anchor (F1 0.631, MCC 0.213); the
+`image-verbose` (0.603 / 0.281) and `verbose-text-image` (0.517 / 0.291)
+anchors; every rank, tier and Hsu admissible set on every board (no tiering
+instrument reads modality); and every hypothesis-outcome row, H1's confirmatory
+contrast included — it groups the five phase-2a conditions, all correctly
+labelled.
+
+The upstream register row `era1-single-pass-baseline-matrix` carries the same
+correction as an `[AMENDED 2026-09-14, E88]` clause, and claims-inventory row
+R2-06 is re-anchored to the corrected figures. Commit: this entry's commit.
+
 ### 2026-09-13 — The five ruled markers cleared (Session 153)
 
 **Refresh trigger**: item 9 of
@@ -1237,14 +1284,16 @@ load-bearing, so it could not be left standing.
 | Claim | Before | After |
 |---|---|---|
 | Text-only-cell tile MCC | "near-zero" | undefined on 8 of the 14 phase-2 text-only cells; 0.0665 on the other 6 |
-| Image-bearing-cell tile MCC | "far better tile discrimination" (unquantified) | MCC 0.094–0.291 over the 17 computable image-bearing cells |
+| Image-bearing-cell tile MCC | "far better tile discrimination" (unquantified) | MCC 0.094–0.291 over the 17 computable image-bearing cells — **superseded 2026-09-14 by E88: 0.0665–0.2907 over the 21 computable of 22**, the four phase-2e ordering cells having been in neither group |
 | Text-only-cell F1 | ≈ 0.60 | ≈ 0.60 (unchanged) |
 
 **What did not change**: no F1, precision, recall, or confidence interval
 anywhere in the draft; the `canonical-last` anchor (F1 0.631, MCC 0.213)
 is untouched, as are the `image-verbose` (0.603 / 0.281) and
 `verbose-text-image` (0.517 / 0.291) anchors quoted from the
-`era1-single-pass-baseline-matrix` outcome. The **direction** of the
+`era1-single-pass-baseline-matrix` outcome. [E88, 2026-09-14: the four
+phase-2e ordering cells this entry placed in neither modality group are
+image-bearing — see the Changelog entry of that date.] The **direction** of the
 metric trade-off survives — image cells genuinely do discriminate better
 at tile level — and no registered hypothesis verdict, tie set, or tier
 ranking moves. What changed is that the text side of the contrast is now
