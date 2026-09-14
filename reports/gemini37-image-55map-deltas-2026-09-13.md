@@ -586,6 +586,16 @@ required keyword-only arguments`. That is a masking error: the exception cannot
 round-trip through the pickler, so the real failure never reached the log.
 Reproduced in-process, it reads:
 
+**And it does not die — it hangs.** Killing `_handle_results` means `pool.map`
+can never return, so the parent process and all twelve workers stay alive
+indefinitely. The first sweep run was found still resident **53 minutes** later,
+holding twelve busy workers, with nothing written and nothing further to write.
+An operator watching only for a non-zero exit or an empty output file would read
+that state as "still running". Anyone re-running this stage should check for a
+stale pool by process age, not by exit status; the hung run here was identified
+by its start time (02:16:23) against the successful run's `sweeps.json` mtime
+(02:26:49) and then killed.
+
 > per-tile TP/FP/FN table refused: **192 of 6,250** in-frame detections were
 > credited to a tile under the `id` tile join, a shortfall of **6,058**.
 
