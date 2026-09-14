@@ -23,18 +23,17 @@ Asserts:
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
-from pathlib import Path
-
 import json
+from datetime import UTC, datetime, timedelta
+from pathlib import Path
 
 import pytest
 
 from scripts.generate_post_run_report import (
     PLANNED_STALE_DAYS,
-    _metrics_from_eval,
     VERIFIER_N_TILES_NULL_REASON,
     _carry_timestamps,
+    _metrics_from_eval,
     _stabilise_timestamps,
     _strip_ts,
     assemble_manifest,
@@ -789,10 +788,10 @@ def test_drift_check_flags_decomposed_planned_run():
 @pytest.mark.tier1
 def test_report_planned_runs_ages_and_flags_stale():
     """Planned runs are the only build output that mentions them, so age is shown."""
-    fresh = report_planned_runs([_PLANNED], now=datetime(2026, 7, 29, tzinfo=timezone.utc))
+    fresh = report_planned_runs([_PLANNED], now=datetime(2026, 7, 29, tzinfo=UTC))
     assert fresh == ["PLANNED  h7-escalation  (declared 1d ago)"]
 
-    stale_day = datetime(2026, 7, 28, tzinfo=timezone.utc) + timedelta(
+    stale_day = datetime(2026, 7, 28, tzinfo=UTC) + timedelta(
         days=PLANNED_STALE_DAYS)
     stale = report_planned_runs([_PLANNED], now=stale_day)
     assert "STALE" in stale[0]
@@ -1012,7 +1011,7 @@ def test_lowercase_rfc3339_zone_designator_parses():
     """AUDIT L4: RFC 3339 permits lowercase 'z'; fromisoformat does not accept it."""
     line = report_planned_runs(
         [{"run_id": "x", "status": "planned", "planned_at": "2026-07-28t00:00:00z"}],
-        now=datetime(2026, 7, 29, tzinfo=timezone.utc))[0]
+        now=datetime(2026, 7, 29, tzinfo=UTC))[0]
     assert "declared 1d ago" in line and "unparseable" not in line
 
 
