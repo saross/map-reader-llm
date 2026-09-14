@@ -862,13 +862,24 @@ def detect_mounds_versioned(
         print(f"Error: Prompt text not found at {prompt_path}")
         return
 
-    # Initialise metadata tracker for comprehensive API logging
+    # Initialise metadata tracker for comprehensive API logging.
+    #
+    # This script already writes the CLI overrides into ``config`` above
+    # (temperature, thinking level, model), so the recorded ``configuration``
+    # block has always been the EFFECTIVE configuration — it never had
+    # ``run_pv.py``'s temperature blind spot. ``cli_overrides`` is passed for
+    # provenance only: the merge is idempotent, and the key records which
+    # values came from the command line rather than the config file.
     metadata_tracker = LLMMetadataTracker(
         config=config,
         system_instruction=system_instruction_text,
         script_name="4_detect_mounds_batch.py",
         script_version=__version__,
         model_override=model_name_cfg,
+        cli_overrides={
+            "temperature": temperature_override,
+            "thinking_level": thinking_level_override,
+        },
     )
 
     # Initialise results tracker for detection counts

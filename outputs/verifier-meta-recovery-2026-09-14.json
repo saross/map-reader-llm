@@ -1,0 +1,2337 @@
+{
+  "schema": "verifier-meta-recovery/1",
+  "generated_at": "2026-09-14T01:29:44.822621+00:00",
+  "generator": "scripts/recover_verifier_meta_from_git.py 1.0.0",
+  "report": "reports/verifier-meta-recovery-2026-09-14.md",
+  "contract": "recovered_passes carry a git blob's usage_stats VERBATIM and are counted by scripts/audit_verifier_cost.py as a third source of passes, after the fixed merged schema and the legacy backup convention. items_processed is reconstructed from the blob's own counters (items_processed_source names which). residual_estimate is an estimate, never an audit, and is never counted. No committed run.meta.json was rewritten.",
+  "stages": {
+    "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37": {
+      "verdict": "NOT-IN-HISTORY",
+      "reason": "no-pre-overwrite-blob-in-history",
+      "results": 57482,
+      "surviving_meta_items_processed": 29,
+      "shortfall": 57453,
+      "main_pass_covered_per_cleanup_history": null,
+      "items_recovered": 0,
+      "items_still_unaccounted": 57453,
+      "historical_blob_count": 1,
+      "first_commit": {
+        "commit": "a73d64346eb8730a8cbb5d9bb998ab80ba14058b",
+        "date": "2026-09-01T05:05:10Z",
+        "subject": "results(gemini37): fourth cell harvested \u2014 the 2x2 grid complete"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [],
+      "recovered_passes": [],
+      "notes": [],
+      "residual_estimate": {
+        "basis": "the stage's surviving pass, scaled by candidate count: 29 candidates at 1792.0 input, 132.4 output and 151.9 thinking tokens each",
+        "is_estimate": true,
+        "counted_in_audits": false,
+        "missing_candidates": 57453,
+        "usage_stats": {
+          "total_input_tokens": 102955776,
+          "total_cached_tokens": 0,
+          "total_output_tokens": 7605589,
+          "total_thoughts_tokens": 8728894,
+          "total_tokens": 119290258
+        }
+      },
+      "main_pass_window_from_history": null,
+      "billing_export": {
+        "model": "gemini-3.7-flash",
+        "export_pacific_day": "2026-08-31",
+        "day_anchor": "the surviving (later) pass's window \u2014 the main pass may have started on the previous Pacific day, so export both",
+        "surviving_pass_pacific_day": "2026-08-31",
+        "main_pass_pacific_day": null,
+        "same_model_same_day_runs": 3,
+        "same_model_same_day_without_recorded_tokens": 0,
+        "verdict": "boundable-by-subtraction",
+        "inventory": [
+          {
+            "path": "outputs/gemini37-image-gs-2026-09-01/probe/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
+            "start_utc": "2026-09-01T05:07:36.374817+00:00",
+            "items_processed": 5,
+            "input_tokens": 100090,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/gemini37-image-gs-2026-09-01/probe-seq15/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
+            "start_utc": "2026-09-01T05:11:54.225198+00:00",
+            "items_processed": 15,
+            "input_tokens": 300270,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_1/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
+            "start_utc": "2026-09-01T06:03:30.391983+00:00",
+            "items_processed": 1292,
+            "input_tokens": 25863256,
+            "tokens_recorded": true
+          }
+        ]
+      }
+    },
+    "outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify": {
+      "verdict": "NOT-IN-HISTORY",
+      "reason": "no-pre-overwrite-blob-in-history",
+      "results": 38713,
+      "surviving_meta_items_processed": 6,
+      "shortfall": 38707,
+      "main_pass_covered_per_cleanup_history": 38707,
+      "items_recovered": 0,
+      "items_still_unaccounted": 38707,
+      "historical_blob_count": 1,
+      "first_commit": {
+        "commit": "c368c9db7bc0b5b61b501cdfdf2b4f66be2d369c",
+        "date": "2026-08-26T21:14:44Z",
+        "subject": "data(stride55): Run A verifier complete \u2014 38,713/38,713"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [],
+      "recovered_passes": [],
+      "notes": [],
+      "residual_estimate": {
+        "basis": "the stage's surviving pass, scaled by candidate count: 6 candidates at 1792.0 input, 153.8 output and 0.0 thinking tokens each",
+        "is_estimate": true,
+        "counted_in_audits": false,
+        "missing_candidates": 38707,
+        "usage_stats": {
+          "total_input_tokens": 69362944,
+          "total_cached_tokens": 0,
+          "total_output_tokens": 5954427,
+          "total_thoughts_tokens": 0,
+          "total_tokens": 75317371
+        }
+      },
+      "main_pass_window_from_history": null,
+      "billing_export": {
+        "model": "gemini-3-flash-preview",
+        "export_pacific_day": "2026-08-26",
+        "day_anchor": "the surviving (later) pass's window \u2014 the main pass may have started on the previous Pacific day, so export both",
+        "surviving_pass_pacific_day": "2026-08-26",
+        "main_pass_pacific_day": null,
+        "same_model_same_day_runs": 21,
+        "same_model_same_day_without_recorded_tokens": 0,
+        "verdict": "boundable-by-subtraction",
+        "inventory": [
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_9/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T08:22:12.575886+00:00",
+            "items_processed": 24561,
+            "input_tokens": 36890622,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_10/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T10:25:35.887720+00:00",
+            "items_processed": 24557,
+            "input_tokens": 36890622,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_10_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:27:40.456954+00:00",
+            "items_processed": 1,
+            "input_tokens": 1502,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_1_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:27:48.746812+00:00",
+            "items_processed": 1,
+            "input_tokens": 1502,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_2_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:27:53.220864+00:00",
+            "items_processed": 1,
+            "input_tokens": 3004,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_3_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:28:02.639633+00:00",
+            "items_processed": 4,
+            "input_tokens": 6008,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_4_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:28:20.524080+00:00",
+            "items_processed": 1,
+            "input_tokens": 1502,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_5_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:28:27.611334+00:00",
+            "items_processed": 1,
+            "input_tokens": 1502,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_7_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:28:32.136353+00:00",
+            "items_processed": 2,
+            "input_tokens": 3004,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_8_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:28:37.908364+00:00",
+            "items_processed": 1,
+            "input_tokens": 3004,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov128_55map/run_9_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:28:52.423112+00:00",
+            "items_processed": 2,
+            "input_tokens": 3004,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_10_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:29:06.259132+00:00",
+            "items_processed": 4,
+            "input_tokens": 9012,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_1_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:29:17.254553+00:00",
+            "items_processed": 69,
+            "input_tokens": 103638,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_2_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:30:13.730876+00:00",
+            "items_processed": 5,
+            "input_tokens": 7510,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_3_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:30:23.859282+00:00",
+            "items_processed": 3,
+            "input_tokens": 4506,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_4_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:30:44.584174+00:00",
+            "items_processed": 3,
+            "input_tokens": 4506,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_5_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:30:56.766631+00:00",
+            "items_processed": 1,
+            "input_tokens": 1502,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_6_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:31:03.536769+00:00",
+            "items_processed": 2,
+            "input_tokens": 3004,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_7_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:31:10.859496+00:00",
+            "items_processed": 2,
+            "input_tokens": 3004,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/g384_ov192_55map/run_8_recovery/detections-detect_brief-text-3-flash-2026-08-26.meta.json",
+            "start_utc": "2026-08-26T12:31:18.961497+00:00",
+            "items_processed": 5,
+            "input_tokens": 7510,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify/run.meta.json",
+            "start_utc": "2026-08-26T21:13:27.449375+00:00",
+            "items_processed": 57482,
+            "input_tokens": 103007744,
+            "tokens_recorded": true
+          }
+        ]
+      }
+    },
+    "outputs/55maps-generalisation/verified-v2": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 8942,
+      "surviving_meta_items_processed": 3,
+      "shortfall": 8939,
+      "main_pass_covered_per_cleanup_history": 8939,
+      "items_recovered": 8939,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "060a5240bfd579a51e876c70279503dbdc349468",
+        "date": "2026-04-10T16:33:18+10:00",
+        "subject": "data(55maps): add consensus, verified (v1+v2), and cleanup outputs"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/55maps-generalisation/verified-v2/run.meta.json",
+          "blob": "e09169f54963c98b4476e4b49af4127cb07ae47d",
+          "commit": "060a5240bfd579a51e876c70279503dbdc349468",
+          "commit_date": "2026-04-10T16:33:18+10:00",
+          "commit_subject": "data(55maps): add consensus, verified (v1+v2), and cleanup outputs",
+          "items_covered": 8939,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 16885771
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:e09169f54963c98b4476e4b49af4127cb07ae47d",
+          "kind": "main",
+          "path": "outputs/55maps-generalisation/verified-v2/run.meta.json",
+          "commit": "060a5240bfd579a51e876c70279503dbdc349468",
+          "commit_date": "2026-04-10T16:33:18+10:00",
+          "run_id": "d7a8fba9-a8a3-4f1b-bf42-6d659a950387",
+          "timestamp": {
+            "start": "2026-04-10T04:40:42.879663+00:00",
+            "end": "2026-04-10T05:38:23.564098+00:00",
+            "duration_seconds": 3460.684435
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "c4c9184199a2b37387135c744a0907b9589ef769acf8f91a277649dae4204643"
+          },
+          "execution_stats": {
+            "items_processed": 8939
+          },
+          "usage_stats": {
+            "total_input_tokens": 16885771,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 1481768,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 18367539
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 8.442885,
+            "output_cost_usd": 4.445304,
+            "total_cost_usd": 12.888189,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1889.0,
+        "surviving_pass_input_per_candidate": 1889.0
+      }
+    },
+    "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 4358,
+      "surviving_meta_items_processed": 57,
+      "shortfall": 4301,
+      "main_pass_covered_per_cleanup_history": null,
+      "items_recovered": 4301,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "52b0215a6e67749c07067098d081d51d445fd0fd",
+        "date": "2026-04-09T16:45:13+10:00",
+        "subject": "data(e47): add N=5 consensus + PV results for propose_brief proposer"
+      },
+      "first_commit_files": [
+        "candidate_manifest.json",
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json",
+          "blob": "25e47351cc2f54f9d45e5968997b5a4bc5440976",
+          "commit": "52b0215a6e67749c07067098d081d51d445fd0fd",
+          "commit_date": "2026-04-09T16:45:13+10:00",
+          "commit_subject": "data(e47): add N=5 consensus + PV results for propose_brief proposer",
+          "items_covered": 4301,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 7707392
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:25e47351cc2f54f9d45e5968997b5a4bc5440976",
+          "kind": "main",
+          "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json",
+          "commit": "52b0215a6e67749c07067098d081d51d445fd0fd",
+          "commit_date": "2026-04-09T16:45:13+10:00",
+          "run_id": "52040647-5819-4646-9b30-cfa130c81734",
+          "timestamp": {
+            "start": "2026-04-09T00:27:52.147190+00:00",
+            "end": "2026-04-09T02:14:40.437784+00:00",
+            "duration_seconds": 6408.290594
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d"
+          },
+          "execution_stats": {
+            "items_processed": 4301
+          },
+          "usage_stats": {
+            "total_input_tokens": 7707392,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 679957,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 8387349
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 3.853696,
+            "output_cost_usd": 2.039871,
+            "total_cost_usd": 5.893567,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1792.0,
+        "surviving_pass_input_per_candidate": 1792.0
+      }
+    },
+    "outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 3736,
+      "surviving_meta_items_processed": 1,
+      "shortfall": 3735,
+      "main_pass_covered_per_cleanup_history": 3735,
+      "items_recovered": 3738,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "3d22184d60914fa4919ca56bd653163d27e72549",
+        "date": "2026-04-15T07:19:02+10:00",
+        "subject": "data(outputs): track detection GeoJSON and verifier results from gitignored dirs"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/run.meta.json",
+          "blob": "8485af7d8efdf5b5c82e6f92b0a68a74e6d051c3",
+          "commit": "3d22184d60914fa4919ca56bd653163d27e72549",
+          "commit_date": "2026-04-15T07:19:02+10:00",
+          "commit_subject": "data(outputs): track detection GeoJSON and verifier results from gitignored dirs",
+          "items_covered": 3738,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 6698496
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:8485af7d8efdf5b5c82e6f92b0a68a74e6d051c3",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/run.meta.json",
+          "commit": "3d22184d60914fa4919ca56bd653163d27e72549",
+          "commit_date": "2026-04-15T07:19:02+10:00",
+          "run_id": "1ccfd307-403a-45e2-b928-76c804069737",
+          "timestamp": {
+            "start": "2026-03-26T00:44:17.145971+00:00",
+            "end": "2026-03-26T01:32:05.230719+00:00",
+            "duration_seconds": 2868.084748
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "medium",
+            "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d"
+          },
+          "execution_stats": {
+            "items_processed": 3738
+          },
+          "usage_stats": {
+            "total_input_tokens": 6698496,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 567691,
+            "total_thoughts_tokens": 3314508,
+            "total_tokens": 10580695
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 0.66985,
+            "output_cost_usd": 0.227076,
+            "total_cost_usd": 0.896926,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.1,
+              "output_per_1m": 0.4
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1792.0,
+        "surviving_pass_input_per_candidate": 1792.0
+      }
+    },
+    "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 3736,
+      "surviving_meta_items_processed": 21,
+      "shortfall": 3715,
+      "main_pass_covered_per_cleanup_history": 3715,
+      "items_recovered": 3717,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "5cee158bcc2a6d78c54b53d99cdd42574ad1f57e",
+        "date": "2026-04-25T05:52:26Z",
+        "subject": "data(s78-rerun): Phase A \u2014 checklist-text on text pool (6 candidates scored, 0 failed)"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+          "blob": "a0e2f0a8ac83332799e605c9e63c7881b344b218",
+          "commit": "5cee158bcc2a6d78c54b53d99cdd42574ad1f57e",
+          "commit_date": "2026-04-25T05:52:26Z",
+          "commit_subject": "data(s78-rerun): Phase A \u2014 checklist-text on text pool (6 candidates scored, 0 failed)",
+          "items_covered": 3717,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 7188678
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:a0e2f0a8ac83332799e605c9e63c7881b344b218",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+          "commit": "5cee158bcc2a6d78c54b53d99cdd42574ad1f57e",
+          "commit_date": "2026-04-25T05:52:26Z",
+          "run_id": "fb39d388-510a-4c15-be79-c672e550b495",
+          "timestamp": {
+            "start": "2026-04-25T05:35:03.965786+00:00",
+            "end": "2026-04-25T05:51:14.303006+00:00",
+            "duration_seconds": 970.33722
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "81c3485dc1cae237d85785291411cab5526cfb634fb9086259fe454f7f164074"
+          },
+          "execution_stats": {
+            "items_processed": 3717
+          },
+          "usage_stats": {
+            "total_input_tokens": 7188678,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 581855,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 7770533
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 3.594339,
+            "output_cost_usd": 1.745565,
+            "total_cost_usd": 5.339904,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1934.0,
+        "surviving_pass_input_per_candidate": 1934.0
+      }
+    },
+    "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 3736,
+      "surviving_meta_items_processed": 27,
+      "shortfall": 3709,
+      "main_pass_covered_per_cleanup_history": 3709,
+      "items_recovered": 3709,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "bd0a4d09144b0389de3b8f6e63aacdd22bc2bd0b",
+        "date": "2026-04-25T05:52:17Z",
+        "subject": "data(s78-rerun): Phase A \u2014 brief-text on text pool (6 candidates scored, 0 failed)"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+          "blob": "fd8216c0294094b789897d237bf26054286348ef",
+          "commit": "bd0a4d09144b0389de3b8f6e63aacdd22bc2bd0b",
+          "commit_date": "2026-04-25T05:52:17Z",
+          "commit_subject": "data(s78-rerun): Phase A \u2014 brief-text on text pool (6 candidates scored, 0 failed)",
+          "items_covered": 3709,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 5812003
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:fd8216c0294094b789897d237bf26054286348ef",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+          "commit": "bd0a4d09144b0389de3b8f6e63aacdd22bc2bd0b",
+          "commit_date": "2026-04-25T05:52:17Z",
+          "run_id": "465274e2-6856-420d-a128-a44be20223f2",
+          "timestamp": {
+            "start": "2026-04-25T05:35:03.968760+00:00",
+            "end": "2026-04-25T05:50:59.448650+00:00",
+            "duration_seconds": 955.47989
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "ded339c98c8fd91849d38fd81cceb4bd13a267d8982db208fcc13ee294b935ba"
+          },
+          "execution_stats": {
+            "items_processed": 3709
+          },
+          "usage_stats": {
+            "total_input_tokens": 5812003,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 257871,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 6069874
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 2.906001,
+            "output_cost_usd": 0.773613,
+            "total_cost_usd": 3.679615,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1567.0,
+        "surviving_pass_input_per_candidate": 1567.0
+      }
+    },
+    "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 3736,
+      "surviving_meta_items_processed": 41,
+      "shortfall": 3695,
+      "main_pass_covered_per_cleanup_history": 3695,
+      "items_recovered": 3698,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "96a6ac235ab16af6e55741fb6901babe00a22ec2",
+        "date": "2026-04-25T05:52:09Z",
+        "subject": "data(s78-rerun): Phase A \u2014 adversarial-text on text pool (6 candidates scored, 0 failed)"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+          "blob": "e77e0ac4c0ca118914a1430e9ffc48bc7e6f8fc8",
+          "commit": "96a6ac235ab16af6e55741fb6901babe00a22ec2",
+          "commit_date": "2026-04-25T05:52:09Z",
+          "commit_subject": "data(s78-rerun): Phase A \u2014 adversarial-text on text pool (6 candidates scored, 0 failed)",
+          "items_covered": 3698,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 6626816
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:e77e0ac4c0ca118914a1430e9ffc48bc7e6f8fc8",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+          "commit": "96a6ac235ab16af6e55741fb6901babe00a22ec2",
+          "commit_date": "2026-04-25T05:52:09Z",
+          "run_id": "40bc70b9-a9f5-4e92-bf36-9909c795fbe1",
+          "timestamp": {
+            "start": "2026-04-25T05:35:03.951185+00:00",
+            "end": "2026-04-25T05:52:08.726104+00:00",
+            "duration_seconds": 1024.774919
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d"
+          },
+          "execution_stats": {
+            "items_processed": 3698
+          },
+          "usage_stats": {
+            "total_input_tokens": 6626816,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 585070,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 7211886
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 3.313408,
+            "output_cost_usd": 1.75521,
+            "total_cost_usd": 5.068618,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1792.0,
+        "surviving_pass_input_per_candidate": 1792.0
+      }
+    },
+    "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 3601,
+      "surviving_meta_items_processed": 1,
+      "shortfall": 3600,
+      "main_pass_covered_per_cleanup_history": 3600,
+      "items_recovered": 3600,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+        "date": "2026-04-17T12:17:45+10:00",
+        "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+      },
+      "first_commit_files": [
+        "crops/candidate_manifest.json",
+        "probabilities.json",
+        "run.meta.json",
+        "sweep_2d.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/run.meta.json",
+          "blob": "287a2188f23206d211e937649433a0aa42746a51",
+          "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+          "commit_date": "2026-04-17T12:17:45+10:00",
+          "commit_subject": "data(verifier): full-matrix text-only adversarial v1 verification",
+          "items_covered": 3600,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 6451200
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:287a2188f23206d211e937649433a0aa42746a51",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/run.meta.json",
+          "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+          "commit_date": "2026-04-17T12:17:45+10:00",
+          "run_id": "d3ead1c9-a1de-43df-9be0-424e581ce01e",
+          "timestamp": {
+            "start": "2026-04-17T00:43:57.223343+00:00",
+            "end": "2026-04-17T00:54:26.408237+00:00",
+            "duration_seconds": 629.184894
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d"
+          },
+          "execution_stats": {
+            "items_processed": 3600
+          },
+          "usage_stats": {
+            "total_input_tokens": 6451200,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 587456,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 7038656
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 3.2256,
+            "output_cost_usd": 1.762368,
+            "total_cost_usd": 4.987968,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1792.0,
+        "surviving_pass_input_per_candidate": 1792.0
+      }
+    },
+    "outputs/grid-2026-08-18/verifier/g384_ov192/verify_37": {
+      "verdict": "NOT-IN-HISTORY",
+      "reason": "no-pre-overwrite-blob-in-history",
+      "results": 3319,
+      "surviving_meta_items_processed": 1,
+      "shortfall": 3318,
+      "main_pass_covered_per_cleanup_history": 3318,
+      "items_recovered": 0,
+      "items_still_unaccounted": 3318,
+      "historical_blob_count": 1,
+      "first_commit": {
+        "commit": "bce39625005276315259d592997b9756c41df574",
+        "date": "2026-08-31T07:20:10Z",
+        "subject": "results(gemini37-55map): full campaign data \u2014 passes, arms, fourth-cell GS leg"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [],
+      "recovered_passes": [],
+      "notes": [],
+      "residual_estimate": {
+        "basis": "the stage's surviving pass, scaled by candidate count: 1 candidates at 1792.0 input, 156.0 output and 120.0 thinking tokens each",
+        "is_estimate": true,
+        "counted_in_audits": false,
+        "missing_candidates": 3318,
+        "usage_stats": {
+          "total_input_tokens": 5945856,
+          "total_cached_tokens": 0,
+          "total_output_tokens": 517608,
+          "total_thoughts_tokens": 398160,
+          "total_tokens": 6861624
+        }
+      },
+      "main_pass_window_from_history": null,
+      "billing_export": {
+        "model": "gemini-3.7-flash",
+        "export_pacific_day": "2026-08-30",
+        "day_anchor": "the surviving (later) pass's window \u2014 the main pass may have started on the previous Pacific day, so export both",
+        "surviving_pass_pacific_day": "2026-08-30",
+        "main_pass_pacific_day": null,
+        "same_model_same_day_runs": 8,
+        "same_model_same_day_without_recorded_tokens": 0,
+        "verdict": "boundable-by-subtraction",
+        "inventory": [
+          {
+            "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json",
+            "start_utc": "2026-08-30T08:35:22.509357+00:00",
+            "items_processed": 95,
+            "input_tokens": 142690,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_4/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json",
+            "start_utc": "2026-08-30T20:00:01.580556+00:00",
+            "items_processed": 24555,
+            "input_tokens": 36883112,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_3_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json",
+            "start_utc": "2026-08-30T20:10:30.443966+00:00",
+            "items_processed": 15366,
+            "input_tokens": 23079732,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_3_recovery2/detections-detect_brief-text-3.7-flash-2026-08-31.meta.json",
+            "start_utc": "2026-08-31T01:21:24.283635+00:00",
+            "items_processed": 9,
+            "input_tokens": 13518,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_5/detections-detect_brief-text-3.7-flash-2026-08-31.meta.json",
+            "start_utc": "2026-08-31T01:24:20.906859+00:00",
+            "items_processed": 24560,
+            "input_tokens": 36890622,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_4_recovery/detections-detect_brief-text-3.7-flash-2026-08-31.meta.json",
+            "start_utc": "2026-08-31T01:25:10.922219+00:00",
+            "items_processed": 6,
+            "input_tokens": 9012,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_5_recovery/detections-detect_brief-text-3.7-flash-2026-08-31.meta.json",
+            "start_utc": "2026-08-31T03:40:32.083020+00:00",
+            "items_processed": 1,
+            "input_tokens": 1502,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/verify_arm2/run.meta.json",
+            "start_utc": "2026-08-31T03:47:45.957141+00:00",
+            "items_processed": 12715,
+            "input_tokens": 22785280,
+            "tokens_recorded": true
+          }
+        ]
+      }
+    },
+    "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 2840,
+      "surviving_meta_items_processed": 1,
+      "shortfall": 2839,
+      "main_pass_covered_per_cleanup_history": 2839,
+      "items_recovered": 2839,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+        "date": "2026-04-17T12:17:45+10:00",
+        "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+      },
+      "first_commit_files": [
+        "crops/candidate_manifest.json",
+        "probabilities.json",
+        "run.meta.json",
+        "sweep_2d.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/run.meta.json",
+          "blob": "c872b0d0edbef1f7c6e531f2173b098680b46eb2",
+          "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+          "commit_date": "2026-04-17T12:17:45+10:00",
+          "commit_subject": "data(verifier): full-matrix text-only adversarial v1 verification",
+          "items_covered": 2839,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 5087488
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:c872b0d0edbef1f7c6e531f2173b098680b46eb2",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/run.meta.json",
+          "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+          "commit_date": "2026-04-17T12:17:45+10:00",
+          "run_id": "c58ebd5b-6ff6-4802-971d-6c8bbd24e114",
+          "timestamp": {
+            "start": "2026-04-17T01:15:33.737051+00:00",
+            "end": "2026-04-17T01:25:32.892342+00:00",
+            "duration_seconds": 599.155291
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d"
+          },
+          "execution_stats": {
+            "items_processed": 2839
+          },
+          "usage_stats": {
+            "total_input_tokens": 5087488,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 459505,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 5546993
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 2.543744,
+            "output_cost_usd": 1.378515,
+            "total_cost_usd": 3.922259,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1792.0,
+        "surviving_pass_input_per_candidate": 1792.0
+      }
+    },
+    "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 2190,
+      "surviving_meta_items_processed": 11,
+      "shortfall": 2179,
+      "main_pass_covered_per_cleanup_history": 2179,
+      "items_recovered": 2179,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+        "date": "2026-04-17T12:17:45+10:00",
+        "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+      },
+      "first_commit_files": [
+        "crops/candidate_manifest.json",
+        "probabilities.json",
+        "run.meta.json",
+        "sweep_2d.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/run.meta.json",
+          "blob": "249cff9ecd55d6003fe434517fe7ee14ad3a958a",
+          "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+          "commit_date": "2026-04-17T12:17:45+10:00",
+          "commit_subject": "data(verifier): full-matrix text-only adversarial v1 verification",
+          "items_covered": 2179,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 3904768
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:249cff9ecd55d6003fe434517fe7ee14ad3a958a",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/run.meta.json",
+          "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+          "commit_date": "2026-04-17T12:17:45+10:00",
+          "run_id": "c4e4723d-8a9e-4ad4-9352-242a881d3fbd",
+          "timestamp": {
+            "start": "2026-04-17T00:57:08.324263+00:00",
+            "end": "2026-04-17T01:05:27.496639+00:00",
+            "duration_seconds": 499.172376
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d"
+          },
+          "execution_stats": {
+            "items_processed": 2179
+          },
+          "usage_stats": {
+            "total_input_tokens": 3904768,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 354838,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 4259606
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 1.952384,
+            "output_cost_usd": 1.064514,
+            "total_cost_usd": 3.016898,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1792.0,
+        "surviving_pass_input_per_candidate": 1792.0
+      }
+    },
+    "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 2017,
+      "surviving_meta_items_processed": 1,
+      "shortfall": 2016,
+      "main_pass_covered_per_cleanup_history": 2016,
+      "items_recovered": 2019,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "400e6fbcb22a1d1036949756d2334f122e78bd94",
+        "date": "2026-04-25T05:34:50Z",
+        "subject": "data(s78-rerun): Phase A \u2014 checklist on image pool (6 candidates scored, 0 failed)"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+          "blob": "df77e977a0825ebebd6c0bdbed38b488dc5fc84e",
+          "commit": "400e6fbcb22a1d1036949756d2334f122e78bd94",
+          "commit_date": "2026-04-25T05:34:50Z",
+          "commit_subject": "data(s78-rerun): Phase A \u2014 checklist on image pool (6 candidates scored, 0 failed)",
+          "items_covered": 2019,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 17064588
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:df77e977a0825ebebd6c0bdbed38b488dc5fc84e",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+          "commit": "400e6fbcb22a1d1036949756d2334f122e78bd94",
+          "commit_date": "2026-04-25T05:34:50Z",
+          "run_id": "fb3ed74e-0286-4b5d-96d8-43a003dc884c",
+          "timestamp": {
+            "start": "2026-04-25T05:24:42.363662+00:00",
+            "end": "2026-04-25T05:29:06.522661+00:00",
+            "duration_seconds": 264.158999
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "81c3485dc1cae237d85785291411cab5526cfb634fb9086259fe454f7f164074"
+          },
+          "execution_stats": {
+            "items_processed": 2019
+          },
+          "usage_stats": {
+            "total_input_tokens": 17064588,
+            "total_cached_tokens": 20201,
+            "total_output_tokens": 310945,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 17375533
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 8.532294,
+            "output_cost_usd": 0.932835,
+            "total_cost_usd": 9.465129,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 8452.0,
+        "surviving_pass_input_per_candidate": 8452.0
+      }
+    },
+    "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 2017,
+      "surviving_meta_items_processed": 1,
+      "shortfall": 2016,
+      "main_pass_covered_per_cleanup_history": 2016,
+      "items_recovered": 2016,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+        "date": "2026-04-17T12:17:45+10:00",
+        "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+      },
+      "first_commit_files": [
+        "crops/candidate_manifest.json",
+        "probabilities.json",
+        "run.meta.json",
+        "sweep_2d.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/run.meta.json",
+          "blob": "f06d1f84612e614ea97cbaa02b8ba19a43daf8c9",
+          "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+          "commit_date": "2026-04-17T12:17:45+10:00",
+          "commit_subject": "data(verifier): full-matrix text-only adversarial v1 verification",
+          "items_covered": 2016,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 3612672
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:f06d1f84612e614ea97cbaa02b8ba19a43daf8c9",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/run.meta.json",
+          "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+          "commit_date": "2026-04-17T12:17:45+10:00",
+          "run_id": "cfde8765-227c-4c1e-b05f-361b31865d89",
+          "timestamp": {
+            "start": "2026-04-17T01:06:55.452008+00:00",
+            "end": "2026-04-17T01:14:00.876038+00:00",
+            "duration_seconds": 425.42403
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d"
+          },
+          "execution_stats": {
+            "items_processed": 2016
+          },
+          "usage_stats": {
+            "total_input_tokens": 3612672,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 332604,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 3945276
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 1.806336,
+            "output_cost_usd": 0.997812,
+            "total_cost_usd": 2.804148,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1792.0,
+        "surviving_pass_input_per_candidate": 1792.0
+      }
+    },
+    "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 2017,
+      "surviving_meta_items_processed": 19,
+      "shortfall": 1998,
+      "main_pass_covered_per_cleanup_history": 1998,
+      "items_recovered": 1998,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "e85c629024cae2c56f82bb3bdda3ac6e8938dfbd",
+        "date": "2026-04-25T05:34:46Z",
+        "subject": "data(s78-rerun): Phase A \u2014 brief-text on image pool (6 candidates scored, 0 failed)"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+          "blob": "45c6fafa12da1651dd960fd7e27d90916a6577df",
+          "commit": "e85c629024cae2c56f82bb3bdda3ac6e8938dfbd",
+          "commit_date": "2026-04-25T05:34:46Z",
+          "commit_subject": "data(s78-rerun): Phase A \u2014 brief-text on image pool (6 candidates scored, 0 failed)",
+          "items_covered": 1998,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 3130866
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:45c6fafa12da1651dd960fd7e27d90916a6577df",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+          "commit": "e85c629024cae2c56f82bb3bdda3ac6e8938dfbd",
+          "commit_date": "2026-04-25T05:34:46Z",
+          "run_id": "275bd20c-bcb4-4f18-8cf5-0771f8a9cecb",
+          "timestamp": {
+            "start": "2026-04-25T05:24:42.315153+00:00",
+            "end": "2026-04-25T05:33:34.887742+00:00",
+            "duration_seconds": 532.572589
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "ded339c98c8fd91849d38fd81cceb4bd13a267d8982db208fcc13ee294b935ba"
+          },
+          "execution_stats": {
+            "items_processed": 1998
+          },
+          "usage_stats": {
+            "total_input_tokens": 3130866,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 136673,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 3267539
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 1.565433,
+            "output_cost_usd": 0.410019,
+            "total_cost_usd": 1.975452,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1567.0,
+        "surviving_pass_input_per_candidate": 1567.0
+      }
+    },
+    "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 2017,
+      "surviving_meta_items_processed": 19,
+      "shortfall": 1998,
+      "main_pass_covered_per_cleanup_history": 1998,
+      "items_recovered": 1999,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "f36e7bef967f5a7e5c2cfed9db95fa3e2be75260",
+        "date": "2026-04-25T05:34:54Z",
+        "subject": "data(s78-rerun): Phase A \u2014 checklist-text on image pool (6 candidates scored, 0 failed)"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+          "blob": "dfab48aeeb30a38b2f51b66976dc7118f8cb70d4",
+          "commit": "f36e7bef967f5a7e5c2cfed9db95fa3e2be75260",
+          "commit_date": "2026-04-25T05:34:54Z",
+          "commit_subject": "data(s78-rerun): Phase A \u2014 checklist-text on image pool (6 candidates scored, 0 failed)",
+          "items_covered": 1999,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 3866066
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:dfab48aeeb30a38b2f51b66976dc7118f8cb70d4",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+          "commit": "f36e7bef967f5a7e5c2cfed9db95fa3e2be75260",
+          "commit_date": "2026-04-25T05:34:54Z",
+          "run_id": "ef825da4-ce78-48c5-aa56-bf8edadf7c03",
+          "timestamp": {
+            "start": "2026-04-25T05:24:42.489670+00:00",
+            "end": "2026-04-25T05:34:16.937766+00:00",
+            "duration_seconds": 574.448096
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "81c3485dc1cae237d85785291411cab5526cfb634fb9086259fe454f7f164074"
+          },
+          "execution_stats": {
+            "items_processed": 1999
+          },
+          "usage_stats": {
+            "total_input_tokens": 3866066,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 307106,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 4173172
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 1.933033,
+            "output_cost_usd": 0.921318,
+            "total_cost_usd": 2.854351,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1934.0,
+        "surviving_pass_input_per_candidate": 1934.0
+      }
+    },
+    "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 2017,
+      "surviving_meta_items_processed": 26,
+      "shortfall": 1991,
+      "main_pass_covered_per_cleanup_history": 1991,
+      "items_recovered": 1991,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "35b380a6d1d92251840930e5cf57597e1aa09bac",
+        "date": "2026-04-25T05:34:38Z",
+        "subject": "data(s78-rerun): Phase A \u2014 adversarial-text on image pool (6 candidates scored, 0 failed)"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+          "blob": "1eac65ac15523dfd793bd77b809dd7b06c4ad9ca",
+          "commit": "35b380a6d1d92251840930e5cf57597e1aa09bac",
+          "commit_date": "2026-04-25T05:34:38Z",
+          "commit_subject": "data(s78-rerun): Phase A \u2014 adversarial-text on image pool (6 candidates scored, 0 failed)",
+          "items_covered": 1991,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 3567872
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:1eac65ac15523dfd793bd77b809dd7b06c4ad9ca",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+          "commit": "35b380a6d1d92251840930e5cf57597e1aa09bac",
+          "commit_date": "2026-04-25T05:34:38Z",
+          "run_id": "00724cd0-490f-4697-b22b-6c4567136576",
+          "timestamp": {
+            "start": "2026-04-25T05:24:42.468499+00:00",
+            "end": "2026-04-25T05:34:38.275327+00:00",
+            "duration_seconds": 595.806828
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d"
+          },
+          "execution_stats": {
+            "items_processed": 1991
+          },
+          "usage_stats": {
+            "total_input_tokens": 3567872,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 329021,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 3896893
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 1.783936,
+            "output_cost_usd": 0.987063,
+            "total_cost_usd": 2.770999,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1792.0,
+        "surviving_pass_input_per_candidate": 1792.0
+      }
+    },
+    "outputs/verifier-robustness/384-flash-high-text-ge3of5/T0.3/verified": {
+      "verdict": "NOT-IN-HISTORY",
+      "reason": "no-pre-overwrite-blob-in-history",
+      "results": 4275,
+      "surviving_meta_items_processed": 2775,
+      "shortfall": 1500,
+      "main_pass_covered_per_cleanup_history": null,
+      "items_recovered": 0,
+      "items_still_unaccounted": 1500,
+      "historical_blob_count": 1,
+      "first_commit": {
+        "commit": "af9214554f8bd75e735ce7094892d66687523155",
+        "date": "2026-06-09T23:36:41+10:00",
+        "subject": "data(verifier-robustness): Stage-2 snowball T=0.3 (both cells stall)"
+      },
+      "first_commit_files": [
+        "consensus.json",
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [],
+      "recovered_passes": [],
+      "notes": [],
+      "residual_estimate": {
+        "basis": "the stage's surviving pass, scaled by candidate count: 2775 candidates at 1792.0 input, 160.6 output and 0.0 thinking tokens each",
+        "is_estimate": true,
+        "counted_in_audits": false,
+        "missing_candidates": 1500,
+        "usage_stats": {
+          "total_input_tokens": 2688000,
+          "total_cached_tokens": 0,
+          "total_output_tokens": 240859,
+          "total_thoughts_tokens": 0,
+          "total_tokens": 2928859
+        }
+      },
+      "main_pass_window_from_history": null,
+      "billing_export": {
+        "model": "gemini-3-flash-preview",
+        "export_pacific_day": "2026-06-09",
+        "day_anchor": "the surviving (later) pass's window \u2014 the main pass may have started on the previous Pacific day, so export both",
+        "surviving_pass_pacific_day": "2026-06-09",
+        "main_pass_pacific_day": null,
+        "same_model_same_day_runs": 9,
+        "same_model_same_day_without_recorded_tokens": 0,
+        "verdict": "boundable-by-subtraction",
+        "inventory": [
+          {
+            "path": "outputs/verifier-robustness/256-text-1of5-union/T0.0/verified/run.meta.json",
+            "start_utc": "2026-06-09T07:16:14.117591+00:00",
+            "items_processed": 12790,
+            "input_tokens": 22919680,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/verifier-robustness/_smoke/384-flash-high-text-ge3of5/T0.3/verified/run.meta.json",
+            "start_utc": "2026-06-09T11:18:50.043457+00:00",
+            "items_processed": 60,
+            "input_tokens": 107520,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/verifier-robustness/_smoke/256-text-ge3of5/T0.3/verified/run.meta.json",
+            "start_utc": "2026-06-09T11:20:04.684488+00:00",
+            "items_processed": 60,
+            "input_tokens": 107520,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/verifier-robustness/256-text-ge3of5/T0.3/verified/run.meta.json",
+            "start_utc": "2026-06-09T12:07:09.289002+00:00",
+            "items_processed": 8225,
+            "input_tokens": 14739200,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/verifier-robustness/_smoke/384-flash-high-text-ge3of5/T0.7-high/verified/run.meta.json",
+            "start_utc": "2026-06-10T02:34:16.156535+00:00",
+            "items_processed": 60,
+            "input_tokens": 107520,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/verifier-robustness/384-flash-high-text-ge3of5/T0.7/verified/run.meta.json",
+            "start_utc": "2026-06-10T02:37:22.354450+00:00",
+            "items_processed": 4275,
+            "input_tokens": 7660800,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/verifier-robustness/384-flash-high-text-ge3of5/T0.7-high/verified/run.meta.json",
+            "start_utc": "2026-06-10T02:55:03.553501+00:00",
+            "items_processed": 4275,
+            "input_tokens": 7660800,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/verifier-robustness/384-flash-high-text-ge3of5/T0.3-high/verified/run.meta.json",
+            "start_utc": "2026-06-10T03:42:15.439029+00:00",
+            "items_processed": 4275,
+            "input_tokens": 7662592,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/verifier-robustness/384-flash-high-text-16of30/T0.3/verified/run.meta.json",
+            "start_utc": "2026-06-10T05:35:06.455332+00:00",
+            "items_processed": 3645,
+            "input_tokens": 6531840,
+            "tokens_recorded": true
+          }
+        ]
+      }
+    },
+    "outputs/flash35-pv-2x2/verified-f3vf": {
+      "verdict": "NOT-IN-HISTORY",
+      "reason": "no-pre-overwrite-blob-in-history",
+      "results": 1132,
+      "surviving_meta_items_processed": 1,
+      "shortfall": 1131,
+      "main_pass_covered_per_cleanup_history": 1131,
+      "items_recovered": 0,
+      "items_still_unaccounted": 1131,
+      "historical_blob_count": 1,
+      "first_commit": {
+        "commit": "68c4f0e293d941daa3466bb4ff52488f57e0b88f",
+        "date": "2026-06-11T04:59:04+10:00",
+        "subject": "data(flash35): tranche API outputs (10 passes + 3 verifier legs)"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [],
+      "recovered_passes": [],
+      "notes": [],
+      "residual_estimate": {
+        "basis": "the stage's surviving pass, scaled by candidate count: 1 candidates at 1792.0 input, 165.0 output and 0.0 thinking tokens each",
+        "is_estimate": true,
+        "counted_in_audits": false,
+        "missing_candidates": 1131,
+        "usage_stats": {
+          "total_input_tokens": 2026752,
+          "total_cached_tokens": 0,
+          "total_output_tokens": 186615,
+          "total_thoughts_tokens": 0,
+          "total_tokens": 2213367
+        }
+      },
+      "main_pass_window_from_history": null,
+      "billing_export": {
+        "model": "gemini-3-flash-preview",
+        "export_pacific_day": "2026-06-10",
+        "day_anchor": "the surviving (later) pass's window \u2014 the main pass may have started on the previous Pacific day, so export both",
+        "surviving_pass_pacific_day": "2026-06-10",
+        "main_pass_pacific_day": null,
+        "same_model_same_day_runs": 4,
+        "same_model_same_day_without_recorded_tokens": 0,
+        "verdict": "boundable-by-subtraction",
+        "inventory": [
+          {
+            "path": "outputs/h11/pv-diag-384/verified/text-min-t07-true-1of5/run.meta.json",
+            "start_utc": "2026-06-11T03:26:32.825207+00:00",
+            "items_processed": 1586,
+            "input_tokens": 2842112,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/h11/pv-diag-384/verified/flash-high-text-t03-1of5/run.meta.json",
+            "start_utc": "2026-06-11T06:12:47.760118+00:00",
+            "items_processed": 2954,
+            "input_tokens": 5293568,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/55maps-text-min-n10-uplift/proposer/run_6/detections-detect_brief-text-3-flash-2026-06-11.meta.json",
+            "start_utc": "2026-06-11T06:13:01.370726+00:00",
+            "items_processed": 8541,
+            "input_tokens": 12828582,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/55maps-text-min-n10-uplift/proposer/run_7/detections-detect_brief-text-3-flash-2026-06-11.meta.json",
+            "start_utc": "2026-06-11T06:59:28.185217+00:00",
+            "items_processed": 8541,
+            "input_tokens": 12830084,
+            "tokens_recorded": true
+          }
+        ]
+      }
+    },
+    "outputs/h8-v2/wbf/scale-4/verified": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 1114,
+      "surviving_meta_items_processed": 15,
+      "shortfall": 1099,
+      "main_pass_covered_per_cleanup_history": 1099,
+      "items_recovered": 1099,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "2e84d4a653bfa38713e8e40b5d174ff1b7cc987f",
+        "date": "2026-04-16T15:40:40+10:00",
+        "subject": "data(h12-v2): H12 v2 detection data + Scale-4/Scale-8 verifier outputs"
+      },
+      "first_commit_files": [
+        "detections_vt4_pt0.10.geojson",
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h8-v2/wbf/scale-4/verified/run.meta.json",
+          "blob": "4686d05de89a26c8f94737b172c6fa9676e4304b",
+          "commit": "2e84d4a653bfa38713e8e40b5d174ff1b7cc987f",
+          "commit_date": "2026-04-16T15:40:40+10:00",
+          "commit_subject": "data(h12-v2): H12 v2 detection data + Scale-4/Scale-8 verifier outputs",
+          "items_covered": 1099,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 1969408
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:4686d05de89a26c8f94737b172c6fa9676e4304b",
+          "kind": "main",
+          "path": "outputs/h8-v2/wbf/scale-4/verified/run.meta.json",
+          "commit": "2e84d4a653bfa38713e8e40b5d174ff1b7cc987f",
+          "commit_date": "2026-04-16T15:40:40+10:00",
+          "run_id": "d431856d-a66d-4a91-9201-e0db98ee1cee",
+          "timestamp": {
+            "start": "2026-04-15T23:47:53.330480+00:00",
+            "end": "2026-04-15T23:59:32.168501+00:00",
+            "duration_seconds": 698.838021
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d"
+          },
+          "execution_stats": {
+            "items_processed": 1099
+          },
+          "usage_stats": {
+            "total_input_tokens": 1969408,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 179450,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 2148858
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 0.984704,
+            "output_cost_usd": 0.53835,
+            "total_cost_usd": 1.523054,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1792.0,
+        "surviving_pass_input_per_candidate": 1792.0
+      }
+    },
+    "outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier": {
+      "verdict": "NOT-IN-HISTORY",
+      "reason": "batch-main-pass-recorded-no-tokens",
+      "results": 1047,
+      "surviving_meta_items_processed": 21,
+      "shortfall": 1026,
+      "main_pass_covered_per_cleanup_history": 1026,
+      "items_recovered": 0,
+      "items_still_unaccounted": 1026,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "3d22184d60914fa4919ca56bd653163d27e72549",
+        "date": "2026-04-15T07:19:02+10:00",
+        "subject": "data(outputs): track detection GeoJSON and verifier results from gitignored dirs"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/run.meta.json",
+          "blob": "b622725518480cdcc1ddd0d544909395190615fd",
+          "commit": "3d22184d60914fa4919ca56bd653163d27e72549",
+          "commit_date": "2026-04-15T07:19:02+10:00",
+          "commit_subject": "data(outputs): track detection GeoJSON and verifier results from gitignored dirs",
+          "items_covered": 0,
+          "items_processed_source": "none recorded (api requests: 0)",
+          "input_tokens": 0
+        }
+      ],
+      "recovered_passes": [],
+      "notes": [
+        "blob b622725518 (2026-04-15) records ZERO tokens: the pass it describes ran through the Batch API, which returns no per-response usage, so the main pass's token load was never in any metadata and the overwrite destroyed nothing"
+      ],
+      "residual_estimate": {
+        "basis": "the stage's surviving pass, scaled by candidate count: 21 candidates at 1792.0 input, 144.1 output and 403.7 thinking tokens each",
+        "is_estimate": true,
+        "counted_in_audits": false,
+        "missing_candidates": 1026,
+        "usage_stats": {
+          "total_input_tokens": 1838592,
+          "total_cached_tokens": 0,
+          "total_output_tokens": 147891,
+          "total_thoughts_tokens": 414211,
+          "total_tokens": 2400693
+        }
+      },
+      "main_pass_window_from_history": {
+        "start": "2026-03-25T10:31:28.501405+00:00",
+        "end": "2026-03-25T10:31:28.507922+00:00",
+        "duration_seconds": 0.006517
+      },
+      "billing_export": {
+        "model": "gemini-3.1-pro-preview",
+        "export_pacific_day": "2026-03-25",
+        "day_anchor": "the main pass's own recorded window",
+        "surviving_pass_pacific_day": "2026-05-06",
+        "main_pass_pacific_day": "2026-03-25",
+        "same_model_same_day_runs": 4,
+        "same_model_same_day_without_recorded_tokens": 3,
+        "verdict": "not-boundable",
+        "inventory": [
+          {
+            "path": "outputs/h11/pv-diag-384/verified/image-baseline-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T11:33:04.830566+00:00",
+            "items_processed": 0,
+            "input_tokens": 0,
+            "tokens_recorded": false
+          },
+          {
+            "path": "outputs/h11/pv-diag-384/verified/pro-medium-text-baseline-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T12:35:39.776777+00:00",
+            "items_processed": 0,
+            "input_tokens": 0,
+            "tokens_recorded": false
+          },
+          {
+            "path": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T15:54:59.213433+00:00",
+            "items_processed": 0,
+            "input_tokens": 0,
+            "tokens_recorded": false
+          },
+          {
+            "path": "outputs/h11/pv-diag-384/verified/pro-high-text-1of5-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T23:35:52.754644+00:00",
+            "items_processed": 0,
+            "input_tokens": 903168,
+            "tokens_recorded": true
+          }
+        ]
+      }
+    },
+    "outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier": {
+      "verdict": "NOT-IN-HISTORY",
+      "reason": "batch-main-pass-recorded-no-tokens",
+      "results": 841,
+      "surviving_meta_items_processed": 8,
+      "shortfall": 833,
+      "main_pass_covered_per_cleanup_history": 833,
+      "items_recovered": 0,
+      "items_still_unaccounted": 833,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "3d22184d60914fa4919ca56bd653163d27e72549",
+        "date": "2026-04-15T07:19:02+10:00",
+        "subject": "data(outputs): track detection GeoJSON and verifier results from gitignored dirs"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/run.meta.json",
+          "blob": "f733735187a4ff9c199da5d8920878c1477ebba5",
+          "commit": "3d22184d60914fa4919ca56bd653163d27e72549",
+          "commit_date": "2026-04-15T07:19:02+10:00",
+          "commit_subject": "data(outputs): track detection GeoJSON and verifier results from gitignored dirs",
+          "items_covered": 0,
+          "items_processed_source": "none recorded (api requests: 0)",
+          "input_tokens": 0
+        }
+      ],
+      "recovered_passes": [],
+      "notes": [
+        "blob f733735187 (2026-04-15) records ZERO tokens: the pass it describes ran through the Batch API, which returns no per-response usage, so the main pass's token load was never in any metadata and the overwrite destroyed nothing"
+      ],
+      "residual_estimate": {
+        "basis": "the stage's surviving pass, scaled by candidate count: 8 candidates at 1792.0 input, 131.2 output and 376.9 thinking tokens each",
+        "is_estimate": true,
+        "counted_in_audits": false,
+        "missing_candidates": 833,
+        "usage_stats": {
+          "total_input_tokens": 1492736,
+          "total_cached_tokens": 0,
+          "total_output_tokens": 109331,
+          "total_thoughts_tokens": 313937,
+          "total_tokens": 1916004
+        }
+      },
+      "main_pass_window_from_history": {
+        "start": "2026-03-25T08:27:26.599457+00:00",
+        "end": "2026-03-25T08:27:26.605112+00:00",
+        "duration_seconds": 0.005655
+      },
+      "billing_export": {
+        "model": "gemini-3.1-pro-preview",
+        "export_pacific_day": "2026-03-25",
+        "day_anchor": "the main pass's own recorded window",
+        "surviving_pass_pacific_day": "2026-05-06",
+        "main_pass_pacific_day": "2026-03-25",
+        "same_model_same_day_runs": 4,
+        "same_model_same_day_without_recorded_tokens": 3,
+        "verdict": "not-boundable",
+        "inventory": [
+          {
+            "path": "outputs/h11/pv-diag-384/verified/image-baseline-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T11:33:04.830566+00:00",
+            "items_processed": 0,
+            "input_tokens": 0,
+            "tokens_recorded": false
+          },
+          {
+            "path": "outputs/h11/pv-diag-384/verified/pro-medium-text-baseline-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T12:35:39.776777+00:00",
+            "items_processed": 0,
+            "input_tokens": 0,
+            "tokens_recorded": false
+          },
+          {
+            "path": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T15:54:59.213433+00:00",
+            "items_processed": 0,
+            "input_tokens": 0,
+            "tokens_recorded": false
+          },
+          {
+            "path": "outputs/h11/pv-diag-384/verified/pro-high-text-1of5-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T23:35:52.754644+00:00",
+            "items_processed": 0,
+            "input_tokens": 903168,
+            "tokens_recorded": true
+          }
+        ]
+      }
+    },
+    "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap37": {
+      "verdict": "NOT-IN-HISTORY",
+      "reason": "no-pre-overwrite-blob-in-history",
+      "results": 791,
+      "surviving_meta_items_processed": 2,
+      "shortfall": 789,
+      "main_pass_covered_per_cleanup_history": 789,
+      "items_recovered": 0,
+      "items_still_unaccounted": 789,
+      "historical_blob_count": 1,
+      "first_commit": {
+        "commit": "3039d3ac9ed5f67514bf8b4ecf3dfce2376c86b6",
+        "date": "2026-08-29T13:38:34Z",
+        "subject": "results(gemini37): verifier-role swap \u2014 all-3.7 stack GS-SIGNIFICANT"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [],
+      "recovered_passes": [],
+      "notes": [],
+      "residual_estimate": {
+        "basis": "the stage's surviving pass, scaled by candidate count: 2 candidates at 1792.0 input, 145.5 output and 64.0 thinking tokens each",
+        "is_estimate": true,
+        "counted_in_audits": false,
+        "missing_candidates": 789,
+        "usage_stats": {
+          "total_input_tokens": 1413888,
+          "total_cached_tokens": 0,
+          "total_output_tokens": 114800,
+          "total_thoughts_tokens": 50496,
+          "total_tokens": 1579184
+        }
+      },
+      "main_pass_window_from_history": null,
+      "billing_export": {
+        "model": "gemini-3.7-flash",
+        "export_pacific_day": "2026-08-29",
+        "day_anchor": "the surviving (later) pass's window \u2014 the main pass may have started on the previous Pacific day, so export both",
+        "surviving_pass_pacific_day": "2026-08-29",
+        "main_pass_pacific_day": null,
+        "same_model_same_day_runs": 2,
+        "same_model_same_day_without_recorded_tokens": 0,
+        "verdict": "boundable-by-subtraction",
+        "inventory": [
+          {
+            "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_1_recovery/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json",
+            "start_utc": "2026-08-30T00:01:25.139510+00:00",
+            "items_processed": 322,
+            "input_tokens": 483644,
+            "tokens_recorded": true
+          },
+          {
+            "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2/detections-detect_brief-text-3.7-flash-2026-08-30.meta.json",
+            "start_utc": "2026-08-30T00:10:53.493168+00:00",
+            "items_processed": 24466,
+            "input_tokens": 36752438,
+            "tokens_recorded": true
+          }
+        ]
+      }
+    },
+    "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 572,
+      "surviving_meta_items_processed": 1,
+      "shortfall": 571,
+      "main_pass_covered_per_cleanup_history": 571,
+      "items_recovered": 571,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "f33058f013817304d0523e9aeb2982e8fdf772ea",
+        "date": "2026-04-10T16:34:39+10:00",
+        "subject": "data: add E47 crop manifests and detect single-pass v1 verifier results"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/run.meta.json",
+          "blob": "131b4561f277c20c7807c8442549a38902f7b0cc",
+          "commit": "f33058f013817304d0523e9aeb2982e8fdf772ea",
+          "commit_date": "2026-04-10T16:34:39+10:00",
+          "commit_subject": "data: add E47 crop manifests and detect single-pass v1 verifier results",
+          "items_covered": 571,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 1023232
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:131b4561f277c20c7807c8442549a38902f7b0cc",
+          "kind": "main",
+          "path": "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/run.meta.json",
+          "commit": "f33058f013817304d0523e9aeb2982e8fdf772ea",
+          "commit_date": "2026-04-10T16:34:39+10:00",
+          "run_id": "0e695515-efd2-4ed3-906e-282521f7141f",
+          "timestamp": {
+            "start": "2026-04-10T00:11:34.337793+00:00",
+            "end": "2026-04-10T00:24:43.494386+00:00",
+            "duration_seconds": 789.156593
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d"
+          },
+          "execution_stats": {
+            "items_processed": 571
+          },
+          "usage_stats": {
+            "total_input_tokens": 1023232,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 93604,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 1116836
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 0.511616,
+            "output_cost_usd": 0.280812,
+            "total_cost_usd": 0.792428,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1792.0,
+        "surviving_pass_input_per_candidate": 1792.0
+      }
+    },
+    "outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier": {
+      "verdict": "NOT-IN-HISTORY",
+      "reason": "batch-main-pass-recorded-no-tokens",
+      "results": 519,
+      "surviving_meta_items_processed": 10,
+      "shortfall": 509,
+      "main_pass_covered_per_cleanup_history": 509,
+      "items_recovered": 0,
+      "items_still_unaccounted": 509,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "3d22184d60914fa4919ca56bd653163d27e72549",
+        "date": "2026-04-15T07:19:02+10:00",
+        "subject": "data(outputs): track detection GeoJSON and verifier results from gitignored dirs"
+      },
+      "first_commit_files": [
+        "probabilities.json",
+        "run.meta.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/run.meta.json",
+          "blob": "2354b48989002d083733313a9e8647d7d156c48b",
+          "commit": "3d22184d60914fa4919ca56bd653163d27e72549",
+          "commit_date": "2026-04-15T07:19:02+10:00",
+          "commit_subject": "data(outputs): track detection GeoJSON and verifier results from gitignored dirs",
+          "items_covered": 0,
+          "items_processed_source": "none recorded (api requests: 0)",
+          "input_tokens": 0
+        }
+      ],
+      "recovered_passes": [],
+      "notes": [
+        "blob 2354b48989 (2026-04-15) records ZERO tokens: the pass it describes ran through the Batch API, which returns no per-response usage, so the main pass's token load was never in any metadata and the overwrite destroyed nothing"
+      ],
+      "residual_estimate": {
+        "basis": "the stage's surviving pass, scaled by candidate count: 10 candidates at 1792.0 input, 150.7 output and 401.3 thinking tokens each",
+        "is_estimate": true,
+        "counted_in_audits": false,
+        "missing_candidates": 509,
+        "usage_stats": {
+          "total_input_tokens": 912128,
+          "total_cached_tokens": 0,
+          "total_output_tokens": 76706,
+          "total_thoughts_tokens": 204262,
+          "total_tokens": 1193096
+        }
+      },
+      "main_pass_window_from_history": {
+        "start": "2026-03-25T14:17:39.331418+00:00",
+        "end": "2026-03-25T14:17:39.335073+00:00",
+        "duration_seconds": 0.003655
+      },
+      "billing_export": {
+        "model": "gemini-3.1-pro-preview",
+        "export_pacific_day": "2026-03-25",
+        "day_anchor": "the main pass's own recorded window",
+        "surviving_pass_pacific_day": "2026-05-06",
+        "main_pass_pacific_day": "2026-03-25",
+        "same_model_same_day_runs": 4,
+        "same_model_same_day_without_recorded_tokens": 3,
+        "verdict": "not-boundable",
+        "inventory": [
+          {
+            "path": "outputs/h11/pv-diag-384/verified/image-baseline-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T11:33:04.830566+00:00",
+            "items_processed": 0,
+            "input_tokens": 0,
+            "tokens_recorded": false
+          },
+          {
+            "path": "outputs/h11/pv-diag-384/verified/pro-medium-text-baseline-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T12:35:39.776777+00:00",
+            "items_processed": 0,
+            "input_tokens": 0,
+            "tokens_recorded": false
+          },
+          {
+            "path": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T15:54:59.213433+00:00",
+            "items_processed": 0,
+            "input_tokens": 0,
+            "tokens_recorded": false
+          },
+          {
+            "path": "outputs/h11/pv-diag-384/verified/pro-high-text-1of5-pro-verifier/run.meta.json",
+            "start_utc": "2026-03-25T23:35:52.754644+00:00",
+            "items_processed": 0,
+            "input_tokens": 903168,
+            "tokens_recorded": true
+          }
+        ]
+      }
+    },
+    "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10": {
+      "verdict": "RECOVERED-FROM-GIT",
+      "reason": "a pre-overwrite blob accounts for every result",
+      "results": 802,
+      "surviving_meta_items_processed": 460,
+      "shortfall": 342,
+      "main_pass_covered_per_cleanup_history": 342,
+      "items_recovered": 342,
+      "items_still_unaccounted": 0,
+      "historical_blob_count": 2,
+      "first_commit": {
+        "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+        "date": "2026-04-17T12:17:45+10:00",
+        "subject": "data(verifier): full-matrix text-only adversarial v1 verification"
+      },
+      "first_commit_files": [
+        "crops/candidate_manifest.json",
+        "probabilities.json",
+        "run.meta.json",
+        "sweep_2d.json"
+      ],
+      "deleted_files_in_history": [],
+      "sources": [
+        {
+          "kind": "git-blob",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/run.meta.json",
+          "blob": "9938edb9b3abde2d8d897ad214ba10e32ec157f2",
+          "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+          "commit_date": "2026-04-17T12:17:45+10:00",
+          "commit_subject": "data(verifier): full-matrix text-only adversarial v1 verification",
+          "items_covered": 342,
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "input_tokens": 612864
+        }
+      ],
+      "recovered_passes": [
+        {
+          "source": "git-blob:9938edb9b3abde2d8d897ad214ba10e32ec157f2",
+          "kind": "main",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/run.meta.json",
+          "commit": "b8961e56f8361bf1b2d91eaf0da0811a3776ddcd",
+          "commit_date": "2026-04-17T12:17:45+10:00",
+          "run_id": "2a34299b-83fc-4fa5-96fa-589d954bd88f",
+          "timestamp": {
+            "start": "2026-04-16T23:37:58.043875+00:00",
+            "end": "2026-04-16T23:41:55.988999+00:00",
+            "duration_seconds": 237.945124
+          },
+          "items_processed_source": "execution_stats.finish_reason_counts.success",
+          "configuration": {
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0,
+            "thinking_level": "minimal",
+            "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d"
+          },
+          "execution_stats": {
+            "items_processed": 342
+          },
+          "usage_stats": {
+            "total_input_tokens": 612864,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 56163,
+            "total_thoughts_tokens": 0,
+            "total_tokens": 669027
+          },
+          "cost_estimate_recorded_at_run_time": {
+            "input_cost_usd": 0.306432,
+            "output_cost_usd": 0.168489,
+            "total_cost_usd": 0.474921,
+            "pricing_used": {
+              "model": "gemini-3-flash-preview",
+              "input_per_1m": 0.5,
+              "output_per_1m": 3.0
+            }
+          }
+        }
+      ],
+      "notes": [],
+      "cross_check": {
+        "what": "input tokens per candidate, recovered main pass against the surviving pass: equality is strong evidence that the blob is this stage's own earlier self",
+        "main_pass_input_per_candidate": 1792.0,
+        "surviving_pass_input_per_candidate": 1792.0
+      }
+    }
+  },
+  "verdict_counts": {
+    "NOT-IN-HISTORY": 9,
+    "RECOVERED-FROM-GIT": 17
+  }
+}

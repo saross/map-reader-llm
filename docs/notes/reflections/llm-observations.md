@@ -8086,3 +8086,28 @@ remains the missing primitive.
 - **Uplift is universal and the verifier is a tile classifier.** 170 of
   170 pairs computed; the 0.890 headline gains +0.213 F1 and +0.393 MCC
   over its 16-of-30 consensus; two negatives in 170, both explained.
+
+## Session 153-b/c — 2026-09-13/14 (the rulings day; the errata from the benchmark repository; the modality audit; the campaign)
+
+- **A preregistered factor was assigned by a substring test.** Four
+  scripts read modality off the condition label ("image" in the name);
+  the verifier's modality over a text proposer and labels with no token
+  broke it. Corpus-wide derivation from the transmitted configuration:
+  8 of 593 conditions and 1 pool mislabelled; no preregistered or signed
+  outcome moved; one image tile-MCC range and two tile-size legs did.
+- **The null-exemplar leak is real, small, and image-only.** Image cells'
+  FP rate on the 20 exposed tiles is 0.56 × the rest against 0.69 × for
+  text (p < 1e-4), but the largest per-cell ΔF1 is 0.007 and the
+  image-over-text tile-MCC advantage is +0.085 on both frames; a
+  disclosure, not a qualifier.
+- **On the Gold Standard board the two metrics rank close to oppositely.**
+  MCC Tier 1 (33 cells) shares no member with F1 Tier 1 (5); the
+  admissible sets overlap by 9 of 65. Image single-pass proposer-verifier
+  baselines lead MCC at F1 rank 119.
+- **An image pass agrees with itself.** At 55-map scale one 3.7 image
+  pass supplied 84 % of the three-pass union's candidates (text: 65 %):
+  extra image passes raise votes, not coverage — the proposer-side
+  mechanism for tile-MCC not rising with K.
+- **Flex 503 storms hit the 3.7 verifier and not the Gemini 3 one** on
+  the same candidates in the same window: 12,247 retries and 13 losses
+  against zero.

@@ -313,10 +313,16 @@ def _cleanup_configuration_gate(
     The comparison is over ``lib_llm_metadata.CLEANUP_GATE_FIELDS`` — the
     effective model, prompt version, instruction file and its content hash,
     temperature, output-token ceiling, thinking level and example-library
-    hash. Two blind spots are recorded rather than blocked: a ``--temperature``
-    override is not reflected in a meta's ``configuration`` block on either
-    side of the comparison, and the config file's own byte digest was never
-    recorded by the main pass, so it is reported as evidence only.
+    hash. ``--temperature`` is compared from 2026-09-14: the tracker now
+    merges the configuration-valued command-line overrides into the block it
+    records and fingerprints (``lib_llm_metadata.CONFIG_OVERRIDE_KEYS``), so a
+    temperature change between a main pass and its cleanup blocks like any
+    other. One blind spot remains, recorded rather than blocked: the config
+    file's own byte digest was never recorded by pre-2026-09 main passes, so
+    ``verifier_config_sha256`` is reported as evidence only. A main pass that
+    predates the merge records no ``configuration.temperature`` of its own
+    when it ran under an override, and a field the main pass never recorded
+    does not block — such a stage is compared on the fields it does carry.
 
     Args:
         verified_dir: The stage directory holding ``run.meta.json``.
@@ -325,7 +331,9 @@ def _cleanup_configuration_gate(
             ``--thinking-level`` and any ``--safe-mode-tokens`` ceiling
             already applied, so the gate sees the worst case.
         model_override: The model the operator asked for, or None.
-        cli_overrides: The overrides the operator passed, recorded verbatim.
+        cli_overrides: The overrides the operator passed, recorded verbatim
+            on the pass entry. The configuration-valued ones are also merged
+            into the fingerprinted block by the tracker.
         allow_config_change: When True, a difference warns instead of
             refusing, and is recorded on the pass entry.
 
@@ -372,6 +380,11 @@ def _cleanup_configuration_gate(
         script_name="run_pv.py",
         script_version=__version__,
         model_override=model_override,
+        # The candidate block must be built the same way the pass's own meta
+        # will be, or the gate compares unlike with unlike: the tracker merges
+        # the configuration-valued overrides (temperature among them) into the
+        # block it fingerprints.
+        cli_overrides=cli_overrides,
     )
     candidate_block = tracker.finalise()["configuration"]
     main_fingerprint = main_pass_configuration(previous)
@@ -725,6 +738,9 @@ def _verify_batch(
         script_name="run_pv.py",
         script_version=__version__,
         model_override=model_override,
+        # The JSONL was built with this temperature (build_generation_config
+        # above), so the recorded configuration must say so too.
+        cli_overrides={"temperature": temperature},
     )
 
     # Batch lifecycle
@@ -1286,13 +1302,18 @@ def _verify_realtime(
         gen_config_dict, system_instruction, service_tier=service_tier,
     )
 
-    # Metadata tracker
+    # Metadata tracker. ``cli_overrides`` carries --temperature so the
+    # recorded ``configuration`` block is the EFFECTIVE configuration and the
+    # cleanup configuration gate can see a temperature change; --thinking-level
+    # is already merged into ``config`` by cmd_verify, and safe mode by
+    # cmd_cleanup's per-attempt config.
     metadata_tracker = LLMMetadataTracker(
         config=config,
         system_instruction=system_instruction,
         script_name="run_pv.py",
         script_version=__version__,
         model_override=model_name,
+        cli_overrides={"temperature": temperature},
     )
 
     candidates = manifest.get("candidates", [])

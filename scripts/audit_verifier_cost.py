@@ -35,10 +35,20 @@ them from whichever of the three conventions is present:
    copy — ``run.meta.json.pre-cleanup-<timestamp>.backup`` (the campaign's
    arm 2) or ``run.meta.main-<date>.json`` (the S144 verifier swap). These
    files hold disjoint passes, so they are summed.
-3. **Neither**, which is the fourth cell: one meta covering 29 of 57,482
-   candidates and nothing else on disc. The audit then reports what the
-   surviving meta covers AND the shortfall, and refuses to present the
-   figure as the stage's cost.
+3. **The recovery register** (``outputs/verifier-meta-recovery-2026-09-14.json``,
+   written by ``scripts/recover_verifier_meta_from_git.py``): the repository
+   commits ``outputs/**``, so a stage committed *before* the overwrite still
+   carries its pre-overwrite ``run.meta.json`` as a git blob. The register
+   records those blobs' ``usage_stats`` verbatim, and this auditor counts them
+   as passes of the stage — named in the report as
+   ``register:git-blob:<blob>`` so every dollar traces to a blob hash. The
+   register's ``residual_estimate`` blocks are estimates and are **never**
+   counted; they are surfaced as a note.
+
+4. **None of the three**, which is the fourth cell: one meta covering 29 of
+   57,482 candidates, nothing else on disc, and nothing in history. The audit
+   then reports what the surviving meta covers AND the shortfall, and refuses
+   to present the figure as the stage's cost.
 
 The cost basis
 --------------
@@ -72,6 +82,12 @@ Usage
     # cleanup-overwrite signature, classified recoverable or not
     python scripts/audit_verifier_cost.py --sweep outputs
 
+    # Explicit file pairs: price metadata files that are not (or no longer) a
+    # stage on disc — a main-pass backup beside its cleanup, or blobs
+    # extracted from git history with `git cat-file blob`
+    python scripts/audit_verifier_cost.py \\
+        --pass-file /tmp/main-pass.json --pass-file /tmp/cleanup.json
+
 Options
 -------
 ``--tier``            ``flex`` (default, half of list) or ``standard``.
@@ -80,6 +96,11 @@ Options
 ``--sweep <root>``    Retrospective mode over a tree of verifier stages.
 ``--min-shortfall N`` Sweep only: smallest meta-vs-results gap to report
                       (default 1).
+``--pass-file F``     Repeatable: price these metadata files as one stage.
+``--recovery-register P`` Register to read recovered passes from (default:
+                      ``outputs/verifier-meta-recovery-2026-09-14.json``).
+``--no-recovery-register`` Ignore the register, to see a stage as the working
+                      tree alone reports it.
 
 Author: Claude Code, for Shawn Ross
 Licence: Apache 2.0
@@ -116,6 +137,19 @@ LEGACY_PRIOR_META_GLOBS: tuple[str, ...] = (
     "run.meta.json.pre-*.backup",
     "run.meta.main-*.json",
 )
+
+#: Default recovery register: passes recovered from git history by
+#: ``scripts/recover_verifier_meta_from_git.py``. Read as the THIRD source of
+#: passes, after the fixed schema and the legacy backup convention, for stages
+#: whose main pass survives only as a git blob.
+RECOVERY_REGISTER_DEFAULT: Path = (
+    BASE_DIR / "outputs" / "verifier-meta-recovery-2026-09-14.json"
+)
+
+#: Schema tag the register must carry for this auditor to read it. A register
+#: written under a later contract is ignored with a warning rather than
+#: mis-read: a wrong pass block is a wrong dollar figure.
+RECOVERY_REGISTER_SCHEMA = "verifier-meta-recovery/1"
 
 #: Glob for the sidecars the fixed writer leaves. Each is an earlier MERGED
 #: state of the same stage, so it must never be added to the primary total —
@@ -213,6 +247,59 @@ def _load_json(path: Path) -> dict[str, Any]:
     return loaded if isinstance(loaded, dict) else {}
 
 
+def load_recovery_register(path: Path | None) -> dict[str, Any]:
+    """Load the git-history recovery register, or return an empty mapping.
+
+    Args:
+        path: Register file, or None to skip the register entirely.
+
+    Returns:
+        The register's ``stages`` mapping, keyed by stage path as the register
+        records it. Empty when the file is absent, unparseable, or written
+        under a schema this auditor does not know.
+    """
+    if path is None or not path.exists():
+        return {}
+    register = _load_json(path)
+    schema = register.get("schema")
+    if schema != RECOVERY_REGISTER_SCHEMA:
+        print(
+            f"warning: ignoring {path}: schema {schema!r} is not "
+            f"{RECOVERY_REGISTER_SCHEMA!r}",
+            file=sys.stderr,
+        )
+        return {}
+    stages = register.get("stages")
+    return stages if isinstance(stages, dict) else {}
+
+
+def _register_entry(
+    register: dict[str, Any], stage: Path,
+) -> dict[str, Any] | None:
+    """Find *stage* in the register, tolerating path spelling differences.
+
+    The register records repository-relative paths; a caller may name a stage
+    absolutely, with a trailing slash, or relative to the working directory.
+
+    Args:
+        register: The register's ``stages`` mapping.
+        stage: The stage directory as the caller named it.
+
+    Returns:
+        The register entry, or None when the stage is not registered.
+    """
+    candidates = [str(stage), str(stage).rstrip("/")]
+    try:
+        candidates.append(str(stage.resolve().relative_to(BASE_DIR)))
+    except ValueError:
+        pass
+    for candidate in candidates:
+        entry = register.get(candidate)
+        if isinstance(entry, dict):
+            return entry
+    return None
+
+
 def count_results(stage: Path) -> int | None:
     """Count the result keys a stage's ``probabilities.json`` holds.
 
@@ -301,6 +388,7 @@ def audit_stage(
     *,
     tier: str = "flex",
     default_model: str = "gemini-3.7-flash",
+    register: dict[str, Any] | None = None,
 ) -> StageAudit:
     """Audit one verifier stage, summing every pass recorded on disc.
 
@@ -309,6 +397,10 @@ def audit_stage(
         tier: Service tier actually used (``run_pv.py verify`` defaults to
             ``flex``, which bills at half of list).
         default_model: Rate card for a pass that records no model.
+        register: The recovery register's ``stages`` mapping (see
+            :func:`load_recovery_register`). Passes it records for this stage
+            are counted as a third source, after the fixed schema and the
+            legacy backup convention. None or empty ignores the register.
 
     Returns:
         The stage's audit.
@@ -405,6 +497,63 @@ def audit_stage(
         stage_format = (
             "legacy-summed" if len(passes) > 1 else "single-meta"
         )
+        # THIRD SOURCE: passes recovered from git history. Only for a stage
+        # with no merged meta — a merged meta already carries every pass — and
+        # only for passes whose run_id is not already counted, so a register
+        # that overlaps a file on disc cannot double-count the same pass.
+        entry = _register_entry(register or {}, stage)
+        if entry is not None:
+            counted_run_ids = {
+                (meta.get("run_id") if meta else None)
+                for meta in (
+                    [meta]
+                    + [
+                        _load_json(path)
+                        for pattern in LEGACY_PRIOR_META_GLOBS
+                        for path in sorted(stage.glob(pattern))
+                    ]
+                )
+            }
+            added = 0
+            for recovered in entry.get("recovered_passes") or []:
+                if recovered.get("run_id") in counted_run_ids:
+                    notes.append(
+                        "register pass "
+                        f"{recovered.get('source', '?')} skipped: its run_id "
+                        "is already counted from a file on disc",
+                    )
+                    continue
+                passes.append(
+                    _price_block(
+                        recovered,
+                        source=f"register:{recovered.get('source', '?')}",
+                        kind="recovered-from-git",
+                        tier=tier,
+                        default_model=default_model,
+                    ),
+                )
+                added += 1
+            if added:
+                stage_format = "register-recovered"
+                notes.append(
+                    f"{added} pass(es) recovered from git history by the "
+                    f"recovery register ({entry.get('verdict')}): "
+                    + "; ".join(
+                        f"{recovered.get('source', '?')} at "
+                        f"{recovered.get('commit', '?')[:9]} "
+                        f"({(recovered.get('commit_date') or '?')[:10]})"
+                        for recovered in entry.get("recovered_passes") or []
+                    ),
+                )
+            estimate = entry.get("residual_estimate")
+            if estimate is not None:
+                notes.append(
+                    "the register carries a residual ESTIMATE for this stage "
+                    f"({estimate.get('missing_candidates')} candidates, "
+                    f"{estimate.get('usage_stats', {}).get('total_input_tokens', 0):,} "
+                    "input tokens) — an estimate, never counted into the "
+                    "audited total; see the register for its basis",
+                )
         audited_total = sum(p.audited_usd for p in passes if p.counted)
         items_covered = sum(p.items for p in passes if p.counted)
 
@@ -437,6 +586,63 @@ def audit_stage(
         meta_only_usd=meta_only,
         complete=not shortfall,
         notes=notes,
+    )
+
+
+def audit_files(
+    paths: list[Path],
+    *,
+    tier: str = "flex",
+    default_model: str = "gemini-3.7-flash",
+) -> StageAudit:
+    """Audit explicit metadata files as one stage, summing them.
+
+    For passes that are not (or are no longer) a stage on disc: a main-pass
+    backup beside its cleanup, or blobs pulled out of git history with
+    ``git cat-file blob <hash> > /tmp/main-pass.json``. The caller asserts that
+    the files hold DISJOINT passes of one stage — nothing here can check that,
+    so the audit reports each file's coverage for the caller to verify.
+
+    Args:
+        paths: Metadata files to price, in any order.
+        tier: Service tier actually used.
+        default_model: Rate card for a file recording no model.
+
+    Returns:
+        A :class:`StageAudit` over the files, with ``results`` None (there is
+        no ``probabilities.json`` to count) and therefore no shortfall.
+
+    Raises:
+        FileNotFoundError: When a named file does not exist.
+    """
+    passes: list[PassAudit] = []
+    for path in paths:
+        if not path.exists():
+            raise FileNotFoundError(f"no such metadata file: {path}")
+        meta = _load_json(path)
+        passes.append(
+            _price_block(
+                meta,
+                source=path.name,
+                kind="explicit-file",
+                tier=tier,
+                default_model=default_model,
+            ),
+        )
+    return StageAudit(
+        stage=" + ".join(str(path) for path in paths),
+        format="explicit-files",
+        results=None,
+        passes=passes,
+        audited_usd=sum(entry.audited_usd for entry in passes),
+        items_covered=sum(entry.items for entry in passes),
+        shortfall=0,
+        meta_only_usd=None,
+        complete=True,
+        notes=[
+            "explicit file mode: the caller asserts these files hold disjoint "
+            "passes of one stage; check the per-file item counts above",
+        ],
     )
 
 
@@ -515,7 +721,9 @@ class StageSignature:
         sibling_candidates: Sibling stages whose meta matches this stage's
             model and instruction hash and covers the whole result set —
             evidence for manual adjudication, not automatic recovery.
-        classification: ``RECOVERABLE``, ``UNRECOVERABLE`` or ``MERGED``.
+        classification: ``RECOVERABLE`` (a prior meta on disc),
+            ``RECOVERED-FROM-GIT`` (the recovery register holds the main
+            pass), ``UNRECOVERABLE`` or ``MERGED``.
         audited_usd: The audited figure for what IS on disc, or None when
             the stage could not be priced.
         audit_error: Why the stage could not be priced, when it could not.
@@ -590,6 +798,7 @@ def sweep(
     tier: str = "flex",
     default_model: str = "gemini-3.7-flash",
     min_shortfall: int = 1,
+    register: dict[str, Any] | None = None,
 ) -> list[StageSignature]:
     """Enumerate verifier stages whose meta understates their candidate load.
 
@@ -605,6 +814,9 @@ def sweep(
         tier: Service tier to price at.
         default_model: Rate card for a pass recording no model.
         min_shortfall: Smallest gap worth reporting.
+        register: The recovery register's ``stages`` mapping; a stage whose
+            main pass it holds is classified ``RECOVERED-FROM-GIT`` and its
+            audited figure includes the recovered pass.
 
     Returns:
         One :class:`StageSignature` per qualifying stage, worst first.
@@ -637,6 +849,7 @@ def sweep(
         try:
             audit = audit_stage(
                 stage, tier=tier, default_model=default_model,
+                register=register,
             )
         except (FileNotFoundError, RateCardError) as exc:
             audit_error = str(exc)
@@ -654,6 +867,8 @@ def sweep(
             classification = "MERGED"
         elif prior_files:
             classification = "RECOVERABLE"
+        elif audit is not None and audit.format == "register-recovered":
+            classification = "RECOVERED-FROM-GIT"
         else:
             classification = "UNRECOVERABLE"
         signatures.append(
@@ -822,6 +1037,35 @@ def main(argv: list[str] | None = None) -> int:
         dest="as_json",
         help="Emit JSON instead of a table",
     )
+    parser.add_argument(
+        "--pass-file",
+        action="append",
+        type=Path,
+        default=None,
+        dest="pass_files",
+        help=(
+            "Repeatable: price these metadata files as one stage, summed. For "
+            "passes that are not a stage on disc (a main-pass backup, or a "
+            "blob extracted from git history)."
+        ),
+    )
+    parser.add_argument(
+        "--recovery-register",
+        type=Path,
+        default=RECOVERY_REGISTER_DEFAULT,
+        help=(
+            "Recovery register to read pre-overwrite passes from "
+            f"(default: {RECOVERY_REGISTER_DEFAULT})"
+        ),
+    )
+    parser.add_argument(
+        "--no-recovery-register",
+        action="store_true",
+        help=(
+            "Ignore the recovery register, to see a stage as the working tree "
+            "alone reports it"
+        ),
+    )
     args = parser.parse_args(argv)
 
     if args.model not in RATE_CARDS:
@@ -832,6 +1076,24 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 2
 
+    register = load_recovery_register(
+        None if args.no_recovery_register else args.recovery_register,
+    )
+
+    if args.pass_files:
+        try:
+            audit = audit_files(
+                args.pass_files, tier=args.tier, default_model=args.model,
+            )
+        except (FileNotFoundError, RateCardError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        if args.as_json:
+            print(json.dumps(asdict(audit), indent=2))
+        else:
+            _print_stage(audit)
+        return 0
+
     if args.sweep is not None:
         if not args.sweep.is_dir():
             print(f"error: not a directory: {args.sweep}", file=sys.stderr)
@@ -841,6 +1103,7 @@ def main(argv: list[str] | None = None) -> int:
             tier=args.tier,
             default_model=args.model,
             min_shortfall=args.min_shortfall,
+            register=register,
         )
         if args.as_json:
             print(json.dumps([asdict(s) for s in signatures], indent=2))
@@ -849,13 +1112,19 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if not args.stages:
-        parser.error("give at least one stage directory, or --sweep <root>")
+        parser.error(
+            "give at least one stage directory, --sweep <root>, or "
+            "--pass-file <file>",
+        )
 
     audits: list[StageAudit] = []
     for stage in args.stages:
         try:
             audits.append(
-                audit_stage(stage, tier=args.tier, default_model=args.model),
+                audit_stage(
+                    stage, tier=args.tier, default_model=args.model,
+                    register=register,
+                ),
             )
         except FileNotFoundError as exc:
             print(f"error: {exc}", file=sys.stderr)
