@@ -1,7 +1,7 @@
 # Erratum pointers into the lodged registration
 
-> **Last revised**: 2026-09-13 (created, under errata E86 and E87). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-14 (three § H1 / § H4 / factorial-table rows added
+> under erratum E88). See [§ Changelog](#changelog) for revision history.
 
 ## What this document is, and why it exists separately
 
@@ -22,10 +22,11 @@ registration to the erratum that corrects it. It is a navigation aid, not an
 authority — the authoritative record of every deviation, correction and
 clarification is [`../protocol-errata.md`](../protocol-errata.md).
 
-**Coverage**: this index is **not** a complete map of the 87-entry errata
+**Coverage**: this index is **not** a complete map of the 88-entry errata
 register onto the registration. It was created to discharge E87's remediation 1
 and covers the passages E86 and E87 correct, plus the adjudications a reader of
-those passages needs (E64, E73). Entries are added on touch, as later errata
+those passages needs (E64, E73), and was extended on 2026-09-14 with the
+modality passages **E88** corrects. Entries are added on touch, as later errata
 land on identified passages.
 
 Line numbers refer to `preregistration.md` at blob `fa221b30f395`, which is the
@@ -41,6 +42,9 @@ blob the commitment ledger pins; they are stable for as long as that pin holds.
 | 2.4 | Per-sheet holdout tables, same two columns | 154–233 | **E87** | As § 2.3. |
 | 2.4 | "**Holdout set summary**: 60 tiles, 79 mounds total" | 234 | **E87** | **79 is an undercount. The affine-correct figure is 97** distinct symbols over the 60 512 px windows (82 over their cores). § 3.2's power discussion quotes this "60 tiles (79 mound symbols)". |
 | 2.5 | Density Distribution table (8/7/5 training, 30/18/12 holdout) | 238–246 | **E87** | Derived from the §§ 2.3–2.4 counts, so it inherits their error: under the corrected counts **10 of 20 training and 27 of 60 holdout tiles change stratum**, and **3 training and 12 holdout tiles listed as `empty` are not empty**. The stratified sample is unchanged — these are the strata the registered seeds drew from — so § 2.5 records **how the selection was made**, not the tiles' true mound content. |
+| H1 | "**Test**: Compare detection performance across 5 modality/elaboration levels" and the five-level table beneath it | 410–420 | **E88** | The five levels are correctly defined, and H1's own confirmatory contrast groups the five phase-2a conditions correctly. What **E88** corrects is how the factor's value was RECORDED downstream: four analysis scripts assigned it by testing a condition label for the substring `image` rather than reading `include_example_images` over a non-empty exemplar list in the transmitted configuration. Eight conditions and one proposer pool carried a wrong label. No hypothesis-outcome row changes. |
+| H1 | "**Text-modality consistency**: Identical text is used across modalities…" | 432 | **E88** | The clause is the reason modality is a property of the *exemplar library* and not of the prompt text or of the map tile (which is always transmitted as an image — it is a vision task). It is therefore the passage that licenses **E88**'s derivation rule, and the passage a reader needs before accepting that a `*-text` label over an image-bearing configuration is mislabelled rather than a different condition. |
+| H4 | "`*_canonical-last.json`, `*_random-order.json` … Same instruction file per modality" | 2017 | **E88** | The operative reading of "same instruction file per modality" is that H4's four exemplar-ORDERING variants inherit their arm's configuration, so all four are **image-bearing** (instruction `detect_brief-text-image.md`, `include_example_images` true, `example_count` 13 — read from `outputs/retest/phase2e/canonical-last/run_1/detections_canonical-last_run01.meta.json`). Their labels name neither modality, so the retired substring test fell through to `text` on some artefacts and left them in *neither* group on others — the four `retest-phase2e::` cells are exactly the cells E88's recomputation moves into the image group (17 computable cells → 21). |
 | H8 | "**Availability constraint**: The training set contains 36 mounds across 20 tiles. Hard examples are drawn from failures across K=10 baseline runs…" | 815 | **E87** and **E64 (i)** | E87: the 36 is an undercount (50), so the availability constraint this paragraph reasons from — and which it says "motivates H10 (training pool size)" — was looser than stated. The H10 motivation is not reversed, because the binding constraint was the mining campaign's *yield*, but the arithmetic is wrong. E64 (i): "K=10 baseline runs" and the any-run candidacy rule contradict § 8.4.1; operative reading is K=5 passes, any-run hard positives, ≥3-of-5 hard negatives. |
 | H10 | "**Constraints**: Total tiles available: 361 … Maximum training pool: ~301 tiles (361 − 60 holdout)" | 936–938 | **E64 (ii)** | The same already-adjudicated corpus figure as § 2.1. Not re-opened by E87. |
 | 8.4.2 | Library-composition table, **Null tile** row, "Source: Training set" | 1512 | **E86** | True of the **2025-12-23** training set, false of the committed calibration set. The set was re-selected on 2026-01-04 (`4d011a839`) and none of the three null tiles survived, but `inputs/examples/null-tiles/null_tiles_manifest.json` was never regenerated. The four hard-example categories in the same table are unaffected (all 20 crops' source tiles are committed calibration tiles). |
@@ -82,6 +86,28 @@ the lodged tables, clearly labelled as a post-hoc correction, in
 and a tier-1 test.
 
 ## Changelog
+
+### 2026-09-14 — Three modality rows added under erratum E88
+
+**Trigger**: the corpus-wide modality-track audit
+([`reports/modality-track-audit-2026-09-14.md`](../../../../reports/modality-track-audit-2026-09-14.md))
+and the PI's four rulings of 2026-09-14, ruling 1 of which inserts **E88** and
+indexes it here.
+
+| | before | after |
+|---|---|---|
+| Index rows | 12 | **15** |
+| Errata indexed | E20, E64, E73, E86, E87 | **+ E88** |
+| Registration passages indexed | §§ 2.1, 2.3, 2.4, 2.5, H8, H10, 8.4.2, 8.4.3, 8.6 | **+ § H1 (`:410–420`, `:432`), § H4 (`:2017`)** |
+
+**What did NOT change**: every pre-existing row is verbatim; no line number was
+restated; `preregistration.md` is untouched and still at blob `fa221b30f395`
+(the blob `results/commitments.json` pins), so the 702 commitment anchors are
+undisturbed. E88 corrects no lodged *text* — the registration's definition of
+the modality factor is correct, and what moved is how four analysis scripts
+recorded the factor's value.
+
+Commit: this entry's commit.
 
 ### 2026-09-13 — Original publication
 

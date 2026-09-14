@@ -5623,3 +5623,109 @@ inversion in the affine metadata, whose convention the recomputation follows);
 `reports/null-exemplar-errata-2026-09-13.md` (the claims-with-anchors record).
 
 ---
+
+### E88: Modality — a preregistered factor — was assigned by a substring test on the condition label in four scripts; eight conditions and one pool were mislabelled, and two registered outcomes quote an image-group range that moves
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-09-14 (identified by the null-exemplar sensitivity job of 2026-09-13 for seven cells; characterised corpus-wide on the PI's ruling of 2026-09-14) |
+| Type | Correction of a derived factor label (no cell re-scored; group membership only) |
+| Commit | `eb34ecbcc` (the derivation and the board builder's derived `track` + `track_basis`), `cb9b1d7f2` (the plateau, tile-size-sweep, K-ladder-registry and pool-registry fixes), `36b9821c4` (the plateau `--out-dir` fix), `c1b151bce` / `23158fc3c` / `d5eaeb1ee` (the legacy-rule A/B recomputation), `22e69c00c` (the audit report); this entry's commit carries the erratum, and the outcome amendments, the paper and claims-inventory corrections, the verifier-convention change and the Era-2 board rebuild land in the same session's ruling commits |
+| Files | `scripts/build_gs_era2_board.py` (the `track` assignment, was `:307`), `scripts/characterise_gs_plateau.py` (`derive_tags`), `scripts/tile_size_sweep.py` (`parse_modality_temp`), `scripts/register_k_ladder_phase2_conditions.py` (`modality`), `scripts/build_k_ladder_phase2_unions.py` (`POOL_REGISTRY`); artefacts `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/membership.json`, `results/working-precision/gs-plateau-characterisation.{json,md}`, `results/tile-size-sweep/tile_size_sweep.{json,md}`, `results/k-ladder-2026-09-12/phase2/unions.json`; outcomes `era1-single-pass-baseline-matrix` and `tile-size-sweep` in `results/run-analyses.json`; `docs/paper/results-draft.md:195-196` and `:1240`; `docs/paper/results-claims-inventory-2026-09-12.md` R2-06. New: `scripts/derive_condition_modality.py`, `scripts/compare_modality_recomputation.py`, `results/modality-track-audit-2026-09-14/`, `reports/modality-track-audit-2026-09-14.md`, `reports/modality-rulings-deltas-2026-09-14.md` |
+| Impact | **Nil on every preregistered outcome.** H1's confirmatory contrast groups the five phase-2a conditions, all correctly labelled; the confirmatory family's per-hypothesis *p* values are unrecomputed; no hypothesis-outcome row changes. **Nil on the signed Era-2 board, the signed uplift supplement, the signed verifier-uplift pairing and the signed K-ladder analysis** — none of them groups by the field. **Two unsigned but verified registered outcomes quote a figure that moves**, and one paper sentence with them |
+
+**Description**. Modality — few-shot exemplars sent as images or as text labels
+only — is a preregistered factor (H1; lodged registration § H1 `:410`, `:432`,
+the factorial table `:1740`). Four scripts assigned it by testing the condition
+label or pool key for the substring `image`. That fails when a label names the
+**verifier's** modality over a text proposer, and again when a label carries no
+modality token at all and the test falls through to `text`. The ground truth is
+`include_example_images` over a non-empty exemplar list in the configuration the
+proposer transmitted (`scripts/4_detect_mounds_batch.py:885,901`), now derived
+corpus-wide by `scripts/derive_condition_modality.py`.
+
+Of 593 registered conditions, 591 are derivable and 547 from a transmitted
+configuration, with no route contradicting another. Eight conditions and one
+proposer pool carried a wrong recorded label across four artefacts; the
+register's `proposer_pools[...].modality`, the passes manifest, the opmax
+membership and the uplift supplement are clean.
+
+**The figures that move.**
+
+| claim | before | after |
+|---|---|---|
+| `era1-single-pass-baseline-matrix` outcome: "image cells span 0.094-0.291" | 17 computable image-bearing cells, MCC 0.0942–0.2907 | **21 of 22**, MCC **0.0665–0.2907** |
+| `docs/paper/results-draft.md:195-196` and `:1240`; claims inventory R2-06 | "MCC 0.094–0.291 across the seventeen computable image-bearing cells" | **0.0665–0.2907 across the twenty-one** |
+| `tile_size_sweep.json` `by_arch_modality` 512 `single-pass/image` | `image-terse` 0.6052 / 0.2239 | **`canonical-last` 0.6314 / 0.2132** |
+| `tile_size_sweep.json` `by_arch_modality` 512 `single-pass/text` | `canonical-last` 0.6314 / 0.2132 | **`text-scale-4` 0.6094 / undefined** |
+| `tile-size-sweep` outcome: the single-pass ceiling ladder | 512 (0.631) > 384 (0.520) > 256 (0.342) | **0.609 > 0.520 > 0.342** read as the `single-pass/text` leg, which is what two of the three published entries are; **0.631 > 0.600 > 0.342** read as the overall per-size ceiling. The ordering 512 > 384 > 256 survives either reading |
+
+**What does not move.** The direction of the metric trade-off (20 of the 21
+computable image-bearing cells are strictly above every computable text-only
+cell's 0.0665, and the twenty-first, `retest-phase2e::random`, ties it); the
+text-only side entirely (14 cells, 8 undefined, 0.0665 on the other 6); the
+text-only F1 range 0.5016–0.6094; the single-pass tile-size isolation
+(0.342 < 0.520 < 0.606) and the consensus+verifier head-to-head, both
+byte-identical; every plateau-tabulation group statistic (image onset median
+75 m / p90 100 / max 150, text 30 / 75 / 150, before and after, with all five
+sibling summaries byte-identical); the Era-2 board's ranking, tiers, tie sets,
+Hsu sets and tile-MCC family; Obs 351, Obs 352, Obs 447 and Obs 482.
+
+**Protocol impact**: nil on the preregistered analyses. The affected statistics
+are post-hoc characterisations that GROUP cells by modality; the registered
+contrasts either hold modality fixed or group only correctly-labelled
+conditions. The corrective is a change of source rather than of naming: four of
+the five derivation routes read the configuration that was transmitted, and
+where two of them could both speak they never once disagreed across 593
+conditions.
+
+**Remediation (PI rulings, 2026-09-14 — four, all executed this session)**:
+
+1. **This entry**, with its pointer rows in
+   `osf/errata-pointers.md` (the lodged copy cannot carry inline pointers — it
+   is blob-pinned and line-anchored by 702 commitments; see E87 remediation 1).
+2. **The two registered-but-unsigned outcomes amended in place**, each with an
+   `[AMENDED 2026-09-14, E88: …]` clause that preserves the prior text verbatim,
+   and the paper prose (`docs/paper/results-draft.md`), the claims-inventory row
+   R2-06 and the `results/tile-size-sweep/` and
+   `results/working-precision/gs-plateau-characterisation.{json,md}` tabulations
+   brought to the corrected figures. Neither row carries a PI signature
+   (`_signature_note` absent on both); both carry a 2026-06-09 authoring
+   verification stamp, which is what this erratum's revision markers attach to,
+   exactly as E81 and E83 did on the same two rows.
+3. **The register's `verifier_passes[...].modality` convention settled as the
+   verifier stage's OWN exemplar modality** — what the verifier itself was sent
+   — and made to derive from the verify configuration rather than be hand-
+   authored. The field had been used both ways, and the
+   `pv-diag-384::scale-4-optimal-487-verified-v1-{n1,n3,n5,n10}` family was
+   split across both conventions inside a single run. 55 of the 186 registered
+   stages change value (51 from `image` to `text`, 4 from `text` to `image`);
+   12 stages whose verify configuration no route can read keep their recorded
+   value. Nothing numerical rests on the field — no analysis in the corpus
+   groups by it. Convention recorded in `docs/methodology/notation-key.md` § 7.
+4. **The Era-2 board rebuilt with derived labels** — the three
+   `proposer-verifier-384::verified-{adversarial,brief,checklist}-image` cells
+   as **text**, the four `pv-diag-384::pv-scale4-optimal` cells as **image**,
+   and a `track_basis` field on all 110 members — and presented for
+   re-signature. No rank, tier, tie set, Hsu set or metric moves: the tiering
+   never reads `track`.
+
+`results/k-ladder-2026-09-12/phase2/unions.json` is **not** regenerated: doing
+so would rebuild the consensus unions and rewrite `experiment_intent.md` files
+inside a signed analysis. The source constant is fixed, and the artefact's two
+scale-4 rungs correct at the next Phase 2 union rebuild.
+
+Cross-references: **E86** (the null-exemplar overlap, whose sensitivity job
+found the first seven cells, and whose exposure disclosure the rebuilt board's
+README now carries); **E81** (undefined tile MCC published as `0.0` — the same
+§ R2 passage's prior correction, and the reason the text side is stated as
+undefined rather than near-zero; its own consumer note quotes the superseded
+0.094–0.291 and the "four phase-2e ordering variants sit in neither group"
+parenthesis, both of which this entry supersedes without rewriting the
+historical entry); **E83** (the tie-set revision that the same two outcomes
+carry); **E56** (the in-sample-argmax class the `-opmax` cells belong to);
+`reports/modality-track-audit-2026-09-14.md` (the corpus-wide characterisation);
+`reports/modality-rulings-deltas-2026-09-14.md` (the claims-with-anchors record
+of the four rulings).
+
+---
