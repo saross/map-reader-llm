@@ -259,12 +259,15 @@ Three qualifications the PI should know before asking:
   1131/1132 candidates succeeded". It records no token totals: `run_pv.py`
   does not log usage, so a driver log can date a pass but never price it.
 - **A subtraction residue is a difference of large numbers.** On 26 August the
-  day's recorded Gemini 3 Flash spend is dominated by six 24,5xx-tile proposer
-  passes at about US$13.35 each and the sibling 57,482-candidate verifier at
-  US$78.36 (list). The residue sought is about US$26 of a roughly US$160 day
-  — recoverable, but sensitive to any unrecorded aborted pass on the same day,
-  exactly the residue § 3 of the billing report already attributes to two
-  aborted 30 August passes.
+  day's other recorded Gemini 3 Flash runs print about US$158 in their own
+  metadata at **list** rates — six 24,5xx-tile proposer passes at about
+  US$13.35 each, plus the sibling 57,482-candidate verifier at US$78.36 — and
+  the residue sought is US$26 at **flex**, US$53 at list. So the wanted figure
+  is about a third of the day's recorded spend on either basis: recoverable,
+  but sensitive to any unrecorded aborted pass, which is exactly the residue
+  § 3 of the billing report attributes to two aborted 30 August passes. Read
+  the export on one basis throughout, and note that these older metas print
+  list for realtime runs (the pre-2026-08-18 convention).
 
 ### 4.1 A discrepancy worth the PI's attention
 
@@ -379,7 +382,7 @@ id `gemini-3.1-pro-preview` (and `-customtools`), per 1M tokens in USD:
 | Input, standard | 2.00 | 4.00 |
 | Output, standard (thinking billed as output) | 12.00 | 18.00 |
 | Context-caching read | 0.20 | 0.40 |
-| Cache storage | 4.50 per 1M tokens per hour | 4.50 |
+| Cache storage | 4.50 per 1M tokens per hour | not tiered on the page |
 | Input, batch **and** flex | 1.00 | 2.00 |
 | Output, batch **and** flex | 6.00 | 9.00 |
 
