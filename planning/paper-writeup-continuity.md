@@ -49,13 +49,26 @@ project state.
 > <worktree> log --oneline main..HEAD`, push that branch, and relaunch an
 > Opus agent to finish from its last commit and its report draft; nothing
 > of theirs is on main until you fast-forward it.)
-> **(O2) `worktree-agent-a7f2b5a5f07a83071` — git-history recovery of the 26
-> verifier metas, `--temperature` written into the meta's configuration,
-> the Gemini 3 Pro rate card.** After landing: read its report's list of
-> stages still unrecoverable and the exact Google Cloud daily-export
-> dates that could bound them; ask the PI for those exports in ONE batch
-> (Reports page, Projects = map-reader-llm, Group by SKU, one day each,
-> into `docs/costs/`, gitignored). If none can be bounded, say so.
+> **(O2) LANDED before Fable closed (`daa78cf74`, registry `3875bc7dc`):
+> git-history recovery — 17 of the 26 verifier metas RECOVERED (blob,
+> commit, date in `outputs/verifier-meta-recovery-2026-09-14.json`;
+> US$41.22 of verifier spend now audited), 9 NOT-IN-HISTORY incl. the
+> fourth cell (enters history at `a73d64346` already overwritten; estimate
+> US$69.24 vs the ≈ US$58 day-isolated figure — consistent with straddling
+> the 30–31 Aug Pacific boundary) and its GS leg; the three Pro stages ran
+> through the Batch API and never recorded a token; `--temperature` and
+> other CLI overrides now merged into the recorded configuration;
+> Gemini 3.1 Pro rate card added (read 2026-09-14, page dated
+> 2026-09-11). **ASK THE PI, in one batch, for project-filtered daily
+> Google Cloud exports** (Reports page, Group by SKU, one day each,
+> Pacific days) for **25 March, 9 June, 10 June, 25 August and 26
+> August 2026** into `docs/costs/` (gitignored) — they bound the
+> remaining unrecoverable stages by subtraction (25 March bounds the six
+> batch Pro passes jointly only); 29–31 August need nothing new. Then
+> price them with `scripts/audit_verifier_cost.py` and record in the
+> recovery register. Also flagged: `reports/billing-reconciliation-2026-09-11.md`
+> line ~104 prices the grid `verify_37` at 913 candidates where the stage
+> holds 3,319 (estimate US$3.95) — correct it.
 > **(O3) THE IMAGE CAMPAIGN (`gemini37-image-55map-2026-09-13`, approved
 > ≈ US$275; US$259 committed at Fable's close)**: it lives on sapphire in
 > `~/worktrees/map-reader-llm/claude-image55` (branch
