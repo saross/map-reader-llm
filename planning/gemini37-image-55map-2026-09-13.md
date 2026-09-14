@@ -1,10 +1,15 @@
 # Gemini 3.7 image at deployment scale: the tile-MCC candidate, K = 3
 
-> **Last revised**: 2026-09-13 (**PROPOSER COMPLETE** — all three passes at
+> **Last revised**: 2026-09-14 (**CAMPAIGN COMPLETE** — P1 near miss, P2 and P3
+> informative fails, P4 holds, P5 holds on three rungs of four (§ 4a); the
+> primary cell leads the 55-map corpus on BOTH metrics at tile-MCC 0.7648 and
+> F1 @ 50 m 0.9199 with all ten tests BH-significant. Audited **US$274.6139**
+> of the US$420 hard stop. Findings:
+> `results/gemini37-image-55map-2026-09-13/findings.md`; one UNSIGNED analysis
+> row registered. Earlier: **PROPOSER COMPLETE** — all three passes at
 > 24,561 / 24,561, audited US$245.6307 at a flat US$0.00333 per tile-pass, and
-> both unions built (K = 1 6,985, K = 3 8,337; § 3.2). The four verifier arms
-> are in flight and the campaign projects to ≈ US$274–288, inside the US$420
-> hard stop. Earlier: **PASS 1 COMPLETE, both gates PASS** — audited
+> both unions built (K = 1 6,985, K = 3 8,337; § 3.2). Earlier:
+> **PASS 1 COMPLETE, both gates PASS** — audited
 > US$81.9283 against the US$110 gate, cached share 0.808 against the 0.70
 > gate (§ 3.1). Earlier: **RELAUNCHED** — B1–B4 all discharged, the GS
 > calibration leg run and the carried operating points fixed in § 2, the
@@ -121,8 +126,10 @@ is ≈ US$261 (B3).
 | 55-map proposer, pass 2 | ≈ 79 | **81.8712** — cache 0.810, within 0.07 % of pass 1 |
 | 55-map proposer, pass 3 | ≈ 79 | **81.8313** — cache 0.811 |
 | **Proposer, all three passes** | 237 | **245.6307** — 73,683 tile-passes, US$0.00333 each |
-| Four verifier arms, scoring | 37.4 | in flight; projected **27.6–40.9** (§ 3.2) |
-| **Running total** | | **≈ 246.78** of a ≈ US$274–288 envelope |
+| K = 1 arm 1 / arm 2 | — | **4.9626** / **7.7028** (main 7.6875 + cleanup 0.0153) |
+| K = 3 arm 1 / arm 2 | — | **5.9058** / **9.2650** (main 9.2638 + cleanup 0.0012) |
+| **Four verifier arms** | 37.4 | **27.8361** — 26 % under the card |
+| **CAMPAIGN TOTAL** | ≈ 261–276 | **274.6139** — US$145.39 clear of the US$420 stop |
 
 ### 3.2 Union sizes and the four-arm projection
 
@@ -219,6 +226,37 @@ operates as a go/no-go on passes 2–3. Detail in
 - **P5 (transfer)**: the carried point's tax against the rung oracle is
   ≤ 0.01 F1 and ≤ 0.01 MCC.
 
+## 4a. Outcome, 2026-09-14 — COMPLETE
+
+Full findings: `results/gemini37-image-55map-2026-09-13/findings.md`.
+
+| | Verdict | The number |
+|---|---|---|
+| **P1** | **NEAR MISS** | +0.0177 vs the leader (BH p 0.0000) — significant, short of +0.02, above the +0.01 informative band; +0.0185 at the MCC oracle |
+| **P2** | **INFORMATIVE FAIL** | tile-MCC **rises** with K on both arms (arm 2 0.7569 → 0.7648, BH p 0.0022), reversing all three committed ladders |
+| **P3** | **INFORMATIVE FAIL** | F1 @ 50 m 0.9199 vs the text arm's 0.8848 = +0.0351 — image is better, not at parity |
+| **P4** | **HOLDS** | arm 2 − arm 1 on MCC: +0.0158 at K = 3, +0.0245 at K = 1 |
+| **P5** | **HOLDS on 3 rungs of 4** | primary cell's tax F1 +0.0007 / MCC +0.0008; fails only on `IMG-ARM1-K1` |
+
+The primary cell `IMG-ARM2-K3-carried` leads the 55-map corpus on **both**
+metrics — tile-MCC **0.7648** [0.7516, 0.7776] and micro-F1 @ 50 m **0.9199** —
+beating all four external comparators and its own K = 1 rung, with **all ten**
+tests BH-significant at q = 0.05. So the § 6 fallback ("if P1 fails
+informatively the result still settles the modality question at deployment
+scale") is what happened, and it settled in the image modality's favour.
+
+Two results the card did not anticipate:
+
+- **K reverses sign by modality.** The three image passes dedup to
+  7,123 / 7,103 / 7,125 against a three-pass union of only 8,337, so one pass
+  supplies 84 % of the K = 3 candidates and extra passes buy *corroboration*
+  rather than new geometry. At unanimity that makes K a **precision** filter
+  (FP tiles 275 → 183 on arm 1, 165 → 127 on arm 2) instead of the recall lever
+  it is on text. Hence MCC and F1 rise together here and diverge on text.
+- **The verifier seat interacts with modality.** The K = 3 MCC
+  difference-in-differences against the text 2×2 is **+0.0174**: the 3.7
+  verifier buys +0.0158 MCC for an image pool and −0.0016 for text.
+
 ## 5. Run order and gates
 
 1. `/audit-config` on the proposer and both verifier configs; a 5-tile
@@ -245,6 +283,42 @@ settles the modality question at deployment scale, which the paper
 currently states on the GS only.
 
 ## Changelog
+
+### 2026-09-14 (complete) — P1–P5 read, the campaign closed at US$274.6139
+
+**Trigger**: the four verifier arms, the scoring and the five-test family all
+completed, so every prediction is now readable as §§ 10.4–10.6 of the deltas
+report pre-specified.
+
+| Claim | Before | After |
+|---|---:|---:|
+| P1 | UNTESTED | **NEAR MISS** — +0.0177, BH p 0.0000, short of +0.02 |
+| P2 | UNTESTED | **INFORMATIVE FAIL** — MCC rises with K, BH p 0.0022 |
+| P3 | UNTESTED | **INFORMATIVE FAIL** — +0.0351, image better than parity |
+| P4 | UNTESTED | **HOLDS** — +0.0158 at K = 3, +0.0245 at K = 1 |
+| P5 | UNTESTED | **HOLDS on 3 of 4 rungs**; primary tax +0.0007 / +0.0008 |
+| Four verifier arms | in flight | **complete**, US$27.8361 (card 37.4) |
+| Campaign total | projected ≈ 274–288 | **US$274.6139** audited |
+| Analysis row | unauthored | **registered, UNSIGNED** |
+| Findings document | unwritten | `results/gemini37-image-55map-2026-09-13/findings.md` |
+
+Two legs needed a 503 recovery — 13 candidates on the K = 1 arm 2 and 1 on the
+K = 3 arm 2 — both closed by `run_pv.py cleanup` at a byte-identical
+configuration, with both metas kept, so each of those arms' audited cost is the
+sum of two files (post-run report § 3.1).
+
+One methodological correction was necessary before any figure existed: the
+campaign's rungs were not booked onto the scoring frame, because the proposer's
+192 px-stride tiling shares only 660 tile names with the 336 px-stride
+evaluation frame. Fixed by the established map-constrained standard-tile
+assignment, confirmed idempotent on three comparators at 100.00 %, with two new
+gates added. Detail: deltas report § 10.7. No join variant, default or
+committed cell moved.
+
+**What did NOT change**: the carried operating points, the cells, the scoring
+instrument, the five-test family, the US$420 hard stop, the 55-map board and the
+tile-MCC tiering (neither re-tiered), and every signed row. The open geometric
+tile-join question is untouched.
 
 ### 2026-09-13 (proposer complete) — three passes, both unions, arms in flight
 

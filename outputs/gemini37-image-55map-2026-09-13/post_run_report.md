@@ -1,10 +1,16 @@
 # Post-run report — Gemini 3.7 image at 55-map scale, K = 3
 
-> **Last revised**: 2026-09-13 (**proposer COMPLETE** — all three passes at
+> **Last revised**: 2026-09-14 (**CAMPAIGN COMPLETE** — all four verifier arms
+> finished after two 503 recoveries, twelve cells scored on the r2 engine, the
+> five-test family run with all ten tests BH-significant, the run registered
+> with one UNSIGNED analysis row, and the findings document written. Audited
+> **US$274.6139** of the US$420 hard stop. P1 near miss, P2 and P3 informative
+> fails, P4 holds, P5 holds on three rungs of four — verdicts and numbers in
+> `results/gemini37-image-55map-2026-09-13/findings.md`. Earlier:
+> **proposer COMPLETE** — all three passes at
 > 24,561 / 24,561 for an audited US$245.6307, coverage gate PASS on each, and
-> both unions built at 6,985 (K = 1) and 8,337 (K = 3); the four verifier arms
-> are in flight and the campaign projects to ≈ US$274–288 inside the US$420
-> hard stop. Earlier: **pass-1 gate applied — both PASS**: audited
+> both unions built at 6,985 (K = 1) and 8,337 (K = 3). Earlier:
+> **pass-1 gate applied — both PASS**: audited
 > US$81.9283 against the US$110 gate, cached share 0.808
 > against the 0.70 gate. Earlier: steward hand-over — the
 > resume path in § 4 names the two drivers that replace its ad-hoc commands,
@@ -43,9 +49,15 @@ what ran, what the gates measured, and exactly how to resume.
 | K = 3 union (first-N) | **built**, 8,337 candidates | 0.00 | `union_k3.geojson` |
 | K = 1 arm 1 (`gemini-3-flash`, MINIMAL) | **6,985 / 6,985** | **4.9626** | 15:11–15:20 UTC, 0 retries |
 | K = 1 arm 2 (`gemini-3.7-flash`, low) | **6,985 / 6,985** after cleanup | **7.7028** | main 6,972 at 12,247 retries (503 storm, § 3.1); 13 recovered by cleanup |
-| K = 3 arms 1 and 2 | **IN FLIGHT** | pending | relaunched 23:03:21 UTC after the storm stopped the driver |
-| Scoring, tests, registration | not started | — | |
-| **Committed so far** | | **≈ 259.44** | against a ≈ US$274–276 envelope (§ 3.1) |
+| K = 3 arm 1 (`gemini-3-flash`, MINIMAL) | **8,337 / 8,337** | **5.9058** | 9 retries |
+| K = 3 arm 2 (`gemini-3.7-flash`, low) | **8,337 / 8,337** after cleanup | **9.2650** | main 8,336 at 9,045 retries; 1 recovered by cleanup |
+| Sweep, 179 achievable points × 4 rungs | **complete** | 0.00 | `sweeps.json`, four CSVs |
+| Materialisation, 12 cells | **complete** | 0.00 | carried + F1 oracle + MCC oracle per rung |
+| Scoring, 12 cells on the r2 engine | **complete**, all rc = 0 | 0.00 | engine reproduces the sweep on every cell |
+| Five-test family, both metrics | **complete** | 0.00 | all ten tests BH-significant at q = 0.05 |
+| Registration | **complete** | 0.00 | 12 conditions, ONE analysis row, UNSIGNED |
+| Findings document | **complete** | 0.00 | `results/gemini37-image-55map-2026-09-13/findings.md` |
+| **CAMPAIGN TOTAL** | | **274.6139** | US$145.39 clear of the US$420 hard stop |
 
 Carried operating points, from the GS K = 3 calibration leg swept at the
 GS-primary 20 m buffer:
@@ -312,6 +324,41 @@ is discovering a broken instrument after the API spend, not before.
 | Tier-1 suite on sapphire | **2,516 passed**, 4 skipped, 27 deselected, 3 xfailed | `claude-steward`, 193 s |
 
 ## Changelog
+
+### 2026-09-14 (complete) — four arms, twelve cells, P1–P5 read, campaign closed
+
+**Trigger**: the campaign reached its end — all four verifier arms complete,
+every cell scored, the five-test family run, the run registered and the findings
+document written. This document is now a completed post-run record rather than a
+launch-state one, and the resume path in § 4 is history rather than instruction.
+
+| Claim | Before | After |
+|---|---:|---:|
+| K = 3 arm 1 | unbuilt | **8,337 / 8,337**, US$5.9058 |
+| K = 3 arm 2 | unbuilt | **8,337 / 8,337** after cleanup, US$9.2650 |
+| Four verifier arms | in flight | **complete**, US$27.8361 (card 37.4) |
+| Cells scored | none | **12**, all rc = 0, on the r2 board's engine |
+| Five-test family | undeclared verdicts | **10 tests, all BH-significant** |
+| Analysis row | unauthored | **registered, UNSIGNED** |
+| P1–P5 | UNTESTED | near miss / informative fail / informative fail / holds / holds on 3 of 4 |
+| Campaign audited total | ≈ 259.44 | **274.6139** |
+
+**Two 503 recoveries**, both recorded in § 3.1: 13 candidates on the K = 1 arm 2
+and 1 on the K = 3 arm 2, each closed by `run_pv.py cleanup` at a configuration
+byte-identical to its main pass, with both metas kept. The audited cost of each
+of those arms is the **sum of two meta files**.
+
+**One methodological correction** was required before any figure existed — the
+rungs were not booked onto the scoring frame — and it is minuted in full at
+`reports/gemini37-image-55map-deltas-2026-09-13.md` § 10.7, together with the
+two mechanism gates added to prevent a recurrence. It changed no join variant,
+no default and no committed cell.
+
+**What did NOT change**: the carried operating points, the scoring instrument,
+the five-test family, the US$420 hard stop, the 55-map board and the tile-MCC
+tiering (neither re-tiered), every signed row, every prompt and input
+configuration, and the open geometric tile-join question. Nothing on sapphire's
+main checkout was written.
 
 ### 2026-09-13 (proposer complete) — three passes, coverage gate, both unions
 
