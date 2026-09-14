@@ -1,0 +1,150 @@
+{
+  "buffer_m": 50,
+  "reference": "r2",
+  "cells": [
+    {
+      "label": "IMG-ARM1-K1-carried",
+      "rung": "IMG-ARM1-K1",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 1,
+      "basis": "carried",
+      "point": "(0.10, k1)",
+      "n_detections": 6250,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K1-carried/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM1-K1-f1-oracle",
+      "rung": "IMG-ARM1-K1",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 1,
+      "basis": "f1-oracle",
+      "point": "(0.15, k1)",
+      "n_detections": 5582,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K1-f1-oracle/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM1-K1-mcc-oracle",
+      "rung": "IMG-ARM1-K1",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 1,
+      "basis": "mcc-oracle",
+      "point": "(0.15, k1)",
+      "n_detections": 5582,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K1-mcc-oracle/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM1-K3-carried",
+      "rung": "IMG-ARM1-K3",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 3,
+      "basis": "carried",
+      "point": "(0.10, k3)",
+      "n_detections": 5437,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K3-carried/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM1-K3-f1-oracle",
+      "rung": "IMG-ARM1-K3",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 3,
+      "basis": "f1-oracle",
+      "point": "(0.10, k3)",
+      "n_detections": 5437,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K3-f1-oracle/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM1-K3-mcc-oracle",
+      "rung": "IMG-ARM1-K3",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 3,
+      "basis": "mcc-oracle",
+      "point": "(0.15, k3)",
+      "n_detections": 4977,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K3-mcc-oracle/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM2-K1-carried",
+      "rung": "IMG-ARM2-K1",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 1,
+      "basis": "carried",
+      "point": "(0.88, k1)",
+      "n_detections": 5997,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K1-carried/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM2-K1-f1-oracle",
+      "rung": "IMG-ARM2-K1",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 1,
+      "basis": "f1-oracle",
+      "point": "(0.95, k1)",
+      "n_detections": 5938,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K1-f1-oracle/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM2-K1-mcc-oracle",
+      "rung": "IMG-ARM2-K1",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 1,
+      "basis": "mcc-oracle",
+      "point": "(0.98, k1)",
+      "n_detections": 5322,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K1-mcc-oracle/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM2-K3-carried",
+      "rung": "IMG-ARM2-K3",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 3,
+      "basis": "carried",
+      "point": "(0.88, k3)",
+      "n_detections": 5357,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-carried/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM2-K3-f1-oracle",
+      "rung": "IMG-ARM2-K3",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 3,
+      "basis": "f1-oracle",
+      "point": "(0.90, k3)",
+      "n_detections": 5343,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-f1-oracle/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM2-K3-mcc-oracle",
+      "rung": "IMG-ARM2-K3",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 3,
+      "basis": "mcc-oracle",
+      "point": "(0.96, k2)",
+      "n_detections": 5167,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-mcc-oracle/detections.geojson"
+    }
+  ]
+}
