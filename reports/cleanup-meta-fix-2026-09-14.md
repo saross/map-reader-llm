@@ -1,8 +1,9 @@
 # The cleanup metadata overwrite: mechanism, fix, and retrospective
 
-> **Last revised**: 2026-09-14 (original publication — the PI's "fix
-> permanently" ruling on checklist item 14). See [§ Changelog](#changelog)
-> for revision history.
+> **Last revised**: 2026-09-14 (later: the temperature blind spot closed, the
+> Pro rate card added, and 17 of the 26 unrecoverable stages recovered from git
+> history; earlier: original publication — the PI's "fix permanently" ruling on
+> checklist item 14). See [§ Changelog](#changelog) for revision history.
 
 **Scope.** Why a verifier stage's `run.meta.json` could report a hundredth of
 the arm's true cost, what now prevents it, a tool that audits such a stage
@@ -161,14 +162,20 @@ each a deliberate departure from a literal byte-hash of the config file:
 the name the SDK resolved (`gemini-3-flash-preview`) while the operator
 types the short one, and `run_pv.py` resolves it only after a client exists.
 
-**Known blind spot, recorded not fixed.** A `--temperature` override is not
-reflected in a meta's `configuration.temperature` on either side of the
-comparison — `build_generation_config` takes it as a separate argument — so
-the gate cannot see a temperature change. It is recorded verbatim under
-`cleanup_passes[].cli_overrides`. Injecting the override into the config dict
-before the tracker is built would fix it and would change the meta content of
-every future `--temperature` run; that is a separate, deliberate change and
-is left for the PI.
+**Known blind spot — CLOSED 2026-09-14 (`685ecbf25`).** As first published,
+a `--temperature` override was not reflected in a meta's
+`configuration.temperature` on either side of the comparison —
+`build_generation_config` took it as a separate argument — so the gate could
+not see a temperature change, and the override survived only under
+`cleanup_passes[].cli_overrides`. The PI ruled the same day that the override
+should reach the recorded configuration. `LLMMetadataTracker` now merges the
+configuration-valued overrides (`CONFIG_OVERRIDE_KEYS`: `temperature`,
+`max_output_tokens`, `thinking_level`) over the config file, so the block the
+gate fingerprints is the **effective** configuration, with
+`configuration.cli_overrides` listing what came from the command line. A run
+with no overrides writes exactly the key set it wrote before. See
+`reports/verifier-meta-recovery-2026-09-14.md` § 6. The config file's own byte
+digest remains evidence-only, as described above.
 
 ## 3. The auditor
 
@@ -261,6 +268,22 @@ calibration leg are both in the unrecoverable set, exactly as § 2.5 reported;
 this sweep adds 24 more stages of the same shape that no prior audit had
 enumerated.
 
+> **Amended 2026-09-14.** "Unrecoverable" in this table means *from the working
+> tree*. The PI asked the same day whether git history holds the pre-overwrite
+> metadata, and for **17 of these 26 stages it does** — the repository commits
+> `outputs/**`, so a stage committed before its cleanup still carries the main
+> pass's meta as a blob. US$41.2226 of spend has since been audited from those
+> blobs and `audit_verifier_cost.py` reads them from
+> `outputs/verifier-meta-recovery-2026-09-14.json` as a third source, which is
+> why a sweep run today classes those 17 `RECOVERED-FROM-GIT` rather than
+> `UNRECOVERABLE`. The fourth cell and its GS calibration leg are **not**
+> among them. Nine stages remain, three of which never recorded their tokens
+> at all (a Batch API main pass). Per-stage blob hashes, the remaining nine,
+> and the billing-export dates that could bound them:
+> `reports/verifier-meta-recovery-2026-09-14.md`. The `audited` column below
+> is unchanged and still means "the lower bound over what the working tree
+> holds".
+
 ### 4.1 The three recoveries
 
 - **`verify_swap38`** — the only stage with a prior meta in its own
@@ -309,6 +332,15 @@ case 0.000 (every crop is a distinct image), so a Pro card added with a
 verified cache rate would price them immediately. Their shortfalls are
 reported; only the money is missing.
 
+> **Amended 2026-09-14 (`e0f27cd5f`).** The card was added, with the cache-read
+> rate (0.20 per 1M) read from `ai.google.dev/gemini-api/docs/pricing` on
+> 2026-09-14 for the exact model id; the long-prompt tier went into a new
+> `LONG_PROMPT_RATE_CARDS`. The three stages now price at US$0.106662,
+> US$0.051040 and US$0.038726 — their *surviving* passes only. Their main
+> passes ran through the Batch API on 2026-03-25 and never recorded a token,
+> so those three shortfalls are not overwrite damage at all:
+> `reports/verifier-meta-recovery-2026-09-14.md` §§ 3.2, 7.
+
 ## 5. What did NOT change
 
 - **No committed `run.meta.json` was rewritten.** The retrospective
@@ -339,6 +371,24 @@ reported; only the money is missing.
 | `tests/test_run_pv.py` | 1 amended | `test_cleanup_leaves_the_main_meta_untouched` replaces `test_cleanup_backs_up_run_meta`, which asserted the ad-hoc backup this change removed |
 
 ## Changelog
+
+### 2026-09-14 — The blind spot closed, the Pro card added, 17 stages recovered
+
+**Refresh trigger**: the PI's three rulings of 2026-09-14, which took up two
+items this report had left open and answered a question it had not asked.
+
+| Claim | Before | After |
+|---|---|---|
+| `--temperature` at the configuration gate | blind spot, recorded not fixed (§ 2.2) | closed — the tracker merges configuration-valued CLI overrides into the recorded block (`685ecbf25`) |
+| The three Pro stages' cost | "not priced", no rate card (§ 4.3) | US$0.106662 / 0.051040 / 0.038726 for their surviving passes (`e0f27cd5f`) |
+| The 26 unrecoverable stages (§ 4) | unrecoverable from the working tree | 17 recovered from git history, US$41.2226 now audited; 9 remain (`6d57adb88`) |
+
+**What did NOT change**: the § 4 census itself — 29 stages, 3 recoverable from
+disc, the same per-stage `results`, `meta n`, `short` and `main?` columns, and
+the same `audited` lower bounds. The fourth cell and its GS calibration leg
+remain unrecovered, and § 2.5's counts (29 of 57,482; 1 of 3,319) and the
+campaign's US$7.7028 are reproduced unchanged. No committed `run.meta.json`
+was rewritten by any of the three commits.
 
 ### 2026-09-14 — Original publication
 
