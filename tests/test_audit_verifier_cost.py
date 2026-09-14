@@ -39,9 +39,17 @@ import pytest
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from scripts.audit_proposer_cost import (  # noqa: E402
+    LONG_PROMPT_RATE_CARDS,
+    RATE_CARDS,
+    rates,
+)
 from scripts.audit_verifier_cost import (  # noqa: E402
+    RECOVERY_REGISTER_SCHEMA,
+    audit_files,
     audit_stage,
     count_results,
+    load_recovery_register,
     sweep,
 )
 from scripts.lib_llm_metadata import merge_cleanup_meta  # noqa: E402
@@ -420,3 +428,282 @@ class TestSweep:
         found = sweep(root)
         assert found[0].cleanup_history == 1
         assert found[0].main_pass_covered == 994
+
+
+# ─────────────────────────────────────────────────────────────────────
+# 6. The recovery register — the third source of passes
+# ─────────────────────────────────────────────────────────────────────
+
+
+def _register(stage: str, entry: dict[str, Any]) -> dict[str, Any]:
+    """Wrap one stage entry in a register of the current schema."""
+    return {"schema": RECOVERY_REGISTER_SCHEMA, "stages": {stage: entry}}
+
+
+def _recovered_pass(
+    *,
+    run_id: str = "main-pass-run-id",
+    items: int = 900,
+    input_tokens: int = 1_800_000,
+    output_tokens: int = 90_000,
+) -> dict[str, Any]:
+    """One ``recovered_passes`` entry as the register records it."""
+    return {
+        "source": "git-blob:0123456789abcdef",
+        "kind": "main",
+        "commit": "abcdef1234567890",
+        "commit_date": "2026-04-17T00:00:00+00:00",
+        "run_id": run_id,
+        "configuration": {"model": "gemini-3-flash-preview"},
+        "execution_stats": {"items_processed": items},
+        "usage_stats": {
+            "total_input_tokens": input_tokens,
+            "total_cached_tokens": 0,
+            "total_output_tokens": output_tokens,
+            "total_thoughts_tokens": 0,
+        },
+    }
+
+
+class TestRecoveryRegister:
+    """A register pass is counted, traced to its blob, and never doubled."""
+
+    def test_register_pass_closes_the_shortfall_and_is_counted(
+        self, tmp_path: Path,
+    ) -> None:
+        """The recovered main pass is summed with the surviving cleanup."""
+        stage = _write_stage(
+            tmp_path / "verified",
+            {
+                "run_id": "cleanup-run-id",
+                "configuration": {"model": "gemini-3-flash-preview"},
+                "execution_stats": {"items_processed": 100},
+                "usage_stats": {
+                    "total_input_tokens": 200_000,
+                    "total_output_tokens": 10_000,
+                },
+            },
+            results=1_000,
+        )
+        register = _register(str(stage), {
+            "verdict": "RECOVERED-FROM-GIT",
+            "recovered_passes": [_recovered_pass()],
+        })
+        audit = audit_stage(stage, register=register["stages"])
+        assert audit.format == "register-recovered"
+        assert audit.items_covered == 1_000
+        assert audit.shortfall == 0
+        assert audit.complete is True
+        # flex: input 0.25/1M, output 1.50/1M over both passes.
+        expected = (
+            (200_000 + 1_800_000) * 0.25 / 1e6
+            + (10_000 + 90_000) * 1.50 / 1e6
+        )
+        assert audit.audited_usd == pytest.approx(expected)
+        sources = [entry.source for entry in audit.passes]
+        assert "register:git-blob:0123456789abcdef" in sources
+        assert any(
+            "recovered from git history" in note for note in audit.notes
+        )
+
+    def test_a_pass_already_counted_on_disc_is_not_doubled(
+        self, tmp_path: Path,
+    ) -> None:
+        """A register pass whose ``run_id`` is on disc is skipped."""
+        stage = _write_stage(
+            tmp_path / "verified",
+            {
+                "run_id": "main-pass-run-id",
+                "configuration": {"model": "gemini-3-flash-preview"},
+                "execution_stats": {"items_processed": 900},
+                "usage_stats": {
+                    "total_input_tokens": 1_800_000,
+                    "total_output_tokens": 90_000,
+                },
+            },
+            results=1_000,
+        )
+        register = _register(str(stage), {
+            "verdict": "RECOVERED-FROM-GIT",
+            "recovered_passes": [_recovered_pass()],
+        })
+        audit = audit_stage(stage, register=register["stages"])
+        assert audit.items_covered == 900
+        assert audit.format == "single-meta"
+        assert any("already counted" in note for note in audit.notes)
+
+    def test_residual_estimate_is_noted_but_never_counted(
+        self, tmp_path: Path,
+    ) -> None:
+        """An estimate must not reach the audited total."""
+        stage = _write_stage(
+            tmp_path / "verified",
+            {
+                "configuration": {"model": "gemini-3-flash-preview"},
+                "execution_stats": {"items_processed": 100},
+                "usage_stats": {
+                    "total_input_tokens": 200_000,
+                    "total_output_tokens": 10_000,
+                },
+            },
+            results=1_000,
+        )
+        register = _register(str(stage), {
+            "verdict": "NOT-IN-HISTORY",
+            "recovered_passes": [],
+            "residual_estimate": {
+                "is_estimate": True,
+                "missing_candidates": 900,
+                "usage_stats": {"total_input_tokens": 1_800_000},
+            },
+        })
+        audit = audit_stage(stage, register=register["stages"])
+        expected = 200_000 * 0.25 / 1e6 + 10_000 * 1.50 / 1e6
+        assert audit.audited_usd == pytest.approx(expected)
+        assert audit.shortfall == 900
+        assert audit.complete is False
+        assert any("ESTIMATE" in note for note in audit.notes)
+
+    def test_a_register_of_an_unknown_schema_is_ignored(
+        self, tmp_path: Path,
+    ) -> None:
+        """A future contract must not be mis-read as the current one."""
+        path = tmp_path / "register.json"
+        path.write_text(json.dumps({
+            "schema": "verifier-meta-recovery/99",
+            "stages": {"outputs/whatever": {"recovered_passes": []}},
+        }))
+        assert load_recovery_register(path) == {}
+
+    def test_an_absent_register_is_not_an_error(self, tmp_path: Path) -> None:
+        """The auditor works with no register on the machine."""
+        assert load_recovery_register(tmp_path / "nope.json") == {}
+        assert load_recovery_register(None) == {}
+
+    def test_sweep_classifies_a_registered_stage_as_recovered(
+        self, tmp_path: Path,
+    ) -> None:
+        """The census must show git recovery as its own class."""
+        root = tmp_path / "outputs"
+        stage = _write_stage(
+            root / "verified",
+            {
+                "run_id": "cleanup-run-id",
+                "configuration": {"model": "gemini-3-flash-preview"},
+                "execution_stats": {"items_processed": 100},
+                "usage_stats": {
+                    "total_input_tokens": 200_000,
+                    "total_output_tokens": 10_000,
+                },
+            },
+            results=1_000,
+        )
+        register = _register(str(stage), {
+            "verdict": "RECOVERED-FROM-GIT",
+            "recovered_passes": [_recovered_pass()],
+        })
+        found = sweep(root, register=register["stages"])
+        assert len(found) == 1
+        assert found[0].classification == "RECOVERED-FROM-GIT"
+        assert found[0].audited_usd is not None
+
+    def test_the_committed_register_is_readable_and_self_consistent(
+        self,
+    ) -> None:
+        """The register this session wrote must parse under its own schema."""
+        path = PROJECT_ROOT / "outputs/verifier-meta-recovery-2026-09-14.json"
+        if not path.exists():
+            pytest.skip(f"register not in this checkout: {path}")
+        stages = load_recovery_register(path)
+        assert stages, "the register records no stages"
+        for stage, entry in stages.items():
+            assert entry["verdict"] in {
+                "RECOVERED-FROM-GIT", "PARTIALLY-RECOVERED", "NOT-IN-HISTORY",
+            }, stage
+            for recovered in entry.get("recovered_passes") or []:
+                # Every counted pass must be traceable to a blob and carry the
+                # usage the audit will price.
+                assert recovered["source"].startswith("git-blob:"), stage
+                assert recovered["usage_stats"]["total_input_tokens"] > 0
+                assert recovered["execution_stats"]["items_processed"] > 0
+            if entry["verdict"] == "NOT-IN-HISTORY":
+                assert not entry.get("recovered_passes")
+
+
+# ─────────────────────────────────────────────────────────────────────
+# 7. Explicit file pairs
+# ─────────────────────────────────────────────────────────────────────
+
+
+class TestExplicitFiles:
+    """``--pass-file`` prices files that are not a stage on disc."""
+
+    def test_the_swap38_pair_sums_to_the_committed_figure(self) -> None:
+        """The S144 arm's two files, named explicitly, give US$0.8469."""
+        main = SWAP38 / "run.meta.main-2026-09-04.json"
+        cleanup = SWAP38 / "run.meta.json"
+        if not main.exists():
+            pytest.skip(f"stage not in this checkout: {SWAP38}")
+        audit = audit_files([main, cleanup])
+        assert audit.audited_usd == pytest.approx(0.8469, abs=5e-5)
+        assert audit.items_covered == 791
+        assert audit.format == "explicit-files"
+
+    def test_a_missing_file_is_an_error_not_a_zero(
+        self, tmp_path: Path,
+    ) -> None:
+        """Pricing a file that is not there must fail loudly."""
+        with pytest.raises(FileNotFoundError):
+            audit_files([tmp_path / "absent.json"])
+
+
+# ─────────────────────────────────────────────────────────────────────
+# 8. The Gemini 3.1 Pro rate card
+# ─────────────────────────────────────────────────────────────────────
+
+
+class TestProRateCard:
+    """The Pro card pins the rates read from Google's pricing page."""
+
+    def test_standard_tier_rates_are_the_published_ones(self) -> None:
+        """US$2.00 input, US$12.00 output, US$0.20 cache read, per 1M."""
+        card = RATE_CARDS["gemini-3.1-pro-preview"]
+        assert card == {"input": 2.00, "output": 12.00, "cache": 0.20}
+        rate = rates("gemini-3.1-pro-preview", "standard")
+        assert rate["input"] == pytest.approx(2.00 / 1e6)
+        assert rate["output"] == pytest.approx(12.00 / 1e6)
+        assert rate["cache"] == pytest.approx(0.20 / 1e6)
+
+    def test_flex_halves_input_and_output_but_not_the_cache_read(self) -> None:
+        """Batch and flex are half of standard; caching is not discounted."""
+        rate = rates("gemini-3.1-pro-preview", "flex")
+        assert rate["input"] == pytest.approx(1.00 / 1e6)
+        assert rate["output"] == pytest.approx(6.00 / 1e6)
+        assert rate["cache"] == pytest.approx(0.20 / 1e6)
+
+    def test_the_long_prompt_tier_is_recorded(self) -> None:
+        """Prompts over 200K tokens bill at 4.00 / 18.00 / 0.40."""
+        assert LONG_PROMPT_RATE_CARDS["gemini-3.1-pro-preview"] == {
+            "input": 4.00, "output": 18.00, "cache": 0.40,
+        }
+
+    @pytest.mark.parametrize(
+        ("stage_name", "expected_usd"),
+        [
+            ("text-baseline-pro-verifier", 0.106662),
+            ("pro-high-image-1of5-pro-verifier", 0.038726),
+            ("pro-medium-image-baseline-pro-verifier", 0.051040),
+        ],
+    )
+    def test_the_three_pro_stages_now_price(
+        self, stage_name: str, expected_usd: float,
+    ) -> None:
+        """Each Pro verifier stage's surviving pass prices at flex rates."""
+        stage = PROJECT_ROOT / "outputs/h11/pv-diag-384/verified" / stage_name
+        if not stage.exists():
+            pytest.skip(f"stage not in this checkout: {stage}")
+        audit = audit_stage(stage)
+        assert audit.audited_usd == pytest.approx(expected_usd, abs=5e-6)
+        # Thinking tokens are billed as output, which the meta's own
+        # cost_estimate omitted — so the audit exceeds it despite flex.
+        assert audit.meta_only_usd is not None
