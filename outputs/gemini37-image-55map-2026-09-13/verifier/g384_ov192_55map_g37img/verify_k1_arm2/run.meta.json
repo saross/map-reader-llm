@@ -1,0 +1,238 @@
+{
+  "run_id": "de088f2a-2192-41a5-b397-9b80be13dc0f",
+  "timestamp": {
+    "start": "2026-09-13T22:59:16.557637+00:00",
+    "end": "2026-09-13T23:02:45.307684+00:00",
+    "duration_seconds": 208.750047
+  },
+  "environment": {
+    "git_commit": "fe42a6c2211db27c7f1b9e0b4bcf8196758c55d2",
+    "script": "run_pv.py",
+    "script_version": "1.0.0"
+  },
+  "configuration": {
+    "version": "verify_adversarial-text",
+    "model": "gemini-3.7-flash",
+    "instruction_file": "verify_adversarial.md",
+    "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+    "system_instruction_text": "# Two-Stage Detection: Adversarial Verifier\n\nA detection system has identified the symbol at the centre of this crop as a\npossible burial mound. Your task is to **find reasons it is NOT a burial mound**.\n\nAssume the detection system made an error. Argue for the strongest non-mound\ninterpretation of this symbol. Only confirm it as a burial mound if you cannot\nfind a plausible alternative explanation.\n\n## What burial mounds look like\n\nBurial mound symbols have **short lines (rays) radiating OUTWARD** from a\ncentral shape, forming a \"sunburst\" or \"gear\" pattern. The rays point away\nfrom the centre, indicating elevated terrain. The central shape is typically\na small circle or oval in orange-brown, or a triangle or square in black\n(when a survey marker sits on a mound).\n\n## Common false alarms \u2014 argue for these first\n\nBefore confirming a mound, check whether the symbol could instead be:\n\n- **A triangulation point without a mound**: A solid black triangle, possibly\n  with a central dot \u2014 but with NO outward-radiating rays around it. These\n  are extremely common on Soviet maps and frequently confused with mounds.\n- **A benchmark without a mound**: A solid black square, possibly with a\n  central dot \u2014 but with NO outward-radiating rays around it.\n- **A contour feature**: Lines that approach or converge on a point, but the\n  lines point INWARD (downhill flow) rather than radiating OUTWARD. These\n  can appear in the same orange-brown colour family as mound symbols.\n- **A vegetation or land-use boundary**: Small marks along a boundary line\n  that may resemble rays but are actually boundary indicators.\n- **Text or numbering artefact**: Partial Cyrillic characters or elevation\n  numbers that coincidentally resemble radiating lines.\n- **A spot height marker**: A small dot with a nearby number \u2014 no rays.\n\n## Decision process\n\n1. Identify the strongest non-mound interpretation of the symbol.\n2. Describe the specific visual evidence supporting that interpretation.\n3. Only if NO non-mound interpretation is plausible, confirm as a mound.\n\n## Output Format\n\nReturn JSON:\n\n{\n    \"best_alternative\": \"The strongest non-mound interpretation of this symbol.\",\n    \"alternative_evidence\": \"Specific visual features supporting the non-mound interpretation.\",\n    \"reasoning\": \"Why you accept or reject the non-mound interpretation.\",\n    \"mound_probability\": 0.0\n}\n\n## Scoring Guide\n\n- **0.9-1.0**: No plausible alternative \u2014 clear sunburst with outward rays\n- **0.6-0.8**: The non-mound interpretation is weak but not impossible\n- **0.3-0.5**: Genuinely ambiguous \u2014 mound and non-mound are equally plausible\n- **0.0-0.2**: Strong non-mound interpretation \u2014 symbol is most likely something else\n",
+    "library_hash": "no_examples",
+    "library_hash_basis": "example-bytes+path-label-category/1",
+    "library_manifest": [],
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "low",
+    "tile_size": null,
+    "include_example_images": true,
+    "example_count": 0,
+    "full_config_snapshot": {
+      "version": "verify_adversarial-text",
+      "description": "Two-Stage Verifier (Stage 2). Adversarial, text-only (no example images). Matches Phase 3d Track 2 best config (F1=0.796).",
+      "hypothesis": "H2",
+      "model": "gemini-3-flash",
+      "instruction_file": "verify_adversarial.md",
+      "temperature": 0.0,
+      "max_output_tokens": 8192,
+      "thinking_level": "low",
+      "_config_notes": {
+        "source": "Phase 3d Track 2 (Session 43). Text-only adversarial verifier achieved F1=0.796 at T=0.0, threshold 0.2.",
+        "temperature": "0.0 based on Phase 3d: T=0.5 and T=1.0 did not improve over T=0.0 baseline.",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
+        "track": "Track 2 \u2014 text-only. Text example labels sent (no images), matching Phase 3d run_h2_pilot.py build_verifier_request(include_examples=False).",
+        "usage": "Used in proposer-verifier pipeline Stage 2. Feed proposer GeoJSON directly."
+      },
+      "examples": [],
+      "text_only_labels": [
+        "Positive: Burial Mound (Kurgan)",
+        "Positive: Settlement Mound",
+        "Positive: Triangulation Point ON Mound",
+        "Positive: Benchmark ON Mound",
+        "Negative: Triangulation Point ALONE",
+        "Negative: Benchmark ALONE"
+      ],
+      "crop_label": "Now classify the candidate symbol at the centre of this crop:"
+    }
+  },
+  "execution_stats": {
+    "items_processed": 13,
+    "items_failed": 0,
+    "items_skipped": 0,
+    "retries_total": 16,
+    "retries_rate_limit": 0,
+    "retries_server_error": 16,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "success": 13,
+      "error": 16
+    },
+    "safety_blocks": 0,
+    "parse_failures": 16,
+    "empty_responses": 16,
+    "completed_items": [
+      "candidate_01460",
+      "candidate_02937",
+      "candidate_02909",
+      "candidate_04197",
+      "candidate_04072",
+      "candidate_04310",
+      "candidate_05556",
+      "candidate_04253",
+      "candidate_06954",
+      "candidate_02713",
+      "candidate_06824",
+      "candidate_06885",
+      "candidate_06949"
+    ],
+    "failed_items": [],
+    "retry_details": [
+      {
+        "item_id": "cand_2713_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T22:59:21.901662+00:00"
+      },
+      {
+        "item_id": "cand_4072_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T22:59:21.963695+00:00"
+      },
+      {
+        "item_id": "cand_4253_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T22:59:26.770514+00:00"
+      },
+      {
+        "item_id": "cand_4310_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T22:59:31.344660+00:00"
+      },
+      {
+        "item_id": "cand_5556_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T22:59:34.248610+00:00"
+      },
+      {
+        "item_id": "cand_2713_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T22:59:59.994445+00:00"
+      },
+      {
+        "item_id": "cand_6824_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T23:00:04.177515+00:00"
+      },
+      {
+        "item_id": "cand_4253_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T23:00:09.152613+00:00"
+      },
+      {
+        "item_id": "cand_4310_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T23:00:11.299673+00:00"
+      },
+      {
+        "item_id": "cand_5556_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T23:00:16.998875+00:00"
+      },
+      {
+        "item_id": "cand_2713_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T23:00:35.502726+00:00"
+      },
+      {
+        "item_id": "cand_6824_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T23:00:43.198433+00:00"
+      },
+      {
+        "item_id": "cand_6885_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T23:00:55.286018+00:00"
+      },
+      {
+        "item_id": "cand_6949_iter1",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T23:00:58.044923+00:00"
+      },
+      {
+        "item_id": "cand_6949_iter1",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T23:01:31.494238+00:00"
+      },
+      {
+        "item_id": "cand_6949_iter1",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-09-13T23:02:07.797055+00:00"
+      }
+    ]
+  },
+  "usage_stats": {
+    "total_input_tokens": 23296,
+    "total_output_tokens": 1687,
+    "total_cached_tokens": 0,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 1799,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 26782,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 23296,
+        "output_tokens": 1687,
+        "total_tokens": 26782,
+        "request_count": 29
+      }
+    }
+  },
+  "results_summary": {},
+  "cost_estimate": {
+    "input_cost_usd": 0.017472,
+    "output_cost_usd": 0.013072,
+    "total_cost_usd": 0.030545,
+    "list_input_cost_usd": 0.017472,
+    "list_output_cost_usd": 0.013072,
+    "list_total_cost_usd": 0.030545,
+    "cost_basis": "list",
+    "pricing_used": {
+      "model": "gemini-3.7-flash",
+      "input_per_1m": 0.75,
+      "output_per_1m": 3.75,
+      "thinking_tokens_billed_as_output": 1799,
+      "discount": 1.0,
+      "discount_reason": "no discount applied"
+    }
+  }
+}
