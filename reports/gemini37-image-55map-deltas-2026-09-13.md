@@ -1,6 +1,13 @@
 # Gemini 3.7 image, 55-map K = 3 — launch deltas and what the gates measured
 
-> **Last revised**: 2026-09-13 (steward hand-over — § 10 added: Q1 discharged
+> **Last revised**: 2026-09-14 (**§ 10.7 added — the campaign's rungs were not
+> booked onto the scoring frame.** The proposer's 192 px-stride tiling shares
+> only 660 tile names with the 336 px-stride scoring frame, so the published
+> `id` join credited 192 of 6,250 detections and the per-tile invariant refused.
+> Fixed by applying the established map-constrained standard-tile assignment
+> every other 55-map cell goes through, confirmed idempotent on three
+> comparators at 100.00 %; two new gates close the blind spot. Earlier:
+> steward hand-over — § 10 added: Q1 discharged
 > by dated addenda, Q7 settled with a provenance sidecar, and a NEW delta —
 > the brief's "corrected-F1 engine" is not the r2 board's engine, so scoring
 > follows the board's `evaluate_detections.py` recipe; the five-test family
@@ -567,7 +574,106 @@ and nothing at all on MCC.
   that every ladder says K = 3 pays a penalty on — which is the tension § 10.5
   describes from the confusion-matrix side, seen from the K axis.
 
+### 10.7 NEW — the campaign's rungs were not booked onto the scoring frame
+
+Found by the second steward on 2026-09-14, when the sweep died on its first
+run. It is the most consequential delta of the campaign, and the four gates of
+§ 6 could not have caught it.
+
+**The symptom.** `--stage sweep` crashed with a `TypeError` inside
+`multiprocessing`'s result handler — `TileJoinRefusalError.__init__() missing 4
+required keyword-only arguments`. That is a masking error: the exception cannot
+round-trip through the pickler, so the real failure never reached the log.
+Reproduced in-process, it reads:
+
+> per-tile TP/FP/FN table refused: **192 of 6,250** in-frame detections were
+> credited to a tile under the `id` tile join, a shortfall of **6,058**.
+
+**The cause.** Two different tilings, and nothing in the harness bridged them:
+
+| | Tiling | Tiles |
+|---|---|---:|
+| Proposer (`g384_ov192_55map`) | 384 px on a **192 px** stride | 24,561 |
+| Scoring frame (`55maps_evaluation_bounds.geojson`) | 384 px on a **336 px** stride | 8,541 |
+
+Only **660** tile names are common to the two, and only **142** of a rung's
+4,857 distinct `source_tile` values are in the frame. The published tile-MCC
+convention is the name-based `id` join (PI ruling, § 0 of
+`reports/tile-mcc-geometric-join-2026-09-12.md`), and that report states the
+precondition plainly: `id` is "well defined only when the cell's proposer
+tiling **is** the scoring frame." It is not, here, so the invariant was right
+to refuse.
+
+**This is not the geometric-join question.** That question — whether to adopt
+`geometric-primary` or `geometric-contains` — remains open with the PI, moves
+146 committed cells by roughly a tenth of an MCC, and was not touched. What was
+missing is a step *every other 55-map cell already goes through*:
+`stride55_score.assign_standard_tile` over
+`stride55_score.build_map_constrained_index`, which re-stamps `source_tile` to
+the nearest standard-grid tile centroid **within the origin raster's own map**.
+The map constraint is load-bearing, and `stride55_score.py` lines 119–127 say
+why: the sheet rasters overlap, so an unconstrained nearest-centroid assignment
+flips about 10 % of candidates to the adjacent sheet and moves corrected F1 by
+about 0.04.
+
+**The rule was confirmed, not assumed.** Re-applying it to the committed
+comparators must be a fixed point if it is the writer that produced them:
+
+| Cell | Features | Idempotent |
+|---|---:|---:|
+| `FOURTH-N1-oracle` | 5,337 | **100.00 %** |
+| `ARM2-N3-oracle` | 5,097 | **100.00 %** |
+| `ARM2-N5-oracle` | 4,924 | **100.00 %** |
+| `IM-k3` | 4,680 | 83.65 % |
+
+So it is provably the writer for the three cells P1, P3 and P4 are chiefly
+stated against. `IM-k3`'s partial is a property of that comparator, not of the
+rule: the MCC tiering scored the original verified file **in place**, so it
+never passed through this writer — a caveat now attached to the one test in the
+five-test family that uses it.
+
+**Why § 6's four gates were blind to it.** Gates 2, 3 and 4 all consume
+*comparator* detection sets, and those already carry scoring-frame
+`source_tile`. No gate ever ran a *campaign* rung through the per-tile path. The
+gates were therefore both passing and uninformative about the campaign's own
+cells — the exact failure mode a gate is supposed to prevent. Two gates were
+added to close it:
+
+- **Gate 5** asserts the assignment rule is idempotent on the three comparators
+  that went through it, and reports `IM-k3`'s expected partial.
+- **Gate 6** asserts every campaign rung books **100 %** of its candidates on
+  the scoring frame. All four rungs now read 6,985 / 6,985 and 8,337 / 8,337.
+
+**The near miss.** The tile-join report's § 1 site 2 records that under a
+vocabulary mismatch the per-tile table loses *every* TP and FP, leaving pure
+false negatives and a micro-F1 of 0.0000 — and that the per-tile bootstrap CIs
+and the pairwise permutation tests would then resample exactly that. Had the
+invariant not been added on 2026-09-12, this campaign would have produced a
+full set of P1–P5 verdicts, a board row and a findings document off a table of
+pure false negatives. The invariant is what turned a silent wrong answer into a
+crash, and the crash is what produced this section.
+
 ## Changelog
+
+### 2026-09-14 — § 10.7: the rungs were not booked onto the scoring frame
+
+**Trigger**: `--stage sweep` crashed on its first run with a masked
+`TileJoinRefusalError`. Diagnosis, fix and gates in § 10.7.
+
+| Claim | Before | After |
+|---|---:|---:|
+| Campaign rung `source_tile` | proposer tiling (192 px stride) | **scoring frame** (336 px stride) |
+| Detections booked under the `id` join | **192 of 6,250** | **100 %**, all four rungs |
+| Mechanism gates | four, all PASS | **six**, all PASS |
+| Assignment rule | absent from the harness | `stride55_score.assign_standard_tile`, idempotent on three comparators at 100.00 % |
+| `IM-k3` join provenance | unstated | 83.65 % idempotent — scored in place, caveat attached |
+| Geometric-join question | open with the PI | **still open, untouched** |
+
+**What did NOT change**: no join variant, no default, no committed cell, and no
+figure on any board or tiering. The carried operating points, the five-test
+family, the scoring instrument and the US$420 hard stop all stand. The fix puts
+the campaign's own detections into the vocabulary the published join already
+requires.
 
 ### 2026-09-13 (steward hand-over) — § 10: two open questions closed, one new delta
 

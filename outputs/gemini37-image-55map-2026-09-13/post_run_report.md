@@ -305,7 +305,10 @@ is discovering a broken instrument after the API spend, not before.
 | F1 mechanism gate | **PASS** | all four comparators' committed F1 @ 50 m to 1e-4 |
 | MCC mechanism gate | **PASS** | all four comparators' committed tile confusion, exactly |
 | Permutation gate | **PASS** | the board's `ARM2-N5` vs `ARM2-N3` test reproduced: diff 0.002321, p 0.1208, null mean 4e-06, null sd 0.001491 |
+| Tile-join idempotency (gate 5) | **PASS** | the assignment rule reproduces `FOURTH-N1`, `ARM2-N3` and `ARM2-N5` `source_tile` at 100.00 %; `IM-k3` 83.65 %, expected |
+| Rung booking (gate 6) | **PASS** | all four rungs book 100 % of candidates on the 8,541-tile frame (6,985 / 6,985 and 8,337 / 8,337) |
 | Cost auditor, in this session's hands | **validated** | reproduces the GS leg's US$22.5004 / 0.00322 / 0.7948 |
+| Verifier-leg auditor | **validated** | reproduces the GS calibration arms' US$0.4417 and US$0.6804 exactly |
 | Tier-1 suite on sapphire | **2,516 passed**, 4 skipped, 27 deselected, 3 xfailed | `claude-steward`, 193 s |
 
 ## Changelog
