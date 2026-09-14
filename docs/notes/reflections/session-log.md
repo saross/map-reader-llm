@@ -9569,3 +9569,13 @@ leaving an index lock (explicit pathspecs).
 Thursday 2026-09-17 midday because top-tier credit ran low; the beacon
 at the head of the continuity file carries both lanes; Fable restarts
 from that beacon alone.
+
+**Addendum (2026-09-14, at close).** The image campaign completed and was
+merged: US$274.61 audited; P1 near miss (+0.0177 tile-MCC over the
+leader), P2 and P3 informative fails (tile-MCC rises with K on image;
+image F1 +0.035 over text at deployment), P4 and P5 hold; the cell leads
+the 55-map corpus on both metrics. The merge mis-resolved the analysis
+register once (published unparseable, repaired within the hour from
+main's rows plus the campaign's; memory `2026-09-14-016341f9fa6c`). All
+five in-flight agents landed before close; the beacon's Opus lane starts
+with two signatures and the 55-map board rebuild.

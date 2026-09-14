@@ -83,58 +83,39 @@ project state.
 > recovery register. Also flagged: `reports/billing-reconciliation-2026-09-11.md`
 > line ~104 prices the grid `verify_37` at 913 candidates where the stage
 > holds 3,319 (estimate US$3.95) — correct it.
-> **(O3) THE IMAGE CAMPAIGN (`gemini37-image-55map-2026-09-13`, approved
-> ≈ US$275; US$259 committed at Fable's close)**: it lives on sapphire in
-> `~/worktrees/map-reader-llm/claude-image55` (branch
-> `gemini37-image-55map-2026-09-13`); the steward AGENT died with Fable's
-> session but the run did not. Resume path: the campaign's
-> `outputs/gemini37-image-55map-2026-09-13/post_run_report.md` § 4 (verbatim
-> commands) and the card `planning/gemini37-image-55map-2026-09-13.md`
-> **UPDATE at Fable's close (steward paused mid-scoring, watch armed,
-> its local worktree `agent-af930c35f40e0a282` KEPT — resumable):** K = 3
-> arms done; scoring in progress (4 of 12 cells at the last report).
-> **A near miss the Opus lane must carry into the findings and an Obs**:
-> the campaign's proposer tiling (384 px, 192 px stride, 24,561 tiles)
-> is not the r2 scoring frame (384 px, 336 px stride, 8,541 tiles; 660
-> shared names), so the published name-based tile join's precondition
-> failed — the PR #16 invariant CRASHED the sweep (192 of 6,250
-> detections credited, shortfall 6,058) instead of letting it score a
-> table of pure false negatives at micro-F1 0.0000 that the bootstrap and
-> permutations would then have resampled. The fix is the step every
-> other 55-map cell already goes through — `stride55_score.assign_standard_tile`
-> over a MAP-CONSTRAINED index (unconstrained assignment flips ~10 % of
-> candidates to the adjacent sheet, ~0.04 F1) — proven a fixed point at
-> 100.00 % on the three committed comparators (`IM-k3` 83.65 %: the MCC
-> tiering scored its original file in place; a recorded caveat on the one
-> test that uses it); gates 5 (idempotency) and 6 (every rung books 100 %
-> on the frame) added with tests (`7ed157a32`, `e0f9a4d03`, `d6dd86c47`
-> on the campaign branch). The exception's keyword-only constructor also
-> could not round-trip the multiprocessing pickler — fixed. **Provisional
-> signals, NOT verdicts (hold until BH-corrected)**: P1 reads +0.0177 MCC
-> over the leader (informative-failure band, between +0.01 and +0.02);
-> P2 looks to FAIL interestingly — tile-MCC RISES with K on both image
-> arms (arm 2 0.7569 → 0.7648; FP 275 → 183 → 80): with image passes
-> agreeing so heavily, K at unanimity is a PRECISION filter, the opposite
-> of text.
-> § 5. State at close: proposer done (3 passes, US$245.63, cache 0.81);
-> K = 1 arms done (arm 2 recovered 13 candidates via cleanup — its true
-> cost is main + cleanup metas, post-run report § 3.1); **K = 3 arms
-> running** (`verify_k3_arm1`, then `verify_k3_arm2`, ≈ 8,337 candidates
-> each; watch the log staleness, NOT `pgrep` — `docs/agent-guidance.md`
-> § Compute Location). Then: score both unions × both arms on r2 at 50 m
-> with `scripts/evaluate_detections.py` against
-> `best-available-gt-55maps-r2.geojson` at the CARRIED points (card § 2:
-> arm 1 (0.10, k3), arm 2 (0.88, k3); K = 1 at k1) and the rung oracles,
-> tile-MCC on 8,541 tiles, paired tile-swap (10,000, seed 42) against
-> `FOURTH-N1-oracle` (0.7471), `ARM2-N3-oracle`, `ARM2-N5-oracle`, `IM-k3`
-> (its set: `outputs/55maps-image-generalisation/verified/verified_detections.geojson`),
-> BH within the five-test family; P1–P5 as the deltas report §§ 10.4–10.6
-> pre-specify; register; findings
-> `results/gemini37-image-55map-2026-09-13/findings.md`; ONE analysis row
-> `gemini37-image-55map-2026-09-13` UNSIGNED; the card's audited actuals.
-> Do NOT re-tier the 55-map board (that is O5). Launch this as one Opus
-> agent with the brief above; it needs the campaign branch merged into
-> main first (it carries the driver, harness and tests).
+> **(O3) THE IMAGE CAMPAIGN — COMPLETE and MERGED before Fable closed**
+> (`gemini37-image-55map-2026-09-13` merged at `60e22c7c4`; the register
+> repaired at `f77d9078c` after a mis-resolved merge — memory
+> `2026-09-14-016341f9fa6c`; projections at `780a49ae3`; tier-1 2,829).
+> **Audited USD 274.61** against the card's ≈ 261–276 (proposer 245.63,
+> four arms 27.84, calibration 1.12); cache 0.81 per pass; unions K = 1
+> 6,985 / K = 3 8,337 with provenance sidecars. **Verdicts** (primary
+> cell `IMG-ARM2-K3-carried`, r2, 50 m, 8,541 tiles; all ten tests
+> BH-significant): **P1 NEAR MISS** — tile-MCC 0.7648 vs the leader's
+> 0.7471, **+0.0177** (informative band: above +0.01, short of +0.02);
+> **P2 INFORMATIVE FAIL** — tile-MCC RISES with K on both image arms
+> (0.7569 → 0.7648, BH p 0.002), the opposite of every text ladder: image
+> passes agree so heavily that unanimity at K = 3 is a precision filter
+> (FP 275 → 183 → 80); **P3 INFORMATIVE FAIL** — F1 0.9199 vs the text
+> arm's 0.8848, **+0.0351**: image BETTER than text at deployment, not
+> parity (Obs 447 said parity on the GS); **P4 HOLDS** (3.7 verifier
+> +0.0158 MCC at K = 3); **P5 HOLDS on 3 of 4 rungs**. **The cell leads
+> the 55-map corpus on BOTH metrics.** Findings
+> `results/gemini37-image-55map-2026-09-13/findings.md`; row
+> `gemini37-image-55map-2026-09-13` UNSIGNED — **present to the PI for
+> signature** with the P1–P5 table. The near miss (proposer tiling ≠
+> scoring frame; the invariant crashed instead of scoring pure false
+> negatives; the map-constrained re-stamp proven a fixed point at 100 %
+> on three comparators) is in the deltas report § 10.7 and the post-run
+> report — write it as an Obs. Housekeeping: the K = 1 arm-2 main-pass
+> backup (`*.pre-cleanup-*.backup`, gitignored) lives only on sapphire in
+> `~/worktrees/map-reader-llm/claude-image55` — `git add -f` it (and
+> arm 1's if any) so the two-file cost is auditable from the tree, then
+> the skipped test in `tests/test_audit_verifier_cost.py` runs; that
+> sapphire worktree (890 MB, mostly gitignored crops) can be removed once
+> the backup is committed; `claude-steward2` too. **Then O5** (the 55-map
+> board r2 rebuild + MCC tiering with the four image cells and the K = 5
+> rung; PI signatures) and item 10.
 > **(O4) Checklist mundane items** (`planning/documentation-foundation-
 > checklist-2026-09-13.md`): 6b (one call ≈ US$0.0007, PI decision), 12
 > (verdict model, PI decision), 11c (`PaperImp` blocks on touch), 11d at
