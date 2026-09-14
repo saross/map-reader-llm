@@ -64,7 +64,8 @@ from scripts.run_k_ladder_phase2_verifier import (  # noqa: E402
     resolve_paths,
 )
 from scripts.score_k_ladder_phase2_rungs import POINTS_JSON  # noqa: E402
-from scripts.derive_condition_modality import condition_modality  # noqa: E402
+from scripts.derive_condition_modality import (
+    condition_modality, verifier_stage_modality)  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -99,26 +100,39 @@ RUN_ROOT = {
 }
 
 
-def modality(pool_slug: str, run_id: str = "pv-diag-384") -> str:
-    """The register's modality field for a verifier stage, as the TRACK.
+def modality(pool_slug: str, run_id: str = "pv-diag-384",
+             stage_id: str | None = None, stage_path: str | None = None) -> str:
+    """The register's modality field for a verifier stage.
 
-    This field records the *track* the stage belongs to — the modality of the
-    PROPOSER pool beneath it — which is the convention ``pv-diag-384`` follows
-    throughout (see the 2026-09-14 modality-track audit; the field's meaning is
-    inconsistent across runs and settling it is the PI's). It was a substring
-    test on the pool slug, which returned "text" for ``scale-4-optimal-487``
-    although that pool's config (``detect_h8_scale-4_v2``) sets
-    ``include_example_images`` true over 13 exemplars. It now derives the
-    proposer pool's modality from the transmitted configuration.
+    The field records the **verifier stage's own** exemplar modality — what
+    that stage itself was sent — which the PI settled on 2026-09-14 (erratum
+    E88) after the modality-track audit found the field used under two
+    different meanings, with the ``scale-4-optimal-487-verified-v1-*`` family
+    split across both conventions inside this very run. It was originally a
+    substring test on the pool slug, which returned "text" for
+    ``scale-4-optimal-487`` although that pool's config
+    (``detect_h8_scale-4_v2``) sets ``include_example_images`` true over 13
+    exemplars; it then briefly derived the TRACK; it now derives the verifier
+    stage's own modality from the verify configuration the stage transmitted.
 
     Args:
-        pool_slug: The proposer pool's register slug.
+        pool_slug: The proposer pool's register slug (the fallback's basis).
         run_id: The run the pool belongs to.
+        stage_id: The ``verifier_passes`` key being minted, when known.
+        stage_path: The stage's path relative to the run's output root, when
+            known.
 
     Returns:
-        "image" or "text"; "text" when no route can derive the pool, which
-        preserves the historical fallback rather than writing a null.
+        "image" or "text". Falls back to the proposer pool's own derived
+        modality when the stage's verify metadata cannot be read, and to "text"
+        when neither route can speak, which preserves the historical fallback
+        rather than writing a null.
     """
+    if stage_id:
+        spec = {"path": stage_path} if stage_path else {}
+        derived, _configs = verifier_stage_modality(run_id, stage_id, spec)
+        if derived:
+            return derived
     derived, _basis = condition_modality(run_id, pool_slug)
     return derived or "text"
 
@@ -268,11 +282,13 @@ def main() -> None:
         if stage_id not in run["verifier_passes"]:
             # The register records a stage path relative to the run's own
             # output root, e.g. "image-n5/image-t0.7/verified-v1-n3".
+            stage_path = str(
+                Path(paths["verify_dir"]).relative_to(RUN_ROOT[rung["run_id"]])
+            )
             run["verifier_passes"][stage_id] = {
-                "modality": modality(rung["pool_slug"], rung["run_id"]),
-                "path": str(
-                    Path(paths["verify_dir"]).relative_to(RUN_ROOT[rung["run_id"]])
-                ),
+                "modality": modality(rung["pool_slug"], rung["run_id"],
+                                     stage_id=stage_id, stage_path=stage_path),
+                "path": stage_path,
             }
             stages_added += 1
 

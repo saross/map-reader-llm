@@ -954,19 +954,57 @@ def verify_stage_dirs(run: str, key: str, spec: Any) -> list[str]:
     return [c for c in cands if (BASE_DIR / c).is_dir()]
 
 
+def verifier_stage_modality(run: str, key: str, spec: Any) -> tuple[str | None, list[str]]:
+    """Derive a registered verifier stage's OWN exemplar modality.
+
+    This is the convention the PI settled on 2026-09-14 (erratum E88) for the
+    register's ``verifier_passes[...].modality`` field: the field records what
+    the VERIFIER itself was sent, by exactly the rule the proposer obeys —
+    ``include_example_images`` over a non-empty exemplar list in the
+    transmitted configuration. ``verify_{adversarial,brief,checklist,
+    comparative}.json`` carry six exemplars; their ``*-text`` variants carry
+    none. It is NOT the track (the proposer pool beneath the stage), which is
+    what some rows had recorded; see :func:`condition_modality` for that.
+
+    Args:
+        run: Run id.
+        key: The ``verifier_passes`` key.
+        spec: Its recorded spec (a bare modality string or a dict with
+            ``path``).
+
+    Returns:
+        ``(modality, verify_configs)`` — the derived modality, or ``None`` when
+        no ``verify_*`` pass metadata can be read for the stage, and the sorted
+        verify config names the derivation read.
+    """
+    metas: list[dict[str, Any]] = []
+    for stage_dir in verify_stage_dirs(run, key, spec):
+        root = BASE_DIR / stage_dir
+        for p in sorted(glob.glob(str(root / "*.meta.json"))
+                        + glob.glob(str(root / "*/*.meta.json"))):
+            meta = read_meta(p)
+            if meta and str(meta.get("config") or "").startswith("verify_"):
+                metas.append(meta)
+    metas = dedupe(metas)
+    return modality_of(metas), sorted({str(m["config"]) for m in metas})
+
+
 def verifier_pass_audit() -> list[dict[str, Any]]:
     """Audit the register's ``verifier_passes[...].modality`` against two readings.
 
-    The field turns out to be ambiguous across runs, and the audit of
-    2026-09-14 reports the ambiguity rather than resolving it (what the field
-    means is the PI's to settle). The two candidate readings are:
+    The field was ambiguous across runs until the PI settled it on 2026-09-14
+    (erratum E88) as the **verifier** reading. Both readings are still reported
+    so the ambiguity stays visible and the settlement stays checkable:
 
     * **verifier** — the modality of the verify config the stage ran, by the
       same rule the proposer uses (``include_example_images`` and a non-empty
       exemplar list). ``verify_{adversarial,brief,checklist,comparative}``
-      carry six exemplars; their ``*-text`` variants carry none.
+      carry six exemplars; their ``*-text`` variants carry none. **This is the
+      settled convention**, derived by :func:`verifier_stage_modality`.
     * **track** — the modality of the PROPOSER pool the stage sits beneath,
-      i.e. which arm of the experiment the pass belongs to.
+      i.e. which arm of the experiment the pass belongs to. Retired as a
+      reading of this field; it remains available as
+      :func:`condition_modality` on the pool.
 
     Returns:
         One record per registered verifier stage, with the recorded value, both
@@ -983,16 +1021,7 @@ def verifier_pass_audit() -> list[dict[str, Any]]:
     for run, entry in decomposition.items():
         for key, spec in (entry.get("verifier_passes") or {}).items():
             recorded = spec if isinstance(spec, str) else spec.get("modality")
-            metas: list[dict[str, Any]] = []
-            for stage_dir in verify_stage_dirs(run, key, spec):
-                root = BASE_DIR / stage_dir
-                for p in sorted(glob.glob(str(root / "*.meta.json"))
-                                + glob.glob(str(root / "*/*.meta.json"))):
-                    meta = read_meta(p)
-                    if meta and str(meta.get("config") or "").startswith("verify_"):
-                        metas.append(meta)
-            metas = dedupe(metas)
-            verifier_reading = modality_of(metas)
+            verifier_reading, verify_configs = verifier_stage_modality(run, key, spec)
 
             # The track: the modality of every proposer pool whose conditions
             # name this stage, plus the pool the stage's path sits under.
@@ -1011,7 +1040,7 @@ def verifier_pass_audit() -> list[dict[str, Any]]:
                 "run_id": run,
                 "stage": key,
                 "recorded": recorded,
-                "verify_configs": sorted({str(m["config"]) for m in metas}),
+                "verify_configs": verify_configs,
                 "verifier_reading": verifier_reading,
                 "track_reading": track_reading,
                 "matches_verifier_reading": (
@@ -1106,6 +1135,67 @@ def artefact_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
     return summary
 
 
+def plan_verifier_modality_fix(
+        verifier_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """List the register's verifier stages whose recorded modality must change.
+
+    Under the convention the PI settled on 2026-09-14 (erratum E88) the field
+    records the verifier stage's OWN exemplar modality. A stage whose verify
+    configuration no route can read keeps its recorded value — the derivation
+    never guesses.
+
+    Args:
+        verifier_rows: Records from :func:`verifier_pass_audit`.
+
+    Returns:
+        One entry per stage that changes, with ``before`` and ``after``.
+    """
+    plan: list[dict[str, Any]] = []
+    for row in verifier_rows:
+        derived = row["verifier_reading"]
+        if not derived:
+            continue
+        if comparable(row["recorded"]) == derived:
+            continue
+        plan.append({
+            "run_id": row["run_id"],
+            "stage": row["stage"],
+            "before": row["recorded"],
+            "after": derived,
+            "verify_configs": row["verify_configs"],
+        })
+    return plan
+
+
+def apply_verifier_modality_fix(plan: list[dict[str, Any]]) -> int:
+    """Rewrite ``results/run-conditions.json`` from :func:`plan_verifier_modality_fix`.
+
+    The register is re-serialised with the same ``indent=1`` /
+    ``ensure_ascii=False`` settings every other register writer uses, so an
+    empty plan is a byte-identical no-op.
+
+    Args:
+        plan: Entries from :func:`plan_verifier_modality_fix`.
+
+    Returns:
+        The number of stages whose recorded value changed.
+    """
+    path = BASE_DIR / RUN_CONDITIONS
+    register = json.loads(path.read_text(encoding="utf-8"))
+    changed = 0
+    for entry in plan:
+        spec = register["decomposition"][entry["run_id"]]["verifier_passes"][entry["stage"]]
+        if isinstance(spec, str):
+            register["decomposition"][entry["run_id"]]["verifier_passes"][entry["stage"]] = \
+                entry["after"]
+        else:
+            spec["modality"] = entry["after"]
+        changed += 1
+    path.write_text(json.dumps(register, indent=1, ensure_ascii=False) + "\n",
+                    encoding="utf-8")
+    return changed
+
+
 def main() -> int:
     """Command-line entry point.
 
@@ -1118,6 +1208,11 @@ def main() -> int:
     ap.add_argument("--check", action="store_true",
                     help="Exit non-zero if any recorded modality disagrees with a "
                          "derivation; writes nothing.")
+    ap.add_argument("--fix-verifier-modality", action="store_true",
+                    help="Rewrite results/run-conditions.json so every registered "
+                         "verifier stage's modality is the verifier's OWN exemplar "
+                         "modality (the convention settled 2026-09-14, E88). Stages "
+                         "whose verify config no route can read are left alone.")
     args = ap.parse_args()
 
     records, pool_records = derive()
@@ -1170,8 +1265,21 @@ def main() -> int:
               f"[{rec['artefact']}.{rec['field']}] recorded {rec['recorded']} "
               f"!= derived {rec['derived']}")
 
+    verifier_fix = plan_verifier_modality_fix(verifier_rows)
+    print(f"registered verifier stages needing the settled (VERIFIER) value: "
+          f"{len(verifier_fix)}")
+    for entry in verifier_fix:
+        print(f"  VERIFIER-MODALITY {entry['run_id']}::{entry['stage']} "
+              f"recorded {entry['before']} -> derived {entry['after']} "
+              f"(from {', '.join(entry['verify_configs']) or 'no config'})")
+
+    if args.fix_verifier_modality:
+        changed = apply_verifier_modality_fix(verifier_fix)
+        print(f"rewrote {RUN_CONDITIONS}: {changed} verifier stage(s) changed")
+        return 0
+
     if args.check:
-        return 1 if (mismatched or pool_mismatched) else 0
+        return 1 if (mismatched or pool_mismatched or verifier_fix) else 0
 
     out = BASE_DIR / args.out
     out.mkdir(parents=True, exist_ok=True)

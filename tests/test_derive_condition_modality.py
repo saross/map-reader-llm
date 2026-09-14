@@ -14,6 +14,11 @@ The two failure shapes the 2026-09-14 audit found are covered explicitly:
 2. a label with NO modality token, where ``"image" in label`` is false and a
    substring test falls through to ``"text"`` (``pv-scale4-optimal-n1-opmax``
    on ``detect_h8_scale-4_v2``).
+
+The register's ``verifier_passes[...].modality`` convention — the VERIFIER
+stage's own exemplar modality, settled by the PI on 2026-09-14 (erratum E88) —
+is pinned here too: the planner that brings the register to that convention,
+and a corpus-wide assertion that the committed register carries it.
 """
 
 from __future__ import annotations
@@ -217,6 +222,60 @@ def test_walk_for_modality_finds_nested_records():
     assert found == {"retest-phase2e::canonical-last": "text", "a::b": "image"}
 
 
+# ── tier 1: the verifier-stage modality convention (E88) ─────────────────
+
+@pytest.mark.tier1
+def test_verifier_modality_plan_targets_only_stages_that_disagree():
+    """The planner moves a stage only when a derivable reading contradicts it.
+
+    Covers all four cases the register contains: agreement (no entry), the
+    ``image``-recorded stage over a ``verify_*-text`` config (the 51-stage
+    majority), the ``text``-recorded stage over an exemplar-bearing verify
+    config (the 4-stage minority), and the stage whose verify metadata no route
+    can read, which keeps its recorded value rather than being guessed at.
+    """
+    rows = [
+        {"run_id": "r", "stage": "agrees", "recorded": "text",
+         "verifier_reading": "text", "verify_configs": ["verify_adversarial-text"]},
+        {"run_id": "r", "stage": "track-reading-image", "recorded": "image",
+         "verifier_reading": "text", "verify_configs": ["verify_adversarial-text"]},
+        {"run_id": "r", "stage": "track-reading-text", "recorded": "text",
+         "verifier_reading": "image", "verify_configs": ["verify_adversarial"]},
+        {"run_id": "r", "stage": "underivable", "recorded": "image",
+         "verifier_reading": None, "verify_configs": []},
+    ]
+    plan = d.plan_verifier_modality_fix(rows)
+    assert [(e["stage"], e["before"], e["after"]) for e in plan] == [
+        ("track-reading-image", "image", "text"),
+        ("track-reading-text", "text", "image"),
+    ]
+
+
+@pytest.mark.tier1
+def test_verifier_modality_plan_treats_text_plus_image_as_a_refinement():
+    """``text+image`` recorded against an image-bearing verifier is not a move.
+
+    ``comparable()`` folds the refinement onto the binary preregistered factor,
+    so a stage recorded ``text+image`` over an exemplar-bearing verify config
+    already carries the settled value.
+    """
+    rows = [{"run_id": "r", "stage": "s", "recorded": "text+image",
+             "verifier_reading": "image", "verify_configs": ["verify_brief"]}]
+    assert d.plan_verifier_modality_fix(rows) == []
+
+
+@pytest.mark.tier1
+def test_verifier_stage_modality_returns_none_for_an_unknown_stage():
+    """A stage with no directory on disk yields no reading and no config list.
+
+    The derivation never guesses: an unreadable stage returns ``None`` so the
+    planner leaves the recorded value alone.
+    """
+    modality, configs = d.verifier_stage_modality(
+        "no-such-run", "no-such-stage", {"path": "no/such/path"})
+    assert (modality, configs) == (None, [])
+
+
 # ── tier 2: corpus-wide agreement ────────────────────────────────────────
 
 @pytest.mark.tier2
@@ -243,3 +302,16 @@ def test_no_derivation_route_contradicts_another():
     """Pass metadata, pool metadata and the config file must agree."""
     records, _ = d.derive()
     assert [r["condition_id"] for r in records if r["derived"]["routes_disagree"]] == []
+
+
+
+@pytest.mark.tier2
+def test_register_verifier_modality_is_the_verifier_stages_own_modality():
+    """Every derivable verifier stage carries the convention settled 2026-09-14.
+
+    The field records what the VERIFIER was sent, not the track it sits
+    beneath (erratum E88). Stages whose verify metadata cannot be read are out
+    of scope by construction — the planner skips them.
+    """
+    plan = d.plan_verifier_modality_fix(d.verifier_pass_audit())
+    assert [(e["run_id"], e["stage"], e["before"], e["after"]) for e in plan] == []

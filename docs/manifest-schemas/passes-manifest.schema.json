@@ -54,7 +54,7 @@
         "modality": {
           "type": "string",
           "enum": ["image", "text"],
-          "description": "Proposer input modality."
+          "description": "Proposer input modality: image when the transmitted configuration set include_example_images over a non-empty exemplar list, text otherwise (derived, never read off a substring of the label \u2014 erratum E88; docs/methodology/notation-key.md \u00a7 7). A verifier stage's modality, recorded in results/run-conditions.json under verifier_passes, is that stage's OWN exemplar modality by the same rule, not the track it sits beneath."
         },
         "thinking_level": {
           "type": ["string", "null"],
