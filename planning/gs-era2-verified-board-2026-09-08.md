@@ -1,7 +1,24 @@
 # The GS Era-2 verified board: the Gemini 3.7 and 3.8 GS cells on one frame with the incumbents
 
-> **Last revised**: 2026-09-13 (the board is **REBUILT and awaits the PI's
-> re-signature**: one rebuild carried three ruled changes — the four
+> **Last revised**: 2026-09-14 (the board is **REBUILT AGAIN and still awaits
+> the PI's re-signature**, now over both rebuilds' changes. Ruling 4 of the PI's
+> four rulings of 2026-09-14 on the modality-track audit (erratum **E88**):
+> `track` now **derives from the transmitted proposer configuration** rather
+> than from a substring test on the condition label, and a **`track_basis`**
+> field on all **110** members names the route. **Seven labels corrected** —
+> the three `proposer-verifier-384::verified-{adversarial,brief,checklist}-image`
+> cells are **text** (their proposer sent no example pixels; the token named the
+> image VERIFIER) and the four `pv-diag-384::pv-scale4-optimal` cells are
+> **image** (their labels name neither modality, so the retired test fell
+> through). **Nothing numerical moved** — the tiering instrument never reads
+> `track`, and the full chain was re-run to prove it rather than asserting it
+> (`rebuild-track-2026-09-14/`). **E86's null-exemplar exposure is now disclosed
+> on the board page**: 20 of the 487 frame tiles, the FP-rate-ratio contrast
+> 0.561 against 0.685 at *p* < 0.0001, the ≤ 0.0074 F1 / ≤ 0.0120 tile-MCC
+> movement bound, and the reduced-frame tie-set edges. Deltas:
+> `reports/modality-rulings-deltas-2026-09-14.md`. Prior: 2026-09-13 (the board
+> is **REBUILT and awaits the PI's re-signature**: one rebuild carried three
+> ruled changes — the four
 > recovery-fix cells at their current evaluations (`g37-text-k3-verified-opmax`
 > 0.8870 → **0.8860** / 495, the other three unchanged), ruling 7's **tile-MCC
 > permutation family** on the same swap masks (2,982/11,175 pairs significant,
@@ -275,7 +292,37 @@ until § 9 is signed.
 
 ## Changelog
 
-### 2026-09-13 (latest) — rulings 6 and 7 executed in ONE rebuild; awaiting the PI's re-signature
+### 2026-09-14 (latest) — rebuilt with derived `track` labels; E86's exposure disclosed; the re-signature still pending
+
+**Trigger**: ruling 4 of the PI's four rulings of 2026-09-14 on the
+corpus-wide modality-track audit (`reports/modality-track-audit-2026-09-14.md`),
+which inserted erratum **E88**. This card's board carried a `track` field
+assigned by `"image" if "image" in label else "text"` — a substring test on a
+label, where the ground truth is `include_example_images` over a non-empty
+exemplar list in the configuration the proposer transmitted.
+
+| | before | after |
+|---|---|---|
+| `track` source | a substring test on the condition label | **derived from the transmitted proposer configuration** |
+| `track_basis` | absent | **on all 110 members** (`pass-metadata` 57, `run-metadata` 23, `config-file` 17, `pool-name-token` 12, `register` 1) |
+| Labels corrected | — | **7** (3 image → text, 4 text → image) |
+| Members / excluded | 110 / 161 | **110 / 161**, identical id sets, **0** other member field changes |
+| Ranks, tiers, tie sets, Hsu sets, gates, metrics | — | **all reproduced; nothing moved** |
+| E86 exposure | not disclosed on the board page | **disclosed** — 20 of 487 tiles, the sensitivity result, the reduced-frame tie-set edges |
+
+**What this card's reader needs to know.** The correction does not touch a
+number on the board; it changes what two families of cells are *called*, and
+therefore how a by-track sentence about the board should be read. Two of the
+four `pv-scale4-optimal` cells sit in tile-MCC Tier 1, so the ruling-7 finding
+that MCC Tier 1 is "led by single-pass image proposer + verifier baselines" is
+now correctly named for two more of its members. Conversely three cells this
+card's own tables would have called image are text controls.
+
+The signature is still the PI's to give, and it is now one signature over both
+rebuilds: `provenance.json` → `re_sign_pending`. Deltas:
+`reports/modality-rulings-deltas-2026-09-14.md`.
+
+### 2026-09-13 — rulings 6 and 7 executed in ONE rebuild; awaiting the PI's re-signature
 
 The rebuild the two rulings below deferred to has run, on sapphire, at US$0 and
 with no API call (checklist item 6,

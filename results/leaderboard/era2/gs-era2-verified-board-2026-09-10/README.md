@@ -1,6 +1,6 @@
 # The GS Era-2 verified board on one frame — `gs-era2-verified-board-2026-09-10`
 
-> **Last revised**: 2026-09-13 (latest — **REBUILT and awaiting the PI's re-signature**. One rebuild carried three ruled changes for one signature (checklist item 6). (1) The **four recovery-fix cells** are picked up at their current evaluations: `g37-text-k3-verified-opmax` now reads F1@20 **0.8860** / **495 detections** in this board's withheld table and in G6 (from 0.8870 / 494 — one added false positive), its committed tile-MCC is no longer quoted because its re-scored artefact withholds the tile block at source, and the two K = 1 cells and tier E's K = 5 are unchanged; nothing was re-scored here. (2) Ruling 7 — a **tile-MCC permutation family** now runs on the SAME swap masks as F1 (seed 42, one tile order, byte-identical `rng.random(487) < 0.5` stream), BH q = 0.05 within its own family, with its own greedy-clique tiering and its own Hsu MCB set: **2,982/11,175** pairs significant, **6 MCC tiers**, **MCC tie set 33**, **MCC MCB admissible 59 of 150**. It is **reported beside** the preregistered F1 tiering and does NOT replace it — the board's tiering, ranks and Tier 1 are the F1 ones. **The two readings barely agree**: no F1 Tier-1 cell is in MCC Tier 1, and the two admissible sets share only **9** of their 65 and 59 members. (3) Ruling 6 — the **withheld table** now carries each cell's whole-frame F1 point estimate, the statement that its interval is **withdrawn** (tile-resampled bootstrap) with the retracted interval named where one survives, the shortfall counts, both tile vocabularies, and that the name-based `id` join is the published convention. **The F1 arm reproduced EXACTLY**: ranking, tiers, tie set and all 11,175 pairwise records byte-identical, the F1 MCB artefact byte-identical, **Tier 1 and its five members unchanged**; `rebuild-mcc-2026-09-13/f1-arm-identity.json`. Signature discipline: `signed_at`, `signature_history` and `gates.G1.pi_ruling` carried forward, the previous PENDING block nested as `previous_pending`, and **10 signature-bearing paths asserted byte-equal** before and after — `rebuild-mcc-2026-09-13/signature-paths.json`, PASS. Deltas: `reports/era2-board-mcc-family-2026-09-13.md`. Prior: 2026-09-13 later still, the K = 3 cell's evaluation written (note only); earlier that day, four cells pending re-score after the recovery-fragment fix (note only); earlier, PI ruling item 1 — the K-ladder cohort admitted by route (a), 103 → **153 cells admitted**, 150 tiered, 3 withheld, Tier 1 unchanged; 2026-09-12, PI ruling R3 — K = 1 admitted, 79 → 103 cells, re-signed 2026-09-12T06:04:30Z; 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10 later still, nine `-opmax` cells re-materialised and re-tiered; later, the symmetry fix 39 → 79 cells; earlier that day, original publication). Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instruments: `scripts/era1_leaderboard_tiering.py --permute-mcc` (round-robin tile-swap permutation, 10,000 draws, seed 42 — micro-F1 **and** tile-MCC on one swap stream, BH q = 0.05 per family, greedy clique, 20 m) and `scripts/selection_aware_intervals.py --board` for each metric's MCB; Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
+> **Last revised**: 2026-09-14 (latest — **REBUILT AGAIN and still awaiting the PI's re-signature, now over both rebuilds' changes**. Ruling 4 of the PI's four rulings of 2026-09-14 on the modality-track audit (erratum **E88**): the membership `track` field now **derives from the transmitted proposer configuration** instead of testing the condition label for the substring `image`, and a new **`track_basis`** field on all **110** members names the route. **Seven labels are corrected** — `verified-adversarial-image`, `verified-brief-image` and `verified-checklist-image` are **text** (their proposer is `detect_brief-text`, which sent no example pixels; the token names the image VERIFIER), and the four `pv-scale4-optimal` cells are **image** (their labels name neither modality, so the retired test fell through to `text`). **Nothing numerical moved**: the tiering instrument never reads `track`, and every rank, tier, tie set, Hsu admissible set, gate verdict and metric reproduced — `rebuild-track-2026-09-14/`. **E86's null-exemplar exposure is now disclosed on this page** (20 of the 487 frame tiles; the sensitivity analysis is `results/null-exemplar-sensitivity-2026-09-13/findings.md`). Prior: 2026-09-13 — **REBUILT and awaiting the PI's re-signature**: one rebuild carried three ruled changes for one signature (checklist item 6) — the four recovery-fix cells at their current evaluations (`g37-text-k3-verified-opmax` 0.8870 → **0.8860** / 495), ruling 7's tile-MCC permutation family on the same swap masks (2,982/11,175 pairs significant, 6 MCC tiers, MCC tie set 33, MCC MCB 59 of 150, reported BESIDE the preregistered F1 tiering and not replacing it), and ruling 6's withheld-cell disclosure; the F1 arm reproduced exactly and 10 signature-bearing paths were asserted byte-equal (`rebuild-mcc-2026-09-13/`). Earlier: 2026-09-13, the K-ladder cohort admitted by route (a), 103 → **153 cells admitted**, 150 tiered, 3 withheld; 2026-09-12, K = 1 admitted, 79 → 103 cells, re-signed 2026-09-12T06:04:30Z; 2026-09-11, off-board `pv-high-text-t0.0-n3` re-examined, nothing on the board changed; 2026-09-10, nine `-opmax` cells re-materialised and re-tiered, the symmetry fix 39 → 79 cells, original publication.) Card: `planning/gs-era2-verified-board-2026-09-08.md`. Frame: `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` (`era2-b-487`; the Era-2 carrier tiles clipped to the B tiling's union, 487 tiles, 1,402.4 km², 435 curator reference mounds). Instruments: `scripts/era1_leaderboard_tiering.py --permute-mcc` (round-robin tile-swap permutation, 10,000 draws, seed 42 — micro-F1 **and** tile-MCC on one swap stream, BH q = 0.05 per family, greedy clique, 20 m) and `scripts/selection_aware_intervals.py --board` for each metric's MCB; Tier-1 membership is the MCB admissible set (E83). See [§ Changelog](#changelog).
 
 **153 cells admitted**, of which **150 are tiered** and **3 withheld** (listed below the table); 7961/11175 pairs significant; 14 tiers; tie set 5; MCB admissible 65 of 150. 50 cell(s) admitted by `k-ladder/membership.json` with their board-frame evaluations as-is (PI ruling 2026-09-13). A tile-MCC permutation family is **reported beside** this F1 tiering and does not replace it (PI ruling 2026-09-13, ruling 7): 6 MCC tiers, MCC tie set 33, MCC MCB admissible 59 — see [§ Tile-level MCC](#tile-level-mcc--a-second-family-on-the-same-swap-masks-reported-not-the-tiering).
 
@@ -173,6 +173,47 @@
 
 Δ frame = board-frame F1 minus the committed evaluation's F1 (gate G6; the committed frame is the Era-2 frame for the incumbents and grid-common for the B-geometry cells; for the `-opmax` rows it is the Era-2-frame reproduction of the archived board's score, or — for the nine re-materialised on 2026-09-10 — of the materialisation registry's registered point). For the K-ladder rows it is +0.0000 by construction: their committed evaluation IS the board-frame evaluation, so G2 is an identity rather than a reproduction. Full pairwise table: `tiering_20m.json`; gates: `gates.json`, `opmax/gates.json`, `g1-regression.json`, `frame-deltas.md`; per-cell evaluations: `cells/`; reproduction evaluations: `g2/`, `opmax/g2/`.
 
+**Null-exemplar exposure on this frame (erratum E86), disclosed.** Three "null"
+(empty) exemplar tiles in the few-shot library (`inputs/examples/null-tiles/`)
+were never excluded from the Gold-Standard evaluation frames, so every
+configuration that transmitted the example **images** was shown those pixels
+labelled "no mounds here" and was then scored on them. On this board's frame the
+exposure is **20 of the 487 tiles**
+(`inputs/examples/null-tiles/null_overlap_by_frame.json`; E86 in
+`docs/methodology/preregistration/protocol-errata.md`). **No reference symbol
+lies inside a null window**, so no precision, recall, F1 or tile-MCC value above
+is invalid. The sensitivity analysis that removes the exposed tiles —
+`results/null-exemplar-sensitivity-2026-09-13/findings.md` — is a sensitivity
+analysis **beside** this board and not a replacement for it; nothing under
+`results/leaderboard/**` is scored on the reduced frame, and which frame the
+paper reports is the PI's call. What it found:
+
+- **The leak is measurable.** Image-bearing cells suppress false positives on
+  the 20 exposed tiles about a fifth more than text controls do — FP-rate ratio
+  **0.561** against **0.685**, mean log ratio −0.1433 against −0.0552,
+  difference **−0.0881** at *p* < 0.0001, and **−0.0773** at *p* < 0.0001
+  restricted to the single `pv-diag-384` run.
+- **No cell's published number moves more than a hundredth.** The largest
+  movement of any Era-2 cell is **0.0074** in F1@20 and **0.0120** in tile-MCC,
+  and the reduction costs the image cells *less* than the text controls, because
+  the leaked tiles hold 12 of the frame's 435 reference mounds as well as the
+  quiet ground.
+- **The tie sets move at their edges.** On the reduced frame F1 Tier 1 goes from
+  five cells to **four** — the cell it loses is a *text* cell — the F1 tier
+  count from 14 to **13**, tile-MCC Tier 1 from 33 cells to **28**, and the two
+  Hsu admissible sets by one and two members. The top of both rankings, and the
+  selection-aware winner under both metrics, are unchanged.
+
+The exposure is confined to the image modality (of the 41 configurations that
+transmit example images, 37 include the three null exemplars; the 22
+text-modality configurations carry the nulls as labels only), which is exactly
+why **E88's seven corrected `track` labels matter to the reading of that
+sensitivity result and not to this board's numbers**: the sensitivity job
+derived each cell's exposure from run metadata itself and used the corrected
+classification throughout, so it needs no re-reading. Had it used this board's
+former `track`, three text controls would have been counted as image-bearing and
+four image cells as controls.
+
 ## Tile-level MCC — a second family on the same swap masks (REPORTED, not the tiering)
 
 PI ruling 2026-09-13 (S153 ruling 7): the round-robin tile-swap carries **tile-MCC on the same swap masks as F1** — one `numpy.random.default_rng(42)` stream, one tile order, so a ΔF1 and a ΔMCC on a pair are two statistics of one permutation, not two experiments (`tests/test_k_ladder_mcc_instruments.py::test_f1_and_mcc_kernels_draw_identical_swap_masks`) — with Benjamini-Hochberg q = 0.05 **within its own family**. It is reported beside the preregistered F1 tiering and **does not replace it**: the board's tiering, its ranks and its Tier 1 are the F1 ones above. Tile MCC is buffer-invariant (tile truth is intersection with any reference, tile prediction is any detection assigned to the tile), so this table is the same at every buffer. Cells the tile-join invariant withholds are excluded from this family exactly as they are from the F1 one, and are listed above.
@@ -336,7 +377,100 @@ Full MCC pairwise table: `tiering_20m.json` → `mcc_permutation.pairwise`; per-
 
 ## Changelog
 
-### 2026-09-13 (latest) — REBUILT: three ruled changes in one rebuild; a tile-MCC family beside the F1 tiering; awaiting the PI's re-signature
+### 2026-09-14 (latest) — REBUILT with derived `track` labels and a `track_basis` field; E86's exposure disclosed; nothing numerical moved
+
+**Trigger**: ruling 4 of the PI's four rulings of 2026-09-14 on the
+corpus-wide modality-track audit
+(`reports/modality-track-audit-2026-09-14.md`; checklist item 6c), which
+inserted erratum **E88**. Modality is a preregistered factor (H1), and
+`scripts/build_gs_era2_board.py` had assigned this board's `track` field with
+`"image" if "image" in label else "text"` — a substring test that fails twice
+over: a proposer–verifier label names BOTH stages, so the verifier's modality
+can win, and a label that varies a different factor names neither modality and
+falls through to `"text"`. Both shapes occur here. Nothing was re-scored and no
+API call was made; all compute on sapphire.
+
+| Quantity | before | after |
+|---|---:|---:|
+| Members / excluded | 110 / 161 | **110 / 161** (identical id sets) |
+| `track` labels corrected | — | **7** |
+| `track_basis` field | absent | **on all 110 members** — `pass-metadata` 57, `run-metadata` 23, `config-file` 17, `pool-name-token` 12, `register` 1 |
+| Other member fields changed | — | **0** |
+| Cells admitted / tiered / withheld | 153 / 150 / 3 | ****153 / 150 / 3** (identical)** |
+| F1 pairs significant at BH q = 0.05 | 7,961 / 11,175 | ****7,961 / 11,175** (byte-identical)** |
+| F1 tiers | 14 | ****14** (same sizes)** |
+| F1 Tier 1 / tie set | the five 3.7 / 3.8 cells / 5 | ****the same five, same order, same F1** / **5**** |
+| Top cell | `g37-image-k5-verified-swap37-p0.90-k5` 0.9233 | ****the same cell, 0.9233**** |
+| Hsu F1 MCB admissible set | 65 of 150 (w_upper 0.0749) | ****65 of 150** — the artefact is byte-identical (`git diff` reports no change)** |
+| MCC pairs significant / tiers / tie set | 2,982 / 11,175 · 6 · 33 | ****2,982 / 11,175 · 6 · 33** (byte-identical)** |
+| Hsu tile-MCC MCB admissible set | 59 of 150 (w_upper 0.0828) | ****59 of 150** — the artefact is byte-identical** |
+| Withheld cells | the three Gemini 3.7 GS text rungs | ****the same three, at the same F1** (0.8338, 0.8495, 0.8860)** |
+| Gates | G2 0 / G3 0 / G4 110 / 110; G6 max abs delta 0.0078 | ****unchanged** — G2 0 / G3 0 / G4 110 / 110; G6 max abs delta **0.0078**** |
+| E86 exposure disclosure | not on this page | **published above the MCC section** — 20 of 487 tiles, the FP-rate ratio contrast, the ≤ 0.0120 movement bound, and the reduced-frame tie-set edges |
+
+**The seven corrected labels, and why each was wrong.**
+
+| cell | before | after | mechanism |
+|---|---|---|---|
+| `proposer-verifier-384::verified-adversarial-image` | image | **text** | the label's token names the image **verifier**; the proposer is `detect_brief-text`, `include_example_images` false |
+| `proposer-verifier-384::verified-brief-image` | image | **text** | as above |
+| `proposer-verifier-384::verified-checklist-image` | image | **text** | as above |
+| `pv-diag-384::pv-scale4-optimal-n1-opmax` | text | **image** | no modality token in the label; the substring test fell through. The proposer is `detect_h8_scale-4_v2`, instruction `detect_brief-text-image.md`, `include_example_images` true over 13 exemplars |
+| `pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1` | text | **image** | as above |
+| `pv-diag-384::pv-scale4-optimal-n3-opmax` | text | **image** | as above |
+| `pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3` | text | **image** | as above |
+
+Two of the four `pv-scale4-optimal` cells sit in tile-MCC Tier 1, so the
+correction changes how that tier reads — MCC Tier 1 is "led by single-pass image
+proposer + verifier baselines" and two more of its members are now correctly
+named image — without changing a single one of its numbers.
+
+**Why no number could move, and that was checked rather than asserted.**
+`track` is metadata: `scripts/era1_leaderboard_tiering.py` and
+`scripts/selection_aware_intervals.py` never read it, `tiering_20m.json`
+contains zero `track` occurrences, and no rendered board table has a track
+column. The rebuild ran the full chain anyway — membership, tiering input,
+`era1_leaderboard_tiering --permute-mcc` (10,000 permutations, seed 42, both
+families on one swap stream), both MCB arms with the F1 arm last, gates and
+`finalise --no-analysis-row` — and the record is
+`rebuild-track-2026-09-14/`: `track-deltas.json` (the membership delta, 7 label
+changes, 110 `track_basis` additions, **0** other member field changes),
+`both-arms-identity.json` (`f1_arm_identical` **true**, `mcc_arm_identical` **true**,
+`keys_that_moved` **empty**, so even the withheld-cell block is unmoved) and
+`signature-paths.json`. Both MCB artefacts came back byte-identical under `git diff`,
+and the MCC MCB was recomputed BEFORE the F1 one so that the F1 admissible set — the
+one the board cites — is computed last over the final membership, as the PI's standing
+rule requires. The only things that moved anywhere in `tiering_20m.json`,
+`frame-deltas.md`, `gates.json` and `tiering_20m.md` are run stamps and the source
+commit. The before state is not duplicated in the job directory: git holds it, and
+`track-deltas.json` records the blob hashes (`membership.json` `e9900fa370f2`,
+`tiering_20m.json` `b4a39f3a4350`, `provenance.json` `1aecf12352ae`,
+`results/run-analyses.json` `fd5ffb3136ac`).
+
+**Signature discipline.** `finalise --no-analysis-row` carries `signed_at`,
+`signature_history` and `gates.G1.pi_ruling` forward and nests the previous
+PENDING block rather than overwriting it; the board's signed analysis row was
+not written at all. **Ten signature-bearing paths were asserted byte-equal** before and after —
+`signed_at` still `2026-09-12T06:04:30Z`, `signed_by`, `signature_history`,
+`gates.G1.pi_ruling`, `re_sign_pending.previous_pending`, the whole of
+`results/run-analyses.json` and every field of this board's signed analysis row —
+`rebuild-track-2026-09-14/signature-paths.json`, **PASS**. The register comparison is
+against the register as this session's ruling-2 commit left it: the two rows amended
+under E88 are `era1-single-pass-baseline-matrix` and `tile-size-sweep`, neither of
+which is this board's row and neither of which is signed.
+
+**What did NOT change**: every F1 rank, tier, pairwise test, BH verdict and MCB
+member; Tier 1 and its members; the tie sets of both families; the top cell and
+its F1; the admitted / tiered / withheld counts and the identity of the three
+withheld cells; the frame, reference, instrument, seed, permutation count and
+buffer; every gate verdict; and every signature field.
+
+**The board awaits the PI's re-signature**, now over both the 2026-09-13
+rebuild's three ruled changes and this one's corrected metadata:
+`provenance.json` → `re_sign_pending`. Deltas:
+`reports/modality-rulings-deltas-2026-09-14.md`.
+
+### 2026-09-13 — REBUILT: three ruled changes in one rebuild; a tile-MCC family beside the F1 tiering; awaiting the PI's re-signature
 
 **Trigger**: checklist item 6
 (`planning/documentation-foundation-checklist-2026-09-13.md`), which gathers

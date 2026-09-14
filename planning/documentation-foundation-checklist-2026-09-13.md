@@ -1,6 +1,23 @@
 # Documentation foundation checklist — the preregistration → outcome chain
 
-> **Last revised**: 2026-09-14 (latest — **item 14 closed**: the cleanup
+> **Last revised**: 2026-09-14 (latest — **item 6c's four PI rulings all
+> executed**, and item 6's board rebuilt a second time to carry them. Erratum
+> **E88** inserted with three pointer rows (12 → 15); the two
+> registered-but-unsigned outcomes amended in place (`era1-single-pass-baseline-matrix`
+> 17 computable image cells at MCC 0.0942–0.2907 → **21 of 22 at
+> 0.0665–0.2907**; `tile-size-sweep` **two of fifteen** legs swapping leaders at
+> 512 px single-pass) with the § R2 paper sentence and claims row R2-06
+> re-anchored and both tabulations regenerated; the register's
+> `verifier_passes[...].modality` convention settled as the **verifier's own
+> exemplars** and made to derive, **55 of 186** stages changing value (51 image →
+> text, 4 text → image), 174 of 174 derivable stages now agreeing; and the Era-2
+> board rebuilt with derived `track` labels — **7 of 110** corrected,
+> `track_basis` on all 110, **0** other member field changes, and **nothing
+> numerical moved** (both tiering arms and both MCB artefacts byte-identical, 10
+> signature paths byte-equal, PASS) — plus E86's null-exemplar exposure now
+> disclosed on the board page. US$0, no API call, no cell re-scored. Deltas:
+> `reports/modality-rulings-deltas-2026-09-14.md`. Before that — **item 14
+> closed**: the cleanup
 > metadata overwrite fixed permanently. `run.meta.json` now carries the sum
 > across the main pass and every cleanup or resume pass, with `main_pass`
 > verbatim, a `cleanup_passes` list and a never-overwritten sidecar; a
@@ -196,6 +213,13 @@ agent work; Fable only for the PI-facing orchestration turns.
   (stability 0.420, 36 distinct winners, against F1's 0.602 / 22). Reported
   BESIDE the preregistered F1 tiering and NOT replacing it, per ruling 7 —
   the board's tiering, ranks and Tier 1 remain the F1 ones.
+  **Rebuilt again 2026-09-14** under item 6c's ruling 4, to carry the
+  derived `track` labels and the new `track_basis` field on all 110
+  members plus E86's null-exemplar disclosure: corrected metadata, and
+  **no rank, tier, tie set, Hsu set or metric moved** — the tiering
+  instrument never reads `track`. The PI still signs ONCE, now over both
+  rebuilds' changes; `provenance.json` → `re_sign_pending` carries the
+  combined proposed outcome.
   **Signature discipline**: `signed_at`, `signature_history` and
   `gates.G1.pi_ruling` carried forward, the previous PENDING block nested as
   `previous_pending` rather than overwritten (a gap this job closed), and
@@ -298,6 +322,44 @@ agent work; Fable only for the PI-facing orchestration turns.
     `scale-4-optimal-487` family is split across both conventions inside
     one run. Not actioned; nothing numerical rests on it. Owner: Opus
     agent (done); PI to rule on E88 and on the field's meaning.
+    **RULED AND EXECUTED 2026-09-14** — all four PI rulings of that
+    morning landed; deltas
+    `reports/modality-rulings-deltas-2026-09-14.md`. (1) Erratum **E88**
+    inserted (E87 was the last; collision-checked) with three pointer rows
+    in `osf/errata-pointers.md`, 12 → **15**; the hypothesis-outcome
+    table's deviations column does not read the errata register, so
+    `--check` reports it up to date and no `deviations` array changed
+    (E81 and E83 precedent on the same two rows). (2) Both
+    registered-but-unsigned outcomes amended in place with an
+    `[AMENDED 2026-09-14, E88]` clause preserving the prior text verbatim
+    — `era1-single-pass-baseline-matrix` **17 computable image cells at
+    MCC 0.0942–0.2907 → 21 of 22 at 0.0665–0.2907**, `tile-size-sweep`
+    **two of fifteen legs swapping leaders at 512 px single-pass**; the
+    §-R2 paper sentence and claims row R2-06 re-anchored (R2-06 stays
+    VERIFIED, so the 237/214/19/1/3 census is unchanged); both
+    tabulations regenerated, the tile-size-sweep vintage archived with a
+    five-row delta table because the regeneration also carries register
+    growth, E81's undefined-MCC convention and one MCC re-read.
+    **Signature gate recorded**: the brief's test (`manually_verified_at`
+    absent) does NOT hold — both rows carry a 2026-06-09 AUTHORING stamp;
+    the operative discriminator is the absence of a `_signature_note`,
+    which both satisfy, so neither row is PI-signed and the amendment
+    proceeded. (3) The register's `verifier_passes[...].modality`
+    convention settled as the **verifier's own exemplars** and made to
+    derive: **55 of 186 stages changed value** (51 `image` → `text`, 4
+    `text` → `image`; 12 underivable stages keep their recorded value),
+    174 of 174 derivable stages now agree and 0 contradict, the split
+    `scale-4-optimal-487` family converges on `text`, 55 verifier pass
+    rows in the passes manifest follow and the 447 proposer rows do not.
+    Convention in `docs/methodology/notation-key.md` § 7 and the
+    passes-manifest schema; three minting sites derive; 3 tier-1 + 1
+    tier-2 tests. (4) The Era-2 board rebuilt with derived labels and
+    presented for re-signature: **7 of 110** `track` labels corrected (3 image → text, 4 text → image), `track_basis` on all 110 (`pass-metadata` 57, `run-metadata` 23, `config-file` 17, `pool-name-token` 12, `register` 1), **0** other member field changes, and **nothing numerical moved** — both tiering arms and both MCB artefacts byte-identical (`both-arms-identity.json`: `keys_that_moved` empty), 153/150/3 cells, 7,961/11,175 F1 pairs, 14 tiers, Tier 1 five cells, tie set 5, F1 MCB 65 of 150, MCC 2,982/11,175 · 6 tiers · tie set 33 · MCB 59 of 150, G2 0 / G3 0 / G4 110/110, G6 0.0078. **10 signature paths byte-equal, PASS**; no signature field touched. E86's exposure disclosure (20 of 487 tiles, the 0.561-against-0.685 FP-rate contrast, the ≤ 0.0120 movement bound, the reduced-frame tie-set edges) added to the board README. Record: `rebuild-track-2026-09-14/`.
+    **Raised, not actioned**: a SECOND conditions row shows the
+    nondeterministic `provenance.source_files` pick item 6a flagged —
+    `55maps-generalisation::verified-paired` alternates between two
+    uplift-supplement verifier-pairing evaluation paths across
+    regenerations with no input change. No metric is affected.
   - [ ] **6b. PI decision**: one verifier call (≈ US$0.0007) to make
     tier E's K = 5 zero-delta unconditional (candidate_01335 carried 0.10
     across a 1 px crop shift against a 0.15 gate) — or accept as

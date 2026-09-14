@@ -1,8 +1,8 @@
 # G6 — committed-frame versus board-frame F1 at 20 m (gs-era2-verified-board-2026-09-10)
 
-> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by `scripts/build_gs_era2_board.py gates` at commit `acd4ed054`; `check-renderings` is the drift guard (tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope") this projection carries provenance instead of a hand changelog.
+> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by `scripts/build_gs_era2_board.py gates` at commit `70b47979a`; `check-renderings` is the drift guard (tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope") this projection carries provenance instead of a hand changelog.
 
-> Generated 2026-09-13T10:46:37+00:00 by `scripts/build_gs_era2_board.py gates`. G2: 0 reproduction failures; G3: 0 frame failures; G4: 110 cells of 110 members.
+> Generated 2026-09-14T02:26:23+00:00 by `scripts/build_gs_era2_board.py gates`. G2: 0 reproduction failures; G3: 0 frame failures; G4: 110 cells of 110 members.
 
 | condition | committed frame | committed F1@20 | board F1@20 | Δ (board − committed) | n features | n det. committed | n det. board |
 |---|---|---:|---:|---:|---:|---:|---:|

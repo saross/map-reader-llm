@@ -1,6 +1,26 @@
 # K-ladder review: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-13 (latest — the review's **three withheld rungs
+> **Last revised**: 2026-09-14 (latest — **two of this review's own labels were
+> wrong, and erratum E88 corrects them**. The `scale-4-optimal-487` proposer pool
+> is **image-bearing**, not text: its config `detect_h8_scale-4_v2` runs
+> instruction `detect_brief-text-image.md` with `include_example_images` true
+> over 13 exemplars, which is what the sibling family table in
+> `scripts/build_k_ladder_phase2_tables.py` already had as `text+image` and what
+> `POOL_REGISTRY` in `scripts/build_k_ladder_phase2_unions.py` had as `text`.
+> `register_k_ladder_phase2_conditions.modality` assigned the same value by a
+> substring test on the pool slug and now derives. **On the Era-2 board the four
+> `pv-scale4-optimal` cells are relabelled text → image** (board rebuilt
+> 2026-09-14, ruling 4), and **two of them are in tile-MCC Tier 1** — so this
+> review's MCC reading is not merely corroborated at board scale, it is
+> corrected in the review's favour: two more Tier-1 MCC members are correctly
+> named image. **No number in this review moves.**
+> `results/k-ladder-2026-09-12/phase2/unions.json` is deliberately NOT
+> regenerated — it sits inside a SIGNED analysis and regenerating it would
+> rebuild the consensus unions and rewrite `experiment_intent.md` files — so its
+> two scale-4 rungs still read `text` and correct at the next Phase 2 union
+> rebuild; `ladders.json` (`text+image`) and `tension/effect-sizes.json` were
+> already right. Deltas: `reports/modality-rulings-deltas-2026-09-14.md`. Prior:
+> 2026-09-13 — the review's **three withheld rungs
 > and its MCC reading both reach the Era-2 board**, which was REBUILT under
 > checklist item 6 and awaits the PI's re-signature. The board now carries a
 > **tile-MCC permutation family** on the same swap masks as F1 (ruling 7),
@@ -410,7 +430,31 @@ adding a statistic family to a signed board is a change the PI did not rule.
 
 ## Changelog
 
-### 2026-09-13 (latest) — the review's MCC reading corroborated at board scale; the three withheld rungs disclosed
+### 2026-09-14 (latest) — the scale-4 pool is image-bearing (erratum E88); two more MCC Tier-1 members correctly named
+
+**Trigger**: the corpus-wide modality-track audit
+(`reports/modality-track-audit-2026-09-14.md`) and the PI's four rulings of
+2026-09-14. Two of this review's artefacts recorded the
+`pv-diag-384::scale-4-optimal-487` pool's modality as `text`.
+
+| | before | after |
+|---|---|---|
+| `scripts/build_k_ladder_phase2_unions.py` `POOL_REGISTRY` | hand-authored `text` | **`text+image`** (fixed at `cb9b1d7f2`, matching the sibling table in `build_k_ladder_phase2_tables.py`) |
+| `register_k_ladder_phase2_conditions.modality` | `"image" if "image" in pool_slug else "text"` | **derives** — now the verifier stage's own modality (ruling 3), with the pool's derived modality as fallback |
+| `results/k-ladder-2026-09-12/phase2/unions.json` two scale-4 rungs | `text` | **still `text` — deliberately not regenerated** (signed analysis; see the banner) |
+| `results/k-ladder-2026-09-12/phase2/ladders.json`, `tension/effect-sizes.json` | `text+image` / correct | **unchanged — they were already right** |
+| The four `pv-scale4-optimal` cells on the Era-2 board | `track` `text` | **`image`** |
+| Registered verifier stages `scale-4-optimal-487-verified-v1-{n1,n3,n5,n10}` | split: n5/n10 `image`, n1/n3 `text` | **all four `text`** — they ran the identical `verify_adversarial-text` config, and this family is the one that proved the field ambiguous (§ 6 of the audit) |
+
+**What did NOT change**: no F1, tile-MCC, interval, rung, tier, tie set,
+admissible set or Pareto reading in this review. The review treats the scale-4
+family **by name** throughout and never places it in a text or image track; its
+by-track statements (§ 7.1's "both HIGH tracks") name the six HIGH text/image
+families and exclude it. The correction's only consequence for the review is
+that two members of the Era-2 board's tile-MCC Tier 1 are now correctly named
+image, which strengthens rather than qualifies § 4's reading.
+
+### 2026-09-13 — the review's MCC reading corroborated at board scale; the three withheld rungs disclosed
 
 **Trigger**: checklist item 6
 (`planning/documentation-foundation-checklist-2026-09-13.md`) rebuilt the GS
