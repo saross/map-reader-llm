@@ -76,6 +76,32 @@ project state.
 > session but the run did not. Resume path: the campaign's
 > `outputs/gemini37-image-55map-2026-09-13/post_run_report.md` § 4 (verbatim
 > commands) and the card `planning/gemini37-image-55map-2026-09-13.md`
+> **UPDATE at Fable's close (steward paused mid-scoring, watch armed,
+> its local worktree `agent-af930c35f40e0a282` KEPT — resumable):** K = 3
+> arms done; scoring in progress (4 of 12 cells at the last report).
+> **A near miss the Opus lane must carry into the findings and an Obs**:
+> the campaign's proposer tiling (384 px, 192 px stride, 24,561 tiles)
+> is not the r2 scoring frame (384 px, 336 px stride, 8,541 tiles; 660
+> shared names), so the published name-based tile join's precondition
+> failed — the PR #16 invariant CRASHED the sweep (192 of 6,250
+> detections credited, shortfall 6,058) instead of letting it score a
+> table of pure false negatives at micro-F1 0.0000 that the bootstrap and
+> permutations would then have resampled. The fix is the step every
+> other 55-map cell already goes through — `stride55_score.assign_standard_tile`
+> over a MAP-CONSTRAINED index (unconstrained assignment flips ~10 % of
+> candidates to the adjacent sheet, ~0.04 F1) — proven a fixed point at
+> 100.00 % on the three committed comparators (`IM-k3` 83.65 %: the MCC
+> tiering scored its original file in place; a recorded caveat on the one
+> test that uses it); gates 5 (idempotency) and 6 (every rung books 100 %
+> on the frame) added with tests (`7ed157a32`, `e0f9a4d03`, `d6dd86c47`
+> on the campaign branch). The exception's keyword-only constructor also
+> could not round-trip the multiprocessing pickler — fixed. **Provisional
+> signals, NOT verdicts (hold until BH-corrected)**: P1 reads +0.0177 MCC
+> over the leader (informative-failure band, between +0.01 and +0.02);
+> P2 looks to FAIL interestingly — tile-MCC RISES with K on both image
+> arms (arm 2 0.7569 → 0.7648; FP 275 → 183 → 80): with image passes
+> agreeing so heavily, K at unanimity is a PRECISION filter, the opposite
+> of text.
 > § 5. State at close: proposer done (3 passes, US$245.63, cache 0.81);
 > K = 1 arms done (arm 2 recovered 13 candidates via cleanup — its true
 > cost is main + cleanup metas, post-run report § 3.1); **K = 3 arms
