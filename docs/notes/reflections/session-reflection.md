@@ -11323,3 +11323,57 @@ name.
 most of it, then an overnight autonomous block; the longest session of
 the write-up phase by commit count (about 140). Relational note: the PI
 asked twice to be told when he was wrong and once said thank you for it.*
+
+## Session 153-b/c — 2026-09-13/14 — the rulings day, the errata from next door, and the handover to a cheaper lane
+
+*map-reader-llm; primary instance, one conversation since 2026-09-11 with no compaction; written at close while three agent branches and an API campaign were still in flight, so their results are not in this entry.*
+
+**What would I do differently if I replayed this session?** Two
+things, both about agents rather than science. I removed an agent's
+worktree after merging its branch and thereby made it un-resumable at
+the moment its monitor fired; the pass-1 gate of an approved campaign
+had to be applied by hand and a second steward briefed from scratch.
+And I let that second steward's liveness watch stand on a process
+pattern matched over ssh, which self-matched and read alive through a
+four-hour stall; the steward found and fixed it itself, but I had read
+its "watch armed" and moved on. The replay rule is the one now in the
+agent guidance: a job that waits on external work keeps its worktree,
+and remote liveness is read from a log's staleness, never from a
+pattern. The other replay is smaller: the first image-run agent was
+right to refuse a 102,000-call campaign whose approval existed only in
+conversation; I should have minuted the PI's approval in the card before
+launching, and did so only afterwards.
+
+**What surprised me?** That the day's most consequential finding came
+from another repository. The benchmark's provenance audit, run by a
+different instance in a different tree, found that the three null
+exemplars had never been rebuilt when the calibration tiles were
+re-selected, and the blast-radius question it posed here turned out to
+be the same name-keyed class the session had been chasing for three
+days (a manifest declaring provenance from a set re-selected under the
+same name). The exposure was the image modality only, the sensitivity
+re-score showed both image claims stand, and the correction was a
+disclosure rather than a qualifier — but the chain from there to the
+modality-track audit was the surprise: seven mislabelled board cells
+led to a corpus-wide derivation of modality from what the model was
+actually sent, which found that four scripts had been assigning a
+preregistered factor by a substring test. Nothing preregistered moved.
+It could have.
+
+**What context will be hardest to reconstruct in six months?** Why the
+Era-2 board was rebuilt four times in three days and signed once. The
+sequence — admission of K = 1, the MCC family, the recovery-fix cells,
+the corrected labels — is in the README's changelog, but the reason the
+PI held his signature each time (a change he had already ruled was
+about to land, and he did not want two signatures on one state) is
+only here and in the continuity's day list. The second is the
+campaign's cost story: three metadata files per verifier arm (main,
+cleanup, sidecar) because the writer used to overwrite, and the
+fourth cell's August loss explained by the same mechanism a month
+later.
+
+*Texture: the PI present and ruling item by item for most of two days,
+then an explicit handover request because the top-tier credit ran low;
+fourteen agents in worktrees this session, five still pending at close.
+Relational note: "Good morning Fable, what's the status?" — the first
+time the PI has addressed the model by name at a session start.*
