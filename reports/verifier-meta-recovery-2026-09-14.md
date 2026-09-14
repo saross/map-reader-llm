@@ -453,13 +453,25 @@ All tier-1.
 
 | Module | Tests | Covers |
 |---|---:|---|
-| `tests/test_audit_verifier_cost.py` | 19 existing + **16 new** | the register as a third source: a recovered pass closes the shortfall and is summed at its own rates; a pass already counted on disc is skipped; a residual estimate is noted and never counted; an unknown schema is ignored; an absent register is not an error; the sweep's new class; the committed register parses and every counted pass carries a blob source, positive tokens and a positive item count. `--pass-file`: the swap-38 pair sums to US$0.8469 from explicit files, and a missing file raises. The Pro card: standard rates, the flex halving that leaves the cache rate alone, the long-prompt table, and all three Pro stages pricing to their audited figures |
+| `tests/test_audit_verifier_cost.py` | 19 existing + **15 new** (34 collected) | the register as a third source: a recovered pass closes the shortfall and is summed at its own rates; a pass already counted on disc is skipped; a residual estimate is noted and never counted; an unknown schema is ignored; an absent register is not an error; the sweep's new class; the committed register parses and every counted pass carries a blob source, positive tokens and a positive item count. `--pass-file`: the swap-38 pair sums to US$0.8469 from explicit files, and a missing file raises. The Pro card: standard rates, the flex halving that leaves the cache rate alone, the long-prompt table, and all three Pro stages pricing to their audited figures |
 | `tests/test_cli_override_metadata.py` | **12 new** | the effective configuration (a `--temperature` override is recorded, listed under `cli_overrides`, and `None` is not an override); non-configuration overrides are not merged; every merged key is a gate field; **an override changes the fingerprint, the same override twice does not**; an override equal to the config value is not a change; each of the three merged keys blocks |
 
 ```bash
 python -m pytest tests/test_audit_verifier_cost.py \
     tests/test_cli_override_metadata.py -m tier1 -q
 ```
+
+Whole suite, run in this worktree: **2,822 passed, 1 failed, 5 skipped,
+3 xfailed** in 4:09. The one failure is
+`tests/test_build_generated_file_registry.py::test_committed_registry_matches_a_rebuild`,
+and it is **environmental, not a regression**: the committed registry lists 93
+files under gitignored paths (`outputs/ab-plus/_work/**`) that exist only in
+the main checkout, so a rebuild inside any isolated worktree drifts by those 93
+whatever the branch contains. The only drift this branch adds is one entry, for
+this report, so `python scripts/build_generated_file_registry.py` should be run
+**in the main checkout** after this branch lands. The registry was deliberately
+not hand-edited here: rebuilding it in a worktree would delete those 93
+entries.
 
 ## Changelog
 
