@@ -247,6 +247,12 @@
    "directory_path": "outputs/gemini37-image-gs-2026-09-01",
    "status": "active",
    "notes": "Gemini 3.7 Flash image-GS screen (card planning/gemini37-image-gs-2026-08-30.md; predictions I1-I5 committed at PI go): detect_brief-text-image on the same geometry and reference as the text screen, two verifier arms. The escalation trigger was NOT met and no 55-map image extension followed; the negative decision is itself the registered outcome. Registered S149."
+  },
+  {
+   "run_id": "gemini37-image-55map-2026-09-13",
+   "directory_path": "outputs/gemini37-image-55map-2026-09-13",
+   "status": "active",
+   "notes": "Gemini 3.7 image proposer at 55-map deployment scale, K = 3 (card planning/gemini37-image-55map-2026-09-13.md; predictions P1-P5 committed before any deployment scoring). One image proposer pool of three passes over the 24,561-tile g384_ov192_55map geometry, two first-N unions (K = 1 6,985 candidates, K = 3 8,337) each verified by two arms (carried Gemini-3 MINIMAL; all-3.7 low), twelve scored cells. Asks whether a configuration chosen for tile-level discrimination can beat every configuration deployed so far on the 55-map corpus. Results tree is results/gemini37-image-55map-2026-09-13/. Its post_run_report.md is HAND-AUTHORED and on the generator's exclusion list."
   }
  ]
 }

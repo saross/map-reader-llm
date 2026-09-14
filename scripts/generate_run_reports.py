@@ -162,6 +162,13 @@ HAND_AUTHORED: dict[str, str] = {
         "(the run's scientific question), Dawid-Skene correction, launcher-provenance "
         "caveat and limitations — not re-derivable from the manifests. In full "
         "Revision-Policy scope with its own changelog.",
+    "gemini37-image-55map-2026-09-13":
+        "hand-authored launch-state and campaign record carrying the two post-pass "
+        "gates and why they are post-pass, the per-pass audited costs, the flex 503 "
+        "storm and its 13-candidate gap, the dual-meta accounting a cleanup leaves "
+        "behind, the verifier-leg audit method, the six mechanism gates and a resume "
+        "path — none of it re-derivable from the manifests. In full Revision-Policy "
+        "scope with its own changelog; a projection would destroy it.",
 }
 
 #: The buffers the reports surface from a condition's 14-buffer metric block.
