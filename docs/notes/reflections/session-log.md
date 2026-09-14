@@ -9533,3 +9533,39 @@ resolved as a resolution effect (487 tiles resolve ΔF1 ≈ 0.03 and above);
 propagated; h10 t1/t2 rebuilt; board admission stopped on a mechanism
 question; eight morning questions in the close-out report § 10. Session
 API total: US$24.81 + US$4.96 = **US$29.77**. Tier-1 2,447 passed.
+
+## Session 153-b/c — 2026-09-13/14 (amd-tower + sapphire; Fable 5.1 driving; ≈ US$260 API committed to the approved image campaign, ≈ US$0.003 elsewhere; fourteen Opus worktree agents; handover to the Opus lane at close)
+
+**Rulings and landings (all on main unless noted).** PRs #14–17 merged
+(content anchors; the tile-join refactor; the K-ladder close-out); the
+ladder row signed after the MCB sets and the carried convention; ten
+rows signed, one unsigned by design; the tile-join rule = the name-based
+join (ruling 6); MCC family at rebuild (7); recovery-fragment patch and
+the five-union fix; board admission (153 cells), re-tier, MCC family;
+the image K = 3 campaign approved (≈ US$275, caching confirmed), blocked
+once at the audit for US$0, relaunched, proposer done (US$245.63), K = 1
+arms done, K = 3 arms running at close; the eval-framework comparison
+(Inspect AI vs Pydantic AI evals) drafted, verified, on main; documentation
+batch 1 (41/41 run reports generated; verifier 38 pass; Obs 477–481;
+Methods § M.x current; audit refreshed); items 6, 6a, 9, 11a, 11b; the
+benchmark repository's E86/E87 drafts assessed and inserted with the Era-1
+exposure and the visibility fact; the null-exemplar sensitivity (both
+claims stand; disclosure); the modality-track audit (E88 drafted; source
+fixed in five scripts); the cleanup-meta fix (verifier writer merges,
+sidecars, configuration gate; 29 stages swept, 3 recovered, 26 not);
+Obs 482. **In flight at close** (branches to land in the Opus lane): the
+four modality rulings incl. the board rebuild; git-history recovery of
+the 26 metas + temperature in metadata + the Pro rate card; the campaign.
+
+**Incidents.** An agent's worktree removed while its monitor was armed
+(un-resumable; gate applied by hand); a `pgrep -f` liveness watch
+self-matching over ssh (four-hour stall unseen; fixed, now policy); a
+registry drift guard that fails on every document-adding merge (rebuild
+discipline recorded); a worktree registry rebuild dropping 93 `outputs/`
+entries (main-checkout-only rule); a bus error in `git add -A outputs`
+leaving an index lock (explicit pathspecs).
+
+**Contextual assumptions.** The PI handed over to an Opus lane until
+Thursday 2026-09-17 midday because top-tier credit ran low; the beacon
+at the head of the continuity file carries both lanes; Fable restarts
+from that beacon alone.

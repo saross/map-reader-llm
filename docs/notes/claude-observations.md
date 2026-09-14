@@ -2467,3 +2467,29 @@ print the count of what it will touch and compare it with the count I
 expect; the second sync of the day did exactly that (81 of 146,468) and
 was clean.
 **How to apply.** Count first, act second, on anything plural.
+
+## claude-obs 111 — 2026-09-14 (Session 153-c): "This error sounds serious" was the right prior, and the probe was what bounded it
+
+**Pattern.** Shawn read a passing note about seven mislabelled board
+cells as serious where I had filed it as metadata; the corpus-wide
+derivation he asked for found a mechanism in four scripts and a reach
+that stopped short of every preregistered outcome.
+**Lesson.** His severity prior on anything touching a preregistered
+factor is better than mine; my job is the probe that measures the
+reach, not the reassurance.
+**How to apply.** When a finding touches a registered factor, lead with
+the derivation-from-source and the reach table, and let the numbers
+say "narrow".
+
+## claude-obs 112 — 2026-09-14 (Session 153-c): The handover request came with the lane design already in it
+
+**Pattern.** "Restart in Opus until Thursday … keep the tasks
+relatively mundane until you're back … leave messages for both lanes."
+He designed the cost-aware split himself: landing, ticking and
+signatures for the cheaper lane; the outline pass held for the top
+tier.
+**Lesson.** He allocates model tiers to task kinds deliberately; the
+beacon should be written for two readers with different remits, not
+one.
+**How to apply.** Any time credit is the constraint, write the beacon
+as lanes with a "do not start" list for the cheaper one.
