@@ -31,18 +31,32 @@ project state.
 > (`git pull --ff-only`; if it refuses because of untracked overlaps, use
 > the untracked-aware pattern of 2026-09-12: remove only untracked files
 > whose blob equals the incoming blob).**
-> **(O1) `worktree-agent-a5c49a969ef74b0b6` — the four modality rulings**:
-> E88 inserted; the two unsigned outcomes amended (`era1-single-pass-
-> baseline-matrix`, `tile-size-sweep`) with the draft sentence and claims
-> row R2-06; the verifier-modality convention (verifier's own exemplars)
-> in the register; the Era-2 board REBUILT with corrected `track` labels
-> and E86's disclosure. After landing: **present the board to the PI for
-> RE-SIGNATURE** (`provenance.json → re_sign_pending`; what it attests:
-> 153 admitted / 150 tiered / 3 withheld, Tier 1 the same five cells,
-> corrected metadata, the null-exemplar disclosure, the tile-MCC family
-> beside the F1 tiering); on the PI's "sign", apply as `169188a6f` did
-> (new `manually_verified_at`, note preserving the signed text, provenance
-> `re_sign_pending` → resolved, `signature_history` extended).
+> **(O1) LANDED before Fable closed (`9f5fec777`, projections
+> `a21e11061`)**: E88 inserted (register 88 entries; three pointer rows
+> in `osf/errata-pointers.md`); the two outcomes amended (Era-1 image
+> group 22/21-computable at MCC 0.0665–0.2907; two tile-size 512 px legs
+> re-led) with the draft sentence and R2-06; the verifier-modality
+> convention = the verifier's own exemplars (55 of 186 stages changed
+> value, 174/174 derivable agree; notation key § 7 + schema); **the
+> Era-2 board REBUILT at `60b07ffcc` with corrected `track` labels and
+> `track_basis` on all 110 members and E86's disclosure — EVERY number
+> identical** (153/150/3; Tier 1 the same five; F1 MCB 65/150; MCC family
+> 59/150, 9 shared; signature paths 10/10 byte-equal). **FIRST ACT OF
+> THE OPUS LANE: present it to the PI for RE-SIGNATURE** and apply on his
+> "sign" as `169188a6f` did. **Signature semantics, from the register's
+> `_README` (re-verified by the agent): `manually_verified_at` is an
+> AUTHORING stamp; the PI's signature is `_signature_note`** — re-count
+> "signed rows" by `_signature_note`, not by the timestamp, before
+> quoting a signed count anywhere (the S153 "66 signed" counted
+> timestamps). Follow-ups from the job: `build_gs_era2_board.py
+> renderings` overwrites the README banner with a stub (restored by hand
+> twice — fix the builder); a second conditions row
+> (`55maps-generalisation::verified-paired`) shows the nondeterministic
+> `provenance.source_files` pick (item 6a's flag) — make the extractor
+> deterministic; `derive_condition_modality.py --check` exits 1 on the
+> one deliberately deferred `unions.json` pool until the next Phase 2
+> union rebuild; the tile-size-sweep pre-E88 vintage is archived under
+> `archive/superseded-sweeps/tile-size-sweep-pre-e88-2026-09-14/`.
 > (If either agent branch is ABSENT from origin, that agent did not
 > finish before the session closed. Its worktree survives locally under
 > `.claude/worktrees/agent-<id>/` with its per-unit commits: `git -C
