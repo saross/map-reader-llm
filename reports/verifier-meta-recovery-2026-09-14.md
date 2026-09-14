@@ -32,13 +32,15 @@ second pass overwrote the metadata therefore still carries the pre-overwrite
 `run.meta.json` as a git blob, even though nothing in the working tree does.
 The 26 stages divide exactly on that timing:
 
-- 17 were committed in April 2026 as soon as their main pass finished, and
-  cleaned up weeks later (2026-05-03 or 2026-05-06, in three commits). The
-  April blob is the main pass.
-- 9 were committed only after the second pass had already run, so the only
-  blob their `run.meta.json` has ever had is the damaged one. Six of those
-  were single-session campaigns (committed hours after the cleanup); three are
-  a different case entirely (§ 3.2).
+- 17 were committed in April 2026 with their main pass's metadata intact
+  (commits dated 2026-04-09 to 2026-04-25), and cleaned up weeks later, the
+  damaged meta arriving in commits dated 2026-05-03 and 2026-05-06. The April
+  blob is the main pass.
+- 9 hold no usable pre-overwrite metadata. For **six** of them the only blob
+  their `run.meta.json` has ever had is the damaged one: single-session
+  campaigns, committed hours after the cleanup had already run. The other
+  **three** do have an earlier blob, and it records zero tokens — a different
+  failure entirely (§ 3.2).
 
 ### 1.1 Method
 
