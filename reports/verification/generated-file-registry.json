@@ -1,14 +1,14 @@
 {
  "_meta": {
-  "generated_at": "2026-09-14T01:46:15.104196+00:00",
+  "generated_at": "2026-09-14T02:39:23.827544+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "daa78cf74",
+  "git_head": "9f5fec777",
   "counts": {
-   "total": 3958,
+   "total": 3959,
    "generated": 3556,
    "generated_unattributed": 0,
-   "hand_written": 402,
+   "hand_written": 403,
    "by_directory": {
     "results/": {
      "total": 3106,
@@ -16,9 +16,9 @@
      "hand_written": 145
     },
     "reports/": {
-     "total": 92,
+     "total": 93,
      "generated": 0,
-     "hand_written": 92
+     "hand_written": 93
     },
     "outputs/": {
      "total": 731,
@@ -12481,6 +12481,16 @@
   },
   {
    "path": "reports/key-findings-summary-2026-06-23.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/modality-rulings-deltas-2026-09-14.md",
    "stratum": "hand-written",
    "rule_id": null,
    "generator": null,
@@ -26864,7 +26874,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/gates.json"
    ],
-   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by `scripts/build_gs_era2_board.py gates` at commit `acd4ed054`; `check-renderings` is the drift guard (tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog.",
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by `scripts/build_gs_era2_board.py gates` at commit `70b47979a`; `check-renderings` is the drift guard (tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
@@ -28940,7 +28950,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json"
    ],
-   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `30a27f361` and rendered at commit `acd4ed054`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `70b47979a` and rendered at commit `70b47979a`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
