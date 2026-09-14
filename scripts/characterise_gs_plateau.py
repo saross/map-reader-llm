@@ -30,35 +30,76 @@
 # ============================================================================
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import statistics
+import sys
 from collections import defaultdict
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+# Modality is a preregistered factor (H1), so the by-modality grouping below
+# must rest on the configuration each proposer transmitted, not on a substring
+# of its label. See scripts/derive_condition_modality.py (audit 2026-09-14).
+from scripts.derive_condition_modality import condition_modality  # noqa: E402
+
 CONDITIONS = BASE_DIR / "results" / "conditions-manifest.json"
 RUNS = BASE_DIR / "results" / "runs-manifest.json"
-OUT_DIR = BASE_DIR / "results" / "working-precision"
+DEFAULT_OUT_DIR = BASE_DIR / "results" / "working-precision"
 STEP_NOISE = 0.005  # the verifier-robustness §2 noise floor
+
+#: Set by ``--legacy-modality``. Reinstates the retired name-substring rule so
+#: the 2026-09-14 audit can measure its effect on identical data. Never set in
+#: normal use.
+LEGACY_MODALITY = False
 
 
 def derive_tags(cond: dict) -> dict:
-    """Best-effort modality/thinking/temperature tags from label + pool names.
+    """Modality (derived) plus best-effort thinking/temperature tags.
 
-    The manifest does not carry these as first-class fields for every
-    condition; the naming conventions are consistent enough for grouping.
-    Ambiguous cases are tagged 'unknown' rather than guessed.
+    MODALITY is derived from the configuration the condition's proposer pool
+    transmitted — ``include_example_images`` and a non-empty exemplar list —
+    via ``scripts/derive_condition_modality.condition_modality``. It used to be
+    a substring test on ``label + proposer_pool``, which mislabelled the three
+    ``proposer-verifier-384::verified-*-image`` conditions as image (the token
+    names their image VERIFIER over a ``detect_brief-text`` proposer that sent
+    no pixels) and left every pool with no modality token "unknown". Modality
+    is a preregistered factor (H1), so a grouping variable built from names is
+    not good enough.
+
+    THINKING and TEMPERATURE remain name-derived: the manifest does not carry
+    them as first-class fields for every condition, the naming conventions are
+    consistent enough for grouping, and ambiguous cases are tagged 'unknown'
+    rather than guessed.
+
+    Args:
+        cond: One condition row from ``results/conditions-manifest.json``.
+
+    Returns:
+        ``{"modality", "modality_basis", "thinking", "temperature"}``.
     """
     text = f"{cond['label']} {cond.get('proposer_pool', '')}".lower()
-    modality = ("image" if "image" in text else
-                "text" if "text" in text else "unknown")
+    if LEGACY_MODALITY:
+        # The retired rule, kept ONLY so the audit can isolate its effect on
+        # identical data (scripts/compare_modality_recomputation.py).
+        modality = ("image" if "image" in text else
+                    "text" if "text" in text else "unknown")
+        modality_basis = "legacy-name-substring"
+    else:
+        modality, modality_basis = condition_modality(
+            cond["run_id"], cond.get("proposer_pool") or "")
     thinking = ("high" if "high" in text else
                 "medium" if "medium" in text else
                 "minimal" if ("min" in text or "minimal" in text) else "unknown")
     m = re.search(r"t-?0[-.]([037])\b|t0\.([037])\b", text)
     temp = f"0.{m.group(1) or m.group(2)}" if m else "unknown"
-    return {"modality": modality, "thinking": thinking, "temperature": temp}
+    return {"modality": modality or "unknown", "modality_basis": modality_basis,
+            "thinking": thinking, "temperature": temp}
 
 
 def plateau(curve: list[tuple[int, float]]) -> dict:
@@ -76,9 +117,29 @@ def plateau(curve: list[tuple[int, float]]) -> dict:
             "tail_drift": round(curve[-1][1] - f1_onset, 4)}
 
 
-def main() -> int:
-    """Tabulate plateau onsets across the GS condition set."""
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+def main(argv: list[str] | None = None) -> int:
+    """Tabulate plateau onsets across the GS condition set.
+
+    Args:
+        argv: Command-line arguments; ``None`` reads ``sys.argv``.
+
+    Returns:
+        0 on success.
+    """
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR,
+                    help="Directory for the two output artefacts. Point it "
+                         "elsewhere to recompute without touching the published "
+                         "tabulation.")
+    ap.add_argument("--legacy-modality", action="store_true",
+                    help="Reinstate the retired name-substring modality rule. "
+                         "For the 2026-09-14 audit's A/B only — it reproduces a "
+                         "known defect.")
+    args = ap.parse_args(argv)
+    global LEGACY_MODALITY
+    LEGACY_MODALITY = args.legacy_modality
+    out_dir = args.out_dir
+    out_dir.mkdir(parents=True, exist_ok=True)
     conds = json.loads(CONDITIONS.read_text())["conditions"]
     runs = {r["run_id"]: r for r in json.loads(RUNS.read_text())["runs"]}
 
@@ -166,7 +227,7 @@ def main() -> int:
     else:
         md.append("None.")
 
-    (OUT_DIR / "gs-plateau-characterisation.json").write_text(json.dumps({
+    (out_dir / "gs-plateau-characterisation.json").write_text(json.dumps({
         "criterion": {"step_noise": STEP_NOISE,
                       "definition": "smallest buffer with all later step gains <= noise"},
         "n_analysed": len(rows), "skipped": dict(skipped),
@@ -174,7 +235,7 @@ def main() -> int:
                     "by_tile_size": by_size, "by_modality": by_mod,
                     "by_thinking": by_think, "by_temperature": by_temp},
         "conditions": rows}, indent=2) + "\n")
-    (OUT_DIR / "gs-plateau-characterisation.md").write_text("\n".join(md) + "\n")
+    (out_dir / "gs-plateau-characterisation.md").write_text("\n".join(md) + "\n")
 
     print(f"analysed {len(rows)} GS conditions (skipped {dict(skipped)})")
     for s in overall + by_arch[:6]:
@@ -182,7 +243,7 @@ def main() -> int:
               f"(p90 {s['onset_p90']:g}, max {s['onset_max']}), "
               f"tail drift {s['tail_drift_median']:+.4f}")
     print(f"late-plateau (>=50 m): {len(outliers)} conditions")
-    print(f"Wrote {OUT_DIR.relative_to(BASE_DIR)}/gs-plateau-characterisation.{{json,md}}")
+    print(f"Wrote {out_dir}/gs-plateau-characterisation.{{json,md}}")
     return 0
 
 

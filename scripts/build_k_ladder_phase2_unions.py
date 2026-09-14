@@ -183,7 +183,15 @@ POOL_REGISTRY: dict[str, dict[str, str]] = {
         "run_id": "pv-diag-384",
         "pool_slug": "scale-4-optimal-487",
         "label_stem": "pv-scale4-optimal",
-        "modality": "text",
+        # Corrected 2026-09-14 (modality-track audit) from "text". The pool's
+        # config is detect_h8_scale-4_v2 — instruction file
+        # detect_brief-text-image.md, include_example_images TRUE, 13 exemplars
+        # — so it narrates the exemplars AND sends their pixels. The register
+        # (results/run-conditions.json) and the sibling family table in
+        # scripts/build_k_ladder_phase2_tables.py both had it right; this
+        # constant did not, and its value reached
+        # results/k-ladder-2026-09-12/phase2/unions.json.
+        "modality": "text+image",
     },
     "Gemini 3.7 text, GS B geometry": {
         "run_id": "gemini37-screen-2026-08-28",

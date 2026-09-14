@@ -12,6 +12,34 @@ project state.
 
 > **⏰ STATE AT 2026-09-13 ~10:00 UTC (S153-b, the PI's rulings day) —
 > the PI's OPEN decisions, in order (each independent):**
+> **MODALITY-TRACK AUDIT LANDED (2026-09-14, PI priority; `6cdf33bd2`;
+> `reports/modality-track-audit-2026-09-14.md`).** Mechanism: four scripts
+> assigned modality — a preregistered factor — by a substring test for
+> `image` on the condition label, wrong when the label names the
+> VERIFIER's modality over a text proposer or carries no token. Corpus-wide
+> (593 conditions, 591 derivable from what was transmitted): 8 conditions
+> and 1 pool mislabelled across 4 artefacts (board `track` 7/110; plateau
+> characterisation 3/263; tile-size sweep 1/16; K-ladder Phase 2 unions
+> 1/14 pools); register, passes manifest, opmax membership and uplift
+> supplement clean. Reach: 5 UNAFFECTED, 2 LABEL-ONLY, 3 NUMBER-AT-RISK.
+> Recomputed at $0: **no preregistered outcome and no signed analysis
+> outcome changes** (H1's contrast groups five correctly labelled
+> conditions); the Era-1 single-pass image group's tile-MCC range moves
+> 17 cells 0.0942–0.2907 → 21 of 22, 0.0665–0.2907 (direction survives,
+> 20 of 21 above every text cell); two of fifteen tile-size-sweep
+> single-pass legs swap leaders; the plateau analysis does not move.
+> Source fixed in five scripts (board `track` now derives from the
+> transmitted configuration, with a `track_basis` field); the board
+> ARTEFACT is corrected only at the next rebuild. **PI rulings**: (i)
+> insert erratum **E88** (draft in report § 7 — nil on preregistered
+> outcomes); (ii) amend the two registered-but-unsigned outcomes
+> (`era1-single-pass-baseline-matrix`, `tile-size-sweep`), the draft
+> sentence at `results-draft.md:195-196` and claims row R2-06 to the
+> corrected range (recommended); (iii) the register's
+> `verifier_passes[...].modality` field is AMBIGUOUS (two conventions,
+> 119/55 vs 92/8 stages; nothing numerical rests on it) — choose one;
+> (iv) rebuild the Era-2 board once more with the corrected labels
+> (checklist 6c) and THEN re-sign. Obs candidate in report § 10.
 > **E86/E87 LANDED** (`2fa91cdb1`; report
 > `reports/null-exemplar-errata-2026-09-13.md`; guard
 > `scripts/check_manifest_provenance.py` flags only the null manifest;
