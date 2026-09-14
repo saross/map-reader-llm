@@ -262,6 +262,22 @@ class ExecutionStats:
     retry_details: list[dict[str, Any]] = field(default_factory=list)
 
 
+#: Command-line override names that ARE configuration values, and so are
+#: merged into the effective configuration a run's metadata records. Each
+#: names a field of the config file with the same name, and each is in
+#: :data:`CLEANUP_GATE_FIELDS`, so a change to any of them between a main pass
+#: and a later pass over the same stage is now visible to the cleanup
+#: configuration gate. ``--model`` is handled by ``model_override`` (it needs
+#: the SDK-resolved name, not the typed one); ``--service-tier``,
+#: ``--iterations`` and ``--workers`` are not configuration fields and are
+#: recorded on the pass entry instead.
+CONFIG_OVERRIDE_KEYS: tuple[str, ...] = (
+    "temperature",
+    "max_output_tokens",
+    "thinking_level",
+)
+
+
 class LLMMetadataTracker:
     """
     Thread-safe metadata tracker for LLM API runs.
@@ -289,12 +305,14 @@ class LLMMetadataTracker:
         script_name: str = "unknown",
         script_version: str = "unknown",
         model_override: str | None = None,
+        cli_overrides: dict[str, Any] | None = None,
     ) -> None:
         """
         Initialise the metadata tracker.
 
         Args:
-            config: The prompt/experiment configuration dict.
+            config: The prompt/experiment configuration dict, as loaded from
+                the config file.
             system_instruction: The system instruction text (for hashing and
                 persisting in output metadata).
             script_name: Name of the calling script.
@@ -306,10 +324,42 @@ class LLMMetadataTracker:
                 default in the config JSON. Fixes E42 metadata bug where
                 ``config.get("model")`` returned the config default even
                 when a CLI override was active.
+            cli_overrides: Command-line overrides of configuration values,
+                as a mapping of name to value; None values are ignored. The
+                keys in :data:`CONFIG_OVERRIDE_KEYS` are merged over *config*
+                so the recorded ``configuration`` block is the **effective**
+                configuration — the file merged with the command line — and
+                are also listed verbatim under ``configuration.cli_overrides``
+                so a reader can always separate the two. Everything else is
+                ignored here (``--model`` has its own argument above;
+                ``--service-tier`` and ``--iterations`` are not configuration
+                fields).
+
+                Why it matters: the cleanup configuration gate
+                (``run_pv.py`` ``_cleanup_configuration_gate``) fingerprints
+                this block, and until 2026-09-14 a ``--temperature`` override
+                reached ``build_generation_config`` as a separate argument
+                and never touched the block, so the gate could not see a
+                temperature change between a main pass and its cleanup.
+                Recording the effective value closes that blind spot.
+
+                Longer-term direction (the PI's, 2026-09-14): overrides
+                belong in proper config files rather than on the command
+                line, at which point this merge becomes a no-op and the
+                ``cli_overrides`` key stops appearing.
         """
         self.run_id = str(uuid.uuid4())
         self.start_time = datetime.now(timezone.utc)
-        self.config = config
+        self.cli_overrides = {
+            key: value
+            for key, value in (cli_overrides or {}).items()
+            if value is not None and key in CONFIG_OVERRIDE_KEYS
+        }
+        # The effective configuration. A run with no overrides keeps the
+        # config object it was given, so its metadata is byte-identical to
+        # what earlier versions wrote (a tier-1 regression test).
+        self.config = {**config, **self.cli_overrides} if self.cli_overrides \
+            else config
         self.model_override = model_override
         self.system_instruction_text = system_instruction or ""
         self.system_instruction_hash = hashlib.sha256(
@@ -672,12 +722,24 @@ class LLMMetadataTracker:
                     "example_count": len(
                         self.config.get("examples", [])
                     ),
+                    # The EFFECTIVE configuration: the config file merged with
+                    # the command-line overrides in CONFIG_OVERRIDE_KEYS (see
+                    # __init__). ``cli_overrides`` below says which values came
+                    # from the command line; its absence means none did.
                     "full_config_snapshot": self.config,
                 },
                 "execution_stats": asdict(self.stats),
                 "usage_stats": asdict(self.usage),
                 "results_summary": self.results_summary,
             }
+
+            # Added only when the command line actually overrode something, so
+            # a run without overrides writes exactly the key set it always
+            # wrote.
+            if self.cli_overrides:
+                result["configuration"]["cli_overrides"] = dict(
+                    self.cli_overrides,
+                )
 
             if include_per_item and self.response_metadata:
                 result["per_item_metadata"] = [
