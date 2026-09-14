@@ -44,8 +44,11 @@ project state.
 > (new `manually_verified_at`, note preserving the signed text, provenance
 > `re_sign_pending` → resolved, `signature_history` extended).
 > (If either agent branch is ABSENT from origin, that agent did not
-> finish before the session closed: relaunch an Opus agent from the
-> summary above plus the reports it cites; nothing of theirs is on main.)
+> finish before the session closed. Its worktree survives locally under
+> `.claude/worktrees/agent-<id>/` with its per-unit commits: `git -C
+> <worktree> log --oneline main..HEAD`, push that branch, and relaunch an
+> Opus agent to finish from its last commit and its report draft; nothing
+> of theirs is on main until you fast-forward it.)
 > **(O2) `worktree-agent-a7f2b5a5f07a83071` — git-history recovery of the 26
 > verifier metas, `--temperature` written into the meta's configuration,
 > the Gemini 3 Pro rate card.** After landing: read its report's list of
