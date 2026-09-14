@@ -240,6 +240,15 @@ class TestTwoFileStages:
                 "campaign arm not synced to this checkout: "
                 f"{CAMPAIGN_K1_ARM2}",
             )
+        if not (
+            list(CAMPAIGN_K1_ARM2.glob("*.pre-cleanup-*.backup"))
+            or list(CAMPAIGN_K1_ARM2.glob("run.meta.pre-cleanup-*.json"))
+        ):
+            pytest.skip(
+                "the main pass's pre-cleanup backup is gitignored "
+                "(outputs/**/*.pre-cleanup-*.backup) and absent here; the "
+                "two-file sum needs it — see checklist item 14 / the beacon"
+            )
         audit = audit_stage(CAMPAIGN_K1_ARM2)
         assert round(audit.audited_usd, 4) == 7.7028
         by_items = sorted(audit.passes, key=lambda p: -p.items)
