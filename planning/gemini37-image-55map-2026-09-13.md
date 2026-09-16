@@ -232,7 +232,7 @@ Full findings: `results/gemini37-image-55map-2026-09-13/findings.md`.
 
 | | Verdict | The number |
 |---|---|---|
-| **P1** | **NEAR MISS** | +0.0177 vs the leader (BH p 0.0000) — significant, short of +0.02, above the +0.01 informative band; +0.0185 at the MCC oracle |
+| **P1** | **NEAR MISS** | +0.0177 vs the leader (BH *p* < 0.0001) — significant, short of +0.02, above the +0.01 informative band; +0.0185 at the MCC oracle |
 | **P2** | **INFORMATIVE FAIL** | tile-MCC **rises** with K on both arms (arm 2 0.7569 → 0.7648, BH p 0.0022), reversing all three committed ladders |
 | **P3** | **INFORMATIVE FAIL** | F1 @ 50 m 0.9199 vs the text arm's 0.8848 = +0.0351 — image is better, not at parity |
 | **P4** | **HOLDS** | arm 2 − arm 1 on MCC: +0.0158 at K = 3, +0.0245 at K = 1 |
@@ -292,7 +292,7 @@ report pre-specified.
 
 | Claim | Before | After |
 |---|---:|---:|
-| P1 | UNTESTED | **NEAR MISS** — +0.0177, BH p 0.0000, short of +0.02 |
+| P1 | UNTESTED | **NEAR MISS** — +0.0177, BH *p* < 0.0001, short of +0.02 |
 | P2 | UNTESTED | **INFORMATIVE FAIL** — MCC rises with K, BH p 0.0022 |
 | P3 | UNTESTED | **INFORMATIVE FAIL** — +0.0351, image better than parity |
 | P4 | UNTESTED | **HOLDS** — +0.0158 at K = 3, +0.0245 at K = 1 |

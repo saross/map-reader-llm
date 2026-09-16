@@ -1,8 +1,10 @@
 # Gemini 3.7 image at deployment scale, K = 3: findings
 
-> **Last revised**: 2026-09-14 (original publication — the campaign's P1–P5
-> verdicts, both arms × both rungs, the deployment-scale modality
-> difference-in-differences, and the audited costs per leg). See
+> **Last revised**: 2026-09-16 (permutation p-values reported as *p* < 0.0001
+> rather than *p* = 0.0000; the P1 threshold gap named; `IM-k3`'s tile-join
+> provenance re-diagnosed). Prior: 2026-09-14 (original publication — the
+> campaign's P1–P5 verdicts, both arms × both rungs, the deployment-scale
+> modality difference-in-differences, and the audited costs per leg). See
 > [§ Changelog](#changelog) for revision history.
 
 Card: `planning/gemini37-image-55map-2026-09-13.md` (§ 2 the cells, § 4 the
@@ -18,15 +20,18 @@ recipe — 14 buffers, `best-available-gt-55maps-r2.geojson` (5,018 references),
 read from a committed `evaluation.json` under
 `results/gemini37-image-55map-2026-09-13/cells/`, and the paired tile-swap
 runs at 10,000 draws, seed 42, with Benjamini–Hochberg at q = 0.05 applied
-across the declared five-test family, separately on each metric.
+across the declared five-test family, separately on each metric. **A
+permutation p-value is bounded below by 1/10,000**, so a test with no draw
+at or beyond the observed statistic is reported as *p* < 0.0001, never as
+*p* = 0; the raw zeros are in `tests_IMG-ARM2-K3-carried.json`.
 
 ## 1. P1–P5, with the numbers
 
 | | Prediction | Result | Verdict |
 |---|---|---|---|
-| **P1** | image K = 3 carried tile-MCC beats `FOURTH-N1-oracle` (0.7471) by **≥ +0.02**, BH-significant | **0.7648** vs 0.7471 = **+0.0177**, BH p 0.0000; **+0.0185** at the rung's MCC oracle | **NEAR MISS** — significant and in the predicted direction, short of the threshold, and above the ≤ +0.01 informative-failure band |
+| **P1** | image K = 3 carried tile-MCC beats `FOURTH-N1-oracle` (0.7471) by **≥ +0.02**, BH-significant | **0.7648** vs 0.7471 = **+0.0177**, BH *p* < 0.0001; **+0.0185** at the rung's MCC oracle | **NEAR MISS** — significant and in the predicted direction, but short of the +0.02 threshold and above the ≤ +0.01 informative-failure band. The card defined no verdict for the interval between the two, so +0.0177 falls in a GAP in the prediction's design; the threshold was not met |
 | **P2** | K = 1 MCC **≥** K = 3 MCC; F1 lower at K = 1 | MCC **rises** with K on both arms: arm 2 0.7569 → **0.7648** (+0.0078, BH p **0.0022**); arm 1 0.7324 → 0.7490. F1 lower at K = 1 on both (0.8719 < 0.9199; 0.8477 < 0.9025) | **INFORMATIVE FAIL** on the MCC claim, significantly reversed; the F1 half holds |
-| **P3** | F1 @ 50 m at K = 3 within **± 0.02** of the 3.7 text arm 2 at N = 3 (0.8848) | **0.9199** vs 0.8848 = **+0.0351**, BH p 0.0000 | **INFORMATIVE FAIL**, in the image modality's favour — not parity |
+| **P3** | F1 @ 50 m at K = 3 within **± 0.02** of the 3.7 text arm 2 at N = 3 (0.8848) | **0.9199** vs 0.8848 = **+0.0351**, BH *p* < 0.0001 | **INFORMATIVE FAIL**, in the image modality's favour — not parity |
 | **P4** | arm 2 beats arm 1 on MCC by **≥ +0.01** | K = 3: **+0.0158** (0.7648 − 0.7490). K = 1: **+0.0245** (0.7569 − 0.7324) | **HOLDS** at both rungs |
 | **P5** | carried-vs-oracle tax **≤ 0.01** on both metrics, per rung | `IMG-ARM2-K3` F1 **+0.0007** / MCC **+0.0008**; `IMG-ARM2-K1` +0.0023 / +0.0045; `IMG-ARM1-K3` +0.0000 / +0.0087; `IMG-ARM1-K1` **+0.0129 / +0.0199** | **HOLDS on 3 rungs of 4**; fails only on `IMG-ARM1-K1` |
 
@@ -36,11 +41,11 @@ of the ten tests is BH-significant:
 
 | Comparator | its MCC | Δ MCC | BH p | its F1 | Δ F1 | BH p |
 |---|---:|---:|---:|---:|---:|---:|
-| `FOURTH-N1-oracle` | 0.7471 | **+0.0177** | 0.0000 | 0.8352 | **+0.0848** | 0.0000 |
-| `ARM2-N3-oracle` | 0.7163 | **+0.0484** | 0.0000 | 0.8848 | **+0.0351** | 0.0000 |
-| `ARM2-N5-oracle` | 0.7147 | **+0.0501** | 0.0000 | 0.8871 | **+0.0328** | 0.0000 |
-| `IM-k3` | 0.7110 | **+0.0538** | 0.0000 | 0.8008 | **+0.1191** | 0.0000 |
-| `IMG-ARM2-K1-carried` | 0.7569 | **+0.0078** | 0.0022 | 0.8719 | **+0.0480** | 0.0000 |
+| `FOURTH-N1-oracle` | 0.7471 | **+0.0177** | < 0.0001 | 0.8352 | **+0.0848** | < 0.0001 |
+| `ARM2-N3-oracle` | 0.7163 | **+0.0484** | < 0.0001 | 0.8848 | **+0.0351** | < 0.0001 |
+| `ARM2-N5-oracle` | 0.7147 | **+0.0501** | < 0.0001 | 0.8871 | **+0.0328** | < 0.0001 |
+| `IM-k3` | 0.7110 | **+0.0538** | < 0.0001 | 0.8008 | **+0.1191** | < 0.0001 |
+| `IMG-ARM2-K1-carried` | 0.7569 | **+0.0078** | 0.0022 | 0.8719 | **+0.0480** | < 0.0001 |
 
 So the campaign's substantive question — does the image modality's tile-MCC
 advantage transfer from the Gold Standard to deployment? — is answered **yes**,
@@ -204,6 +209,40 @@ report's upward revision to ≈ 9,000–10,900 overshot. The K = 1 estimate of
   seat" effect is the seat as a package, not the model alone.
 
 ## Changelog
+
+### 2026-09-16 — p-value rendering, the P1 gap, and IM-k3's join
+
+PI review of the campaign before signature. Three corrections, none of which
+moves a measurement:
+
+| Claim | Before | After |
+|---|---|---|
+| Permutation p-values | `BH p 0.0000` | **BH *p* < 0.0001** |
+| P1's verdict band | "near miss", band unstated | the card's **gap** named: success ≥ +0.02, informative failure ≤ +0.01, and +0.0177 falls between them |
+| `IM-k3` tile join | "83.65 % idempotent — scored in place" | **not a defect**: its `source_tile` vocabulary is 100 % inside the scoring frame (2,664 of 2,664 names; 4,680 of 4,680 features). The 83.65 % is a CONVENTION difference, not an invalid join |
+
+**p-values.** A permutation p-value over 10,000 draws is bounded below by
+1/10,000. Reporting `0.0000` reads as *p* = 0, which no permutation test can
+produce. The raw zeros remain in `tests_IMG-ARM2-K3-carried.json`; only the
+rendering changed. Propagated to the card § 4a and the register row's outcome.
+
+**P1's gap.** The card specified success at ≥ +0.02 and informative failure at
+≤ +0.01, and said nothing about the interval between. The observed +0.0177
+falls in it. The verdict "near miss" stands and the threshold was genuinely
+not met — but it is a gap in the prediction's design, not a property of the
+result, and is now stated as such rather than glossed.
+
+**`IM-k3`.** Re-checked against `55maps_evaluation_bounds.geojson` directly:
+all 2,664 of its distinct `source_tile` names are frame tiles and all 4,680 of
+its features book onto one, so its confusion matrix (summing to 8,541) is
+sound and the five-test family is not compromised. What the 83.65 % figure
+measures is that re-applying `assign_standard_tile` would MOVE 16.35 % of its
+detections to a different frame tile — the origin-tile convention against the
+nearest-standard-centroid convention. Both are well defined. The other three
+comparators are 100 % idempotent because they were produced BY that writer.
+Reconciling them is a $0 on-disk re-score, but it would move `IM-k3`'s
+published MCC and therefore the eight-cell tiering where it is sole Tier 1, so
+it is the PI's call and is not done here.
 
 ### 2026-09-14 — Original publication
 

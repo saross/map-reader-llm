@@ -35607,3 +35607,85 @@ it withholds); **Obs 280** and **Obs 369/370** (the divergence first
 recorded across strata, then statistically resolved at deployment scale
 with `IM-k3` sole MCC Tier 1 — 482 is the same finding measured over 150
 cells under one permutation stream).
+
+## Observation 483: An invariant added two days earlier turned a silent wrong answer into a crash — the campaign would otherwise have published a full set of verdicts off a table of pure false negatives (Session 154, 2026-09-14/16)
+
+**The finding.** The Gemini 3.7 image 55-map campaign
+(`results/gemini37-image-55map-2026-09-13/findings.md`) booked its detections
+on the **proposer's** tiling — 384 px on a 192 px stride, 24,561 tiles — while
+the scoring frame is 384 px on a **336 px** stride, 8,541 tiles. Only 660 tile
+names are common to the two vocabularies, and only 142 of a rung's 4,857
+distinct `source_tile` values are in the frame. Under the published name-based
+(`id`) tile join, **192 of 6,250** in-frame detections were credited to a tile;
+6,058 were not.
+
+The published convention states its own precondition: `id` is "well defined
+only when the cell's proposer tiling **is** the scoring frame"
+(`reports/tile-mcc-geometric-join-2026-09-12.md` § 0). It was not, here.
+
+**Why this is an observation and not a bug report.** What the per-tile table
+does under a vocabulary mismatch is not "fail" — it loses every true and false
+positive and leaves **pure false negatives**, a micro-F1 of 0.0000 and a
+degenerate confusion matrix. Every downstream instrument would then have
+consumed that table without complaint: the per-tile Bias-corrected and
+accelerated (BCa) bootstrap confidence intervals resample it, and the paired
+tile-swap permutation tests permute it. The campaign would have produced a
+complete set of P1–P5 verdicts, a board row and a findings document, all
+internally consistent, all wrong, and none of it visibly anomalous.
+
+The tile-join **invariant** — added on 2026-09-12, two days before this run —
+is what stopped it, by refusing the table instead of returning it. The refusal
+is what produced the diagnosis.
+
+| | |
+|---|---:|
+| Detections booked under the `id` join, before | **192 of 6,250** |
+| After the fix, all four rungs | **100 %** (6,985 / 6,985 and 8,337 / 8,337) |
+| Tile names common to the two tilings | 660 |
+| A rung's `source_tile` values inside the frame | 142 of 4,857 |
+| Mechanism gates, before → after | 4 (all PASS) → **6** |
+
+**Three lessons, in descending order of transferability.**
+
+1. **An invariant that refuses is worth more than a check that passes.** The
+   campaign's four pre-existing gates all PASSED and all were uninformative:
+   gates 2, 3 and 4 consume *comparator* detection sets, which already carry
+   scoring-frame `source_tile`. No gate ever ran a *campaign* rung through the
+   per-tile path. A gate that never exercises the new artefact on the new code
+   path cannot catch a defect in it, however green it reads.
+
+2. **The dangerous failure is the one that returns a well-formed answer.** A
+   micro-F1 of 0.0000 on a degenerate matrix is a number, not an error. The
+   project has now met this shape twice — the other being Observation 481's
+   4 % currency mismatch, "the most dangerous size a unit error can be" —
+   and both times the defence was an assertion about *meaning* rather than a
+   test of *form*.
+
+3. **The masking error cost more time than the defect.** The refusal surfaced
+   as a `TypeError` inside `multiprocessing`'s result handler
+   (`TileJoinRefusalError.__init__() missing 4 required keyword-only
+   arguments`): the exception could not round-trip through the pickler, so the
+   real failure never reached the log. Worse, killing `_handle_results` means
+   `pool.map` never returns — the first run was found **still resident 53
+   minutes later**, holding twelve busy workers with nothing written. An
+   operator watching for a non-zero exit or an empty output file would read
+   that as "still running". **A custom exception raised inside a worker must be
+   picklable, or the diagnosis it carries is destroyed at the process
+   boundary** — and a stalled pool should be identified by process age against
+   output mtime, not by exit status. (Compare the `pgrep -f` self-match hazard
+   in `docs/agent-guidance.md`: the same class of check that always reads
+   ALIVE.)
+
+**What did NOT change.** No join variant, no default, no committed cell, and no
+figure on any board or tiering. The geometric-join question remains open. The
+fix put the campaign's own detections into the vocabulary the published join
+already required — `stride55_score.assign_standard_tile` over
+`build_map_constrained_index`, a step every other 55-map cell already goes
+through, and one confirmed idempotent at 100.00 % on the three comparators that
+produced it.
+
+**Sources.** `reports/gemini37-image-55map-deltas-2026-09-13.md` § 10.7;
+`outputs/gemini37-image-55map-2026-09-13/post_run_report.md` § 3;
+`reports/tile-mcc-geometric-join-2026-09-12.md` § 0 and § 1 site 2.
+Related: [[Observation 481]] (a wrong answer that looked right),
+[[Observation 482]] (the two-metric board this campaign's cell now leads).
