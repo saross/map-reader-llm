@@ -32,7 +32,9 @@ from scripts.lib_batch_api import (
     _resolve_tile_paths,
     _retry_tile_sync,
     audit_file_storage,
+    aggregate_batch_usage,
     build_jsonl_file,
+    validate_thinking_level,
     cleanup_batch_files,
     complete_batch_unit,
     parse_detections_to_geojson,
@@ -151,6 +153,59 @@ class TestJSONLConstruction:
             assert "key" in line
             assert "request" in line
             assert line["key"] == "tile_001.png"
+
+    @pytest.mark.tier1
+    def test_usage_is_aggregated_from_responses_not_the_job(self) -> None:
+        """Batch usage lives per RESPONSE; the job carries none.
+
+        Shapes are the ones measured on 2026-09-17 against gemini-3.7-flash
+        with an explicit context cache.
+        """
+        results = [
+            {"key": "a.png", "response": {"usageMetadata": {
+                "promptTokenCount": 19999, "candidatesTokenCount": 10,
+                "cachedContentTokenCount": 18909, "thoughtsTokenCount": 271,
+                "totalTokenCount": 20280}}},
+            {"key": "b.png", "response": {"usageMetadata": {
+                "promptTokenCount": 19999, "candidatesTokenCount": 6,
+                "cachedContentTokenCount": 18909, "thoughtsTokenCount": 191,
+                "totalTokenCount": 20196}}},
+            {"key": "c.png", "error": {"code": 3, "message": "invalid"}},
+        ]
+        u = aggregate_batch_usage(results)
+        assert u["total_input_tokens"] == 39998
+        assert u["total_cached_tokens"] == 37818
+        assert u["total_output_tokens"] == 16
+        assert u["total_thoughts_tokens"] == 462
+        assert u["n_responses_with_usage"] == 2      # the errored one contributes nothing
+        assert round(u["cached_share"], 4) == 0.9455
+        # Names must match the real-time path so one auditor reads both modes.
+        assert "total_input_tokens" in u and "total_thoughts_tokens" in u
+
+    @pytest.mark.tier1
+    def test_absent_usage_is_reported_not_recorded_as_zero(self) -> None:
+        """No usage is not the same as a free run."""
+        u = aggregate_batch_usage([{"key": "a.png", "response": {}}])
+        assert u["n_responses_with_usage"] == 0
+        assert u["cached_share"] is None
+        assert "ABSENT" in u["usage_source"]
+
+    @pytest.mark.tier1
+    def test_thinking_level_mismatch_is_refused_before_submission(self) -> None:
+        """`minimal` on 3.7 fails every request under a SUCCEEDED job.
+
+        Measured 2026-09-17: 100 requests, 100 errors, job state SUCCEEDED.
+        """
+        with pytest.raises(ValueError, match="not accepted by"):
+            validate_thinking_level("gemini-3.7-flash", "minimal")
+        with pytest.raises(ValueError, match="not accepted by"):
+            validate_thinking_level("gemini-3-flash-preview", "low")
+        # The floor each family DOES take.
+        validate_thinking_level("gemini-3.7-flash", "low")
+        validate_thinking_level("gemini-3-flash-preview", "minimal")
+        # Unknown families and absent levels pass through.
+        validate_thinking_level("some-future-model", "whatever")
+        validate_thinking_level("gemini-3.7-flash", None)
 
     @pytest.mark.tier1
     def test_cached_content_removes_the_prefix_and_names_the_cache(self) -> None:

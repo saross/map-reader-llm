@@ -740,6 +740,7 @@ def detect_mounds_versioned(
     tile_size=None,
     tiles_dir_override=None,
     use_cache=False,
+    cache_ttl_seconds=86400,
     service_tier=None,
     skip_intent_check=False,
 ):
@@ -944,6 +945,11 @@ def detect_mounds_versioned(
     # Log service tier if specified
     if service_tier:
         print(f"Service tier: {service_tier}")
+        if service_tier == "flex":
+            from scripts.lib_batch_api import recommend_execution_mode
+            advice = recommend_execution_mode(model_name_cfg, "realtime")
+            if advice:
+                print(f"\n  NOTE: {advice}\n")
 
     gen_config_kwargs = {
         "temperature": config.get("temperature", 0.1),
@@ -993,7 +999,13 @@ def detect_mounds_versioned(
                         types.Content(parts=cache_parts, role="user"),
                     ],
                     display_name=f"detect-{config_version_tag}",
-                    ttl="3600s",
+                    # A 55-map pass runs 2-3 hours, so the previous one-hour
+                    # TTL expired MID-PASS and silently reverted the remaining
+                    # tiles to the full input rate — a failure that shows up
+                    # only on the bill, never in the log. The default now
+                    # outlasts any pass this project runs; override with
+                    # --cache-ttl for something longer still.
+                    ttl=f"{cache_ttl_seconds}s",
                 ),
             )
             cache_name = cached_content.name
@@ -1006,7 +1018,7 @@ def detect_mounds_versioned(
             )
             print(
                 f"Context cache created: {cache_name} "
-                f"({token_count} tokens, TTL=1h)"
+                f"({token_count} tokens, TTL={cache_ttl_seconds}s)"
             )
         except Exception as e:
             print(f"WARNING: Cache creation failed ({e}), proceeding without cache")
@@ -1755,6 +1767,12 @@ Examples:
     )
     parser.add_argument("--limit", type=int, help="Process only first N tiles")
     parser.add_argument(
+        "--cache-ttl", type=int, default=86400,
+        help="Context-cache lifetime in seconds (default 86400 = 24 h). Must "
+             "outlast the run: a cache that expires mid-pass silently reverts "
+             "the remaining tiles to the full uncached input rate.",
+    )
+    parser.add_argument(
         "--use-cache", action="store_true",
         help=(
             "Enable Gemini context caching. Caches the shared prompt "
@@ -1834,6 +1852,7 @@ Examples:
             tile_size=args.tile_size,
             tiles_dir_override=args.tiles_dir,
             use_cache=args.use_cache,
+            cache_ttl_seconds=args.cache_ttl,
             service_tier=args.service_tier,
             skip_intent_check=args.skip_intent_check,
         )

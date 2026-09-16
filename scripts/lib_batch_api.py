@@ -606,6 +606,10 @@ def build_jsonl_file(
     # protobuf schema requires uppercase enum names ("MINIMAL").
     thinking_level = config.get("thinking_level")
     if thinking_level:
+        # Validated here rather than at submission: this is the last point at
+        # which the model and the level are both in hand before 24,561
+        # requests are written to disk.
+        validate_thinking_level(config.get("model", ""), thinking_level)
         generation_config["thinking_config"] = {
             "thinking_level": thinking_level.upper(),
         }
@@ -983,6 +987,160 @@ def validate_batch_results(
         )
 
     return matched, missing, errored
+
+
+#: Model families whose FLEX capacity has proved unreliable, and for which
+#: batch is the better default. Flex and batch bill identically — both are
+#: half of list, and a cache hit bills at the cache rate under either — so
+#: preferring batch costs nothing and buys capacity.
+#:
+#: Evidence, 2026-09-16/17: `gemini-3.7-flash` returned 503 UNAVAILABLE
+#: ("This model is currently experiencing high demand") on flex for over
+#: twelve hours and 37 consecutive checks, while a batch job for the same
+#: model on the same account completed in 104 seconds. The newer and more
+#: in-demand the model, the likelier this is.
+FLEX_UNRELIABLE_FAMILIES: tuple[str, ...] = ("gemini-3.7", "gemini-3.8")
+
+
+def recommend_execution_mode(model_name: str, requested_mode: str) -> str | None:
+    """Return a warning when flex is a poor choice for this model, else None.
+
+    Advisory rather than automatic: batch is asynchronous with a 24-hour
+    turnaround target, so switching a caller's mode under it would change the
+    shape of the run, not just its price. The operator decides; this makes the
+    trade visible at the point of choosing.
+
+    Args:
+        model_name: Model about to be dispatched.
+        requested_mode: ``"realtime"`` or ``"batch"``.
+
+    Returns:
+        A human-readable recommendation, or None when nothing is amiss.
+    """
+    if requested_mode == "batch":
+        return None
+    if any(model_name.startswith(f) for f in FLEX_UNRELIABLE_FAMILIES):
+        return (
+            f"{model_name} is a high-demand family whose FLEX capacity has "
+            f"returned 503 for hours at a stretch (2026-09-16/17: 37 "
+            f"consecutive failures on flex; a batch job for the same model "
+            f"finished in 104 s). Batch bills identically to flex and does "
+            f"not compete for the same capacity — prefer --mode batch, or "
+            f"switch to it early if flex under-delivers."
+        )
+    return None
+
+
+#: Thinking levels each model family actually accepts. The families use
+#: DIFFERENT NAMES for the same idea — the floor is `minimal` on the Gemini 3
+#: line and `low` on 3.7/3.8 — and sending the wrong one is rejected per
+#: request with a bare "Request contains an invalid argument", while the
+#: enclosing batch job still reports SUCCEEDED. Measured 2026-09-17: a
+#: 100-request probe returned 100 errors under a job marked succeeded, because
+#: the prompt config's `minimal` default reached a 3.7 submission.
+THINKING_LEVELS_BY_FAMILY: dict[str, frozenset[str]] = {
+    "gemini-3.7": frozenset({"low", "medium", "high"}),
+    "gemini-3.8": frozenset({"low", "medium", "high"}),
+    "gemini-3-flash": frozenset({"minimal", "medium", "high"}),
+    "gemini-3.1-pro": frozenset({"medium", "high"}),
+    "gemini-3.5": frozenset({"minimal", "medium", "high"}),
+}
+
+
+def validate_thinking_level(model_name: str, thinking_level: str | None) -> None:
+    """Raise if *thinking_level* is not one this model accepts.
+
+    Checked BEFORE submission because the failure mode is expensive and quiet:
+    every request is rejected individually while the job reports success, so
+    the operator sees a completed job and an empty output rather than an
+    error. An unknown model family is allowed through rather than blocked —
+    this guard exists to catch a known mismatch, not to gate new models.
+
+    Args:
+        model_name: Model the batch will name.
+        thinking_level: Level from the config or CLI override, or None.
+
+    Raises:
+        ValueError: The level is invalid for a family we know about.
+    """
+    if not thinking_level:
+        return
+    for family, allowed in THINKING_LEVELS_BY_FAMILY.items():
+        if model_name.startswith(family):
+            if thinking_level.lower() not in allowed:
+                raise ValueError(
+                    f"thinking_level {thinking_level!r} is not accepted by "
+                    f"{model_name}; it takes {sorted(allowed)}. The families "
+                    f"name their floor differently — `minimal` on the Gemini 3 "
+                    f"line, `low` on 3.7/3.8 — and the wrong one fails every "
+                    f"request while the batch job still reports SUCCEEDED."
+                )
+            return
+
+
+def aggregate_batch_usage(results: list[dict]) -> dict:
+    """Sum per-response usage across a batch's results file.
+
+    The Batch API reports usage PER RESPONSE, not on the job: a completed
+    ``BatchJob`` carries no ``usage_metadata`` at all. Reading the job alone
+    therefore yields nothing, which is why this project's 2026-04-15 Pro
+    stages were recorded as having run with zero tokens and are described in
+    ``outputs/verifier-meta-recovery-2026-09-14.json`` as having "ran through
+    the Batch API, which returns no per-response usage". Measured 2026-09-17,
+    that is not so — the usage is there, in the results file, and includes
+    both counts that decide cost:
+
+        {'promptTokenCount': 19999, 'candidatesTokenCount': 10,
+         'cachedContentTokenCount': 18909, 'thoughtsTokenCount': 271}
+
+    Field names in the output are those the REAL-TIME path records
+    (``scripts/lib_llm_metadata.py``), so one auditor reads both modes.
+
+    Args:
+        results: Parsed result dicts from :func:`retrieve_batch_results`.
+
+    Returns:
+        A usage dict in real-time field naming, plus ``n_responses_with_usage``
+        so a partial report can be told from a complete one. ``cached_share``
+        is None when no response reported usage, which is distinct from a
+        share of zero.
+    """
+    totals = {
+        "total_input_tokens": 0,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 0,
+        "total_thoughts_tokens": 0,
+        "total_tokens": 0,
+    }
+    field_map = {
+        "promptTokenCount": "total_input_tokens",
+        "cachedContentTokenCount": "total_cached_tokens",
+        "candidatesTokenCount": "total_output_tokens",
+        "thoughtsTokenCount": "total_thoughts_tokens",
+        "totalTokenCount": "total_tokens",
+    }
+    n_with_usage = 0
+    for result in results:
+        response = result.get("response") or {}
+        usage = response.get("usageMetadata") or response.get("usage_metadata")
+        if not usage:
+            continue
+        n_with_usage += 1
+        for api_name, our_name in field_map.items():
+            value = usage.get(api_name)
+            if isinstance(value, int):
+                totals[our_name] += value
+
+    totals["n_responses_with_usage"] = n_with_usage
+    totals["usage_source"] = (
+        "batch results file (per-response usageMetadata)" if n_with_usage
+        else "ABSENT — no response carried usageMetadata"
+    )
+    totals["cached_share"] = (
+        totals["total_cached_tokens"] / totals["total_input_tokens"]
+        if totals["total_input_tokens"] else None
+    )
+    return totals
 
 
 def parse_response_with_repair(response_text: str) -> dict | list:
@@ -1935,53 +2093,28 @@ def complete_batch_unit(
     processed_tiles = set(matched.keys()) - set(still_failed)
     failed_tiles = missing_tiles + errored + still_failed
 
-    # Extract usage stats from batch job metadata if available.
-    #
-    # The field NAMES and the CACHED and THINKING counts both matter. This
-    # block previously recorded `input_tokens` / `output_tokens` /
-    # `total_tokens`, which `scripts/audit_proposer_cost.py` cannot read (it
-    # requires `total_input_tokens` and `total_output_tokens`) and which drop
-    # the two counts that decide the cost:
-    #
-    #   * `cached_content_token_count` — implicit prefix caching bills at the
-    #     cache rate, a fifth to a fifteenth of the input rate. On this
-    #     project's image legs roughly 81 % of input tokens are cached, so
-    #     losing this count OVERSTATES cost by about 2.5x, and losing the
-    #     ability to measure it means a batch leg cannot be compared with a
-    #     real-time one at all.
-    #   * `thoughts_token_count` — billed at the OUTPUT rate. Gemini 3.7 at
-    #     `low` spends about 286 thought-tokens per tile against 57 output
-    #     tokens, so omitting it UNDERSTATES cost by roughly 5x on the output
-    #     line.
-    #
-    # Both are exposed by google-genai's GenerateContentResponseUsageMetadata
-    # (SDK 1.71.0). Names mirror the real-time path in
-    # `scripts/lib_llm_metadata.py` so one auditor reads both.
-    usage_stats = None
-    um = getattr(completed_job, "usage_metadata", None)
-    if um is not None:
-        input_tokens = getattr(um, "prompt_token_count", 0) or 0
-        cached_tokens = getattr(um, "cached_content_token_count", 0) or 0
-        usage_stats = {
-            "total_input_tokens": input_tokens,
-            "total_cached_tokens": cached_tokens,
-            "total_output_tokens": getattr(um, "candidates_token_count", 0) or 0,
-            "total_thoughts_tokens": getattr(um, "thoughts_token_count", 0) or 0,
-            "total_tokens": getattr(um, "total_token_count", 0) or 0,
-            # Recorded so a zero cache share can be told apart from an API that
-            # does not report one: a batch leg whose cached count is absent is
-            # NOT evidence that caching did not happen.
-            "cached_share": (cached_tokens / input_tokens) if input_tokens else None,
-            "usage_source": "batch job usage_metadata",
-        }
+    # Usage comes from the RESULTS FILE, not the job. A completed BatchJob
+    # carries no usage_metadata; the per-response usageMetadata does, and it
+    # includes `cachedContentTokenCount` and `thoughtsTokenCount` — the two
+    # counts that decide the bill. Reading the job instead is what left the
+    # 2026-04-15 Pro stages recorded as zero-token and unauditable.
+    usage_stats = aggregate_batch_usage(results)
+    if usage_stats.get("n_responses_with_usage"):
+        logger.info(
+            "batch usage: %s input (%s cached, share %.3f), %s output, "
+            "%s thinking, from %d/%d responses",
+            f"{usage_stats['total_input_tokens']:,}",
+            f"{usage_stats['total_cached_tokens']:,}",
+            usage_stats["cached_share"] or 0.0,
+            f"{usage_stats['total_output_tokens']:,}",
+            f"{usage_stats['total_thoughts_tokens']:,}",
+            usage_stats["n_responses_with_usage"], len(results),
+        )
     else:
-        # Not the same as zero usage. The Batch API returned no per-response
-        # usage at all on this project's 2026-04-15 Pro stages
-        # (outputs/verifier-meta-recovery-2026-09-14.json,
-        # "batch-main-pass-recorded-no-tokens"), which left those passes
-        # permanently unauditable. Say so in the metadata rather than writing
-        # zeros that read as a free run.
-        usage_stats = {"usage_source": "ABSENT — batch job reported no usage_metadata"}
+        logger.warning(
+            "batch reported NO per-response usage — this leg cannot be "
+            "audited from its metadata; see aggregate_batch_usage()",
+        )
 
     # Write outputs
     cost_estimate = write_batch_outputs(
