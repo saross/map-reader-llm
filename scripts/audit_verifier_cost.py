@@ -131,12 +131,19 @@ __version__ = "1.0.0"
 
 #: Glob patterns for a prior pass's meta under the LEGACY conventions, where
 #: the surviving ``run.meta.json`` describes the cleanup and the main pass
-#: lives in an operator-made copy. Both hold a pass DISJOINT from the primary
-#: meta's, so both are summed into the stage total.
+#: lives in an operator-made copy. A match normally holds a pass DISJOINT from
+#: the primary meta's and is summed into the stage total — but the conventions
+#: give one pass more than one name, and a stage can hold two of them for the
+#: same pass, so ``audit_stage`` de-duplicates by pass identity before summing.
+#:
+#: ORDER IS THE PREFERENCE: when two names hold one pass, the FIRST pattern's
+#: file is the one reported and priced. ``run.meta.main-<date>.json`` leads
+#: because it is the durable, committed name; the ``*.backup`` spellings are
+#: operator artefacts that may exist on one machine only.
 LEGACY_PRIOR_META_GLOBS: tuple[str, ...] = (
+    "run.meta.main-*.json",
     "run.meta.json.pre-cleanup-*.backup",
     "run.meta.json.pre-*.backup",
-    "run.meta.main-*.json",
 )
 
 #: Default recovery register: passes recovered from git history by

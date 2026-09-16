@@ -240,7 +240,11 @@ class TestTwoFileStages:
         audit = audit_stage(stage)
         counted = [p for p in audit.passes if p.counted]
         assert len(counted) == 2, [p.source for p in counted]
-        assert sum(1 for p in counted if p.kind == "legacy-prior") == 1
+        priors = [p for p in counted if p.kind == "legacy-prior"]
+        assert len(priors) == 1
+        # The DURABLE, committed name is the one kept — not the operator
+        # backup, which may exist on one machine only.
+        assert priors[0].source == "run.meta.main-2026-09-04.json"
         assert any("already counted" in note for note in audit.notes)
 
     def test_two_distinct_legacy_priors_are_both_summed(
