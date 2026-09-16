@@ -186,6 +186,10 @@ class PassAudit:
         counted: Whether this row contributes to the stage total. A merged
             meta's top-level block is priced as a cross-check and is NOT
             counted, because the per-pass blocks it summarises are.
+        identity: The pass's own identity, from ``_pass_identity``. Two rows
+            describing ONE pass share it, whichever file or register entry
+            each was read from; ``audit_stage`` uses it to refuse to count a
+            pass twice.
     """
 
     source: str
@@ -196,6 +200,7 @@ class PassAudit:
     audited_usd: float
     meta_cost_usd: float | None
     counted: bool = True
+    identity: str = ""
 
 
 @dataclass
@@ -379,6 +384,7 @@ def _price_block(
     tier: str,
     default_model: str,
     counted: bool = True,
+    identity: str | None = None,
 ) -> PassAudit:
     """Price one pass block on the audited basis.
 
@@ -390,6 +396,12 @@ def _price_block(
         tier: Service tier to price at.
         default_model: Rate card to use when the block records no model.
         counted: Whether the row contributes to the stage total.
+        identity: Override for the pass's identity. Blocks ENUMERATED inside
+            one merged meta are known-distinct by construction — the writer
+            listed them — so they pass their own source here rather than be
+            compared by content, which two passes can legitimately share.
+            Passes DISCOVERED by globbing files or reading the register have
+            no such guarantee and take the content-derived default.
 
     Returns:
         The priced pass.
@@ -429,6 +441,7 @@ def _price_block(
         ),
         meta_cost_usd=(block.get("cost_estimate") or {}).get("total_cost_usd"),
         counted=counted,
+        identity=identity if identity is not None else _pass_identity(block),
     )
 
 
@@ -482,6 +495,7 @@ def audit_stage(
             _price_block(
                 main_pass,
                 source="run.meta.json:main_pass",
+                identity="block:run.meta.json:main_pass",
                 kind="main",
                 tier=tier,
                 default_model=default_model,
@@ -492,6 +506,7 @@ def audit_stage(
                 _price_block(
                     entry,
                     source=f"run.meta.json:cleanup_passes[{index}]",
+                    identity=f"block:run.meta.json:cleanup_passes[{index}]",
                     kind=entry.get("kind", "cleanup"),
                     tier=tier,
                     default_model=default_model,
@@ -502,6 +517,7 @@ def audit_stage(
             _price_block(
                 meta,
                 source="run.meta.json (merged totals)",
+                identity="block:run.meta.json (merged totals)",
                 kind="merged-total",
                 tier=tier,
                 default_model=default_model,
@@ -571,26 +587,18 @@ def audit_stage(
         # that overlaps a file on disc cannot double-count the same pass.
         entry = _register_entry(register or {}, stage)
         if entry is not None:
-            counted_run_ids = {
-                (meta.get("run_id") if meta else None)
-                for meta in (
-                    [meta]
-                    + [
-                        _load_json(path)
-                        for pattern in LEGACY_PRIOR_META_GLOBS
-                        for path in sorted(stage.glob(pattern))
-                    ]
-                )
-            }
             added = 0
             for recovered in entry.get("recovered_passes") or []:
-                if recovered.get("run_id") in counted_run_ids:
+                identity = _pass_identity(recovered)
+                if identity in counted_identities:
                     notes.append(
                         "register pass "
-                        f"{recovered.get('source', '?')} skipped: its run_id "
-                        "is already counted from a file on disc",
+                        f"{recovered.get('source', '?')} skipped: it holds a "
+                        "pass already counted from a file on disc "
+                        f"({identity.split(':', 1)[0].replace('digest', 'identical content')})",
                     )
                     continue
+                counted_identities.add(identity)
                 passes.append(
                     _price_block(
                         recovered,
@@ -624,6 +632,27 @@ def audit_stage(
                 )
         audited_total = sum(p.audited_usd for p in passes if p.counted)
         items_covered = sum(p.items for p in passes if p.counted)
+
+    # ONE INVARIANT over every source. Each branch guards its own additions,
+    # but the stage total is only trustworthy if no pass is counted twice by
+    # ANY route, so the assembled result is checked once here. A duplicate at
+    # this point is a defect in a guard above, not a data condition, so it is
+    # reported loudly rather than silently corrected — a wrong dollar figure
+    # that looks right is the failure this auditor exists to prevent.
+    seen: dict[str, str] = {}
+    for pass_audit in passes:
+        if not pass_audit.counted:
+            continue
+        identity = pass_audit.identity
+        if identity in seen:
+            notes.append(
+                "DOUBLE-COUNT: "
+                f"{pass_audit.source} holds the same pass as {seen[identity]} "
+                "and both are counted into this stage's total — the figure "
+                "below is overstated; this is a guard defect, please report it",
+            )
+        else:
+            seen[identity] = pass_audit.source
 
     orphan_sidecars = sorted(
         path.name for path in stage.glob(FIXED_SIDECAR_GLOB)

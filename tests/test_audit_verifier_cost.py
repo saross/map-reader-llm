@@ -270,6 +270,32 @@ class TestTwoFileStages:
             1 for p in audit.passes if p.counted and p.kind == "legacy-prior"
         ) == 2
 
+    def test_two_cleanup_blocks_with_identical_usage_are_both_counted(
+        self, tmp_path: Path,
+    ) -> None:
+        """Blocks listed inside one merged meta are known-distinct.
+
+        Two passes may legitimately record identical usage, so the closing
+        invariant must not read a merged meta's own enumeration as a
+        double-count. Identity for those blocks comes from their position, not
+        their content.
+        """
+        main = _read(GS_LEG / "verify_k3_arm1" / "run.meta.json")
+        cleanup = _read(GS_LEG / "verify_k3_arm2" / "run.meta.json")
+        merged = merge_cleanup_meta(main, cleanup)
+        # A second cleanup identical to the first in every priced respect.
+        merged["cleanup_passes"] = [
+            merged["cleanup_passes"][0],
+            json.loads(json.dumps(merged["cleanup_passes"][0])),
+        ]
+        stage = _write_stage(tmp_path / "verify_twin_cleanups", merged,
+                             results=1244)
+
+        audit = audit_stage(stage)
+        counted = [p for p in audit.passes if p.counted]
+        assert len(counted) == 3, [p.source for p in counted]
+        assert not [n for n in audit.notes if "DOUBLE-COUNT" in n]
+
     def test_merge_sidecars_are_not_double_counted(
         self, tmp_path: Path,
     ) -> None:

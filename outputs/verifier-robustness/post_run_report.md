@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — verifier-robustness
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `4fc81d735`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `2d1726b6e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/verifier-robustness` · **Registry status**: active · **Purpose**: Verifier-robustness programme: determinism (n=1 vindicated), proposer-input band, temperature/thinking matrix, model roles, compute allocation, operational maximum, pass-budget Pareto. Meta-rule: on a within-noise tie, take the cheaper config.
 
@@ -141,7 +141,7 @@ A run is linked to an analysis when the analysis's `conditions_compared` names o
 |---|---|---|---|---|---|---|---|---|
 | `gs-era2-verified-board-2026-09-10` | 6 of 103 | leaderboard | `H2`, `H1` | post-hoc | Results | — | 2026-09-16T02:58:00Z | `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json` |
 | `min-vs-high-thinking-pv` | 1 of 7 | leaderboard | `H2`, `H3` | post-hoc | Results | `E56`, `E62` | 2026-06-12T06:59:01Z | `results/verifier-robustness` |
-| `null-exemplar-sensitivity-2026-09-13` | 6 of 235 | comparison | — | post-hoc | Appendix | — | not supplied | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
+| `null-exemplar-sensitivity-2026-09-13` | 6 of 235 | comparison | — | post-hoc | Appendix | — | 2026-09-16T06:43:40Z | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
 | `pass-budget-pareto` | 2 of 5 | leaderboard | `H2`, `H3` | post-hoc | Results | `E56`, `E62` | 2026-06-12T06:59:01Z | `results/verifier-robustness/pareto` |
 | `pass-budget-pareto-v2` | 2 of 7 | leaderboard | `H2`, `H3` | post-hoc | Results | `E56`, `E62` | 2026-09-12T09:03:09Z | `results/verifier-robustness/pareto` |
 | `uplift-supplement-flatten` | 8 of 441 | diagnostic | — | post-hoc | Appendix | — | 2026-09-10T22:55:40Z | `results/uplift-supplement/conditions.csv` |
@@ -190,7 +190,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `4fc81d735` |
+| Source commit | `2d1726b6e` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

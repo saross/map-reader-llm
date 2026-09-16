@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — pv-diag-384
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `4fc81d735`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `2d1726b6e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/pv-diag-384` · **Registry status**: active · **Purpose**: not supplied
 
@@ -1106,7 +1106,7 @@ A run is linked to an analysis when the analysis's `conditions_compared` names o
 | `k-ladder-2026-09-12` | 43 of 94 | comparison | `H3`, `H13` | post-hoc | Results | `E56`, `E85` | 2026-09-13T06:58:12Z | `results/k-ladder-2026-09-12/findings.md` |
 | `min-vs-high-thinking-pv` | 6 of 7 | leaderboard | `H2`, `H3` | post-hoc | Results | `E56`, `E62` | 2026-06-12T06:59:01Z | `results/verifier-robustness` |
 | `n1-baseline-matrix-384` | 10 of 18 | leaderboard | `H1`, `H7` | post-hoc | Results | `E57` | 2026-06-04T02:05:31Z | `results/paper-eval/n1/384px-14buf-mcc` |
-| `null-exemplar-sensitivity-2026-09-13` | 115 of 235 | comparison | — | post-hoc | Appendix | — | not supplied | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
+| `null-exemplar-sensitivity-2026-09-13` | 115 of 235 | comparison | — | post-hoc | Appendix | — | 2026-09-16T06:43:40Z | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
 | `pass-budget-pareto` | 3 of 5 | leaderboard | `H2`, `H3` | post-hoc | Results | `E56`, `E62` | 2026-06-12T06:59:01Z | `results/verifier-robustness/pareto` |
 | `pass-budget-pareto-v2` | 5 of 7 | leaderboard | `H2`, `H3` | post-hoc | Results | `E56`, `E62` | 2026-09-12T09:03:09Z | `results/verifier-robustness/pareto` |
 | `pv-diag-384-consensus-calibration` | 29 of 29 | sweep | `H3` | post-hoc | Results | `E71` | not supplied | `results/rescore-2026-06-05/pv-diag-384/consensus-sweep` |
@@ -1217,7 +1217,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `4fc81d735` |
+| Source commit | `2d1726b6e` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

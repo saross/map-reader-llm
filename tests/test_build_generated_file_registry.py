@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import io
 import json
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -202,6 +203,32 @@ def test_enumerate_mine_scope(tmp_path):
         _write(tmp_path / rel, "# stub\n")
     got = [p.as_posix() for p in enumerate_mine(tmp_path)]
     assert got == sorted(keep)
+
+
+def test_enumerate_mine_skips_untracked_and_gitignored_files(tmp_path):
+    """The registry describes the REPOSITORY, not one working copy.
+
+    `outputs/ab-plus/_work/` is gitignored on purpose — it holds copyrighted
+    extracted page text and this repository is public — but a plain filesystem
+    glob enumerated its 93 files anyway, baking one machine's untracked state
+    into the committed registry and making the `--check` drift guard pass only
+    there.
+    """
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True)
+    tracked = "results/a.md"
+    untracked = "outputs/ab-plus/_work/paper_2024.overflow-notes.md"
+    for rel in (tracked, untracked):
+        _write(tmp_path / rel, "# stub\n")
+    subprocess.run(["git", "-C", str(tmp_path), "add", tracked], check=True)
+
+    got = [p.as_posix() for p in enumerate_mine(tmp_path)]
+    assert got == [tracked]
+
+
+def test_enumerate_mine_is_unfiltered_outside_a_repository(tmp_path):
+    """No git means "do not filter", not "the repository tracks nothing"."""
+    _write(tmp_path / "results/a.md", "# stub\n")
+    assert [p.as_posix() for p in enumerate_mine(tmp_path)] == ["results/a.md"]
 
 
 @pytest.mark.tier1

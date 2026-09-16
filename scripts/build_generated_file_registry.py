@@ -106,6 +106,34 @@ PREREG_MINE_DOCS = (
 )
 
 
+def _tracked_paths(root: Path) -> set[Path] | None:
+    """Return every path git tracks, relative to *root*.
+
+    The registry must describe the REPOSITORY, not the working copy that
+    happened to build it: a gitignored or merely-untracked file present on one
+    machine would otherwise be baked into the committed registry and make its
+    drift guard unreproducible everywhere else.
+
+    Args:
+        root: Repository root.
+
+    Returns:
+        Tracked paths relative to *root*, or None when git cannot be consulted
+        — a directory that is not a repository, say. None means "do not
+        filter", which is distinct from an empty set ("this repository tracks
+        nothing"); conflating the two would silently empty the registry.
+    """
+    result = subprocess.run(
+        ["git", "-C", str(root), "ls-files", "-z"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        return None
+    return {Path(name) for name in result.stdout.split("\0") if name}
+
+
 def enumerate_mine(root: Path) -> list[Path]:
     """Enumerate the mine's markdown corpus per charter § 2.
 
@@ -123,12 +151,23 @@ def enumerate_mine(root: Path) -> list[Path]:
     the revision policy covers, and an exclusion list would be one more
     place for a class to hide.
 
+    "In the tree" means TRACKED BY GIT, not merely present on one disc. A
+    plain filesystem glob enumerated whatever the scanning machine happened
+    to hold, so the committed registry recorded 93 gitignored files from
+    ``outputs/ab-plus/_work/`` — an area excluded on purpose, because it
+    holds copyrighted extracted page text and this repository is public —
+    and the ``--check`` drift guard could then only pass on the one machine
+    that built it. Filtering to ``git ls-files`` makes the registry a
+    property of the repository rather than of a working copy, so it
+    reproduces on any checkout, in a worktree, and in CI.
+
     Args:
         root: Repository root.
 
     Returns:
-        Sorted list of paths relative to ``root``.
+        Sorted list of paths relative to ``root``, tracked files only.
     """
+    tracked = _tracked_paths(root)
     files: set[Path] = set()
     files.update(root.glob("results/**/*.md"))
     files.update(root.glob("outputs/**/*.md"))
@@ -146,7 +185,11 @@ def enumerate_mine(root: Path) -> list[Path]:
     outline = root / "docs" / "methods-outline.md"
     if outline.exists():
         files.add(outline)
-    return sorted(p.relative_to(root) for p in files)
+    return sorted(
+        rel
+        for rel in (p.relative_to(root) for p in files)
+        if tracked is None or rel in tracked
+    )
 
 
 def head_lines(path: Path, n: int = HEAD_LINES) -> list[str]:

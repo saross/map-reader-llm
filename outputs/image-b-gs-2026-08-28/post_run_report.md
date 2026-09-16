@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — image-b-gs-2026-08-28
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `4fc81d735`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `2d1726b6e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/image-b-gs-2026-08-28` · **Registry status**: active · **Purpose**: Image variant of the leading configuration on the GS corpus: the modality head-to-head under matched everything (vs the committed text-B anchor), plus the first matched MINIMAL-vs-HIGH image thinking pair. Card planning/image-b-gs-2026-08-28.md.
 
@@ -157,7 +157,7 @@ A run is linked to an analysis when the analysis's `conditions_compared` names o
 | `gs-era2-verified-board-2026-09-10` | 2 of 103 | leaderboard | `H2`, `H1` | post-hoc | Results | — | 2026-09-16T02:58:00Z | `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json` |
 | `image-b-modality-2026-08-28` | 1 of 2 | comparison | `H1` | registered-exploratory | Results | — | 2026-08-28T12:43:12Z | `results/image-b-gs-2026-08-28/analysis.json` |
 | `image-b-thinking-pair-2026-08-28` | 2 of 2 | comparison | `H1` | registered-exploratory | Results | — | 2026-08-28T12:43:12Z | `results/image-b-gs-2026-08-28/high/pair_verdicts.json` |
-| `null-exemplar-sensitivity-2026-09-13` | 2 of 235 | comparison | — | post-hoc | Appendix | — | not supplied | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
+| `null-exemplar-sensitivity-2026-09-13` | 2 of 235 | comparison | — | post-hoc | Appendix | — | 2026-09-16T06:43:40Z | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
 | `uplift-supplement-flatten` | 2 of 441 | diagnostic | — | post-hoc | Appendix | — | 2026-09-10T22:55:40Z | `results/uplift-supplement/conditions.csv` |
 | `verifier-uplift-pairing` | 2 of 170 | comparison | `H2` | post-hoc | Appendix | — | 2026-09-12T06:04:30Z | `results/uplift-supplement/verifier-uplift.csv` |
 
@@ -196,7 +196,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `4fc81d735` |
+| Source commit | `2d1726b6e` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

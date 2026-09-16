@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — retest-phase2c
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `4fc81d735`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `2d1726b6e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/retest/phase2c` · **Registry status**: active · **Purpose**: not supplied
 
@@ -133,7 +133,7 @@ A run is linked to an analysis when the analysis's `conditions_compared` names o
 |---|---|---|---|---|---|---|---|---|
 | `era1-leaderboard` | 13 of 82 | leaderboard | `H2`, `H1`, `H3`, `H4`, `H5`, `H7`, `H8`, `H9` | post-hoc | Results | `E25`, `E27`, `E28`, `E29`, `E30`, `E31`, `E36`, `E37`, `E58` | 2026-06-09T01:22:50Z | `results/era1-leaderboard` |
 | `era1-single-pass-baseline-matrix` | 13 of 36 | leaderboard | `H1`, `H4`, `H5`, `H7`, `H8` | post-hoc | Results | `E25`, `E27`, `E28`, `E29`, `E30`, `E31`, `E36` | 2026-06-09T01:22:50Z | `results/paper-eval/n1/512px-14buf-mcc` |
-| `null-exemplar-sensitivity-2026-09-13` | 13 of 235 | comparison | — | post-hoc | Appendix | — | not supplied | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
+| `null-exemplar-sensitivity-2026-09-13` | 13 of 235 | comparison | — | post-hoc | Appendix | — | 2026-09-16T06:43:40Z | `results/null-exemplar-sensitivity-2026-09-13/findings.md` |
 | `uplift-supplement-flatten` | 13 of 441 | diagnostic | — | post-hoc | Appendix | — | 2026-09-10T22:55:40Z | `results/uplift-supplement/conditions.csv` |
 
 ## 7. Findings documents (1)
@@ -193,7 +193,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `4fc81d735` |
+| Source commit | `2d1726b6e` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 
