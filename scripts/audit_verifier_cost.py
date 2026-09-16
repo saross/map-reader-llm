@@ -109,6 +109,7 @@ Licence: Apache 2.0
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from dataclasses import asdict, dataclass, field
@@ -245,6 +246,47 @@ def _load_json(path: Path) -> dict[str, Any]:
     except (OSError, json.JSONDecodeError):
         return {}
     return loaded if isinstance(loaded, dict) else {}
+
+
+def _pass_identity(meta: dict[str, Any] | None) -> str:
+    """Return a stable identity for one pass, for de-duplication.
+
+    A stage can hold the same pass under two names — the operator's
+    ``run.meta.json.pre-cleanup-<timestamp>.backup`` beside the same bytes
+    saved as ``run.meta.main-<date>.json``, for instance — and summing both
+    would double the stage's audited cost. ``run_id`` is the pass's own
+    identifier and is preferred; a legacy meta that records none falls back
+    to a hash of its usage and execution stats, which is what the pricing
+    reads anyway.
+
+    Args:
+        meta: A pass meta, or None.
+
+    Returns:
+        An identity string. Two metas describing one pass share it.
+
+    Examples:
+        >>> _pass_identity({"run_id": "abc"})
+        'run_id:abc'
+        >>> a = {"usage_stats": {"input_tokens": 10}}
+        >>> _pass_identity(a) == _pass_identity(dict(a))
+        True
+    """
+    if not meta:
+        return "empty"
+    run_id = meta.get("run_id")
+    if run_id:
+        return f"run_id:{run_id}"
+    payload = json.dumps(
+        {
+            "usage_stats": meta.get("usage_stats"),
+            "execution_stats": meta.get("execution_stats"),
+            "configuration": meta.get("configuration"),
+        },
+        sort_keys=True,
+        default=str,
+    )
+    return "digest:" + hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def load_recovery_register(path: Path | None) -> dict[str, Any]:
@@ -481,13 +523,32 @@ def audit_stage(
             default_model=default_model,
         )
         passes.append(primary)
+        # The legacy conventions name the SAME surviving pass in more than one
+        # way, so two globs can match two files holding one pass: a stage that
+        # carries both `run.meta.json.pre-cleanup-*.backup` and
+        # `run.meta.main-*.json` has been seen holding byte-identical copies.
+        # Summing both double-counts the pass and doubles the stage's dollar
+        # figure, so identity is taken from the pass itself — its `run_id`,
+        # or its content when a legacy meta records none — exactly as the
+        # recovery register's guard below does.
+        counted_identities: set[str] = {_pass_identity(meta)}
         for pattern in LEGACY_PRIOR_META_GLOBS:
             for path in sorted(stage.glob(pattern)):
                 if any(p.source == path.name for p in passes):
                     continue
+                prior = _load_json(path)
+                identity = _pass_identity(prior)
+                if identity in counted_identities:
+                    notes.append(
+                        f"{path.name} skipped: it holds a pass already "
+                        "counted from another file in this stage "
+                        f"({'run_id ' + prior['run_id'] if prior.get('run_id') else 'identical content'})",
+                    )
+                    continue
+                counted_identities.add(identity)
                 passes.append(
                     _price_block(
-                        _load_json(path),
+                        prior,
                         source=path.name,
                         kind="legacy-prior",
                         tier=tier,

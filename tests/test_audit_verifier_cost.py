@@ -214,6 +214,58 @@ class TestTwoFileStages:
         # The merged total is priced once, not once per block.
         assert len([p for p in audit.passes if p.kind == "merged-total"]) == 1
 
+    def test_one_pass_under_two_legacy_names_is_counted_once(
+        self, tmp_path: Path,
+    ) -> None:
+        """Two legacy globs matching one pass must not double the stage.
+
+        The legacy conventions give the surviving main pass more than one
+        name, and a stage can hold both: ``verify_swap38`` on sapphire carries
+        ``run.meta.json.pre-cleanup-20260904T044039.backup`` byte-identical to
+        the committed ``run.meta.main-2026-09-04.json``. Summing both counted
+        790 candidates twice and doubled the stage's dollar figure.
+        """
+        cleanup = _read(GS_LEG / "verify_k3_arm2" / "run.meta.json")
+        main = _read(GS_LEG / "verify_k3_arm1" / "run.meta.json")
+        stage = _write_stage(
+            tmp_path / "verify_two_names",
+            cleanup,
+            results=1,
+            extra_files={
+                "run.meta.main-2026-09-04.json": main,
+                "run.meta.json.pre-cleanup-20260904T044039.backup": main,
+            },
+        )
+
+        audit = audit_stage(stage)
+        counted = [p for p in audit.passes if p.counted]
+        assert len(counted) == 2, [p.source for p in counted]
+        assert sum(1 for p in counted if p.kind == "legacy-prior") == 1
+        assert any("already counted" in note for note in audit.notes)
+
+    def test_two_distinct_legacy_priors_are_both_summed(
+        self, tmp_path: Path,
+    ) -> None:
+        """The guard must not suppress a genuinely distinct second pass."""
+        cleanup = _read(GS_LEG / "verify_k3_arm2" / "run.meta.json")
+        main = _read(GS_LEG / "verify_k3_arm1" / "run.meta.json")
+        other = dict(main)
+        other["run_id"] = "a-different-pass"
+        stage = _write_stage(
+            tmp_path / "verify_two_passes",
+            cleanup,
+            results=1,
+            extra_files={
+                "run.meta.main-2026-09-04.json": main,
+                "run.meta.json.pre-cleanup-20260904T044039.backup": other,
+            },
+        )
+
+        audit = audit_stage(stage)
+        assert sum(
+            1 for p in audit.passes if p.counted and p.kind == "legacy-prior"
+        ) == 2
+
     def test_merge_sidecars_are_not_double_counted(
         self, tmp_path: Path,
     ) -> None:
