@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-image-gs-2026-09-01
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `c576dae8d`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `4fc81d735`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-image-gs-2026-09-01` · **Registry status**: active · **Purpose**: Image variant of the 3.7 GS screen under matched everything, for the difference-in-differences against the Gemini-3 modality contrast (image-b-gs-2026-08-28). Predictions I1-I5 committed at PI go (card planning/gemini37-image-gs-2026-08-30.md). The escalation trigger was not met; no 55-map image extension followed.
 
@@ -154,7 +154,11 @@ No erratum in `docs/methodology/preregistration/protocol-errata.md` is registere
 
 ## 9. Documents and structure in the run directory
 
-No `experiment_intent.md`, `evaluation.md`, `pre_launch_audit.md` or retrospective report under this directory.
+| Document class | Filename | Count |
+|---|---|---:|
+| per-pass/per-run intent | `experiment_intent.md` | 16 |
+
+These classes are in Revision-Policy scope going forward (`docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope").
 
 ### 9.1 Registered pools
 
@@ -171,7 +175,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `c576dae8d` |
+| Source commit | `4fc81d735` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 
