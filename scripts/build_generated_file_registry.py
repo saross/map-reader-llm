@@ -151,6 +151,13 @@ def enumerate_mine(root: Path) -> list[Path]:
     the revision policy covers, and an exclusion list would be one more
     place for a class to hide.
 
+    ORDERING: because enumeration reads the git index, a newly authored file
+    must be STAGED (``git add``) before the registry is rebuilt, or the
+    committed registry will omit a file that the next commit makes tracked and
+    the ``--check`` guard will fail on every other checkout. Stage, rebuild,
+    then commit. (This is not hypothetical — it happened on the very commit
+    that introduced this filter.)
+
     "In the tree" means TRACKED BY GIT, not merely present on one disc. A
     plain filesystem glob enumerated whatever the scanning machine happened
     to hold, so the committed registry recorded 93 gitignored files from
