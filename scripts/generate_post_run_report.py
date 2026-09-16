@@ -1869,11 +1869,10 @@ def check_signature_integrity(new_obj: dict) -> tuple[list[str], list[str]]:
       signature with no record of WHAT was approved is the defect this object
       exists to end — 50 rows once carried a bare timestamp, and no one could
       say afterwards what the PI had been shown.
-    * ``legacy-signed`` must carry a ``signed_at`` — it asserts a real stamp —
-      and must NOT invent an ``attests``, because its scope was never recorded
-      and writing one now would be fabrication.
     * ``unsigned``, ``unsigned-by-design`` and ``re-sign-pending`` must not
-      carry a ``signed_at``: none of them is a live signature.
+      carry a ``signed_at``: none of them is a live signature. This is what
+      stops a pre-2026-09-16 authoring stamp being quietly promoted back into
+      a signature date.
 
     Args:
         new_obj: the freshly-assembled analyses manifest object.
@@ -1899,18 +1898,6 @@ def check_signature_integrity(new_obj: dict) -> tuple[list[str], list[str]]:
                 errors.append(
                     f"{aid}: signature.status is 'signed' with no attests — a "
                     "signature must record what it covers",
-                )
-        elif status == "legacy-signed":
-            if not signed_at:
-                errors.append(
-                    f"{aid}: signature.status is 'legacy-signed' with no "
-                    "signed_at, so it asserts a stamp it does not carry",
-                )
-            if attests:
-                errors.append(
-                    f"{aid}: signature.status is 'legacy-signed' but carries an "
-                    "attests — a legacy row's scope was never recorded and must "
-                    "not be written after the fact",
                 )
         elif status in {"unsigned", "unsigned-by-design", "re-sign-pending"}:
             if signed_at:

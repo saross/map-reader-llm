@@ -72,10 +72,9 @@ fields. It is never a signature and must never be counted as one.
 | status | meaning |
 |---|---|
 | `signed` | The PI approved a walkthrough of the row **as it stands**. |
-| `unsigned` | Authored, awaiting that walkthrough. |
+| `unsigned` | Authored, awaiting that walkthrough — including every row stamped under the pre-2026-09-16 convention. |
 | `unsigned-by-design` | Deliberately never signed — calibration material whose claim is carried by a signed sibling. |
-| `re-sign-pending` | A prior signature the row has since outgrown. |
-| `legacy-signed` | Stamped before 2026-09-16, under the convention where the timestamp *was* the signature, with the row's substance unchanged since. The review happened; its scope was never written down. |
+| `re-sign-pending` | A signature the row has since outgrown; the prior signature is preserved in `history`. |
 
 Counting signed rows means counting `status == "signed"`. It never means
 counting timestamps, and it never means counting the presence of a note — the
@@ -97,11 +96,9 @@ schema validation, and its errors block the write exactly as a schema
 violation does:
 
 - `signed` must carry a `signed_at` **and** a non-empty `attests`.
-- `legacy-signed` must carry a `signed_at`, and must **not** carry an
-  `attests` — its scope was never recorded, and writing one now would be
-  fabrication.
 - `unsigned`, `unsigned-by-design` and `re-sign-pending` must not carry a
-  `signed_at`.
+  `signed_at`. This is what stops a pre-2026-09-16 authoring stamp being
+  quietly promoted back into a signature date.
 
 Every run prints a status tally (`INFO: signature status: ...`) so the count
 is never taken by hand. Tier-1 tests in
@@ -110,22 +107,32 @@ is never taken by hand. Tier-1 tests in
 ## The 2026-09-16 migration
 
 69 rows were migrated. 19 carried a signature note (17 real signatures, 2
-explicitly unsigned); the other 50 carried a bare timestamp.
+explicitly unsigned); the other 50 carried a bare timestamp from the period
+when one field served both authoring and signature.
 
-Those 50 were split by the question that actually matters — **has the row
-moved since it was stamped?** A row untouched since its stamp still has a
-signature vouching for exactly the text standing there; what is missing is
-only the record of scope. A row whose substance changed afterwards has a
-signature vouching for text nobody read.
+**None of those 50 is treated as signed.** The migration first split them by
+whether the row had moved since its stamp, and gave the 25 unchanged ones a
+`legacy-signed` status on the reading that their review had happened and only
+its scope went unrecorded. Asked directly, the PI said he is **not confident
+he reviewed them**. That retired both the reading and the status: a status must
+never assert more than the evidence carries. All 50 are `unsigned`, and all 50
+are queued in `planning/legacy-signature-queue-2026-09-16.md` for a **first**
+signature — 18 batch walkthroughs, not 50 separate ones.
 
-The split was computed by walking all 103 commits of the register, hashing each
-row's substantive fields (signature fields excluded) and comparing **commit
-positions**, not dates, so a row whose outcome and stamp were written in one
-commit does not read as drift. Result: **25 clean → `legacy-signed`**, **23
-drifted → `re-sign-pending`**, and 2 rows to `unsigned` (see below).
+The stamps are not destroyed. Each stays in `manually_verified_at` and in
+`signature.history`, labelled as the authoring stamp it now is.
 
-Two methodological traps in that walk, recorded because both produced
-confident wrong answers first:
+The drift analysis survives as review material rather than as a status: the
+queue's Part A holds the 25 rows that have not moved since stamping, Part B the
+25 that have, each Part-B batch annotated with the fields that actually changed
+and marked CLAIM or BOOKKEEPING. Several Part-A commits describe a PI sign-off
+in their own message — context for the review, not a substitute for it.
+
+That split was computed by walking all 103 commits of the register, hashing
+each row's substantive fields (signature fields excluded) and comparing
+**commit positions**, not dates, so a row whose outcome and stamp were written
+in one commit does not read as drift. Two traps in that walk are recorded
+because both produced confident wrong answers first:
 
 - Commit `b64ceae00` published a register carrying conflict markers that does
   not parse. Reading that as "every row absent" stops the walk and reports the
@@ -135,16 +142,17 @@ confident wrong answers first:
   marks every row whose outcome and stamp were written together as drifted.
   Compare positions in history instead.
 
-`era1-single-pass-baseline-matrix` and `tile-size-sweep` went to `unsigned`
-rather than `legacy-signed`: the E88 work of 2026-09-14 amended both in place
-precisely because the project judged them never PI-signed, and calling them
-legacy-signed would contradict a decision already acted on.
-
-The `re-sign-pending` rows are queued in
-`planning/legacy-signature-queue-2026-09-16.md`, grouped by the systematic
-pass that moved them — nine conversations, not 23.
-
 ## Changelog
+
+### 2026-09-16 — PI ruling: no legacy stamp counts as a signature
+
+The `legacy-signed` status was retired the day it was written. It asserted
+that a pre-convention stamp meant the review had happened and only its scope
+went unrecorded; the PI ruled he cannot confirm that, so all 50 legacy-stamped
+rows are `unsigned` and queued. Status tally moved from 17 signed / 25
+legacy-signed / 23 re-sign-pending / 3 unsigned / 1 unsigned-by-design to
+**17 signed / 51 unsigned / 1 unsigned-by-design**. No finding, number or
+outcome changed.
 
 ### 2026-09-16 — Original publication
 

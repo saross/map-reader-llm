@@ -851,19 +851,16 @@ def test_signed_status_must_carry_its_evidence():
 
 
 @pytest.mark.tier1
-def test_legacy_signed_asserts_a_stamp_and_invents_no_scope():
-    """Its review happened; its scope was never written and must not be now."""
-    missing, _ = check_signature_integrity(_sig("legacy-signed"))
-    assert any("no signed_at" in e for e in missing)
+def test_a_legacy_authoring_stamp_cannot_be_promoted_to_a_signature():
+    """PI ruling 2026-09-16: a pre-convention stamp is not evidence of review.
 
-    invented, _ = check_signature_integrity(
-        _sig("legacy-signed", signed_at="2026-08-17T03:50:21Z",
-             attests="reconstructed after the fact"))
-    assert any("must not be written after the fact" in e for e in invented)
-
-    ok, _ = check_signature_integrity(
-        _sig("legacy-signed", signed_at="2026-08-17T03:50:21Z"))
-    assert ok == []
+    The row keeps its stamp in `manually_verified_at` and in history, but the
+    signature object must not carry it as a `signed_at`, which is what would
+    make it count as a signature again.
+    """
+    errors, _ = check_signature_integrity(
+        _sig("unsigned", signed_at="2026-08-17T03:50:21Z"))
+    assert any("not a live signature" in e for e in errors)
 
 
 @pytest.mark.tier1
@@ -883,14 +880,13 @@ def test_signature_tally_is_reported_so_no_one_counts_by_hand():
         {"analysis_id": "a", "signature": {"status": "signed",
                                            "signed_at": "2026-09-16T00:00:00Z",
                                            "attests": "x"}},
-        {"analysis_id": "b", "signature": {"status": "legacy-signed",
-                                           "signed_at": "2026-08-17T00:00:00Z"}},
+        {"analysis_id": "b", "signature": {"status": "re-sign-pending"}},
         {"analysis_id": "c", "signature": {"status": "unsigned"}},
     ]}
     errors, advisories = check_signature_integrity(obj)
     assert errors == []
     assert advisories == [
-        "signature status: 1 legacy-signed, 1 signed, 1 unsigned"]
+        "signature status: 1 re-sign-pending, 1 signed, 1 unsigned"]
 
 
 @pytest.mark.tier1

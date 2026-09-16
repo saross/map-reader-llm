@@ -118,19 +118,19 @@
           "properties": {
             "status": {
               "type": "string",
-              "enum": ["signed", "unsigned", "unsigned-by-design", "re-sign-pending", "legacy-signed"],
-              "description": "signed: the PI approved a walkthrough of this row as it stands. unsigned: authored, awaiting that walkthrough. unsigned-by-design: deliberately never signed (calibration material whose claim is carried by a signed sibling). re-sign-pending: a prior signature the row has since outgrown. legacy-signed: stamped before 2026-09-16 under the convention where the timestamp WAS the signature, with the row's substance unchanged since \u2014 the review happened, its scope was never written down."
+              "enum": ["signed", "unsigned", "unsigned-by-design", "re-sign-pending"],
+              "description": "signed: the PI approved a walkthrough of this row as it stands. unsigned: authored, awaiting that walkthrough \u2014 including every row stamped under the pre-2026-09-16 convention, which the PI ruled on 2026-09-16 cannot be taken as evidence he reviewed it. unsigned-by-design: deliberately never signed (calibration material whose claim is carried by a signed sibling). re-sign-pending: a signature the row has since outgrown, the prior signature preserved in history."
             },
             "signed_at": {
               "oneOf": [
                 { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
                 { "type": "null" }
               ],
-              "description": "When the PI signed. Null unless status is signed or legacy-signed."
+              "description": "When the PI signed. Null unless status is signed."
             },
             "attests": {
               "type": ["string", "null"],
-              "description": "What the signature covers, in the PI's terms, INCLUDING its scope limits \u2014 which artefact, which membership, and what the signature does not reach. Required when status is signed; null for a legacy row, whose scope was never recorded."
+              "description": "What the signature covers, in the PI's terms, INCLUDING its scope limits \u2014 which artefact, which membership, and what the signature does not reach. Required when status is signed; on an unsigned row it may instead record why the row is not signed."
             },
             "presentation": {
               "type": ["string", "null"],
