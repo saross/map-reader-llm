@@ -462,26 +462,123 @@ def _build_reference_parts(
     return parts
 
 
+def create_shared_context_cache(
+    client: Any,
+    model_name: str,
+    system_instruction: str,
+    examples: list[dict],
+    include_images: bool = True,
+    ttl_seconds: int = 86400,
+) -> tuple[str | None, int]:
+    """Create an explicit context cache holding the prompt's shared prefix.
+
+    Every request in a detection batch repeats the same preamble — the system
+    instruction, the "Reference Symbols" line and the example images — and
+    only the transition text and the tile image differ. Caching that prefix
+    once and referencing it per request is the arrangement the Batch API
+    documents: "Context caching is supported for batch requests. Reuse cached
+    content by specifying the cached_content resource name in the
+    configuration of individual requests within your batch."
+
+    Pricing, per the same documentation: a cache hit bills at the standard
+    context-caching rate and the 50 % batch discount does NOT apply on top of
+    it, while tokens that miss the cache do get the batch discount. The two
+    are complementary rather than multiplicative, which
+    ``scripts/audit_proposer_cost.py`` already models by leaving the cache
+    rate undiscounted by tier.
+
+    TTL matters more here than in the real-time path. Batch jobs target a
+    24-hour turnaround, so the one-hour TTL used by
+    ``4_detect_mounds_batch.py`` would expire mid-job and silently revert the
+    remaining requests to the full input rate — the failure would show up only
+    as a bill. The default is therefore 24 hours. Storage is billed per token
+    per hour but the prefix is small (of order 16k tokens), so a day of
+    storage costs well under a dollar against the tens of dollars the cache
+    saves.
+
+    The cache's contents MIRROR the inline assembly in
+    :func:`build_jsonl_file` exactly, so a cached request and an inline one
+    present the model with the same context in the same order.
+
+    Args:
+        client: A ``google.genai`` client.
+        model_name: Model the cache is bound to. A cache is model-specific.
+        system_instruction: System instruction text.
+        examples: Example dicts from the prompt config.
+        include_images: Whether example IMAGES are transmitted (text-only
+            conditions still send the labels).
+        ttl_seconds: Cache lifetime. Must exceed the expected job duration.
+
+    Returns:
+        ``(cache_resource_name, cached_token_count)``, or ``(None, 0)`` if the
+        cache could not be created — the caller should then fall back to
+        inline assembly rather than submit requests naming a cache that does
+        not exist.
+    """
+    from google.genai import types
+
+    reference_parts = _build_reference_parts(examples, include_images)
+    cache_parts: list[dict] = [
+        {"text": "Here are the Reference Symbols you must find:"},
+    ]
+    cache_parts.extend(reference_parts)
+
+    try:
+        cached = client.caches.create(
+            model=model_name,
+            config=types.CreateCachedContentConfig(
+                system_instruction=system_instruction,
+                contents=[types.Content(parts=cache_parts, role="user")],
+                display_name="batch-detect-shared-prefix",
+                ttl=f"{ttl_seconds}s",
+            ),
+        )
+    except Exception as exc:                                   # noqa: BLE001
+        logger.warning("context cache creation failed (%s): %s",
+                       type(exc).__name__, exc)
+        return None, 0
+
+    um = getattr(cached, "usage_metadata", None)
+    tokens = getattr(um, "total_token_count", 0) if um else 0
+    logger.info("context cache created: %s (%s tokens, ttl %ss)",
+                cached.name, f"{tokens:,}", ttl_seconds)
+    return cached.name, tokens
+
+
 def build_jsonl_file(
     tile_paths: list[Path],
     config: dict,
     system_instruction: str,
     examples: list[dict],
     output_path: Path,
+    cached_content: str | None = None,
 ) -> int:
     """
     Build a JSONL request file for one execution unit.
 
-    Each line contains one tile's complete request, including all
-    reference images (duplicated per line since the Batch API has no
-    shared-context mechanism).
+    Each line contains one tile's complete request. By default the shared
+    preamble — system instruction, the "Reference Symbols" line and the
+    example images — is duplicated on every line. Passing *cached_content*
+    instead names a context cache holding that preamble, and each line then
+    carries only its transition text and tile image.
+
+    (An earlier version of this docstring stated that "the Batch API has no
+    shared-context mechanism". That is no longer true, and was the reason this
+    path duplicated a ~16k-token prefix on every request: the API documents
+    "Context caching is supported for batch requests. Reuse cached content by
+    specifying the cached_content resource name in the configuration of
+    individual requests within your batch.")
 
     Args:
         tile_paths: List of tile image paths to process.
         config: Prompt config dict (temperature, max_output_tokens, etc.).
-        system_instruction: System instruction text.
+        system_instruction: System instruction text. Omitted from each line
+            when *cached_content* is given, because it lives in the cache.
         examples: List of example dicts from prompt config.
         output_path: Where to write the JSONL file.
+        cached_content: Resource name of a context cache created by
+            :func:`create_shared_context_cache`, or None for inline assembly.
+            The cache must be bound to the SAME model the batch names.
 
     Returns:
         Number of lines written.
@@ -532,11 +629,14 @@ def build_jsonl_file(
             # reference_parts is empty, to maintain prompt parity.
             content_parts: list[dict] = []
 
-            # Reference examples preamble (always present)
-            content_parts.append({
-                "text": "Here are the Reference Symbols you must find:",
-            })
-            content_parts.extend(reference_parts)
+            # Reference examples preamble. Skipped when a context cache holds
+            # it: repeating it here would both defeat the cache and present
+            # the model with the preamble twice.
+            if cached_content is None:
+                content_parts.append({
+                    "text": "Here are the Reference Symbols you must find:",
+                })
+                content_parts.extend(reference_parts)
 
             # Transition text
             content_parts.append({
@@ -556,21 +656,24 @@ def build_jsonl_file(
             })
 
             # Assemble the JSONL line
-            line = {
-                "key": tile_path.name,
-                "request": {
-                    "contents": [
-                        {
-                            "parts": content_parts,
-                            "role": "user",
-                        }
-                    ],
-                    "system_instruction": {
-                        "parts": [{"text": system_instruction}],
-                    },
-                    "generation_config": generation_config,
-                },
+            request: dict[str, Any] = {
+                "contents": [
+                    {
+                        "parts": content_parts,
+                        "role": "user",
+                    }
+                ],
+                "generation_config": generation_config,
             }
+            if cached_content is None:
+                request["system_instruction"] = {
+                    "parts": [{"text": system_instruction}],
+                }
+            else:
+                # The cache carries the system instruction; naming both is
+                # rejected by the API.
+                request["cached_content"] = cached_content
+            line = {"key": tile_path.name, "request": request}
 
             f.write(json.dumps(line) + "\n")
             line_count += 1

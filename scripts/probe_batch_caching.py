@@ -9,16 +9,17 @@ independently decides whether the leg is affordable or auditable:
 2. **Does Batch report usage metadata?** On this project's 2026-04-15 Pro
    stages it did not, leaving those passes permanently unauditable
    (``outputs/verifier-meta-recovery-2026-09-14.json``).
-3. **Does Batch get IMPLICIT prefix caching?** The real-time legs cache about
-   81 % of input tokens without any explicit cache object. If batch does not,
-   the 3.7 runs 4-5 cost about US$381 instead of about US$155.
+3. **Does an EXPLICIT context cache actually bill as a cache hit?** The
+   real-time legs get ~81 % of input tokens cached IMPLICITLY, with no cache
+   object at all. The Batch API documents only the explicit route — "Reuse
+   cached content by specifying the cached_content resource name" — and says
+   nothing about implicit caching for batch. So the explicit route is what a
+   production batch leg must use, and it is what this probe exercises.
 
-The probe sends N copies of a realistic prompt — the real system instruction
-and example images, so the cacheable prefix is the production one — and reads
-the usage each response reports. Prompts are identical by design: implicit
-caching keys on a shared prefix, so identical prompts are the most favourable
-case. A cache miss HERE is decisive; a cache hit here is necessary but not
-sufficient for the full leg.
+The probe builds the production shared prefix — real system instruction, real
+example library — as a context cache, then submits N requests that name it and
+carry only their own tile. It reports the cached share the API actually bills,
+which is the number that decides whether the leg costs ~US$155 or ~US$381.
 
 Usage:
     python scripts/probe_batch_caching.py --n 100 --model gemini-3.7-flash
@@ -46,6 +47,12 @@ def main() -> int:
     ap.add_argument("--config", default="prompts/configs/detect_brief-text-image.json")
     ap.add_argument("--tiles-dir", default="inputs/tiles_384_ov192_55maps")
     ap.add_argument("--out", default="outputs/batch-probe-2026-09-17/probe.json")
+    ap.add_argument("--ttl", type=int, default=86400,
+                    help="context-cache TTL in seconds (default 24 h, to "
+                         "outlast the batch turnaround target)")
+    ap.add_argument("--no-cache", action="store_true",
+                    help="submit WITHOUT a context cache, to measure whether "
+                         "implicit caching fires for batch")
     ap.add_argument("--dry-run", action="store_true",
                     help="assemble and cost the probe, submit nothing")
     args = ap.parse_args()
@@ -76,19 +83,39 @@ def main() -> int:
         return 0
 
     client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
-    requests = []
-    for tile in tiles:
-        parts = [types.Part.from_bytes(data=tile.read_bytes(), mime_type="image/png")]
-        requests.append({
-            "contents": [{"role": "user", "parts": [p.model_dump() for p in parts]}],
-            "config": {"system_instruction": instr,
-                       "temperature": cfg.get("temperature", 0.7),
-                       "max_output_tokens": cfg.get("max_output_tokens", 8192)},
-        })
+
+    from scripts.lib_batch_api import build_jsonl_file, create_shared_context_cache
+
+    cache_name, cache_tokens = None, 0
+    if not args.no_cache:
+        cache_name, cache_tokens = create_shared_context_cache(
+            client=client, model_name=args.model, system_instruction=instr,
+            examples=examples,
+            include_images=cfg.get("include_example_images", True),
+            ttl_seconds=args.ttl)
+        if cache_name is None:
+            print("  ! cache creation FAILED — aborting rather than submitting "
+                  "requests that name a cache which does not exist",
+                  file=sys.stderr)
+            return 2
+        print(f"cache      : {cache_name} ({cache_tokens:,} tokens, ttl {args.ttl}s)")
+
+    jsonl = REPO / args.out
+    jsonl = jsonl.with_suffix(".jsonl")
+    jsonl.parent.mkdir(parents=True, exist_ok=True)
+    n_lines = build_jsonl_file(
+        tile_paths=tiles, config=cfg, system_instruction=instr,
+        examples=examples, output_path=jsonl, cached_content=cache_name)
+    print(f"jsonl      : {jsonl} ({n_lines} lines, "
+          f"{jsonl.stat().st_size/1e6:.1f} MB)")
+
+    uploaded = client.files.upload(
+        file=str(jsonl), config=types.UploadFileConfig(mime_type="application/jsonl"))
+    print(f"uploaded   : {uploaded.name}")
 
     print("\nsubmitting batch ...")
     t0 = time.time()
-    job = client.batches.create(model=args.model, src=requests)
+    job = client.batches.create(model=args.model, src=uploaded.name)
     print(f"  job: {job.name}  state={job.state}")
 
     while True:
@@ -103,6 +130,8 @@ def main() -> int:
     um = getattr(job, "usage_metadata", None)
     result = {"model": args.model, "n": args.n, "state": str(job.state),
               "elapsed_s": round(time.time() - t0, 1),
+              "explicit_cache": cache_name, "cache_prefix_tokens": cache_tokens,
+              "cache_ttl_s": None if args.no_cache else args.ttl,
               "job_usage_metadata_present": um is not None}
     if um is not None:
         inp = getattr(um, "prompt_token_count", 0) or 0

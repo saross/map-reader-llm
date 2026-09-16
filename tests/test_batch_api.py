@@ -152,6 +152,72 @@ class TestJSONLConstruction:
             assert "request" in line
             assert line["key"] == "tile_001.png"
 
+    @pytest.mark.tier1
+    def test_cached_content_removes_the_prefix_and_names_the_cache(self) -> None:
+        """A cached line carries the cache name and NOT the shared preamble.
+
+        Repeating the preamble alongside a cache both defeats the cache and
+        shows the model its examples twice, so the two must be mutually
+        exclusive.
+        """
+        config = _make_prompt_config()
+        config["include_example_images"] = False
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            tile = _make_tile_image(tmp, "tile_001.png")
+            output = tmp / "batch.jsonl"
+
+            build_jsonl_file(
+                tile_paths=[tile],
+                config=config,
+                system_instruction="Test instruction",
+                examples=[],
+                output_path=output,
+                cached_content="cachedContents/abc123",
+            )
+            req = json.loads(output.read_text().splitlines()[0])["request"]
+
+        assert req["cached_content"] == "cachedContents/abc123"
+        assert "system_instruction" not in req
+        texts = [p.get("text", "") for p in req["contents"][0]["parts"]]
+        assert not any("Reference Symbols you must find" in t for t in texts)
+        # The unique half must survive.
+        assert any("Target Map Tile" in t for t in texts)
+
+    @pytest.mark.tier1
+    def test_inline_and_cached_lines_differ_only_by_the_shared_prefix(self) -> None:
+        """The cached line is the inline line MINUS the cacheable prefix.
+
+        This is the equivalence the K-ladder rests on: runs 1-3 sent the
+        preamble inline, so a batch rung using a cache must present the model
+        with the same context, differing only in WHERE the prefix comes from.
+        """
+        config = _make_prompt_config()
+        config["include_example_images"] = False
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            tile = _make_tile_image(tmp, "tile_001.png")
+            inline_out, cached_out = tmp / "a.jsonl", tmp / "b.jsonl"
+            for path, cache in ((inline_out, None), (cached_out, "cachedContents/x")):
+                build_jsonl_file(
+                    tile_paths=[tile], config=config,
+                    system_instruction="Test instruction", examples=[],
+                    output_path=path, cached_content=cache,
+                )
+            inline = json.loads(inline_out.read_text().splitlines()[0])["request"]
+            cached = json.loads(cached_out.read_text().splitlines()[0])["request"]
+
+        # Generation config — temperature, thinking level, token budget — is
+        # the treatment, and must be untouched by the caching route.
+        assert inline["generation_config"] == cached["generation_config"]
+
+        inline_parts = inline["contents"][0]["parts"]
+        cached_parts = cached["contents"][0]["parts"]
+        # The cached line's parts are a suffix of the inline line's.
+        assert cached_parts == inline_parts[len(inline_parts) - len(cached_parts):]
+
     def test_jsonl_system_instruction(self) -> None:
         """Each line should include the system instruction."""
         config = _make_prompt_config()
