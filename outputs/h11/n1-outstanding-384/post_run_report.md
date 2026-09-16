@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — n1-outstanding-384
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `b64ceae00`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `c576dae8d`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/n1-outstanding-384` · **Registry status**: active · **Purpose**: not supplied
 
@@ -207,7 +207,7 @@ A run is linked to an analysis when the analysis's `conditions_compared` names o
 | Analysis | Cells | Type | Hypotheses | Registration | Paper section | Deviations | Signed | Output |
 |---|---|---|---|---|---|---|---|---|
 | `diversity-dividend-384` | 3 of 22 | leaderboard | `H3` | confirmatory-with-deviation | Results | `None for the operating-point selection: the registered H3 analysis plan (osf/preregistration.md:519-521) specifies 'Generate threshold sweep curves', 'Identify optimal (N, threshold)', and 'Compare single-pass mean F1 vs voted F1' against the test tiles, so the best-operating- point characterisation is the preregistered method (not in-sample/E56 -- that rule governs the verifier prob_t diagnostics, a distinct case; see E56 Update 2026-06-06).`, `E49/E51 (T=0.7 production carry-forward temperature; HIGH thinking) -- the characterised configurations, carried forward from Phase 2b.`, `Production operating point reported alongside best: text 4-of-5, image 3-of-5 (the 55maps deployment thresholds); the best-minus-N5 delta is the within-test operating-point sensitivity.` | 2026-06-06T00:07:40Z | `results/diversity-dividend-384` |
-| `gs-era2-verified-board-2026-09-10` | 1 of 103 | leaderboard | `H2`, `H1` | post-hoc | Results | — | 2026-09-12T06:04:30Z | `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json` |
+| `gs-era2-verified-board-2026-09-10` | 1 of 103 | leaderboard | `H2`, `H1` | post-hoc | Results | — | 2026-09-16T02:58:00Z | `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json` |
 | `h6-a07-voting-thresholds` | 6 of 6 | sweep | `H6` | post-hoc | Methods | `E74`, `E57`, `E71` | 2026-09-10T06:56:15Z | `results/h6-registered-analyses` |
 | `h6-a09-cost-gate` | 2 of 4 | diagnostic | `H6` | post-hoc | Methods | `E74`, `E57`, `E71` | 2026-09-08T01:53:31Z | `results/h6-registered-analyses` |
 | `n1-baseline-matrix-384` | 3 of 18 | leaderboard | `H1`, `H7` | post-hoc | Results | `E57` | 2026-06-04T02:05:31Z | `results/paper-eval/n1/384px-14buf-mcc` |
@@ -258,7 +258,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `b64ceae00` |
+| Source commit | `c576dae8d` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

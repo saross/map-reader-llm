@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-13T09:02:37Z",
+  "generated_at": "2026-09-16T02:55:16Z",
   "generator_version": "0.7.1",
   "runs": [
     {
@@ -1378,6 +1378,40 @@
           "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
         ],
         "last_extracted_at": "2026-09-13T09:02:37Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "run_id": "gemini37-image-55map-2026-09-13",
+      "directory_path": "outputs/gemini37-image-55map-2026-09-13",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "H3",
+        "H13"
+      ],
+      "purpose": "Can a configuration chosen for tile-level discrimination (Matthews correlation coefficient on the presence or absence of a mound per tile) significantly outperform every configuration deployed so far on the 55-map corpus? Presence-or-absence is the unit of survey triage, so MCC has research uses F1 does not. One Gemini 3.7 image proposer pool at K = 3, both K = 1 and K = 3 first-N rungs, each under two verifier arms (carried Gemini-3; all-3.7), mirroring the 3.7 TEXT 2x2 of gemini37-55map-2026-08-29 so the modality difference-in-differences exists at deployment scale. Carried operating points were fixed on a Gold Standard K = 3 calibration leg before any 55-map scoring. Predictions P1-P5, card planning/gemini37-image-55map-2026-09-13.md \u00a7 4. H3 is informed through the pass-count factor, H13 through the tile geometry; the modality-on-tile-MCC question itself is post-hoc.",
+      "run_type": "proposer-verifier",
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "combined",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": "gemini37-image-55map-2026-09-13::img-arm2-k3-carried-p0.88-k3-r2-gt",
+      "headline_rationale": "The all-3.7 image stack at K = 3 on its carried point \u2014 the cell every prediction is stated about. It leads the 55-map corpus on tile-MCC (0.7648) and on micro-F1 @ 50 m (0.9199), beating all four external comparators and its own K = 1 rung on both metrics, every one of the ten tests BH-significant at q = 0.05.",
+      "post_run_report_path": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-09-16T02:55:16Z",
         "extractor_version": "0.7.1"
       }
     }

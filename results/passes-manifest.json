@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-14T01:17:06Z",
+  "generated_at": "2026-09-16T02:55:16Z",
   "generator_version": "0.7.1",
   "passes": [
     {
@@ -52752,6 +52752,289 @@
           "outputs/gemini37-image-gs-2026-09-01/verifier/g384_ov192_g37img/verify_arm2/run.meta.json"
         ],
         "last_extracted_at": "2026-09-06T05:11:51Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run1",
+      "run_id": "gemini37-image-55map-2026-09-13",
+      "proposer_pool": "g384_ov192_55map_g37img",
+      "pass_n": 1,
+      "model_used": "gemini-3.7-flash",
+      "model_requested": "gemini-3.7-flash",
+      "model_version": "gemini-3.7-flash",
+      "modality": "image",
+      "thinking_level": "low",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "7c9bbcec1c4396db59aca57303fa1d679e0d93ffb0249b526dd5d89fe41dab1c",
+      "status": "ok",
+      "n_tiles_processed": 24561,
+      "n_tiles_null_reason": null,
+      "n_candidates_verified": null,
+      "n_tiles_dispatched": 24561,
+      "tokens": {
+        "input_billed": 491642080,
+        "input_cached": 397093752,
+        "output": 1469579,
+        "thinking": 7428304,
+        "total": 500539963
+      },
+      "cost_usd": 201.049311,
+      "wall_clock_s": 10863.075197,
+      "timestamps": {
+        "start": "2026-09-13T07:30:36.331300+00:00",
+        "end": "2026-09-13T10:31:39.406497+00:00"
+      },
+      "retries": 20251,
+      "provenance": {
+        "source_files": [
+          "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json",
+          "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json"
+        ],
+        "last_extracted_at": "2026-09-16T02:55:16Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run2",
+      "run_id": "gemini37-image-55map-2026-09-13",
+      "proposer_pool": "g384_ov192_55map_g37img",
+      "pass_n": 2,
+      "model_used": "gemini-3.7-flash",
+      "model_requested": "gemini-3.7-flash",
+      "model_version": "gemini-3.7-flash",
+      "modality": "image",
+      "thinking_level": "low",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "7c9bbcec1c4396db59aca57303fa1d679e0d93ffb0249b526dd5d89fe41dab1c",
+      "status": "ok",
+      "n_tiles_processed": 24561,
+      "n_tiles_null_reason": null,
+      "n_candidates_verified": null,
+      "n_tiles_dispatched": 24561,
+      "tokens": {
+        "input_billed": 491662098,
+        "input_cached": 398460348,
+        "output": 1473925,
+        "thinking": 7605564,
+        "total": 500741587
+      },
+      "cost_usd": 201.397329,
+      "wall_clock_s": 7591.342268,
+      "timestamps": {
+        "start": "2026-09-13T10:40:57.057935+00:00",
+        "end": "2026-09-13T12:47:28.400203+00:00"
+      },
+      "retries": 7329,
+      "provenance": {
+        "source_files": [
+          "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json",
+          "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json"
+        ],
+        "last_extracted_at": "2026-09-16T02:55:16Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run3",
+      "run_id": "gemini37-image-55map-2026-09-13",
+      "proposer_pool": "g384_ov192_55map_g37img",
+      "pass_n": 3,
+      "model_used": "gemini-3.7-flash",
+      "model_requested": "gemini-3.7-flash",
+      "model_version": "gemini-3.7-flash",
+      "modality": "image",
+      "thinking_level": "low",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "7c9bbcec1c4396db59aca57303fa1d679e0d93ffb0249b526dd5d89fe41dab1c",
+      "status": "ok",
+      "n_tiles_processed": 24561,
+      "n_tiles_null_reason": null,
+      "n_candidates_verified": null,
+      "n_tiles_dispatched": 24561,
+      "tokens": {
+        "input_billed": 491662098,
+        "input_cached": 398574231,
+        "output": 1476240,
+        "thinking": 7601915,
+        "total": 500740253
+      },
+      "cost_usd": 201.394827,
+      "wall_clock_s": 7976.961966,
+      "timestamps": {
+        "start": "2026-09-13T12:47:43.532592+00:00",
+        "end": "2026-09-13T15:00:40.494558+00:00"
+      },
+      "retries": 7381,
+      "provenance": {
+        "source_files": [
+          "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json",
+          "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json"
+        ],
+        "last_extracted_at": "2026-09-16T02:55:16Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm1::run1",
+      "run_id": "gemini37-image-55map-2026-09-13",
+      "proposer_pool": "g384_ov192_55map_g37img-union-k1-verify-arm1",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "image",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": null,
+      "n_tiles_null_reason": "verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand_NNNN) in execution_stats.completed_items and candidate API items in per_item_metadata, so no tile-scale record exists to report. Completed crop count is in n_candidates_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)",
+      "n_candidates_verified": 6985,
+      "n_tiles_dispatched": null,
+      "tokens": {
+        "input_billed": 12517120,
+        "input_cached": 0,
+        "output": 1222208,
+        "thinking": 0,
+        "total": 13739328
+      },
+      "cost_usd": 9.925184,
+      "wall_clock_s": 534.760398,
+      "timestamps": {
+        "start": "2026-09-13T15:11:07.983810+00:00",
+        "end": "2026-09-13T15:20:02.744208+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm1/run.meta.json"
+        ],
+        "last_extracted_at": "2026-09-16T02:55:16Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm2::run1",
+      "run_id": "gemini37-image-55map-2026-09-13",
+      "proposer_pool": "g384_ov192_55map_g37img-union-k1-verify-arm2",
+      "pass_n": 1,
+      "model_used": "gemini-3.7-flash",
+      "model_requested": "gemini-3.7-flash",
+      "model_version": null,
+      "modality": "image",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": null,
+      "n_tiles_null_reason": "verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand_NNNN) in execution_stats.completed_items and candidate API items in per_item_metadata, so no tile-scale record exists to report. Completed crop count is in n_candidates_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)",
+      "n_candidates_verified": 13,
+      "n_tiles_dispatched": null,
+      "tokens": {
+        "input_billed": 23296,
+        "input_cached": 0,
+        "output": 1687,
+        "thinking": 1799,
+        "total": 26782
+      },
+      "cost_usd": 0.030545,
+      "wall_clock_s": 208.750047,
+      "timestamps": {
+        "start": "2026-09-13T22:59:16.557637+00:00",
+        "end": "2026-09-13T23:02:45.307684+00:00"
+      },
+      "retries": 16,
+      "provenance": {
+        "source_files": [
+          "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm2/run.meta.json"
+        ],
+        "last_extracted_at": "2026-09-16T02:55:16Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm1::run1",
+      "run_id": "gemini37-image-55map-2026-09-13",
+      "proposer_pool": "g384_ov192_55map_g37img-union-k3-verify-arm1",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "image",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": null,
+      "n_tiles_null_reason": "verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand_NNNN) in execution_stats.completed_items and candidate API items in per_item_metadata, so no tile-scale record exists to report. Completed crop count is in n_candidates_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)",
+      "n_candidates_verified": 8337,
+      "n_tiles_dispatched": null,
+      "tokens": {
+        "input_billed": 14939904,
+        "input_cached": 0,
+        "output": 1447229,
+        "thinking": 0,
+        "total": 16387133
+      },
+      "cost_usd": 11.811639,
+      "wall_clock_s": 586.274703,
+      "timestamps": {
+        "start": "2026-09-13T23:04:17.605568+00:00",
+        "end": "2026-09-13T23:14:03.880271+00:00"
+      },
+      "retries": 9,
+      "provenance": {
+        "source_files": [
+          "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm1/run.meta.json"
+        ],
+        "last_extracted_at": "2026-09-16T02:55:16Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "pass_id": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm2::run1",
+      "run_id": "gemini37-image-55map-2026-09-13",
+      "proposer_pool": "g384_ov192_55map_g37img-union-k3-verify-arm2",
+      "pass_n": 1,
+      "model_used": "gemini-3.7-flash",
+      "model_requested": "gemini-3.7-flash",
+      "model_version": null,
+      "modality": "image",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": null,
+      "n_tiles_null_reason": "verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand_NNNN) in execution_stats.completed_items and candidate API items in per_item_metadata, so no tile-scale record exists to report. Completed crop count is in n_candidates_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)",
+      "n_candidates_verified": 1,
+      "n_tiles_dispatched": null,
+      "tokens": {
+        "input_billed": 1792,
+        "input_cached": 0,
+        "output": 121,
+        "thinking": 164,
+        "total": 2077
+      },
+      "cost_usd": 0.002413,
+      "wall_clock_s": 6.47716,
+      "timestamps": {
+        "start": "2026-09-14T02:15:04.581334+00:00",
+        "end": "2026-09-14T02:15:11.058494+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm2/run.meta.json"
+        ],
+        "last_extracted_at": "2026-09-16T02:55:16Z",
         "extractor_version": "0.7.1"
       }
     }

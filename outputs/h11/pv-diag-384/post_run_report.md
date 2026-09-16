@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — pv-diag-384
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `b64ceae00`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `c576dae8d`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/pv-diag-384` · **Registry status**: active · **Purpose**: not supplied
 
@@ -1101,7 +1101,7 @@ A run is linked to an analysis when the analysis's `conditions_compared` names o
 | `e45-bootstrap-pairings` | 3 of 3 | comparison | `H2`, `H3` | confirmatory-with-deviation | Methods | `E45`, `E54` | 2026-08-17T10:24:40Z | `results/e45-bootstrap-pairings` |
 | `family-bh-fdr-confirmatory` | 2 of 12 | comparison | `H1`, `H2`, `H3`, `H4`, `H5`, `H7`, `H8` | confirmatory-with-deviation | Results | `E28`, `E30`, `E36`, `E41`, `E45`, `E51`, `E53`, `E54`, `E58`, `E59`, `E60`, `E64` | 2026-08-14T23:32:30Z | `results/family-fdr/family_fdr.json` |
 | `flash35-model-roles` | 1 of 5 | leaderboard | `H2` | post-hoc | Results | `E56`, `E62` | 2026-06-12T06:59:01Z | `results/flash35-2x2` |
-| `gs-era2-verified-board-2026-09-10` | 72 of 103 | leaderboard | `H2`, `H1` | post-hoc | Results | — | 2026-09-12T06:04:30Z | `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json` |
+| `gs-era2-verified-board-2026-09-10` | 72 of 103 | leaderboard | `H2`, `H1` | post-hoc | Results | — | 2026-09-16T02:58:00Z | `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json` |
 | `h6-a06-decision-rule` | 4 of 8 | comparison | `H6` | post-hoc | Methods | `E74`, `E40` | 2026-08-17T13:02:16Z | `results/h6-registered-analyses` |
 | `k-ladder-2026-09-12` | 43 of 94 | comparison | `H3`, `H13` | post-hoc | Results | `E56`, `E85` | 2026-09-13T06:58:12Z | `results/k-ladder-2026-09-12/findings.md` |
 | `min-vs-high-thinking-pv` | 6 of 7 | leaderboard | `H2`, `H3` | post-hoc | Results | `E56`, `E62` | 2026-06-12T06:59:01Z | `results/verifier-robustness` |
@@ -1217,7 +1217,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `b64ceae00` |
+| Source commit | `c576dae8d` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

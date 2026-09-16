@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-14T01:25:35Z",
+  "generated_at": "2026-09-16T02:55:16Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -2802,17 +2802,17 @@
       "predicted_outcome": null,
       "predicted_outcome_amended": null,
       "tie_set": [],
-      "outcome": "3651/5253 pairs significant at BH q = 0.05, 12 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 49. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 60/60; G6 max |delta| 0.0078. [AMENDED 2026-09-12, S153: 79 -> 103 cells \u2014 the twenty single-pass (K = 1) proposer-verifier cells admitted under PI ruling R3, three K = 3 archived sweep optima promoted from off-board, and the September recovery pair pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax; re-tiered, MCB recomputed last; Tier 1, its order and its F1 unchanged; the archived-count fix of reports/name-keyed-cache-audit-2026-09-12.md fix 3 landed in the same rebuild. Signed text at 2026-09-10: '1845/3081 pairs significant at BH q = 0.05, 7 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 28. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 39/39; G6 max |delta| 0.0078.']",
+      "outcome": "150 of 153 admitted cells tiered; 3 WITHHELD (the tile-join invariant refuses their per-tile table on this frame, so they are ranked and tested nowhere and only their whole-frame F1 is quoted: g37-text-k1-verified-carried-p0.10-k1 F1@20 0.8338; g37-text-k1-verified-opmax F1@20 0.8495; g37-text-k3-verified-opmax F1@20 0.8860). 7961/11175 pairs significant at BH q = 0.05, 14 tiers on the era2-b-487 frame (487 tiles, 435 reference mounds). Tier 1 (greedy clique) = 5 cell(s); MCB admissible set = 65. Top: g37-image-k5-verified-swap37-p0.90-k5-era2b F1@20 0.9233. g37-text-k5-verified-swap37-p0.80-k5-era2b 0.9190 (T1); g37-text-k5-verified-swap38-p0.88-k5-era2b 0.9182 (T1); g37-image-k5-verified-carried-p0.10-k5-era2b 0.9179 (T1); g37-text-k10-verified-carried-p0.10-k10-era2b 0.9068 (T1). Gates: G1 see provenance, G2 0 failures, G3 0 failures, G4 110/110; G6 max |delta| 0.0078. REPORTED BESIDE, not replacing, the preregistered F1 tiering (PI ruling 2026-09-13, S153 ruling 7): a tile-MCC permutation family on the SAME swap masks (same seed, same tile order), BH q = 0.05 within its own family \u2014 2982/11175 pairs significant, 6 MCC tiers over 150 cells; MCC Tier 1 = 33 cell(s) (verified-adv-image-baseline-pro-vf-era2b MCC 0.8887; verified-adv-image-baseline-medium-vf-era2b MCC 0.8848; verified-adv-image-baseline-era2b MCC 0.8766; pv-scale4-optimal-n1-opmax MCC 0.8726; pv-high-image-t1.0-n1-opmax MCC 0.8640; and 28 more \u2014 full list in tiering_20m.json -> mcc_permutation.tie_set); MCC MCB admissible set = 59, of which 9 also in the F1 admissible set. The board's tiering remains the F1 one.",
       "paper_section": "Results",
       "output_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json",
       "working_notes_obs": [],
-      "manually_verified_at": "2026-09-12T06:04:30Z",
+      "manually_verified_at": "2026-09-16T02:58:00Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json"
         ],
-        "last_extracted_at": "2026-09-12T14:24:08Z",
+        "last_extracted_at": "2026-09-16T02:55:16Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -3861,6 +3861,56 @@
           "results/null-exemplar-sensitivity-2026-09-13/findings.md"
         ],
         "last_extracted_at": "2026-09-13T14:50:26Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "gemini37-image-55map-2026-09-13",
+      "type": "comparison",
+      "conditions_compared": [
+        "gemini37-image-55map-2026-09-13::img-arm1-k1-carried-p0.10-k1-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k1-f1-oracle-p0.15-k1-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k1-mcc-oracle-p0.15-k1-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k3-carried-p0.10-k3-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k3-f1-oracle-p0.10-k3-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k3-mcc-oracle-p0.15-k3-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k1-carried-p0.88-k1-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k1-f1-oracle-p0.95-k1-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k1-mcc-oracle-p0.98-k1-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k3-carried-p0.88-k3-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k3-f1-oracle-p0.90-k3-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k3-mcc-oracle-p0.96-k2-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+        "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+        "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt"
+      ],
+      "hypothesis_refs": [
+        "H3",
+        "H13"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "Scored on the r2 board's own engine (evaluate_detections.py, 14 buffers, BCa 10,000 / seed 42, --mcc) rather than the canonical Track-2 corrected-F1 engine the steward brief named, because every prediction is a difference against an r2 board cell and mixing instruments would make the paired tile-swap incoherent (deltas \u00a7 10.3).",
+        "source_tile re-stamped from the proposer's 192 px-stride tiling onto the 336 px-stride scoring frame by stride55_score.assign_standard_tile, the writer that produced the comparators (idempotent on three of them at 100.00 %). Without this the published id join credits 192 of 6,250 detections and the per-tile invariant refuses (deltas \u00a7 10.7). No join variant, default or committed cell was changed.",
+        "The K = 1 arm 2 leg lost 13 candidates and the K = 3 arm 2 leg 1 candidate to a flex 503 storm; both were closed by run_pv.py cleanup at a configuration byte-identical to the main pass, and each arm's audited cost is the sum of its main and cleanup metas (post-run report \u00a7 3.1)."
+      ],
+      "predicted_outcome": "P1 the all-3.7 image K = 3 carried cell's tile-MCC exceeds the 55-map leader (FOURTH-N1-oracle 0.7471) by >= +0.02, BH-significant; P2 the K = 1 rung's MCC is >= the K = 3 rung's while F1 is lower; P3 F1 @ 50 m at K = 3 is within +/-0.02 of the 3.7 text arm 2 at N = 3 (0.8848); P4 arm 2 beats arm 1 on MCC by >= +0.01; P5 the carried point's tax against each rung's oracle is <= 0.01 on both metrics.",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "Two of the five predictions hold, two fail informatively and one is a near miss; the campaign settles the modality question at deployment scale in the image modality's favour on BOTH metrics. The all-3.7 image K = 3 carried cell leads the 55-map corpus at tile-MCC 0.7648 [0.7516, 0.7776] and micro-F1 @ 50 m 0.9199, beating all four external comparators and its own K = 1 rung on both metrics with every one of the ten tests BH-significant at q = 0.05. P1 NEAR MISS: +0.0177 against the leader (BH p 0.0000), significant and in the predicted direction but short of the +0.02 threshold, and above the +0.01 informative-failure band \u2014 +0.0185 at the rung's MCC oracle, still short. P2 INFORMATIVE FAIL and the campaign's most interesting result: tile-MCC RISES with K on both image arms (arm 2 0.7569 -> 0.7648, +0.0078, BH p 0.0022; arm 1 0.7324 -> 0.7490), contradicting all three committed deployment ladders, where MCC falls monotonically. The mechanism is visible on the proposer side: per-pass dedup counts of 7,123 / 7,103 / 7,125 against a three-pass union of 8,337 mean one image pass supplies 84 % of the K = 3 candidates, so extra passes mostly raise vote counts, and K at unanimity acts as a precision filter rather than a recall lever \u2014 false-positive tiles fall 275 -> 183 (arm 1) and 165 -> 127 (arm 2). For an image pool K buys specificity; for text it buys recall. P3 INFORMATIVE FAIL in the image modality's favour: F1 @ 50 m 0.9199 against the text arm's 0.8848, +0.0351 (BH p 0.0000), well outside the +/-0.02 parity band, so Obs 447's GS parity does NOT hold at deployment scale. P4 HOLDS at both rungs: +0.0245 at K = 1 and +0.0158 at K = 3. P5 HOLDS on three rungs of four, with the primary cell's tax negligible (F1 +0.0007, MCC +0.0008); it FAILS only on IMG-ARM1-K1 (F1 +0.0129, MCC +0.0199), the carried Gemini-3 verifier at K = 1. The modality difference-in-differences, (image arm 2 - arm 1) - (text arm 2 - arm 1) at matched K, is +0.0174 MCC at K = 3 and +0.0069 at K = 1: the 3.7 verifier seat buys tile-MCC for an image pool (+0.0158) where it buys nothing for text (-0.0016).",
+      "paper_section": "Results",
+      "output_path": "results/gemini37-image-55map-2026-09-13/findings.md",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/gemini37-image-55map-2026-09-13/findings.md"
+        ],
+        "last_extracted_at": "2026-09-16T02:55:16Z",
         "extractor_version": "0.7.1"
       }
     }

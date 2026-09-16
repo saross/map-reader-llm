@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-09-14T01:17:06Z · 593 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `f77d9078c`.
+> Generated 2026-09-16T02:55:16Z · 605 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `c576dae8d`.
 >
-> **Coverage**: 593 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 605 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -601,3 +601,15 @@
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5 | proposer-verifier | verified | 5 | 5 | 0.9308 | 0.8322 | 425 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9179 | 0.8133 | 430 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9233 | 0.8264 | 425 |
+| gemini37-image-55map-2026-09-13::img-arm1-k1-carried-p0.10-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.765 | 0.7324 | 6250 |
+| gemini37-image-55map-2026-09-13::img-arm1-k1-f1-oracle-p0.15-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7777 | 0.7523 | 5582 |
+| gemini37-image-55map-2026-09-13::img-arm1-k1-mcc-oracle-p0.15-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7777 | 0.7523 | 5582 |
+| gemini37-image-55map-2026-09-13::img-arm1-k3-carried-p0.10-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.8138 | 0.749 | 5437 |
+| gemini37-image-55map-2026-09-13::img-arm1-k3-f1-oracle-p0.10-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.8138 | 0.749 | 5437 |
+| gemini37-image-55map-2026-09-13::img-arm1-k3-mcc-oracle-p0.15-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.8114 | 0.7577 | 4977 |
+| gemini37-image-55map-2026-09-13::img-arm2-k1-carried-p0.88-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7889 | 0.7569 | 5997 |
+| gemini37-image-55map-2026-09-13::img-arm2-k1-f1-oracle-p0.95-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7913 | 0.7594 | 5938 |
+| gemini37-image-55map-2026-09-13::img-arm2-k1-mcc-oracle-p0.98-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7896 | 0.7614 | 5322 |
+| gemini37-image-55map-2026-09-13::img-arm2-k3-carried-p0.88-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.8293 | 0.7648 | 5357 |
+| gemini37-image-55map-2026-09-13::img-arm2-k3-f1-oracle-p0.90-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.83 | 0.7654 | 5343 |
+| gemini37-image-55map-2026-09-13::img-arm2-k3-mcc-oracle-p0.96-k2-r2-gt | proposer-verifier | verified | 2 | 3 | 0.8045 | 0.7656 | 5167 |

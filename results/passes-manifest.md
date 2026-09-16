@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-09-14T01:17:06Z · 1317 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `f77d9078c`.
+> Generated 2026-09-16T02:55:16Z · 1324 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `c576dae8d`.
 >
-> **Coverage**: 1317 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 1324 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cands | cost_usd |
 |---|---|---|---|---|---|---|---|---|
@@ -1325,3 +1325,10 @@
 | gemini37-image-gs-2026-09-01::g384_ov192_g37img::run5 | gemini-3.7-flash | image | low | 0.7 | ok | 1398 | — | 6.522182 |
 | gemini37-image-gs-2026-09-01::g384_ov192_g37img-union-k5-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 674 | 0.956203 |
 | gemini37-image-gs-2026-09-01::g384_ov192_g37img-union-k5-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 674 | 0.851863 |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run1 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.049311 |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run2 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.397329 |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run3 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.394827 |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 6985 | 9.925184 |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm2::run1 | gemini-3.7-flash | image | low | 0.0 | ok | — | 13 | 0.030545 |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 8337 | 11.811639 |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm2::run1 | gemini-3.7-flash | image | low | 0.0 | ok | — | 1 | 0.002413 |
