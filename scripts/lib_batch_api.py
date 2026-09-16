@@ -1832,17 +1832,53 @@ def complete_batch_unit(
     processed_tiles = set(matched.keys()) - set(still_failed)
     failed_tiles = missing_tiles + errored + still_failed
 
-    # Extract usage stats from batch job metadata if available
+    # Extract usage stats from batch job metadata if available.
+    #
+    # The field NAMES and the CACHED and THINKING counts both matter. This
+    # block previously recorded `input_tokens` / `output_tokens` /
+    # `total_tokens`, which `scripts/audit_proposer_cost.py` cannot read (it
+    # requires `total_input_tokens` and `total_output_tokens`) and which drop
+    # the two counts that decide the cost:
+    #
+    #   * `cached_content_token_count` — implicit prefix caching bills at the
+    #     cache rate, a fifth to a fifteenth of the input rate. On this
+    #     project's image legs roughly 81 % of input tokens are cached, so
+    #     losing this count OVERSTATES cost by about 2.5x, and losing the
+    #     ability to measure it means a batch leg cannot be compared with a
+    #     real-time one at all.
+    #   * `thoughts_token_count` — billed at the OUTPUT rate. Gemini 3.7 at
+    #     `low` spends about 286 thought-tokens per tile against 57 output
+    #     tokens, so omitting it UNDERSTATES cost by roughly 5x on the output
+    #     line.
+    #
+    # Both are exposed by google-genai's GenerateContentResponseUsageMetadata
+    # (SDK 1.71.0). Names mirror the real-time path in
+    # `scripts/lib_llm_metadata.py` so one auditor reads both.
     usage_stats = None
-    if hasattr(completed_job, "usage_metadata"):
-        um = completed_job.usage_metadata
+    um = getattr(completed_job, "usage_metadata", None)
+    if um is not None:
+        input_tokens = getattr(um, "prompt_token_count", 0) or 0
+        cached_tokens = getattr(um, "cached_content_token_count", 0) or 0
         usage_stats = {
-            "input_tokens": getattr(um, "prompt_token_count", 0) or 0,
-            "output_tokens": (
-                getattr(um, "candidates_token_count", 0) or 0
-            ),
+            "total_input_tokens": input_tokens,
+            "total_cached_tokens": cached_tokens,
+            "total_output_tokens": getattr(um, "candidates_token_count", 0) or 0,
+            "total_thoughts_tokens": getattr(um, "thoughts_token_count", 0) or 0,
             "total_tokens": getattr(um, "total_token_count", 0) or 0,
+            # Recorded so a zero cache share can be told apart from an API that
+            # does not report one: a batch leg whose cached count is absent is
+            # NOT evidence that caching did not happen.
+            "cached_share": (cached_tokens / input_tokens) if input_tokens else None,
+            "usage_source": "batch job usage_metadata",
         }
+    else:
+        # Not the same as zero usage. The Batch API returned no per-response
+        # usage at all on this project's 2026-04-15 Pro stages
+        # (outputs/verifier-meta-recovery-2026-09-14.json,
+        # "batch-main-pass-recorded-no-tokens"), which left those passes
+        # permanently unauditable. Say so in the metadata rather than writing
+        # zeros that read as a free run.
+        usage_stats = {"usage_source": "ABSENT — batch job reported no usage_metadata"}
 
     # Write outputs
     cost_estimate = write_batch_outputs(
