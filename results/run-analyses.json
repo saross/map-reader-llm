@@ -1,5 +1,5 @@
 {
- "_README": "Hand-authored ANALYSIS specs (sub-step 3c). Each entry is one analysis — a comparison/finding OVER conditions (leaderboard, hypothesis test, sweep, ...). The generator (scripts/generate_post_run_report.py) validates these, attaches provenance, and emits results/analyses-manifest.json (+ .md). HYBRID authoring: the machine-fillable keys (analysis_id, type, conditions_compared, output_path) are authored here; the human-authored fields (outcome, hypothesis_refs, preregistered, deviations, predicted_outcome, tie_set, paper_section, working_notes_obs) may stay null until a human writes the finding + preregistration linkage, per the schema's lenient back-fill. Set manually_verified_at when a human has authored/verified a row. Schema: docs/manifest-schemas/analyses-manifest.schema.json.",
+ "_README": "Hand-authored ANALYSIS specs (sub-step 3c). Each entry is one analysis — a comparison/finding OVER conditions (leaderboard, hypothesis test, sweep, ...). The generator (scripts/generate_post_run_report.py) validates these, attaches provenance, and emits results/analyses-manifest.json (+ .md). HYBRID authoring: the machine-fillable keys (analysis_id, type, conditions_compared, output_path) are authored here; the human-authored fields (outcome, hypothesis_refs, preregistered, deviations, predicted_outcome, tie_set, paper_section, working_notes_obs) may stay null until a human writes the finding + preregistration linkage, per the schema's lenient back-fill. manually_verified_at is an AUTHORING stamp only — set it when a human has authored/verified a row. It is NOT a signature and must never be counted as one. The PI's signature is the `signature` object (status, signed_at, attests, presentation, history); count signed rows by status == 'signed', never by a timestamp and never by the presence of a note. Policy and the 2026-09-16 migration: docs/methodology/signature-policy.md. Schema: docs/manifest-schemas/analyses-manifest.schema.json.",
  "schema_version": "1.0",
  "analyses": [
   {
@@ -45,7 +45,20 @@
    "output_path": "results/paper-eval/n1/384px-14buf-mcc",
    "working_notes_obs": [],
    "manually_verified_at": "2026-06-04T02:05:31Z",
-   "_prereg_rationale": "post-hoc: the 18-cell ranked board was not in the registered analysis plan (docs/methodology/n1-baseline-matrix.md:412-424 — the argued exception, preserved per the D17 ruling); H1/H6/H7 are recapitulated as convergent evidence only. H6 removed from hypothesis_refs (PI walk 2026-08-17, per d17-inventory-h5-h8.md:474-476): the board is not H6 evidence (E41/E74); H6's disposition lives at h6-phase4-transfer."
+   "_prereg_rationale": "post-hoc: the 18-cell ranked board was not in the registered analysis plan (docs/methodology/n1-baseline-matrix.md:412-424 — the argued exception, preserved per the D17 ruling); H1/H6/H7 are recapitulated as convergent evidence only. H6 removed from hypothesis_refs (PI walk 2026-08-17, per d17-inventory-h5-h8.md:474-476): the board is not H6 evidence (E41/E74); H6's disposition lives at h6-phase4-transfer.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-04T02:05:31Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-04T02:05:31Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "pv-diag-384-consensus-calibration",
@@ -97,7 +110,14 @@
    "working_notes_obs": [],
    "manually_verified_at": null,
    "_prereg_rationale": "post-hoc: implements the registered H3 sweep method (osf/preregistration.md:519-521) but over unregistered production carry-forward pools (HIGH thinking is fixed at minimal by osf:1211-1212 and osf:2135); calibration material, no finding asserted. PI walk item S134.",
-   "_signature_note": "UNSIGNED BY DESIGN — PI ruling 2026-09-12 (S153), reaffirming S108: calibration material (the diversity-dividend curve); the signed sibling diversity-dividend-384 carries the claim."
+   "_signature_note": "UNSIGNED BY DESIGN — PI ruling 2026-09-12 (S153), reaffirming S108: calibration material (the diversity-dividend curve); the signed sibling diversity-dividend-384 carries the claim.",
+   "signature": {
+    "status": "unsigned-by-design",
+    "signed_at": null,
+    "attests": "UNSIGNED BY DESIGN — PI ruling 2026-09-12 (S153), reaffirming S108: calibration material (the diversity-dividend curve); the signed sibling diversity-dividend-384 carries the claim.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "diversity-dividend-384",
@@ -147,7 +167,20 @@
    "output_path": "results/diversity-dividend-384",
    "working_notes_obs": [],
    "manually_verified_at": "2026-06-06T00:07:40Z",
-   "_prereg_rationale": "confirmatory-with-deviation: executes the registered H3 comparison (osf:501, 519-521) and supplies the family BH-FDR H3 headline contrast (reports/verification/family-fdr-registration.md:698, SELECTED); the thinking-dividend claim in the same row is post-registration (D17 sweep U5) — outcome-prose fence pending the S134 PI walk."
+   "_prereg_rationale": "confirmatory-with-deviation: executes the registered H3 comparison (osf:501, 519-521) and supplies the family BH-FDR H3 headline contrast (reports/verification/family-fdr-registration.md:698, SELECTED); the thinking-dividend claim in the same row is post-registration (D17 sweep U5) — outcome-prose fence pending the S134 PI walk.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-06T00:07:40Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-06T00:07:40Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "phase3a-consensus-calibration",
@@ -189,7 +222,20 @@
    "output_path": "results/rescore-2026-06-07/phase3",
    "working_notes_obs": [],
    "manually_verified_at": "2026-06-08T04:19:07Z",
-   "_prereg_rationale": "registered-exploratory: the registered H3 threshold-sweep characterisation (osf:519-521; pooling osf:325-327; N=30 osf:512) on the registered design modulo corpus (E36); carries no confirmatory contrast. First-N sub-pooling partially unlicensed (D17 sweep U2)."
+   "_prereg_rationale": "registered-exploratory: the registered H3 threshold-sweep characterisation (osf:519-521; pooling osf:325-327; N=30 osf:512) on the registered design modulo corpus (E36); carries no confirmatory contrast. First-N sub-pooling partially unlicensed (D17 sweep U2).",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-08T04:19:07Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-08T04:19:07Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "phase3a-high-consensus-calibration",
@@ -222,7 +268,20 @@
    "output_path": "results/rescore-2026-06-07/phase3",
    "working_notes_obs": [],
    "manually_verified_at": "2026-06-08T04:19:07Z",
-   "_prereg_rationale": "post-hoc: registered sweep machinery, but the HIGH-thinking arm it sweeps is unregistered (osf:1211-1212, osf:2135; D17 sweep U5/U6). PI walk item S134."
+   "_prereg_rationale": "post-hoc: registered sweep machinery, but the HIGH-thinking arm it sweeps is unregistered (osf:1211-1212, osf:2135; D17 sweep U5/U6). PI walk item S134.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-08T04:19:07Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-08T04:19:07Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "phase3a-replication-thinking-calibration",
@@ -252,7 +311,20 @@
    "output_path": "results/rescore-2026-06-07/phase3",
    "working_notes_obs": [],
    "manually_verified_at": "2026-06-08T04:19:07Z",
-   "_prereg_rationale": "post-hoc: the HIGH-vs-MINIMAL thinking contrast is an unregistered factor (osf:1211-1212, osf:2135). PI walk item S134."
+   "_prereg_rationale": "post-hoc: the HIGH-vs-MINIMAL thinking contrast is an unregistered factor (osf:1211-1212, osf:2135). PI walk item S134.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-08T04:19:07Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-08T04:19:07Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "phase3c-diversity-calibration",
@@ -285,7 +357,20 @@
    "output_path": "results/rescore-2026-06-07/phase3c",
    "working_notes_obs": [],
    "manually_verified_at": "2026-06-08T04:19:07Z",
-   "_prereg_rationale": "registered-exploratory: implements the registered H9 five-condition design with the registered 5 replications and analyses (osf:855-896); H9 is registered exploratory Tier A (osf:843). Replication grouping rule unregistered (D17 sweep U8)."
+   "_prereg_rationale": "registered-exploratory: implements the registered H9 five-condition design with the registered 5 replications and analyses (osf:855-896); H9 is registered exploratory Tier A (osf:843). Replication grouping rule unregistered (D17 sweep U8).",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-08T04:19:07Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-08T04:19:07Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "era1-single-pass-baseline-matrix",
@@ -369,7 +454,14 @@
    "output_path": "results/paper-eval/n1/512px-14buf-mcc",
    "working_notes_obs": [],
    "manually_verified_at": "2026-06-09T01:22:50Z",
-   "_prereg_rationale": "post-hoc: constructed 36-cell board; the registered H1/H4/H5/H7/H8 tests are pairwise-bootstrap analyses (osf:434-443, 568-572, 630-636, 725-729, 819-824) adjudicated at family-bh-fdr-confirmatory; this board is their characterisation home. Constituent-phase errata attached per D17 inventory (h1-h4:357-359; h5-h8:226-231)."
+   "_prereg_rationale": "post-hoc: constructed 36-cell board; the registered H1/H4/H5/H7/H8 tests are pairwise-bootstrap analyses (osf:434-443, 568-572, 630-636, 725-729, 819-824) adjudicated at family-bh-fdr-confirmatory; this board is their characterisation home. Constituent-phase errata attached per D17 inventory (h1-h4:357-359; h5-h8:226-231).",
+   "signature": {
+    "status": "unsigned",
+    "signed_at": null,
+    "attests": "Not PI-signed. The 2026-06-09 value in manually_verified_at is an AUTHORING stamp; the E88 work of 2026-09-14 amended this row's outcome in place on exactly that ground, the ruling being that the operative discriminator is the absence of a signature note. Awaiting a first walkthrough and signature.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "era1-leaderboard",
@@ -499,7 +591,20 @@
    "output_path": "results/era1-leaderboard",
    "working_notes_obs": [],
    "manually_verified_at": "2026-06-09T01:22:50Z",
-   "_prereg_rationale": "post-hoc: constructed 82-cell board; carries the registered H2 contrast's characterisation (PV vs single-stage-with-voting — H2 added to hypothesis_refs per D17 inventory h1-h4:476-484, 617-619); the confirmatory H2 adjudication lives at family-bh-fdr-confirmatory. PV-cell errata E37/E58 attached. PI walk item S134."
+   "_prereg_rationale": "post-hoc: constructed 82-cell board; carries the registered H2 contrast's characterisation (PV vs single-stage-with-voting — H2 added to hypothesis_refs per D17 inventory h1-h4:476-484, 617-619); the confirmatory H2 adjudication lives at family-bh-fdr-confirmatory. PV-cell errata E37/E58 attached. PI walk item S134.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-09T01:22:50Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-09T01:22:50Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "tile-size-sweep",
@@ -565,7 +670,14 @@
     "Obs 352 — the verifier rescues 256px consensus (0.460->0.856, +0.396), leapfrogging 512 to 2nd; 384 retains the consensus+PV lead (0.890), so 256 does not overwhelm the verifier"
    ],
    "manually_verified_at": "2026-06-09T01:52:52Z",
-   "_prereg_rationale": "registered-exploratory: H11 is registered exploratory Tier B (osf:946); trigger met (osf:948 — every 512 px cell < 0.85); the registered 512-vs-384 core executed (osf:954-976); the 256 px arm and the architecture-interaction framing are post-hoc extensions (D17 inventory h9-h12:749-784); deviations per inventory recommendation (h9-h12:781) plus E36. Deviations completed post-verification (S134 blind-verifier finding A: E62 names the constituent run; E56 governs the best-prob_t operating points)."
+   "_prereg_rationale": "registered-exploratory: H11 is registered exploratory Tier B (osf:946); trigger met (osf:948 — every 512 px cell < 0.85); the registered 512-vs-384 core executed (osf:954-976); the 256 px arm and the architecture-interaction framing are post-hoc extensions (D17 inventory h9-h12:749-784); deviations per inventory recommendation (h9-h12:781) plus E36. Deviations completed post-verification (S134 blind-verifier finding A: E62 names the constituent run; E56 governs the best-prob_t operating points).",
+   "signature": {
+    "status": "unsigned",
+    "signed_at": null,
+    "attests": "Not PI-signed. The 2026-06-09 value in manually_verified_at is an AUTHORING stamp; the E88 work of 2026-09-14 amended this row's outcome in place on exactly that ground, the ruling being that the operative discriminator is the absence of a signature note. Awaiting a first walkthrough and signature.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "verifier-robustness-matrix",
@@ -604,7 +716,20 @@
     "Obs 357 — the cost meta-rule: on a within-noise tie, take the cheaper config"
    ],
    "manually_verified_at": "2026-06-12T06:59:01Z",
-   "_prereg_rationale": "post-hoc: E62 names verifier-robustness among the unregistered PV extension studies; no registered verifier-parameter sweep exists; E56 governs its in-sample operating points."
+   "_prereg_rationale": "post-hoc: E62 names verifier-robustness among the unregistered PV extension studies; no registered verifier-parameter sweep exists; E56 governs its in-sample operating points.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-12T06:59:01Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-12T06:59:01Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "pass-budget-pareto",
@@ -640,7 +765,20 @@
     "Obs 347 — GS-plateau resolving-power heuristics (invoked by the span caveat)"
    ],
    "manually_verified_at": "2026-06-12T06:59:01Z",
-   "_prereg_rationale": "post-hoc: PV-ladder cost board; the nearest registered text is the H3 cost-efficiency bullet (osf:524-528) but the priced object is the unregistered PV ladder; tiering apparatus unregistered (D17 sweep FALSE-9). Deviations completed post-verification (S134 blind-verifier finding A: E62 names the constituent run; E56 governs the best-prob_t operating points)."
+   "_prereg_rationale": "post-hoc: PV-ladder cost board; the nearest registered text is the H3 cost-efficiency bullet (osf:524-528) but the priced object is the unregistered PV ladder; tiering apparatus unregistered (D17 sweep FALSE-9). Deviations completed post-verification (S134 blind-verifier finding A: E62 names the constituent run; E56 governs the best-prob_t operating points).",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-12T06:59:01Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-12T06:59:01Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "min-vs-high-thinking-pv",
@@ -681,7 +819,20 @@
     "Obs 141 — the consensus-era diversity dividend (the prior this rejects under PV)"
    ],
    "manually_verified_at": "2026-06-12T06:59:01Z",
-   "_prereg_rationale": "post-hoc: MINIMAL-vs-HIGH thinking is an unregistered factor (osf:1211-1212, osf:2135); rejects an internal expectation (Obs 141), not a registered hypothesis. Deviations completed post-verification (S134 blind-verifier finding A: E62 names the constituent run; E56 governs the best-prob_t operating points)."
+   "_prereg_rationale": "post-hoc: MINIMAL-vs-HIGH thinking is an unregistered factor (osf:1211-1212, osf:2135); rejects an internal expectation (Obs 141), not a registered hypothesis. Deviations completed post-verification (S134 blind-verifier finding A: E62 names the constituent run; E56 governs the best-prob_t operating points).",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-12T06:59:01Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-12T06:59:01Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "pass-budget-pareto-v2",
@@ -724,7 +875,14 @@
    ],
    "manually_verified_at": "2026-09-12T09:03:09Z",
    "_prereg_rationale": "post-hoc: as pass-budget-pareto; the measured-token costing axis additionally has no registered basis. Deviations completed post-verification (S134 blind-verifier finding A: E62 names the constituent run; E56 governs the best-prob_t operating points).",
-   "_signature_note": "Re-signed 2026-09-12T09:03:09Z by the PI (S153 ruling 3: the tile-MCC column amendment appended verbatim from reports/k-ladder-mcc-test-2026-09-12.md § 5.1; all prior text preserved). Original signature: 2026-06-12T06:59:01Z"
+   "_signature_note": "Re-signed 2026-09-12T09:03:09Z by the PI (S153 ruling 3: the tile-MCC column amendment appended verbatim from reports/k-ladder-mcc-test-2026-09-12.md § 5.1; all prior text preserved). Original signature: 2026-06-12T06:59:01Z",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T09:03:09Z",
+    "attests": "Re-signed 2026-09-12T09:03:09Z by the PI (S153 ruling 3: the tile-MCC column amendment appended verbatim from reports/k-ladder-mcc-test-2026-09-12.md § 5.1; all prior text preserved). Original signature: 2026-06-12T06:59:01Z",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "flash35-model-roles",
@@ -759,7 +917,20 @@
     "Obs 359 — pool recall ceiling (the proposer-role mechanism)"
    ],
    "manually_verified_at": "2026-06-12T06:59:01Z",
-   "_prereg_rationale": "post-hoc: E62 names flash35-pv-2x2 among the unregistered PV extension studies; Gemini 3.5 Flash is outside the registered model roster (osf:1199-1201); not H14 evidence (D17 inventory h13-h15:305)."
+   "_prereg_rationale": "post-hoc: E62 names flash35-pv-2x2 among the unregistered PV extension studies; Gemini 3.5 Flash is outside the registered model roster (osf:1199-1201); not H14 evidence (D17 inventory h13-h15:305).",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-12T06:59:01Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-12T06:59:01Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "unswept-pools-completeness",
@@ -803,7 +974,20 @@
     "Obs 359 — verifier-model scope refinement"
    ],
    "manually_verified_at": "2026-06-12T07:16:28Z",
-   "_prereg_rationale": "post-hoc: completeness sweep over in-sample PV operating points (E56); the Pro-verifier +0.015 is post-hoc cross-model verification, never to be cited as H15 (D17 inventory h13-h15:463-467)."
+   "_prereg_rationale": "post-hoc: completeness sweep over in-sample PV operating points (E56); the Pro-verifier +0.015 is post-hoc cross-model verification, never to be cited as H15 (D17 inventory h13-h15:463-467).",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-12T07:16:28Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-12T07:16:28Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "55map-canonical-leaderboard-50m",
@@ -836,7 +1020,20 @@
     "Obs 364 — the min11 uplift (pass count closes half the thinking gap)"
    ],
    "manually_verified_at": "2026-06-12T06:59:01Z",
-   "_prereg_rationale": "post-hoc: the 55-map corpus appears nowhere in the registration (grep-verified, D17 evidence pass 2026-08-17); 50 m is a registered supplementary tolerance only (osf:294); deployment board."
+   "_prereg_rationale": "post-hoc: the 55-map corpus appears nowhere in the registration (grep-verified, D17 evidence pass 2026-08-17); 50 m is a registered supplementary tolerance only (osf:294); deployment board.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-06-12T06:59:01Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-06-12T06:59:01Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "55map-canonical-leaderboard-mcc-50m",
@@ -867,7 +1064,20 @@
     "Obs 370 — rider: IM-k3 is the SOLE Tier-1 cell on the MCC axis (this analysis)"
    ],
    "manually_verified_at": "2026-07-27T05:28:40Z",
-   "_prereg_rationale": "post-hoc: tile-MCC is a registered secondary outcome metric (osf:379-394), but the board, corpus, headline buffer, and tiering method are all outside the registration."
+   "_prereg_rationale": "post-hoc: tile-MCC is a registered secondary outcome metric (osf:379-394), but the board, corpus, headline buffer, and tiering method are all outside the registration.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-07-27T05:28:40Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-07-27T05:28:40Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "h1-cmt0106-pooled-modality",
@@ -895,7 +1105,20 @@
    "output_path": "results/family-fdr/h1_cmt0106_pooled_modality.json",
    "paper_section": "Results",
    "manually_verified_at": "2026-08-14T23:32:30Z",
-   "_prereg_rationale": "confirmatory-with-deviation: the registered H1 pooled-modality planned contrast (osf:441) by the registered two-tailed bootstrap method (osf:434-443); E36 is a material design deviation (corpus/K), E45/E54/E64 contextual; strictness rule applied (non-empty deviations -> -with-deviation)."
+   "_prereg_rationale": "confirmatory-with-deviation: the registered H1 pooled-modality planned contrast (osf:441) by the registered two-tailed bootstrap method (osf:434-443); E36 is a material design deviation (corpus/K), E45/E54/E64 contextual; strictness rule applied (non-empty deviations -> -with-deviation).",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-08-14T23:32:30Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-14T23:32:30Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "family-bh-fdr-confirmatory",
@@ -944,7 +1167,20 @@
    "output_path": "results/family-fdr/family_fdr.json",
    "paper_section": "Results",
    "manually_verified_at": "2026-08-14T23:32:30Z",
-   "_prereg_rationale": "confirmatory-with-deviation: the registered family inference itself (BH-FDR q=0.05 across confirmatory hypotheses, osf:270), registration-before-compute; the twelve attached E-numbers include six-plus material design deviations."
+   "_prereg_rationale": "confirmatory-with-deviation: the registered family inference itself (BH-FDR q=0.05 across confirmatory hypotheses, osf:270), registration-before-compute; the twelve attached E-numbers include six-plus material design deviations.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-08-14T23:32:30Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-14T23:32:30Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "e43-matched-temperature",
@@ -974,7 +1210,20 @@
    "output_path": "results/e43-matched-temperature/findings.md",
    "working_notes_obs": [],
    "manually_verified_at": "2026-08-14T23:32:30Z",
-   "_prereg_rationale": "post-hoc: E72 classifies the lineage as an unregistered exploratory analysis (no registered hypothesis affected); the row itself disclaims registered standing."
+   "_prereg_rationale": "post-hoc: E72 classifies the lineage as an unregistered exploratory analysis (no registered hypothesis affected); the row itself disclaims registered standing.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-08-14T23:32:30Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-14T23:32:30Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "obs280-shared-reference",
@@ -1003,7 +1252,20 @@
    ],
    "outcome": "Divergence survives reference unification: text (T03-k4) leads F1 @50m 0.8303 while image (IM-k3) leads MCC 0.7120 from third place on F1; the MCC gap steps +0.0386 (student-only) -> +0.0393 (legacy extended) -> +0.0430 (standardised), so ~90% of the original divergence is metric behaviour and the reference asymmetry had slightly UNDERSTATED it. Text's F1 lead narrows +0.0372 -> +0.0293 but holds at every buffer (no R>=75m crossover on the shared reference). Both headline gaps have non-overlapping marginal 95% CIs.",
    "manually_verified_at": "2026-08-14T22:45:49Z",
-   "_prereg_rationale": "post-hoc: the 55-map corpus and the standardised reference are post-registration constructs; no registered F1-vs-MCC divergence analysis exists."
+   "_prereg_rationale": "post-hoc: the 55-map corpus and the standardised reference are post-registration constructs; no registered F1-vs-MCC divergence analysis exists.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-08-14T22:45:49Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-14T22:45:49Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "55map-standardised-leaderboard-50m",
@@ -1036,7 +1298,20 @@
     "Obs 364 — the min11 uplift (pass count closes half the thinking gap)"
    ],
    "manually_verified_at": "2026-08-14T22:45:49Z",
-   "_prereg_rationale": "post-hoc: unregistered corpus, reference, and tiering; robustness replication of the canonical board."
+   "_prereg_rationale": "post-hoc: unregistered corpus, reference, and tiering; robustness replication of the canonical board.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-08-14T22:45:49Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-14T22:45:49Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "55map-standardised-leaderboard-mcc-50m",
@@ -1067,7 +1342,20 @@
     "Obs 370 — rider: IM-k3 is the SOLE Tier-1 cell on the MCC axis (this analysis)"
    ],
    "manually_verified_at": "2026-08-14T22:45:49Z",
-   "_prereg_rationale": "post-hoc: unregistered corpus, reference, and tiering; robustness replication of the canonical MCC board."
+   "_prereg_rationale": "post-hoc: unregistered corpus, reference, and tiering; robustness replication of the canonical MCC board.",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-08-14T22:45:49Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-14T22:45:49Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "h10-pool-size",
@@ -1102,7 +1390,20 @@
     "Obs 236 — H10 pool size is a null: 20-tile calibration matches 160-tile under PV",
     "Obs 235 — formal retraction of the v1 H10/H12 probe findings (config-intent mismatch)"
    ],
-   "manually_verified_at": "2026-08-17T03:50:21Z"
+   "manually_verified_at": "2026-08-17T03:50:21Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-17T03:50:21Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-17T03:50:21Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "h12-v2-hp-hn-ratio",
@@ -1146,7 +1447,20 @@
     "Obs 239 — H12 v2 HP:HN ratio is a null: all three pairwise contrasts fail after BH-FDR",
     "Obs 240 — library-design axis definitively null: 45-pair cross-hypothesis matrix, zero significant"
    ],
-   "manually_verified_at": "2026-08-17T03:50:21Z"
+   "manually_verified_at": "2026-08-17T03:50:21Z",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-08-17T03:50:21Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-17T03:50:21Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "h6-phase4-transfer",
@@ -1170,7 +1484,20 @@
    "paper_section": "Methods",
    "output_path": "reports/d17-inventory/unexecuted-register.md",
    "working_notes_obs": [],
-   "manually_verified_at": "2026-08-17T03:50:21Z"
+   "manually_verified_at": "2026-08-17T03:50:21Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-17T03:50:21Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-17T03:50:21Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "h14-cross-model-consistency",
@@ -1192,7 +1519,20 @@
    "paper_section": "Methods",
    "output_path": "reports/d17-inventory/unexecuted-register.md",
    "working_notes_obs": [],
-   "manually_verified_at": "2026-08-17T03:50:21Z"
+   "manually_verified_at": "2026-08-17T03:50:21Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-17T03:50:21Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-17T03:50:21Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "h15-cross-model-voting",
@@ -1214,7 +1554,20 @@
    "paper_section": "Methods",
    "output_path": "reports/d17-inventory/unexecuted-register.md",
    "working_notes_obs": [],
-   "manually_verified_at": "2026-08-17T03:50:21Z"
+   "manually_verified_at": "2026-08-17T03:50:21Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-17T03:50:21Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-17T03:50:21Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "h2-condition-c-fine-to-coarse",
@@ -1236,7 +1589,20 @@
    "paper_section": "Methods",
    "output_path": "reports/d17-inventory/unexecuted-register.md",
    "working_notes_obs": [],
-   "manually_verified_at": "2026-08-17T03:50:21Z"
+   "manually_verified_at": "2026-08-17T03:50:21Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-17T03:50:21Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-17T03:50:21Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "s8-9-post-experiment-verification",
@@ -1258,7 +1624,20 @@
    "paper_section": "Methods",
    "output_path": "docs/methodology/preregistration/protocol-errata.md",
    "working_notes_obs": [],
-   "manually_verified_at": "2026-08-17T03:50:21Z"
+   "manually_verified_at": "2026-08-17T03:50:21Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-17T03:50:21Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-17T03:50:21Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "e45-bootstrap-pairings",
@@ -1286,7 +1665,20 @@
    "paper_section": "Methods",
    "output_path": "results/e45-bootstrap-pairings",
    "working_notes_obs": [],
-   "manually_verified_at": "2026-08-17T10:24:40Z"
+   "manually_verified_at": "2026-08-17T10:24:40Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-17T10:24:40Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-17T10:24:40Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "h6-a06-decision-rule",
@@ -1320,7 +1712,20 @@
    "working_notes_obs": [
     "Obs 415 — temperature, not thinking, drives the genuine-Pro corner gap (2x2 decomposition; fires all four cells, thinking null); rider: the optimal vote threshold reverses between models at matched N"
    ],
-   "manually_verified_at": "2026-08-17T13:02:16Z"
+   "manually_verified_at": "2026-08-17T13:02:16Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-17T13:02:16Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-17T13:02:16Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "h6-a07-voting-thresholds",
@@ -1354,7 +1759,14 @@
     "Obs 415 — temperature, not thinking, drives the genuine-Pro corner gap (2x2 decomposition; fires all four cells, thinking null); rider: the optimal vote threshold reverses between models at matched N"
    ],
    "manually_verified_at": "2026-09-10T06:56:15Z",
-   "_signature_note": "Re-signed 2026-09-10T06:56:15Z by the PI after the 2026-09-08 artefact regeneration (prose 0.0016 -> 0.0015; previous signature 2026-09-08T01:53:31Z)."
+   "_signature_note": "Re-signed 2026-09-10T06:56:15Z by the PI after the 2026-09-08 artefact regeneration (prose 0.0016 -> 0.0015; previous signature 2026-09-08T01:53:31Z).",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-10T06:56:15Z",
+    "attests": "Re-signed 2026-09-10T06:56:15Z by the PI after the 2026-09-08 artefact regeneration (prose 0.0016 -> 0.0015; previous signature 2026-09-08T01:53:31Z).",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "h6-a09-cost-gate",
@@ -1383,7 +1795,20 @@
    "paper_section": "Methods",
    "output_path": "results/h6-registered-analyses",
    "working_notes_obs": [],
-   "manually_verified_at": "2026-09-08T01:53:31Z"
+   "manually_verified_at": "2026-09-08T01:53:31Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-09-08T01:53:31Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-09-08T01:53:31Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "grid-tilesize-overlap-2026-08-18",
@@ -1408,7 +1833,14 @@
    "output_path": "results/grid-2026-08-18",
    "working_notes_obs": [],
    "manually_verified_at": "2026-09-12T09:03:09Z",
-   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted."
+   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T09:03:09Z",
+    "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "grid-postverifier-2026-08-18",
@@ -1435,7 +1867,14 @@
     "Obs 433 — the grid's tile-size ranking reverses under the verifier (384 beats 512 at both overlaps, sig at 12.5%) while the overlap reversal survives at half margin; consensus and verifier are complements"
    ],
    "manually_verified_at": "2026-09-12T09:03:09Z",
-   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted."
+   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T09:03:09Z",
+    "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "h13-overlap-2026-08-18",
@@ -1464,7 +1903,14 @@
    "output_path": "results/h13-overlap-2026-08-18",
    "working_notes_obs": [],
    "manually_verified_at": "2026-09-12T09:03:09Z",
-   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted."
+   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T09:03:09Z",
+    "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "tile-level-f1",
@@ -1497,7 +1943,14 @@
     "Obs 423 — the reproduce-a-committed-value gate that catches wrong-but-plausible re-derivations; this derivation's MCC reproduction check implements it"
    ],
    "manually_verified_at": "2026-09-12T09:03:09Z",
-   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted."
+   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T09:03:09Z",
+    "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "stride-plateau-2026-08-25",
@@ -1527,7 +1980,20 @@
    "working_notes_obs": [
     "Obs 435 — plateau-not-winner: 12 of 13 geometry cells one statistical tier; 384px at-or-above at every stride; interior optimum strides 192-256"
    ],
-   "manually_verified_at": "2026-08-28T12:16:45Z"
+   "manually_verified_at": "2026-08-28T12:16:45Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-28T12:16:45Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-28T12:16:45Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "stride-winner-ladder-exact-2026-08-25",
@@ -1553,7 +2019,20 @@
    "working_notes_obs": [
     "Obs 436 — exact winner ladder: N=3 0.8911 at ~$2.64 all-in; pass-count saturation at GS scale; the successor-paper practitioner-recipe spine"
    ],
-   "manually_verified_at": "2026-08-28T12:16:45Z"
+   "manually_verified_at": "2026-08-28T12:16:45Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-28T12:16:45Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-28T12:16:45Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "stride55-sweep-oracle-2026-08-27",
@@ -1578,7 +2057,20 @@
    "working_notes_obs": [
     "Obs 437 — the transfer tax collapses at 55 maps: carried points nearly lossless (+0.0036/+0.0081 vs the incumbent's +0.0324); P6's tie broke (B beats A, BH-robust)"
    ],
-   "manually_verified_at": "2026-08-28T12:16:45Z"
+   "manually_verified_at": "2026-08-28T12:16:45Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-28T12:16:45Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-28T12:16:45Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "stride55-ladder-2026-08-27",
@@ -1603,7 +2095,20 @@
     "Obs 437 — the transfer tax collapses at 55 maps (ladder P2 exact, P7 carried-point saturation)",
     "Obs 438 — the final board and the emergent N=3 rung: B saturates at N=3 carried; the GS-determinable $65 bargain step"
    ],
-   "manually_verified_at": "2026-08-28T12:16:45Z"
+   "manually_verified_at": "2026-08-28T12:16:45Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-28T12:16:45Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-28T12:16:45Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "stride55-a5-vs-b5-2026-08-27",
@@ -1628,7 +2133,20 @@
    "working_notes_obs": [
     "Obs 437 — the transfer tax collapses at 55 maps (the A5-vs-B5 recommendation-rung test folded into the findings BH family)"
    ],
-   "manually_verified_at": "2026-08-28T12:16:45Z"
+   "manually_verified_at": "2026-08-28T12:16:45Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-28T12:16:45Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-28T12:16:45Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "55map-final-board-2026-08-27",
@@ -1673,7 +2191,20 @@
    "working_notes_obs": [
     "Obs 438 — the final board and the emergent N=3 rung: B saturates at N=3 carried; the GS-determinable $65 bargain step"
    ],
-   "manually_verified_at": "2026-08-28T12:22:08Z"
+   "manually_verified_at": "2026-08-28T12:22:08Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-28T12:22:08Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-28T12:22:08Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "sensitivity-mde-2026-08-28",
@@ -1712,7 +2243,20 @@
    "paper_section": "Appendix",
    "output_path": "results/sensitivity-mde-2026-08-28/sensitivity.json",
    "working_notes_obs": [],
-   "manually_verified_at": "2026-08-28T12:22:08Z"
+   "manually_verified_at": "2026-08-28T12:22:08Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-28T12:22:08Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-28T12:22:08Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "image-b-modality-2026-08-28",
@@ -1735,7 +2279,20 @@
    "working_notes_obs": [
     "Obs 439 — image campaign: text stronger for localisation with MCC parity; the verifier absorbs the thinking dividend on the image track"
    ],
-   "manually_verified_at": "2026-08-28T12:43:12Z"
+   "manually_verified_at": "2026-08-28T12:43:12Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-28T12:43:12Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-28T12:43:12Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "image-b-thinking-pair-2026-08-28",
@@ -1758,7 +2315,20 @@
    "working_notes_obs": [
     "Obs 439 — image campaign: text stronger for localisation with MCC parity; the verifier absorbs the thinking dividend on the image track"
    ],
-   "manually_verified_at": "2026-08-28T12:43:12Z"
+   "manually_verified_at": "2026-08-28T12:43:12Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-28T12:43:12Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-28T12:43:12Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "h7-escalation-2026-08-28",
@@ -1785,7 +2355,20 @@
    "working_notes_obs": [
     "Obs 440 — the preregistration compliance audit: believe the artefacts; the last obligation discharged with data"
    ],
-   "manually_verified_at": "2026-08-28T12:43:12Z"
+   "manually_verified_at": "2026-08-28T12:43:12Z",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-08-28T12:43:12Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-08-28T12:43:12Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "gemini37-screen-2026-08-28",
@@ -1810,7 +2393,14 @@
     "Obs 441 — Gemini 3.7 Flash clears the Gemini 3 plateau but resolves only in the verifier role"
    ],
    "manually_verified_at": "2026-09-12T09:03:09Z",
-   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted."
+   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T09:03:09Z",
+    "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "gemini37-55map-grid-2026-08-31",
@@ -1839,7 +2429,14 @@
     "Obs 444 — the complete proposer x verifier 2x2: the family gain lives in the verifier seat"
    ],
    "manually_verified_at": "2026-09-12T09:03:09Z",
-   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted."
+   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T09:03:09Z",
+    "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "gemini37-55map-gridboard-2026-08-31",
@@ -1867,7 +2464,14 @@
     "Obs 444 — the complete proposer x verifier 2x2: the family gain lives in the verifier seat"
    ],
    "manually_verified_at": "2026-09-12T09:03:09Z",
-   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted."
+   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T09:03:09Z",
+    "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "gemini37-image-gs-2026-09-01",
@@ -1896,7 +2500,14 @@
     "Obs 447 — the modality gap is eliminated at Gemini 3.7"
    ],
    "manually_verified_at": "2026-09-12T09:03:09Z",
-   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted."
+   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T09:03:09Z",
+    "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "gemini37-fourth-cell-gs-leg-2026-08-31",
@@ -1919,7 +2530,14 @@
     "Obs 444 — the complete proposer x verifier 2x2: the family gain lives in the verifier seat"
    ],
    "manually_verified_at": "2026-09-12T09:03:09Z",
-   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted."
+   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T09:03:09Z",
+    "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "gemini38-screen-armv-2026-09-04",
@@ -1946,7 +2564,14 @@
     "Obs 448 — Gemini 3.8 Flash ties the 3.7 stack in the verifier seat"
    ],
    "manually_verified_at": "2026-09-12T09:03:09Z",
-   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted."
+   "_signature_note": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T09:03:09Z",
+    "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "55map-final-board-r2-2026-09-06",
@@ -2001,7 +2626,20 @@
    "deviations": [],
    "manually_verified_at": "2026-09-07T08:36:56Z",
    "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
-   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-09-07T08:36:56Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-09-07T08:36:56Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "55map-r2-leaderboard-50m",
@@ -2028,7 +2666,20 @@
    "deviations": [],
    "manually_verified_at": "2026-09-07T08:36:56Z",
    "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
-   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-09-07T08:36:56Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-09-07T08:36:56Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "55map-r2-leaderboard-mcc-50m",
@@ -2055,7 +2706,20 @@
    "deviations": [],
    "manually_verified_at": "2026-09-07T08:36:56Z",
    "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
-   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-09-07T08:36:56Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-09-07T08:36:56Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "obs280-shared-reference-r2",
@@ -2082,7 +2746,20 @@
    "deviations": [],
    "manually_verified_at": "2026-09-07T08:36:56Z",
    "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
-   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-09-07T08:36:56Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-09-07T08:36:56Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "tile-level-f1-r2",
@@ -2111,7 +2788,20 @@
    "deviations": [],
    "manually_verified_at": "2026-09-07T08:36:56Z",
    "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
-   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-09-07T08:36:56Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-09-07T08:36:56Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "estimated-correction-r2",
@@ -2165,7 +2855,20 @@
    "deviations": [],
    "manually_verified_at": "2026-09-07T08:36:56Z",
    "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
-   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers"
+   "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-09-07T08:36:56Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-09-07T08:36:56Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "student-baseline-r2",
@@ -2187,7 +2890,20 @@
    "manually_verified_at": "2026-09-07T08:36:56Z",
    "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
    "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
-   "_conditions_note": "reference-level diagnostic: the reference layers and the audit rates, not a condition (schema reference_scope, S150; PI ruling 2026-09-07)"
+   "_conditions_note": "reference-level diagnostic: the reference layers and the audit rates, not a condition (schema reference_scope, S150; PI ruling 2026-09-07)",
+   "signature": {
+    "status": "legacy-signed",
+    "signed_at": "2026-09-07T08:36:56Z",
+    "attests": null,
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-09-07T08:36:56Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "sensitivity-mde-r2",
@@ -2245,7 +2961,20 @@
    "manually_verified_at": "2026-09-07T08:36:56Z",
    "_prereg_rationale": "Re-measurement of a registered analysis on reference r2 (planning/reference-revision-2026-09-06.md); the reference changed after the registered analyses ran — disclosed by erratum (step 8).",
    "predicted_outcome": "card § 4: r1 → r2 deltas inside the 0.005 band; the estimated column wider than the tiers",
-   "_conditions_note": "instrument-level: harvests the r2 board's committed pairwise records over these 35 conditions (precedent: sensitivity-mde-2026-08-28 cites the 17 conditions of the boards it harvested)"
+   "_conditions_note": "instrument-level: harvests the r2 board's committed pairwise records over these 35 conditions (precedent: sensitivity-mde-2026-08-28 cites the 17 conditions of the boards it harvested)",
+   "signature": {
+    "status": "re-sign-pending",
+    "signed_at": null,
+    "attests": "A legacy stamp of 2026-09-07T08:36:56Z with no record of scope, and the row's substance has changed since in a later commit, so the stamp no longer vouches for what stands here. Queued for a fresh walkthrough by the pass that moved it — see planning/legacy-signature-queue-2026-09-16.md.",
+    "presentation": null,
+    "history": [
+     {
+      "signed_at": "2026-09-07T08:36:56Z",
+      "convention": "pre-2026-09-16: the timestamp WAS the signature",
+      "note": "scope not recorded at the time"
+     }
+    ]
+   }
   },
   {
    "analysis_id": "gs-era2-verified-board-2026-09-10",
@@ -2369,7 +3098,14 @@
    "_prereg_rationale": "Post-hoc: the preregistration fixed the model family; this board extends § R4's GS instrument to the Gemini 3.7 / 3.8 cells on one frame. Split out of the r2 chain by PI ruling (S149); card signed 2026-09-09.",
    "_conditions_note": "39 '-era2b' rows (the registered cells re-scored on the board frame; the committed rows remain the members' records) plus 40 '-opmax' rows (the archived Era-2 PV board's sweep-optimal Gemini 3 cells, in-sample optima of the E56 class, registered 2026-09-10 for the symmetry fix; three K = 3 archived cells are registered but off-board by the K >= 5 rule). Both families at both levels: committed operating points and sweep optima.",
    "manually_verified_at": "2026-09-16T02:58:00Z",
-   "_signature_note": "Re-signed 2026-09-16T02:58:00Z by the PI (S154, 2026-09-16) over BOTH rebuilds made since the 2026-09-12 signature, presented as one written walkthrough and approved: (a) the 2026-09-13 rebuild carrying rulings 6 and 7 — the four recovery-fix cells at their current evaluations (g37-text-k3-verified-opmax 0.8870 -> 0.8860, one added false positive), the tile-MCC permutation family on the same swap masks REPORTED BESIDE the preregistered F1 tiering, and the withheld-cell disclosure; and (b) the 2026-09-14 ruling-4 rebuild (erratum E88) deriving the membership `track` field from the transmitted proposer configuration instead of a substring test on the condition label, with a `track_basis` field on all 110 members and seven labels corrected. INDEPENDENTLY RE-VERIFIED before signing, from the artefacts rather than the rebuild's own harness: tiering_20m.json differs from the pre-rebuild blob b4a39f3a4 only in `generated_at_utc` and `git_commit` (`ranking`, `tiers`, `tie_set`, `pairwise` and the whole `mcc_permutation` block hash-identical); membership.json holds 110 -> 110 members with identical ids, exactly 7 `track` changes, `track_basis` added to all 110, 0 other member-field changes and excluded 161 -> 161; the mcb/ artefacts are absent from the rebuild commit 60b07ffcc and so unchanged by construction; signature-paths.json is 10/10 byte-equal; and both correction directions check out at the configuration (proposer-verifier-384::verified-adversarial-image has proposer_pool `detect_brief-text`, so its `image` token named the VERIFIER, and pv-diag-384::pv-scale4-optimal-* runs prompts/configs/h8/v2/detect_h8_scale-4_v2.json with include_example_images true and 13 exemplars). SIGNATURE SCOPE: this row's `conditions_compared` holds 103 entries and is NOT the board's membership — the board admits 153 cells and tiers 150, from results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering-input/run-analyses.json (provenance.re_sign_pending.tiering_membership_source); the signature attests the board artefact at that membership, not this field. E86's null-exemplar exposure (20 of the 487 frame tiles) is disclosed on the board page. Prior signature: 2026-09-12T06:04:30Z — 'Re-signed 2026-09-12T06:04:30Z by the PI (S153, ruling given after a review of what the signature attests: one frame era2-b-487, one instrument, gate G1 on every cell's own inputs, gates G2/G3/G4/G6 held, Tier 1 unchanged at 103 cells). Original signature: 2026-09-10T12:34:56Z — 'Signed 2026-09-10T12:34:56Z by the PI on the 79-cell board (39 -era2b rows + 40 -opmax rows, the nine mis-materialised opmax cells corrected the same day; merge aec214e0f). PI ruling 2026-09-10 (S152, in session): G1 is SATISFIED on the true-input reproduction. As specified, the gate rebuilt the archived 44-cell board from its ARCHIVED inputs and one cell differed (0.7460 -> 0.7475) because the archived board had scored a 372-feature blob served from a stale label-keyed cache while the archived file holds 373 features; from the inputs the archived board actually scored it reproduces 44/44 cells and 946/946 pairs with tiers identical (g1-regression.json 'bisect' and g1-confirmatory-rebuild.json; Obs 464). The clause 'nothing published unless all gates pass' is read as reproduction from the true inputs, which passes; the as-specified failure and its cause stay on record.''"
+   "_signature_note": "Re-signed 2026-09-16T02:58:00Z by the PI (S154, 2026-09-16) over BOTH rebuilds made since the 2026-09-12 signature, presented as one written walkthrough and approved: (a) the 2026-09-13 rebuild carrying rulings 6 and 7 — the four recovery-fix cells at their current evaluations (g37-text-k3-verified-opmax 0.8870 -> 0.8860, one added false positive), the tile-MCC permutation family on the same swap masks REPORTED BESIDE the preregistered F1 tiering, and the withheld-cell disclosure; and (b) the 2026-09-14 ruling-4 rebuild (erratum E88) deriving the membership `track` field from the transmitted proposer configuration instead of a substring test on the condition label, with a `track_basis` field on all 110 members and seven labels corrected. INDEPENDENTLY RE-VERIFIED before signing, from the artefacts rather than the rebuild's own harness: tiering_20m.json differs from the pre-rebuild blob b4a39f3a4 only in `generated_at_utc` and `git_commit` (`ranking`, `tiers`, `tie_set`, `pairwise` and the whole `mcc_permutation` block hash-identical); membership.json holds 110 -> 110 members with identical ids, exactly 7 `track` changes, `track_basis` added to all 110, 0 other member-field changes and excluded 161 -> 161; the mcb/ artefacts are absent from the rebuild commit 60b07ffcc and so unchanged by construction; signature-paths.json is 10/10 byte-equal; and both correction directions check out at the configuration (proposer-verifier-384::verified-adversarial-image has proposer_pool `detect_brief-text`, so its `image` token named the VERIFIER, and pv-diag-384::pv-scale4-optimal-* runs prompts/configs/h8/v2/detect_h8_scale-4_v2.json with include_example_images true and 13 exemplars). SIGNATURE SCOPE: this row's `conditions_compared` holds 103 entries and is NOT the board's membership — the board admits 153 cells and tiers 150, from results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering-input/run-analyses.json (provenance.re_sign_pending.tiering_membership_source); the signature attests the board artefact at that membership, not this field. E86's null-exemplar exposure (20 of the 487 frame tiles) is disclosed on the board page. Prior signature: 2026-09-12T06:04:30Z — 'Re-signed 2026-09-12T06:04:30Z by the PI (S153, ruling given after a review of what the signature attests: one frame era2-b-487, one instrument, gate G1 on every cell's own inputs, gates G2/G3/G4/G6 held, Tier 1 unchanged at 103 cells). Original signature: 2026-09-10T12:34:56Z — 'Signed 2026-09-10T12:34:56Z by the PI on the 79-cell board (39 -era2b rows + 40 -opmax rows, the nine mis-materialised opmax cells corrected the same day; merge aec214e0f). PI ruling 2026-09-10 (S152, in session): G1 is SATISFIED on the true-input reproduction. As specified, the gate rebuilt the archived 44-cell board from its ARCHIVED inputs and one cell differed (0.7460 -> 0.7475) because the archived board had scored a 372-feature blob served from a stale label-keyed cache while the archived file holds 373 features; from the inputs the archived board actually scored it reproduces 44/44 cells and 946/946 pairs with tiers identical (g1-regression.json 'bisect' and g1-confirmatory-rebuild.json; Obs 464). The clause 'nothing published unless all gates pass' is read as reproduction from the true inputs, which passes; the as-specified failure and its cause stay on record.''",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-16T02:58:00Z",
+    "attests": "Re-signed 2026-09-16T02:58:00Z by the PI (S154, 2026-09-16) over BOTH rebuilds made since the 2026-09-12 signature, presented as one written walkthrough and approved: (a) the 2026-09-13 rebuild carrying rulings 6 and 7 — the four recovery-fix cells at their current evaluations (g37-text-k3-verified-opmax 0.8870 -> 0.8860, one added false positive), the tile-MCC permutation family on the same swap masks REPORTED BESIDE the preregistered F1 tiering, and the withheld-cell disclosure; and (b) the 2026-09-14 ruling-4 rebuild (erratum E88) deriving the membership `track` field from the transmitted proposer configuration instead of a substring test on the condition label, with a `track_basis` field on all 110 members and seven labels corrected. INDEPENDENTLY RE-VERIFIED before signing, from the artefacts rather than the rebuild's own harness: tiering_20m.json differs from the pre-rebuild blob b4a39f3a4 only in `generated_at_utc` and `git_commit` (`ranking`, `tiers`, `tie_set`, `pairwise` and the whole `mcc_permutation` block hash-identical); membership.json holds 110 -> 110 members with identical ids, exactly 7 `track` changes, `track_basis` added to all 110, 0 other member-field changes and excluded 161 -> 161; the mcb/ artefacts are absent from the rebuild commit 60b07ffcc and so unchanged by construction; signature-paths.json is 10/10 byte-equal; and both correction directions check out at the configuration (proposer-verifier-384::verified-adversarial-image has proposer_pool `detect_brief-text`, so its `image` token named the VERIFIER, and pv-diag-384::pv-scale4-optimal-* runs prompts/configs/h8/v2/detect_h8_scale-4_v2.json with include_example_images true and 13 exemplars). SIGNATURE SCOPE: this row's `conditions_compared` holds 103 entries and is NOT the board's membership — the board admits 153 cells and tiers 150, from results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering-input/run-analyses.json (provenance.re_sign_pending.tiering_membership_source); the signature attests the board artefact at that membership, not this field. E86's null-exemplar exposure (20 of the 487 frame tiles) is disclosed on the board page. Prior signature: 2026-09-12T06:04:30Z — 'Re-signed 2026-09-12T06:04:30Z by the PI (S153, ruling given after a review of what the signature attests: one frame era2-b-487, one instrument, gate G1 on every cell's own inputs, gates G2/G3/G4/G6 held, Tier 1 unchanged at 103 cells). Original signature: 2026-09-10T12:34:56Z — 'Signed 2026-09-10T12:34:56Z by the PI on the 79-cell board (39 -era2b rows + 40 -opmax rows, the nine mis-materialised opmax cells corrected the same day; merge aec214e0f). PI ruling 2026-09-10 (S152, in session): G1 is SATISFIED on the true-input reproduction. As specified, the gate rebuilt the archived 44-cell board from its ARCHIVED inputs and one cell differed (0.7460 -> 0.7475) because the archived board had scored a 372-feature blob served from a stale label-keyed cache while the archived file holds 373 features; from the inputs the archived board actually scored it reproduces 44/44 cells and 946/946 pairs with tiers identical (g1-regression.json 'bisect' and g1-confirmatory-rebuild.json; Obs 464). The clause 'nothing published unless all gates pass' is read as reproduction from the true inputs, which passes; the as-specified failure and its cause stay on record.''",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "uplift-supplement-flatten",
@@ -2828,7 +3564,14 @@
    "_prereg_rationale": "Post-hoc: a dataset derivation for the heterogeneity supplement, agreed 2026-08-28; no registered hypothesis is adjudicated.",
    "_conditions_note": "Five ids were RENAMED in place on 2026-09-12, not added or removed: consensus-384-t1-0::consensus-{1..5}of30 became ...of5 under erratum E85 (the cell is N = 5, not N = 30). The same five artefacts, the same five measured values, the same pair counts; the signed outcome, manually_verified_at and _signature_note are untouched. The rename was propagated because results/run-conditions.json no longer holds the old labels, so leaving them would break the generator's foreign-key guard and the tier-1 envelope test. CONFIRMED by the PI on 2026-09-13 (morning rulings, item 2): the rename stands as made, and the row's outcome and manually_verified_at were not touched.",
    "manually_verified_at": "2026-09-10T22:55:40Z",
-   "_signature_note": "Approved as drafted and signed 2026-09-10T22:55:40Z by the PI (S152 registration walk-through, ruling 2(v))."
+   "_signature_note": "Approved as drafted and signed 2026-09-10T22:55:40Z by the PI (S152 registration walk-through, ruling 2(v)).",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-10T22:55:40Z",
+    "attests": "Approved as drafted and signed 2026-09-10T22:55:40Z by the PI (S152 registration walk-through, ruling 2(v)).",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "verifier-uplift-pairing",
@@ -3018,7 +3761,14 @@
    "_prereg_rationale": "Post-hoc: the registered proposer-verifier contingency (H2) measured as a within-stratum paired difference across the whole corpus; not a preregistered test.",
    "_conditions_note": "the verified cells with a computed uplift; their twins are registered siblings where one exists, otherwise waived twin evaluations under results/uplift-supplement/verifier-pairing/.",
    "manually_verified_at": "2026-09-12T06:04:30Z",
-   "_signature_note": "Re-signed 2026-09-12T06:04:30Z by the PI (S153 ruling 7: same mechanics — new timestamp, signed text preserved). Prior signature: 2026-09-11T07:03:41Z — 'Amended and re-signed 2026-09-11T07:03:41Z by the PI (S153 ruling B1: new timestamp plus this note): counts 85 -> 145 computed / 86 -> 27 blocked, conditions_compared 85 -> 145 entries, outcome rewritten with the recomputed medians; the signed outcome text is preserved verbatim inside the outcome. Original signature: 2026-09-10T22:55:40Z — 'Approved as drafted and signed 2026-09-10T22:55:40Z by the PI (S152 registration walk-through, ruling 2(v)).''"
+   "_signature_note": "Re-signed 2026-09-12T06:04:30Z by the PI (S153 ruling 7: same mechanics — new timestamp, signed text preserved). Prior signature: 2026-09-11T07:03:41Z — 'Amended and re-signed 2026-09-11T07:03:41Z by the PI (S153 ruling B1: new timestamp plus this note): counts 85 -> 145 computed / 86 -> 27 blocked, conditions_compared 85 -> 145 entries, outcome rewritten with the recomputed medians; the signed outcome text is preserved verbatim inside the outcome. Original signature: 2026-09-10T22:55:40Z — 'Approved as drafted and signed 2026-09-10T22:55:40Z by the PI (S152 registration walk-through, ruling 2(v)).''",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-12T06:04:30Z",
+    "attests": "Re-signed 2026-09-12T06:04:30Z by the PI (S153 ruling 7: same mechanics — new timestamp, signed text preserved). Prior signature: 2026-09-11T07:03:41Z — 'Amended and re-signed 2026-09-11T07:03:41Z by the PI (S153 ruling B1: new timestamp plus this note): counts 85 -> 145 computed / 86 -> 27 blocked, conditions_compared 85 -> 145 entries, outcome rewritten with the recomputed medians; the signed outcome text is preserved verbatim inside the outcome. Original signature: 2026-09-10T22:55:40Z — 'Approved as drafted and signed 2026-09-10T22:55:40Z by the PI (S152 registration walk-through, ruling 2(v)).''",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "k-ladder-2026-09-12",
@@ -3137,7 +3887,14 @@
    "output_path": "results/k-ladder-2026-09-12/findings.md",
    "working_notes_obs": [],
    "manually_verified_at": "2026-09-13T06:58:12Z",
-   "_signature_note": "Signed 2026-09-13T06:58:12Z by the PI (S153, 2026-09-13) on the final text, after rulings on the carried convention (stride shell), the MCB sets ('wait for the sets'), hypothesis_refs H3+H13, the § 8.6 reversal claim, and approval of the outcome as written with those additions."
+   "_signature_note": "Signed 2026-09-13T06:58:12Z by the PI (S153, 2026-09-13) on the final text, after rulings on the carried convention (stride shell), the MCB sets ('wait for the sets'), hypothesis_refs H3+H13, the § 8.6 reversal claim, and approval of the outcome as written with those additions.",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-13T06:58:12Z",
+    "attests": "Signed 2026-09-13T06:58:12Z by the PI (S153, 2026-09-13) on the final text, after rulings on the carried convention (stride shell), the MCB sets ('wait for the sets'), hypothesis_refs H3+H13, the § 8.6 reversal claim, and approval of the outcome as written with those additions.",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "null-exemplar-sensitivity-2026-09-13",
@@ -3391,7 +4148,14 @@
    "working_notes_obs": [],
    "manually_verified_at": "2026-09-16T06:43:40Z",
    "_prereg_rationale": "post-hoc: not in the registered analysis plan. The leak was noticed after the boards were built, and this extends the boards' registered scoring and permutation methods to an unregistered question — the sensitivity of published cells to an evaluation-frame contamination — which is the S134 sorting rule's definition of post-hoc. It carries no confirmatory claim and revises no hypothesis outcome; it is a robustness disclosure for the Era-2 board and for Obs 482. hypothesis_refs is empty by the same reasoning: no preregistered hypothesis is tested, and the cells it touches span several.",
-   "_signature_note": "Signed 2026-09-16T06:43:40Z by the PI (S154, 2026-09-16), approved AS DRAFTED after a written walkthrough of the mechanism, the leak signature, the per-cell movement, the tie-set edges and four flagged caveats. The headline figures were re-read from analysis.json before presenting and match the prose: 487 -> 467 tiles, 7,961 -> 7,905 significant pairs, 14 -> 13 F1 tiers, F1 tie set 5 -> 4 with the departing cell gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b (a TEXT cell), Spearman 0.998852, largest rank shift 8 places, 2 cells moving by more than one tier; leak signature image/text FP-rate ratio 0.561 against 0.685, difference -0.088143 with 0 of 10,000 permutations at or beyond it, and -0.077270 stratified within pv-diag-384 (54 image / 61 text cells). PI RULING ON THE REPORTING FRAME: the paper scores and reports on the FULL frame (era2-b-487). The reduced frame stays a sensitivity analysis beside the boards; nothing under results/leaderboard/** is re-scored on it. Rationale: the movement is not significant enough to warrant changing the reported basis, and the PI's wider framing puts the headline on the 55-map deployment results as the more real-world-relevant evidence. PI RULING ON THE PRESENTATION: call the error out clearly, and state that it does not change the ranking of image cells and that text-only configurations were not subject to the leak in the first place (they transmitted the example labels but never the pixels, so no text cell could have been advantaged by it) — but do not dwell on it beyond that. PRECISION NOTE for whoever drafts that text: 'not subject to the error' is exact as to the MECHANISM, not as to the frame — text cells never saw the null pixels, but they were still scored on the 20 exposed tiles, and removing those tiles costs them MORE than it costs the image cells (mean dF1 -0.00275 against -0.00213), because the exposed tiles also hold 12 of the frame's 435 reference mounds. CAVEATS CARRIED (raised before signature, accepted): (i) 'the reduction costs image cells less' is the NET of two effects that nearly cancel — evidence the correction is small, not that the leak was harmless in isolation; (ii) the signature test is a between-cell contrast even when stratified, so it establishes that pixel-sending cells behave differently on the leaked ground, not that any individual cell's published number is wrong by a stated amount — the per-cell re-scores answer that, in thousandths; (iii) any paper text quoting a tie-set SIZE is frame-specific and must name its frame (F1 Tier 1 is 5 on the full frame, 4 on the reduced); (iv) Era-1 exposure is NOT ESTABLISHED rather than absent — null unstratified, weak and heterogeneous stratified — and should be worded that way. Previous state: 'UNSIGNED. Computed and authored 2026-09-13 by Claude Code on the PI's ruling of the same day; awaiting the PI's reading of results/null-exemplar-sensitivity-2026-09-13/findings.md. The Era-2 board's own re-signature was held pending this result.'"
+   "_signature_note": "Signed 2026-09-16T06:43:40Z by the PI (S154, 2026-09-16), approved AS DRAFTED after a written walkthrough of the mechanism, the leak signature, the per-cell movement, the tie-set edges and four flagged caveats. The headline figures were re-read from analysis.json before presenting and match the prose: 487 -> 467 tiles, 7,961 -> 7,905 significant pairs, 14 -> 13 F1 tiers, F1 tie set 5 -> 4 with the departing cell gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b (a TEXT cell), Spearman 0.998852, largest rank shift 8 places, 2 cells moving by more than one tier; leak signature image/text FP-rate ratio 0.561 against 0.685, difference -0.088143 with 0 of 10,000 permutations at or beyond it, and -0.077270 stratified within pv-diag-384 (54 image / 61 text cells). PI RULING ON THE REPORTING FRAME: the paper scores and reports on the FULL frame (era2-b-487). The reduced frame stays a sensitivity analysis beside the boards; nothing under results/leaderboard/** is re-scored on it. Rationale: the movement is not significant enough to warrant changing the reported basis, and the PI's wider framing puts the headline on the 55-map deployment results as the more real-world-relevant evidence. PI RULING ON THE PRESENTATION: call the error out clearly, and state that it does not change the ranking of image cells and that text-only configurations were not subject to the leak in the first place (they transmitted the example labels but never the pixels, so no text cell could have been advantaged by it) — but do not dwell on it beyond that. PRECISION NOTE for whoever drafts that text: 'not subject to the error' is exact as to the MECHANISM, not as to the frame — text cells never saw the null pixels, but they were still scored on the 20 exposed tiles, and removing those tiles costs them MORE than it costs the image cells (mean dF1 -0.00275 against -0.00213), because the exposed tiles also hold 12 of the frame's 435 reference mounds. CAVEATS CARRIED (raised before signature, accepted): (i) 'the reduction costs image cells less' is the NET of two effects that nearly cancel — evidence the correction is small, not that the leak was harmless in isolation; (ii) the signature test is a between-cell contrast even when stratified, so it establishes that pixel-sending cells behave differently on the leaked ground, not that any individual cell's published number is wrong by a stated amount — the per-cell re-scores answer that, in thousandths; (iii) any paper text quoting a tie-set SIZE is frame-specific and must name its frame (F1 Tier 1 is 5 on the full frame, 4 on the reduced); (iv) Era-1 exposure is NOT ESTABLISHED rather than absent — null unstratified, weak and heterogeneous stratified — and should be worded that way. Previous state: 'UNSIGNED. Computed and authored 2026-09-13 by Claude Code on the PI's ruling of the same day; awaiting the PI's reading of results/null-exemplar-sensitivity-2026-09-13/findings.md. The Era-2 board's own re-signature was held pending this result.'",
+   "signature": {
+    "status": "signed",
+    "signed_at": "2026-09-16T06:43:40Z",
+    "attests": "Signed 2026-09-16T06:43:40Z by the PI (S154, 2026-09-16), approved AS DRAFTED after a written walkthrough of the mechanism, the leak signature, the per-cell movement, the tie-set edges and four flagged caveats. The headline figures were re-read from analysis.json before presenting and match the prose: 487 -> 467 tiles, 7,961 -> 7,905 significant pairs, 14 -> 13 F1 tiers, F1 tie set 5 -> 4 with the departing cell gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b (a TEXT cell), Spearman 0.998852, largest rank shift 8 places, 2 cells moving by more than one tier; leak signature image/text FP-rate ratio 0.561 against 0.685, difference -0.088143 with 0 of 10,000 permutations at or beyond it, and -0.077270 stratified within pv-diag-384 (54 image / 61 text cells). PI RULING ON THE REPORTING FRAME: the paper scores and reports on the FULL frame (era2-b-487). The reduced frame stays a sensitivity analysis beside the boards; nothing under results/leaderboard/** is re-scored on it. Rationale: the movement is not significant enough to warrant changing the reported basis, and the PI's wider framing puts the headline on the 55-map deployment results as the more real-world-relevant evidence. PI RULING ON THE PRESENTATION: call the error out clearly, and state that it does not change the ranking of image cells and that text-only configurations were not subject to the leak in the first place (they transmitted the example labels but never the pixels, so no text cell could have been advantaged by it) — but do not dwell on it beyond that. PRECISION NOTE for whoever drafts that text: 'not subject to the error' is exact as to the MECHANISM, not as to the frame — text cells never saw the null pixels, but they were still scored on the 20 exposed tiles, and removing those tiles costs them MORE than it costs the image cells (mean dF1 -0.00275 against -0.00213), because the exposed tiles also hold 12 of the frame's 435 reference mounds. CAVEATS CARRIED (raised before signature, accepted): (i) 'the reduction costs image cells less' is the NET of two effects that nearly cancel — evidence the correction is small, not that the leak was harmless in isolation; (ii) the signature test is a between-cell contrast even when stratified, so it establishes that pixel-sending cells behave differently on the leaked ground, not that any individual cell's published number is wrong by a stated amount — the per-cell re-scores answer that, in thousandths; (iii) any paper text quoting a tie-set SIZE is frame-specific and must name its frame (F1 Tier 1 is 5 on the full frame, 4 on the reduced); (iv) Era-1 exposure is NOT ESTABLISHED rather than absent — null unstratified, weak and heterogeneous stratified — and should be worded that way. Previous state: 'UNSIGNED. Computed and authored 2026-09-13 by Claude Code on the PI's ruling of the same day; awaiting the PI's reading of results/null-exemplar-sensitivity-2026-09-13/findings.md. The Era-2 board's own re-signature was held pending this result.'",
+    "presentation": null,
+    "history": []
+   }
   },
   {
    "analysis_id": "gemini37-image-55map-2026-09-13",
@@ -3435,7 +4199,14 @@
    "output_path": "results/gemini37-image-55map-2026-09-13/findings.md",
    "working_notes_obs": [],
    "manually_verified_at": null,
-   "_signature_note": "UNSIGNED by instruction: the card requires this row to be authored but left unsigned for the PI. No board and no tiering was re-tiered and no signed row was touched."
+   "_signature_note": "UNSIGNED by instruction: the card requires this row to be authored but left unsigned for the PI. No board and no tiering was re-tiered and no signed row was touched.",
+   "signature": {
+    "status": "unsigned",
+    "signed_at": null,
+    "attests": "UNSIGNED by instruction: the card requires this row to be authored but left unsigned for the PI. No board and no tiering was re-tiered and no signed row was touched.",
+    "presentation": null,
+    "history": []
+   }
   }
  ]
 }

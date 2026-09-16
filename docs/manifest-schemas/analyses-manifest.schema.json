@@ -110,7 +110,41 @@
             { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
             { "type": "null" }
           ],
-          "description": "Set when a human authors/verifies the row. The generator treats a non-null value as a signal not to overwrite the human-authored fields."
+          "description": "AUTHORING stamp: set when a human authored or verified the row's hand-authored fields, which tells the generator not to overwrite them. This is NOT a signature and must never be counted as one \u2014 the PI's signature is the `signature` object. The two were conflated until 2026-09-16, which is why 50 rows carried a stamp with no record of what was reviewed; see docs/methodology/signature-policy.md."
+        },
+        "signature": {
+          "type": "object",
+          "description": "The PI's signature on this row, and what it attests. A signature means the PI was shown a written walkthrough \u2014 what the row claims, what changed since any prior signature, what was independently verified and how, and what is NOT covered \u2014 read it, asked questions, and approved. Nothing else is a signature: not an authoring stamp, not silence, not an instruction to carry on. Policy: docs/methodology/signature-policy.md.",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["signed", "unsigned", "unsigned-by-design", "re-sign-pending", "legacy-signed"],
+              "description": "signed: the PI approved a walkthrough of this row as it stands. unsigned: authored, awaiting that walkthrough. unsigned-by-design: deliberately never signed (calibration material whose claim is carried by a signed sibling). re-sign-pending: a prior signature the row has since outgrown. legacy-signed: stamped before 2026-09-16 under the convention where the timestamp WAS the signature, with the row's substance unchanged since \u2014 the review happened, its scope was never written down."
+            },
+            "signed_at": {
+              "oneOf": [
+                { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
+                { "type": "null" }
+              ],
+              "description": "When the PI signed. Null unless status is signed or legacy-signed."
+            },
+            "attests": {
+              "type": ["string", "null"],
+              "description": "What the signature covers, in the PI's terms, INCLUDING its scope limits \u2014 which artefact, which membership, and what the signature does not reach. Required when status is signed; null for a legacy row, whose scope was never recorded."
+            },
+            "presentation": {
+              "type": ["string", "null"],
+              "description": "Where the walkthrough the PI read can be found: a session reference, a report path, or the attests text itself."
+            },
+            "history": {
+              "type": "array",
+              "items": { "type": "object" },
+              "default": [],
+              "description": "Prior signatures and lapses, newest last."
+            }
+          },
+          "required": ["status"],
+          "additionalProperties": false
         },
         "provenance": { "$ref": "common-defs.schema.json#/$defs/provenance" }
       },

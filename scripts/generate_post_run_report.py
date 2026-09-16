@@ -1359,6 +1359,13 @@ def build_analyses(specs: list[dict], at: str | None = None) -> list[dict]:
             "output_path": out_path,
             "working_notes_obs": spec.get("working_notes_obs", []),
             "manually_verified_at": spec.get("manually_verified_at"),
+            # The PI's signature must reach the PUBLISHED manifest. Its
+            # predecessor, the free-text `_signature_note`, never did: every
+            # underscore-prefixed key is dropped here, so the only signature
+            # evidence downstream was the ambiguous authoring timestamp beside
+            # it. A signature that exists solely in the hand-authored source is
+            # not a record anything else can check.
+            "signature": spec.get("signature") or {"status": "unsigned"},
             "provenance": build_provenance(sources, at),
         })
         # Reference-level diagnostic marker (schema ``reference_scope``, S150):
@@ -1851,6 +1858,72 @@ def report_planned_runs(registry: list[dict], now: datetime | None = None) -> li
     return lines
 
 
+def check_signature_integrity(new_obj: dict) -> tuple[list[str], list[str]]:
+    """Refuse to publish a signature that does not carry its own evidence.
+
+    The schema pins the status vocabulary; this pins the cross-field rules that
+    a vocabulary alone cannot, and which are exactly the ones the old
+    convention lost:
+
+    * ``signed`` must carry a ``signed_at`` and a non-empty ``attests``. A
+      signature with no record of WHAT was approved is the defect this object
+      exists to end — 50 rows once carried a bare timestamp, and no one could
+      say afterwards what the PI had been shown.
+    * ``legacy-signed`` must carry a ``signed_at`` — it asserts a real stamp —
+      and must NOT invent an ``attests``, because its scope was never recorded
+      and writing one now would be fabrication.
+    * ``unsigned``, ``unsigned-by-design`` and ``re-sign-pending`` must not
+      carry a ``signed_at``: none of them is a live signature.
+
+    Args:
+        new_obj: the freshly-assembled analyses manifest object.
+
+    Returns:
+        ``(errors, advisories)``. Errors block the write exactly as a schema
+        violation does; the advisory is the status tally, so a count of signed
+        rows never has to be taken by hand again.
+    """
+    errors: list[str] = []
+    tally: dict[str, int] = {}
+    for row in new_obj.get("analyses", []):
+        aid = row.get("analysis_id", "<unknown>")
+        signature = row.get("signature") or {}
+        status = signature.get("status")
+        tally[status] = tally.get(status, 0) + 1
+        signed_at = signature.get("signed_at")
+        attests = (signature.get("attests") or "").strip()
+        if status == "signed":
+            if not signed_at:
+                errors.append(f"{aid}: signature.status is 'signed' with no signed_at")
+            if not attests:
+                errors.append(
+                    f"{aid}: signature.status is 'signed' with no attests — a "
+                    "signature must record what it covers",
+                )
+        elif status == "legacy-signed":
+            if not signed_at:
+                errors.append(
+                    f"{aid}: signature.status is 'legacy-signed' with no "
+                    "signed_at, so it asserts a stamp it does not carry",
+                )
+            if attests:
+                errors.append(
+                    f"{aid}: signature.status is 'legacy-signed' but carries an "
+                    "attests — a legacy row's scope was never recorded and must "
+                    "not be written after the fact",
+                )
+        elif status in {"unsigned", "unsigned-by-design", "re-sign-pending"}:
+            if signed_at:
+                errors.append(
+                    f"{aid}: signature.status is '{status}' but carries a "
+                    f"signed_at ({signed_at}) — it is not a live signature",
+                )
+    advisory = "signature status: " + ", ".join(
+        f"{count} {status}" for status, count in sorted(tally.items())
+    )
+    return sorted(errors), [advisory]
+
+
 def check_write_once_predictions(
     new_obj: dict, json_path: Path
 ) -> tuple[list[str], list[str]]:
@@ -2052,6 +2125,12 @@ def write_manifests(bundles: dict[str, list[dict]], at: str, registry: Registry)
                 obj, json_path)
             errors = errors + write_once_errors
             advisories.extend(write_once_warnings)
+            # Signature integrity blocks the write on the same footing: a
+            # signature published without its evidence is worse than none,
+            # because it looks like oversight that did not happen.
+            signature_errors, signature_advisories = check_signature_integrity(obj)
+            errors = errors + signature_errors
+            advisories.extend(signature_advisories)
         out[manifest] = (len(rows), errors, json_rel)
         if not errors:
             staged.append((manifest, obj, json_path, json_rel))
@@ -2070,7 +2149,11 @@ def write_manifests(bundles: dict[str, list[dict]], at: str, registry: Registry)
         json_path.with_suffix(".md").write_text(
             render_manifest(manifest, obj, json_rel), encoding="utf-8")
     for advisory in advisories:
-        print(f"WARN: {advisory}", file=sys.stderr)
+        # A tally is information, not a warning: prefixing it "WARN" trains the
+        # reader to skim past the line that exists to stop signed rows being
+        # hand-counted.
+        prefix = "INFO" if advisory.startswith("signature status:") else "WARN"
+        print(f"{prefix}: {advisory}", file=sys.stderr)
     return out
 
 

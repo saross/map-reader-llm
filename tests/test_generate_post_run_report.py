@@ -40,6 +40,7 @@ from scripts.generate_post_run_report import (
     build_analyses,
     build_manifests,
     build_run_row,
+    check_signature_integrity,
     check_write_once_predictions,
     draft_run,
     drift_check,
@@ -821,6 +822,75 @@ def _analyses_file(tmp_path, predicted):
         "analyses": [{"analysis_id": "a1", "predicted_outcome": predicted}],
     }))
     return p
+
+
+def _sig(status, **kw):
+    """One analyses manifest carrying a single row with this signature."""
+    signature = {"status": status, "signed_at": None, "attests": None}
+    signature.update(kw)
+    return {"analyses": [{"analysis_id": "a1", "signature": signature}]}
+
+
+@pytest.mark.tier1
+def test_signed_status_must_carry_its_evidence():
+    """A signature with no record of WHAT was approved is the defect to end."""
+    errors, _ = check_signature_integrity(_sig("signed"))
+    assert len(errors) == 2
+    assert any("no signed_at" in e for e in errors)
+    assert any("no attests" in e for e in errors)
+
+    ok, _ = check_signature_integrity(
+        _sig("signed", signed_at="2026-09-16T00:00:00Z",
+             attests="the board at its 153-cell membership"))
+    assert ok == []
+
+    # Whitespace is not a record of scope.
+    blank, _ = check_signature_integrity(
+        _sig("signed", signed_at="2026-09-16T00:00:00Z", attests="   "))
+    assert any("no attests" in e for e in blank)
+
+
+@pytest.mark.tier1
+def test_legacy_signed_asserts_a_stamp_and_invents_no_scope():
+    """Its review happened; its scope was never written and must not be now."""
+    missing, _ = check_signature_integrity(_sig("legacy-signed"))
+    assert any("no signed_at" in e for e in missing)
+
+    invented, _ = check_signature_integrity(
+        _sig("legacy-signed", signed_at="2026-08-17T03:50:21Z",
+             attests="reconstructed after the fact"))
+    assert any("must not be written after the fact" in e for e in invented)
+
+    ok, _ = check_signature_integrity(
+        _sig("legacy-signed", signed_at="2026-08-17T03:50:21Z"))
+    assert ok == []
+
+
+@pytest.mark.tier1
+def test_unsigned_statuses_cannot_carry_a_signature_date():
+    """None of them is a live signature, so none may look like one."""
+    for status in ("unsigned", "unsigned-by-design", "re-sign-pending"):
+        errors, _ = check_signature_integrity(
+            _sig(status, signed_at="2026-09-16T00:00:00Z"))
+        assert any("not a live signature" in e for e in errors), status
+        assert check_signature_integrity(_sig(status))[0] == []
+
+
+@pytest.mark.tier1
+def test_signature_tally_is_reported_so_no_one_counts_by_hand():
+    """The '66 signed' figure came from counting timestamps. Never again."""
+    obj = {"analyses": [
+        {"analysis_id": "a", "signature": {"status": "signed",
+                                           "signed_at": "2026-09-16T00:00:00Z",
+                                           "attests": "x"}},
+        {"analysis_id": "b", "signature": {"status": "legacy-signed",
+                                           "signed_at": "2026-08-17T00:00:00Z"}},
+        {"analysis_id": "c", "signature": {"status": "unsigned"}},
+    ]}
+    errors, advisories = check_signature_integrity(obj)
+    assert errors == []
+    assert advisories == [
+        "signature status: 1 legacy-signed, 1 signed, 1 unsigned"]
 
 
 @pytest.mark.tier1
