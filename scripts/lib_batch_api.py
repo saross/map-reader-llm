@@ -469,6 +469,11 @@ def _build_reference_parts(
 #: the explicit route can cache prompts the implicit one ignores.
 EXPLICIT_CACHE_MIN_TOKENS = 1024
 
+#: Lines a DRY RUN writes per chunk. The rehearsal exists to prove the request
+#: shape, and a few lines prove it as well as 4,000 do; writing the real file
+#: cost 1.34 GB per chunk and 7.6 GB per pass before this cap.
+DRY_RUN_JSONL_LINES = 5
+
 #: Implicit caching's floor on the Gemini 3.5-3.8 Flash line, for comparison.
 IMPLICIT_CACHE_MIN_TOKENS = 4096
 
@@ -2318,7 +2323,14 @@ def run_batch_unit(
     # (text-only configs) or when creation fails, so caching can never turn a
     # runnable leg into a failed one.
     cached_content = None
-    if use_context_cache:
+    if use_context_cache and dry_run:
+        # A dry run must not touch the API. Creating a cache is a billable,
+        # persistent resource — an earlier dry run of this leg left eight
+        # live caches on the account, one per chunk. A placeholder keeps the
+        # request SHAPE inspectable, which is the point of the rehearsal.
+        cached_content = "cachedContents/DRY-RUN-PLACEHOLDER"
+        logger.info("dry run: using a placeholder cache name, creating none")
+    elif use_context_cache:
         cached_content, cache_tokens = create_shared_context_cache(
             client=client,
             model_name=model_name,
@@ -2339,7 +2351,10 @@ def run_batch_unit(
         system_instruction=system_instruction,
         examples=examples,
         config_version=config_version,
-        limit=limit,
+        # A dry run proves the request SHAPE, which a handful of lines shows
+        # as well as all of them. Writing the full file cost 1.34 GB per
+        # chunk and 7.6 GB per pass on 2026-09-17, for a rehearsal.
+        limit=DRY_RUN_JSONL_LINES if dry_run else limit,
         offset=offset,
         tile_size=tile_size,
         tiles_dir=tiles_dir,
@@ -2349,14 +2364,26 @@ def run_batch_unit(
     if ctx is None:
         return False, "no_tiles_found", 0.0
 
-    print(f"  Built JSONL: {ctx.line_count} lines ({ctx.jsonl_path})")
-
     if dry_run:
+        true_total = len(_resolve_tile_paths(unit.get("manifest_path"),
+                                             tiles_dir=tiles_dir)) \
+            if unit.get("manifest_path") else None
+        print(f"  Built SAMPLE JSONL: {ctx.line_count} lines "
+              f"(dry run writes at most {DRY_RUN_JSONL_LINES}; "
+              f"{ctx.jsonl_path})")
         print(
             f"  [DRY RUN] Would submit batch job for "
-            f"{ctx.line_count} tiles"
+            f"{true_total if true_total else 'the full'} tiles; "
+            f"no cache created, nothing uploaded, no API call made"
         )
+        try:
+            ctx.jsonl_path.unlink()
+            print("  [DRY RUN] sample JSONL removed")
+        except OSError:
+            pass
         return True, "dry_run", 0.0
+
+    print(f"  Built JSONL: {ctx.line_count} lines ({ctx.jsonl_path})")
 
     # Phase 2: Submit (or resume existing job)
     if resume_job_name:
