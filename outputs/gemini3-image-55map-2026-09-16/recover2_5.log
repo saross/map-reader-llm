@@ -1,0 +1,32 @@
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3-flash-preview
+Overriding Config Temperature (1.0) with CLI Argument: 0.7
+Overriding Config Thinking Level (minimal) with CLI Argument: minimal
+Loaded Version: detect_brief-text-image
+Model: gemini-3-flash-preview
+Workers: 4
+System Instruction: detect_brief-text-image.md
+Thinking level: minimal
+Service tier: flex
+
+[intent-check] config diff vs base (detect_brief-text-image):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.geojson
+Metadata: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json
+Using Manifest: outputs/gemini3-image-55map-2026-09-16/still_run_5.json
+Manifest loaded. Found 1 of 1 tiles (1 remaining to process).
+Tile size: 384 (measured from tiles; config default was 512)
+Processing 1 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=20000
+Thread pool size: 60 (governor active)
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:07<00:00,  7.41s/it]100%|██████████| 1/1 [00:07<00:00,  7.41s/it]
+
+Finished. Saved to outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.geojson
+Tile manifest: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.tiles.json
+Metadata saved to outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json
+Tiles processed: 1
+Tiles failed: 0
+Total detections: 3
+Tokens used: 20,215
+Estimated cost: $0.0053

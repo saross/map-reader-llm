@@ -1,0 +1,32 @@
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3-flash-preview
+Overriding Config Temperature (1.0) with CLI Argument: 0.7
+Overriding Config Thinking Level (minimal) with CLI Argument: minimal
+Loaded Version: detect_brief-text-image
+Model: gemini-3-flash-preview
+Workers: 8
+System Instruction: detect_brief-text-image.md
+Thinking level: minimal
+Service tier: flex
+
+[intent-check] config diff vs base (detect_brief-text-image):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson
+Metadata: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json
+Using Manifest: outputs/gemini3-image-55map-2026-09-16/missing_run_2.json
+Manifest loaded. Found 10 of 10 tiles (10 remaining to process).
+Tile size: 384 (measured from tiles; config default was 512)
+Processing 10 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=20000
+Thread pool size: 60 (governor active)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [00:06<01:00,  6.77s/it] 20%|██        | 2/10 [00:06<00:22,  2.86s/it] 40%|████      | 4/10 [00:07<00:07,  1.20s/it] 70%|███████   | 7/10 [00:07<00:01,  1.84it/s] 90%|█████████ | 9/10 [00:08<00:00,  1.91it/s]100%|██████████| 10/10 [00:11<00:00,  1.08s/it]100%|██████████| 10/10 [00:11<00:00,  1.18s/it]
+
+Finished. Saved to outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson
+Tile manifest: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.tiles.json
+Metadata saved to outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json
+Tiles processed: 10
+Tiles failed: 0
+Total detections: 15
+Tokens used: 201,215
+Estimated cost: $0.0516

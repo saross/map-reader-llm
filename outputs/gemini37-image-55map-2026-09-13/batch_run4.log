@@ -1,0 +1,491 @@
+
+[intent-check] config diff vs base (detect_brief-text-image):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text-image
+Model: gemini-3.7-flash
+System instruction: detect_brief-text-image.md
+Tile size: 384
+Tiles dir: inputs/tiles_384_ov192_55maps
+Manifest: outputs/gemini37-image-55map-2026-09-13/all_tiles_manifest.json
+Output: outputs/gemini37-image-55map-2026-09-13/batch-staging-run4
+Chunking: 24561 tiles into 7 batch jobs (max 4000 per job)
+
+--- Chunk 1/7 (tiles 1–4000) ---
+  Built JSONL: 4000 lines (outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/batch_working/detections_detect_brief-text-image_run01_chunk0.jsonl)
+  Submitted batch job: batches/iidf4feulumb14m277dp92cwj9z7yi4llsta
+  Polling batches/iidf4feulumb14m277dp92cwj9z7yi4llsta: JOB_STATE_RUNNING
+  Polling batches/iidf4feulumb14m277dp92cwj9z7yi4llsta: JOB_STATE_RUNNING
+  Polling batches/iidf4feulumb14m277dp92cwj9z7yi4llsta: JOB_STATE_RUNNING
+  Polling batches/iidf4feulumb14m277dp92cwj9z7yi4llsta: JOB_STATE_RUNNING
+  Polling batches/iidf4feulumb14m277dp92cwj9z7yi4llsta: JOB_STATE_RUNNING
+  Polling batches/iidf4feulumb14m277dp92cwj9z7yi4llsta: JOB_STATE_RUNNING
+  Polling batches/iidf4feulumb14m277dp92cwj9z7yi4llsta: JOB_STATE_RUNNING
+  Polling batches/iidf4feulumb14m277dp92cwj9z7yi4llsta: JOB_STATE_RUNNING
+  Polling batches/iidf4feulumb14m277dp92cwj9z7yi4llsta: JOB_STATE_RUNNING
+  Polling batches/iidf4feulumb14m277dp92cwj9z7yi4llsta: JOB_STATE_SUCCEEDED
+  Batch complete: 4000 tiles, 3704 detections, 0 failed, $32.8990
+
+--- Chunk 2/7 (tiles 4001–8000) ---
+  Built JSONL: 4000 lines (outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/batch_working/detections_detect_brief-text-image_run01_chunk1.jsonl)
+  Submitted batch job: batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_RUNNING
+  Polling batches/gj9heqwqbadt3i43tbqbi4h4hgeg50bm94y9: JOB_STATE_SUCCEEDED
+  Batch complete: 4000 tiles, 3560 detections, 0 failed, $32.7788
+
+--- Chunk 3/7 (tiles 8001–12000) ---
+  Built JSONL: 4000 lines (outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/batch_working/detections_detect_brief-text-image_run01_chunk2.jsonl)
+  Submitted batch job: batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_RUNNING
+  Polling batches/uw31wfgaclbh16poefzyl978ccngdsgxymdn: JOB_STATE_SUCCEEDED
+  Batch complete: 4000 tiles, 4455 detections, 0 failed, $32.9474
+
+--- Chunk 4/7 (tiles 12001–16000) ---
+  Built JSONL: 4000 lines (outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/batch_working/detections_detect_brief-text-image_run01_chunk3.jsonl)
+  Submitted batch job: batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_RUNNING
+  Polling batches/wfm2533xcx2up0dw7hce8wcdefg36w7271xy: JOB_STATE_SUCCEEDED
+  Batch complete: 4000 tiles, 3346 detections, 0 failed, $32.8373
+
+--- Chunk 5/7 (tiles 16001–20000) ---
+  Built JSONL: 4000 lines (outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/batch_working/detections_detect_brief-text-image_run01_chunk4.jsonl)
+  Submitted batch job: batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_RUNNING
+  Polling batches/srqrk482pp87g0gqmn6nelipnx4jv8pggk7n: JOB_STATE_SUCCEEDED
+  Batch complete: 4000 tiles, 2035 detections, 0 failed, $32.3713
+
+--- Chunk 6/7 (tiles 20001–24000) ---
+  Built JSONL: 4000 lines (outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/batch_working/detections_detect_brief-text-image_run01_chunk5.jsonl)
+  Submitted batch job: batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_RUNNING
+  Polling batches/nnvo7uahj5uv27oig42lozq2lsdozz7xtvts: JOB_STATE_SUCCEEDED
+  Batch complete: 4000 tiles, 2739 detections, 0 failed, $32.8433
+
+--- Chunk 7/7 (tiles 24001–24561) ---
+  Built JSONL: 561 lines (outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/batch_working/detections_detect_brief-text-image_run01_chunk6.jsonl)
+  Submitted batch job: batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd
+  Polling batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd: JOB_STATE_RUNNING
+  Polling batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd: JOB_STATE_RUNNING
+  Polling batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd: JOB_STATE_RUNNING
+  Polling batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd: JOB_STATE_RUNNING
+  Polling batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd: JOB_STATE_RUNNING
+  Polling batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd: JOB_STATE_RUNNING
+  Polling batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd: JOB_STATE_RUNNING
+  Polling batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd: JOB_STATE_RUNNING
+  Polling batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd: JOB_STATE_RUNNING
+  Polling batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd: JOB_STATE_RUNNING
+  Polling batches/jhz2j5mmtauxjurk9h3xiguodn02uxqr8esd: JOB_STATE_SUCCEEDED
+  Batch complete: 561 tiles, 213 detections, 0 failed, $4.5148
+
+Merged 7 chunks → detections_detect_brief-text-image_run01.geojson: 20052 features, 24561 tiles
+
+Batch complete. Estimated cost: $201.1919
+Tiles processed: 24561

@@ -1,0 +1,41 @@
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3-flash-preview
+Overriding Config Temperature (1.0) with CLI Argument: 0.7
+Overriding Config Thinking Level (minimal) with CLI Argument: minimal
+Loaded Version: detect_brief-text-image
+Model: gemini-3-flash-preview
+Workers: 8
+System Instruction: detect_brief-text-image.md
+Thinking level: minimal
+Service tier: flex
+
+[intent-check] config diff vs base (detect_brief-text-image):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson
+Metadata: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json
+Using Manifest: outputs/gemini3-image-55map-2026-09-16/missing_run_3.json
+Manifest loaded. Found 13 of 13 tiles (13 remaining to process).
+Tile size: 384 (measured from tiles; config default was 512)
+Processing 13 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=20000
+Thread pool size: 60 (governor active)
+  0%|          | 0/13 [00:00<?, ?it/s]  8%|▊         | 1/13 [00:06<01:23,  7.00s/it] 15%|█▌        | 2/13 [00:07<00:32,  2.95s/it] 23%|██▎       | 3/13 [00:07<00:16,  1.69s/it] 31%|███       | 4/13 [00:07<00:10,  1.11s/it] 38%|███▊      | 5/13 [00:07<00:06,  1.30it/s] 62%|██████▏   | 8/13 [00:08<00:01,  2.69it/s] 69%|██████▉   | 9/13 [00:08<00:02,  1.99it/s] 77%|███████▋  | 10/13 [00:09<00:01,  2.46it/s]                                                77%|███████▋  | 10/13 [00:09<00:01,  2.46it/s] 85%|████████▍ | 11/13 [00:09<00:00,  2.24it/s]                                                85%|████████▍ | 11/13 [00:10<00:00,  2.24it/s] 92%|█████████▏| 12/13 [00:10<00:00,  1.80it/s]                                                92%|█████████▏| 12/13 [00:10<00:00,  1.80it/s]100%|██████████| 13/13 [00:10<00:00,  1.23it/s]
+Failed to parse response for K-35-076-1_x960_y2496.png: Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair
+Failed to parse response for K-35-074-2_x1920_y960.png: Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair
+Failed to parse response for K-35-065-2_GManastir_4326_x2880_y960.png: Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair
+
+WARNING: 3 tiles have failed. Check API status.
+
+WARNING: 3 tiles have failed. Check API status.
+
+WARNING: 3 tiles have failed. Check API status.
+
+Finished. Saved to outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson
+Tile manifest: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.tiles.json
+Metadata saved to outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json
+Tiles processed: 10
+Tiles failed: 3
+Total detections: 13
+Tokens used: 261,506
+Estimated cost: $0.0670

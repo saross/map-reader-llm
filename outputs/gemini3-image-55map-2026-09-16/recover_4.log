@@ -1,0 +1,40 @@
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3-flash-preview
+Overriding Config Temperature (1.0) with CLI Argument: 0.7
+Overriding Config Thinking Level (minimal) with CLI Argument: minimal
+Loaded Version: detect_brief-text-image
+Model: gemini-3-flash-preview
+Workers: 8
+System Instruction: detect_brief-text-image.md
+Thinking level: minimal
+Service tier: flex
+
+[intent-check] config diff vs base (detect_brief-text-image):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson
+Metadata: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json
+Using Manifest: outputs/gemini3-image-55map-2026-09-16/missing_run_4.json
+Manifest loaded. Found 17 of 17 tiles (17 remaining to process).
+Tile size: 384 (measured from tiles; config default was 512)
+Processing 17 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=20000
+Thread pool size: 60 (governor active)
+  0%|          | 0/17 [00:00<?, ?it/s]  6%|▌         | 1/17 [00:06<01:51,  6.94s/it] 12%|█▏        | 2/17 [00:07<00:43,  2.93s/it] 18%|█▊        | 3/17 [00:07<00:24,  1.75s/it] 29%|██▉       | 5/17 [00:07<00:09,  1.24it/s] 35%|███▌      | 6/17 [00:08<00:07,  1.38it/s] 47%|████▋     | 8/17 [00:08<00:04,  2.16it/s] 53%|█████▎    | 9/17 [00:08<00:03,  2.58it/s] 59%|█████▉    | 10/17 [00:08<00:02,  2.96it/s] 71%|███████   | 12/17 [00:09<00:01,  3.41it/s] 88%|████████▊ | 15/17 [00:09<00:00,  5.84it/s]100%|██████████| 17/17 [00:11<00:00,  2.56it/s]100%|██████████| 17/17 [00:11<00:00,  1.54it/s]
+  Skipping detection with malformed box_2d (length=5) in K-35-067-1_x3648_y2304.png
+  Skipping detection with malformed box_2d (length=5) in K-35-067-1_x3648_y2304.png
+  Skipping detection with malformed box_2d (length=5) in K-35-067-1_x3648_y2304.png
+  Skipping detection with malformed box_2d (length=5) in K-35-067-1_x3648_y2304.png
+  K-35-067-1_x3648_y2304.png: 4 parsed detection(s) could not be converted to features and are NOT in the output
+  Skipping detection with malformed box_2d (length=5) in K-35-053-1_x1344_y2112.png
+  K-35-053-1_x1344_y2112.png: 1 parsed detection(s) could not be converted to features and are NOT in the output
+WARNING: 5 parsed detection(s) could not be converted to features; total_detections reports the 21 actually written
+
+Finished. Saved to outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson
+Tile manifest: outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.tiles.json
+Metadata saved to outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json
+Tiles processed: 17
+Tiles failed: 0
+Total detections: 21
+Tokens used: 342,149
+Estimated cost: $0.0878
