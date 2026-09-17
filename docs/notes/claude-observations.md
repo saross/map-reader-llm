@@ -2493,3 +2493,64 @@ beacon should be written for two readers with different remits, not
 one.
 **How to apply.** Any time credit is the constraint, write the beacon
 as lanes with a "do not start" list for the cheaper one.
+
+## claude-obs 113 — 2026-09-17: He questions a number's framing, not just its value
+
+**Pattern.** Presented with "the image limb's F1 ratio moved 1.21 → 1.14,
+crossing the 1.20 threshold", he did not ask whether 1.14 was right. He asked
+whether the movement was *just resolving failed tiles* — which, if true, would
+make the pre-refresh figure an artefact and the crossing uninteresting. The
+check showed `limb1_fires` was False on both sides, because the limb's other
+condition had already failed.
+**Lesson.** His instinct is to interrogate what a number MEANS before accepting
+what it says, and he is willing to propose a deflationary reading of a finding
+an agent has dressed up. I had made a story from one number without reading the
+conjoined condition beside it in the same object.
+**How to apply.** Before presenting a quantity as having crossed a line, read
+every condition the claim is conjoined with. If the claim is "X ≥ t and Y
+comparable", a movement in X is only reportable after checking Y.
+
+## claude-obs 114 — 2026-09-17: He corrects over-assertion in tooling as readily as in prose
+
+**Pattern.** On a thinking-level guard, he wrote: "aren't we using 'low' with
+3.7 because 'minimal' doesn't exist and 'low' is the lowest available setting
+— the goal is to run the model at the lowest available setting, not necessarily
+the one with the same name." I had shipped complete per-family allow-lists
+asserting which levels each model accepts, having measured exactly two pairs,
+and a test encoding an unverified rejection as though it were API behaviour.
+**Lesson.** The anti-confabulation standard applies to constants and tests, not
+only to claims in chat. A lookup table is a set of assertions; an allow-list of
+levels nobody has tested is a guess dressed as a constraint.
+**How to apply.** Encode what was measured, with the date, and separate it from
+what is merely conventional. Where evidence is absent, warn rather than block —
+blocking on a guess turns a guard into an obstacle to anything new.
+
+## claude-obs 115 — 2026-09-17: He treats a failed validation as information, not a blocked path
+
+**Pattern.** When the drift probe could not run because flex was saturated, his
+response was not "skip it" or "wait" but "perhaps we should try batch?" — and
+when batch turned out to need explicit caching, "build an explicit cache; we may
+need this apparatus in future" and "solve generally; we need the flexibility to
+move between batch, flex, and normal API calls."
+**Lesson.** A blocked route is an occasion to build the general capability, and
+he will fund the detour when the apparatus outlasts the immediate need. The
+resulting work — explicit caching, cross-mode layout normalisation, usage
+capture parity — is reusable and was cheaper than the run it enabled.
+**How to apply.** When an obstacle forces a workaround, ask whether the
+workaround should be general before making it specific; he is likely to say yes
+and to want it tested.
+
+## claude-obs 116 — 2026-09-17: Self-critique — I let a finished run sit for four hours
+
+**Pattern.** Run 4 completed and I did not check back until the PI asked for a
+status, 4.4 hours later. I had said I would verify and submit run 5 on
+completion. Separately, my overnight chain waited on a success string
+(`"Tiles processed:"`) which a partial failure never prints, so it stalled at
+the starting line for the whole window.
+**Lesson.** Both failures are the same mistake in different clothes: waiting for
+a signal that only appears on the happy path. A watcher must key on TERMINAL
+state — success or failure — and a promise to check back needs a scheduled
+check, not an intention.
+**How to apply.** When chaining on a long job, define the wait condition as "has
+it stopped" plus a separate read of "how did it stop", never as "has it
+succeeded".

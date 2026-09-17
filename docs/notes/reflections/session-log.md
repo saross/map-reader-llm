@@ -9579,3 +9579,69 @@ register once (published unparseable, repaired within the hour from
 main's rows plus the campaign's; memory `2026-09-14-016341f9fa6c`). All
 five in-flight agents landed before close; the beacon's Opus lane starts
 with two signatures and the 55-map board rebuild.
+
+## Session 154
+
+**2026-09-16 to 2026-09-18 · Opus lane · map-reader-llm**
+
+**Signatures.** Era-2 board re-signed over both rebuilds (`2cbd2dbaa`) after an
+independent re-verification: `tiering_20m.json` differs from the pre-rebuild
+blob only in two stamps, membership 110 → 110 with exactly 7 `track` changes and
+0 other field changes, `mcb/` untouched by the commit, and both corrections
+confirmed at the configuration. `null-exemplar-sensitivity-2026-09-13` signed
+with the PI's ruling that the paper reports the FULL frame. Part A of the
+legacy-signature queue signed: 24 rows as a batch, `h6-a09-cost-gate` held and
+then signed after a separate review. Register 17 → 42 signed.
+
+**The signature vocabulary (PR #18, merged).** "66 signed" was a count of
+authoring timestamps. Four defects: one field carrying two meanings;
+`_signature_note` free text with "UNSIGNED" inside three of them; the note
+never reaching the published manifest (underscore keys are dropped); and scope
+unstated. A first-class `signature` object with a status enum now reaches the
+manifest, with `check_signature_integrity` blocking a write that publishes a
+signature without its evidence and a status tally printed every run. The PI
+ruled that no pre-2026-09-16 stamp counts as a signature, which retired the
+`legacy-signed` status on the day it was written and queued all 50 legacy rows.
+
+**Verification tooling.** Cost auditor: identity-based de-duplication across
+all three pass sources plus a closing invariant, after `verify_swap38` was found
+holding a backup byte-identical to a committed meta (would have doubled that
+stage). File registry: enumeration filtered through `git ls-files`, after the
+committed registry was found to encode 93 gitignored files from a
+copyrighted-text working area, making its drift guard pass only on one machine.
+
+**The 3.7 image pool, K = 3 → K = 5.** Flex for `gemini-3.7-flash` returned 503
+for over twelve hours (37 checks); batch served the same model in 104 seconds.
+Explicit context caching built for the batch path (`cached_content` per request,
+24 h TTL, opt-in) and validated against realtime by a 500-tile probe: 0.9493
+mean agreement against a 0.9527 realtime-to-realtime baseline. Runs 4 and 5
+submitted via batch; run 5's chunk 2 lost its poll to a 503 and was recovered
+from the completed job without re-running. Pool now 5 × 24,561, all complete;
+detections 20,017 / 20,065 / 20,090 / 20,052 / 20,092.
+
+**The Gemini 3 image pool (new).** 5 passes × 24,561 tiles at `minimal`,
+T = 0.7, on the campaign geometry; 67 failed tiles recovered in two rounds, all
+transient. Audited **US$233.63** at US$0.00190/tile-pass. Detections ~34,400 per
+pass against 3.7's ~20,000.
+
+**Defects found, all returning well-formed answers rather than errors.** A batch
+job reporting SUCCEEDED with 100 of 100 requests failed; a thinking-level guard
+validating against the config's model rather than the submitted one (it would
+have passed the submission it existed to refuse); a usage producer and consumer
+disagreeing on field names (a completed leg recorded zero tokens); a chunk merge
+combining detections but not metadata (a seven-chunk pass would have reported
+one seventh of its coverage, then one seventh of its item count).
+
+**Housekeeping.** Six pre-recovery backups deleted after hash-verification
+against both commits named in `.gitignore` (30.1 MB); four redundant backups
+deleted earlier; 16 stranded `experiment_intent.md` files committed from
+sapphire. Brave closed gracefully on the PI's workstation at his request,
+session preserved.
+
+**Contextual assumptions.** The PI was away from amd-tower for part of the
+session and asleep for one overnight window; two runs proceeded unattended under
+explicit approval with a US$600 cap. Local memory pressure killed several
+watcher processes and once produced a bus error during `git add` — the work
+itself runs on sapphire and was never at risk, but staging needs explicit
+pathspecs on this checkout, both for that reason and because ecryptfs makes
+`git add` fail on a set of phantom files.

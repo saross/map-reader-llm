@@ -8469,3 +8469,71 @@ eight cells — the recomputation found none.
 A factor is derived from what was sent, never from a name; and a
 label-only finding in one artefact is a prompt to ask where else the
 same derivation runs.
+
+## Entry — 2026-09-17 (Session 154, map-reader-llm): A threshold crossing that crossed nothing
+
+**Session:** 0ca50b9e-3d97-4daf-b56c-5aa9505ebd9f
+**Instance:** primary
+
+### Surprising fact
+
+Reviewing `h6-a09-cost-gate` for signature, the refresh of 2026-09-08 had
+moved the matched-configuration image F1 ratio from **1.2052 to 1.1373**,
+across the registered 1.20 threshold. A registered quantity crossing a
+registered line is exactly the shape of thing a signature ought to pause on,
+and I presented it that way: before the refresh the image limb *would* have
+fired; after, it did not.
+
+### Probe
+
+The PI did not accept the framing. He asked whether the movement was just the
+consequence of resolving failed tiles — in which case the pre-refresh 1.21 was
+an artefact of a weaker comparator and only the final 1.14 was of interest.
+
+The pre-refresh artefact had been archived at
+`archive/pre-recovery-2026-09-08/h6-registered-analyses/`, so the question was
+directly checkable. Comparing the two artefacts field by field:
+
+| | pre | post |
+|---|---:|---:|
+| Pro single-pass F1 | 0.6658 | 0.6658 |
+| Flash N=3 consensus F1 | 0.552454 | 0.585411 |
+| F1 ratio | 1.2052 | 1.1373 |
+| cost ratio | 1.3207 | 1.3207 |
+| **`limb1_fires`** | **False** | **False** |
+
+### Belief revision
+
+The crossing had no consequence, and I should have known before saying
+otherwise. Limb 1 requires ≥ 1.20 F1 **at comparable cost**; the cost ratio of
+1.3207 already failed the declared ±10% window, so the limb was False on both
+sides of the threshold and the F1 movement changed nothing. I had read one
+number against its line and built a story, without checking the conjoined
+condition sitting beside it in the same object.
+
+The PI's hypothesis was also right on its own terms: Pro's F1 did not move and
+the costs did not move; only the Flash comparator improved, by 0.033 F1, when
+recomputed against recovered evidence. So 1.14 is the figure on better data and
+1.21 was the weaker-comparator artefact — with the nuance that the improvement
+came from rebuilt N = 3 sweeps rather than from extra tiles, since the coverage
+range is [485, 486] in both.
+
+### What would change this belief
+
+A cost ratio inside the ±10% window on either side, which would make the F1
+threshold binding and the crossing consequential. There is none.
+
+### Implications for practice
+
+A conjunctive condition must be read as a whole. When a claim rests on "X ≥ t
+**and** Y comparable", a movement in X is worth reporting only after checking
+whether Y was ever satisfied — otherwise the report dresses an inert number as
+a decision. More generally: an archived pre-change artefact turns a question
+about a change into a comparison, and this project's habit of archiving one is
+what made a two-minute check possible instead of an argument from prose.
+
+### What this is not
+
+Not a defect in the row, which labels these figures "the pure model effect, not
+the gate's verdict" and was accurate throughout. The error was in the review,
+not the artefact.

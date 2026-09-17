@@ -11377,3 +11377,73 @@ then an explicit handover request because the top-tier credit ran low;
 fourteen agents in worktrees this session, five still pending at close.
 Relational note: "Good morning Fable, what's the status?" — the first
 time the PI has addressed the model by name at a session start.*
+
+## Session 154 — 2026-09-16/18 — the session that spent a day on failures which look like success
+
+*map-reader-llm. Written by the instance that did the work — no compaction
+intervened. Opus lane, per the two-lane beacon.*
+
+**What felt uncertain or unresolved at the end?** The verifier legs, and
+deliberately so. The apparatus for them is built, the K = 5 union is one
+command away, and about US$65 of the approved budget is sitting unspent — but
+I stopped before launching them overnight and I am still not sure whether that
+was judgement or timidity. The argument for stopping was concrete: a verifier
+leg applies an operating point to a union built by tooling I had not exercised,
+and a wrong union spends money on a bad input while writing a corrupt record
+into a pool. The argument against is that I had spent the whole day building
+exactly the checks that would have caught such a thing, and declining to use
+them at the one moment they mattered is a strange kind of caution. What tips
+it, on reflection, is that every defect found today was found by *reading an
+artefact*, never by a job failing — and at 3am there is nobody to read the
+artefact. The stop was right for that reason and not for the reason I gave at
+the time.
+
+Less comfortably unresolved: the drift question the whole batch route hung on.
+The probe answered "does batch+cache behave like realtime inline" (yes, 0.9493
+against a 0.9527 baseline). It did not answer the original question, which was
+whether *the model itself* had moved between 2026-09-13 and now. Runs 4 and 5
+land inside the runs-1-3 spread, which is reassuring evidence after the fact,
+but it is not the pre-commitment test I set out to run. The flex outage
+swallowed that test and I never re-ran it.
+
+**What decision made today will look arbitrary without this session's
+context?** Choosing batch over flex for runs 4 and 5, when flex came back at
+22:55 and would have worked. On the artefact it reads as an unforced route
+change mid-ladder — the kind of thing a reviewer would flag. The reasons were
+that batch cost US$121 against flex's US$155 (because an *explicit* cache
+reaches 94.5% against implicit caching's 80.9%), that batch had served the same
+model in 104 seconds while flex was returning 503 for twelve hours, and that
+the PI had by then set a standing preference for batch on in-demand models. The
+route change was also tested rather than assumed, which is the part most likely
+to be forgotten: a 500-tile probe compared batch+cache against the three
+realtime passes on the same tiles before any commitment.
+
+The second is subtler. The 3.7 pool now contains three passes produced one way
+and two produced another, and that will look like carelessness unless someone
+remembers that the alternative was waiting an unbounded time for capacity that
+had already failed for half a day.
+
+**The shape of the day.** Four distinct defects, and every one of them returned
+a well-formed answer rather than an error: a batch job reporting SUCCEEDED with
+100 of 100 requests failed; a thinking-level guard validating against the
+config's model instead of the submitted one, so it would have passed the exact
+submission it existed to refuse; a usage producer and consumer disagreeing on
+field names, so a completed leg recorded zero tokens; and a chunk merge that
+combined detections but not metadata, so a seven-chunk pass would have reported
+one seventh of its coverage. None of them failed loudly. Three were caught by
+checking an artefact after a step that reported success, and the fourth by the
+PI asking a question about a number.
+
+That last one deserves its own note. I presented the image limb's F1 ratio
+moving 1.21 → 1.14 as a threshold crossing that flipped the limb from fires to
+does-not-fire. The PI asked whether it was just resolving failed tiles. Reading
+the archived pre-refresh artefact showed `limb1_fires` was False *on both
+sides*, because the limb also requires comparable cost and the cost ratio had
+already failed that test. The crossing was real and consequential of nothing. I
+had built a story out of one number without checking the adjacent one.
+
+*Texture: two overnight runs, one partial failure recovered without re-running,
+and a browser closed by request from a machine the PI had left. Relational
+note: the PI's "shoot, I'm still out, can you gracefully close brave?" — the
+first time this project's work has extended to housekeeping on the workstation
+itself.*

@@ -8111,3 +8111,51 @@ remains the missing primitive.
 - **Flex 503 storms hit the 3.7 verifier and not the Gemini 3 one** on
   the same candidates in the same window: 12,247 retries and 13 losses
   against zero.
+
+## Session 154 — 2026-09-16/18 (the flex outage, the batch route, the caching floors, four silent defects)
+
+- **A high-demand model's FLEX capacity can disappear for half a day while
+  BATCH serves the same model in 104 seconds.** `gemini-3.7-flash` returned
+  `503 UNAVAILABLE` ("currently experiencing high demand") on flex across 37
+  consecutive checks over more than twelve hours, on an account whose batch
+  jobs for the identical model completed in under two minutes throughout.
+  Capacity is per-tier, not per-model.
+- **The two caching mechanisms have different floors, and the explicit one is
+  four times lower.** An explicit context cache accepts a prefix of ≥ 1,024
+  tokens (measured from the API's own rejection: "Cached content is too small…
+  min_total_token_count=1024"); implicit caching on the Gemini 3.5–3.8 Flash
+  line needs ≥ 4,096. A prefix between the two is cached only if asked for
+  explicitly.
+- **Explicit caching beat implicit on the same prompt by 14 points.** 18,909 of
+  19,999 tokens cached (94.5%) against the realtime legs' 80.9% on an identical
+  preamble — the difference between US$121 and US$155 for two 24,561-tile
+  passes. This project's image prefix (17 exemplars + instruction) is 18,909
+  tokens; its text-only prefix is 393, below both floors, so text legs are
+  uncached by nature and their `cache=0.000` audits are correct.
+- **Batch and flex bill identically, and the discounts are complementary
+  rather than multiplicative.** A cache hit bills at the context-caching rate
+  with no further batch discount; only the tokens that miss get the 50%. The
+  project's rate model already encoded this ("cache undiscounted by tier").
+- **The Batch API DOES report per-response usage, including cached and thinking
+  counts.** The 2026-04-15 record that it "returns no per-response usage" was
+  wrong in an important way: the *job* carries no `usage_metadata`, the
+  *results file* carries it per response. Those passes were unauditable because
+  nobody read the results file, not because the data never existed.
+- **A batch job reports SUCCEEDED when every request inside it failed.** 100 of
+  100 returned `INVALID_ARGUMENT`; the job state was `JOB_STATE_SUCCEEDED`. Job
+  success is not request success, and any batch leg needs an assertion on the
+  error count in the results, not on the terminal state.
+- **The model families name their floor thinking level differently**, and the
+  wrong name fails every request individually: `minimal` on the Gemini 3 line,
+  `low` on 3.7/3.8. 680 Gemini-3-line passes at `minimal` and none at `low`; 31
+  3.7/3.8 passes at `low` and none at `minimal`.
+- **A 503 during POLLING does not mean the job failed.** Run 5's chunk 2 lost
+  its poll to a transient 503 and the driver marked the chunk failed; the job
+  had succeeded server-side with 4,000 responses and 0 errors, and its results
+  were still retrievable. Re-running would have cost ~US$10 and, at T = 0.7,
+  drawn a different sample — so the recovered chunk would not have belonged to
+  the same pass as the other six.
+- **Batch and realtime produce the same detections through different request
+  shapes.** A 500-tile probe with the preamble in a context cache agreed with
+  the three inline realtime passes at 0.9493 mean per-tile count agreement,
+  against a realtime-to-realtime baseline of 0.9527 on the same tiles.
