@@ -1031,50 +1031,84 @@ def recommend_execution_mode(model_name: str, requested_mode: str) -> str | None
     return None
 
 
-#: Thinking levels each model family actually accepts. The families use
-#: DIFFERENT NAMES for the same idea — the floor is `minimal` on the Gemini 3
-#: line and `low` on 3.7/3.8 — and sending the wrong one is rejected per
-#: request with a bare "Request contains an invalid argument", while the
-#: enclosing batch job still reports SUCCEEDED. Measured 2026-09-17: a
-#: 100-request probe returned 100 errors under a job marked succeeded, because
-#: the prompt config's `minimal` default reached a 3.7 submission.
-THINKING_LEVELS_BY_FAMILY: dict[str, frozenset[str]] = {
-    "gemini-3.7": frozenset({"low", "medium", "high"}),
-    "gemini-3.8": frozenset({"low", "medium", "high"}),
-    "gemini-3-flash": frozenset({"minimal", "medium", "high"}),
-    "gemini-3.1-pro": frozenset({"medium", "high"}),
-    "gemini-3.5": frozenset({"minimal", "medium", "high"}),
+#: What each model family calls its FLOOR — the lowest thinking setting it
+#: offers. This project's experiments target "the lowest available setting",
+#: not any particular name, and the families spell that differently: the
+#: Gemini 3 line calls it `minimal`, the 3.7/3.8 line calls it `low`. Holding
+#: the floor constant across models is what makes a cross-model comparison a
+#: model comparison rather than a thinking-budget comparison.
+#:
+#: Evidenced by what this project has actually dispatched (results/passes-manifest.json,
+#: 2026-09-17): 680 Gemini-3-line passes at `minimal` and none at `low`; 31
+#: 3.7/3.8 passes at `low` and none at `minimal`.
+THINKING_FLOOR_BY_FAMILY: dict[str, str] = {
+    "gemini-3.7": "low",
+    "gemini-3.8": "low",
+    "gemini-3-flash": "minimal",
+    "gemini-3.5": "minimal",
+}
+
+#: Combinations MEASURED to be rejected by the API, with the date measured.
+#: Deliberately short: it records observation, not inference. A rejected pair
+#: fails EVERY request while the enclosing batch job still reports SUCCEEDED,
+#: so the operator sees a completed job and an empty output — which is what a
+#: 100-request probe did on 2026-09-17 before this guard existed.
+#:
+#: Membership is NOT extrapolated between families. That 3.7 refuses `minimal`
+#: is no evidence about what the Gemini 3 line does with `low`, which this
+#: project has never sent and therefore cannot claim either way.
+MEASURED_REJECTED_THINKING: dict[tuple[str, str], str] = {
+    ("gemini-3.7", "minimal"): "measured 2026-09-17: INVALID_ARGUMENT per request",
 }
 
 
 def validate_thinking_level(model_name: str, thinking_level: str | None) -> None:
-    """Raise if *thinking_level* is not one this model accepts.
+    """Raise on a MEASURED-bad model/thinking pair; warn on an unattested one.
 
-    Checked BEFORE submission because the failure mode is expensive and quiet:
-    every request is rejected individually while the job reports success, so
-    the operator sees a completed job and an empty output rather than an
-    error. An unknown model family is allowed through rather than blocked —
-    this guard exists to catch a known mismatch, not to gate new models.
+    Two tiers, because the evidence comes in two strengths:
+
+    * A pair in :data:`MEASURED_REJECTED_THINKING` has been observed failing
+      against the live API, so it raises.
+    * A level that is neither the family's floor nor one this project has
+      dispatched before is merely unattested — it may be perfectly valid.
+      That warns, because blocking it would make this guard an obstacle to
+      running anything new, and an allow-list of levels nobody has tested
+      would be a guess dressed as a constraint.
 
     Args:
-        model_name: Model the batch will name.
-        thinking_level: Level from the config or CLI override, or None.
+        model_name: Model the request will name.
+        thinking_level: Level from config or CLI override, or None.
 
     Raises:
-        ValueError: The level is invalid for a family we know about.
+        ValueError: The pair is one measured to fail.
     """
     if not thinking_level:
         return
-    for family, allowed in THINKING_LEVELS_BY_FAMILY.items():
+    level = thinking_level.lower()
+    for family, reason in (
+        (f, r) for (f, lv), r in MEASURED_REJECTED_THINKING.items()
+        if lv == level for f in [f]
+    ):
         if model_name.startswith(family):
-            if thinking_level.lower() not in allowed:
-                raise ValueError(
-                    f"thinking_level {thinking_level!r} is not accepted by "
-                    f"{model_name}; it takes {sorted(allowed)}. The families "
-                    f"name their floor differently — `minimal` on the Gemini 3 "
-                    f"line, `low` on 3.7/3.8 — and the wrong one fails every "
-                    f"request while the batch job still reports SUCCEEDED."
-                )
+            floor = THINKING_FLOOR_BY_FAMILY.get(family, "?")
+            raise ValueError(
+                f"thinking_level {thinking_level!r} is rejected by "
+                f"{model_name} ({reason}). This family's floor is {floor!r}. "
+                f"The families name the lowest setting differently — "
+                f"`minimal` on the Gemini 3 line, `low` on 3.7/3.8 — so a "
+                f"config written for one model needs the other's floor, not "
+                f"its own default. The wrong one fails every request while "
+                f"the batch job still reports SUCCEEDED."
+            )
+
+    for family, floor in THINKING_FLOOR_BY_FAMILY.items():
+        if model_name.startswith(family) and level != floor:
+            logger.warning(
+                "thinking_level %r is not %s's floor (%r) and has not been "
+                "dispatched for this family before — valid as far as we know, "
+                "but unattested; check it is what the experiment intends",
+                thinking_level, model_name, floor,
+            )
             return
 
 

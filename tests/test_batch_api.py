@@ -191,21 +191,39 @@ class TestJSONLConstruction:
         assert "ABSENT" in u["usage_source"]
 
     @pytest.mark.tier1
-    def test_thinking_level_mismatch_is_refused_before_submission(self) -> None:
+    def test_measured_bad_thinking_pair_is_refused(self) -> None:
         """`minimal` on 3.7 fails every request under a SUCCEEDED job.
 
-        Measured 2026-09-17: 100 requests, 100 errors, job state SUCCEEDED.
+        Measured 2026-09-17: 100 requests, 100 INVALID_ARGUMENT errors, job
+        state SUCCEEDED. This is the ONE pair we have observed failing.
         """
-        with pytest.raises(ValueError, match="not accepted by"):
+        with pytest.raises(ValueError, match="rejected by"):
             validate_thinking_level("gemini-3.7-flash", "minimal")
-        with pytest.raises(ValueError, match="not accepted by"):
-            validate_thinking_level("gemini-3-flash-preview", "low")
-        # The floor each family DOES take.
+
+    @pytest.mark.tier1
+    def test_each_family_floor_passes_without_complaint(self) -> None:
+        """The floor is the target; the families just spell it differently."""
         validate_thinking_level("gemini-3.7-flash", "low")
         validate_thinking_level("gemini-3-flash-preview", "minimal")
-        # Unknown families and absent levels pass through.
-        validate_thinking_level("some-future-model", "whatever")
         validate_thinking_level("gemini-3.7-flash", None)
+
+    @pytest.mark.tier1
+    def test_unattested_levels_warn_rather_than_block(self, caplog) -> None:
+        """An untested pair is unknown, not known-bad.
+
+        This project has never sent `low` to the Gemini 3 line, so nothing is
+        known about whether it is accepted. Refusing it would encode a guess
+        as a constraint and would block any future run that tries it.
+        """
+        import logging
+        with caplog.at_level(logging.WARNING):
+            validate_thinking_level("gemini-3-flash-preview", "low")
+        assert "unattested" in caplog.text
+        # Unknown families are not this guard's business at all.
+        caplog.clear()
+        with caplog.at_level(logging.WARNING):
+            validate_thinking_level("some-future-model", "whatever")
+        assert caplog.text == ""
 
     @pytest.mark.tier1
     def test_cached_content_removes_the_prefix_and_names_the_cache(self) -> None:
