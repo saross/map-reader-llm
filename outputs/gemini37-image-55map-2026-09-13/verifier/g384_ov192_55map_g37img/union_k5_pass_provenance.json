@@ -1,0 +1,56 @@
+{
+  "pass_provenance_schema": "consensus-pass-provenance/1",
+  "total_passes": 5,
+  "pass_ids": [
+    "run_1",
+    "run_2",
+    "run_3",
+    "run_4",
+    "run_5"
+  ],
+  "pass_provenance": [
+    {
+      "pass_id": "run_1",
+      "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+      "git_blob_hash": "cb99e0fcc4f6fec024ba8fb2866c2ff0ae2a8fed"
+    },
+    {
+      "pass_id": "run_1",
+      "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+      "git_blob_hash": "7a9d3e43447b957e02a443ee223f2bad9161dd21"
+    },
+    {
+      "pass_id": "run_2",
+      "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+      "git_blob_hash": "305fa72b11d71edf88bd34e8e037f2900f2a0cf0"
+    },
+    {
+      "pass_id": "run_2",
+      "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+      "git_blob_hash": "deb5cfe7b0963ceec5b7fd622c6293a1a2e1d89d"
+    },
+    {
+      "pass_id": "run_3",
+      "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+      "git_blob_hash": "eb9fe0e2021140e002bb92dd5db52f3ce225d382"
+    },
+    {
+      "pass_id": "run_3",
+      "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+      "git_blob_hash": "76d2ca5bd4caa70b03c2797e37fbc6a50f6dd46b"
+    },
+    {
+      "pass_id": "run_4",
+      "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_4/detections-detect_brief-text-image-3.7-flash-2026-09-17.geojson",
+      "git_blob_hash": "f30f7eada74e7d9572b1dcd67db98332e0fc0623"
+    },
+    {
+      "pass_id": "run_5",
+      "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_5/detections-detect_brief-text-image-3.7-flash-2026-09-17.geojson",
+      "git_blob_hash": "bec82b13eda99d3abeb6ac0911c73d361fd8336b"
+    }
+  ],
+  "union_path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/union_k5.geojson",
+  "union_feature_count": 9173,
+  "builder": "scripts/stride55_prepare_and_union.py"
+}
