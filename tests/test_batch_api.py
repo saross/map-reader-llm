@@ -184,6 +184,31 @@ class TestJSONLConstruction:
         assert sig.parameters["use_context_cache"].default is False
 
     @pytest.mark.tier1
+    def test_usage_producer_and_consumer_agree_on_field_names(self) -> None:
+        """One naming, end to end, or a leg records zero tokens.
+
+        `aggregate_batch_usage` emits the real-time names; `write_batch_outputs`
+        read `input_tokens`/`output_tokens`. Every count silently landed as 0,
+        so a completed batch leg's meta claimed it had used no tokens — which
+        is how a leg becomes unauditable without anything appearing to fail.
+        """
+        import inspect
+        from scripts.lib_batch_api import aggregate_batch_usage, write_batch_outputs
+        emitted = set(aggregate_batch_usage([
+            {"key": "a", "response": {"usageMetadata": {
+                "promptTokenCount": 1, "cachedContentTokenCount": 1,
+                "candidatesTokenCount": 1, "thoughtsTokenCount": 1,
+                "totalTokenCount": 4}}}]))
+        # Whitespace-normalised: a call wrapped across lines consumes the
+        # field just as well as one on a single line.
+        consumed = " ".join(inspect.getsource(write_batch_outputs).split())
+        for field in ("total_input_tokens", "total_cached_tokens",
+                      "total_output_tokens", "total_thoughts_tokens"):
+            assert field in emitted, f"{field} not emitted"
+            assert f'usage_stats.get("{field}"' in consumed, \
+                f"{field} not consumed by write_batch_outputs"
+
+    @pytest.mark.tier1
     def test_usage_is_aggregated_from_responses_not_the_job(self) -> None:
         """Batch usage lives per RESPONSE; the job carries none.
 

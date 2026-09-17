@@ -1723,11 +1723,23 @@ def write_batch_outputs(
         "execution_mode": "batch",
     })
 
-    # Build usage from batch job stats if available
+    # Build usage from the aggregated per-response stats.
+    #
+    # Field names are the REAL-TIME ones, which is what `aggregate_batch_usage`
+    # emits and what `audit_proposer_cost.py` reads. They were previously read
+    # as `input_tokens` / `output_tokens`, so once the producer moved to the
+    # shared naming every count silently landed as 0 — a batch leg's meta said
+    # it had used no tokens at all.
+    #
+    # CACHED and THINKING are carried too. Both decide the bill: cached input
+    # bills at a tenth of the input rate, and thinking tokens bill at the
+    # OUTPUT rate. Dropping them is what made earlier batch legs unauditable.
     usage = AggregatedUsage()
     if usage_stats:
-        usage.total_input_tokens = usage_stats.get("input_tokens", 0)
-        usage.total_output_tokens = usage_stats.get("output_tokens", 0)
+        usage.total_input_tokens = usage_stats.get("total_input_tokens", 0)
+        usage.total_cached_tokens = usage_stats.get("total_cached_tokens", 0)
+        usage.total_output_tokens = usage_stats.get("total_output_tokens", 0)
+        usage.total_thoughts_tokens = usage_stats.get("total_thoughts_tokens", 0)
         usage.total_tokens = usage_stats.get("total_tokens", 0)
     tracker.usage = usage
 
@@ -1746,6 +1758,12 @@ def write_batch_outputs(
 
     meta = tracker.finalise(include_per_item=False)
     meta["cost_estimate"] = cost_estimate
+    if usage_stats:
+        # Provenance of the counts: how many responses reported usage, and
+        # whether any did. "0 tokens" and "nobody told us" must not read alike.
+        for key in ("n_responses_with_usage", "usage_source", "cached_share"):
+            if key in usage_stats:
+                meta.setdefault("usage_stats", {})[key] = usage_stats[key]
     meta["batch_api"] = {
         "execution_mode": "batch",
         "batch_discount_applied": True,
