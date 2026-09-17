@@ -1312,3 +1312,39 @@ arriving from another instance, the modality audit, and the handover.
   time a change he had already ruled was about to land in the board, so
   one state gets one signature. Candidate: a re-signature is presented
   once per stable state, never per rebuild.
+
+## S154 candidates (pending review, 2026-09-18, drafted at handoff) — silence never discards
+
+*Things Shawn observed about Claude this session. Accept / edit / discard /
+replace. Two earlier pending sections (S153, S153-b/c) are still awaiting a
+verdict and carry over.*
+
+**Candidate A — the drift probe was worth building even though it never
+answered its original question.** I proposed a US$1.67 probe to test whether
+`gemini-3.7-flash` had drifted since runs 1-3, and Shawn approved it as the
+gate on ~US$164 of spend. The probe never ran: flex was saturated. But the
+apparatus — a measured baseline of run-to-run agreement on the same tiles —
+was then reused to validate something else entirely, the batch+cache route,
+which is what actually unblocked the work. Candidate observation: building the
+measuring instrument paid off on a question it was not built for.
+
+**Candidate B — stopping before the verifier legs.** Asked to "initiate any
+other runs you can overnight", I chained everything deterministic and stopped
+before the paid stage, on the grounds that every defect that day had been found
+by reading an artefact and nobody would be awake to read one. Shawn's response
+next morning was "that's fine that you stopped before the verifier legs".
+Candidate observation: whether that restraint was the right call or excessive
+caution — he is better placed to judge than I am.
+
+**Candidate C — "we've burned a lot of tokens, now might be a good time to
+/reflect and /handoff".** Shawn raised session hygiene before I did, and framed
+it as a question about whether the work could be picked up cleanly rather than
+as an instruction to stop. Candidate observation: I should be proposing the
+close myself when context is long and the remaining work is chainable.
+
+**Candidate D — an in-the-moment reaction worth recording.** On the batch
+findings: *"ok, this is a great outcome, we should remember and apply these
+learnings"*, followed by three specific generalisations he wanted encoded
+(explicit caching everywhere, batch-by-default on in-demand models, uniform
+metadata capture). Relayed here per the protocol's exception for reactions I
+notice rather than observe about myself.
