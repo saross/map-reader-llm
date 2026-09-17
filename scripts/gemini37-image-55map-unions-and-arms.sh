@@ -39,6 +39,11 @@
 # Usage (from the campaign worktree on sapphire):
 #     bash scripts/gemini37-image-55map-unions-and-arms.sh
 #     WORKERS=50 bash scripts/gemini37-image-55map-unions-and-arms.sh
+#     KS=5 WORKERS=50 bash scripts/gemini37-image-55map-unions-and-arms.sh
+#
+# KS selects the rungs (default "1 3"). Added 2026-09-18 (S155) for the K = 5
+# rung after passes 4-5 landed: the stages are the same, only the rung list
+# differs, so the rung is an argument rather than a second script.
 #
 # Created: 2026-09-13
 # Author: Shawn Ross, Claude Code
@@ -55,6 +60,7 @@ TILES=inputs/tiles_384_ov192_55maps
 VERIFIER_CONFIG=prompts/configs/verify_adversarial-text.json
 VROOT=$OUT/verifier/$CELL
 WORKERS=${WORKERS:-50}
+KS=${KS:-"1 3"}
 PADDING=75
 
 # The two verifier arms, exactly as card section 2 fixes them.
@@ -95,26 +101,26 @@ print("coverage gate OK")
 EOF
 
 echo "=== stage 1: unions (stride builder, first-N rule) $(date -Is)"
-for k in 1 3; do
+for k in $KS; do
   $PY scripts/stride55_prepare_and_union.py \
     --root "$OUT" --cell "$CELL" --manifest "$MANIFEST" --k "$k" --write
 done
 
 echo "=== stage 2: provenance sidecars $(date -Is)"
-for k in 1 3; do
+for k in $KS; do
   $PY scripts/emit_union_pass_provenance.py \
     --root "$OUT" --cell "$CELL" --k "$k" --write
 done
 
 echo "=== stage 3: union feature counts $(date -Is)"
-for k in 1 3; do
+for k in $KS; do
   n=$($PY -c "import json,sys; print(len(json.load(open(sys.argv[1]))['features']))" \
         "$VROOT/union_k$k.geojson")
   echo "union_k$k: $n candidates"
 done
 
 echo "=== stage 4: crop extraction $(date -Is)"
-for k in 1 3; do
+for k in $KS; do
   if [ -f "$VROOT/crops_k$k/candidate_manifest.json" ]; then
     echo "crops_k$k already extracted, skipping"
     continue
@@ -127,7 +133,7 @@ for k in 1 3; do
 done
 
 echo "=== stage 5: four verifier arms, sequentially $(date -Is)"
-for k in 1 3; do
+for k in $KS; do
   for arm in arm1 arm2; do
     dest=$VROOT/verify_k${k}_${arm}
     if [ -f "$dest/probabilities.json" ]; then
