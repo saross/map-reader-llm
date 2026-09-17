@@ -155,6 +155,19 @@ class TestJSONLConstruction:
             assert line["key"] == "tile_001.png"
 
     @pytest.mark.tier1
+    def test_context_cache_is_opt_in(self) -> None:
+        """Defaulting caching ON would change every existing caller's requests.
+
+        PI ruling 2026-09-17: the caching apparatus is for future legs, not
+        retro-fitted to completed ones. A re-run of a finished study must
+        still produce the request shape it produced originally.
+        """
+        import inspect
+        from scripts.lib_batch_api import run_batch_unit
+        sig = inspect.signature(run_batch_unit)
+        assert sig.parameters["use_context_cache"].default is False
+
+    @pytest.mark.tier1
     def test_usage_is_aggregated_from_responses_not_the_job(self) -> None:
         """Batch usage lives per RESPONSE; the job carries none.
 

@@ -462,6 +462,17 @@ def _build_reference_parts(
     return parts
 
 
+#: Minimum tokens an EXPLICIT context cache accepts, measured 2026-09-17 from
+#: the API's own rejection: "Cached content is too small. total_token_count=387,
+#: min_total_token_count=1024". Implicit caching's floor is four times higher
+#: (4,096 on Gemini 3.5-3.8 Flash, per the caching documentation), which is why
+#: the explicit route can cache prompts the implicit one ignores.
+EXPLICIT_CACHE_MIN_TOKENS = 1024
+
+#: Implicit caching's floor on the Gemini 3.5-3.8 Flash line, for comparison.
+IMPLICIT_CACHE_MIN_TOKENS = 4096
+
+
 def create_shared_context_cache(
     client: Any,
     model_name: str,
@@ -522,6 +533,41 @@ def create_shared_context_cache(
         {"text": "Here are the Reference Symbols you must find:"},
     ]
     cache_parts.extend(reference_parts)
+
+    # Size check BEFORE the call, so a prefix that cannot be cached is a
+    # logged decision rather than a caught exception. Measured floors
+    # (2026-09-17): explicit caching needs >= 1,024 tokens — the API rejects
+    # less with "Cached content is too small. min_total_token_count=1024" —
+    # while implicit caching on Gemini 3.5-3.8 Flash needs >= 4,096. A prefix
+    # between the two is cached ONLY if asked for explicitly, which is the
+    # main reason to prefer the explicit route.
+    #
+    # This project's own prefixes sit at the extremes: the image config's is
+    # 18,909 tokens and caches under either scheme; the text-only config's is
+    # 393 and can be cached by neither, because the whole shared prefix is one
+    # short instruction. Text-only legs therefore run uncached by nature, not
+    # by oversight, and their audits correctly show cache=0.000.
+    try:
+        prefix_tokens = client.models.count_tokens(
+            model=model_name,
+            contents=[types.Content(parts=[{"text": system_instruction}], role="user"),
+                      types.Content(parts=cache_parts, role="user")],
+        ).total_tokens
+    except Exception:                                          # noqa: BLE001
+        prefix_tokens = None
+    if not isinstance(prefix_tokens, int):
+        # A non-integer count tells us nothing; proceed and let the API decide
+        # rather than block on an unusable measurement.
+        prefix_tokens = None
+
+    if prefix_tokens is not None and prefix_tokens < EXPLICIT_CACHE_MIN_TOKENS:
+        logger.info(
+            "shared prefix is %s tokens, below the %s-token explicit-cache "
+            "minimum — running uncached (inline assembly); this is expected "
+            "for text-only configs",
+            f"{prefix_tokens:,}", f"{EXPLICIT_CACHE_MIN_TOKENS:,}",
+        )
+        return None, 0
 
     try:
         cached = client.caches.create(
@@ -1775,6 +1821,7 @@ def prepare_batch_unit(
     tile_size: int | None = None,
     tiles_dir: Path | None = None,
     output_name_suffix: str = "",
+    cached_content: str | None = None,
 ) -> BatchUnitContext | None:
     """
     Prepare one execution unit for batch submission (Phase 1).
@@ -1871,6 +1918,7 @@ def prepare_batch_unit(
         system_instruction=system_instruction,
         examples=examples,
         output_path=jsonl_path,
+        cached_content=cached_content,
     )
 
     key = f"{unit['condition_name']}/run_{unit['run']}"
@@ -2206,6 +2254,12 @@ def run_batch_unit(
     config_version: str,
     poll_interval: float = 30.0,
     max_poll_hours: float = 25.0,
+    # OPT-IN. Defaulting this on would change the request shape of every
+    # existing batch caller, including any re-run of a completed study, which
+    # is exactly the retro-fitting the PI ruled out on 2026-09-17. New legs
+    # ask for it explicitly.
+    use_context_cache: bool = False,
+    cache_ttl_seconds: int = 86400,
     limit: int | None = None,
     offset: int = 0,
     dry_run: bool = False,
@@ -2258,6 +2312,25 @@ def run_batch_unit(
         Tuple of (success, message, cost_usd).
     """
     # Phase 1: Prepare
+    # One context cache per unit, created before the JSONL is written so the
+    # preamble is stored once rather than repeated on every line. Falls back
+    # to inline assembly when the prefix is below the explicit-cache minimum
+    # (text-only configs) or when creation fails, so caching can never turn a
+    # runnable leg into a failed one.
+    cached_content = None
+    if use_context_cache:
+        cached_content, cache_tokens = create_shared_context_cache(
+            client=client,
+            model_name=model_name,
+            system_instruction=system_instruction,
+            examples=examples,
+            include_images=config.get("include_example_images", True),
+            ttl_seconds=cache_ttl_seconds,
+        )
+        if cached_content:
+            logger.info("batch unit will reference cache %s (%s tokens)",
+                        cached_content, f"{cache_tokens:,}")
+
     ctx = prepare_batch_unit(
         unit=unit,
         config=config,
@@ -2271,6 +2344,7 @@ def run_batch_unit(
         tile_size=tile_size,
         tiles_dir=tiles_dir,
         output_name_suffix=output_name_suffix,
+        cached_content=cached_content,
     )
     if ctx is None:
         return False, "no_tiles_found", 0.0
