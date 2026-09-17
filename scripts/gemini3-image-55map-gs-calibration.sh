@@ -46,6 +46,12 @@
 # Usage (from ~/Code/map-reader-llm on sapphire):
 #     bash scripts/gemini3-image-55map-gs-calibration.sh
 #     WORKERS=50 bash scripts/gemini3-image-55map-gs-calibration.sh
+#     ARMS=arm1 bash scripts/gemini3-image-55map-gs-calibration.sh
+#
+# ARMS restricts the verifier legs (default "arm1 arm2"), so the Gemini 3 arm
+# can run while a 3.7 leg is in flight elsewhere without breaking the PI's
+# 2026-08-30 rule against two concurrent Gemini 3.7 runs; the sweeps run
+# only for arms whose probabilities exist.
 #
 # Created: 2026-09-18 (S155)
 # Author: Shawn Ross, Claude Code
@@ -62,6 +68,7 @@ RESULTS=results/gemini3-image-55map-2026-09-16/gs-calibration
 VERIFIER_CONFIG=prompts/configs/verify_adversarial-text.json
 WORKERS=${WORKERS:-50}
 KS=${KS:-"3 5"}
+ARMS=${ARMS:-"arm1 arm2"}
 
 # The two verifier arms, exactly as the 3.7 campaign card section 2 fixes
 # them (scripts/gemini37-image-55map-unions-and-arms.sh).
@@ -82,7 +89,7 @@ done
 
 echo "=== stage 1: four verifier arms, sequentially $(date -Is)"
 for k in $KS; do
-  for arm in arm1 arm2; do
+  for arm in $ARMS; do
     dest=$VROOT/verify_k${k}_${arm}
     if [ -f "$dest/probabilities.json" ]; then
       echo "verify_k${k}_${arm} already done, skipping"
@@ -109,10 +116,14 @@ done
 
 echo "=== stage 2: sweeps at 20 m, carried points $(date -Is)"
 for k in $KS; do
-  for arm in arm1 arm2; do
+  for arm in $ARMS; do
     out=$RESULTS/k$k/$arm
     if [ -f "$out/analysis.json" ]; then
       echo "$out already swept, skipping"
+      continue
+    fi
+    if [ ! -f "$VROOT/verify_k${k}_${arm}/probabilities.json" ]; then
+      echo "verify_k${k}_${arm} not run yet, no sweep"
       continue
     fi
     $PY scripts/image_b_analysis.py \
