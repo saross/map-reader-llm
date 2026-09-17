@@ -2,7 +2,7 @@
 
 # Run registry
 
-> Generated 2026-05-30T08:03:46Z · 42 row(s) · schema v1.0 · rendered from `results/run-registry.json` at commit `1f6826f5e`.
+> Generated 2026-05-30T08:03:46Z · 42 row(s) · schema v1.0 · rendered from `results/run-registry.json` at commit `22ffe6b43`.
 >
 > **Coverage**: all 42 runs (hand-verified input).
 

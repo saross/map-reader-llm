@@ -21,14 +21,14 @@ them as they stand. Grouped by the commit that set the stamp; several of those
 commits describe a PI sign-off in their own message, which is context for the
 review, not a substitute for it.
 
-### A1. `60b246994` — 2026-08-17 · 6 row(s)
+### A1. `60b246994` — 2026-08-17 · 6 row(s) — **SIGNED 2026-09-17**
 
 > feat(register): S134 walk rulings applied — E78, s8-9 row, fences, stamps
 
 Evidence: PI sign-off described in the commit message.
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `h10-pool-size`
 - `h14-cross-model-consistency`
@@ -37,49 +37,49 @@ Evidence: PI sign-off described in the commit message.
 - `h6-phase4-transfer`
 - `s8-9-post-experiment-verification`
 
-### A2. `6a97da344` — 2026-08-17 · 1 row(s)
+### A2. `6a97da344` — 2026-08-17 · 1 row(s) — **SIGNED 2026-09-17**
 
 > docs(register): S135 L4 walk part 1 — three PI rulings applied
 
 Evidence: PI sign-off described in the commit message.
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `e45-bootstrap-pairings`
 
-### A3. `75a6b190c` — 2026-08-17 · 1 row(s)
+### A3. `75a6b190c` — 2026-08-17 · 1 row(s) — **SIGNED 2026-09-17**
 
 > docs(register): H6 rows ratified post-hoc and stamped (S135 L4 walk)
 
 Evidence: PI sign-off described in the commit message.
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `h6-a06-decision-rule`
 
-### A4. `667561e65` — 2026-08-28 · 3 row(s)
+### A4. `667561e65` — 2026-08-28 · 3 row(s) — **SIGNED 2026-09-17**
 
 > registry(pass3): PI sign-off — registration backlog CLEAR
 
 Evidence: PI sign-off described in the commit message.
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `h7-escalation-2026-08-28`
 - `image-b-modality-2026-08-28`
 - `image-b-thinking-pair-2026-08-28`
 
-### A5. `b2949c27e` — 2026-08-28 · 5 row(s)
+### A5. `b2949c27e` — 2026-08-28 · 5 row(s) — **SIGNED 2026-09-17**
 
 > registry(pass1): PI sign-off — all five analyses verified
 
 Evidence: PI sign-off described in the commit message.
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `stride-plateau-2026-08-25`
 - `stride-winner-ladder-exact-2026-08-25`
@@ -87,26 +87,26 @@ Evidence: PI sign-off described in the commit message.
 - `stride55-ladder-2026-08-27`
 - `stride55-sweep-oracle-2026-08-27`
 
-### A6. `e84b4e592` — 2026-08-28 · 2 row(s)
+### A6. `e84b4e592` — 2026-08-28 · 2 row(s) — **SIGNED 2026-09-17**
 
 > registry(pass2): PI sign-off — final board + sensitivity verified
 
 Evidence: PI sign-off described in the commit message.
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `55map-final-board-2026-08-27`
 - `sensitivity-mde-2026-08-28`
 
-### A7. `60bac9fb8` — 2026-09-07 · 5 row(s)
+### A7. `60bac9fb8` — 2026-09-07 · 5 row(s) — **SIGNED 2026-09-17**
 
 > register(r2): eight analysis rows, PI-signed 2026-09-07
 
 Evidence: PI sign-off described in the commit message.
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `55map-final-board-r2-2026-09-06`
 - `55map-r2-leaderboard-50m`
@@ -114,25 +114,25 @@ Evidence: PI sign-off described in the commit message.
 - `obs280-shared-reference-r2`
 - `tile-level-f1-r2`
 
-### A8. `38aa9ed1b` — 2026-09-08 · 1 row(s)
+### A8. `38aa9ed1b` — 2026-09-08 · 1 row(s) — **HELD** (see note)
 
 > register(h6): A-07 and A-09 refreshed on the recovered comparator; e47 rows re-pointed
 
 Evidence: no sign-off language in the commit message.
 
-- [ ] Walkthrough prepared
+- [x] Walkthrough prepared
 - [ ] PI signed
 
 - `h6-a09-cost-gate`
 
-### A9. `da37c642c` — 2026-09-08 · 1 row(s)
+### A9. `da37c642c` — 2026-09-08 · 1 row(s) — **SIGNED 2026-09-17**
 
 > merge main into schema/reference-level-diagnostics; manifests regenerated
 
 Evidence: no sign-off language in the commit message.
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `student-baseline-r2`
 
@@ -150,8 +150,8 @@ from the diff at that commit. **CLAIM** marks a batch that altered a finding;
 
 Fields moved: `_note` x1, `outcome` x1
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `family-bh-fdr-confirmatory`
 - `phase3c-diversity-calibration`
@@ -162,8 +162,8 @@ Fields moved: `_note` x1, `outcome` x1
 
 Fields moved: `_prereg_rationale` x7, `deviations` x4, `preregistered` x7
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `e43-matched-temperature`
 - `h1-cmt0106-pooled-modality`
@@ -179,8 +179,8 @@ Fields moved: `_prereg_rationale` x7, `deviations` x4, `preregistered` x7
 
 Fields moved: `outcome` x4
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `55map-canonical-leaderboard-50m`
 - `55map-canonical-leaderboard-mcc-50m`
@@ -193,8 +193,8 @@ Fields moved: `outcome` x4
 
 Fields moved: `outcome` x1, `tie_set` x1
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `diversity-dividend-384`
 
@@ -204,8 +204,8 @@ Fields moved: `outcome` x1, `tie_set` x1
 
 Fields moved: `outcome` x4, `tie_set` x4
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `flash35-model-roles`
 - `h12-v2-hp-hn-ratio`
@@ -218,8 +218,8 @@ Fields moved: `outcome` x4, `tie_set` x4
 
 Fields moved: `outcome` x3, `tie_set` x1
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `era1-leaderboard`
 - `n1-baseline-matrix-384`
@@ -231,8 +231,8 @@ Fields moved: `outcome` x3, `tie_set` x1
 
 Fields moved: `_conditions_note` x1, `conditions_compared` x1
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `sensitivity-mde-r2`
 
@@ -242,8 +242,8 @@ Fields moved: `_conditions_note` x1, `conditions_compared` x1
 
 Fields moved: `outcome` x1
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `estimated-correction-r2`
 
@@ -253,8 +253,8 @@ Fields moved: `outcome` x1
 
 Fields moved: see the diff
 
-- [ ] Walkthrough prepared
-- [ ] PI signed
+- [x] Walkthrough prepared
+- [x] PI signed
 
 - `era1-single-pass-baseline-matrix`
 - `tile-size-sweep`
@@ -273,6 +273,28 @@ disagree:
 1. **Anything that looks wrong, weak or over-stated.**
 
 ## Changelog
+
+### 2026-09-17 — Part A signed, 24 of 25; A8 held
+
+The PI approved Part A as a batch after a written walkthrough grouping its
+rows by the strength of the evidence behind each stamp: sixteen rows whose
+commit message records an explicit PI sign-off, eight from "rulings
+applied"/"ratified" commits (five of which are NOT EXECUTED dispositions
+recording an absence rather than a finding), and one held.
+
+**`h6-a09-cost-gate` (A8) is HELD.** Its stamp comes from
+`38aa9ed1b`, "register(h6): A-07 and A-09 refreshed on the recovered
+comparator", which carries no sign-off language. What marks it out is not the
+missing phrase but the asymmetry: that commit refreshed A-07 and A-09
+together, the PI re-signed A-07 two days later with a proper signature note,
+and A-09 never received one. Its sibling was reviewed after the refresh; it
+was not.
+
+The A9-tagged row (`student-baseline-r2`) was signed WITH A7. Tracing its
+stamp to its origin puts it in the `60bac9fb8` "PI-signed 2026-09-07" batch;
+the merge commit `da37c642c` that this document originally credited had only
+rewritten the file later. Register tally after signing: 41 signed, 27
+unsigned, 1 unsigned-by-design.
 
 ### 2026-09-16 — PI ruling: all 50 rows queued
 
