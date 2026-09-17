@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-17T07:01:43Z",
+  "generated_at": "2026-09-17T07:37:47Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -2025,10 +2025,10 @@
       "working_notes_obs": [],
       "manually_verified_at": "2026-09-08T01:53:31Z",
       "signature": {
-        "status": "unsigned",
-        "signed_at": null,
-        "attests": "Not established as PI-signed. The 2026-09-08T01:53:31Z value in manually_verified_at was set under the pre-2026-09-16 convention, where one field served both authoring and signature; the PI ruled on 2026-09-16 that he cannot confirm he reviewed the rows stamped that way. Its substance is UNCHANGED since the stamp, which was set at 38aa9ed1b (2026-09-08, \"register(h6): A-07 and A-09 refreshed on the recovered comparator; e47 rows re-pointed\"), so the row stands as it was stamped. Queued for a first walkthrough and signature \u2014 see planning/legacy-signature-queue-2026-09-16.md.",
-        "presentation": null,
+        "status": "signed",
+        "signed_at": "2026-09-17T07:37:26Z",
+        "attests": "Signed 2026-09-17T07:37:26Z by the PI after a SEPARATE review, held back from the Part A batch of the same day. WHY IT WAS HELD: its stamp comes from 38aa9ed1b, 'register(h6): A-07 and A-09 refreshed on the recovered comparator', which carries no sign-off language \u2014 and that one commit refreshed A-07 and A-09 together, after which the PI re-signed A-07 on 2026-09-10 with a signature note while A-09 received none. The sibling was reviewed after the refresh and this row was not. WHAT THE REVIEW FOUND, read from the artefact and its archived pre-refresh copy rather than from the outcome text: the refresh moved exactly one quantity. The Flash matched-configuration comparator's N=3 consensus F1 rose 0.552454 -> 0.585411 when recomputed against the recovered evidence, which lowered the image F1 ratio Pro/Flash from 1.2052 to 1.1373. Pro's F1 (0.6658), both cost figures and the cost ratio (1.3207) are unchanged. NO VERDICT MOVED. registered_gate_verdict is CLOSED in both artefacts, and limb1_fires is False in BOTH \u2014 the 1.20 F1 threshold the ratio crossed was never the binding condition, because limb 1 also requires comparable cost and the 1.3207 cost ratio already failed the declared +/-10% window. The crossing therefore has no consequence for the gate; an agent initially presented it as a threshold crossing that changed the limb's behaviour, and the PI's questioning established it did not. DIRECTION OF TRAVEL: the comparator got STRONGER and the surviving margin to the threshold is WIDER than before, on fuller evidence. The two disclosed gaps both bias against the conclusion and are therefore conservative: the Flash comparator covers 485-486 of 487 tiles (the E71 residue that failed both recovery tiers), and a one-sided coverage gap depresses Flash F1, which INFLATES the Pro/Flash ratio; and the cost bases are non-identical (per-pass extractor against modelled token-load flex). SCOPE: this covers the gate's CLOSED verdict on the Flash-optimal basis and the matched-configuration figures as they stand at 2026-09-17T07:37:26Z. The matched-configuration numbers are explicitly the pure model effect, NOT the gate's verdict, and the row says so. The pre-refresh artefact is preserved at archive/pre-recovery-2026-09-08/h6-registered-analyses/. The original stamp 2026-09-08T01:53:31Z stays in manually_verified_at as the authoring record.",
+        "presentation": "Session 154 (2026-09-17), A8 separate walkthrough in conversation: the refresh diffed field by field, the pre- and post-recovery artefacts compared side by side, and the limb conditions read from the artefact",
         "history": [
           {
             "stamped_at": "2026-09-08T01:53:31Z",
@@ -2042,7 +2042,7 @@
           "results/run-analyses.json",
           "results/h6-registered-analyses"
         ],
-        "last_extracted_at": "2026-09-16T11:04:59Z",
+        "last_extracted_at": "2026-09-17T07:37:47Z",
         "extractor_version": "0.7.1"
       }
     },

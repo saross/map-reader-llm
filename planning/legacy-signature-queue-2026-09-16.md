@@ -114,14 +114,14 @@ Evidence: PI sign-off described in the commit message.
 - `obs280-shared-reference-r2`
 - `tile-level-f1-r2`
 
-### A8. `38aa9ed1b` — 2026-09-08 · 1 row(s) — **HELD** (see note)
+### A8. `38aa9ed1b` — 2026-09-08 · 1 row(s) — **SIGNED 2026-09-17** (after separate review)
 
 > register(h6): A-07 and A-09 refreshed on the recovered comparator; e47 rows re-pointed
 
 Evidence: no sign-off language in the commit message.
 
 - [x] Walkthrough prepared
-- [ ] PI signed
+- [x] PI signed
 
 - `h6-a09-cost-gate`
 
@@ -273,6 +273,30 @@ disagree:
 1. **Anything that looks wrong, weak or over-stated.**
 
 ## Changelog
+
+### 2026-09-17 — A8 signed after separate review; Part A complete
+
+`h6-a09-cost-gate` signed. The hold was warranted by an unexplained
+asymmetry — one commit refreshed A-07 and A-09 together, A-07 was
+re-signed two days later, A-09 was not — and the explanation proved
+benign.
+
+Reading the artefact against its archived pre-refresh copy showed the
+refresh moved exactly ONE quantity: the Flash matched-configuration
+comparator's N=3 consensus F1 rose 0.552454 to 0.585411 when recomputed
+against recovered evidence, lowering the image F1 ratio from 1.2052 to
+1.1373. Pro's F1 and both cost figures are unchanged.
+
+**No verdict moved.** `registered_gate_verdict` is CLOSED in both, and
+`limb1_fires` is False in BOTH: the 1.20 F1 threshold the ratio crossed
+was never the binding condition, because limb 1 also requires comparable
+cost and the 1.3207 cost ratio already failed the declared ±10% window.
+An agent first presented the crossing as changing the limb's behaviour;
+the PI's questioning established it did not. The comparator got stronger
+and the margin to the threshold is wider than before.
+
+Part A is complete: 25 of 25 signed. Register tally: 42 signed, 26
+unsigned, 1 unsigned-by-design.
 
 ### 2026-09-17 — Part A signed, 24 of 25; A8 held
 

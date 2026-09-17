@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — pv-diag-256
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `22ffe6b43`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `f307c1932`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/pv-diag-256` · **Registry status**: active · **Purpose**: 256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT): the small-tile anchor for the tile-size comparison, where F1@20m orders 256 &lt; 512 &lt; 384 (0.46 / 0.69 / 0.79). Unregistered exploratory extension of the registered H11 two-level design (E62); populated 2026-07-30 per the PI ruling at reports/verification/phase2-rulings-2026-07-30.md S 1b.
 
@@ -120,7 +120,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `22ffe6b43` |
+| Source commit | `f307c1932` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

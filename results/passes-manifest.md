@@ -2,7 +2,7 @@
 
 # Passes manifest
 
-> Generated 2026-09-16T02:55:16Z · 1324 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `22ffe6b43`.
+> Generated 2026-09-16T02:55:16Z · 1324 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `f307c1932`.
 >
 > **Coverage**: 1324 pass(es) across the decomposed runs (sub-step 3b in progress).
 
