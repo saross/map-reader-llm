@@ -8,6 +8,129 @@ project state.
 
 ---
 
+## 🎯 NEXT SESSION (S155) — REPAIR TWO DEFECTS, THEN THE VERIFIER LEGS (written 2026-09-18 by Opus at session close)
+
+> **Read this block first. Start with `git fetch && git status -sb` (expect
+> the ~7 phantom-modified files under `archive/` and `results/rescore-*`;
+> they are an ECRYPTFS artefact — content is hash-identical to the index,
+> `git add -A` fails on them with "short read while indexing", so ALWAYS
+> stage with explicit pathspecs) and
+> `ssh sapphire 'cd ~/Code/map-reader-llm && git status -sb'`.**
+>
+> ### FIRST: two defects to repair, both found at the end of S154
+>
+> **(D1) The overnight chain waits on a success string.**
+> `/tmp/overnight.sh` (pattern, not a committed script) keyed its wait on
+> `"Tiles processed:"` in the run log, which a PARTIAL failure never prints.
+> Run 5 failed one chunk of seven and the chain sat at its starting line for
+> the whole window. Any watcher must key on a TERMINAL state — stopped, then
+> read HOW it stopped — never on a success marker. If this is made a
+> committed script, that is the contract to encode.
+>
+> **(D2) `scripts/normalise_pass_layout.py` picks its file by sort order.**
+> On a chunked pass it warned `8 candidates for .tiles.json` and took the
+> merged one only because `detections_..._run01.tiles.json` happens to sort
+> before `..._chunk0.tiles.json`. It must PREFER the merged file explicitly
+> (reject names containing `_chunk`), or a future pass silently normalises
+> one chunk's tile list into a pool — one seventh of the coverage, looking
+> entirely ordinary. Tests in `tests/test_normalise_pass_layout.py`.
+>
+> A third defect of the same family WAS repaired (`e99c88bfc`):
+> `merge_chunk_metadata` summed tokens but inherited `execution_stats` from
+> chunk 0, so runs 4-5 audited at `n=4000` against 24,561 tiles. Cost totals
+> were right; the per-item rate was out by the chunk count.
+>
+> ### THEN: the verifier legs (~US$65 of the approved US$600; US$603 spent)
+>
+> **Deliberately not run.** They apply an operating point to a union built by
+> tooling not yet exercised, and they were reached at a point where nobody
+> was awake to read the artefact — and every defect this session was found by
+> READING AN ARTEFACT after a step reported success, never by a job failing.
+>
+> Order: (1) build the K = 5 union for the 3.7 pool —
+> `scripts/merge_passes.py --input-dir <pool> --passes 1,2,3,4,5 --threshold 1`
+> handles `run_N` and `run_N_recovery*` natively; compare its size against
+> K = 1 (6,985) and K = 3 (8,337). (2) Verify the 3.7 K = 5 union with BOTH
+> arms — carried points already exist on the GS: arm 1 `p0.10`, arm 2
+> `p0.90` (registered cells `g37-image-k5-verified-carried-p0.10-k5` and
+> `-swap37-p0.90-k5`). (3) The Gemini 3 pool needs a GS CALIBRATION first —
+> `image-b-gs-2026-08-28` is a near-perfect source (Gemini 3, `minimal`,
+> T = 0.7, same `g384_ov192` geometry, 10 passes), so its carried points cost
+> no proposer spend, only small GS verifier legs. Then K = 1/3/5 unions x 2
+> arms.
+>
+> **Rates, measured this session**: verifier arm 1 (Gemini 3 `minimal`)
+> US$0.00071/candidate; arm 2 (3.7 `low`) US$0.00119/candidate.
+>
+> ### STATE: both proposer pools are COMPLETE
+>
+> | pool | passes | detections/pass | audited |
+> |---|---|---|---|
+> | 3.7 image (`gemini37-image-55map-2026-09-13`) | **5 x 24,561** | 20,017 / 20,065 / 20,090 / 20,052 / 20,092 | US$369.44 |
+> | Gemini 3 image (`gemini3-image-55map-2026-09-16`) | **5 x 24,561** | ~34,400 (1.7x the 3.7 yield) | US$233.63 |
+>
+> Every pass covers every tile; verified by walking the tile set against each
+> pass's `tiles.json` including recovery fragments. All outputs committed
+> (`1553a7b24`, `21d1b497d`). The batch request JSONLs (24.6 GB) were
+> deleted as reproducible inputs; the 24 MB of per-chunk API outputs were
+> committed first.
+>
+> ### WHAT THE 2x2 IS FOR, and what it still lacks
+>
+> The image proposer x verifier 2x2 at deployment has both POOLS but only
+> one pool's cells: the 3.7 row (arms 1 and 2) exists at K = 3 and now
+> K = 5; the Gemini 3 row exists as a proposer pool with no verifier legs
+> yet. Arms share a pool: arm 1 (Gemini 3 verifier) and arm 2 (3.7
+> verifier) verify the SAME candidates, so two pools x two arms = the four
+> cells. `IM-k3` cannot serve as a cell: it differs on pool
+> (`library_plus-hp`), tiling (8,541 vs 24,561), thinking (`high` vs floor),
+> passes (N=5 vs K=3) and tile convention — a five-way confound.
+>
+> ### ROUTE AND CACHING, established this session (see `reports/flex-tier-503-2026-09-16.md`)
+>
+> - **Flex capacity is per-tier, not per-model.** `gemini-3.7-flash` flex
+>   returned 503 for 12+ hours across 37 checks while BATCH served the same
+>   model in 104 seconds. Prefer batch for 3.7/3.8 —
+>   `recommend_execution_mode()` warns on flex for those families.
+> - **Explicit caching beats implicit by 14 points** (0.9445 vs 0.809 on an
+>   identical preamble) and has a **4x lower floor**: explicit needs >= 1,024
+>   tokens (measured), implicit >= 4,096 (documented). This project's image
+>   prefix is 18,909 tokens; its text-only prefix is 393, below both — text
+>   legs are uncached BY NATURE and their `cache=0.000` audits are correct.
+> - Batch and flex bill identically; a cache hit bills at the cache rate with
+>   no further batch discount. `--use-cache` now works in both modes, OPT-IN
+>   so no existing caller's request shape changes.
+> - **A batch job reports SUCCEEDED when every request inside it failed**
+>   (measured: 100/100). Assert on the results' error count, never the job
+>   state. And **a 503 while POLLING does not mean the job failed** — run 5's
+>   chunk 2 was recovered from its completed job at no cost.
+>
+> ### SIGNATURES: 42 signed, 26 unsigned, 1 by design
+>
+> PR #18 merged: a first-class `signature` object with a status enum,
+> carried into the published manifest (its predecessor never was), with
+> `check_signature_integrity` blocking a write that publishes a signature
+> without its evidence. Policy: `docs/methodology/signature-policy.md`.
+> **Part A of `planning/legacy-signature-queue-2026-09-16.md` is COMPLETE**
+> (25 of 25). **Part B remains: 25 rows in 8 batches**, grouped by the pass
+> that moved them, four marked CLAIM and four BOOKKEEPING.
+>
+> **Also open**: the image campaign row `gemini37-image-55map-2026-09-13` is
+> still UNSIGNED (walked through 2026-09-16, P1-P5 verified); the 55-map
+> board r2 rebuild with the image cells (beacon item O5); and the meta's
+> `cost_estimate` for batch prices cached tokens at the FULL input rate,
+> overstating by 3.2x — no published figure is affected (the auditor is the
+> source of truth and warns against that field) but it should be fixed.
+>
+> ### HOUSEKEEPING carried forward
+>
+> 26 backup files remain under `outputs/55maps-text-high-generalisation`
+> alone and 133 untracked non-markdown files under `outputs/` overall. Six
+> pre-recovery backups were deleted this session after hash-verification
+> against both commits named in `.gitignore:145`; the rest need the same
+> check each, since `pre-gtupdate` backups may hold states git does NOT
+> hold.
+
 ## 🎯 NEXT SESSION — TWO LANES (written 2026-09-14 ~01:30 UTC by Fable at the PI's request; the PI restarts in OPUS until Thursday 2026-09-17 ~12:00 AEST, then FABLE; usage resets Thursday)
 
 > **Read this block first, then "STATE AFTER S153" below for the day's
