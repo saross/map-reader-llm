@@ -212,6 +212,10 @@ class TestJSONLConstruction:
         assert merged["results_summary"]["total_detections"] == 12
         t = json.loads((tmp_path / "d.tiles.json").read_text())
         assert len(t["completed"]) == 6
+        # Each chunk's total_tiles is that chunk's size; the pass's total is
+        # the SUM. Taking the max wrote 4,000 against 24,561 completed for a
+        # seven-chunk pass (pool runs 4-5 of gemini37-image-55map-2026-09-13).
+        assert t["total_tiles"] == 27
 
     @pytest.mark.tier1
     def test_chunks_that_disagree_on_configuration_are_refused(self, tmp_path) -> None:

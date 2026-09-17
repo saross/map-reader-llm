@@ -1253,12 +1253,17 @@ def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
     base["chunked_run"] = {"n_chunks": len(metas),
                            "chunk_metas": [Path(m).name for m in sorted(chunk_metas)]}
 
+    # Each chunk's ``total_tiles`` is the size of THAT chunk, so the pass's
+    # total is their SUM. Taking the max (as this did until 2026-09-18) wrote
+    # ``total_tiles: 4000`` against 24,561 completed tiles for a seven-chunk
+    # pass — a sidecar that says the pass is six times over-complete, which
+    # `derive_recovery_worklists.py` reads as "not a whole corpus" and skips.
     completed: set[str] = set()
     total = 0
     for t in sorted(chunk_tiles):
         d = json.loads(Path(t).read_text())
         completed |= set(d.get("completed", []))
-        total = max(total, d.get("total_tiles", 0))
+        total += int(d.get("total_tiles", 0) or 0)
     tiles_out.write_text(json.dumps(
         {"total_tiles": total, "completed": sorted(completed)}, indent=1) + "\n")
     meta_out.write_text(json.dumps(base, indent=2) + "\n")
