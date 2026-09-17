@@ -188,6 +188,8 @@ class TestJSONLConstruction:
                 "usage_stats": {"total_input_tokens": 100,
                                 "total_cached_tokens": 90,
                                 "total_output_tokens": 10},
+                "execution_stats": {"items_processed": 10, "items_failed": 0},
+                "results_summary": {"total_detections": 4},
                 "cost_estimate": {"total_cost_usd": 1.5}}))
             t = tmp_path / f"d_chunk{i}.tiles.json"
             t.write_text(json.dumps(
@@ -203,6 +205,11 @@ class TestJSONLConstruction:
         assert round(u["cached_share"], 4) == 0.9
         assert merged["cost_estimate"]["total_cost_usd"] == 4.5
         assert merged["chunked_run"]["n_chunks"] == 3
+        # items_processed is what audit_proposer_cost reads as the pass's item
+        # count. Inheriting chunk 0's value made a 7-chunk pass report 4,000
+        # items against its own correctly-summed 491M tokens.
+        assert merged["execution_stats"]["items_processed"] == 30
+        assert merged["results_summary"]["total_detections"] == 12
         t = json.loads((tmp_path / "d.tiles.json").read_text())
         assert len(t["completed"]) == 6
 

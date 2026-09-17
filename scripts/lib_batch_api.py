@@ -1223,6 +1223,32 @@ def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
                              if inp else None)
     usage["usage_source"] = f"merged from {len(metas)} chunk metas"
     base["usage_stats"] = usage
+
+    # execution_stats and results_summary must be summed too, not inherited
+    # from chunk 0. `audit_proposer_cost.py` reads
+    # execution_stats.items_processed as the pass's item count, so leaving
+    # chunk 0's value made a seven-chunk pass report 4,000 items against its
+    # own correctly-summed 491M tokens — the tokens and therefore the total
+    # cost were right, but the per-item rate was out by the chunk count.
+    for section, fields in (
+        ("execution_stats", ("items_processed", "items_failed", "items_skipped",
+                             "retries_total", "retries_rate_limit",
+                             "retries_server_error", "retries_timeout")),
+        ("results_summary", ("total_detections",)),
+    ):
+        merged_section = dict(base.get(section) or {})
+        for field in fields:
+            total = 0
+            present = False
+            for m in metas:
+                v = (m.get(section) or {}).get(field)
+                if isinstance(v, int):
+                    total += v
+                    present = True
+            if present:
+                merged_section[field] = total
+        if merged_section:
+            base[section] = merged_section
     base.setdefault("cost_estimate", {})["total_cost_usd"] = cost
     base["chunked_run"] = {"n_chunks": len(metas),
                            "chunk_metas": [Path(m).name for m in sorted(chunk_metas)]}
