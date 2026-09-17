@@ -1910,6 +1910,15 @@ def prepare_batch_unit(
         prompt_config["temperature"] = unit["temperature"]
     if unit.get("thinking_level") is not None:
         prompt_config["thinking_level"] = unit["thinking_level"]
+    # The RESOLVED model, not the config file's default. Without this the
+    # config keeps whatever model its file names — `gemini-3-flash` for the
+    # shared image config — while the batch is submitted against
+    # `model_name`. That mismatch is not cosmetic: it made
+    # validate_thinking_level() check the wrong family, so the guard against
+    # `minimal`-on-3.7 would have PASSED the very submission it exists to
+    # refuse, and it is the same class as erratum E42, where a CLI `--model`
+    # override reached the API but never the recorded metadata.
+    prompt_config["model"] = model_name
 
     # Build JSONL
     jsonl_dir = run_dir / "batch_working"

@@ -155,6 +155,22 @@ class TestJSONLConstruction:
             assert line["key"] == "tile_001.png"
 
     @pytest.mark.tier1
+    def test_prepare_batch_unit_records_the_resolved_model(self) -> None:
+        """The guard must see the model actually submitted, not the config's.
+
+        `prepare_batch_unit` re-loads the prompt config from disk. Before this
+        was fixed the config kept its own default (`gemini-3-flash` in the
+        shared image config) while the batch went to `model_name`, so
+        `validate_thinking_level` checked the wrong family — and would have
+        PASSED `minimal` on a 3.7 submission, the exact failure it guards.
+        Same class as erratum E42.
+        """
+        import inspect
+        from scripts.lib_batch_api import prepare_batch_unit
+        body = inspect.getsource(prepare_batch_unit)
+        assert 'prompt_config["model"] = model_name' in body
+
+    @pytest.mark.tier1
     def test_context_cache_is_opt_in(self) -> None:
         """Defaulting caching ON would change every existing caller's requests.
 
