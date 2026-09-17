@@ -120,31 +120,168 @@ REFERENCE = "r2"
 #: integer-exact and compared exactly.
 F1_GATE_TOL = 1e-4
 
-CAMPAIGN_ROOT = PROJECT_ROOT / "outputs/gemini37-image-55map-2026-09-13"
-CAMPAIGN_CELL = "g384_ov192_55map_g37img"
-RESULTS_HOME = PROJECT_ROOT / "results/gemini37-image-55map-2026-09-13"
-
-#: The carried operating points, FIXED by the Gold Standard calibration leg
-#: before any 55-map scoring (card section 2). Both arms select unanimity, so
-#: a K = 1 rung carries ``prob_t`` only and ``k`` collapses to 1 — stated here
-#: rather than inferred later, because it means the K contrast varies the vote
-#: threshold as well as the pass count (deltas section 5).
-CARRIED: dict[str, float] = {"arm1": 0.10, "arm2": 0.88}
-
 #: Verifier arms. ``model`` and ``thinking`` are recorded for the report; the
-#: verifier runs themselves are launched outside this script.
+#: verifier runs themselves are launched outside this script. The arms are
+#: shared by every campaign of the image 2x2: arm 1 and arm 2 verify the SAME
+#: candidates, so two pools x two arms are the four cells.
 ARM_MODEL = {
     "arm1": ("gemini-3-flash-preview", "minimal"),
     "arm2": ("gemini-3.7-flash", "low"),
 }
 
-RUNGS = (1, 3)
 
-#: The Gold Standard calibration leg, used by the materialiser identity gate.
-#: Feature counts are the committed ones read from the leg's analysis.json.
-GS_VERIFIER = (
-    PROJECT_ROOT / "outputs/gemini37-image-gs-2026-09-01/verifier/g384_ov192_g37img"
+@dataclass(frozen=True)
+class Campaign:
+    """One proposer pool of the image 2x2 at deployment scale.
+
+    The stages below are the same for every pool; only where the pool lives,
+    which rungs it carries and which operating points its GS calibration leg
+    fixed differ. Those are data, so they are a record rather than a second
+    copy of the script (S155, 2026-09-18).
+
+    Attributes:
+        key: The ``--campaign`` name.
+        prefix: Rung-label prefix, e.g. ``IMG`` gives ``IMG-ARM2-K3``.
+        root: Campaign outputs root holding ``verifier/<cell>/``.
+        cell: The pass-pool directory name.
+        results_home: Where sweeps, cells and tests land.
+        rungs: The first-N pass counts the pool carries.
+        carried: ``(arm, k) -> (prob_t, min_votes)``, FIXED by the pool's Gold
+            Standard calibration leg before any 55-map scoring. ``None`` until
+            that leg has run — the sweep refuses to start without it.
+        gs_verifier: The calibration leg's verifier root.
+        gs_calibration: ``arm -> {crops, verify, point, n}`` for the
+            materialiser identity gate: re-deriving the leg's verified set at
+            the carried point must reproduce its committed feature count.
+    """
+
+    key: str
+    prefix: str
+    root: Path
+    cell: str
+    results_home: Path
+    rungs: tuple[int, ...]
+    carried: dict[tuple[str, int], tuple[float, int]] | None
+    gs_verifier: Path
+    gs_calibration: dict[str, dict[str, Any]] | None
+
+
+#: The 3.7 image pool. Carried points from card section 2 (K = 1 and K = 3,
+#: the GS K = 3 leg of 30e36bcd1) and from the registered GS K = 5 cells
+#: ``g37-image-k5-verified-carried-p0.10-k5`` / ``-swap37-p0.90-k5``
+#: (``results/run-conditions.json``). Both arms select unanimity at every
+#: rung, so a K = 1 rung carries ``prob_t`` only and ``k`` collapses to 1 —
+#: stated here rather than inferred later, because it means the K contrast
+#: varies the vote threshold as well as the pass count (deltas section 5).
+G37 = Campaign(
+    key="g37",
+    prefix="IMG",
+    root=PROJECT_ROOT / "outputs/gemini37-image-55map-2026-09-13",
+    cell="g384_ov192_55map_g37img",
+    results_home=PROJECT_ROOT / "results/gemini37-image-55map-2026-09-13",
+    rungs=(1, 3, 5),
+    carried={
+        ("arm1", 1): (0.10, 1), ("arm1", 3): (0.10, 3), ("arm1", 5): (0.10, 5),
+        ("arm2", 1): (0.88, 1), ("arm2", 3): (0.88, 3), ("arm2", 5): (0.90, 5),
+    },
+    gs_verifier=PROJECT_ROOT
+    / "outputs/gemini37-image-gs-2026-09-01/verifier/g384_ov192_g37img",
+    gs_calibration={
+        "arm1": {"crops": "crops_k3", "verify": "verify_k3_arm1",
+                 "point": (0.10, 3), "n": 444},
+        "arm2": {"crops": "crops_k3", "verify": "verify_k3_arm2",
+                 "point": (0.88, 3), "n": 433},
+    },
 )
+
+#: The Gemini 3 image pool. Its calibration leg runs on
+#: ``image-b-gs-2026-08-28`` (scripts/gemini3-image-55map-gs-calibration.sh);
+#: ``carried`` and ``gs_calibration`` are filled from that leg's
+#: ``analysis.json`` files once it has run, and stay ``None`` until then.
+G3 = Campaign(
+    key="g3",
+    prefix="G3IMG",
+    root=PROJECT_ROOT / "outputs/gemini3-image-55map-2026-09-16",
+    cell="g384_ov192_55map_g3img",
+    results_home=PROJECT_ROOT / "results/gemini3-image-55map-2026-09-16",
+    rungs=(1, 3, 5),
+    carried=None,
+    gs_verifier=PROJECT_ROOT / "outputs/image-b-gs-2026-08-28/verifier/g384_ov192_image",
+    gs_calibration=None,
+)
+
+CAMPAIGNS = {c.key: c for c in (G37, G3)}
+
+#: The selected campaign and its aliases. The aliases exist so the stages read
+#: as they did when the script served one pool; ``select_campaign`` rebinds
+#: them all at once. The default is the 3.7 pool the script was written for.
+CAMPAIGN: Campaign = G37
+CAMPAIGN_ROOT = G37.root
+CAMPAIGN_CELL = G37.cell
+RESULTS_HOME = G37.results_home
+RUNGS = G37.rungs
+GS_VERIFIER = G37.gs_verifier
+
+#: Backward-compatible view of the carried PROBABILITY per arm at the rungs
+#: the script originally served (K = 1 and K = 3 share one probability per
+#: arm); :func:`carried_point` is the general form.
+CARRIED: dict[str, float] = {"arm1": 0.10, "arm2": 0.88}
+
+
+def select_campaign(key: str) -> Campaign:
+    """Bind the module to one campaign of the 2x2.
+
+    Args:
+        key: A key of :data:`CAMPAIGNS`.
+
+    Returns:
+        The selected campaign.
+    """
+    global CAMPAIGN, CAMPAIGN_ROOT, CAMPAIGN_CELL, RESULTS_HOME, RUNGS
+    global GS_VERIFIER, GS_CALIBRATION, CARRIED
+    camp = CAMPAIGNS[key]
+    CAMPAIGN = camp
+    CAMPAIGN_ROOT, CAMPAIGN_CELL = camp.root, camp.cell
+    RESULTS_HOME, RUNGS, GS_VERIFIER = camp.results_home, camp.rungs, camp.gs_verifier
+    GS_CALIBRATION = camp.gs_calibration or {}
+    if camp.carried:
+        CARRIED = {arm: camp.carried[(arm, min(camp.rungs))][0]
+                   for arm in ARM_MODEL if (arm, min(camp.rungs)) in camp.carried}
+    else:
+        CARRIED = {}
+    return camp
+
+
+def carried_point(arm: str, k: int) -> tuple[float, int]:
+    """The campaign's carried operating point for one rung.
+
+    Args:
+        arm: ``arm1`` or ``arm2``.
+        k: The rung's pass count.
+
+    Returns:
+        ``(prob_t, min_votes)``.
+
+    Raises:
+        RuntimeError: The campaign's calibration leg has not fixed its points.
+        KeyError: The rung has no carried point.
+    """
+    if not CAMPAIGN.carried:
+        raise RuntimeError(
+            f"campaign {CAMPAIGN.key}: carried points not fixed — run its GS "
+            "calibration leg and record image_best here before sweeping")
+    return CAMPAIGN.carried[(arm, k)]
+
+
+def parse_rungs(spec: str | None) -> tuple[int, ...]:
+    """``--rungs 5`` or ``--rungs 1,3`` to a tuple; ``None`` means all."""
+    if not spec:
+        return RUNGS
+    rungs = tuple(int(x) for x in spec.split(","))
+    bad = [k for k in rungs if k not in RUNGS]
+    if bad:
+        raise SystemExit(f"rungs {bad} are not in campaign {CAMPAIGN.key}'s {RUNGS}")
+    return rungs
 #: The committed r2 board, and the pair whose permutation result gate 4
 #: reproduces. This pair is chosen because its committed p-value is 0.1208
 #: rather than 0.0: a saturated verdict would pass even with a broken null.
@@ -153,10 +290,7 @@ COMMITTED_BOARD = Path(
 )
 PAIRWISE_GATE_PAIR = ("ARM2-N5-oracle", "ARM2-N3-oracle")
 
-GS_CALIBRATION = {
-    "arm1": {"verify": "verify_k3_arm1", "point": (0.10, 3), "n": 444},
-    "arm2": {"verify": "verify_k3_arm2", "point": (0.88, 3), "n": 433},
-}
+GS_CALIBRATION: dict[str, dict[str, Any]] = G37.gs_calibration or {}
 
 
 @dataclass(frozen=True)
@@ -459,7 +593,7 @@ def with_carried(
     Returns:
         The grid, with the carried point appended when it was absent.
     """
-    carried = (CARRIED[arm], min(3, k))
+    carried = carried_point(arm, k)
     if carried in points:
         return points
     return sorted([*points, carried])
@@ -524,15 +658,23 @@ def _score_point(task: tuple[str, float, int]) -> dict[str, Any]:
 
 def rung_label(arm: str, k: int) -> str:
     """The campaign's label for one rung, e.g. ``IMG-ARM2-K3``."""
-    return f"IMG-{arm.upper()}-K{k}"
+    return f"{CAMPAIGN.prefix}-{arm.upper()}-K{k}"
 
 
-def stage_sweep(workers: int) -> int:
-    """Sweep every achievable point of every rung; write CSVs and the oracles."""
+def stage_sweep(workers: int, rungs: tuple[int, ...] | None = None) -> int:
+    """Sweep every achievable point of every rung; write CSVs and the oracles.
+
+    Args:
+        workers: Sweep parallelism.
+        rungs: Restrict to these rungs (e.g. a rung added after the others
+            were swept); their entries replace the same rungs' entries in an
+            existing ``sweeps.json`` and the other rungs' entries are kept.
+    """
+    rungs = rungs or RUNGS
     ref, bounds, tile_index = load_frames()
     frames = {}
     for arm in ARM_MODEL:
-        for k in RUNGS:
+        for k in rungs:
             label = rung_label(arm, k)
             frames[label] = rung_frame(arm, k)
             logger.info("%s: %d candidates", label, len(frames[label]))
@@ -550,12 +692,16 @@ def stage_sweep(workers: int) -> int:
         rows = pool.map(_score_point, tasks, chunksize=2)
 
     RESULTS_HOME.mkdir(parents=True, exist_ok=True)
-    sweeps: dict[str, Any] = {
-        "buffer_m": BUFFER_M,
-        "reference": REFERENCE,
-        "declared_family": "four external comparators + the K=1 vs K=3 contrast",
-        "rungs": {},
-    }
+    sweeps_path = RESULTS_HOME / "sweeps.json"
+    if sweeps_path.exists():
+        sweeps = json.loads(sweeps_path.read_text())
+    else:
+        sweeps = {
+            "buffer_m": BUFFER_M,
+            "reference": REFERENCE,
+            "declared_family": "four external comparators + the K=1 vs K=3 contrast",
+            "rungs": {},
+        }
     for label in frames:
         frows = [r for r in rows if r["rung"] == label and r["micro_f1_50"] is not None]
         frows.sort(key=lambda r: (r["prob_t"], r["min_votes"]))
@@ -568,16 +714,16 @@ def stage_sweep(workers: int) -> int:
         mcc_best = max(frows, key=lambda r: r["tile_mcc"])
         k = int(label.rsplit("K", 1)[1])
         arm = "arm1" if "ARM1" in label else "arm2"
-        carried_votes = min(3, k)
+        carried_prob, carried_votes = carried_point(arm, k)
         carried = next(
             (r for r in frows
-             if abs(r["prob_t"] - CARRIED[arm]) < 1e-9
+             if abs(r["prob_t"] - carried_prob) < 1e-9
              and r["min_votes"] == carried_votes),
             None,
         )
         sweeps["rungs"][label] = {
             "n_sweep_points": len(frows),
-            "carried_point": [CARRIED[arm], carried_votes],
+            "carried_point": [carried_prob, carried_votes],
             "carried": carried,
             "f1_oracle": f1_best,
             "mcc_oracle": mcc_best,
@@ -587,8 +733,8 @@ def stage_sweep(workers: int) -> int:
             label, f1_best["micro_f1_50"], f1_best["prob_t"], f1_best["min_votes"],
             mcc_best["tile_mcc"], mcc_best["prob_t"], mcc_best["min_votes"],
         )
-    (RESULTS_HOME / "sweeps.json").write_text(json.dumps(sweeps, indent=2) + "\n")
-    logger.info("wrote %s", (RESULTS_HOME / "sweeps.json").relative_to(PROJECT_ROOT))
+    sweeps_path.write_text(json.dumps(sweeps, indent=2) + "\n")
+    logger.info("wrote %s", sweeps_path.relative_to(PROJECT_ROOT))
     return 0
 
 
@@ -597,13 +743,25 @@ def stage_sweep(workers: int) -> int:
 # ---------------------------------------------------------------------------
 
 
-def stage_materialise() -> int:
-    """Write one detections file per cell: carried, F1 oracle, MCC oracle."""
+def stage_materialise(rungs: tuple[int, ...] | None = None) -> int:
+    """Write one detections file per cell: carried, F1 oracle, MCC oracle.
+
+    Args:
+        rungs: Restrict to these rungs; their cells replace the same labels
+            in an existing ``cells_manifest.json`` and other cells are kept.
+    """
+    rungs = rungs or RUNGS
     sweeps = json.loads((RESULTS_HOME / "sweeps.json").read_text())
+    manifest_path = RESULTS_HOME / "cells_manifest.json"
+    existing: list[dict[str, Any]] = []
+    if manifest_path.exists():
+        existing = json.loads(manifest_path.read_text())["cells"]
     cells: list[dict[str, Any]] = []
     for label, info in sweeps["rungs"].items():
         arm = "arm1" if "ARM1" in label else "arm2"
         k = int(label.rsplit("K", 1)[1])
+        if k not in rungs:
+            continue
         frame = rung_frame(arm, k)
         wanted = {
             "carried": tuple(info["carried_point"]),
@@ -630,10 +788,12 @@ def stage_materialise() -> int:
             })
             logger.info("%-28s n=%5d -> %s", cell_label, len(sub),
                         dest.relative_to(PROJECT_ROOT))
-    dest = RESULTS_HOME / "cells_manifest.json"
-    dest.write_text(json.dumps({"buffer_m": BUFFER_M, "reference": REFERENCE,
-                                "cells": cells}, indent=2) + "\n")
-    logger.info("wrote %s", dest.relative_to(PROJECT_ROOT))
+    new_labels = {c["label"] for c in cells}
+    merged = [c for c in existing if c["label"] not in new_labels] + cells
+    manifest_path.write_text(json.dumps({"buffer_m": BUFFER_M, "reference": REFERENCE,
+                                         "cells": merged}, indent=2) + "\n")
+    logger.info("wrote %s (%d cells, %d new or replaced)",
+                manifest_path.relative_to(PROJECT_ROOT), len(merged), len(cells))
     return 0
 
 
@@ -676,7 +836,7 @@ def engine_command(det: str, out_dir: str, label: str, workers: int) -> list[str
     ]
 
 
-def stage_score(workers: int, jobs: int) -> int:
+def stage_score(workers: int, jobs: int, rungs: tuple[int, ...] | None = None) -> int:
     """Score every materialised cell with the engine, on the board's recipe.
 
     ``--require-clean-inputs`` makes the engine refuse a detections file that
@@ -686,6 +846,8 @@ def stage_score(workers: int, jobs: int) -> int:
     Args:
         workers: Engine parallelism per cell.
         jobs: Cells scored concurrently.
+        rungs: Restrict to these rungs' cells (already-scored rungs are not
+            re-scored; a re-score would only reproduce them).
 
     Returns:
         A process exit status.
@@ -693,8 +855,9 @@ def stage_score(workers: int, jobs: int) -> int:
     import subprocess
     from concurrent.futures import ThreadPoolExecutor
 
+    rungs = rungs or RUNGS
     manifest = json.loads((RESULTS_HOME / "cells_manifest.json").read_text())
-    cells = manifest["cells"]
+    cells = [c for c in manifest["cells"] if c["k"] in rungs]
     dirty = subprocess.run(
         ["git", "status", "--porcelain", "--", *[c["det"] for c in cells]],
         cwd=PROJECT_ROOT, capture_output=True, text=True, check=False,
@@ -737,9 +900,11 @@ def stage_selftest() -> int:
     failures: list[str] = []
 
     # Gate 1 — the materialiser reproduces the committed calibration counts.
+    if not GS_CALIBRATION:
+        failures.append(f"campaign {CAMPAIGN.key}: no GS calibration recorded")
     for arm, spec in GS_CALIBRATION.items():
         try:
-            frame = load_manifest_probs(GS_VERIFIER / "crops_k3",
+            frame = load_manifest_probs(GS_VERIFIER / spec.get("crops", "crops_k3"),
                                         GS_VERIFIER / spec["verify"])
             got = len(materialise(frame, *spec["point"]))
         except Exception as exc:  # noqa: BLE001 - a gate reports, never raises
@@ -979,16 +1144,23 @@ def main() -> int:
                     help="Cells scored concurrently in --stage score (default 3)")
     ap.add_argument("--primary", default=None,
                     help="Cell under test for --stage tests")
+    ap.add_argument("--campaign", default="g37", choices=sorted(CAMPAIGNS),
+                    help="Which pool of the image 2x2 (default g37)")
+    ap.add_argument("--rungs", default=None,
+                    help="Restrict sweep/materialise/score to these rungs, "
+                         "e.g. '5' (default: the campaign's rungs)")
     args = ap.parse_args()
+    select_campaign(args.campaign)
+    rungs = parse_rungs(args.rungs)
 
     if args.stage == "selftest":
         return stage_selftest()
     if args.stage == "sweep":
-        return stage_sweep(args.workers)
+        return stage_sweep(args.workers, rungs)
     if args.stage == "materialise":
-        return stage_materialise()
+        return stage_materialise(rungs)
     if args.stage == "score":
-        return stage_score(args.workers, args.jobs)
+        return stage_score(args.workers, args.jobs, rungs)
     return stage_tests(args.primary)
 
 

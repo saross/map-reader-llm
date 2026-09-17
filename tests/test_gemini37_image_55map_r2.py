@@ -261,3 +261,58 @@ def test_assign_eval_frame_tiles_handles_an_empty_frame() -> None:
 
     assert len(out) == 0
     assert "origin_source_tile" in out.columns
+
+
+# ---------------------------------------------------------------------------
+# The campaign table (S155): one script, two pools of the image 2x2.
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture
+def g37_restored():
+    """Whatever a test selects, the module is left on the default pool."""
+    from scripts import gemini37_image_55map_r2 as mod
+
+    yield mod
+    mod.select_campaign("g37")
+
+
+def test_k5_carried_points_are_the_registered_gs_k5_cells(g37_restored) -> None:
+    """K = 5 carries the GS K = 5 cells' points, NOT K = 3's: arm 2 moves from
+    0.88 to 0.90 and both arms select unanimity of five."""
+    mod = g37_restored
+    assert mod.carried_point("arm1", 5) == (0.10, 5)
+    assert mod.carried_point("arm2", 5) == (0.90, 5)
+    assert mod.carried_point("arm2", 3) == (0.88, 3)
+    assert mod.carried_point("arm2", 1) == (0.88, 1)
+
+
+def test_with_carried_forces_the_k5_point(frame: gpd.GeoDataFrame, g37_restored) -> None:
+    mod = g37_restored
+    grid = mod.achievable_points(frame, 5)
+    assert (0.90, 5) not in grid
+    assert (0.90, 5) in mod.with_carried(grid, "arm2", 5)
+
+
+def test_an_uncalibrated_campaign_refuses_to_sweep(g37_restored) -> None:
+    """The Gemini 3 pool has no carried points until its GS leg has run; a
+    sweep at made-up points would look exactly like a real one."""
+    mod = g37_restored
+    camp = mod.select_campaign("g3")
+    assert camp.carried is None
+    assert mod.rung_label("arm1", 5) == "G3IMG-ARM1-K5"
+    assert mod.RESULTS_HOME.name == "gemini3-image-55map-2026-09-16"
+    with pytest.raises(RuntimeError, match="not fixed"):
+        mod.carried_point("arm1", 5)
+    mod.select_campaign("g37")
+    assert mod.rung_label("arm1", 5) == "IMG-ARM1-K5"
+    assert mod.CARRIED == {"arm1": 0.10, "arm2": 0.88}
+
+
+def test_rung_filter_rejects_a_rung_the_campaign_does_not_carry(g37_restored) -> None:
+    mod = g37_restored
+    assert mod.parse_rungs(None) == (1, 3, 5)
+    assert mod.parse_rungs("5") == (5,)
+    assert mod.parse_rungs("1,3") == (1, 3)
+    with pytest.raises(SystemExit):
+        mod.parse_rungs("10")
