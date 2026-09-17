@@ -144,3 +144,14 @@ write a **pid file** and check that pid directly (`kill -0 "$pid"`). If
 `pgrep` is unavoidable, make the pattern unmatchable by its own command line
 (e.g. `pgrep -f '[r]un_pv'`) and still prefer staleness as the primary
 signal.
+
+**Never key a watcher on a success string.** A chain that waits for
+`"Tiles processed:"` (or any completion line) cannot tell "not yet" from
+"never": a PARTIAL failure prints no success line, so the chain waits on a
+job that finished hours ago. The overnight chain of 2026-09-17 did exactly
+this after run 5 failed one chunk of seven. Wait on a **terminal state** —
+the process gone, a stale log, or any of the driver's completion, partial,
+or traceback lines — and only then read HOW it stopped.
+`scripts/wait_for_run.py` encodes this contract and exits with the state
+(0 success, 2 partial, 3 crashed, 4 stale, 5 stopped); a chain proceeds only
+on 0.
