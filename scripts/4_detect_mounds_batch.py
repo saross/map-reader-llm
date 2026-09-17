@@ -1624,6 +1624,8 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
             tile_size=effective_tile_size,
             tiles_dir=effective_tiles_dir,
             output_name_suffix=suffix,
+            use_context_cache=args.use_cache,
+            cache_ttl_seconds=args.cache_ttl,
         )
 
         total_cost += cost_usd
@@ -1774,11 +1776,12 @@ Examples:
     )
     parser.add_argument(
         "--use-cache", action="store_true",
-        help=(
-            "Enable Gemini context caching. Caches the shared prompt "
-            "prefix (system instruction + examples) to reduce input "
-            "costs by ~50-90%%. Real-time API only."
-        ),
+        help="Store the shared prompt prefix (system instruction plus example "
+             "images) in an explicit context cache and reference it per "
+             "request, instead of repeating it. Works in BOTH realtime and "
+             "batch modes. Needs a prefix of at least 1024 tokens — image "
+             "configs qualify at ~18.9k, text-only configs do not at ~393 — "
+             "and falls back to inline assembly when it cannot be used.",
     )
     parser.add_argument(
         "--tile-size", type=int, default=None,
