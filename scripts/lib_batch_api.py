@@ -1163,6 +1163,84 @@ def validate_thinking_level(model_name: str, thinking_level: str | None) -> None
             return
 
 
+def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
+                         meta_out: Path, tiles_out: Path) -> dict:
+    """Merge a chunked batch run's per-chunk metas and tile lists into one pass.
+
+    A large batch run is split into chunks of at most ``MAX_BATCH_TILES``, and
+    the geojsons are merged back into one file. The METADATA was not: each
+    chunk kept its own ``.meta.json`` and ``.tiles.json``, so a chunked pass
+    had no single record of what it cost or which tiles it covered.
+
+    That is not a cosmetic gap. Anything reading a pass directory — the cost
+    auditor, the completeness check, the layout normaliser — takes the file it
+    finds, which for a chunked run is chunk 0. A seven-chunk pass would report
+    one seventh of its tokens and one seventh of its coverage, and both would
+    look like ordinary numbers rather than errors.
+
+    Token counts are SUMMED; the configuration is taken from the first chunk
+    and asserted identical across the rest, because a pass whose chunks ran
+    under different configurations is not one pass.
+
+    Args:
+        chunk_metas: Per-chunk ``.meta.json`` paths.
+        chunk_tiles: Per-chunk ``.tiles.json`` paths.
+        meta_out: Where to write the merged meta.
+        tiles_out: Where to write the merged tile list.
+
+    Returns:
+        The merged meta dict.
+
+    Raises:
+        ValueError: The chunks disagree on model, temperature or thinking
+            level — they are not rungs of one pass.
+    """
+    metas = [json.loads(Path(m).read_text()) for m in sorted(chunk_metas)]
+    if not metas:
+        raise ValueError("no chunk metadata to merge")
+
+    base = json.loads(json.dumps(metas[0]))
+    cfg0 = base.get("configuration") or {}
+    for i, m in enumerate(metas[1:], start=1):
+        cfg = m.get("configuration") or {}
+        for field in ("model", "temperature", "thinking_level",
+                      "instruction_hash", "library_hash"):
+            if cfg.get(field) != cfg0.get(field):
+                raise ValueError(
+                    f"chunk {i} disagrees on {field}: "
+                    f"{cfg.get(field)!r} != {cfg0.get(field)!r}; "
+                    "these chunks are not one pass")
+
+    usage: dict[str, int] = {}
+    cost = 0.0
+    for m in metas:
+        for k, v in (m.get("usage_stats") or {}).items():
+            if isinstance(v, int):
+                usage[k] = usage.get(k, 0) + v
+        cost += float((m.get("cost_estimate") or {}).get("total_cost_usd") or 0)
+    inp = usage.get("total_input_tokens", 0)
+    usage["cached_share"] = (usage.get("total_cached_tokens", 0) / inp
+                             if inp else None)
+    usage["usage_source"] = f"merged from {len(metas)} chunk metas"
+    base["usage_stats"] = usage
+    base.setdefault("cost_estimate", {})["total_cost_usd"] = cost
+    base["chunked_run"] = {"n_chunks": len(metas),
+                           "chunk_metas": [Path(m).name for m in sorted(chunk_metas)]}
+
+    completed: set[str] = set()
+    total = 0
+    for t in sorted(chunk_tiles):
+        d = json.loads(Path(t).read_text())
+        completed |= set(d.get("completed", []))
+        total = max(total, d.get("total_tiles", 0))
+    tiles_out.write_text(json.dumps(
+        {"total_tiles": total, "completed": sorted(completed)}, indent=1) + "\n")
+    meta_out.write_text(json.dumps(base, indent=2) + "\n")
+    logger.info("merged %d chunk metas: %s input tokens, %s tiles completed",
+                len(metas), f"{inp:,}", f"{len(completed):,}")
+    return base
+
+
 def aggregate_batch_usage(results: list[dict]) -> dict:
     """Sum per-response usage across a batch's results file.
 

@@ -34,6 +34,7 @@ from scripts.lib_batch_api import (
     audit_file_storage,
     aggregate_batch_usage,
     build_jsonl_file,
+    merge_chunk_metadata,
     validate_thinking_level,
     cleanup_batch_files,
     complete_batch_unit,
@@ -169,6 +170,56 @@ class TestJSONLConstruction:
         from scripts.lib_batch_api import prepare_batch_unit
         body = inspect.getsource(prepare_batch_unit)
         assert 'prompt_config["model"] = model_name' in body
+
+    @pytest.mark.tier1
+    def test_chunk_metadata_merges_tokens_and_tiles(self, tmp_path) -> None:
+        """A chunked pass must report ALL its tokens and ALL its tiles.
+
+        Without merging, a reader takes chunk 0 and reports a fraction of the
+        run as though it were the whole — a wrong number that looks ordinary.
+        """
+        cfg = {"model": "gemini-3.7-flash", "temperature": 0.7,
+               "thinking_level": "low"}
+        metas, tiles = [], []
+        for i in range(3):
+            m = tmp_path / f"d_chunk{i}.meta.json"
+            m.write_text(json.dumps({
+                "configuration": cfg,
+                "usage_stats": {"total_input_tokens": 100,
+                                "total_cached_tokens": 90,
+                                "total_output_tokens": 10},
+                "cost_estimate": {"total_cost_usd": 1.5}}))
+            t = tmp_path / f"d_chunk{i}.tiles.json"
+            t.write_text(json.dumps(
+                {"total_tiles": 9, "completed": [f"t{i}a.png", f"t{i}b.png"]}))
+            metas.append(m)
+            tiles.append(t)
+
+        merged = merge_chunk_metadata(
+            metas, tiles, tmp_path / "d.meta.json", tmp_path / "d.tiles.json")
+        u = merged["usage_stats"]
+        assert u["total_input_tokens"] == 300
+        assert u["total_cached_tokens"] == 270
+        assert round(u["cached_share"], 4) == 0.9
+        assert merged["cost_estimate"]["total_cost_usd"] == 4.5
+        assert merged["chunked_run"]["n_chunks"] == 3
+        t = json.loads((tmp_path / "d.tiles.json").read_text())
+        assert len(t["completed"]) == 6
+
+    @pytest.mark.tier1
+    def test_chunks_that_disagree_on_configuration_are_refused(self, tmp_path) -> None:
+        """Chunks run under different configurations are not one pass."""
+        metas = []
+        for i, temp in enumerate((0.7, 1.0)):
+            m = tmp_path / f"d_chunk{i}.meta.json"
+            m.write_text(json.dumps({
+                "configuration": {"model": "gemini-3.7-flash",
+                                  "temperature": temp},
+                "usage_stats": {}, "cost_estimate": {}}))
+            metas.append(m)
+        with pytest.raises(ValueError, match="not one pass"):
+            merge_chunk_metadata(metas, [], tmp_path / "m.json",
+                                 tmp_path / "t.json")
 
     @pytest.mark.tier1
     def test_context_cache_is_opt_in(self) -> None:

@@ -1680,6 +1680,30 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
                 f"{len(merged_data['processed_tiles'])} tiles"
             )
 
+            # Merge the METADATA too. Without this a chunked pass keeps its
+            # tokens and its tile list scattered across per-chunk files, and
+            # anything reading the pass directory — cost auditor, completeness
+            # check, layout normaliser — picks up chunk 0 and silently reports
+            # a fraction of the run as though it were the whole.
+            from scripts.lib_batch_api import merge_chunk_metadata
+            chunk_metas = sorted(run_dir.glob("*_chunk*.meta.json"))
+            chunk_tiles = sorted(run_dir.glob("*_chunk*.tiles.json"))
+            if chunk_metas:
+                try:
+                    merged = merge_chunk_metadata(
+                        chunk_metas, chunk_tiles,
+                        merged_output.with_suffix(".meta.json"),
+                        merged_output.with_suffix(".tiles.json"))
+                    u = merged.get("usage_stats", {})
+                    share = u.get("cached_share")
+                    print(
+                        f"Merged {len(chunk_metas)} chunk metas: "
+                        f"{u.get('total_input_tokens', 0):,} input tokens"
+                        + (f" ({share:.1%} cached)" if share else "")
+                    )
+                except ValueError as exc:
+                    print(f"\n  ! chunk metadata NOT merged: {exc}")
+
     if chunk_failed:
         print("\nBatch partially failed (some chunks errored)")
         return {"items_processed": total_processed, "items_failed": total_failed}
