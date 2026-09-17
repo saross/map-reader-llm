@@ -92,14 +92,64 @@ def find_pass_files(src: Path) -> dict[str, Path]:
                       and "batch_working" not in p.parts)
         if suffix == ".geojson":
             hits = [h for h in hits if "detections" in h.name]
-        if hits:
-            found[suffix] = hits[0]
-            if len(hits) > 1:
-                print(f"  ! {len(hits)} candidates for {suffix}; "
-                      f"taking {hits[0].name}", file=sys.stderr)
+        found_one = select_pass_file(hits, suffix, src)
+        if found_one is not None:
+            found[suffix] = found_one
     if ".geojson" not in found:
         raise FileNotFoundError(f"no detections geojson under {src}")
     return found
+
+
+def select_pass_file(hits: list[Path], suffix: str, src: Path) -> Path | None:
+    """Choose the one file of a suffix that IS the pass, or refuse.
+
+    A chunked batch run leaves per-chunk files (``..._chunk0.tiles.json``,
+    ``..._chunk1.tiles.json``, ...) beside the merged pass file
+    (``..._run01.tiles.json``). The merged file is the pass; a chunk is one
+    seventh of it. Before 2026-09-18 this chose by SORT ORDER, and took the
+    merged file only because ``run01.tiles.json`` happens to sort before
+    ``run01_chunk0.tiles.json`` — a coincidence, not a rule. Had it gone the
+    other way, one chunk's tile list would have been normalised into the pool
+    as the whole pass, and every downstream reader would have seen an
+    ordinary-looking file covering one seventh of the corpus.
+
+    The rule now: chunk files (any name containing ``_chunk``) are never
+    candidates. If only chunk files exist the pass has not been merged and
+    the caller must merge it first — refusing is the right answer, because
+    the alternative is a well-formed wrong one. If more than one non-chunk
+    file remains the layout is ambiguous, and that too is refused rather
+    than resolved by sort order.
+
+    Args:
+        hits: All files under *src* ending in *suffix*, sorted.
+        suffix: The suffix being resolved (for messages).
+        src: The searched directory (for messages).
+
+    Returns:
+        The single non-chunk file, or ``None`` when *hits* is empty.
+
+    Raises:
+        FileNotFoundError: Only chunk files exist — the pass is unmerged.
+        ValueError: More than one non-chunk candidate — the layout is
+            ambiguous and must be resolved by the operator, not by sorting.
+    """
+    if not hits:
+        return None
+    whole = [h for h in hits if "_chunk" not in h.name]
+    chunks = [h for h in hits if "_chunk" in h.name]
+    if not whole:
+        raise FileNotFoundError(
+            f"only chunk files for {suffix} under {src} "
+            f"({len(chunks)} chunks, e.g. {chunks[0].name}); the pass has "
+            "not been merged — merge the chunks first, never normalise one")
+    if len(whole) > 1:
+        raise ValueError(
+            f"{len(whole)} non-chunk candidates for {suffix} under {src}: "
+            f"{[h.name for h in whole]}; refusing to choose by sort order")
+    if chunks:
+        print(f"  {len(chunks)} chunk file(s) for {suffix} ignored; "
+              f"taking the merged {whole[0].name}", file=sys.stderr)
+    return whole[0]
 
 
 def normalise(src: Path, pool: Path, run: int, version: str, model: str,
