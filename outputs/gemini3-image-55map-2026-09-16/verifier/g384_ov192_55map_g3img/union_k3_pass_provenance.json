@@ -1,0 +1,49 @@
+{
+  "pass_provenance_schema": "consensus-pass-provenance/1",
+  "total_passes": 3,
+  "pass_ids": [
+    "run_1",
+    "run_2",
+    "run_3"
+  ],
+  "pass_provenance": [
+    {
+      "pass_id": "run_1",
+      "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1/detections-detect_brief-text-image-3-flash-2026-09-16.geojson",
+      "git_blob_hash": "6ec1ba707a3159aecafab7a15899601351f0a659"
+    },
+    {
+      "pass_id": "run_1",
+      "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson",
+      "git_blob_hash": "e11760587620d1e6ba32134d1ba86de528cda759"
+    },
+    {
+      "pass_id": "run_2",
+      "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2/detections-detect_brief-text-image-3-flash-2026-09-16.geojson",
+      "git_blob_hash": "30e3b61fd7ce99116f48fb90d291bee62cee2ca5"
+    },
+    {
+      "pass_id": "run_2",
+      "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson",
+      "git_blob_hash": "e9c56f8d38080ffc526470908ed2f1798c850589"
+    },
+    {
+      "pass_id": "run_3",
+      "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3/detections-detect_brief-text-image-3-flash-2026-09-16.geojson",
+      "git_blob_hash": "5b58a486fcba0d03e0fe8908df4344adbb681327"
+    },
+    {
+      "pass_id": "run_3",
+      "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson",
+      "git_blob_hash": "883686b7dc928479a495c248f5fd71174ea2fe9e"
+    },
+    {
+      "pass_id": "run_3",
+      "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.geojson",
+      "git_blob_hash": "5cc249bc6d036c5c04e74679ecec3d3bdea34241"
+    }
+  ],
+  "union_path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/union_k3.geojson",
+  "union_feature_count": 36389,
+  "builder": "scripts/stride55_prepare_and_union.py"
+}
