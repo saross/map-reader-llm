@@ -15,7 +15,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from scripts.lib_llm_metadata import AggregatedUsage  # noqa: E402
+from scripts.lib_llm_metadata import AggregatedUsage, ExecutionStats  # noqa: E402
 from scripts.run_pv import record_batch_usage  # noqa: E402
 
 pytestmark = pytest.mark.tier1
@@ -26,6 +26,7 @@ class _Tracker:
 
     def __init__(self) -> None:
         self.usage = AggregatedUsage()
+        self.stats = ExecutionStats()
         self.results_summary: dict = {}
 
 
@@ -81,3 +82,17 @@ def test_no_usage_at_all_is_absent_not_zero(tmp_path):
         tracker, [{"key": "candidate_00000", "response": {}}], tmp_path)
     assert usage["cached_share"] is None
     assert usage["usage_source"].startswith("ABSENT")
+
+
+def test_matched_count_is_booked_as_items_processed(tmp_path):
+    """The auditor reads execution_stats.items_processed as the stage's
+    item count; the batch path booked none, so its per-candidate rate read
+    n/a on the first audited batch verifier leg (2026-09-18)."""
+    tracker = _Tracker()
+    results = [_result("candidate_00000", 5, 0, 1, 0),
+               _result("candidate_00001", 5, 0, 1, 0)]
+    record_batch_usage(tracker, results, tmp_path, n_processed=2)
+    assert tracker.stats.items_processed == 2
+    tracker2 = _Tracker()
+    record_batch_usage(tracker2, results, tmp_path)
+    assert tracker2.stats.items_processed == 0
