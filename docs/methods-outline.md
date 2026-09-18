@@ -460,8 +460,9 @@ removed from this table.
    enriched the model — opposite to the project's founding assumption
 2. **Two-stage improvement (H2)**: Contradicted preregistered null;
    proposer–verifier achieved +0.09–0.14 F1
-3. **Deterministic temperature (H7)**: T=0.0 best for single-pass
-   despite literature suggesting stochasticity aids diversity
+3. **Temperature 0 (H7)**: T=0.0 best for single-pass despite
+   literature suggesting stochasticity aids diversity; not deterministic
+   across independent calls (E89)
 4. **Minimal negative text (H5)**: Less guidance was better — verbose
    exclusion instructions may have introduced confusion
 5. **Consensus voting ceiling (H3)**: N=30 at T=0.7 achieved F1=0.751,
