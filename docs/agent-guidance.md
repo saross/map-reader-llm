@@ -165,3 +165,15 @@ or traceback lines — and only then read HOW it stopped.
 `scripts/wait_for_run.py` encodes this contract and exits with the state
 (0 success, 2 partial, 3 crashed, 4 stale, 5 stopped); a chain proceeds only
 on 0.
+
+**A blocked launch session is a queued command, not a dead one.** An
+`ssh host 'nohup job … & ; <more commands>'` line whose `nohup` inherits
+the session's file descriptors does not return when the job is
+backgrounded — it returns when the job EXITS, and then runs `<more
+commands>`. On 2026-09-18 a launch line from 23:26 UTC ran its tail at
+20:47 the next day: it rebuilt two calibration unions with a builder that
+had been rejected in between and re-extracted their crops over the
+correct ones, and the next leg's count gate passed on the wrong pair.
+Redirect all three descriptors on the launch (`> log 2>&1 < /dev/null &`),
+put NOTHING after a launch on the same line, and treat a launch call that
+"timed out" as still holding an unexecuted tail until its process is gone.
