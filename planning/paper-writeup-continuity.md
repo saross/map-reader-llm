@@ -43,8 +43,10 @@ project state.
 >   (`kill $(cat arms_k5.pid)` and its python child), archive the partial
 >   `verify_k5_arm2/probabilities.json` (5,653 results at 07:13 UTC, no
 >   run.meta.json — the killed pass's ≈ US$6.9 is count × rate only), then
->   re-run the arm with `--mode batch` (9,173 requests ≈ US$10.9). It is a
->   route change on a rung whose siblings ran flex; the PI decides.
+>   re-run the arm with `--mode batch` (9,173 requests ≈ US$10.9). **PI
+>   ruling 2026-09-18 08:30 UTC: leave THIS arm running as it is; from now
+>   on 3.7/3.8 legs run batch unless flex is measured at least as prompt**
+>   (recorded in `docs/agent-guidance.md` § Experiment Execution).
 > - **After arm 2 lands**: commit `verify_k5_arm2/` (pathspec), audit with
 >   `scripts/audit_verifier_cost.py <dir> --tier flex`, then the r2 stages on
 >   the PR #19 branch (below).
