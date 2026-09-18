@@ -31,14 +31,20 @@ project state.
 >   `items_processed` must be 9,173; if fewer, `run_pv.py cleanup` as the
 >   K = 1 and K = 3 legs needed (13 and 1 recovered). If the driver died, the
 >   same command resumes — a finished arm is skipped.
-> - **Why it was NOT switched to batch** despite the beacon's route advice:
->   `run_pv.py verify --mode batch` builds the right request (checked by
->   `--dry-run`: thinking LOW, T 0.0, system instruction present) but
->   `_verify_batch` records no token usage and discards the raw results, and
->   `lib_batch_api.aggregate_batch_usage` has NO caller yet — a batch leg would
->   be unauditable. Wire the aggregator into `_verify_batch` (with a test)
->   before any batch verifier leg. Until then 3.7 verifier legs are flex, one
->   at a time (PI rule 2026-08-30).
+> - **The batch route is READY but not taken without the PI.** Arm 2 was
+>   left on flex to match K = 1/3; from ~07:00 UTC the 3.7 flex tier
+>   collapsed (10 candidates in 30 min against 200 new 503s, the 2026-09-16
+>   pattern). `run_pv.py verify --mode batch` builds the right request
+>   (`--dry-run` checked: thinking LOW, T 0.0, system instruction present),
+>   and its one defect — `_verify_batch` recorded NO token usage and
+>   discarded the raw results, so a batch leg was unauditable — is repaired:
+>   `record_batch_usage` persists `batch_results.jsonl` and books usage via
+>   `aggregate_batch_usage` (four tests). To switch: kill the flex driver
+>   (`kill $(cat arms_k5.pid)` and its python child), archive the partial
+>   `verify_k5_arm2/probabilities.json` (5,653 results at 07:13 UTC, no
+>   run.meta.json — the killed pass's ≈ US$6.9 is count × rate only), then
+>   re-run the arm with `--mode batch` (9,173 requests ≈ US$10.9). It is a
+>   route change on a rung whose siblings ran flex; the PI decides.
 > - **After arm 2 lands**: commit `verify_k5_arm2/` (pathspec), audit with
 >   `scripts/audit_verifier_cost.py <dir> --tier flex`, then the r2 stages on
 >   the PR #19 branch (below).

@@ -650,6 +650,67 @@ def cmd_cleanup(args: argparse.Namespace) -> int:
 # =========================================================================
 
 
+def record_batch_usage(tracker: Any, raw_results: list[dict],
+                       output_dir: Path) -> dict:
+    """Persist a batch's raw results and book their token usage on the run.
+
+    Until 2026-09-18 the batch path recorded NO usage: the Batch API reports
+    usage per response, not on the job, and this path never read it, so a
+    batch verifier stage wrote ``usage_stats`` of zero and its cost could
+    not be audited (the 2026-04-15 Pro stages are the standing example,
+    ``outputs/verifier-meta-recovery-2026-09-14.json``). It also discarded
+    the raw results once parsed, so the usage could not be recovered later.
+
+    Both are fixed here: the raw results are written to
+    ``<output_dir>/batch_results.jsonl`` (the record the auditor can re-read),
+    and :func:`lib_batch_api.aggregate_batch_usage` sums the per-response
+    ``usageMetadata`` into the tracker's usage in the REAL-TIME field
+    naming, so one auditor reads both modes.
+
+    Args:
+        tracker: The stage's ``LLMMetadataTracker`` (or anything with a
+            ``usage`` ``AggregatedUsage`` and a ``results_summary`` dict).
+        raw_results: Parsed result dicts from ``retrieve_batch_results``.
+        output_dir: The stage directory.
+
+    Returns:
+        The aggregated usage dict, as ``aggregate_batch_usage`` returns it.
+    """
+    from scripts.lib_batch_api import aggregate_batch_usage
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    raw_path = output_dir / "batch_results.jsonl"
+    with open(raw_path, "w") as fh:
+        for row in raw_results:
+            fh.write(json.dumps(row) + "\n")
+    usage = aggregate_batch_usage(raw_results)
+    for field_name in ("total_input_tokens", "total_output_tokens",
+                       "total_cached_tokens", "total_thoughts_tokens",
+                       "total_tokens"):
+        setattr(tracker.usage, field_name, int(usage.get(field_name, 0)))
+    tracker.results_summary["batch_usage"] = {
+        "n_responses_with_usage": usage["n_responses_with_usage"],
+        "n_results": len(raw_results),
+        "usage_source": usage["usage_source"],
+        "cached_share": usage["cached_share"],
+        "raw_results": raw_path.name,
+    }
+    logger.info(
+        "Batch usage booked from %d/%d responses: %s input tokens "
+        "(%s cached), %s output; raw results -> %s",
+        usage["n_responses_with_usage"], len(raw_results),
+        f"{usage['total_input_tokens']:,}", f"{usage['total_cached_tokens']:,}",
+        f"{usage['total_output_tokens']:,}", raw_path,
+    )
+    if usage["n_responses_with_usage"] < len(raw_results):
+        logger.warning(
+            "%d of %d batch responses carried no usageMetadata — the audited "
+            "cost of this stage understates it",
+            len(raw_results) - usage["n_responses_with_usage"], len(raw_results),
+        )
+    return usage
+
+
 def _verify_batch(
     manifest: dict,
     config: dict,
@@ -780,6 +841,7 @@ def _verify_batch(
 
         # Retrieve and parse
         raw_results = retrieve_batch_results(client, completed_job)
+        record_batch_usage(batch_metadata, raw_results, output_dir)
 
         # Build expected keys for validation (sorted list to match
         # validate_batch_results' list[str] type contract)
