@@ -604,8 +604,8 @@ single-pass runs per condition on the 60-tile holdout, then a
 re-execution on the full 340-tile corpus (E36) with replication
 scaled to the factor's observed variance — three runs where the
 60-tile stage found a live effect, one where it found none
-(sufficient for confirmation, and deterministic at the carried
-T = 0.0), thirty for the consensus study (the rationale table is in
+(sufficient for confirmation at the carried T = 0.0, whose
+run-to-run variance is about 0.004 F1 — E89), thirty for the consensus study (the rationale table is in
 `reports/experimental-progression.md` § "What was re-run"). Register
 outcomes are on the Era-1 340-tile, 14-buffer + MCC basis; the
 identifiers in parentheses key into `results/analyses-manifest.json`.

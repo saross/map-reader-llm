@@ -107,6 +107,16 @@ Markdown reports under `results/**.md` and `reports/**.md` are mutable working d
 
 ## Experiment Execution
 
+- **Default Gemini 3.7 / 3.8 legs to the Batch API (`--mode batch`), not
+  flex realtime** — proposer and verifier alike. PI ruling 2026-09-18, after
+  the 3.7 K = 5 verifier arm on flex fell from 58 candidates/min to ~1/min
+  under a 503 storm (17,000 503s against 5,840 successes in 8.7 hours),
+  where batch had served the same model's proposer passes in minutes. Flex
+  capacity is per-tier, not per-model (`reports/flex-tier-503-2026-09-16.md`).
+  Use flex for those families only when it is measured to be at least as
+  prompt as batch on the day. The batch verifier path books its usage and
+  keeps `batch_results.jsonl` since 8392c7a53, so a batch leg audits like a
+  realtime one.
 - **Never hard-code worker counts in study YAML files.** Parallelisation is the job of the TPM governor in `4_detect_mounds_batch.py`, not the study definition. When running experiments, pass `--workers N` via the CLI to set concurrency; the governor will dynamically manage throughput within API limits. Study YAML files should set `workers: 1` as the safe default and let the operator choose the appropriate parallelism at runtime.
 
 ## Google API Quota Notes

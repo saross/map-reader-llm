@@ -808,6 +808,9 @@ The 4 conditions are:
 
 **Cross-references**: Observation 128 (working notes — determinism implications for replication design).
 
+**Superseded 2026-09-18 by E89**: independent re-invocations at T=0.0 are not
+byte-identical (E44 rerun: ten passes, 1,087–1,113 detections, sd 0.004 F1).
+
 ---
 
 ### E32: Phase 3a uses T=0.3/T=0.7 instead of carry-forward T=0.0
@@ -5727,5 +5730,78 @@ carry); **E56** (the in-sample-argmax class the `-opmax` cells belong to);
 `reports/modality-track-audit-2026-09-14.md` (the corpus-wide characterisation);
 `reports/modality-rulings-deltas-2026-09-14.md` (the claims-with-anchors record
 of the four rulings).
+
+---
+
+### E89: E31's "perfectly deterministic at T=0.0" claim does not hold for independent API re-invocations — the corrected E44 rerun and four later observations show run-to-run variation at temperature 0
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-09-18 (identified during the map-reader-bench critical-friend review of 2026-09-17; the contradiction has been in the record since the E44 rerun of 2026-03-25) |
+| Type | Correction of an empirical claim in an earlier erratum (E31) and in Observation 128; no cell re-scored |
+| Commit | This entry's commit |
+| Files | `docs/methodology/preregistration/protocol-errata.md` E31 (`:792–811`; annotation after its cross-references line `:809`); `docs/notes/working-notes.md` Observation 128 (`:2098`) and Observation 333's citation of it (`:17061`); `docs/methods-outline.md:463` ("Deterministic temperature (H7)"); `docs/paper/methods-draft.md:607` ("deterministic at the carried T = 0.0"). Evidence: `outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_{1..10}/detections_brief-text-t0_run{01..10}.geojson` and `.meta.json`; `results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_*/evaluation.json`; Observations 325 (`:16594`), 338 (`:17301`), 354 (`:19196`), 374 (`:21905`, the passage at `:21997–21999`). E31's own `Files` line names `outputs/phase2e/…`; those directories and `checkpoint.json` now live under `archive/outputs-pre-retest-60-tile/phase2e/` (moved in `276e4ca80`) |
+| Impact | **Nil on any point estimate or preregistered outcome.** Four Phase 2e replicate units (E31: `canonical-first/run_1`, `canonical-last/run_{3,6,8}`) were copied rather than executed on the assumption of identical output; their within-condition variance was therefore recorded as zero where about 0.004 F1 (1 sd) should be expected. The H4 ordering point estimates are unaffected. E32's deviation to T > 0 for consensus stands, on the stronger ground that T = 0 supplies variation but little *diversity* (Obs 333: pooling ten T = 0 passes gave +0.051 F1 against +0.349 for a diverse condition). No published number changes |
+
+**Description**. E31 (2026-02-12) states: "At T=0.0, the Gemini 3 Flash API
+is perfectly deterministic — identical prompts produce identical outputs.
+This was empirically confirmed in Phase 2d (Session 32: terse=134,
+verbose=128 detections in every replicate)". Observation 128 records the same
+finding. On that basis four Phase 2e replicate units were copied from a
+completed run instead of being re-executed.
+
+The claim did not survive the project's own later data, and was never
+amended:
+
+1. **The corrected E44 rerun** — the canonical T = 0.0 single-pass text
+   baseline (`gemini-3-flash-preview`, MINIMAL thinking, temperature 0.0,
+   Batch API, 487 tiles, zero retries;
+   `outputs/retest/h11-single-pass-384-t0/brief-text-t0/`) — produced ten
+   *different* passes: 1,093 / 1,107 / 1,113 / 1,090 / 1,093 / 1,104 / 1,098 /
+   1,087 / 1,089 / 1,090 detections, ten distinct file hashes. Rescored
+   (`results/rescore-2026-05-31/…/evaluation.json`): F1@20 m 0.4961–0.5085,
+   mean 0.5031, sd 0.0040; F1@50 m 0.5129–0.5256, mean 0.5204, sd 0.0042.
+   (Every figure re-derived from those files at `276e25dcb`.)
+2. **Observation 325** (2026-05-12): independent verifier re-invocations at
+   T = 0.0 on identical crops drift in ~17 % of probabilities and cross the
+   decision threshold in ~3 %; only *replayed* (cached) outputs are
+   byte-identical.
+3. **Observation 338** (2026-06-03): three T = 0.0 replicates of
+   `pro-text-high-t-0-0` gave 443 / 437 / 450 detections — "n>1 at T=0.0 is
+   not wasted budget".
+4. **Observation 354** (2026-06-09): ~3 % of candidates flip accept/reject
+   across independent T = 0.0 verifier runs.
+5. **Observation 374** (2026-07-30): tiles that had survived roughly 16–21
+   prior attempts at T = 0.0 were recovered on a later sweep at the original
+   parameters — "Residual API nondeterminism is not zero".
+
+Observation 333 (`:17061`) cites Observation 128's "perfect determinism" to
+explain the E44 rerun's sd = 0.004 — an internal contradiction, since a
+non-zero sd is what refutes the determinism claim.
+
+**The defensible statement** (Obs 325's two-regime form): replay of a stored
+response is exact by construction; independent re-invocation at T = 0.0 is
+not, and for the single-pass text configuration varies by about ±0.004 F1
+(1 sd) and 1–2 % in detections per pass. Repeat passes at T = 0.0 measure
+provider-side run-to-run variance; they do not supply ensemble diversity.
+
+**Resolution**. (i) E31 is annotated as superseded by this entry. Its four
+copied units are retained as-is; the archived `checkpoint.json` records them
+only in its `completed` list and carries no field that could mark them as
+copied, so E31's Resolution line and this entry are the record of which four
+they are. (ii) Observation 128 and the Observation 333 cross-reference carry
+a pointer to this entry. (iii) `docs/methods-outline.md:463` "Deterministic
+temperature (H7)" is reworded to "Temperature 0 (H7): T=0.0 best for
+single-pass; not deterministic across independent calls (E89)", and
+`docs/paper/methods-draft.md:607` no longer justifies a single confirmation
+run by determinism. (iv) Any downstream document that justifies T = 0.0 by
+determinism should justify it by the carry-forward decision and equal-best F1
+instead (`results/phase2b-carry-forward-parameters.md`, whose "deterministic
+decoding" is the decoding rule, not a claim about the API).
+
+**Lesson**. A determinism claim made from within-job replicates (Phase 2d) was
+generalised to independent API calls and then used to skip execution. Test
+determinism with the same design that will rely on it — separate calls,
+separate days — before copying outputs.
 
 ---

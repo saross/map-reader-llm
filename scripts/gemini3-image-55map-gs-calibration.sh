@@ -95,17 +95,22 @@ for k in $KS; do
       echo "verify_k${k}_${arm} already done, skipping"
       continue
     fi
+    # Route: Gemini 3 on realtime flex (prompt for that family); 3.7 on the
+    # Batch API — PI ruling 2026-09-18 after the 55-map 3.7 arm on flex fell
+    # to ~4 candidates/min under a 503 storm (docs/agent-guidance.md
+    # section Experiment Execution). Batch ignores --service-tier/--workers
+    # and books its usage since 8392c7a53.
     if [ "$arm" = "arm1" ]; then
-      model=$ARM1_MODEL; thinking=$ARM1_THINKING
+      model=$ARM1_MODEL; thinking=$ARM1_THINKING; mode=realtime
     else
-      model=$ARM2_MODEL; thinking=$ARM2_THINKING
+      model=$ARM2_MODEL; thinking=$ARM2_THINKING; mode=batch
     fi
-    echo "--- verify_k${k}_${arm}: $model / $thinking $(date -Is)"
+    echo "--- verify_k${k}_${arm}: $model / $thinking / $mode $(date -Is)"
     $PY scripts/run_pv.py verify \
       --crops-dir "$VROOT/crops_k$k" \
       --verifier-config "$VERIFIER_CONFIG" \
       --output-dir "$dest" \
-      --mode realtime \
+      --mode "$mode" \
       --model "$model" \
       --thinking-level "$thinking" \
       --temperature 0.0 \
