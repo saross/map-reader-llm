@@ -14,42 +14,52 @@ project state.
 > `ssh sapphire 'cd ~/Code/map-reader-llm && git status -sb'`. Stage with
 > explicit pathspecs (ecryptfs).**
 >
-> ### STATE OF THE 3.7 K = 5 LEG (may still be IN FLIGHT when you read this)
+> ### THE 3.7 K = 5 RUNG IS COMPLETE AND SCORED (on PR #19's branch)
 >
-> - K = 5 union built by the stride builder (the K = 1/3 rule): **9,173**
->   candidates, votes {1: 1887, 2: 802, 3: 453, 4: 438, 5: 5593}, against
->   6,985 / 8,337. Crops extracted (9,173 from rasters). Committed `bd5de9f80`.
-> - **Arm 1** (Gemini 3 `minimal`): 9,173/9,173, 0 failed, 52 server-error
->   retries, audited **US$6.4896** (US$0.000707/candidate). Committed.
-> - **Arm 2** (3.7 `low`, realtime flex): launched 2026-09-17 23:39 UTC by
->   `KS=5 WORKERS=50 bash scripts/gemini37-image-55map-unions-and-arms.sh`
->   (pid file `outputs/gemini37-image-55map-2026-09-13/arms_k5.pid`, log
->   `arms_k5.nohup`). It is in a 3.7 flex 503 storm: ~10–16 candidates/min
->   with 503s outnumbering successes (K = 3's arm 2 ran at 58/min with 9,069
->   503s and took 2 h 24 m). Projected to finish around mid-day UTC 2026-09-18.
->   **Read the artefact, do not trust the exit**: `run.meta.json`
->   `items_processed` must be 9,173; if fewer, `run_pv.py cleanup` as the
->   K = 1 and K = 3 legs needed (13 and 1 recovered). If the driver died, the
->   same command resumes — a finished arm is skipped.
-> - **The batch route is READY but not taken without the PI.** Arm 2 was
->   left on flex to match K = 1/3; from ~07:00 UTC the 3.7 flex tier
->   collapsed (10 candidates in 30 min against 200 new 503s, the 2026-09-16
->   pattern). `run_pv.py verify --mode batch` builds the right request
->   (`--dry-run` checked: thinking LOW, T 0.0, system instruction present),
->   and its one defect — `_verify_batch` recorded NO token usage and
->   discarded the raw results, so a batch leg was unauditable — is repaired:
->   `record_batch_usage` persists `batch_results.jsonl` and books usage via
->   `aggregate_batch_usage` (four tests). To switch: kill the flex driver
->   (`kill $(cat arms_k5.pid)` and its python child), archive the partial
->   `verify_k5_arm2/probabilities.json` (5,653 results at 07:13 UTC, no
->   run.meta.json — the killed pass's ≈ US$6.9 is count × rate only), then
->   re-run the arm with `--mode batch` (9,173 requests ≈ US$10.9). **PI
->   ruling 2026-09-18 08:30 UTC: leave THIS arm running as it is; from now
->   on 3.7/3.8 legs run batch unless flex is measured at least as prompt**
->   (recorded in `docs/agent-guidance.md` § Experiment Execution).
-> - **After arm 2 lands**: commit `verify_k5_arm2/` (pathspec), audit with
->   `scripts/audit_verifier_cost.py <dir> --tier flex`, then the r2 stages on
->   the PR #19 branch (below).
+> - K = 5 union (stride builder): **9,173** candidates, votes {1: 1887,
+>   2: 802, 3: 453, 4: 438, 5: 5593}; crops 9,173. `bd5de9f80`.
+> - **Arm 1** (Gemini 3 `minimal`, flex): 9,173/9,173, 0 failed, audited
+>   **US$6.4896**. **Arm 2** (3.7 `low`, flex): the main pass took 20 h 59 m
+>   under a 503 storm and ended 7,702/9,173 with 1,471 exhausted — while its
+>   progress line read `9173/9173` (attempts, not successes; the beacon's
+>   theme again). `run_pv.py cleanup` on the same configuration recovered
+>   1,439 + 32 in two attempts: **9,173/9,173, 0 failed, audited US$10.1788**
+>   (`4900288ff`, pre-cleanup metas kept as sidecars).
+> - Swept, materialised and scored on the branch (`8d800f2d6`, `f2fa7b7f6`);
+>   the engine reproduces the sweep on every cell. Micro-F1 @ 50 m / tile-MCC:
+>
+>   | cell | carried | F1@50 | P | R | tile-MCC | n |
+>   |---|---|---:|---:|---:|---:|---:|
+>   | IMG-ARM1-K5-carried | (0.10, k5) | 0.9130 | 0.8890 | 0.9384 | 0.7529 | 5,297 |
+>   | IMG-ARM2-K5-carried | (0.90, k5) | **0.9270** | 0.9092 | 0.9456 | **0.7659** | 5,219 |
+>   | IMG-ARM2-K3-carried (for reference) | (0.88, k3) | 0.9199 | 0.8908 | 0.9510 | 0.7648 | 5,357 |
+>
+>   Oracles: arm 1 F1 0.9130 at (0.10, k5), MCC 0.7542 at (0.15, k5); arm 2
+>   F1 0.9280 and MCC 0.7681, both at (0.95, k5). The ladder is monotone on
+>   both arms (arm 2 F1@50 0.8719 / 0.9199 / 0.9270 at K = 1/3/5) with the
+>   carried point at or within 0.001 of its oracle — no surprise to flag.
+>   **`--stage tests` is NOT run for K = 5**: its family is undeclared and
+>   the script's five-test family is K = 3-primary; the PI declares it.
+>   Registration (run-conditions / run-analyses rows) is likewise the PI's.
+> - **PI ruling 2026-09-18 (recorded in `docs/agent-guidance.md`)**: 3.7/3.8
+>   legs run the Batch API unless flex is measured at least as prompt. The
+>   batch verifier path books its usage and keeps `batch_results.jsonl`
+>   since `8392c7a53`. The arm above was left on flex on the PI's
+>   instruction ("don't change it now").
+>
+> ### AN INCIDENT TO KNOW ABOUT (recorded in `docs/agent-guidance.md`)
+>
+> The very first ssh launch line of the session (arms driver + free builds)
+> was BLOCKED, not dead: when the arms driver exited at 20:47 UTC it ran the
+> rest of its command line — rebuilt the Gemini 3 GS unions with
+> `merge_passes.py` (the builder rejected hours earlier) and re-extracted
+> crops over the correct ones. The calibration's 3.7 arm then passed its
+> union-vs-crops count gate on the WRONG pair and submitted a batch
+> (`batches/z9j4fkmowofhlsed3cd8lmsqna7jof07u8s2`, 2,396 requests,
+> ≈ US$2.85, never polled). Killed; the committed unions and manifests
+> restored with `git checkout`; crops re-extracted byte-identically;
+> relaunched on the right 2,227 / 2,788 unions. Request file and README
+> under `archive/preliminary-work/image-b-gs-mergebuilt-unions-2026-09-18/stale-session-rerun-2026-09-18/`.
 >
 > ### THE r2 CHAIN IS NOW A CAMPAIGN TABLE — PR #19 (draft), branch `s155-image-2x2-r2`
 >

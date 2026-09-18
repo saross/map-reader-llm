@@ -651,7 +651,7 @@ def cmd_cleanup(args: argparse.Namespace) -> int:
 
 
 def record_batch_usage(tracker: Any, raw_results: list[dict],
-                       output_dir: Path) -> dict:
+                       output_dir: Path, n_processed: int | None = None) -> dict:
     """Persist a batch's raw results and book their token usage on the run.
 
     Until 2026-09-18 the batch path recorded NO usage: the Batch API reports
@@ -672,11 +672,19 @@ def record_batch_usage(tracker: Any, raw_results: list[dict],
             ``usage`` ``AggregatedUsage`` and a ``results_summary`` dict).
         raw_results: Parsed result dicts from ``retrieve_batch_results``.
         output_dir: The stage directory.
+        n_processed: The number of results that matched an expected key,
+            booked as ``execution_stats.items_processed``. The realtime path
+            counts items as it records them; the batch path recorded none,
+            so its audited per-candidate rate read ``n/a`` (found on the
+            first audited batch verifier leg, 2026-09-18).
 
     Returns:
         The aggregated usage dict, as ``aggregate_batch_usage`` returns it.
     """
     from scripts.lib_batch_api import aggregate_batch_usage
+
+    if n_processed is not None:
+        tracker.stats.items_processed = int(n_processed)
 
     output_dir.mkdir(parents=True, exist_ok=True)
     raw_path = output_dir / "batch_results.jsonl"
@@ -841,7 +849,6 @@ def _verify_batch(
 
         # Retrieve and parse
         raw_results = retrieve_batch_results(client, completed_job)
-        record_batch_usage(batch_metadata, raw_results, output_dir)
 
         # Build expected keys for validation (sorted list to match
         # validate_batch_results' list[str] type contract)
@@ -857,6 +864,8 @@ def _verify_batch(
         matched, missing, errored = validate_batch_results(
             expected_keys, raw_results,
         )
+        record_batch_usage(batch_metadata, raw_results, output_dir,
+                           n_processed=len(matched))
         # Surface every missing result as a failed_items[] entry so the
         # batch path matches realtime parity. _assert_completeness in
         # _write_verification_outputs is idempotent against these IDs.
