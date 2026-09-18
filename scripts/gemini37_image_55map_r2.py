@@ -153,6 +153,10 @@ class Campaign:
         gs_calibration: ``arm -> {crops, verify, point, n}`` for the
             materialiser identity gate: re-deriving the leg's verified set at
             the carried point must reproduce its committed feature count.
+        calibration_files: ``arm -> analysis.json`` of the calibration leg's
+            sweep, whose ``image_best`` must equal the carried point above —
+            so a constant retyped wrongly fails the selftest rather than
+            silently sweeping the wrong point.
     """
 
     key: str
@@ -164,6 +168,7 @@ class Campaign:
     carried: dict[tuple[str, int], tuple[float, int]] | None
     gs_verifier: Path
     gs_calibration: dict[str, dict[str, Any]] | None
+    calibration_files: dict[str, Path] | None = None
 
 
 #: The 3.7 image pool. Carried points from card section 2 (K = 1 and K = 3,
@@ -192,12 +197,19 @@ G37 = Campaign(
         "arm2": {"crops": "crops_k3", "verify": "verify_k3_arm2",
                  "point": (0.88, 3), "n": 433},
     },
+    calibration_files={
+        "arm1": PROJECT_ROOT / "results/gemini37-image-55map-2026-09-13/gs-calibration/arm1/analysis.json",
+        "arm2": PROJECT_ROOT / "results/gemini37-image-55map-2026-09-13/gs-calibration/arm2/analysis.json",
+    },
 )
 
-#: The Gemini 3 image pool. Its calibration leg runs on
-#: ``image-b-gs-2026-08-28`` (scripts/gemini3-image-55map-gs-calibration.sh);
-#: ``carried`` and ``gs_calibration`` are filled from that leg's
-#: ``analysis.json`` files once it has run, and stay ``None`` until then.
+#: The Gemini 3 image pool. Its calibration leg ran on
+#: ``image-b-gs-2026-08-28`` on 2026-09-18
+#: (scripts/gemini3-image-55map-gs-calibration.sh; commits 276e25dcb and
+#: 99afa6a4d): image_b_prepare_and_union.py first-N unions at K = 3 (2,227)
+#: and K = 5 (2,788), both arms, swept at 20 m. The K = 1 rung carries the
+#: K = 3 probability with votes collapsed to 1, as on the 3.7 pool.
+G3_CALIBRATION_HOME = PROJECT_ROOT / "results/gemini3-image-55map-2026-09-16/gs-calibration"
 G3 = Campaign(
     key="g3",
     prefix="G3IMG",
@@ -205,9 +217,21 @@ G3 = Campaign(
     cell="g384_ov192_55map_g3img",
     results_home=PROJECT_ROOT / "results/gemini3-image-55map-2026-09-16",
     rungs=(1, 3, 5),
-    carried=None,
+    carried={
+        ("arm1", 1): (0.15, 1), ("arm1", 3): (0.15, 3), ("arm1", 5): (0.15, 5),
+        ("arm2", 1): (0.88, 1), ("arm2", 3): (0.88, 3), ("arm2", 5): (0.95, 5),
+    },
     gs_verifier=PROJECT_ROOT / "outputs/image-b-gs-2026-08-28/verifier/g384_ov192_image",
-    gs_calibration=None,
+    gs_calibration={
+        "arm1": {"crops": "crops_k3", "verify": "verify_k3_arm1",
+                 "point": (0.15, 3), "n": 433},
+        "arm2": {"crops": "crops_k3", "verify": "verify_k3_arm2",
+                 "point": (0.88, 3), "n": 445},
+    },
+    calibration_files={
+        "arm1": G3_CALIBRATION_HOME / "k3/arm1/analysis.json",
+        "arm2": G3_CALIBRATION_HOME / "k3/arm2/analysis.json",
+    },
 )
 
 CAMPAIGNS = {c.key: c for c in (G37, G3)}
@@ -915,6 +939,22 @@ def stage_selftest() -> int:
                     arm, spec["point"], got, spec["n"], "OK" if ok else "FAIL")
         if not ok:
             failures.append(f"materialiser {arm}: {got} != {spec['n']}")
+
+    # Gate 1b — the carried constants are the calibration files' image_best.
+    for arm, path in (CAMPAIGN.calibration_files or {}).items():
+        try:
+            best = json.loads(Path(path).read_text())["image_best"]
+        except Exception as exc:  # noqa: BLE001 - a gate reports, never raises
+            failures.append(f"calibration file {arm}: {exc}")
+            continue
+        want = carried_point(arm, int(best["min_votes"]))
+        got = (round(float(best["prob_t"]), 4), int(best["min_votes"]))
+        ok = got == want and best.get("n_detections") == GS_CALIBRATION[arm]["n"]
+        logger.info("gate 1b calibration %-5s file says %s n=%s vs table %s n=%s — %s",
+                    arm, got, best.get("n_detections"), want,
+                    GS_CALIBRATION[arm]["n"], "OK" if ok else "FAIL")
+        if not ok:
+            failures.append(f"calibration {arm}: file {got} != table {want}")
 
     # Gates 2 and 3 — the two statistics reproduce each comparator's committed
     # evaluation through this script's own code path.

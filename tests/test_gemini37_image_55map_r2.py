@@ -294,19 +294,52 @@ def test_with_carried_forces_the_k5_point(frame: gpd.GeoDataFrame, g37_restored)
     assert (0.90, 5) in mod.with_carried(grid, "arm2", 5)
 
 
-def test_an_uncalibrated_campaign_refuses_to_sweep(g37_restored) -> None:
-    """The Gemini 3 pool has no carried points until its GS leg has run; a
-    sweep at made-up points would look exactly like a real one."""
+def test_the_gemini3_campaign_carries_its_calibration_leg(g37_restored) -> None:
+    """The Gemini 3 row's points are the 2026-09-18 GS calibration leg's
+    image_best values; a K = 1 rung collapses votes to 1 as on the 3.7 row."""
     mod = g37_restored
     camp = mod.select_campaign("g3")
-    assert camp.carried is None
     assert mod.rung_label("arm1", 5) == "G3IMG-ARM1-K5"
     assert mod.RESULTS_HOME.name == "gemini3-image-55map-2026-09-16"
-    with pytest.raises(RuntimeError, match="not fixed"):
-        mod.carried_point("arm1", 5)
+    assert mod.carried_point("arm1", 1) == (0.15, 1)
+    assert mod.carried_point("arm1", 3) == (0.15, 3)
+    assert mod.carried_point("arm1", 5) == (0.15, 5)
+    assert mod.carried_point("arm2", 3) == (0.88, 3)
+    assert mod.carried_point("arm2", 5) == (0.95, 5)
+    assert mod.CARRIED == {"arm1": 0.15, "arm2": 0.88}
+    for arm, path in camp.calibration_files.items():
+        best = json.loads(Path(path).read_text())["image_best"]
+        assert (best["prob_t"], best["min_votes"]) == mod.carried_point(arm, 3)
+        assert best["n_detections"] == camp.gs_calibration[arm]["n"]
     mod.select_campaign("g37")
     assert mod.rung_label("arm1", 5) == "IMG-ARM1-K5"
     assert mod.CARRIED == {"arm1": 0.10, "arm2": 0.88}
+
+
+def test_an_uncalibrated_campaign_refuses_to_sweep(g37_restored) -> None:
+    """A campaign without carried points must refuse: a sweep at made-up
+    points would look exactly like a real one."""
+    mod = g37_restored
+    blank = mod.Campaign(key="blank", prefix="X", root=mod.PROJECT_ROOT,
+                         cell="c", results_home=mod.PROJECT_ROOT, rungs=(1,),
+                         carried=None, gs_verifier=mod.PROJECT_ROOT,
+                         gs_calibration=None)
+    mod.CAMPAIGNS["blank"] = blank
+    try:
+        mod.select_campaign("blank")
+        with pytest.raises(RuntimeError, match="not fixed"):
+            mod.carried_point("arm1", 1)
+    finally:
+        del mod.CAMPAIGNS["blank"]
+        mod.select_campaign("g37")
+
+
+def test_g37_calibration_files_match_the_table(g37_restored) -> None:
+    mod = g37_restored
+    for arm, path in mod.G37.calibration_files.items():
+        best = json.loads(Path(path).read_text())["image_best"]
+        assert (best["prob_t"], best["min_votes"]) == mod.carried_point(arm, 3)
+        assert best["n_detections"] == mod.G37.gs_calibration[arm]["n"]
 
 
 def test_rung_filter_rejects_a_rung_the_campaign_does_not_carry(g37_restored) -> None:
