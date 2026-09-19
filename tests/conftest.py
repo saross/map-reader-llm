@@ -88,3 +88,30 @@ def calibration_tiles(tile_selection_metadata: dict) -> list[dict]:
 def empty_gdf() -> gpd.GeoDataFrame:
     """Return an empty GeoDataFrame with expected CRS."""
     return gpd.GeoDataFrame(geometry=[], crs="EPSG:32635")
+
+
+# =============================================================================
+# Safety Nets
+# =============================================================================
+
+@pytest.fixture(autouse=True)
+def isolate_file_registry(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    """Point the shared Files API registry at a temporary path for every test.
+
+    ``lib_batch_api.upload_jsonl`` registers every upload in the shared
+    active-file registry (``outputs/.active_files.json``) so a concurrent
+    process's sweep can see the file is in use. That file is live
+    operational state: a test that reaches the real ``upload_jsonl`` would
+    otherwise write a fictional entry into it and protect a non-existent
+    file from real sweeps for 48 hours. Redirecting the module constant
+    costs nothing and makes the accident impossible.
+
+    Tests that assert on registry contents can read the same path —
+    ``tmp_path / ".active_files.json"`` — because ``tmp_path`` is shared
+    with the test requesting it.
+    """
+    from scripts import lib_batch_api
+
+    monkeypatch.setattr(
+        lib_batch_api, "FILE_REGISTRY_PATH", tmp_path / ".active_files.json",
+    )

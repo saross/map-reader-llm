@@ -799,9 +799,10 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
             the orchestration is testable without an API.
         log: Logger (default: module logger).
         record_path: Where to write ``batch_jobs.json`` — every chunk's
-            request file and job name, updated as jobs are lodged and as
-            they finish, so a chunk lost to a polling error can be
-            retrieved later by name (``run_pv.py batch-recover``).
+            request file, uploaded Files API name and job name, updated as
+            jobs are lodged and as they finish, so a chunk lost to a
+            polling error can be retrieved later by name
+            (``run_pv.py batch-recover``).
 
     Returns:
         ``(results, failed_chunks)``: the concatenated raw results of every
@@ -813,6 +814,7 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
     from scripts.lib_batch_api import (
         FILE_STORAGE_CAP_BYTES,
         FILE_STORAGE_QUOTA_METRIC,
+        deregister_upload,
         is_file_storage_quota_error,
     )
 
@@ -835,6 +837,7 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
         # chunks already lodged and billing (re-audit, 2026-09-19).
         try:
             uploaded = upload(client, path, name)
+            entry["file"] = uploaded
             log.info("Uploaded chunk %d/%d: %s", i + 1, len(jsonl_paths), uploaded)
             job = submit(client, model_name, uploaded, name)
             entry["job"] = getattr(job, "name", str(job))
@@ -877,6 +880,11 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
             entry["state"] = state
             chunk_results = retrieve(client, done)
             entry["n_results"] = len(chunk_results)
+            # The results are in hand, so this chunk's request file is no
+            # longer in use: drop it from the shared registry so another
+            # process's sweep can reclaim the space (audit finding M6).
+            # Its job is terminal, so nothing else protects it either.
+            deregister_upload(entry.get("file", ""))
         except Exception as exc:  # noqa: BLE001 - one chunk must not lose the rest
             log.error("Batch chunk %d/%d failed: %s — its job %s can be "
                       "retrieved by name with run_pv.py batch-recover",
@@ -933,6 +941,7 @@ def _verify_batch(
         Exit code (0=success, 1=error or completeness gap in strict mode).
     """
     from scripts.lib_batch_api import (
+        make_safe_sweep,
         poll_batch_job,
         preflight_file_storage,
         retrieve_batch_results,
@@ -1034,8 +1043,12 @@ def _verify_batch(
         # leg can be too big for the project even when each chunk is under
         # the 2 GB per-file limit. On 2026-09-19 14:05 UTC this leg lodged
         # 4 of 12 chunks and lost the other 8 to a file_storage_bytes 429,
-        # one chunk at a time. Fail before the first upload instead.
-        preflight_file_storage(client, jsonl_paths, log=logger)
+        # one chunk at a time. Fail before the first upload instead —
+        # but first sweep the files no live batch job is reading, so a
+        # project full of finished legs' inputs does not block this one.
+        preflight_file_storage(
+            client, jsonl_paths, log=logger, sweep=make_safe_sweep(client),
+        )
 
         # Upload, submit, poll and retrieve — every chunk lodged before the
         # first is polled.

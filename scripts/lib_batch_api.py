@@ -55,7 +55,7 @@ import geojson
 import rasterio
 from shapely.geometry import box, mapping
 
-from config import EXAMPLES_DIR, TILE_SIZE, TILES_DIR
+from config import BASE_DIR, EXAMPLES_DIR, TILE_SIZE, TILES_DIR
 from scripts.lib_llm_metadata import (  # noqa: E402
     BATCH_API_DISCOUNT,
     AggregatedUsage,
@@ -191,6 +191,12 @@ FILE_STORAGE_BUDGET_BYTES = int(
 # Bytes per gibibyte — the unit audit_file_storage() reports in.
 _GIB = 1024 ** 3
 
+# The shared active-file registry every process on this project writes to.
+# run_phase2.py builds the same path independently; keeping the canonical
+# expression here means the uploads this module registers and the sweeps it
+# runs address one file rather than two.
+FILE_REGISTRY_PATH = BASE_DIR / "outputs" / ".active_files.json"
+
 
 class FileStorageCapExceeded(RuntimeError):
     """
@@ -311,20 +317,22 @@ def preflight_file_storage(
     2026-09-19 14:05 UTC incident, where 4 of 12 chunks lodged and 8
     died on a 429).
 
-    **No production call site passes a sweep today.** The obvious
-    candidate, :func:`sweep_stale_files_safe`, protects only files that
-    are in the shared registry or younger than its grace period — it
-    never consults batch job state, and neither :func:`upload_jsonl` nor
-    the verifier path registers what it uploads. It would therefore
-    delete the input file of an in-flight batch job lodged by another
-    process, so this function fails fast instead of sweeping. Pass a
-    *sweep* only once it can guarantee that no file referenced by a
-    non-terminal job is deleted.
+    **Build the sweep with** :func:`make_safe_sweep`. Its
+    :func:`sweep_stale_files_safe` consults batch job state before it
+    deletes anything, so no file that is the source of a non-terminal job
+    can be swept, whichever process lodged it; and it aborts without
+    deleting when it cannot see the jobs at all. Until 2026-09-20 the
+    sweep protected only registry-listed and young files, and nothing on
+    the verifier path registered its uploads — so passing it here would
+    have deleted a concurrent leg's in-flight input (audit finding M6).
+    Any other *sweep* must carry the same guarantee.
 
     An audit that cannot run (e.g. ``files.list()`` itself errors) is a
     warning, not a failure: the preflight is a guard on spend, not a
     gate on API health, and the per-chunk quota guard in the lodging
-    loop still covers the blind case.
+    loop still covers the blind case. This holds for the re-audit after
+    a sweep as well — the pre-sweep numbers describe storage that no
+    longer exists, so they are never used to refuse a leg.
 
     Args:
         client: Initialised ``google.genai.Client``.
@@ -402,15 +410,20 @@ def preflight_file_storage(
             projected / _GIB, deleted, freed_gb,
         )
         audited = _audit()
-        if audited is not None:
-            file_count, stored_bytes = audited
-            projected = stored_bytes + pending_bytes
-            log.info(
-                "File storage after sweep: %d file(s), %.2f GB projected",
-                file_count, projected / _GIB,
-            )
-            if projected <= FILE_STORAGE_BUDGET_BYTES:
-                return projected
+        if audited is None:
+            # The re-audit is the only account of what the sweep freed.
+            # Without it the pre-sweep numbers describe storage that no
+            # longer exists, so refusing on them would be a lie; warn and
+            # proceed, exactly as an unavailable first audit does.
+            return None
+        file_count, stored_bytes = audited
+        projected = stored_bytes + pending_bytes
+        log.info(
+            "File storage after sweep: %d file(s), %.2f GB projected",
+            file_count, projected / _GIB,
+        )
+        if projected <= FILE_STORAGE_BUDGET_BYTES:
+            return projected
 
     largest = _largest_stored_files(client)
     if largest:
@@ -438,10 +451,82 @@ def preflight_file_storage(
     raise FileStorageCapExceeded(message, projected_bytes=projected)
 
 
+def register_upload(
+    file_name: str,
+    *,
+    registry_path: Path | None = None,
+    unit_key: str = "",
+    study_name: str = "",
+) -> None:
+    """
+    Record an upload in the shared registry, best-effort.
+
+    The registry is the *belt* of the two-part sweep guard (the braces are
+    batch job state — see :func:`active_batch_input_files`), so a registry
+    that cannot be written must never fail an upload that has already
+    succeeded and is already billing storage. Every failure is logged and
+    swallowed.
+
+    Args:
+        file_name: Files API resource name, e.g. ``"files/abc123"``.
+        registry_path: Registry to write (default
+            :data:`FILE_REGISTRY_PATH`).
+        unit_key: Execution unit that owns the upload, for diagnostics.
+        study_name: Study name, for diagnostics.
+    """
+    if not file_name:
+        return
+    path = Path(registry_path) if registry_path is not None else FILE_REGISTRY_PATH
+    try:
+        from scripts.lib_file_registry import register_file
+
+        register_file(path, file_name, unit_key=unit_key, study_name=study_name)
+    except Exception as exc:  # noqa: BLE001 - registration is best-effort
+        logger.warning(
+            "Could not register uploaded file %s in %s: %s — a concurrent "
+            "sweep now relies on batch job state alone to protect it",
+            file_name, path, exc,
+        )
+
+
+def deregister_upload(
+    file_name: str,
+    *,
+    registry_path: Path | None = None,
+) -> None:
+    """
+    Remove a file from the shared registry, best-effort.
+
+    Called as a file is deleted, so a stale entry cannot outlive the file
+    it protects. Deregistering *before* the delete attempt is deliberate
+    and matches ``run_phase2``'s ordering: if the delete fails the file
+    auto-expires, whereas a registry entry for a deleted file would block
+    every later sweep from reclaiming its name.
+
+    Args:
+        file_name: Files API resource name.
+        registry_path: Registry to write (default
+            :data:`FILE_REGISTRY_PATH`).
+    """
+    if not file_name:
+        return
+    path = Path(registry_path) if registry_path is not None else FILE_REGISTRY_PATH
+    try:
+        from scripts.lib_file_registry import deregister_file
+
+        deregister_file(path, file_name)
+    except Exception as exc:  # noqa: BLE001 - deregistration is best-effort
+        logger.warning(
+            "Could not deregister file %s from %s: %s", file_name, path, exc,
+        )
+
+
 def cleanup_batch_files(
     client: Any,
     file_names: list[str],
     label: str = "",
+    *,
+    registry_path: Path | None = None,
 ) -> tuple[int, int]:
     """
     Delete files from the Gemini Files API.
@@ -460,6 +545,9 @@ def cleanup_batch_files(
         file_names: List of file resource names (e.g. ``"files/abc123"``).
         label: Optional label for log messages (e.g. ``"input"``
             or ``"output"``).
+        registry_path: Shared registry to deregister each deleted file
+            from (default :data:`FILE_REGISTRY_PATH`). Deregistration is
+            best-effort and never blocks a deletion.
 
     Returns:
         Tuple of ``(deleted_count, error_count)``.
@@ -471,6 +559,9 @@ def cleanup_batch_files(
     for name in file_names:
         if not name:
             continue
+        # Deregister first: a registry entry that outlives its file would
+        # protect a name that no longer exists from every future sweep.
+        deregister_upload(name, registry_path=registry_path)
         try:
             client.files.delete(name=name)
             deleted += 1
@@ -577,22 +668,79 @@ def sweep_stale_files(
     return deleted, freed_gb
 
 
+def active_batch_input_files(client: Any) -> set[str]:
+    """
+    Enumerate the input files of every batch job that has not finished.
+
+    A batch job reads its request JSONL from the Files API for as long as
+    it is alive, and the Files API offers no back-reference from a file to
+    the job consuming it. The only way to know that a file is in use is to
+    ask the batches service which jobs are still running and what each
+    one's source file is.
+
+    This is the **primary** guard on :func:`sweep_stale_files_safe`, and it
+    is independent of the shared registry: it sees jobs lodged by any
+    process on the project, whether or not that process registered its
+    upload. A job in any non-terminal state protects its source file; a
+    job in one of :data:`_TERMINAL_STATES` protects nothing, because its
+    input is exactly what a sweep exists to reclaim.
+
+    Args:
+        client: Initialised ``google.genai.Client``.
+
+    Returns:
+        The Files API resource names (``"files/abc123"``) that are the
+        source of at least one non-terminal batch job.
+
+    Raises:
+        Exception: Whatever ``client.batches.list()`` raises. A caller
+            that cannot see the jobs cannot tell an idle file from an
+            in-flight one and must delete nothing — see
+            :func:`sweep_stale_files_safe`.
+    """
+    protected: set[str] = set()
+    for job in client.batches.list():
+        if _get_state_name(getattr(job, "state", "")) in _TERMINAL_STATES:
+            continue
+        src = getattr(job, "src", None)
+        # SDK shape (google-genai 1.73.1): ``BatchJob.src`` is a
+        # ``BatchJobSource`` whose ``file_name`` is the uploaded request
+        # JSONL. Submission passes the resource name as a bare string
+        # (see submit_batch_job), so tolerate both spellings.
+        file_name = src if isinstance(src, str) else getattr(src, "file_name", None)
+        if file_name:
+            protected.add(str(file_name))
+    return protected
+
+
 def sweep_stale_files_safe(
     client: Any,
     registry_path: Path,
     grace_minutes: float = 5.0,
 ) -> tuple[int, float]:
     """
-    Concurrency-safe orphan cleanup using a shared file registry.
+    Concurrency-safe orphan cleanup, guarded by batch job state.
 
-    Safe to call from any process — uses the shared registry at
-    ``registry_path`` to determine which files are actively in use
-    across all concurrent processes. Files not in the registry and
-    older than ``grace_minutes`` are deleted.
+    Safe to call from any process. A file is deleted only when all three
+    of the following hold:
 
-    The grace period covers the window between a file being uploaded
-    and being registered (typically < 1 second, but 5 minutes
-    provides a generous safety margin).
+    1. **No live job is reading it.** ``client.batches.list()`` is
+       consulted first and the source file of every non-terminal job is
+       protected (:func:`active_batch_input_files`). This is the guard
+       that does not depend on anyone's bookkeeping, and it is why the
+       sweep is safe to pass to :func:`preflight_file_storage`.
+    2. **It is not in the shared registry** at ``registry_path``, which
+       every upload through :func:`upload_jsonl` writes to.
+    3. **It is older than** ``grace_minutes``, which covers the window
+       between an upload completing and its job being lodged — a file
+       that exists but has no job yet is invisible to guard (1).
+
+    If the batches listing itself fails the sweep **deletes nothing** and
+    says so: a sweep that cannot see the jobs cannot tell an idle file
+    from an in-flight one, and the failure mode it would otherwise
+    produce — a concurrent leg's input deleted underneath a running job,
+    which fails server-side with no local error — is far worse than a
+    storage cap hit (audit finding M6, 2026-09-20).
 
     Args:
         client: Initialised ``google.genai.Client``.
@@ -601,13 +749,26 @@ def sweep_stale_files_safe(
             regardless of registry state. Default 5 minutes.
 
     Returns:
-        Tuple of ``(deleted_count, freed_gb)``.
+        Tuple of ``(deleted_count, freed_gb)``. ``(0, 0.0)`` when the
+        sweep aborted without deleting anything.
     """
     from datetime import datetime, timezone
 
     from scripts.lib_file_registry import get_registered_files
 
-    # Get the set of files registered by all processes
+    # Guard 1 — batch job state. Independent of every process's
+    # bookkeeping, so it protects uploads nobody registered.
+    try:
+        in_flight = active_batch_input_files(client)
+    except Exception as e:
+        logger.warning(
+            "Safe sweep aborted — could not list batch jobs (%s), so an "
+            "in-flight job's input cannot be told from an orphan. "
+            "Nothing deleted.", e,
+        )
+        return 0, 0.0
+
+    # Guard 2 — the set of files registered by all processes.
     try:
         registered = get_registered_files(
             registry_path, prune_stale=True,
@@ -627,6 +788,10 @@ def sweep_stale_files_safe(
         for f in client.files.list():
             name = getattr(f, "name", "")
             if not name:
+                continue
+
+            # A live job is reading this file — never delete it
+            if name in in_flight:
                 continue
 
             # Registered files are always preserved
@@ -661,14 +826,51 @@ def sweep_stale_files_safe(
     freed_gb = stale_bytes / (1024 ** 3)
     logger.info(
         "Safe sweep: found %d stale files (%.2f GB), "
-        "%d registered (protected), deleting...",
-        len(stale_names), freed_gb, len(registered),
+        "%d in-flight and %d registered (protected), deleting...",
+        len(stale_names), freed_gb, len(in_flight), len(registered),
     )
 
     deleted, _errors = cleanup_batch_files(
         client, stale_names, label="safe-sweep",
+        registry_path=registry_path,
     )
     return deleted, freed_gb
+
+
+def make_safe_sweep(
+    client: Any,
+    registry_path: Path | None = None,
+    grace_minutes: float = 5.0,
+) -> Callable[[], tuple[int, float]]:
+    """
+    Build the zero-argument sweep callable :func:`preflight_file_storage` takes.
+
+    The preflight's ``sweep=`` hook is deliberately zero-argument so the
+    guard itself knows nothing about registries or job state. This factory
+    is the one blessed way to fill it: it binds
+    :func:`sweep_stale_files_safe`, which never deletes the input of a
+    live batch job, to this project's shared registry.
+
+    Args:
+        client: Initialised ``google.genai.Client``.
+        registry_path: Shared registry (default
+            :data:`FILE_REGISTRY_PATH`).
+        grace_minutes: Passed through to the sweep.
+
+    Returns:
+        A callable returning ``(deleted_count, freed_gb)``.
+
+    Examples:
+        >>> preflight_file_storage(client, paths, sweep=make_safe_sweep(client))
+        18253611008
+    """
+    path = Path(registry_path) if registry_path is not None else FILE_REGISTRY_PATH
+
+    def _sweep() -> tuple[int, float]:
+        """Free provably idle Files API storage; see the factory's docstring."""
+        return sweep_stale_files_safe(client, path, grace_minutes=grace_minutes)
+
+    return _sweep
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -1022,14 +1224,31 @@ def upload_jsonl(
     client: Any,
     jsonl_path: Path,
     display_name: str | None = None,
+    *,
+    registry_path: Path | None = None,
+    unit_key: str = "",
+    study_name: str = "",
 ) -> str:
     """
-    Upload a JSONL file via the Google Files API.
+    Upload a JSONL file via the Google Files API and register it.
+
+    Every upload is recorded in the shared active-file registry before
+    this returns, so a sweep run by any other process on the project sees
+    the file as in use during the window between the upload completing
+    and its batch job being lodged — the one window batch job state
+    cannot cover. Registration is best-effort: a registry that cannot be
+    written is logged, not raised, because the upload has already
+    happened and is already consuming the storage cap.
 
     Args:
         client: Initialised ``google.genai.Client``.
         jsonl_path: Path to the local JSONL file.
         display_name: Optional human-readable name for the upload.
+        registry_path: Shared registry to record the upload in (default
+            :data:`FILE_REGISTRY_PATH`).
+        unit_key: Execution unit that owns the upload, recorded in the
+            registry for diagnostics.
+        study_name: Study name, recorded in the registry for diagnostics.
 
     Returns:
         The uploaded file's name (resource identifier for batch creation).
@@ -1042,6 +1261,10 @@ def upload_jsonl(
         config={"display_name": display_name, "mime_type": "jsonl"},
     )
     logger.info("Uploaded JSONL as: %s", uploaded.name)
+    register_upload(
+        uploaded.name, registry_path=registry_path,
+        unit_key=unit_key or display_name, study_name=study_name,
+    )
     return uploaded.name
 
 
@@ -2457,7 +2680,9 @@ def submit_batch_unit(
         Exception: On upload or submission failure (caller handles).
     """
     display_name = f"{ctx.unit['condition_name']}_run{ctx.unit['run']:02d}"
-    uploaded_name = upload_jsonl(client, ctx.jsonl_path, display_name)
+    uploaded_name = upload_jsonl(
+        client, ctx.jsonl_path, display_name, unit_key=ctx.unit_key,
+    )
     batch_job = submit_batch_job(
         client, ctx.model_name, uploaded_name, display_name,
     )
@@ -2883,8 +3108,12 @@ def run_batch_unit(
             # upload rather than on a 429 part-way through — the same hole
             # that cost the verifier leg of 2026-09-19 14:05 UTC 8 of its
             # 12 chunks. One chunk is in flight here, so the projection
-            # covers this chunk only.
-            preflight_file_storage(client, [ctx.jsonl_path])
+            # covers this chunk only. Over budget, the sweep frees files
+            # that no live batch job is reading and the storage is
+            # re-audited before the unit is refused.
+            preflight_file_storage(
+                client, [ctx.jsonl_path], sweep=make_safe_sweep(client),
+            )
             job_name, _uploaded_name = submit_batch_unit(
                 ctx, client, on_submit,
             )

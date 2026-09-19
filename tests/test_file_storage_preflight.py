@@ -15,12 +15,23 @@ a sweep rescues proceeds, an over-cap projection that nothing rescues
 fails before a single byte is uploaded, and a storage 429 reaching the
 lodging loop anyway is reported specifically without abandoning the
 chunks already lodged and billing.
+
+Section (g) pins the sweep the preflight is now allowed to run (audit
+finding M6, 2026-09-20). Until then no call site passed one, because the
+only candidate deleted any file that was neither registered nor young —
+and nothing on the verifier path registered its uploads, so a Phase 2
+sweep could delete a concurrent verifier leg's in-flight input. The sweep
+now asks the batches service which jobs are alive and protects their
+source files, whoever lodged them.
 """
 from __future__ import annotations
 
+import ast
 import logging
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -33,13 +44,24 @@ from scripts.lib_batch_api import (  # noqa: E402
     FILE_STORAGE_SAFETY_MARGIN,
     FileStorageCapExceeded,
     is_file_storage_quota_error,
+    make_safe_sweep,
     preflight_file_storage,
+    sweep_stale_files_safe,
+    upload_jsonl,
+)
+from scripts.lib_file_registry import (  # noqa: E402
+    get_registered_files,
+    register_file,
 )
 from scripts.run_pv import run_batch_jobs  # noqa: E402
 
 pytestmark = pytest.mark.tier1
 
 _GIB = 1024 ** 3
+
+# Older than sweep_stale_files_safe's five-minute grace period, so only the
+# registry or a live job can protect a file carrying this timestamp.
+_STALE = datetime.now(timezone.utc) - timedelta(hours=1)
 
 # The 429 body the incident produced, abbreviated but keeping every token
 # the guard is allowed to match on.
@@ -56,11 +78,19 @@ _STORAGE_429 = (
 
 
 class _FakeFile:
-    """One entry in the fake Files API listing."""
+    """One entry in the fake Files API listing.
 
-    def __init__(self, name: str, size_bytes: int) -> None:
+    ``create_time`` defaults to *now*, which is what the API reports for a
+    file that has just been uploaded — and what the sweep's grace period
+    protects. A test that wants a file the sweep may reclaim passes
+    ``create_time=_STALE``.
+    """
+
+    def __init__(self, name: str, size_bytes: int,
+                 create_time: datetime | None = None) -> None:
         self.name = name
         self.size_bytes = size_bytes
+        self.create_time = create_time or datetime.now(timezone.utc)
 
 
 class _FakeFilesApi:
@@ -85,11 +115,44 @@ class _FakeFilesApi:
         self._files = [f for f in self._files if f.name != name]
 
 
+def _job(name: str, state: str, src_file: str | None):
+    """A fake ``BatchJob``, shaped like google-genai 1.73.1's.
+
+    ``BatchJob.state`` is a ``JobState`` enum (read through ``.name``) and
+    ``BatchJob.src`` is a ``BatchJobSource`` whose ``file_name`` is the
+    uploaded request JSONL.
+    """
+    return SimpleNamespace(
+        name=name,
+        state=SimpleNamespace(name=state),
+        src=SimpleNamespace(file_name=src_file),
+    )
+
+
+class _FakeBatchesApi:
+    """``client.batches`` — the sweep's independent source of truth."""
+
+    def __init__(self, jobs: list[object] | None = None,
+                 error: Exception | None = None) -> None:
+        self._jobs = list(jobs or [])
+        self.error = error
+        self.list_calls = 0
+
+    def list(self) -> list[object]:
+        self.list_calls += 1
+        if self.error is not None:
+            raise self.error
+        return list(self._jobs)
+
+
 class _FakeClient:
     """Minimal stand-in for ``google.genai.Client``."""
 
-    def __init__(self, files: list[_FakeFile] | None = None) -> None:
+    def __init__(self, files: list[_FakeFile] | None = None,
+                 jobs: list[object] | None = None,
+                 batches_error: Exception | None = None) -> None:
         self.files = _FakeFilesApi(files or [])
+        self.batches = _FakeBatchesApi(jobs, batches_error)
 
 
 def _chunk(tmp_path: Path, name: str, size_bytes: int = 1024) -> Path:
@@ -611,3 +674,406 @@ def test_the_failure_names_the_largest_files_first(tmp_path):
     assert message.index("files/biggest") < message.index("files/large")
     # top_n = 5, so the sixth-largest is not named at all.
     assert "files/never-named" not in message
+
+
+# ─────────────────────────────────────────────────────────────────────
+# (g) The sweep — job state first, the registry second
+# ─────────────────────────────────────────────────────────────────────
+
+
+def _registry(tmp_path: Path) -> Path:
+    """Path to an empty per-test copy of the shared registry."""
+    return tmp_path / ".active_files.json"
+
+
+def test_a_live_jobs_input_survives_the_sweep(tmp_path):
+    """The M6 data-loss path, closed.
+
+    A verifier leg uploads its request JSONL through ``upload_jsonl`` and
+    lodges a batch job that runs for hours. Before 2026-09-20 nothing on
+    that path registered the upload, so a concurrent Phase 2 sweep saw an
+    unregistered file older than five minutes and deleted it — killing
+    the job server-side with no local error. Job state is now consulted
+    first, so the file survives however old and however unregistered it
+    is, while a genuine orphan beside it still goes.
+    """
+    client = _FakeClient(
+        files=[
+            _FakeFile("files/in-flight", 3 * _GIB, create_time=_STALE),
+            _FakeFile("files/orphan", 1 * _GIB, create_time=_STALE),
+        ],
+        jobs=[_job("batches/live", "JOB_STATE_RUNNING", "files/in-flight")],
+    )
+
+    deleted, freed_gb = sweep_stale_files_safe(client, _registry(tmp_path))
+
+    assert client.files.deleted == ["files/orphan"]
+    assert deleted == 1
+    assert freed_gb == pytest.approx(1.0)
+
+
+def test_a_finished_jobs_input_is_swept(tmp_path):
+    """The other side: a terminal job protects nothing.
+
+    Its input has already been read, and reclaiming it is the whole point
+    of the sweep — a guard that protected every file named by any job
+    would free nothing and the preflight could not use it.
+    """
+    client = _FakeClient(
+        files=[_FakeFile("files/done", 4 * _GIB, create_time=_STALE)],
+        jobs=[_job("batches/done", "JOB_STATE_SUCCEEDED", "files/done")],
+    )
+
+    deleted, _freed = sweep_stale_files_safe(client, _registry(tmp_path))
+
+    assert client.files.deleted == ["files/done"]
+    assert deleted == 1
+
+
+def test_every_non_terminal_state_protects_its_input(tmp_path):
+    """PENDING and an unrecognised state are live too, not just RUNNING.
+
+    Terminal membership is the test, not a list of live states: a state
+    the SDK adds later must protect its file by default rather than have
+    its input swept the moment it is not one of the states this code
+    happened to know about.
+    """
+    client = _FakeClient(
+        files=[
+            _FakeFile("files/pending", _GIB, create_time=_STALE),
+            _FakeFile("files/unknown-state", _GIB, create_time=_STALE),
+            _FakeFile("files/cancelled", _GIB, create_time=_STALE),
+        ],
+        jobs=[
+            _job("batches/p", "JOB_STATE_PENDING", "files/pending"),
+            _job("batches/u", "JOB_STATE_SOMETHING_NEW", "files/unknown-state"),
+            _job("batches/c", "JOB_STATE_CANCELLED", "files/cancelled"),
+        ],
+    )
+
+    sweep_stale_files_safe(client, _registry(tmp_path))
+
+    assert client.files.deleted == ["files/cancelled"]
+
+
+def test_a_sweep_that_cannot_see_the_jobs_deletes_nothing(tmp_path, caplog):
+    """A sweep that cannot see the jobs is not a safe sweep.
+
+    The listing is the only way to tell an in-flight input from an
+    orphan. Falling back to the registry alone would reinstate exactly
+    the hazard this guard exists to close, so the sweep aborts — and says
+    so, because the caller will then report a storage cap it might
+    otherwise have cleared.
+    """
+    client = _FakeClient(
+        files=[_FakeFile("files/orphan", 4 * _GIB, create_time=_STALE)],
+        batches_error=RuntimeError("batches.list unavailable"),
+    )
+
+    with caplog.at_level(logging.WARNING):
+        deleted, freed_gb = sweep_stale_files_safe(client, _registry(tmp_path))
+
+    assert (deleted, freed_gb) == (0, 0.0)
+    assert client.files.deleted == []
+    warnings = "\n".join(r.getMessage() for r in caplog.records
+                         if r.levelno == logging.WARNING)
+    assert "Nothing deleted" in warnings
+    assert "batches.list unavailable" in warnings
+
+
+def test_a_registered_file_survives_before_its_job_exists(tmp_path):
+    """The registry is the belt: it covers the upload-to-lodge window.
+
+    Between an upload completing and its batch job being created there is
+    no job to protect the file, so job state alone would leave it exposed
+    once the grace period lapsed. This is why ``upload_jsonl`` registers.
+    """
+    registry = _registry(tmp_path)
+    register_file(registry, "files/just-uploaded", unit_key="leg-c0")
+    client = _FakeClient(
+        files=[_FakeFile("files/just-uploaded", 2 * _GIB, create_time=_STALE)],
+    )
+
+    deleted, _freed = sweep_stale_files_safe(client, registry)
+
+    assert (deleted, client.files.deleted) == (0, [])
+
+
+def test_upload_jsonl_registers_what_it_uploaded(tmp_path):
+    """The registration M6 asked for, at the one site every path shares.
+
+    ``run_pv``'s lodging loop and ``submit_batch_unit`` both upload
+    through this function; before 2026-09-20 neither registered, so only
+    ``run_phase2``'s own uploads were protected.
+    """
+    client = _FakeClient()
+    registry = _registry(tmp_path)
+
+    name = upload_jsonl(
+        client, _chunk(tmp_path, "c0.jsonl"), "leg-c0", registry_path=registry,
+    )
+
+    assert name == "files/c0"
+    assert get_registered_files(registry, prune_stale=False) == {"files/c0"}
+
+
+def test_an_unwritable_registry_does_not_fail_the_upload(tmp_path, caplog):
+    """Registration is best-effort — the upload has already happened.
+
+    Raising here would turn a bookkeeping failure into a lost upload that
+    is already consuming the storage cap, with the caller believing
+    nothing was lodged.
+    """
+    client = _FakeClient()
+    blocked = tmp_path / "not-a-dir"
+    blocked.write_text("this is a file, so a registry cannot live under it\n")
+
+    with caplog.at_level(logging.WARNING):
+        name = upload_jsonl(
+            client, _chunk(tmp_path, "c0.jsonl"), "leg-c0",
+            registry_path=blocked / ".active_files.json",
+        )
+
+    assert name == "files/c0"
+    assert "Could not register uploaded file" in "\n".join(
+        r.getMessage() for r in caplog.records if r.levelno == logging.WARNING
+    )
+
+
+def test_cleanup_deregisters_what_it_deletes(tmp_path):
+    """A registry entry must not outlive its file.
+
+    A stale entry protects a name that no longer exists from every future
+    sweep, and after 30 days of a campaign that is how a registry becomes
+    useless.
+    """
+    from scripts.lib_batch_api import cleanup_batch_files
+
+    registry = _registry(tmp_path)
+    register_file(registry, "files/done", unit_key="leg-c0")
+    client = _FakeClient(files=[_FakeFile("files/done", _GIB)])
+
+    deleted, errors = cleanup_batch_files(
+        client, ["files/done"], label="leg", registry_path=registry,
+    )
+
+    assert (deleted, errors) == (1, 0)
+    assert get_registered_files(registry, prune_stale=False) == set()
+
+
+def test_the_preflight_sweep_frees_an_idle_file_and_proceeds(tmp_path):
+    """The wiring M6 unlocked, end to end.
+
+    An over-cap projection now frees the input of a leg that has
+    finished, re-audits, and lodges — where before the guard could only
+    refuse, because the sweep it had was not safe to run.
+    """
+    client = _FakeClient(
+        files=[
+            _FakeFile("files/finished", 14 * _GIB, create_time=_STALE),
+            _FakeFile("files/live", 6 * _GIB, create_time=_STALE),
+        ],
+        jobs=[
+            _job("batches/done", "JOB_STATE_SUCCEEDED", "files/finished"),
+            _job("batches/live", "JOB_STATE_RUNNING", "files/live"),
+        ],
+    )
+    chunk = _chunk(tmp_path, "c0.jsonl", 4096)
+    assert 20 * _GIB + 4096 > FILE_STORAGE_BUDGET_BYTES  # starts over budget
+
+    projected = preflight_file_storage(
+        client, [chunk], sweep=make_safe_sweep(client, _registry(tmp_path)),
+    )
+
+    assert client.files.deleted == ["files/finished"]
+    assert projected == 6 * _GIB + 4096
+    assert projected <= FILE_STORAGE_BUDGET_BYTES
+
+
+def test_the_preflight_refuses_when_only_live_files_remain(tmp_path):
+    """Nothing idle to free, so the leg fails fast with nothing deleted.
+
+    This is the case that would have been a data-loss event with the old
+    sweep: both files are in-flight inputs of other processes' jobs, and
+    freeing space by deleting them would have killed those jobs to lodge
+    this one.
+    """
+    client = _FakeClient(
+        files=[
+            _FakeFile("files/live-a", 14 * _GIB, create_time=_STALE),
+            _FakeFile("files/live-b", 6 * _GIB, create_time=_STALE),
+        ],
+        jobs=[
+            _job("batches/a", "JOB_STATE_RUNNING", "files/live-a"),
+            _job("batches/b", "JOB_STATE_PENDING", "files/live-b"),
+        ],
+    )
+
+    with pytest.raises(FileStorageCapExceeded):
+        preflight_file_storage(
+            client, [_chunk(tmp_path, "c0.jsonl", 4096)],
+            sweep=make_safe_sweep(client, _registry(tmp_path)),
+        )
+
+    assert client.files.deleted == []
+    assert client.files.uploads == []
+
+
+def test_an_unavailable_re_audit_after_a_sweep_warns_and_proceeds(
+    tmp_path, caplog,
+):
+    """The post-sweep re-audit honours the same warn-and-proceed contract.
+
+    Falling through to the refusal would report the *pre-sweep* file
+    count and byte total — numbers describing storage that no longer
+    exists, after the operator was told files had just been deleted.
+    """
+    client = _FakeClient(
+        files=[_FakeFile("files/huge", 20 * _GIB, create_time=_STALE)],
+    )
+    calls = {"n": 0}
+    real_list = client.files.list
+
+    def _list_once():
+        calls["n"] += 1
+        if calls["n"] > 1:
+            raise RuntimeError("files.list unavailable after the sweep")
+        return real_list()
+
+    client.files.list = _list_once  # type: ignore[method-assign]
+
+    with caplog.at_level(logging.WARNING):
+        result = preflight_file_storage(
+            client, [_chunk(tmp_path, "c0.jsonl", 4096)],
+            sweep=lambda: (0, 0.0),
+        )
+
+    assert result is None
+    warnings = "\n".join(r.getMessage() for r in caplog.records
+                         if r.levelno == logging.WARNING)
+    assert "preflight skipped" in warnings
+    assert client.files.uploads == []
+
+
+def _called_names(tree: ast.AST) -> set[str]:
+    """Every call in *tree*, as a dotted name (``client.files.delete``)."""
+
+    def dotted(node: ast.AST) -> str:
+        if isinstance(node, ast.Name):
+            return node.id
+        if isinstance(node, ast.Attribute):
+            return f"{dotted(node.value)}.{node.attr}"
+        return "?"
+
+    return {dotted(n.func) for n in ast.walk(tree) if isinstance(n, ast.Call)}
+
+
+def test_phase2s_sweeps_inherit_the_job_state_guard():
+    """Phase 2 owns no file deletion of its own, so it inherits the guard.
+
+    ``run_phase2`` sweeps twice — reactively in ``_submit_one`` when a
+    lodge hits the storage quota, and proactively between waves — and
+    both are closures inside ``_execute_units_batch``, reachable only by
+    standing up the whole batch pipeline. What makes them safe is
+    structural and can be pinned directly: every sweep Phase 2 performs
+    is ``sweep_stale_files_safe``, the function the rest of this section
+    tests, and no line of ``run_phase2`` deletes a file itself. A new
+    hand-rolled sweep, or a revert to the deprecated and unguarded
+    ``sweep_stale_files``, fails here.
+    """
+    source = Path(__file__).resolve().parent.parent / "scripts" / "run_phase2.py"
+    called = _called_names(ast.parse(source.read_text(encoding="utf-8")))
+
+    assert "sweep_stale_files_safe" in called
+    assert "sweep_stale_files" not in called
+    assert not [name for name in called if name.endswith("files.delete")]
+
+
+def test_verify_batch_sweeps_before_it_refuses(tmp_path, monkeypatch):
+    """The verifier call site passes the sweep, not just the check.
+
+    The wiring is what M6 unlocked, and section (f)'s lesson applies
+    again: deleting ``sweep=make_safe_sweep(client)`` from
+    ``run_pv._verify_batch`` leaves a guard that can only refuse, and a
+    leg is lost to a project full of finished legs' inputs. The
+    consequence asserted here is that the finished leg's input is
+    reclaimed and this leg's chunk is uploaded.
+    """
+    import scripts.run_pv as run_pv
+
+    client = _FakeClient(
+        files=[_FakeFile("files/finished", 20 * _GIB, create_time=_STALE)],
+        jobs=[_job("batches/done", "JOB_STATE_SUCCEEDED", "files/finished")],
+    )
+
+    def _build(*, manifest, config, output_path, crops_base_dir,
+               temperature_override=None):
+        output_path.write_bytes(b"x" * 4096)
+        return len(manifest.get("candidates", []))
+
+    monkeypatch.setattr(run_pv, "build_verifier_jsonl", _build)
+    monkeypatch.setattr(run_pv, "load_system_instruction", lambda cfg: "sys")
+    monkeypatch.setattr(run_pv, "_get_api_key", lambda: "test-key")
+    monkeypatch.setattr(run_pv, "_resolve_model_name", lambda c, m: m)
+    monkeypatch.setattr("google.genai.Client", lambda **kwargs: client)
+
+    output_dir = tmp_path / "leg"
+    run_pv._verify_batch(
+        manifest={"candidates": [{"candidate_id": 1}]},
+        config={"model": "gemini-3-flash"},
+        crops_base_dir=tmp_path,
+        output_dir=output_dir,
+        iterations=1,
+        temperature=None,
+        dry_run=False,
+        strict=False,
+    )
+
+    assert client.files.deleted == ["files/finished"]
+    assert client.files.uploads == [str(output_dir / "verifier_requests.jsonl")]
+
+
+def test_run_batch_unit_sweeps_before_it_refuses(tmp_path, monkeypatch):
+    """The proposer call site, the same way.
+
+    Without the sweep the unit is refused with the quota message; with it
+    the idle input is freed and the unit reaches submission — here a
+    sentinel that proves how far it got.
+    """
+    import scripts.lib_batch_api as lba
+
+    client = _FakeClient(
+        files=[_FakeFile("files/finished", 20 * _GIB, create_time=_STALE)],
+        jobs=[_job("batches/done", "JOB_STATE_SUCCEEDED", "files/finished")],
+    )
+    ctx = lba.BatchUnitContext(
+        unit_key="T1.0/run_1",
+        unit={},
+        output_file=tmp_path / "unit.geojson",
+        jsonl_path=_chunk(tmp_path, "unit.jsonl", 4096),
+        submitted_keys=["tile_001.png"],
+        tile_paths=[tmp_path / "tile_001.png"],
+        prompt_config={},
+        model_name="gemini-3-flash",
+        system_instruction="sys",
+        config_version="v1",
+        line_count=1,
+    )
+
+    def _submit(*args, **kwargs):
+        raise RuntimeError("reached the submit step")
+
+    monkeypatch.setattr(lba, "prepare_batch_unit", lambda **kwargs: ctx)
+    monkeypatch.setattr(lba, "submit_batch_unit", _submit)
+    monkeypatch.setattr(lba, "FILE_REGISTRY_PATH", _registry(tmp_path))
+
+    success, message, _cost = lba.run_batch_unit(
+        unit={}, config={}, output_dir=tmp_path / "out", client=client,
+        model_name="gemini-3-flash", system_instruction="sys",
+        examples=[], config_version="v1",
+    )
+
+    assert success is False
+    assert message == "submit_error: reached the submit step"
+    assert FILE_STORAGE_QUOTA_METRIC not in message
+    assert client.files.deleted == ["files/finished"]
