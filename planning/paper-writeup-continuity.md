@@ -58,6 +58,36 @@ project state.
 >    the PI to declare the Gemini 3 row's family (the script's default
 >    primary is `G3IMG-ARM2-K3-carried`).
 >
+> ### RULINGS AND WORK OF 2026-09-19 06:00–07:00 UTC
+>
+> - **Tests declared** before the primary cell existed:
+>   `reports/image-2x2-tests-declaration-2026-09-19.md` (`0e5985d83`) — five
+>   tests per metric at K = 3 (T1/T2 proposer effect under each arm, T3
+>   verifier seat within the Gemini 3 row, T4 the four-cell interaction, T5
+>   confound check vs IM-k3), K = 1 and K = 5 exploratory replicates, the
+>   K = 3 → 5 contrast within the 3.7 row exploratory, E89 floor and other
+>   caveats stated. The 3.7 deltas report gained § 10.8 pointing there.
+> - **`--stage tests-2x2 --rungs K`** implemented on the r2 chain
+>   (`74629993f`, `3aa2b36d5`; five synthetic-tile tests) and **run at K = 1**
+>   (`615636acb`, `results/image-2x2-2026-09-19/tests_2x2_K1.json`, exploratory):
+>   MCC T1 +0.0507 sig, T2 +0.0179 sig, T3 −0.0081 ns, **T4 interaction
+>   +0.0327 sig**, T5 ns; F1 T1 +0.2075, T2 +0.1813, T3 −0.0020 ns, T4
+>   +0.0262 sig. At K = 1 the 3.7 verifier's gain depends on the proposer
+>   family: it helps the 3.7 pool and not the Gemini 3 pool. Run K = 3 (the
+>   primary) once `verify_k3_arm2` is scored; then K = 5.
+> - **3.7 campaign documents extended to K = 5** under the revision policy
+>   (`3a9a39836`, `57d0aad4d`): `results/gemini37-image-55map-2026-09-13/findings.md`
+>   and `outputs/gemini37-image-55map-2026-09-13/post_run_report.md`; campaign
+>   as extended US$415.3174.
+> - **K = 5 cells registered, unsigned** (`4019f8621`): six conditions and
+>   two verifier passes in `results/run-conditions.json`, listed on the run's
+>   analysis row, `run-facts.json` updated; verify 1 pass, generator ALL
+>   VALID. The PI signs.
+> - **Observation drafts** for the PI: `planning/observation-drafts-2026-09-19.md`
+>   (`8f7a40955`), provisional Obs 484–487.
+> - **Runs 4–5 pool metas re-merged** (`76adb359a`): items_processed 4,000 →
+>   24,561; tokens and cost unchanged.
+>
 > ### GEMINI 3 ROW, K = 1 RUNG — SCORED (`8491f9c78`, `ba19eebd1`) — A RESULT TO FLAG
 >
 > | cell | carried | n | P | R | F1@50 | tile-MCC | FP tiles |
