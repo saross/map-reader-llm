@@ -1,0 +1,43 @@
+{
+  "buffer_m": 50,
+  "reference": "r2",
+  "rung": "IM-5pass",
+  "cells": [
+    {
+      "label": "IM-5pass-k3-f1-oracle",
+      "prob_t": 0.15,
+      "min_votes": 3,
+      "basis": "f1-oracle",
+      "point": "(0.15, k3)",
+      "n_detections": 4680,
+      "det": "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k3-f1-oracle/detections.geojson"
+    },
+    {
+      "label": "IM-5pass-k3-mcc-oracle",
+      "prob_t": 0.2,
+      "min_votes": 3,
+      "basis": "mcc-oracle",
+      "point": "(0.20, k3)",
+      "n_detections": 4561,
+      "det": "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k3-mcc-oracle/detections.geojson"
+    },
+    {
+      "label": "IM-5pass-k5-carried",
+      "prob_t": 0.15,
+      "min_votes": 5,
+      "basis": "carried",
+      "point": "(0.15, k5)",
+      "n_detections": 2283,
+      "det": "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k5-carried/detections.geojson"
+    },
+    {
+      "label": "IM-5pass-k5-f1-oracle",
+      "prob_t": 0.15,
+      "min_votes": 5,
+      "basis": "f1-oracle",
+      "point": "(0.15, k5)",
+      "n_detections": 2283,
+      "det": "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k5-f1-oracle/detections.geojson"
+    }
+  ]
+}

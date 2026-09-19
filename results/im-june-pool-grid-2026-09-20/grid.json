@@ -1,0 +1,148 @@
+{
+  "rung": "IM-5pass",
+  "buffer_m": 50,
+  "reference": "r2",
+  "pool": "outputs/55maps-image-generalisation",
+  "source_tile_convention": "re-stamped by stride55_score.assign_standard_tile",
+  "min_votes_covered": [
+    3,
+    4,
+    5
+  ],
+  "min_votes_unverified": [
+    1,
+    2
+  ],
+  "n_candidates": 7878,
+  "n_sweep_points": 51,
+  "carried_point": [
+    0.15,
+    3
+  ],
+  "carried": {
+    "rung": "IM-5pass",
+    "prob_t": 0.15,
+    "min_votes": 3,
+    "n_detections": 4680,
+    "tp": 3883.0,
+    "fp": 797.0,
+    "fn": 1135.0,
+    "micro_f1_50": 0.8007836667354093,
+    "tile_mcc": 0.7087071385083928,
+    "tile_tp": 2443,
+    "tile_tn": 4860,
+    "tile_fp": 152,
+    "tile_fn": 1086
+  },
+  "committed_im_k3": {
+    "micro_f1_50": 0.8008,
+    "tile_mcc": 0.711
+  },
+  "gate_tolerance": 0.003,
+  "gate": {
+    "micro_f1_50_delta": -1.633326459060669e-05,
+    "tile_mcc_delta": -0.0022928614916071233,
+    "passed": true
+  },
+  "per_min_votes": {
+    "3": {
+      "n_points": 17,
+      "f1_oracle": {
+        "rung": "IM-5pass",
+        "prob_t": 0.15,
+        "min_votes": 3,
+        "n_detections": 4680,
+        "tp": 3883.0,
+        "fp": 797.0,
+        "fn": 1135.0,
+        "micro_f1_50": 0.8007836667354093,
+        "tile_mcc": 0.7087071385083928,
+        "tile_tp": 2443,
+        "tile_tn": 4860,
+        "tile_fp": 152,
+        "tile_fn": 1086
+      },
+      "mcc_oracle": {
+        "rung": "IM-5pass",
+        "prob_t": 0.2,
+        "min_votes": 3,
+        "n_detections": 4561,
+        "tp": 3831.0,
+        "fp": 730.0,
+        "fn": 1187.0,
+        "micro_f1_50": 0.7998747259630441,
+        "tile_mcc": 0.7138745110646613,
+        "tile_tp": 2423,
+        "tile_tn": 4893,
+        "tile_fp": 119,
+        "tile_fn": 1106
+      }
+    },
+    "4": {
+      "n_points": 17,
+      "f1_oracle": {
+        "rung": "IM-5pass",
+        "prob_t": 0.15,
+        "min_votes": 4,
+        "n_detections": 3541,
+        "tp": 3166.0,
+        "fp": 375.0,
+        "fn": 1852.0,
+        "micro_f1_50": 0.7398060521088913,
+        "tile_mcc": 0.6576877107136585,
+        "tile_tp": 2131,
+        "tile_tn": 4922,
+        "tile_fp": 90,
+        "tile_fn": 1398
+      },
+      "mcc_oracle": {
+        "rung": "IM-5pass",
+        "prob_t": 0.2,
+        "min_votes": 4,
+        "n_detections": 3467,
+        "tp": 3126.0,
+        "fp": 341.0,
+        "fn": 1892.0,
+        "micro_f1_50": 0.7368296994696524,
+        "tile_mcc": 0.6597206536918931,
+        "tile_tp": 2114,
+        "tile_tn": 4940,
+        "tile_fp": 72,
+        "tile_fn": 1415
+      }
+    },
+    "5": {
+      "n_points": 17,
+      "f1_oracle": {
+        "rung": "IM-5pass",
+        "prob_t": 0.15,
+        "min_votes": 5,
+        "n_detections": 2283,
+        "tp": 2136.0,
+        "fp": 147.0,
+        "fn": 2882.0,
+        "micro_f1_50": 0.5851253252979043,
+        "tile_mcc": 0.5458842064603989,
+        "tile_tp": 1560,
+        "tile_tn": 4967,
+        "tile_fp": 45,
+        "tile_fn": 1969
+      },
+      "mcc_oracle": {
+        "rung": "IM-5pass",
+        "prob_t": 0.15,
+        "min_votes": 5,
+        "n_detections": 2283,
+        "tp": 2136.0,
+        "fp": 147.0,
+        "fn": 2882.0,
+        "micro_f1_50": 0.5851253252979043,
+        "tile_mcc": 0.5458842064603989,
+        "tile_tp": 1560,
+        "tile_tn": 4967,
+        "tile_fp": 45,
+        "tile_fn": 1969
+      }
+    }
+  }
+}
