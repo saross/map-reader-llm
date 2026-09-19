@@ -1,0 +1,78 @@
+{
+  "buffer_m": 50,
+  "reference": "r2",
+  "cells": [
+    {
+      "label": "G3IMG-ARM1-K1-carried",
+      "rung": "G3IMG-ARM1-K1",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 1,
+      "basis": "carried",
+      "point": "(0.15, k1)",
+      "n_detections": 8529,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM1-K1-f1-oracle",
+      "rung": "G3IMG-ARM1-K1",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 1,
+      "basis": "f1-oracle",
+      "point": "(0.40, k1)",
+      "n_detections": 7466,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM1-K1-mcc-oracle",
+      "rung": "G3IMG-ARM1-K1",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 1,
+      "basis": "mcc-oracle",
+      "point": "(0.30, k1)",
+      "n_detections": 7543,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM2-K1-carried",
+      "rung": "G3IMG-ARM2-K1",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 1,
+      "basis": "carried",
+      "point": "(0.88, k1)",
+      "n_detections": 9172,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM2-K1-f1-oracle",
+      "rung": "G3IMG-ARM2-K1",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 1,
+      "basis": "f1-oracle",
+      "point": "(0.98, k1)",
+      "n_detections": 7931,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM2-K1-mcc-oracle",
+      "rung": "G3IMG-ARM2-K1",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 1,
+      "basis": "mcc-oracle",
+      "point": "(0.98, k1)",
+      "n_detections": 7931,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/detections.geojson"
+    }
+  ]
+}
