@@ -1200,6 +1200,19 @@ def locate_pass_files(unit_dir: Path) -> tuple[Path, Path, Path] | None:
     return picked[0], picked[1], picked[2]
 
 
+def _chunk_sort_key(path: Path | str) -> tuple[int, str]:
+    """Sort chunk files by chunk NUMBER: ``_chunk10`` after ``_chunk2``.
+
+    Lexicographic order put chunk 10 before chunk 2, which decided which
+    chunk became ``base`` in :func:`merge_chunk_metadata` (audit lens A,
+    2026-09-19). Harmless for sums; wrong for anything that reads chunk 0
+    as the first chunk.
+    """
+    name = Path(path).name
+    m = re.search(r"_chunk(\d+)", name)
+    return (int(m.group(1)) if m else -1, name)
+
+
 def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
                          meta_out: Path, tiles_out: Path) -> dict:
     """Merge a chunked batch run's per-chunk metas and tile lists into one pass.
@@ -1232,7 +1245,8 @@ def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
         ValueError: The chunks disagree on model, temperature or thinking
             level — they are not rungs of one pass.
     """
-    metas = [json.loads(Path(m).read_text()) for m in sorted(chunk_metas)]
+    metas = [json.loads(Path(m).read_text())
+             for m in sorted(chunk_metas, key=_chunk_sort_key)]
     if not metas:
         raise ValueError("no chunk metadata to merge")
 
@@ -1286,7 +1300,9 @@ def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
                 merged_section[field] = total
         if merged_section:
             base[section] = merged_section
-    base.setdefault("cost_estimate", {})["total_cost_usd"] = cost
+    if not isinstance(base.get("cost_estimate"), dict):
+        base["cost_estimate"] = {}
+    base["cost_estimate"]["total_cost_usd"] = cost
     base["chunked_run"] = {"n_chunks": len(metas),
                            "chunk_metas": [Path(m).name for m in sorted(chunk_metas)]}
 
@@ -1297,7 +1313,7 @@ def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
     # `derive_recovery_worklists.py` reads as "not a whole corpus" and skips.
     completed: set[str] = set()
     total = 0
-    for t in sorted(chunk_tiles):
+    for t in sorted(chunk_tiles, key=_chunk_sort_key):
         d = json.loads(Path(t).read_text())
         completed |= set(d.get("completed", []))
         total += int(d.get("total_tiles", 0) or 0)

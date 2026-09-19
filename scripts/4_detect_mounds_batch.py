@@ -1752,7 +1752,7 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
                     print(
                         f"Merged {len(chunk_metas)} chunk metas: "
                         f"{u.get('total_input_tokens', 0):,} input tokens"
-                        + (f" ({share:.1%} cached)" if share else "")
+                        + (f" ({share:.1%} cached)" if share is not None else " (cache share unknown)")
                     )
                 except ValueError as exc:
                     print(f"\n  ! chunk metadata NOT merged: {exc}")
