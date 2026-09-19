@@ -1200,11 +1200,219 @@ def stage_tests(primary: str | None) -> int:
     return 0
 
 
+# ---------------------------------------------------------------------------
+# The 2x2 family (reports/image-2x2-tests-declaration-2026-09-19.md).
+# ---------------------------------------------------------------------------
+
+TWO_BY_TWO_HOME = PROJECT_ROOT / "results/image-2x2-2026-09-19"
+_PERM_CHUNK = 1000
+
+
+def did_test_f1(tp: dict[str, np.ndarray], fp: dict[str, np.ndarray],
+                fn: dict[str, np.ndarray], n_permutations: int = N_PERMS,
+                seed: int = SEED) -> dict[str, Any]:
+    """Four-cell tile-swap permutation test of the interaction on micro-F1.
+
+    ``D = [F1(A2) - F1(A1)] - [F1(B2) - F1(B1)]``. Under the null of no
+    interaction a tile's row-A pair and row-B pair are exchangeable: each
+    permutation draws a probability-0.5 mask over tiles and, for masked
+    tiles, swaps (A1, A2) with (B1, B2). Same rng stream, swap probability
+    and two-sided p as the board's ``permutation_test_float``.
+
+    Args:
+        tp, fp, fn: Per-tile counts keyed ``A1``, ``A2``, ``B1``, ``B2``,
+            all of one length in the bounds' tile order.
+        n_permutations: Permutations.
+        seed: Seed for ``numpy.random.default_rng``.
+
+    Returns:
+        ``observed_diff``, the four F1 values, ``p_value``, ``null_mean``,
+        ``null_std``, ``n_permutations``, ``n_tiles``.
+    """
+    cells = ("A1", "A2", "B1", "B2")
+    f1 = {c: micro_f1(tp[c].sum(), fp[c].sum(), fn[c].sum()) for c in cells}
+    observed = (f1["A2"] - f1["A1"]) - (f1["B2"] - f1["B1"])
+    n_tiles = len(tp["A1"])
+    rng = np.random.default_rng(seed)
+    null = np.empty(n_permutations)
+    done = 0
+    while done < n_permutations:
+        m = min(_PERM_CHUNK, n_permutations - done)
+        swap = rng.random((m, n_tiles)) < 0.5
+        sums = {}
+        for row, other in (("A", "B"), ("B", "A")):
+            for arm in ("1", "2"):
+                own, oth = f"{row}{arm}", f"{other}{arm}"
+                sums[own] = tuple(
+                    np.where(swap, arr[oth], arr[own]).sum(axis=1)
+                    for arr in (tp, fp, fn))
+        f = {c: micro_f1(*sums[c]) for c in cells}
+        null[done:done + m] = (f["A2"] - f["A1"]) - (f["B2"] - f["B1"])
+        done += m
+    return {
+        "f1_A1": f1["A1"], "f1_A2": f1["A2"], "f1_B1": f1["B1"], "f1_B2": f1["B2"],
+        "row_A_effect": f1["A2"] - f1["A1"], "row_B_effect": f1["B2"] - f1["B1"],
+        "observed_diff": float(observed),
+        "p_value": float(np.mean(np.abs(null) >= abs(observed))),
+        "null_mean": float(null.mean()), "null_std": float(null.std()),
+        "n_permutations": n_permutations, "n_tiles": int(n_tiles),
+    }
+
+
+def did_test_mcc(pred: dict[str, np.ndarray], truth: np.ndarray,
+                 n_permutations: int = N_PERMS, seed: int = SEED) -> dict[str, Any]:
+    """Four-cell tile-swap permutation test of the interaction on tile-MCC.
+
+    As :func:`did_test_f1` with the statistic tile-MCC from each cell's
+    per-tile predictions against the shared truth (the same construction as
+    ``mcc_tiering_55map.permutation_test_mcc``).
+    """
+    cells = ("A1", "A2", "B1", "B2")
+
+    def mcc_of(p: np.ndarray) -> Any:
+        tp = (p & truth).sum(axis=-1)
+        fp = (p & ~truth).sum(axis=-1)
+        fn = (~p & truth).sum(axis=-1)
+        tn = (~p & ~truth).sum(axis=-1)
+        return mcc_from_confusion(tp, tn, fp, fn)
+
+    mcc = {c: float(mcc_of(pred[c])) for c in cells}
+    observed = (mcc["A2"] - mcc["A1"]) - (mcc["B2"] - mcc["B1"])
+    n_tiles = len(truth)
+    rng = np.random.default_rng(seed)
+    null = np.empty(n_permutations)
+    done = 0
+    while done < n_permutations:
+        m = min(_PERM_CHUNK, n_permutations - done)
+        swap = rng.random((m, n_tiles)) < 0.5
+        vals = {}
+        for row, other in (("A", "B"), ("B", "A")):
+            for arm in ("1", "2"):
+                own, oth = f"{row}{arm}", f"{other}{arm}"
+                vals[own] = mcc_of(np.where(swap, pred[oth], pred[own]))
+        null[done:done + m] = (vals["A2"] - vals["A1"]) - (vals["B2"] - vals["B1"])
+        done += m
+    return {
+        "mcc_A1": mcc["A1"], "mcc_A2": mcc["A2"], "mcc_B1": mcc["B1"], "mcc_B2": mcc["B2"],
+        "row_A_effect": mcc["A2"] - mcc["A1"], "row_B_effect": mcc["B2"] - mcc["B1"],
+        "observed_diff": float(observed),
+        "p_value": float(np.mean(np.abs(null) >= abs(observed))),
+        "null_mean": float(null.mean()), "null_std": float(null.std()),
+        "n_permutations": n_permutations, "n_tiles": int(n_tiles),
+    }
+
+
+def stage_tests_2x2(rungs: tuple[int, ...]) -> int:
+    """Run the declared 2x2 family at each rung and write one JSON per rung.
+
+    Cells: A = the 3.7 pool (``G37``), B = the Gemini 3 pool (``G3``), arms
+    1 and 2, all at the carried point. T1–T3 and T5 use the board's paired
+    tile-swap tests; T4 is :func:`did_test_f1` / :func:`did_test_mcc`; BH at
+    q = 0.05 across the five per metric. K = 3 is the primary rung; the
+    file records the rung's status (primary / exploratory).
+    """
+    ref, bounds, tile_index = load_frames()
+    im_k3 = next(c for c in COMPARATORS if c.label == "IM-k3")
+
+    def vectors(det_path: Path) -> dict[str, Any]:
+        det = read_detections(det_path)
+        tp, fp, fn = per_tile_arrays(det, ref, bounds, tile_index)
+        truth, pred, conf = tile_vectors(det, ref, bounds)
+        return {"tp": tp, "fp": fp, "fn": fn, "truth": truth, "pred": pred,
+                "confusion": conf, "n": int(len(det))}
+
+    im = vectors(PROJECT_ROOT / im_k3.detections)
+    for k in rungs:
+        labels = {
+            "A1": (G37.results_home, f"IMG-ARM1-K{k}-carried"),
+            "A2": (G37.results_home, f"IMG-ARM2-K{k}-carried"),
+            "B1": (G3.results_home, f"G3IMG-ARM1-K{k}-carried"),
+            "B2": (G3.results_home, f"G3IMG-ARM2-K{k}-carried"),
+        }
+        cells: dict[str, dict[str, Any]] = {}
+        for key, (home, label) in labels.items():
+            path = home / "cells" / label / "detections.geojson"
+            if not path.exists():
+                logger.error("K = %d: %s not built (%s)", k, label, path.relative_to(PROJECT_ROOT))
+                return 2
+            cells[key] = vectors(path)
+        truth = cells["A1"]["truth"]
+        for key in ("A2", "B1", "B2"):
+            if not np.array_equal(truth, cells[key]["truth"]):
+                logger.error("truth vectors differ for %s — different frames", key)
+                return 3
+        if not np.array_equal(truth, im["truth"]):
+            logger.error("truth vectors differ for IM-k3 — different frames")
+            return 3
+
+        pairs = [("T1", "proposer effect under arm 2", "A2", "B2"),
+                 ("T2", "proposer effect under arm 1", "A1", "B1"),
+                 ("T3", "verifier seat within row B", "B2", "B1")]
+        mcc_rows, f1_rows = [], []
+        for tid, name, a, b in pairs:
+            ca, cb = cells[a], cells[b]
+            mcc_rows.append({"test": tid, "name": name, "a": labels[a][1], "b": labels[b][1],
+                             **permutation_test_mcc(ca["pred"], cb["pred"], truth,
+                                                    n_permutations=N_PERMS, seed=SEED)})
+            f1_rows.append({"test": tid, "name": name, "a": labels[a][1], "b": labels[b][1],
+                            **permutation_test_float(ca["tp"], ca["fp"], ca["fn"],
+                                                     cb["tp"], cb["fp"], cb["fn"],
+                                                     n_permutations=N_PERMS, seed=SEED)})
+        mcc_rows.append({"test": "T4", "name": "interaction (A2-A1)-(B2-B1)",
+                         "a": "row A arm effect", "b": "row B arm effect",
+                         **did_test_mcc({c: cells[c]["pred"] for c in cells}, truth)})
+        f1_rows.append({"test": "T4", "name": "interaction (A2-A1)-(B2-B1)",
+                        "a": "row A arm effect", "b": "row B arm effect",
+                        **did_test_f1({c: cells[c]["tp"] for c in cells},
+                                      {c: cells[c]["fp"] for c in cells},
+                                      {c: cells[c]["fn"] for c in cells})})
+        cb1 = cells["B1"]
+        mcc_rows.append({"test": "T5", "name": "confound check vs IM-k3", "a": labels["B1"][1],
+                         "b": "IM-k3", "meaningful": k == 3,
+                         **permutation_test_mcc(cb1["pred"], im["pred"], truth,
+                                                n_permutations=N_PERMS, seed=SEED)})
+        f1_rows.append({"test": "T5", "name": "confound check vs IM-k3", "a": labels["B1"][1],
+                        "b": "IM-k3", "meaningful": k == 3,
+                        **permutation_test_float(cb1["tp"], cb1["fp"], cb1["fn"],
+                                                 im["tp"], im["fp"], im["fn"],
+                                                 n_permutations=N_PERMS, seed=SEED)})
+        for rows in (mcc_rows, f1_rows):
+            adjusted = apply_bh_correction([r["p_value"] for r in rows], q=0.05)
+            for r, adj in zip(rows, adjusted, strict=True):
+                r["bh_adjusted_p"] = round(float(adj), 6)
+                r["significant"] = bool(adj < 0.05)
+        out = {
+            "declaration": "reports/image-2x2-tests-declaration-2026-09-19.md",
+            "rung": k,
+            "status": "primary" if k == 3 else "exploratory replicate",
+            "cells": {key: {"label": lab, "home": str(home.relative_to(PROJECT_ROOT)),
+                            "n": cells[key]["n"], "confusion": cells[key]["confusion"]}
+                      for key, (home, lab) in labels.items()},
+            "buffer_m": BUFFER_M, "reference": REFERENCE,
+            "n_permutations": N_PERMS, "seed": SEED,
+            "mcc_tests": mcc_rows, "f1_tests": f1_rows,
+        }
+        TWO_BY_TWO_HOME.mkdir(parents=True, exist_ok=True)
+        dest = TWO_BY_TWO_HOME / f"tests_2x2_K{k}.json"
+        dest.write_text(json.dumps(out, indent=2) + "\n")
+        for r in mcc_rows:
+            logger.info("K=%d MCC %s %-30s d=%+.4f p=%.4f BH=%.4f %s", k, r["test"], r["name"],
+                        r["observed_diff"], r["p_value"], r["bh_adjusted_p"],
+                        "SIG" if r["significant"] else "ns")
+        for r in f1_rows:
+            logger.info("K=%d F1  %s %-30s d=%+.4f p=%.4f BH=%.4f %s", k, r["test"], r["name"],
+                        r["observed_diff"], r["p_value"], r["bh_adjusted_p"],
+                        "SIG" if r["significant"] else "ns")
+        logger.info("wrote %s", dest.relative_to(PROJECT_ROOT))
+    return 0
+
+
 def main() -> int:
     """Entry point. Returns a process exit status."""
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--stage", required=True,
-                    choices=["selftest", "sweep", "materialise", "score", "tests"])
+                    choices=["selftest", "sweep", "materialise", "score", "tests",
+                             "tests-2x2"])
     ap.add_argument("--workers", type=int, default=8,
                     help="Sweep parallelism, or engine workers per cell (default 8)")
     ap.add_argument("--jobs", type=int, default=3,
@@ -1228,6 +1436,8 @@ def main() -> int:
         return stage_materialise(rungs)
     if args.stage == "score":
         return stage_score(args.workers, args.jobs, rungs)
+    if args.stage == "tests-2x2":
+        return stage_tests_2x2(rungs)
     return stage_tests(args.primary)
 
 
