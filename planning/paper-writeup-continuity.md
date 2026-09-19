@@ -8,6 +8,37 @@ project state.
 
 ---
 
+## 🔍 S156 PROGRESS (2026-09-19 14:15 UTC, Fable, session open — K = 5 arm 2 IN FLIGHT)
+
+> **K = 3 rung of the Gemini 3 row DONE end to end; K = 5 arm 2 lodged on
+> batch at 13:59 UTC.** If this session died, resume at the K = 5 item of
+> the S156 block below, with these already landed:
+>
+> - Arm 2 K = 3 verifier leg: 36,389/36,389, 0 failed, audited
+>   **US$40.5813** (`e21b5295a`; ten batch jobs, drained 04:12 → 13:58 UTC —
+>   queue times ran to ~9.5 h on this account). Row spend **US$138.38** of
+>   the US$200 provisional; K = 5 (≈ 51) in flight.
+> - K = 3 sweeps + six cells (`5d106e1d5`), scored (`e29bc17db`), primary
+>   tests (`ed3861cac`, `results/image-2x2-2026-09-19/tests_2x2_K3.json`):
+>   MCC T1 +0.0413 sig, T2 +0.0243 sig, T3 −0.0013 ns, **T4 +0.0170 sig**
+>   (BH 0.0052), T5 ns; F1 T1 +0.1072, T2 +0.1001, T3 +0.0103 sig, T4
+>   +0.0071 sig, T5 ns.
+> - **Finding to flag**: at K = 3 the Gemini 3 row closes only part of the
+>   gap — carried arm 2 F1@50 0.813 / MCC 0.723 vs the 3.7 row's 0.920 /
+>   0.765 at the same rung (precision 0.750 vs 0.891 is the whole
+>   difference; recall 0.887 vs 0.951). Consistent with the GS calibration's
+>   ~0.10 F1 offset at every rung. Gates all passed; carried within 0.013 of
+>   the F1 oracle.
+> - K = 5 arm 2: `arms_arm2_k5.log` / `.pid` (pid 70161), 12 batch jobs;
+>   when it lands: verify 45,786/45,786, audit, commit
+>   (`verify_k5_arm2/` probabilities, run.meta, batch_results.jsonl,
+>   batch_jobs.json), then `--stage sweep --campaign g3 --rungs 5 --workers 12`,
+>   `--stage materialise --campaign g3 --rungs 5`, commit, `--stage score
+>   --campaign g3 --rungs 5 --workers 5 --jobs 4`, commit, `--stage tests-2x2
+>   --rungs 5`, commit. Then registration and signing are the PI's.
+> - Housekeeping: sapphire had been five commits behind origin and is now
+>   synced; the stale-session incident README committed (`7d587cf27`).
+
 ## 🎯 NEXT SESSION (S156) — THE GEMINI 3 ROW'S LEGS ARE IN FLIGHT; READ THEIR ARTEFACTS, LODGE K = 3 AND K = 5 (written 2026-09-19 01:00 UTC by Fable, S155 still open)
 
 > **Read this block first, then the S155 block below it for the 3.7 row's
