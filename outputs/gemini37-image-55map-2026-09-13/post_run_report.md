@@ -485,7 +485,7 @@ re-tiered), every signed row, the analysis row's UNSIGNED status, and every
 prompt and input configuration. Nothing on sapphire's main checkout was
 written.
 
-Landed in `<this commit>`.
+Landed in `3a9a39836`.
 
 ### 2026-09-14 (complete) — four arms, twelve cells, P1–P5 read, campaign closed
 

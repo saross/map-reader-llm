@@ -361,7 +361,7 @@ results, the scoring instrument, the carried points for K = 1 and K = 3, the
 and the analysis row's UNSIGNED status. The six K = 5 cells' standing in the
 registry, and any decision to test the contrast, are with the PI.
 
-Landed in `<this commit>`.
+Landed in `3a9a39836`.
 
 ### 2026-09-16 — p-value rendering, the P1 gap, and IM-k3's join
 
