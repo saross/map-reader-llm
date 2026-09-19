@@ -168,8 +168,14 @@ def test_missing_chunk_files_contribute_nothing(tmp_path):
     assert projected == _GIB
 
 
-def test_an_unavailable_audit_warns_and_lets_the_leg_proceed(tmp_path):
-    """The preflight guards spend; it is not a gate on API health."""
+def test_an_unavailable_audit_warns_and_lets_the_leg_proceed(tmp_path, caplog):
+    """The preflight guards spend; it is not a gate on API health.
+
+    The WARNING is load-bearing, not decoration: when the audit cannot
+    run the leg lodges unguarded, and that line is the operator's only
+    signal that it did. Pinning the return value alone would let the
+    warning be deleted silently.
+    """
     client = _FakeClient()
 
     def _boom():
@@ -177,7 +183,17 @@ def test_an_unavailable_audit_warns_and_lets_the_leg_proceed(tmp_path):
 
     client.files.list = _boom  # type: ignore[method-assign]
 
-    assert preflight_file_storage(client, [_chunk(tmp_path, "c0.jsonl")]) is None
+    with caplog.at_level(logging.WARNING):
+        result = preflight_file_storage(
+            client, [_chunk(tmp_path, "c0.jsonl")],
+        )
+
+    assert result is None
+    warnings = "\n".join(r.getMessage() for r in caplog.records
+                         if r.levelno == logging.WARNING)
+    assert "preflight skipped" in warnings
+    assert "unguarded" in warnings
+    assert "files.list unavailable" in warnings
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -350,3 +366,198 @@ def test_the_record_keeps_the_storage_429_verbatim(tmp_path):
     assert record["chunks"][1]["state"].startswith("lodging failed:")
     assert "file_storage_bytes" in record["chunks"][1]["state"]
     assert record["chunks"][0]["state"] == "JOB_STATE_SUCCEEDED"
+
+
+# ─────────────────────────────────────────────────────────────────────
+# (e) The boundary
+# ─────────────────────────────────────────────────────────────────────
+
+
+def test_a_projection_exactly_on_the_budget_proceeds(tmp_path):
+    """The budget is inclusive — ``<=``, not ``<``.
+
+    Pins the boundary operator. Without a case sitting exactly on it,
+    flipping ``projected <= FILE_STORAGE_BUDGET_BYTES`` to ``<`` would
+    refuse a leg that fits and leave the suite green.
+    """
+    pending = 4096
+    client = _FakeClient(
+        [_FakeFile("files/old", FILE_STORAGE_BUDGET_BYTES - pending)],
+    )
+    chunk = _chunk(tmp_path, "c0.jsonl", pending)
+
+    assert preflight_file_storage(client, [chunk]) == FILE_STORAGE_BUDGET_BYTES
+    assert client.files.uploads == []
+
+
+def test_one_byte_over_the_budget_is_refused(tmp_path):
+    """The other side of the same boundary."""
+    pending = 4096
+    client = _FakeClient(
+        [_FakeFile("files/old", FILE_STORAGE_BUDGET_BYTES - pending + 1)],
+    )
+    chunk = _chunk(tmp_path, "c0.jsonl", pending)
+
+    with pytest.raises(FileStorageCapExceeded):
+        preflight_file_storage(client, [chunk])
+    assert client.files.uploads == []
+
+
+# ─────────────────────────────────────────────────────────────────────
+# (f) The wiring — the guard is only worth what its call sites are
+# ─────────────────────────────────────────────────────────────────────
+
+
+def test_verify_batch_checks_storage_before_the_first_upload(
+    tmp_path, monkeypatch,
+):
+    """The verifier wiring, not the helper.
+
+    Until this test existed, deleting
+    ``preflight_file_storage(client, jsonl_paths, log=logger)`` from
+    ``run_pv._verify_batch`` left every test in the suite green — the
+    guard was unit-tested but never proved to be *called*. The assertion
+    that matters is the consequence: a full project uploads nothing.
+    """
+    import scripts.run_pv as run_pv
+
+    client = _FakeClient([_FakeFile("files/huge", 20 * _GIB)])
+
+    def _build(*, manifest, config, output_path, crops_base_dir,
+               temperature_override=None):
+        """Stand in for the JSONL builder; writes a chunk of known size."""
+        output_path.write_bytes(b"x" * 4096)
+        return len(manifest.get("candidates", []))
+
+    monkeypatch.setattr(run_pv, "build_verifier_jsonl", _build)
+    monkeypatch.setattr(run_pv, "load_system_instruction", lambda cfg: "sys")
+    monkeypatch.setattr(run_pv, "_get_api_key", lambda: "test-key")
+    monkeypatch.setattr(run_pv, "_resolve_model_name", lambda c, m: m)
+    monkeypatch.setattr("google.genai.Client", lambda **kwargs: client)
+
+    output_dir = tmp_path / "leg"
+    rc = run_pv._verify_batch(
+        manifest={"candidates": [{"candidate_id": 1}, {"candidate_id": 2}]},
+        config={"model": "gemini-3-flash"},
+        crops_base_dir=tmp_path,
+        output_dir=output_dir,
+        iterations=1,
+        temperature=None,
+        dry_run=False,
+    )
+
+    assert rc == 1
+    # Nothing lodged, so nothing is billing and no outputs were booked.
+    assert client.files.uploads == []
+    assert not (output_dir / "probabilities.json").exists()
+    assert not (output_dir / "batch_jobs.json").exists()
+
+
+def test_run_batch_unit_checks_storage_before_submitting(
+    tmp_path, monkeypatch,
+):
+    """The proposer wiring, the same way.
+
+    ``run_batch_unit`` must refuse the unit before ``submit_batch_unit``
+    uploads its ~1.3 GB chunk. Deleting the call site left the existing
+    ``run_batch_unit`` tests green because their ``MagicMock`` client
+    makes the audit unavailable, so the guard was inert there and
+    nothing asserted on it.
+    """
+    import scripts.lib_batch_api as lba
+
+    client = _FakeClient([_FakeFile("files/huge", 20 * _GIB)])
+    ctx = lba.BatchUnitContext(
+        unit_key="T1.0/run_1",
+        unit={},
+        output_file=tmp_path / "unit.geojson",
+        jsonl_path=_chunk(tmp_path, "unit.jsonl", 4096),
+        submitted_keys=["tile_001.png"],
+        tile_paths=[tmp_path / "tile_001.png"],
+        prompt_config={},
+        model_name="gemini-3-flash",
+        system_instruction="sys",
+        config_version="v1",
+        line_count=1,
+    )
+    submitted: list[object] = []
+
+    def _submit(*args, **kwargs):
+        submitted.append(args)
+        return "batches/should-not-happen", "files/should-not-happen"
+
+    def _poll(*args, **kwargs):
+        """Never reached. Present so that a regression fails fast.
+
+        Without it, removing the guard would send the unit into
+        ``poll_batch_job``, whose new transient-error tolerance retries a
+        broken client for 20 x 30 s before propagating — a twenty-minute
+        hang instead of a red test.
+        """
+        raise AssertionError("polled a unit that should not have lodged")
+
+    monkeypatch.setattr(lba, "prepare_batch_unit", lambda **kwargs: ctx)
+    monkeypatch.setattr(lba, "submit_batch_unit", _submit)
+    monkeypatch.setattr(lba, "poll_batch_job", _poll)
+
+    success, message, cost = lba.run_batch_unit(
+        unit={},
+        config={},
+        output_dir=tmp_path / "out",
+        client=client,
+        model_name="gemini-3-flash",
+        system_instruction="sys",
+        examples=[],
+        config_version="v1",
+    )
+
+    assert success is False
+    assert message.startswith("submit_error:")
+    assert FILE_STORAGE_QUOTA_METRIC in message
+    assert cost == 0.0
+    # The consequence: no submission attempted, nothing uploaded.
+    assert submitted == []
+    assert client.files.uploads == []
+
+
+def test_a_dry_run_unit_never_reaches_the_storage_check(tmp_path, monkeypatch):
+    """A dry run uploads nothing, so a full project must not block it.
+
+    Pins the ordering of the ``dry_run`` early return against the
+    preflight: moving the check above it would make every rehearsal fail
+    on a project that happens to be full.
+    """
+    import scripts.lib_batch_api as lba
+
+    client = _FakeClient([_FakeFile("files/huge", 20 * _GIB)])
+    ctx = lba.BatchUnitContext(
+        unit_key="T1.0/run_1",
+        unit={},
+        output_file=tmp_path / "unit.geojson",
+        jsonl_path=_chunk(tmp_path, "dry.jsonl", 4096),
+        submitted_keys=["tile_001.png"],
+        tile_paths=[tmp_path / "tile_001.png"],
+        prompt_config={},
+        model_name="gemini-3-flash",
+        system_instruction="sys",
+        config_version="v1",
+        line_count=1,
+    )
+    monkeypatch.setattr(lba, "prepare_batch_unit", lambda **kwargs: ctx)
+
+    success, message, _cost = lba.run_batch_unit(
+        unit={},
+        config={},
+        output_dir=tmp_path / "out",
+        client=client,
+        model_name="gemini-3-flash",
+        system_instruction="sys",
+        examples=[],
+        config_version="v1",
+        dry_run=True,
+    )
+
+    assert success is True
+    assert message == "dry_run"
+    assert client.files.list_calls == 0
+    assert client.files.uploads == []
