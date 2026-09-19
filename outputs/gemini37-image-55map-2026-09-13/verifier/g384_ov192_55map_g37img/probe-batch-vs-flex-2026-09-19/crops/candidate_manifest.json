@@ -1,0 +1,2417 @@
+{
+ "version": "2.0",
+ "source_geojson": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/union_k5.geojson",
+ "rasters_dir": "/home/shawn/Code/map-reader-llm/inputs/rasters",
+ "tiles_dir": "inputs/tiles_384_ov192_55maps",
+ "padding": 75,
+ "crop_dimensions": "150x150",
+ "total_detections": 9173,
+ "successful_extractions": 9173,
+ "failed_extractions": 0,
+ "raster_crops": 9173,
+ "tile_fallback_crops": 0,
+ "missing_sources": [],
+ "candidates": [
+  {
+   "candidate_id": 9,
+   "crop_file": "crops/candidate_00009.png",
+   "source_tile": "K-35-042-3_x2496_y2496.png",
+   "centroid_x": 473259.5464753837,
+   "centroid_y": 4728843.629596362,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-042-3_x2496_y2496.png"
+   }
+  },
+  {
+   "candidate_id": 53,
+   "crop_file": "crops/candidate_00053.png",
+   "source_tile": "K-35-050-4_x1344_y3456.png",
+   "centroid_x": 322501.510868568,
+   "centroid_y": 4689925.667543128,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-050-4_x1344_y3456.png"
+   }
+  },
+  {
+   "candidate_id": 106,
+   "crop_file": "crops/candidate_00106.png",
+   "source_tile": "K-35-050-4_x1152_y1344.png",
+   "centroid_x": 321104.2241627878,
+   "centroid_y": 4699462.224917586,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-050-4_x1152_y1344.png"
+   }
+  },
+  {
+   "candidate_id": 117,
+   "crop_file": "crops/candidate_00117.png",
+   "source_tile": "K-35-050-4_x2496_y1920.png",
+   "centroid_x": 328095.2427346477,
+   "centroid_y": 4696805.963894829,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-050-4_x2496_y1920.png"
+   }
+  },
+  {
+   "candidate_id": 188,
+   "crop_file": "crops/candidate_00188.png",
+   "source_tile": "K-35-050-4_x3840_y576.png",
+   "centroid_x": 334127.02179372654,
+   "centroid_y": 4702919.815146121,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-050-4_x3840_y576.png"
+   }
+  },
+  {
+   "candidate_id": 319,
+   "crop_file": "crops/candidate_00319.png",
+   "source_tile": "K-35-051-3_x1152_y1536.png",
+   "centroid_x": 341536.04399875936,
+   "centroid_y": 4697607.618842084,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-051-3_x1152_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 344,
+   "crop_file": "crops/candidate_00344.png",
+   "source_tile": "K-35-051-3_x1920_y3456.png",
+   "centroid_x": 346437.71424487815,
+   "centroid_y": 4688590.449049053,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-051-3_x1920_y3456.png"
+   }
+  },
+  {
+   "candidate_id": 409,
+   "crop_file": "crops/candidate_00409.png",
+   "source_tile": "K-35-051-3_x2688_y2880.png",
+   "centroid_x": 350477.6191842738,
+   "centroid_y": 4691143.159667049,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-051-3_x2688_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 434,
+   "crop_file": "crops/candidate_00434.png",
+   "source_tile": "K-35-051-4_x0_y1728.png",
+   "centroid_x": 356789.8318342877,
+   "centroid_y": 4696233.4182077795,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-051-4_x0_y1728.png"
+   }
+  },
+  {
+   "candidate_id": 488,
+   "crop_file": "crops/candidate_00488.png",
+   "source_tile": "K-35-051-4_x0_y2304.png",
+   "centroid_x": 357482.85815272864,
+   "centroid_y": 4693546.269850373,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-051-4_x0_y2304.png"
+   }
+  },
+  {
+   "candidate_id": 514,
+   "crop_file": "crops/candidate_00514.png",
+   "source_tile": "K-35-051-3_x1920_y2688.png",
+   "centroid_x": 345957.8321645383,
+   "centroid_y": 4692733.273399223,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-051-3_x1920_y2688.png"
+   }
+  },
+  {
+   "candidate_id": 520,
+   "crop_file": "crops/candidate_00520.png",
+   "source_tile": "K-35-051-3_x3456_y1536.png",
+   "centroid_x": 353388.5009623633,
+   "centroid_y": 4699200.186117767,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-051-3_x3456_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 525,
+   "crop_file": "crops/candidate_00525.png",
+   "source_tile": "K-35-051-4_x3072_y3072.png",
+   "centroid_x": 372811.13527453074,
+   "centroid_y": 4691020.59460842,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-051-4_x3072_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 711,
+   "crop_file": "crops/candidate_00711.png",
+   "source_tile": "K-35-052-3_x1920_y2112.png",
+   "centroid_x": 387633.4162173029,
+   "centroid_y": 4694344.382813363,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-052-3_x1920_y2112.png"
+   }
+  },
+  {
+   "candidate_id": 750,
+   "crop_file": "crops/candidate_00750.png",
+   "source_tile": "K-35-052-3_x3072_y2304.png",
+   "centroid_x": 393536.21331224625,
+   "centroid_y": 4693717.362706411,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-052-3_x3072_y2304.png"
+   }
+  },
+  {
+   "candidate_id": 771,
+   "crop_file": "crops/candidate_00771.png",
+   "source_tile": "K-35-052-3_x3456_y1920.png",
+   "centroid_x": 395176.7465533714,
+   "centroid_y": 4694825.1039751405,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-052-3_x3456_y1920.png"
+   }
+  },
+  {
+   "candidate_id": 916,
+   "crop_file": "crops/candidate_00916.png",
+   "source_tile": "K-35-053-1_x2112_y1728.png",
+   "centroid_x": 428971.91931232484,
+   "centroid_y": 4715003.891529103,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-053-1_x2112_y1728.png"
+   }
+  },
+  {
+   "candidate_id": 949,
+   "crop_file": "crops/candidate_00949.png",
+   "source_tile": "K-35-053-1_x3456_y2688.png",
+   "centroid_x": 436149.72635650693,
+   "centroid_y": 4709050.012795135,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-053-1_x3456_y2688.png"
+   }
+  },
+  {
+   "candidate_id": 964,
+   "crop_file": "crops/candidate_00964.png",
+   "source_tile": "K-35-053-2_x1344_y3456.png",
+   "centroid_x": 445774.21493835043,
+   "centroid_y": 4706689.59597588,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 3,
+    "source_tile": "K-35-053-2_x1344_y3456.png"
+   }
+  },
+  {
+   "candidate_id": 1040,
+   "crop_file": "crops/candidate_01040.png",
+   "source_tile": "K-35-053-2_x3072_y2880.png",
+   "centroid_x": 455395.19304420275,
+   "centroid_y": 4708085.011940744,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-053-2_x3072_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 1049,
+   "crop_file": "crops/candidate_01049.png",
+   "source_tile": "K-35-053-2_x3072_y3072.png",
+   "centroid_x": 454604.96696136036,
+   "centroid_y": 4707396.648711372,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-053-2_x3072_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 1084,
+   "crop_file": "crops/candidate_01084.png",
+   "source_tile": "K-35-053-2_x3648_y2880.png",
+   "centroid_x": 458333.65651318344,
+   "centroid_y": 4707860.0438733455,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-053-2_x3648_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 1104,
+   "crop_file": "crops/candidate_01104.png",
+   "source_tile": "K-35-053-2_x3264_y2112.png",
+   "centroid_x": 455951.32045502507,
+   "centroid_y": 4711893.509111049,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-053-2_x3264_y2112.png"
+   }
+  },
+  {
+   "candidate_id": 1133,
+   "crop_file": "crops/candidate_01133.png",
+   "source_tile": "K-35-053-4_Boyadzhik_x1152_y2112.png",
+   "centroid_x": 444518.91775652784,
+   "centroid_y": 4693684.300020552,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-053-4_Boyadzhik_x1152_y2112.png"
+   }
+  },
+  {
+   "candidate_id": 1139,
+   "crop_file": "crops/candidate_01139.png",
+   "source_tile": "K-35-053-4_Boyadzhik_x1152_y3072.png",
+   "centroid_x": 444744.09183838614,
+   "centroid_y": 4688412.829108364,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-053-4_Boyadzhik_x1152_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 1160,
+   "crop_file": "crops/candidate_01160.png",
+   "source_tile": "K-35-053-4_Boyadzhik_x1728_y2496.png",
+   "centroid_x": 447916.12267165625,
+   "centroid_y": 4691162.26169207,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-053-4_Boyadzhik_x1728_y2496.png"
+   }
+  },
+  {
+   "candidate_id": 1163,
+   "crop_file": "crops/candidate_01163.png",
+   "source_tile": "K-35-053-4_Boyadzhik_x0_y3072.png",
+   "centroid_x": 438859.941488846,
+   "centroid_y": 4688864.692302345,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-053-4_Boyadzhik_x0_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 1169,
+   "crop_file": "crops/candidate_01169.png",
+   "source_tile": "K-35-053-4_Boyadzhik_x0_y2880.png",
+   "centroid_x": 438886.3078945974,
+   "centroid_y": 4689488.646338314,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-053-4_Boyadzhik_x0_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 1290,
+   "crop_file": "crops/candidate_01290.png",
+   "source_tile": "K-35-054-1_Straldzha_4326_x1536_y384.png",
+   "centroid_x": 467402.9470463664,
+   "centroid_y": 4720789.585088373,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-1_Straldzha_4326_x1536_y384.png"
+   }
+  },
+  {
+   "candidate_id": 1291,
+   "crop_file": "crops/candidate_01291.png",
+   "source_tile": "K-35-054-1_Straldzha_4326_x1344_y384.png",
+   "centroid_x": 467156.4882715116,
+   "centroid_y": 4720458.837599567,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-1_Straldzha_4326_x1344_y384.png"
+   }
+  },
+  {
+   "candidate_id": 1307,
+   "crop_file": "crops/candidate_01307.png",
+   "source_tile": "K-35-054-1_Straldzha_4326_x1536_y2688.png",
+   "centroid_x": 467963.84041693364,
+   "centroid_y": 4708676.422213876,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-1_Straldzha_4326_x1536_y2688.png"
+   }
+  },
+  {
+   "candidate_id": 1403,
+   "crop_file": "crops/candidate_01403.png",
+   "source_tile": "K-35-054-1_Straldzha_4326_x384_y192.png",
+   "centroid_x": 461650.8933861345,
+   "centroid_y": 4721701.595544956,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-1_Straldzha_4326_x384_y192.png"
+   }
+  },
+  {
+   "candidate_id": 1424,
+   "crop_file": "crops/candidate_01424.png",
+   "source_tile": "K-35-054-1_Straldzha_4326_x576_y2688.png",
+   "centroid_x": 463101.23076714814,
+   "centroid_y": 4708991.653149166,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-1_Straldzha_4326_x576_y2688.png"
+   }
+  },
+  {
+   "candidate_id": 1489,
+   "crop_file": "crops/candidate_01489.png",
+   "source_tile": "K-35-054-2_Atolov_4326_x192_y1152.png",
+   "centroid_x": 481445.0276724649,
+   "centroid_y": 4716227.057449958,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-2_Atolov_4326_x192_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 1519,
+   "crop_file": "crops/candidate_01519.png",
+   "source_tile": "K-35-054-2_Atolov_4326_x2304_y2880.png",
+   "centroid_x": 491787.3941916405,
+   "centroid_y": 4707721.1222913,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-2_Atolov_4326_x2304_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 1535,
+   "crop_file": "crops/candidate_01535.png",
+   "source_tile": "K-35-054-1_Straldzha_4326_x3264_y1344.png",
+   "centroid_x": 476919.1442176708,
+   "centroid_y": 4716104.709892991,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-054-1_Straldzha_4326_x3264_y1344.png"
+   }
+  },
+  {
+   "candidate_id": 1545,
+   "crop_file": "crops/candidate_01545.png",
+   "source_tile": "K-35-054-2_Atolov_4326_x2880_y1920.png",
+   "centroid_x": 495440.55227643886,
+   "centroid_y": 4712991.926381035,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-2_Atolov_4326_x2880_y1920.png"
+   }
+  },
+  {
+   "candidate_id": 1584,
+   "crop_file": "crops/candidate_01584.png",
+   "source_tile": "K-35-054-2_Atolov_4326_x384_y0.png",
+   "centroid_x": 482779.9148320401,
+   "centroid_y": 4722292.162171853,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-2_Atolov_4326_x384_y0.png"
+   }
+  },
+  {
+   "candidate_id": 1588,
+   "crop_file": "crops/candidate_01588.png",
+   "source_tile": "K-35-054-2_Atolov_4326_x768_y1152.png",
+   "centroid_x": 484812.788423227,
+   "centroid_y": 4716725.889378412,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-2_Atolov_4326_x768_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 1654,
+   "crop_file": "crops/candidate_01654.png",
+   "source_tile": "K-35-054-3_Yambol_x2112_y3264.png",
+   "centroid_x": 470657.7721238585,
+   "centroid_y": 4687144.439502453,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-3_Yambol_x2112_y3264.png"
+   }
+  },
+  {
+   "candidate_id": 1674,
+   "crop_file": "crops/candidate_01674.png",
+   "source_tile": "K-35-054-3_Yambol_x2496_y2688.png",
+   "centroid_x": 473058.3415905985,
+   "centroid_y": 4690709.985762278,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-3_Yambol_x2496_y2688.png"
+   }
+  },
+  {
+   "candidate_id": 1679,
+   "crop_file": "crops/candidate_01679.png",
+   "source_tile": "K-35-054-3_Yambol_x2688_y0.png",
+   "centroid_x": 473389.4889540313,
+   "centroid_y": 4703920.575923772,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-3_Yambol_x2688_y0.png"
+   }
+  },
+  {
+   "candidate_id": 1743,
+   "crop_file": "crops/candidate_01743.png",
+   "source_tile": "K-35-054-3_Yambol_x576_y192.png",
+   "centroid_x": 463003.42940429645,
+   "centroid_y": 4703114.490769871,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-3_Yambol_x576_y192.png"
+   }
+  },
+  {
+   "candidate_id": 1796,
+   "crop_file": "crops/candidate_01796.png",
+   "source_tile": "K-35-054-4_Voynika_x192_y1152.png",
+   "centroid_x": 481364.0145032144,
+   "centroid_y": 4699270.931535624,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-4_Voynika_x192_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 1824,
+   "crop_file": "crops/candidate_01824.png",
+   "source_tile": "K-35-054-4_Voynika_x3072_y1152.png",
+   "centroid_x": 496506.76697561226,
+   "centroid_y": 4698190.411810185,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-4_Voynika_x3072_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 1827,
+   "crop_file": "crops/candidate_01827.png",
+   "source_tile": "K-35-054-4_Voynika_x2880_y0.png",
+   "centroid_x": 494659.1487111112,
+   "centroid_y": 4705226.504634828,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 3,
+    "source_tile": "K-35-054-4_Voynika_x2880_y0.png"
+   }
+  },
+  {
+   "candidate_id": 1832,
+   "crop_file": "crops/candidate_01832.png",
+   "source_tile": "K-35-054-4_Voynika_x3072_y384.png",
+   "centroid_x": 495924.07062921324,
+   "centroid_y": 4701786.127682545,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-4_Voynika_x3072_y384.png"
+   }
+  },
+  {
+   "candidate_id": 1876,
+   "crop_file": "crops/candidate_01876.png",
+   "source_tile": "K-35-054-4_Voynika_x576_y192.png",
+   "centroid_x": 483824.5206029621,
+   "centroid_y": 4703078.414584413,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-4_Voynika_x576_y192.png"
+   }
+  },
+  {
+   "candidate_id": 1982,
+   "crop_file": "crops/candidate_01982.png",
+   "source_tile": "K-35-055-1_x1152_y1536.png",
+   "centroid_x": 506858.13077089953,
+   "centroid_y": 4714241.683272083,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-055-1_x1152_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 2045,
+   "crop_file": "crops/candidate_02045.png",
+   "source_tile": "K-35-054-4_Voynika_x576_y1344.png",
+   "centroid_x": 482205.3671266454,
+   "centroid_y": 4698325.466739214,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-054-4_Voynika_x576_y1344.png"
+   }
+  },
+  {
+   "candidate_id": 2060,
+   "crop_file": "crops/candidate_02060.png",
+   "source_tile": "K-35-055-2_x0_y2688.png",
+   "centroid_x": 521151.5190820915,
+   "centroid_y": 4708875.574127775,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-055-2_x0_y2688.png"
+   }
+  },
+  {
+   "candidate_id": 2103,
+   "crop_file": "crops/candidate_02103.png",
+   "source_tile": "K-35-055-2_x1536_y1344.png",
+   "centroid_x": 529566.2288425924,
+   "centroid_y": 4717011.193748781,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-055-2_x1536_y1344.png"
+   }
+  },
+  {
+   "candidate_id": 2167,
+   "crop_file": "crops/candidate_02167.png",
+   "source_tile": "K-35-055-2_x4032_y1152.png",
+   "centroid_x": 540695.9010482884,
+   "centroid_y": 4716953.912521627,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-055-2_x4032_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 2266,
+   "crop_file": "crops/candidate_02266.png",
+   "source_tile": "K-35-055-3_x1344_y576.png",
+   "centroid_x": 507789.5391668784,
+   "centroid_y": 4700639.154217475,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-055-3_x1344_y576.png"
+   }
+  },
+  {
+   "candidate_id": 2286,
+   "crop_file": "crops/candidate_02286.png",
+   "source_tile": "K-35-055-3_x3264_y2304.png",
+   "centroid_x": 517517.25411289546,
+   "centroid_y": 4692560.581178846,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-055-3_x3264_y2304.png"
+   }
+  },
+  {
+   "candidate_id": 2287,
+   "crop_file": "crops/candidate_02287.png",
+   "source_tile": "K-35-055-3_x3264_y2304.png",
+   "centroid_x": 517808.20272977627,
+   "centroid_y": 4692318.255462694,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-055-3_x3264_y2304.png"
+   }
+  },
+  {
+   "candidate_id": 2340,
+   "crop_file": "crops/candidate_02340.png",
+   "source_tile": "K-35-055-4_x1152_y2880.png",
+   "centroid_x": 527440.9548967286,
+   "centroid_y": 4689746.6734952675,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-055-4_x1152_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 2504,
+   "crop_file": "crops/candidate_02504.png",
+   "source_tile": "K-35-062-4_Asenovgrad_4326_x2112_y0.png",
+   "centroid_x": 325148.0949971159,
+   "centroid_y": 4670303.52291235,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-062-4_Asenovgrad_4326_x2112_y0.png"
+   }
+  },
+  {
+   "candidate_id": 2547,
+   "crop_file": "crops/candidate_02547.png",
+   "source_tile": "K-35-062-4_Asenovgrad_4326_x3840_y768.png",
+   "centroid_x": 333794.6267608423,
+   "centroid_y": 4665951.485337786,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-062-4_Asenovgrad_4326_x3840_y768.png"
+   }
+  },
+  {
+   "candidate_id": 2591,
+   "crop_file": "crops/candidate_02591.png",
+   "source_tile": "K-35-063-1_Granit_4326_x1152_y1728.png",
+   "centroid_x": 341161.401011341,
+   "centroid_y": 4678682.09338351,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-1_Granit_4326_x1152_y1728.png"
+   }
+  },
+  {
+   "candidate_id": 2615,
+   "crop_file": "crops/candidate_02615.png",
+   "source_tile": "K-35-063-1_Granit_4326_x1536_y2688.png",
+   "centroid_x": 343026.83444419445,
+   "centroid_y": 4674270.83524944,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-1_Granit_4326_x1536_y2688.png"
+   }
+  },
+  {
+   "candidate_id": 2621,
+   "crop_file": "crops/candidate_02621.png",
+   "source_tile": "K-35-063-1_Granit_4326_x1728_y1152.png",
+   "centroid_x": 344516.22030845826,
+   "centroid_y": 4682585.472616925,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-1_Granit_4326_x1728_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 2646,
+   "crop_file": "crops/candidate_02646.png",
+   "source_tile": "K-35-063-1_Granit_4326_x1728_y2112.png",
+   "centroid_x": 344884.0417679013,
+   "centroid_y": 4677223.392968103,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-1_Granit_4326_x1728_y2112.png"
+   }
+  },
+  {
+   "candidate_id": 2664,
+   "crop_file": "crops/candidate_02664.png",
+   "source_tile": "K-35-063-1_Granit_4326_x192_y1920.png",
+   "centroid_x": 336683.6680991682,
+   "centroid_y": 4678083.673009826,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-1_Granit_4326_x192_y1920.png"
+   }
+  },
+  {
+   "candidate_id": 2677,
+   "crop_file": "crops/candidate_02677.png",
+   "source_tile": "K-35-063-1_Granit_4326_x2112_y1728.png",
+   "centroid_x": 346195.7557628753,
+   "centroid_y": 4678491.027576629,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-1_Granit_4326_x2112_y1728.png"
+   }
+  },
+  {
+   "candidate_id": 2705,
+   "crop_file": "crops/candidate_02705.png",
+   "source_tile": "K-35-063-1_Granit_4326_x2304_y576.png",
+   "centroid_x": 347227.2433583669,
+   "centroid_y": 4684873.782693139,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-1_Granit_4326_x2304_y576.png"
+   }
+  },
+  {
+   "candidate_id": 2803,
+   "crop_file": "crops/candidate_02803.png",
+   "source_tile": "K-35-063-1_Granit_4326_x3456_y3072.png",
+   "centroid_x": 353273.4710284534,
+   "centroid_y": 4671952.351804977,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-1_Granit_4326_x3456_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 2927,
+   "crop_file": "crops/candidate_02927.png",
+   "source_tile": "K-35-063-2_Chirpan_4326_x1536_y1152.png",
+   "centroid_x": 363930.4543422848,
+   "centroid_y": 4681644.694883149,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-2_Chirpan_4326_x1536_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 3119,
+   "crop_file": "crops/candidate_03119.png",
+   "source_tile": "K-35-063-2_Chirpan_4326_x384_y1152.png",
+   "centroid_x": 358061.91393192246,
+   "centroid_y": 4681971.267796658,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-2_Chirpan_4326_x384_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 3150,
+   "crop_file": "crops/candidate_03150.png",
+   "source_tile": "K-35-063-2_Chirpan_4326_x768_y576.png",
+   "centroid_x": 360208.5199314228,
+   "centroid_y": 4684151.084722435,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-2_Chirpan_4326_x768_y576.png"
+   }
+  },
+  {
+   "candidate_id": 3257,
+   "crop_file": "crops/candidate_03257.png",
+   "source_tile": "K-35-063-3_Tatarevo_4326_x2880_y2496.png",
+   "centroid_x": 349802.58200827206,
+   "centroid_y": 4656596.407567323,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-3_Tatarevo_4326_x2880_y2496.png"
+   }
+  },
+  {
+   "candidate_id": 3258,
+   "crop_file": "crops/candidate_03258.png",
+   "source_tile": "K-35-063-2_Chirpan_4326_x768_y576.png",
+   "centroid_x": 360709.33983830817,
+   "centroid_y": 4684354.403503787,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 3,
+    "source_tile": "K-35-063-2_Chirpan_4326_x768_y576.png"
+   }
+  },
+  {
+   "candidate_id": 3295,
+   "crop_file": "crops/candidate_03295.png",
+   "source_tile": "K-35-063-3_Tatarevo_4326_x384_y384.png",
+   "centroid_x": 337057.2400632455,
+   "centroid_y": 4667114.245343299,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-063-3_Tatarevo_4326_x384_y384.png"
+   }
+  },
+  {
+   "candidate_id": 3432,
+   "crop_file": "crops/candidate_03432.png",
+   "source_tile": "K-35-063-4_Skobelevo_4326_x2880_y3456.png",
+   "centroid_x": 369980.47022198676,
+   "centroid_y": 4651324.505941266,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-063-4_Skobelevo_4326_x2880_y3456.png"
+   }
+  },
+  {
+   "candidate_id": 3456,
+   "crop_file": "crops/candidate_03456.png",
+   "source_tile": "K-35-063-4_Skobelevo_4326_x3648_y384.png",
+   "centroid_x": 374556.06565373694,
+   "centroid_y": 4666905.2714016875,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-4_Skobelevo_4326_x3648_y384.png"
+   }
+  },
+  {
+   "candidate_id": 3470,
+   "crop_file": "crops/candidate_03470.png",
+   "source_tile": "K-35-063-4_Skobelevo_4326_x3648_y1344.png",
+   "centroid_x": 374343.09119813284,
+   "centroid_y": 4661862.245868867,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-4_Skobelevo_4326_x3648_y1344.png"
+   }
+  },
+  {
+   "candidate_id": 3483,
+   "crop_file": "crops/candidate_03483.png",
+   "source_tile": "K-35-063-4_Skobelevo_4326_x4032_y1536.png",
+   "centroid_x": 375761.415040871,
+   "centroid_y": 4660636.397359496,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-063-4_Skobelevo_4326_x4032_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 3510,
+   "crop_file": "crops/candidate_03510.png",
+   "source_tile": "K-35-064-1_Sredets_4326_x1152_y1536.png",
+   "centroid_x": 382057.38020548626,
+   "centroid_y": 4679349.022121053,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-1_Sredets_4326_x1152_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 3527,
+   "crop_file": "crops/candidate_03527.png",
+   "source_tile": "K-35-064-1_Sredets_4326_x1536_y1920.png",
+   "centroid_x": 384518.07540557126,
+   "centroid_y": 4677208.096126919,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-1_Sredets_4326_x1536_y1920.png"
+   }
+  },
+  {
+   "candidate_id": 3582,
+   "crop_file": "crops/candidate_03582.png",
+   "source_tile": "K-35-064-1_Sredets_4326_x2496_y1536.png",
+   "centroid_x": 389191.4370884539,
+   "centroid_y": 4678582.946547397,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-1_Sredets_4326_x2496_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 3593,
+   "crop_file": "crops/candidate_03593.png",
+   "source_tile": "K-35-064-1_Sredets_4326_x2880_y3072.png",
+   "centroid_x": 391179.36536756856,
+   "centroid_y": 4671539.503600232,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-1_Sredets_4326_x2880_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 3598,
+   "crop_file": "crops/candidate_03598.png",
+   "source_tile": "K-35-063-4_Skobelevo_4326_x2880_y1152.png",
+   "centroid_x": 370005.9079614186,
+   "centroid_y": 4664077.311822138,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-063-4_Skobelevo_4326_x2880_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 3608,
+   "crop_file": "crops/candidate_03608.png",
+   "source_tile": "K-35-064-1_Sredets_4326_x3456_y3072.png",
+   "centroid_x": 394781.7326794475,
+   "centroid_y": 4670806.971024461,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-1_Sredets_4326_x3456_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 3611,
+   "crop_file": "crops/candidate_03611.png",
+   "source_tile": "K-35-064-1_Sredets_4326_x2112_y2688.png",
+   "centroid_x": 387425.6653848753,
+   "centroid_y": 4673365.08409019,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-1_Sredets_4326_x2112_y2688.png"
+   }
+  },
+  {
+   "candidate_id": 3657,
+   "crop_file": "crops/candidate_03657.png",
+   "source_tile": "K-35-064-1_Sredets_4326_x768_y2688.png",
+   "centroid_x": 381031.5374166279,
+   "centroid_y": 4672711.091997007,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-1_Sredets_4326_x768_y2688.png"
+   }
+  },
+  {
+   "candidate_id": 3681,
+   "crop_file": "crops/candidate_03681.png",
+   "source_tile": "K-35-064-1_Sredets_4326_x3456_y3072.png",
+   "centroid_x": 394872.01295150095,
+   "centroid_y": 4671587.152038906,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-1_Sredets_4326_x3456_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 3733,
+   "crop_file": "crops/candidate_03733.png",
+   "source_tile": "K-35-064-2_Radnevo_4326_x2688_y576.png",
+   "centroid_x": 411691.0221478714,
+   "centroid_y": 4683356.257751837,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-2_Radnevo_4326_x2688_y576.png"
+   }
+  },
+  {
+   "candidate_id": 3750,
+   "crop_file": "crops/candidate_03750.png",
+   "source_tile": "K-35-064-2_Radnevo_4326_x3264_y1152.png",
+   "centroid_x": 414498.7550342053,
+   "centroid_y": 4681000.262518508,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-2_Radnevo_4326_x3264_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 3752,
+   "crop_file": "crops/candidate_03752.png",
+   "source_tile": "K-35-064-1_Sredets_4326_x1536_y2880.png",
+   "centroid_x": 385295.5488759067,
+   "centroid_y": 4673021.625590218,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-064-1_Sredets_4326_x1536_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 3770,
+   "crop_file": "crops/candidate_03770.png",
+   "source_tile": "K-35-064-2_Radnevo_4326_x3840_y576.png",
+   "centroid_x": 417242.15793359856,
+   "centroid_y": 4683672.278331484,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-2_Radnevo_4326_x3840_y576.png"
+   }
+  },
+  {
+   "candidate_id": 3811,
+   "crop_file": "crops/candidate_03811.png",
+   "source_tile": "K-35-064-2_Radnevo_4326_x4032_y1920.png",
+   "centroid_x": 416667.27287113445,
+   "centroid_y": 4676521.932418985,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-064-2_Radnevo_4326_x4032_y1920.png"
+   }
+  },
+  {
+   "candidate_id": 3814,
+   "crop_file": "crops/candidate_03814.png",
+   "source_tile": "K-35-064-2_Radnevo_4326_x384_y1536.png",
+   "centroid_x": 400143.14136212156,
+   "centroid_y": 4679340.92966985,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-2_Radnevo_4326_x384_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 3899,
+   "crop_file": "crops/candidate_03899.png",
+   "source_tile": "K-35-064-3_Dimitrovgrad_4326_x2688_y1536.png",
+   "centroid_x": 390323.77253969305,
+   "centroid_y": 4660526.931108112,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-3_Dimitrovgrad_4326_x2688_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 3923,
+   "crop_file": "crops/candidate_03923.png",
+   "source_tile": "K-35-064-3_Dimitrovgrad_4326_x3840_y1536.png",
+   "centroid_x": 395006.6724058826,
+   "centroid_y": 4660931.035146332,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-064-3_Dimitrovgrad_4326_x3840_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 3946,
+   "crop_file": "crops/candidate_03946.png",
+   "source_tile": "K-35-064-4_Galabovo_4326_x1152_y1344.png",
+   "centroid_x": 402632.75839955756,
+   "centroid_y": 4661138.580473328,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-4_Galabovo_4326_x1152_y1344.png"
+   }
+  },
+  {
+   "candidate_id": 3981,
+   "crop_file": "crops/candidate_03981.png",
+   "source_tile": "K-35-064-4_Galabovo_4326_x0_y1344.png",
+   "centroid_x": 397221.4812291379,
+   "centroid_y": 4661090.4952954035,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-4_Galabovo_4326_x0_y1344.png"
+   }
+  },
+  {
+   "candidate_id": 4010,
+   "crop_file": "crops/candidate_04010.png",
+   "source_tile": "K-35-064-4_Galabovo_4326_x2880_y2112.png",
+   "centroid_x": 411475.94451961236,
+   "centroid_y": 4658348.631691554,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-064-4_Galabovo_4326_x2880_y2112.png"
+   }
+  },
+  {
+   "candidate_id": 4012,
+   "crop_file": "crops/candidate_04012.png",
+   "source_tile": "K-35-064-4_Galabovo_4326_x3072_y1728.png",
+   "centroid_x": 412802.2326982816,
+   "centroid_y": 4658737.596280015,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-4_Galabovo_4326_x3072_y1728.png"
+   }
+  },
+  {
+   "candidate_id": 4040,
+   "crop_file": "crops/candidate_04040.png",
+   "source_tile": "K-35-064-4_Galabovo_4326_x576_y3264.png",
+   "centroid_x": 400742.8442005168,
+   "centroid_y": 4650982.423351757,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-064-4_Galabovo_4326_x576_y3264.png"
+   }
+  },
+  {
+   "candidate_id": 4061,
+   "crop_file": "crops/candidate_04061.png",
+   "source_tile": "K-35-065-1_Radetski_4326_x1152_y1536.png",
+   "centroid_x": 424082.74695097783,
+   "centroid_y": 4678279.588394333,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-065-1_Radetski_4326_x1152_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 4119,
+   "crop_file": "crops/candidate_04119.png",
+   "source_tile": "K-35-065-1_Radetski_4326_x2304_y192.png",
+   "centroid_x": 430425.92660201946,
+   "centroid_y": 4685482.7033186,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-065-1_Radetski_4326_x2304_y192.png"
+   }
+  },
+  {
+   "candidate_id": 4304,
+   "crop_file": "crops/candidate_04304.png",
+   "source_tile": "K-35-065-2_GManastir_4326_x3456_y1536.png",
+   "centroid_x": 456807.0256883654,
+   "centroid_y": 4677773.674913543,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-065-2_GManastir_4326_x3456_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 4315,
+   "crop_file": "crops/candidate_04315.png",
+   "source_tile": "K-35-065-2_GManastir_4326_x3648_y1728.png",
+   "centroid_x": 457431.87224612327,
+   "centroid_y": 4677356.46789771,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-065-2_GManastir_4326_x3648_y1728.png"
+   }
+  },
+  {
+   "candidate_id": 4333,
+   "crop_file": "crops/candidate_04333.png",
+   "source_tile": "K-35-065-2_GManastir_4326_x384_y1920.png",
+   "centroid_x": 440854.31666441116,
+   "centroid_y": 4675612.217390756,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-065-2_GManastir_4326_x384_y1920.png"
+   }
+  },
+  {
+   "candidate_id": 4339,
+   "crop_file": "crops/candidate_04339.png",
+   "source_tile": "K-35-065-2_GManastir_4326_x768_y0.png",
+   "centroid_x": 442604.57153935905,
+   "centroid_y": 4685792.7459915755,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-065-2_GManastir_4326_x768_y0.png"
+   }
+  },
+  {
+   "candidate_id": 4342,
+   "crop_file": "crops/candidate_04342.png",
+   "source_tile": "K-35-065-2_GManastir_4326_x3456_y192.png",
+   "centroid_x": 457034.26090984506,
+   "centroid_y": 4685540.904526427,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-065-2_GManastir_4326_x3456_y192.png"
+   }
+  },
+  {
+   "candidate_id": 4371,
+   "crop_file": "crops/candidate_04371.png",
+   "source_tile": "K-35-065-3_Glavan_4326_x1536_y2112.png",
+   "centroid_x": 425663.0948249447,
+   "centroid_y": 4656731.285875107,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-065-3_Glavan_4326_x1536_y2112.png"
+   }
+  },
+  {
+   "candidate_id": 4374,
+   "crop_file": "crops/candidate_04374.png",
+   "source_tile": "K-35-065-3_Glavan_4326_x0_y1152.png",
+   "centroid_x": 418229.36269358307,
+   "centroid_y": 4662318.885538213,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-065-3_Glavan_4326_x0_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 4386,
+   "crop_file": "crops/candidate_04386.png",
+   "source_tile": "K-35-065-3_Glavan_4326_x2112_y768.png",
+   "centroid_x": 428546.77961472387,
+   "centroid_y": 4663554.614197612,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-065-3_Glavan_4326_x2112_y768.png"
+   }
+  },
+  {
+   "candidate_id": 4422,
+   "crop_file": "crops/candidate_04422.png",
+   "source_tile": "K-35-065-3_Glavan_4326_x3264_y576.png",
+   "centroid_x": 433299.3854555114,
+   "centroid_y": 4665517.321488047,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-065-3_Glavan_4326_x3264_y576.png"
+   }
+  },
+  {
+   "candidate_id": 4506,
+   "crop_file": "crops/candidate_04506.png",
+   "source_tile": "K-35-065-4_x1728_y3456.png",
+   "centroid_x": 447584.07888168754,
+   "centroid_y": 4650267.296517926,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-065-4_x1728_y3456.png"
+   }
+  },
+  {
+   "candidate_id": 4552,
+   "crop_file": "crops/candidate_04552.png",
+   "source_tile": "K-35-066-1_x0_y1920.png",
+   "centroid_x": 460081.4671580579,
+   "centroid_y": 4676609.0750851985,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-066-1_x0_y1920.png"
+   }
+  },
+  {
+   "candidate_id": 4554,
+   "crop_file": "crops/candidate_04554.png",
+   "source_tile": "K-35-066-1_x1152_y1152.png",
+   "centroid_x": 465557.89953106013,
+   "centroid_y": 4680281.086401938,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-066-1_x1152_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 4557,
+   "crop_file": "crops/candidate_04557.png",
+   "source_tile": "K-35-066-1_x0_y2880.png",
+   "centroid_x": 460320.5456545511,
+   "centroid_y": 4671040.662013404,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-066-1_x0_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 4562,
+   "crop_file": "crops/candidate_04562.png",
+   "source_tile": "K-35-066-1_x1152_y3456.png",
+   "centroid_x": 465464.54894779925,
+   "centroid_y": 4668981.506427821,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-066-1_x1152_y3456.png"
+   }
+  },
+  {
+   "candidate_id": 4741,
+   "crop_file": "crops/candidate_04741.png",
+   "source_tile": "K-35-066-1_x3648_y768.png",
+   "centroid_x": 476887.60216437926,
+   "centroid_y": 4681455.72494902,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-066-1_x3648_y768.png"
+   }
+  },
+  {
+   "candidate_id": 4803,
+   "crop_file": "crops/candidate_04803.png",
+   "source_tile": "K-35-066-2_x1536_y192.png",
+   "centroid_x": 488009.54084224615,
+   "centroid_y": 4684651.490701212,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-066-2_x1536_y192.png"
+   }
+  },
+  {
+   "candidate_id": 4808,
+   "crop_file": "crops/candidate_04808.png",
+   "source_tile": "K-35-066-2_x1344_y384.png",
+   "centroid_x": 487330.28957920347,
+   "centroid_y": 4683355.904228892,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-066-2_x1344_y384.png"
+   }
+  },
+  {
+   "candidate_id": 4889,
+   "crop_file": "crops/candidate_04889.png",
+   "source_tile": "K-35-066-2_x768_y3456.png",
+   "centroid_x": 484224.1828778558,
+   "centroid_y": 4668306.208090011,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-066-2_x768_y3456.png"
+   }
+  },
+  {
+   "candidate_id": 5038,
+   "crop_file": "crops/candidate_05038.png",
+   "source_tile": "K-35-066-3_x3648_y0.png",
+   "centroid_x": 477326.8690473428,
+   "centroid_y": 4667286.29961804,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-066-3_x3648_y0.png"
+   }
+  },
+  {
+   "candidate_id": 5107,
+   "crop_file": "crops/candidate_05107.png",
+   "source_tile": "K-35-066-4_x192_y2688.png",
+   "centroid_x": 481625.1521531868,
+   "centroid_y": 4653020.2329180725,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-066-4_x192_y2688.png"
+   }
+  },
+  {
+   "candidate_id": 5155,
+   "crop_file": "crops/candidate_05155.png",
+   "source_tile": "K-35-067-1_x1344_y2496.png",
+   "centroid_x": 508295.7067882746,
+   "centroid_y": 4673203.748053451,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-067-1_x1344_y2496.png"
+   }
+  },
+  {
+   "candidate_id": 5168,
+   "crop_file": "crops/candidate_05168.png",
+   "source_tile": "K-35-067-1_x0_y576.png",
+   "centroid_x": 501618.9501020366,
+   "centroid_y": 4682763.941145523,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-067-1_x0_y576.png"
+   }
+  },
+  {
+   "candidate_id": 5310,
+   "crop_file": "crops/candidate_05310.png",
+   "source_tile": "K-35-067-2_x192_y1728.png",
+   "centroid_x": 522730.8463085462,
+   "centroid_y": 4676784.8911093995,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-067-2_x192_y1728.png"
+   }
+  },
+  {
+   "candidate_id": 5313,
+   "crop_file": "crops/candidate_05313.png",
+   "source_tile": "K-35-067-2_x1344_y3264.png",
+   "centroid_x": 528162.8443339106,
+   "centroid_y": 4669566.73928567,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-067-2_x1344_y3264.png"
+   }
+  },
+  {
+   "candidate_id": 5413,
+   "crop_file": "crops/candidate_05413.png",
+   "source_tile": "K-35-067-3_x576_y576.png",
+   "centroid_x": 504677.64611172094,
+   "centroid_y": 4663883.480863813,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-067-3_x576_y576.png"
+   }
+  },
+  {
+   "candidate_id": 5514,
+   "crop_file": "crops/candidate_05514.png",
+   "source_tile": "K-35-067-4_x3648_y1344.png",
+   "centroid_x": 540121.0388909681,
+   "centroid_y": 4659793.59510363,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-067-4_x3648_y1344.png"
+   }
+  },
+  {
+   "candidate_id": 5539,
+   "crop_file": "crops/candidate_05539.png",
+   "source_tile": "K-35-067-4_x2304_y2880.png",
+   "centroid_x": 533666.2773817799,
+   "centroid_y": 4652180.702974294,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 3,
+    "source_tile": "K-35-067-4_x2304_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 5573,
+   "crop_file": "crops/candidate_05573.png",
+   "source_tile": "K-35-074-1_x2304_y2880.png",
+   "centroid_x": 304169.3253327244,
+   "centroid_y": 4637411.066118806,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-074-1_x2304_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 5574,
+   "crop_file": "crops/candidate_05574.png",
+   "source_tile": "K-35-074-1_x3840_y3072.png",
+   "centroid_x": 312697.62426029047,
+   "centroid_y": 4635439.972049421,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-074-1_x3840_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 5635,
+   "crop_file": "crops/candidate_05635.png",
+   "source_tile": "K-35-074-3_x2880_y1152.png",
+   "centroid_x": 308128.35224143835,
+   "centroid_y": 4628197.903263804,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-074-3_x2880_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 5820,
+   "crop_file": "crops/candidate_05820.png",
+   "source_tile": "K-35-075-2_x2112_y0.png",
+   "centroid_x": 366240.6658318068,
+   "centroid_y": 4649757.869069941,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-075-2_x2112_y0.png"
+   }
+  },
+  {
+   "candidate_id": 5881,
+   "crop_file": "crops/candidate_05881.png",
+   "source_tile": "K-35-075-2_x3264_y1152.png",
+   "centroid_x": 372204.2075937124,
+   "centroid_y": 4644814.762694516,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-075-2_x3264_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 5925,
+   "crop_file": "crops/candidate_05925.png",
+   "source_tile": "K-35-075-2_x0_y192.png",
+   "centroid_x": 355942.46834092063,
+   "centroid_y": 4649107.5833125925,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-075-2_x0_y192.png"
+   }
+  },
+  {
+   "candidate_id": 5930,
+   "crop_file": "crops/candidate_05930.png",
+   "source_tile": "K-35-075-2_x3648_y3072.png",
+   "centroid_x": 374088.01182011695,
+   "centroid_y": 4634291.2786225425,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-075-2_x3648_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 5947,
+   "crop_file": "crops/candidate_05947.png",
+   "source_tile": "K-35-075-2_x2688_y1536.png",
+   "centroid_x": 368111.33088235906,
+   "centroid_y": 4643223.85047143,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-075-2_x2688_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 5977,
+   "crop_file": "crops/candidate_05977.png",
+   "source_tile": "K-35-075-3_x3648_y192.png",
+   "centroid_x": 353336.27608642494,
+   "centroid_y": 4632177.408148921,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-075-3_x3648_y192.png"
+   }
+  },
+  {
+   "candidate_id": 6065,
+   "crop_file": "crops/candidate_06065.png",
+   "source_tile": "K-35-075-4_x3648_y0.png",
+   "centroid_x": 373848.1943413989,
+   "centroid_y": 4631103.628062645,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-075-4_x3648_y0.png"
+   }
+  },
+  {
+   "candidate_id": 6118,
+   "crop_file": "crops/candidate_06118.png",
+   "source_tile": "K-35-075-4_x2688_y0.png",
+   "centroid_x": 369397.5740740115,
+   "centroid_y": 4631893.657517987,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-075-4_x2688_y0.png"
+   }
+  },
+  {
+   "candidate_id": 6126,
+   "crop_file": "crops/candidate_06126.png",
+   "source_tile": "K-35-076-1_x1920_y2880.png",
+   "centroid_x": 386812.5470508669,
+   "centroid_y": 4634964.526067355,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-076-1_x1920_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 6201,
+   "crop_file": "crops/candidate_06201.png",
+   "source_tile": "K-35-076-1_x3264_y2304.png",
+   "centroid_x": 393480.41684668866,
+   "centroid_y": 4637451.401982725,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-076-1_x3264_y2304.png"
+   }
+  },
+  {
+   "candidate_id": 6216,
+   "crop_file": "crops/candidate_06216.png",
+   "source_tile": "K-35-076-1_x3840_y0.png",
+   "centroid_x": 396042.20065738505,
+   "centroid_y": 4649135.865615927,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-076-1_x3840_y0.png"
+   }
+  },
+  {
+   "candidate_id": 6224,
+   "crop_file": "crops/candidate_06224.png",
+   "source_tile": "K-35-076-1_x1920_y1536.png",
+   "centroid_x": 386743.9601401872,
+   "centroid_y": 4641353.353390429,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 3,
+    "source_tile": "K-35-076-1_x1920_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 6227,
+   "crop_file": "crops/candidate_06227.png",
+   "source_tile": "K-35-076-1_x4032_y192.png",
+   "centroid_x": 395620.5840846833,
+   "centroid_y": 4648281.710579447,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-076-1_x4032_y192.png"
+   }
+  },
+  {
+   "candidate_id": 6252,
+   "crop_file": "crops/candidate_06252.png",
+   "source_tile": "K-35-076-2_x0_y1152.png",
+   "centroid_x": 397256.929874766,
+   "centroid_y": 4643810.44290096,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-076-2_x0_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 6304,
+   "crop_file": "crops/candidate_06304.png",
+   "source_tile": "K-35-076-2_x2112_y2496.png",
+   "centroid_x": 407842.42684823944,
+   "centroid_y": 4636861.242796611,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-076-2_x2112_y2496.png"
+   }
+  },
+  {
+   "candidate_id": 6482,
+   "crop_file": "crops/candidate_06482.png",
+   "source_tile": "K-35-076-4_x1344_y0.png",
+   "centroid_x": 403578.83339098963,
+   "centroid_y": 4631297.40390933,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-076-4_x1344_y0.png"
+   }
+  },
+  {
+   "candidate_id": 6537,
+   "crop_file": "crops/candidate_06537.png",
+   "source_tile": "K-35-076-4_x2304_y2496.png",
+   "centroid_x": 409207.59857825615,
+   "centroid_y": 4619207.952362894,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-076-4_x2304_y2496.png"
+   }
+  },
+  {
+   "candidate_id": 6543,
+   "crop_file": "crops/candidate_06543.png",
+   "source_tile": "K-35-076-4_x384_y192.png",
+   "centroid_x": 398756.12172679073,
+   "centroid_y": 4629964.540384222,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-076-4_x384_y192.png"
+   }
+  },
+  {
+   "candidate_id": 6572,
+   "crop_file": "crops/candidate_06572.png",
+   "source_tile": "K-35-076-4_x3264_y192.png",
+   "centroid_x": 412447.6710118166,
+   "centroid_y": 4630586.732904046,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-076-4_x3264_y192.png"
+   }
+  },
+  {
+   "candidate_id": 6669,
+   "crop_file": "crops/candidate_06669.png",
+   "source_tile": "K-35-077-1_x960_y960.png",
+   "centroid_x": 423232.8251765965,
+   "centroid_y": 4645203.817875356,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-077-1_x960_y960.png"
+   }
+  },
+  {
+   "candidate_id": 6873,
+   "crop_file": "crops/candidate_06873.png",
+   "source_tile": "K-35-077-3_x2112_y0.png",
+   "centroid_x": 428450.5974765767,
+   "centroid_y": 4630174.577828383,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-077-3_x2112_y0.png"
+   }
+  },
+  {
+   "candidate_id": 6912,
+   "crop_file": "crops/candidate_06912.png",
+   "source_tile": "K-35-077-3_x3840_y1152.png",
+   "centroid_x": 436608.2649061502,
+   "centroid_y": 4625459.631709101,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-077-3_x3840_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 6916,
+   "crop_file": "crops/candidate_06916.png",
+   "source_tile": "K-35-077-3_x1344_y384.png",
+   "centroid_x": 424523.48902432976,
+   "centroid_y": 4629388.347757113,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-077-3_x1344_y384.png"
+   }
+  },
+  {
+   "candidate_id": 6924,
+   "crop_file": "crops/candidate_06924.png",
+   "source_tile": "K-35-077-4_x1152_y1344.png",
+   "centroid_x": 443278.6946495234,
+   "centroid_y": 4623361.358347386,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-077-4_x1152_y1344.png"
+   }
+  },
+  {
+   "candidate_id": 6932,
+   "crop_file": "crops/candidate_06932.png",
+   "source_tile": "K-35-077-3_x2880_y0.png",
+   "centroid_x": 432416.6129705497,
+   "centroid_y": 4630818.011494251,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 5,
+    "source_tile": "K-35-077-3_x2880_y0.png"
+   }
+  },
+  {
+   "candidate_id": 7019,
+   "crop_file": "crops/candidate_07019.png",
+   "source_tile": "K-35-050-4_x2304_y1536.png",
+   "centroid_x": 326063.2169661062,
+   "centroid_y": 4699532.503234847,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-050-4_x2304_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 7062,
+   "crop_file": "crops/candidate_07062.png",
+   "source_tile": "K-35-051-4_x384_y1920.png",
+   "centroid_x": 357677.9447012405,
+   "centroid_y": 4697003.554700481,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-051-4_x384_y1920.png"
+   }
+  },
+  {
+   "candidate_id": 7123,
+   "crop_file": "crops/candidate_07123.png",
+   "source_tile": "K-35-053-4_Boyadzhik_x1920_y2496.png",
+   "centroid_x": 448834.69877240655,
+   "centroid_y": 4692692.873646235,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-053-4_Boyadzhik_x1920_y2496.png"
+   }
+  },
+  {
+   "candidate_id": 7177,
+   "crop_file": "crops/candidate_07177.png",
+   "source_tile": "K-35-054-4_Voynika_x3648_y1344.png",
+   "centroid_x": 498462.57415661204,
+   "centroid_y": 4696640.960618416,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-054-4_Voynika_x3648_y1344.png"
+   }
+  },
+  {
+   "candidate_id": 7359,
+   "crop_file": "crops/candidate_07359.png",
+   "source_tile": "K-35-064-2_Radnevo_4326_x1344_y3072.png",
+   "centroid_x": 404726.2188384485,
+   "centroid_y": 4670394.387652196,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-064-2_Radnevo_4326_x1344_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 7397,
+   "crop_file": "crops/candidate_07397.png",
+   "source_tile": "K-35-064-4_Galabovo_4326_x2688_y3456.png",
+   "centroid_x": 409676.9032553423,
+   "centroid_y": 4651680.623903477,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 3,
+    "source_tile": "K-35-064-4_Galabovo_4326_x2688_y3456.png"
+   }
+  },
+  {
+   "candidate_id": 7428,
+   "crop_file": "crops/candidate_07428.png",
+   "source_tile": "K-35-065-2_GManastir_4326_x576_y0.png",
+   "centroid_x": 441801.4630418118,
+   "centroid_y": 4686031.891403824,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-065-2_GManastir_4326_x576_y0.png"
+   }
+  },
+  {
+   "candidate_id": 7433,
+   "crop_file": "crops/candidate_07433.png",
+   "source_tile": "K-35-065-3_Glavan_4326_x1152_y1728.png",
+   "centroid_x": 423476.30331255955,
+   "centroid_y": 4658888.20912373,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-065-3_Glavan_4326_x1152_y1728.png"
+   }
+  },
+  {
+   "candidate_id": 7517,
+   "crop_file": "crops/candidate_07517.png",
+   "source_tile": "K-35-066-4_x2688_y2112.png",
+   "centroid_x": 493689.1887776939,
+   "centroid_y": 4655883.989188396,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-066-4_x2688_y2112.png"
+   }
+  },
+  {
+   "candidate_id": 7527,
+   "crop_file": "crops/candidate_07527.png",
+   "source_tile": "K-35-067-1_x0_y0.png",
+   "centroid_x": 500032.0505933746,
+   "centroid_y": 4686082.9211946055,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-067-1_x0_y0.png"
+   }
+  },
+  {
+   "candidate_id": 7573,
+   "crop_file": "crops/candidate_07573.png",
+   "source_tile": "K-35-074-2_x2880_y0.png",
+   "centroid_x": 329349.59083772486,
+   "centroid_y": 4651029.455245206,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 4,
+    "source_tile": "K-35-074-2_x2880_y0.png"
+   }
+  },
+  {
+   "candidate_id": 7668,
+   "crop_file": "crops/candidate_07668.png",
+   "source_tile": "K-35-076-3_x2496_y768.png",
+   "centroid_x": 387600.7550267049,
+   "centroid_y": 4628120.737632352,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-076-3_x2496_y768.png"
+   }
+  },
+  {
+   "candidate_id": 7744,
+   "crop_file": "crops/candidate_07744.png",
+   "source_tile": "K-35-077-3_x3840_y768.png",
+   "centroid_x": 437194.93053003936,
+   "centroid_y": 4626289.540792866,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 3,
+    "source_tile": "K-35-077-3_x3840_y768.png"
+   }
+  },
+  {
+   "candidate_id": 7749,
+   "crop_file": "crops/candidate_07749.png",
+   "source_tile": "K-35-077-4_x2304_y2496.png",
+   "centroid_x": 450675.28511052544,
+   "centroid_y": 4618089.784088084,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-077-4_x2304_y2496.png"
+   }
+  },
+  {
+   "candidate_id": 7787,
+   "crop_file": "crops/candidate_07787.png",
+   "source_tile": "K-35-051-3_x960_y2112.png",
+   "centroid_x": 341794.25532360945,
+   "centroid_y": 4694790.065671465,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-051-3_x960_y2112.png"
+   }
+  },
+  {
+   "candidate_id": 7953,
+   "crop_file": "crops/candidate_07953.png",
+   "source_tile": "K-35-063-1_Granit_4326_x384_y0.png",
+   "centroid_x": 338051.3319268479,
+   "centroid_y": 4688327.652037351,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-063-1_Granit_4326_x384_y0.png"
+   }
+  },
+  {
+   "candidate_id": 7962,
+   "crop_file": "crops/candidate_07962.png",
+   "source_tile": "K-35-063-2_Chirpan_4326_x0_y2880.png",
+   "centroid_x": 356789.1624663513,
+   "centroid_y": 4673537.912831776,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-063-2_Chirpan_4326_x0_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 8005,
+   "crop_file": "crops/candidate_08005.png",
+   "source_tile": "K-35-063-4_Skobelevo_4326_x2688_y960.png",
+   "centroid_x": 369426.46479168755,
+   "centroid_y": 4664591.833350292,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-063-4_Skobelevo_4326_x2688_y960.png"
+   }
+  },
+  {
+   "candidate_id": 8085,
+   "crop_file": "crops/candidate_08085.png",
+   "source_tile": "K-35-065-2_GManastir_4326_x2112_y960.png",
+   "centroid_x": 449013.2866485393,
+   "centroid_y": 4680429.451872712,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-065-2_GManastir_4326_x2112_y960.png"
+   }
+  },
+  {
+   "candidate_id": 8179,
+   "crop_file": "crops/candidate_08179.png",
+   "source_tile": "K-35-067-2_x3456_y3264.png",
+   "centroid_x": 537828.3531974532,
+   "centroid_y": 4669068.472988802,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-067-2_x3456_y3264.png"
+   }
+  },
+  {
+   "candidate_id": 8201,
+   "crop_file": "crops/candidate_08201.png",
+   "source_tile": "K-35-074-3_x2688_y1536.png",
+   "centroid_x": 307179.2277461302,
+   "centroid_y": 4625000.334365339,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-074-3_x2688_y1536.png"
+   }
+  },
+  {
+   "candidate_id": 8279,
+   "crop_file": "crops/candidate_08279.png",
+   "source_tile": "K-35-076-4_x192_y3264.png",
+   "centroid_x": 398487.30315637845,
+   "centroid_y": 4613792.500973672,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-076-4_x192_y3264.png"
+   }
+  },
+  {
+   "candidate_id": 8317,
+   "crop_file": "crops/candidate_08317.png",
+   "source_tile": "K-35-077-2_x3456_y3072.png",
+   "centroid_x": 456655.0322289516,
+   "centroid_y": 4634519.529346508,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-077-2_x3456_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 8348,
+   "crop_file": "crops/candidate_08348.png",
+   "source_tile": "K-35-050-4_x1344_y3264.png",
+   "centroid_x": 322713.6840252053,
+   "centroid_y": 4690296.637092683,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-050-4_x1344_y3264.png"
+   }
+  },
+  {
+   "candidate_id": 8423,
+   "crop_file": "crops/candidate_08423.png",
+   "source_tile": "K-35-054-1_Straldzha_4326_x2304_y192.png",
+   "centroid_x": 471908.2728848098,
+   "centroid_y": 4722096.6167580495,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-054-1_Straldzha_4326_x2304_y192.png"
+   }
+  },
+  {
+   "candidate_id": 8479,
+   "crop_file": "crops/candidate_08479.png",
+   "source_tile": "K-35-055-3_x2688_y960.png",
+   "centroid_x": 513377.9705365537,
+   "centroid_y": 4698614.856538208,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-055-3_x2688_y960.png"
+   }
+  },
+  {
+   "candidate_id": 8645,
+   "crop_file": "crops/candidate_08645.png",
+   "source_tile": "K-35-066-3_x0_y3264.png",
+   "centroid_x": 459108.10275420244,
+   "centroid_y": 4650069.890427398,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-066-3_x0_y3264.png"
+   }
+  },
+  {
+   "candidate_id": 8669,
+   "crop_file": "crops/candidate_08669.png",
+   "source_tile": "K-35-066-4_x960_y768.png",
+   "centroid_x": 484050.46123208886,
+   "centroid_y": 4662817.831065167,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-066-4_x960_y768.png"
+   }
+  },
+  {
+   "candidate_id": 8689,
+   "crop_file": "crops/candidate_08689.png",
+   "source_tile": "K-35-067-4_x1728_y2112.png",
+   "centroid_x": 529900.5802136705,
+   "centroid_y": 4656820.045608672,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-067-4_x1728_y2112.png"
+   }
+  },
+  {
+   "candidate_id": 8727,
+   "crop_file": "crops/candidate_08727.png",
+   "source_tile": "K-35-075-4_x2688_y1344.png",
+   "centroid_x": 368983.7237221077,
+   "centroid_y": 4624759.858349477,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 2,
+    "source_tile": "K-35-075-4_x2688_y1344.png"
+   }
+  },
+  {
+   "candidate_id": 8751,
+   "crop_file": "crops/candidate_08751.png",
+   "source_tile": "K-35-076-2_x3648_y3072.png",
+   "centroid_x": 415421.05729041586,
+   "centroid_y": 4633433.993359792,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-076-2_x3648_y3072.png"
+   }
+  },
+  {
+   "candidate_id": 8785,
+   "crop_file": "crops/candidate_08785.png",
+   "source_tile": "K-35-077-3_x384_y768.png",
+   "centroid_x": 420322.75162794464,
+   "centroid_y": 4627565.301923234,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-077-3_x384_y768.png"
+   }
+  },
+  {
+   "candidate_id": 8797,
+   "crop_file": "crops/candidate_08797.png",
+   "source_tile": "K-35-050-4_x2496_y3648.png",
+   "centroid_x": 327608.4898056278,
+   "centroid_y": 4688939.896868636,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-050-4_x2496_y3648.png"
+   }
+  },
+  {
+   "candidate_id": 8830,
+   "crop_file": "crops/candidate_08830.png",
+   "source_tile": "K-35-052-3_x1728_y2112.png",
+   "centroid_x": 386469.31108053407,
+   "centroid_y": 4695573.390832698,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-052-3_x1728_y2112.png"
+   }
+  },
+  {
+   "candidate_id": 8834,
+   "crop_file": "crops/candidate_08834.png",
+   "source_tile": "K-35-052-3_x2496_y960.png",
+   "centroid_x": 389917.09162583365,
+   "centroid_y": 4700885.585247758,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-052-3_x2496_y960.png"
+   }
+  },
+  {
+   "candidate_id": 8835,
+   "crop_file": "crops/candidate_08835.png",
+   "source_tile": "K-35-052-3_x2688_y768.png",
+   "centroid_x": 391662.23789540003,
+   "centroid_y": 4701015.435505932,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-052-3_x2688_y768.png"
+   }
+  },
+  {
+   "candidate_id": 8837,
+   "crop_file": "crops/candidate_08837.png",
+   "source_tile": "K-35-052-3_x3840_y2880.png",
+   "centroid_x": 396249.09923669643,
+   "centroid_y": 4691876.373105608,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-052-3_x3840_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 8928,
+   "crop_file": "crops/candidate_08928.png",
+   "source_tile": "K-35-063-1_Granit_4326_x0_y1920.png",
+   "centroid_x": 335011.31522908015,
+   "centroid_y": 4677518.777333934,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-063-1_Granit_4326_x0_y1920.png"
+   }
+  },
+  {
+   "candidate_id": 8935,
+   "crop_file": "crops/candidate_08935.png",
+   "source_tile": "K-35-063-1_Granit_4326_x2688_y1152.png",
+   "centroid_x": 347839.77495159634,
+   "centroid_y": 4682303.792626592,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-063-1_Granit_4326_x2688_y1152.png"
+   }
+  },
+  {
+   "candidate_id": 9007,
+   "crop_file": "crops/candidate_09007.png",
+   "source_tile": "K-35-065-1_Radetski_4326_x192_y1728.png",
+   "centroid_x": 418280.9915107468,
+   "centroid_y": 4678025.604319451,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-065-1_Radetski_4326_x192_y1728.png"
+   }
+  },
+  {
+   "candidate_id": 9044,
+   "crop_file": "crops/candidate_09044.png",
+   "source_tile": "K-35-066-2_x1728_y2880.png",
+   "centroid_x": 488846.411873802,
+   "centroid_y": 4672284.67738055,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-066-2_x1728_y2880.png"
+   }
+  },
+  {
+   "candidate_id": 9064,
+   "crop_file": "crops/candidate_09064.png",
+   "source_tile": "K-35-067-1_x2112_y1920.png",
+   "centroid_x": 510476.4331515592,
+   "centroid_y": 4676581.408600611,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-067-1_x2112_y1920.png"
+   }
+  },
+  {
+   "candidate_id": 9075,
+   "crop_file": "crops/candidate_09075.png",
+   "source_tile": "K-35-067-4_x1728_y2112.png",
+   "centroid_x": 529872.5905276237,
+   "centroid_y": 4656825.81209674,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-067-4_x1728_y2112.png"
+   }
+  },
+  {
+   "candidate_id": 9125,
+   "crop_file": "crops/candidate_09125.png",
+   "source_tile": "K-35-076-2_x192_y384.png",
+   "centroid_x": 397333.0974085775,
+   "centroid_y": 4647070.997202005,
+   "cropped_from": "raster",
+   "properties": {
+    "vote_count": 1,
+    "source_tile": "K-35-076-2_x192_y384.png"
+   }
+  }
+ ],
+ "probe_note": "200 of 9,173 K=5 candidates, seed 42; flex arm 2 probabilities in ../verify_k5_arm2"
+}
