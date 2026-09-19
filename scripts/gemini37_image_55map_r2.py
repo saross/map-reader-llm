@@ -1208,6 +1208,15 @@ TWO_BY_TWO_HOME = PROJECT_ROOT / "results/image-2x2-2026-09-19"
 _PERM_CHUNK = 1000
 
 
+def _micro_f1_vec(tp: Any, fp: Any, fn: Any) -> Any:
+    """Vectorised micro-F1 with the board's zero rule (0.0 when tp == 0)."""
+    tp = np.asarray(tp, dtype=float)
+    denom = 2.0 * tp + np.asarray(fp, dtype=float) + np.asarray(fn, dtype=float)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        f1 = np.where((tp > 0) & (denom > 0), 2.0 * tp / np.where(denom > 0, denom, 1.0), 0.0)
+    return f1
+
+
 def did_test_f1(tp: dict[str, np.ndarray], fp: dict[str, np.ndarray],
                 fn: dict[str, np.ndarray], n_permutations: int = N_PERMS,
                 seed: int = SEED) -> dict[str, Any]:
@@ -1246,7 +1255,7 @@ def did_test_f1(tp: dict[str, np.ndarray], fp: dict[str, np.ndarray],
                 sums[own] = tuple(
                     np.where(swap, arr[oth], arr[own]).sum(axis=1)
                     for arr in (tp, fp, fn))
-        f = {c: micro_f1(*sums[c]) for c in cells}
+        f = {c: _micro_f1_vec(*sums[c]) for c in cells}
         null[done:done + m] = (f["A2"] - f["A1"]) - (f["B2"] - f["B1"])
         done += m
     return {
