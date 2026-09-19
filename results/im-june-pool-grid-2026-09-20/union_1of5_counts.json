@@ -1,0 +1,73 @@
+{
+  "what": "Vote histogram of the 1-of-5 union rebuilt from the five June image proposer passes.",
+  "why": "The June verifier saw only the 3-of-5 union, so the threshold-by-votes grid in this directory stops at three votes. This records how many candidates a full votes-1-to-5 grid would have to verify.",
+  "builder": "scripts/merge_passes.py",
+  "command": "python scripts/merge_passes.py --input-dir outputs/55maps-image-generalisation/proposer/library_plus-hp --output <scratch>/union_1of5.geojson --threshold 1",
+  "dedup_radius_m": 20.0,
+  "dedup_radius_source": "outputs/55maps-image-generalisation/consensus/consensus_meta.json",
+  "run_host": "sapphire",
+  "run_date": "2026-09-20",
+  "union_written_to": "~/tmp/im-june-union/union_1of5.geojson (outside the repository; counts only)",
+  "total_passes": 5,
+  "n_candidates_total": 63217,
+  "votes": {
+    "1": 48716,
+    "2": 6623,
+    "3": 2891,
+    "4": 2153,
+    "5": 2834
+  },
+  "n_verified_in_june": 7878,
+  "n_unverified": 55339,
+  "reproduces_committed_consensus": {
+    "file": "outputs/55maps-image-generalisation/consensus/consensus-3of5.geojson",
+    "n_features": 7878,
+    "votes": {
+      "3": 2891,
+      "4": 2153,
+      "5": 2834
+    },
+    "exact": true
+  },
+  "crop_manifest_divergence": {
+    "file": "outputs/55maps-image-generalisation/crops/candidate_manifest.json",
+    "n_candidates": 7878,
+    "votes": {
+      "3": 2896,
+      "4": 2159,
+      "5": 2823
+    },
+    "matched_one_to_one_to_consensus": true,
+    "median_centroid_separation_m": 0.0,
+    "max_centroid_separation_m": 6.898182489403622,
+    "n_vote_count_mismatches": 16,
+    "note": "The grid reads the crop manifest, because that is what the verifier was given and what probabilities.json keys to."
+  },
+  "pass_provenance": [
+    {
+      "pass_id": "run_1",
+      "path": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_1/detections-library_plus-hp-3-flash-2026-04-18.geojson",
+      "git_blob_hash": "16748d76ab4759e3790101eb0718deada468f88f"
+    },
+    {
+      "pass_id": "run_2",
+      "path": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_2/detections-library_plus-hp-3-flash-2026-04-18.geojson",
+      "git_blob_hash": "fe1aaa81f05ec715f8e82ac276cda50373ceb657"
+    },
+    {
+      "pass_id": "run_3",
+      "path": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_3/detections-library_plus-hp-3-flash-2026-04-18.geojson",
+      "git_blob_hash": "235ea1c8455b792bd657d030f9a8c946c9b215a5"
+    },
+    {
+      "pass_id": "run_4",
+      "path": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_4/detections-library_plus-hp-3-flash-2026-04-18.geojson",
+      "git_blob_hash": "9e57bee0daafb5471c11cf55883a80ec3d4c38e7"
+    },
+    {
+      "pass_id": "run_5",
+      "path": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_5/detections-library_plus-hp-3-flash-2026-04-18.geojson",
+      "git_blob_hash": "873fae8a3e91cb6f9a5c6497a208f3e84992898b"
+    }
+  ]
+}
