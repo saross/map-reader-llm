@@ -71,7 +71,7 @@ def test_cost_auditor_refuses_an_unmerged_chunked_pass(tmp_path):
     a run with no sign anything was wrong (lens B ran it on a real staging
     directory: US$10.21 for a 24,561-tile pass)."""
     _chunked_unit(tmp_path / "run_1", merged=False)
-    with pytest.raises(FileNotFoundError, match="not been merged"):
+    with pytest.raises(SystemExit, match="not been merged"):
         read_fragments(str(tmp_path))
 
 
@@ -130,7 +130,7 @@ def test_sum_dicts_nested_and_none_values():
 def test_resume_branch_treats_a_geojson_without_sidecar_as_failed():
     src = (ROOT / "scripts" / "4_detect_mounds_batch.py").read_text()
     i = src.index("SKIPPING (output exists")
-    block = src[i:i + 1500]
+    block = src[i:i + 2500]
     assert "tally_chunk(run_dir, suffix, chunk_limit, True)" in block
     assert "chunk_failed = True" in block
     assert "total_failed += chunk_limit" in block
