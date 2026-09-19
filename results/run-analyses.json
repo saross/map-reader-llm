@@ -4160,7 +4160,7 @@
   {
    "analysis_id": "gemini37-image-55map-2026-09-13",
    "type": "comparison",
-   "_note": "The campaign's registered outcome (controlling card planning/gemini37-image-55map-2026-09-13.md, predictions P1-P5 committed before any deployment scoring; deltas and rulings reports/gemini37-image-55map-deltas-2026-09-13.md § 10). Twelve cells of this run, tested against four committed comparators of results/55map-final-board-r2-2026-09-06/ and the tile-MCC tiering. Audited spend US$274.61 against a US$420 hard stop: proposer US$245.6307, four verifier arms US$27.8361, Gold Standard calibration leg US$1.1221, mechanism smoke US$0.025.",
+   "_note": "The campaign's registered outcome (controlling card planning/gemini37-image-55map-2026-09-13.md, predictions P1-P5 committed before any deployment scoring; deltas and rulings reports/gemini37-image-55map-deltas-2026-09-13.md § 10). Twelve cells of this run, tested against four committed comparators of results/55map-final-board-r2-2026-09-06/ and the tile-MCC tiering. Audited spend US$274.61 against a US$420 hard stop: proposer US$245.6307, four verifier arms US$27.8361, Gold Standard calibration leg US$1.1221, mechanism smoke US$0.025. The K = 5 rung (six further cells, both arms x carried / F1 oracle / MCC oracle) was added on 2026-09-19; it is EXPLORATORY — not preregistered, no permutation test run — and this row remains UNSIGNED.",
    "_prereg_rationale": "post-hoc: the preregistration's H3 registers consensus voting over K proposer passes as a factor and H13 the tile geometry, and this campaign executes both at deployment scale; but its own question — whether the image modality's tile-MCC advantage transfers from the Gold Standard to deployment, and in which verifier seat — is post-hoc, and its predictions P1-P5 were committed in the card before any 55-map scoring rather than at registration.",
    "conditions_compared": [
     "gemini37-image-55map-2026-09-13::img-arm1-k1-carried-p0.10-k1-r2-gt",
@@ -4175,6 +4175,12 @@
     "gemini37-image-55map-2026-09-13::img-arm2-k3-carried-p0.88-k3-r2-gt",
     "gemini37-image-55map-2026-09-13::img-arm2-k3-f1-oracle-p0.90-k3-r2-gt",
     "gemini37-image-55map-2026-09-13::img-arm2-k3-mcc-oracle-p0.96-k2-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm1-k5-carried-p0.10-k5-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm1-k5-f1-oracle-p0.10-k5-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm1-k5-mcc-oracle-p0.15-k5-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm2-k5-carried-p0.90-k5-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm2-k5-f1-oracle-p0.95-k5-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm2-k5-mcc-oracle-p0.95-k5-r2-gt",
     "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
     "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
     "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
