@@ -35692,3 +35692,287 @@ produced it.
 `reports/tile-mcc-geometric-join-2026-09-12.md` § 0 and § 1 site 2.
 Related: [[Observation 481]] (a wrong answer that looked right),
 [[Observation 482]] (the two-metric board this campaign's cell now leads).
+
+## Observation 484: K = 5 confirms the image-pool mechanism and finds its knee — pass count buys precision, not recall, and the third step is inside verifier drift (Session 155, 2026-09-18/19)
+
+**Context.** The Gemini 3.7 image 55-map campaign (Obs 481–483 lineage;
+card `planning/gemini37-image-55map-2026-09-13.md`) was extended from
+K = 3 to K = 5 by two Batch-API proposer passes, a K = 5 first-N union of
+9,173 candidates, both verifier arms, and the campaign-table r2 chain
+(`scripts/gemini37_image_55map_r2.py --rungs 5`; PR #19, merged
+`eb8c68038`). Cells are scored on the r2 board's instrument (micro-F1 @
+50 m, tile-MCC on the 8,541-tile frame), with carried points fixed on the
+Gold Standard (GS) before any 55-map score
+(`results/gemini37-image-55map-2026-09-13/sweeps.json`, `cells/`).
+
+**The finding.** The ladder is monotone on both arms, and the gain is
+almost entirely precision.
+
+| K | arm 2 n | P | R | F1@50 | tile-MCC | FP detections | FP tiles |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 5,997 | 0.8007 | 0.9570 | 0.8719 | 0.7569 | 1,195 | 165 |
+| 3 | 5,357 | 0.8908 | 0.9510 | 0.9199 | 0.7648 | 585 | 127 |
+| 5 | 5,219 | 0.9092 | 0.9456 | 0.9270 | 0.7659 | 474 | 114 |
+
+Arm 1 runs 0.8477 → 0.9025 → 0.9130 (F1) and 0.7324 → 0.7490 → 0.7529
+(MCC). The findings document's § 3 mechanism — passes largely agree, so
+unanimity acts as a precision filter — holds at the third rung: recall
+gives up 0.011 across the whole ladder while false-positive detections
+fall by 60 %. The increments shrink: K = 1 → 3 is **+0.048 F1 / +0.0078
+MCC** (both Benjamini–Hochberg-significant in the declared family);
+K = 3 → 5 is **+0.0071 / +0.0011**.
+
+**Why this matters.** Two things make K = 3 the knee rather than K = 5
+the target. *Cost*: each proposer pass is ≈ US$62–82 (US$61.86 on batch,
+US$81.83–81.93 on flex), so K = 5 costs 1.5x K = 3 for a seventh of its
+gain. *Drift*: erratum E89 and the 2026-09-19 batch-versus-flex probe put
+independent re-invocation of this verifier at ~40 % of probabilities
+moving and 3.5–5.3 % of decisions flipping at the operating point, so
++0.007 F1 at n ≈ 5,200 is inside the band verifier nondeterminism alone
+can produce. The K = 3 → 5 contrast was not preregistered (the card
+stopped the ladder at 3) and is declared exploratory; no permutation test
+has been run on it. The paper can therefore state the image ladder's
+shape with three points instead of two, name K = 3 as the operating rung
+on a cost basis, and report K = 5 as the best cell (F1 0.9270, MCC
+0.7659, the corpus leader on both metrics) without claiming the last step
+is real.
+
+**Also.** Every carried point sits within 0.001 F1 of its rung's oracle
+(K = 5 arm 2: carried 0.9270 at prob_t 0.90, oracle 0.9280 at 0.95), so
+the GS calibration transfers to the 55-map corpus with no hidden
+headroom.
+
+**Findable later**: K = 5 image ladder, pass count is a precision filter,
+ladder knee at K = 3, 0.8719 → 0.9199 → 0.9270, tile-MCC 0.7569 → 0.7648
+→ 0.7659, FP detections 1,195 → 585 → 474, recall gives up 0.011,
+exploratory K = 3 → 5 contrast, verifier drift band, US$62–82 per
+proposer pass, `IMG-ARM2-K5-carried`, 9,173-candidate K = 5 union.
+
+Sources: `results/gemini37-image-55map-2026-09-13/sweeps.json` (read
+2026-09-19: the six rungs' `carried` and `f1_oracle` blocks — n, fp, F1@50,
+`tile_mcc`, `tile_fp`, and the carried points (0.88, k1), (0.88, k3),
+(0.90, k5) on arm 2); the matching
+`results/gemini37-image-55map-2026-09-13/cells/IMG-ARM{1,2}-K{1,3,5}-carried/evaluation.json`
+(read 2026-09-19: the 50 m buffer P/R/F1 and `n_detections`);
+`results/gemini37-image-55map-2026-09-13/findings.md` § 3 and its K = 5
+extension (the 9,173 / 8,337 / 6,985 union sizes);
+`outputs/gemini37-image-55map-2026-09-13/post_run_report.md` §§ on passes
+1–5 (per-pass audited cost US$81.9283 / 81.8712 / 81.8313 flex and
+US$61.8648 / 61.9455 batch);
+`docs/methodology/preregistration/protocol-errata.md` E89;
+`reports/image-2x2-tests-declaration-2026-09-19.md` (the declared family,
+and the K = 1 and K = 5 rungs as exploratory replicates); PR #19 merge
+`eb8c68038`.
+Related: **Obs 485** (the Gemini 3 row of the same 2x2 at K = 1 — the
+image-pool mechanism named here is what the Gemini 3 row is expected to
+exploit at the higher rungs); **Obs 486** (the drift floor this entry's
+"inside verifier drift" claim rests on); **Obs 483** (the tile-join
+defect that had to be repaired before any rung of this ladder could be
+scored); **Obs 479** (the verifier stage's absorption of K's F1 return —
+the stage-resolved form of the same precision-filter mechanism).
+
+## Observation 485: The Gemini 3 image proposer at a single pass over-generates threefold, halving micro-F1 while tile-MCC barely moves — PRELIMINARY until K = 3 and K = 5 land (Session 155, 2026-09-19)
+
+**Context.** The second row of the image proposer x verifier 2x2 at
+deployment scale: the Gemini 3 image pool
+(`gemini3-image-55map-2026-09-16`, 5 x 24,561 tiles,
+`detect_brief-text-image`, `minimal` thinking, T 0.7), verified by the
+same two arms as the 3.7 row at operating points fixed on the GS from
+`image-b-gs-2026-08-28`
+(`results/gemini3-image-55map-2026-09-16/gs-calibration/`). The K = 1
+rung was scored 2026-09-19
+(`results/gemini3-image-55map-2026-09-16/cells/`, `ba19eebd1`); every
+chain gate passed (booking 22,785/22,785; calibration constants verified
+against the sweep files).
+
+**The finding.** At K = 1 the Gemini 3 row is far below the 3.7 row on
+micro-F1 and close to it on tile-MCC.
+
+| cell (K = 1, carried) | n | P | R | F1@50 | tile-MCC | FP tiles |
+|---|---:|---:|---:|---:|---:|---:|
+| Gemini 3 pool, arm 1 (0.15) | 8,529 | 0.529 | 0.900 | 0.6664 | 0.7144 | 301 |
+| Gemini 3 pool, arm 2 (0.88) | 9,172 | 0.514 | 0.939 | 0.6644 | 0.7063 | 405 |
+| 3.7 pool, arm 2 (0.88) | 5,997 | 0.801 | 0.957 | 0.8719 | 0.7569 | 165 |
+
+The Gemini 3 pool yields 1.7x the raw detections per pass (34,394 against
+20,015 on pass 1) and its K = 1 union is 3.3x the 3.7 pool's (22,785
+against 6,985). At the GS-carried point the verifier keeps about half of
+that union, and the kept half carries **4,458 false-positive detections
+against the 3.7 cell's 1,195**. Micro-F1 halves its distance to 1;
+tile-MCC moves only ~0.05 because the surplus detections land on tiles
+that were already counted (301–405 false-positive tiles against 165). The
+oracles do not rescue it: the best F1 the rung can reach is 0.6923 (arm 2,
+at prob_t 0.98).
+
+**Reading.** This is consistent with the GS calibration, where the
+Gemini 3 image pool sat below the 3.7 image pool at every rung, amplified
+by scale. It is a proposer-family effect, not a verifier one: both arms
+see it. K = 3 and K = 5 impose unanimity, which on an image pool is a
+precision filter (Obs 484), so the gap is expected to close at the higher
+rungs — that comparison, at matched K, is what the 2x2 was built to make.
+Until those rungs are scored this entry is a single-rung reading and must
+not be cited alone.
+
+**Caveat on one figure.** The size of the GS-calibration gap is not
+settled here. The S155 continuity record states ~0.10 F1@20 at every rung;
+the committed calibration analyses' own rung-to-anchor gaps read 0.041 to
+0.076 (`gs-calibration/k{3,5}/arm{1,2}/analysis.json`, `image_best.f1`
+0.8200 / 0.8408 / 0.8431 / 0.8551 against `anchor.f1_20` 0.8961). The
+*direction* is not in doubt; the magnitude should be re-derived from a
+matched pair before the paper quotes a number.
+
+**Findable later**: Gemini 3 image pool over-generation, 2x2 proposer
+family row, K = 1 rung PRELIMINARY, micro-F1 versus tile-MCC divergence,
+22,785-candidate union, 3.3x the 3.7 pool, 1.7x detections per pass,
+F1@50 0.6664 and 0.6644, tile-MCC 0.7144 and 0.7063, oracle 0.6923 at
+0.98, `G3IMG-ARM2-K1-carried`, booking gate 22,785/22,785.
+
+Sources: `results/gemini3-image-55map-2026-09-16/sweeps.json` (read
+2026-09-19: both K = 1 rungs' `carried` and `f1_oracle` blocks — n, fp,
+tp, fn, `tile_mcc`, `tile_fp`, carried points (0.15, k1) and (0.88, k1),
+oracle 0.6923 at 0.98); `results/gemini3-image-55map-2026-09-16/cells/`
+(the scored cells, `ba19eebd1`);
+`outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/union_k1_pass_provenance.json`
+(read 2026-09-19: `union_feature_count` 22,785, builder
+`scripts/stride55_prepare_and_union.py`);
+`outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1/detections-detect_brief-text-image-3-flash-2026-09-16.{geojson,meta.json}`
+(read 2026-09-19: 34,394 features; `gemini-3-flash-preview`, T 0.7,
+`minimal`); the 3.7 comparator in
+`results/gemini37-image-55map-2026-09-13/sweeps.json`;
+`results/gemini3-image-55map-2026-09-16/gs-calibration/k{3,5}/arm{1,2}/analysis.json`;
+`planning/paper-writeup-continuity.md` § "GEMINI 3 ROW, K = 1 RUNG —
+SCORED" (read 2026-09-19: the same three-row table, the gate line, and
+the 5 x 24,561 / 1.7x pool row).
+Related: **Obs 484** (the K-ladder on the 3.7 pool — the precision-filter
+mechanism this row is predicted to ride at K = 3 and K = 5, and the
+source of the 3.7 comparator row above); **Obs 482** (two metrics, one
+board, near-opposite orderings — the same F1-versus-tile-MCC divergence
+seen across 150 cells); **Obs 476** (the verifier as a tile classifier
+before it is a detector).
+
+## Observation 486: The Batch API route is inside the verifier's own re-invocation drift — an E89 corollary that licensed a route switch (Session 155, 2026-09-19)
+
+**Context.** The Principal Investigator (PI) ruled on 2026-09-18 that
+Gemini 3.7 and 3.8 legs run the Batch API by default, after a 3.7
+realtime-flex verifier arm fell to ~1 candidate/min under a 503 storm
+(44,091 server-error retries, 20 h 59 m). Before the Gemini 3 row's arm 2
+legs went to batch, the phase gate asked whether the route changes the
+answers: the 3.7 row's arm 2 had run on flex.
+
+**The finding.** 200 candidates of the 3.7 K = 5 union (seed 42), whose
+flex arm 2 probabilities were on file, were re-verified on batch in four
+50-candidate jobs
+(`outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/`,
+`cab5d1b91`, audited US$0.2248).
+
+| comparison | n | identical p | flips at 0.90 | abs dp > 0.5 |
+|---|---:|---:|---:|---:|
+| flex K5 vs flex K3 twin (same route, same mound's crop from the K = 3 union) | 171 | 61 % | 3.5 % | 5 |
+| batch K5 vs flex K5 (same crop, route differs) | 171 | 60 % | 5.3 % | 6 |
+| batch K5 vs flex K3 twin | 171 | 61 % | 4.1 % | 7 |
+
+The twin baseline is the same verifier re-invoked on flex against the
+K = 3 union's crop of the same mound (matched within 5 m, median 0.57 m).
+The batch route's drift is indistinguishable from the route's own
+re-invocation drift: nine flips against six of 171 is noise at this n.
+The probe also proved the multi-chunk batch orchestration
+(`run_pv.py --mode batch --max-batch-candidates`) on four jobs before it
+carried legs of up to 45,786 requests.
+
+**Why this matters.** E89 — T = 0 is not deterministic across independent
+calls — now has a route corollary: batch versus realtime is not a
+parameter of the experiment for this verifier, only of its bookkeeping.
+It also fixes the floor for any within-cell increment the paper may
+claim: below ~5 % of decisions at the operating point, a difference
+between two verifier passes is not distinguishable from drift without
+replication. That floor is what makes the K = 3 → 5 step in Obs 484
+reportable-but-not-claimable.
+
+**Findable later**: batch versus flex route equivalence, E89 corollary,
+verifier re-invocation drift, 60 % identical probabilities, 5.3 % flips
+at 0.90, twin baseline 3.5 %, nine flips against six of 171, phase-gate
+probe US$0.2248, multi-chunk batch orchestration proven, 503 storm 44,091
+retries, batch-by-default ruling 2026-09-18.
+
+Sources:
+`outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/README.md`
+(read 2026-09-19: the three-row comparison table, the 200-candidate /
+seed 42 / four-chunk design, `gemini-3.7-flash` `low` T 0.0, audited
+US$0.2248 at US$0.001124/candidate, the twin-match tolerance and median,
+and the PASS verdict);
+`outputs/gemini37-image-55map-2026-09-13/post_run_report.md` (read
+2026-09-19: the K = 5 arm 2 row — 7,702 of 9,173 in 20 h 59 m at 44,091
+retries, 1,439 + 32 recovered);
+`docs/methodology/preregistration/protocol-errata.md` E89 (read
+2026-09-19: the ten T = 0.0 passes at 1,087–1,113 detections and ten
+distinct file hashes); `planning/paper-writeup-continuity.md` § "THE
+PHASE GATE'S VALIDATION — PASSED" and the arm-leg table (the 22,785 /
+36,389 / 45,786 union sizes); probe commit `cab5d1b91`.
+Related: **Obs 484** (the K = 3 → 5 step this drift floor places inside
+the noise band); **Obs 483** (the same campaign's defect lineage, and the
+reason a phase gate reads artefacts rather than exit codes); **Obs 487**
+(the other phase-gate lesson of the same session — a gate is only as good
+as the independence of what it compares).
+
+## Observation 487: A blocked launch session is a queued command — it executed 21 hours late and rebuilt correct artefacts with a rejected builder (Session 155, 2026-09-17/19)
+
+**Context.** An `ssh host 'nohup job … & ; <more commands>'` line launched
+the day's first verifier arms at 23:26 UTC on 2026-09-17. The `nohup`
+inherited the session's descriptors, so the SSH call did not return; the
+harness moved it to the background and the session went on. Later that
+evening the union builder named in that line's tail (`merge_passes.py`)
+was rejected for the GS calibration in favour of
+`image_b_prepare_and_union.py`, the correct unions were built, their crops
+extracted, and arm 1 verified.
+
+**The finding.** At 20:47 UTC on 2026-09-18, when the arms driver exited,
+the blocked session ran the rest of its command line: it rebuilt the GS
+calibration unions with the rejected builder (**2,396 / 3,005** candidates
+at K = 3 / K = 5, over the correct **2,227 / 2,788**) and re-extracted the
+crops over the correct ones. The next leg's union-versus-crops count gate
+then PASSED on the wrong pair, and a batch job of 2,396 requests was
+lodged (≈ US$2.85, never polled) before the mismatch was seen by reading
+the committed manifest against the working tree. It was reverted with
+`git checkout`, the crops were re-extracted byte-identically, and the leg
+was relaunched. The displaced artefacts are preserved at
+`archive/preliminary-work/image-b-gs-mergebuilt-unions-2026-09-18/`.
+
+**Why this matters.** Three of the session's defects share one family — a
+step that reports success while its artefact is wrong (a progress line
+reading 9,173/9,173 with 1,471 candidates failed; a normaliser taking the
+right file by sort-order coincidence; chunk metadata inherited from chunk
+0) — and this one adds the temporal form: a command that succeeds, but a
+day later, against a world that has changed under it. The gate that should
+have caught it compared two artefacts both written by the stale command,
+so they agreed. The defence is procedural and is now in
+`docs/agent-guidance.md`: redirect all three descriptors on a launch, put
+nothing after a launch on the same line, and treat a launch call that
+"timed out" as holding an unexecuted tail until its process is gone. For
+reproducibility the lesson is that **a count gate is only as good as the
+independence of the two counts it compares**.
+
+**Findable later**: blocked ssh session, deferred command execution, queued
+tail, launch line 23:26 UTC ran at 20:47 UTC, `merge_passes.py` rejected
+builder, 2,396 / 3,005 against 2,227 / 2,788, count gate independence,
+stale-session rerun, orphaned batch ≈ US$2.85, image-b-gs mergebuilt
+archive, redirect all three descriptors.
+
+Sources: `docs/agent-guidance.md` § "A blocked launch session is a queued
+command, not a dead one" (read 2026-09-19: the 23:26 → 20:47 timeline, the
+two rebuilt calibration unions, the count gate passing on the wrong pair,
+and the three-part defence);
+`archive/preliminary-work/image-b-gs-mergebuilt-unions-2026-09-18/union_k{3,5}.geojson`
+(read 2026-09-19: 2,396 and 3,005 features) against
+`outputs/image-b-gs-2026-08-28/verifier/g384_ov192_image/union_k{3,5}.geojson`
+(2,227 and 2,788); `planning/paper-writeup-continuity.md` (read
+2026-09-19: the orphaned batch ≈ US$2.85, never polled, in the state block
+and the cost table); `docs/notes/reflections/session-log.md` (the same
+figure, unaudited);
+`outputs/gemini37-image-55map-2026-09-13/post_run_report.md` (read
+2026-09-19: the 9,173/9,173-after-cleanup row with 1,439 + 32 recovered).
+Related: **Obs 483** (the S154 defect family this one extends — an
+artefact that is wrong while every indicator reads green, and the gates
+that could not see it); **Obs 486** (the phase-gate probe of the same
+session, which read artefacts rather than status lines); **Obs 478** (a
+count that can hold while the set changes — the same limit on counting as
+a check).
