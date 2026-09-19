@@ -126,3 +126,72 @@ def test_the_null_micro_f1_keeps_the_zero_rule():
         np.array([0.0, 5.0, 0.0]),
     )
     assert np.array_equal(out, np.array([0.0, 0.0, 1.0]))
+
+
+def test_the_null_is_centred_on_zero():
+    """A correct exchangeable null has mean zero.
+
+    The existing fixtures assert only `p > 0.05` / `p < 0.01`, which is
+    loose enough to survive a badly biased null: raising the per-tile swap
+    probability from 0.5 to 0.9 moves `null_mean` from -0.0002 to -0.45 and
+    every assertion still passes. Centredness is the property that breaks
+    first when the permutation scheme is wrong.
+    """
+    rng = np.random.default_rng(2)
+    tp, fp, fn = {}, {}, {}
+    for c, (t, f) in {"A1": (0.5, 0.4), "A2": (0.9, 0.05),
+                      "B1": (0.7, 0.2), "B2": (0.5, 0.4)}.items():
+        tp[c], fp[c], fn[c] = _counts(rng, t, f)
+
+    r = did_test_f1(tp, fp, fn, n_permutations=2000, seed=3)
+
+    # Standard error of the null mean over n permutations.
+    tolerance = 4.0 * r["null_std"] / np.sqrt(r["n_permutations"])
+    assert abs(r["null_mean"]) < tolerance, (
+        f"null_mean {r['null_mean']:+.5f} exceeds {tolerance:.5f} — "
+        "the permutation scheme is biased"
+    )
+
+
+def test_identical_rows_make_every_permutation_a_no_op():
+    """The swap is PAIRED: the (A1, A2) pair moves as one unit.
+
+    When the two rows hold the same cells, swapping a tile's row-A pair
+    with its row-B pair changes nothing, so every null D is exactly zero
+    and the null has no spread at all. An independent mask per cell — the
+    obvious way to break the pairing — would mix arm 1 of one row with arm
+    2 of the other and give a non-degenerate null here.
+    """
+    rng = np.random.default_rng(4)
+    a1 = _counts(rng, 0.6, 0.3)
+    a2 = _counts(rng, 0.7, 0.2)
+    tp = {"A1": a1[0], "A2": a2[0], "B1": a1[0], "B2": a2[0]}
+    fp = {"A1": a1[1], "A2": a2[1], "B1": a1[1], "B2": a2[1]}
+    fn = {"A1": a1[2], "A2": a2[2], "B1": a1[2], "B2": a2[2]}
+
+    r = did_test_f1(tp, fp, fn, n_permutations=500, seed=3)
+
+    assert r["null_std"] == 0.0
+    assert r["null_mean"] == 0.0
+
+
+def test_the_seed_is_live():
+    """Two seeds must give two null draws.
+
+    `default_rng(seed)` hard-coded to `default_rng(0)` would make the seed
+    argument decorative and the run irreproducible from its recorded seed,
+    with every existing assertion still satisfied.
+    """
+    rng = np.random.default_rng(1)
+    tp, fp, fn = {}, {}, {}
+    for c, (t, f) in {"A1": (0.6, 0.3), "A2": (0.7, 0.2),
+                      "B1": (0.5, 0.4), "B2": (0.6, 0.3)}.items():
+        tp[c], fp[c], fn[c] = _counts(rng, t, f)
+
+    a = did_test_f1(tp, fp, fn, n_permutations=2000, seed=3)
+    b = did_test_f1(tp, fp, fn, n_permutations=2000, seed=99)
+    again = did_test_f1(tp, fp, fn, n_permutations=2000, seed=3)
+
+    assert a["observed_diff"] == b["observed_diff"]  # the data did not change
+    assert a["null_mean"] != b["null_mean"]          # the draw did
+    assert a["null_mean"] == again["null_mean"]      # and is reproducible

@@ -561,3 +561,53 @@ def test_a_dry_run_unit_never_reaches_the_storage_check(tmp_path, monkeypatch):
     assert message == "dry_run"
     assert client.files.list_calls == 0
     assert client.files.uploads == []
+
+
+def test_the_quota_error_is_recognised_from_the_metric_alone(tmp_path):
+    """The metric clause must carry its own weight.
+
+    `_STORAGE_429` contains BOTH the metric and the quota id, so it could
+    not tell the two branches apart: reducing the matcher to
+    `FILE_STORAGE_QUOTA_ID in text` left the whole suite green. A 429 body
+    that names the metric without the `quotaId` suffix would then fall back
+    to the generic "failed to lodge" message — straight back to the
+    2026-09-19 symptom, where eight chunks died in a row and the log never
+    said why.
+    """
+    metric_only = (
+        "429 RESOURCE_EXHAUSTED. Quota exceeded for metric: "
+        "generativelanguage.googleapis.com/file_storage_bytes, "
+        "limit: 21474836480"
+    )
+    assert FILE_STORAGE_QUOTA_METRIC.split("/")[-1] in metric_only
+    assert "FileStorageBytesPerProject" not in metric_only
+    assert is_file_storage_quota_error(RuntimeError(metric_only))
+
+
+def test_the_failure_names_the_largest_files_first(tmp_path):
+    """The message exists to tell an operator what to delete FIRST.
+
+    With only two stored files and `top_n = 5` the ordering was
+    unobservable, so reversing the sort left the suite green while the
+    message named the smallest files to delete.
+    """
+    client = _FakeClient([
+        _FakeFile("files/small", 1 * _GIB),
+        _FakeFile("files/biggest", 9 * _GIB),
+        _FakeFile("files/medium", 5 * _GIB),
+        _FakeFile("files/tiny", 1024),
+        _FakeFile("files/large", 7 * _GIB),
+        _FakeFile("files/never-named", 512),
+    ])
+
+    with pytest.raises(FileStorageCapExceeded) as excinfo:
+        preflight_file_storage(client, [_chunk(tmp_path, "c0.jsonl")])
+
+    message = str(excinfo.value)
+    named = [n for n in ("files/biggest", "files/large", "files/medium",
+                         "files/small", "files/tiny") if n in message]
+    assert named == ["files/biggest", "files/large", "files/medium",
+                     "files/small", "files/tiny"]
+    assert message.index("files/biggest") < message.index("files/large")
+    # top_n = 5, so the sixth-largest is not named at all.
+    assert "files/never-named" not in message

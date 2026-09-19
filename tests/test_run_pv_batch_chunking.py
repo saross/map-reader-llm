@@ -349,3 +349,226 @@ def test_batch_recover_reports_failure_when_no_job_is_reachable(
     assert run_pv.cmd_batch_recover(args) == 1
     # Nothing was booked, so no output file was overwritten.
     assert called == []
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Polling tolerance — the semantics the parameter name promises
+# ─────────────────────────────────────────────────────────────────────
+
+
+def _polling_client(states):
+    """A client whose ``batches.get`` walks *states*.
+
+    Each entry is either an exception to raise or a state name to return.
+    """
+    class _State:
+        def __init__(self, name):
+            self.name = name
+
+    class _Done:
+        def __init__(self, name):
+            self.state = _State(name)
+
+    class _Batches:
+        def __init__(self):
+            self.calls = 0
+
+        def get(self, name):
+            self.calls += 1
+            step = states[min(self.calls - 1, len(states) - 1)]
+            if isinstance(step, Exception):
+                raise step
+            return _Done(step)
+
+    class _Client:
+        def __init__(self):
+            self.batches = _Batches()
+
+    return _Client()
+
+
+def test_the_error_budget_is_consecutive_not_cumulative(monkeypatch):
+    """`max_consecutive_errors` means in a row, as the name and docstring say.
+
+    Deleting the `consecutive_errors = 0` reset turns the budget into a
+    lifetime total, so a long leg that recovers fully from a handful of
+    isolated 503s hours apart would abort anyway. Two errors, a successful
+    non-terminal poll, then two more errors must survive a budget of two.
+    """
+    import scripts.lib_batch_api as lba
+
+    monkeypatch.setattr(lba.time, "sleep", lambda s: None)
+    client = _polling_client([
+        RuntimeError("503 UNAVAILABLE"),
+        RuntimeError("503 UNAVAILABLE"),
+        "JOB_STATE_RUNNING",          # recovery — resets the counter
+        RuntimeError("503 UNAVAILABLE"),
+        RuntimeError("503 UNAVAILABLE"),
+        "JOB_STATE_SUCCEEDED",
+    ])
+
+    job = poll_batch_job(client, "batches/x", interval_seconds=0,
+                         max_consecutive_errors=2)
+
+    assert job.state.name == "JOB_STATE_SUCCEEDED"
+    assert client.batches.calls == 6
+
+
+def test_the_documented_default_error_budget_is_twenty(monkeypatch):
+    """20 x 30 s = the 10 minutes of dead endpoint the docstring promises.
+
+    Both existing poll tests override `max_consecutive_errors`, so the
+    default could be raised to any value and nothing would notice.
+    """
+    import scripts.lib_batch_api as lba
+
+    monkeypatch.setattr(lba.time, "sleep", lambda s: None)
+    client = _polling_client([RuntimeError("503 UNAVAILABLE")])
+
+    with pytest.raises(RuntimeError):
+        poll_batch_job(client, "batches/x", interval_seconds=0)
+
+    # The budget is tolerated, the one after it propagates.
+    assert client.batches.calls == 21
+
+
+def test_the_job_record_carries_the_state_that_was_polled(tmp_path):
+    """`batch_jobs.json` is what an operator reads after a bad leg.
+
+    The shared fake hard-codes JOB_STATE_SUCCEEDED, so hard-coding the
+    same constant into the writer was invisible — the record could claim
+    success for a job that did not succeed.
+    """
+    import json as _json
+
+    class _OtherJob:
+        def __init__(self, name):
+            self.name = name
+            self.state = type("S", (), {"name": "JOB_STATE_EXPIRED"})()
+
+    calls, fns = _fakes()
+    fns["poll"] = lambda client, job_name: _OtherJob(job_name)
+    paths = [tmp_path / "c0.jsonl"]
+    rec = tmp_path / "batch_jobs.json"
+
+    run_batch_jobs(None, "m", paths, "leg", **fns,
+                   log=logging.getLogger("t"), record_path=rec)
+
+    record = _json.loads(rec.read_text())
+    assert record["chunks"][0]["state"] == "JOB_STATE_EXPIRED"
+
+
+def test_batch_recover_does_not_merge_a_job_that_did_not_succeed(
+    tmp_path, monkeypatch,
+):
+    """The SUCCEEDED gate, pinned.
+
+    Both existing recover fakes return JOB_STATE_SUCCEEDED, so turning the
+    gate into `if False:` was invisible — a FAILED or EXPIRED job's rows
+    could be merged into the leg's probabilities.
+    """
+    import argparse
+    import json as _json
+
+    import scripts.lib_batch_api as lba
+    import scripts.run_pv as run_pv
+
+    crops_dir = tmp_path / "crops"
+    crops_dir.mkdir()
+    (crops_dir / "candidate_manifest.json").write_text(
+        _json.dumps({"candidates": [{"candidate_id": 1}]}),
+    )
+    config_path = tmp_path / "verifier.json"
+    config_path.write_text(_json.dumps({"model": "gemini-3-flash"}))
+    leg = tmp_path / "leg"
+    leg.mkdir()
+    (leg / "batch_jobs.json").write_text(
+        _json.dumps({"chunks": [{"index": 0, "job": "batches/failed"}]}),
+    )
+
+    class _Job:
+        state = type("S", (), {"name": "JOB_STATE_FAILED"})()
+
+    class _Batches:
+        def get(self, name):
+            return _Job()
+
+    class _Client:
+        batches = _Batches()
+
+    retrieved: list[str] = []
+    booked: list[str] = []
+
+    monkeypatch.setattr(run_pv, "_get_api_key", lambda: "test-key")
+    monkeypatch.setattr(run_pv, "load_system_instruction", lambda cfg: "sys")
+    monkeypatch.setattr("google.genai.Client", lambda **kwargs: _Client())
+    monkeypatch.setattr(
+        lba, "retrieve_batch_results",
+        lambda client, job: retrieved.append("fetched") or [{"key": "x"}],
+    )
+    monkeypatch.setattr(run_pv, "_finish_batch_outputs",
+                        lambda **kwargs: booked.append("booked") or 0)
+
+    args = argparse.Namespace(
+        output_dir=leg, crops_dir=crops_dir, verifier_config=config_path,
+        job=[], model=None, thinking_level=None, temperature=None,
+        iterations=1, strict=True,
+    )
+
+    assert run_pv.cmd_batch_recover(args) == 1
+    assert retrieved == []   # its results were never even fetched
+    assert booked == []      # and nothing was written over the leg
+
+
+def test_iterations_really_divide_the_per_job_candidate_budget(
+    tmp_path, monkeypatch,
+):
+    """The division, pinned behaviourally rather than by source text.
+
+    The existing test reads run_pv.py and asserts an expression is present
+    in it, which a comment satisfies just as well: the division could be
+    deleted outright and the suite would not move, and a K = 5 leg would
+    then build chunks five times too large and breach the 2 GB per-file
+    limit. This drives the real path instead and counts the candidates
+    that actually reach the builder.
+    """
+    import scripts.run_pv as run_pv
+
+    class _FakeFiles:
+        def list(self):
+            return []
+
+    class _FakeClient:
+        files = _FakeFiles()
+
+    chunk_sizes: list[int] = []
+
+    def _build_consensus(*, manifest, config, output_path, crops_base_dir,
+                         iterations, temperature):
+        chunk_sizes.append(len(manifest["candidates"]))
+        output_path.write_bytes(b"x" * 16)
+        return len(manifest["candidates"]) * iterations
+
+    monkeypatch.setattr(run_pv, "build_verifier_jsonl_consensus",
+                        _build_consensus)
+    monkeypatch.setattr(run_pv, "load_system_instruction", lambda cfg: "sys")
+    monkeypatch.setattr(run_pv, "_get_api_key", lambda: "test-key")
+    monkeypatch.setattr(run_pv, "_resolve_model_name", lambda c, m: m)
+    monkeypatch.setattr("google.genai.Client", lambda **kwargs: _FakeClient())
+    monkeypatch.setattr(run_pv, "run_batch_jobs", lambda *a, **k: ([], []))
+    monkeypatch.setattr(run_pv, "_finish_batch_outputs", lambda **kwargs: 0)
+
+    run_pv._verify_batch(
+        manifest={"candidates": [{"candidate_id": i} for i in range(10)]},
+        config={"model": "gemini-3-flash"},
+        crops_base_dir=tmp_path,
+        output_dir=tmp_path / "leg",
+        iterations=5,
+        temperature=None,
+        dry_run=False,
+        max_batch_candidates=10,
+    )
+
+    # The limit is in REQUESTS: 10 requests per job at K = 5 is 2
+    # candidates per job, so ten candidates make five chunks.
+    assert chunk_sizes == [2, 2, 2, 2, 2]
