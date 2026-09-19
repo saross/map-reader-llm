@@ -67,7 +67,10 @@ import glob
 import json
 import os
 import sys
+from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 #: List rate cards, USD per 1M tokens, read at source and recorded in
 #: ``reports/token-load-audit-2026-06-12.md`` section 2 (Gemini 3) and
@@ -197,12 +200,22 @@ def read_fragments(root: str) -> list[dict[str, Any]]:
     Returns:
         One dict per fragment that has a meta file, in directory-sorted order.
     """
+    from scripts.normalise_pass_layout import select_pass_file
+
     out: list[dict[str, Any]] = []
     for name in sorted(d for d in os.listdir(root) if d.startswith("run_")):
-        metas = sorted(glob.glob(os.path.join(root, name, "*.meta.json")))
+        metas = sorted(Path(p) for p in glob.glob(os.path.join(root, name, "*.meta.json")))
         if not metas:
             continue
-        meta = json.load(open(metas[0]))
+        # The pass's meta by rule, never by sort order: a chunked pass whose
+        # chunks were never merged has no pass meta, and pricing chunk 0 as
+        # the pass at a budget gate reports one seventh of the run with no
+        # sign anything is wrong (audit lens A and B, 2026-09-19). Such a
+        # directory stops the audit.
+        chosen = select_pass_file(metas, ".meta.json", Path(root) / name)
+        with open(chosen) as fh:
+            meta = json.load(fh)
+        metas = [str(chosen)]
         usage = meta["usage_stats"]
         total_input = usage["total_input_tokens"]
         out.append(

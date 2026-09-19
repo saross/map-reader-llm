@@ -1366,14 +1366,36 @@ def estimate_cost(
 # remains for already-corrupted historical runs.
 
 
+#: Keys whose values are ratios, not counts: a sum of two shares is not a
+#: share. They are cleared on merge so a consumer recomputes them from the
+#: summed counts (the cost auditors already do).
+_RATIO_SUFFIXES = ("_share", "_rate", "_ratio")
+
+
 def _sum_dicts(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
-    """Element-wise sum two dicts of numeric values; missing keys treated as 0."""
+    """Element-wise sum two dicts of counts; missing keys treated as 0.
+
+    Only ints and floats are summed. A string (``usage_source``), a bool or
+    ``None`` keeps the first non-null value seen; a ratio key (see
+    :data:`_RATIO_SUFFIXES`) is set to ``None`` because the sum of two
+    shares is meaningless. Before 2026-09-19 every value was added, which
+    crashed a resume against a pre-S154 meta (``int + str``) and wrote a
+    ``cached_share`` of 1.58 into a cost artefact (audit lens A).
+    """
     out = dict(a)
     for k, v in b.items():
         if isinstance(v, dict):
-            out[k] = _sum_dicts(out.get(k, {}), v)
+            out[k] = _sum_dicts(out.get(k, {}) or {}, v)
+        elif k.endswith(_RATIO_SUFFIXES):
+            out[k] = None
+        elif isinstance(v, bool) or not isinstance(v, (int, float)):
+            if out.get(k) is None:
+                out[k] = v
         else:
-            out[k] = (out.get(k, 0) or 0) + (v or 0)
+            current = out.get(k, 0)
+            if isinstance(current, bool) or not isinstance(current, (int, float)):
+                current = 0
+            out[k] = current + v
     return out
 
 

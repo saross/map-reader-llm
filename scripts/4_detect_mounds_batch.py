@@ -1630,13 +1630,22 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
                 f"\n--- Chunk {chunk_idx + 1}/{num_chunks}: "
                 f"SKIPPING (output exists: {chunk_geojson.name}) ---"
             )
-            # Count existing tiles for summary
-            chunk_tiles = chunk_geojson.with_suffix(".tiles.json")
-            if chunk_tiles.exists():
-                with open(chunk_tiles) as f:
-                    td = json.load(f)
-                total_processed += len(td.get("completed", []))
-                total_failed += len(td.get("failed", []))
+            # A finished chunk has a sidecar beside its geojson (both are
+            # written by complete_batch_unit). A geojson WITHOUT one is an
+            # inconsistent state — a truncated or partial write — and until
+            # 2026-09-19 it was counted as nothing at all and the run then
+            # printed "Batch complete" short (audit lens B). It is treated as
+            # a failed chunk: counted, merge withheld, no re-spend without
+            # the operator looking.
+            if chunk_geojson.with_suffix(".tiles.json").exists():
+                processed, failed = tally_chunk(run_dir, suffix, chunk_limit, True)
+                total_processed += processed
+                total_failed += failed
+            else:
+                print(f"    {chunk_geojson.name} has no .tiles.json sidecar — "
+                      "treating the chunk as failed, not as done")
+                chunk_failed = True
+                total_failed += chunk_limit
             continue
 
         if needs_chunking:

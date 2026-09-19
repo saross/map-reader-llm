@@ -1163,6 +1163,43 @@ def validate_thinking_level(model_name: str, thinking_level: str | None) -> None
             return
 
 
+def locate_pass_files(unit_dir: Path) -> tuple[Path, Path, Path] | None:
+    """The one geojson, tiles sidecar and meta that ARE the pass in *unit_dir*.
+
+    Until 2026-09-19 ``patch_failed_tiles`` took ``glob(...)[0]`` three times
+    independently — directory order, with chunk files as candidates — so on
+    a chunked run it could read one chunk's failed list and write the
+    recovered features into another chunk's geojson (audit lens A). The
+    rule now lives in ``normalise_pass_layout.select_pass_file``: chunk
+    files are never candidates, a chunk-only or ambiguous directory is
+    refused.
+
+    Args:
+        unit_dir: The pass directory.
+
+    Returns:
+        ``(geojson, tiles, meta)`` or ``None`` when any of the three is
+        absent, chunk-only or ambiguous (the caller skips the unit).
+    """
+    from scripts.normalise_pass_layout import select_pass_file
+
+    picked: list[Path] = []
+    for suffix in (".geojson", ".tiles.json", ".meta.json"):
+        hits = sorted(p for p in unit_dir.glob(f"*{suffix}")
+                      if p.is_file() and "batch_working" not in p.parts)
+        if suffix == ".geojson":
+            hits = [h for h in hits if "detections" in h.name]
+        try:
+            chosen = select_pass_file(hits, suffix, unit_dir)
+        except (FileNotFoundError, ValueError) as exc:
+            logger.warning("%s", exc)
+            return None
+        if chosen is None:
+            return None
+        picked.append(chosen)
+    return picked[0], picked[1], picked[2]
+
+
 def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
                          meta_out: Path, tiles_out: Path) -> dict:
     """Merge a chunked batch run's per-chunk metas and tile lists into one pass.
@@ -2605,20 +2642,14 @@ def patch_failed_tiles(
         ``still_failed``, and ``total_patched`` keys.
     """
     # ── Locate output files ───────────────────────────────────
-    geojson_files = list(unit_dir.glob("*.geojson"))
-    tiles_files = list(unit_dir.glob("*.tiles.json"))
-    meta_files = list(unit_dir.glob("*.meta.json"))
-
-    if not geojson_files or not tiles_files or not meta_files:
-        logger.warning("Incomplete unit at %s — skipping", unit_dir)
+    located = locate_pass_files(unit_dir)
+    if located is None:
+        logger.warning("Incomplete or ambiguous unit at %s — skipping", unit_dir)
         return {
             "recovered": [], "recovered_safe_mode": [],
             "still_failed": [], "total_patched": 0,
         }
-
-    geojson_path = geojson_files[0]
-    tiles_path = tiles_files[0]
-    meta_path = meta_files[0]
+    geojson_path, tiles_path, meta_path = located
 
     # ── Read failed tiles ─────────────────────────────────────
     with open(tiles_path) as f:
