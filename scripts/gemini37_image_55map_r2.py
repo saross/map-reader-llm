@@ -1338,14 +1338,104 @@ def did_test_mcc(pred: dict[str, np.ndarray], truth: np.ndarray,
     }
 
 
+# Written onto the T5 row at the rungs where it is not a family member.
+T5_OUT_OF_FAMILY = (
+    "T5 is meaningful only at K = 3, where IM-k3's three votes match the rung. "
+    "Here it is reported for completeness: it sits outside the "
+    "Benjamini-Hochberg family (T1-T4 at this rung), so it carries a raw "
+    "p-value but no adjusted p-value and no verdict. Declaration section 3; "
+    "audit finding M1, 2026-09-20."
+)
+
+
+def apply_bh_to_family(rows: list[dict], q: float = 0.05,
+                       note: str = "") -> list[dict]:
+    """Correct a family of test rows for multiplicity, excluding non-members.
+
+    A row carrying ``"meaningful": False`` is reported for completeness but
+    is not a member of the family at this rung. It must therefore neither
+    inflate the family size *m* — which corrects every real test against a
+    family larger than the one declared, making them more conservative than
+    the declaration says — nor carry a significance verdict of its own,
+    which is what let an exploratory row be read as a finding. Rows with no
+    ``meaningful`` key are members, so a family in which every contrast is
+    meaningful behaves exactly as an uncorrected call to
+    :func:`apply_bh_correction` over all rows.
+
+    Mutates *rows* in place:
+
+    - members gain ``bh_adjusted_p`` and a boolean ``significant``;
+    - non-members gain ``significant = None`` and, when *note* is given, a
+      ``note`` — and deliberately gain **no** ``bh_adjusted_p``, because an
+      adjusted p-value means nothing outside the family it was adjusted
+      against.
+
+    Args:
+        rows: Test rows, each carrying a raw ``p_value``.
+        q: FDR threshold. A member is significant when its adjusted
+            p-value falls below it.
+        note: Explanation written onto each non-member row.
+
+    Returns:
+        The member rows, in their original order.
+
+    Examples:
+        >>> rows = [{"p_value": 0.01}, {"p_value": 0.02, "meaningful": False}]
+        >>> members = apply_bh_to_family(rows, note="outside the family")
+        >>> len(members), rows[0]["bh_adjusted_p"], rows[1]["significant"]
+        (1, 0.01, None)
+    """
+    family = [r for r in rows if r.get("meaningful", True)]
+    adjusted = apply_bh_correction([r["p_value"] for r in family], q=q)
+    for r, adj in zip(family, adjusted, strict=True):
+        r["bh_adjusted_p"] = round(float(adj), 6)
+        r["significant"] = bool(adj < q)
+    for r in rows:
+        if r.get("meaningful", True):
+            continue
+        r.pop("bh_adjusted_p", None)
+        r["significant"] = None
+        if note:
+            r["note"] = note
+    return family
+
+
+def log_test_row(k: int, metric: str, r: dict) -> None:
+    """Log one row of the 2x2 family, marking rows outside the BH family.
+
+    The operator-facing line is where a reading of these tests usually
+    starts, so a row that is not in the family must not print beside the
+    others with a bare ``SIG``/``ns`` verdict — the ``meaningful`` flag was
+    visible only in the JSON before 2026-09-20 (audit finding m4).
+
+    Args:
+        k: The rung.
+        metric: ``"MCC"`` or ``"F1"``.
+        r: One test row, corrected by :func:`apply_bh_to_family`.
+    """
+    if "bh_adjusted_p" in r:
+        tail = (f"BH={r['bh_adjusted_p']:.4f} "
+                f"{'SIG' if r['significant'] else 'ns'}")
+    else:
+        tail = "BH=     n/a  outside the family at this rung"
+    logger.info("K=%d %-3s %s %-30s d=%+.4f p=%.4f %s", k, metric, r["test"],
+                r["name"], r["observed_diff"], r["p_value"], tail)
+
+
 def stage_tests_2x2(rungs: tuple[int, ...]) -> int:
     """Run the declared 2x2 family at each rung and write one JSON per rung.
 
     Cells: A = the 3.7 pool (``G37``), B = the Gemini 3 pool (``G3``), arms
     1 and 2, all at the carried point. T1–T3 and T5 use the board's paired
-    tile-swap tests; T4 is :func:`did_test_f1` / :func:`did_test_mcc`; BH at
-    q = 0.05 across the five per metric. K = 3 is the primary rung; the
-    file records the rung's status (primary / exploratory).
+    tile-swap tests; T4 is :func:`did_test_f1` / :func:`did_test_mcc`. K = 3
+    is the primary rung; the file records the rung's status (primary /
+    exploratory).
+
+    Benjamini-Hochberg runs at q = 0.05 per metric across the family *at
+    that rung*: all five at K = 3, and T1–T4 at K = 1 and K = 5, where T5's
+    IM-k3 comparator is a three-vote cell (declaration section 3). The T5
+    row is still written at those rungs, with its raw statistic and
+    p-value, a ``note``, and no verdict — see :func:`apply_bh_to_family`.
     """
     ref, bounds, tile_index = load_frames()
     im_k3 = next(c for c in COMPARATORS if c.label == "IM-k3")
@@ -1412,11 +1502,11 @@ def stage_tests_2x2(rungs: tuple[int, ...]) -> int:
                         **permutation_test_float(cb1["tp"], cb1["fp"], cb1["fn"],
                                                  im["tp"], im["fp"], im["fn"],
                                                  n_permutations=N_PERMS, seed=SEED)})
+        # The family is T1-T5 at the primary rung and T1-T4 at the others,
+        # where T5's IM-k3 comparator is a three-vote cell and the contrast
+        # is meaningless by the declaration's own terms (section 3).
         for rows in (mcc_rows, f1_rows):
-            adjusted = apply_bh_correction([r["p_value"] for r in rows], q=0.05)
-            for r, adj in zip(rows, adjusted, strict=True):
-                r["bh_adjusted_p"] = round(float(adj), 6)
-                r["significant"] = bool(adj < 0.05)
+            apply_bh_to_family(rows, q=0.05, note=T5_OUT_OF_FAMILY)
         out = {
             "declaration": "reports/image-2x2-tests-declaration-2026-09-19.md",
             "rung": k,
@@ -1432,13 +1522,9 @@ def stage_tests_2x2(rungs: tuple[int, ...]) -> int:
         dest = TWO_BY_TWO_HOME / f"tests_2x2_K{k}.json"
         dest.write_text(json.dumps(out, indent=2) + "\n")
         for r in mcc_rows:
-            logger.info("K=%d MCC %s %-30s d=%+.4f p=%.4f BH=%.4f %s", k, r["test"], r["name"],
-                        r["observed_diff"], r["p_value"], r["bh_adjusted_p"],
-                        "SIG" if r["significant"] else "ns")
+            log_test_row(k, "MCC", r)
         for r in f1_rows:
-            logger.info("K=%d F1  %s %-30s d=%+.4f p=%.4f BH=%.4f %s", k, r["test"], r["name"],
-                        r["observed_diff"], r["p_value"], r["bh_adjusted_p"],
-                        "SIG" if r["significant"] else "ns")
+            log_test_row(k, "F1", r)
         logger.info("wrote %s", dest.relative_to(PROJECT_ROOT))
     return 0
 

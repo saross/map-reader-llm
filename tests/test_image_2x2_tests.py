@@ -3,6 +3,12 @@
 Synthetic tiles: under no interaction the arm effect is the same in both
 rows and p is large; under a strong interaction p is small; the statistic is
 antisymmetric in the rows and zero when both rows share the same cells.
+
+The last three tests cover the family the Benjamini-Hochberg correction is
+applied over, which is the rung's, not always five (audit finding M1,
+2026-09-20): fake p-values make the family size readable off the adjusted
+values, and a row outside the family keeps its raw statistic while losing
+its verdict.
 """
 from __future__ import annotations
 
@@ -195,3 +201,108 @@ def test_the_seed_is_live():
     assert a["observed_diff"] == b["observed_diff"]  # the data did not change
     assert a["null_mean"] != b["null_mean"]          # the draw did
     assert a["null_mean"] == again["null_mean"]      # and is reproducible
+
+
+# ─────────────────────────────────────────────────────────────────────
+# The BH family at each rung (audit finding M1, 2026-09-20)
+# ─────────────────────────────────────────────────────────────────────
+
+# Raw p-values chosen so every rank is unambiguous, the monotonicity
+# cummin never fires, and m = 4 and m = 5 give different answers on every
+# member — so the family size is readable off the arithmetic alone.
+_RAW_P = {"T1": 0.001, "T2": 0.010, "T3": 0.020, "T4": 0.900, "T5": 0.002}
+
+
+def _family_rows(t5_meaningful: bool) -> list[dict]:
+    """The declared five rows, with T5 flagged as the rung requires."""
+    rows = [{"test": t, "name": t, "p_value": _RAW_P[t], "observed_diff": 0.01}
+            for t in ("T1", "T2", "T3", "T4")]
+    rows.append({"test": "T5", "name": "confound check vs IM-k3",
+                 "p_value": _RAW_P["T5"], "observed_diff": 0.05,
+                 "meaningful": t5_meaningful})
+    return rows
+
+
+def test_the_bh_family_is_four_at_k_ne_3_and_five_at_k_3():
+    """The family size is the rung's, and it is visible in the arithmetic.
+
+    `reports/image-2x2-tests-declaration-2026-09-19.md` section 3 makes T5
+    meaningful only at K = 3. Until 2026-09-20 all five rows went into the
+    correction at every rung, so the four real tests at K = 1 and K = 5
+    were corrected against m = 5: the K = 5 file's MCC T3 row carries
+    `0.0629 * 5/3 = 0.104833` where the declared family gives
+    `0.0629 * 4/3 = 0.083867`. That direction is conservative — it can
+    only suppress a finding — but it is not the declared family.
+    """
+    from scripts.gemini37_image_55map_r2 import apply_bh_to_family
+
+    exploratory = _family_rows(t5_meaningful=False)
+    members = apply_bh_to_family(exploratory, note="outside")
+    by_test = {r["test"]: r for r in exploratory}
+
+    assert [r["test"] for r in members] == ["T1", "T2", "T3", "T4"]
+    # p * m / rank with m = 4 and ranks 1..4 over T1, T2, T3, T4.
+    assert by_test["T1"]["bh_adjusted_p"] == round(0.001 * 4 / 1, 6)
+    assert by_test["T2"]["bh_adjusted_p"] == round(0.010 * 4 / 2, 6)
+    assert by_test["T3"]["bh_adjusted_p"] == round(0.020 * 4 / 3, 6)
+    assert by_test["T4"]["bh_adjusted_p"] == round(0.900 * 4 / 4, 6)
+
+    primary = _family_rows(t5_meaningful=True)
+    members = apply_bh_to_family(primary, note="outside")
+    by_test = {r["test"]: r for r in primary}
+
+    assert [r["test"] for r in members] == ["T1", "T2", "T3", "T4", "T5"]
+    # m = 5, and T5's p = 0.002 takes rank 2, pushing T2, T3, T4 down one.
+    assert by_test["T1"]["bh_adjusted_p"] == round(0.001 * 5 / 1, 6)
+    assert by_test["T5"]["bh_adjusted_p"] == round(0.002 * 5 / 2, 6)
+    assert by_test["T2"]["bh_adjusted_p"] == round(0.010 * 5 / 3, 6)
+    assert by_test["T3"]["bh_adjusted_p"] == round(0.020 * 5 / 4, 6)
+    assert by_test["T4"]["bh_adjusted_p"] == round(0.900 * 5 / 5, 6)
+
+
+def test_a_row_outside_the_family_keeps_its_statistic_and_loses_its_verdict():
+    """The second half of M1: no adjusted p-value, no significance.
+
+    At K = 5 the F1 T5 row read `"meaningful": false, "p_value": 0.0009,
+    "bh_adjusted_p": 0.001125, "significant": true` — a verdict on a
+    contrast the family declares meaningless at that rung, one citation
+    away from being read as a confound check that passed. The raw
+    statistic stays, because the row is still reported for completeness.
+    """
+    from scripts.gemini37_image_55map_r2 import (
+        T5_OUT_OF_FAMILY,
+        apply_bh_to_family,
+    )
+
+    rows = _family_rows(t5_meaningful=False)
+    apply_bh_to_family(rows, note=T5_OUT_OF_FAMILY)
+    t5 = rows[-1]
+
+    assert "bh_adjusted_p" not in t5
+    assert t5["significant"] is None
+    assert t5["p_value"] == 0.002 and t5["observed_diff"] == 0.05
+    assert "outside" in t5["note"]
+    # The four members keep a boolean verdict, both ways round.
+    assert [r["significant"] for r in rows[:4]] == [True, True, True, False]
+
+
+def test_the_primary_rung_is_unchanged_by_the_family_rule():
+    """K = 3 must produce exactly what it produced before.
+
+    The committed `tests_2x2_K3.json` is citable and the PI's ruling
+    changes nothing at the primary rung, so the meaningful-T5 path has to
+    stay bit-for-bit identical to a plain correction over all five rows.
+    """
+    from scripts.apply_fdr_correction import apply_bh_correction
+    from scripts.gemini37_image_55map_r2 import apply_bh_to_family
+
+    rows = _family_rows(t5_meaningful=True)
+    expected = apply_bh_correction([r["p_value"] for r in rows], q=0.05)
+
+    apply_bh_to_family(rows, note="outside")
+
+    assert [r["bh_adjusted_p"] for r in rows] == [
+        round(float(p), 6) for p in expected
+    ]
+    assert all("note" not in r for r in rows)
+    assert all(isinstance(r["significant"], bool) for r in rows)
