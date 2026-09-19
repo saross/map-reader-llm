@@ -8159,3 +8159,48 @@ remains the missing primitive.
   shapes.** A 500-tile probe with the preamble in a context cache agreed with
   the three inline realtime passes at 0.9493 mean per-tile count agreement,
   against a realtime-to-realtime baseline of 0.9527 on the same tiles.
+
+## Session 155 — 2026-09-18/19 (the flex collapse mid-run, batch queue latency, route equivalence, the Gemini 3 row's over-generation, auditing the fixes)
+
+- **A flex verifier arm can collapse mid-run, not just fail to start.** The
+  3.7 K = 5 arm 2 ran at 58 candidates/min for its first hour, then fell
+  under a 503 storm to ~1/min for eight hours (44,091 server-error retries
+  over 21 hours), ending 7,702/9,173 with 1,471 candidates exhausted — while
+  its progress line read `9173/9173`, because the bar counts attempts.
+  `run_pv.py cleanup` on the same configuration recovered all 1,471 in two
+  attempts at 20–28/min once the storm eased. PI ruling: 3.7/3.8 legs on
+  batch by default (docs/agent-guidance.md).
+- **Batch queue latency is highly variable and unrelated to job size.** Six
+  4,000-request jobs lodged together returned at 9 min, 9 min, 43 min,
+  ~50 min, 2 h 45 m and 3 h 24 m; a 2,227-request job took 33 min and a
+  2,788-request one 12 min. Lodging every chunk before polling any is the
+  right shape; the wall-clock is the slowest job's.
+- **A 503 on the POLLING endpoint loses a chunk from the pass while the job
+  completes.** Job 4 of 6 was written off at 01:33 and was SUCCEEDED when
+  fetched by name at 02:39; folded in at no cost with `batch-recover`. Polling
+  now tolerates twenty consecutive errors and every job name is recorded.
+- **Route is inside re-invocation drift.** 200 candidates re-verified on batch
+  against their flex probabilities: 60 % identical, 5.3 % flips at 0.90; the
+  same verifier re-invoked on flex against a near-identical crop of the same
+  mound: 61 % / 3.5 %. On `gemini-3.7-flash` `low` the drift is larger than
+  Obs 325's Gemini 3 `minimal` figures (80 % identical, 3 % flips) — thinking
+  adds nondeterminism.
+- **The Gemini 3 image proposer over-generates 1.7x per pass and 3.3–5.0x at
+  the union.** Unions of 22,785 / 36,389 / 45,786 against 6,985 / 8,337 /
+  9,173. At K = 1 the GS-carried point keeps half the union: F1 0.66 vs 0.87,
+  tile-MCC 0.71 vs 0.76. Micro-F1 sees every surplus detection; tile-MCC sees
+  only the surplus on new tiles.
+- **At K = 1 the 3.7 verifier's gain depends on the proposer family** (2x2
+  family, exploratory rung): +0.0245 MCC on the 3.7 pool, −0.0081 on the
+  Gemini 3 pool, interaction +0.0327 (BH-significant). Primary rung pending.
+- **K = 5 on the 3.7 pool: the knee is K = 3.** F1 0.8719 → 0.9199 → 0.9270,
+  MCC 0.7569 → 0.7648 → 0.7659; FP detections 1,195 → 585 → 474 at recall
+  0.957 → 0.946. Carried points within 0.001 of every rung's oracle.
+- **Auditing the fixes finds what the fixes broke.** Two lenses on the week's
+  code found two criticals in the chunked proposer (a failed chunk skipped past
+  its count, then merged over); the re-audit of the resulting fixes found a
+  new critical (a batch rerun that lost chunks rewrote a good
+  `probabilities.json` from the partial results). The second pass is not
+  optional after fixes written in a hurry.
+- **Explicit caching held at 0.945 on batch passes 4–5** against 0.808–0.813
+  on flex with implicit caching: US$61.9 per 24,561-tile pass against US$81.9.

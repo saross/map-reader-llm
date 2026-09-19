@@ -9645,3 +9645,64 @@ watcher processes and once produced a bus error during `git add` — the work
 itself runs on sapphire and was never at risk, but staging needs explicit
 pathspecs on this checkout, both for that reason and because ecryptfs makes
 `git add` fail on a set of phantom files.
+
+## Session 155
+
+**2026-09-18 to 2026-09-19 · Fable lane · map-reader-llm · session 08a272f1**
+
+**The two S154 defects.** D1: `scripts/wait_for_run.py`, a terminal-state
+watcher (success / partial / crashed / stale / stopped → 0/2/3/4/5), rule in
+the guidance. D2: `normalise_pass_layout.select_pass_file` never chooses by
+sort order; chunk-only and ambiguous layouts refused. Sibling: chunk merge
+summed `total_tiles` (was max); runs 4–5 sidecars and, later, their metas
+(`items_processed` 4,000 → 24,561) re-merged.
+
+**3.7 K = 5 rung.** Union 9,173 (stride builder). Arm 1 US$6.49, clean. Arm 2
+on flex: 21 h under a 503 storm, 7,702/9,173, then two cleanups to 9,173/9,173,
+US$10.18. Swept, materialised, scored on PR #19: arm 2 carried F1@50 0.9270 /
+tile-MCC 0.7659; ladder monotone, K = 3 the knee. Findings and campaign record
+extended (campaign as extended US$415.32); six cells registered unsigned;
+K = 3 → 5 contrast ruled exploratory.
+
+**Gemini 3 row.** GS calibration on `image-b-gs-2026-08-28` with
+`image_b_prepare_and_union.py` (the builder that reproduces the committed 622;
+a first attempt with `merge_passes.py` archived, US$3.73): arm 1 (0.15, k3/k5)
+F1@20 0.8200 / 0.8431, arm 2 (0.88, k3) 0.8408, (0.95, k5) 0.8551. 55-map
+unions 22,785 / 36,389 / 45,786. Phase gate run; batch-vs-flex probe passed
+(US$0.22). PI approved US$200; PR #19 merged; driver generalised
+(`scripts/image-55map-unions-and-arms.sh`). Arm 1 complete on all rungs
+(US$72.40). Arm 2 K = 1 complete after `batch-recover` folded a polling-lost
+chunk back in (US$25.40); K = 3 lodged 04:12 UTC, 3 of 10 jobs back at close;
+K = 5 not yet lodged. K = 1 rung scored: F1 0.6664 / 0.6644, MCC 0.7144 /
+0.7063 — flagged, not a defect.
+
+**Tests.** `reports/image-2x2-tests-declaration-2026-09-19.md`: five tests per
+metric at K = 3 primary, K = 1 and K = 5 exploratory, E89 floor and caveats.
+`--stage tests-2x2` implemented (four-cell interaction as a tile-swap
+permutation) and run at K = 1: interaction +0.0327 MCC / +0.0262 F1,
+BH-significant; the 3.7 verifier helps the 3.7 pool and not the Gemini 3 pool.
+
+**Code audit** (PI request, everything since 2026-09-11): two fresh-context
+lenses plus a re-audit of the fixes. Fixed: two criticals in the chunked
+proposer, one in the batch verifier rerun path, and ~15 mediums (pass-file rule
+in three places, `_sum_dicts`, sweep premise, probe, drivers' guards and
+fail-fast, watcher missing-log, r2 merge helpers, wiring tests). Batch verifier
+path: usage booked, raw results kept, chunked at 4,000, polling tolerant,
+`batch-recover`. Tier-1 suite 2,935 passing; drift guards regenerated.
+
+**Rulings.** 3.7/3.8 legs on the Batch API unless flex is measured as prompt
+(2026-09-18); complete the grid, US$200 provisional (2026-09-19); K = 3 → 5
+exploratory; 2x2 family option 3 with K = 3 primary. E89 written. Four
+observations accepted (Obs 484–487, entering at close).
+
+**Spend (audited).** 3.7 K = 5 US$16.67; Gemini 3 GS calibration US$9.01;
+mis-built legs US$3.73; probe US$0.22; Gemini 3 55-map arm 1 US$72.40, arm 2
+K = 1 US$25.40; K = 3 in flight (≈ US$40), K = 5 pending (≈ US$51). Orphaned
+batch on the wrong union ≈ US$2.85 unaudited.
+
+**Contextual assumptions.** The 3.7 arm 2 K = 5 leg was left on flex at the
+PI's instruction ("don't change it now") after the batch ruling; the K = 1
+Gemini 3 tests are post hoc by construction because that rung was scored
+before the family was declared; every launch after the blocked-session
+incident went through pid-file-guarded scripts with all three descriptors
+redirected.

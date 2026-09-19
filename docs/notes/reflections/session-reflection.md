@@ -11447,3 +11447,58 @@ and a browser closed by request from a machine the PI had left. Relational
 note: the PI's "shoot, I'm still out, can you gracefully close brave?" — the
 first time this project's work has extended to housekeeping on the workstation
 itself.*
+
+## Session 155 — 2026-09-18/19 — the session that finished one row, opened the second, and audited its own week
+
+*map-reader-llm. Written by the instance that did the work — no compaction
+intervened. Fable lane. Session id 08a272f1-a18d-442b-adbc-511d687d8083.*
+
+**What was different about this session compared to recent ones?** Its
+shape. It ran for the better part of thirty hours, and most of that was
+waiting: a 3.7 verifier arm crawling through a flex 503 storm at one
+candidate a minute for twenty-one hours, then batch queues of one to three
+and a half hours per job. Recent sessions were dense with rulings; this one
+was long silences punctuated by short bursts, and the bursts were of a new
+kind — twice I lodged legs and handed the waiting to monitors rather than
+holding the thread myself. That changed what the session could contain. The
+gaps were where the week's code audit happened (two fresh-context lenses
+and a re-audit of the fixes, which found a critical the fixes had introduced),
+where the K = 5 rung got its documents and registration, where the 2x2's
+test family was declared while its primary cell was still in a queue. None
+of that would have fitted a session that was watching a progress bar.
+
+The other difference was in the failures. Session 154 named a family —
+success reported while the artefact is wrong — and this session added a
+temporal member to it. A launch line I had written at 23:26 was blocked, not
+dead; when the driver it launched exited twenty-one hours later, the rest of
+the line ran, rebuilt two unions with a builder rejected in the meantime, and
+handed a batch job the wrong candidates. The count gate that should have
+caught it compared two artefacts the same stale command had written, so they
+agreed. I have now written that rule into the guidance and, within the same
+hour, violated a neighbouring one (a `pgrep` that matched its own command
+line). Knowing a hazard and not committing it are different things, and the
+gap between them is exactly the space the audit lenses were built to cover.
+
+**What question emerged that wasn't pursued?** Whether the carried-point
+protocol is even-handed across proposer families. The Gemini 3 row's K = 1
+rung landed at F1 0.66 against the 3.7 row's 0.87, with tile-MCC nearly level.
+Every gate passed; the union is 3.3 times the size and the GS-carried point
+keeps about half of it. Unanimity at K = 3 will filter that, and the primary
+rung will say how much. But the question underneath is whether a threshold
+calibrated on a 487-tile frame, where the pool's over-generation is muted,
+transfers fairly to a corpus where it is not — and whether the 3.7 row looks
+good partly because its pool proposes tightly rather than because its
+verifier is better. The declared family tests the interaction, which is the
+right first question; the calibration-transfer question is the next one, and
+nobody has asked it yet.
+
+Also not pursued, and offered: a US$10 replicate of the 3.7 arm 2 at K = 5,
+which would say whether the +0.007 F1 step is real or drift. The PI ruled the
+contrast exploratory, which is the principled reading of a rung the card
+excluded; the replicate remains the cheap way to find out.
+
+*Texture: a marathon with a rhythm. The PI's interventions were few and each
+changed the default — batch for 3.7 from now on but not for the run in
+flight; complete the grid; declare before the cell exists; use the waits for
+documentation. Relational note: "we're low on context, your call" at the end —
+the first time the PI has left the reflect-or-wait decision to me.*

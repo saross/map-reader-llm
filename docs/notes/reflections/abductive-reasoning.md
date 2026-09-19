@@ -8537,3 +8537,55 @@ what made a two-minute check possible instead of an argument from prose.
 Not a defect in the row, which labels these figures "the pure model effect, not
 the gate's verdict" and was accurate throughout. The error was in the review,
 not the artefact.
+
+## Entry — 2026-09-19 (Session 155, map-reader-llm): A cell that halves on one metric and holds on the other
+
+**Session:** 08a272f1-a18d-442b-adbc-511d687d8083
+**Instance:** primary
+
+### Surprising fact
+
+The first scored rung of the Gemini 3 image row of the 2x2 — K = 1, both
+arms, carried points fixed on the GS — came in at micro-F1 0.6664 / 0.6644
+against the 3.7 row's 0.8477 / 0.8719, while tile-MCC was 0.7144 / 0.7063
+against 0.7324 / 0.7569. A 0.2 F1 gap beside a 0.02–0.05 MCC gap on the same
+detections is not a shape the earlier rows had shown. My first reading was a
+pipeline error: a wrong operating point, a mis-booked frame, or the K = 1
+collapse rule applied wrongly.
+
+### Probe
+
+Every gate the chain has passed: gate 6 booked 22,785/22,785 candidates on the
+scoring frame; gate 1b matched the carried constants to the calibration
+files; the oracles were swept and the carried cells sat where the sweep put
+them. The union itself is the answer: 22,785 candidates against the 3.7 pool's
+6,985 at the same rung, from a proposer that yields 1.7x the raw detections
+per pass. The verifier at the GS-carried point retains 8,529 / 9,172 of them
+(the 3.7 row: 5,997). Precision 0.51–0.53 against 0.80. The GS calibration had
+shown the same family gap (0.82 vs 0.92 F1@20) in muted form on a 487-tile
+frame where over-generation has less room.
+
+### Belief revision
+
+From "the Gemini 3 row is mis-scored" to "the two metrics measure different
+things about a pool that over-generates". Micro-F1 counts every surplus
+detection; tile-MCC counts only surplus on tiles that had none, and most of
+the surplus lands on tiles already scored. The row is not broken; a single
+pass of this proposer is. That reframes the primary rung: unanimity at K = 3
+is, on an image pool, a precision filter (findings § 3), so the K = 3 result
+will separate "proposer family that over-generates" from "proposer family
+that finds different mounds".
+
+### What would change this belief
+
+If the K = 3 and K = 5 rungs keep a large F1 gap with MCC level, the
+over-generation reading holds and the family effect is mostly precision. If
+the gap closes at K = 3 on both metrics, the K = 1 cell was a single-pass
+artefact and the 2x2's interaction (already +0.0327 MCC at K = 1) should
+shrink. If MCC opens up at higher K, something other than surplus is at work.
+
+### Implications for practice
+
+A carried point calibrated on a small frame keeps its threshold, not its
+precision, when the pool scales; report the union size beside every cell, and
+read a metric pair, not a metric.

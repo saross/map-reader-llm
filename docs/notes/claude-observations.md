@@ -2554,3 +2554,41 @@ check, not an intention.
 **How to apply.** When chaining on a long job, define the wait condition as "has
 it stopped" plus a separate read of "how did it stop", never as "has it
 succeeded".
+
+## claude-obs 117 — 2026-09-19: He changes the default without touching the run in flight
+
+**Pattern.** With a 3.7 arm crawling on flex, the PI ruled "unless performance
+is better than this, we should run batch — don't change it now". The policy
+moved for every future leg; the live leg kept its route so its rung stayed
+comparable with its siblings.
+**Lesson.** A ruling can separate the default from the instance. Protect the
+in-flight comparison; fix the policy.
+**How to apply.** When a route or parameter proves bad mid-run, propose the
+policy change and the disposition of the running job as two decisions, not one.
+
+## claude-obs 118 — 2026-09-19: Self-critique — two rules I had just written, broken within the hour
+
+**Pattern.** I committed twice with failing tests because `pytest … | tail -1`
+returns tail's status, and I used `pgrep -f` over ssh to check for a running
+driver an hour after writing the guidance rule that says never to — the
+pattern matched my own command line and skipped a launch. Both caught by the
+next artefact, not by me.
+**Lesson.** Writing a rule down does not install it. Under speed the hand
+reaches for the old idiom; the defence has to be mechanical (a pid file, a
+pytest call with no pipe) rather than remembered.
+**How to apply.** No pipe after `pytest` in a commit chain; liveness by pid
+file only; when I write a rule, grep my own next ten commands for its
+violation.
+
+## claude-obs 119 — 2026-09-19: He treats an API wait as a documentation window and asks for the menu
+
+**Pattern.** "Anything we can do here while we wait?" — then, given four
+options and a recommendation, he took all four and added a fifth (discuss the
+test design so the decision is deliberate). The waits became the K = 5
+documents, the registration draft, the observation drafts and the test
+declaration.
+**Lesson.** A long wait is not idle time to him; it is the slot for the
+low-urgency, high-value work that never gets a session of its own.
+**How to apply.** When a run will take hours, lay out the documentation and
+registration work that has become possible, with a recommended order, without
+being asked.
