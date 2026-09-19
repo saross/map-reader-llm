@@ -35976,3 +35976,374 @@ that could not see it); **Obs 486** (the phase-gate probe of the same
 session, which read artefacts rather than status lines); **Obs 478** (a
 count that can hold while the set changes — the same limit on counting as
 a check).
+
+## Observation 488: An asymmetry in which cells were materialised halved a cross-track finding — the carried-analogue artefact (Session 156, 2026-09-20)
+
+**Context.** The PI asked on 2026-09-20 what the 17-exemplar few-shot
+image library buys the 3.7 Flash proposer on the 55-map corpus at
+K/N = 1, 3, and 5. The morning report
+(`reports/text-vs-image-tracks-2026-09-20.md`) answered it, and an
+afternoon comparability inventory
+(`reports/comparability-inventory-37-runs-2026-09-20.md`, `cc73aa81e`)
+audited the answer's footing axis by axis.
+
+**The finding.** The text track has no carried cell on r2 below N = 5,
+so the morning report fell back to the nearest available point — the
+text F1-oracle — and read the K = 1 edge as
+0.8719 − 0.8610 = **+0.0109**. The r2 board's own sweep CSVs already
+held the carried-analogue points, swept but never materialised. Read
+carried against carried, the K = 1 edge is **+0.0260**.
+
+| Rung | arm 2, carried vs carried | arm 1, carried vs carried | morning report (image carried vs text **oracle**) |
+|---|---:|---:|---:|
+| K/N = 1 | 0.8719 − 0.8459 = **+0.0260** | 0.8477 − 0.7859 = **+0.0618** | +0.0109 |
+| K/N = 3 | 0.9199 − 0.8802 = **+0.0397** | 0.9025 − 0.8469 = **+0.0556** | +0.0351 |
+| K/N = 5 | 0.9270 − 0.8827 = **+0.0443** | 0.9130 − 0.8551 = **+0.0579** | +0.0443 |
+
+The mechanism is an asymmetric carried-analogue tax. Substituting a
+rung's oracle for its missing carried point flatters that side by the
+gap between them, and the two tracks' gaps are unlike: the text track's
+at N = 1 is **0.0142** (canonical, oracle 0.8563 − analogue 0.8421;
+`grid_board.json` `named_contrasts["arm2-N1: carried vs oracle"]`
+`delta_f1` −0.014196), the image track's at K = 1 is **0.0023** (r2,
+0.8742 − 0.8719). A sixfold asymmetry in the substitution, applied to
+one side only, moves the K = 1 row by a factor of 2.4. The K/N = 5 row,
+where both sides have real carried cells, does not move at all.
+
+**Why this matters.** The morning report read the K-dependence as a
+finding and flagged it to the PI under `docs/agent-guidance.md`
+§ Research Finding Calibration: "the library's return is smallest
+exactly where the cost argument for one pass is strongest" (§ 4.10).
+On a carried-vs-carried reading the K = 1 edge is +0.0260 and the
+K-dependence is far weaker — the surprise was the artefact, not the
+result. Nothing in the pipeline was wrong; the delta was assembled from
+whichever point each side happened to have on disk. The principle
+generalises past this one comparison: **an asymmetry in WHICH cells got
+materialised can masquerade as a finding, so before reading a delta,
+check that both sides sit on the same point basis.** The repair is
+$0 — the seven missing carried-analogue cells are already swept, and
+materialising them also buys them CIs and tile-MCC, which the sweep
+rows do not carry.
+
+**Also.** The board sets its own precedent against itself:
+`A-N3-carried` and `B-N3-carried` exist with `basis: "carried
+(post-hoc)"` (`cells_manifest.json`), and the same construction was
+never applied to the `ARM1` / `ARM2` / `FOURTH` families. The
+inventory names this the mechanical cause (§ 5, missed item 11).
+
+**Findable later**: carried-analogue artefact, carried-vs-carried basis,
+point-basis asymmetry, +0.0109 becomes +0.0260, K = 1 row moves by a
+factor of 2.4, carried-analogue tax 0.0142 text against 0.0023 image,
+seven unmaterialised cells, sweep CSVs hold the points, `A-N3-carried`
+post-hoc precedent, text-vs-image library edge, delta on mismatched
+bases, comparability inventory § 3.2.
+
+Sources: `reports/comparability-inventory-37-runs-2026-09-20.md` § 3.2
+(read 2026-09-20: the seven unmaterialised carried-analogue rows with
+n_det / tp / fp / fn and micro-F1@50 on r2 — `ARM2-N1` (0.80, k1)
+0.8459, `ARM2-N3` (0.80, k3) 0.8802, `ARM1-N1` (0.10, k1) 0.7859,
+`ARM1-N3` (0.10, k3) 0.8469; the carried-vs-carried consequence table;
+the 0.0142 / 0.0023 tax figures and the `grid_board.json` anchor) and
+§ 5 items 3 and 11 (read 2026-09-20: "the K = 1 delta the report gives
+(+0.0109 …) becomes +0.0260 carried-vs-carried" and "§ 4.10's
+calibration surprise … **is the artefact, not the finding**");
+`reports/text-vs-image-tracks-2026-09-20.md` §§ 1.1, 3.1, 3.2, 4.2 and
+4.10 (read 2026-09-20: the "not available" rows at K/N = 1 and 3, the
++0.0109 / +0.0351 / +0.0399 oracle-basis deltas, and the calibration
+surprise as originally written);
+`results/gemini37-55map-2026-08-31/grid-board/grid_board.json`
+(read 2026-09-20: `named_contrasts["arm2-N1: carried vs oracle"]`
+`delta_f1` −0.014195689597237493, p 0.0007, BH 0.001105);
+`results/55map-final-board-r2-2026-09-06/sweep_ARM{1,2}-N{1,3}.csv`;
+`results/gemini37-image-55map-2026-09-13/sweeps.json`.
+Related: **Obs 481** (a corroboration that compared currencies and read
+as a 4 % match — the same failure mode one axis over, and the reason
+"both sides on the same basis" is a standing check rather than a
+one-off); **Obs 484** (the image K-ladder supplying the image side of
+every row above); **Obs 485** (the Gemini 3 row, whose own
+GS-calibration-gap magnitude the same pair of reports left open);
+**Obs 489** (the other basis mismatch the inventory found in the same
+pass — two verifier-ladder methods).
+
+## Observation 489: Two verifier-ladder methods now coexist in the corpus, and which one the benchmark uses is an open decision (Session 156, 2026-09-20)
+
+**Context.** The comparability inventory asked, axis by axis, which
+differences between the 3.7-generation runs actually bite. One axis had
+been thought settled and was quietly reopened by the image campaign's
+design: how the rungs below the top of a K-ladder come into existence.
+
+**The finding.** The corpus now contains two methods, and they are not
+interchangeable.
+
+| | inherited ladder (text track) | per-rung ladder (both image rows) |
+|---|---|---|
+| lower rungs | derived from the single N = 5 leg over the top union | a verifier leg run at each rung |
+| probability | copied from the nearest K = 10 candidate within 10 m | measured at that rung |
+| unmatched clusters | **dropped from scoring** (counted, and charged in cost) | n/a |
+| marginal cost | $0 | a full leg |
+| rung contrast | free of E89 re-invocation drift | carries it |
+| deployment fidelity | no — a deployment would run the leg | yes |
+
+The drop rates are small but one-sided: **54 of 8,426** at text N = 1
+(0.64 %), **3 of 11,079** at N = 3, and **663 of 25,586** (2.59 %) at
+the fourth cell's N = 1. A dropped candidate can be neither a true nor
+a false positive, so the rung's precision is biased upward by an
+unmeasured amount. The board's r2 families inherit the same
+construction — `sweep_ARM2-N1.csv` at (0.0, k1) shows **8,372**
+= 8,426 − 54.
+
+The two methods trade one unquantified bias for another. Inheritance
+buys rung contrasts that are free of verifier re-invocation drift,
+because the lower rung is not a re-invocation at all; per-rung legs are
+deployment-faithful but put every rung contrast against the E89 floor —
+independent re-invocation at T = 0 moves ~40 % of probabilities and
+flips **3.5–5.3 %** of decisions at the operating point (declaration
+§ 5 caveat 1). Session 156's paired tile-swap of the 3.7 image K = 5
+against K = 3 carried is an example sitting inside that band: F1
+**+0.0071** at *p* < 0.0001, tile-MCC +0.0012 at *p* = 0.61. The
+permutation samples tiles, not verifier nondeterminism, so significance
+there is not evidence the step is real.
+
+**Why this matters.** Neither bias is measured on this corpus. No
+`match_dist_*` was recorded for the 3.7 arms, and no head-to-head
+"inherited rung versus its own leg" comparison exists anywhere, so the
+inheritance bias has a plausible-sounding bound and no number. On the
+other side, a per-rung contrast below the drift floor is untestable
+without a replicate arm, which costs a second full leg. The decision
+was believed settled on inheritance — the text campaign declares its
+lower rungs descriptive, "screening protocol — no carried claims below
+N = 5" — and the image campaign's per-rung design reopened it without
+anyone ruling. **This is recorded as an open decision, not a ruling**:
+the PI is re-deciding which method the benchmark's ladder uses, and the
+paper needs one answer, because a K-ladder assembled from both methods
+cannot be read as a single curve.
+
+**Findable later**: two verifier-ladder methods, inherited versus
+per-rung ladder, probability inheritance within 10 m, unmatched dropped
+54 of 8,426, 3 of 11,079, 663 of 25,586, 8,372 = 8,426 − 54, precision
+biased upward by dropping, E89 drift floor 3.5–5.3 %, rung contrast
+below the drift floor, K = 5 vs K = 3 F1 +0.0071 p < 0.0001, tile-MCC
++0.0012 p 0.61, zero-usd-inherited never built, open decision for the
+PI, benchmark ladder method.
+
+Sources: `reports/comparability-inventory-37-runs-2026-09-20.md` § 3.3
+(read 2026-09-20: the two methods contrasted, the 54 / 3 / 663 drop
+counts against 8,426 / 11,079 / 25,586, the 8,372 sweep-row check, the
+"zero-usd-inherited, never built" label, and the finding that the
+magnitude is not established for the text ladder) and § 1.2;
+`results/gemini37-55map-2026-08-31/findings.md` § "The N-ladder"
+(read 2026-09-20, lines 93–97: "probability inheritance ≤ 10 m,
+unmatched 54 at N=1 and 3 at N=3", the 8,426 / 11,079 / 12,715 union
+sizes, and "screening protocol — no carried claims below N=5");
+`scripts/stride55_ladder.py` (read 2026-09-20, module docstring:
+"probability inheritance by nearest K = 10 candidate within 10 m
+(unmatched clusters counted, excluded from scoring, included in
+cost)"); `reports/image-2x2-tests-declaration-2026-09-19.md` § 5
+caveat 1 (read 2026-09-20: ~40 % of probabilities, 3.5–5.3 % of
+decisions, and "a difference below that floor can be 'significant' and
+still be drift"); `reports/text-vs-image-tracks-2026-09-20.md` §§ 4.4
+and 4.6 (read 2026-09-20: the inheritance caveat, and the Session 156
+paired permutation K = 5 vs K = 3 — F1 +0.0071 *p* < 0.0001, tile-MCC
++0.0012 *p* = 0.61, run on sapphire 2026-09-20 and recorded there
+rather than in a results file).
+Related: **Obs 486** (the batch-versus-flex probe that fixed the E89
+drift floor this entry's second column rests on); **Obs 484** (the
+image K-ladder, whose K = 3 → 5 step is the worked example above, and
+whose knee argument survives either method); **Obs 488** (the sibling
+basis mismatch found in the same inventory pass — there the carried
+point, here the rung); **Obs 479** (the verifier stage's absorption of
+K's F1 return — what a ladder's rungs are measuring in the first place).
+
+## Observation 490: The File API storage cap is a campaign-level resource, not a run-level one — a quota that accumulates across runs must be audited before spend (Session 156, 2026-09-19/20)
+
+**Context.** The Gemini 3 image row's arm 2 K = 5 verifier leg, 45,786
+requests over twelve Batch API chunks, lodged on sapphire on
+2026-09-19. Two days earlier the same project had uploaded the
+2026-09-17 proposer pass inputs, and nothing had deleted them.
+
+**The finding.** At **14:05 UTC** the driver lodged chunks 0–3 and then
+lost chunks 4–11 to `429 FileStorageBytesPerProject`. The Gemini File
+API caps a project at **20 GiB** and uploads persist **30 days**; at the
+moment of failure the project held **45 files, 21.4 GB**, of which
+**~16 GB** was the 2026-09-17 proposer pass uploads — a different stage
+of a different leg, finished, committed, and still charged against the
+cap. The failure was recovered rather than re-bought: the completed
+K = 1 and K = 3 verifier input files were deleted (16 files, **3.55 GB**
+freed), chunks 4–11 were re-lodged with a small script on sapphire (all
+eight lodged 14:38–14:42 UTC, ledger
+`verify_k5_arm2/batch_jobs_relodged.json`), and the two ledgers were
+folded together with `run_pv.py batch-recover`. The leg landed at
+22:11 UTC: 45,786/45,786, 0 failed, audited **US$51.0925**
+(`880c207f7`).
+
+Three defences landed out of it, and each has a lesson attached.
+
+1. **A pre-lodge preflight** — `scripts/lib_batch_api.py`
+   `preflight_file_storage` (`935865223`, tests `a0f40609e`). The
+   library had held `audit_file_storage` and `sweep_stale_files` all
+   along; the verifier batch path simply never called them. The audit
+   then found the new wiring itself untested: deleting **either** call
+   site left **142 of 142 tests green** across the four batch test
+   modules, and `run_pv._verify_batch` was reached by no test at all.
+   Fixed in `ac00a3ed7` with four tests that assert the consequence —
+   nothing uploaded, no `batch_jobs.json`, no `probabilities.json`,
+   non-zero exit — and verified red under a call-site-deletion mutation.
+2. **Case-insensitive failure filters.** The watch on this leg matched
+   `Error` and missed thirty minutes of `ERROR - Batch chunk 5/12
+   failed to lodge` lines; eight of twelve chunks were gone before
+   anyone read the log (`017ab13bd`).
+3. **Delete a leg's uploads once it is committed**, and never delete a
+   file that is the `src` of a non-terminal batch job.
+
+**Why this matters.** Every other resource this project governs is
+scoped to the run being launched — TPM, RPM, the daily quota, the
+budget approval. File storage is not: it is a project-level ceiling
+that accumulates across runs and campaigns, is invisible in any single
+run's plan, and is consumed by legs that have already succeeded. That
+makes it exactly the kind of limit a phase gate is for, and it was
+discovered mid-lodge instead, with four chunks already billing.
+Generalised: **a quota that accumulates across runs must be audited
+before spend, not discovered during it.** The second lesson is about
+defences rather than quotas — `audit_file_storage` existed and was
+unwired, and then its replacement was wired and unpinned. A guard that
+nothing calls and a guard that no test proves is called are, from the
+next refactor's point of view, the same guard.
+
+**Findable later**: File API storage cap, `FileStorageBytesPerProject`,
+20 GiB per project, uploads persist 30 days, 45 files 21.4 GB, ~16 GB
+proposer pass uploads, 14:05 UTC incident, four of twelve chunks lodged,
+3.55 GB freed, re-lodged 14:38–14:42 UTC, `batch_jobs_relodged.json`,
+`run_pv.py batch-recover`, 45,786/45,786 US$51.0925, `preflight_file_storage`,
+142 of 142 tests green, untested wiring, uppercase ERROR missed for
+thirty minutes, case-insensitive watcher filter, campaign-level quota.
+
+Sources: `planning/paper-writeup-continuity.md` § "S156 PROGRESS"
+(read 2026-09-20: the 14:05 UTC incident block — chunks 0–3 lodged and
+4–11 failed with 429 `FileStorageBytesPerProject`, the 20 GiB cap, 45
+files / 21.4 GB with ~16 GB the 2026-09-17 proposer uploads at 30-day
+expiry, the 16 files / 3.55 GB deletion, the 14:38–14:42 UTC re-lodge,
+the `batch-recover` runbook, the note that "`lib_batch_api` has
+`audit_file_storage` / `sweep_stale_files` but the verifier batch path
+never calls them before lodging", and the 22:11 UTC landing —
+45,786/45,786, 0 failed, audited US$51.0925, `880c207f7`);
+`reports/code-audit-2026-09-20-storage-preflight.md` § 1 (read
+2026-09-20: the audited range and the `935865223` / `a0f40609e`
+commits) and § 3.1 C1 (read 2026-09-20: both call sites deletable with
+142 of 142 green, `_verify_batch` reached by no test, the failure
+scenario, and the `ac00a3ed7` fix verified red under mutation);
+`docs/agent-guidance.md` §§ "A watcher's failure filter must match
+every spelling" and "The Gemini File API has a 20 GiB per-project cap"
+(read 2026-09-20: the `Error`-versus-`ERROR` miss, the thirty minutes,
+the chunk-size figures, and the delete-after-commit rule) —
+both added in `017ab13bd`.
+Related: **Obs 487** (the blocked-launch incident of the previous
+session — the same campaign's other ops failure, and the same lesson
+that a green indicator is not an artefact); **Obs 483** (the defect
+family in which a step reports success while its artefact is wrong);
+**Obs 486** (the batch-by-default ruling that put this leg on the Batch
+API in the first place, and the probe that licensed it).
+
+## Observation 491: The T4 proposer-by-verifier interaction declines monotonically with K and does not replicate at K = 5 (Session 156, 2026-09-19/20)
+
+**Context.** The image proposer x verifier 2x2 (row A the 3.7 image
+pool, row B the Gemini 3 image pool; arm 1 the Gemini 3 verifier, arm 2
+the 3.7 verifier) was tested at all three rungs against the declared
+family in `reports/image-2x2-tests-declaration-2026-09-19.md`. K = 3 is
+the primary rung; K = 1 and K = 5 are exploratory replicates. T4 is the
+interaction, (A2 − A1) − (B2 − B1) — does the verifier's gain depend on
+the proposer family? All three runs used the paired tile-swap
+permutation, 10,000 permutations, seed 42, 8,541 tiles, 50 m buffer,
+r2 reference.
+
+**The finding.** The interaction shrinks monotonically on both metrics
+and is gone by K = 5.
+
+| Rung | Status | MCC *d* | MCC *p* (BH) | F1 *d* | F1 *p* (BH) |
+|---|---|---:|---|---:|---|
+| K = 1 | exploratory | **+0.0327** | 0.0000 (0.0000) | **+0.0262** | 0.0000 (0.0000) |
+| K = 3 | **primary** | **+0.0170** | 0.0031 (0.0052) | **+0.0071** | 0.0154 (0.0192) |
+| K = 5 | exploratory | **+0.0043** | 0.4221 (0.4402) | **+0.0011** | 0.6710 (0.6710) |
+
+It closes from both ends. The 3.7 verifier's tile-MCC advantage over
+the Gemini 3 verifier narrows on the 3.7 pool (row A effect +0.0246 →
++0.0158 → +0.0131) while it *grows* on the Gemini 3 pool (row B effect
+−0.0081 → −0.0013 → **+0.0088**). The same shape holds on F1 (row A
++0.0242 → +0.0174 → +0.0140; row B −0.0020 → +0.0103 → +0.0129).
+
+**Why this matters.** The reading is coherent rather than
+contradictory: unanimity is the image pool's precision filter
+(Obs 484), so as votes accumulate the pool is cleaned before the
+verifier sees it, and a verifier whose advantage is pool-dependent has
+less left to exploit. What the paper cannot do is quote the primary
+rung alone. **The K = 3 interaction is significant and the K = 5
+replicate does not reproduce it**, and any claim about the interaction
+must carry that, exactly as the audit's research-calibration note says
+(§ 5). Note also that the K = 3 F1 effect, +0.0071, is itself close to
+the E89 drift floor, so of the six cells above only the K = 1 row is
+comfortably clear of verifier nondeterminism.
+
+**A second reading from the same session — T5 rests on a vote-rule
+mismatch.** T5 is the confound check, `G3IMG-ARM1-K_c` against
+`IM-k3`, the earlier Gemini 3 image cell. `IM-k3` is a **three-vote
+cell over five passes**, so at K = 3 it is being compared with a
+**3-of-3 unanimity** cell — a different vote rule, not a matched
+protocol. Read against the protocol-matched comparator instead — the
+K = 5 pool at 3 votes — the picture reverses: the best point at three
+votes, (0.20, k3), scores **0.7357** F1@50 and the carried
+probability's row, (0.15, k3), scores **0.7312**, against `IM-k3`'s
+**0.8008**. T5's null at K = 3 (F1 +0.0016, *p* = 0.7604) is therefore
+not a reproduction result; it is two vote rules landing near each
+other. The June pool's full grid is being rebuilt on disk to settle
+this.
+
+**Caveats.** (i) `results/im-june-pool-grid-2026-09-20/` did **not**
+exist on amd-tower or on sapphire when this entry was written — the
+rebuild was in progress and nothing had been committed, so the T5
+re-reading above stands on the sweep CSV alone and should be
+re-derived from the grid once it lands. (ii) `IM-k3`'s tile join is not
+this chain's (83.65 % idempotent), a caveat the declaration already
+attaches to every T5 row (§ 5 caveat 5). (iii) The audit's M1 finding
+notes that a `meaningful: false` row sits inside the BH family at
+K ≠ 3 and carries a `significant` verdict; the direction of that error
+is conservative for T1–T4, but the K = 1 and K = 5 BH values above
+inherit it.
+
+**Findable later**: T4 interaction declines with K, proposer-by-verifier
+interaction, MCC +0.0327 +0.0170 +0.0043, F1 +0.0262 +0.0071 +0.0011,
+primary rung does not replicate at K = 5, BH 0.0052 at K = 3, p 0.4221
+at K = 5, row B effect changes sign, unanimity washes out the
+interaction, T5 vote-rule mismatch, IM-k3 three-vote cell, 3-of-3
+against 3-of-5, protocol-matched comparator 0.7357 against 0.8008,
+im-june-pool-grid pending, `tests_2x2_K{1,3,5}.json`.
+
+Sources: `results/image-2x2-2026-09-19/tests_2x2_K1.json`,
+`tests_2x2_K3.json`, `tests_2x2_K5.json` (read 2026-09-20: each file's
+`mcc_tests` and `f1_tests` T4 rows — `observed_diff`, `p_value`,
+`bh_adjusted_p`, `significant`, `row_A_effect`, `row_B_effect`, and the
+shared `n_permutations` 10000 / `seed` 42 / `n_tiles` 8541 /
+`buffer_m` 50 / `reference` r2; and the T5 rows including `IM-k3`
+`f1_b` 0.800784, `meaningful` true only at K = 3, and the K = 3 T5 F1
+`observed_diff` 0.001604 at *p* 0.7604); committed in `8308f039f`
+(K = 5) and `ed3861cac` (K = 3);
+`reports/code-audit-2026-09-20-storage-preflight.md` § 5 (read
+2026-09-20: the same three-row decline table and "the primary rung's
+finding does not replicate at K = 5") and § 3.2 M1;
+`results/gemini3-image-55map-2026-09-16/sweep_G3IMG-ARM1-K5.csv` (read
+2026-09-20: the `min_votes` = 3 rows — (0.20, k3) n 6,974 at
+`micro_f1_50` 0.7356571047364909 and (0.15, k3) at 0.7312; the carried
+row (0.15, k5) n 4,858 at 0.8177399756986635);
+`reports/image-2x2-tests-declaration-2026-09-19.md` §§ 3 and 5 (read
+2026-09-20: the T4 and T5 definitions, "T5 is meaningful only at K = 3
+(IM-k3 is a three-vote cell)", caveat 1's drift floor, and caveat 5's
+83.65 % tile join); `planning/paper-writeup-continuity.md` § "S156
+PROGRESS" (read 2026-09-20: the K = 1/3/5 test summaries and the flag
+that the interaction "is gone at K = 5").
+Related: **Obs 484** (the precision-filter mechanism that explains the
+decline — unanimity cleaning the pool before the verifier sees it);
+**Obs 485** (the K = 1 rung of row B, the over-generation that makes the
+K = 1 interaction the largest of the three); **Obs 427** (the
+vote-threshold penalty is modality-asymmetric — the prior reason a
+3-of-5 versus 3-of-3 comparison cannot be read as protocol-matched);
+**Obs 370** (`IM-k3` as the sole Tier-1 cell on tile-MCC — why the T5
+comparator matters); **Obs 489** (the ladder-method decision that
+governs what a rung contrast in this table is measuring).
