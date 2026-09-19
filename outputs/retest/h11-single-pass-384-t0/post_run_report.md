@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — retest-h11-single-pass-384-t0
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `f307c1932`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `69d1ed6bf`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/retest/h11-single-pass-384-t0` · **Registry status**: active · **Purpose**: H11 single-pass 384px baseline (T=0).
 
@@ -139,11 +139,12 @@ Listed in the `deviations` field of an analysis that reads this run:
 - **None for the operating-point selection: the registered H3 analysis plan (osf/preregistration.md:519-521) specifies 'Generate threshold sweep curves', 'Identify optimal (N, threshold)', and 'Compare single-pass mean F1 vs voted F1' against the test tiles, so the best-operating- point characterisation is the preregistered method (not in-sample/E56 -- that rule governs the verifier prob_t diagnostics, a distinct case; see E56 Update 2026-06-06).** — not supplied
 - **Production operating point reported alongside best: text 4-of-5, image 3-of-5 (the 55maps deployment thresholds); the best-minus-N5 delta is the within-test operating-point sensitivity.** — not supplied
 
-### 8.2 Mentioning this run (1)
+### 8.2 Mentioning this run (2)
 
 The entry's text names this run id or its directory path. A mention is a pointer to read the entry, not a claim that the erratum is about this run:
 
 - **E44** — single-pass-384 executed at T=1.0 instead of T=0.0
+- **E89** — E31's "perfectly deterministic at T=0.0" claim does not hold for independent API re-invocations — the corrected E44 rerun and four later observations show run-to-run variation at temperature 0
 
 ## 9. Documents and structure in the run directory
 
@@ -162,7 +163,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `f307c1932` |
+| Source commit | `69d1ed6bf` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 

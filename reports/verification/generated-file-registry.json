@@ -1,18 +1,18 @@
 {
  "_meta": {
-  "generated_at": "2026-09-17T07:38:20.539316+00:00",
+  "generated_at": "2026-09-19T00:48:52.092420+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "f307c1932",
+  "git_head": "69d1ed6bf",
   "counts": {
-   "total": 3904,
-   "generated": 3591,
+   "total": 3923,
+   "generated": 3609,
    "generated_unattributed": 0,
-   "hand_written": 313,
+   "hand_written": 314,
    "by_directory": {
     "results/": {
-     "total": 3119,
-     "generated": 2973,
+     "total": 3125,
+     "generated": 2979,
      "hand_written": 146
     },
     "reports/": {
@@ -21,9 +21,9 @@
      "hand_written": 94
     },
     "outputs/": {
-     "total": 661,
-     "generated": 618,
-     "hand_written": 43
+     "total": 674,
+     "generated": 630,
+     "hand_written": 44
     },
     "docs/": {
      "total": 30,
@@ -42,7 +42,7 @@
     "check_mode": 68,
     "tier1_check_test": 68,
     "compliant": 51,
-    "neither_regime": 3540
+    "neither_regime": 3558
    }
   }
  },
@@ -3888,6 +3888,210 @@
    "regime2_compliant": false
   },
   {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1_recovery_rd1/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2_recovery_rd1/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd1/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd2/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4_recovery_rd1/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd1/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd2/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
    "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/archive-run2-partial-aborted-2026-08-30/experiment_intent.md",
    "stratum": "generated",
    "rule_id": "gen-outputs-experiment-intent-batch",
@@ -4285,6 +4489,16 @@
    "check_tests": [],
    "tier1_check_test": false,
    "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/README.md",
+   "stratum": "hand-written",
+   "rule_id": "hw-outputs-readme",
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
   },
   {
    "path": "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/archive-run2-fd-storm-attempt1/experiment_intent.md",
@@ -17186,6 +17400,63 @@
    "regime2_compliant": false
   },
   {
+   "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-18T22:17:05.991449+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-f1-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-f1-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-18T22:17:05.017057+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-18T22:16:58.963928+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
    "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K1-carried/evaluation.md",
    "stratum": "generated",
    "rule_id": "gen-evaluation-md",
@@ -17290,6 +17561,63 @@
     "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-mcc-oracle/evaluation.json"
    ],
    "marker": "**Generated**: 2026-09-14T02:36:19.683324+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-18T22:17:03.161367+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-f1-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-f1-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-18T22:19:22.115101+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-18T22:19:25.549219+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
