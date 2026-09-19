@@ -91,8 +91,16 @@ echo "=== stage 1: four verifier arms, sequentially $(date -Is)"
 for k in $KS; do
   for arm in $ARMS; do
     dest=$VROOT/verify_k${k}_${arm}
-    if [ -f "$dest/probabilities.json" ]; then
-      echo "verify_k${k}_${arm} already done, skipping"
+    n_union=$($PY -c "import json,sys; print(len(json.load(open(sys.argv[1]))['features']))" "$VROOT/union_k$k.geojson")
+    # Complete means run.meta.json books items_processed == union count;
+    # a probabilities.json alone may be a partial realtime pass, which
+    # run_pv resumes (audit lens A, 2026-09-19).
+    if $PY -c "
+import json,sys
+m=json.load(open(sys.argv[1]+'/run.meta.json'))
+sys.exit(0 if int(m.get('execution_stats',{}).get('items_processed') or 0)==int(sys.argv[2]) else 1)
+" "$dest" "$n_union" 2>/dev/null; then
+      echo "verify_k${k}_${arm} complete ($n_union/$n_union), skipping"
       continue
     fi
     # Route: Gemini 3 on realtime flex (prompt for that family); 3.7 on the
@@ -143,4 +151,14 @@ print(f'  k{sys.argv[2]} {sys.argv[3]}: carried (prob_t {d[\"prob_t\"]:.2f}, k{d
   done
 done
 
+# The finished state is four analysis.json present (runbook above); say so
+# only when it is true.
+missing=0
+for k in $KS; do for arm in arm1 arm2; do
+  [ -f "$RESULTS/k$k/$arm/analysis.json" ] || { echo "no sweep for k$k $arm"; missing=$((missing + 1)); }
+done; done
+if [ "$missing" -gt 0 ]; then
+  echo "GS CALIBRATION INCOMPLETE: $missing sweep(s) missing $(date -Is)"
+  exit 2
+fi
 echo "GS CALIBRATION DONE $(date -Is)"
