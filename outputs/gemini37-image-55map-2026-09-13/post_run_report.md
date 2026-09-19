@@ -1,6 +1,15 @@
-# Post-run report — Gemini 3.7 image at 55-map scale, K = 3
+# Post-run report — Gemini 3.7 image at 55-map scale, K = 3 and K = 5
 
-> **Last revised**: 2026-09-14 (**CAMPAIGN COMPLETE** — all four verifier arms
+> **Last revised**: 2026-09-19 (**CAMPAIGN COMPLETE, EXTENDED TO K = 5** — the
+> same campaign, not a fourth one: proposer passes 4 and 5 run through the
+> Batch API on 2026-09-17 after a flex 503 outage, the five-pass union built at
+> 9,173, both verifier arms run over it, and six further cells swept,
+> materialised and scored on the r2 engine with all six selftest gates passing.
+> The K = 5 rung was **not in the card** and is declared **EXPLORATORY**: no
+> permutation test was run at it, and the campaign's analysis row remains
+> **UNSIGNED**.
+> Audited **US$415.3174** — the K = 3 close of US$274.6139 plus US$140.7035 of
+> extension. Earlier: 2026-09-14 (**CAMPAIGN COMPLETE** — all four verifier arms
 > finished after two 503 recoveries, twelve cells scored on the r2 engine, the
 > five-test family run with all ten tests BH-significant, the run registered
 > with one UNSIGNED analysis row, and the findings document written. Audited
@@ -23,11 +32,7 @@ Card: `planning/gemini37-image-55map-2026-09-13.md`. Deltas and blocker status:
 `reports/gemini37-image-55map-deltas-2026-09-13.md`. Pre-launch audit:
 `outputs/gemini37-image-55map-2026-09-13/pre_launch_audit.md`.
 
-**Status: pass 1 of 3 in flight.** The Gold Standard (GS) calibration leg is
-complete and the carried operating points are fixed in the card § 2. Nothing
-downstream of the proposer exists: no 55-map union, no verifier arm, no score,
-no permutation test, no P1–P5 verdict, no analysis row. This document records
-what ran, what the gates measured, and exactly how to resume.
+**Status: CAMPAIGN COMPLETE, extended to K = 5** (this line replaced the launch-state paragraph on 2026-09-19; the original read "pass 1 of 3 in flight … Nothing downstream of the proposer exists" and is preserved in the 2026-09-13 changelog entries). Three rungs on both arms are scored; the K = 5 rung is exploratory and untested; the K = 5 cells are registered unsigned.
 
 ## 1. What ran
 
@@ -57,7 +62,23 @@ what ran, what the gates measured, and exactly how to resume.
 | Five-test family, both metrics | **complete** | 0.00 | all ten tests BH-significant at q = 0.05 |
 | Registration | **complete** | 0.00 | 12 conditions, ONE analysis row, UNSIGNED |
 | Findings document | **complete** | 0.00 | `results/gemini37-image-55map-2026-09-13/findings.md` |
-| **CAMPAIGN TOTAL** | | **274.6139** | US$145.39 clear of the US$420 hard stop |
+| **CAMPAIGN TOTAL, at the K = 3 close** | | **274.6139** | US$145.39 clear of the US$420 hard stop |
+| 55-map proposer pass 4 (**Batch API**) | **COMPLETE**, 24,561 / 24,561 | **61.8648** | 2026-09-17, 7 jobs of ≤ 4,000 tiles, all SUCCEEDED; cache 0.945 |
+| 55-map proposer pass 5 (**Batch API**) | **COMPLETE**, 24,561 / 24,561 | **61.9455** | 2026-09-17, same chunking; cache 0.945 |
+| Coverage gate, passes 4–5 | **PASS** | 0.00 | 24,561 / 24,561 each, driver stage 0, after `normalise_pass_layout.py` folded the batch layout into the pool |
+| **55-map proposer pool, five passes** | **COMPLETE**, 122,805 tile-passes | **369.4409** | US$0.00301 per tile-pass |
+| K = 5 union (first-N) | **built**, 9,173 candidates | 0.00 | `union_k5.geojson`; votes {1: 1,887, 2: 802, 3: 453, 4: 438, 5: 5,593} |
+| K = 5 crop extraction | **9,173 / 9,173** from rasters | 0.00 | `crops_k5/`; PNGs untracked per `.gitignore:72` |
+| K = 5 arm 1 (`gemini-3-flash`, MINIMAL) | **9,173 / 9,173**, 0 failed | **6.4896** | 2026-09-17 23:28–23:39 UTC (11 m 38 s), 52 server-error retries |
+| K = 5 arm 2 (`gemini-3.7-flash`, low) | **9,173 / 9,173** after two cleanups | **10.1788** | main 7,702 in 20 h 59 m at 44,091 retries (503 storm, § 3.2); 1,439 + 32 recovered |
+| Sweep, the two K = 5 rungs | **complete** | 0.00 | `--rungs 5`; 100 achievable points on arm 1, 120 on arm 2; `sweeps.json`, two CSVs |
+| Materialisation, 6 K = 5 cells | **complete** | 0.00 | carried + F1 oracle + MCC oracle per arm |
+| Scoring, 6 K = 5 cells on the r2 engine | **complete**, all rc = 0 | 0.00 | 2026-09-18/19; engine reproduces the sweep on every cell |
+| Selftest gates, with the K = 5 rungs | **PASS** | 0.00 | all six; gate 6 books 9,173 / 9,173 on both K = 5 rungs |
+| Batch-vs-flex probe, 200 candidates | **PASS** | **0.2248** | 2026-09-19, `probe-batch-vs-flex-2026-09-19/`; no route effect beyond re-invocation drift |
+| Permutation tests at K = 5 | **NOT RUN** | 0.00 | `--stage tests` is K = 3-primary; the rung is exploratory |
+| Standing of the six K = 5 cells | **with the PI** | 0.00 | the campaign's analysis row remains UNSIGNED |
+| **CAMPAIGN TOTAL, as extended to K = 5** | | **415.3174** | 274.6139 + 140.7035; US$4.68 inside the original US$420 hard stop |
 
 Carried operating points, from the GS K = 3 calibration leg swept at the
 GS-primary 20 m buffer:
@@ -67,6 +88,12 @@ GS-primary 20 m buffer:
 | arm 1 | `gemini-3-flash-preview`, `verify_adversarial-text`, T = 0.0, MINIMAL | (0.10, k3) | 0.9197 | 0.9032 | 0.9369 |
 | arm 2 | `gemini-3.7-flash`, same config, thinking `low` | (0.88, k3) | 0.9245 | 0.9192 | 0.9299 |
 
+The K = 5 rung carries the **registered GS K = 5 cells'** points instead —
+arm 1 (0.10, k5) and arm 2 (**0.90**, k5), from
+`g37-image-k5-verified-carried-p0.10-k5` and
+`g37-image-k5-verified-swap37-p0.90-k5` in `results/run-conditions.json` — so
+arm 2's probability at K = 5 is 0.90, not this leg's 0.88.
+
 ## 2. Gates
 
 | Gate | Basis | Reading |
@@ -75,6 +102,14 @@ GS-primary 20 m buffer:
 | Pass-1 audited cost ≤ US$110 | `scripts/audit_proposer_cost.py` | **PASS** — US$81.9283, US$28 of headroom |
 | Pass-1 cached share ≥ 0.70 | `usage_stats` | **PASS** — 0.808 (`run_1`), 0.813 (recovery) |
 | Running audited total ≤ US$420 | same | ≈ US$83.08 so far; projected ≈ US$285 at completion |
+| Passes 4–5 cached share ≥ 0.70 | `usage_stats`, batch path | **PASS** — 0.945 on each, explicit context caching |
+| Passes 4–5 audited cost ≤ 1.5 × pass 1 (US$122.9) | `scripts/audit_proposer_cost.py` | **PASS** — US$61.8648 and US$61.9455, *below* the flex passes |
+
+**The K = 5 extension against the hard stop.** The campaign as extended audits
+at **US$415.3174**, which is US$4.68 inside the card's US$420 hard stop — but
+that headroom is incidental, not a gate that was planned and met. Passes 4 and
+5, and the two K = 5 arms, were approved separately under the image-campaign
+envelope (S154), after this card had closed at US$274.6139.
 
 **Pass-1 gate, applied 2026-09-13 10:36 UTC** — re-read at source by the
 second steward, not carried from a hand-over note:
@@ -170,6 +205,50 @@ arm 1 **US$0.000711**, arm 2 **US$0.001103**. These reproduce the GS-derived
 projection (0.000710 / 0.001094) to within 1 %, so the four arms land at
 **≈ US$27.8** and the campaign at **≈ US$274.6** — the optimistic end of the
 § 3.2 range in the card, and US$145 clear of the US$420 hard stop.
+
+### 3.2 The flex 503 outage of 2026-09-16/18 — passes on batch, and a 21-hour arm
+
+**The proposer side.** When the K = 5 rung was added (2026-09-16/17), flex
+realtime returned 503 on `gemini-3.7-flash` for more than twelve hours while
+the **Batch API** served the same model in minutes. Passes 4 and 5 therefore
+ran on batch, chunked into seven jobs of at most 4,000 tiles each
+(`batch_run4.log:14`, `batch_run5.log`), all jobs SUCCEEDED, and
+`scripts/normalise_pass_layout.py` folded the batch output into the pool's
+`run_N/` layout so the union builder, the coverage gate and the cost auditor
+see five passes of one shape. Explicit context caching gave a **0.945** cached
+share against 0.808–0.813 on the flex passes, so each batch pass audits at
+**US$61.9** against **US$81.9**. Diagnosis and evidence:
+`reports/flex-tier-503-2026-09-16.md`.
+
+**The verifier side, and a progress line that lied.** `verify_k5_arm1`
+(`gemini-3-flash-preview`, MINIMAL) finished 9,173 / 9,173 in 11 m 38 s with 52
+server-error retries. `verify_k5_arm2` (`gemini-3.7-flash`, low) ran
+2026-09-17 23:39:46 → 2026-09-18 20:39:03 UTC — **20 h 59 m** — under a 503
+storm of **44,091** server-error retries, and ended with **7,702 verified and
+1,471 exhausted**, while its progress line read `9173/9173`: the driver counts
+**attempts**, not successes, so a leg can look complete and be a sixth short.
+The meta's `results_summary.completeness_gap` is the reliable reading, and it
+booked the gap explicitly (`expected 9173, actual 7702, missing_count 1471`).
+
+Two `run_pv.py cleanup` passes over the arm, each byte-identical in
+configuration to the main pass, recovered **1,439** and then the remaining
+**32**, closing the arm at **9,173 / 9,173, 0 failed** and 48,616 retries over
+all three passes. The pre-cleanup metas are kept as sidecars
+(`run.meta.pre-cleanup-1.json`, `run.meta.pre-cleanup-2.json`).
+
+**A trap that is NOT present at this rung.** Unlike the K = 1 and K = 3 arm 2
+legs of § 3.1, the K = 5 arm's `run.meta.json` is a **merged** meta
+(`meta_merge_schema: cleanup-merge/1`), carrying the main pass and both
+cleanups under `main_pass` and `cleanup_passes`. Its `usage_stats` is therefore
+cumulative, and the arm's audited cost — main 8.5430 + cleanups 1.5995 + 0.0364
+= **US$10.1788** — is half its single `cost_estimate`, with no sidecar
+arithmetic required. Reading the sidecars *and* the merged meta would
+double-count.
+
+**The standing consequence.** This storm is why the PI ruled on 2026-09-18 that
+Gemini 3.7 and 3.8 legs default to the **Batch API**, proposer and verifier
+alike, with flex used only where it is measured to be at least as prompt on the
+day (`docs/agent-guidance.md` § Experiment Execution).
 
 ## 4. How to resume
 
@@ -284,6 +363,30 @@ its committed confusion matrix belongs to.
 **Do not** re-tier the 55-map board or the tile-MCC tiering, and touch no
 signed row.
 
+**The K = 5 rung is complete, and this is how it ran.** Passes 4 and 5 went
+through the proposer's batch path on 2026-09-17 (§ 3.2) and were folded into
+the pool by `scripts/normalise_pass_layout.py`. The union, the provenance
+sidecar, the crops and both arms then came from the same arms driver with the
+rung selected by an environment variable:
+
+```bash
+KS=5 WORKERS=50 bash scripts/gemini37-image-55map-unions-and-arms.sh
+```
+
+That entry point is, since 2026-09-19, a thin wrapper over the campaign-generic
+`scripts/image-55map-unions-and-arms.sh` (`CAMPAIGN=g37`), which keeps this
+campaign's original defaults — rungs `1 3`, both arms on realtime flex — so a
+re-run reproduces what this record describes. Anything new should call the
+generic script directly and put the 3.7 legs on batch, per the PI ruling of
+2026-09-18. The analysis stages are the § 4 step-4 chain with the rung named:
+`--stage sweep|materialise|score --rungs 5`, with `--stage selftest` run first
+(all six gates PASS, gate 6 booking 9,173 / 9,173 on both K = 5 rungs).
+
+**What is still open at K = 5**: `--stage tests` was **not** run — it is
+K = 3-primary, and the rung is exploratory. The six cells' standing in the
+registry, and any decision to test the K = 3 → K = 5 contrast, is with the PI;
+the campaign's analysis row remains UNSIGNED either way.
+
 ## 5. Environment
 
 - Isolated sapphire worktree `~/worktrees/map-reader-llm/claude-image55`;
@@ -293,6 +396,12 @@ signed row.
   directories are a 95 MB copy.
 - Driver log `outputs/gemini37-image-55map-2026-09-13/driver.log`; residual
   manifests `residual_run_<N>.json`.
+- The K = 5 extension's own artefacts: `batch_run4.log`, `batch_run5.log`,
+  the staging trees `batch-staging-run4/` and `batch-staging-run5/` (JSONL
+  payloads, chunk metas and batch job ids), and `overnight.log` for the chain
+  that drove them. The merged pool metas live at
+  `g384_ov192_55map_g37img/run_{4,5}/…meta.json`, both reading
+  `items_processed` 24,561.
 - `.pre-merge-backup/` holds the twelve calibration artefacts as first
   generated, before the byte-identical committed versions were checked out over
   them (md5 parity verified both ways). Archived, not deleted.
@@ -319,11 +428,64 @@ is discovering a broken instrument after the API spend, not before.
 | Permutation gate | **PASS** | the board's `ARM2-N5` vs `ARM2-N3` test reproduced: diff 0.002321, p 0.1208, null mean 4e-06, null sd 0.001491 |
 | Tile-join idempotency (gate 5) | **PASS** | the assignment rule reproduces `FOURTH-N1`, `ARM2-N3` and `ARM2-N5` `source_tile` at 100.00 %; `IM-k3` 83.65 %, expected |
 | Rung booking (gate 6) | **PASS** | all four rungs book 100 % of candidates on the 8,541-tile frame (6,985 / 6,985 and 8,337 / 8,337) |
+| Rung booking (gate 6), K = 5 | **PASS** | both K = 5 rungs book 9,173 / 9,173 on the same frame; all six gates PASS with the rung added |
+| `scripts/normalise_pass_layout.py` | landed | folds a batch-layout pass into the pool's `run_N/` shape, so the union builder, coverage gate and cost auditor see one shape across five passes |
+| Batch verifier path, probed | **PASS** | 200 K = 5 candidates re-verified on batch, 2026-09-19: 5.3 % decision flips at 0.90 against a 3.5 % same-route twin baseline — no route effect beyond re-invocation drift (E89) |
 | Cost auditor, in this session's hands | **validated** | reproduces the GS leg's US$22.5004 / 0.00322 / 0.7948 |
 | Verifier-leg auditor | **validated** | reproduces the GS calibration arms' US$0.4417 and US$0.6804 exactly |
 | Tier-1 suite on sapphire | **2,516 passed**, 4 skipped, 27 deselected, 3 xfailed | `claude-steward`, 193 s |
 
 ## Changelog
+
+### 2026-09-19 (extended) — the K = 5 rung, on the Batch API, declared exploratory
+
+**Trigger**: the image proposer × verifier 2×2 was given a K = 5 cell per row
+(S154, 2026-09-16/17), which required two further proposer passes, a five-pass
+union, both verifier arms over it, and six more scored cells. This is the same
+campaign extended, **not** a fourth campaign: same pool, same crops recipe,
+same verifier configurations, same r2 scoring engine.
+
+| Claim | Before | After |
+|---|---:|---:|
+| Proposer passes | 3 | **5** (4 and 5 on the **Batch API**) |
+| Proposer pool | 73,683 tile-passes, US$245.6307 | **122,805 tile-passes, US$369.4409** |
+| Proposer, per tile-pass | US$0.00333 | **US$0.00301** |
+| Proposer cached share | 0.808 / 0.810 / 0.811 (flex, implicit) | **0.945** on each batch pass (explicit caching) |
+| Unions built | 6,985 (K = 1), 8,337 (K = 3) | **+ 9,173 (K = 5)** |
+| Verifier arms | four, US$27.8361 | **six, US$44.5045** |
+| Cells scored | 12 | **18** |
+| Campaign audited total | US$274.6139 | **US$415.3174** |
+
+**Why batch.** Flex realtime returned 503 on `gemini-3.7-flash` for more than
+twelve hours on 2026-09-16/17 while batch served the same model in minutes
+(`reports/flex-tier-503-2026-09-16.md`). Passes 4 and 5 ran as seven batch jobs
+of ≤ 4,000 tiles each, all SUCCEEDED, and `scripts/normalise_pass_layout.py`
+folded them into the pool's layout. Each batch pass cost US$61.9 against
+US$81.9 on flex, for an identical payload.
+
+**The 21-hour arm** is minuted in § 3.2: `verify_k5_arm2` ended its main pass
+at 7,702 of 9,173 after 44,091 server-error retries, with a progress line that
+read `9173/9173` because the driver counts attempts; two cleanups recovered
+1,439 and 32. That storm is why the PI ruled on 2026-09-18 that 3.7 and 3.8
+legs default to the Batch API (`docs/agent-guidance.md` § Experiment
+Execution). Unlike § 3.1's legs, this arm's `run.meta.json` is a merged meta
+(`cleanup-merge/1`), so its audited US$10.1788 is read from that one file.
+
+**Status of the rung.** EXPLORATORY, by the PI's ruling of 2026-09-19: the
+K = 3 → K = 5 contrast was not preregistered (the card ends the ladder at 3,
+`planning/gemini37-image-55map-2026-09-13.md:279`), **no permutation test was
+run** at K = 5, and the six cells' standing in the registry is with the PI.
+Numbers and their caveats: `results/gemini37-image-55map-2026-09-13/findings.md` §§ 2, 3 and 7.
+
+**What did NOT change**: the K = 1 and K = 3 cells and every one of their
+evaluations, the P1–P5 verdicts, the declared five-test family and its ten
+BH-significant results, the scoring instrument, the K = 1 and K = 3 carried
+operating points, the 55-map board and the tile-MCC tiering (neither
+re-tiered), every signed row, the analysis row's UNSIGNED status, and every
+prompt and input configuration. Nothing on sapphire's main checkout was
+written.
+
+Landed in `<this commit>`.
 
 ### 2026-09-14 (complete) — four arms, twelve cells, P1–P5 read, campaign closed
 
