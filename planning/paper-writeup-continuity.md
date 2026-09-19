@@ -29,8 +29,27 @@ project state.
 >   difference; recall 0.887 vs 0.951). Consistent with the GS calibration's
 >   ~0.10 F1 offset at every rung. Gates all passed; carried within 0.013 of
 >   the F1 oracle.
-> - K = 5 arm 2: `arms_arm2_k5.log` / `.pid` (pid 70161), 12 batch jobs;
->   when it lands: verify 45,786/45,786, audit, commit
+> - **K = 5 arm 2 — SPLIT ACROSS TWO LEDGERS (14:05 UTC incident)**: the
+>   driver (`arms_arm2_k5.log` / `.pid`, pid 70161) lodged chunks 0–3 and
+>   then chunks 4–11 failed with **429 `FileStorageBytesPerProject`** — the
+>   File API's 20 GiB cap (45 files, 21.4 GB: ~16 GB is the 2026-09-17
+>   proposer pass uploads, 30-day expiry). Fixed by deleting the completed
+>   K = 1 and K = 3 verifier input files (16 files, 3.55 GB freed; the
+>   proposer files and three 2026-09-18 uploads left for the PI), then
+>   re-lodging chunks 4–11 with `/tmp/relodge_k5_chunks.py` on sapphire
+>   (text in the S156 scratchpad and transcript): all 8 lodged 14:38–14:42
+>   UTC, job names in `verify_k5_arm2/batch_jobs_relodged.json`. The
+>   driver still polls its 4 and will exit PARTIAL. **Recovery when all 12
+>   SUCCEED**: `run_pv.py batch-recover --crops-dir <verifier>/crops_k5
+>   --output-dir <verifier>/verify_k5_arm2 --verifier-config
+>   prompts/configs/verify_adversarial-text.json --model gemini-3.7-flash
+>   --thinking-level low --temperature 0.0 --job <each of the 8 names>`
+>   (it reads the 4 from batch_jobs.json itself); then merge the relodged
+>   ledger into batch_jobs.json by hand for the audit trail. Hardening
+>   for the PI: `lib_batch_api` has `audit_file_storage` /
+>   `sweep_stale_files` but the verifier batch path never calls them
+>   before lodging.
+> - K = 5 arm 2 when it lands: verify 45,786/45,786, audit, commit
 >   (`verify_k5_arm2/` probabilities, run.meta, batch_results.jsonl,
 >   batch_jobs.json), then `--stage sweep --campaign g3 --rungs 5 --workers 12`,
 >   `--stage materialise --campaign g3 --rungs 5`, commit, `--stage score
