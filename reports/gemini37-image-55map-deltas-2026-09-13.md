@@ -1,6 +1,6 @@
 # Gemini 3.7 image, 55-map K = 3 — launch deltas and what the gates measured
 
-> **Last revised**: 2026-09-14 (**§ 10.7 added — the campaign's rungs were not
+> **Last revised**: 2026-09-19 (**§ 10.8 added — the image 2x2's test family declared, K = 3 → 5 exploratory**; earlier: 2026-09-14, **§ 10.7 added — the campaign's rungs were not
 > booked onto the scoring frame.** The proposer's 192 px-stride tiling shares
 > only 660 tile names with the 336 px-stride scoring frame, so the published
 > `id` join credited 192 of 6,250 detections and the per-tile invariant refused.
@@ -663,7 +663,27 @@ full set of P1–P5 verdicts, a board row and a findings document off a table of
 pure false negatives. The invariant is what turned a silent wrong answer into a
 crash, and the crash is what produced this section.
 
+### 10.8 NEW (2026-09-19) — the 2x2's family, and the K = 3 → K = 5 contrast
+
+The campaign's rungs are one row of the image proposer x verifier 2x2 at
+deployment scale; the second row is the Gemini 3 image pool
+(`gemini3-image-55map-2026-09-16`), verified by the same two arms. The
+family for the 2x2 — five tests per metric at the primary rung K = 3, with
+K = 1 and K = 5 as exploratory replicates and all caveats — is declared in
+`reports/image-2x2-tests-declaration-2026-09-19.md`, written before the
+primary rung's Gemini 3 arm 2 cell existed. Two rulings recorded there bear
+on this campaign: the K = 5 rung added on 2026-09-16/17 was outside this
+card (§ "the K = 5 → 10 step"), so **the K = 3 → K = 5 contrast within this
+row is exploratory**; and the five-test family of § 10.4 is unchanged.
+
 ## Changelog
+
+### 2026-09-19 — § 10.8: the 2x2 family declared; K = 3 → 5 exploratory
+
+**Trigger**: the Gemini 3 row of the 2x2 reached its primary rung's arm 2
+leg (in flight), and the PI ruled on the tests (S155). **Numbers moved**:
+none — no cell, score or verdict in this report changes. **Unchanged**: the
+five-test family (§ 10.4), P1–P5, the DiD of § 10.6. Commit: `301f627fe`.
 
 ### 2026-09-14 — § 10.7: the rungs were not booked onto the scoring frame
 
