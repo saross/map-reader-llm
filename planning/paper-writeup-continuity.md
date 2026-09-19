@@ -58,6 +58,26 @@ project state.
 >    the PI to declare the Gemini 3 row's family (the script's default
 >    primary is `G3IMG-ARM2-K3-carried`).
 >
+> ### GEMINI 3 ROW, K = 1 RUNG — SCORED (`8491f9c78`, `ba19eebd1`) — A RESULT TO FLAG
+>
+> | cell | carried | n | P | R | F1@50 | tile-MCC | FP tiles |
+> |---|---|---:|---:|---:|---:|---:|---:|
+> | G3IMG-ARM1-K1-carried | (0.15, k1) | 8,529 | 0.529 | 0.900 | 0.6664 | 0.7144 | 301 |
+> | G3IMG-ARM2-K1-carried | (0.88, k1) | 9,172 | 0.514 | 0.939 | 0.6644 | 0.7063 | 405 |
+> | IMG-ARM2-K1-carried (3.7, reference) | (0.88, k1) | 5,997 | 0.801 | 0.957 | 0.8719 | 0.7569 | 165 |
+>
+> Oracles: arm 1 F1 0.6753 at (0.40, k1), MCC 0.7455 at (0.30, k1); arm 2
+> F1 0.6923 and MCC 0.7659 at (0.98, k1). Every gate passed (booking
+> 22,785/22,785; calibration constants match the files), so this is a
+> finding, not a defect: at a single pass the Gemini 3 image proposer
+> over-generates (its union is 3.3x the 3.7 pool's) and the verifier at the
+> GS-carried point keeps about half; micro-F1 halves while tile-MCC barely
+> moves because the surplus sits on tiles already counted. Consistent with
+> the GS calibration (Gemini 3 ~0.10 F1@20 below 3.7 at every rung),
+> amplified at scale. K = 3 and K = 5 (unanimity, the image pool's
+> precision filter) are where the row is expected to close the gap — the
+> comparison the 2x2 exists to make. Raised with the PI 2026-09-19 04:25 UTC.
+>
 > ### THE PHASE GATE'S VALIDATION — PASSED
 >
 > `outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/`
