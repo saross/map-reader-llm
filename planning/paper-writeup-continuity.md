@@ -58,6 +58,41 @@ project state.
 >    the PI to declare the Gemini 3 row's family (the script's default
 >    primary is `G3IMG-ARM2-K3-carried`).
 >
+> ### SESSION S155 CLOSED 2026-09-19 ~07:10 UTC — STATE AT CLOSE
+>
+> - **In flight**: Gemini 3 arm 2 K = 3 (`arms_arm2_k3.pid`, `arms_arm2_k3.log`,
+>   10 batch jobs lodged 04:12–04:24, **3 of 10 back** at close; queue times
+>   on this account have run 9 min to 3.5 h). No monitor survives the session:
+>   re-arm one, or simply read the log. When the driver exits: if it reports
+>   PARTIAL, `batch_jobs.json` in `verify_k3_arm2/` names every job —
+>   `run_pv.py batch-recover --crops-dir <verifier>/crops_k3 --output-dir
+>   <verifier>/verify_k3_arm2 --verifier-config prompts/configs/verify_adversarial-text.json
+>   --model gemini-3.7-flash --thinking-level low --temperature 0.0` folds
+>   the lost ones in. Then audit, commit (probabilities, run.meta,
+>   batch_results.jsonl, batch_jobs.json), and lodge K = 5 with
+>   `bash /tmp/launch_g3_arm2.sh 5` on sapphire (script text in the S155
+>   transcript; equivalent: `CAMPAIGN=g3 STAGES=arms ARMS=arm2 KS=5 nohup bash
+>   scripts/image-55map-unions-and-arms.sh > outputs/gemini3-image-55map-2026-09-16/arms_arm2_k5.log 2>&1 < /dev/null &`
+>   with NOTHING after the `&` on that line).
+> - **Then the primary rung**: `--stage sweep --campaign g3 --rungs 3 --workers 12`,
+>   `--stage materialise --campaign g3 --rungs 3`, commit the cells,
+>   `--stage score --campaign g3 --rungs 3 --workers 5 --jobs 4`, commit,
+>   then `--stage tests-2x2 --rungs 3` (the declared primary family), commit
+>   `results/image-2x2-2026-09-19/tests_2x2_K3.json`. Same for K = 5 after its
+>   arm 2 lands. Then the Gemini 3 row's registration and both rows' signing
+>   are the PI's.
+> - **Reflections written** (`8ff162e01`): session-reflection, llm-observations,
+>   abductive entry, session-log, claude-obs 117–119. **Obs 484–487 entered**
+>   (`50c21d32e`). One figure for the PI: Obs 485's caveat says the Gemini 3
+>   vs 3.7 GS gap "must be re-derived from a matched pair" because the writer
+>   compared against the text-B anchor (gaps 0.04–0.08); at matched rung and
+>   arm between the two IMAGE calibration legs the gaps are 0.100 (K3 arm 1),
+>   0.084 (K3 arm 2), 0.082 (K5 arm 1), 0.076 (K5 arm 2) — the draft's
+>   "0.08–0.10" was that comparison.
+> - **Spend on the Gemini 3 row at close**: US$97.80 audited (arm 1 72.40,
+>   arm 2 K = 1 25.40) of the US$200 provisional; K = 3 (≈ 40) in flight,
+>   K = 5 (≈ 51) to lodge.
+>
 > ### RULINGS AND WORK OF 2026-09-19 06:00–07:00 UTC
 >
 > - **Tests declared** before the primary cell existed:
