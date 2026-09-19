@@ -8,8 +8,30 @@ project state.
 
 ---
 
-## 🔍 S156 PROGRESS (2026-09-19 14:15 UTC, Fable, session open — K = 5 arm 2 IN FLIGHT)
+## 🔍 S156 PROGRESS (updated 2026-09-19 22:30 UTC, Fable, session open — THE GEMINI 3 ROW IS COMPLETE: all six legs, three rungs, tests at K = 1/3/5)
 
+> **22:30 UTC — ROW COMPLETE.** K = 5 arm 2 leg folded in by batch-recover
+> at 22:11 UTC: 45,786/45,786, 0 failed, audited **US$51.0925**
+> (`880c207f7`; ledgers merged, driver's PARTIAL artefacts kept). **Row
+> spend US$189.47 of the US$200 provisional** (arm 1 72.40; arm 2 K1
+> 25.40, K3 40.58, K5 51.09). K = 5 sweeps + cells (`983018037`), scored
+> (`6e30bcc5a`), exploratory tests (`8308f039f`,
+> `results/image-2x2-2026-09-19/tests_2x2_K5.json`): MCC T1 +0.0406 sig,
+> T2 +0.0364 sig, T3 +0.0088 ns, **T4 +0.0043 ns**, T5 ns; F1 T1 +0.0964,
+> T2 +0.0953, T3 +0.0129 sig, **T4 +0.0011 ns**, **T5 +0.0170 sig**.
+> Two things to flag: the interaction seen at K = 1 (+0.033 MCC) and K = 3
+> (+0.017) is gone at K = 5, so the 3.7 verifier's pool-dependent gain
+> shrinks with unanimity; and T5 (confound check vs IM-k3) is significant
+> on F1 at K = 5 only. K = 5 carried: arm 1 F1@50 0.818 / MCC 0.717, arm 2
+> 0.831 / 0.725 (3.7 arm 2 K5: 0.927 / 0.766). The K-ladder for the
+> Gemini 3 row, arm 2 carried: 0.664 → 0.813 → 0.831 F1; 0.706 → 0.723 →
+> 0.725 MCC. File API storage after deleting the K = 1/3/5 verifier
+> uploads: 25 files, 16.9 GB (the 2026-09-17 proposer uploads, ~16 GB,
+> still there — PI to rule). **Remaining for the PI**: the Gemini 3 row's
+> registration (`results/run-conditions.json` — 18 cells, 6 verifier
+> passes) and both rows' signing; whether the K = 5 tests should be re-run
+> under a declared family name; the storage hardening.
+>
 > **K = 3 rung of the Gemini 3 row DONE end to end; K = 5 arm 2 lodged on
 > batch at 13:59 UTC.** If this session died, resume at the K = 5 item of
 > the S156 block below, with these already landed:
