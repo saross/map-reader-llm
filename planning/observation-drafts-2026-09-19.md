@@ -1,5 +1,8 @@
 # Observation drafts — 2026-09-19 (S155), for PI review before entry
 
+> **Entered into `docs/notes/working-notes.md` as Obs 484, 485, 486, and 487
+> on 2026-09-19 (commit `50c21d32e`).**
+
 Four candidate entries for `docs/notes/working-notes.md`, drafted by Claude on
 the PI's request. Numbers are re-derived from the committed files named in
 each entry. The next free number in the notes is 484; the numbers below are
