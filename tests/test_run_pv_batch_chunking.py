@@ -224,3 +224,128 @@ def test_poll_gives_up_after_too_many_consecutive_errors():
             poll_batch_job(_Client(), "batches/x", interval_seconds=0, max_consecutive_errors=2)
     finally:
         lba.time.sleep = orig
+
+
+def test_batch_recover_skips_an_unreachable_job_and_keeps_the_rest(
+    tmp_path, monkeypatch,
+):
+    """One bad job name must not discard the jobs already fetched.
+
+    ``batch-recover`` is the recovery path for a leg that has already lost
+    data once. Job names come from ``batch_jobs.json`` and from repeatable
+    ``--job`` flags, so an expired, mistyped, or foreign-project name is
+    ordinary; before this guard it raised straight out of the loop and the
+    leg stayed exactly as broken as it was.
+    """
+    import argparse
+    import json as _json
+
+    import scripts.lib_batch_api as lba
+    import scripts.run_pv as run_pv
+
+    crops_dir = tmp_path / "crops"
+    crops_dir.mkdir()
+    (crops_dir / "candidate_manifest.json").write_text(
+        _json.dumps({"candidates": [{"candidate_id": 1}]}),
+    )
+    config_path = tmp_path / "verifier.json"
+    config_path.write_text(_json.dumps({"model": "gemini-3-flash"}))
+
+    leg = tmp_path / "leg"
+    leg.mkdir()
+    (leg / "batch_jobs.json").write_text(_json.dumps({"chunks": [
+        {"index": 0, "job": "batches/gone"},
+        {"index": 1, "job": "batches/good"},
+    ]}))
+
+    class _State:
+        name = "JOB_STATE_SUCCEEDED"
+
+    class _Job:
+        state = _State()
+
+    class _Batches:
+        def get(self, name):
+            if name == "batches/gone":
+                raise RuntimeError("404 NOT_FOUND: batches/gone")
+            return _Job()
+
+    class _Client:
+        batches = _Batches()
+
+    monkeypatch.setattr(run_pv, "_get_api_key", lambda: "test-key")
+    monkeypatch.setattr(run_pv, "load_system_instruction", lambda cfg: "sys")
+    monkeypatch.setattr("google.genai.Client", lambda **kwargs: _Client())
+    monkeypatch.setattr(
+        lba, "retrieve_batch_results",
+        lambda client, job: [{"key": "candidate_00001", "response": {}}],
+    )
+
+    booked: dict = {}
+
+    def _finish(**kwargs):
+        booked.update(kwargs)
+        return 0
+
+    monkeypatch.setattr(run_pv, "_finish_batch_outputs", _finish)
+
+    args = argparse.Namespace(
+        output_dir=leg, crops_dir=crops_dir, verifier_config=config_path,
+        job=[], model=None, thinking_level=None, temperature=None,
+        iterations=1, strict=True,
+    )
+
+    rc = run_pv.cmd_batch_recover(args)
+
+    # The reachable job's result was still booked, despite the bad name.
+    assert rc == 0
+    assert [r["key"] for r in booked["raw_results"]] == ["candidate_00001"]
+
+
+def test_batch_recover_reports_failure_when_no_job_is_reachable(
+    tmp_path, monkeypatch,
+):
+    """Every job unreachable is a failure, not a silent zero-result booking."""
+    import argparse
+    import json as _json
+
+    import scripts.run_pv as run_pv
+
+    crops_dir = tmp_path / "crops"
+    crops_dir.mkdir()
+    (crops_dir / "candidate_manifest.json").write_text(
+        _json.dumps({"candidates": [{"candidate_id": 1}]}),
+    )
+    config_path = tmp_path / "verifier.json"
+    config_path.write_text(_json.dumps({"model": "gemini-3-flash"}))
+
+    leg = tmp_path / "leg"
+    leg.mkdir()
+    (leg / "batch_jobs.json").write_text(
+        _json.dumps({"chunks": [{"index": 0, "job": "batches/gone"}]}),
+    )
+
+    class _Batches:
+        def get(self, name):
+            raise RuntimeError("404 NOT_FOUND")
+
+    class _Client:
+        batches = _Batches()
+
+    called: list[str] = []
+
+    monkeypatch.setattr(run_pv, "_get_api_key", lambda: "test-key")
+    monkeypatch.setattr(run_pv, "load_system_instruction", lambda cfg: "sys")
+    monkeypatch.setattr("google.genai.Client", lambda **kwargs: _Client())
+    monkeypatch.setattr(run_pv, "_finish_batch_outputs",
+                        lambda **kwargs: called.append("booked") or 0)
+
+    args = argparse.Namespace(
+        output_dir=leg, crops_dir=crops_dir, verifier_config=config_path,
+        job=[], model=None, thinking_level=None, temperature=None,
+        iterations=1, strict=True,
+    )
+
+    assert run_pv.cmd_batch_recover(args) == 1
+    # Nothing was booked, so no output file was overwritten.
+    assert called == []

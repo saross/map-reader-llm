@@ -1144,7 +1144,8 @@ def cmd_batch_recover(args: argparse.Namespace) -> int:
     from scripts.lib_llm_metadata import LLMMetadataTracker
 
     output_dir: Path = args.output_dir
-    manifest = json.load(open(args.crops_dir / "candidate_manifest.json"))
+    with open(args.crops_dir / "candidate_manifest.json") as fh:
+        manifest = json.load(fh)
     with open(args.verifier_config) as fh:
         config = json.load(fh)
     if args.thinking_level is not None:
@@ -1170,16 +1171,33 @@ def cmd_batch_recover(args: argparse.Namespace) -> int:
     from google import genai
     client = genai.Client(api_key=_get_api_key(), http_options={"api_version": "v1alpha"})
     recovered: list[dict] = []
+    unreachable: list[str] = []
     for name in job_names:
-        job = client.batches.get(name=name)
-        state = getattr(getattr(job, "state", None), "name", str(getattr(job, "state", "")))
-        if "SUCCEEDED" not in state:
-            logger.warning("%s is %s — nothing to retrieve", name, state)
+        # Per-job guard. Job names come from batch_jobs.json and from
+        # repeatable --job flags, so one expired, mistyped, or
+        # foreign-project name is ordinary. This is the recovery path for a
+        # leg that has ALREADY lost data once: an unhandled traceback here
+        # would discard every job fetched earlier in the loop and leave the
+        # leg exactly as broken as it was (audit 2026-09-20, lens A M7).
+        try:
+            job = client.batches.get(name=name)
+            state = getattr(getattr(job, "state", None), "name",
+                            str(getattr(job, "state", "")))
+            if "SUCCEEDED" not in state:
+                logger.warning("%s is %s — nothing to retrieve", name, state)
+                continue
+            rows = retrieve_batch_results(client, job)
+        except Exception as exc:  # noqa: BLE001 - one job must not lose the rest
+            logger.error("%s could not be recovered: %s — continuing with the "
+                         "remaining job(s)", name, exc)
+            unreachable.append(name)
             continue
-        rows = retrieve_batch_results(client, job)
         new = [r for r in rows if r.get("key") not in have]
         logger.info("%s: %d results, %d not yet in the leg", name, len(rows), len(new))
         recovered.extend(rows)
+    if unreachable:
+        logger.warning("%d of %d job(s) could not be reached: %s",
+                       len(unreachable), len(job_names), unreachable)
     if not recovered:
         logger.error("no results recovered")
         return 1
