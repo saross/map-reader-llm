@@ -210,6 +210,110 @@
         "tile_fp": 28,
         "tile_fn": 995
       }
+    },
+    "IMG-ARM1-K5": {
+      "n_sweep_points": 100,
+      "carried_point": [
+        0.1,
+        5
+      ],
+      "carried": {
+        "rung": "IMG-ARM1-K5",
+        "prob_t": 0.1,
+        "min_votes": 5,
+        "n_detections": 5297,
+        "tp": 4709.0,
+        "fp": 588.0,
+        "fn": 309.0,
+        "micro_f1_50": 0.9130392632089191,
+        "tile_mcc": 0.7528612403532944,
+        "tile_tp": 2652,
+        "tile_tn": 4848,
+        "tile_fp": 164,
+        "tile_fn": 877
+      },
+      "f1_oracle": {
+        "rung": "IMG-ARM1-K5",
+        "prob_t": 0.1,
+        "min_votes": 5,
+        "n_detections": 5297,
+        "tp": 4709.0,
+        "fp": 588.0,
+        "fn": 309.0,
+        "micro_f1_50": 0.9130392632089191,
+        "tile_mcc": 0.7528612403532944,
+        "tile_tp": 2652,
+        "tile_tn": 4848,
+        "tile_fp": 164,
+        "tile_fn": 877
+      },
+      "mcc_oracle": {
+        "rung": "IMG-ARM1-K5",
+        "prob_t": 0.15,
+        "min_votes": 5,
+        "n_detections": 4885,
+        "tp": 4486.0,
+        "fp": 399.0,
+        "fn": 532.0,
+        "micro_f1_50": 0.905988084418863,
+        "tile_mcc": 0.7542214804688346,
+        "tile_tp": 2564,
+        "tile_tn": 4923,
+        "tile_fp": 89,
+        "tile_fn": 965
+      }
+    },
+    "IMG-ARM2-K5": {
+      "n_sweep_points": 120,
+      "carried_point": [
+        0.9,
+        5
+      ],
+      "carried": {
+        "rung": "IMG-ARM2-K5",
+        "prob_t": 0.9,
+        "min_votes": 5,
+        "n_detections": 5219,
+        "tp": 4745.0,
+        "fp": 474.0,
+        "fn": 273.0,
+        "micro_f1_50": 0.9270294031454528,
+        "tile_mcc": 0.7659335921614188,
+        "tile_tp": 2648,
+        "tile_tn": 4898,
+        "tile_fp": 114,
+        "tile_fn": 881
+      },
+      "f1_oracle": {
+        "rung": "IMG-ARM2-K5",
+        "prob_t": 0.95,
+        "min_votes": 5,
+        "n_detections": 5197,
+        "tp": 4740.0,
+        "fp": 457.0,
+        "fn": 278.0,
+        "micro_f1_50": 0.9280469897209985,
+        "tile_mcc": 0.7681458931562806,
+        "tile_tp": 2644,
+        "tile_tn": 4909,
+        "tile_fp": 103,
+        "tile_fn": 885
+      },
+      "mcc_oracle": {
+        "rung": "IMG-ARM2-K5",
+        "prob_t": 0.95,
+        "min_votes": 5,
+        "n_detections": 5197,
+        "tp": 4740.0,
+        "fp": 457.0,
+        "fn": 278.0,
+        "micro_f1_50": 0.9280469897209985,
+        "tile_mcc": 0.7681458931562806,
+        "tile_tp": 2644,
+        "tile_tn": 4909,
+        "tile_fp": 103,
+        "tile_fn": 885
+      }
     }
   }
 }
