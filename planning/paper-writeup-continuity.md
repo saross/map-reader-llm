@@ -32,24 +32,22 @@ project state.
 >
 > | leg | route | log / pid | state at write |
 > |---|---|---|---|
-> | arm 2 (3.7 `low`) K = 1, 22,785 | batch, 6 jobs of ≤ 4,000 | `arms_arm2_k1.log` / `arms_arm2_k1.pid` | jobs 1–3 back; **job 4 lost to a 503 while POLLING** (its job `batches/ndvxul75xb8h87vs0gqfqjha8a7o651bqoto` is SUCCEEDED on the service side — fold it in with `run_pv.py batch-recover --job <name>` once the driver exits, `4fa478fc5`); jobs 5–6 queued since 00:45 |
+> | arm 2 (3.7 `low`) K = 1, 22,785 | batch, 6 jobs of ≤ 4,000 | `arms_arm2_k1.log` | **COMPLETE** 04:10 UTC after `batch-recover` folded the polling-503 chunk back in: 22,785/22,785, 0 failed, audited **US$25.3978** (`67d24c0f8`) |
+> | arm 2 K = 3, 36,389 | batch, 10 jobs | `arms_arm2_k3.log` / `arms_arm2_k3.pid` | **lodged 04:12 UTC** on the hardened path (polling tolerates 503s; `batch_jobs.json` records every job) |
 > | arm 1 (Gemini 3 `minimal`) K = 1, 3, 5 | realtime flex | `arms_arm1.log` | **COMPLETE** 02:35 UTC: 22,785 / 36,389 / 45,786, 0 failed, audited US$15.76 + 25.10 + 31.54 = **US$72.40** (`bca7c0d53`, `fc5079d0a`, `79a2afc0d`) |
 >
 > **Next, in this order, each gated on READING THE ARTEFACT** (run.meta.json
 > `items_processed` == union count; `batch_results.jsonl` present for a batch
 > arm; audit with `scripts/audit_verifier_cost.py <dir> --tier flex`):
 >
-> 1. When arm 2 K = 1's driver exits it will report PARTIAL (chunk 4 lost).
->    Run `.venv/bin/python scripts/run_pv.py batch-recover --crops-dir
->    <verifier>/crops_k1 --output-dir <verifier>/verify_k1_arm2
->    --verifier-config prompts/configs/verify_adversarial-text.json --model
->    gemini-3.7-flash --thinking-level low --temperature 0.0 --job
->    batches/ndvxul75xb8h87vs0gqfqjha8a7o651bqoto`, then verify
->    22,785/22,785, audit (≈ US$25 expected), commit `verify_k1_arm2/`
->    (probabilities, run.meta, batch_results.jsonl, batch_jobs.json if any),
->    then lodge K = 3: `CAMPAIGN=g3 STAGES=arms ARMS=arm2 KS=3 nohup bash
->    scripts/image-55map-unions-and-arms.sh > outputs/gemini3-image-55map-2026-09-16/arms_arm2_k3.log 2>&1 < /dev/null &`
->    (≈ US$40, 10 jobs). Then K = 5 the same way (≈ US$51, 12 jobs).
+> 1. When arm 2 K = 3 lands (read `arms_arm2_k3.log`; if a chunk was lost,
+>    `batch_jobs.json` in `verify_k3_arm2/` names its job — `run_pv.py
+>    batch-recover` folds it in): verify 36,389/36,389, audit (≈ US$40),
+>    commit `verify_k3_arm2/` (probabilities, run.meta, batch_results.jsonl,
+>    batch_jobs.json). Then lodge K = 5 with `bash /tmp/launch_g3_arm2.sh 5`
+>    on sapphire (pid-file guarded; the script is in this session's
+>    scratchpad and its text is in the S155 transcript) or the equivalent
+>    `CAMPAIGN=g3 STAGES=arms ARMS=arm2 KS=5` invocation (≈ US$51, 12 jobs).
 > 2. Arm 1 runs K = 1 → 3 → 5 by itself (≈ US$72 total); the driver stops at
 >    the first incomplete arm. If it stops, `arm_state` in the log says why;
 >    a partial realtime arm resumes on re-run.
