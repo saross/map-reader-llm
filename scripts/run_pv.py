@@ -223,6 +223,8 @@ def cmd_verify(args: argparse.Namespace) -> int:
             dry_run=args.dry_run,
             model_override=args.model,
             strict=strict,
+            max_batch_candidates=getattr(
+                args, "max_batch_candidates", DEFAULT_MAX_BATCH_CANDIDATES),
         )
     else:
         return _verify_realtime(
@@ -719,6 +721,92 @@ def record_batch_usage(tracker: Any, raw_results: list[dict],
     return usage
 
 
+#: Candidates per batch job. A verifier request carries one base64 crop and
+#: the example library; measured 2026-09-18 at ~59 KB per request on the
+#: g384_ov192 crops, so 4,000 requests is ~235 MB against the Batch API's
+#: 2 GB file limit, and matches the proposer's MAX_BATCH_TILES. The Gemini 3
+#: 55-map unions (22,785 / 36,389 / 45,786 candidates) exceed the limit as a
+#: single job by up to 2.7 GB, which is why a batch leg is chunked at all.
+DEFAULT_MAX_BATCH_CANDIDATES = 4000
+
+
+def chunk_manifest(manifest: dict, size: int | None) -> list[dict]:
+    """Split a candidate manifest into sub-manifests of at most *size*.
+
+    Candidate ids are preserved, so every result key is still
+    ``candidate_{id:05d}`` and the union of the chunks' expected keys is the
+    whole manifest's. Header fields are copied onto each chunk.
+
+    Args:
+        manifest: The crops manifest (``candidates`` plus header fields).
+        size: Maximum candidates per chunk; ``None`` or ``<= 0`` means one.
+
+    Returns:
+        One or more manifests in candidate order.
+    """
+    candidates = list(manifest.get("candidates", []))
+    if not size or size <= 0 or len(candidates) <= size:
+        return [manifest]
+    header = {k: v for k, v in manifest.items() if k != "candidates"}
+    return [{**header, "candidates": candidates[i:i + size]}
+            for i in range(0, len(candidates), size)]
+
+
+def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
+                   display_base: str, *, upload, submit, poll, retrieve,
+                   log=None) -> list[dict]:
+    """Submit every chunk, then poll and retrieve each; concatenate results.
+
+    All jobs are lodged before the first is polled, so a multi-chunk leg
+    waits once for the slowest job rather than once per chunk. A chunk whose
+    job fails (or raises while polling) contributes no results and is
+    reported; its candidates then surface as ``missing`` in the caller's
+    completeness validation rather than as a crash that loses the other
+    chunks' paid-for results.
+
+    Args:
+        client: The API client.
+        model_name: Resolved model name.
+        jsonl_paths: One request file per chunk, in order.
+        display_base: Display-name prefix; chunk index is appended.
+        upload, submit, poll, retrieve: The lifecycle functions, injected so
+            the orchestration is testable without an API.
+        log: Logger (default: module logger).
+
+    Returns:
+        The concatenated raw results of every chunk that completed.
+    """
+    log = log or logger
+    jobs: list[tuple[int, Any]] = []
+    for i, path in enumerate(jsonl_paths):
+        name = display_base if len(jsonl_paths) == 1 else f"{display_base}-c{i}"
+        uploaded = upload(client, path, name)
+        log.info("Uploaded chunk %d/%d: %s", i + 1, len(jsonl_paths), uploaded)
+        job = submit(client, model_name, uploaded, name)
+        log.info("Submitted batch job %d/%d: %s", i + 1, len(jsonl_paths),
+                 getattr(job, "name", job))
+        jobs.append((i, job))
+    results: list[dict] = []
+    failed_chunks: list[int] = []
+    for i, job in jobs:
+        try:
+            done = poll(client, getattr(job, "name", job))
+            state = getattr(getattr(done, "state", None), "name",
+                            str(getattr(done, "state", "")))
+            log.info("Batch job %d/%d complete: %s", i + 1, len(jobs), state)
+            chunk_results = retrieve(client, done)
+        except Exception as exc:  # noqa: BLE001 - one chunk must not lose the rest
+            log.error("Batch chunk %d/%d failed: %s", i + 1, len(jobs), exc)
+            failed_chunks.append(i)
+            continue
+        results.extend(chunk_results)
+    if failed_chunks:
+        log.error("%d of %d batch chunks returned nothing: %s — their "
+                  "candidates will be reported missing", len(failed_chunks),
+                  len(jobs), failed_chunks)
+    return results
+
+
 def _verify_batch(
     manifest: dict,
     config: dict,
@@ -729,12 +817,17 @@ def _verify_batch(
     dry_run: bool,
     model_override: str | None = None,
     strict: bool = True,
+    max_batch_candidates: int | None = DEFAULT_MAX_BATCH_CANDIDATES,
 ) -> int:
     """Batch API verification path.
 
     Builds JSONL, uploads, submits, polls, retrieves, and parses
     results using ``lib_batch_api`` lifecycle functions and
-    ``lib_verifier`` JSONL builders.
+    ``lib_verifier`` JSONL builders. A manifest larger than
+    ``max_batch_candidates`` is split into that many candidates per job
+    (:data:`DEFAULT_MAX_BATCH_CANDIDATES`); the chunks' results are
+    concatenated before validation, so completeness, usage and outputs are
+    booked once for the whole leg.
 
     Args:
         manifest: Candidate manifest dict.
@@ -761,29 +854,37 @@ def _verify_batch(
     )
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    jsonl_path = output_dir / "verifier_requests.jsonl"
+    chunks = chunk_manifest(manifest, max_batch_candidates)
+    jsonl_paths: list[Path] = []
+    n_lines = 0
+    for i, chunk in enumerate(chunks):
+        jsonl_path = output_dir / ("verifier_requests.jsonl" if len(chunks) == 1
+                                   else f"verifier_requests_chunk{i}.jsonl")
+        # Build JSONL
+        if iterations > 1:
+            temp = temperature if temperature is not None else 0.7
+            n = build_verifier_jsonl_consensus(
+                manifest=chunk,
+                config=config,
+                output_path=jsonl_path,
+                crops_base_dir=crops_base_dir,
+                iterations=iterations,
+                temperature=temp,
+            )
+        else:
+            n = build_verifier_jsonl(
+                manifest=chunk,
+                config=config,
+                output_path=jsonl_path,
+                crops_base_dir=crops_base_dir,
+                temperature_override=temperature,
+            )
+        n_lines += n
+        jsonl_paths.append(jsonl_path)
+        logger.info("Built JSONL chunk %d/%d: %d lines → %s",
+                    i + 1, len(chunks), n, jsonl_path)
 
-    # Build JSONL
-    if iterations > 1:
-        temp = temperature if temperature is not None else 0.7
-        n_lines = build_verifier_jsonl_consensus(
-            manifest=manifest,
-            config=config,
-            output_path=jsonl_path,
-            crops_base_dir=crops_base_dir,
-            iterations=iterations,
-            temperature=temp,
-        )
-    else:
-        n_lines = build_verifier_jsonl(
-            manifest=manifest,
-            config=config,
-            output_path=jsonl_path,
-            crops_base_dir=crops_base_dir,
-            temperature_override=temperature,
-        )
-
-    logger.info("Built JSONL: %d lines → %s", n_lines, jsonl_path)
+    logger.info("Built JSONL: %d lines in %d chunk(s)", n_lines, len(chunks))
 
     if dry_run:
         logger.info("[DRY RUN] JSONL written but not submitted")
@@ -821,10 +922,7 @@ def _verify_batch(
             http_options={"api_version": "v1alpha"},
         )
 
-        # Upload
         display_name = f"pv-verifier-{datetime.now(timezone.utc):%Y%m%d-%H%M}"
-        uploaded_file = upload_jsonl(client, jsonl_path, display_name)
-        logger.info("Uploaded: %s", uploaded_file)
 
         # Resolve model name (handles -preview suffix fallback)
         model_name = model_override or config.get("model", "gemini-3-flash")
@@ -834,21 +932,13 @@ def _verify_batch(
         # Update tracker now that the model is resolved.
         batch_metadata.model_override = model_name
 
-        batch_job = submit_batch_job(
-            client, model_name, uploaded_file, display_name,
+        # Upload, submit, poll and retrieve — every chunk lodged before the
+        # first is polled.
+        raw_results = run_batch_jobs(
+            client, model_name, jsonl_paths, display_name,
+            upload=upload_jsonl, submit=submit_batch_job,
+            poll=poll_batch_job, retrieve=retrieve_batch_results,
         )
-        logger.info("Submitted batch job: %s", batch_job.name)
-
-        # Poll
-        completed_job = poll_batch_job(client, batch_job.name)
-        # Use getattr for safe access — state may be enum or string
-        state_str = getattr(
-            completed_job.state, "name", str(completed_job.state),
-        )
-        logger.info("Batch job complete: %s", state_str)
-
-        # Retrieve and parse
-        raw_results = retrieve_batch_results(client, completed_job)
 
         # Build expected keys for validation (sorted list to match
         # validate_batch_results' list[str] type contract)
@@ -1926,6 +2016,14 @@ def _build_parser() -> argparse.ArgumentParser:
     verify_parser.add_argument(
         "--dry-run", action="store_true",
         help="Build JSONL without submitting (batch mode only)",
+    )
+    verify_parser.add_argument(
+        "--max-batch-candidates", type=int,
+        default=DEFAULT_MAX_BATCH_CANDIDATES,
+        help=("Batch mode only: candidates per batch job; a larger manifest "
+              f"is split into that many per job (default "
+              f"{DEFAULT_MAX_BATCH_CANDIDATES}, ~235 MB of requests against "
+              "the 2 GB file limit)"),
     )
     verify_parser.add_argument(
         "--service-tier",
