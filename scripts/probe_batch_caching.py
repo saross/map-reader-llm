@@ -139,7 +139,12 @@ def main() -> int:
     # carries no usage_metadata (lib_batch_api.aggregate_batch_usage). The
     # probe read the job and so always reported "no usage" — reproducing,
     # as a fresh measurement, the false conclusion the 2026-09-17 fix closed.
-    usage = aggregate_batch_usage(retrieve_batch_results(client, job))
+    if "SUCCEEDED" in str(job.state):
+        usage = aggregate_batch_usage(retrieve_batch_results(client, job))
+    else:
+        # FAILED / CANCELLED / EXPIRED: no results file to read; record the
+        # state rather than dying on batch_job.dest (re-audit, 2026-09-19).
+        usage = aggregate_batch_usage([])
     result = {"model": args.model, "n": args.n, "state": str(job.state),
               "elapsed_s": round(time.time() - t0, 1),
               "explicit_cache": cache_name, "cache_prefix_tokens": cache_tokens,

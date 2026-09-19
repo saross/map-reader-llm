@@ -1304,7 +1304,8 @@ def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
         base["cost_estimate"] = {}
     base["cost_estimate"]["total_cost_usd"] = cost
     base["chunked_run"] = {"n_chunks": len(metas),
-                           "chunk_metas": [Path(m).name for m in sorted(chunk_metas)]}
+                           "chunk_metas": [Path(m).name for m in
+                                           sorted(chunk_metas, key=_chunk_sort_key)]}
 
     # Each chunk's ``total_tiles`` is the size of THAT chunk, so the pass's
     # total is their SUM. Taking the max (as this did until 2026-09-18) wrote

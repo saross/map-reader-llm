@@ -88,8 +88,9 @@ def _fakes(fail_on: set[str] = frozenset()):
 def test_every_chunk_is_lodged_before_any_is_polled(tmp_path):
     calls, fns = _fakes()
     paths = [tmp_path / f"c{i}.jsonl" for i in range(3)]
-    results = run_batch_jobs(None, "m", paths, "leg", **fns,
-                             log=logging.getLogger("t"))
+    results, failed = run_batch_jobs(None, "m", paths, "leg", **fns,
+                                     log=logging.getLogger("t"))
+    assert failed == []
     kinds = [k for k, _ in calls]
     first_poll = kinds.index("poll")
     assert kinds[:first_poll].count("submit") == 3
@@ -107,7 +108,43 @@ def test_single_chunk_keeps_the_plain_display_name(tmp_path):
 def test_a_failed_chunk_loses_only_its_own_results(tmp_path):
     calls, fns = _fakes(fail_on={"leg-c1"})
     paths = [tmp_path / f"c{i}.jsonl" for i in range(3)]
-    results = run_batch_jobs(None, "m", paths, "leg", **fns,
-                             log=logging.getLogger("t"))
+    results, failed = run_batch_jobs(None, "m", paths, "leg", **fns,
+                                     log=logging.getLogger("t"))
     assert len(results) == 4
+    assert failed == [1]
     assert not any("leg-c1" in r["key"] for r in results)
+
+
+def test_a_chunk_that_fails_to_lodge_does_not_abandon_the_lodged_ones(tmp_path):
+    """Re-audit 2026-09-19: lodging was unguarded, so a failure on chunk k
+    abandoned chunks 0..k-1 already lodged and billing."""
+    calls, fns = _fakes()
+    real_submit = fns["submit"]
+
+    def submit(client, model, uploaded, name):
+        if name == "leg-c1":
+            raise RuntimeError("upload quota")
+        return real_submit(client, model, uploaded, name)
+
+    fns["submit"] = submit
+    paths = [tmp_path / f"c{i}.jsonl" for i in range(3)]
+    results, failed = run_batch_jobs(None, "m", paths, "leg", **fns,
+                                     log=logging.getLogger("t"))
+    assert failed == [1]
+    assert len(results) == 4
+    assert [n for k, n in calls if k == "retrieve"] == ["batches/leg-c0", "batches/leg-c2"]
+
+
+def test_chunk_manifest_books_each_chunks_own_total():
+    m = _manifest(10)
+    m["total_detections"] = 10
+    chunks = chunk_manifest(m, 4)
+    assert [c["total_detections"] for c in chunks] == [4, 4, 2]
+
+
+def test_iterations_divide_the_per_job_candidate_budget():
+    """The 2 GB argument is in REQUESTS; --iterations K makes a candidate K
+    requests. Pinned at the source since the division lives in _verify_batch."""
+    src = (Path(__file__).resolve().parent.parent / "scripts" / "run_pv.py").read_text()
+    assert "int(max_batch_candidates or 0) // max(1, iterations)" in src
+    assert 'f"probabilities.json.pre-rerun-{stamp}.backup"' in src

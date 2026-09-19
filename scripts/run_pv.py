@@ -748,13 +748,19 @@ def chunk_manifest(manifest: dict, size: int | None) -> list[dict]:
     if not size or size <= 0 or len(candidates) <= size:
         return [manifest]
     header = {k: v for k, v in manifest.items() if k != "candidates"}
-    return [{**header, "candidates": candidates[i:i + size]}
-            for i in range(0, len(candidates), size)]
+    out = []
+    for i in range(0, len(candidates), size):
+        part = candidates[i:i + size]
+        chunk = {**header, "candidates": part}
+        if "total_detections" in header:
+            chunk["total_detections"] = len(part)
+        out.append(chunk)
+    return out
 
 
 def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
                    display_base: str, *, upload, submit, poll, retrieve,
-                   log=None) -> list[dict]:
+                   log=None) -> tuple[list[dict], list[int]]:
     """Submit every chunk, then poll and retrieve each; concatenate results.
 
     All jobs are lodged before the first is polled, so a multi-chunk leg
@@ -774,37 +780,48 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
         log: Logger (default: module logger).
 
     Returns:
-        The concatenated raw results of every chunk that completed.
+        ``(results, failed_chunks)``: the concatenated raw results of every
+        chunk that completed, and the indices of chunks that did not (failed
+        to lodge, or failed while polling or retrieving).
     """
     log = log or logger
     jobs: list[tuple[int, Any]] = []
+    failed_chunks: list[int] = []
     for i, path in enumerate(jsonl_paths):
         name = display_base if len(jsonl_paths) == 1 else f"{display_base}-c{i}"
-        uploaded = upload(client, path, name)
-        log.info("Uploaded chunk %d/%d: %s", i + 1, len(jsonl_paths), uploaded)
-        job = submit(client, model_name, uploaded, name)
-        log.info("Submitted batch job %d/%d: %s", i + 1, len(jsonl_paths),
-                 getattr(job, "name", job))
+        # Lodging is guarded too: a failure on chunk k must not abandon the
+        # chunks already lodged and billing (re-audit, 2026-09-19).
+        try:
+            uploaded = upload(client, path, name)
+            log.info("Uploaded chunk %d/%d: %s", i + 1, len(jsonl_paths), uploaded)
+            job = submit(client, model_name, uploaded, name)
+            log.info("Submitted batch job %d/%d: %s", i + 1, len(jsonl_paths),
+                     getattr(job, "name", job))
+        except Exception as exc:  # noqa: BLE001 - one chunk must not lose the rest
+            log.error("Batch chunk %d/%d failed to lodge: %s", i + 1,
+                      len(jsonl_paths), exc)
+            failed_chunks.append(i)
+            continue
         jobs.append((i, job))
     results: list[dict] = []
-    failed_chunks: list[int] = []
     for i, job in jobs:
         try:
             done = poll(client, getattr(job, "name", job))
             state = getattr(getattr(done, "state", None), "name",
                             str(getattr(done, "state", "")))
-            log.info("Batch job %d/%d complete: %s", i + 1, len(jobs), state)
+            log.info("Batch job %d/%d finished polling: %s", i + 1,
+                     len(jsonl_paths), state)
             chunk_results = retrieve(client, done)
         except Exception as exc:  # noqa: BLE001 - one chunk must not lose the rest
-            log.error("Batch chunk %d/%d failed: %s", i + 1, len(jobs), exc)
+            log.error("Batch chunk %d/%d failed: %s", i + 1, len(jsonl_paths), exc)
             failed_chunks.append(i)
             continue
         results.extend(chunk_results)
     if failed_chunks:
         log.error("%d of %d batch chunks returned nothing: %s — their "
                   "candidates will be reported missing", len(failed_chunks),
-                  len(jobs), failed_chunks)
-    return results
+                  len(jsonl_paths), sorted(failed_chunks))
+    return results, sorted(failed_chunks)
 
 
 def _verify_batch(
@@ -854,7 +871,11 @@ def _verify_batch(
     )
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    chunks = chunk_manifest(manifest, max_batch_candidates)
+    # The size limit is in REQUESTS: with --iterations K a candidate is K
+    # requests, so the candidates-per-job budget divides by K.
+    per_job = max(1, int(max_batch_candidates or 0) // max(1, iterations)) \
+        if max_batch_candidates else None
+    chunks = chunk_manifest(manifest, per_job)
     jsonl_paths: list[Path] = []
     n_lines = 0
     for i, chunk in enumerate(chunks):
@@ -879,10 +900,16 @@ def _verify_batch(
                 crops_base_dir=crops_base_dir,
                 temperature_override=temperature,
             )
-        n_lines += n
-        jsonl_paths.append(jsonl_path)
         logger.info("Built JSONL chunk %d/%d: %d lines → %s",
                     i + 1, len(chunks), n, jsonl_path)
+        if n == 0:
+            # Every candidate in this chunk lacked a crop; an empty JSONL
+            # cannot be lodged. Those candidates surface as missing.
+            logger.warning("chunk %d/%d has no valid requests — not lodged",
+                           i + 1, len(chunks))
+            continue
+        n_lines += n
+        jsonl_paths.append(jsonl_path)
 
     logger.info("Built JSONL: %d lines in %d chunk(s)", n_lines, len(chunks))
 
@@ -934,11 +961,22 @@ def _verify_batch(
 
         # Upload, submit, poll and retrieve — every chunk lodged before the
         # first is polled.
-        raw_results = run_batch_jobs(
+        raw_results, failed_chunks = run_batch_jobs(
             client, model_name, jsonl_paths, display_name,
             upload=upload_jsonl, submit=submit_batch_job,
             poll=poll_batch_job, retrieve=retrieve_batch_results,
         )
+        # A batch pass REPLACES probabilities.json (no resume). Keep what is
+        # there: a rerun that lost chunks must not overwrite a good file with
+        # a partial one (re-audit, 2026-09-19, critical).
+        prob_path = output_dir / "probabilities.json"
+        if prob_path.exists():
+            stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+            backup = output_dir / f"probabilities.json.pre-rerun-{stamp}.backup"
+            shutil.copy2(prob_path, backup)
+            logger.warning("existing probabilities.json kept as %s%s",
+                           backup.name,
+                           " (this rerun lost chunks)" if failed_chunks else "")
 
         # Build expected keys for validation (sorted list to match
         # validate_batch_results' list[str] type contract)

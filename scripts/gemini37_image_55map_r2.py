@@ -689,7 +689,12 @@ def load_sweeps(path: Path) -> dict[str, Any]:
     """
     if path.exists():
         sweeps = json.loads(path.read_text())
-        sweeps.setdefault("rungs", {})
+        if not isinstance(sweeps.get("rungs"), dict):
+            sweeps["rungs"] = {}
+        sweeps.setdefault("buffer_m", BUFFER_M)
+        sweeps.setdefault("reference", REFERENCE)
+        sweeps.setdefault("declared_family",
+                          "four external comparators + the K=1 vs K=3 contrast")
         return sweeps
     return {
         "buffer_m": BUFFER_M,

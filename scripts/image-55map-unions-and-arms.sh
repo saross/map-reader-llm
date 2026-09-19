@@ -105,16 +105,19 @@ union_count() {
 # but not complete) or "absent".
 arm_state() {
   local dest=$1 n_union=$2
-  $PY - "$dest" "$n_union" <<'EOF'
+  $PY - "$dest" "$n_union" 2>/dev/null <<'EOF' || echo absent
 import json, sys
 from pathlib import Path
 dest, n_union = Path(sys.argv[1]), int(sys.argv[2])
 meta = dest / "run.meta.json"
-if meta.exists():
-    m = json.load(open(meta))
-    n = int(m.get("execution_stats", {}).get("items_processed") or 0)
-    if n == n_union:
-        print("complete"); sys.exit(0)
+try:
+    if meta.exists():
+        m = json.load(open(meta))
+        n = int(m.get("execution_stats", {}).get("items_processed") or 0)
+        if n == n_union:
+            print("complete"); sys.exit(0)
+except Exception:
+    pass   # a malformed meta is a partial arm, not a crashed driver
 print("partial" if (dest / "probabilities.json").exists() else "absent")
 EOF
 }
@@ -184,7 +187,7 @@ fi
 
 if [[ " $STAGES " == *" arms "* ]]; then
   echo "=== stage 5: verifier arms [$ARMS] over rungs [$KS] $(date -Is)"
-  incomplete=0
+  rc=0
   for k in $KS; do
     n_union=$(union_count "$VROOT/union_k$k.geojson")
     for arm in $ARMS; do
@@ -214,15 +217,18 @@ if [[ " $STAGES " == *" arms "* ]]; then
         --thinking-level "$thinking" \
         --temperature 0.0 \
         --service-tier flex \
-        --workers "$WORKERS" || echo "verify_k${k}_${arm}: run_pv exited $? (completeness gap or error)"
+        --workers "$WORKERS" || rc=$?
       state=$(arm_state "$dest" "$n_union")
-      echo "verify_k${k}_${arm}: $state after the run"
-      [ "$state" = complete ] || incomplete=$((incomplete + 1))
+      echo "verify_k${k}_${arm}: $state after the run (run_pv exit ${rc:-0})"
+      if [ "$state" != complete ]; then
+        # Stop at the first arm that is not complete: a systematic failure
+        # (bad config, missing crops, quota) must not spend on every
+        # remaining rung x arm before it is seen (re-audit, 2026-09-19).
+        echo "ARMS INCOMPLETE: verify_k${k}_${arm} is $state — stopping here $(date -Is)"
+        exit 2
+      fi
+      rc=0
     done
   done
-  if [ "$incomplete" -gt 0 ]; then
-    echo "ARMS INCOMPLETE: $incomplete arm(s) not at their union count $(date -Is)"
-    exit 2
-  fi
   echo "ALL ARMS DONE $(date -Is)"
 fi

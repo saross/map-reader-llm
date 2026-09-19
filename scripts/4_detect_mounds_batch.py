@@ -1641,6 +1641,21 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
                 processed, failed = tally_chunk(run_dir, suffix, chunk_limit, True)
                 total_processed += processed
                 total_failed += failed
+                # complete_batch_unit writes the geojson and sidecar BEFORE
+                # its tolerance check, so a chunk it rejected as
+                # partial_failure leaves both files. Re-apply the same rule
+                # here, or a resume promotes the rejected chunk to "landed"
+                # and merges over it (re-audit, 2026-09-19).
+                from scripts.lib_batch_api import (
+                    MAX_ACCEPTABLE_TILE_FAILURE_RATE,
+                    MIN_ACCEPTABLE_TILE_FAILURES,
+                )
+                tolerance = max(MIN_ACCEPTABLE_TILE_FAILURES,
+                                int(chunk_limit * MAX_ACCEPTABLE_TILE_FAILURE_RATE))
+                if failed > tolerance:
+                    print(f"    chunk {chunk_idx} sidecar records {failed} failed "
+                          f"tiles (> {tolerance} tolerated) — still a failed chunk")
+                    chunk_failed = True
             else:
                 print(f"    {chunk_geojson.name} has no .tiles.json sidecar — "
                       "treating the chunk as failed, not as done")

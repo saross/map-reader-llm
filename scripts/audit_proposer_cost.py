@@ -212,7 +212,13 @@ def read_fragments(root: str) -> list[dict[str, Any]]:
         # the pass at a budget gate reports one seventh of the run with no
         # sign anything is wrong (audit lens A and B, 2026-09-19). Such a
         # directory stops the audit.
-        chosen = select_pass_file(metas, ".meta.json", Path(root) / name)
+        try:
+            chosen = select_pass_file(metas, ".meta.json", Path(root) / name)
+        except (FileNotFoundError, ValueError) as exc:
+            raise SystemExit(
+                f"audit_proposer_cost: cannot price {Path(root) / name}: {exc}. "
+                "Merge the chunks, or archive the superseded meta, then re-run."
+            ) from exc
         with open(chosen) as fh:
             meta = json.load(fh)
         metas = [str(chosen)]

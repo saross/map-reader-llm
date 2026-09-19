@@ -154,7 +154,7 @@ done
 # The finished state is four analysis.json present (runbook above); say so
 # only when it is true.
 missing=0
-for k in $KS; do for arm in arm1 arm2; do
+for k in $KS; do for arm in $ARMS; do
   [ -f "$RESULTS/k$k/$arm/analysis.json" ] || { echo "no sweep for k$k $arm"; missing=$((missing + 1)); }
 done; done
 if [ "$missing" -gt 0 ]; then

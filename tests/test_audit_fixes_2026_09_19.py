@@ -101,6 +101,23 @@ def test_sum_dicts_clears_ratios_instead_of_adding_them():
     assert out["total_cost_usd"] == 3.5
 
 
+def test_sum_dicts_clears_a_ratio_present_only_on_the_left():
+    """Re-audit 2026-09-19: a merged chunked pass carries cached_share and a
+    realtime recovery does not; the stale share survived next to summed
+    counts (0.79 recorded, 0.527 true)."""
+    out = _sum_dicts({"total_input_tokens": 100, "total_cached_tokens": 79, "cached_share": 0.79},
+                     {"total_input_tokens": 50})
+    assert out["cached_share"] is None
+    assert out["total_cached_tokens"] == 79 and out["total_input_tokens"] == 150
+
+
+def test_resume_branch_reapplies_the_failure_tolerance():
+    src = (ROOT / "scripts" / "4_detect_mounds_batch.py").read_text()
+    i = src.index("SKIPPING (output exists")
+    block = src[i:i + 2500]
+    assert "MAX_ACCEPTABLE_TILE_FAILURE_RATE" in block and "if failed > tolerance:" in block
+
+
 def test_sum_dicts_nested_and_none_values():
     out = _sum_dicts({"by_provider": {"gemini": {"n": 1}}, "x": None},
                      {"by_provider": {"gemini": {"n": 2}}, "x": 3})

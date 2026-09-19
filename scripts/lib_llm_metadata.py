@@ -1396,6 +1396,10 @@ def _sum_dicts(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
             if isinstance(current, bool) or not isinstance(current, (int, float)):
                 current = 0
             out[k] = current + v
+    # A ratio present only in ``a`` is just as stale next to summed counts.
+    for k in list(out):
+        if k.endswith(_RATIO_SUFFIXES):
+            out[k] = None
     return out
 
 

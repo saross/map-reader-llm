@@ -901,9 +901,11 @@ def sweep(
 
     A stage qualifies when its ``run.meta.json`` records a positive
     ``items_processed`` below the number of results its
-    ``probabilities.json`` holds. ``items_processed == 0`` is excluded: the
-    Batch Application Programming Interface (API) returns no per-response
-    metadata, so a batch stage legitimately records zero and its tokens were
+    ``probabilities.json`` holds. A realtime stage at ``items_processed == 0``
+    has nothing to compare; a BATCH stage at zero is a booking failure and is
+    reported (the Batch Application Programming Interface (API) reports usage
+    per response and the path has read it since 2026-09-17), so it no longer
+    counts as a stage that legitimately records zero and its tokens were
     never in the meta to lose.
 
     Args:
