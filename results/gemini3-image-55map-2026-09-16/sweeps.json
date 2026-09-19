@@ -210,6 +210,110 @@
         "tile_fp": 71,
         "tile_fn": 915
       }
+    },
+    "G3IMG-ARM1-K5": {
+      "n_sweep_points": 100,
+      "carried_point": [
+        0.15,
+        5
+      ],
+      "carried": {
+        "rung": "G3IMG-ARM1-K5",
+        "prob_t": 0.15,
+        "min_votes": 5,
+        "n_detections": 4858,
+        "tp": 4038.0,
+        "fp": 820.0,
+        "fn": 980.0,
+        "micro_f1_50": 0.8177399756986635,
+        "tile_mcc": 0.7164960880499314,
+        "tile_tp": 2485,
+        "tile_tn": 4854,
+        "tile_fp": 158,
+        "tile_fn": 1044
+      },
+      "f1_oracle": {
+        "rung": "G3IMG-ARM1-K5",
+        "prob_t": 0.15,
+        "min_votes": 5,
+        "n_detections": 4858,
+        "tp": 4038.0,
+        "fp": 820.0,
+        "fn": 980.0,
+        "micro_f1_50": 0.8177399756986635,
+        "tile_mcc": 0.7164960880499314,
+        "tile_tp": 2485,
+        "tile_tn": 4854,
+        "tile_fp": 158,
+        "tile_fn": 1044
+      },
+      "mcc_oracle": {
+        "rung": "G3IMG-ARM1-K5",
+        "prob_t": 0.4,
+        "min_votes": 1,
+        "n_detections": 11739,
+        "tp": 4361.0,
+        "fp": 7378.0,
+        "fn": 657.0,
+        "micro_f1_50": 0.520498895983768,
+        "tile_mcc": 0.7495899397886531,
+        "tile_tp": 2597,
+        "tile_tn": 4881,
+        "tile_fp": 131,
+        "tile_fn": 932
+      }
+    },
+    "G3IMG-ARM2-K5": {
+      "n_sweep_points": 145,
+      "carried_point": [
+        0.95,
+        5
+      ],
+      "carried": {
+        "rung": "G3IMG-ARM2-K5",
+        "prob_t": 0.95,
+        "min_votes": 5,
+        "n_detections": 5155,
+        "tp": 4225.0,
+        "fp": 930.0,
+        "fn": 793.0,
+        "micro_f1_50": 0.8306300992824143,
+        "tile_mcc": 0.7253167456763774,
+        "tile_tp": 2567,
+        "tile_tn": 4819,
+        "tile_fp": 193,
+        "tile_fn": 962
+      },
+      "f1_oracle": {
+        "rung": "G3IMG-ARM2-K5",
+        "prob_t": 0.96,
+        "min_votes": 5,
+        "n_detections": 4664,
+        "tp": 4044.0,
+        "fp": 620.0,
+        "fn": 974.0,
+        "micro_f1_50": 0.8353645940921298,
+        "tile_mcc": 0.7450271779013578,
+        "tile_tp": 2447,
+        "tile_tn": 4979,
+        "tile_fp": 33,
+        "tile_fn": 1082
+      },
+      "mcc_oracle": {
+        "rung": "G3IMG-ARM2-K5",
+        "prob_t": 0.98,
+        "min_votes": 1,
+        "n_detections": 12508,
+        "tp": 4572.0,
+        "fp": 7936.0,
+        "fn": 446.0,
+        "micro_f1_50": 0.5217391304347826,
+        "tile_mcc": 0.7754947030597968,
+        "tile_tp": 2623,
+        "tile_tn": 4951,
+        "tile_fp": 61,
+        "tile_fn": 906
+      }
     }
   }
 }
