@@ -88,3 +88,41 @@ def test_mcc_interaction_detects_a_row_dependent_arm_effect():
     q = {"A1": pred(0.6, 0.3), "A2": pred(0.7, 0.2), "B1": pred(0.6, 0.3), "B2": pred(0.7, 0.2)}
     r0 = did_test_mcc(q, truth, n_permutations=2000, seed=3)
     assert r0["p_value"] > 0.05
+
+
+def test_the_null_micro_f1_is_bitwise_identical_to_the_boards_scalar():
+    """The null and the observed statistic must use the same arithmetic.
+
+    ``did_test_f1`` computes the observed D with the board's scalar
+    ``micro_f1`` and every null D with ``_micro_f1_vec``, then compares
+    them with ``>=``. The closed form ``2*tp / (2*tp + fp + fn)`` is
+    algebraically equal to ``2PR / (P + R)`` but not equal in floating
+    point: it differed from ``micro_f1`` in the last ULP on 7,526 of
+    20,000 random count triples. This pins the two to the same spelling.
+    """
+    from scripts.gemini37_image_55map_r2 import _micro_f1_vec
+    from scripts.n1_baseline_leaderboard_tiering import micro_f1
+
+    rng = np.random.default_rng(0)
+    tp = rng.integers(0, 50, 5000).astype(float)
+    fp = rng.integers(0, 50, 5000).astype(float)
+    fn = rng.integers(0, 50, 5000).astype(float)
+
+    scalar = np.array([micro_f1(a, b, c) for a, b, c in zip(tp, fp, fn)])
+    vector = _micro_f1_vec(tp, fp, fn)
+
+    assert np.array_equal(vector, scalar), (
+        f"{int((vector != scalar).sum())} of {len(scalar)} triples differ"
+    )
+
+
+def test_the_null_micro_f1_keeps_the_zero_rule():
+    """tp == 0 is 0.0 even when fp and fn are zero too (no NaN)."""
+    from scripts.gemini37_image_55map_r2 import _micro_f1_vec
+
+    out = _micro_f1_vec(
+        np.array([0.0, 0.0, 3.0]),
+        np.array([0.0, 5.0, 0.0]),
+        np.array([0.0, 5.0, 0.0]),
+    )
+    assert np.array_equal(out, np.array([0.0, 0.0, 1.0]))

@@ -1209,11 +1209,38 @@ _PERM_CHUNK = 1000
 
 
 def _micro_f1_vec(tp: Any, fp: Any, fn: Any) -> Any:
-    """Vectorised micro-F1 with the board's zero rule (0.0 when tp == 0)."""
+    """Vectorised micro-F1, bitwise identical to the board's ``micro_f1``.
+
+    Carries the board's zero rule (0.0 when ``tp == 0``) and, deliberately,
+    its *arithmetic*: precision and recall computed separately and combined
+    as ``2PR / (P + R)``. The algebraically equal closed form
+    ``2·tp / (2·tp + fp + fn)`` is not equal in floating point — measured
+    over 20,000 random count triples it differs from ``micro_f1`` in the
+    last unit in the last place on 7,526 of them, where this form is
+    identical on all 20,000. That matters here because
+    :func:`did_test_f1` computes the OBSERVED statistic with the scalar
+    ``micro_f1`` and the NULL with this function, and compares the two with
+    ``>=``: a permutation reproducing the observed sums exactly must not
+    fall on the wrong side of the comparison through a rounding difference
+    between two spellings of the same formula.
+
+    Args:
+        tp, fp, fn: Aggregate counts, scalars or aligned arrays.
+
+    Returns:
+        Micro-average F1, same shape as the inputs.
+    """
     tp = np.asarray(tp, dtype=float)
-    denom = 2.0 * tp + np.asarray(fp, dtype=float) + np.asarray(fn, dtype=float)
-    with np.errstate(divide="ignore", invalid="ignore"):
-        f1 = np.where((tp > 0) & (denom > 0), 2.0 * tp / np.where(denom > 0, denom, 1.0), 0.0)
+    fp = np.asarray(fp, dtype=float)
+    fn = np.asarray(fn, dtype=float)
+    denom_p, denom_r = tp + fp, tp + fn
+    precision = np.divide(tp, denom_p, out=np.zeros_like(tp), where=denom_p > 0)
+    recall = np.divide(tp, denom_r, out=np.zeros_like(tp), where=denom_r > 0)
+    denom_f = precision + recall
+    f1 = np.divide(
+        2 * precision * recall, denom_f, out=np.zeros_like(tp), where=denom_f > 0,
+    )
+    f1[tp == 0] = 0.0  # explicit tp == 0 -> 0.0, as in micro_f1
     return f1
 
 
