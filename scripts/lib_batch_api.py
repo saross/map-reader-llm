@@ -48,7 +48,7 @@ import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from typing import Any
 
 import geojson
@@ -160,6 +160,282 @@ def _get_state_name(state: Any) -> str:
 # ─────────────────────────────────────────────────────────────────────
 # File Storage Management
 # ─────────────────────────────────────────────────────────────────────
+
+# The Files API caps TOTAL stored bytes per project, and an uploaded
+# request JSONL is retained for 30 days — so a campaign's uploads
+# accumulate across legs whether or not the jobs that consumed them have
+# finished. On 2026-09-19 14:05 UTC a 12-chunk verifier leg lodged 4
+# chunks and then lost the remaining 8 to::
+#
+#     429 RESOURCE_EXHAUSTED ... Quota exceeded for metric:
+#     generativelanguage.googleapis.com/file_storage_bytes,
+#     limit: 21474836480 (quotaId: FileStorageBytesPerProject)
+#
+# against 45 stored uploads totalling 21.4 GB. The cap below is the
+# limit that 429 reported: 21,474,836,480 bytes = 20 GiB.
+FILE_STORAGE_QUOTA_METRIC = (
+    "generativelanguage.googleapis.com/file_storage_bytes"
+)
+FILE_STORAGE_QUOTA_ID = "FileStorageBytesPerProject"
+FILE_STORAGE_CAP_BYTES = 21_474_836_480
+
+# Head-room withheld from the cap. The audit enumerates files at one
+# instant and another process may upload between the audit and the
+# lodge, so the preflight budgets against 95% of the cap rather than
+# racing it to the last byte.
+FILE_STORAGE_SAFETY_MARGIN = 0.05
+FILE_STORAGE_BUDGET_BYTES = int(
+    FILE_STORAGE_CAP_BYTES * (1.0 - FILE_STORAGE_SAFETY_MARGIN),
+)
+
+# Bytes per gibibyte — the unit audit_file_storage() reports in.
+_GIB = 1024 ** 3
+
+
+class FileStorageCapExceeded(RuntimeError):
+    """
+    Projected Files API usage would breach the per-project storage cap.
+
+    Raised by :func:`preflight_file_storage` *before* any upload, so a
+    leg that cannot fit fails without committing spend. The numbers are
+    carried as attributes as well as in the message, so a caller can
+    report them without re-parsing the string.
+
+    Attributes:
+        projected_bytes: Stored bytes plus the bytes about to be uploaded.
+        budget_bytes: The cap less :data:`FILE_STORAGE_SAFETY_MARGIN`.
+        cap_bytes: The quota limit itself.
+    """
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        projected_bytes: int,
+        budget_bytes: int = FILE_STORAGE_BUDGET_BYTES,
+        cap_bytes: int = FILE_STORAGE_CAP_BYTES,
+    ) -> None:
+        super().__init__(message)
+        self.projected_bytes = projected_bytes
+        self.budget_bytes = budget_bytes
+        self.cap_bytes = cap_bytes
+
+
+def is_file_storage_quota_error(exc: BaseException) -> bool:
+    """
+    Recognise the Files API storage-quota 429 from any raised exception.
+
+    The SDK surfaces quota breaches as a generic error whose message
+    carries the metric name, so the message is the only reliable
+    discriminator. Both the metric and the quota id are matched because
+    the two appear in different parts of the same 429 body.
+
+    Args:
+        exc: Any exception raised by an upload or submission call.
+
+    Returns:
+        True when the exception names the file-storage quota — i.e. the
+        failure is "the project is full", not a transient error.
+
+    Examples:
+        >>> is_file_storage_quota_error(RuntimeError(
+        ...     "429 RESOURCE_EXHAUSTED ... metric: "
+        ...     "generativelanguage.googleapis.com/file_storage_bytes"))
+        True
+        >>> is_file_storage_quota_error(RuntimeError("503 UNAVAILABLE"))
+        False
+    """
+    text = str(exc)
+    return (
+        "file_storage_bytes" in text
+        or FILE_STORAGE_QUOTA_ID in text
+    )
+
+
+def _largest_stored_files(
+    client: Any,
+    top_n: int = 5,
+) -> list[tuple[str, int]]:
+    """
+    Enumerate the largest files currently held by the Files API.
+
+    Called only on the failure path of :func:`preflight_file_storage`, to
+    name the files an operator would delete first. Any enumeration error
+    is swallowed: a diagnostic must never mask the quota error it exists
+    to explain.
+
+    Args:
+        client: Initialised ``google.genai.Client``.
+        top_n: How many files to name.
+
+    Returns:
+        ``(name, size_bytes)`` pairs, largest first, at most *top_n* long.
+        Empty when the listing fails.
+    """
+    try:
+        files = [
+            (
+                getattr(f, "name", "") or "<unnamed>",
+                int(getattr(f, "size_bytes", 0) or 0),
+            )
+            for f in client.files.list()
+        ]
+    except Exception as exc:  # noqa: BLE001 - diagnostics are best-effort
+        logger.debug("Could not enumerate files for diagnostics: %s", exc)
+        return []
+
+    files.sort(key=lambda item: item[1], reverse=True)
+    return files[:top_n]
+
+
+def preflight_file_storage(
+    client: Any,
+    jsonl_paths: Sequence[Path],
+    *,
+    log: logging.Logger | None = None,
+    sweep: Callable[[], tuple[int, float]] | None = None,
+) -> int | None:
+    """
+    Check projected Files API storage before a leg's first upload.
+
+    Sums the local sizes of every request JSONL about to be uploaded,
+    adds the bytes the project already holds (via
+    :func:`audit_file_storage`), and compares the projection against
+    :data:`FILE_STORAGE_BUDGET_BYTES`. The audit is logged at INFO on
+    every call, so the run log always records what the leg believed the
+    storage state to be.
+
+    Over budget, an optional *sweep* is given one chance to free space
+    and the storage is re-audited; still over, the call raises rather
+    than letting the lodging loop discover the cap chunk by chunk (the
+    2026-09-19 14:05 UTC incident, where 4 of 12 chunks lodged and 8
+    died on a 429).
+
+    **No production call site passes a sweep today.** The obvious
+    candidate, :func:`sweep_stale_files_safe`, protects only files that
+    are in the shared registry or younger than its grace period — it
+    never consults batch job state, and neither :func:`upload_jsonl` nor
+    the verifier path registers what it uploads. It would therefore
+    delete the input file of an in-flight batch job lodged by another
+    process, so this function fails fast instead of sweeping. Pass a
+    *sweep* only once it can guarantee that no file referenced by a
+    non-terminal job is deleted.
+
+    An audit that cannot run (e.g. ``files.list()`` itself errors) is a
+    warning, not a failure: the preflight is a guard on spend, not a
+    gate on API health, and the per-chunk quota guard in the lodging
+    loop still covers the blind case.
+
+    Args:
+        client: Initialised ``google.genai.Client``.
+        jsonl_paths: Every request file the leg is about to upload.
+            Paths that do not exist contribute zero.
+        log: Logger for the audit line (default: this module's logger).
+        sweep: Optional zero-argument callable returning
+            ``(deleted_count, freed_gb)``, invoked once when the
+            projection is over budget. See the caveat above.
+
+    Returns:
+        The projected usage in bytes, or ``None`` when the audit could
+        not be performed.
+
+    Raises:
+        FileStorageCapExceeded: When the projection is over budget and
+            no sweep (or an insufficient sweep) brought it back under.
+            Raised before any upload, so no spend is committed.
+
+    Examples:
+        >>> preflight_file_storage(client, [Path("chunk0.jsonl")])
+        21474836  # projected bytes; INFO line written to the run log
+    """
+    log = log or logger
+
+    pending_bytes = 0
+    for path in jsonl_paths:
+        try:
+            pending_bytes += path.stat().st_size
+        except OSError:
+            # A chunk that is not on disk cannot be uploaded either; the
+            # caller's own build step reports it.
+            continue
+
+    def _audit() -> tuple[int, int] | None:
+        """Return ``(file_count, stored_bytes)``, or None if unavailable."""
+        try:
+            count, total_gb = audit_file_storage(client)
+        except Exception as exc:  # noqa: BLE001 - audit must not be fatal
+            log.warning(
+                "File storage preflight skipped — could not audit the "
+                "Files API (%s). Lodging proceeds unguarded; a %s 429 "
+                "will be reported per chunk.",
+                exc, FILE_STORAGE_QUOTA_METRIC,
+            )
+            return None
+        # total_gb is stored_bytes / 2**30 — a power-of-two rescale, so
+        # multiplying back recovers the byte count exactly.
+        return count, int(round(total_gb * _GIB))
+
+    audited = _audit()
+    if audited is None:
+        return None
+    file_count, stored_bytes = audited
+    projected = stored_bytes + pending_bytes
+
+    log.info(
+        "File storage preflight: %d file(s) stored (%.2f GB) + %d chunk(s) "
+        "to upload (%.2f GB) = %.2f GB projected against a %.2f GB budget "
+        "(%.2f GB cap less a %.0f%% margin)",
+        file_count, stored_bytes / _GIB, len(jsonl_paths),
+        pending_bytes / _GIB, projected / _GIB,
+        FILE_STORAGE_BUDGET_BYTES / _GIB, FILE_STORAGE_CAP_BYTES / _GIB,
+        FILE_STORAGE_SAFETY_MARGIN * 100,
+    )
+
+    if projected <= FILE_STORAGE_BUDGET_BYTES:
+        return projected
+
+    if sweep is not None:
+        deleted, freed_gb = sweep()
+        log.warning(
+            "File storage over budget (%.2f GB projected) — swept %d "
+            "file(s), freeing %.2f GB; re-auditing",
+            projected / _GIB, deleted, freed_gb,
+        )
+        audited = _audit()
+        if audited is not None:
+            file_count, stored_bytes = audited
+            projected = stored_bytes + pending_bytes
+            log.info(
+                "File storage after sweep: %d file(s), %.2f GB projected",
+                file_count, projected / _GIB,
+            )
+            if projected <= FILE_STORAGE_BUDGET_BYTES:
+                return projected
+
+    largest = _largest_stored_files(client)
+    if largest:
+        largest_text = "; largest stored files: " + ", ".join(
+            f"{name} ({size / _GIB:.2f} GB)" for name, size in largest
+        )
+    else:
+        largest_text = ""
+    message = (
+        f"Files API storage cap would be exceeded — nothing uploaded, no "
+        f"spend committed. Metric {FILE_STORAGE_QUOTA_METRIC} "
+        f"(quotaId {FILE_STORAGE_QUOTA_ID}): projected {projected:,} bytes "
+        f"({projected / _GIB:.2f} GB) = {file_count} stored file(s) "
+        f"({stored_bytes / _GIB:.2f} GB) + {len(jsonl_paths)} chunk(s) to "
+        f"upload ({pending_bytes / _GIB:.2f} GB), against a cap of "
+        f"{FILE_STORAGE_CAP_BYTES:,} bytes "
+        f"({FILE_STORAGE_CAP_BYTES / _GIB:.2f} GB) and a preflight budget "
+        f"of {FILE_STORAGE_BUDGET_BYTES:,} bytes "
+        f"({FILE_STORAGE_BUDGET_BYTES / _GIB:.2f} GB){largest_text}. "
+        f"Uploads are retained for 30 days: delete the stale ones "
+        f"(cleanup_batch_files) and re-run; audit_file_storage() reports "
+        f"current usage."
+    )
+    log.error("%s", message)
+    raise FileStorageCapExceeded(message, projected_bytes=projected)
 
 
 def cleanup_batch_files(
@@ -2601,6 +2877,14 @@ def run_batch_unit(
         print(f"  Resuming batch job: {job_name}")
     else:
         try:
+            # Pre-lodge storage check. A proposer chunk's JSONL is ~1.3 GB
+            # and the Files API caps stored bytes per project (30-day
+            # retention), so a chunk that cannot fit must fail before the
+            # upload rather than on a 429 part-way through — the same hole
+            # that cost the verifier leg of 2026-09-19 14:05 UTC 8 of its
+            # 12 chunks. One chunk is in flight here, so the projection
+            # covers this chunk only.
+            preflight_file_storage(client, [ctx.jsonl_path])
             job_name, _uploaded_name = submit_batch_unit(
                 ctx, client, on_submit,
             )

@@ -783,6 +783,13 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
     completeness validation rather than as a crash that loses the other
     chunks' paid-for results.
 
+    A lodging failure naming the Files API storage quota is reported
+    specifically: that is a full project rather than a transient error, so
+    every remaining chunk will fail the same way and no retry can help.
+    The loop still continues, because the chunks already lodged are
+    billing. Callers run ``lib_batch_api.preflight_file_storage()`` before
+    the first upload so this path is not reached at all.
+
     Args:
         client: The API client.
         model_name: Resolved model name.
@@ -801,6 +808,14 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
         chunk that completed, and the indices of chunks that did not (failed
         to lodge, or failed while polling or retrieving).
     """
+    # Local import: lib_batch_api pulls in rasterio/geojson, which the
+    # non-batch subcommands must not pay for at import time.
+    from scripts.lib_batch_api import (
+        FILE_STORAGE_CAP_BYTES,
+        FILE_STORAGE_QUOTA_METRIC,
+        is_file_storage_quota_error,
+    )
+
     log = log or logger
     record: dict[str, Any] = {"display_base": display_base, "model": model_name,
                               "chunks": []}
@@ -827,8 +842,23 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
             log.info("Submitted batch job %d/%d: %s", i + 1, len(jsonl_paths),
                      entry["job"])
         except Exception as exc:  # noqa: BLE001 - one chunk must not lose the rest
-            log.error("Batch chunk %d/%d failed to lodge: %s", i + 1,
-                      len(jsonl_paths), exc)
+            if is_file_storage_quota_error(exc):
+                # The project's Files API storage is full, not a transient
+                # error: every remaining chunk will fail the same way, and
+                # retrying without freeing space cannot help. Say so once
+                # per chunk, plainly (2026-09-19 14:05 UTC).
+                log.error(
+                    "Batch chunk %d/%d hit the Files API storage cap "
+                    "(%s, %.2f GB): %s — the remaining chunks will not "
+                    "lodge either. Run audit_file_storage() to see what "
+                    "the project is holding, delete stale uploads "
+                    "(retained 30 days), then re-run this leg.",
+                    i + 1, len(jsonl_paths), FILE_STORAGE_QUOTA_METRIC,
+                    FILE_STORAGE_CAP_BYTES / (1024 ** 3), exc,
+                )
+            else:
+                log.error("Batch chunk %d/%d failed to lodge: %s", i + 1,
+                          len(jsonl_paths), exc)
             entry["state"] = f"lodging failed: {exc}"
             failed_chunks.append(i)
             save_record()
@@ -904,6 +934,7 @@ def _verify_batch(
     """
     from scripts.lib_batch_api import (
         poll_batch_job,
+        preflight_file_storage,
         retrieve_batch_results,
         submit_batch_job,
         upload_jsonl,
@@ -997,6 +1028,14 @@ def _verify_batch(
             return 1
         # Update tracker now that the model is resolved.
         batch_metadata.model_override = model_name
+
+        # Pre-lodge storage check. The Files API caps stored bytes per
+        # project and keeps every uploaded request JSONL for 30 days, so a
+        # leg can be too big for the project even when each chunk is under
+        # the 2 GB per-file limit. On 2026-09-19 14:05 UTC this leg lodged
+        # 4 of 12 chunks and lost the other 8 to a file_storage_bytes 429,
+        # one chunk at a time. Fail before the first upload instead.
+        preflight_file_storage(client, jsonl_paths, log=logger)
 
         # Upload, submit, poll and retrieve — every chunk lodged before the
         # first is polled.
