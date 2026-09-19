@@ -1393,6 +1393,42 @@ def detect_mounds_versioned(
         "items_failed": metadata_tracker.stats.items_failed,
     }
 
+def tally_chunk(run_dir: Path, suffix: str, chunk_limit: int,
+                success: bool) -> tuple[int, int]:
+    """Count one chunk's processed and failed tiles from its sidecar.
+
+    A chunk that succeeded, or failed partway (``partial_failure``), has a
+    ``.tiles.json`` with ``completed`` and ``failed`` lists and is counted
+    from them. A chunk that failed before writing a sidecar — a submit,
+    poll or retrieve error, a job that FAILED, was CANCELLED or EXPIRED —
+    has no record of its own, so every tile it was given counts as failed.
+    Without this rule the losing chunk was the one that was never counted.
+
+    Args:
+        run_dir: The run directory holding the chunk files.
+        suffix: The chunk's filename suffix (``_chunk3``, or empty).
+        chunk_limit: How many tiles the chunk was given.
+        success: Whether ``run_batch_unit`` reported success for it.
+
+    Returns:
+        ``(processed, failed)`` for the chunk.
+    """
+    sidecars = list(run_dir.glob(f"*{suffix}.tiles.json"))
+    if suffix == "":
+        # An unchunked run: the pattern above would also match chunk files
+        # from an earlier chunked attempt in the same directory.
+        sidecars = [t for t in sidecars if "_chunk" not in t.name]
+    processed = failed = 0
+    for tf in sidecars:
+        with open(tf) as f:
+            td = json.load(f)
+        processed += len(td.get("completed", []))
+        failed += len(td.get("failed", []))
+    if not sidecars and not success:
+        failed = int(chunk_limit)
+    return processed, failed
+
+
 def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
     """
     Run detection via Gemini Batch API (50% cost discount).
@@ -1633,18 +1669,26 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
         if not success:
             print(f"\nBatch chunk {chunk_idx} failed: {message}")
             chunk_failed = True
-            continue
 
-        # Count tiles from this chunk's .tiles.json
-        chunk_tiles_files = list(run_dir.glob(f"*{suffix}.tiles.json"))
-        for tf in chunk_tiles_files:
-            with open(tf) as f:
-                td = json.load(f)
-            total_processed += len(td.get("completed", []))
-            total_failed += len(td.get("failed", []))
+        # Count this chunk's tiles from its sidecar. A chunk that failed
+        # before writing one (submit/poll/retrieve error, job FAILED or
+        # EXPIRED) counts every tile it was given as failed — until
+        # 2026-09-19 a failed chunk was skipped here, so the one chunk that
+        # lost tiles was the one whose losses were never counted, and a run
+        # that dropped 4,000 tiles could exit 0 (audit lens A, S155).
+        processed, failed = tally_chunk(run_dir, suffix, chunk_limit, success)
+        total_processed += processed
+        total_failed += failed
 
-    # Merge chunk GeoJSONs into a single output if chunked
-    if needs_chunking and not args.dry_run:
+    # Merge chunk GeoJSONs into a single output if chunked — but never
+    # while a chunk is missing: the merged sidecar sums total_tiles over the
+    # chunk sidecars that EXIST, so a six-of-seven merge would read as a
+    # complete pass. The chunk files stay in place; a resumed run skips the
+    # finished chunks, re-runs the failed one, and merges then.
+    if chunk_failed and needs_chunking:
+        print("\nChunk merge withheld: a chunk failed. Re-run to resume the "
+              "failed chunk; the merge happens once every chunk has landed.")
+    if needs_chunking and not args.dry_run and not chunk_failed:
         chunk_geojsons = sorted(run_dir.glob("*_chunk*.geojson"))
         if chunk_geojsons:
             merged_features = []
@@ -1706,7 +1750,10 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
 
     if chunk_failed:
         print("\nBatch partially failed (some chunks errored)")
-        return {"items_processed": total_processed, "items_failed": total_failed}
+        # A failed chunk is a failure even if every tile it did reach
+        # succeeded; the exit status must agree with this line.
+        return {"items_processed": total_processed,
+                "items_failed": max(total_failed, 1)}
 
     print(f"\nBatch complete. Estimated cost: ${total_cost:.4f}")
     print(f"Tiles processed: {total_processed}")
