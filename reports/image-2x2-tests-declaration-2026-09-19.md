@@ -172,7 +172,7 @@ above and their T5 rows still carry a `significant` verdict.
 **Tests**: `tests/test_image_2x2_tests.py` pins the family size by
 arithmetic on fake p-values (`m = 4` at K ≠ 3, `m = 5` at K = 3), the row
 shape outside the family, and the bit-for-bit identity of the primary rung
-against a plain correction over all five rows. Commit: `TBD`.
+against a plain correction over all five rows. Commit: `f750b96ef`.
 
 ### 2026-09-19 — Original publication
 
