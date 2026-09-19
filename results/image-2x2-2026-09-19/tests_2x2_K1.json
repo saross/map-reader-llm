@@ -1,0 +1,229 @@
+{
+  "declaration": "reports/image-2x2-tests-declaration-2026-09-19.md",
+  "rung": 1,
+  "status": "exploratory replicate",
+  "cells": {
+    "A1": {
+      "label": "IMG-ARM1-K1-carried",
+      "home": "results/gemini37-image-55map-2026-09-13",
+      "n": 6250,
+      "confusion": {
+        "tp": 2693,
+        "tn": 4737,
+        "fp": 275,
+        "fn": 836
+      }
+    },
+    "A2": {
+      "label": "IMG-ARM2-K1-carried",
+      "home": "results/gemini37-image-55map-2026-09-13",
+      "n": 5997,
+      "confusion": {
+        "tp": 2671,
+        "tn": 4847,
+        "fp": 165,
+        "fn": 858
+      }
+    },
+    "B1": {
+      "label": "G3IMG-ARM1-K1-carried",
+      "home": "results/gemini3-image-55map-2026-09-16",
+      "n": 8529,
+      "confusion": {
+        "tp": 2646,
+        "tn": 4711,
+        "fp": 301,
+        "fn": 883
+      }
+    },
+    "B2": {
+      "label": "G3IMG-ARM2-K1-carried",
+      "home": "results/gemini3-image-55map-2026-09-16",
+      "n": 9172,
+      "confusion": {
+        "tp": 2724,
+        "tn": 4607,
+        "fp": 405,
+        "fn": 805
+      }
+    }
+  },
+  "buffer_m": 50,
+  "reference": "r2",
+  "n_permutations": 10000,
+  "seed": 42,
+  "mcc_tests": [
+    {
+      "test": "T1",
+      "name": "proposer effect under arm 2",
+      "a": "IMG-ARM2-K1-carried",
+      "b": "G3IMG-ARM2-K1-carried",
+      "mcc_a": 0.756936,
+      "mcc_b": 0.706286,
+      "observed_diff": 0.050651,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 3.3e-05,
+      "null_std": 0.005464,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "test": "T2",
+      "name": "proposer effect under arm 1",
+      "a": "IMG-ARM1-K1-carried",
+      "b": "G3IMG-ARM1-K1-carried",
+      "mcc_a": 0.732375,
+      "mcc_b": 0.714431,
+      "observed_diff": 0.017945,
+      "p_value": 0.0039,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 8.5e-05,
+      "null_std": 0.006157,
+      "bh_adjusted_p": 0.0065,
+      "significant": true
+    },
+    {
+      "test": "T3",
+      "name": "verifier seat within row B",
+      "a": "G3IMG-ARM2-K1-carried",
+      "b": "G3IMG-ARM1-K1-carried",
+      "mcc_a": 0.706286,
+      "mcc_b": 0.714431,
+      "observed_diff": -0.008145,
+      "p_value": 0.1681,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 1.7e-05,
+      "null_std": 0.005893,
+      "bh_adjusted_p": 0.210125,
+      "significant": false
+    },
+    {
+      "test": "T4",
+      "name": "interaction (A2-A1)-(B2-B1)",
+      "a": "row A arm effect",
+      "b": "row B arm effect",
+      "mcc_A1": 0.7323753775430167,
+      "mcc_A2": 0.7569363860266408,
+      "mcc_B1": 0.7144308355288882,
+      "mcc_B2": 0.7062858667200745,
+      "row_A_effect": 0.02456100848362408,
+      "row_B_effect": -0.008144968808813657,
+      "observed_diff": 0.03270597729243774,
+      "p_value": 0.0,
+      "null_mean": -5.188485365580635e-05,
+      "null_std": 0.007004857543466084,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "test": "T5",
+      "name": "confound check vs IM-k3",
+      "a": "G3IMG-ARM1-K1-carried",
+      "b": "IM-k3",
+      "meaningful": false,
+      "mcc_a": 0.714431,
+      "mcc_b": 0.711,
+      "observed_diff": 0.003431,
+      "p_value": 0.65,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -4.2e-05,
+      "null_std": 0.007575,
+      "bh_adjusted_p": 0.65,
+      "significant": false
+    }
+  ],
+  "f1_tests": [
+    {
+      "test": "T1",
+      "name": "proposer effect under arm 2",
+      "a": "IMG-ARM2-K1-carried",
+      "b": "G3IMG-ARM2-K1-carried",
+      "f1_a": 0.871902,
+      "f1_b": 0.664412,
+      "observed_diff": 0.20749,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -4.1e-05,
+      "null_std": 0.006196,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "test": "T2",
+      "name": "proposer effect under arm 1",
+      "a": "IMG-ARM1-K1-carried",
+      "b": "G3IMG-ARM1-K1-carried",
+      "f1_a": 0.84771,
+      "f1_b": 0.666421,
+      "observed_diff": 0.18129,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -5.5e-05,
+      "null_std": 0.006164,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "test": "T3",
+      "name": "verifier seat within row B",
+      "a": "G3IMG-ARM2-K1-carried",
+      "b": "G3IMG-ARM1-K1-carried",
+      "f1_a": 0.664412,
+      "f1_b": 0.666421,
+      "observed_diff": -0.002009,
+      "p_value": 0.3483,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -2.6e-05,
+      "null_std": 0.002145,
+      "bh_adjusted_p": 0.3483,
+      "significant": false
+    },
+    {
+      "test": "T4",
+      "name": "interaction (A2-A1)-(B2-B1)",
+      "a": "row A arm effect",
+      "b": "row B arm effect",
+      "f1_A1": 0.847710330138445,
+      "f1_A2": 0.8719019518837948,
+      "f1_B1": 0.6664206097290913,
+      "f1_B2": 0.6644115574348132,
+      "row_A_effect": 0.024191621745349834,
+      "row_B_effect": -0.0020090522942781686,
+      "observed_diff": 0.026200674039628002,
+      "p_value": 0.0,
+      "null_mean": 1.385128353575864e-05,
+      "null_std": 0.0029500849553690837,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "test": "T5",
+      "name": "confound check vs IM-k3",
+      "a": "G3IMG-ARM1-K1-carried",
+      "b": "IM-k3",
+      "meaningful": false,
+      "f1_a": 0.666421,
+      "f1_b": 0.800784,
+      "observed_diff": -0.134363,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 0.000106,
+      "null_std": 0.00593,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    }
+  ]
+}
