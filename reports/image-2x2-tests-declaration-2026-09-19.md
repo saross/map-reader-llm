@@ -125,4 +125,4 @@ output `results/image-2x2-2026-09-19/tests_2x2_K{K}.json`, one file per rung.
 ### 2026-09-19 — Original publication
 
 Declared with the Gemini 3 row's primary-rung arm 2 cell unbuilt (ten batch
-jobs in flight, three returned at 06:27 UTC). Commit: `301f627fe`.
+jobs in flight, three returned at 06:27 UTC). Commit: `0e5985d83`.

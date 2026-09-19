@@ -683,7 +683,7 @@ row is exploratory**; and the five-test family of § 10.4 is unchanged.
 **Trigger**: the Gemini 3 row of the 2x2 reached its primary rung's arm 2
 leg (in flight), and the PI ruled on the tests (S155). **Numbers moved**:
 none — no cell, score or verdict in this report changes. **Unchanged**: the
-five-test family (§ 10.4), P1–P5, the DiD of § 10.6. Commit: `301f627fe`.
+five-test family (§ 10.4), P1–P5, the DiD of § 10.6. Commit: `0e5985d83`.
 
 ### 2026-09-14 — § 10.7: the rungs were not booked onto the scoring frame
 
