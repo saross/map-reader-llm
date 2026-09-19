@@ -806,6 +806,7 @@ def poll_batch_job(
     interval_seconds: float = 30.0,
     max_hours: float = 25.0,
     progress_callback: Any | None = None,
+    max_consecutive_errors: int = 20,
 ) -> Any:
     """
     Poll a batch job until it reaches a terminal state.
@@ -817,6 +818,8 @@ def poll_batch_job(
         max_hours: Maximum hours to poll before giving up.
         progress_callback: Optional callable invoked with the BatchJob
             object on each poll iteration (for logging/progress bars).
+        max_consecutive_errors: Transient errors from the polling endpoint
+            tolerated in a row before the error propagates.
 
     Returns:
         The BatchJob in its terminal state.
@@ -827,9 +830,26 @@ def poll_batch_job(
     """
     max_seconds = max_hours * 3600
     start = time.monotonic()
+    consecutive_errors = 0
 
     while True:
-        job = client.batches.get(name=job_name)
+        # A 503 (or any transient error) on the POLLING endpoint says nothing
+        # about the job, which keeps running on the service side. Until
+        # 2026-09-19 it propagated and the caller wrote the chunk off; the
+        # S154 note that "a 503 while polling does not mean the job failed"
+        # was learnt the expensive way. Tolerate up to max_consecutive_errors
+        # in a row (20 x 30 s = 10 min of a dead endpoint) before giving up.
+        try:
+            job = client.batches.get(name=job_name)
+        except Exception as exc:  # noqa: BLE001 - transient endpoint errors
+            consecutive_errors += 1
+            if consecutive_errors > max_consecutive_errors:
+                raise
+            logger.warning("poll of %s failed (%d/%d in a row): %s — retrying",
+                           job_name, consecutive_errors, max_consecutive_errors, exc)
+            time.sleep(interval_seconds)
+            continue
+        consecutive_errors = 0
         state = _get_state_name(job.state)
 
         if progress_callback:

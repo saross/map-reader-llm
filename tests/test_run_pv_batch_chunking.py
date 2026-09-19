@@ -16,9 +16,11 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from scripts.lib_batch_api import poll_batch_job  # noqa: E402
 from scripts.run_pv import (  # noqa: E402
     DEFAULT_MAX_BATCH_CANDIDATES,
     chunk_manifest,
+    merge_raw_results,
     run_batch_jobs,
 )
 
@@ -148,3 +150,77 @@ def test_iterations_divide_the_per_job_candidate_budget():
     src = (Path(__file__).resolve().parent.parent / "scripts" / "run_pv.py").read_text()
     assert "int(max_batch_candidates or 0) // max(1, iterations)" in src
     assert 'f"probabilities.json.pre-rerun-{stamp}.backup"' in src
+
+
+def test_job_record_is_written_as_jobs_are_lodged_and_finished(tmp_path):
+    """A chunk lost to a polling error must be retrievable by name later."""
+    import json as _json
+    calls, fns = _fakes(fail_on={"leg-c1"})
+    paths = [tmp_path / f"c{i}.jsonl" for i in range(3)]
+    rec = tmp_path / "batch_jobs.json"
+    run_batch_jobs(None, "m", paths, "leg", **fns, log=logging.getLogger("t"),
+                   record_path=rec)
+    record = _json.loads(rec.read_text())
+    assert [c["job"] for c in record["chunks"]] == ["batches/leg-c0", "batches/leg-c1", "batches/leg-c2"]
+    assert record["chunks"][1]["state"].startswith("lost:")
+    assert record["chunks"][0]["state"] == "JOB_STATE_SUCCEEDED"
+    assert record["chunks"][0]["n_results"] == 2
+
+
+def test_merge_raw_results_dedupes_by_key_newest_wins():
+    old = [{"key": "a", "v": 1}, {"key": "b", "v": 1}]
+    new = [{"key": "b", "v": 2}, {"key": "c", "v": 2}, {"nokey": True}]
+    merged = {r["key"]: r["v"] for r in merge_raw_results(old, new)}
+    assert merged == {"a": 1, "b": 2, "c": 2}
+
+
+def test_poll_tolerates_transient_errors_then_returns_terminal():
+    """A 503 on the polling endpoint says nothing about the job (S154 note);
+    it lost a 4,000-candidate chunk on 2026-09-19 before this."""
+    class _State:
+        name = "JOB_STATE_SUCCEEDED"
+
+    class _Done:
+        state = _State()
+
+    class _Batches:
+        def __init__(self):
+            self.n = 0
+
+        def get(self, name):
+            self.n += 1
+            if self.n <= 3:
+                raise RuntimeError("503 UNAVAILABLE")
+            return _Done()
+
+    class _Client:
+        batches = _Batches()
+
+    import scripts.lib_batch_api as lba
+    slept = []
+    orig = lba.time.sleep
+    lba.time.sleep = slept.append
+    try:
+        job = poll_batch_job(_Client(), "batches/x", interval_seconds=7)
+    finally:
+        lba.time.sleep = orig
+    assert job.state.name == "JOB_STATE_SUCCEEDED"
+    assert slept == [7, 7, 7]
+
+
+def test_poll_gives_up_after_too_many_consecutive_errors():
+    class _Batches:
+        def get(self, name):
+            raise RuntimeError("503")
+
+    class _Client:
+        batches = _Batches()
+
+    import scripts.lib_batch_api as lba
+    orig = lba.time.sleep
+    lba.time.sleep = lambda s: None
+    try:
+        with pytest.raises(RuntimeError):
+            poll_batch_job(_Client(), "batches/x", interval_seconds=0, max_consecutive_errors=2)
+    finally:
+        lba.time.sleep = orig

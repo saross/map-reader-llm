@@ -758,9 +758,22 @@ def chunk_manifest(manifest: dict, size: int | None) -> list[dict]:
     return out
 
 
+def merge_raw_results(existing: list[dict], new: list[dict]) -> list[dict]:
+    """Union of two raw-result lists by ``key``; a newer result replaces an
+    older one with the same key. Used by ``batch-recover`` to fold a
+    recovered job's results into a leg's ``batch_results.jsonl``."""
+    by_key: dict[str, dict] = {}
+    for row in [*existing, *new]:
+        key = row.get("key")
+        if key is None:
+            continue
+        by_key[key] = row
+    return list(by_key.values())
+
+
 def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
                    display_base: str, *, upload, submit, poll, retrieve,
-                   log=None) -> tuple[list[dict], list[int]]:
+                   log=None, record_path: Path | None = None) -> tuple[list[dict], list[int]]:
     """Submit every chunk, then poll and retrieve each; concatenate results.
 
     All jobs are lodged before the first is polled, so a multi-chunk leg
@@ -778,6 +791,10 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
         upload, submit, poll, retrieve: The lifecycle functions, injected so
             the orchestration is testable without an API.
         log: Logger (default: module logger).
+        record_path: Where to write ``batch_jobs.json`` — every chunk's
+            request file and job name, updated as jobs are lodged and as
+            they finish, so a chunk lost to a polling error can be
+            retrieved later by name (``run_pv.py batch-recover``).
 
     Returns:
         ``(results, failed_chunks)``: the concatenated raw results of every
@@ -785,37 +802,60 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
         to lodge, or failed while polling or retrieving).
     """
     log = log or logger
+    record: dict[str, Any] = {"display_base": display_base, "model": model_name,
+                              "chunks": []}
+
+    def save_record() -> None:
+        if record_path is not None:
+            record_path.write_text(json.dumps(record, indent=1) + "\n")
+
     jobs: list[tuple[int, Any]] = []
     failed_chunks: list[int] = []
     for i, path in enumerate(jsonl_paths):
         name = display_base if len(jsonl_paths) == 1 else f"{display_base}-c{i}"
+        entry = {"index": i, "jsonl": str(path), "display_name": name,
+                 "job": None, "state": "not lodged"}
+        record["chunks"].append(entry)
         # Lodging is guarded too: a failure on chunk k must not abandon the
         # chunks already lodged and billing (re-audit, 2026-09-19).
         try:
             uploaded = upload(client, path, name)
             log.info("Uploaded chunk %d/%d: %s", i + 1, len(jsonl_paths), uploaded)
             job = submit(client, model_name, uploaded, name)
+            entry["job"] = getattr(job, "name", str(job))
+            entry["state"] = "lodged"
             log.info("Submitted batch job %d/%d: %s", i + 1, len(jsonl_paths),
-                     getattr(job, "name", job))
+                     entry["job"])
         except Exception as exc:  # noqa: BLE001 - one chunk must not lose the rest
             log.error("Batch chunk %d/%d failed to lodge: %s", i + 1,
                       len(jsonl_paths), exc)
+            entry["state"] = f"lodging failed: {exc}"
             failed_chunks.append(i)
+            save_record()
             continue
+        save_record()
         jobs.append((i, job))
     results: list[dict] = []
     for i, job in jobs:
+        entry = record["chunks"][i]
         try:
             done = poll(client, getattr(job, "name", job))
             state = getattr(getattr(done, "state", None), "name",
                             str(getattr(done, "state", "")))
             log.info("Batch job %d/%d finished polling: %s", i + 1,
                      len(jsonl_paths), state)
+            entry["state"] = state
             chunk_results = retrieve(client, done)
+            entry["n_results"] = len(chunk_results)
         except Exception as exc:  # noqa: BLE001 - one chunk must not lose the rest
-            log.error("Batch chunk %d/%d failed: %s", i + 1, len(jsonl_paths), exc)
+            log.error("Batch chunk %d/%d failed: %s — its job %s can be "
+                      "retrieved by name with run_pv.py batch-recover",
+                      i + 1, len(jsonl_paths), exc, entry.get("job"))
+            entry["state"] = f"lost: {exc}"
             failed_chunks.append(i)
+            save_record()
             continue
+        save_record()
         results.extend(chunk_results)
     if failed_chunks:
         log.error("%d of %d batch chunks returned nothing: %s — their "
@@ -867,7 +907,6 @@ def _verify_batch(
         retrieve_batch_results,
         submit_batch_job,
         upload_jsonl,
-        validate_batch_results,
     )
 
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -965,6 +1004,7 @@ def _verify_batch(
             client, model_name, jsonl_paths, display_name,
             upload=upload_jsonl, submit=submit_batch_job,
             poll=poll_batch_job, retrieve=retrieve_batch_results,
+            record_path=output_dir / "batch_jobs.json",
         )
         # A batch pass REPLACES probabilities.json (no resume). Keep what is
         # there: a rerun that lost chunks must not overwrite a good file with
@@ -978,40 +1018,53 @@ def _verify_batch(
                            backup.name,
                            " (this rerun lost chunks)" if failed_chunks else "")
 
-        # Build expected keys for validation (sorted list to match
-        # validate_batch_results' list[str] type contract)
-        expected_keys: list[str] = []
-        for candidate in manifest.get("candidates", []):
-            cid = candidate["candidate_id"]
-            if iterations > 1:
-                for i in range(1, iterations + 1):
-                    expected_keys.append(f"candidate_{cid:05d}_iter{i}")
-            else:
-                expected_keys.append(f"candidate_{cid:05d}")
-
-        matched, missing, errored = validate_batch_results(
-            expected_keys, raw_results,
-        )
-        record_batch_usage(batch_metadata, raw_results, output_dir,
-                           n_processed=len(matched))
-        # Surface every missing result as a failed_items[] entry so the
-        # batch path matches realtime parity. _assert_completeness in
-        # _write_verification_outputs is idempotent against these IDs.
-        for mid in sorted(missing):
-            batch_metadata.log_failure(
-                mid, "absent from batch response",
-            )
-        if missing:
-            logger.warning(
-                "%d missing results (of %d expected)",
-                len(missing), len(expected_keys),
-            )
-
-        parsed = parse_verifier_results(matched)
-
     except Exception as e:
         logger.error("Batch verification failed: %s", e)
         return 1
+
+    return _finish_batch_outputs(
+        manifest=manifest, config=config, output_dir=output_dir,
+        iterations=iterations, raw_results=raw_results,
+        batch_metadata=batch_metadata, model_name=model_name, strict=strict,
+    )
+
+
+def _finish_batch_outputs(*, manifest: dict, config: dict, output_dir: Path,
+                          iterations: int, raw_results: list[dict],
+                          batch_metadata: Any, model_name: str,
+                          strict: bool) -> int:
+    """Validate a leg's raw results against its manifest and write outputs.
+
+    Shared by the batch verify path and ``batch-recover``, so a recovered
+    leg is booked exactly as a first-time one: usage and items from the raw
+    results, every missing key logged as a failure, the completeness
+    assertion run, ``probabilities.json`` and ``run.meta.json`` written.
+    """
+    from scripts.lib_batch_api import validate_batch_results
+
+    # Build expected keys for validation (sorted list to match
+    # validate_batch_results' list[str] type contract)
+    expected_keys: list[str] = []
+    for candidate in manifest.get("candidates", []):
+        cid = candidate["candidate_id"]
+        if iterations > 1:
+            for i in range(1, iterations + 1):
+                expected_keys.append(f"candidate_{cid:05d}_iter{i}")
+        else:
+            expected_keys.append(f"candidate_{cid:05d}")
+
+    matched, missing, errored = validate_batch_results(expected_keys, raw_results)
+    record_batch_usage(batch_metadata, raw_results, output_dir,
+                       n_processed=len(matched))
+    # Surface every missing result as a failed_items[] entry so the
+    # batch path matches realtime parity. _assert_completeness in
+    # _write_verification_outputs is idempotent against these IDs.
+    for mid in sorted(missing):
+        batch_metadata.log_failure(mid, "absent from batch response")
+    if missing:
+        logger.warning("%d missing results (of %d expected)",
+                       len(missing), len(expected_keys))
+    parsed = parse_verifier_results(matched)
 
     # Write outputs (also runs the completeness assertion).
     gap_count = _write_verification_outputs(
@@ -1031,8 +1084,91 @@ def _verify_batch(
         pass_kind="rerun",
         merge_previous_meta=False,
     )
-
     return 1 if gap_count > 0 and strict else 0
+
+
+def cmd_batch_recover(args: argparse.Namespace) -> int:
+    """Fold completed batch jobs into a leg that lost them while polling.
+
+    A 503 on the polling endpoint (or a killed process) loses a chunk's
+    results from the pass while the job completes on the service side. This
+    reads the leg's ``batch_jobs.json`` (and any ``--job`` names given),
+    fetches each job by name, retrieves its results if it SUCCEEDED, merges
+    them with the leg's ``batch_results.jsonl`` by key, and re-books the
+    whole leg through the same finisher as a first-time run. The previous
+    ``probabilities.json`` is kept as a timestamped backup.
+
+    Returns:
+        0 when the leg is complete, 1 on a remaining completeness gap.
+    """
+    from scripts.lib_batch_api import retrieve_batch_results
+    from scripts.lib_llm_metadata import LLMMetadataTracker
+
+    output_dir: Path = args.output_dir
+    manifest = json.load(open(args.crops_dir / "candidate_manifest.json"))
+    with open(args.verifier_config) as fh:
+        config = json.load(fh)
+    if args.thinking_level is not None:
+        config["thinking_level"] = args.thinking_level
+
+    job_names: list[str] = list(args.job or [])
+    record_path = output_dir / "batch_jobs.json"
+    if record_path.exists():
+        for entry in json.loads(record_path.read_text()).get("chunks", []):
+            if entry.get("job") and entry["job"] not in job_names:
+                job_names.append(entry["job"])
+    if not job_names:
+        logger.error("no jobs to recover: no batch_jobs.json under %s and no --job",
+                     output_dir)
+        return 1
+
+    existing: list[dict] = []
+    raw_path = output_dir / "batch_results.jsonl"
+    if raw_path.exists():
+        existing = [json.loads(line) for line in raw_path.read_text().splitlines() if line.strip()]
+    have = {r.get("key") for r in existing}
+
+    from google import genai
+    client = genai.Client(api_key=_get_api_key(), http_options={"api_version": "v1alpha"})
+    recovered: list[dict] = []
+    for name in job_names:
+        job = client.batches.get(name=name)
+        state = getattr(getattr(job, "state", None), "name", str(getattr(job, "state", "")))
+        if "SUCCEEDED" not in state:
+            logger.warning("%s is %s — nothing to retrieve", name, state)
+            continue
+        rows = retrieve_batch_results(client, job)
+        new = [r for r in rows if r.get("key") not in have]
+        logger.info("%s: %d results, %d not yet in the leg", name, len(rows), len(new))
+        recovered.extend(rows)
+    if not recovered:
+        logger.error("no results recovered")
+        return 1
+
+    raw_results = merge_raw_results(existing, recovered)
+    model_name = args.model or config.get("model", "gemini-3-flash")
+    batch_metadata = LLMMetadataTracker(
+        config=config,
+        system_instruction=load_system_instruction(config),
+        script_name="run_pv.py",
+        script_version=__version__,
+        model_override=model_name,
+        cli_overrides={"temperature": args.temperature},
+    )
+    batch_metadata.results_summary["batch_recover"] = {
+        "jobs": job_names, "recovered_rows": len(recovered),
+        "date": datetime.now(timezone.utc).isoformat(),
+    }
+    prob_path = output_dir / "probabilities.json"
+    if prob_path.exists():
+        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+        shutil.copy2(prob_path, output_dir / f"probabilities.json.pre-recover-{stamp}.backup")
+    return _finish_batch_outputs(
+        manifest=manifest, config=config, output_dir=output_dir,
+        iterations=args.iterations, raw_results=raw_results,
+        batch_metadata=batch_metadata, model_name=model_name,
+        strict=getattr(args, "strict", True),
+    )
 
 
 # =========================================================================
@@ -2163,6 +2299,25 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Identify missing candidates without making API calls",
     )
     cleanup_parser.set_defaults(func=cmd_cleanup)
+
+    # --- batch-recover subcommand ---
+    recover_parser = subparsers.add_parser(
+        "batch-recover",
+        help="Fold completed batch jobs into a leg that lost them while polling",
+    )
+    recover_parser.add_argument("--crops-dir", type=Path, required=True)
+    recover_parser.add_argument("--output-dir", type=Path, required=True,
+                                help="The leg's stage directory (batch_jobs.json, batch_results.jsonl)")
+    recover_parser.add_argument("--verifier-config", type=Path, required=True)
+    recover_parser.add_argument("--job", action="append", default=[],
+                                help="Batch job name to retrieve (repeatable); "
+                                     "added to those in batch_jobs.json")
+    recover_parser.add_argument("--model", type=str, default=None)
+    recover_parser.add_argument("--thinking-level", type=str, default=None)
+    recover_parser.add_argument("--temperature", type=float, default=None)
+    recover_parser.add_argument("--iterations", type=int, default=1)
+    recover_parser.add_argument("--no-strict", dest="strict", action="store_false", default=True)
+    recover_parser.set_defaults(func=cmd_batch_recover)
 
     return parser
 
