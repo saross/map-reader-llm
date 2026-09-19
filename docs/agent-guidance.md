@@ -155,6 +155,28 @@ write a **pid file** and check that pid directly (`kill -0 "$pid"`). If
 (e.g. `pgrep -f '[r]un_pv'`) and still prefer staleness as the primary
 signal.
 
+**A watcher's failure filter must match every spelling.** The 2026-09-19
+K = 5 watch matched `Error` and missed thirty minutes of `ERROR - Batch
+chunk 5/12 failed to lodge` lines; the leg had lost eight of twelve chunks
+before anyone read the log. Match failure signatures case-insensitively
+(`grep -i`, or list both spellings) and include the library's own words
+(`failed`, `lost`, `PARTIAL`, `Completeness gap`), not just `Traceback`.
+
+**The Gemini File API has a 20 GiB per-project cap, and uploads persist
+30 days.** Every batch request JSONL (verifier chunks ≈ 240 MB, proposer
+chunks ≈ 1.3 GB) counts against it until deleted, across runs and
+campaigns. `scripts/lib_batch_api.py` now runs `preflight_file_storage`
+before lodging (commit 935865223); after a leg is committed, delete its
+uploads (`client.files.delete`), and never delete a file that is the `src`
+of a non-terminal batch job.
+
+**Mutation harnesses: copy, never symlink, and run a red sentinel first.**
+The 2026-09-20 audit's first harness symlinked `tests/`; every test module
+resolves `sys.path` through `Path(__file__).resolve()`, which follows the
+link back to the real `scripts/`, so every mutation read green. Rebuild
+with real copies and confirm one deliberate breakage turns red before
+trusting any mutation result.
+
 **Never key a watcher on a success string.** A chain that waits for
 `"Tiles processed:"` (or any completion line) cannot tell "not yet" from
 "never": a PARTIAL failure prints no success line, so the chain waits on a
