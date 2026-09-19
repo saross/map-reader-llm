@@ -930,10 +930,17 @@ def sweep(
         processed = (
             (meta.get("execution_stats") or {}).get("items_processed") or 0
         )
-        if processed <= 0 or results - processed < min_shortfall:
-            continue
-
         probs = _load_json(probs_path)
+        # A batch stage booking zero items is a BOOKING failure, not a
+        # legitimate zero: the Batch API reports usage per response and the
+        # path has read it since 2026-09-17 (aggregate_batch_usage). Until
+        # 2026-09-19 such stages were skipped here as "nothing to lose"
+        # (audit lens B), which is exactly how a regression of that booking
+        # would hide. A realtime stage at zero has nothing to compare.
+        if processed <= 0 and probs.get("mode") != "batch":
+            continue
+        if results - processed < min_shortfall:
+            continue
         history = probs.get("cleanup_history") or []
         main_covered: int | None = None
         if history and isinstance(history[0], dict):

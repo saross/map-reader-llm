@@ -167,7 +167,7 @@ def build_sidecar(
     return record, sidecar_path(union_path)
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     """Entry point. Returns a process exit status."""
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument(
@@ -189,7 +189,7 @@ def main() -> int:
         action="store_true",
         help="Write the sidecar (default: report it and exit without writing)",
     )
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
 
     root = Path(args.root)
     if not root.is_absolute():

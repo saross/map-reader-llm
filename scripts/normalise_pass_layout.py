@@ -190,7 +190,7 @@ def normalise(src: Path, pool: Path, run: int, version: str, model: str,
     return dest
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -202,9 +202,10 @@ def main() -> int:
     ap.add_argument("--date", required=True)
     ap.add_argument("--move", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
-    args = ap.parse_args()
-    normalise(args.src, args.pool, args.run, args.version, args.model,
-              args.date, move=args.move, dry_run=args.dry_run)
+    args = ap.parse_args(argv)
+    normalise(src=args.src, pool=args.pool, run=args.run, version=args.version,
+              model=args.model, date=args.date, move=args.move,
+              dry_run=args.dry_run)
     return 0
 
 

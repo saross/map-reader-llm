@@ -118,32 +118,46 @@ def main() -> int:
     job = client.batches.create(model=args.model, src=uploaded.name)
     print(f"  job: {job.name}  state={job.state}")
 
+    # Terminal states from the shared table (EXPIRED included — the probe's
+    # own substring test omitted it and would have polled an expired job
+    # forever; audit lens A, 2026-09-19).
+    from scripts.lib_batch_api import (
+        _TERMINAL_STATES,
+        aggregate_batch_usage,
+        retrieve_batch_results,
+    )
     while True:
         job = client.batches.get(name=job.name)
         state = str(job.state)
-        if "SUCCEEDED" in state or "FAILED" in state or "CANCELLED" in state:
+        if any(t in state for t in _TERMINAL_STATES):
             break
         print(f"  {time.time()-t0:7.0f}s  {state}")
         time.sleep(30)
 
     print(f"\nfinal state: {job.state} after {time.time()-t0:.0f}s")
-    um = getattr(job, "usage_metadata", None)
+    # Usage lives in the RESULTS FILE, per response; a completed BatchJob
+    # carries no usage_metadata (lib_batch_api.aggregate_batch_usage). The
+    # probe read the job and so always reported "no usage" — reproducing,
+    # as a fresh measurement, the false conclusion the 2026-09-17 fix closed.
+    usage = aggregate_batch_usage(retrieve_batch_results(client, job))
     result = {"model": args.model, "n": args.n, "state": str(job.state),
               "elapsed_s": round(time.time() - t0, 1),
               "explicit_cache": cache_name, "cache_prefix_tokens": cache_tokens,
               "cache_ttl_s": None if args.no_cache else args.ttl,
-              "job_usage_metadata_present": um is not None}
-    if um is not None:
-        inp = getattr(um, "prompt_token_count", 0) or 0
-        cac = getattr(um, "cached_content_token_count", 0) or 0
-        result.update({"input_tokens": inp, "cached_tokens": cac,
-                       "output_tokens": getattr(um, "candidates_token_count", 0) or 0,
-                       "thoughts_tokens": getattr(um, "thoughts_token_count", 0) or 0,
-                       "cached_share": (cac / inp) if inp else None})
-        print(f"  input {inp:,}  cached {cac:,}  share "
-              f"{(cac/inp if inp else 0):.3f}")
+              "usage_source": usage["usage_source"],
+              "n_responses_with_usage": usage["n_responses_with_usage"],
+              "input_tokens": usage["total_input_tokens"],
+              "cached_tokens": usage["total_cached_tokens"],
+              "output_tokens": usage["total_output_tokens"],
+              "thoughts_tokens": usage["total_thoughts_tokens"],
+              "cached_share": usage["cached_share"]}
+    if usage["n_responses_with_usage"]:
+        print(f"  input {usage['total_input_tokens']:,}  cached "
+              f"{usage['total_cached_tokens']:,}  share "
+              f"{(usage['cached_share'] or 0):.3f} "
+              f"({usage['n_responses_with_usage']} responses)")
     else:
-        print("  NO job-level usage_metadata — the 2026-04-15 condition")
+        print("  NO per-response usageMetadata in the results file")
 
     out = REPO / args.out
     out.parent.mkdir(parents=True, exist_ok=True)

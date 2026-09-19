@@ -1866,6 +1866,76 @@ class TestCompleteBatchUnit:
 
     @patch("scripts.lib_batch_api.retrieve_batch_results")
     @patch("scripts.lib_batch_api.write_batch_outputs")
+    def test_failures_above_the_tolerance_are_rejected_not_success(
+        self,
+        mock_write: MagicMock,
+        mock_retrieve: MagicMock,
+    ) -> None:
+        """The rejection branch had no test: `if True:` in place of the
+        tolerance check left the suite green while 20 %+ tile loss returned
+        'success' (audit lens B, 2026-09-19). Twenty tiles, eleven errors:
+        the threshold is max(10, int(20 * 0.20)) = 10, so eleven rejects."""
+        keys = [f"tile_{i:03d}.png" for i in range(20)]
+        mock_retrieve.return_value = (
+            [_make_batch_response(k, error="boom") for k in keys[:11]]
+            + [_make_batch_response(k, detections=[]) for k in keys[11:]]
+        )
+        mock_write.return_value = {"total_cost_usd": 0.02}
+        completed_job = MagicMock()
+        completed_job.state = JobState.JOB_STATE_SUCCEEDED
+        completed_job.usage_metadata = None
+        ctx = BatchUnitContext(
+            unit_key="cond_a/run_1",
+            unit=_make_unit(),
+            output_file=Path("/tmp/out.geojson"),
+            jsonl_path=Path("/tmp/batch.jsonl"),
+            submitted_keys=keys,
+            tile_paths=[Path(f"/tmp/{k}") for k in keys],
+            prompt_config=_make_prompt_config(),
+            model_name="gemini-3-flash",
+            system_instruction="Test",
+            config_version="test_v1",
+            line_count=20,
+        )
+        success, message, _cost = complete_batch_unit(ctx, MagicMock(), completed_job)
+        assert success is False
+        assert message.startswith("partial_failure_11")
+
+    @patch("scripts.lib_batch_api.retrieve_batch_results")
+    @patch("scripts.lib_batch_api.write_batch_outputs")
+    def test_failures_at_the_tolerance_are_still_success(
+        self,
+        mock_write: MagicMock,
+        mock_retrieve: MagicMock,
+    ) -> None:
+        """Ten of twenty is at the floor of ten and passes; the negative pin."""
+        keys = [f"tile_{i:03d}.png" for i in range(20)]
+        mock_retrieve.return_value = (
+            [_make_batch_response(k, error="boom") for k in keys[:10]]
+            + [_make_batch_response(k, detections=[]) for k in keys[10:]]
+        )
+        mock_write.return_value = {"total_cost_usd": 0.02}
+        completed_job = MagicMock()
+        completed_job.state = JobState.JOB_STATE_SUCCEEDED
+        completed_job.usage_metadata = None
+        ctx = BatchUnitContext(
+            unit_key="cond_a/run_1",
+            unit=_make_unit(),
+            output_file=Path("/tmp/out.geojson"),
+            jsonl_path=Path("/tmp/batch.jsonl"),
+            submitted_keys=keys,
+            tile_paths=[Path(f"/tmp/{k}") for k in keys],
+            prompt_config=_make_prompt_config(),
+            model_name="gemini-3-flash",
+            system_instruction="Test",
+            config_version="test_v1",
+            line_count=20,
+        )
+        success, message, _cost = complete_batch_unit(ctx, MagicMock(), completed_job)
+        assert success is True and message == "success"
+
+    @patch("scripts.lib_batch_api.retrieve_batch_results")
+    @patch("scripts.lib_batch_api.write_batch_outputs")
     def test_success_path(
         self,
         mock_write: MagicMock,

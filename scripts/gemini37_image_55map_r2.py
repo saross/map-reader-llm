@@ -680,6 +680,37 @@ def _score_point(task: tuple[str, float, int]) -> dict[str, Any]:
     return row
 
 
+def load_sweeps(path: Path) -> dict[str, Any]:
+    """The existing ``sweeps.json`` with its rungs, or a fresh record.
+
+    A filtered sweep (``--rungs 5``) must keep the other rungs' entries;
+    this is where they are read back. Extracted so the merge is testable
+    without a frame (audit lens B, 2026-09-19).
+    """
+    if path.exists():
+        sweeps = json.loads(path.read_text())
+        sweeps.setdefault("rungs", {})
+        return sweeps
+    return {
+        "buffer_m": BUFFER_M,
+        "reference": REFERENCE,
+        "declared_family": "four external comparators + the K=1 vs K=3 contrast",
+        "rungs": {},
+    }
+
+
+def merge_cells(existing: list[dict[str, Any]],
+                cells: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Replace same-label cells, keep the rest, append the new ones.
+
+    ``--rungs 5`` materialises six cells; the K = 1 and K = 3 cells in the
+    manifest must survive it. Order: surviving existing cells first, then
+    the new ones.
+    """
+    new_labels = {c["label"] for c in cells}
+    return [c for c in existing if c["label"] not in new_labels] + cells
+
+
 def rung_label(arm: str, k: int) -> str:
     """The campaign's label for one rung, e.g. ``IMG-ARM2-K3``."""
     return f"{CAMPAIGN.prefix}-{arm.upper()}-K{k}"
@@ -717,15 +748,7 @@ def stage_sweep(workers: int, rungs: tuple[int, ...] | None = None) -> int:
 
     RESULTS_HOME.mkdir(parents=True, exist_ok=True)
     sweeps_path = RESULTS_HOME / "sweeps.json"
-    if sweeps_path.exists():
-        sweeps = json.loads(sweeps_path.read_text())
-    else:
-        sweeps = {
-            "buffer_m": BUFFER_M,
-            "reference": REFERENCE,
-            "declared_family": "four external comparators + the K=1 vs K=3 contrast",
-            "rungs": {},
-        }
+    sweeps = load_sweeps(sweeps_path)
     for label in frames:
         frows = [r for r in rows if r["rung"] == label and r["micro_f1_50"] is not None]
         frows.sort(key=lambda r: (r["prob_t"], r["min_votes"]))
@@ -812,8 +835,7 @@ def stage_materialise(rungs: tuple[int, ...] | None = None) -> int:
             })
             logger.info("%-28s n=%5d -> %s", cell_label, len(sub),
                         dest.relative_to(PROJECT_ROOT))
-    new_labels = {c["label"] for c in cells}
-    merged = [c for c in existing if c["label"] not in new_labels] + cells
+    merged = merge_cells(existing, cells)
     manifest_path.write_text(json.dumps({"buffer_m": BUFFER_M, "reference": REFERENCE,
                                          "cells": merged}, indent=2) + "\n")
     logger.info("wrote %s (%d cells, %d new or replaced)",
@@ -1094,7 +1116,7 @@ def stage_tests(primary: str | None) -> int:
     """
     manifest = json.loads((RESULTS_HOME / "cells_manifest.json").read_text())
     by_label = {c["label"]: c for c in manifest["cells"]}
-    primary = primary or "IMG-ARM2-K3-carried"
+    primary = primary or f"{CAMPAIGN.prefix}-ARM2-K3-carried"
     if primary not in by_label:
         logger.error("no such cell %s; have %s", primary, sorted(by_label))
         return 2

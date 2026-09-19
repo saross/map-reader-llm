@@ -92,6 +92,7 @@ def _write_stage(
     *,
     results: int,
     extra_files: dict[str, dict[str, Any]] | None = None,
+    mode: str = "realtime",
 ) -> Path:
     """Write a synthetic verifier stage with *results* result keys."""
     directory.mkdir(parents=True, exist_ok=True)
@@ -100,7 +101,7 @@ def _write_stage(
     with open(directory / "probabilities.json", "w") as handle:
         json.dump(
             {
-                "mode": "realtime",
+                "mode": mode,
                 "results": {
                     f"candidate_{i:05d}": {"mound_probability": 0.5}
                     for i in range(results)
@@ -430,6 +431,7 @@ class TestSweep:
             root / "batch_stage",
             big | {"execution_stats": {"items_processed": 0}},
             results=1_000,
+            mode="batch",
         )
         return root
 
@@ -438,7 +440,10 @@ class TestSweep:
         found = {
             Path(s.stage).name: s for s in sweep(self._tree(tmp_path))
         }
-        assert set(found) == {"recoverable", "unrecoverable"}
+        # batch_stage joins the set since 2026-09-19: a batch stage booking
+        # zero is a booking failure to report, not a legitimate zero.
+        assert set(found) == {"recoverable", "unrecoverable", "batch_stage"}
+        assert found["batch_stage"].shortfall == 1_000
         assert found["recoverable"].classification == "RECOVERABLE"
         assert found["recoverable"].prior_meta_files == [
             "run.meta.json.pre-cleanup-20260913T225915.backup",
@@ -446,18 +451,22 @@ class TestSweep:
         assert found["unrecoverable"].classification == "UNRECOVERABLE"
         assert found["unrecoverable"].shortfall == 995
 
-    def test_complete_and_batch_stages_are_not_reported(
+    def test_complete_stage_is_not_reported_but_a_zero_batch_stage_is(
         self, tmp_path: Path,
     ) -> None:
-        """A complete stage, and a batch stage recording zero, are excluded.
+        """A complete stage is excluded; a batch stage recording zero is
+        REPORTED.
 
-        The Batch API returns no per-response metadata, so a batch stage
-        legitimately records ``items_processed: 0`` and had nothing in the
-        meta to lose.
+        The premise this test pinned until 2026-09-19 — "the Batch API
+        returns no per-response metadata, so a batch stage legitimately
+        records items_processed 0" — was disproved on 2026-09-17: the usage
+        is in the results file and the path books it. A batch stage at zero
+        is now a booking failure, and hiding it is how a regression of that
+        booking would pass unseen (audit lens B).
         """
         names = {Path(s.stage).name for s in sweep(self._tree(tmp_path))}
         assert "clean" not in names
-        assert "batch_stage" not in names
+        assert "batch_stage" in names
 
     def test_min_shortfall_filters(self, tmp_path: Path) -> None:
         """A large threshold suppresses the small gaps."""

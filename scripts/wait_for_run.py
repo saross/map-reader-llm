@@ -135,11 +135,14 @@ def wait_for_terminal(log: Path, pid: int | None = None,
                       stale_seconds: float = 3600.0, poll_seconds: float = 60.0,
                       markers: dict[str, list[str]] | None = None,
                       grace_seconds: float = 5.0,
-                      sleep=time.sleep) -> str:
+                      sleep=time.sleep, clock=time.time) -> str:
     """Block until the job is in a terminal state and return that state.
 
     Args:
-        log: The job's log file. Staleness is judged on its mtime.
+        log: The job's log file. Staleness is judged on its mtime. A log
+            that has not APPEARED after ``stale_seconds`` is stale too —
+            a mistyped path or a job that never started must not wait
+            forever (audit lens A, 2026-09-19).
         pid: The job's process id, if known. A dead process is terminal at
             once; without a pid, only staleness or a marker ends the wait.
         stale_seconds: Silence on the log that counts as a hang.
@@ -148,10 +151,12 @@ def wait_for_terminal(log: Path, pid: int | None = None,
         grace_seconds: After the process is seen dead, how long to allow the
             log to flush before classifying it.
         sleep: Injected for tests.
+        clock: Injected for tests.
 
     Returns:
         One of the keys of :data:`EXIT_STATUS`.
     """
+    started = clock()
     while True:
         text = log.read_text(errors="replace") if log.exists() else ""
         state = classify_log(text, markers)
@@ -162,8 +167,10 @@ def wait_for_terminal(log: Path, pid: int | None = None,
             text = log.read_text(errors="replace") if log.exists() else ""
             state = classify_log(text, markers)
             return state if state != "running" else "stopped"
-        age = log_age_seconds(log)
-        if age is not None and age > stale_seconds:
+        age = log_age_seconds(log, clock())
+        if age is None:
+            age = clock() - started
+        if age > stale_seconds:
             return "stale"
         sleep(poll_seconds)
 
