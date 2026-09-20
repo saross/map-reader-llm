@@ -33,6 +33,10 @@ argmax that landed on a committed set) are skipped exactly as
 ``register_pass2_author.py`` skipped them on r1 -- the clone of the
 committed row IS their registration.
 
+Cells whose ``basis`` matches ``HELD_BASES`` are reported as ``held`` and
+never written: a board cell can exist and be scored while the PI holds
+its registration back. See that constant for the standing holds.
+
 Dry-run by default: prints every row it would add. ``--write`` persists,
 idempotently (existing labels are skipped), preserving the file's
 serialisation. Then run ``verify_run_conditions.py``.
@@ -112,6 +116,36 @@ FOURTH_TEMPLATE = "g384-ov192-55map-k10-verified37"
 COINCIDENT_POINTS = {"TH7-oracle": (0.15, 3), "IM-oracle": (0.15, 3),
                      "UPL-oracle": (0.15, 5)}
 
+#: Manifest ``basis`` substrings whose cells are scored but NOT registered.
+#: PI decision D6 (planning/pi-decisions-2026-09-20.md, ruled 2026-09-20)
+#: admits the seven ``carried-analogue (post-hoc)`` addendum cells and holds
+#: the ten ``mcc-oracle (post-hoc)`` cells, because the tile-MCC oracle is
+#: being redefined as the optimum over prob_t at the family's CARRIED vote
+#: count -- the unconstrained argmax collapses to the lowest vote count on
+#: offer in all 23 families (D6a, same file), which is a vote-threshold
+#: choice wearing a metric's name. Registering the old definition would
+#: publish rows that the redefinition is about to re-point. A held cell is
+#: neither an error nor an omission, so it is neither raised on nor
+#: silently dropped: it is reported as ``held``. Remove the entry once the
+#: re-pointed cells land, and the same command registers them.
+HELD_BASES = ("mcc-oracle",)
+
+#: The carried-analogue addendum (PI ruling 2026-09-20). These cells apply a
+#: family's GS-carried probability threshold downward to a lower rung with k
+#: set to that rung's own N, so a carried-vs-carried comparison exists at
+#: every rung. They were swept on r2 but never materialised until now, and
+#: the board was NOT re-tiered to admit them.
+ADDENDUM_BASIS = "carried-analogue"
+ADDENDUM_DATE = "2026-09-20"
+ADDENDUM_NOTE = (
+    "Registered per reports/comparability-inventory-37-runs-2026-09-20.md "
+    "section 3.2 (PI ruling 2026-09-20), which found these carried-analogue "
+    "points already swept on r2 but never materialised, leaving the "
+    "carried-against-carried comparison with no registered cell below the "
+    "top rung. Post-hoc and not a preregistered claim; the board was not "
+    "re-tiered, so this cell is not on final_board_50m.json."
+)
+
 _CELL_RE = re.compile(r"^(?P<fam>[A-Z0-9]+)(?:-N(?P<n>\d+))?-(?P<basis>oracle|carried)$")
 
 
@@ -170,6 +204,10 @@ def author_board_rows(dec: dict, manifest: list[dict],
         label = m["label"]
         if m.get("committed_eval"):
             continue  # the four incumbents: covered by the 7a-i clones
+        basis_txt = m.get("basis", "")
+        if any(h in basis_txt for h in HELD_BASES):
+            plan.append((None, {"label": label}, "held"))
+            continue
         pt, pk = parse_point(m["point"])
         if label in COINCIDENT_POINTS and (pt, pk) == COINCIDENT_POINTS[label]:
             plan.append((None, {"label": label}, "coincident"))
@@ -178,8 +216,18 @@ def author_board_rows(dec: dict, manifest: list[dict],
         if not mm:
             raise ValueError(f"unrecognised board cell label {label!r}")
         fam, n, basis = mm.group("fam"), mm.group("n"), mm.group("basis")
-        posthoc = "posthoc-" if "post-hoc" in m.get("basis", "") else ""
+        posthoc = "posthoc-" if "post-hoc" in basis_txt else ""
         f1_txt = f", F1@50 {f1_of[label]:.4f}" if label in f1_of else ""
+        if ADDENDUM_BASIS in basis_txt:
+            # Addendum cells are off the tiered board, so the usual "tier via
+            # final_board_50m.json" pointer would be false; say what they are,
+            # where they sit, and what triggered them instead.
+            note = (f"r2 board cell {label} (basis {basis_txt}, added "
+                    f"{ADDENDUM_DATE}; point {m['point']}{f1_txt}). "
+                    f"{ADDENDUM_NOTE} {R2_NOTE}")
+        else:
+            note = (f"r2 board cell {label} ({basis_txt or basis}{f1_txt}, "
+                    f"tier via final_board_50m.json). {R2_NOTE}")
         common = {
             "architecture": "proposer-verifier",
             "aggregation": "verified",
@@ -187,8 +235,7 @@ def author_board_rows(dec: dict, manifest: list[dict],
             "prob_threshold": pt,
             "eval_path": f"{R2_BOARD.relative_to(REPO)}/cells/{label}/evaluation.json",
             "detections": m["det"],
-            "_note": (f"r2 board cell {label} ({m.get('basis', basis)}{f1_txt}, "
-                      f"tier via final_board_50m.json). {R2_NOTE}"),
+            "_note": note,
         }
         if fam in AB_CELL:  # stride A/B and their rungs
             run_id = STRIDE_RUN
@@ -209,7 +256,8 @@ def author_board_rows(dec: dict, manifest: list[dict],
         elif fam in G37_TEMPLATE:  # 3.7 arms and their rungs
             run_id = G37_RUN
             tpl = _template(dec, run_id, G37_TEMPLATE[fam])
-            row = {"label": f"{fam.lower()}-n{n}-{basis}-p{pt:.2f}-k{pk}{SUFFIX_R2}",
+            row = {"label": (f"{fam.lower()}-n{n}-{basis}-{posthoc}"
+                             f"p{pt:.2f}-k{pk}{SUFFIX_R2}"),
                    "proposer_pool": tpl["proposer_pool"], "n_passes": int(n),
                    "verifier_config": copy.deepcopy(tpl["verifier_config"]),
                    "n_candidates": tpl.get("n_candidates"), **common}
@@ -217,7 +265,7 @@ def author_board_rows(dec: dict, manifest: list[dict],
             run_id = STRIDE_RUN
             tpl = _template(dec, run_id, FOURTH_TEMPLATE)
             row = {"label": (f"g384-ov192-55map-n{n}-verified37-{basis}-"
-                             f"p{pt:.2f}-k{pk}{SUFFIX_R2}"),
+                             f"{posthoc}p{pt:.2f}-k{pk}{SUFFIX_R2}"),
                    "proposer_pool": tpl.get("proposer_pool", "g384_ov192_55map"),
                    "n_passes": int(n),
                    "verifier_config": copy.deepcopy(tpl["verifier_config"]),
@@ -242,6 +290,25 @@ def apply(dec: dict, plan: list[tuple[str, dict, str]]) -> int:
             run["_note"] = (note + " " + CROSSREF_NOTE).strip()
         n += 1
     return n
+
+
+def write_register(rc: dict) -> None:
+    """Persist ``rc`` to run-conditions.json in the file's own JSON style.
+
+    The register's committed style is ASCII-escaped: 780a49ae3 restored it
+    after a merge introduced literal em dashes. A hard-coded
+    ``ensure_ascii=False`` therefore re-encodes 133 ``\\uXXXX`` escapes on
+    every write and buries the new rows in a ~400-line diff of text nobody
+    touched. Mirror the existing file instead -- both its escaping and its
+    trailing newline -- so the diff is exactly the rows that were added.
+
+    Args:
+        rc: The whole run-conditions document, already mutated by ``apply``.
+    """
+    existing = RUN_CONDITIONS.read_text()
+    trailing = "\n" if existing.endswith("\n") else ""
+    RUN_CONDITIONS.write_text(
+        json.dumps(rc, indent=1, ensure_ascii=existing.isascii()) + trailing)
 
 
 def main() -> int:
@@ -273,14 +340,13 @@ def main() -> int:
               + (f"  -> {row['eval_path']}" if status == "add" else ""))
     n_add = sum(1 for _r, _row, s in plan if s == "add")
     print(f"{n_add} row(s) to add, {sum(1 for p in plan if p[2] == 'skip')} present, "
-          f"{sum(1 for p in plan if p[2] == 'coincident')} coincident (skipped by design)")
+          f"{sum(1 for p in plan if p[2] == 'coincident')} coincident (skipped by design), "
+          f"{sum(1 for p in plan if p[2] == 'held')} held (see HELD_BASES)")
     if not args.write:
         print("dry run -- pass --write to persist")
         return 0
     n = apply(dec, plan)
-    existing = RUN_CONDITIONS.read_text()
-    trailing = "\n" if existing.endswith("\n") else ""
-    RUN_CONDITIONS.write_text(json.dumps(rc, indent=1, ensure_ascii=False) + trailing)
+    write_register(rc)
     print(f"wrote {n} row(s) -> {RUN_CONDITIONS.relative_to(REPO)}; "
           f"now run scripts/verify_run_conditions.py")
     return 0

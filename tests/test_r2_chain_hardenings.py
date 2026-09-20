@@ -472,3 +472,143 @@ def test_a_real_reference_file_still_outranks_the_label_suffix():
     meta = {"input_files": {"ground_truth": lus.REFERENCE_PATH["r2"]}}
     res = lus.resolve_reference(meta, "verified-k4-canonical-gt", None)
     assert (res.term, res.basis) == ("r2", "eval-ground-truth")
+
+
+# ---------------------------- D6: the carried-analogue addendum (r2) ---
+# PI decision D6 (planning/pi-decisions-2026-09-20.md, ruled 2026-09-20):
+# (a) register the seven carried-analogue addendum cells of the r2 board;
+# hold the ten mcc-oracle cells, because the tile-MCC oracle is being
+# redefined as the optimum over prob_t at the family's carried vote count.
+# The trigger is reports/comparability-inventory-37-runs-2026-09-20.md
+# section 3.2, which found the seven points swept on r2 but never
+# materialised, leaving carried-against-carried with no cell below the top
+# rung.
+
+#: (run id, label, prob_threshold, vote_threshold, n_passes, board cell).
+#: One row per addendum cell, in the inventory's section 3.2 order.
+ADDENDUM_ROWS = [
+    ("gemini37-55map-2026-08-29", "arm2-n1-carried-posthoc-p0.80-k1-r2-gt",
+     0.8, 1, 1, "ARM2-N1-carried"),
+    ("gemini37-55map-2026-08-29", "arm2-n3-carried-posthoc-p0.80-k3-r2-gt",
+     0.8, 3, 3, "ARM2-N3-carried"),
+    ("gemini37-55map-2026-08-29", "arm1-n1-carried-posthoc-p0.10-k1-r2-gt",
+     0.1, 1, 1, "ARM1-N1-carried"),
+    ("gemini37-55map-2026-08-29", "arm1-n3-carried-posthoc-p0.10-k3-r2-gt",
+     0.1, 3, 3, "ARM1-N3-carried"),
+    ("stride-55map-2026-08-25",
+     "g384-ov192-55map-n1-verified37-carried-posthoc-p0.98-k1-r2-gt",
+     0.98, 1, 1, "FOURTH-N1-carried"),
+    ("stride-55map-2026-08-25",
+     "g384-ov192-55map-n3-verified37-carried-posthoc-p0.98-k3-r2-gt",
+     0.98, 3, 3, "FOURTH-N3-carried"),
+    ("stride-55map-2026-08-25",
+     "g384-ov192-55map-n5-verified37-carried-posthoc-p0.98-k5-r2-gt",
+     0.98, 5, 5, "FOURTH-N5-carried"),
+]
+
+R2_BOARD_REL = "results/55map-final-board-r2-2026-09-06"
+
+
+@pytest.mark.tier1
+def test_the_seven_carried_analogue_cells_are_registered():
+    """D6(a): all seven rows are present, in the right run, at the right point."""
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    for run_id, label, prob, votes, n_passes, cell in ADDENDUM_ROWS:
+        rows = [c for c in dec[run_id]["conditions"] if c.get("label") == label]
+        assert len(rows) == 1, f"{run_id}::{label}: expected exactly one row, got {len(rows)}"
+        row = rows[0]
+        assert row["prob_threshold"] == prob
+        assert row["vote_threshold"] == votes
+        assert row["n_passes"] == n_passes
+        assert row["architecture"] == "proposer-verifier"
+        assert row["aggregation"] == "verified"
+        assert row["eval_path"] == f"{R2_BOARD_REL}/cells/{cell}/evaluation.json"
+        assert row["detections"] == f"{R2_BOARD_REL}/cells/{cell}/detections.geojson"
+        assert (ROOT / row["eval_path"]).exists(), row["eval_path"]
+
+
+@pytest.mark.tier1
+def test_the_addendum_notes_carry_their_basis_date_and_trigger():
+    """A post-hoc row must say what it is and what asked for it, not just where."""
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    for run_id, label, _prob, _votes, _n, cell in ADDENDUM_ROWS:
+        note = next(c for c in dec[run_id]["conditions"]
+                    if c.get("label") == label)["_note"]
+        assert cell in note
+        assert "carried-analogue" in note and "post-hoc" in note
+        assert r2reg.ADDENDUM_DATE in note
+        assert "comparability-inventory-37-runs-2026-09-20.md" in note
+        assert "section 3.2" in note
+        # The board was not re-tiered for these, so the note must not claim it.
+        assert "tier via final_board_50m.json" not in note
+
+
+@pytest.mark.tier1
+def test_the_addendum_rows_keep_their_runs_candidate_count_convention():
+    """n_candidates follows the run, not the rung: 12,715 text, 57,482 fourth."""
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    expected = {"gemini37-55map-2026-08-29": 12715, "stride-55map-2026-08-25": 57482}
+    for run_id, label, *_ in ADDENDUM_ROWS:
+        row = next(c for c in dec[run_id]["conditions"] if c.get("label") == label)
+        assert row["n_candidates"] == expected[run_id], label
+
+
+@pytest.mark.tier1
+def test_the_mcc_oracle_cells_are_held_and_never_written():
+    """D6: a held basis plans as 'held' -- not an add, not a raise, not a drop."""
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    manifest = [{"label": "ARM1-N1-mcc-oracle", "det": "x/d.geojson",
+                 "basis": "mcc-oracle (post-hoc)", "point": "(0.20, k1)",
+                 "committed_eval": False}]
+    plan = r2reg.author_board_rows(dec, manifest, None)
+    assert [(r, row["label"], s) for r, row, s in plan] == [
+        (None, "ARM1-N1-mcc-oracle", "held")]
+    # apply() writes only "add" rows, so a held cell cannot reach the register.
+    before = {rid: len(run["conditions"]) for rid, run in dec.items()}
+    assert r2reg.apply(dec, plan) == 0
+    assert {rid: len(run["conditions"]) for rid, run in dec.items()} == before
+    # No register row may point at one of the board's held mcc-oracle cells.
+    # The twelve image-campaign mcc-oracle rows are a different population
+    # (their own run homes) and D6 re-points them; they are not held here.
+    held_homes = [p.name for p in (ROOT / R2_BOARD_REL / "cells").iterdir()
+                  if p.name.endswith("-mcc-oracle")]
+    assert len(held_homes) == 10, held_homes
+    for run in dec.values():
+        for cond in run["conditions"]:
+            assert not str(cond.get("eval_path", "")).startswith(
+                f"{R2_BOARD_REL}/cells/"
+            ) or Path(cond["eval_path"]).parent.name not in held_homes, cond["label"]
+
+
+@pytest.mark.tier1
+def test_an_unknown_board_cell_label_still_raises():
+    """The hold must be narrow: only HELD_BASES is exempt from the raise."""
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    manifest = [{"label": "WAT-N1-sideways", "det": "x/d.geojson",
+                 "basis": "something new", "point": "(0.20, k1)",
+                 "committed_eval": False}]
+    with pytest.raises(ValueError, match="unrecognised board cell label"):
+        r2reg.author_board_rows(dec, manifest, None)
+
+
+@pytest.mark.tier1
+def test_the_registrar_writes_in_the_registers_own_json_style(tmp_path,
+                                                             monkeypatch):
+    """780a49ae3's ASCII style must survive a write, or the diff is unreadable."""
+    committed = (ROOT / "results/run-conditions.json").read_text()
+    assert committed.isascii(), "the committed register is ASCII-escaped"
+
+    doc = {"decomposition": {"r": {"conditions": [{"_note": "an em dash — here"}]}}}
+    ascii_file = tmp_path / "ascii.json"
+    ascii_file.write_text(json.dumps(doc, indent=1, ensure_ascii=True) + "\n")
+    monkeypatch.setattr(r2reg, "RUN_CONDITIONS", ascii_file)
+    r2reg.write_register(doc)
+    assert ascii_file.read_text().isascii()
+    assert ascii_file.read_text().endswith("\n")
+
+    utf8_file = tmp_path / "utf8.json"
+    utf8_file.write_text(json.dumps(doc, indent=1, ensure_ascii=False))
+    monkeypatch.setattr(r2reg, "RUN_CONDITIONS", utf8_file)
+    r2reg.write_register(doc)
+    assert "—" in utf8_file.read_text()
+    assert not utf8_file.read_text().endswith("\n")
