@@ -1,19 +1,19 @@
 {
  "_meta": {
-  "generated_at": "2026-09-20T03:04:26.843501+00:00",
+  "generated_at": "2026-09-20T05:45:44.423638+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "93c935d91",
+  "git_head": "ec1d3f7ff",
   "counts": {
-   "total": 3974,
-   "generated": 3652,
+   "total": 3984,
+   "generated": 3660,
    "generated_unattributed": 0,
-   "hand_written": 322,
+   "hand_written": 324,
    "by_directory": {
     "results/": {
-     "total": 3171,
-     "generated": 3022,
-     "hand_written": 149
+     "total": 3181,
+     "generated": 3030,
+     "hand_written": 151
     },
     "reports/": {
      "total": 98,
@@ -42,7 +42,7 @@
     "check_mode": 68,
     "tier1_check_test": 68,
     "compliant": 51,
-    "neither_regime": 3601
+    "neither_regime": 3609
    }
   }
  },
@@ -17906,6 +17906,92 @@
    "hand_edited": false
   },
   {
+   "path": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K1-carried-inherited/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K1-carried-inherited/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T04:16:13.155412+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K3-carried-inherited/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K3-carried-inherited/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T04:15:33.728486+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K1-carried-inherited/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K1-carried-inherited/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T04:16:21.066211+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K3-carried-inherited/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K3-carried-inherited/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T04:15:39.735928+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/findings.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/eval/report_autogen.md",
    "stratum": "generated",
    "rule_id": "gen-autogen-corrected-f1",
@@ -18392,6 +18478,92 @@
   },
   {
    "path": "results/gemini37-image-55map-2026-09-13/findings.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K1-carried-inherited/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K1-carried-inherited/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T03:45:17.284012+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K3-carried-inherited/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K3-carried-inherited/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T03:45:02.987216+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K1-carried-inherited/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K1-carried-inherited/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T03:45:10.513112+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K3-carried-inherited/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K3-carried-inherited/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T03:45:02.089895+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/findings.md",
    "stratum": "hand-written",
    "rule_id": null,
    "generator": null,
