@@ -589,14 +589,22 @@ def read_sweep_csv(path: Path) -> list[dict]:
     numbers the in-memory rows carried. Empty cells (a point that retained
     no detection) come back as ``None``.
 
+    The counting columns are integers in this board's CSVs but floats in the
+    image campaigns' (``gemini37_image_55map_r2._score_point`` sums numpy
+    arrays into ``tp``/``fp``/``fn``), and the tile-presence builder reads
+    both. So a counting column comes back as an ``int`` when its literal is
+    one and a ``float`` otherwise, rather than being forced either way: a
+    blanket ``float`` would make the board's exact counts approximate, and a
+    blanket ``int`` crashes on ``4870.0``.
+
     Args:
-        path: ``sweep_<family>.csv`` in the board home.
+        path: ``sweep_<family>.csv`` in a board or campaign home.
 
     Returns:
         The rows, in file order.
     """
-    ints = {"min_votes", "n_detections", "tp", "fp", "fn",
-            "tile_tp", "tile_tn", "tile_fp", "tile_fn"}
+    counts = {"min_votes", "n_detections", "tp", "fp", "fn",
+              "tile_tp", "tile_tn", "tile_fp", "tile_fn"}
     floats = {"prob_t", "micro_f1_50", "tile_mcc"}
     rows: list[dict] = []
     with path.open(newline="") as fh:
@@ -605,14 +613,24 @@ def read_sweep_csv(path: Path) -> list[dict]:
             for key, value in raw.items():
                 if value is None or value == "":
                     row[key] = None
-                elif key in ints:
-                    row[key] = int(value)
+                elif key in counts:
+                    row[key] = (int(value) if _is_int_literal(value)
+                                else float(value))
                 elif key in floats:
                     row[key] = float(value)
                 else:
                     row[key] = value
             rows.append(row)
     return rows
+
+
+def _is_int_literal(value: str) -> bool:
+    """Whether a CSV cell spells a whole number without a decimal point."""
+    try:
+        int(value)
+    except ValueError:
+        return False
+    return True
 
 
 def carried_k_record(frows: list[dict], carried: dict | None) -> dict:

@@ -264,6 +264,30 @@ def test_read_sweep_csv_restores_the_row_types(tmp_path) -> None:
     assert row["micro_f1_50"] == pytest.approx(0.8380252957976336)
 
 
+def test_read_sweep_csv_keeps_integer_counts_exact(tmp_path) -> None:
+    """The board writes whole numbers and they must stay whole."""
+    path = tmp_path / "sweep_X.csv"
+    path.write_text("family,prob_t,min_votes,n_detections,tp,fp,fn\n"
+                    "X,0.15,3,4786,4108,678,910\n")
+    row = fbs.read_sweep_csv(path)[0]
+    assert isinstance(row["tp"], int) and row["tp"] == 4108
+
+
+def test_read_sweep_csv_accepts_the_image_campaigns_float_counts(
+        tmp_path) -> None:
+    """The image sweeps sum numpy arrays, so tp/fp/fn are written as floats.
+
+    The tile-presence builder reads both spellings; a blanket int() here
+    crashed on 4870.0 the first time it did (2026-09-21).
+    """
+    path = tmp_path / "sweep_X.csv"
+    path.write_text("rung,prob_t,min_votes,n_detections,tp,fp,fn\n"
+                    "X,0.9,3,5343,4870.0,473.0,148.0\n")
+    row = fbs.read_sweep_csv(path)[0]
+    assert row["tp"] == pytest.approx(4870.0)
+    assert row["n_detections"] == 5343
+
+
 def test_read_sweep_csv_reads_an_empty_metric_as_none(tmp_path) -> None:
     """A point that retained nothing is written with blank metrics."""
     path = tmp_path / "sweep_X.csv"
