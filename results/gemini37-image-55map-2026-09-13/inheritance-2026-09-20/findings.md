@@ -1,10 +1,9 @@
 # Inheritance against own-leg verification on the 3.7 image row
 
-> **Last revised**: 2026-09-20 (original publication — the image row's K = 1
-> and K = 3 rungs derived by inheritance from its K = 5 legs, the eight-cell
-> head-to-head, the candidate-level agreement statistics, the arm 2 ladder
-> contrasts under each method, and the verdict against the E89 drift floor).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-20 (the instrument parametrised to serve both
+> pools of the image 2 x 2, and the ambiguity and union-separation
+> measurements added — no number in this note moved). Prior: 2026-09-20
+> (original publication). See [§ Changelog](#changelog) for revision history.
 
 ## 1. The question
 
@@ -80,6 +79,20 @@ list's 0.6-2.6 % band, and the text track's own figures are the same order
 
 These are the counts in `ladder.json`; the K = 3 rung's two unmatched
 candidates are the whole of the "dropped candidate" mechanism at that rung.
+
+**The radius is never asked to choose.** Only **2** candidates at each rung
+(0.03 % and 0.02 % of the matched set) have more than one K = 5 candidate
+inside the 10 m radius, never more than two, and of those only one — at
+arm 1, K = 1 — has neighbours that disagree about the carried decision. There
+are **no exact distance ties**, so the rule's tie-break (nearest Euclidean
+neighbour wins) names a winner unaided in every case. The reason is
+structural and is measured in `union_separation.json`: a union is the centroid
+set of a greedy star clustering at `DEDUP_METRES` = 20 m
+(`scripts/h13_k_sensitivity.cluster_votes`), so same-union candidates closer
+than 10 m to each other are rare — **8 of 9,173** in this row's K = 5 union
+(0.087 %), against a median nearest-neighbour separation of 147 m. The
+[Gemini 3 row](../../gemini3-image-55map-2026-09-16/inheritance-2026-09-20/findings.md)
+tests the same radius at about five times the candidate count.
 
 ## 4. Candidate-level agreement, on the matched candidates
 
@@ -311,6 +324,35 @@ remain uncharacterised there too.
 | `tests.json` | H1-H4 and L1-L4 on both metrics, with the per-cell tile confusions. |
 
 ## Changelog
+
+### 2026-09-20 — Instrument parametrised; ambiguity and separation measured
+
+**Trigger**: the PI ruled that the same head-to-head be run on the Gemini 3
+image row, which this note's § 9 had named as the measurement that would close
+the adoption question.
+
+`inheritance_ladder.py` gained a `--campaign` flag selecting one of the r2
+script's own `CAMPAIGNS` records, so one instrument now serves both pools; the
+default stays `g37`. Under the parametrised code this row's four cells and four
+sweep CSVs re-derived **byte for byte**, and `ladder.json`'s diff was 68 lines
+added and none removed.
+
+Two measurements were added and are reported in § 3 above: an **ambiguity**
+block (how often the 10 m radius offers a choice of K = 5 candidates, whether
+the alternatives disagree about the carried decision, how many are exact
+distance ties, and how decisive the margin is) and a **`separation` stage**
+writing `union_separation.json` (within-union nearest-neighbour distances,
+which set how ambiguous the radius can be at all).
+
+| claim | before | after |
+|---|---|---|
+| every cell metric, agreement statistic and test in this note | — | unchanged |
+| ambiguous matches, row A | not measured | 2 per rung (0.02–0.03 %), max 2 in radius |
+| decision-ambiguous matches, row A | not measured | 1 (arm 1, K = 1), 0 elsewhere |
+| exact distance ties, row A | not measured | 0 at every rung |
+| K = 5 union candidates with a same-union neighbour within 10 m | not measured | 8 of 9,173 (0.087 %) |
+
+Landed in `2ba1914b6`. Nothing else in this note changed.
 
 ### 2026-09-20 — Original publication
 
