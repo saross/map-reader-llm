@@ -238,3 +238,82 @@ def test_the_superseded_basis_keeps_the_post_hoc_marker() -> None:
     """Otherwise a board regeneration would drop the retained evidence."""
     assert "post-hoc" in ph.SUPERSEDED_MCC_BASIS
     assert "superseded" in ph.SUPERSEDED_MCC_BASIS
+
+
+# --- The confusion gate ------------------------------------------------------
+#
+# The gate that checks a materialised cell against its committed sweep row
+# caught its own first bug on 2026-09-20: it folded ``tile_tp`` onto ``tp``,
+# so the DETECTION counts were never compared, the tile counts were compared
+# twice, and the "micro-F1" it then computed was a tile-level F1 (0.8093
+# against ARM1-N1's committed 0.8413). These tests keep the two namespaces
+# apart. The two scorers are stubbed: what is under test is the comparison,
+# not the scoring, and both scorers have their own tests elsewhere
+# (tests/test_final_board_sweep_record.py, tests/test_advanced_metrics_*).
+
+#: Detection counts and tile counts that are deliberately different numbers,
+#: so a test cannot pass by comparing one against the other.
+DET_COUNTS = {"tp": 4108, "fp": 678, "fn": 910}
+TILE_COUNTS = {"tile_tp": 2424, "tile_tn": 4772, "tile_fp": 240,
+               "tile_fn": 1105}
+TILE_MCC = 0.6791784625969423
+DET_F1 = 0.8380252957976336
+
+
+@pytest.fixture
+def stub_scorers(monkeypatch):
+    """Pin what the two scorers return, so only the comparison is under test."""
+    import pandas as pd
+
+    monkeypatch.setattr(
+        ph, "compute_per_tile_tp_fp_fn",
+        lambda *_a, **_k: pd.DataFrame([DET_COUNTS]))
+    monkeypatch.setattr(
+        ph, "tile_confusion",
+        lambda *_a, **_k: {"tile_mcc": TILE_MCC, **TILE_COUNTS})
+
+
+@pytest.fixture
+def row() -> dict:
+    """The committed sweep row those scorers reproduce, as strings."""
+    return {**{k: str(v) for k, v in DET_COUNTS.items()},
+            **{k: str(v) for k, v in TILE_COUNTS.items()},
+            "micro_f1_50": str(DET_F1), "tile_mcc": str(TILE_MCC)}
+
+
+def test_the_confusion_gate_passes_its_own_sweep_row(stub_scorers, row) -> None:
+    ph.confusion_gate("X", None, row, None, None)  # must not raise
+
+
+def test_the_gate_sees_a_wrong_detection_count(stub_scorers, row) -> None:
+    """The bug of 2026-09-20: detection counts were silently not compared."""
+    row["fp"] = str(DET_COUNTS["fp"] + 7)
+    with pytest.raises(RuntimeError, match="confusion gate FAILED"):
+        ph.confusion_gate("X", None, row, None, None)
+
+
+def test_the_gate_sees_a_wrong_tile_count(stub_scorers, row) -> None:
+    row["tile_fn"] = str(TILE_COUNTS["tile_fn"] + 3)
+    with pytest.raises(RuntimeError, match="confusion gate FAILED"):
+        ph.confusion_gate("X", None, row, None, None)
+
+
+def test_the_gate_computes_the_DETECTION_f1_not_a_tile_f1(
+        stub_scorers, row) -> None:
+    """A tile-level F1 on these counts is 0.7828, far outside the 0.003 bound.
+
+    That substitution is exactly what the 2026-09-20 bug made, and the F1
+    half of the gate was the only check still live to catch it: the count
+    half had been neutered by the same namespace collapse.
+    """
+    ph.confusion_gate("X", None, row, None, None)
+    row["micro_f1_50"] = str(DET_F1 + 0.01)
+    with pytest.raises(RuntimeError, match="micro-F1@50 gate FAILED"):
+        ph.confusion_gate("X", None, row, None, None)
+
+
+def test_the_gate_sees_a_tile_mcc_outside_the_mechanism_bound(
+        stub_scorers, row) -> None:
+    row["tile_mcc"] = str(TILE_MCC + 0.01)
+    with pytest.raises(RuntimeError, match="tile-MCC gate FAILED"):
+        ph.confusion_gate("X", None, row, None, None)

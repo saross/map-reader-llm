@@ -406,21 +406,25 @@ def confusion_gate(label: str, sub: gpd.GeoDataFrame, row: dict,
     """
     tiles = compute_per_tile_tp_fp_fn(sub, ref, bounds,
                                       buffer_metres=BUFFER_M)
+    confusion = tile_confusion(sub, ref, bounds)  # once: it is the slow call
+    # DETECTION-level and TILE-level counts are two different confusions and
+    # must stay in two different namespaces. Folding ``tile_tp`` onto ``tp``
+    # compared tiles against tiles twice, left the detection counts unchecked,
+    # and then computed a tile-level "micro-F1" — which is what the F1 half of
+    # this gate caught on its first run (0.8093 against the committed 0.8413).
     got = {"tp": int(tiles["tp"].sum()), "fp": int(tiles["fp"].sum()),
-           "fn": int(tiles["fn"].sum())}
-    got.update({k.removeprefix("tile_"): v
-                for k, v in tile_confusion(sub, ref, bounds).items()
-                if k != "tile_mcc"})
-    want = {k: int(row[k]) for k in ("tp", "fp", "fn")}
-    want.update({k.removeprefix("tile_"): int(row[k])
-                 for k in ("tile_tp", "tile_tn", "tile_fp", "tile_fn")
-                 if row.get(k) not in (None, "")})
-    bad = {k: (got[k], want[k]) for k in want if got.get(k) != want[k]}
+           "fn": int(tiles["fn"].sum()),
+           **{k: v for k, v in confusion.items() if k != "tile_mcc"}}
+    want = {k: int(row[k])
+            for k in ("tp", "fp", "fn", "tile_tp", "tile_tn", "tile_fp",
+                      "tile_fn")
+            if row.get(k) not in (None, "")}
+    bad = {k: (got.get(k), want[k]) for k in want if got.get(k) != want[k]}
     if bad:
         raise RuntimeError(
             f"{label}: confusion gate FAILED — {bad} (got, committed)")
     f1 = micro_f1(got["tp"], got["fp"], got["fn"])
-    mcc = tile_confusion(sub, ref, bounds)["tile_mcc"]
+    mcc = confusion["tile_mcc"]
     for name, value, committed in (
             ("micro-F1@50", f1, float(row["micro_f1_50"])),
             ("tile-MCC", mcc, float(row["tile_mcc"]))):
@@ -428,9 +432,10 @@ def confusion_gate(label: str, sub: gpd.GeoDataFrame, row: dict,
             raise RuntimeError(
                 f"{label}: {name} gate FAILED — {value:.6f} vs committed "
                 f"{committed:.6f} (bound {MECHANISM_BOUND})")
-    logger.info("%-26s confusion gate OK (tp/fp/fn %d/%d/%d exact; "
-                "micro-F1 %.4f, tile-MCC %.4f)", label, got["tp"], got["fp"],
-                got["fn"], f1, mcc)
+    logger.info("%-26s confusion gate OK (detections tp/fp/fn %d/%d/%d and "
+                "tiles %d/%d/%d/%d exact; micro-F1 %.4f, tile-MCC %.4f)",
+                label, got["tp"], got["fp"], got["fn"], got["tile_tp"],
+                got["tile_tn"], got["tile_fp"], got["tile_fn"], f1, mcc)
 
 
 def verify_scored(which: str, out: Path) -> int:
