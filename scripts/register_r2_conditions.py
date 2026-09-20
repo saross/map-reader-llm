@@ -117,18 +117,20 @@ COINCIDENT_POINTS = {"TH7-oracle": (0.15, 3), "IM-oracle": (0.15, 3),
                      "UPL-oracle": (0.15, 5)}
 
 #: Manifest ``basis`` substrings whose cells are scored but NOT registered.
-#: PI decision D6 (planning/pi-decisions-2026-09-20.md, ruled 2026-09-20)
-#: admits the seven ``carried-analogue (post-hoc)`` addendum cells and holds
-#: the ten ``mcc-oracle (post-hoc)`` cells, because the tile-MCC oracle is
-#: being redefined as the optimum over prob_t at the family's CARRIED vote
-#: count -- the unconstrained argmax collapses to the lowest vote count on
-#: offer in all 23 families (D6a, same file), which is a vote-threshold
-#: choice wearing a metric's name. Registering the old definition would
-#: publish rows that the redefinition is about to re-point. A held cell is
-#: neither an error nor an omission, so it is neither raised on nor
-#: silently dropped: it is reported as ``held``. Remove the entry once the
-#: re-pointed cells land, and the same command registers them.
-HELD_BASES = ("mcc-oracle",)
+#: PI decision D6 (planning/pi-decisions-2026-09-20.md) admits the seven
+#: ``carried-analogue (post-hoc)`` addendum cells and, under ruling 6c of
+#: the same day, the ten ``mcc-oracle at carried k`` cells. What stays held
+#: is the SUPERSEDED selection: the unconstrained tile-MCC argmax, free to
+#: choose the vote count as well as the probability threshold, which every
+#: one of the board's 23 families put at the lowest vote count its sweep
+#: offers (D6a; Obs 492). Those ten cells remain on disk, scored and
+#: tabled in the board's "Superseded" sub-block, because the collapse is
+#: the evidence for the redefinition -- but they are not the board's MCC
+#: oracle and must not be registered as one. A held cell is neither an
+#: error nor an omission, so it is neither raised on nor silently dropped:
+#: it is reported as ``held``. Match on the full superseded basis, not on
+#: "mcc-oracle", which is a prefix of the admitted basis too.
+HELD_BASES = ("mcc-oracle, unconstrained k",)
 
 #: The carried-analogue addendum (PI ruling 2026-09-20). These cells apply a
 #: family's GS-carried probability threshold downward to a lower rung with k
@@ -146,7 +148,31 @@ ADDENDUM_NOTE = (
     "re-tiered, so this cell is not on final_board_50m.json."
 )
 
-_CELL_RE = re.compile(r"^(?P<fam>[A-Z0-9]+)(?:-N(?P<n>\d+))?-(?P<basis>oracle|carried)$")
+#: The redefined tile-MCC oracle (PI ruling 6c, 2026-09-20). The optimum
+#: over prob_t with min_votes PINNED to the family's carried vote count, so
+#: the MCC oracle and the F1 oracle are read of the same configuration.
+MCC_CARRIED_BASIS = "mcc-oracle at carried k"
+MCC_CARRIED_NOTE = (
+    "Registered per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, "
+    "2026-09-20): the board's tile-MCC oracle is the optimum over prob_t "
+    "with min_votes PINNED to this family's carried vote count, which makes "
+    "it the like-for-like companion of the F1-argmax oracle rather than a "
+    "vote-threshold choice wearing a metric's name. It SUPERSEDES the "
+    "unconstrained argmax, which is kept unregistered at "
+    "cells/<family>-mcc-oracle/ with basis 'mcc-oracle, unconstrained k "
+    "(post-hoc, superseded 2026-09-20)' and tabled in final-board-50m.md "
+    "section 'Superseded: the unconstrained tile-MCC optima': all 23 board "
+    "families put that optimum at the lowest vote count their sweep offers "
+    "(docs/notes/working-notes.md Observation 492). Derived from the "
+    "committed sweep CSVs with no re-sweep. Post-hoc and not a "
+    "preregistered claim; the board was not re-tiered, so this cell is not "
+    "on final_board_50m.json."
+)
+
+_CELL_RE = re.compile(
+    r"^(?P<fam>[A-Z0-9]+)(?:-N(?P<n>\d+))?"
+    r"-(?P<basis>oracle|carried|mcc-oracle)(?:-k(?P<ck>\d+))?$"
+)
 
 
 def clone_scoring_rows(dec: dict) -> list[tuple[str, dict, str]]:
@@ -216,9 +242,21 @@ def author_board_rows(dec: dict, manifest: list[dict],
         if not mm:
             raise ValueError(f"unrecognised board cell label {label!r}")
         fam, n, basis = mm.group("fam"), mm.group("n"), mm.group("basis")
+        if mm.group("ck") is not None and int(mm.group("ck")) != pk:
+            # A carried-k cell names its pinned vote count in its own label.
+            # If the label and the swept point disagree, one of them is a
+            # typo and the row would misdescribe its detections.
+            raise ValueError(
+                f"{label}: label pins k{mm.group('ck')} but its point is "
+                f"{m['point']!r} (k{pk})"
+            )
         posthoc = "posthoc-" if "post-hoc" in basis_txt else ""
         f1_txt = f", F1@50 {f1_of[label]:.4f}" if label in f1_of else ""
-        if ADDENDUM_BASIS in basis_txt:
+        if MCC_CARRIED_BASIS in basis_txt:
+            note = (f"r2 board cell {label} (basis {basis_txt}, added "
+                    f"{ADDENDUM_DATE}; point {m['point']}{f1_txt}). "
+                    f"{MCC_CARRIED_NOTE} {R2_NOTE}")
+        elif ADDENDUM_BASIS in basis_txt:
             # Addendum cells are off the tiered board, so the usual "tier via
             # final_board_50m.json" pointer would be false; say what they are,
             # where they sit, and what triggered them instead.
