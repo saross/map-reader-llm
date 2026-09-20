@@ -8,6 +8,66 @@ project state.
 
 ---
 
+## 🔍 S156 CLOSE (2026-09-21, Fable) — EVERY RULING EXECUTED; READ `planning/pi-decisions-2026-09-20.md` FIRST
+
+> **The decision log is the index for this session's rulings** (D1–D9, all
+> Ruled, each with the commits that executed it). Both clones clean and in
+> sync at `19a09827b`+; full tier-1 3,203 passed; register 658 conditions
+> ALL VALID, verifier 40/3/0; both signed rows guarded by cited-artefact
+> hash snapshots. Spend this session: US$10.20 (arm 2 replicate) + US$6.49
+> (arm 1 replicate) = **US$16.69**.
+>
+> ### What changed the picture (headline findings, all in Obs 488–493)
+>
+> - **Inheritance is the ladder method** (D2). Head-to-head on both image
+>   rows: no difference beyond drift at K = 3; at K = 1 inheritance's
+>   dropped-candidate filter is a real +0.006/+0.009 F1 precision effect on
+>   the over-generating Gemini 3 pool (null on tile-MCC). Rules: inherited
+>   K = 1 never beside own-leg K = 1; ladder claims name the method; 20 m
+>   dedup radius (2× the 10 m match radius) is the invariant.
+> - **Both verifiers' E89 floors measured on one union** (D4, D8): 2.46 %
+>   and 2.41 % flips at their carried thresholds; drift-only contrasts of
+>   order 0.001 F1 and 0.0005 tile-MCC. Rule in the declaration: claimable
+>   only if the effect clearly exceeds drift AND resolves against its own
+>   null. K3→K5 F1 gains claimable on both arms; tile-MCC gains not.
+> - **The MCC oracle is gone from the main boards** (D6c amended
+>   2026-09-21): tile-MCC has no interior optimum — its free optimum is the
+>   lowest vote count on 23/23 families (F1 cost 0.054–0.181), its pinned
+>   optimum is within noise of the carried point. Tile-MCC stays reported
+>   beside F1 at carried and F1-oracle points; the F1 oracle stays free.
+>   `results/tile-presence-2026-09-21/` (leaderboard + Pareto frontiers)
+>   serves the tile-presence researcher; the 3.7 image row's frontiers have
+>   NO interior points (0 of 6) where the Gemini 3 row's do (5 of 6).
+> - **T5m** (D3): matched on protocol, September's Gemini 3 pool trails June's
+>   IM-k3 by 0.070 F1; the declared T5's F1 null was the comparator choice.
+> - **Carried-vs-carried image − text** (inventory + seven addendum cells):
+>   +0.026/+0.040/+0.044 F1, +0.050/+0.057/+0.060 tile-MCC at K/N 1/3/5.
+>
+> ### Open threads for the next session
+>
+> 1. Prose pass: "MCC oracle" survives in the image findings' prose
+>    (g37 §§ 1, 3, 7; g3 §§ 3, 8) and `scripts/im_june_pool_grid.py` still
+>    writes one such cell.
+> 2. `--check` drift mode for `scripts/build_tile_presence_board.py`.
+> 3. Twelve pre-2026-09-14 verifier legs cannot be cost-audited (cleanup
+>    overwrote their metas); `results/tile-presence-2026-09-21/verifier-costs.json`
+>    lists them.
+> 4. The text arms register the N = 5 pool's candidate count on every rung's
+>    condition (convention, flagged twice today).
+> 5. Row A needs a NEW analysis row for K = 5, the replicate, and the 2x2
+>    (its signature excludes them by scope).
+> 6. Depth of the tile-MCC collapse as a proposer over-generation diagnostic
+>    (computable from committed sweeps).
+>
+> ### Method lessons (see also Obs 490, the guidance rules of 017ab13bd)
+>
+> - Shared clones with several agents: detached worktrees at origin/main for
+>   commits; explicit pathspecs; never stash; never derive an identifier
+>   from another agent's free text (the registrar's duplicate-plan bug).
+> - A cell cited by a signed row must never be re-materialised in place —
+>   now enforced by the cited-artefact guard (2ca81ceeb).
+> - Nested heredocs inside `ssh '…'` break on backticks; ship files.
+
 ## 🔍 S156 DAY 2 (2026-09-20, Fable, session open) — COMPARABILITY REPAIRED, AUDIT ACTED ON, REPLICATE CLAIMABLE; PI DECISIONS PENDING
 
 > **Read this before the block below.** Everything here is on `origin/main`
