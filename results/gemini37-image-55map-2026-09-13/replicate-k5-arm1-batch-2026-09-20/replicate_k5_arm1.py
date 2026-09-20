@@ -678,18 +678,35 @@ def stage_tests() -> int:
                                      b["tp"], b["fp"], b["fn"],
                                      n_permutations=N_PERMS, seed=SEED)})
 
-    # Cells that are the SAME file on both sides of a contrast make that
-    # contrast degenerate; say so in the record rather than leaving a reader
-    # to notice that two rows are identical.
-    degenerate = [
-        {"test": name, "a": a_label, "b": b_label,
-         "note": "both sides materialise the same operating point, so this "
-                 "contrast duplicates another row of this table"}
-        for name, a_label, b_label, _ in tests
-        if cache[a_label]["n"] == cache[b_label]["n"]
-        and np.array_equal(cache[a_label]["pred"], cache[b_label]["pred"])
-        and np.array_equal(cache[a_label]["tp"], cache[b_label]["tp"])
-    ]
+    # Where an arm's F1 oracle coincides with its carried point, the oracle
+    # cell IS the carried cell, and test (d) becomes a second copy of test
+    # (a). That is worth recording in the JSON rather than leaving a reader to
+    # notice that two rows carry identical numbers, so duplicate CONTRASTS are
+    # detected by comparing each test's two sides cell-for-cell against every
+    # earlier test's.
+    def same_cell(x: str, y: str) -> bool:
+        """Do two labels materialise identical detections on the frame?"""
+        return (cache[x]["n"] == cache[y]["n"]
+                and np.array_equal(cache[x]["pred"], cache[y]["pred"])
+                and np.array_equal(cache[x]["tp"], cache[y]["tp"])
+                and np.array_equal(cache[x]["fp"], cache[y]["fp"])
+                and np.array_equal(cache[x]["fn"], cache[y]["fn"]))
+
+    degenerate = []
+    for i, (name, a_label, b_label, _) in enumerate(tests):
+        for prior, pa, pb, _ in tests[:i]:
+            if same_cell(a_label, pa) and same_cell(b_label, pb):
+                degenerate.append({
+                    "test": name, "duplicates": prior,
+                    "a": a_label, "b": b_label,
+                    "note": (f"{a_label} and {pa} are the same cell, as are "
+                             f"{b_label} and {pb}: this arm's F1 oracle "
+                             "coincides with its carried point on both "
+                             f"invocations, so test ({name}) is test "
+                             f"({prior}) again and carries no extra "
+                             "information."),
+                })
+                break
 
     out = {
         "purpose": (
@@ -728,8 +745,9 @@ def stage_tests() -> int:
                     r["test"], r["a"], r["b"], r["mcc_a"], r["mcc_b"],
                     r["observed_diff"], r["p_value"])
     for d in degenerate:
-        logger.warning("degenerate contrast (%s): %s and %s are the same cell",
-                       d["test"], d["a"], d["b"])
+        logger.warning("test (%s) duplicates test (%s): same cells on both "
+                       "sides, so its row carries no extra information",
+                       d["test"], d["duplicates"])
     logger.info("wrote %s", dest.relative_to(PROJECT_ROOT))
     return 0
 
