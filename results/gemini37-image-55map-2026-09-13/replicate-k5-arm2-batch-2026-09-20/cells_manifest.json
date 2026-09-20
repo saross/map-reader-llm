@@ -1,0 +1,30 @@
+{
+  "buffer_m": 50,
+  "reference": "r2",
+  "cells": [
+    {
+      "label": "IMG-ARM2-K5-carried-replicate",
+      "rung": "IMG-ARM2-K5-replicate",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 5,
+      "basis": "carried",
+      "point": "(0.90, k5)",
+      "n_detections": 5202,
+      "det": "results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/cells/IMG-ARM2-K5-carried-replicate/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM2-K5-f1-oracle-replicate",
+      "rung": "IMG-ARM2-K5-replicate",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 5,
+      "basis": "f1-oracle",
+      "point": "(0.95, k5)",
+      "n_detections": 5184,
+      "det": "results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/cells/IMG-ARM2-K5-f1-oracle-replicate/detections.geojson"
+    }
+  ]
+}
