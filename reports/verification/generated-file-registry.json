@@ -1,29 +1,29 @@
 {
  "_meta": {
-  "generated_at": "2026-09-19T00:48:52.092420+00:00",
+  "generated_at": "2026-09-20T01:45:19.666589+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "69d1ed6bf",
+  "git_head": "892633660",
   "counts": {
-   "total": 3923,
-   "generated": 3609,
+   "total": 3972,
+   "generated": 3650,
    "generated_unattributed": 0,
-   "hand_written": 314,
+   "hand_written": 322,
    "by_directory": {
     "results/": {
-     "total": 3125,
-     "generated": 2979,
-     "hand_written": 146
+     "total": 3169,
+     "generated": 3020,
+     "hand_written": 149
     },
     "reports/": {
-     "total": 94,
+     "total": 98,
      "generated": 0,
-     "hand_written": 94
+     "hand_written": 98
     },
     "outputs/": {
-     "total": 674,
+     "total": 675,
      "generated": 630,
-     "hand_written": 44
+     "hand_written": 45
     },
     "docs/": {
      "total": 30,
@@ -42,7 +42,7 @@
     "check_mode": 68,
     "tier1_check_test": 68,
     "compliant": 51,
-    "neither_regime": 3558
+    "neither_regime": 3599
    }
   }
  },
@@ -4090,6 +4090,16 @@
    "check_tests": [],
    "tier1_check_test": false,
    "regime2_compliant": false
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
+   "stratum": "hand-written",
+   "rule_id": "hw-outputs-post-run-report",
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
   },
   {
    "path": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/archive-run2-partial-aborted-2026-08-30/experiment_intent.md",
@@ -11885,6 +11895,26 @@
    "hand_edited": false
   },
   {
+   "path": "reports/code-audit-2026-09-20-storage-preflight.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/comparability-inventory-37-runs-2026-09-20.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "reports/configuration-audit-2026-03-25-v2.md",
    "stratum": "hand-written",
    "rule_id": null,
@@ -12096,6 +12126,16 @@
   },
   {
    "path": "reports/h2c-full-run-proposal-2026-08-24.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/image-2x2-tests-declaration-2026-09-19.md",
    "stratum": "hand-written",
    "rule_id": null,
    "generator": null,
@@ -12436,6 +12476,16 @@
   },
   {
    "path": "reports/symbol-footprint-measurement-2026-08-22.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/text-vs-image-tracks-2026-09-20.md",
    "stratum": "hand-written",
    "rule_id": null,
    "generator": null,
@@ -13229,6 +13279,44 @@
    "regime2_compliant": false
   },
   {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N1-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/ARM1-N1-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T00:14:46.909525+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N1-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/ARM1-N1-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T01:32:09.573340+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
    "path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N1-oracle/evaluation.md",
    "stratum": "generated",
    "rule_id": "gen-evaluation-md",
@@ -13238,6 +13326,44 @@
     "results/55map-final-board-r2-2026-09-06/cells/ARM1-N1-oracle/evaluation.json"
    ],
    "marker": "**Generated**: 2026-09-07T03:55:55.654832+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N3-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/ARM1-N3-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T00:14:30.105760+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N3-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/ARM1-N3-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T01:32:12.689284+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -13286,6 +13412,25 @@
    "regime2_compliant": false
   },
   {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N5-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/ARM1-N5-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T01:32:15.189763+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
    "path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N5-oracle/evaluation.md",
    "stratum": "generated",
    "rule_id": "gen-evaluation-md",
@@ -13305,6 +13450,44 @@
    "regime2_compliant": false
   },
   {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N1-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/ARM2-N1-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T00:14:37.413471+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N1-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/ARM2-N1-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T01:32:10.378637+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
    "path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N1-oracle/evaluation.md",
    "stratum": "generated",
    "rule_id": "gen-evaluation-md",
@@ -13314,6 +13497,44 @@
     "results/55map-final-board-r2-2026-09-06/cells/ARM2-N1-oracle/evaluation.json"
    ],
    "marker": "**Generated**: 2026-09-07T03:58:35.046796+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N3-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/ARM2-N3-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T00:14:27.086572+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N3-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/ARM2-N3-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T01:32:15.566468+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -13352,6 +13573,25 @@
     "results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-carried/evaluation.json"
    ],
    "marker": "**Generated**: 2026-09-07T03:58:27.763619+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T01:34:52.622023+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -13514,6 +13754,44 @@
    "regime2_compliant": false
   },
   {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T00:16:56.554760+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T01:34:44.901530+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
    "path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-oracle/evaluation.md",
    "stratum": "generated",
    "rule_id": "gen-evaluation-md",
@@ -13552,6 +13830,25 @@
    "regime2_compliant": false
   },
   {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N10-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N10-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T01:35:20.856824+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
    "path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N10-oracle/evaluation.md",
    "stratum": "generated",
    "rule_id": "gen-evaluation-md",
@@ -13571,6 +13868,44 @@
    "regime2_compliant": false
   },
   {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N3-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N3-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T00:16:46.009501+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N3-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N3-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T01:35:07.922627+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
    "path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N3-oracle/evaluation.md",
    "stratum": "generated",
    "rule_id": "gen-evaluation-md",
@@ -13580,6 +13915,44 @@
     "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N3-oracle/evaluation.json"
    ],
    "marker": "**Generated**: 2026-09-07T04:03:16.649710+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T00:16:50.974507+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T01:35:10.762319+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -17143,6 +17516,358 @@
    "hand_edited": false
   },
   {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T04:18:22.464613+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T04:18:08.793299+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T04:18:11.035733+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T14:05:44.373314+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-f1-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-f1-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T14:05:43.751469+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T14:06:53.913769+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T22:18:56.323296+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-f1-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-f1-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T22:18:56.626055+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T22:20:35.716756+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T04:18:29.429597+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T04:21:11.742927+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T04:21:17.810077+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T14:05:51.266343+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T14:08:09.641288+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T14:09:27.537887+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T22:18:59.669770+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T22:21:12.610960+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T22:23:06.116008+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/findings.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/eval/report_autogen.md",
    "stratum": "generated",
    "rule_id": "gen-autogen-corrected-f1",
@@ -17629,6 +18354,54 @@
   },
   {
    "path": "results/gemini37-image-55map-2026-09-13/findings.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/cells/IMG-ARM2-K5-carried-replicate/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/cells/IMG-ARM2-K5-carried-replicate/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T00:06:53.378155+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/cells/IMG-ARM2-K5-f1-oracle-replicate/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/cells/IMG-ARM2-K5-f1-oracle-replicate/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T00:06:52.159462+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/findings.md",
    "stratum": "hand-written",
    "rule_id": null,
    "generator": null,
@@ -22250,6 +23023,92 @@
    ],
    "tier1_check_test": true,
    "regime2_compliant": true
+  },
+  {
+   "path": "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k3-f1-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k3-f1-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T23:48:29.994675+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k3-mcc-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k3-mcc-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T23:48:27.592485+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k5-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k5-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T23:47:54.433619+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k5-f1-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k5-f1-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-19T23:47:53.255874+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/im-june-pool-grid-2026-09-20/findings.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
   },
   {
    "path": "results/image-b-gs-2026-08-28/best-eval/evaluation.md",
