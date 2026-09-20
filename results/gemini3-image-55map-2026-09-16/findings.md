@@ -1,6 +1,10 @@
 # Gemini 3 image at deployment scale, K = 1, 3 and 5: findings
 
-> **Last revised**: 2026-09-20 (original publication — row B of the image
+> **Last revised**: 2026-09-21 (the six `*-mcc-oracle` rows dropped from
+> § 2's table under PI ruling 2026-09-21 and moved to
+> `results/tile-presence-2026-09-21/`; this also clears rows that had gone
+> stale when those cells were re-pointed on 2026-09-20). Prior: 2026-09-20
+> (original publication — row B of the image
 > proposer × verifier 2×2, registered UNSIGNED for the Principal
 > Investigator's (PI) review). See [§ Changelog](#changelog) for revision
 > history.
@@ -87,22 +91,25 @@ so the transfer tax is visible.
 |---|---|---:|---:|---|---:|---|---:|---:|---:|---:|
 | `G3IMG-ARM1-K1-carried` | (0.15, k1) | 8,529 | 0.6664 | [0.6593, 0.6734] | 0.7144 | [0.6992, 0.7286] | 2,646 | 301 | 883 | 4,711 |
 | `G3IMG-ARM1-K1-f1-oracle` | (0.40, k1) | 7,466 | 0.6753 | [0.6676, 0.6825] | 0.7444 | [0.7311, 0.7572] | 2,512 | 83 | 1,017 | 4,929 |
-| `G3IMG-ARM1-K1-mcc-oracle` | (0.30, k1) | 7,543 | 0.6748 | [0.6671, 0.6820] | 0.7455 | [0.7322, 0.7583] | 2,521 | 86 | 1,008 | 4,926 |
 | `G3IMG-ARM1-K3-carried` | (0.15, k3) | 5,538 | 0.8024 | [0.7943, 0.8101] | 0.7247 | [0.7106, 0.7392] | 2,557 | 187 | 972 | 4,825 |
 | `G3IMG-ARM1-K3-f1-oracle` | (0.15, k3) | 5,538 | 0.8024 | [0.7943, 0.8101] | 0.7247 | [0.7106, 0.7392] | 2,557 | 187 | 972 | 4,825 |
-| `G3IMG-ARM1-K3-mcc-oracle` | (0.35, **k1**) | 10,078 | 0.5723 | [0.5647, 0.5798] | 0.7486 | [0.7354, 0.7619] | 2,575 | 117 | 954 | 4,895 |
 | `G3IMG-ARM1-K5-carried` | (0.15, k5) | 4,858 | 0.8177 | [0.8089, 0.8259] | 0.7165 | [0.7024, 0.7304] | 2,485 | 158 | 1,044 | 4,854 |
 | `G3IMG-ARM1-K5-f1-oracle` | (0.15, k5) | 4,858 | 0.8177 | [0.8089, 0.8259] | 0.7165 | [0.7024, 0.7304] | 2,485 | 158 | 1,044 | 4,854 |
-| `G3IMG-ARM1-K5-mcc-oracle` | (0.40, **k1**) | 11,739 | 0.5205 | [0.5128, 0.5280] | 0.7496 | [0.7360, 0.7632] | 2,597 | 131 | 932 | 4,881 |
 | `G3IMG-ARM2-K1-carried` | (0.88, k1) | 9,172 | 0.6644 | [0.6572, 0.6712] | 0.7063 | [0.6907, 0.7212] | 2,724 | 405 | 805 | 4,607 |
 | `G3IMG-ARM2-K1-f1-oracle` | (0.98, k1) | 7,931 | 0.6923 | [0.6851, 0.6992] | 0.7659 | [0.7531, 0.7781] | 2,573 | 56 | 956 | 4,956 |
-| `G3IMG-ARM2-K1-mcc-oracle` | (0.98, k1) | 7,931 | 0.6923 | [0.6851, 0.6992] | 0.7659 | [0.7531, 0.7781] | 2,573 | 56 | 956 | 4,956 |
 | **`G3IMG-ARM2-K3-carried`** | (0.88, k3) | 5,941 | **0.8127** | [0.8050, 0.8201] | **0.7234** | [0.7087, 0.7379] | 2,639 | 261 | 890 | 4,751 |
 | `G3IMG-ARM2-K3-f1-oracle` | (0.96, k3) | 5,266 | 0.8263 | [0.8185, 0.8336] | 0.7553 | [0.7431, 0.7678] | 2,505 | 41 | 1,024 | 4,971 |
-| `G3IMG-ARM2-K3-mcc-oracle` | (0.98, **k1**) | 10,727 | 0.5772 | [0.5695, 0.5846] | 0.7706 | [0.7576, 0.7831] | 2,614 | 71 | 915 | 4,941 |
 | `G3IMG-ARM2-K5-carried` | (0.95, k5) | 5,155 | 0.8306 | [0.8224, 0.8382] | 0.7253 | [0.7111, 0.7394] | 2,567 | 193 | 962 | 4,819 |
 | `G3IMG-ARM2-K5-f1-oracle` | (0.96, k5) | 4,664 | 0.8354 | [0.8271, 0.8432] | 0.7450 | [0.7324, 0.7577] | 2,447 | 33 | 1,082 | 4,979 |
-| `G3IMG-ARM2-K5-mcc-oracle` | (0.98, **k1**) | 12,508 | 0.5217 | [0.5141, 0.5294] | 0.7755 | [0.7629, 0.7880] | 2,623 | 61 | 906 | 4,951 |
+
+**The tile-MCC optimum is not on this table.** PI ruling 2026-09-21 dropped
+it from every board and campaign table under both definitions —
+unconstrained, and pinned to the rung's carried vote count — because it is a
+vote-threshold choice read as a metric's verdict. It is presented instead,
+with its vote count as a column and its verifier pool priced, in
+[`results/tile-presence-2026-09-21/`](../tile-presence-2026-09-21/leaderboard.md).
+The cells stay on disk with their committed evaluations, re-labelled in
+`cells_manifest.json`.
 
 The bolded cell is the run's headline condition: the all-3.7-verifier cell at
 the declared primary rung on its carried point, the cell T1 and T3 are stated
@@ -361,6 +368,41 @@ in a way a 487-tile Gold Standard leg cannot show.
   K = 5 ladder in § 2 is descriptive.
 
 ## Changelog
+
+### 2026-09-21 — The tile-MCC optimum moved off this table
+
+**Refresh trigger**: PI ruling 2026-09-21, superseding ruling 6c of
+2026-09-20. The "MCC oracle" is dropped from the main boards and campaign
+tables under **both** definitions — the unconstrained tile-MCC argmax, and
+the argmax pinned to each configuration's carried vote count. Tile-MCC stays
+reported beside micro-F1 at the carried and F1-oracle points, where both
+metrics describe the same configuration; the F1 oracle stays free over both
+dimensions; and the tile-MCC optimum moves to a separate presentation,
+`results/tile-presence-2026-09-21/`, where its vote count is a column and
+the verifier pool it would need is priced.
+
+**What changed on this document**: the six
+`G3IMG-ARM{1,2}-K{1,3,5}-mcc-oracle` rows are removed from § 2's table and
+replaced by one pointer line.
+
+**This also corrects a staleness.** Those rows were published on 2026-09-20
+against the UNCONSTRAINED optima — `G3IMG-ARM1-K3-mcc-oracle` at (0.35,
+**k1**) with 10,078 detections, and so on. Later the same day ruling 6c
+re-pointed every `*-mcc-oracle` cell to its carried-k optimum and moved the
+unconstrained cells to `cells/<label>-mcc-oracle-unconstrained/`, and this
+document was not refreshed. Its six rows therefore carried the right
+numbers under the wrong labels for a day. Removing them resolves that;
+the numbers themselves are in
+`results/tile-presence-2026-09-21/leaderboard.md`, which reads the sweep
+record directly.
+
+| | before | after |
+|---|---:|---:|
+| § 2 table rows | 18 | **12** |
+| cells on disk | 24 | **24** (none deleted) |
+
+**Numbers that moved**: none on this document. The six rows removed were
+label-stale, not value-wrong.
 
 ### 2026-09-20 — Original publication
 

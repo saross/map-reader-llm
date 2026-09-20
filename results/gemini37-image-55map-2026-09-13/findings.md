@@ -1,6 +1,9 @@
 # Gemini 3.7 image at deployment scale, K = 3 and K = 5: findings
 
-> **Last revised**: 2026-09-19 (the **K = 5 rung added** — six further cells on
+> **Last revised**: 2026-09-21 (the six `*-mcc-oracle` rows dropped from
+> § 2's table under PI ruling 2026-09-21 and moved to
+> `results/tile-presence-2026-09-21/`; no cell deleted, no number changed).
+> Prior: 2026-09-19 (the **K = 5 rung added** — six further cells on
 > the two image arms, swept, materialised and scored on the same r2 engine,
 > after proposer passes 4 and 5 were run through the Batch API. The rung is
 > declared **EXPLORATORY**: it was not in the card, no permutation test was run
@@ -74,22 +77,25 @@ arm 2 carries **0.90** at this rung, not the K = 3 leg's 0.88.
 |---|---|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|
 | `IMG-ARM1-K1-carried` | (0.10, k1) | 6,250 | 0.8477 | 0.7324 | [0.7175, 0.7463] | 2,693 | 275 | 836 | 4,737 | 0.7631 | 0.9451 |
 | `IMG-ARM1-K1-f1-oracle` | (0.15, k1) | 5,582 | 0.8606 | 0.7523 | [0.7388, 0.7652] | 2,585 | 112 | 944 | 4,900 | 0.7325 | 0.9777 |
-| `IMG-ARM1-K1-mcc-oracle` | (0.15, k1) | 5,582 | 0.8606 | 0.7523 | [0.7388, 0.7652] | 2,585 | 112 | 944 | 4,900 | 0.7325 | 0.9777 |
 | `IMG-ARM1-K3-carried` | (0.10, k3) | 5,437 | 0.9025 | 0.7490 | [0.7351, 0.7625] | 2,658 | 183 | 871 | 4,829 | 0.7532 | 0.9635 |
 | `IMG-ARM1-K3-f1-oracle` | (0.10, k3) | 5,437 | 0.9025 | 0.7490 | [0.7351, 0.7625] | 2,658 | 183 | 871 | 4,829 | 0.7532 | 0.9635 |
-| `IMG-ARM1-K3-mcc-oracle` | (0.15, k3) | 4,977 | 0.8992 | 0.7577 | [0.7444, 0.7702] | 2,568 | 80 | 961 | 4,932 | 0.7277 | 0.9840 |
 | `IMG-ARM2-K1-carried` | (0.88, k1) | 5,997 | 0.8719 | 0.7569 | [0.7432, 0.7702] | 2,671 | 165 | 858 | 4,847 | 0.7569 | 0.9671 |
 | `IMG-ARM2-K1-f1-oracle` | (0.95, k1) | 5,938 | 0.8742 | 0.7594 | [0.7459, 0.7725] | 2,661 | 148 | 868 | 4,864 | 0.7540 | 0.9705 |
-| `IMG-ARM2-K1-mcc-oracle` | (0.98, k1) | 5,322 | 0.8721 | 0.7614 | [0.7491, 0.7737] | 2,519 | 31 | 1,010 | 4,981 | 0.7138 | 0.9938 |
 | **`IMG-ARM2-K3-carried`** | (0.88, k3) | 5,357 | **0.9199** | **0.7648** | [0.7516, 0.7776] | 2,659 | 127 | 870 | 4,885 | 0.7535 | 0.9747 |
 | `IMG-ARM2-K3-f1-oracle` | (0.90, k3) | 5,343 | 0.9206 | 0.7654 | [0.7524, 0.7784] | 2,657 | 123 | 872 | 4,889 | 0.7529 | 0.9755 |
-| `IMG-ARM2-K3-mcc-oracle` | (0.96, k2) | 5,167 | 0.8882 | 0.7656 | [0.7534, 0.7780] | 2,534 | 28 | 995 | 4,984 | 0.7181 | 0.9944 |
 | `IMG-ARM1-K5-carried` | (0.10, k5) | 5,297 | 0.9130 | 0.7529 | [0.7394, 0.7662] | 2,652 | 164 | 877 | 4,848 | 0.7515 | 0.9673 |
 | `IMG-ARM1-K5-f1-oracle` | (0.10, k5) | 5,297 | 0.9130 | 0.7529 | [0.7394, 0.7662] | 2,652 | 164 | 877 | 4,848 | 0.7515 | 0.9673 |
-| `IMG-ARM1-K5-mcc-oracle` | (0.15, k5) | 4,885 | 0.9060 | 0.7542 | [0.7409, 0.7670] | 2,564 | 89 | 965 | 4,923 | 0.7266 | 0.9822 |
 | `IMG-ARM2-K5-carried` | (0.90, k5) | 5,219 | 0.9270 | 0.7659 | [0.7528, 0.7790] | 2,648 | 114 | 881 | 4,898 | 0.7504 | 0.9773 |
 | `IMG-ARM2-K5-f1-oracle` | (0.95, k5) | 5,197 | 0.9280 | 0.7681 | [0.7552, 0.7811] | 2,644 | 103 | 885 | 4,909 | 0.7492 | 0.9794 |
-| `IMG-ARM2-K5-mcc-oracle` | (0.95, k5) | 5,197 | 0.9280 | 0.7681 | [0.7552, 0.7811] | 2,644 | 103 | 885 | 4,909 | 0.7492 | 0.9794 |
+
+**The tile-MCC optimum is not on this table.** PI ruling 2026-09-21 dropped
+it from every board and campaign table under both definitions —
+unconstrained, and pinned to the rung's carried vote count — because it is a
+vote-threshold choice read as a metric's verdict. It is presented instead,
+with its vote count as a column and its verifier pool priced, in
+[`results/tile-presence-2026-09-21/`](../tile-presence-2026-09-21/leaderboard.md).
+The cells stay on disk with their committed evaluations, re-labelled in
+`cells_manifest.json`.
 
 The exploratory `IMG-ARM2-K5-carried` cell scores above the K = 3 headline cell
 on both metrics (0.9270 against 0.9199 F1; 0.7659 against 0.7648 tile-MCC), and
@@ -317,6 +323,32 @@ report's upward revision to ≈ 9,000–10,900 overshot. The K = 1 estimate of
   seat" effect is the seat as a package, not the model alone.
 
 ## Changelog
+
+### 2026-09-21 — The tile-MCC optimum moved off this table
+
+**Refresh trigger**: PI ruling 2026-09-21, superseding ruling 6c of
+2026-09-20. The "MCC oracle" is dropped from the main boards and campaign
+tables under **both** definitions — the unconstrained tile-MCC argmax, and
+the argmax pinned to each configuration's carried vote count. Tile-MCC stays
+reported beside micro-F1 at the carried and F1-oracle points, where both
+metrics describe the same configuration; the F1 oracle stays free over both
+dimensions; and the tile-MCC optimum moves to a separate presentation,
+`results/tile-presence-2026-09-21/`, where its vote count is a column and
+the verifier pool it would need is priced.
+
+**What changed on this document**: the six `IMG-ARM{1,2}-K{1,3,5}-mcc-oracle`
+rows are removed from § 2's table and replaced by one pointer line. Nothing
+else on the document changes: the P1-P5 verdicts, the carried and F1-oracle
+rows, the audited costs and the limitations all stand, and the analytical
+discussion of where each rung's tile-MCC optimum sits (§§ 1, 3, 7) is
+unaffected — its numbers now resolve to the tile-presence leaderboard.
+
+| | before | after |
+|---|---:|---:|
+| § 2 table rows | 18 | **12** |
+| cells on disk | 19 | **19** (none deleted) |
+
+**Numbers that moved**: none.
 
 ### 2026-09-19 — the K = 5 rung, added and declared exploratory
 

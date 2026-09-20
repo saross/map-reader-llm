@@ -36468,3 +36468,99 @@ on this board — the prior reason the two oracles cannot be assumed to
 agree); **Obs 488** (the materialisation asymmetry that put the MCC
 oracle on the board in the first place); **Obs 491** and **Obs 427** (the
 vote-rule mismatch the superseded registrations reproduce).
+
+## Observation 493: A metric's optimum is not a configuration — the tile-MCC oracle took three rulings to place, and the third put it where its vote count and its price are visible (Session 158, 2026-09-21)
+
+**Context.** This entry closes the arc **Obs 492** opened. Over two days the
+tile-MCC optimum was published on the r2 board three different ways, and the
+third is a different *kind* of object from the first two.
+
+| ruling | definition | where it sat |
+|---|---|---|
+| 2026-09-20, item 2 | unconstrained tile-MCC argmax (`prob_t` **and** `min_votes` free) | an oracle column on the board |
+| 2026-09-20, 6c | tile-MCC argmax over `prob_t` at the family's **carried** vote count | an oracle column on the board, the unconstrained one demoted to a "Superseded" sub-block |
+| **2026-09-21** | **both** | **off the boards; a separate tile-presence presentation** |
+
+**What the third ruling saw that the first two did not.** Ruling 6c fixed the
+*symptom* Obs 492 recorded — the collapse to the lowest vote count — by
+forbidding the collapse. But pinning the vote count does not make a tile-MCC
+argmax a companion to an F1 argmax; it only makes the two look alike. Both
+remained **oracles chosen on the evaluation reference**, and putting either
+in a column beside carried cells invites the reading "this configuration
+scores 0.7755", when no one ever deployed it and nothing says what it would
+cost to. The fix was not a better definition but a different **venue**.
+
+**The venue does two things a board column cannot.**
+
+1. **The vote count becomes a column.** `results/tile-presence-2026-09-21/leaderboard.md`
+   shows `votes` beside `tile-MCC` for all 35 configurations, and 26 of them
+   sit at a single vote. On a board that number is invisible; here it is the
+   second thing a reader sees.
+2. **The verifier pool is priced.** A point at k = 1 needs a probability for
+   every candidate with at least one vote, not just the unanimous ones. The
+   table reads that pool off the sweep's own zero-threshold row and prices it
+   at the leg's audited per-candidate rate. The top two rows —
+   `G3IMG-ARM2-K5` at tile-MCC 0.7755 and `G3IMG-ARM2-K3` at 0.7706 — need
+   **45,786 and 36,389 candidates at US$51.09 and US$40.58**, where
+   `IMG-ARM2-K5` reaches **0.7681** on **5,593** candidates for **US$6.21**
+   at micro-F1 **0.9280** against 0.5217. **8.2× the verifier spend and a
+   0.4063 collapse in micro-F1 buys 0.0073 of tile-MCC.** That trade is
+   invisible in a metric column and decisive in a deployment decision.
+
+**A second reading: the frontier splits the two pools.** Per configuration,
+the `(micro-F1 @ 50 m, tile-MCC)` Pareto-non-dominated sweep points —
+**21 of 35** configurations have more than two, i.e. a genuine interior
+choice. The split is Obs 492's finding again from the other side: **16 of the
+board's 23** families and **5 of the Gemini 3 row's 6** rungs have an
+interior, and **none of the 3.7 image row's six** does. On the 3.7 pool the
+two metrics have nothing to argue about; on the Gemini 3 pool they argue at
+length. That is consistent with the over-generation reading Obs 492 proposed
+and is a second, independent signature of it.
+
+**Method note: twelve legs cannot be costed at all.** Building the cost
+column surfaced that `scripts/audit_verifier_cost.py` reaches only a LOWER
+BOUND on twelve of the thirty-five configurations' legs — every pre-2026-09-14
+stage whose `run_pv.py` cleanup overwrote `run.meta.json` with the retry
+pass's usage. Those rows are left blank rather than filled, because a lower
+bound multiplied by a pool size is a number that looks like a cost and is
+not. Where the auditor and a campaign post-run report both have a figure,
+**they agree to the cent on all ten overlapping legs** — an unplanned
+cross-check obtained for free.
+
+**The transferable lesson.** *An optimum over a parameter is not a
+configuration, and a board column is a claim that it is.* Whenever a table
+reports an argmax beside deployed cells, ask what the argmax varied that the
+deployed cells held fixed, and whether that variable is visible in the table.
+If it is not, the column is asserting a comparison the reader cannot check.
+The cheapest fix is rarely a better definition of the argmax — it is moving
+it somewhere the varied parameter, and its price, are columns.
+
+**Findable later**: tile-MCC oracle dropped from the boards, PI ruling
+2026-09-21, three rulings in two days, an optimum is not a configuration,
+tile-presence presentation, vote count as a column, verifier pool priced,
+26 of 35 at a single vote, 8.2× spend for 0.0073 tile-MCC, 21 of 35 with an
+interior frontier, none of the 3.7 image row, twelve unauditable legs,
+lower bound never multiplied into a cost, auditor and post-run report agree
+to the cent.
+
+Sources: `planning/pi-decisions-2026-09-20.md` §§ D6, D6a and the
+2026-09-21 amendment (read 2026-09-21: the three definitions and the
+supersession); `results/tile-presence-2026-09-21/leaderboard.json` and
+`leaderboard.md` (built 2026-09-21 by
+`scripts/build_tile_presence_board.py`; the 35 rows, their `min_votes`,
+`pool_n_at_vote`, `pool_verifier_usd` and `verifier_cost_basis`);
+`results/tile-presence-2026-09-21/frontier/frontier.json` (the
+non-dominated counts quoted above);
+`results/tile-presence-2026-09-21/verifier-costs.json` (21 audited, 2
+published, 12 unaudited, with each leg's stage directories);
+`results/tile-presence-2026-09-21/findings.md` (the E89 caveat and the
+cost discussion); `results/55map-final-board-r2-2026-09-06/final-board-50m.md`
+§ Changelog 2026-09-21 and the two image campaigns' findings § Changelog
+2026-09-21 (what each document stopped tabling).
+Related: **Obs 492** (the collapse this arc began with — that entry's
+"redefinition" is the SECOND of the three rulings above and was itself
+superseded the next day; its finding about the collapse stands unchanged);
+**Obs 485** (the Gemini 3 single-pass over-generation the frontier split
+supports); **Obs 484** (unanimity as the image pool's precision filter);
+**Obs 482** (F1 and tile-MCC giving near-opposite orderings on this board —
+the first sign that one column could not serve both).

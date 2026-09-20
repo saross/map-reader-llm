@@ -1,9 +1,9 @@
 # The final 55-map board @ 50 m — every run, carried and oracle (reference r2)
 
-> **Last revised**: 2026-09-20 (tile-MCC oracle redefined as the
-> optimum at each family's carried vote count — ten new addendum cells,
-> the ten unconstrained ones superseded but kept; `IM-k4`
-> vote-provenance note; the tiered board unchanged). See
+> **Last revised**: 2026-09-21 (the tile-MCC oracle DROPPED from this
+> board under both definitions and moved to
+> `results/tile-presence-2026-09-21/`; the addendum is the seven
+> carried-analogue cells; the tiered board unchanged). See
 > [§ Changelog](#changelog) for revision history.
 > Card:
 > `planning/55map-final-board-2026-08-27.md`. Reference:
@@ -232,6 +232,47 @@ re-labelled in `cells_manifest.json`.
 
 ## Changelog
 
+### 2026-09-21 — The tile-MCC oracle dropped from this board
+
+**Refresh trigger**: PI ruling 2026-09-21, superseding ruling 6c of
+2026-09-20. The "MCC oracle" is dropped from the main boards and campaign
+tables under **both** definitions — the unconstrained tile-MCC argmax, and
+the argmax pinned to each configuration's carried vote count. Tile-MCC stays
+reported beside micro-F1 at the carried and F1-oracle points, where both
+metrics describe the same configuration; the F1 oracle stays free over both
+dimensions; and the tile-MCC optimum moves to a separate presentation,
+`results/tile-presence-2026-09-21/`, where its vote count is a column and
+the verifier pool it would need is priced.
+
+**What changed on this document**: the addendum's table goes from **17 rows
+to 7** — the seven carried-analogue cells — and the "Superseded: the
+unconstrained tile-MCC optima" sub-block is removed. `final_board_50m.json`
+loses `addendum_superseded_cells` and its `addendum` block gains a
+`tile_mcc_optimum` line naming where the column went.
+
+| | before (2026-09-20) | after (2026-09-21) |
+|---|---:|---:|
+| addendum rows on this document | 17 | **7** |
+| superseded sub-block rows | 10 | **0** (block removed) |
+| `cells_manifest.json` cells | 63 | **63** (none deleted) |
+| tiered board rows | 35 | **35** |
+
+**Numbers that moved**: none. No cell was re-scored, no sweep re-run, no
+board re-tiered, and `scripts/final_board_build.py` was not run. The twenty
+cells this document stops tabling stay on disk with their committed
+evaluations, re-labelled in `cells_manifest.json`: the ten unconstrained
+optima as `tile-presence oracle (unconstrained tile-MCC optimum; presented
+in results/tile-presence-2026-09-21/)` and the ten carried-k cells as
+`mcc-oracle at carried k — retained, not presented (PI ruling 2026-09-21)`.
+
+**A guard widened in the same change**: `scripts/final_board_sweeps.py`
+rebuilds `cells_manifest.json` from its own output and carried forward any
+cell whose basis contained the substring `post-hoc` — a word every basis
+then in use happened to have. Neither new basis does, so the next
+regeneration would have dropped all twenty. It now carries forward any
+committed label the run did not produce, which is the invariant it always
+meant.
+
 ### 2026-09-20 — The tile-MCC oracle redefined: the optimum at the carried k
 
 **Refresh trigger**: the tile-MCC oracle added earlier the same day was the
@@ -286,8 +327,9 @@ group letters, the 595-pair Benjamini–Hochberg family and
 `significance-groups.png`. `scripts/final_board_build.py` was not run. The
 ten unconstrained cells stay on disk with their committed evaluations,
 relabelled `mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)`
-and tabled in the addendum's
-[§ Superseded](#superseded-the-unconstrained-tile-mcc-optima) sub-block:
+and tabled at the time in the addendum's "Superseded" sub-block —
+removed on 2026-09-21 with the rest of the tile-MCC oracle, the cells
+now presented in [`results/tile-presence-2026-09-21/`](../tile-presence-2026-09-21/leaderboard.md):
 the collapse is the evidence for the redefinition. `cells_manifest.json`
 grows 53 → 63.
 
