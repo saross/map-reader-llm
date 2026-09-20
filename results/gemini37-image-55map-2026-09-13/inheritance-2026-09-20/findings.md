@@ -1,9 +1,11 @@
 # Inheritance against own-leg verification on the 3.7 image row
 
-> **Last revised**: 2026-09-20 (the instrument parametrised to serve both
-> pools of the image 2 x 2, and the ambiguity and union-separation
-> measurements added — no number in this note moved). Prior: 2026-09-20
-> (original publication). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-20 (§ 8 and § 9 re-read against the arm 1
+> verifier's now-measured drift floor — no number in this note moved).
+> Prior: 2026-09-20 (the instrument parametrised to serve both pools of the
+> image 2 x 2, and the ambiguity and union-separation measurements added);
+> 2026-09-20 (original publication). See [§ Changelog](#changelog) for
+> revision history.
 
 ## 1. The question
 
@@ -265,12 +267,32 @@ this row, with two qualifications stated plainly:
    proposer pool, one corpus and one pair of rungs, each resting on single
    verifier legs. This is enough to say inheritance costs nothing measurable
    *here*; it is not enough to say it costs nothing anywhere.
-2. **Arm 1 has no measured drift floor.** The declaration's caveat 1 scope
-   note applies: the floor is measured on `gemini-3.7-flash` at low thinking
-   and T = 0 (arm 2). For arm 1 (`gemini-3-flash-preview`, minimal) a
-   difference of order 0.001 is *uncharacterised* rather than known to be
-   drift. H1 and H2 should be read as "no effect large enough to see", not as
-   "proven to be drift".
+2. **Arm 1's drift floor is now measured, and H1 and H2 sit in it.** When
+   this note was first published the declaration's caveat 1 scope note said
+   the floor was measured on `gemini-3.7-flash` at low thinking and T = 0
+   (arm 2) only, so an arm 1 difference of order 0.001 was *uncharacterised*
+   rather than known to be drift, and H1 and H2 had to be read as "no effect
+   large enough to see" rather than "drift". That gap is closed: the arm 1
+   verifier (`gemini-3-flash-preview`, `minimal`, T = 0) has its own
+   full-scale replicate, and its **drift-only contrast is +0.0005 micro-F1
+   (*p* = 0.5773) and +0.0001 tile-MCC (*p* = 0.9310)**
+   (`results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/findings.md`
+   § 6.1; declaration § 5 caveat 1 Scope). H1's +0.0002 micro-F1 is *below*
+   that contrast and H2's −0.0010 about twice it, both null at 0.13 and 0.95
+   null standard deviations — so on micro-F1 these two now read as **inside
+   the arm 1 drift band**, which is a stronger statement than the one this
+   note could make at publication.
+
+   Two limits on that upgrade. The tile-MCC readings do **not** follow the
+   same route: arm 1's tile-MCC drift contrast came out at +0.0001, so close
+   to zero that ratios against it are meaningless, and H1's +0.0024 and H2's
+   +0.0015 are nominally many times it while sitting at 0.86 and 0.84 null
+   SDs with *p* = 0.39 and 0.41. The declaration's margin rule is a
+   *necessary* condition, not a sufficient one — an effect still has to be
+   resolvable against its own null — and where the measured drift contrast
+   lands near zero the null SD is the yardstick that means anything. And the
+   arm 1 band is measured on this row's own 9,173-candidate union, so
+   carrying it to another pool is an assumption rather than a measurement.
 
 The D2 recommendation to **keep the own-leg cells as replicates** is well
 founded and should stand: they are what makes this measurement possible, they
@@ -308,9 +330,14 @@ It would add four things this row cannot give:
    head-to-head would be interpretable in the same units as H3 and H4 here,
    doubling the arm-2 evidence.
 
-What it would *not* fix: row B's arm 1 is the Gemini 3 verifier, which still
-has no measured drift floor, so an arm-1 difference of order 0.001 would
-remain uncharacterised there too.
+What it would *not* fix, **as this section stood on publication**: row B's
+arm 1 is the Gemini 3 verifier, which then had no measured drift floor, so an
+arm-1 difference of order 0.001 would have remained uncharacterised there too.
+That limitation has since lapsed — the arm 1 verifier's floor was measured on
+2026-09-20 (+0.0005 micro-F1, +0.0001 tile-MCC;
+`../replicate-k5-arm1-batch-2026-09-20/findings.md` § 6.1) — with the
+qualification in § 8 that it is measured over *this* row's union, so applying
+it to row B's much larger and lower-precision unions is an assumption.
 
 ## 10. Artefacts
 
@@ -324,6 +351,34 @@ remain uncharacterised there too.
 | `tests.json` | H1-H4 and L1-L4 on both metrics, with the per-cell tile confusions. |
 
 ## Changelog
+
+### 2026-09-20 — Re-read against the arm 1 verifier's measured drift floor
+
+**Trigger**:
+`results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/findings.md`
+§ 6.1 — a full-scale replicate of this row's arm 1 K = 5 verifier leg, which
+measures the drift floor this note's § 8 qualification 2 and § 9 closing
+paragraph both recorded as missing. The arm 1 drift-only contrast is
+**+0.0005 micro-F1** (*p* = 0.5773, null SD 0.0008) and **+0.0001 tile-MCC**
+(*p* = 0.9310, null SD 0.0015).
+
+**What changed.** Wording only, in two places. § 8 qualification 2 no longer
+says arm 1 has no measured floor; it gives the floor, and upgrades H1
+(+0.0002 micro-F1) and H2 (−0.0010) from "no effect large enough to see" to
+**inside the arm 1 drift band** on micro-F1, which is the stronger statement
+this note could not make at publication. § 9's closing paragraph is marked as
+the position at publication and records that the limitation has since lapsed.
+
+**What did NOT change.** No number in H1–H4 or L1–L4, no cell, no verdict, and
+not the adoption recommendation. Two limits are added rather than removed: the
+tile-MCC readings are **not** upgraded, because arm 1's measured tile-MCC
+drift contrast (+0.0001) sits so near zero that ratios against it carry no
+information and H1's +0.0024 and H2's +0.0015 remain null at 0.86 and 0.84
+null SDs — the declaration's margin rule is necessary, not sufficient; and the
+arm 1 band is measured over this row's own union, so carrying it to another
+pool stays an assumption.
+
+Commit: `TBDINH`.
 
 ### 2026-09-20 — Instrument parametrised; ambiguity and separation measured
 

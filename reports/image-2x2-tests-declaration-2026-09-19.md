@@ -1,9 +1,11 @@
 # The image proposer x verifier 2x2 at deployment scale: test declaration
 
-> **Last revised**: 2026-09-20 (PI ruling: the E89 floor of § 5 caveat 1
-> revised against the full-scale replicate, in both flip-rate and metric
-> units). Prior: 2026-09-20 (T5m added as § 3a; the BH family at K = 1 and
-> K = 5 is T1–T4). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-20 (the arm 1 verifier's E89 floor measured; § 5
+> caveat 1 Scope now covers both arms). Prior: 2026-09-20 (PI ruling: the E89
+> floor of § 5 caveat 1 revised against the full-scale replicate, in both
+> flip-rate and metric units); 2026-09-20 (T5m added as § 3a; the BH family at
+> K = 1 and K = 5 is T1–T4). See [§ Changelog](#changelog) for revision
+> history.
 
 **Declared**: 2026-09-19, 06:40 UTC, by the PI (Shawn Ross) with Claude
 Code, session S155. **State of the data at declaration**: the 3.7 row
@@ -220,13 +222,67 @@ output `results/image-2x2-2026-09-19/tests_2x2_K{K}.json`, one file per rung.
    claim follows from it. T5 and T5m are covered in the same way — T5's
    +0.0016 F1 is the size of drift, while T5m's −0.0696 is not (§ 3a).
 
-   **Scope.** The floor is measured on `gemini-3.7-flash` at low thinking and
-   T = 0 — the arm 2 verifier. The arm 1 verifier
-   (`gemini-3-flash-preview`, `minimal`, T = 0) has **no measured floor**:
-   E89's qualitative finding that these verifiers are nondeterministic at
-   T = 0 covers it, but no replicate of an arm 1 leg exists, so an arm-1
-   difference of order 0.001 is uncharacterised rather than known to be
-   drift.
+   Which arm's band a row is read against no longer matters, because the two
+   are the same size at their own operating points (Scope, below). It is worth
+   saying where they enter all the same. **T2 is an arm 1 contrast on both
+   sides** — the proposer effect under the Gemini 3 verifier — so it is now
+   read against the arm 1 band, +0.0005 F1 and +0.0001 tile-MCC, which its
+   margins of ≈ 0.10 F1 and 0.024–0.041 MCC clear by two orders of magnitude
+   at every rung (+0.1813 / +0.1001 / +0.0953 F1 and +0.0179 / +0.0243 /
+   +0.0364 MCC at K = 1 / 3 / 5, `results/image-2x2-2026-09-19/tests_2x2_K{1,3,5}.json`).
+   The verdict does not move; what changes is that the clearance is
+   demonstrated on the verifier the contrast actually ran on rather than
+   borrowed from the other seat. **T3 and T4 cross the arms**, so each is read
+   against a band both seats share.
+
+   **Scope — both arms are now measured.** The figures above are the arm 2
+   verifier's (`gemini-3.7-flash`, low thinking, T = 0). The **arm 1**
+   verifier (`gemini-3-flash-preview`, `minimal`, T = 0) has its own
+   full-scale replicate as of 2026-09-20, on the same 9,173-candidate K = 5
+   union and by the same method — one pair of legs, batch against flex, as on
+   arm 2:
+   `results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/`
+   (`agreement.json`, `tests.json`; `findings.md` § 3, § 5 and § 6). An arm-1
+   difference of order 0.001 is therefore no longer uncharacterised.
+
+   | | arm 1: `gemini-3-flash-preview`, `minimal` | arm 2: `gemini-3.7-flash`, low |
+   |---|---:|---:|
+   | identical probabilities | 81.84 % (7,507 / 9,173) | 63.51 % (5,826 / 9,173) |
+   | flips at the arm's **own carried point** | **2.41 %** (221 / 9,173) at 0.10, Wilson 95 % **[2.11 %, 2.74 %]** | **2.46 %** (226 / 9,173) at 0.90, Wilson 95 % [2.17 %, 2.80 %] |
+   | \|Δp\| > 0.5 | 2.92 % (268 / 9,173) | 2.03 % (186 / 9,173) |
+   | drift-only contrast, **micro-F1** | **+0.0005** (*p* = 0.5773, null SD 0.0008) | +0.0008 (*p* = 0.4015, null SD 0.0009); +0.0010 at the oracles |
+   | drift-only contrast, **tile-MCC** | **+0.0001** (*p* = 0.9310, null SD 0.0015) | −0.0005 (*p* = 0.8225, null SD 0.0016); −0.0007 at the oracles |
+
+   **At their own operating points the two floors are the same size** — the
+   flip rates differ by 0.05 percentage points and their Wilson intervals
+   overlap almost entirely, and both drift contrasts sit under one null
+   standard deviation on both metrics. So the band this caveat states, **of
+   order 0.001 F1 and ±0.001 tile-MCC**, covers both verifier seats, and the
+   rule below applies to an arm 1 contrast as it does to an arm 2 one.
+
+   Three qualifications travel with the arm 1 figures. First, **a flip rate is
+   only interpretable at the threshold the cell is deployed at**: arm 1's runs
+   2.41 % → 3.62 % → 5.22 % across 0.10 / 0.50 / 0.90 where arm 2's is flat at
+   2.38 % → 2.20 % → 2.46 %, because half of arm 1's flips at 0.90 are one-rung
+   0.85 ↔ 0.95 or 0.85 ↔ 1.00 nudges on an answer lattice that straddles that
+   cut. Compared at a common 0.90 the arms look twice as different as they
+   are; no arm 1 cell is materialised at 0.90. Second, **arm 1's metric-unit
+   band rests on one contrast, not two**: its F1 oracle coincides with its
+   carried point on both legs, so the second drift reading that arm 2 has at
+   its oracles is on arm 1 the first one again. Third, the two arms differ in
+   the *shape* of their disagreement rather than its size — arm 1 repeats
+   itself exactly far more often (κ 0.77 against 0.50, on a lower chance
+   baseline) and reverses itself outright rather more often (2.92 % against
+   2.03 % at \|Δp\| > 0.5).
+
+   The arm 1 replicate's own worked example is the **arm 1 K = 3 → K = 5
+   micro-F1 gain, +0.0105 (*p* < 0.0001) and +0.0110 (*p* < 0.0001) when the
+   K = 5 side is re-verified**, about twenty-two times its drift contrast —
+   claimable, and replicated outright. Its tile-MCC counterpart, +0.0039 at
+   *p* = 0.0990 and +0.0040 replicated at *p* = 0.1037, is **not** claimed,
+   but note that it fails differently from arm 2's: it is well outside the
+   drift band and fails on its own significance, so it is a direction of
+   consistent sign rather than an effect the size of noise.
 2. **Route.** Row A's arm 2 ran on realtime flex; row B's arm 2 runs on the
    Batch API (PI ruling 2026-09-18). The 2026-09-19 batch-versus-flex probe
    (`outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/`)
@@ -251,6 +307,65 @@ output `results/image-2x2-2026-09-19/tests_2x2_K{K}.json`, one file per rung.
    registration and signature are the PI's, after the tests are run.
 
 ## Changelog
+
+### 2026-09-20 — The arm 1 verifier's E89 floor measured
+
+**Trigger**:
+`results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/`
+— the same measurement the arm 2 entry below records, run on the **arm 1**
+verifier (`gemini-3-flash-preview`, `minimal`, T = 0): a second, independent
+invocation over the same 9,173-candidate K = 5 union, same model, instruction
+file, system-instruction hash, temperature and thinking level, on the Batch
+API against the original's realtime flex. Data commit `5778b5569`, audited
+US$6.4909. It closes the gap the previous revision's Scope paragraph opened
+and explicitly left open.
+
+**Before → after**, on § 5 caveat 1's Scope:
+
+| figure | superseded: no arm 1 replicate exists | revised: arm 1 replicate, 9,173 candidates |
+|---|---|---|
+| arm 1 identical probabilities | not measured | **81.84 %** (7,507 / 9,173) |
+| arm 1 decision flips at its carried 0.10 | not measured | **2.41 %** (221 / 9,173), Wilson 95 % **[2.11 %, 2.74 %]** |
+| arm 1 \|Δp\| > 0.5 | not measured | **2.92 %** (268 / 9,173) |
+| arm 1 drift-only contrast, micro-F1 | "uncharacterised rather than known to be drift" | **+0.0005** (*p* = 0.5773, null SD 0.0008) |
+| arm 1 drift-only contrast, tile-MCC | as above | **+0.0001** (*p* = 0.9310, null SD 0.0015) |
+
+Figures from `agreement.json` and `tests.json` beside the note above.
+
+**What the revision changes.** Caveat 1's Scope paragraph no longer says the
+arm 1 verifier has no measured floor; it gives both arms' figures side by side
+and records that **at their own carried operating points the two floors are
+the same size** — 2.41 % against 2.46 % of decisions, Wilson intervals
+overlapping almost entirely, and both drift contrasts under one null standard
+deviation on both metrics. The band the caveat states, of order 0.001 F1 and
+±0.001 tile-MCC, therefore covers both verifier seats and the rule applies to
+an arm 1 contrast as it does to an arm 2 one. Three qualifications are added
+with it: a flip rate is interpretable only at the threshold a cell is deployed
+at (arm 1's rises 2.41 → 3.62 → 5.22 % across 0.10 / 0.50 / 0.90 where arm 2's
+is flat, because half its flips at 0.90 are one-rung nudges on a lattice that
+straddles that cut, and no arm 1 cell is materialised at 0.90); arm 1's
+metric-unit band rests on **one** contrast rather than two, its F1 oracle
+coinciding with its carried point on both legs; and the arms differ in the
+shape of their disagreement rather than its size (arm 1 is the more
+self-consistent on probabilities, κ 0.77 against 0.50 on a lower chance
+baseline, and the more prone to large reversals, 2.92 % against 2.03 %).
+§ 5 caveat 1's "Applied to this family" paragraph gains a note on which arm's
+band each row is read against — T2 is arm 1 on both sides, T3 and T4 cross the
+arms — and a second worked example is recorded: the **arm 1 K = 3 → K = 5
+micro-F1 gain, +0.0105 and +0.0110 replicated, both *p* < 0.0001**, about
+twenty-two times its drift contrast, claimable and replicated outright; its
+tile-MCC counterpart, +0.0039 at *p* = 0.0990, is not claimed but fails
+differently from arm 2's — outside the drift band, short on its own
+significance.
+
+**What does not change.** No test's numbers, no verdict, no family, no
+instrument, no rung, and no arm 2 figure. Every T-row verdict in § 3 and § 3a
+stands exactly as it did: T2's margins clear the arm 1 band by two orders of
+magnitude at every rung, so reading it against its own verifier's floor rather
+than the other seat's moves nothing. The revision only replaces a
+"uncharacterised" with a measurement and records what the measurement says.
+
+Commit: `TBDDECL`.
 
 ### 2026-09-20 — The E89 floor revised against the full-scale replicate
 

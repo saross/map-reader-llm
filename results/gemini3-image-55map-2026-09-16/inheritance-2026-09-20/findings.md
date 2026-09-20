@@ -1,11 +1,14 @@
 # Inheritance against own-leg verification on the Gemini 3 image row
 
-> **Last revised**: 2026-09-20 (original publication — the Gemini 3 image
-> row's K = 1 and K = 3 rungs derived by inheritance from its K = 5 legs, the
-> eight-cell head-to-head, the candidate-level agreement statistics, the
-> density stress test of the 10 m radius, the arm 2 ladder contrasts under
-> each method, and the verdict against the E89 drift floor). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-20 (§ 6 and § 8 re-read against the arm 1
+> verifier's now-measured drift floor; H1 no longer rests on a borrowed
+> warrant — no number in this note moved). Prior: 2026-09-20 (original
+> publication — the Gemini 3 image row's K = 1 and K = 3 rungs derived by
+> inheritance from its K = 5 legs, the eight-cell head-to-head, the
+> candidate-level agreement statistics, the density stress test of the 10 m
+> radius, the arm 2 ladder contrasts under each method, and the verdict
+> against the E89 drift floor). See [§ Changelog](#changelog) for revision
+> history.
 
 ## 1. Why this row
 
@@ -202,10 +205,14 @@ inherited**, so a positive difference favours the own-leg method.
 | H4 | arm 2, K = 3 | +0.0003 | 0.7773 | 0.27 | −0.0001 | 0.9849 | 0.04 |
 
 Both K = 1 contrasts favour **inheritance** on micro-F1, consistently in sign
-and at 3.0 and 5.9 null standard deviations. Both K = 3 contrasts are inside
-the drift band. **Every tile-MCC contrast is inside or at the edge of the
-band** (0.04–1.58 null SDs, all *p* ≥ 0.10): the effect is micro-F1 only, which
-is what a precision-versus-recall trade at fixed tile coverage looks like.
+and at 3.0 and 5.9 null standard deviations. Neither K = 3 contrast is
+resolvable — H4 at 0.27 null SDs is inside the drift band outright, and H2 at
+1.50 null SDs and *p* = 0.13 is above its arm's drift contrast (about five
+times +0.0005) but not separable from its own null, which is a different kind
+of negative and is read as one in § 8. **Every tile-MCC contrast is inside or
+at the edge of the band** (0.04–1.58 null SDs, all *p* ≥ 0.10): the effect is
+micro-F1 only, which is what a precision-versus-recall trade at fixed tile
+coverage looks like.
 
 ## 7. The ladder contrasts under each method (arm 2)
 
@@ -238,14 +245,22 @@ micro-F1, *p* = 0.4015, null SD 0.0009; −0.0005 tile-MCC, *p* = 0.8225, null S
 unless it exceeds the drift-only contrast by a clear margin:
 
 - **K = 3, both arms**: −0.0026 and +0.0003 micro-F1, −0.0003 and −0.0001
-  tile-MCC, at 0.04–1.50 null SDs. Inside the band, signs inconsistent. Row
-  A's verdict reproduces exactly.
+  tile-MCC, at 0.04–1.50 null SDs, signs inconsistent, neither claimable. Row
+  A's verdict reproduces exactly. Since the arm 1 floor was measured this
+  bullet needs one distinction it could not draw at publication: H4 (arm 2,
+  +0.0003) is inside its arm's drift band, while H2 (arm 1, −0.0026) is
+  *outside* arm 1's +0.0005 band and fails instead on its own null at
+  *p* = 0.1328. Both are negatives; only the first is a statement that the
+  effect is the size of noise.
 - **K = 1, both arms**: −0.0061 and −0.0086 micro-F1 at 3.0 and 5.9 null SDs,
   *p* = 0.0025 and < 0.0001. That is **7.6 and 10.8 times** the drift
-  contrast, consistent in sign across two arms and two verifier models, and
-  mechanically explained — 228 and 257 dropped detections, precision up about
-  a point, recall down about half a point. This is claimable, and it is not
-  drift.
+  contrast — both ratios taken against arm 2's +0.0008, the only floor
+  measured when this note was published. Read each against its own arm's
+  floor, now that arm 1's is measured at +0.0005, H1 is **12.7 times** drift
+  and H3 is unchanged at 10.8. The contrasts are consistent in sign across two
+  arms and two verifier models, and mechanically explained — 228 and 257
+  dropped detections, precision up about a point, recall down about half a
+  point. This is claimable, and it is not drift.
 - **tile-MCC, everywhere**: inside or at the edge of the band. No tile-MCC
   claim follows from any of these four contrasts, in either direction.
 
@@ -275,14 +290,35 @@ asked to make an ambiguous choice even at five times the candidate density
 measured, and common to every model at that rung.
 
 **Two qualifications, as on row A.** This row's **arm 1 verifier
-(`gemini-3-flash-preview`, minimal) has no measured drift floor at all** — the
-declaration's caveat 1 scope note — so H1's F1 result is read as claimable
-only because its arm 2 twin (H3) is larger, in the same direction, on a
-verifier whose floor *is* measured; and this row's **arm 2 legs are
-batch-served**, so its arm 2 comparisons are cross-route. The 2026-09-19
-batch-versus-flex probe found the route indistinguishable from same-route
-drift (declaration § 5 caveat 2), which makes the floor if anything an
-over-estimate, but the point is recorded rather than assumed away.
+(`gemini-3-flash-preview`, minimal) now has a measured drift floor of its
+own** — it had none when this note was published, and H1's micro-F1 result
+was admitted only because its arm 2 twin (H3) was larger, in the same
+direction, on a verifier whose floor *was* measured. The arm 1 floor was
+measured at full scale on 2026-09-20: a **drift-only contrast of +0.0005
+micro-F1 (*p* = 0.5773, null SD 0.0008) and +0.0001 tile-MCC (*p* = 0.9310,
+null SD 0.0015)**
+(`results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/findings.md`
+§ 6.1; declaration § 5 caveat 1 Scope). **H1 no longer needs the borrowed
+warrant**: its −0.0061 micro-F1 is about **twelve times** that drift contrast
+and 3.0 null SDs at *p* = 0.0025, so it clears the rule on its own arm's
+footing, and H3's agreement in sign and size now corroborates it rather than
+carrying it. H2's −0.0026 is about five times drift but only 1.50 null SDs at
+*p* = 0.1328, so it stays unclaimed — the margin rule is necessary, not
+sufficient, and an effect still has to be resolvable against its own null.
+On tile-MCC nothing changes: arm 1's measured tile-MCC drift contrast is
++0.0001, near enough to zero that ratios against it carry no information, and
+every tile-MCC row here remains inside or at the edge of its own null.
+
+Two limits on that upgrade, both recorded rather than assumed away. The arm 1
+band is measured over the **3.7 row's** 9,173-candidate union, not this row's
+22,785–45,786-candidate ones, so carrying it here assumes the verifier's
+re-invocation behaviour does not depend on the candidate set it is shown —
+plausible for a per-candidate call at T = 0, and untested. And this row's
+**arm 2 legs are batch-served**, so its arm 2 comparisons are cross-route. The
+2026-09-19 batch-versus-flex probe found the route indistinguishable from
+same-route drift (declaration § 5 caveat 2), and both replicate pairs are
+themselves batch-against-flex, which makes each floor if anything an
+over-estimate.
 
 ## 9. Artefacts
 
@@ -300,6 +336,38 @@ The instrument lives with the row A study, which it also still serves:
 run here as `--campaign g3`.
 
 ## Changelog
+
+### 2026-09-20 — Re-read against the arm 1 verifier's measured drift floor
+
+**Trigger**:
+`results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/findings.md`
+§ 6.1 — a full-scale replicate of the arm 1 verifier
+(`gemini-3-flash-preview`, `minimal`, T = 0), the seat this row's § 8 recorded
+as having no measured drift floor at all. Its drift-only contrast is
+**+0.0005 micro-F1** (*p* = 0.5773, null SD 0.0008) and **+0.0001 tile-MCC**
+(*p* = 0.9310, null SD 0.0015).
+
+**What changed.** Wording, and one ratio stated beside the original rather
+than in place of it.
+
+| reading | at publication | now |
+|---|---|---|
+| H1's warrant | claimable only because H3, its arm 2 twin, is larger and in the same direction on a verifier whose floor *is* measured | claimable **on its own arm's footing**: −0.0061 is about **12.7×** the arm 1 drift contrast at 3.0 null SDs, *p* = 0.0025; H3 now corroborates rather than carries it |
+| H1's drift ratio | 7.6× (against arm 2's +0.0008, the only floor then measured) | 7.6× retained as the published figure, **12.7×** added against arm 1's own floor |
+| H2's negative | "inside the band" | **outside** arm 1's +0.0005 band at about 5×, unresolvable against its own null (*p* = 0.1328, 1.50 null SDs) — a different kind of negative, and still not claimed |
+| H4's negative | "inside the band" | unchanged: inside arm 2's band at 0.27 null SDs |
+
+**What did NOT change.** No number in H1–H4 or L1–L4, no cell, no verdict, no
+adoption recommendation, and no tile-MCC reading — arm 1's measured tile-MCC
+drift contrast is +0.0001, near enough to zero that ratios against it carry no
+information, so every tile-MCC row stands exactly as published, inside or at
+the edge of its own null. Two limits are recorded with the upgrade: the arm 1
+band is measured over the **3.7 row's** 9,173-candidate union rather than this
+row's much larger ones, so carrying it here assumes the verifier's
+re-invocation behaviour does not depend on the candidate set; and this row's
+arm 2 legs remain batch-served, so its arm 2 comparisons remain cross-route.
+
+Commit: `TBDINH`.
 
 ### 2026-09-20 — Original publication
 
