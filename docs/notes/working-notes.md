@@ -36347,3 +36347,124 @@ vote-threshold penalty is modality-asymmetric — the prior reason a
 **Obs 370** (`IM-k3` as the sole Tier-1 cell on tile-MCC — why the T5
 comparator matters); **Obs 489** (the ladder-method decision that
 governs what a rung contrast in this table is measuring).
+
+## Observation 492: The tile-MCC optimum collapses to the lowest available vote count on every board family — but not on every pool, and the depth of the collapse may be a proposer diagnostic (Session 157, 2026-09-20)
+
+**Context.** The r2 board's sweep record gained a tile-MCC per point on
+2026-09-20 so that the text track and the fourth cell could publish an
+MCC oracle beside the F1 oracle the image rows already had (Obs 488's
+sibling work). The first definition was the obvious one: the tile-MCC
+argmax over a family's whole achievable grid, free to choose the vote
+threshold `min_votes` as well as the probability threshold `prob_t`. Ten
+cells were materialised at those points.
+
+**The finding.** Every one of the r2 board's **23 of 23** families puts
+that unconstrained optimum at the **lowest vote count its sweep offers**.
+Every family whose rungs reach down to a single vote collapsed to k = 1;
+the five incumbents (TH7, T03, TM, IM, UPL), whose sweeps floor at k = 3,
+sat on that floor. Across the thirteen families whose optimum drops from
+a multi-vote F1 oracle to a single vote, it costs **0.054 (A-N3) to
+0.181 (B-N10) of micro-F1 @ 50 m** against that family's own F1 oracle,
+for a few hundredths of tile-MCC.
+
+The mechanism is structural, not incidental. Tile-MCC asks only whether a
+tile was hit at all, so a second or third detection inside an
+already-positive tile is free in that currency and costly in F1.
+Lowering the vote threshold adds exactly that kind of detection. A metric
+indifferent to over-generation *within* a tile will therefore always
+prefer the setting that over-generates, and an oracle read on it is not a
+companion to an F1 oracle — it is a different question asked of a
+different configuration.
+
+**The ruling.** The PI redefined the board's tile-MCC oracle on 2026-09-20
+as the optimum over `prob_t` at the family's **carried** vote count, with
+`min_votes` pinned, so that the F1 oracle and the MCC oracle are read of
+the same configuration. Ten carried-k board cells were materialised
+(`<family>-mcc-oracle-k<carried>`) and the twelve image-campaign MCC
+oracles re-pointed. The trade is legible: across the seven board families
+whose point moves, pinning the vote count gives up **0.0067 to 0.0298**
+of tile-MCC and recovers **0.0573 to 0.1707** of micro-F1 @ 50 m.
+
+**The unconstrained optima were preserved, not deleted.** They remain in
+`sweeps.json` as `mcc_argmax` (board) and `mcc_argmax_unconstrained`
+(image campaigns); their cells remain on disk with their committed
+evaluations — relabelled `mcc-oracle, unconstrained k (post-hoc,
+superseded 2026-09-20)` on the board, moved to
+`cells/<label>-unconstrained/` on the image rows — and the board document
+tables them in a labelled sub-block. The collapse is the evidence for the
+redefinition; deleting it would leave the new definition looking
+arbitrary.
+
+**The nuance that matters for the paper: the collapse is a property of
+the pool, not of the metric alone.** "Universal" is true of the board's 23
+families and of the Gemini 3 image row, and **false of the 3.7 image
+row**. Of the eight image rungs that had a choice of vote count, the four
+Gemini 3 rungs above K = 1 collapsed all the way to a single vote (at
+micro-F1 0.5205 to 0.5772, against 0.8023 to 0.8353 at their carried k,
+holding 10,078 to 12,508 detections against 4,660 to 5,370);
+`IMG-ARM2-K3` collapsed one step, to k = 2; and **three 3.7 rungs did not
+collapse at all** — `IMG-ARM1-K3` at (0.15, k3), `IMG-ARM1-K5` at
+(0.15, k5) and `IMG-ARM2-K5` at (0.95, k5) already put the unconstrained
+optimum at full unanimity, so the redefinition is a no-op for them.
+
+The reading that fits is Obs 485's: the Gemini 3 image proposer
+over-generates roughly threefold at a single pass, so its low-vote band
+is full of detections landing in tiles that are already hit, which
+tile-MCC takes for free; the 3.7 image pool is clean enough that its
+low-vote band adds false-positive *tiles* instead. If that reading holds,
+**the depth of the collapse is a measure of proposer over-generation**
+rather than a nuisance — an unclaimed diagnostic sitting in sweep data
+already on disk, computable with no further API spend.
+
+**What it costs a reader who does not notice.** Five of the twelve image
+`*-mcc-oracle` conditions registered in `results/run-conditions.json`
+carry the superseded vote threshold in their own label and in their
+`vote_threshold` field — `img-arm2-k3-mcc-oracle-p0.96-k2-r2-gt`,
+`g3img-arm1-k3-mcc-oracle-p0.35-k1-r2-gt`,
+`g3img-arm2-k3-mcc-oracle-p0.98-k1-r2-gt`,
+`g3img-arm1-k5-mcc-oracle-p0.40-k1-r2-gt` and
+`g3img-arm2-k5-mcc-oracle-p0.98-k1-r2-gt` — i.e. a K = 3 or K = 5 cell
+registered at `vote_threshold: 1`. Reading such a row beside a K = 3
+carried cell compares a 1-of-3 cell with a 3-of-3 one: the same vote-rule
+mismatch Obs 491 found in T5 and Obs 427 first named. The redefinition
+removes the mismatch at source; the register still has to be re-pointed,
+and their `eval_path`s now resolve to the re-pointed cells.
+
+**Findable later**: tile-MCC oracle redefinition, carried-k MCC oracle,
+unconstrained optimum collapses to the lowest vote count, 23 of 23 board
+families, F1 cost 0.054 to 0.181, pinning min_votes recovers 0.0573 to
+0.1707 F1 for 0.0067 to 0.0298 tile-MCC, tile-MCC indifferent to
+over-generation within a tile, Gemini 3 image row collapses and the 3.7
+image row does not, collapse depth as an over-generation diagnostic,
+`mcc_argmax_at_carried_k`, `mcc_argmax_unconstrained`,
+`<family>-mcc-oracle-k<carried>`, `cells/<label>-unconstrained/`,
+"no carried k" for UPL / A-N1 / B-N1.
+
+Sources: `planning/pi-decisions-2026-09-20.md` §§ D6, D6a (read
+2026-09-20: the redefinition and "every one of the 23 families puts its
+tile-MCC argmax at the LOWEST vote count its sweep offers … F1 lost
+0.06–0.18 where the collapse is possible");
+`results/55map-final-board-r2-2026-09-06/sweeps.json` (read 2026-09-20
+after commit `539372938`: each family's `argmax`, `mcc_argmax`,
+`carried_k`, `carried_k_source` and `mcc_argmax_at_carried_k`, and the
+`mcc_carried_k_families` index of 20);
+`results/55map-final-board-r2-2026-09-06/sweep_*.csv` (all 23, read
+2026-09-20 for the per-family F1 costs quoted above);
+`results/55map-final-board-r2-2026-09-06/final-board-50m.md`
+§ Addendum and its § Superseded sub-block, and the two 2026-09-20
+changelog entries (`cc6d9537f`);
+`results/gemini37-image-55map-2026-09-13/sweeps.json` and
+`results/gemini3-image-55map-2026-09-16/sweeps.json` (read 2026-09-20
+after `4a8d157cb`: each rung's `carried_point`, `mcc_oracle` and
+`mcc_argmax_unconstrained`);
+`results/run-conditions.json` at commit `b4446a2c1` (read 2026-09-20:
+the twelve `*-mcc-oracle-*` condition labels, their `vote_threshold`,
+`prob_threshold` and `eval_path`).
+Related: **Obs 485** (the Gemini 3 single-pass over-generation that the
+collapse-depth reading rests on); **Obs 484** (unanimity as the image
+pool's precision filter — why the 3.7 row's optimum already sits at full
+unanimity); **Obs 482** (F1 and tile-MCC giving near-opposite orderings
+on this board — the prior reason the two oracles cannot be assumed to
+agree); **Obs 488** (the materialisation asymmetry that put the MCC
+oracle on the board in the first place); **Obs 491** and **Obs 427** (the
+vote-rule mismatch the superseded registrations reproduce).
