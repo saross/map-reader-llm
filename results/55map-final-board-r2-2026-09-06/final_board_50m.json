@@ -8959,6 +8959,50 @@
   ],
   "addendum_cells": [
     {
+      "label": "ARM2-N5-mcc-oracle-k5",
+      "basis": "mcc-oracle at carried k (post-hoc, 2026-09-20)",
+      "point": "(0.96, k5)",
+      "n_detections": 4378,
+      "f1_50": 0.8821,
+      "ci": [
+        0.8741,
+        0.8897
+      ],
+      "precision_50": 0.9466,
+      "recall_50": 0.8258,
+      "mcc": 0.7291,
+      "mcc_ci": [
+        0.7167,
+        0.7421
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC oracle at this family's CARRIED vote count (k5, from ARM2-N5-carried): the tile-MCC optimum over prob_t with min_votes pinned, so it is the like-for-like companion of the F1 oracle (tile-MCC 0.7291, micro-F1@50 0.8821, against the F1 argmax's 0.8871). Supersedes the UNCONSTRAINED optimum at (0.96, k1), which is kept as ARM2-N5-mcc-oracle with a superseded basis: all 23 board families put that optimum at the lowest vote count their sweep offers. PI ruling 2026-09-20. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "ARM2-N3-mcc-oracle-k3",
+      "basis": "mcc-oracle at carried k (post-hoc, 2026-09-20)",
+      "point": "(0.96, k3)",
+      "n_detections": 4499,
+      "f1_50": 0.8818,
+      "ci": [
+        0.874,
+        0.8893
+      ],
+      "precision_50": 0.9327,
+      "recall_50": 0.8362,
+      "mcc": 0.7326,
+      "mcc_ci": [
+        0.7203,
+        0.7457
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC oracle at this family's CARRIED vote count (k3, from ARM2-N3-carried): the tile-MCC optimum over prob_t with min_votes pinned, so it is the like-for-like companion of the F1 oracle (tile-MCC 0.7326, micro-F1@50 0.8818, against the F1 argmax's 0.8848). Supersedes the UNCONSTRAINED optimum at (0.96, k1), which is kept as ARM2-N3-mcc-oracle with a superseded basis: all 23 board families put that optimum at the lowest vote count their sweep offers. PI ruling 2026-09-20. Post-hoc, not a registered claim."
+    },
+    {
       "label": "ARM2-N3-carried",
       "basis": "carried-analogue (post-hoc)",
       "point": "(0.80, k3)",
@@ -8979,6 +9023,28 @@
       "group": null,
       "cost_usd": null,
       "note": "carried analogue: (0.80, k5) is ARM2's GS-carried operating point at its top rung; the same probability threshold is applied downward here with k set to this rung's own N. Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.2. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "FOURTH-N5-mcc-oracle-k5",
+      "basis": "mcc-oracle at carried k (post-hoc, 2026-09-20)",
+      "point": "(0.96, k5)",
+      "n_detections": 4434,
+      "f1_50": 0.8758,
+      "ci": [
+        0.8679,
+        0.8832
+      ],
+      "precision_50": 0.9335,
+      "recall_50": 0.8248,
+      "mcc": 0.7326,
+      "mcc_ci": [
+        0.72,
+        0.7453
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC oracle at this family's CARRIED vote count (k5, from FOURTH-N5-carried): the tile-MCC optimum over prob_t with min_votes pinned, so it is the like-for-like companion of the F1 oracle (tile-MCC 0.7326, micro-F1@50 0.8758, against the F1 argmax's 0.8758). Supersedes the UNCONSTRAINED optimum at (0.96, k1), which is kept as FOURTH-N5-mcc-oracle with a superseded basis: all 23 board families put that optimum at the lowest vote count their sweep offers. PI ruling 2026-09-20. Post-hoc, not a registered claim."
     },
     {
       "label": "FOURTH-N5-carried",
@@ -9003,6 +9069,28 @@
       "note": "carried analogue: (0.98, k10) is FOURTH's GS-carried operating point at its top rung; the same probability threshold is applied downward here with k set to this rung's own N. Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.2. Post-hoc, not a registered claim."
     },
     {
+      "label": "FOURTH-N3-mcc-oracle-k3",
+      "basis": "mcc-oracle at carried k (post-hoc, 2026-09-20)",
+      "point": "(0.96, k3)",
+      "n_detections": 4626,
+      "f1_50": 0.8747,
+      "ci": [
+        0.867,
+        0.882
+      ],
+      "precision_50": 0.9118,
+      "recall_50": 0.8406,
+      "mcc": 0.7376,
+      "mcc_ci": [
+        0.725,
+        0.7504
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC oracle at this family's CARRIED vote count (k3, from FOURTH-N3-carried): the tile-MCC optimum over prob_t with min_votes pinned, so it is the like-for-like companion of the F1 oracle (tile-MCC 0.7376, micro-F1@50 0.8747, against the F1 argmax's 0.8747). Supersedes the UNCONSTRAINED optimum at (0.96, k1), which is kept as FOURTH-N3-mcc-oracle with a superseded basis: all 23 board families put that optimum at the lowest vote count their sweep offers. PI ruling 2026-09-20. Post-hoc, not a registered claim."
+    },
+    {
       "label": "FOURTH-N3-carried",
       "basis": "carried-analogue (post-hoc)",
       "point": "(0.98, k3)",
@@ -9025,8 +9113,74 @@
       "note": "carried analogue: (0.98, k10) is FOURTH's GS-carried operating point at its top rung; the same probability threshold is applied downward here with k set to this rung's own N. Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.2. Post-hoc, not a registered claim."
     },
     {
-      "label": "ARM2-N1-mcc-oracle",
-      "basis": "mcc-oracle (post-hoc)",
+      "label": "FOURTH-N10-mcc-oracle-k10",
+      "basis": "mcc-oracle at carried k (post-hoc, 2026-09-20)",
+      "point": "(0.96, k10)",
+      "n_detections": 4249,
+      "f1_50": 0.8732,
+      "ci": [
+        0.865,
+        0.8811
+      ],
+      "precision_50": 0.9522,
+      "recall_50": 0.8063,
+      "mcc": 0.7269,
+      "mcc_ci": [
+        0.7142,
+        0.7394
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC oracle at this family's CARRIED vote count (k10, from FOURTH-N10-carried): the tile-MCC optimum over prob_t with min_votes pinned, so it is the like-for-like companion of the F1 oracle (tile-MCC 0.7269, micro-F1@50 0.8732, against the F1 argmax's 0.8813). Supersedes the UNCONSTRAINED optimum at (0.96, k1), which is kept as FOURTH-N10-mcc-oracle with a superseded basis: all 23 board families put that optimum at the lowest vote count their sweep offers. PI ruling 2026-09-20. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "ARM1-N5-mcc-oracle-k5",
+      "basis": "mcc-oracle at carried k (post-hoc, 2026-09-20)",
+      "point": "(0.20, k5)",
+      "n_detections": 4473,
+      "f1_50": 0.8688,
+      "ci": [
+        0.8603,
+        0.8767
+      ],
+      "precision_50": 0.9218,
+      "recall_50": 0.8216,
+      "mcc": 0.7196,
+      "mcc_ci": [
+        0.7061,
+        0.7331
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC oracle at this family's CARRIED vote count (k5, from ARM1-N5-carried): the tile-MCC optimum over prob_t with min_votes pinned, so it is the like-for-like companion of the F1 oracle (tile-MCC 0.7196, micro-F1@50 0.8688, against the F1 argmax's 0.8727). Supersedes the UNCONSTRAINED optimum at (0.4, k1), which is kept as ARM1-N5-mcc-oracle with a superseded basis: all 23 board families put that optimum at the lowest vote count their sweep offers. PI ruling 2026-09-20. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "ARM1-N3-mcc-oracle-k3",
+      "basis": "mcc-oracle at carried k (post-hoc, 2026-09-20)",
+      "point": "(0.20, k3)",
+      "n_detections": 4613,
+      "f1_50": 0.8676,
+      "ci": [
+        0.8596,
+        0.8755
+      ],
+      "precision_50": 0.9057,
+      "recall_50": 0.8326,
+      "mcc": 0.7236,
+      "mcc_ci": [
+        0.7098,
+        0.7371
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC oracle at this family's CARRIED vote count (k3, from ARM1-N3-carried): the tile-MCC optimum over prob_t with min_votes pinned, so it is the like-for-like companion of the F1 oracle (tile-MCC 0.7236, micro-F1@50 0.8676, against the F1 argmax's 0.8705). Supersedes the UNCONSTRAINED optimum at (0.4, k1), which is kept as ARM1-N3-mcc-oracle with a superseded basis: all 23 board families put that optimum at the lowest vote count their sweep offers. PI ruling 2026-09-20. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "ARM2-N1-mcc-oracle-k1",
+      "basis": "mcc-oracle at carried k (post-hoc, 2026-09-20)",
       "point": "(0.96, k1)",
       "n_detections": 5022,
       "f1_50": 0.861,
@@ -9044,7 +9198,7 @@
       "tier": null,
       "group": null,
       "cost_usd": null,
-      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7422 against the F1 argmax's 0.8610 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+      "note": "tile-MCC oracle at this family's CARRIED vote count (k1, from ARM2-N1-carried): the tile-MCC optimum over prob_t with min_votes pinned, so it is the like-for-like companion of the F1 oracle (tile-MCC 0.7422, micro-F1@50 0.8610, against the F1 argmax's 0.8610). Supersedes the UNCONSTRAINED optimum at (0.96, k1), which is kept as ARM2-N1-mcc-oracle with a superseded basis: all 23 board families put that optimum at the lowest vote count their sweep offers. PI ruling 2026-09-20. Post-hoc, not a registered claim."
     },
     {
       "label": "ARM1-N3-carried",
@@ -9091,8 +9245,8 @@
       "note": "carried analogue: (0.80, k5) is ARM2's GS-carried operating point at its top rung; the same probability threshold is applied downward here with k set to this rung's own N. Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.2. Post-hoc, not a registered claim."
     },
     {
-      "label": "ARM1-N1-mcc-oracle",
-      "basis": "mcc-oracle (post-hoc)",
+      "label": "ARM1-N1-mcc-oracle-k1",
+      "basis": "mcc-oracle at carried k (post-hoc, 2026-09-20)",
       "point": "(0.20, k1)",
       "n_detections": 5219,
       "f1_50": 0.8413,
@@ -9110,11 +9264,11 @@
       "tier": null,
       "group": null,
       "cost_usd": null,
-      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7246 against the F1 argmax's 0.8413 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+      "note": "tile-MCC oracle at this family's CARRIED vote count (k1, from ARM1-N1-carried): the tile-MCC optimum over prob_t with min_votes pinned, so it is the like-for-like companion of the F1 oracle (tile-MCC 0.7246, micro-F1@50 0.8413, against the F1 argmax's 0.8413). Supersedes the UNCONSTRAINED optimum at (0.2, k1), which is kept as ARM1-N1-mcc-oracle with a superseded basis: all 23 board families put that optimum at the lowest vote count their sweep offers. PI ruling 2026-09-20. Post-hoc, not a registered claim."
     },
     {
-      "label": "FOURTH-N1-mcc-oracle",
-      "basis": "mcc-oracle (post-hoc)",
+      "label": "FOURTH-N1-mcc-oracle-k1",
+      "basis": "mcc-oracle at carried k (post-hoc, 2026-09-20)",
       "point": "(0.96, k1)",
       "n_detections": 5337,
       "f1_50": 0.8352,
@@ -9132,7 +9286,7 @@
       "tier": null,
       "group": null,
       "cost_usd": null,
-      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7471 against the F1 argmax's 0.8352 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+      "note": "tile-MCC oracle at this family's CARRIED vote count (k1, from FOURTH-N1-carried): the tile-MCC optimum over prob_t with min_votes pinned, so it is the like-for-like companion of the F1 oracle (tile-MCC 0.7471, micro-F1@50 0.8352, against the F1 argmax's 0.8352). Supersedes the UNCONSTRAINED optimum at (0.96, k1), which is kept as FOURTH-N1-mcc-oracle with a superseded basis: all 23 board families put that optimum at the lowest vote count their sweep offers. PI ruling 2026-09-20. Post-hoc, not a registered claim."
     },
     {
       "label": "FOURTH-N1-carried",
@@ -9157,8 +9311,113 @@
       "note": "carried analogue: (0.98, k10) is FOURTH's GS-carried operating point at its top rung; the same probability threshold is applied downward here with k set to this rung's own N. Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.2. Post-hoc, not a registered claim."
     },
     {
+      "label": "ARM1-N1-carried",
+      "basis": "carried-analogue (post-hoc)",
+      "point": "(0.10, k1)",
+      "n_detections": 6660,
+      "f1_50": 0.7859,
+      "ci": [
+        0.7767,
+        0.7947
+      ],
+      "precision_50": 0.689,
+      "recall_50": 0.9145,
+      "mcc": 0.6178,
+      "mcc_ci": [
+        0.6006,
+        0.6342
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "carried analogue: (0.10, k5) is ARM1's GS-carried operating point at its top rung; the same probability threshold is applied downward here with k set to this rung's own N. Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.2. Post-hoc, not a registered claim."
+    }
+  ],
+  "addendum": {
+    "what": "post-hoc cells scored on this board's instrument but NOT members of its tiered family",
+    "tiered_cells": 35,
+    "why_untiered": "the board is signed; the PI ruled 2026-09-13, carried forward 2026-09-20, that cells landing after it do not re-tier it (scripts/final_board_build.py was not re-run)",
+    "bases": [
+      "carried-analogue (post-hoc)",
+      "mcc-oracle at carried k (post-hoc, 2026-09-20)"
+    ],
+    "superseded_bases": [
+      "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)",
+      "mcc-oracle (post-hoc)"
+    ],
+    "superseded_why": "the tile-MCC oracle was REDEFINED on 2026-09-20 as the optimum over prob_t at the family's CARRIED vote count; the unconstrained optima in addendum_superseded_cells all sit at the lowest vote count their family's sweep offers, at a cost of 0.06-0.18 micro-F1, and are retained as the evidence for that finding, not as an oracle",
+    "generated_by": "scripts/final_board_addendum_render.py"
+  },
+  "addendum_superseded_cells": [
+    {
+      "label": "ARM2-N1-mcc-oracle",
+      "basis": "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)",
+      "point": "(0.96, k1)",
+      "n_detections": 5022,
+      "f1_50": 0.861,
+      "ci": [
+        0.8533,
+        0.8683
+      ],
+      "precision_50": 0.8606,
+      "recall_50": 0.8613,
+      "mcc": 0.7422,
+      "mcc_ci": [
+        0.7298,
+        0.7551
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7422 against the F1 argmax's 0.8610 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "ARM1-N1-mcc-oracle",
+      "basis": "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)",
+      "point": "(0.20, k1)",
+      "n_detections": 5219,
+      "f1_50": 0.8413,
+      "ci": [
+        0.8332,
+        0.8492
+      ],
+      "precision_50": 0.8251,
+      "recall_50": 0.8581,
+      "mcc": 0.7246,
+      "mcc_ci": [
+        0.7109,
+        0.7384
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7246 against the F1 argmax's 0.8413 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "FOURTH-N1-mcc-oracle",
+      "basis": "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)",
+      "point": "(0.96, k1)",
+      "n_detections": 5337,
+      "f1_50": 0.8352,
+      "ci": [
+        0.8272,
+        0.8428
+      ],
+      "precision_50": 0.8102,
+      "recall_50": 0.8617,
+      "mcc": 0.7471,
+      "mcc_ci": [
+        0.7343,
+        0.7596
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7471 against the F1 argmax's 0.8352 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
       "label": "ARM2-N3-mcc-oracle",
-      "basis": "mcc-oracle (post-hoc)",
+      "basis": "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)",
       "point": "(0.96, k1)",
       "n_detections": 5619,
       "f1_50": 0.8245,
@@ -9180,7 +9439,7 @@
     },
     {
       "label": "ARM2-N5-mcc-oracle",
-      "basis": "mcc-oracle (post-hoc)",
+      "basis": "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)",
       "point": "(0.96, k1)",
       "n_detections": 5924,
       "f1_50": 0.8055,
@@ -9202,7 +9461,7 @@
     },
     {
       "label": "ARM1-N3-mcc-oracle",
-      "basis": "mcc-oracle (post-hoc)",
+      "basis": "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)",
       "point": "(0.40, k1)",
       "n_detections": 5327,
       "f1_50": 0.7979,
@@ -9223,30 +9482,8 @@
       "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7303 against the F1 argmax's 0.8705 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
     },
     {
-      "label": "ARM1-N1-carried",
-      "basis": "carried-analogue (post-hoc)",
-      "point": "(0.10, k1)",
-      "n_detections": 6660,
-      "f1_50": 0.7859,
-      "ci": [
-        0.7767,
-        0.7947
-      ],
-      "precision_50": 0.689,
-      "recall_50": 0.9145,
-      "mcc": 0.6178,
-      "mcc_ci": [
-        0.6006,
-        0.6342
-      ],
-      "tier": null,
-      "group": null,
-      "cost_usd": null,
-      "note": "carried analogue: (0.10, k5) is ARM1's GS-carried operating point at its top rung; the same probability threshold is applied downward here with k set to this rung's own N. Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.2. Post-hoc, not a registered claim."
-    },
-    {
       "label": "FOURTH-N3-mcc-oracle",
-      "basis": "mcc-oracle (post-hoc)",
+      "basis": "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)",
       "point": "(0.96, k1)",
       "n_detections": 6298,
       "f1_50": 0.7798,
@@ -9268,7 +9505,7 @@
     },
     {
       "label": "ARM1-N5-mcc-oracle",
-      "basis": "mcc-oracle (post-hoc)",
+      "basis": "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)",
       "point": "(0.40, k1)",
       "n_detections": 5631,
       "f1_50": 0.7787,
@@ -9290,7 +9527,7 @@
     },
     {
       "label": "FOURTH-N5-mcc-oracle",
-      "basis": "mcc-oracle (post-hoc)",
+      "basis": "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)",
       "point": "(0.96, k1)",
       "n_detections": 6852,
       "f1_50": 0.7488,
@@ -9312,7 +9549,7 @@
     },
     {
       "label": "FOURTH-N10-mcc-oracle",
-      "basis": "mcc-oracle (post-hoc)",
+      "basis": "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)",
       "point": "(0.96, k1)",
       "n_detections": 7733,
       "f1_50": 0.7025,
@@ -9332,15 +9569,5 @@
       "cost_usd": null,
       "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7567 against the F1 argmax's 0.8813 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
     }
-  ],
-  "addendum": {
-    "what": "post-hoc cells scored on this board's instrument but NOT members of its tiered family",
-    "tiered_cells": 35,
-    "why_untiered": "the board is signed; the PI ruled 2026-09-13, carried forward 2026-09-20, that cells landing after it do not re-tier it (scripts/final_board_build.py was not re-run)",
-    "bases": [
-      "carried-analogue (post-hoc)",
-      "mcc-oracle (post-hoc)"
-    ],
-    "generated_by": "scripts/final_board_addendum_render.py"
-  }
+  ]
 }
