@@ -53,6 +53,21 @@
         "tile_tn": 4900,
         "tile_fp": 112,
         "tile_fn": 944
+      },
+      "mcc_argmax_unconstrained": {
+        "rung": "IMG-ARM1-K1",
+        "prob_t": 0.15,
+        "min_votes": 1,
+        "n_detections": 5582,
+        "tp": 4561.0,
+        "fp": 1021.0,
+        "fn": 457.0,
+        "micro_f1_50": 0.860566037735849,
+        "tile_mcc": 0.7522971131662105,
+        "tile_tp": 2585,
+        "tile_tn": 4900,
+        "tile_fp": 112,
+        "tile_fn": 944
       }
     },
     "IMG-ARM1-K3": {
@@ -92,6 +107,21 @@
         "tile_fn": 871
       },
       "mcc_oracle": {
+        "rung": "IMG-ARM1-K3",
+        "prob_t": 0.15,
+        "min_votes": 3,
+        "n_detections": 4977,
+        "tp": 4494.0,
+        "fp": 483.0,
+        "fn": 524.0,
+        "micro_f1_50": 0.8992496248124061,
+        "tile_mcc": 0.7577313832561348,
+        "tile_tp": 2568,
+        "tile_tn": 4932,
+        "tile_fp": 80,
+        "tile_fn": 961
+      },
+      "mcc_argmax_unconstrained": {
         "rung": "IMG-ARM1-K3",
         "prob_t": 0.15,
         "min_votes": 3,
@@ -157,6 +187,21 @@
         "tile_tn": 4981,
         "tile_fp": 31,
         "tile_fn": 1010
+      },
+      "mcc_argmax_unconstrained": {
+        "rung": "IMG-ARM2-K1",
+        "prob_t": 0.98,
+        "min_votes": 1,
+        "n_detections": 5322,
+        "tp": 4509.0,
+        "fp": 813.0,
+        "fn": 509.0,
+        "micro_f1_50": 0.8721470019342359,
+        "tile_mcc": 0.7613923527161283,
+        "tile_tp": 2519,
+        "tile_tn": 4981,
+        "tile_fp": 31,
+        "tile_fn": 1010
       }
     },
     "IMG-ARM2-K3": {
@@ -196,6 +241,21 @@
         "tile_fn": 872
       },
       "mcc_oracle": {
+        "rung": "IMG-ARM2-K3",
+        "prob_t": 0.9,
+        "min_votes": 3,
+        "n_detections": 5343,
+        "tp": 4769.0,
+        "fp": 574.0,
+        "fn": 249.0,
+        "micro_f1_50": 0.9205675127883408,
+        "tile_mcc": 0.7654346916557514,
+        "tile_tp": 2657,
+        "tile_tn": 4889,
+        "tile_fp": 123,
+        "tile_fn": 872
+      },
+      "mcc_argmax_unconstrained": {
         "rung": "IMG-ARM2-K3",
         "prob_t": 0.96,
         "min_votes": 2,
@@ -261,6 +321,21 @@
         "tile_tn": 4923,
         "tile_fp": 89,
         "tile_fn": 965
+      },
+      "mcc_argmax_unconstrained": {
+        "rung": "IMG-ARM1-K5",
+        "prob_t": 0.15,
+        "min_votes": 5,
+        "n_detections": 4885,
+        "tp": 4486.0,
+        "fp": 399.0,
+        "fn": 532.0,
+        "micro_f1_50": 0.905988084418863,
+        "tile_mcc": 0.7542214804688346,
+        "tile_tp": 2564,
+        "tile_tn": 4923,
+        "tile_fp": 89,
+        "tile_fn": 965
       }
     },
     "IMG-ARM2-K5": {
@@ -300,6 +375,21 @@
         "tile_fn": 885
       },
       "mcc_oracle": {
+        "rung": "IMG-ARM2-K5",
+        "prob_t": 0.95,
+        "min_votes": 5,
+        "n_detections": 5197,
+        "tp": 4740.0,
+        "fp": 457.0,
+        "fn": 278.0,
+        "micro_f1_50": 0.9280469897209985,
+        "tile_mcc": 0.7681458931562806,
+        "tile_tp": 2644,
+        "tile_tn": 4909,
+        "tile_fp": 103,
+        "tile_fn": 885
+      },
+      "mcc_argmax_unconstrained": {
         "rung": "IMG-ARM2-K5",
         "prob_t": 0.95,
         "min_votes": 5,
