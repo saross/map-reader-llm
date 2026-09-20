@@ -80,7 +80,26 @@
         "tile_tn": 4922,
         "tile_fp": 90,
         "tile_fn": 1228
-      }
+      },
+      "carried_k": 4,
+      "carried_k_source": "TH7-k4",
+      "mcc_argmax_at_carried_k": {
+        "family": "TH7",
+        "prob_t": 0.3,
+        "min_votes": 4,
+        "n_detections": 3714,
+        "tp": 3484,
+        "fp": 230,
+        "fn": 1534,
+        "micro_f1_50": 0.7979844251030691,
+        "tile_mcc": 0.6710817511725788,
+        "tile_tp": 2145,
+        "tile_tn": 4954,
+        "tile_fp": 58,
+        "tile_fn": 1384
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "T03": {
       "n_sweep_points": 57,
@@ -160,7 +179,26 @@
         "tile_tn": 4929,
         "tile_fp": 83,
         "tile_fn": 1194
-      }
+      },
+      "carried_k": 4,
+      "carried_k_source": "T03-k4",
+      "mcc_argmax_at_carried_k": {
+        "family": "T03",
+        "prob_t": 0.3,
+        "min_votes": 4,
+        "n_detections": 3847,
+        "tp": 3587,
+        "fp": 260,
+        "fn": 1431,
+        "micro_f1_50": 0.8092498589960518,
+        "tile_mcc": 0.6777014291098797,
+        "tile_tp": 2181,
+        "tile_tn": 4950,
+        "tile_fp": 62,
+        "tile_fn": 1348
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "TM": {
       "n_sweep_points": 57,
@@ -240,7 +278,26 @@
         "tile_tn": 4856,
         "tile_fp": 156,
         "tile_fn": 1287
-      }
+      },
+      "carried_k": 4,
+      "carried_k_source": "TM-k4",
+      "mcc_argmax_at_carried_k": {
+        "family": "TM",
+        "prob_t": 0.2,
+        "min_votes": 4,
+        "n_detections": 3758,
+        "tp": 3430,
+        "fp": 328,
+        "fn": 1588,
+        "micro_f1_50": 0.7816773017319963,
+        "tile_mcc": 0.6437515451160771,
+        "tile_tp": 2117,
+        "tile_tn": 4888,
+        "tile_fp": 124,
+        "tile_fn": 1412
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "IM": {
       "n_sweep_points": 51,
@@ -320,7 +377,26 @@
         "tile_tn": 4871,
         "tile_fp": 141,
         "tile_fn": 1062
-      }
+      },
+      "carried_k": 4,
+      "carried_k_source": "IM-k4",
+      "mcc_argmax_at_carried_k": {
+        "family": "IM",
+        "prob_t": 0.2,
+        "min_votes": 4,
+        "n_detections": 3467,
+        "tp": 3126,
+        "fp": 341,
+        "fn": 1892,
+        "micro_f1_50": 0.7368296994696524,
+        "tile_mcc": 0.6564873700895658,
+        "tile_tp": 2114,
+        "tile_tn": 4930,
+        "tile_fp": 82,
+        "tile_fn": 1415
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "UPL": {
       "n_sweep_points": 144,
@@ -400,7 +476,12 @@
         "tile_tn": 4920,
         "tile_fp": 92,
         "tile_fn": 1252
-      }
+      },
+      "carried_k": null,
+      "carried_k_source": null,
+      "mcc_argmax_at_carried_k": null,
+      "mcc_argmax_at_carried_k_note": "no carried k",
+      "mcc_argmax_at_carried_k_is_unconstrained": null
     },
     "A-N10": {
       "n_sweep_points": 200,
@@ -480,7 +561,26 @@
         "tile_tn": 4917,
         "tile_fp": 95,
         "tile_fn": 1104
-      }
+      },
+      "carried_k": 8,
+      "carried_k_source": "A-N10-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "A-N10",
+        "prob_t": 0.25,
+        "min_votes": 8,
+        "n_detections": 3952,
+        "tp": 3677,
+        "fp": 275,
+        "fn": 1341,
+        "micro_f1_50": 0.8198439241917502,
+        "tile_mcc": 0.6980513959034751,
+        "tile_tp": 2252,
+        "tile_tn": 4965,
+        "tile_fp": 47,
+        "tile_fn": 1277
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "A-N1": {
       "n_sweep_points": 19,
@@ -560,7 +660,12 @@
         "tile_tn": 4949,
         "tile_fp": 63,
         "tile_fn": 1212
-      }
+      },
+      "carried_k": null,
+      "carried_k_source": null,
+      "mcc_argmax_at_carried_k": null,
+      "mcc_argmax_at_carried_k_note": "no carried k",
+      "mcc_argmax_at_carried_k_is_unconstrained": null
     },
     "A-N3": {
       "n_sweep_points": 60,
@@ -640,7 +745,26 @@
         "tile_tn": 4936,
         "tile_fp": 76,
         "tile_fn": 1155
-      }
+      },
+      "carried_k": 3,
+      "carried_k_source": "A-N3-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "A-N3",
+        "prob_t": 0.25,
+        "min_votes": 3,
+        "n_detections": 3891,
+        "tp": 3612,
+        "fp": 279,
+        "fn": 1406,
+        "micro_f1_50": 0.8108654169940509,
+        "tile_mcc": 0.6923494529331923,
+        "tile_tp": 2223,
+        "tile_tn": 4967,
+        "tile_fp": 45,
+        "tile_fn": 1306
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "A-N5": {
       "n_sweep_points": 100,
@@ -720,7 +844,26 @@
         "tile_tn": 4929,
         "tile_fp": 83,
         "tile_fn": 1132
-      }
+      },
+      "carried_k": 4,
+      "carried_k_source": "A-N5-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "A-N5",
+        "prob_t": 0.25,
+        "min_votes": 4,
+        "n_detections": 4052,
+        "tp": 3722,
+        "fp": 330,
+        "fn": 1296,
+        "micro_f1_50": 0.8207276736493936,
+        "tile_mcc": 0.6989023765402882,
+        "tile_tp": 2266,
+        "tile_tn": 4958,
+        "tile_fp": 54,
+        "tile_fn": 1263
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "B-N10": {
       "n_sweep_points": 200,
@@ -800,7 +943,26 @@
         "tile_tn": 4878,
         "tile_fp": 134,
         "tile_fn": 1028
-      }
+      },
+      "carried_k": 10,
+      "carried_k_source": "B-N10-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "B-N10",
+        "prob_t": 0.2,
+        "min_votes": 10,
+        "n_detections": 4354,
+        "tp": 3980,
+        "fp": 374,
+        "fn": 1038,
+        "micro_f1_50": 0.8493384549722578,
+        "tile_mcc": 0.7040115502642945,
+        "tile_tp": 2379,
+        "tile_tn": 4893,
+        "tile_fp": 119,
+        "tile_fn": 1150
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "B-N1": {
       "n_sweep_points": 20,
@@ -880,7 +1042,12 @@
         "tile_tn": 4931,
         "tile_fp": 81,
         "tile_fn": 1128
-      }
+      },
+      "carried_k": null,
+      "carried_k_source": null,
+      "mcc_argmax_at_carried_k": null,
+      "mcc_argmax_at_carried_k_note": "no carried k",
+      "mcc_argmax_at_carried_k_is_unconstrained": null
     },
     "B-N3": {
       "n_sweep_points": 60,
@@ -960,7 +1127,26 @@
         "tile_tn": 4904,
         "tile_fp": 108,
         "tile_fn": 1070
-      }
+      },
+      "carried_k": 3,
+      "carried_k_source": "B-N3-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "B-N3",
+        "prob_t": 0.4,
+        "min_votes": 3,
+        "n_detections": 4353,
+        "tp": 3913,
+        "fp": 440,
+        "fn": 1105,
+        "micro_f1_50": 0.8351296553196031,
+        "tile_mcc": 0.7146438451440633,
+        "tile_tp": 2342,
+        "tile_tn": 4955,
+        "tile_fp": 57,
+        "tile_fn": 1187
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "B-N5": {
       "n_sweep_points": 100,
@@ -1040,7 +1226,26 @@
         "tile_tn": 4890,
         "tile_fp": 122,
         "tile_fn": 1049
-      }
+      },
+      "carried_k": 5,
+      "carried_k_source": "B-N5-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "B-N5",
+        "prob_t": 0.4,
+        "min_votes": 5,
+        "n_detections": 4180,
+        "tp": 3840,
+        "fp": 340,
+        "fn": 1178,
+        "micro_f1_50": 0.8349641226353555,
+        "tile_mcc": 0.7101792283013797,
+        "tile_tp": 2316,
+        "tile_tn": 4959,
+        "tile_fp": 53,
+        "tile_fn": 1213
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "ARM1-N5": {
       "n_sweep_points": 95,
@@ -1120,7 +1325,26 @@
         "tile_tn": 4932,
         "tile_fp": 80,
         "tile_fn": 1082
-      }
+      },
+      "carried_k": 5,
+      "carried_k_source": "ARM1-N5-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "ARM1-N5",
+        "prob_t": 0.2,
+        "min_votes": 5,
+        "n_detections": 4473,
+        "tp": 4123,
+        "fp": 350,
+        "fn": 895,
+        "micro_f1_50": 0.8688230955642187,
+        "tile_mcc": 0.7196435384598678,
+        "tile_tp": 2402,
+        "tile_tn": 4928,
+        "tile_fp": 84,
+        "tile_fn": 1127
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "ARM1-N1": {
       "n_sweep_points": 19,
@@ -1200,7 +1424,26 @@
         "tile_tn": 4879,
         "tile_fp": 133,
         "tile_fn": 1040
-      }
+      },
+      "carried_k": 1,
+      "carried_k_source": "ARM1-N1-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "ARM1-N1",
+        "prob_t": 0.2,
+        "min_votes": 1,
+        "n_detections": 5219,
+        "tp": 4306,
+        "fp": 913,
+        "fn": 712,
+        "micro_f1_50": 0.841262088502491,
+        "tile_mcc": 0.7246174293740002,
+        "tile_tp": 2489,
+        "tile_tn": 4879,
+        "tile_fp": 133,
+        "tile_fn": 1040
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": true
     },
     "ARM1-N3": {
       "n_sweep_points": 57,
@@ -1280,7 +1523,26 @@
         "tile_tn": 4940,
         "tile_fp": 72,
         "tile_fn": 1095
-      }
+      },
+      "carried_k": 3,
+      "carried_k_source": "ARM1-N3-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "ARM1-N3",
+        "prob_t": 0.2,
+        "min_votes": 3,
+        "n_detections": 4613,
+        "tp": 4178,
+        "fp": 435,
+        "fn": 840,
+        "micro_f1_50": 0.8676149932509605,
+        "tile_mcc": 0.7236105074195173,
+        "tile_tp": 2432,
+        "tile_tn": 4919,
+        "tile_fp": 93,
+        "tile_fn": 1097
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "ARM2-N5": {
       "n_sweep_points": 135,
@@ -1360,7 +1622,26 @@
         "tile_tn": 4965,
         "tile_fp": 47,
         "tile_fn": 1046
-      }
+      },
+      "carried_k": 5,
+      "carried_k_source": "ARM2-N5-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "ARM2-N5",
+        "prob_t": 0.96,
+        "min_votes": 5,
+        "n_detections": 4378,
+        "tp": 4144,
+        "fp": 234,
+        "fn": 874,
+        "micro_f1_50": 0.8820774797786292,
+        "tile_mcc": 0.7291157388619841,
+        "tile_tp": 2367,
+        "tile_tn": 4984,
+        "tile_fp": 28,
+        "tile_fn": 1162
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "ARM2-N1": {
       "n_sweep_points": 26,
@@ -1440,7 +1721,26 @@
         "tile_tn": 4974,
         "tile_fp": 38,
         "tile_fn": 1088
-      }
+      },
+      "carried_k": 1,
+      "carried_k_source": "ARM2-N1-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "ARM2-N1",
+        "prob_t": 0.96,
+        "min_votes": 1,
+        "n_detections": 5022,
+        "tp": 4322,
+        "fp": 700,
+        "fn": 696,
+        "micro_f1_50": 0.8609561752988049,
+        "tile_mcc": 0.7421891480811401,
+        "tile_tp": 2441,
+        "tile_tn": 4974,
+        "tile_fp": 38,
+        "tile_fn": 1088
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": true
     },
     "ARM2-N3": {
       "n_sweep_points": 81,
@@ -1520,7 +1820,26 @@
         "tile_tn": 4969,
         "tile_fp": 43,
         "tile_fn": 1057
-      }
+      },
+      "carried_k": 3,
+      "carried_k_source": "ARM2-N3-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "ARM2-N3",
+        "prob_t": 0.96,
+        "min_votes": 3,
+        "n_detections": 4499,
+        "tp": 4196,
+        "fp": 303,
+        "fn": 822,
+        "micro_f1_50": 0.8817904801933383,
+        "tile_mcc": 0.7326333634466269,
+        "tile_tp": 2386,
+        "tile_tn": 4982,
+        "tile_fp": 30,
+        "tile_fn": 1143
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "FOURTH-N10": {
       "n_sweep_points": 270,
@@ -1600,7 +1919,26 @@
         "tile_tn": 4943,
         "tile_fp": 69,
         "tile_fn": 980
-      }
+      },
+      "carried_k": 10,
+      "carried_k_source": "FOURTH-N10-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "FOURTH-N10",
+        "prob_t": 0.96,
+        "min_votes": 10,
+        "n_detections": 4249,
+        "tp": 4046,
+        "fp": 203,
+        "fn": 972,
+        "micro_f1_50": 0.8732059997841805,
+        "tile_mcc": 0.7268739979126972,
+        "tile_tp": 2361,
+        "tile_tn": 4981,
+        "tile_fp": 31,
+        "tile_fn": 1168
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "FOURTH-N1": {
       "n_sweep_points": 27,
@@ -1680,7 +2018,26 @@
         "tile_tn": 4967,
         "tile_fp": 45,
         "tile_fn": 1056
-      }
+      },
+      "carried_k": 1,
+      "carried_k_source": "FOURTH-N1-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "FOURTH-N1",
+        "prob_t": 0.96,
+        "min_votes": 1,
+        "n_detections": 5337,
+        "tp": 4324,
+        "fp": 1013,
+        "fn": 694,
+        "micro_f1_50": 0.8351521004345727,
+        "tile_mcc": 0.7470836550257224,
+        "tile_tp": 2473,
+        "tile_tn": 4967,
+        "tile_fp": 45,
+        "tile_fn": 1056
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": true
     },
     "FOURTH-N3": {
       "n_sweep_points": 81,
@@ -1760,7 +2117,26 @@
         "tile_tn": 4958,
         "tile_fp": 54,
         "tile_fn": 1024
-      }
+      },
+      "carried_k": 3,
+      "carried_k_source": "FOURTH-N3-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "FOURTH-N3",
+        "prob_t": 0.96,
+        "min_votes": 3,
+        "n_detections": 4626,
+        "tp": 4218,
+        "fp": 408,
+        "fn": 800,
+        "micro_f1_50": 0.8747407714641227,
+        "tile_mcc": 0.7375930224056209,
+        "tile_tp": 2420,
+        "tile_tn": 4974,
+        "tile_fp": 38,
+        "tile_fn": 1109
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     },
     "FOURTH-N5": {
       "n_sweep_points": 135,
@@ -1840,7 +2216,26 @@
         "tile_tn": 4953,
         "tile_fp": 59,
         "tile_fn": 999
-      }
+      },
+      "carried_k": 5,
+      "carried_k_source": "FOURTH-N5-carried",
+      "mcc_argmax_at_carried_k": {
+        "family": "FOURTH-N5",
+        "prob_t": 0.96,
+        "min_votes": 5,
+        "n_detections": 4434,
+        "tp": 4139,
+        "fp": 295,
+        "fn": 879,
+        "micro_f1_50": 0.8757934828607703,
+        "tile_mcc": 0.7326139324085801,
+        "tile_tp": 2393,
+        "tile_tn": 4977,
+        "tile_fp": 35,
+        "tile_fn": 1136
+      },
+      "mcc_argmax_at_carried_k_note": null,
+      "mcc_argmax_at_carried_k_is_unconstrained": false
     }
   },
   "mcc_families": [
@@ -1867,5 +2262,28 @@
     "TH7",
     "TM",
     "UPL"
+  ],
+  "_README": "Per-family sweep record for the r2 board. 'argmax' is the micro-F1 @ 50 m optimum over the family's whole achievable grid (prob_t x min_votes) and is the basis of the '<family>-oracle' cells. 'mcc_argmax_at_carried_k' is the board's TILE-MCC ORACLE from the PI ruling of 2026-09-20: the tile-MCC optimum over prob_t with min_votes PINNED to 'carried_k', the vote count of the family's carried cell ('carried_k_source' in cells_manifest.json), so that it is a like-for-like companion of the F1 oracle. 'mcc_argmax' is the UNCONSTRAINED tile-MCC optimum, free to choose any vote count. It is SUPERSEDED as the published oracle and RETAINED as a recorded finding: all 23 families put it at the lowest vote count their sweep offers, abandoning unanimity for a fraction of a point of tile-MCC at a cost of 0.06-0.18 micro-F1 (PI decision log D6a, 2026-09-20). 'mcc_families' names the families whose rows carry a tile-MCC at all; 'mcc_carried_k_families' names those with a carried-k oracle. A family with no carried cell records 'no carried k'.",
+  "mcc_carried_k_families": [
+    "A-N10",
+    "A-N3",
+    "A-N5",
+    "ARM1-N1",
+    "ARM1-N3",
+    "ARM1-N5",
+    "ARM2-N1",
+    "ARM2-N3",
+    "ARM2-N5",
+    "B-N10",
+    "B-N3",
+    "B-N5",
+    "FOURTH-N1",
+    "FOURTH-N10",
+    "FOURTH-N3",
+    "FOURTH-N5",
+    "IM",
+    "T03",
+    "TH7",
+    "TM"
   ]
 }
