@@ -54,6 +54,27 @@ published one per rung, so no text-vs-image MCC comparison was possible
 (`reports/comparability-inventory-37-runs-2026-09-20.md` § 1.2, § 3.7).
 ``sweeps.json`` records which families carry it in ``mcc_families``.
 
+Carried-k MCC oracle (PI ruling 2026-09-20, the redefinition): the
+``mcc_argmax`` above is the **unconstrained** tile-MCC optimum — free to
+pick any vote count the family's sweep offers — and every one of the 23
+families put it at the LOWEST vote count available, paying 0.06–0.18 of
+micro-F1 for a fraction of a point of tile-MCC. That makes it a poor
+companion to the F1 oracle, which is read at the family's own vote
+structure. So each family's record also gains
+``mcc_argmax_at_carried_k``: the tile-MCC optimum over ``prob_t`` with
+``min_votes`` PINNED to the family's CARRIED vote count (the ``k`` of its
+carried cell in ``cells_manifest.json``, named in ``carried_k_source``).
+That is the board's tile-MCC oracle from 2026-09-20. ``mcc_argmax`` is
+NOT deleted: the collapse is a recorded property of the metric on this
+corpus and the record keeps the evidence for it. Where a family's
+carried k is the only rung its sweep offers (the N = 1 families) the two
+coincide, flagged by ``mcc_argmax_at_carried_k_is_unconstrained``. A
+family with no carried cell on the board has no carried k: its
+``mcc_argmax_at_carried_k`` is ``null`` and
+``mcc_argmax_at_carried_k_note`` says so. ``--record-carried-k``
+recomputes the field for every family from the COMMITTED sweep CSVs
+without re-sweeping anything.
+
 Outputs (<board home>/): sweeps.json,
 per-family sweep CSVs, cells/<label>/detections.geojson for every
 non-committed cell, and cells_manifest.json for stages 2 (full
@@ -64,6 +85,8 @@ Usage::
     python scripts/final_board_sweeps.py [--workers N] [--reference {standardised,r2}]
     # sweep-record-only refresh of named families (no cells, no manifest):
     python scripts/final_board_sweeps.py --reference r2 --families ARM1-N1 ARM1-N3
+    # carried-k MCC oracle from the committed CSVs (no sweep, no cells):
+    python scripts/final_board_sweeps.py --reference r2 --record-carried-k
 
 Zero API. Run on sapphire.
 
@@ -134,6 +157,34 @@ logger = logging.getLogger(__name__)
 #: ``board_home(--reference)`` so an r2 sweep cannot write into the r1 tree.
 OUT = PROJECT_ROOT / "results/55map-final-board-2026-08-27"
 BUFFER_M = 50
+
+#: What a family with no carried cell on the board records instead of a
+#: carried-k MCC oracle. Three families are in this position (``UPL``,
+#: ``A-N1``, ``B-N1``): the board publishes an oracle cell for each but no
+#: carried counterpart, so there is no vote count to pin the optimum to.
+NO_CARRIED_K = "no carried k"
+
+#: The record's own explanation of its two MCC argmaxes, written into
+#: ``sweeps.json`` so a consumer reading the file alone cannot mistake the
+#: retained unconstrained optimum for the board's published oracle.
+SWEEPS_README = (
+    "Per-family sweep record for the r2 board. 'argmax' is the micro-F1 @ 50 m "
+    "optimum over the family's whole achievable grid (prob_t x min_votes) and "
+    "is the basis of the '<family>-oracle' cells. "
+    "'mcc_argmax_at_carried_k' is the board's TILE-MCC ORACLE from the PI "
+    "ruling of 2026-09-20: the tile-MCC optimum over prob_t with min_votes "
+    "PINNED to 'carried_k', the vote count of the family's carried cell "
+    "('carried_k_source' in cells_manifest.json), so that it is a "
+    "like-for-like companion of the F1 oracle. "
+    "'mcc_argmax' is the UNCONSTRAINED tile-MCC optimum, free to choose any "
+    "vote count. It is SUPERSEDED as the published oracle and RETAINED as a "
+    "recorded finding: all 23 families put it at the lowest vote count their "
+    "sweep offers, abandoning unanimity for a fraction of a point of tile-MCC "
+    "at a cost of 0.06-0.18 micro-F1 (PI decision log D6a, 2026-09-20). "
+    "'mcc_families' names the families whose rows carry a tile-MCC at all; "
+    "'mcc_carried_k_families' names those with a carried-k oracle. A family "
+    f"with no carried cell records '{NO_CARRIED_K}'."
+)
 MECHANISM_BOUND = 0.003  # the board's documented micro-vs-eval bound
 DEPLOY = PROJECT_ROOT / "results/deployment-oracle-2026-06-06/vote3-verify"
 IMK4_DET = (PROJECT_ROOT / "results/55maps-standardised-ref-2026-08-14"
@@ -403,7 +454,14 @@ def load_sweeps(path: Path, reference: str) -> dict:
 
 
 def mcc_argmax(frows: list[dict]) -> dict | None:
-    """The tile-MCC argmax of one family's sweep rows.
+    """The UNCONSTRAINED tile-MCC argmax of one family's sweep rows.
+
+    Free to pick any ``min_votes`` the family's sweep offers. Every one of
+    the board's 23 families puts this at the lowest vote count available
+    (PI decision log D6a, 2026-09-20), which is why it is no longer the
+    board's published MCC oracle — see :func:`mcc_argmax_at_carried_k`.
+    It is kept in the record because that collapse is a finding about the
+    metric on this corpus, not a defect to be edited out.
 
     Tie-break follows the image script: ``max`` over the rows in
     ``(prob_t, min_votes)`` order, so the lowest operating point wins a
@@ -421,6 +479,231 @@ def mcc_argmax(frows: list[dict]) -> dict | None:
         return None
     return max(sorted(scored, key=lambda r: (r["prob_t"], r["min_votes"])),
                key=lambda r: r["tile_mcc"])
+
+
+def mcc_argmax_at_carried_k(frows: list[dict], carried_k: int | None) -> dict | None:
+    """The tile-MCC argmax over ``prob_t`` at a FIXED vote count.
+
+    The board's tile-MCC oracle from the PI ruling of 2026-09-20: the
+    optimum is taken over the probability threshold only, with the vote
+    count pinned to the family's carried ``k``, so that it is a
+    like-for-like companion of the F1 oracle rather than a licence to
+    abandon unanimity (which is what the unconstrained optimum does on
+    every family of this board).
+
+    Args:
+        frows: One family's sweep rows.
+        carried_k: The family's carried vote count, or ``None`` when the
+            family has no carried cell on the board.
+
+    Returns:
+        The winning row, or ``None`` when there is no carried k, no row
+        at that vote count, or no row carrying a tile-MCC.
+    """
+    if carried_k is None:
+        return None
+    scored = [r for r in frows
+              if r.get("tile_mcc") is not None
+              and int(r["min_votes"]) == int(carried_k)]
+    if not scored:
+        return None
+    return max(sorted(scored, key=lambda r: (r["prob_t"], r["min_votes"])),
+               key=lambda r: r["tile_mcc"])
+
+
+def family_of_carried_label(label: str) -> str | None:
+    """The family a carried cell's label belongs to, or ``None``.
+
+    Two spellings are in use on this board and both are read here rather
+    than listed, so a new carried cell is picked up without a table edit:
+
+    * ``<family>-carried`` — every materialised carried cell, including
+      the emergent N = 3 cells and the 3.7 carried analogues;
+    * ``<family>-k<N>`` — the four committed text/image incumbents
+      (``TH7-k4``, ``T03-k4``, ``TM-k4``, ``IM-k4``).
+
+    Args:
+        label: A cell label from ``cells_manifest.json``.
+
+    Returns:
+        The family name, or ``None`` if the label is neither spelling.
+    """
+    if label.endswith("-carried"):
+        return label[: -len("-carried")]
+    stem, sep, tail = label.rpartition("-k")
+    if sep and stem and tail.isdigit():
+        return stem
+    return None
+
+
+def carried_k_by_family(manifest_path: Path) -> dict[str, dict]:
+    """Each family's CARRIED vote count, read from the board's cell manifest.
+
+    "Carried" is whatever the manifest calls carried — basis ``carried``,
+    ``carried (post-hoc)`` or ``carried-analogue (post-hoc)`` — so the
+    carried analogues the 2026-09-20 addendum added give the 3.7 rungs a
+    carried k, exactly as the ruling directs. Families with no carried
+    cell (on this board: ``UPL``, ``A-N1``, ``B-N1``) are simply absent
+    from the result, and their carried-k oracle is recorded as null.
+
+    Args:
+        manifest_path: The board home's ``cells_manifest.json``.
+
+    Returns:
+        ``family -> {"k": int, "prob_t": float, "label": str,
+        "basis": str}``. Empty when the manifest does not exist yet.
+    """
+    if not manifest_path.is_file():
+        return {}
+    out: dict[str, dict] = {}
+    for cell in json.loads(manifest_path.read_text()).get("cells", []):
+        if "carried" not in str(cell.get("basis", "")):
+            continue
+        family = family_of_carried_label(str(cell.get("label", "")))
+        if family is None:
+            continue
+        point = str(cell.get("point", ""))
+        try:
+            prob_s, k_s = point.strip("()").split(",")
+            k = int(k_s.strip().lstrip("k"))
+            prob_t = float(prob_s)
+        except (ValueError, AttributeError):
+            logger.warning("carried cell %s has an unreadable point %r — "
+                           "skipped", cell.get("label"), point)
+            continue
+        if family in out and out[family]["k"] != k:
+            raise RuntimeError(
+                f"{family}: two carried cells disagree on k — "
+                f"{out[family]['label']} k{out[family]['k']} vs "
+                f"{cell['label']} k{k}")
+        out[family] = {"k": k, "prob_t": prob_t, "label": cell["label"],
+                       "basis": cell["basis"]}
+    return out
+
+
+def read_sweep_csv(path: Path) -> list[dict]:
+    """One family's committed sweep CSV, typed as the sweep wrote it.
+
+    ``--record-carried-k`` recomputes an argmax from the committed CSVs
+    rather than re-sweeping, so the CSV's strings have to come back as the
+    numbers the in-memory rows carried. Empty cells (a point that retained
+    no detection) come back as ``None``.
+
+    Args:
+        path: ``sweep_<family>.csv`` in the board home.
+
+    Returns:
+        The rows, in file order.
+    """
+    ints = {"min_votes", "n_detections", "tp", "fp", "fn",
+            "tile_tp", "tile_tn", "tile_fp", "tile_fn"}
+    floats = {"prob_t", "micro_f1_50", "tile_mcc"}
+    rows: list[dict] = []
+    with path.open(newline="") as fh:
+        for raw in csvmod.DictReader(fh):
+            row: dict = {}
+            for key, value in raw.items():
+                if value is None or value == "":
+                    row[key] = None
+                elif key in ints:
+                    row[key] = int(value)
+                elif key in floats:
+                    row[key] = float(value)
+                else:
+                    row[key] = value
+            rows.append(row)
+    return rows
+
+
+def carried_k_record(frows: list[dict], carried: dict | None) -> dict:
+    """The carried-k block of one family's ``sweeps.json`` entry.
+
+    Args:
+        frows: The family's sweep rows.
+        carried: Its entry from :func:`carried_k_by_family`, or ``None``.
+
+    Returns:
+        The four keys the record gains, ready to merge into the family's
+        entry.
+    """
+    if carried is None:
+        return {"carried_k": None, "carried_k_source": None,
+                "mcc_argmax_at_carried_k": None,
+                "mcc_argmax_at_carried_k_note": NO_CARRIED_K,
+                "mcc_argmax_at_carried_k_is_unconstrained": None}
+    best = mcc_argmax_at_carried_k(frows, carried["k"])
+    unconstrained = mcc_argmax(frows)
+    coincide = (best is not None and unconstrained is not None
+                and (best["prob_t"], best["min_votes"])
+                == (unconstrained["prob_t"], unconstrained["min_votes"]))
+    return {"carried_k": carried["k"],
+            "carried_k_source": carried["label"],
+            "mcc_argmax_at_carried_k": best,
+            "mcc_argmax_at_carried_k_note": None,
+            "mcc_argmax_at_carried_k_is_unconstrained": coincide}
+
+
+def record_carried_k(out: Path, reference: str) -> int:
+    """Merge ``mcc_argmax_at_carried_k`` into the committed sweep record.
+
+    Reads the committed per-family CSVs — no family frame is built, no
+    point is re-scored, and no cell or manifest is written. This is the
+    path the 2026-09-20 redefinition took: the sweep rows already carry
+    ``tile_mcc`` per point, so the new oracle is a different argmax over
+    the same, unchanged evidence.
+
+    Args:
+        out: The board home.
+        reference: The reference vintage, stamped into the record.
+
+    Returns:
+        Process exit code.
+    """
+    path = out / "sweeps.json"
+    sweeps = load_sweeps(path, reference)
+    carried = carried_k_by_family(out / "cells_manifest.json")
+    logger.info("carried k read for %d famil%s from cells_manifest.json",
+                len(carried), "y" if len(carried) == 1 else "ies")
+    for name, record in sweeps["families"].items():
+        csv_path = out / f"sweep_{name}.csv"
+        if not csv_path.is_file():
+            raise SystemExit(f"{csv_path.name}: missing — cannot recompute "
+                             f"{name}'s carried-k MCC oracle from the "
+                             "committed CSVs")
+        frows = read_sweep_csv(csv_path)
+        block = carried_k_record(frows, carried.get(name))
+        record.update(block)
+        best = block["mcc_argmax_at_carried_k"]
+        if best is None:
+            logger.info("%-10s %s", name, NO_CARRIED_K)
+            continue
+        logger.info("%-10s carried k%-2d (%s): MCC %.4f at (%.2f, k%d), "
+                    "micro %.4f%s", name, block["carried_k"],
+                    block["carried_k_source"], best["tile_mcc"],
+                    best["prob_t"], best["min_votes"], best["micro_f1_50"],
+                    "  [= unconstrained]"
+                    if block["mcc_argmax_at_carried_k_is_unconstrained"]
+                    else "")
+    stamp_record(sweeps)
+    path.write_text(json.dumps(sweeps, indent=2) + "\n")
+    logger.info("CARRIED-K RECORD COMPLETE: %d families in %s",
+                len(sweeps["families"]), path.relative_to(PROJECT_ROOT))
+    return 0
+
+
+def stamp_record(sweeps: dict) -> None:
+    """Refresh the record's derived index keys and its ``_README``.
+
+    Args:
+        sweeps: The record about to be written.
+    """
+    sweeps["_README"] = SWEEPS_README
+    sweeps["mcc_families"] = sorted(
+        n for n, rec in sweeps["families"].items()
+        if rec.get("mcc_argmax") is not None)
+    sweeps["mcc_carried_k_families"] = sorted(
+        n for n, rec in sweeps["families"].items()
+        if rec.get("mcc_argmax_at_carried_k") is not None)
 
 
 def main() -> int:
@@ -455,9 +738,27 @@ def main() -> int:
              "scripts/final_board_posthoc_cells.py for cells a filtered "
              "re-sweep implies.",
     )
+    ap.add_argument(
+        "--record-carried-k", action="store_true",
+        help="Recompute every family's mcc_argmax_at_carried_k from the "
+             "COMMITTED sweep CSVs and merge it into sweeps.json, then stop. "
+             "No family frame is built, no point is re-scored, no gate over "
+             "the frames runs and no cell or manifest is written: the rows "
+             "already carry tile_mcc per point, so the 2026-09-20 "
+             "redefinition is a different argmax over unchanged evidence.",
+    )
     args = ap.parse_args()
     out = board_home(args.reference)
     include_g37 = args.reference == "r2"
+    if args.record_carried_k:
+        if args.families:
+            ap.error("--record-carried-k rewrites the whole record from the "
+                     "committed CSVs; --families would narrow nothing and "
+                     "risks implying it did")
+        if args.reference == "standardised" and not args.force_r1:
+            ap.error(f"{out.relative_to(PROJECT_ROOT)} is the committed r1 "
+                     "board home and is read-only (H2). Pass --reference r2.")
+        return record_carried_k(out, args.reference)
     if args.reference == "standardised" and out.exists() and not args.force_r1:
         ap.error(f"{out.relative_to(PROJECT_ROOT)} is the committed r1 board "
                  "home and is read-only (H2). Pass --reference r2 for the "
@@ -606,6 +907,12 @@ def main() -> int:
               if args.families
               else {"buffer_m": BUFFER_M, "reference": args.reference,
                     "families": {}})
+    # Carried k is read from the manifest ON DISK, i.e. the one the PREVIOUS
+    # run wrote: a full run rebuilds the manifest below, and the carried cells
+    # it will write are the same points it reads here (the identity table and
+    # the post-hoc carry-forward), so the record cannot depend on its own
+    # output. A board with no manifest yet simply records "no carried k".
+    carried_k = carried_k_by_family(out / "cells_manifest.json")
     for name in swept:
         frows = sorted((r for r in rows if r["family"] == name),
                        key=lambda r: -r["micro_f1_50"])
@@ -618,19 +925,28 @@ def main() -> int:
         mcc_best = mcc_argmax(frows)
         sweeps["families"][name] = {
             "n_sweep_points": len(frows), "argmax": best, "top3": frows[:3],
-            "mcc_argmax": mcc_best}
+            "mcc_argmax": mcc_best,
+            **carried_k_record(frows, carried_k.get(name))}
         logger.info("%-6s oracle: micro %.4f at (%.2f, k%d) | runners: %s",
                     name, best["micro_f1_50"], best["prob_t"],
                     best["min_votes"],
                     ", ".join(f"{r['micro_f1_50']:.4f}@({r['prob_t']:.2f},"
                               f"k{r['min_votes']})" for r in frows[1:3]))
         if mcc_best is not None:
-            logger.info("%-6s MCC oracle: %.4f at (%.2f, k%d), micro %.4f",
-                        name, mcc_best["tile_mcc"], mcc_best["prob_t"],
+            logger.info("%-6s MCC optimum (unconstrained, superseded): %.4f "
+                        "at (%.2f, k%d), micro %.4f", name,
+                        mcc_best["tile_mcc"], mcc_best["prob_t"],
                         mcc_best["min_votes"], mcc_best["micro_f1_50"])
-    sweeps["mcc_families"] = sorted(
-        n for n, rec in sweeps["families"].items()
-        if rec.get("mcc_argmax") is not None)
+        at_k = sweeps["families"][name]["mcc_argmax_at_carried_k"]
+        if at_k is not None:
+            logger.info("%-6s MCC oracle (carried k%d): %.4f at (%.2f, k%d), "
+                        "micro %.4f", name,
+                        sweeps["families"][name]["carried_k"],
+                        at_k["tile_mcc"], at_k["prob_t"], at_k["min_votes"],
+                        at_k["micro_f1_50"])
+        else:
+            logger.info("%-6s MCC oracle: %s", name, NO_CARRIED_K)
+    stamp_record(sweeps)
 
     if args.families:
         # A filtered run writes the sweep RECORD only. Materialising here

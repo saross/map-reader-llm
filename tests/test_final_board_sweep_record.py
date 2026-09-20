@@ -15,6 +15,11 @@ These tests pin the three pieces that can silently go wrong:
   ``lib_advanced_metrics.calculate_tile_classification`` on the same frame;
 * the MCC argmax's tie-break must match the image script's (lowest operating
   point wins), or the two tracks' oracles are selected differently;
+* the carried-k MCC oracle the PI ruled in on 2026-09-20 — the tile-MCC
+  optimum over ``prob_t`` at the family's CARRIED vote count — must ignore
+  every other vote count, must read that vote count out of the board's own
+  ``cells_manifest.json``, and must record ``"no carried k"`` rather than
+  guessing for a family with no carried cell (``UPL``, ``A-N1``, ``B-N1``);
 * a filtered re-sweep must MERGE into the committed ``sweeps.json``, because
   dropping the families it did not sweep is the 2026-09-13 manifest defect in
   a new guise.
@@ -122,6 +127,166 @@ def test_mcc_argmax_is_none_without_a_tile_mcc() -> None:
     assert fbs.mcc_argmax([]) is None
     assert fbs.mcc_argmax([{"prob_t": 0.1, "min_votes": 1}]) is None
     assert fbs.mcc_argmax([_row(0.1, 1, None)]) is None
+
+
+# --- The carried-k MCC oracle (PI ruling 2026-09-20) ------------------------
+
+def test_mcc_argmax_at_carried_k_ignores_every_other_vote_count() -> None:
+    """The redefinition in one assertion.
+
+    The unconstrained optimum here is a k = 1 row — exactly the collapse
+    the ruling removed — while pinning ``min_votes`` to the carried k
+    returns the best row AT that k.
+    """
+    rows = [_row(0.2, 1, 0.75), _row(0.4, 1, 0.76),
+            _row(0.2, 3, 0.72), _row(0.4, 3, 0.73)]
+    assert fbs.mcc_argmax(rows) == _row(0.4, 1, 0.76)
+    assert fbs.mcc_argmax_at_carried_k(rows, 3) == _row(0.4, 3, 0.73)
+
+
+def test_mcc_argmax_at_carried_k_ties_break_to_the_lowest_threshold() -> None:
+    """Same tie-break as the unconstrained argmax, so the two agree."""
+    rows = [_row(0.9, 3, 0.70), _row(0.2, 3, 0.70), _row(0.5, 3, 0.70)]
+    assert fbs.mcc_argmax_at_carried_k(rows, 3)["prob_t"] == 0.2
+
+
+def test_mcc_argmax_at_carried_k_is_none_without_a_usable_carried_k() -> None:
+    """UPL, A-N1 and B-N1 have no carried cell on the board."""
+    rows = [_row(0.2, 1, 0.75)]
+    assert fbs.mcc_argmax_at_carried_k(rows, None) is None
+    assert fbs.mcc_argmax_at_carried_k(rows, 4) is None
+    assert fbs.mcc_argmax_at_carried_k([_row(0.2, 1, None)], 1) is None
+
+
+def test_the_two_argmaxes_coincide_on_a_single_vote_family() -> None:
+    """An N = 1 family's sweep offers one k, so the redefinition is a no-op."""
+    rows = [_row(0.2, 1, 0.72), _row(0.3, 1, 0.75)]
+    assert fbs.mcc_argmax_at_carried_k(rows, 1) == fbs.mcc_argmax(rows)
+
+
+# --- Reading the carried k out of the board's manifest ----------------------
+
+@pytest.mark.parametrize(("label", "family"), [
+    ("ARM1-N3-carried", "ARM1-N3"),
+    ("A-N10-carried", "A-N10"),
+    ("TH7-k4", "TH7"),
+    ("IM-k4", "IM"),
+    ("ARM2-N5-oracle", None),
+    ("TM", None),
+])
+def test_family_of_carried_label_reads_both_spellings(label, family) -> None:
+    assert fbs.family_of_carried_label(label) == family
+
+
+def _manifest(tmp_path, cells: list[dict]) -> None:
+    (tmp_path / "cells_manifest.json").write_text(
+        json.dumps({"cells": cells}) + "\n")
+
+
+def test_carried_k_by_family_takes_every_carried_basis(tmp_path) -> None:
+    """Plain carried, emergent post-hoc and carried-analogue all count.
+
+    The 3.7 rungs take their carried k from the carried ANALOGUES the
+    2026-09-20 addendum added, which is what the ruling directs.
+    """
+    _manifest(tmp_path, [
+        {"label": "TH7-k4", "basis": "carried", "point": "(0.15, k4)"},
+        {"label": "A-N3-carried", "basis": "carried (post-hoc)",
+         "point": "(0.15, k3)"},
+        {"label": "ARM1-N3-carried", "basis": "carried-analogue (post-hoc)",
+         "point": "(0.10, k3)"},
+        {"label": "ARM2-N5-oracle", "basis": "oracle (r2-reference argmax)",
+         "point": "(0.95, k5)"},
+    ])
+    got = fbs.carried_k_by_family(tmp_path / "cells_manifest.json")
+    assert {f: rec["k"] for f, rec in got.items()} == {
+        "TH7": 4, "A-N3": 3, "ARM1-N3": 3}
+    assert got["ARM1-N3"]["label"] == "ARM1-N3-carried"
+
+
+def test_carried_k_by_family_is_empty_without_a_manifest(tmp_path) -> None:
+    assert fbs.carried_k_by_family(tmp_path / "nothing.json") == {}
+
+
+def test_carried_k_by_family_refuses_two_disagreeing_carried_cells(
+        tmp_path) -> None:
+    """A family cannot have two carried vote counts; silence would pick one."""
+    _manifest(tmp_path, [
+        {"label": "A-N5-carried", "basis": "carried", "point": "(0.15, k4)"},
+        {"label": "A-N5-k5", "basis": "carried", "point": "(0.15, k5)"},
+    ])
+    with pytest.raises(RuntimeError, match="disagree on k"):
+        fbs.carried_k_by_family(tmp_path / "cells_manifest.json")
+
+
+# --- The record block -------------------------------------------------------
+
+def test_carried_k_record_says_no_carried_k_when_there_is_none() -> None:
+    block = fbs.carried_k_record([_row(0.2, 1, 0.7)], None)
+    assert block["carried_k"] is None
+    assert block["mcc_argmax_at_carried_k"] is None
+    assert block["mcc_argmax_at_carried_k_note"] == fbs.NO_CARRIED_K
+
+
+def test_carried_k_record_flags_when_the_two_optima_coincide() -> None:
+    rows = [_row(0.2, 1, 0.72), _row(0.3, 1, 0.75)]
+    carried = {"k": 1, "prob_t": 0.1, "label": "X-N1-carried",
+               "basis": "carried-analogue (post-hoc)"}
+    block = fbs.carried_k_record(rows, carried)
+    assert block["mcc_argmax_at_carried_k_is_unconstrained"] is True
+    assert block["carried_k_source"] == "X-N1-carried"
+    assert block["mcc_argmax_at_carried_k_note"] is None
+
+
+def test_carried_k_record_flags_when_they_differ() -> None:
+    rows = [_row(0.2, 1, 0.75), _row(0.2, 3, 0.72)]
+    carried = {"k": 3, "prob_t": 0.1, "label": "X-N3-carried",
+               "basis": "carried"}
+    block = fbs.carried_k_record(rows, carried)
+    assert block["mcc_argmax_at_carried_k_is_unconstrained"] is False
+    assert block["mcc_argmax_at_carried_k"]["min_votes"] == 3
+
+
+# --- Reading the committed CSVs back ----------------------------------------
+
+def test_read_sweep_csv_restores_the_row_types(tmp_path) -> None:
+    """``--record-carried-k`` recomputes from the CSVs, so types must survive."""
+    path = tmp_path / "sweep_X.csv"
+    path.write_text(
+        "family,prob_t,min_votes,n_detections,tp,fp,fn,micro_f1_50,"
+        "tile_mcc,tile_tp,tile_tn,tile_fp,tile_fn\n"
+        "X,0.15,3,4786,4108,678,910,0.8380252957976336,0.679178,"
+        "2424,4772,240,1105\n")
+    row = fbs.read_sweep_csv(path)[0]
+    assert row["prob_t"] == pytest.approx(0.15)
+    assert row["min_votes"] == 3 and row["n_detections"] == 4786
+    assert row["tile_tp"] == 2424
+    assert row["micro_f1_50"] == pytest.approx(0.8380252957976336)
+
+
+def test_read_sweep_csv_reads_an_empty_metric_as_none(tmp_path) -> None:
+    """A point that retained nothing is written with blank metrics."""
+    path = tmp_path / "sweep_X.csv"
+    path.write_text("family,prob_t,min_votes,n_detections,micro_f1_50,"
+                    "tile_mcc\nX,1.0,3,0,,\n")
+    row = fbs.read_sweep_csv(path)[0]
+    assert row["micro_f1_50"] is None and row["tile_mcc"] is None
+
+
+# --- The record's index keys ------------------------------------------------
+
+def test_stamp_record_indexes_both_oracle_families() -> None:
+    sweeps = {"families": {
+        "WITH": {"mcc_argmax": _row(0.2, 1, 0.7),
+                 "mcc_argmax_at_carried_k": _row(0.2, 3, 0.6)},
+        "UNCONSTRAINED-ONLY": {"mcc_argmax": _row(0.2, 1, 0.7),
+                               "mcc_argmax_at_carried_k": None},
+        "NEITHER": {"mcc_argmax": None, "mcc_argmax_at_carried_k": None},
+    }}
+    fbs.stamp_record(sweeps)
+    assert sweeps["mcc_families"] == ["UNCONSTRAINED-ONLY", "WITH"]
+    assert sweeps["mcc_carried_k_families"] == ["WITH"]
+    assert "unconstrained" in sweeps["_README"].lower()
 
 
 # --- The filtered-run merge (scripts/final_board_sweeps.load_sweeps) ---------
