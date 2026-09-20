@@ -21,7 +21,7 @@ the commit that executed it. Read top to bottom; open items first.
 ### D6 — Board follow-ups
 
 - Register the 17 addendum cells in `results/run-conditions.json`? (precedent: FOURTH-N5-oracle was registered separately.)
-- How to present MCC oracles: on every family with a choice of k the tile-MCC argmax sits at k = 1 and pays 0.06–0.18 of F1; an MCC oracle is not a like-for-like companion of the F1 oracle.
+- How to present MCC oracles: on all 23 families the tile-MCC argmax sits at the lowest vote count on offer, paying 0.06–0.18 of F1 where k = 1 is available; an MCC oracle is a vote-threshold choice wearing a metric's name, not a like-for-like companion of the F1 oracle. Option with no compute: an MCC-argmax over prob_t at the family's CARRIED k, readable from the committed CSVs.
 
 ### D7 — Legacy vote-count divergence (June-grid note § 7, f859646ba)
 
@@ -36,6 +36,6 @@ the commit that executed it. Read top to bottom; open items first.
 
 ### D4 — E89 floor — RULED 2026-09-20: revised in the declaration § 5 caveat 1 (73a4f09df): 2.46 % flips, Wilson [2.17 %, 2.80 %]; drift-only +0.0008 F1 / −0.0005 MCC; rule = claimable only if the effect clearly exceeds the drift contrast; T3's tile-MCC null now read as uninformative; no measured floor for the Gemini 3 verifier
 
-### D6a — MCC sweep of the remaining 13 families — RULED 2026-09-20: yes. In progress
+### D6a — MCC sweep of the remaining 13 families — RULED 2026-09-20: done (03b8496ed; 2,048 points, all 23 families carry mcc_argmax; no cells materialised). Finding: every one of the 23 families puts its tile-MCC argmax at the LOWEST vote count its sweep offers (13 of 13 that offered k = 1 collapsed to it; the five incumbents sit at their k = 3 floor); F1 lost 0.06–0.18 where the collapse is possible
 
 ### K3→K5 F1 gain — CONFIRMED claimable by the PI 2026-09-20 (replicate: +0.0079 vs drift-only +0.0008; `results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/`)
