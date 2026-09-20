@@ -6,6 +6,11 @@ the commit that executed it. Read top to bottom; open items first.
 
 ## Open
 
+### D9 — Do the signed rows A and B lapse after the MCC-oracle redefinition?
+
+- **Facts** (registrar, 7bffd0c2c): both signed rows cite the five re-pointed MCC-oracle conditions in `conditions_compared`. The image campaigns re-materialised those cells in place at 07:43 UTC, after both signatures, so for four hours the signed citations resolved to evaluations the PI never saw; the registrar restored them by pointing the five ids at the `-unconstrained` cells, SHA-256-identical to what was scored at signing. Numbers and membership are therefore unchanged. Two residual questions: (a) both rows describe "the MCC oracle", a term redefined after signing; (b) row B's `attests` says "the 18 registered conditions" and the run now carries 22 (the four new carried-k oracles, outside scope by construction).
+- **Options**: (i) leave both signed; add a dated `_signature_note` recording the redefinition, the restored citations, and that the new conditions are outside scope (recommended: no cited number or member changed); (ii) move both to `re-sign-pending` and re-sign after reading the redefinition.
+
 ## Ruled
 
 ### D7 — Legacy vote-count divergence — RULED 2026-09-20: documented, not rebuilt. IM-k4 is cited on the r2 board (row 35, bottom tier) and in the uplift supplement, not in the paper drafts; a +0.0004 F1 correction is not worth a rebuild and two re-signatures. Dated correction notes at every citation point (bcf1169f7 for the supplement build report and the cell's r2 evaluation; the board changelog and the two register conditions via the agents holding those files). The one never-verified text-high candidate is minuted, not verified. Root cause being fixed: the incremental extractor now refreshes matched entries and matches one-to-one, and the current chain gains a manifest-vs-union guard before any verifier spend (in progress)
