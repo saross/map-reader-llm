@@ -1,7 +1,9 @@
 # The image proposer x verifier 2x2 at deployment scale: test declaration
 
-> **Last revised**: 2026-09-20 (PI ruling: the BH family at K = 1 and K = 5
-> is T1–T4). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-20 (PI ruling: T5m added as § 3a, an additional
+> protocol-matched confound check beside the declared T5). Prior: 2026-09-20
+> (PI ruling: the BH family at K = 1 and K = 5 is T1–T4).
+> See [§ Changelog](#changelog) for revision history.
 
 **Declared**: 2026-09-19, 06:40 UTC, by the PI (Shawn Ross) with Claude
 Code, session S155. **State of the data at declaration**: the 3.7 row
@@ -72,6 +74,70 @@ written at those rungs, with its raw observed difference and p-value, a note
 recording that it is outside the family, and no `bh_adjusted_p` and no
 `significant`.
 
+## 3a. T5m — protocol-matched confound check (additional, 2026-09-20)
+
+**The contrast.** `G3IMG-ARM1-K5-votes3-carried` — the September Gemini 3
+image pool at K = 5, read at `min_votes` 3 and at IM-k3's own probability
+threshold of 0.15, under the same arm-1 verifier — against `IM-k3`. Reported
+beside it, the same pool's best micro-F1 row at three votes,
+`G3IMG-ARM1-K5-votes3-f1-oracle` at (0.20, k3), so the carried-versus-oracle
+tax on the September side is visible rather than implied. Both cells are
+materialised and scored on this board's own instrument by
+`scripts/t5m_matched_comparator.py`, which imports every primitive from
+`scripts/gemini37_image_55map_r2.py` and modifies nothing in it; results in
+`results/image-2x2-2026-09-19/tests_t5m_K3.json`.
+
+**Why it exists.** T5 compares a **3-of-3 unanimous cell on a three-pass
+pool** (n 5,538) with a **3-of-5 majority cell on a five-pass pool**
+(n 4,680). Matching the absolute vote count across pools of different depth
+does not remove the passes confound § 3 lists; it converts it into a
+vote-*fraction* confound of 1.0 against 0.6, and the sign of the comparison
+depends on which axis the matching holds fixed
+(`results/im-june-pool-grid-2026-09-20/findings.md` § 6, which also shows the
+matched comparator is already swept and costs nothing to materialise). T5m is
+that matched comparison.
+
+**Status.** T5m is **additional and post-hoc**. It was specified on
+2026-09-20, after the K = 3 results were known and after the June grid was
+read. T5 stands exactly as declared — `tests_2x2_K3.json` is untouched, its
+Benjamini–Hochberg family is unchanged at `m = 5`, and its verdicts stand —
+and T5m enters no family: it is one contrast plus its own oracle twin,
+reported with raw p-values, which the JSON records under `multiplicity`. Like
+T5, T5m is meaningful only at K = 3, IM-k3 being a three-vote cell, and is run
+there only.
+
+**Result.** Paired tile-swap permutation, 10,000 permutations, seed 42, over
+all 8,541 tiles, on the instruments of § 4. The third row is the declared T5
+re-run through this path as a pipeline gate; it reproduces
+`tests_2x2_K3.json` exactly, so the matched rows can be read against it
+without a mechanism caveat. IM-k3 is read on its own committed file and so on
+its own tile convention, as in T5 (§ 5 caveat 5).
+
+| contrast | *n* (a vs b) | micro-F1 a vs b | Δ F1 | *p* | tile-MCC a vs b | Δ MCC | *p* |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **T5m** `…K5-votes3-carried` (0.15, k3) vs `IM-k3` | 7,222 vs 4,680 | 0.7312 vs 0.8008 | **−0.0696** | **< 0.0001** | 0.7235 vs 0.7110 | +0.0125 | 0.0887 |
+| **T5m oracle** `…K5-votes3-f1-oracle` (0.20, k3) vs `IM-k3` | 6,974 vs 4,680 | 0.7357 vs 0.8008 | **−0.0651** | **< 0.0001** | 0.7347 vs 0.7110 | +0.0237 | 0.0009 |
+| T5 as declared `G3IMG-ARM1-K3-carried` vs `IM-k3` | 5,538 vs 4,680 | 0.8024 vs 0.8008 | +0.0016 | 0.7604 | 0.7247 vs 0.7110 | +0.0137 | 0.0578 |
+
+**The reading.** On **micro-F1 the declared near-tie is a property of the
+matching, not a reproduction**. Matched on pool depth, the September cell is
+0.0696 *behind* IM-k3 — more than forty times T5's own 0.0016, about thirteen
+null standard deviations, and far above the drift floor of § 5 caveat 1 — and
+it is still 0.0651 behind when the September side is given its own three-vote
+F1 oracle. T5's micro-F1 null must therefore not be read as "the earlier
+Gemini 3 image cell is reproduced"; what it says is that one particular
+matching makes the two agree.
+
+On **tile-MCC the reading survives the match.** All three contrasts put the
+September cell above IM-k3, by +0.0125 to +0.0237, so the direction and the
+rough size are stable across the matchings; the raw p-values run 0.0887
+(matched carried), 0.0578 (declared) and 0.0009 (matched oracle), none of them
+corrected here. The honest summary is a small positive tile-MCC difference of
+consistent sign rather than a single verdict — which is what the June note
+predicts from tile-MCC's flatness across this whole region.
+
+Nothing in T5m re-runs T5, re-tiers a board or touches a signed row.
+
 ## 4. The instruments
 
 **T1, T2, T3, T5**: the paired tile-swap permutation test already used by the
@@ -130,6 +196,57 @@ output `results/image-2x2-2026-09-19/tests_2x2_K{K}.json`, one file per rung.
    registration and signature are the PI's, after the tests are run.
 
 ## Changelog
+
+### 2026-09-20 — T5m: a protocol-matched confound check, added beside T5
+
+**Trigger**: `results/im-june-pool-grid-2026-09-20/findings.md` § 6. That note
+swept the June image pool on the r2 reference and found T5's pair matched on
+the *absolute* vote count across pools of different depth — 3-of-3 on three
+passes (n 5,538) against 3-of-5 on five passes (n 4,680) — so the passes
+confound § 3 says T5 removes is not removed but converted into a
+vote-*fraction* confound of 1.0 against 0.6, and the sign of the comparison
+depends on which axis the matching holds fixed. Escalated to the PI and ruled
+on the same day.
+
+**The ruling**: keep T5 exactly as declared — it is committed in three citable
+JSONs and in this changelog — and **add** a matched test, T5m, at the K = 3
+rung only, IM-k3 being a three-vote cell. New § 3a states it. Instrument:
+`scripts/t5m_matched_comparator.py` (`d985a5e51`), which imports every
+primitive from `scripts/gemini37_image_55map_r2.py` and modifies nothing in
+it; cells materialised in `2bd86154e`, scored and tested in `c9abda52e`.
+
+**What does not change**: `results/image-2x2-2026-09-19/tests_2x2_K3.json` is
+untouched. The family is still the five tests, the Benjamini–Hochberg
+correction still runs over `m = 5` at the primary rung, and T5's own verdicts
+stand — micro-F1 +0.0016 at *p* = 0.7604 (BH 0.7604, ns) and tile-MCC +0.0137
+at *p* = 0.0578 (BH 0.07225, ns). T5m enters no family and carries no adjusted
+p-value. The instruments, the other caveats, which rung is primary, and every
+other test are as they were. The declared T5 pair re-run through the new
+script reproduces its committed row exactly — the script refuses to write
+without that gate — so the added rows are on the same pipeline.
+
+**What T5m adds**, at K = 3 against `IM-k3` (paired tile-swap, 10,000
+permutations, seed 42, 8,541 tiles):
+
+| contrast | Δ micro-F1 | *p* | Δ tile-MCC | *p* |
+|---|---:|---:|---:|---:|
+| T5 as declared — 3-of-3 on three passes | +0.0016 | 0.7604 | +0.0137 | 0.0578 |
+| T5m matched — 3-of-5 on five passes, (0.15, k3) | **−0.0696** | **< 0.0001** | +0.0125 | 0.0887 |
+| T5m matched at its own three-vote F1 oracle, (0.20, k3) | **−0.0651** | **< 0.0001** | +0.0237 | 0.0009 |
+
+The micro-F1 half of T5's null does not survive the match, and § 3a says so in
+the body: the agreement is a property of the matching, not a reproduction. The
+tile-MCC half does survive, with the sign and rough size stable across all
+three matchings.
+
+**Artefacts**: `results/image-2x2-2026-09-19/tests_t5m_K3.json`; cells
+`results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/`
+and `…/G3IMG-ARM1-K5-votes3-f1-oracle/`, both recorded in that campaign's
+`cells_manifest.json` with a `basis` naming them post-hoc T5m comparators.
+**Tests**: `tests/test_t5m_matched_comparator.py` pins the matched cell to
+IM-k3's own threshold, the oracle twin to the three-vote rows only, and the
+declared-T5 reproduction gate to exact rather than tolerant equality.
+Commit: `TBDRULING1`.
 
 ### 2026-09-20 — Erratum: the metric is plain micro-F1, not "corrected"
 
