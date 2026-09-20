@@ -336,9 +336,10 @@ and tabled in the addendum's
 the collapse is the evidence for the redefinition. `cells_manifest.json`
 grows 53 → 63.
 
-**Commits**: `481d63be8` (sweep-record selector + tests), `539372938`
-(the record), `836466ff2` (gate fix + tests), `681b4e246` (detections +
-manifest), plus the evaluations and this render.
+**Commits**: `ca1330603` (sweep-record selector + tests), `539372938`
+(the record), `ec0909561` (cell builder and renderer), `836466ff2` (gate
+fix + tests), `681b4e246` (detections + manifest), `cc6d9537f`
+(evaluations + this render).
 
 ### 2026-09-20 — Correction note: `IM-k4`'s vote provenance
 
