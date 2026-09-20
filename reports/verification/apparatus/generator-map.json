@@ -1,6 +1,6 @@
 {
-  "map_version": "1.1",
-  "assembled": "2026-07-31 (Session 122) from three read-only Opus attribution agents (write-site evidence in each rule); v1.1 2026-09-13 (Session 154, checklist item 11a): nine outputs/ rules added with the charter extension to outputs/**.md",
+  "map_version": "1.2",
+  "assembled": "2026-07-31 (Session 122) from three read-only Opus attribution agents (write-site evidence in each rule); v1.1 2026-09-13 (Session 154, checklist item 11a): nine outputs/ rules added with the charter extension to outputs/**.md; v1.2 2026-09-20: gen-evaluation-md-retained, for pre-move evaluation renders kept beside an in-place re-score",
   "rules": [
     {
       "rule_id": "hw-paper-tables",
@@ -370,6 +370,15 @@
       "source_rule": "sibling:evaluation.json",
       "write_site": "scripts/evaluate_detections.py:854",
       "notes": "1,635 files; no render-only mode exists \u2014 re-derivation needs a renderer over the sibling JSON (Agent B)"
+    },
+    {
+      "rule_id": "gen-evaluation-md-retained",
+      "match": "(^|/)evaluation\\.pre-move-\\d{4}-\\d{2}-\\d{2}\\.md$",
+      "scope": "results/",
+      "generator": "scripts/evaluate_detections.py",
+      "source_rule": "sibling:evaluation.pre-move-<date>.json",
+      "write_site": "scripts/evaluate_detections.py:854",
+      "notes": "Retention copies of gen-evaluation-md. A cell scored at one path and then moved carries metadata naming the old path, so it is re-scored in place and its pre-move evaluation is renamed evaluation.pre-move-<date>.{json,csv,md} beside the new one rather than deleted. Same writer and same render as gen-evaluation-md; only the filename differs, so the --strict bar would otherwise read it as unattributed. Five files, added 2026-09-20 for the superseded MCC-oracle cells of the two image campaigns."
     },
     {
       "rule_id": "gen-batch-summary",
