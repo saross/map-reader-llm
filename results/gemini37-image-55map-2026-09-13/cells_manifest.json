@@ -9,12 +9,13 @@
       "verifier_model": "gemini-3.7-flash",
       "verifier_thinking": "low",
       "k": 3,
-      "basis": "mcc-oracle-unconstrained",
+      "basis": "tile-presence oracle (unconstrained tile-MCC optimum; presented in results/tile-presence-2026-09-21/)",
       "point": "(0.96, k2)",
       "n_detections": 5167,
       "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson",
       "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at IMG-ARM2-K3-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one.",
-      "rescored_in_place": "RE-SCORED IN PLACE 2026-09-20: this cell was scored at its original path and then moved here, so its evaluation metadata (cli_args, input_files, input_git_state) still named cells/IMG-ARM2-K3-mcc-oracle/detections.geojson, which now holds the re-pointed carried-k cell; verify_run_conditions.py raised eval-detections-mismatch on the register row citing it. It was re-scored here on the same r2 recipe (14 buffers, tile-level BCa 10,000 at seed 42, --mcc, --require-clean-inputs) over the SAME, unmodified detections file, so every headline number and confidence interval is identical to the pre-move evaluation and only the metadata paths changed. The pre-move record is retained beside it as evaluation.pre-move-2026-09-20.{json,csv,md} and score.pre-move-2026-09-20.log."
+      "rescored_in_place": "RE-SCORED IN PLACE 2026-09-20: this cell was scored at its original path and then moved here, so its evaluation metadata (cli_args, input_files, input_git_state) still named cells/IMG-ARM2-K3-mcc-oracle/detections.geojson, which now holds the re-pointed carried-k cell; verify_run_conditions.py raised eval-detections-mismatch on the register row citing it. It was re-scored here on the same r2 recipe (14 buffers, tile-level BCa 10,000 at seed 42, --mcc, --require-clean-inputs) over the SAME, unmodified detections file, so every headline number and confidence interval is identical to the pre-move evaluation and only the metadata paths changed. The pre-move record is retained beside it as evaluation.pre-move-2026-09-20.{json,csv,md} and score.pre-move-2026-09-20.log.",
+      "presentation": "PI ruling 2026-09-21: the tile-MCC optimum is no longer an oracle column on any board. This cell is the UNCONSTRAINED optimum and is presented in results/tile-presence-2026-09-21/leaderboard.md, with its vote count as a column and its verifier pool priced. Retained on disk with its committed evaluation."
     },
     {
       "label": "IMG-ARM1-K1-carried",
@@ -47,10 +48,11 @@
       "verifier_model": "gemini-3-flash-preview",
       "verifier_thinking": "minimal",
       "k": 1,
-      "basis": "mcc-oracle",
+      "basis": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)",
       "point": "(0.15, k1)",
       "n_detections": 5582,
-      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K1-mcc-oracle/detections.geojson"
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K1-mcc-oracle/detections.geojson",
+      "presentation": "PI ruling 2026-09-21: the tile-MCC optimum is no longer an oracle column on any board, under either definition. This cell is the optimum at the family's CARRIED vote count, the definition ruling 6c of 2026-09-20 introduced and this ruling superseded. It is retained on disk with its committed evaluation and is NOT presented; the tile-presence table presents the unconstrained optimum instead (results/tile-presence-2026-09-21/)."
     },
     {
       "label": "IMG-ARM1-K3-carried",
@@ -83,10 +85,11 @@
       "verifier_model": "gemini-3-flash-preview",
       "verifier_thinking": "minimal",
       "k": 3,
-      "basis": "mcc-oracle",
+      "basis": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)",
       "point": "(0.15, k3)",
       "n_detections": 4977,
-      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K3-mcc-oracle/detections.geojson"
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K3-mcc-oracle/detections.geojson",
+      "presentation": "PI ruling 2026-09-21: the tile-MCC optimum is no longer an oracle column on any board, under either definition. This cell is the optimum at the family's CARRIED vote count, the definition ruling 6c of 2026-09-20 introduced and this ruling superseded. It is retained on disk with its committed evaluation and is NOT presented; the tile-presence table presents the unconstrained optimum instead (results/tile-presence-2026-09-21/)."
     },
     {
       "label": "IMG-ARM2-K1-carried",
@@ -119,10 +122,11 @@
       "verifier_model": "gemini-3.7-flash",
       "verifier_thinking": "low",
       "k": 1,
-      "basis": "mcc-oracle",
+      "basis": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)",
       "point": "(0.98, k1)",
       "n_detections": 5322,
-      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K1-mcc-oracle/detections.geojson"
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K1-mcc-oracle/detections.geojson",
+      "presentation": "PI ruling 2026-09-21: the tile-MCC optimum is no longer an oracle column on any board, under either definition. This cell is the optimum at the family's CARRIED vote count, the definition ruling 6c of 2026-09-20 introduced and this ruling superseded. It is retained on disk with its committed evaluation and is NOT presented; the tile-presence table presents the unconstrained optimum instead (results/tile-presence-2026-09-21/)."
     },
     {
       "label": "IMG-ARM2-K3-carried",
@@ -155,10 +159,11 @@
       "verifier_model": "gemini-3.7-flash",
       "verifier_thinking": "low",
       "k": 3,
-      "basis": "mcc-oracle",
+      "basis": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)",
       "point": "(0.90, k3)",
       "n_detections": 5343,
-      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-mcc-oracle/detections.geojson"
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-mcc-oracle/detections.geojson",
+      "presentation": "PI ruling 2026-09-21: the tile-MCC optimum is no longer an oracle column on any board, under either definition. This cell is the optimum at the family's CARRIED vote count, the definition ruling 6c of 2026-09-20 introduced and this ruling superseded. It is retained on disk with its committed evaluation and is NOT presented; the tile-presence table presents the unconstrained optimum instead (results/tile-presence-2026-09-21/)."
     },
     {
       "label": "IMG-ARM1-K5-carried",
@@ -191,10 +196,11 @@
       "verifier_model": "gemini-3-flash-preview",
       "verifier_thinking": "minimal",
       "k": 5,
-      "basis": "mcc-oracle",
+      "basis": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)",
       "point": "(0.15, k5)",
       "n_detections": 4885,
-      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-mcc-oracle/detections.geojson"
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-mcc-oracle/detections.geojson",
+      "presentation": "PI ruling 2026-09-21: the tile-MCC optimum is no longer an oracle column on any board, under either definition. This cell is the optimum at the family's CARRIED vote count, the definition ruling 6c of 2026-09-20 introduced and this ruling superseded. It is retained on disk with its committed evaluation and is NOT presented; the tile-presence table presents the unconstrained optimum instead (results/tile-presence-2026-09-21/)."
     },
     {
       "label": "IMG-ARM2-K5-carried",
@@ -227,10 +233,11 @@
       "verifier_model": "gemini-3.7-flash",
       "verifier_thinking": "low",
       "k": 5,
-      "basis": "mcc-oracle",
+      "basis": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)",
       "point": "(0.95, k5)",
       "n_detections": 5197,
-      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-mcc-oracle/detections.geojson"
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-mcc-oracle/detections.geojson",
+      "presentation": "PI ruling 2026-09-21: the tile-MCC optimum is no longer an oracle column on any board, under either definition. This cell is the optimum at the family's CARRIED vote count, the definition ruling 6c of 2026-09-20 introduced and this ruling superseded. It is retained on disk with its committed evaluation and is NOT presented; the tile-presence table presents the unconstrained optimum instead (results/tile-presence-2026-09-21/)."
     }
   ]
 }

@@ -182,75 +182,30 @@ compared with a text *oracle*, which flatters the text track and
 understates the image-minus-text gap at K = 1 by a factor of 2.4
 (`reports/comparability-inventory-37-runs-2026-09-20.md` § 3.2).
 
-**MCC-oracle cells at the carried k**
-(`mcc-oracle at carried k (post-hoc, 2026-09-20)`) are the tile-MCC
-optimum over the probability threshold **with the vote count pinned to
-the family's carried `k`** — the counterpart of the F1-argmax `-oracle`
-cells already on the board, asked of the same configuration. The image
-campaigns publish an `mcc_oracle` for every rung; the text track and the
-fourth cell had none, because the board's sweep record carried micro-F1
-only, so no MCC comparison across the two tracks was possible (§ 1.2,
-§ 3.7 of the same inventory). The sweep record now carries the tile
-confusion per point, and each family's `mcc_argmax_at_carried_k` in
-`sweeps.json` names the point, its `carried_k` and the carried cell that
-fixed it (`carried_k_source`). Read each row's F1@50 beside its
-tile-MCC before quoting it.
+**The tile-MCC optimum is not on this board.** It was briefly published
+here as an "MCC oracle", first unconstrained (PI ruling 2026-09-20 item 2)
+and then pinned to each family's carried vote count (ruling 6c, same day).
+**PI ruling 2026-09-21 dropped it under both definitions.** Every one of the
+board's 23 families puts its unconstrained tile-MCC optimum at the lowest
+vote count its sweep offers, so beside an F1 oracle it reads as a rival
+configuration when it is really a vote-threshold choice wearing a metric's
+name. It is presented instead — with its vote count as a column and the
+verifier pool it would need priced — in
+[`results/tile-presence-2026-09-21/`](../tile-presence-2026-09-21/leaderboard.md).
+Tile-MCC itself stays on this board, reported beside micro-F1 at the
+carried and F1-oracle points, where both metrics describe the same
+configuration. The cells remain on disk with their committed evaluations,
+re-labelled in `cells_manifest.json`.
 
 | cell | basis | point | F1@50 | 95% CI | P@50 | R@50 | tile-MCC | 95% CI | n |
 |---|---|---|---:|---|---:|---:|---:|---|---:|
-| ARM2-N5-mcc-oracle-k5 | mcc-oracle at carried k | (0.96, k5) | 0.8821 | [0.8741, 0.8897] | 0.9466 | 0.8258 | 0.7291 | [0.7167, 0.7421] | 4378 |
-| ARM2-N3-mcc-oracle-k3 | mcc-oracle at carried k | (0.96, k3) | 0.8818 | [0.8740, 0.8893] | 0.9327 | 0.8362 | 0.7326 | [0.7203, 0.7457] | 4499 |
 | ARM2-N3-carried | carried-analogue | (0.80, k3) | 0.8802 | [0.8722, 0.8873] | 0.8658 | 0.8950 | 0.7076 | [0.6929, 0.7225] | 5187 |
-| FOURTH-N5-mcc-oracle-k5 | mcc-oracle at carried k | (0.96, k5) | 0.8758 | [0.8679, 0.8832] | 0.9335 | 0.8248 | 0.7326 | [0.7200, 0.7453] | 4434 |
 | FOURTH-N5-carried | carried-analogue | (0.98, k5) | 0.8754 | [0.8675, 0.8829] | 0.9334 | 0.8242 | 0.7322 | [0.7196, 0.7450] | 4431 |
-| FOURTH-N3-mcc-oracle-k3 | mcc-oracle at carried k | (0.96, k3) | 0.8747 | [0.8670, 0.8820] | 0.9118 | 0.8406 | 0.7376 | [0.7250, 0.7504] | 4626 |
 | FOURTH-N3-carried | carried-analogue | (0.98, k3) | 0.8744 | [0.8667, 0.8817] | 0.9117 | 0.8400 | 0.7372 | [0.7246, 0.7500] | 4623 |
-| FOURTH-N10-mcc-oracle-k10 | mcc-oracle at carried k | (0.96, k10) | 0.8732 | [0.8650, 0.8811] | 0.9522 | 0.8063 | 0.7269 | [0.7142, 0.7394] | 4249 |
-| ARM1-N5-mcc-oracle-k5 | mcc-oracle at carried k | (0.20, k5) | 0.8688 | [0.8603, 0.8767] | 0.9218 | 0.8216 | 0.7196 | [0.7061, 0.7331] | 4473 |
-| ARM1-N3-mcc-oracle-k3 | mcc-oracle at carried k | (0.20, k3) | 0.8676 | [0.8596, 0.8755] | 0.9057 | 0.8326 | 0.7236 | [0.7098, 0.7371] | 4613 |
-| ARM2-N1-mcc-oracle-k1 | mcc-oracle at carried k | (0.96, k1) | 0.8610 | [0.8533, 0.8683] | 0.8606 | 0.8613 | 0.7422 | [0.7298, 0.7551] | 5022 |
 | ARM1-N3-carried | carried-analogue | (0.10, k3) | 0.8469 | [0.8382, 0.8549] | 0.8110 | 0.8860 | 0.6591 | [0.6430, 0.6751] | 5482 |
 | ARM2-N1-carried | carried-analogue | (0.80, k1) | 0.8459 | [0.8380, 0.8532] | 0.7805 | 0.9233 | 0.7073 | [0.6920, 0.7222] | 5936 |
-| ARM1-N1-mcc-oracle-k1 | mcc-oracle at carried k | (0.20, k1) | 0.8413 | [0.8332, 0.8492] | 0.8251 | 0.8581 | 0.7246 | [0.7109, 0.7384] | 5219 |
-| FOURTH-N1-mcc-oracle-k1 | mcc-oracle at carried k | (0.96, k1) | 0.8352 | [0.8272, 0.8428] | 0.8102 | 0.8617 | 0.7471 | [0.7343, 0.7596] | 5337 |
 | FOURTH-N1-carried | carried-analogue | (0.98, k1) | 0.8348 | [0.8269, 0.8425] | 0.8101 | 0.8611 | 0.7466 | [0.7340, 0.7592] | 5334 |
 | ARM1-N1-carried | carried-analogue | (0.10, k1) | 0.7859 | [0.7767, 0.7947] | 0.6890 | 0.9145 | 0.6178 | [0.6006, 0.6342] | 6660 |
-
-### Superseded: the unconstrained tile-MCC optima
-
-Until 2026-09-20 the board's MCC oracle was the tile-MCC argmax over a
-family's **whole** achievable grid, free to choose the vote count as
-well as the probability threshold. Every one of the board's 23 families
-put that optimum at the **lowest vote count its sweep offers**: every
-family whose rungs reach down to a single vote collapsed to k = 1, and
-the five incumbents, whose sweeps floor at k = 3, sat on that floor. It
-buys a few hundredths of tile-MCC. Across the thirteen families whose
-optimum drops from a multi-vote F1 oracle to a single vote it costs
-**0.054 (A-N3) to 0.181 (B-N10) of micro-F1@50** against that family's
-own F1 oracle (PI decision log D6a, 2026-09-20, states the range as
-0.06 to 0.18). The reason is structural, not incidental:
-tile-MCC asks only whether a tile was hit at all, so over-generation is
-nearly free in that currency and expensive in F1. An unconstrained MCC
-oracle is therefore not a like-for-like companion of the F1 oracle, and
-the PI redefined the board's MCC oracle on 2026-09-20 as the optimum at
-the family's carried vote count (the rows in the table above). The ten
-cells below are the superseded selection. They are kept — materialised,
-scored, and listed here — because the collapse is a recorded property of
-the metric on this corpus, and these are the evidence for it. Do not
-quote them as the board's MCC oracle.
-
-| cell | basis | point | F1@50 | 95% CI | P@50 | R@50 | tile-MCC | 95% CI | n |
-|---|---|---|---:|---|---:|---:|---:|---|---:|
-| ARM2-N1-mcc-oracle | mcc-oracle (unconstrained k) | (0.96, k1) | 0.8610 | [0.8533, 0.8683] | 0.8606 | 0.8613 | 0.7422 | [0.7298, 0.7551] | 5022 |
-| ARM1-N1-mcc-oracle | mcc-oracle (unconstrained k) | (0.20, k1) | 0.8413 | [0.8332, 0.8492] | 0.8251 | 0.8581 | 0.7246 | [0.7109, 0.7384] | 5219 |
-| FOURTH-N1-mcc-oracle | mcc-oracle (unconstrained k) | (0.96, k1) | 0.8352 | [0.8272, 0.8428] | 0.8102 | 0.8617 | 0.7471 | [0.7343, 0.7596] | 5337 |
-| ARM2-N3-mcc-oracle | mcc-oracle (unconstrained k) | (0.96, k1) | 0.8245 | [0.8164, 0.8322] | 0.7804 | 0.8739 | 0.7475 | [0.7352, 0.7604] | 5619 |
-| ARM2-N5-mcc-oracle | mcc-oracle (unconstrained k) | (0.96, k1) | 0.8055 | [0.7974, 0.8137] | 0.7439 | 0.8782 | 0.7487 | [0.7365, 0.7617] | 5924 |
-| ARM1-N3-mcc-oracle | mcc-oracle (unconstrained k) | (0.40, k1) | 0.7979 | [0.7895, 0.8063] | 0.7747 | 0.8224 | 0.7303 | [0.7172, 0.7436] | 5327 |
-| FOURTH-N3-mcc-oracle | mcc-oracle (unconstrained k) | (0.96, k1) | 0.7798 | [0.7714, 0.7881] | 0.7005 | 0.8792 | 0.7514 | [0.7388, 0.7640] | 6298 |
-| ARM1-N5-mcc-oracle | mcc-oracle (unconstrained k) | (0.40, k1) | 0.7787 | [0.7701, 0.7871] | 0.7363 | 0.8262 | 0.7308 | [0.7175, 0.7443] | 5631 |
-| FOURTH-N5-mcc-oracle | mcc-oracle (unconstrained k) | (0.96, k1) | 0.7488 | [0.7400, 0.7573] | 0.6486 | 0.8856 | 0.7555 | [0.7425, 0.7679] | 6852 |
-| FOURTH-N10-mcc-oracle | mcc-oracle (unconstrained k) | (0.96, k1) | 0.7025 | [0.6934, 0.7115] | 0.5792 | 0.8926 | 0.7567 | [0.7438, 0.7694] | 7733 |
 
 <!-- END board-addendum -->
 ## Provenance and gates
