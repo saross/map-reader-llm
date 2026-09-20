@@ -1,6 +1,6 @@
 {
-  "map_version": "1.2",
-  "assembled": "2026-07-31 (Session 122) from three read-only Opus attribution agents (write-site evidence in each rule); v1.1 2026-09-13 (Session 154, checklist item 11a): nine outputs/ rules added with the charter extension to outputs/**.md; v1.2 2026-09-20: gen-evaluation-md-retained, for pre-move evaluation renders kept beside an in-place re-score",
+  "map_version": "1.3",
+  "assembled": "2026-07-31 (Session 122) from three read-only Opus attribution agents (write-site evidence in each rule); v1.1 2026-09-13 (Session 154, checklist item 11a): nine outputs/ rules added with the charter extension to outputs/**.md; v1.2 2026-09-20: gen-evaluation-md-retained, for pre-move evaluation renders kept beside an in-place re-score; v1.3 2026-09-21: gen-tile-presence, for the tile-presence leaderboard and frontier renders",
   "rules": [
     {
       "rule_id": "hw-paper-tables",
@@ -894,6 +894,15 @@
       "source_rule": "none",
       "stratum": "hand-written",
       "notes": "Hand-authored directory explainers"
+    },
+    {
+      "rule_id": "gen-tile-presence",
+      "match": "^results/tile-presence-\\d{4}-\\d{2}-\\d{2}/(leaderboard|frontier/frontier)\\.md$",
+      "scope": "results/tile-presence-2026-09-21/",
+      "generator": "scripts/build_tile_presence_board.py",
+      "source_rule": "sibling:leaderboard.json / frontier/frontier.json",
+      "write_site": "scripts/build_tile_presence_board.py:stage_leaderboard, stage_frontier",
+      "notes": "The tile-presence presentation (PI ruling 2026-09-21): the tile-MCC optimum is off the boards under both definitions and tabled here instead, with its vote count as a column and its verifier pool priced. Both documents are rendered from the committed sweep records beside their own JSON. findings.md in the same directory is hand-written and is not covered by this rule. Added 2026-09-21."
     }
   ]
 }
