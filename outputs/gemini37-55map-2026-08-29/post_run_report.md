@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-55map-2026-08-29
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `ec1d3f7ff`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `f8d945c75`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-55map-2026-08-29` · **Registry status**: active · **Purpose**: Does the 3.7 GS gain transfer to 55-map deployment, and in which seat? One K=5 3.7 proposer pool, two verifier arms (carried Gemini-3; all-3.7), both carried points committed before deployment scoring. With the fourth cell (registered under stride-55map-2026-08-25) this completes the proposer x verifier 2x2. Predictions D1-D7, card planning/gemini37-55map-2026-08-29.md.
 
@@ -78,19 +78,23 @@ Audit and reconciliation reports whose text names this run or its directory — 
 - `reports/r7-gaps-deltas-2026-09-11.md`
 - `reports/billing-reconciliation-2026-09-11.md`
 
-## 5. Registered conditions (12)
+## 5. Registered conditions (16)
 
 F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment working buffer. Confidence intervals are those the evaluation recorded (method, iterations and seed per condition in the manifest). `mcc` is tile-level. A cell reading *not supplied* means the metric is absent from the condition's evaluation, not that it is zero; a tile-MCC reading *withheld* means the tile-join invariant REFUSED that condition's per-tile table on this frame, so the tile metrics and the bootstrap intervals were not computed — the condition's whole-frame F1 is unaffected and is reported in full (PI ruling 2026-09-13; the named reason is in the condition's manifest row).
 
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
+| `arm1-n1-carried-posthoc-p0.10-k1-r2-gt` | proposer-verifier | verified | 1 | k=1/pt=0.1 | 6660 | 0.6969 [0.6853, 0.7081] | 0.7859 [0.7767, 0.7947] | 0.6178 |
 | `arm1-n1-oracle-p0.20-k1-r2-gt` | proposer-verifier | verified | 1 | k=1/pt=0.2 | 5219 | 0.7481 [0.7367, 0.7591] | 0.8413 [0.8332, 0.8492] | 0.7246 |
+| `arm1-n3-carried-posthoc-p0.10-k3-r2-gt` | proposer-verifier | verified | 3 | k=3/pt=0.1 | 5482 | 0.7514 [0.7397, 0.7629] | 0.8469 [0.8382, 0.8549] | 0.6591 |
 | `arm1-n3-oracle-p0.15-k3-r2-gt` | proposer-verifier | verified | 3 | k=3/pt=0.15 | 4772 | 0.7739 [0.7621, 0.7853] | 0.8705 [0.8625, 0.8780] | 0.7179 |
 | `arm1-n5-carried-p0.10-k5-canonical-gt` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 5229 | 0.7220 [0.7092, 0.7346] | 0.8494 [0.8410, 0.8574] | 0.6665 |
 | `arm1-n5-carried-p0.10-k5-r2-gt` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 5229 | 0.7592 [0.7475, 0.7708] | 0.8551 [0.8466, 0.8631] | 0.6655 |
 | `arm1-n5-carried-p0.10-k5-standardised-gt` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 5229 | 0.7591 [0.7473, 0.7705] | 0.8550 [0.8465, 0.8630] | 0.6665 |
 | `arm1-n5-oracle-p0.15-k5-r2-gt` | proposer-verifier | verified | 5 | k=5/pt=0.15 | 4616 | 0.7754 [0.7635, 0.7869] | 0.8727 [0.8644, 0.8803] | 0.7147 |
+| `arm2-n1-carried-posthoc-p0.80-k1-r2-gt` | proposer-verifier | verified | 1 | k=1/pt=0.8 | 5936 | 0.7510 [0.7397, 0.7617] | 0.8459 [0.8380, 0.8532] | 0.7073 |
 | `arm2-n1-oracle-p0.98-k1-r2-gt` | proposer-verifier | verified | 1 | k=1/pt=0.98 | 5021 | 0.7664 [0.7549, 0.7775] | 0.8610 [0.8534, 0.8684] | 0.7422 |
+| `arm2-n3-carried-posthoc-p0.80-k3-r2-gt` | proposer-verifier | verified | 3 | k=3/pt=0.8 | 5187 | 0.7820 [0.7703, 0.7930] | 0.8802 [0.8722, 0.8873] | 0.7076 |
 | `arm2-n3-oracle-p0.95-k3-r2-gt` | proposer-verifier | verified | 3 | k=3/pt=0.95 | 5097 | 0.7870 [0.7754, 0.7982] | 0.8848 [0.8770, 0.8919] | 0.7163 |
 | `arm2-n5-carried-p0.80-k5-canonical-gt` | proposer-verifier | verified | 5 | k=5/pt=0.8 | 5003 | 0.7469 [0.7345, 0.7595] | 0.8763 [0.8686, 0.8837] | 0.7073 |
 | `arm2-n5-carried-p0.80-k5-r2-gt` | proposer-verifier | verified | 5 | k=5/pt=0.8 | 5003 | 0.7846 [0.7731, 0.7960] | 0.8827 [0.8749, 0.8899] | 0.7063 |
@@ -99,12 +103,12 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 
 Buffers on file (metres), by how many conditions carry that set:
 
-- 10 condition(s): 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150
+- 14 condition(s): 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150
 - 2 condition(s): 20, 30, 50
 
-Tile-level MCC is on file for 12 of 12 condition(s).
+Tile-level MCC is on file for 16 of 16 condition(s).
 
-### 5.1 Condition caveats (12 condition(s), 12 distinct caveat(s))
+### 5.1 Condition caveats (16 condition(s), 16 distinct caveat(s))
 
 Grouped by identical text: a caveat written once for a family of sibling cells is reproduced once, with every cell it applies to named. Nothing is elided.
 
@@ -116,16 +120,24 @@ Grouped by identical text: a caveat written once for a family of sibling cells i
   B3 — arm 2 (all-3.7) at its committed carried point, CANONICAL chain: corrected-F1@50 0.876316 [0.868574, 0.883690], P 0.8901 / R 0.8630, tile-MCC 0.7073, 5,003 detections. The campaign headline: +0.0270 over arm 1 (p = 0.0001, BH-significant) — the family gain sits in the verifier seat. Also the model arm of the student-baseline programme (planning/student-baseline-2026-08-31.md).
 - `arm2-n5-carried-p0.80-k5-standardised-gt`
   B4 — the same detections on the STANDARDISED reference: F1@50 0.8825 [0.8746, 0.8897], P 0.8831 / R 0.8818 — above the entire 2026-08-27 final board including its oracles (ceiling B-N10-oracle 0.8558). Tile matrix identical to the canonical 50 m row (2516/4798/219/1008).
+- `arm1-n1-carried-posthoc-p0.10-k1-r2-gt`
+  r2 board cell ARM1-N1-carried (basis carried-analogue (post-hoc), added 2026-09-20; point (0.10, k1)). Registered per reports/comparability-inventory-37-runs-2026-09-20.md section 3.2 (PI ruling 2026-09-20), which found these carried-analogue points already swept on r2 but never materialised, leaving the carried-against-carried comparison with no registered cell below the top rung. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final\_board\_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate\_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain.
 - `arm1-n1-oracle-p0.20-k1-r2-gt`
   r2 board cell ARM1-N1-oracle (oracle (r2-reference argmax), F1@50 0.8413, tier via final\_board\_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate\_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain.
+- `arm1-n3-carried-posthoc-p0.10-k3-r2-gt`
+  r2 board cell ARM1-N3-carried (basis carried-analogue (post-hoc), added 2026-09-20; point (0.10, k3)). Registered per reports/comparability-inventory-37-runs-2026-09-20.md section 3.2 (PI ruling 2026-09-20), which found these carried-analogue points already swept on r2 but never materialised, leaving the carried-against-carried comparison with no registered cell below the top rung. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final\_board\_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate\_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain.
 - `arm1-n3-oracle-p0.15-k3-r2-gt`
   r2 board cell ARM1-N3-oracle (oracle (r2-reference argmax), F1@50 0.8705, tier via final\_board\_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate\_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain.
 - `arm1-n5-carried-p0.10-k5-r2-gt`
   r2 board cell ARM1-N5-carried (carried, F1@50 0.8551, tier via final\_board\_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate\_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain.
 - `arm1-n5-oracle-p0.15-k5-r2-gt`
   r2 board cell ARM1-N5-oracle (oracle (r2-reference argmax), F1@50 0.8727, tier via final\_board\_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate\_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain.
+- `arm2-n1-carried-posthoc-p0.80-k1-r2-gt`
+  r2 board cell ARM2-N1-carried (basis carried-analogue (post-hoc), added 2026-09-20; point (0.80, k1)). Registered per reports/comparability-inventory-37-runs-2026-09-20.md section 3.2 (PI ruling 2026-09-20), which found these carried-analogue points already swept on r2 but never materialised, leaving the carried-against-carried comparison with no registered cell below the top rung. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final\_board\_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate\_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain.
 - `arm2-n1-oracle-p0.98-k1-r2-gt`
   r2 board cell ARM2-N1-oracle (oracle (r2-reference argmax), F1@50 0.8610, tier via final\_board\_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate\_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain.
+- `arm2-n3-carried-posthoc-p0.80-k3-r2-gt`
+  r2 board cell ARM2-N3-carried (basis carried-analogue (post-hoc), added 2026-09-20; point (0.80, k3)). Registered per reports/comparability-inventory-37-runs-2026-09-20.md section 3.2 (PI ruling 2026-09-20), which found these carried-analogue points already swept on r2 but never materialised, leaving the carried-against-carried comparison with no registered cell below the top rung. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final\_board\_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate\_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain.
 - `arm2-n3-oracle-p0.95-k3-r2-gt`
   r2 board cell ARM2-N3-oracle (oracle (r2-reference argmax), F1@50 0.8848, tier via final\_board\_50m.json). Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate\_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain.
 - `arm2-n5-carried-p0.80-k5-r2-gt`
@@ -215,7 +227,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `ec1d3f7ff` |
+| Source commit | `f8d945c75` |
 | Manifest extractor | `0.7.1` |
 | Run row last extracted | `2026-09-13T09:02:37Z` |
 
