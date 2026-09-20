@@ -9025,6 +9025,28 @@
       "note": "carried analogue: (0.98, k10) is FOURTH's GS-carried operating point at its top rung; the same probability threshold is applied downward here with k set to this rung's own N. Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.2. Post-hoc, not a registered claim."
     },
     {
+      "label": "ARM2-N1-mcc-oracle",
+      "basis": "mcc-oracle (post-hoc)",
+      "point": "(0.96, k1)",
+      "n_detections": 5022,
+      "f1_50": 0.861,
+      "ci": [
+        0.8533,
+        0.8683
+      ],
+      "precision_50": 0.8606,
+      "recall_50": 0.8613,
+      "mcc": 0.7422,
+      "mcc_ci": [
+        0.7298,
+        0.7551
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7422 against the F1 argmax's 0.8610 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
       "label": "ARM1-N3-carried",
       "basis": "carried-analogue (post-hoc)",
       "point": "(0.10, k3)",
@@ -9069,6 +9091,50 @@
       "note": "carried analogue: (0.80, k5) is ARM2's GS-carried operating point at its top rung; the same probability threshold is applied downward here with k set to this rung's own N. Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.2. Post-hoc, not a registered claim."
     },
     {
+      "label": "ARM1-N1-mcc-oracle",
+      "basis": "mcc-oracle (post-hoc)",
+      "point": "(0.20, k1)",
+      "n_detections": 5219,
+      "f1_50": 0.8413,
+      "ci": [
+        0.8332,
+        0.8492
+      ],
+      "precision_50": 0.8251,
+      "recall_50": 0.8581,
+      "mcc": 0.7246,
+      "mcc_ci": [
+        0.7109,
+        0.7384
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7246 against the F1 argmax's 0.8413 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "FOURTH-N1-mcc-oracle",
+      "basis": "mcc-oracle (post-hoc)",
+      "point": "(0.96, k1)",
+      "n_detections": 5337,
+      "f1_50": 0.8352,
+      "ci": [
+        0.8272,
+        0.8428
+      ],
+      "precision_50": 0.8102,
+      "recall_50": 0.8617,
+      "mcc": 0.7471,
+      "mcc_ci": [
+        0.7343,
+        0.7596
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7471 against the F1 argmax's 0.8352 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
       "label": "FOURTH-N1-carried",
       "basis": "carried-analogue (post-hoc)",
       "point": "(0.98, k1)",
@@ -9091,6 +9157,72 @@
       "note": "carried analogue: (0.98, k10) is FOURTH's GS-carried operating point at its top rung; the same probability threshold is applied downward here with k set to this rung's own N. Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.2. Post-hoc, not a registered claim."
     },
     {
+      "label": "ARM2-N3-mcc-oracle",
+      "basis": "mcc-oracle (post-hoc)",
+      "point": "(0.96, k1)",
+      "n_detections": 5619,
+      "f1_50": 0.8245,
+      "ci": [
+        0.8164,
+        0.8322
+      ],
+      "precision_50": 0.7804,
+      "recall_50": 0.8739,
+      "mcc": 0.7475,
+      "mcc_ci": [
+        0.7352,
+        0.7604
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7475 against the F1 argmax's 0.8848 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "ARM2-N5-mcc-oracle",
+      "basis": "mcc-oracle (post-hoc)",
+      "point": "(0.96, k1)",
+      "n_detections": 5924,
+      "f1_50": 0.8055,
+      "ci": [
+        0.7974,
+        0.8137
+      ],
+      "precision_50": 0.7439,
+      "recall_50": 0.8782,
+      "mcc": 0.7487,
+      "mcc_ci": [
+        0.7365,
+        0.7617
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7487 against the F1 argmax's 0.8871 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "ARM1-N3-mcc-oracle",
+      "basis": "mcc-oracle (post-hoc)",
+      "point": "(0.40, k1)",
+      "n_detections": 5327,
+      "f1_50": 0.7979,
+      "ci": [
+        0.7895,
+        0.8063
+      ],
+      "precision_50": 0.7747,
+      "recall_50": 0.8224,
+      "mcc": 0.7303,
+      "mcc_ci": [
+        0.7172,
+        0.7436
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7303 against the F1 argmax's 0.8705 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
       "label": "ARM1-N1-carried",
       "basis": "carried-analogue (post-hoc)",
       "point": "(0.10, k1)",
@@ -9111,6 +9243,94 @@
       "group": null,
       "cost_usd": null,
       "note": "carried analogue: (0.10, k5) is ARM1's GS-carried operating point at its top rung; the same probability threshold is applied downward here with k set to this rung's own N. Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.2. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "FOURTH-N3-mcc-oracle",
+      "basis": "mcc-oracle (post-hoc)",
+      "point": "(0.96, k1)",
+      "n_detections": 6298,
+      "f1_50": 0.7798,
+      "ci": [
+        0.7714,
+        0.7881
+      ],
+      "precision_50": 0.7005,
+      "recall_50": 0.8792,
+      "mcc": 0.7514,
+      "mcc_ci": [
+        0.7388,
+        0.764
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7514 against the F1 argmax's 0.8747 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "ARM1-N5-mcc-oracle",
+      "basis": "mcc-oracle (post-hoc)",
+      "point": "(0.40, k1)",
+      "n_detections": 5631,
+      "f1_50": 0.7787,
+      "ci": [
+        0.7701,
+        0.7871
+      ],
+      "precision_50": 0.7363,
+      "recall_50": 0.8262,
+      "mcc": 0.7308,
+      "mcc_ci": [
+        0.7175,
+        0.7443
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7308 against the F1 argmax's 0.8727 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "FOURTH-N5-mcc-oracle",
+      "basis": "mcc-oracle (post-hoc)",
+      "point": "(0.96, k1)",
+      "n_detections": 6852,
+      "f1_50": 0.7488,
+      "ci": [
+        0.74,
+        0.7573
+      ],
+      "precision_50": 0.6486,
+      "recall_50": 0.8856,
+      "mcc": 0.7555,
+      "mcc_ci": [
+        0.7425,
+        0.7679
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7555 against the F1 argmax's 0.8758 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
+    },
+    {
+      "label": "FOURTH-N10-mcc-oracle",
+      "basis": "mcc-oracle (post-hoc)",
+      "point": "(0.96, k1)",
+      "n_detections": 7733,
+      "f1_50": 0.7025,
+      "ci": [
+        0.6934,
+        0.7115
+      ],
+      "precision_50": 0.5792,
+      "recall_50": 0.8926,
+      "mcc": 0.7567,
+      "mcc_ci": [
+        0.7438,
+        0.7694
+      ],
+      "tier": null,
+      "group": null,
+      "cost_usd": null,
+      "note": "tile-MCC argmax of this family's committed sweep space (tile-MCC 0.7567 against the F1 argmax's 0.8813 micro-F1@50). Added 2026-09-20 per reports/comparability-inventory-37-runs-2026-09-20.md \u00a7 3.7, so the text track and the fourth cell carry the MCC oracle the image rows already publish. Post-hoc, not a registered claim."
     }
   ],
   "addendum": {

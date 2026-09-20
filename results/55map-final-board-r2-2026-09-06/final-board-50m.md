@@ -1,9 +1,10 @@
 # The final 55-map board @ 50 m — every run, carried and oracle (reference r2)
 
-> **Last revised**: 2026-09-20 (post-hoc addendum — the seven
-> carried-analogue cells; `FOURTH-N5-oracle`'s board status minuted; the
-> tiered board unchanged). See [§ Changelog](#changelog) for revision
-> history. Card:
+> **Last revised**: 2026-09-20 (post-hoc addendum — seven
+> carried-analogue cells and ten tile-MCC oracles;
+> `FOURTH-N5-oracle`'s board status minuted; the tiered board
+> unchanged). See [§ Changelog](#changelog) for revision history.
+> Card:
 > `planning/55map-final-board-2026-08-27.md`. Reference:
 > revision r2 (4,726 student + 278 extension + 14 audit-reviewed; card `planning/reference-revision-2026-09-06.md`).
 > Instrument: round-robin tile-swap micro-F1 permutation (10000, seed 42) + BH q=0.05 + greedy-clique tiers (the GS chain).
@@ -197,10 +198,20 @@ it.
 | ARM2-N3-carried | carried-analogue | (0.80, k3) | 0.8802 | [0.8722, 0.8873] | 0.8658 | 0.8950 | 0.7076 | [0.6929, 0.7225] | 5187 |
 | FOURTH-N5-carried | carried-analogue | (0.98, k5) | 0.8754 | [0.8675, 0.8829] | 0.9334 | 0.8242 | 0.7322 | [0.7196, 0.7450] | 4431 |
 | FOURTH-N3-carried | carried-analogue | (0.98, k3) | 0.8744 | [0.8667, 0.8817] | 0.9117 | 0.8400 | 0.7372 | [0.7246, 0.7500] | 4623 |
+| ARM2-N1-mcc-oracle | mcc-oracle | (0.96, k1) | 0.8610 | [0.8533, 0.8683] | 0.8606 | 0.8613 | 0.7422 | [0.7298, 0.7551] | 5022 |
 | ARM1-N3-carried | carried-analogue | (0.10, k3) | 0.8469 | [0.8382, 0.8549] | 0.8110 | 0.8860 | 0.6591 | [0.6430, 0.6751] | 5482 |
 | ARM2-N1-carried | carried-analogue | (0.80, k1) | 0.8459 | [0.8380, 0.8532] | 0.7805 | 0.9233 | 0.7073 | [0.6920, 0.7222] | 5936 |
+| ARM1-N1-mcc-oracle | mcc-oracle | (0.20, k1) | 0.8413 | [0.8332, 0.8492] | 0.8251 | 0.8581 | 0.7246 | [0.7109, 0.7384] | 5219 |
+| FOURTH-N1-mcc-oracle | mcc-oracle | (0.96, k1) | 0.8352 | [0.8272, 0.8428] | 0.8102 | 0.8617 | 0.7471 | [0.7343, 0.7596] | 5337 |
 | FOURTH-N1-carried | carried-analogue | (0.98, k1) | 0.8348 | [0.8269, 0.8425] | 0.8101 | 0.8611 | 0.7466 | [0.7340, 0.7592] | 5334 |
+| ARM2-N3-mcc-oracle | mcc-oracle | (0.96, k1) | 0.8245 | [0.8164, 0.8322] | 0.7804 | 0.8739 | 0.7475 | [0.7352, 0.7604] | 5619 |
+| ARM2-N5-mcc-oracle | mcc-oracle | (0.96, k1) | 0.8055 | [0.7974, 0.8137] | 0.7439 | 0.8782 | 0.7487 | [0.7365, 0.7617] | 5924 |
+| ARM1-N3-mcc-oracle | mcc-oracle | (0.40, k1) | 0.7979 | [0.7895, 0.8063] | 0.7747 | 0.8224 | 0.7303 | [0.7172, 0.7436] | 5327 |
 | ARM1-N1-carried | carried-analogue | (0.10, k1) | 0.7859 | [0.7767, 0.7947] | 0.6890 | 0.9145 | 0.6178 | [0.6006, 0.6342] | 6660 |
+| FOURTH-N3-mcc-oracle | mcc-oracle | (0.96, k1) | 0.7798 | [0.7714, 0.7881] | 0.7005 | 0.8792 | 0.7514 | [0.7388, 0.7640] | 6298 |
+| ARM1-N5-mcc-oracle | mcc-oracle | (0.40, k1) | 0.7787 | [0.7701, 0.7871] | 0.7363 | 0.8262 | 0.7308 | [0.7175, 0.7443] | 5631 |
+| FOURTH-N5-mcc-oracle | mcc-oracle | (0.96, k1) | 0.7488 | [0.7400, 0.7573] | 0.6486 | 0.8856 | 0.7555 | [0.7425, 0.7679] | 6852 |
+| FOURTH-N10-mcc-oracle | mcc-oracle | (0.96, k1) | 0.7025 | [0.6934, 0.7115] | 0.5792 | 0.8926 | 0.7567 | [0.7438, 0.7694] | 7733 |
 
 <!-- END board-addendum -->
 ## Provenance and gates
@@ -226,6 +237,66 @@ it.
   point was ever registered there).
 
 ## Changelog
+
+### 2026-09-20 — Post-hoc addendum: the ten tile-MCC oracles
+
+**Refresh trigger**: this board's sweep record carried micro-F1 and nothing
+else, so no family on it could publish a tile-MCC oracle, while both image
+campaigns publish an `mcc_oracle` for every rung — leaving every text-vs-image
+MCC comparison one-sided
+(`reports/comparability-inventory-37-runs-2026-09-20.md` § 1.2, § 3.7). PI
+ruling 2026-09-20, item 2.
+
+**What changed**: `scripts/final_board_sweeps.py` now records `tile_mcc`,
+`tile_tp`, `tile_tn`, `tile_fp` and `tile_fn` per sweep point and an
+`mcc_argmax` per family. The six 3.7 families and the four fourth-cell rungs
+were re-swept — 926 points, sapphire, 20 workers, 51 minutes, $0 API — and
+their argmax cells materialised and scored into the
+[§ Addendum](#addendum-post-hoc-cells-beside-the-tiered-board):
+`ARM1-N{1,3,5}-mcc-oracle`, `ARM2-N{1,3,5}-mcc-oracle`,
+`FOURTH-N{1,3,5,10}-mcc-oracle`. `cells_manifest.json` grows 43 → 53;
+`sweeps.json` gains `mcc_families`, naming the ten families whose record
+carries the tile columns.
+
+**Numbers that moved**: none. The re-sweep is deterministic and was gated on
+that: all 926 rows of the ten re-swept CSVs were compared field by field
+against the committed files, and `family`, `prob_t`, `min_votes`,
+`n_detections`, `tp`, `fp`, `fn` and `micro_f1_50` are byte-identical
+throughout; the five tile columns are the only additions. The thirteen
+families that were not re-swept are byte-identical objects in `sweeps.json`,
+and every re-swept family's F1 argmax keeps its point and its value.
+
+**What the new rows say — read F1 beside MCC.** Every family with a choice of
+`k` puts its tile-MCC argmax at **k = 1**, abandoning unanimity, and pays
+0.06–0.18 of micro-F1 for a fraction of a point of tile-MCC:
+
+| family | F1 oracle | its F1@50 | MCC oracle | its F1@50 | its tile-MCC |
+|---|---|---:|---|---:|---:|
+| ARM1-N5 | (0.15, k5) | 0.8727 | (0.40, **k1**) | 0.7787 | 0.7308 |
+| ARM2-N5 | (0.95, k5) | 0.8871 | (0.96, **k1**) | 0.8055 | 0.7487 |
+| FOURTH-N10 | (0.96, k9) | 0.8813 | (0.96, **k1**) | 0.7025 | 0.7567 |
+| FOURTH-N5 | (0.96, k5) | 0.8758 | (0.96, **k1**) | 0.7488 | 0.7555 |
+
+tile-MCC asks only whether a tile was hit at all, so over-generation is cheap
+in that currency and expensive in F1. An MCC oracle is therefore **not** a
+like-for-like companion to the F1 oracle on this corpus. The inventory
+reported this collapse for the Gemini 3 image row alone (§ 5.10); it is a
+property of the metric on this corpus, not of that row.
+
+**Cross-check obtained for free**: every scored tile-MCC reproduces the
+`tile_mcc` the extended sweep record wrote for the same point, to four
+decimal places, on all ten cells — an end-to-end confirmation, on ten
+independent points, that the new sweep columns are the engine's tile-MCC and
+not a look-alike.
+
+**What did NOT change**: the 35-cell tiered board — rows, values, tiers,
+group letters, the 595-pair Benjamini–Hochberg family and
+`significance-groups.png`. `scripts/final_board_build.py` was not run.
+Addendum rows carry no tier and no group letter.
+
+**Commits**: `835c2f3a0` (sweep-record extension + tests), `a1c4bf2c3`
+(re-swept CSVs + `sweeps.json`), `1ed3e54cb` (detections + manifest),
+`89d7f7e7c` (evaluations).
 
 ### 2026-09-20 — Post-hoc addendum: the seven carried-analogue cells
 
