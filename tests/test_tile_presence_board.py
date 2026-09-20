@@ -102,15 +102,46 @@ def test_sweep_row_at_tolerates_float_representation() -> None:
 
 # --- The cost block ---------------------------------------------------------
 
-LEG = {"stages": ["outputs/x/verify"], "audited_usd": 9.2650,
-       "items_covered": 8337}
+LEG = {"stages": ["outputs/x/verify"], "basis": "audited", "usd": 9.2650,
+       "candidates": 8337}
+
+#: The same leg as the auditor can only lower-bound it: a pre-2026-09-14
+#: cleanup overwrote the main pass's meta, so it has no usable cost.
+UNAUDITED_LEG = {"stages": ["outputs/x/verify"], "basis": "unaudited",
+                 "usd": None, "candidates": None,
+                 "note": "lower bound only (cleanup-overwrite)"}
 
 
 def test_the_rate_is_the_legs_audited_usd_per_candidate() -> None:
     block = tp.cost_block(8337, LEG)
+    assert block["verifier_cost_basis"] == "audited"
     assert block["verifier_usd_per_candidate"] == pytest.approx(
         9.2650 / 8337)
     assert block["pool_verifier_usd"] == pytest.approx(9.2650, abs=1e-4)
+
+
+def test_a_published_leg_prices_the_pool_too() -> None:
+    """Where the auditor cannot reach the truth, the report's figure does."""
+    leg = {**LEG, "basis": "published", "source": "outputs/x/report.md"}
+    assert tp.cost_block(8337, leg)["pool_verifier_usd"] == pytest.approx(
+        9.2650, abs=1e-4)
+
+
+def test_a_lower_bound_is_never_multiplied_into_a_cost() -> None:
+    """The one arithmetic this builder must refuse to do.
+
+    A lower bound times a pool size is a number that looks like a cost and
+    is not, so an unaudited leg prices nothing and says why.
+    """
+    block = tp.cost_block(8337, UNAUDITED_LEG)
+    assert block["verifier_cost_basis"] == "unaudited"
+    assert block["verifier_usd_per_candidate"] is None
+    assert block["pool_verifier_usd"] is None
+    assert "cleanup-overwrite" in block["verifier_cost_note"]
+
+
+def test_an_unmapped_leg_is_distinguished_from_an_unaudited_one() -> None:
+    assert tp.cost_block(100, None)["verifier_cost_basis"] == "unmapped"
 
 
 def test_a_smaller_pool_is_flagged_as_inheriting_a_larger_leg() -> None:

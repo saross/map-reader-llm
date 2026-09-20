@@ -146,6 +146,57 @@ for _k in (1, 3, 5):
 #: the legs that actually need one are listed, and each says why.
 LEG_MODEL: dict[str, str] = {}
 
+#: Audited verifier-leg costs as the campaigns' own post-run reports PUBLISH
+#: them, transcribed with their source. These exist because
+#: ``scripts/audit_verifier_cost.py`` cannot always reach the truth from the
+#: working tree: ``run_pv.py cleanup`` before 2026-09-14 rewrote
+#: ``run.meta.json`` with the retry pass's usage only, so a stage whose main
+#: pass survives nowhere on disc audits to a LOWER BOUND. The auditor says so
+#: rather than guessing, and its own docstring names this campaign's K = 1
+#: arm 2 as the worked example (US$0.0153 read against US$7.7028 audited).
+#:
+#: Where the auditor IS complete it is cross-checked against these figures and
+#: must agree to the cent, so neither source can drift from the other
+#: unnoticed.
+PUBLISHED_USD = "outputs/gemini37-image-55map-2026-09-13/post_run_report.md"
+PUBLISHED_USD_G3 = "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+PUBLISHED_LEG_COST: dict[str, dict[str, Any]] = {
+    # gemini37-image-55map-2026-09-13, post_run_report.md section 2 stage
+    # table ("K = 1 arm 1", "K = 1 arm 2", "K = 3 arm 1", "K = 3 arm 2",
+    # "K = 5 arm 1", "K = 5 arm 2"), read 2026-09-21.
+    "IMG-ARM1-K1": {"usd": 4.9626, "candidates": 6985, "source": PUBLISHED_USD},
+    "IMG-ARM2-K1": {"usd": 7.7028, "candidates": 6985, "source": PUBLISHED_USD},
+    "IMG-ARM1-K3": {"usd": 5.9058, "candidates": 8337, "source": PUBLISHED_USD},
+    "IMG-ARM2-K3": {"usd": 9.2650, "candidates": 8337, "source": PUBLISHED_USD},
+    "IMG-ARM1-K5": {"usd": 6.4896, "candidates": 9173, "source": PUBLISHED_USD},
+    "IMG-ARM2-K5": {"usd": 10.1788, "candidates": 9173,
+                    "source": PUBLISHED_USD},
+    # gemini3-image-55map-2026-09-16, post_run_report.md section 2 stage
+    # table, read 2026-09-21. Its "Six verifier legs" row totals US$189.4717
+    # over 209,920 verifications, which these six reproduce.
+    "G3IMG-ARM1-K1": {"usd": 15.7559, "candidates": 22785,
+                      "source": PUBLISHED_USD_G3},
+    "G3IMG-ARM2-K1": {"usd": 25.3978, "candidates": 22785,
+                      "source": PUBLISHED_USD_G3},
+    "G3IMG-ARM1-K3": {"usd": 25.1020, "candidates": 36389,
+                      "source": PUBLISHED_USD_G3},
+    "G3IMG-ARM2-K3": {"usd": 40.5813, "candidates": 36389,
+                      "source": PUBLISHED_USD_G3},
+    "G3IMG-ARM1-K5": {"usd": 31.5422, "candidates": 45786,
+                      "source": PUBLISHED_USD_G3},
+    "G3IMG-ARM2-K5": {"usd": 51.0925, "candidates": 45786,
+                      "source": PUBLISHED_USD_G3},
+}
+
+#: How close an auditor run and a published figure must be to be called the
+#: same number. One cent: both are quoted to four decimal places.
+COST_AGREEMENT_USD = 0.01
+
+#: Cost bases that may be used to price a pool. ``unaudited`` may not: a
+#: cleanup-overwritten stage yields a lower bound, and multiplying a lower
+#: bound by a pool size produces a number that looks like a cost and is not.
+PRICEABLE = ("audited", "published")
+
 
 @dataclass(frozen=True)
 class Track:
@@ -275,36 +326,57 @@ def pareto_front(rows: list[dict]) -> list[dict]:
 
 
 def cost_block(pool_n: int | None, leg: dict | None) -> dict:
-    """Price one configuration's pool at its leg's audited per-candidate rate.
+    """Price one configuration's pool at its leg's per-candidate rate.
+
+    A leg is priceable only when its cost is ``audited`` (the auditor read
+    every pass) or ``published`` (a post-run report states it). An
+    ``unaudited`` leg — one whose main pass was cleanup-overwritten — yields
+    a LOWER BOUND, and a lower bound multiplied by a pool size is a number
+    that looks like a cost and is not, so the row is left null with its
+    reason instead.
 
     Args:
         pool_n: Candidates the operating point's vote count admits.
-        leg: The audited leg record (``audited_usd``, ``items_covered``,
-            ``stages``), or ``None`` when no leg is mapped.
+        leg: The leg record from ``verifier-costs.json``, or ``None`` when no
+            leg is mapped to this configuration.
 
     Returns:
         The cost columns, with ``pool_exceeds_verified`` set when the point
         asks for candidates the leg never verified and ``inherits_larger_leg``
         set when the pool is a subset of a bigger verification.
     """
-    if leg is None or pool_n is None or not leg.get("items_covered"):
-        return {"verifier_leg_items": leg.get("items_covered") if leg else None,
-                "verifier_leg_usd": leg.get("audited_usd") if leg else None,
-                "verifier_usd_per_candidate": None,
-                "pool_verifier_usd": None,
-                "pool_exceeds_verified": None,
-                "inherits_larger_leg": None,
-                "verifier_leg_paths": leg.get("stages") if leg else None}
-    rate = leg["audited_usd"] / leg["items_covered"]
-    return {
-        "verifier_leg_items": leg["items_covered"],
-        "verifier_leg_usd": round(leg["audited_usd"], 4),
-        "verifier_usd_per_candidate": rate,
-        "pool_verifier_usd": round(pool_n * rate, 4),
-        "pool_exceeds_verified": pool_n > leg["items_covered"],
-        "inherits_larger_leg": pool_n < leg["items_covered"],
-        "verifier_leg_paths": leg["stages"],
+    if leg is None:
+        return {"verifier_cost_basis": "unmapped",
+                "verifier_leg_items": None, "verifier_leg_usd": None,
+                "verifier_usd_per_candidate": None, "pool_verifier_usd": None,
+                "pool_exceeds_verified": None, "inherits_larger_leg": None,
+                "verifier_leg_paths": None, "verifier_cost_note": None}
+    basis = leg.get("basis", "unaudited")
+    items = leg.get("candidates")
+    usd = leg.get("usd")
+    block = {
+        "verifier_cost_basis": basis,
+        "verifier_leg_items": items,
+        "verifier_leg_usd": round(usd, 4) if usd is not None else None,
+        "verifier_usd_per_candidate": None,
+        "pool_verifier_usd": None,
+        "pool_exceeds_verified": None,
+        "inherits_larger_leg": None,
+        "verifier_leg_paths": leg.get("stages"),
+        "verifier_cost_note": leg.get("note"),
     }
+    if items:
+        block["pool_exceeds_verified"] = (pool_n > items
+                                          if pool_n is not None else None)
+        block["inherits_larger_leg"] = (pool_n < items
+                                        if pool_n is not None else None)
+    if basis not in PRICEABLE or not items or usd is None:
+        return block
+    rate = usd / items
+    block["verifier_usd_per_candidate"] = rate
+    if pool_n is not None:
+        block["pool_verifier_usd"] = round(pool_n * rate, 4)
+    return block
 
 
 def rank_by_tile_mcc(rows: list[dict]) -> list[dict]:
@@ -425,6 +497,7 @@ def audit_legs() -> int:
         by_leg.setdefault(leg, []).append(config)
 
     costs: dict[str, dict] = {}
+    disagreements: list[str] = []
     for leg, members in sorted(by_leg.items()):
         cmd = [".venv/bin/python", "scripts/audit_verifier_cost.py",
                *leg, "--json"]
@@ -433,33 +506,112 @@ def audit_legs() -> int:
             cmd += ["--model", model]
         proc = subprocess.run(cmd, cwd=PROJECT_ROOT, capture_output=True,
                               text=True, check=False)
-        if proc.returncode != 0:
-            logger.error("audit failed for %s: %s", leg, proc.stderr[-800:])
-            return 1
         start = proc.stdout.find("[")
+        if start < 0:
+            logger.error("auditor produced no JSON for %s: %s", leg,
+                         proc.stderr[-600:])
+            return 1
         stages = json.loads(proc.stdout[start:])
-        record = {
-            "stages": list(leg),
-            "audited_usd": sum(s["audited_usd"] for s in stages),
-            "items_covered": sum(s["items_covered"] for s in stages),
+        audited = {
+            "usd": sum(s["audited_usd"] for s in stages),
+            "candidates": sum(s["items_covered"] for s in stages),
             "complete": all(s["complete"] for s in stages),
             "notes": [n for s in stages for n in s.get("notes", [])],
-            "configs": members,
         }
+        # One published figure per leg at most; every member of a shared leg
+        # is the same leg, so the first that has one speaks for all of them.
+        published = next((PUBLISHED_LEG_COST[m] for m in members
+                          if m in PUBLISHED_LEG_COST), None)
+        record = reconcile(leg, members, audited, published)
+        if record.get("disagreement"):
+            disagreements.append(record["disagreement"])
         for config in members:
             costs[config] = record
-        logger.info("%-46s US$%9.4f over %7d candidates (%s)",
+        logger.info("%-44s %-9s US$%9.4f over %7d candidates  (%s)",
                     Path(leg[0]).name + (f" +{len(leg) - 1}"
                                          if len(leg) > 1 else ""),
-                    record["audited_usd"], record["items_covered"],
+                    record["basis"], record["usd"] or 0.0,
+                    record["candidates"] or 0,
                     ", ".join(members[:3])
                     + ("…" if len(members) > 3 else ""))
+        if record["basis"] == "unaudited":
+            logger.warning("  %s", record["note"])
+    if disagreements:
+        for line in disagreements:
+            logger.error("COST DISAGREEMENT %s", line)
+        return 1
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / COSTS).write_text(json.dumps(costs, indent=2) + "\n")
-    logger.info("wrote %s (%d configurations, %d legs)",
+    (OUT / COSTS).write_text(json.dumps({
+        "_README": (
+            "Verifier-leg cost per configuration. basis 'audited' = "
+            "scripts/audit_verifier_cost.py read every pass of the leg; "
+            "'published' = the auditor could not (a pre-2026-09-14 cleanup "
+            "overwrote the main pass's meta, so it yields a LOWER BOUND) and "
+            "the figure is the campaign post-run report's, cited in 'source'; "
+            "'unaudited' = neither, so the leg has no usable cost and nothing "
+            "derived from it is priced. Where both exist they are required to "
+            f"agree to US${COST_AGREEMENT_USD:.2f}."),
+        "agreement_tolerance_usd": COST_AGREEMENT_USD,
+        "generated_by": "scripts/build_tile_presence_board.py --stage costs",
+        "legs": costs,
+    }, indent=2) + "\n")
+    by_basis: dict[str, int] = {}
+    for record in costs.values():
+        by_basis[record["basis"]] = by_basis.get(record["basis"], 0) + 1
+    logger.info("wrote %s (%d configurations, %d legs; %s)",
                 (OUT / COSTS).relative_to(PROJECT_ROOT), len(costs),
-                len(by_leg))
+                len(by_leg),
+                ", ".join(f"{n} {b}" for b, n in sorted(by_basis.items())))
     return 0
+
+
+def reconcile(leg: tuple[str, ...], members: list[str], audited: dict,
+              published: dict | None) -> dict:
+    """Settle one leg's cost between the auditor and the published figure.
+
+    Args:
+        leg: The stage directories audited.
+        members: Configurations drawing on this leg.
+        audited: The auditor's summed result for the leg.
+        published: The post-run report's figure, or ``None``.
+
+    Returns:
+        The leg record written into ``verifier-costs.json``, carrying the
+        basis the cost may be used under and, on a mismatch, a
+        ``disagreement`` the caller turns into a failure.
+    """
+    base = {"stages": list(leg), "configs": members,
+            "auditor_usd": round(audited["usd"], 6),
+            "auditor_candidates": audited["candidates"],
+            "auditor_complete": audited["complete"],
+            "auditor_notes": audited["notes"]}
+    if audited["complete"] and audited["candidates"]:
+        record = {**base, "basis": "audited", "usd": audited["usd"],
+                  "candidates": audited["candidates"],
+                  "source": "scripts/audit_verifier_cost.py over the leg's "
+                            "committed metas",
+                  "note": None}
+        if published and abs(published["usd"] - audited["usd"]) \
+                > COST_AGREEMENT_USD:
+            record["disagreement"] = (
+                f"{members[0]}: auditor US${audited['usd']:.4f} vs published "
+                f"US${published['usd']:.4f} ({published['source']})")
+        elif published:
+            record["cross_checked_against"] = published["source"]
+        return record
+    if published:
+        return {**base, "basis": "published", "usd": published["usd"],
+                "candidates": published["candidates"],
+                "source": published["source"],
+                "note": ("the auditor reads a LOWER BOUND here — a "
+                         "pre-2026-09-14 cleanup overwrote the main pass's "
+                         "meta — so the published audited figure is used; "
+                         "see auditor_notes")}
+    return {**base, "basis": "unaudited", "usd": None, "candidates": None,
+            "source": None,
+            "note": ("no usable verifier-leg cost: the auditor reads only a "
+                     "lower bound (cleanup-overwrite) and no post-run report "
+                     f"publishes this leg. Audit target: {', '.join(leg)}")}
 
 
 # ---------------------------------------------------------------------------
@@ -587,7 +739,7 @@ def stage_leaderboard() -> int:
         raise SystemExit(
             f"{costs_path.relative_to(PROJECT_ROOT)} is missing — run "
             "--stage costs first (it audits the verifier legs).")
-    costs = json.loads(costs_path.read_text())
+    costs = json.loads(costs_path.read_text())["legs"]
     rows = build_rows(costs)
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "leaderboard.json").write_text(json.dumps({
