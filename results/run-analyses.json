@@ -4262,17 +4262,17 @@
    ],
    "predicted_outcome": "No prediction was registered for row B in the form row A's card used (P1-P5). The declared family states five contrasts per metric at the primary rung rather than directional predictions (reports/image-2x2-tests-declaration-2026-09-19.md § 3), with two expectations recorded in § 5.4: that row B over-generates at K = 1, and that the K = 1 replicate would show the largest proposer effect and the K = 5 replicate the smallest.",
    "tie_set": [],
-   "outcome": null,
+   "outcome": "Row B of the image 2x2 is the Gemini 3 proposer pool under both verifiers at K = 1, 3, 5, scored on r2 beside row A. At the K = 3 primary rung, five declared tests per metric (BH q = 0.05): T1 and T2, the proposer effect, are significant on both metrics under either verifier (3.7 pool over Gemini 3 pool by +0.041 and +0.024 tile-MCC, +0.107 and +0.100 micro-F1 at 50 m). T3, the verifier seat within row B, is null on tile-MCC (-0.0013, inside the drift band, so uninformative) and +0.0103 on F1, significant. T4, the interaction, is significant at +0.0170 tile-MCC and +0.0071 F1: the 3.7 verifier's gain depends on the pool it verifies. T5, the declared confound check against the June 2026 cell IM-k3, is null on both metrics (+0.0137 MCC, +0.0016 F1); the additional protocol-matched T5m (declaration section 3a) reverses the F1 reading (-0.0696, p < 0.0001) while keeping tile-MCC consistent in sign, so the June cell is reproduced at the tile level and not at the point level once vote protocol is matched. Exploratory replicates: T4 declines monotonically with K (+0.0327, +0.0170, +0.0043 MCC) and is null at K = 5; T1 and T2 hold at every rung. Carried arm 2 at K = 3 scores F1 0.8127 and tile-MCC 0.7234 against row A's 0.9199 and 0.7648, the difference almost entirely precision (0.7495 vs 0.8908); row B's unions are 3.3 to 5.0 times row A's, and its tile-MCC oracles above K = 1 sit at a single vote with F1 collapsing to 0.52 to 0.58. K = 1 cells are carried-analogues of the K = 3 calibration. Arm 2 ran on the Batch API, arm 1 on flex; route and verifier seat are collinear within this row. Spend: US$189.47 on six verifier legs, US$233.63 proposer, US$9.01 GS calibration.",
    "paper_section": "Results",
    "output_path": "results/gemini3-image-55map-2026-09-16/findings.md",
    "working_notes_obs": [],
-   "manually_verified_at": null,
-   "_signature_note": "UNSIGNED and presented for review: the outcome field is left null because the family's reading at K = 1 and K = 5 is being regenerated under a four-member BH family, and the PI has not adjudicated the K = 3 primary reading. No board and no tiering was re-tiered and no signed row was touched.",
+   "manually_verified_at": "2026-09-20T03:03:53Z",
+   "_signature_note": "Signed 2026-09-20 (S156) as drafted; outcome authored at signing from the K = 3 family, T5m, and the replicates.",
    "signature": {
-    "status": "unsigned",
-    "signed_at": null,
-    "attests": "UNSIGNED and presented for review; the PI signs. No board and no tiering was re-tiered and no signed row was touched.",
-    "presentation": null,
+    "status": "signed",
+    "signed_at": "2026-09-20T03:03:53Z",
+    "attests": "Signed 2026-09-20T03:03:53Z by the PI (S156, 2026-09-20), approved AS DRAFTED after a written walkthrough of the K = 3 primary family, the K = 1 and K = 5 exploratory replicates under the four-member BH family, T5m, the E89 floor revision, and the row's costs. Headline figures re-read at signing from results/image-2x2-2026-09-19/tests_2x2_K3.json, tests_t5m_K3.json, and results/gemini3-image-55map-2026-09-16/sweeps.json and match the prose. SCOPE: covers the 18 registered conditions, the six verifier legs, and the declared tests at K = 3; the K = 1 and K = 5 readings are exploratory and the T5m contrast is additional and post-hoc, both reported but not confirmatory. It does not cover the two T5m comparator cells' registration, which is pending, or any board tiering. The K = 1 rung's carried point is a carried-analogue of the K = 3 calibration, recorded in the register.",
+    "presentation": "planning/pi-decisions-2026-09-20.md D1; Session 156 transcript 2026-09-20 (rows A and B walkthrough)",
     "history": []
    }
   }
