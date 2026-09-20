@@ -29,6 +29,11 @@ the commit that executed it. Read top to bottom; open items first.
 - Register the 17 addendum cells in `results/run-conditions.json`? (precedent: FOURTH-N5-oracle was registered separately.)
 - How to present MCC oracles: on every family with a choice of k the tile-MCC argmax sits at k = 1 and pays 0.06–0.18 of F1; an MCC oracle is not a like-for-like companion of the F1 oracle.
 
+### D7 — Legacy vote-count divergence (June-grid note § 7, f859646ba)
+
+- **Cause**: the 2026-05-03 recovery re-merged the consensus and re-cut crops with an incremental extractor that never refreshes matched entries' properties; five April/May 2026 manifests carry votes one low on 15–110 candidates each. The current chain (both image rows, all six rungs) has zero disagreements.
+- **Decide**: (a) rebuild `IM-k4` on the consensus votes (+3 detections, F1 0.7398 → 0.7402; $0, a board cell); (b) the one never-verified 4-vote candidate in `55maps-text-high-generalisation` (two clusters 17.29 m apart matched to one manifest entry) — verify it (one call) or minute it.
+
 ## Ruled
 
 ### D3 — T5 matched comparator — RULED 2026-09-20: add T5m as an ADDITIONAL test at K = 3 (G3 K = 5 pool at 3 votes vs IM-k3), keep the declared T5. In progress
