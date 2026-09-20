@@ -435,4 +435,4 @@ re-tiered, no signed row touched, and no campaign cell or manifest was
 modified — the replicate's artefacts live entirely in this directory.
 
 Commits: `82020b941` (cells and agreement), `d1134a707` (scores and tests),
-`321dd4549` (flip anatomy), `TBDNOTE` (this note).
+`321dd4549` (flip anatomy), `c2e5bc8a7` (this note).

@@ -378,7 +378,7 @@ null SDs — the declaration's margin rule is necessary, not sufficient; and the
 arm 1 band is measured over this row's own union, so carrying it to another
 pool stays an assumption.
 
-Commit: `TBDINH`.
+Commit: `e1a9d8f8e`.
 
 ### 2026-09-20 — Instrument parametrised; ambiguity and separation measured
 

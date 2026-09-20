@@ -365,7 +365,7 @@ magnitude at every rung, so reading it against its own verifier's floor rather
 than the other seat's moves nothing. The revision only replaces a
 "uncharacterised" with a measurement and records what the measurement says.
 
-Commit: `TBDDECL`.
+Commit: `e1a9d8f8e`.
 
 ### 2026-09-20 — The E89 floor revised against the full-scale replicate
 

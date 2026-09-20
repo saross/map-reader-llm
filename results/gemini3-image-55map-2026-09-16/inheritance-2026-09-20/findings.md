@@ -367,7 +367,7 @@ row's much larger ones, so carrying it here assumes the verifier's
 re-invocation behaviour does not depend on the candidate set; and this row's
 arm 2 legs remain batch-served, so its arm 2 comparisons remain cross-route.
 
-Commit: `TBDINH`.
+Commit: `e1a9d8f8e`.
 
 ### 2026-09-20 — Original publication
 
