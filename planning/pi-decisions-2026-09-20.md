@@ -36,9 +36,9 @@ the commit that executed it. Read top to bottom; open items first.
 
 ## Ruled
 
-### D3 — T5 matched comparator — RULED 2026-09-20: add T5m as an ADDITIONAL test at K = 3 (G3 K = 5 pool at 3 votes vs IM-k3), keep the declared T5. In progress
+### D3 — T5 matched comparator — RULED 2026-09-20: T5m added as an additional test (3783e0e03; instrument d985a5e51, cells 2bd86154e, tests c9abda52e). Result: micro-F1 REVERSES (−0.0696, p < 0.0001) — the declared T5's F1 null cannot be read as reproduction; tile-MCC consistent-sign small positive (+0.0125 to +0.0237, uncorrected)
 
-### D4 — E89 floor — RULED 2026-09-20: revise to the full-scale measurement (2.46 % flips at 0.90 on 9,173 candidates; drift-only contrasts +0.0008 F1 / −0.0005 MCC). In progress
+### D4 — E89 floor — RULED 2026-09-20: revised in the declaration § 5 caveat 1 (73a4f09df): 2.46 % flips, Wilson [2.17 %, 2.80 %]; drift-only +0.0008 F1 / −0.0005 MCC; rule = claimable only if the effect clearly exceeds the drift contrast; T3's tile-MCC null now read as uninformative; no measured floor for the Gemini 3 verifier
 
 ### D6a — MCC sweep of the remaining 13 families — RULED 2026-09-20: yes. In progress
 
