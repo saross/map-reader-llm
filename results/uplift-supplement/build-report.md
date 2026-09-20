@@ -204,8 +204,9 @@ manifest carries pre-recovery vote counts on 16 of 7,878 candidates (each one vo
 2026-05-03 recovery re-cut crops with an incremental extractor that never refreshed matched entries'
 properties. IM-k4 (rows `verified-k4-standardised-gt` and `verified-k4-r2-gt`) is the only committed cell
 built on those counts: on the consensus votes it would hold 3,544 detections instead of 3,541, F1@50 m
-0.7402 instead of 0.7398, tile-MCC 0.6579 instead of 0.6577 — an order of magnitude inside the board's
-0.003 mechanism bound. **PI ruling 2026-09-20: documented, not rebuilt.** No number in this supplement
+0.7402 instead of 0.7398, tile-MCC +0.0002 — an order of magnitude inside the board's 0.003 mechanism
+bound. (The June note quotes the tile-MCC level as 0.6577 by its own light scorer; the cell's committed r2
+level is 0.654 — a tile-convention difference between the two instruments, so only the delta is claimed.) **PI ruling 2026-09-20: documented, not rebuilt.** No number in this supplement
 changes. IM-k3 and every other cell are unaffected (no candidate crosses the 2 → 3 vote boundary).
 
 ### 2026-09-08 — Verifier pairing completed on the current register (S151): 69 of 169 pairs computed

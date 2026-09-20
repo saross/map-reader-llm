@@ -25,4 +25,5 @@
 This cell's detections were filtered at vote_count >= 4 on the June run's crop manifest, whose vote
 counts predate the 2026-05-03 recovery on 16 of 7,878 candidates (`results/im-june-pool-grid-2026-09-20/findings.md` § 7).
 On the consensus file's votes the cell would hold 3,544 detections (+3), F1@50 m 0.7402 (+0.0004),
-tile-MCC 0.6579 (+0.0002). PI ruling 2026-09-20: documented, not rebuilt; the numbers above stand.
+tile-MCC +0.0002 (the June note's level, 0.6577 by its light scorer, differs from this report's 0.654 by
+tile convention; only the delta is claimed). PI ruling 2026-09-20: documented, not rebuilt; the numbers above stand.
