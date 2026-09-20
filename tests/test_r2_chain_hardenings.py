@@ -806,3 +806,56 @@ def test_every_image_mcc_row_matches_its_cells_n_detections():
         # Six original rungs each, plus one successor per rung that moved:
         # one in the 3.7 campaign, four in the Gemini 3 campaign.
         assert seen == (7 if run_id.startswith("gemini37") else 10), (run_id, seen)
+
+
+@pytest.mark.tier1
+def test_registration_is_idempotent_per_cell_not_per_label():
+    """A relabel upstream must not plan a second row for a scored cell.
+
+    The registrar reads ``posthoc`` off the manifest's free-text basis, so
+    the label scheme depends on prose an adjacent agent rewrites. On
+    2026-09-21 the board agent dropped "post-hoc" from both MCC bases and
+    this step planned TWENTY additions over seventeen already-registered
+    cells -- two of them twice within one plan, which apply() would have
+    appended without complaint. Presence is therefore decided on
+    ``eval_path``: whatever the label scheme does, a cell that something
+    already scores is present.
+    """
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    manifest = json.loads(
+        (ROOT / R2_BOARD_REL / "cells_manifest.json").read_text())["cells"]
+    board_path = ROOT / R2_BOARD_REL / "final_board_50m.json"
+    board = json.loads(board_path.read_text()) if board_path.exists() else None
+
+    plan = r2reg.author_board_rows(dec, manifest, board)
+    adds = [row["label"] for _r, row, s in plan if s == "add"]
+    assert adds == [], adds
+
+    # And the guard is the eval_path, not the label: rename the board rows'
+    # labels out of the way and the plan must still add nothing. (Only
+    # theirs -- _template resolves the 3.7 and fourth-cell schemes by label
+    # prefix, which is a separate, legitimate use.)
+    renamed = json.loads(json.dumps(dec))
+    touched = 0
+    for run in renamed.values():
+        for cond in run["conditions"]:
+            if str(cond.get("eval_path", "")).startswith(f"{R2_BOARD_REL}/cells/"):
+                cond["label"] = "renamed-" + cond["label"]
+                touched += 1
+    assert touched > 30, touched
+    plan = r2reg.author_board_rows(renamed, manifest, board)
+    adds = [Path(row["eval_path"]).parent.name
+            for _r, row, s in plan if s == "add"]
+    # Exactly the three cells that were never registered in their own right:
+    # their free and pinned optima are the same point, so the -k1 twin's row
+    # already scores those bytes and a second row would be a duplicate
+    # measurement. They are present by label coincidence, which is the
+    # documented mechanism, so a rename is the one thing that exposes them.
+    assert sorted(adds) == ["ARM1-N1-mcc-oracle", "ARM2-N1-mcc-oracle",
+                            "FOURTH-N1-mcc-oracle"], adds
+    import hashlib
+    for cell in adds:
+        digest = lambda name: hashlib.sha256(  # noqa: E731
+            (ROOT / R2_BOARD_REL / "cells" / name
+             / "detections.geojson").read_bytes()).hexdigest()
+        assert digest(cell) == digest(f"{cell}-k1"), cell

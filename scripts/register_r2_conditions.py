@@ -278,7 +278,16 @@ def author_board_rows(dec: dict, manifest: list[dict],
                 f"{label}: label pins k{mm.group('ck')} but its point is "
                 f"{m['point']!r} (k{pk})"
             )
-        posthoc = "posthoc-" if "post-hoc" in basis_txt else ""
+        # Post-hoc-ness is a property of the cell -- materialised after the
+        # board was tiered -- but the manifest states it only in prose, and
+        # that prose is rewritten as rulings change (2026-09-21 dropped
+        # "post-hoc" from both MCC bases). Match every spelling those cells
+        # have carried; the eval_path presence check below is what keeps a
+        # miss from becoming a duplicate registration.
+        posthoc = "posthoc-" if any(
+            mark in basis_txt for mark in
+            ("post-hoc", "retained, not presented", "tile-presence oracle")
+        ) else ""
         f1_txt = f", F1@50 {f1_of[label]:.4f}" if label in f1_of else ""
         if TILE_PRESENCE_BASIS in basis_txt:
             note = (f"r2 board cell {label} (basis {basis_txt}, registered "
@@ -342,8 +351,21 @@ def author_board_rows(dec: dict, manifest: list[dict],
                    "n_candidates": tpl.get("n_candidates"), **common}
         else:
             raise ValueError(f"no registration scheme for family {fam!r} ({label})")
-        labels = {c.get("label") for c in dec[run_id]["conditions"]}
-        plan.append((run_id, row, "skip" if row["label"] in labels else "add"))
+        # A cell is "present" when something already scores IT, not when a
+        # label happens to collide. Deciding on the label alone made the
+        # registrar depend on the label scheme, and the label scheme depends
+        # on prose: ``posthoc`` is read off the manifest basis, and when the
+        # board agent relabelled both MCC bases on 2026-09-21 the infix
+        # vanished and this planned TWENTY duplicate rows over seventeen
+        # already-registered cells -- two of them twice in one plan, which
+        # apply() would have appended without complaint. Keying on eval_path
+        # makes registration idempotent per cell whatever the label scheme
+        # does, which is the property this step actually needs.
+        run_conds = dec[run_id]["conditions"]
+        known = {c.get("label") for c in run_conds}
+        scored = {str(c.get("eval_path", "")) for c in run_conds}
+        present = row["label"] in known or row["eval_path"] in scored
+        plan.append((run_id, row, "skip" if present else "add"))
     return plan
 
 
