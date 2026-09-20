@@ -575,3 +575,181 @@ def test_iterations_really_divide_the_per_job_candidate_budget(
     # The limit is in REQUESTS: 10 requests per job at K = 5 is 2
     # candidates per job, so ten candidates make five chunks.
     assert chunk_sizes == [2, 2, 2, 2, 2]
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Terminal states other than SUCCEEDED (audit finding m7, 2026-09-20)
+# ─────────────────────────────────────────────────────────────────────
+
+
+def _state_fakes(states: dict[str, str], rows: dict[str, int] | None = None):
+    """Lifecycle fakes whose jobs end in a per-chunk terminal state.
+
+    Args:
+        states: Display name (``"leg-c1"``) → terminal state name. A chunk
+            not listed ends ``JOB_STATE_SUCCEEDED``.
+        rows: Display name → how many result rows its job returns. A chunk
+            not listed returns two, as the shared fakes do.
+
+    Returns:
+        The kwargs ``run_batch_jobs`` takes for its lifecycle functions.
+    """
+    rows = rows or {}
+
+    class _StateJob:
+        def __init__(self, name, state):
+            self.name = name
+            self.state = type("S", (), {"name": state})()
+
+    def upload(client, path, name):
+        return f"files/{name}"
+
+    def submit(client, model, uploaded, name):
+        return _StateJob(f"batches/{name}", "JOB_STATE_PENDING")
+
+    def poll(client, job_name):
+        leaf = job_name.split("/")[-1]
+        return _StateJob(job_name, states.get(leaf, "JOB_STATE_SUCCEEDED"))
+
+    def retrieve(client, job):
+        leaf = job.name.split("/")[-1]
+        n = rows.get(leaf, 2)
+        return [{"key": f"{job.name}:r{i}"} for i in range(n)]
+
+    return dict(upload=upload, submit=submit, poll=poll, retrieve=retrieve)
+
+
+def test_a_partially_succeeded_chunk_is_failed_but_its_rows_are_kept(tmp_path):
+    """m7's shape: the rows are paid for, the chunk is still a failure.
+
+    PARTIALLY_SUCCEEDED is a terminal state, so the chunk never raised and
+    never reached ``failed_chunks`` — the "N of M chunks" alarm and the
+    backup annotation could both stay silent on a leg that had really lost
+    candidates.
+    """
+    fns = _state_fakes({"leg-c1": "JOB_STATE_PARTIALLY_SUCCEEDED"},
+                       rows={"leg-c1": 1})
+    paths = [tmp_path / f"c{i}.jsonl" for i in range(3)]
+
+    results, failed = run_batch_jobs(None, "m", paths, "leg", **fns,
+                                     log=logging.getLogger("t"))
+
+    assert failed == [1]
+    # Two full chunks plus the partial chunk's one row: nothing discarded.
+    assert len(results) == 5
+    assert any("leg-c1" in r["key"] for r in results)
+
+
+def test_every_non_succeeded_terminal_state_counts_as_failed(tmp_path):
+    """FAILED, CANCELLED, EXPIRED and a state the SDK has not shipped yet."""
+    states = {
+        "leg-c0": "JOB_STATE_FAILED",
+        "leg-c1": "JOB_STATE_CANCELLED",
+        "leg-c2": "JOB_STATE_EXPIRED",
+        "leg-c3": "JOB_STATE_SOMETHING_NEW",
+    }
+    fns = _state_fakes(states, rows={k: 0 for k in states})
+    paths = [tmp_path / f"c{i}.jsonl" for i in range(5)]
+
+    results, failed = run_batch_jobs(None, "m", paths, "leg", **fns,
+                                     log=logging.getLogger("t"))
+
+    assert failed == [0, 1, 2, 3]
+    # Chunk 4 succeeded and is untouched by the gate.
+    assert len(results) == 2
+
+
+def test_a_succeeded_chunk_is_not_marked_failed(tmp_path):
+    """The gate must not sweep in the ordinary case."""
+    fns = _state_fakes({})
+    paths = [tmp_path / f"c{i}.jsonl" for i in range(2)]
+    results, failed = run_batch_jobs(None, "m", paths, "leg", **fns,
+                                     log=logging.getLogger("t"))
+    assert failed == []
+    assert len(results) == 4
+
+
+def test_the_alarm_fires_for_a_partially_succeeded_chunk(tmp_path, caplog):
+    """The alarm is the operator's only prompt to run batch-recover."""
+    fns = _state_fakes({"leg-c0": "JOB_STATE_PARTIALLY_SUCCEEDED"})
+    paths = [tmp_path / f"c{i}.jsonl" for i in range(2)]
+
+    with caplog.at_level(logging.ERROR):
+        run_batch_jobs(None, "m", paths, "leg", **fns,
+                       log=logging.getLogger("t"))
+
+    errors = "\n".join(r.getMessage() for r in caplog.records
+                       if r.levelno >= logging.ERROR)
+    assert "1 of 2" in errors
+    assert "JOB_STATE_PARTIALLY_SUCCEEDED" in errors
+
+
+def test_the_record_keeps_the_partial_states_name_and_its_row_count(tmp_path):
+    """``batch_jobs.json`` must say what happened, verbatim."""
+    import json as _json
+
+    # A single-chunk leg keeps the plain display name, not "leg-c0".
+    fns = _state_fakes({"leg": "JOB_STATE_PARTIALLY_SUCCEEDED"},
+                       rows={"leg": 3})
+    rec = tmp_path / "batch_jobs.json"
+    run_batch_jobs(None, "m", [tmp_path / "c0.jsonl"], "leg", **fns,
+                   log=logging.getLogger("t"), record_path=rec)
+
+    chunk = _json.loads(rec.read_text())["chunks"][0]
+    assert chunk["state"] == "JOB_STATE_PARTIALLY_SUCCEEDED"
+    assert chunk["n_results"] == 3
+
+
+def test_the_backup_annotation_fires_on_a_partial_chunk(tmp_path, monkeypatch):
+    """The second consumer of ``failed_chunks``: the pre-rewrite backup.
+
+    ``_verify_batch`` annotates the backup when the rerun did not get
+    everything. A partially-succeeded chunk must trigger that annotation,
+    which before m7 it could not.
+    """
+    import json as _json
+
+    import scripts.run_pv as run_pv
+
+    leg = tmp_path / "leg"
+    leg.mkdir()
+    (leg / "probabilities.json").write_text(_json.dumps({
+        "version": "1.0", "iterations": 1, "total_results": 1,
+        "results": {"candidate_00001": {"mound_probability": 0.9}},
+    }))
+
+    class _FakeFiles:
+        def list(self):
+            return []
+
+    class _FakeClient:
+        files = _FakeFiles()
+
+    def _build(*, manifest, config, output_path, crops_base_dir,
+               temperature_override=None):
+        output_path.write_bytes(b"x" * 16)
+        return len(manifest["candidates"])
+
+    row = {
+        "key": "candidate_00001",
+        "response": {"candidates": [{"content": {"parts": [
+            {"text": _json.dumps({"mound_probability": 0.5})}]}}]},
+    }
+
+    monkeypatch.setattr(run_pv, "build_verifier_jsonl", _build)
+    monkeypatch.setattr(run_pv, "load_system_instruction", lambda cfg: "sys")
+    monkeypatch.setattr(run_pv, "_get_api_key", lambda: "test-key")
+    monkeypatch.setattr(run_pv, "_resolve_model_name", lambda c, m: m)
+    monkeypatch.setattr("google.genai.Client", lambda **kwargs: _FakeClient())
+    # One chunk, partially succeeded: a row came back AND the chunk failed.
+    monkeypatch.setattr(run_pv, "run_batch_jobs", lambda *a, **k: ([row], [0]))
+
+    run_pv._verify_batch(
+        manifest={"candidates": [{"candidate_id": 1}, {"candidate_id": 2}]},
+        config={"version": "v1", "model": "gemini-3-flash"},
+        crops_base_dir=tmp_path, output_dir=leg, iterations=1,
+        temperature=None, dry_run=False, max_batch_candidates=None,
+    )
+
+    backups = sorted(p.name for p in leg.glob("probabilities.json.*.backup"))
+    assert len(backups) == 1

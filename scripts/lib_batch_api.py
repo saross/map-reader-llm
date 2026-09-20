@@ -68,11 +68,16 @@ from scripts.lib_llm_metadata import (  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
+# The ONE terminal state that means the whole chunk ran. Every other
+# terminal state below is a failure even when it returns rows — see
+# run_pv.run_batch_jobs (audit finding m7, 2026-09-20).
+JOB_STATE_SUCCEEDED = "JOB_STATE_SUCCEEDED"
+
 # Terminal states for batch jobs — polling stops when job reaches one of these.
 # Values must match JobState enum .name / .value (not str(), which prepends
 # the class name — e.g. "JobState.JOB_STATE_SUCCEEDED").
 _TERMINAL_STATES = frozenset({
-    "JOB_STATE_SUCCEEDED",
+    JOB_STATE_SUCCEEDED,
     "JOB_STATE_FAILED",
     "JOB_STATE_CANCELLED",
     "JOB_STATE_EXPIRED",

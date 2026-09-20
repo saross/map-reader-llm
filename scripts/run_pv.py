@@ -790,6 +790,18 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
     billing. Callers run ``lib_batch_api.preflight_file_storage()`` before
     the first upload so this path is not reached at all.
 
+    **A chunk is "failed" unless its job ended SUCCEEDED.** FAILED,
+    CANCELLED, EXPIRED, PARTIALLY_SUCCEEDED and any terminal state the SDK
+    adds later all land in ``failed_chunks`` — but the rows such a job did
+    return are retrieved and booked with the rest, because they are paid
+    for and the completeness gate is entitled to see every key that came
+    back. Until 2026-09-20 only a raised exception counted, so a
+    partially-succeeded chunk was silently "fine": the "N of M chunks did
+    not succeed" alarm and the "(this rerun lost chunks)" annotation on
+    the ``probabilities.json`` backup could both be absent from a leg that
+    really had lost candidates (audit finding m7). The polled state is
+    recorded verbatim in ``batch_jobs.json`` either way.
+
     Args:
         client: The API client.
         model_name: Resolved model name.
@@ -806,14 +818,19 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
 
     Returns:
         ``(results, failed_chunks)``: the concatenated raw results of every
-        chunk that completed, and the indices of chunks that did not (failed
-        to lodge, or failed while polling or retrieving).
+        chunk that returned any — including a chunk that ended in a
+        non-SUCCEEDED terminal state — and the indices of the chunks that
+        did not succeed (failed to lodge, failed while polling or
+        retrieving, or reached a terminal state other than SUCCEEDED).
+        The two are not complements: a partially-succeeded chunk appears
+        in ``failed_chunks`` **and** contributes rows to ``results``.
     """
     # Local import: lib_batch_api pulls in rasterio/geojson, which the
     # non-batch subcommands must not pay for at import time.
     from scripts.lib_batch_api import (
         FILE_STORAGE_CAP_BYTES,
         FILE_STORAGE_QUOTA_METRIC,
+        JOB_STATE_SUCCEEDED,
         deregister_upload,
         is_file_storage_quota_error,
     )
@@ -877,6 +894,8 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
                             str(getattr(done, "state", "")))
             log.info("Batch job %d/%d finished polling: %s", i + 1,
                      len(jsonl_paths), state)
+            # The state verbatim, whatever it is: batch_jobs.json is the
+            # record batch-recover and any later audit read.
             entry["state"] = state
             chunk_results = retrieve(client, done)
             entry["n_results"] = len(chunk_results)
@@ -893,12 +912,30 @@ def run_batch_jobs(client: Any, model_name: str, jsonl_paths: list[Path],
             failed_chunks.append(i)
             save_record()
             continue
+        if state != JOB_STATE_SUCCEEDED:
+            # FAILED, CANCELLED, EXPIRED, PARTIALLY_SUCCEEDED and any
+            # terminal state the SDK adds later. Such a chunk is a failure
+            # for ALARM purposes — it is why the leg will come up short —
+            # but whatever rows it did return are paid for and are booked
+            # below, so the completeness gate still sees every key that
+            # came back (audit finding m7, 2026-09-20).
+            log.error(
+                "Batch chunk %d/%d ended %s, not %s: %d row(s) retrieved "
+                "and kept, but this chunk is counted as failed — its "
+                "missing candidates will be reported missing",
+                i + 1, len(jsonl_paths), state, JOB_STATE_SUCCEEDED,
+                len(chunk_results),
+            )
+            failed_chunks.append(i)
         save_record()
         results.extend(chunk_results)
     if failed_chunks:
-        log.error("%d of %d batch chunks returned nothing: %s — their "
-                  "candidates will be reported missing", len(failed_chunks),
-                  len(jsonl_paths), sorted(failed_chunks))
+        # "returned nothing" was true while only a lost chunk could be
+        # here; a PARTIALLY_SUCCEEDED chunk returns some rows and is still
+        # a failure, so the alarm says what is actually true of all of them.
+        log.error("%d of %d batch chunks did not succeed: %s — their "
+                  "missing candidates will be reported missing",
+                  len(failed_chunks), len(jsonl_paths), sorted(failed_chunks))
     return results, sorted(failed_chunks)
 
 
@@ -1071,7 +1108,10 @@ def _verify_batch(
         iterations=iterations, raw_results=raw_results,
         batch_metadata=batch_metadata, model_name=model_name, strict=strict,
         backup_tag="rerun",
-        backup_note=" (this rerun lost chunks)" if failed_chunks else "",
+        # "did not succeed" rather than "lost": since finding m7 a chunk
+        # can be in failed_chunks and still have contributed rows.
+        backup_note=(" (this rerun had chunk(s) that did not succeed)"
+                     if failed_chunks else ""),
     )
 
 
