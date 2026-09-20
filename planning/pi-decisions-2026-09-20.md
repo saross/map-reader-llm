@@ -6,11 +6,6 @@ the commit that executed it. Read top to bottom; open items first.
 
 ## Open
 
-### D2 — Verifier-ladder method for the benchmark and cross-model comparisons
-
-- **Options**: (i) inheritance — one verifier leg over the top-rung union, lower rungs derived by ≤ 10 m match (the text track's method; rung contrasts free of re-invocation drift; one leg's cost; drops unmatched candidates, 0.6–2.6 %, biasing lower-rung precision upward by an unmeasured amount; lower rungs are not deployments). (ii) Own leg per rung (the image rows' method; deployment-faithful; ~2.7× the cost for three rungs; rung contrasts below the drift band untestable without a replicate).
-- **Recommendation**: inheritance for the benchmark; first derive the image rows' K = 1/K = 3 from their K = 5 legs at $0 to MEASURE the inheritance bias against the own-leg cells that already exist; keep own-leg cells as replicates. Cross-model comparisons at the same rung are unaffected by the choice as long as it is one method.
-
 ### D5 — Audit items still open (`reports/code-audit-2026-09-20-storage-preflight.md` § 6)
 
 - **M2**: `batch-recover --iterations` defaults to 1; recovering a multi-iteration leg without it writes an empty `probabilities.json` beside a stale `consensus.json`. Options: default from the leg's own `probabilities.json` `iterations` (recommended) / refuse to book an all-miss leg.
@@ -29,6 +24,8 @@ the commit that executed it. Read top to bottom; open items first.
 - **Decide**: (a) rebuild `IM-k4` on the consensus votes (+3 detections, F1 0.7398 → 0.7402; $0, a board cell); (b) the one never-verified 4-vote candidate in `55maps-text-high-generalisation` (two clusters 17.29 m apart matched to one manifest entry) — verify it (one call) or minute it.
 
 ## Ruled
+
+### D2 — Verifier-ladder method — RULED 2026-09-20: INHERITANCE is the project's ladder method (one verifier leg over the top-rung union, lower rungs by ≤ 10 m match); the image rows' per-rung legs were a departure. The 3.7 image row's K = 1/K = 3 are being derived by inheritance from its K = 5 legs and tested head-to-head against the own-leg cells ($0). In progress
 
 ### D1 — Rows A and B — RULED 2026-09-20: row A signed as drafted 2026-09-13, scope limited to the K = 1/K = 3 rungs, later rungs get a new row (93c935d91); row B signed as drafted with its outcome authored at signing (f749fe9a1). Tally 44 signed, 25 unsigned, 1 by design
 
