@@ -6,12 +6,9 @@ the commit that executed it. Read top to bottom; open items first.
 
 ## Open
 
-### D7 — Legacy vote-count divergence (June-grid note § 7, f859646ba)
-
-- **Cause**: the 2026-05-03 recovery re-merged the consensus and re-cut crops with an incremental extractor that never refreshes matched entries' properties; five April/May 2026 manifests carry votes one low on 15–110 candidates each. The current chain (both image rows, all six rungs) has zero disagreements.
-- **Decide**: (a) rebuild `IM-k4` on the consensus votes (+3 detections, F1 0.7398 → 0.7402; $0, a board cell); (b) the one never-verified 4-vote candidate in `55maps-text-high-generalisation` (two clusters 17.29 m apart matched to one manifest entry) — verify it (one call) or minute it.
-
 ## Ruled
+
+### D7 — Legacy vote-count divergence — RULED 2026-09-20: documented, not rebuilt. IM-k4 is cited on the r2 board (row 35, bottom tier) and in the uplift supplement, not in the paper drafts; a +0.0004 F1 correction is not worth a rebuild and two re-signatures. Dated correction notes at every citation point (bcf1169f7 for the supplement build report and the cell's r2 evaluation; the board changelog and the two register conditions via the agents holding those files). The one never-verified text-high candidate is minuted, not verified. Root cause being fixed: the incremental extractor now refreshes matched entries and matches one-to-one, and the current chain gains a manifest-vs-union guard before any verifier spend (in progress)
 
 ### D6 — Board follow-ups — RULED 2026-09-20: (a) register the seven carried-analogue addendum cells, hold the ten MCC oracles (registration in progress); (c) the tile-MCC oracle is REDEFINED as the optimum over prob_t at the family's carried vote count; the unconstrained single-vote optima are preserved in the sweep records as a recorded property of the metric; the ten board cells and the twelve image-campaign MCC-oracle cells are re-pointed, superseded cells kept on disk (implementation in progress)
 
