@@ -37,4 +37,4 @@ the commit that executed it. Read top to bottom; open items first.
 
 ### D6a — MCC sweep of the remaining 13 families — RULED 2026-09-20: yes. In progress.
 
-### K3→K5 F1 gain — CONFIRMED claimable by the PI 2026-09-20 (replicate: +0.0079 vs drift-only +0.0008; `results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/`).
+### K3→K5 F1 gain — CONFIRMED claimable by the PI 2026-09-20 (replicate: +0.0079 vs drift-only +0.0008; `results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/`)
