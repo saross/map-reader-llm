@@ -1,18 +1,18 @@
 {
  "_meta": {
-  "generated_at": "2026-09-20T01:45:19.666589+00:00",
+  "generated_at": "2026-09-20T02:57:31.109922+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "892633660",
+  "git_head": "2df8910ac",
   "counts": {
-   "total": 3972,
-   "generated": 3650,
+   "total": 3974,
+   "generated": 3652,
    "generated_unattributed": 0,
    "hand_written": 322,
    "by_directory": {
     "results/": {
-     "total": 3169,
-     "generated": 3020,
+     "total": 3171,
+     "generated": 3022,
      "hand_written": 149
     },
     "reports/": {
@@ -42,7 +42,7 @@
     "check_mode": 68,
     "tier1_check_test": 68,
     "compliant": 51,
-    "neither_regime": 3599
+    "neither_regime": 3601
    }
   }
  },
@@ -17677,6 +17677,44 @@
     "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/evaluation.json"
    ],
    "marker": "**Generated**: 2026-09-19T22:20:35.716756+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T02:42:51.104991+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-f1-oracle/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-f1-oracle/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-09-20T02:42:49.931873+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,

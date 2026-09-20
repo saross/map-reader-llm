@@ -4206,13 +4206,13 @@
    "working_notes_obs": [
     "Obs 483 — an invariant added two days earlier turned a silent wrong answer into a crash"
    ],
-   "manually_verified_at": null,
-   "_signature_note": "UNSIGNED by instruction: the card requires this row to be authored but left unsigned for the PI. No board and no tiering was re-tiered and no signed row was touched.",
+   "manually_verified_at": "2026-09-20T02:55:11Z",
+   "_signature_note": "Signed 2026-09-20 (S156); scope limited to the K = 1/K = 3 rungs as read 2026-09-13 — later rungs get a new row.",
    "signature": {
-    "status": "unsigned",
-    "signed_at": null,
-    "attests": "UNSIGNED by instruction: the card requires this row to be authored but left unsigned for the PI. No board and no tiering was re-tiered and no signed row was touched.",
-    "presentation": null,
+    "status": "signed",
+    "signed_at": "2026-09-20T02:55:11Z",
+    "attests": "Signed 2026-09-20T02:55:11Z by the PI (S156, 2026-09-20), approved AS DRAFTED after a written walkthrough of the outcome text as authored 2026-09-13. Headline figures re-read at signing from results/gemini37-image-55map-2026-09-13/sweeps.json and findings.md and match the prose: IMG-ARM2-K3-carried micro-F1 @ 50 m 0.9199 and tile-MCC 0.7648 [0.7516, 0.7776]; P1 near miss +0.0177 MCC against the leader (BH p < 0.0001); P2 informative fail, tile-MCC rising with K on both image arms (arm 2 0.7569 -> 0.7648); P3 informative fail in the image modality's favour, +0.0351 F1 against ARM2-N3-oracle (BH p < 0.0001); P4 holds at both rungs; P5 holds on three rungs of four. SCOPE: this signature covers the K = 1 and K = 3 rungs and the five preregistered predictions as read on 2026-09-13. It does NOT cover the K = 5 rung added 2026-09-16/17 and its six conditions registered 2026-09-19 (4019f8621), the 2026-09-20 batch replicate that made the K = 3 -> K = 5 micro-F1 gain claimable, the image 2x2 tests (reports/image-2x2-tests-declaration-2026-09-19.md), or the 2026-09-20 r2 board addendum cells; the PI ruled at signing that those later rungs get a NEW analysis row rather than a re-signature of this one. Known register erratum at signing: the six verifier passes' modality was corrected from image to text on 2026-09-20 (3a32539d2); no number moves.",
+    "presentation": "planning/pi-decisions-2026-09-20.md D1; Session 156 transcript 2026-09-20 (rows A and B walkthrough)",
     "history": []
    }
   },
