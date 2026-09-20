@@ -117,6 +117,25 @@ Markdown reports under `results/**.md` and `reports/**.md` are mutable working d
   prompt as batch on the day. The batch verifier path books its usage and
   keeps `batch_results.jsonl` since 8392c7a53, so a batch leg audits like a
   realtime one.
+- **A crop manifest is checked against its union before any verifier
+  spend, and an incremental re-extraction refreshes what it matches.**
+  `scripts/55maps-t0.3-extract-new-candidates.py` must refresh a matched
+  entry's `properties` from the consensus feature that claimed it and
+  assign features to entries one to one, nearest pair first — a matched
+  entry left unrefreshed carries pre-recovery votes, and a greedy first
+  match at a radius equal to the clustering radius lets one entry absorb
+  two clusters and lose the second. Both halves went undetected for four
+  months across five April/May 2026 recovery runs
+  (`results/im-june-pool-grid-2026-09-20/findings.md` § 7: a `vote_count`
+  one low on 15 to 110 candidates each, and one consensus feature never
+  extracted or verified). Before launching a verifier leg, run
+  `python scripts/check_union_provenance.py --manifest <candidate_manifest.json>`
+  — `run_pv.py verify` runs it automatically on both the batch and the
+  real-time path and refuses a disagreeing manifest unless
+  `--allow-stale-manifest` is passed. Probabilities are keyed to the
+  manifest, so a disagreement found after the spend cannot be repaired
+  without re-verifying. Fixes: `6bbf27c0f` (extractor), `9b1c6a760`
+  (guard).
 - **Never hard-code worker counts in study YAML files.** Parallelisation is the job of the TPM governor in `4_detect_mounds_batch.py`, not the study definition. When running experiments, pass `--workers N` via the CLI to set concurrency; the governor will dynamically manage throughput within API limits. Study YAML files should set `workers: 1` as the safe default and let the operator choose the appropriate parallelism at runtime.
 
 ## Google API Quota Notes
