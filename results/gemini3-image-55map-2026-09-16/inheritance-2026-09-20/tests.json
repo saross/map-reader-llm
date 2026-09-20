@@ -1,0 +1,316 @@
+{
+  "purpose": "Does deriving the image row's lower rungs by inheritance from its K = 5 legs \u2014 the project's own verifier-ladder method \u2014 differ from the per-rung verifier legs the campaign actually ran? Head-to-head on the same candidates at the same carried points, plus the arm 2 ladder contrasts under each method.",
+  "buffer_m": 50,
+  "reference": "r2",
+  "inherit_tol_m": 10.0,
+  "n_permutations": 10000,
+  "seed": 42,
+  "delta_convention": "observed_diff = a - b, i.e. own-leg minus inherited on H1-H4",
+  "cells": {
+    "G3IMG-ARM1-K1-carried": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/detections.geojson",
+    "G3IMG-ARM1-K1-carried-inherited": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K1-carried-inherited/detections.geojson",
+    "G3IMG-ARM1-K3-carried": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/detections.geojson",
+    "G3IMG-ARM1-K3-carried-inherited": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K3-carried-inherited/detections.geojson",
+    "G3IMG-ARM2-K1-carried": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/detections.geojson",
+    "G3IMG-ARM2-K1-carried-inherited": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K1-carried-inherited/detections.geojson",
+    "G3IMG-ARM2-K3-carried": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/detections.geojson",
+    "G3IMG-ARM2-K3-carried-inherited": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K3-carried-inherited/detections.geojson",
+    "G3IMG-ARM2-K5-carried": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/detections.geojson"
+  },
+  "n_detections": {
+    "G3IMG-ARM1-K1-carried": 8529,
+    "G3IMG-ARM1-K1-carried-inherited": 8317,
+    "G3IMG-ARM1-K3-carried": 5538,
+    "G3IMG-ARM1-K3-carried-inherited": 5531,
+    "G3IMG-ARM2-K1-carried": 9172,
+    "G3IMG-ARM2-K1-carried-inherited": 8911,
+    "G3IMG-ARM2-K3-carried": 5941,
+    "G3IMG-ARM2-K3-carried-inherited": 5958,
+    "G3IMG-ARM2-K5-carried": 5155
+  },
+  "tile_confusion": {
+    "G3IMG-ARM1-K1-carried": {
+      "tp": 2646,
+      "tn": 4711,
+      "fp": 301,
+      "fn": 883
+    },
+    "G3IMG-ARM1-K1-carried-inherited": {
+      "tp": 2640,
+      "tn": 4704,
+      "fp": 308,
+      "fn": 889
+    },
+    "G3IMG-ARM1-K3-carried": {
+      "tp": 2557,
+      "tn": 4825,
+      "fp": 187,
+      "fn": 972
+    },
+    "G3IMG-ARM1-K3-carried-inherited": {
+      "tp": 2556,
+      "tn": 4827,
+      "fp": 185,
+      "fn": 973
+    },
+    "G3IMG-ARM2-K1-carried": {
+      "tp": 2724,
+      "tn": 4607,
+      "fp": 405,
+      "fn": 805
+    },
+    "G3IMG-ARM2-K1-carried-inherited": {
+      "tp": 2721,
+      "tn": 4636,
+      "fp": 376,
+      "fn": 808
+    },
+    "G3IMG-ARM2-K3-carried": {
+      "tp": 2639,
+      "tn": 4751,
+      "fp": 261,
+      "fn": 890
+    },
+    "G3IMG-ARM2-K3-carried-inherited": {
+      "tp": 2643,
+      "tn": 4748,
+      "fp": 264,
+      "fn": 886
+    },
+    "G3IMG-ARM2-K5-carried": {
+      "tp": 2567,
+      "tn": 4819,
+      "fp": 193,
+      "fn": 962
+    }
+  },
+  "multiplicity": "No Benjamini-Hochberg adjustment: this is a method-comparison probe of contrasts that already exist on the board, not a new declared family. Raw p-values are reported, and the verdict is read against the E89 drift floor (reports/image-2x2-tests-declaration-2026-09-19.md section 5 caveat 1), not against a significance threshold.",
+  "f1_tests": [
+    {
+      "test": "H1",
+      "a": "G3IMG-ARM1-K1-carried",
+      "b": "G3IMG-ARM1-K1-carried-inherited",
+      "contrast": "head-to-head arm1 K = 1: own verifier leg vs inheritance from the K = 5 leg, same union, same carried point",
+      "f1_a": 0.666421,
+      "f1_b": 0.672516,
+      "observed_diff": -0.006095,
+      "p_value": 0.0025,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 5e-06,
+      "null_std": 0.002032
+    },
+    {
+      "test": "H2",
+      "a": "G3IMG-ARM1-K3-carried",
+      "b": "G3IMG-ARM1-K3-carried-inherited",
+      "contrast": "head-to-head arm1 K = 3: own verifier leg vs inheritance from the K = 5 leg, same union, same carried point",
+      "f1_a": 0.802387,
+      "f1_b": 0.805005,
+      "observed_diff": -0.002618,
+      "p_value": 0.1328,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -4e-06,
+      "null_std": 0.001747
+    },
+    {
+      "test": "H3",
+      "a": "G3IMG-ARM2-K1-carried",
+      "b": "G3IMG-ARM2-K1-carried-inherited",
+      "contrast": "head-to-head arm2 K = 1: own verifier leg vs inheritance from the K = 5 leg, same union, same carried point",
+      "f1_a": 0.664412,
+      "f1_b": 0.672984,
+      "observed_diff": -0.008573,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -1.3e-05,
+      "null_std": 0.001448
+    },
+    {
+      "test": "H4",
+      "a": "G3IMG-ARM2-K3-carried",
+      "b": "G3IMG-ARM2-K3-carried-inherited",
+      "contrast": "head-to-head arm2 K = 3: own verifier leg vs inheritance from the K = 5 leg, same union, same carried point",
+      "f1_a": 0.812665,
+      "f1_b": 0.812318,
+      "observed_diff": 0.000348,
+      "p_value": 0.7773,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -2e-06,
+      "null_std": 0.00127
+    },
+    {
+      "test": "L1",
+      "a": "G3IMG-ARM2-K3-carried",
+      "b": "G3IMG-ARM2-K1-carried",
+      "contrast": "arm 2 ladder K1 -> K3, own-leg method (both rungs own-leg)",
+      "f1_a": 0.812665,
+      "f1_b": 0.664412,
+      "observed_diff": 0.148254,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -3.4e-05,
+      "null_std": 0.004839
+    },
+    {
+      "test": "L2",
+      "a": "G3IMG-ARM2-K3-carried-inherited",
+      "b": "G3IMG-ARM2-K1-carried-inherited",
+      "contrast": "arm 2 ladder K1 -> K3, inheritance method (both rungs inherited)",
+      "f1_a": 0.812318,
+      "f1_b": 0.672984,
+      "observed_diff": 0.139333,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -4.9e-05,
+      "null_std": 0.004687
+    },
+    {
+      "test": "L3",
+      "a": "G3IMG-ARM2-K5-carried",
+      "b": "G3IMG-ARM2-K3-carried",
+      "contrast": "arm 2 ladder K3 -> K5 as the campaign's current documents report it (both rungs own-leg)",
+      "f1_a": 0.83063,
+      "f1_b": 0.812665,
+      "observed_diff": 0.017965,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 4e-06,
+      "null_std": 0.002711
+    },
+    {
+      "test": "L4",
+      "a": "G3IMG-ARM2-K5-carried",
+      "b": "G3IMG-ARM2-K3-carried-inherited",
+      "contrast": "arm 2 ladder K3 -> K5 under inheritance: the K = 5 cell IS the inheritance source leg, so this is the pure inheritance ladder contrast",
+      "f1_a": 0.83063,
+      "f1_b": 0.812318,
+      "observed_diff": 0.018312,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 1e-06,
+      "null_std": 0.002521
+    }
+  ],
+  "mcc_tests": [
+    {
+      "test": "H1",
+      "a": "G3IMG-ARM1-K1-carried",
+      "b": "G3IMG-ARM1-K1-carried-inherited",
+      "contrast": "head-to-head arm1 K = 1: own verifier leg vs inheritance from the K = 5 leg, same union, same carried point",
+      "mcc_a": 0.714431,
+      "mcc_b": 0.711166,
+      "observed_diff": 0.003265,
+      "p_value": 0.4426,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -3.6e-05,
+      "null_std": 0.004188
+    },
+    {
+      "test": "H2",
+      "a": "G3IMG-ARM1-K3-carried",
+      "b": "G3IMG-ARM1-K3-carried-inherited",
+      "contrast": "head-to-head arm1 K = 3: own verifier leg vs inheritance from the K = 5 leg, same union, same carried point",
+      "mcc_a": 0.724698,
+      "mcc_b": 0.725029,
+      "observed_diff": -0.000331,
+      "p_value": 0.9285,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -4e-05,
+      "null_std": 0.003354
+    },
+    {
+      "test": "H3",
+      "a": "G3IMG-ARM2-K1-carried",
+      "b": "G3IMG-ARM2-K1-carried-inherited",
+      "contrast": "head-to-head arm2 K = 1: own verifier leg vs inheritance from the K = 5 leg, same union, same carried point",
+      "mcc_a": 0.706286,
+      "mcc_b": 0.712891,
+      "observed_diff": -0.006606,
+      "p_value": 0.1083,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -3.2e-05,
+      "null_std": 0.004176
+    },
+    {
+      "test": "H4",
+      "a": "G3IMG-ARM2-K3-carried",
+      "b": "G3IMG-ARM2-K3-carried-inherited",
+      "contrast": "head-to-head arm2 K = 3: own verifier leg vs inheritance from the K = 5 leg, same union, same carried point",
+      "mcc_a": 0.723426,
+      "mcc_b": 0.723559,
+      "observed_diff": -0.000133,
+      "p_value": 0.9849,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 5.4e-05,
+      "null_std": 0.003272
+    },
+    {
+      "test": "L1",
+      "a": "G3IMG-ARM2-K3-carried",
+      "b": "G3IMG-ARM2-K1-carried",
+      "contrast": "arm 2 ladder K1 -> K3, own-leg method (both rungs own-leg)",
+      "mcc_a": 0.723426,
+      "mcc_b": 0.706286,
+      "observed_diff": 0.017141,
+      "p_value": 0.0004,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 3.3e-05,
+      "null_std": 0.0048
+    },
+    {
+      "test": "L2",
+      "a": "G3IMG-ARM2-K3-carried-inherited",
+      "b": "G3IMG-ARM2-K1-carried-inherited",
+      "contrast": "arm 2 ladder K1 -> K3, inheritance method (both rungs inherited)",
+      "mcc_a": 0.723559,
+      "mcc_b": 0.712891,
+      "observed_diff": 0.010668,
+      "p_value": 0.003,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -5.2e-05,
+      "null_std": 0.003668
+    },
+    {
+      "test": "L3",
+      "a": "G3IMG-ARM2-K5-carried",
+      "b": "G3IMG-ARM2-K3-carried",
+      "contrast": "arm 2 ladder K3 -> K5 as the campaign's current documents report it (both rungs own-leg)",
+      "mcc_a": 0.725317,
+      "mcc_b": 0.723426,
+      "observed_diff": 0.00189,
+      "p_value": 0.6372,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -7e-06,
+      "null_std": 0.003979
+    },
+    {
+      "test": "L4",
+      "a": "G3IMG-ARM2-K5-carried",
+      "b": "G3IMG-ARM2-K3-carried-inherited",
+      "contrast": "arm 2 ladder K3 -> K5 under inheritance: the K = 5 cell IS the inheritance source leg, so this is the pure inheritance ladder contrast",
+      "mcc_a": 0.725317,
+      "mcc_b": 0.723559,
+      "observed_diff": 0.001757,
+      "p_value": 0.5639,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 4.9e-05,
+      "null_std": 0.003045
+    }
+  ]
+}
