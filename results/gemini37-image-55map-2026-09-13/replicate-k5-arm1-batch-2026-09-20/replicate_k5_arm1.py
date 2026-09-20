@@ -265,13 +265,26 @@ def flip_block(a: np.ndarray, b: np.ndarray, threshold: float) -> dict[str, Any]
         counts on each side.
     """
     keep_a, keep_b = a >= threshold, b >= threshold
-    flips = int((keep_a != keep_b).sum())
+    flipped = keep_a != keep_b
+    flips = int(flipped.sum())
     low, high = wilson_interval(flips, len(a))
+    # Which value pairs do the flips actually consist of? A flip rate that
+    # changes with the threshold is usually a fact about where the verifier's
+    # probability mass sits rather than about how unsteady it is, and the
+    # commonest transitions show that directly.
+    moves = Counter(
+        (float(x), float(y)) for x, y in zip(a[flipped], b[flipped], strict=True)
+    )
     return {
         "threshold": threshold,
         "n_flips": flips,
         "flip_share": round(flips / len(a), 6),
         "flip_share_wilson95": [round(low, 6), round(high, 6)],
+        "top_transitions": [
+            {"original": o, "replicate": r, "n": c,
+             "share_of_flips": round(c / flips, 6) if flips else 0.0}
+            for (o, r), c in moves.most_common(6)
+        ],
         "n_flips_replicate_keeps_original_drops": int((keep_b & ~keep_a).sum()),
         "n_flips_original_keeps_replicate_drops": int((keep_a & ~keep_b).sum()),
         "n_kept_original": int(keep_a.sum()),
