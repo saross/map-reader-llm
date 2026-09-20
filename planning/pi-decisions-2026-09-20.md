@@ -6,12 +6,6 @@ the commit that executed it. Read top to bottom; open items first.
 
 ## Open
 
-### D1 — Sign rows A and B in the analyses register
-
-- **Where**: `results/run-analyses.json`, analyses 68 (`gemini37-image-55map-2026-09-13`, row A) and 69 (`gemini3-image-55map-2026-09-16`, row B). Fields per row: `signature.status` ("unsigned" → "signed"), `signature.signed_at`, `signature.attests` (what is approved and what is not), `signature.presentation`, `manually_verified_at`; row B also `outcome` (null until the PI adjudicates the K = 3 primary reading).
-- **Afterwards**: `scripts/generate_post_run_report.py --all --write` copies the signature into `results/analyses-manifest.json`.
-- **Bottom line**: row A's outcome text was authored on 2026-09-13 and left unsigned by the card; it predates the K = 5 rung, the 2x2, and today's replicate. Row B's outcome is deliberately blank.
-
 ### D2 — Verifier-ladder method for the benchmark and cross-model comparisons
 
 - **Options**: (i) inheritance — one verifier leg over the top-rung union, lower rungs derived by ≤ 10 m match (the text track's method; rung contrasts free of re-invocation drift; one leg's cost; drops unmatched candidates, 0.6–2.6 %, biasing lower-rung precision upward by an unmeasured amount; lower rungs are not deployments). (ii) Own leg per rung (the image rows' method; deployment-faithful; ~2.7× the cost for three rungs; rung contrasts below the drift band untestable without a replicate).
@@ -35,6 +29,8 @@ the commit that executed it. Read top to bottom; open items first.
 - **Decide**: (a) rebuild `IM-k4` on the consensus votes (+3 detections, F1 0.7398 → 0.7402; $0, a board cell); (b) the one never-verified 4-vote candidate in `55maps-text-high-generalisation` (two clusters 17.29 m apart matched to one manifest entry) — verify it (one call) or minute it.
 
 ## Ruled
+
+### D1 — Rows A and B — RULED 2026-09-20: row A signed as drafted 2026-09-13, scope limited to the K = 1/K = 3 rungs, later rungs get a new row (93c935d91); row B signed as drafted with its outcome authored at signing (f749fe9a1). Tally 44 signed, 25 unsigned, 1 by design
 
 ### D3 — T5 matched comparator — RULED 2026-09-20: T5m added as an additional test (3783e0e03; instrument d985a5e51, cells 2bd86154e, tests c9abda52e). Result: micro-F1 REVERSES (−0.0696, p < 0.0001) — the declared T5's F1 null cannot be read as reproduction; tile-MCC consistent-sign small positive (+0.0125 to +0.0237, uncorrected)
 
