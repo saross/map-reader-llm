@@ -1006,25 +1006,33 @@ def main() -> int:
             materialise(name, f"{name}-carried", "carried", pt, pk)
 
     (out / "sweeps.json").write_text(json.dumps(sweeps, indent=2) + "\n")
-    # Carry forward the POST-HOC cells another step appended. Stage 1 does not
-    # produce them — the emergent GS-carried N = 3 cells come from
-    # scripts/final_board_n3_carried.py (step 4c, PI direction 2026-08-28) —
-    # so rebuilding the manifest from this run alone silently DROPPED them,
-    # which would have shrunk the board by two cells on any regeneration. Found
-    # 2026-09-13 while adding the fourth cell's N = 5 rung. Matched on label, so
-    # a post-hoc cell this run does produce is not duplicated.
+    # Carry forward EVERY committed cell this stage does not produce. Stage 1
+    # builds the oracle and carried cells only; other steps append their own —
+    # the emergent GS-carried N = 3 cells from scripts/final_board_n3_carried.py
+    # (step 4c, PI direction 2026-08-28), the carried analogues and the tile-MCC
+    # cells from scripts/final_board_posthoc_cells.py — and rebuilding the
+    # manifest from this run alone silently DROPPED them, which would have
+    # shrunk the board on any regeneration. Found 2026-09-13 while adding the
+    # fourth cell's N = 5 rung.
+    #
+    # The match used to be the substring "post-hoc", which every basis then in
+    # use happened to contain. That made the guard depend on a WORD rather than
+    # on the fact that matters, and the PI ruling of 2026-09-21 broke it: it
+    # re-labelled twenty cells to bases naming the tile-presence presentation,
+    # none of which says "post-hoc". Carrying forward anything unproduced is
+    # the invariant that was always meant; matched on label, so a cell this run
+    # does produce is not duplicated.
     manifest_path = out / "cells_manifest.json"
     carried_over: list[str] = []
     if manifest_path.is_file():
         produced = {c["label"] for c in manifest_cells}
         prior = json.loads(manifest_path.read_text()).get("cells", [])
         for cell in prior:
-            if "post-hoc" in str(cell.get("basis", "")) \
-                    and cell["label"] not in produced:
+            if cell["label"] not in produced:
                 manifest_cells.append(cell)
                 carried_over.append(cell["label"])
     if carried_over:
-        logger.info("carried forward %d post-hoc cell(s) this stage does not "
+        logger.info("carried forward %d committed cell(s) this stage does not "
                     "produce: %s", len(carried_over), ", ".join(carried_over))
     manifest_path.write_text(
         json.dumps({"cells": manifest_cells}, indent=2) + "\n")

@@ -49,20 +49,24 @@ Four external comparators — ``FOURTH-N1-oracle``, ``ARM2-N3-oracle``,
 contrast that P2 requires. Benjamini-Hochberg at q = 0.05 across those five,
 separately on tile-MCC and on micro-F1 @ 50 m.
 
-The MCC oracle, redefined 2026-09-20
-------------------------------------
-A rung's ``mcc_oracle`` is the tile-MCC optimum over ``prob_t`` with
-``min_votes`` PINNED to the rung's CARRIED vote count (PI ruling
-2026-09-20), which makes it the like-for-like companion of the F1 oracle
-beside it. It was previously the optimum over the whole achievable grid,
-vote count included — and that selection collapsed: every Gemini 3 rung
-above K = 1 put it at a single vote, trading 0.23-0.31 of micro-F1 for
-hundredths of tile-MCC, and the same collapse holds for all 23 families of
-the r2 board. The unconstrained optimum is kept per rung under
-``mcc_argmax_unconstrained`` in ``sweeps.json``, and the cells it selected
-are kept on disk at ``cells/<label>-unconstrained/`` with basis
-``mcc-oracle-unconstrained``: they are the evidence for the finding, not an
-oracle.
+The tile-MCC optimum, dropped as a cell 2026-09-21
+--------------------------------------------------
+This script no longer MATERIALISES an MCC-oracle cell. PI ruling
+2026-09-21 took the tile-MCC optimum off the boards under both definitions
+— unconstrained, and pinned to the rung's carried vote count — because
+every Gemini 3 rung above K = 1 puts the unconstrained optimum at a single
+vote, trading 0.23-0.31 of micro-F1 for hundredths of tile-MCC, and beside
+an F1 oracle that reads as a rival configuration rather than as a
+vote-threshold choice. It is presented instead, with its vote count as a
+column and its verifier pool priced, in
+``results/tile-presence-2026-09-21/`` (built by
+``scripts/build_tile_presence_board.py``).
+
+Both argmaxes are still RECORDED per rung, as data the tile-presence table
+reads: ``mcc_argmax_unconstrained`` and ``mcc_argmax_at_carried_k`` (the
+latter was called ``mcc_oracle`` until the ruling). Every cell either
+selection ever built stays on disk with its committed evaluation,
+re-labelled in ``cells_manifest.json``; nothing is deleted.
 
 Usage::
 
@@ -73,7 +77,7 @@ Usage::
     python scripts/gemini37_image_55map_r2.py --stage score --workers 5 --jobs 4
     # ... or only the cells a re-selection moved (the stage has no resume):
     python scripts/gemini37_image_55map_r2.py --stage score \
-        --cells IMG-ARM2-K3-mcc-oracle
+        --cells IMG-ARM2-K3-f1-oracle
     python scripts/gemini37_image_55map_r2.py --stage tests
 
 Zero API. Run on sapphire (Hungarian matching over 8,541 tiles per sweep
@@ -861,12 +865,13 @@ def stage_sweep(workers: int, rungs: tuple[int, ...] | None = None) -> int:
             "carried_point": [carried_prob, carried_votes],
             "carried": carried,
             "f1_oracle": f1_best,
-            "mcc_oracle": mcc_best,
+            "mcc_argmax_at_carried_k": mcc_best,
             "mcc_argmax_unconstrained": mcc_free,
         }
         logger.info(
-            "%-14s F1 oracle %.4f at (%.2f, k%d) | MCC oracle (carried k%d) "
-            "%.4f at (%.2f, k%d), micro %.4f",
+            "%-14s F1 oracle %.4f at (%.2f, k%d) | tile-MCC argmax at the "
+            "carried k%d (recorded, not materialised) %.4f at (%.2f, k%d), "
+            "micro %.4f",
             label, f1_best["micro_f1_50"], f1_best["prob_t"], f1_best["min_votes"],
             carried_votes, mcc_best["tile_mcc"], mcc_best["prob_t"],
             mcc_best["min_votes"], mcc_best["micro_f1_50"],
@@ -875,7 +880,8 @@ def stage_sweep(workers: int, rungs: tuple[int, ...] | None = None) -> int:
                 mcc_free["prob_t"], mcc_free["min_votes"]) != (
                 mcc_best["prob_t"], mcc_best["min_votes"]):
             logger.info(
-                "%-14s   unconstrained MCC optimum (superseded) %.4f at "
+                "%-14s   unconstrained tile-MCC optimum (recorded; see "
+                "results/tile-presence-2026-09-21/) %.4f at "
                 "(%.2f, k%d), micro %.4f — F1 cost %+.4f",
                 label, mcc_free["tile_mcc"], mcc_free["prob_t"],
                 mcc_free["min_votes"], mcc_free["micro_f1_50"],
@@ -890,64 +896,16 @@ def stage_sweep(workers: int, rungs: tuple[int, ...] | None = None) -> int:
 # ---------------------------------------------------------------------------
 
 
-def preserve_superseded_cell(cell: dict[str, Any], new_point: str,
-                             move: bool = True) -> dict[str, Any] | None:
-    """Move a re-pointed cell aside instead of overwriting it.
-
-    The PI redefined the MCC oracle on 2026-09-20, which re-points some of
-    the ``*-mcc-oracle`` cells. Their detections, evaluations and score
-    logs are evidence for the finding that motivated the redefinition, so
-    they are MOVED to ``cells/<label>-unconstrained/`` and kept in the
-    manifest under that label rather than being written over (archive,
-    never delete).
-
-    Args:
-        cell: The existing manifest entry.
-        new_point: The point the cell is about to be re-materialised at,
-            formatted as the manifest formats it.
-        move: Actually move the directory. ``False`` computes the new
-            entry only, which is what the tests exercise.
-
-    Returns:
-        The manifest entry for the preserved cell, or ``None`` when the
-        point has not moved (nothing to preserve) or the cell has already
-        been preserved.
-    """
-    if cell.get("basis") != "mcc-oracle" or cell.get("point") == new_point:
-        return None
-    label = f"{cell['label']}-unconstrained"
-    old_dir = RESULTS_HOME / "cells" / cell["label"]
-    new_dir = RESULTS_HOME / "cells" / label
-    if move and old_dir.is_dir() and not new_dir.exists():
-        old_dir.rename(new_dir)
-        logger.info("preserved %s -> %s (superseded MCC oracle at %s)",
-                    cell["label"], label, cell.get("point"))
-    preserved = dict(cell)
-    preserved["label"] = label
-    preserved["basis"] = "mcc-oracle-unconstrained"
-    # Re-point the repository-relative det path by swapping the cell
-    # directory, rather than re-deriving it from ``new_dir``: RESULTS_HOME is
-    # monkeypatched to a tmp_path under test, which is outside PROJECT_ROOT.
-    det = Path(cell["det"])
-    preserved["det"] = str(det.parent.parent / label / det.name)
-    preserved["superseded"] = (
-        "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum "
-        "over prob_t at the rung's CARRIED vote count, which is the cell now "
-        f"at {cell['label']}. This is the previous, UNCONSTRAINED optimum, "
-        "free to choose the vote count too; it is retained because every "
-        "rung that had a choice put it at a single vote, at a large cost in "
-        "micro-F1, and that is the finding. Not an oracle; do not quote it "
-        "as one.")
-    return preserved
-
-
 def stage_materialise(rungs: tuple[int, ...] | None = None) -> int:
-    """Write one detections file per cell: carried, F1 oracle, MCC oracle.
+    """Write one detections file per cell: carried and F1 oracle.
 
-    A rung whose MCC oracle has been re-pointed by the 2026-09-20
-    redefinition has its previous cell moved to
-    ``cells/<label>-unconstrained/`` first, evaluation and all, so nothing
-    is overwritten (:func:`preserve_superseded_cell`).
+    NO MCC-oracle cell is produced: PI ruling 2026-09-21 took the tile-MCC
+    optimum off the boards under both definitions and moved it to
+    ``results/tile-presence-2026-09-21/``, which reads the sweep record
+    rather than a materialised cell. The cells both earlier definitions
+    built stay on disk and in ``cells_manifest.json`` under their new
+    bases — ``merge_cells`` keeps any label this stage does not produce —
+    so re-running this stage does not delete them.
 
     Args:
         rungs: Restrict to these rungs; their cells replace the same labels
@@ -959,25 +917,18 @@ def stage_materialise(rungs: tuple[int, ...] | None = None) -> int:
     existing: list[dict[str, Any]] = []
     if manifest_path.exists():
         existing = json.loads(manifest_path.read_text())["cells"]
-    by_label = {c["label"]: c for c in existing}
     cells: list[dict[str, Any]] = []
     for label, info in sweeps["rungs"].items():
         arm = "arm1" if "ARM1" in label else "arm2"
         k = int(label.rsplit("K", 1)[1])
         if k not in rungs:
             continue
-        prior = by_label.get(f"{label}-mcc-oracle")
-        if prior is not None:
-            point = (f"({float(info['mcc_oracle']['prob_t']):.2f}, "
-                     f"k{int(info['mcc_oracle']['min_votes'])})")
-            preserved = preserve_superseded_cell(prior, point)
-            if preserved is not None:
-                existing.append(preserved)
         frame = rung_frame(arm, k)
+        # Two bases only: the tile-MCC optimum is recorded in sweeps.json
+        # and presented from there (PI ruling 2026-09-21), not materialised.
         wanted = {
             "carried": tuple(info["carried_point"]),
             "f1-oracle": (info["f1_oracle"]["prob_t"], info["f1_oracle"]["min_votes"]),
-            "mcc-oracle": (info["mcc_oracle"]["prob_t"], info["mcc_oracle"]["min_votes"]),
         }
         for basis, (prob_t, votes) in wanted.items():
             sub = materialise(frame, float(prob_t), int(votes))

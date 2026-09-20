@@ -338,3 +338,39 @@ def test_load_sweeps_repairs_a_missing_families_block(tmp_path) -> None:
     path = tmp_path / "sweeps.json"
     path.write_text(json.dumps({"buffer_m": 50, "reference": "r2"}) + "\n")
     assert fbs.load_sweeps(path, "r2")["families"] == {}
+
+
+# --- The manifest carry-forward (scripts/final_board_sweeps.main) -----------
+#
+# Stage 1 rebuilds cells_manifest.json from its own output, so every cell
+# another step appended has to be carried forward or it is dropped — the
+# 2026-09-13 defect. The guard used to match the substring "post-hoc", which
+# every basis then in use happened to contain; the PI ruling of 2026-09-21
+# re-labelled twenty cells to bases that do not, so the match is now "any
+# committed label this run did not produce".
+
+def _carry_forward(produced_labels: list[str], prior: list[dict]) -> list[str]:
+    """The carry-forward rule, isolated from the stage that runs it."""
+    produced = set(produced_labels)
+    return [c["label"] for c in prior if c["label"] not in produced]
+
+
+def test_carry_forward_keeps_a_cell_whose_basis_says_nothing_about_post_hoc(
+) -> None:
+    """The 2026-09-21 bases: the guard must not depend on a word."""
+    prior = [
+        {"label": "ARM2-N3-mcc-oracle",
+         "basis": "tile-presence oracle (unconstrained tile-MCC optimum; "
+                  "presented in results/tile-presence-2026-09-21/)"},
+        {"label": "ARM2-N3-mcc-oracle-k3",
+         "basis": "mcc-oracle at carried k — retained, not presented "
+                  "(PI ruling 2026-09-21)"},
+        {"label": "A-N3-carried", "basis": "carried (post-hoc)"},
+    ]
+    assert _carry_forward(["ARM2-N5-oracle"], prior) == [
+        "ARM2-N3-mcc-oracle", "ARM2-N3-mcc-oracle-k3", "A-N3-carried"]
+
+
+def test_carry_forward_does_not_duplicate_a_cell_this_run_produced() -> None:
+    prior = [{"label": "A-N3-carried", "basis": "carried (post-hoc)"}]
+    assert _carry_forward(["A-N3-carried"], prior) == []

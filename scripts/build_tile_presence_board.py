@@ -894,11 +894,135 @@ metrics agree, and the carried point is close to both ends.
     return 0
 
 
+
+# ---------------------------------------------------------------------------
+# Stage: take the MCC oracle off the boards' manifests.
+# ---------------------------------------------------------------------------
+
+#: What the two families of MCC-oracle cell are called after the ruling of
+#: 2026-09-21. Neither is deleted: the cells stay on disk, and the first is
+#: what the tile-presence leaderboard presents.
+TILE_PRESENCE_BASIS = (
+    "tile-presence oracle (unconstrained tile-MCC optimum; presented in "
+    "results/tile-presence-2026-09-21/)")
+RETAINED_BASIS = (
+    "mcc-oracle at carried k — retained, not presented (PI ruling 2026-09-21)")
+
+#: Old basis -> new basis, per manifest. The board spells its bases out; the
+#: campaigns use the short forms their materialiser writes.
+RELABEL = {
+    "mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)":
+        TILE_PRESENCE_BASIS,
+    "mcc-oracle-unconstrained": TILE_PRESENCE_BASIS,
+    "mcc-oracle at carried k (post-hoc, 2026-09-20)": RETAINED_BASIS,
+    "mcc-oracle": RETAINED_BASIS,
+}
+
+#: The pointer every re-labelled cell gains, so a reader who finds the cell
+#: can find the table that presents it (or the ruling that stopped presenting
+#: it) without reading a changelog.
+PRESENTATION = {
+    TILE_PRESENCE_BASIS: (
+        "PI ruling 2026-09-21: the tile-MCC optimum is no longer an oracle "
+        "column on any board. This cell is the UNCONSTRAINED optimum and is "
+        "presented in results/tile-presence-2026-09-21/leaderboard.md, with "
+        "its vote count as a column and its verifier pool priced. Retained "
+        "on disk with its committed evaluation."),
+    RETAINED_BASIS: (
+        "PI ruling 2026-09-21: the tile-MCC optimum is no longer an oracle "
+        "column on any board, under either definition. This cell is the "
+        "optimum at the family's CARRIED vote count, the definition ruling "
+        "6c of 2026-09-20 introduced and this ruling superseded. It is "
+        "retained on disk with its committed evaluation and is NOT "
+        "presented; the tile-presence table presents the unconstrained "
+        "optimum instead (results/tile-presence-2026-09-21/)."),
+}
+
+#: Sweep-record key rename: the campaigns called their carried-k selection
+#: ``mcc_oracle``, which is the word the ruling drops. The board already
+#: spells the same thing ``mcc_argmax_at_carried_k``, so the two tracks are
+#: brought onto one vocabulary. Both argmaxes stay in the record as DATA —
+#: only the name changes.
+SWEEP_KEY_RENAME = {"mcc_oracle": "mcc_argmax_at_carried_k"}
+
+MANIFESTS = (BOARD_HOME / "cells_manifest.json",
+             G37_HOME / "cells_manifest.json",
+             G3_HOME / "cells_manifest.json")
+CAMPAIGN_SWEEPS = (G37_HOME / "sweeps.json", G3_HOME / "sweeps.json")
+
+
+def relabel_manifest(manifest: dict) -> list[tuple[str, str, str]]:
+    """Re-label every MCC-oracle cell of one manifest, in place.
+
+    Args:
+        manifest: The parsed ``cells_manifest.json``.
+
+    Returns:
+        ``(label, old basis, new basis)`` for each cell touched.
+    """
+    touched: list[tuple[str, str, str]] = []
+    for cell in manifest["cells"]:
+        old = cell.get("basis")
+        new = RELABEL.get(old)
+        if new is None:
+            continue
+        cell["basis"] = new
+        cell["presentation"] = PRESENTATION[new]
+        touched.append((cell["label"], old, new))
+    return touched
+
+
+def rename_sweep_keys(sweeps: dict, record_key: str) -> list[str]:
+    """Apply :data:`SWEEP_KEY_RENAME` to every record, in place.
+
+    Args:
+        sweeps: The parsed ``sweeps.json``.
+        record_key: ``rungs`` or ``families``.
+
+    Returns:
+        The records renamed.
+    """
+    touched: list[str] = []
+    for name, record in sweeps.get(record_key, {}).items():
+        for old, new in SWEEP_KEY_RENAME.items():
+            if old in record:
+                record[new] = record.pop(old)
+                touched.append(name)
+    return touched
+
+
+def stage_relabel() -> int:
+    """Re-label the manifests and bring the sweep records onto one vocabulary.
+
+    Idempotent: a manifest already re-labelled has no old basis left to
+    match, and a record already renamed has no old key.
+
+    Returns:
+        Process exit code.
+    """
+    for path in MANIFESTS:
+        manifest = json.loads(path.read_text())
+        touched = relabel_manifest(manifest)
+        path.write_text(json.dumps(manifest, indent=2) + "\n")
+        logger.info("%s: re-labelled %d cell(s)",
+                    path.relative_to(PROJECT_ROOT), len(touched))
+        for label, old, new in touched:
+            logger.info("    %-34s %r -> %r", label, old[:38], new[:38])
+    for path in CAMPAIGN_SWEEPS:
+        sweeps = json.loads(path.read_text())
+        touched = rename_sweep_keys(sweeps, "rungs")
+        path.write_text(json.dumps(sweeps, indent=2) + "\n")
+        logger.info("%s: renamed the carried-k key on %d rung(s)",
+                    path.relative_to(PROJECT_ROOT), len(touched))
+    return 0
+
+
 def main() -> int:
     """Entry point. Returns a process exit status."""
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--stage", required=True,
-                    choices=["costs", "leaderboard", "frontier", "all"])
+                    choices=["costs", "leaderboard", "frontier",
+                             "relabel", "all"])
     args = ap.parse_args()
     if args.stage in ("costs", "all"):
         rc = audit_legs()
@@ -909,7 +1033,11 @@ def main() -> int:
         if rc:
             return rc
     if args.stage in ("frontier", "all"):
-        return stage_frontier()
+        rc = stage_frontier()
+        if rc:
+            return rc
+    if args.stage == "relabel":
+        return stage_relabel()
     return 0
 
 
