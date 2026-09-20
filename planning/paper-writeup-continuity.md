@@ -8,6 +8,71 @@ project state.
 
 ---
 
+## 🔍 S156 DAY 2 (2026-09-20, Fable, session open) — COMPARABILITY REPAIRED, AUDIT ACTED ON, REPLICATE CLAIMABLE; PI DECISIONS PENDING
+
+> **Read this before the block below.** Everything here is on `origin/main`
+> at `ff400117c` or earlier; both clones clean at write time.
+>
+> ### Landed today (all US$0 except the replicate)
+>
+> - **Reports**: `reports/text-vs-image-tracks-2026-09-20.md` (6b84d4372; its
+>   K = 1 delta was an artefact, see next), `reports/comparability-inventory-37-runs-2026-09-20.md`
+>   (cc73aa81e), `reports/code-audit-2026-09-20-storage-preflight.md` (1e532c1f5).
+> - **Inventory fixes 1–5 DONE**: seven carried-analogue cells + ten MCC-oracle
+>   cells on the r2 board as an addendum (not re-tiered; 3ced9749c…892633660;
+>   `cells_manifest.json` 36 → 53); FOURTH-N5-oracle stays off-board by the
+>   2026-09-13 ruling (minuted); Gemini 3 row REGISTERED, unsigned (473498d9a,
+>   2f39fee7c; findings + post-run report written); errata (371199b52 wording,
+>   3a32539d2 row A verifier modality). Carried-vs-carried image − text F1:
+>   +0.026 / +0.040 / +0.044 (arm 2, K/N 1/3/5); tile-MCC +0.050 / +0.057 / +0.060.
+> - **Audit**: M6 + M1 implemented (bdf4a080b, f750b96ef); K = 1/K = 5 tests
+>   regenerated under the four-member family (d04ceacbb). Storage preflight
+>   935865223/a0f40609e + wiring tests ac00a3ed7. File API emptied (0 files).
+> - **Replicate arm** (PI-approved ≤ US$20; audited US$10.2033, 3f8af3a65):
+>   K3 → K5 F1 gain **claimable** (+0.0079 p < 0.0001 vs drift-only +0.0008
+>   p 0.40); tile-MCC null everywhere. Full-scale flip rate 2.46 % at 0.90 —
+>   BELOW the declared 3.5–5.3 % floor. `results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/`.
+> - **June IM pool grid** `results/im-june-pool-grid-2026-09-20/` (942fd438d):
+>   IM-k3 reproduced exactly; re-stamp costs 0.0023 tile-MCC, 0 F1; June
+>   leads at matched votes (3-of-5: 0.8008 vs 0.7357) and trails at matched
+>   stringency (unanimity: 0.5851 vs 0.8177). T5's comparator is the one
+>   pairing that makes them agree. Full June grid would need 55,339
+>   verifications (~US$38).
+> - Obs 488–491 (b02892c8d); guidance rules (017ab13bd); K5 vs K3 paired tests
+>   on all four image stacks in `reports/text-vs-image-tracks-2026-09-20.md` § 4.6.
+>
+> ### PI DECISIONS PENDING (present these first)
+>
+> 1. **Sign row B**: `results/run-analyses.json` row `gemini3-image-55map-2026-09-16`
+>    — `signature.{status,signed_at,attests,presentation}`, `manually_verified_at`,
+>    `outcome` (left null on purpose). Then `generate_post_run_report.py --all --write`.
+>    Row A's analysis row is also still unsigned.
+> 2. **Verifier-ladder method for the benchmark**: inheritance (recommended;
+>    derive the image rows' K1/K3 from their K5 legs at $0 to MEASURE the
+>    inheritance bias) vs own-leg-per-rung. Walkthrough in the S156 transcript
+>    and Obs 489.
+> 3. **T5 re-declaration** against the K = 5 pool at 3 votes (0.15, k3 row of
+>    `sweep_G3IMG-ARM1-K5.csv` already swept; materialise + paired test, $0).
+> 4. **E89 floor**: revise from 3.5–5.3 % (171 twins) to the full-scale 2.46 %?
+> 5. **Audit**: M2 (default `--iterations` from the leg), M4/m10 (margin = one
+>    max chunk; charge PROCESSING uploads), m7 (non-SUCCEEDED terminal → failed
+>    chunk), and NEW: `audit_proposer_cost.py` never reads the model from the
+>    meta (prices a Gemini 3 pool at 3.7 rates, +48 %).
+> 6. **Board follow-ups**: register the 17 addendum cells in run-conditions?
+>    Sweep the remaining 13 families for `mcc_argmax` (~1 h sapphire)?
+>    MCC oracles sit at k = 1 on EVERY family with a choice of k (F1 collapses
+>    0.06–0.18) — an "MCC oracle" is not a like-for-like companion to the F1
+>    oracle; decide how the board presents them.
+>
+> ### Method notes for the next session
+>
+> - Both clones were shared by several agents today; the working pattern that
+>   held was a detached worktree at `origin/main` (`/tmp/mr-m1` on sapphire)
+>   for commits when a clone held another agent's unstaged work. Never stash
+>   in a shared tree.
+> - Nested heredocs inside `ssh '…'` break on backticks; ship scripts and
+>   commit messages as files (`scp`) instead.
+
 ## 🔍 S156 PROGRESS (updated 2026-09-19 22:30 UTC, Fable, session open — THE GEMINI 3 ROW IS COMPLETE: all six legs, three rungs, tests at K = 1/3/5)
 
 > **22:30 UTC — ROW COMPLETE.** K = 5 arm 2 leg folded in by batch-recover
