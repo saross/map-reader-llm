@@ -6,17 +6,14 @@ the commit that executed it. Read top to bottom; open items first.
 
 ## Open
 
-### D6 — Board follow-ups
-
-- Register the 17 addendum cells in `results/run-conditions.json`? (precedent: FOURTH-N5-oracle was registered separately.)
-- How to present MCC oracles: on all 23 families the tile-MCC argmax sits at the lowest vote count on offer, paying 0.06–0.18 of F1 where k = 1 is available; an MCC oracle is a vote-threshold choice wearing a metric's name, not a like-for-like companion of the F1 oracle. Option with no compute: an MCC-argmax over prob_t at the family's CARRIED k, readable from the committed CSVs.
-
 ### D7 — Legacy vote-count divergence (June-grid note § 7, f859646ba)
 
 - **Cause**: the 2026-05-03 recovery re-merged the consensus and re-cut crops with an incremental extractor that never refreshes matched entries' properties; five April/May 2026 manifests carry votes one low on 15–110 candidates each. The current chain (both image rows, all six rungs) has zero disagreements.
 - **Decide**: (a) rebuild `IM-k4` on the consensus votes (+3 detections, F1 0.7398 → 0.7402; $0, a board cell); (b) the one never-verified 4-vote candidate in `55maps-text-high-generalisation` (two clusters 17.29 m apart matched to one manifest entry) — verify it (one call) or minute it.
 
 ## Ruled
+
+### D6 — Board follow-ups — RULED 2026-09-20: (a) register the seven carried-analogue addendum cells, hold the ten MCC oracles (registration in progress); (c) the tile-MCC oracle is REDEFINED as the optimum over prob_t at the family's carried vote count; the unconstrained single-vote optima are preserved in the sweep records as a recorded property of the metric; the ten board cells and the twelve image-campaign MCC-oracle cells are re-pointed, superseded cells kept on disk (implementation in progress)
 
 ### D8 — Arm 1 floor — RULED 2026-09-20 and DONE (leg 5778b5569, audited US$6.4909; analysis 82020b941…be912eea1; `results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/`). Arm 1 floor: 2.41 % flips at its carried threshold, Wilson [2.11 %, 2.74 %]; drift-only +0.0005 F1 (p 0.58), +0.0001 tile-MCC (p 0.93) — indistinguishable from arm 2's at their own operating points. Arm 1 is steadier on probabilities (κ 0.77 vs 0.50) but makes more large reversals (2.9 % vs 2.0 % |Δp| > 0.5). The arm 1 K3→K5 F1 gain (+0.0105) is claimable (≈ 22× drift, p < 0.0001); its tile-MCC gain is not (fails its own null, p 0.10). Rules added to the declaration: read a flip rate only at the deployed threshold; the margin rule is necessary, not sufficient — an effect must still be resolvable against its own null; the arm 1 band is measured on row A's union, carrying it to row B is an assumption
 
