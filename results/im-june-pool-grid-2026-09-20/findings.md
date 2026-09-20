@@ -1,6 +1,9 @@
 # The June 2026 image pool, swept on r2: findings
 
-> **Last revised**: 2026-09-20 (original publication — the June image run's
+> **Last revised**: 2026-09-20 (§ 7 added — the 16-candidate vote-count
+> divergence noted in § 1 traced to the 2026-05-03 recovery campaign, with its
+> blast radius across the committed board measured; no figure in §§ 1-6 moved).
+> Prior: 2026-09-20 (original publication — the June image run's
 > threshold-by-votes grid on the r2 reference, its four scored cells, and the
 > comparison with the September rebuilt Gemini 3 image pool of the image 2x2).
 > See [§ Changelog](#changelog) for revision history.
@@ -77,11 +80,9 @@ one to one, median centroid separation 0 m, maximum 6.9 m — but **16 of them
 histograms differ: 2,891 / 2,153 / 2,834 in the consensus file against
 2,896 / 2,159 / 2,823 in the manifest. Rebuilding the union from the five
 passes (§ 5) reproduces the **consensus file** exactly, so it is the manifest
-that carries the divergent counts. Whether they come from a re-run of the
-consensus stage under a different input order — the order-dependence
-`merge_passes.cluster_across_passes` documents ("different input orderings can
-produce different clusters for detections near the threshold boundary") — or
-from the crop-extraction step, the artefacts do not say. The
+that carries the divergent counts: they are the run's *pre-recovery* vote
+counts, frozen by an incremental re-extraction on 2026-05-03 that appended the
+one new candidate without refreshing the 7,877 it matched (§ 7). The
 grid reads the **crop manifest** regardless, because that is the file the
 verifier was given, the one `verified/probabilities.json` keys to by
 `candidate_id`, and the one the 55-map board's own `IM` family loads
@@ -306,7 +307,139 @@ the (0.15, k3) row of `sweep_G3IMG-ARM1-K5.csv` is already swept, so
 materialising that point as a cell and running the same paired tile-swap
 against `IM-5pass-k3-f1-oracle` is on-disk work.
 
+## 7. Why the two June union records disagree, and how far it reaches
+
+**What the 16 are.** Every one of them is **exactly one vote lower in the crop
+manifest**, with exactly one pass missing from `contributing_passes` and
+`cluster_size` short by one — eleven read 4 in the manifest and 5 in the
+consensus file, five read 3 and 4. They sit on ten tiles, and on each tile it
+is one and the same pass that is absent:
+
+| tile | pass missing from the manifest | `candidate_id`s | manifest → consensus |
+|---|---|---|---|
+| `K-35-042-3_x3360_y1344` | run_3 | 6662, 6663 | 3 → 4 |
+| `K-35-050-4_x1008_y2352` | run_1 | 6655 | 4 → 5 |
+| `K-35-051-4_x336_y2352` | run_2 | 591 | 4 → 5 |
+| `K-35-062-4_Asenovgrad_4326_x336_y1008` | run_5 | 2470 | 4 → 5 |
+| `K-35-063-2_Chirpan_4326_x0_y2352` | run_3 | 7055 | 3 → 4 |
+| `K-35-063-2_Chirpan_4326_x2352_y3696` | run_1 | 7040 | 4 → 5 |
+| `K-35-064-2_Radnevo_4326_x2352_y1680` | run_3 | 3402, 3403 | 4 → 5 |
+| `K-35-064-2_Radnevo_4326_x2352_y2688` | run_1 | 7119 | 4 → 5 |
+| `K-35-064-3_Dimitrovgrad_4326_x2352_y2688` | run_3 | 3527 (3 → 4), 3528, 3529 | 4 → 5 except 3527 |
+| `K-35-065-2_GManastir_4326_x3024_y336` | run_5 | 3925 (3 → 4), 3924, 3926 | 4 → 5 except 3925 |
+
+**The mechanism.** One pass missing per tile is the signature of the 2026-05-03
+**recovery campaign**, and the manifest records it itself. The original run
+(2026-04-18, `.resume_state.json`) left 26 tiles unrecovered across the five
+passes — residuals 8/3/8/2/5 — which commit `2992056be` recovered. The
+consensus was then re-merged from the completed passes, and commit `8699f456b`
+re-ran the extract stage with `scripts/55maps-t0.3-extract-new-candidates.py`.
+That script spatially matches each new consensus feature to an existing
+manifest candidate within 20 m and **appends only the unmatched ones**,
+deliberately preserving existing candidate IDs so the verifier's
+`probabilities.json` stays valid — and therefore never refreshing a matched
+entry's `properties`. The manifest's own `recovery_history` block books the
+step: `existing_candidates` 7,877, `new_consensus_features` 7,878,
+`matched_to_existing` 7,877, `new_extracted` 1. So the consensus file is
+post-recovery and 7,877 of the manifest's 7,878 entries carry pre-recovery
+vote counts. It is **not** a dedup-radius difference (both are 20 m), not a
+`merge_passes` version change, and not the mid-write race that `8699f456b`
+separately diagnosed and corrected — that race produced the wrong *feature
+count*, which was fixed; this is the property refresh that the incremental
+extractor does not do by design.
+
+**Blast radius.** Five of the 263 `candidate_manifest.json` files under
+`outputs/` carry a non-empty `recovery_history`; all five are April/May 2026
+recovery-campaign runs, and all five show the same one-vote-low divergence:
+
+| run | consensus | manifest | divergent candidates | direction |
+|---|---:|---:|---:|---|
+| `55maps-text-high-generalisation` | 9,206 | 9,205 | 110 | all 4 → 5 |
+| `55maps-text-high-t0.3-generalisation` | 9,910 | 9,910 | 15 | all 4 → 5 |
+| `55maps-text-min-generalisation` | 10,170 | 10,170 | 88 | all 4 → 5 |
+| `55maps-image-generalisation` | 7,878 | 7,878 | 16 | 11 at 4 → 5, 5 at 3 → 4 |
+| `gs/gold-standard-v2` | 608 | 608 | 15 | all 4 → 5 |
+
+**The current chain is clean.** Both rows of the image 2x2 were checked rung by
+rung, union `vote_count` against crop-manifest `vote_count`, index-aligned and
+spatially matched: `gemini37-image-55map-2026-09-13` K = 1/3/5 (6,985 / 8,337 /
+9,173) and `gemini3-image-55map-2026-09-16` K = 1/3/5 (22,785 / 36,389 /
+45,786) — **zero disagreeing candidates in all six**, and no manifest carries a
+`recovery_history`. Each was built once from its union and never incrementally
+patched, so the mechanism is inert there.
+
+**Does any committed cell's membership change?** Almost none, and the one that
+does moves by three detections.
+
+- **No candidate crosses the 2 → 3 boundary** in any of the five runs, so no
+  cell defined at votes ≥ 3 changes membership. `IM-k3` — and with it
+  `IM-oracle`, this note's `IM-5pass-k3-f1-oracle` and `-k3-mcc-oracle`, and
+  the 2x2's T5 comparator — is **unaffected**, as is every votes ≥ 3 row of
+  `sweep_IM-5pass.csv`.
+- The three text runs' divergences are **all 4 → 5**, above their own 4-of-5
+  consensus threshold, so their k3 and k4 board cells are unaffected too.
+- The one exception is **`IM-k4`** (`results/55map-final-board-r2-2026-09-06/cells_manifest.json`,
+  point (0.15, k4)), whose committed 3,541 detections are the manifest-vote
+  count. Read on the consensus file's votes it would be 3,544 (+3, 0.08 %).
+  Scored on the r2 recipe the difference is micro-F1 @ 50 m 0.7398 → 0.7402 and
+  tile-MCC 0.6577 → 0.6579 — an order of magnitude inside the board's own
+  0.003 mechanism bound.
+- **No board oracle could move.** Every affected family's k = 5 row sits far
+  below its k = 3 argmax (`IM` 0.5851 against 0.8008; `TH7` 0.7340 against
+  0.8380; `T03` 0.7729 against 0.8399; `TM` 0.7289 against 0.8103), so
+  promoting 15 to 110 candidates into the k = 5 band cannot change any argmax.
+- Within **this** note, the votes ≥ 4 and ≥ 5 rows of the grid would gain at
+  most 11 detections. At the two carried points the divergence can reach:
+  (0.15, k4) F1 0.7398 → 0.7402 and MCC 0.6577 → 0.6579; (0.15, k5) F1 0.5851
+  → 0.5867 and MCC 0.5459 → 0.5472, with *n* 2,283 → 2,291. All four shifts
+  are inside the 0.003 bound and far below the E89 verifier-drift floor, so
+  nothing in §§ 2-6 changes. The grid stays on the manifest's votes, which are
+  the votes the verifier was actually shown.
+
+**One piece of by-catch, outside this note's scope.** The same incremental
+extractor left `55maps-text-high-generalisation` with **9,205 manifest
+candidates against 9,206 consensus features**: two distinct 4-vote consensus
+clusters 17.29 m apart both fell inside the 20 m match radius of manifest
+`candidate_id` 505 (`K-35-051-4_x1344_y3360.png`), so the second was matched
+rather than extracted and has never been verified. Its `recovery_history`
+records the double match plainly — `existing_candidates` 9,131 but
+`matched_to_existing` 9,132. One candidate in 9,206 is a small completeness
+gap, but it is a real one and it is the PI's call, not this note's.
+
 ## Changelog
+
+### 2026-09-20 — § 7: the vote-count divergence diagnosed
+
+**Refresh trigger**: the PI asked why the June run's consensus file and its
+crop manifest disagree on `vote_count` for 16 of 7,878 candidates, and whether
+it signals a broader problem. Read-only investigation; § 7 is its answer and
+§ 1's hedge ("the artefacts do not say") is replaced in place by the mechanism.
+
+**What moved numerically: nothing.** Every figure in §§ 1-6 is unchanged,
+because the divergence never crosses the 2 → 3 vote boundary:
+
+| claim | before | after |
+|---|---|---|
+| `IM-5pass-k3-f1-oracle` F1 / MCC | 0.8008 / 0.7087 | unchanged |
+| `IM-5pass-k3-mcc-oracle` F1 / MCC | 0.7999 / 0.7139 | unchanged |
+| every votes ≥ 3 row of `sweep_IM-5pass.csv` | — | unchanged |
+| `IM-k3` and the 2x2's T5 comparator | 0.8008 / 0.7110 | unchanged |
+| votes ≥ 4 / ≥ 5 rows, if read on consensus votes | *n* +1 to +11 | (0.15, k5) F1 0.5851 → 0.5867, MCC 0.5459 → 0.5472 — not adopted |
+| `IM-k4` on the r2 board, if read on consensus votes | *n* = 3,541 | *n* = 3,544; F1 0.7398 → 0.7402, MCC 0.6577 → 0.6579 — not adopted |
+
+**What did not change**: the grid, the four cells and their evaluations are
+untouched; the reproduction gate still passes at |ΔF1| 0.0000 / |ΔMCC| 0.0023;
+the § 3 comparison and the § 6 reading of T5 stand; no board was re-tiered and
+no committed artefact was rewritten. The grid continues to read the crop
+manifest, which is the record of what the verifier was actually shown.
+
+**Two items referred to the PI**: whether `IM-k4` should be rebuilt on
+post-recovery votes (+3 detections, +0.0004 F1), and the one
+`55maps-text-high-generalisation` consensus feature that the incremental
+extractor matched instead of extracting and that has never been verified
+(§ 7, last paragraph).
+
+Commit: see `git log -- results/im-june-pool-grid-2026-09-20/findings.md`.
 
 ### 2026-09-20 — Original publication
 
