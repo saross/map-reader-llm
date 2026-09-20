@@ -246,7 +246,7 @@ and `…/G3IMG-ARM1-K5-votes3-f1-oracle/`, both recorded in that campaign's
 **Tests**: `tests/test_t5m_matched_comparator.py` pins the matched cell to
 IM-k3's own threshold, the oracle twin to the three-vote rows only, and the
 declared-T5 reproduction gate to exact rather than tolerant equality.
-Commit: `TBDRULING1`.
+Commit: `3783e0e03`.
 
 ### 2026-09-20 — Erratum: the metric is plain micro-F1, not "corrected"
 
