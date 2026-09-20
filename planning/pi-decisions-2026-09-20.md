@@ -25,7 +25,7 @@ the commit that executed it. Read top to bottom; open items first.
 
 ## Ruled
 
-### D2 — Verifier-ladder method — RULED 2026-09-20: INHERITANCE is the project's ladder method (one verifier leg over the top-rung union, lower rungs by ≤ 10 m match); the image rows' per-rung legs were a departure. The 3.7 image row's K = 1/K = 3 are being derived by inheritance from its K = 5 legs and tested head-to-head against the own-leg cells ($0). In progress
+### D2 — Verifier-ladder method — RULED 2026-09-20: INHERITANCE is the project's ladder method (one verifier leg over the top-rung union, lower rungs by ≤ 10 m match); the image rows' per-rung legs were a departure. Head-to-head DONE on the 3.7 image row (62b13e6fd…557b4e881; `results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/`): inherited vs own-leg differs by 0.0002–0.0021 F1 and 0.0005–0.0027 tile-MCC, all p ≥ 0.07, signs mixed — no more than the verifier disagrees with itself; the dropped-candidate precision bias is undetectable (drops 50 of 6,985 at K = 1, 2 of 8,337 at K = 3). Inheritance is SAFE to adopt on this evidence. Bonus: the pure-inheritance K3→K5 tile-MCC contrast is readable (+0.0039, p 0.006) where own-leg pairing left it in the drift band. Open: repeat on the Gemini 3 row ($0, ~10 min) as a density stress test of the 10 m radius
 
 ### D1 — Rows A and B — RULED 2026-09-20: row A signed as drafted 2026-09-13, scope limited to the K = 1/K = 3 rungs, later rungs get a new row (93c935d91); row B signed as drafted with its outcome authored at signing (f749fe9a1). Tally 44 signed, 25 unsigned, 1 by design
 
