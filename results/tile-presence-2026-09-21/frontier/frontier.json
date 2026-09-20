@@ -1,0 +1,1889 @@
+{
+  "_README": "Per configuration, the (micro_f1_50, tile_mcc) Pareto-non-dominated points of its committed sweep. A point is dominated when another is at least as good on both metrics and strictly better on one. This is the honest statement of the trade the tile-presence leaderboard shows one end of.",
+  "buffer_m": 50,
+  "reference": "r2",
+  "generated_by": "scripts/build_tile_presence_board.py",
+  "configurations": {
+    "TH7": {
+      "track": "board",
+      "n_sweep_points": 54,
+      "n_non_dominated": 3,
+      "carried_point": [
+        0.15,
+        4
+      ],
+      "f1_oracle_point": [
+        0.15,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.3,
+        3
+      ],
+      "front": [
+        {
+          "prob_t": 0.15,
+          "min_votes": 3,
+          "n_detections": 4786,
+          "micro_f1_50": 0.8380252957976336,
+          "tile_mcc": 0.6791784625969423
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 3,
+          "n_detections": 4643,
+          "micro_f1_50": 0.8375944519200912,
+          "tile_mcc": 0.6843566000272113
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 3,
+          "n_detections": 4207,
+          "micro_f1_50": 0.8268834688346884,
+          "tile_mcc": 0.6954095477005489
+        }
+      ]
+    },
+    "T03": {
+      "track": "board",
+      "n_sweep_points": 57,
+      "n_non_dominated": 2,
+      "carried_point": [
+        0.15,
+        4
+      ],
+      "f1_oracle_point": [
+        0.2,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.3,
+        3
+      ],
+      "front": [
+        {
+          "prob_t": 0.2,
+          "min_votes": 3,
+          "n_detections": 4762,
+          "micro_f1_50": 0.8398773006134969,
+          "tile_mcc": 0.6954603427911745
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 3,
+          "n_detections": 4279,
+          "micro_f1_50": 0.8256426804345488,
+          "tile_mcc": 0.7050960912662367
+        }
+      ]
+    },
+    "TM": {
+      "track": "board",
+      "n_sweep_points": 57,
+      "n_non_dominated": 1,
+      "carried_point": [
+        0.15,
+        4
+      ],
+      "f1_oracle_point": [
+        0.2,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.2,
+        3
+      ],
+      "front": [
+        {
+          "prob_t": 0.2,
+          "min_votes": 3,
+          "n_detections": 4156,
+          "micro_f1_50": 0.8103335513407457,
+          "tile_mcc": 0.6620402681941738
+        }
+      ]
+    },
+    "IM": {
+      "track": "board",
+      "n_sweep_points": 51,
+      "n_non_dominated": 2,
+      "carried_point": [
+        0.15,
+        4
+      ],
+      "f1_oracle_point": [
+        0.15,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.2,
+        3
+      ],
+      "front": [
+        {
+          "prob_t": 0.15,
+          "min_votes": 3,
+          "n_detections": 4680,
+          "micro_f1_50": 0.8007836667354093,
+          "tile_mcc": 0.711000215229766
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 3,
+          "n_detections": 4561,
+          "micro_f1_50": 0.7998747259630441,
+          "tile_mcc": 0.7173302793120186
+        }
+      ]
+    },
+    "UPL": {
+      "track": "board",
+      "n_sweep_points": 144,
+      "n_non_dominated": 5,
+      "carried_point": null,
+      "f1_oracle_point": [
+        0.15,
+        5
+      ],
+      "mcc_optimum_point": [
+        0.3,
+        3
+      ],
+      "front": [
+        {
+          "prob_t": 0.15,
+          "min_votes": 5,
+          "n_detections": 4361,
+          "micro_f1_50": 0.8273803177311013,
+          "tile_mcc": 0.6694609221550795
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 5,
+          "n_detections": 4245,
+          "micro_f1_50": 0.8262981755370831,
+          "tile_mcc": 0.6738791757322873
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 4,
+          "n_detections": 4504,
+          "micro_f1_50": 0.8227263180004202,
+          "tile_mcc": 0.6782217000769183
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 4,
+          "n_detections": 4157,
+          "micro_f1_50": 0.813950953678474,
+          "tile_mcc": 0.6840839723906974
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 3,
+          "n_detections": 4400,
+          "micro_f1_50": 0.8080271819919305,
+          "tile_mcc": 0.6894660625984151
+        }
+      ]
+    },
+    "A-N10": {
+      "track": "board",
+      "n_sweep_points": 200,
+      "n_non_dominated": 11,
+      "carried_point": [
+        0.15,
+        8
+      ],
+      "f1_oracle_point": [
+        0.15,
+        7
+      ],
+      "mcc_optimum_point": [
+        0.3,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.15,
+          "min_votes": 7,
+          "n_detections": 4639,
+          "micro_f1_50": 0.8418763591177383,
+          "tile_mcc": 0.6954089955629733
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 7,
+          "n_detections": 4474,
+          "micro_f1_50": 0.8404972608512432,
+          "tile_mcc": 0.6995712823207393
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 6,
+          "n_detections": 4641,
+          "micro_f1_50": 0.8379749456465474,
+          "tile_mcc": 0.7000680295309246
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 5,
+          "n_detections": 4823,
+          "micro_f1_50": 0.8332486535921146,
+          "tile_mcc": 0.7006427503931693
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 7,
+          "n_detections": 4084,
+          "micro_f1_50": 0.8244341902878488,
+          "tile_mcc": 0.702505516226288
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 6,
+          "n_detections": 4219,
+          "micro_f1_50": 0.8232109992421782,
+          "tile_mcc": 0.7054546305686357
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 5,
+          "n_detections": 4368,
+          "micro_f1_50": 0.8212230982314085,
+          "tile_mcc": 0.7099708870035004
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 4,
+          "n_detections": 4543,
+          "micro_f1_50": 0.8137224139734338,
+          "tile_mcc": 0.7112955595432808
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 3,
+          "n_detections": 4780,
+          "micro_f1_50": 0.8030210246989182,
+          "tile_mcc": 0.7142991532297871
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 2,
+          "n_detections": 5194,
+          "micro_f1_50": 0.7798668233450843,
+          "tile_mcc": 0.7180224887335126
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 1,
+          "n_detections": 6135,
+          "micro_f1_50": 0.727696583878777,
+          "tile_mcc": 0.7214547427124507
+        }
+      ]
+    },
+    "A-N1": {
+      "track": "board",
+      "n_sweep_points": 19,
+      "n_non_dominated": 2,
+      "carried_point": null,
+      "f1_oracle_point": [
+        0.2,
+        1
+      ],
+      "mcc_optimum_point": [
+        0.3,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.2,
+          "min_votes": 1,
+          "n_detections": 4879,
+          "micro_f1_50": 0.8226735374355866,
+          "tile_mcc": 0.7006231644355948
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 1,
+          "n_detections": 4422,
+          "micro_f1_50": 0.8110169491525423,
+          "tile_mcc": 0.7072882904922796
+        }
+      ]
+    },
+    "A-N3": {
+      "track": "board",
+      "n_sweep_points": 60,
+      "n_non_dominated": 3,
+      "carried_point": [
+        0.15,
+        3
+      ],
+      "f1_oracle_point": [
+        0.2,
+        2
+      ],
+      "mcc_optimum_point": [
+        0.3,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.2,
+          "min_votes": 2,
+          "n_detections": 4796,
+          "micro_f1_50": 0.8320766252292645,
+          "tile_mcc": 0.7017849420190314
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 2,
+          "n_detections": 4350,
+          "micro_f1_50": 0.819598633646456,
+          "tile_mcc": 0.7086595208035521
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 1,
+          "n_detections": 5145,
+          "micro_f1_50": 0.7785102823969301,
+          "tile_mcc": 0.7158658046704801
+        }
+      ]
+    },
+    "A-N5": {
+      "track": "board",
+      "n_sweep_points": 100,
+      "n_non_dominated": 6,
+      "carried_point": [
+        0.15,
+        4
+      ],
+      "f1_oracle_point": [
+        0.15,
+        4
+      ],
+      "mcc_optimum_point": [
+        0.3,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.15,
+          "min_votes": 4,
+          "n_detections": 4597,
+          "micro_f1_50": 0.8382735309412377,
+          "tile_mcc": 0.6907328075795099
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 4,
+          "n_detections": 4437,
+          "micro_f1_50": 0.8368059227921735,
+          "tile_mcc": 0.6956568870378419
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 3,
+          "n_detections": 4753,
+          "micro_f1_50": 0.8355337222392795,
+          "tile_mcc": 0.7006863608930833
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 3,
+          "n_detections": 4307,
+          "micro_f1_50": 0.8227345844504023,
+          "tile_mcc": 0.7083489922151477
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 2,
+          "n_detections": 4710,
+          "micro_f1_50": 0.8055098684210527,
+          "tile_mcc": 0.7138087570269941
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 1,
+          "n_detections": 5479,
+          "micro_f1_50": 0.761931980565876,
+          "tile_mcc": 0.7188363405560625
+        }
+      ]
+    },
+    "B-N10": {
+      "track": "board",
+      "n_sweep_points": 200,
+      "n_non_dominated": 24,
+      "carried_point": [
+        0.15,
+        10
+      ],
+      "f1_oracle_point": [
+        0.2,
+        9
+      ],
+      "mcc_optimum_point": [
+        0.4,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.2,
+          "min_votes": 9,
+          "n_detections": 4639,
+          "micro_f1_50": 0.8559594076835456,
+          "tile_mcc": 0.712335638505622
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 8,
+          "n_detections": 4851,
+          "micro_f1_50": 0.8527713040834938,
+          "tile_mcc": 0.7149678745556831
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 7,
+          "n_detections": 5006,
+          "micro_f1_50": 0.8463687150837989,
+          "tile_mcc": 0.715338689567826
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 8,
+          "n_detections": 4441,
+          "micro_f1_50": 0.8394122000211439,
+          "tile_mcc": 0.7168975443276508
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 8,
+          "n_detections": 4416,
+          "micro_f1_50": 0.8382446470214119,
+          "tile_mcc": 0.7173268776818448
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 8,
+          "n_detections": 4407,
+          "micro_f1_50": 0.8377718832891248,
+          "tile_mcc": 0.7175005713767891
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 7,
+          "n_detections": 4569,
+          "micro_f1_50": 0.8344633357671847,
+          "tile_mcc": 0.7189360805128806
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 7,
+          "n_detections": 4542,
+          "micro_f1_50": 0.8332635983263598,
+          "tile_mcc": 0.7196647210021776
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 7,
+          "n_detections": 4532,
+          "micro_f1_50": 0.8326701570680629,
+          "tile_mcc": 0.7198362068698453
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 6,
+          "n_detections": 4746,
+          "micro_f1_50": 0.8281442031954117,
+          "tile_mcc": 0.7211752312300849
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 6,
+          "n_detections": 4716,
+          "micro_f1_50": 0.8272036161906718,
+          "tile_mcc": 0.7216698504928256
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 6,
+          "n_detections": 4706,
+          "micro_f1_50": 0.8268202385849444,
+          "tile_mcc": 0.7218369209459058
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 5,
+          "n_detections": 4943,
+          "micro_f1_50": 0.8171870294147174,
+          "tile_mcc": 0.7223061491430849
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 5,
+          "n_detections": 4912,
+          "micro_f1_50": 0.8161127895266868,
+          "tile_mcc": 0.7227841988410368
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 5,
+          "n_detections": 4901,
+          "micro_f1_50": 0.8158080451658434,
+          "tile_mcc": 0.723248135980517
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 4,
+          "n_detections": 5173,
+          "micro_f1_50": 0.8026690216858012,
+          "tile_mcc": 0.7232489412439493
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 4,
+          "n_detections": 5140,
+          "micro_f1_50": 0.8015357353809806,
+          "tile_mcc": 0.7237163233456639
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 4,
+          "n_detections": 5129,
+          "micro_f1_50": 0.8012220360697744,
+          "tile_mcc": 0.7241752912608844
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 3,
+          "n_detections": 5458,
+          "micro_f1_50": 0.7819778541428026,
+          "tile_mcc": 0.7245064077495065
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 2,
+          "n_detections": 6062,
+          "micro_f1_50": 0.7510830324909747,
+          "tile_mcc": 0.7247655188034129
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 2,
+          "n_detections": 6018,
+          "micro_f1_50": 0.7506342877854295,
+          "tile_mcc": 0.7257059180459547
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 2,
+          "n_detections": 6003,
+          "micro_f1_50": 0.7505670991743036,
+          "tile_mcc": 0.7259206226182443
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 1,
+          "n_detections": 7486,
+          "micro_f1_50": 0.6754638515674983,
+          "tile_mcc": 0.7270094717640944
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 1,
+          "n_detections": 7466,
+          "micro_f1_50": 0.6754245434155719,
+          "tile_mcc": 0.7270352523072843
+        }
+      ]
+    },
+    "B-N1": {
+      "track": "board",
+      "n_sweep_points": 20,
+      "n_non_dominated": 3,
+      "carried_point": null,
+      "f1_oracle_point": [
+        0.2,
+        1
+      ],
+      "mcc_optimum_point": [
+        0.4,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.2,
+          "min_votes": 1,
+          "n_detections": 5655,
+          "micro_f1_50": 0.8012742434179705,
+          "tile_mcc": 0.70923940794411
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 1,
+          "n_detections": 5096,
+          "micro_f1_50": 0.7986948783863951,
+          "tile_mcc": 0.7200591189417983
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 1,
+          "n_detections": 5055,
+          "micro_f1_50": 0.7973791323339621,
+          "tile_mcc": 0.7203272506960878
+        }
+      ]
+    },
+    "B-N3": {
+      "track": "board",
+      "n_sweep_points": 60,
+      "n_non_dominated": 10,
+      "carried_point": [
+        0.15,
+        3
+      ],
+      "f1_oracle_point": [
+        0.2,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.35,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.2,
+          "min_votes": 3,
+          "n_detections": 4772,
+          "micro_f1_50": 0.8506639427987742,
+          "tile_mcc": 0.7127782728409375
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 3,
+          "n_detections": 4386,
+          "micro_f1_50": 0.8364525733730328,
+          "tile_mcc": 0.7134949564444303
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 3,
+          "n_detections": 4362,
+          "micro_f1_50": 0.8356076759061835,
+          "tile_mcc": 0.7144650639137308
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 3,
+          "n_detections": 4353,
+          "micro_f1_50": 0.8351296553196031,
+          "tile_mcc": 0.7146438451440633
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 2,
+          "n_detections": 5444,
+          "micro_f1_50": 0.823360734085261,
+          "tile_mcc": 0.7149890868456237
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 2,
+          "n_detections": 4937,
+          "micro_f1_50": 0.8148669010547464,
+          "tile_mcc": 0.7194845962993166
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 2,
+          "n_detections": 4910,
+          "micro_f1_50": 0.813859790491539,
+          "tile_mcc": 0.7199646602806596
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 2,
+          "n_detections": 4900,
+          "micro_f1_50": 0.8136721113127646,
+          "tile_mcc": 0.7204296909851273
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 1,
+          "n_detections": 6072,
+          "micro_f1_50": 0.7491433724075744,
+          "tile_mcc": 0.7238848905485352
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 1,
+          "n_detections": 6028,
+          "micro_f1_50": 0.748506246605106,
+          "tile_mcc": 0.7251873188751246
+        }
+      ]
+    },
+    "B-N5": {
+      "track": "board",
+      "n_sweep_points": 100,
+      "n_non_dominated": 13,
+      "carried_point": [
+        0.15,
+        5
+      ],
+      "f1_oracle_point": [
+        0.2,
+        5
+      ],
+      "mcc_optimum_point": [
+        0.35,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.2,
+          "min_votes": 5,
+          "n_detections": 4566,
+          "micro_f1_50": 0.8516277128547579,
+          "tile_mcc": 0.7098144397444127
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 4,
+          "n_detections": 4965,
+          "micro_f1_50": 0.8476409896824602,
+          "tile_mcc": 0.7154073819477427
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 4,
+          "n_detections": 4535,
+          "micro_f1_50": 0.8351303255521826,
+          "tile_mcc": 0.7178318602184564
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 4,
+          "n_detections": 4509,
+          "micro_f1_50": 0.8338406633777684,
+          "tile_mcc": 0.7185627074511216
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 4,
+          "n_detections": 4500,
+          "micro_f1_50": 0.8333683546963646,
+          "tile_mcc": 0.7187349417022132
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 3,
+          "n_detections": 4878,
+          "micro_f1_50": 0.8197251414713015,
+          "tile_mcc": 0.7205309875680672
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 3,
+          "n_detections": 4849,
+          "micro_f1_50": 0.8186885578189926,
+          "tile_mcc": 0.7210125435877597
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 3,
+          "n_detections": 4839,
+          "micro_f1_50": 0.8185046160089275,
+          "tile_mcc": 0.7214782008308903
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 2,
+          "n_detections": 5404,
+          "micro_f1_50": 0.7883323738246019,
+          "tile_mcc": 0.7221198539819331
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 2,
+          "n_detections": 5368,
+          "micro_f1_50": 0.7874061236279608,
+          "tile_mcc": 0.7227963123849591
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 2,
+          "n_detections": 5357,
+          "micro_f1_50": 0.7870843373493976,
+          "tile_mcc": 0.7232489412439493
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 1,
+          "n_detections": 6623,
+          "micro_f1_50": 0.7200412335709989,
+          "tile_mcc": 0.7240055974126949
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 1,
+          "n_detections": 6569,
+          "micro_f1_50": 0.7197721584534391,
+          "tile_mcc": 0.7257907338653153
+        }
+      ]
+    },
+    "ARM1-N5": {
+      "track": "board",
+      "n_sweep_points": 95,
+      "n_non_dominated": 5,
+      "carried_point": [
+        0.1,
+        5
+      ],
+      "f1_oracle_point": [
+        0.15,
+        5
+      ],
+      "mcc_optimum_point": [
+        0.4,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.15,
+          "min_votes": 5,
+          "n_detections": 4616,
+          "micro_f1_50": 0.8727423707701889,
+          "tile_mcc": 0.7147131738316918
+        },
+        {
+          "prob_t": 0.15,
+          "min_votes": 4,
+          "n_detections": 4922,
+          "micro_f1_50": 0.8690140845070422,
+          "tile_mcc": 0.7200544709162996
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 4,
+          "n_detections": 4757,
+          "micro_f1_50": 0.866700767263427,
+          "tile_mcc": 0.7267351376904589
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 3,
+          "n_detections": 5033,
+          "micro_f1_50": 0.8554372699233908,
+          "tile_mcc": 0.7273644635807852
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 1,
+          "n_detections": 5631,
+          "micro_f1_50": 0.7786646633486713,
+          "tile_mcc": 0.7308280654209883
+        }
+      ]
+    },
+    "ARM1-N1": {
+      "track": "board",
+      "n_sweep_points": 19,
+      "n_non_dominated": 1,
+      "carried_point": [
+        0.1,
+        1
+      ],
+      "f1_oracle_point": [
+        0.2,
+        1
+      ],
+      "mcc_optimum_point": [
+        0.2,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.2,
+          "min_votes": 1,
+          "n_detections": 5219,
+          "micro_f1_50": 0.841262088502491,
+          "tile_mcc": 0.7246174293740002
+        }
+      ]
+    },
+    "ARM1-N3": {
+      "track": "board",
+      "n_sweep_points": 57,
+      "n_non_dominated": 4,
+      "carried_point": [
+        0.1,
+        3
+      ],
+      "f1_oracle_point": [
+        0.15,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.4,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.15,
+          "min_votes": 3,
+          "n_detections": 4772,
+          "micro_f1_50": 0.8704800817160367,
+          "tile_mcc": 0.7179472187364325
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 3,
+          "n_detections": 4613,
+          "micro_f1_50": 0.8676149932509605,
+          "tile_mcc": 0.7236105074195173
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 2,
+          "n_detections": 5080,
+          "micro_f1_50": 0.8516537928302634,
+          "tile_mcc": 0.7282638933126575
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 1,
+          "n_detections": 5327,
+          "micro_f1_50": 0.797873368777187,
+          "tile_mcc": 0.7303482384576933
+        }
+      ]
+    },
+    "ARM2-N5": {
+      "track": "board",
+      "n_sweep_points": 135,
+      "n_non_dominated": 6,
+      "carried_point": [
+        0.8,
+        5
+      ],
+      "f1_oracle_point": [
+        0.95,
+        5
+      ],
+      "mcc_optimum_point": [
+        0.96,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.95,
+          "min_votes": 5,
+          "n_detections": 4924,
+          "micro_f1_50": 0.8871454435727218,
+          "tile_mcc": 0.7146526943165216
+        },
+        {
+          "prob_t": 0.95,
+          "min_votes": 4,
+          "n_detections": 5257,
+          "micro_f1_50": 0.883698296836983,
+          "tile_mcc": 0.7211474408289512
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 4,
+          "n_detections": 4615,
+          "micro_f1_50": 0.883629191321499,
+          "tile_mcc": 0.7378668683739366
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 3,
+          "n_detections": 4848,
+          "micro_f1_50": 0.8737076829515508,
+          "tile_mcc": 0.7414423259445752
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 2,
+          "n_detections": 5173,
+          "micro_f1_50": 0.8533019330782061,
+          "tile_mcc": 0.7441599447455135
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 1,
+          "n_detections": 5923,
+          "micro_f1_50": 0.8055936386070743,
+          "tile_mcc": 0.7486789881617824
+        }
+      ]
+    },
+    "ARM2-N1": {
+      "track": "board",
+      "n_sweep_points": 26,
+      "n_non_dominated": 1,
+      "carried_point": [
+        0.8,
+        1
+      ],
+      "f1_oracle_point": [
+        0.98,
+        1
+      ],
+      "mcc_optimum_point": [
+        0.96,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.98,
+          "min_votes": 1,
+          "n_detections": 5021,
+          "micro_f1_50": 0.8610419364478533,
+          "tile_mcc": 0.7421891480811401
+        }
+      ]
+    },
+    "ARM2-N3": {
+      "track": "board",
+      "n_sweep_points": 81,
+      "n_non_dominated": 4,
+      "carried_point": [
+        0.8,
+        3
+      ],
+      "f1_oracle_point": [
+        0.95,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.96,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.95,
+          "min_votes": 3,
+          "n_detections": 5097,
+          "micro_f1_50": 0.8848245180425112,
+          "tile_mcc": 0.7163398973189123
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 3,
+          "n_detections": 4499,
+          "micro_f1_50": 0.8817904801933383,
+          "tile_mcc": 0.7326333634466269
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 2,
+          "n_detections": 4893,
+          "micro_f1_50": 0.8705478760972658,
+          "tile_mcc": 0.7415736275673654
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 1,
+          "n_detections": 5618,
+          "micro_f1_50": 0.824558104550583,
+          "tile_mcc": 0.7474679655179646
+        }
+      ]
+    },
+    "FOURTH-N10": {
+      "track": "board",
+      "n_sweep_points": 270,
+      "n_non_dominated": 9,
+      "carried_point": [
+        0.98,
+        10
+      ],
+      "f1_oracle_point": [
+        0.96,
+        9
+      ],
+      "mcc_optimum_point": [
+        0.96,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.96,
+          "min_votes": 9,
+          "n_detections": 4495,
+          "micro_f1_50": 0.8813202985388416,
+          "tile_mcc": 0.7359313551399321
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 8,
+          "n_detections": 4674,
+          "micro_f1_50": 0.8792818819645069,
+          "tile_mcc": 0.7414462680762106
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 7,
+          "n_detections": 4807,
+          "micro_f1_50": 0.8738931297709923,
+          "tile_mcc": 0.7441245715364189
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 6,
+          "n_detections": 4988,
+          "micro_f1_50": 0.8660803517889266,
+          "tile_mcc": 0.747331228473269
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 5,
+          "n_detections": 5200,
+          "micro_f1_50": 0.8535917009199452,
+          "tile_mcc": 0.7489230593918244
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 4,
+          "n_detections": 5430,
+          "micro_f1_50": 0.8378637059724349,
+          "tile_mcc": 0.7506585371615778
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 3,
+          "n_detections": 5759,
+          "micro_f1_50": 0.8156258699081378,
+          "tile_mcc": 0.7510006286288969
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 2,
+          "n_detections": 6310,
+          "micro_f1_50": 0.7817796610169491,
+          "tile_mcc": 0.7528846578182828
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 1,
+          "n_detections": 7733,
+          "micro_f1_50": 0.7025331346561053,
+          "tile_mcc": 0.7567219879939981
+        }
+      ]
+    },
+    "FOURTH-N1": {
+      "track": "board",
+      "n_sweep_points": 27,
+      "n_non_dominated": 1,
+      "carried_point": [
+        0.98,
+        1
+      ],
+      "f1_oracle_point": [
+        0.96,
+        1
+      ],
+      "mcc_optimum_point": [
+        0.96,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.96,
+          "min_votes": 1,
+          "n_detections": 5337,
+          "micro_f1_50": 0.8351521004345727,
+          "tile_mcc": 0.7470836550257224
+        }
+      ]
+    },
+    "FOURTH-N3": {
+      "track": "board",
+      "n_sweep_points": 81,
+      "n_non_dominated": 3,
+      "carried_point": [
+        0.98,
+        3
+      ],
+      "f1_oracle_point": [
+        0.96,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.96,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.96,
+          "min_votes": 3,
+          "n_detections": 4626,
+          "micro_f1_50": 0.8747407714641227,
+          "tile_mcc": 0.7375930224056209
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 2,
+          "n_detections": 5181,
+          "micro_f1_50": 0.8526326110402982,
+          "tile_mcc": 0.7459589487497438
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 1,
+          "n_detections": 6298,
+          "micro_f1_50": 0.7797808412866737,
+          "tile_mcc": 0.7514267311284735
+        }
+      ]
+    },
+    "FOURTH-N5": {
+      "track": "board",
+      "n_sweep_points": 135,
+      "n_non_dominated": 5,
+      "carried_point": [
+        0.98,
+        5
+      ],
+      "f1_oracle_point": [
+        0.96,
+        5
+      ],
+      "mcc_optimum_point": [
+        0.96,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.96,
+          "min_votes": 5,
+          "n_detections": 4434,
+          "micro_f1_50": 0.8757934828607703,
+          "tile_mcc": 0.7326139324085801
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 4,
+          "n_detections": 4779,
+          "micro_f1_50": 0.8747575788506686,
+          "tile_mcc": 0.743855704246418
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 3,
+          "n_detections": 5127,
+          "micro_f1_50": 0.8573681616559882,
+          "tile_mcc": 0.7483461992969859
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 2,
+          "n_detections": 5646,
+          "micro_f1_50": 0.8214553638409602,
+          "tile_mcc": 0.7497583788783553
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 1,
+          "n_detections": 6852,
+          "micro_f1_50": 0.7487784330244313,
+          "tile_mcc": 0.7554616863183578
+        }
+      ]
+    },
+    "IMG-ARM1-K1": {
+      "track": "g37-image",
+      "n_sweep_points": 20,
+      "n_non_dominated": 1,
+      "carried_point": [
+        0.1,
+        1
+      ],
+      "f1_oracle_point": [
+        0.15,
+        1
+      ],
+      "mcc_optimum_point": [
+        0.15,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.15,
+          "min_votes": 1,
+          "n_detections": 5582,
+          "micro_f1_50": 0.860566037735849,
+          "tile_mcc": 0.7522971131662105
+        }
+      ]
+    },
+    "IMG-ARM1-K3": {
+      "track": "g37-image",
+      "n_sweep_points": 63,
+      "n_non_dominated": 2,
+      "carried_point": [
+        0.1,
+        3
+      ],
+      "f1_oracle_point": [
+        0.1,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.15,
+        3
+      ],
+      "front": [
+        {
+          "prob_t": 0.1,
+          "min_votes": 3,
+          "n_detections": 5437,
+          "micro_f1_50": 0.9025346724055476,
+          "tile_mcc": 0.7489983736917029
+        },
+        {
+          "prob_t": 0.15,
+          "min_votes": 3,
+          "n_detections": 4977,
+          "micro_f1_50": 0.8992496248124061,
+          "tile_mcc": 0.7577313832561348
+        }
+      ]
+    },
+    "IMG-ARM2-K1": {
+      "track": "g37-image",
+      "n_sweep_points": 24,
+      "n_non_dominated": 2,
+      "carried_point": [
+        0.88,
+        1
+      ],
+      "f1_oracle_point": [
+        0.95,
+        1
+      ],
+      "mcc_optimum_point": [
+        0.98,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.95,
+          "min_votes": 1,
+          "n_detections": 5938,
+          "micro_f1_50": 0.8742241694048922,
+          "tile_mcc": 0.7593571548118144
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 1,
+          "n_detections": 5322,
+          "micro_f1_50": 0.8721470019342359,
+          "tile_mcc": 0.7613923527161283
+        }
+      ]
+    },
+    "IMG-ARM2-K3": {
+      "track": "g37-image",
+      "n_sweep_points": 72,
+      "n_non_dominated": 2,
+      "carried_point": [
+        0.88,
+        3
+      ],
+      "f1_oracle_point": [
+        0.9,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.96,
+        2
+      ],
+      "front": [
+        {
+          "prob_t": 0.9,
+          "min_votes": 3,
+          "n_detections": 5343,
+          "micro_f1_50": 0.9205675127883408,
+          "tile_mcc": 0.7654346916557514
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 2,
+          "n_detections": 5167,
+          "micro_f1_50": 0.8881688757977418,
+          "tile_mcc": 0.7655796000144267
+        }
+      ]
+    },
+    "IMG-ARM1-K5": {
+      "track": "g37-image",
+      "n_sweep_points": 100,
+      "n_non_dominated": 2,
+      "carried_point": [
+        0.1,
+        5
+      ],
+      "f1_oracle_point": [
+        0.1,
+        5
+      ],
+      "mcc_optimum_point": [
+        0.15,
+        5
+      ],
+      "front": [
+        {
+          "prob_t": 0.1,
+          "min_votes": 5,
+          "n_detections": 5297,
+          "micro_f1_50": 0.9130392632089191,
+          "tile_mcc": 0.7528612403532944
+        },
+        {
+          "prob_t": 0.15,
+          "min_votes": 5,
+          "n_detections": 4885,
+          "micro_f1_50": 0.905988084418863,
+          "tile_mcc": 0.7542214804688346
+        }
+      ]
+    },
+    "IMG-ARM2-K5": {
+      "track": "g37-image",
+      "n_sweep_points": 120,
+      "n_non_dominated": 1,
+      "carried_point": [
+        0.9,
+        5
+      ],
+      "f1_oracle_point": [
+        0.95,
+        5
+      ],
+      "mcc_optimum_point": [
+        0.95,
+        5
+      ],
+      "front": [
+        {
+          "prob_t": 0.95,
+          "min_votes": 5,
+          "n_detections": 5197,
+          "micro_f1_50": 0.9280469897209985,
+          "tile_mcc": 0.7681458931562806
+        }
+      ]
+    },
+    "G3IMG-ARM1-K1": {
+      "track": "g3-image",
+      "n_sweep_points": 20,
+      "n_non_dominated": 3,
+      "carried_point": [
+        0.15,
+        1
+      ],
+      "f1_oracle_point": [
+        0.4,
+        1
+      ],
+      "mcc_optimum_point": [
+        0.3,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.4,
+          "min_votes": 1,
+          "n_detections": 7466,
+          "micro_f1_50": 0.675264338353092,
+          "tile_mcc": 0.7443806054702115
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 1,
+          "n_detections": 7487,
+          "micro_f1_50": 0.6750899640143943,
+          "tile_mcc": 0.7449767742319054
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 1,
+          "n_detections": 7543,
+          "micro_f1_50": 0.6747870392484676,
+          "tile_mcc": 0.745502916097627
+        }
+      ]
+    },
+    "G3IMG-ARM2-K1": {
+      "track": "g3-image",
+      "n_sweep_points": 26,
+      "n_non_dominated": 1,
+      "carried_point": [
+        0.88,
+        1
+      ],
+      "f1_oracle_point": [
+        0.98,
+        1
+      ],
+      "mcc_optimum_point": [
+        0.98,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.98,
+          "min_votes": 1,
+          "n_detections": 7931,
+          "micro_f1_50": 0.692254228125724,
+          "tile_mcc": 0.76586121328068
+        }
+      ]
+    },
+    "G3IMG-ARM1-K3": {
+      "track": "g3-image",
+      "n_sweep_points": 60,
+      "n_non_dominated": 10,
+      "carried_point": [
+        0.15,
+        3
+      ],
+      "f1_oracle_point": [
+        0.15,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.35,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.15,
+          "min_votes": 3,
+          "n_detections": 5538,
+          "micro_f1_50": 0.8023872679045093,
+          "tile_mcc": 0.7246980430817169
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 3,
+          "n_detections": 5370,
+          "micro_f1_50": 0.8022718521370812,
+          "tile_mcc": 0.7300514283163312
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 2,
+          "n_detections": 7322,
+          "micro_f1_50": 0.7158833063209076,
+          "tile_mcc": 0.7354828442214498
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 2,
+          "n_detections": 6679,
+          "micro_f1_50": 0.713345302214243,
+          "tile_mcc": 0.7437852152667054
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 2,
+          "n_detections": 6642,
+          "micro_f1_50": 0.7132075471698114,
+          "tile_mcc": 0.7439282509291739
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 2,
+          "n_detections": 6623,
+          "micro_f1_50": 0.7131689717378232,
+          "tile_mcc": 0.7440035766852862
+        },
+        {
+          "prob_t": 0.65,
+          "min_votes": 1,
+          "n_detections": 9660,
+          "micro_f1_50": 0.5733751192260527,
+          "tile_mcc": 0.7468536125669268
+        },
+        {
+          "prob_t": 0.7,
+          "min_votes": 1,
+          "n_detections": 9631,
+          "micro_f1_50": 0.57314492456823,
+          "tile_mcc": 0.7469929122495358
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 1,
+          "n_detections": 10043,
+          "micro_f1_50": 0.5724719474138503,
+          "tile_mcc": 0.748534988617646
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 1,
+          "n_detections": 10078,
+          "micro_f1_50": 0.5723370429252782,
+          "tile_mcc": 0.7486128620241544
+        }
+      ]
+    },
+    "G3IMG-ARM2-K3": {
+      "track": "g3-image",
+      "n_sweep_points": 84,
+      "n_non_dominated": 3,
+      "carried_point": [
+        0.88,
+        3
+      ],
+      "f1_oracle_point": [
+        0.96,
+        3
+      ],
+      "mcc_optimum_point": [
+        0.98,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.96,
+          "min_votes": 3,
+          "n_detections": 5266,
+          "micro_f1_50": 0.8263321664721899,
+          "tile_mcc": 0.7553176111633104
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 2,
+          "n_detections": 7128,
+          "micro_f1_50": 0.7370327679894616,
+          "tile_mcc": 0.7646059226374812
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 1,
+          "n_detections": 10727,
+          "micro_f1_50": 0.5771991108288346,
+          "tile_mcc": 0.7705954304901215
+        }
+      ]
+    },
+    "G3IMG-ARM1-K5": {
+      "track": "g3-image",
+      "n_sweep_points": 100,
+      "n_non_dominated": 15,
+      "carried_point": [
+        0.15,
+        5
+      ],
+      "f1_oracle_point": [
+        0.15,
+        5
+      ],
+      "mcc_optimum_point": [
+        0.4,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.15,
+          "min_votes": 5,
+          "n_detections": 4858,
+          "micro_f1_50": 0.8177399756986635,
+          "tile_mcc": 0.7164960880499314
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 5,
+          "n_detections": 4729,
+          "micro_f1_50": 0.8166615368831436,
+          "tile_mcc": 0.7199483206000357
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 4,
+          "n_detections": 5828,
+          "micro_f1_50": 0.7931034482758621,
+          "tile_mcc": 0.7331982825379276
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 4,
+          "n_detections": 5333,
+          "micro_f1_50": 0.7813737803110811,
+          "tile_mcc": 0.7332776699595828
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 4,
+          "n_detections": 5295,
+          "micro_f1_50": 0.7809560748569767,
+          "tile_mcc": 0.7334623989200436
+        },
+        {
+          "prob_t": 0.2,
+          "min_votes": 3,
+          "n_detections": 6974,
+          "micro_f1_50": 0.7356571047364909,
+          "tile_mcc": 0.7346970999883989
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 3,
+          "n_detections": 6365,
+          "micro_f1_50": 0.7305631204427655,
+          "tile_mcc": 0.740598362860494
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 3,
+          "n_detections": 6316,
+          "micro_f1_50": 0.7305452620434091,
+          "tile_mcc": 0.7413428786497255
+        },
+        {
+          "prob_t": 0.35,
+          "min_votes": 2,
+          "n_detections": 7949,
+          "micro_f1_50": 0.6533508136037633,
+          "tile_mcc": 0.743778498579119
+        },
+        {
+          "prob_t": 0.25,
+          "min_votes": 2,
+          "n_detections": 8001,
+          "micro_f1_50": 0.6531991704431984,
+          "tile_mcc": 0.7440479854727757
+        },
+        {
+          "prob_t": 0.3,
+          "min_votes": 2,
+          "n_detections": 7998,
+          "micro_f1_50": 0.6531960663798402,
+          "tile_mcc": 0.7441142817655961
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 2,
+          "n_detections": 7937,
+          "micro_f1_50": 0.6531840988035508,
+          "tile_mcc": 0.744722307967427
+        },
+        {
+          "prob_t": 0.7,
+          "min_votes": 1,
+          "n_detections": 11292,
+          "micro_f1_50": 0.5244635193133047,
+          "tile_mcc": 0.747700338485759
+        },
+        {
+          "prob_t": 0.65,
+          "min_votes": 1,
+          "n_detections": 11323,
+          "micro_f1_50": 0.524202925157579,
+          "tile_mcc": 0.7478594730544825
+        },
+        {
+          "prob_t": 0.4,
+          "min_votes": 1,
+          "n_detections": 11739,
+          "micro_f1_50": 0.520498895983768,
+          "tile_mcc": 0.7495899397886531
+        }
+      ]
+    },
+    "G3IMG-ARM2-K5": {
+      "track": "g3-image",
+      "n_sweep_points": 145,
+      "n_non_dominated": 9,
+      "carried_point": [
+        0.95,
+        5
+      ],
+      "f1_oracle_point": [
+        0.96,
+        5
+      ],
+      "mcc_optimum_point": [
+        0.98,
+        1
+      ],
+      "front": [
+        {
+          "prob_t": 0.96,
+          "min_votes": 5,
+          "n_detections": 4664,
+          "micro_f1_50": 0.8353645940921298,
+          "tile_mcc": 0.7450271779013578
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 5,
+          "n_detections": 4660,
+          "micro_f1_50": 0.8352965488737343,
+          "tile_mcc": 0.7451138596510608
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 4,
+          "n_detections": 5714,
+          "micro_f1_50": 0.8123369362653745,
+          "tile_mcc": 0.7614892608332334
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 4,
+          "n_detections": 5710,
+          "micro_f1_50": 0.8122669649515287,
+          "tile_mcc": 0.7615685289921541
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 3,
+          "n_detections": 6792,
+          "micro_f1_50": 0.7578323454699407,
+          "tile_mcc": 0.7680711431649202
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 3,
+          "n_detections": 6788,
+          "micro_f1_50": 0.7577502964594275,
+          "tile_mcc": 0.7681463059896483
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 2,
+          "n_detections": 8507,
+          "micro_f1_50": 0.6679482439926062,
+          "tile_mcc": 0.7710145275750055
+        },
+        {
+          "prob_t": 0.96,
+          "min_votes": 1,
+          "n_detections": 12516,
+          "micro_f1_50": 0.5218432759210676,
+          "tile_mcc": 0.7753600329835435
+        },
+        {
+          "prob_t": 0.98,
+          "min_votes": 1,
+          "n_detections": 12508,
+          "micro_f1_50": 0.5217391304347826,
+          "tile_mcc": 0.7754947030597968
+        }
+      ]
+    }
+  }
+}

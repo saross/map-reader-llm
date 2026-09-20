@@ -1,0 +1,704 @@
+{
+  "_README": "Verifier-leg cost per configuration. basis 'audited' = scripts/audit_verifier_cost.py read every pass of the leg; 'published' = the auditor could not (a pre-2026-09-14 cleanup overwrote the main pass's meta, so it yields a LOWER BOUND) and the figure is the campaign post-run report's, cited in 'source'; 'unaudited' = neither, so the leg has no usable cost and nothing derived from it is priced. Where both exist they are required to agree to US$0.01.",
+  "agreement_tolerance_usd": 0.01,
+  "generated_by": "scripts/build_tile_presence_board.py --stage costs",
+  "legs": {
+    "IM": {
+      "stages": [
+        "outputs/55maps-image-generalisation/verified"
+      ],
+      "configs": [
+        "IM"
+      ],
+      "auditor_usd": 0.000727,
+      "auditor_candidates": 0,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "7878 of 7878 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/55maps-image-generalisation/verified"
+    },
+    "TH7": {
+      "stages": [
+        "outputs/55maps-text-high-generalisation/verified",
+        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified"
+      ],
+      "configs": [
+        "TH7"
+      ],
+      "auditor_usd": 9.39037,
+      "auditor_candidates": 4367,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "9205 of 9205 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/55maps-text-high-generalisation/verified, results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified"
+    },
+    "T03": {
+      "stages": [
+        "outputs/55maps-text-high-t0.3-generalisation/verified",
+        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified"
+      ],
+      "configs": [
+        "T03"
+      ],
+      "auditor_usd": 9.642493,
+      "auditor_candidates": 4035,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "run.meta.json.pre-recovery-20260427.backup skipped: it holds a pass already counted from another file in this stage (run_id b92052cf-1374-423e-8963-d381825e53be)",
+        "9910 of 9910 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/55maps-text-high-t0.3-generalisation/verified, results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified"
+    },
+    "TM": {
+      "stages": [
+        "outputs/55maps-text-min-generalisation/verified",
+        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified"
+      ],
+      "configs": [
+        "TM"
+      ],
+      "auditor_usd": 1.538019,
+      "auditor_candidates": 2220,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "10170 of 10170 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/55maps-text-min-generalisation/verified, results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified"
+    },
+    "UPL": {
+      "stages": [
+        "outputs/55maps-text-min-n10-uplift/verified-3of10"
+      ],
+      "configs": [
+        "UPL"
+      ],
+      "auditor_usd": 11.266204,
+      "auditor_candidates": 16482,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 11.266204499999999,
+      "candidates": 16482,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null
+    },
+    "G3IMG-ARM1-K1": {
+      "stages": [
+        "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm1"
+      ],
+      "configs": [
+        "G3IMG-ARM1-K1"
+      ],
+      "auditor_usd": 15.755937,
+      "auditor_candidates": 22785,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 15.755937,
+      "candidates": 22785,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null,
+      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+    },
+    "G3IMG-ARM2-K1": {
+      "stages": [
+        "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2"
+      ],
+      "configs": [
+        "G3IMG-ARM2-K1"
+      ],
+      "auditor_usd": 25.397835,
+      "auditor_candidates": 22785,
+      "auditor_complete": true,
+      "auditor_notes": [
+        "merge sidecars present without a merged primary meta: run.meta.pre-rerun-1.json"
+      ],
+      "basis": "audited",
+      "usd": 25.397835,
+      "candidates": 22785,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null,
+      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+    },
+    "G3IMG-ARM1-K3": {
+      "stages": [
+        "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm1"
+      ],
+      "configs": [
+        "G3IMG-ARM1-K3"
+      ],
+      "auditor_usd": 25.102049,
+      "auditor_candidates": 36389,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 25.102049,
+      "candidates": 36389,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null,
+      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+    },
+    "G3IMG-ARM2-K3": {
+      "stages": [
+        "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2"
+      ],
+      "configs": [
+        "G3IMG-ARM2-K3"
+      ],
+      "auditor_usd": 40.581277,
+      "auditor_candidates": 36389,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 40.58127675,
+      "candidates": 36389,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null,
+      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+    },
+    "G3IMG-ARM1-K5": {
+      "stages": [
+        "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm1"
+      ],
+      "configs": [
+        "G3IMG-ARM1-K5"
+      ],
+      "auditor_usd": 31.542175,
+      "auditor_candidates": 45786,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 31.5421755,
+      "candidates": 45786,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null,
+      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+    },
+    "G3IMG-ARM2-K5": {
+      "stages": [
+        "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2"
+      ],
+      "configs": [
+        "G3IMG-ARM2-K5"
+      ],
+      "auditor_usd": 51.092455,
+      "auditor_candidates": 45786,
+      "auditor_complete": true,
+      "auditor_notes": [
+        "merge sidecars present without a merged primary meta: run.meta.pre-rerun-1.json"
+      ],
+      "basis": "audited",
+      "usd": 51.092455125,
+      "candidates": 45786,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null,
+      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+    },
+    "ARM1-N1": {
+      "stages": [
+        "outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/verify_arm1"
+      ],
+      "configs": [
+        "ARM1-N1",
+        "ARM1-N3",
+        "ARM1-N5"
+      ],
+      "auditor_usd": 8.890222,
+      "auditor_candidates": 12715,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 8.890222,
+      "candidates": 12715,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null
+    },
+    "ARM1-N3": {
+      "stages": [
+        "outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/verify_arm1"
+      ],
+      "configs": [
+        "ARM1-N1",
+        "ARM1-N3",
+        "ARM1-N5"
+      ],
+      "auditor_usd": 8.890222,
+      "auditor_candidates": 12715,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 8.890222,
+      "candidates": 12715,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null
+    },
+    "ARM1-N5": {
+      "stages": [
+        "outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/verify_arm1"
+      ],
+      "configs": [
+        "ARM1-N1",
+        "ARM1-N3",
+        "ARM1-N5"
+      ],
+      "auditor_usd": 8.890222,
+      "auditor_candidates": 12715,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 8.890222,
+      "candidates": 12715,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null
+    },
+    "ARM2-N1": {
+      "stages": [
+        "outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/verify_arm2"
+      ],
+      "configs": [
+        "ARM2-N1",
+        "ARM2-N3",
+        "ARM2-N5"
+      ],
+      "auditor_usd": 14.305547,
+      "auditor_candidates": 12715,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 14.305546875000001,
+      "candidates": 12715,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null
+    },
+    "ARM2-N3": {
+      "stages": [
+        "outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/verify_arm2"
+      ],
+      "configs": [
+        "ARM2-N1",
+        "ARM2-N3",
+        "ARM2-N5"
+      ],
+      "auditor_usd": 14.305547,
+      "auditor_candidates": 12715,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 14.305546875000001,
+      "candidates": 12715,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null
+    },
+    "ARM2-N5": {
+      "stages": [
+        "outputs/gemini37-55map-2026-08-29/verifier/g384_ov192_55map_g37/verify_arm2"
+      ],
+      "configs": [
+        "ARM2-N1",
+        "ARM2-N3",
+        "ARM2-N5"
+      ],
+      "auditor_usd": 14.305547,
+      "auditor_candidates": 12715,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 14.305546875000001,
+      "candidates": 12715,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null
+    },
+    "IMG-ARM1-K1": {
+      "stages": [
+        "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm1"
+      ],
+      "configs": [
+        "IMG-ARM1-K1"
+      ],
+      "auditor_usd": 4.962592,
+      "auditor_candidates": 6985,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 4.962592,
+      "candidates": 6985,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null,
+      "cross_checked_against": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md"
+    },
+    "IMG-ARM2-K1": {
+      "stages": [
+        "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm2"
+      ],
+      "configs": [
+        "IMG-ARM2-K1"
+      ],
+      "auditor_usd": 0.015272,
+      "auditor_candidates": 13,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "6972 of 6985 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "published",
+      "usd": 7.7028,
+      "candidates": 6985,
+      "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
+      "note": "the auditor reads a LOWER BOUND here \u2014 a pre-2026-09-14 cleanup overwrote the main pass's meta \u2014 so the published audited figure is used; see auditor_notes"
+    },
+    "IMG-ARM1-K3": {
+      "stages": [
+        "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm1"
+      ],
+      "configs": [
+        "IMG-ARM1-K3"
+      ],
+      "auditor_usd": 5.905819,
+      "auditor_candidates": 8337,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 5.9058195,
+      "candidates": 8337,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null,
+      "cross_checked_against": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md"
+    },
+    "IMG-ARM2-K3": {
+      "stages": [
+        "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm2"
+      ],
+      "configs": [
+        "IMG-ARM2-K3"
+      ],
+      "auditor_usd": 0.001206,
+      "auditor_candidates": 1,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "8336 of 8337 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "published",
+      "usd": 9.265,
+      "candidates": 8337,
+      "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
+      "note": "the auditor reads a LOWER BOUND here \u2014 a pre-2026-09-14 cleanup overwrote the main pass's meta \u2014 so the published audited figure is used; see auditor_notes"
+    },
+    "IMG-ARM1-K5": {
+      "stages": [
+        "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1"
+      ],
+      "configs": [
+        "IMG-ARM1-K5"
+      ],
+      "auditor_usd": 6.48959,
+      "auditor_candidates": 9173,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 6.48959,
+      "candidates": 9173,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null,
+      "cross_checked_against": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md"
+    },
+    "IMG-ARM2-K5": {
+      "stages": [
+        "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2"
+      ],
+      "configs": [
+        "IMG-ARM2-K5"
+      ],
+      "auditor_usd": 10.178819,
+      "auditor_candidates": 9173,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 10.1788185,
+      "candidates": 9173,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null,
+      "cross_checked_against": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md"
+    },
+    "A-N1": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+      ],
+      "configs": [
+        "A-N1",
+        "A-N10",
+        "A-N3",
+        "A-N5"
+      ],
+      "auditor_usd": 0.004072,
+      "auditor_candidates": 6,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "the register carries a residual ESTIMATE for this stage (38707 candidates, 69,362,944 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
+        "38707 of 38713 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+    },
+    "A-N10": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+      ],
+      "configs": [
+        "A-N1",
+        "A-N10",
+        "A-N3",
+        "A-N5"
+      ],
+      "auditor_usd": 0.004072,
+      "auditor_candidates": 6,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "the register carries a residual ESTIMATE for this stage (38707 candidates, 69,362,944 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
+        "38707 of 38713 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+    },
+    "A-N3": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+      ],
+      "configs": [
+        "A-N1",
+        "A-N10",
+        "A-N3",
+        "A-N5"
+      ],
+      "auditor_usd": 0.004072,
+      "auditor_candidates": 6,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "the register carries a residual ESTIMATE for this stage (38707 candidates, 69,362,944 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
+        "38707 of 38713 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+    },
+    "A-N5": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+      ],
+      "configs": [
+        "A-N1",
+        "A-N10",
+        "A-N3",
+        "A-N5"
+      ],
+      "auditor_usd": 0.004072,
+      "auditor_candidates": 6,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "the register carries a residual ESTIMATE for this stage (38707 candidates, 69,362,944 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
+        "38707 of 38713 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+    },
+    "B-N1": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify"
+      ],
+      "configs": [
+        "B-N1",
+        "B-N10",
+        "B-N3",
+        "B-N5"
+      ],
+      "auditor_usd": 39.177723,
+      "auditor_candidates": 57482,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 39.1777235,
+      "candidates": 57482,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null
+    },
+    "B-N10": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify"
+      ],
+      "configs": [
+        "B-N1",
+        "B-N10",
+        "B-N3",
+        "B-N5"
+      ],
+      "auditor_usd": 39.177723,
+      "auditor_candidates": 57482,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 39.1777235,
+      "candidates": 57482,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null
+    },
+    "B-N3": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify"
+      ],
+      "configs": [
+        "B-N1",
+        "B-N10",
+        "B-N3",
+        "B-N5"
+      ],
+      "auditor_usd": 39.177723,
+      "auditor_candidates": 57482,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 39.1777235,
+      "candidates": 57482,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null
+    },
+    "B-N5": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify"
+      ],
+      "configs": [
+        "B-N1",
+        "B-N10",
+        "B-N3",
+        "B-N5"
+      ],
+      "auditor_usd": 39.177723,
+      "auditor_candidates": 57482,
+      "auditor_complete": true,
+      "auditor_notes": [],
+      "basis": "audited",
+      "usd": 39.1777235,
+      "candidates": 57482,
+      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
+      "note": null
+    },
+    "FOURTH-N1": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+      ],
+      "configs": [
+        "FOURTH-N1",
+        "FOURTH-N10",
+        "FOURTH-N3",
+        "FOURTH-N5"
+      ],
+      "auditor_usd": 0.034947,
+      "auditor_candidates": 29,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "the register carries a residual ESTIMATE for this stage (57453 candidates, 102,955,776 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
+        "57453 of 57482 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+    },
+    "FOURTH-N10": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+      ],
+      "configs": [
+        "FOURTH-N1",
+        "FOURTH-N10",
+        "FOURTH-N3",
+        "FOURTH-N5"
+      ],
+      "auditor_usd": 0.034947,
+      "auditor_candidates": 29,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "the register carries a residual ESTIMATE for this stage (57453 candidates, 102,955,776 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
+        "57453 of 57482 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+    },
+    "FOURTH-N3": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+      ],
+      "configs": [
+        "FOURTH-N1",
+        "FOURTH-N10",
+        "FOURTH-N3",
+        "FOURTH-N5"
+      ],
+      "auditor_usd": 0.034947,
+      "auditor_candidates": 29,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "the register carries a residual ESTIMATE for this stage (57453 candidates, 102,955,776 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
+        "57453 of 57482 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+    },
+    "FOURTH-N5": {
+      "stages": [
+        "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+      ],
+      "configs": [
+        "FOURTH-N1",
+        "FOURTH-N10",
+        "FOURTH-N3",
+        "FOURTH-N5"
+      ],
+      "auditor_usd": 0.034947,
+      "auditor_candidates": 29,
+      "auditor_complete": false,
+      "auditor_notes": [
+        "the register carries a residual ESTIMATE for this stage (57453 candidates, 102,955,776 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
+        "57453 of 57482 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      ],
+      "basis": "unaudited",
+      "usd": null,
+      "candidates": null,
+      "source": null,
+      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+    }
+  }
+}
