@@ -3,6 +3,19 @@
   "reference": "r2",
   "cells": [
     {
+      "label": "IMG-ARM2-K3-mcc-oracle-unconstrained",
+      "rung": "IMG-ARM2-K3",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 3,
+      "basis": "mcc-oracle-unconstrained",
+      "point": "(0.96, k2)",
+      "n_detections": 5167,
+      "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson",
+      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at IMG-ARM2-K3-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one."
+    },
+    {
       "label": "IMG-ARM1-K1-carried",
       "rung": "IMG-ARM1-K1",
       "arm": "arm1",
@@ -142,8 +155,8 @@
       "verifier_thinking": "low",
       "k": 3,
       "basis": "mcc-oracle",
-      "point": "(0.96, k2)",
-      "n_detections": 5167,
+      "point": "(0.90, k3)",
+      "n_detections": 5343,
       "det": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-mcc-oracle/detections.geojson"
     },
     {

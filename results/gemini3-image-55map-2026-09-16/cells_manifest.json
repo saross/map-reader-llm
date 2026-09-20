@@ -3,6 +3,82 @@
   "reference": "r2",
   "cells": [
     {
+      "label": "G3IMG-ARM1-K5-votes3-carried",
+      "rung": "G3IMG-ARM1-K5",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 5,
+      "basis": "protocol-matched comparator for T5m (post-hoc, 2026-09-20)",
+      "point": "(0.15, k3)",
+      "n_detections": 7222,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM1-K5-votes3-f1-oracle",
+      "rung": "G3IMG-ARM1-K5",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 5,
+      "basis": "protocol-matched comparator for T5m, F1 oracle at 3 votes (post-hoc, 2026-09-20)",
+      "point": "(0.20, k3)",
+      "n_detections": 6974,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-f1-oracle/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM1-K3-mcc-oracle-unconstrained",
+      "rung": "G3IMG-ARM1-K3",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 3,
+      "basis": "mcc-oracle-unconstrained",
+      "point": "(0.35, k1)",
+      "n_detections": 10078,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/detections.geojson",
+      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM1-K3-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one."
+    },
+    {
+      "label": "G3IMG-ARM2-K3-mcc-oracle-unconstrained",
+      "rung": "G3IMG-ARM2-K3",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 3,
+      "basis": "mcc-oracle-unconstrained",
+      "point": "(0.98, k1)",
+      "n_detections": 10727,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson",
+      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM2-K3-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one."
+    },
+    {
+      "label": "G3IMG-ARM1-K5-mcc-oracle-unconstrained",
+      "rung": "G3IMG-ARM1-K5",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 5,
+      "basis": "mcc-oracle-unconstrained",
+      "point": "(0.40, k1)",
+      "n_detections": 11739,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/detections.geojson",
+      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM1-K5-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one."
+    },
+    {
+      "label": "G3IMG-ARM2-K5-mcc-oracle-unconstrained",
+      "rung": "G3IMG-ARM2-K5",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 5,
+      "basis": "mcc-oracle-unconstrained",
+      "point": "(0.98, k1)",
+      "n_detections": 12508,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/detections.geojson",
+      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM2-K5-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one."
+    },
+    {
       "label": "G3IMG-ARM1-K1-carried",
       "rung": "G3IMG-ARM1-K1",
       "arm": "arm1",
@@ -106,8 +182,8 @@
       "verifier_thinking": "minimal",
       "k": 3,
       "basis": "mcc-oracle",
-      "point": "(0.35, k1)",
-      "n_detections": 10078,
+      "point": "(0.20, k3)",
+      "n_detections": 5370,
       "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/detections.geojson"
     },
     {
@@ -142,8 +218,8 @@
       "verifier_thinking": "low",
       "k": 3,
       "basis": "mcc-oracle",
-      "point": "(0.98, k1)",
-      "n_detections": 10727,
+      "point": "(0.96, k3)",
+      "n_detections": 5266,
       "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/detections.geojson"
     },
     {
@@ -178,8 +254,8 @@
       "verifier_thinking": "minimal",
       "k": 5,
       "basis": "mcc-oracle",
-      "point": "(0.40, k1)",
-      "n_detections": 11739,
+      "point": "(0.20, k5)",
+      "n_detections": 4729,
       "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/detections.geojson"
     },
     {
@@ -214,33 +290,9 @@
       "verifier_thinking": "low",
       "k": 5,
       "basis": "mcc-oracle",
-      "point": "(0.98, k1)",
-      "n_detections": 12508,
+      "point": "(0.98, k5)",
+      "n_detections": 4660,
       "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/detections.geojson"
-    },
-    {
-      "label": "G3IMG-ARM1-K5-votes3-carried",
-      "rung": "G3IMG-ARM1-K5",
-      "arm": "arm1",
-      "verifier_model": "gemini-3-flash-preview",
-      "verifier_thinking": "minimal",
-      "k": 5,
-      "basis": "protocol-matched comparator for T5m (post-hoc, 2026-09-20)",
-      "point": "(0.15, k3)",
-      "n_detections": 7222,
-      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/detections.geojson"
-    },
-    {
-      "label": "G3IMG-ARM1-K5-votes3-f1-oracle",
-      "rung": "G3IMG-ARM1-K5",
-      "arm": "arm1",
-      "verifier_model": "gemini-3-flash-preview",
-      "verifier_thinking": "minimal",
-      "k": 5,
-      "basis": "protocol-matched comparator for T5m, F1 oracle at 3 votes (post-hoc, 2026-09-20)",
-      "point": "(0.20, k3)",
-      "n_detections": 6974,
-      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-f1-oracle/detections.geojson"
     }
   ]
 }
