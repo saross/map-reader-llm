@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-09-20T08:36:22Z · 651 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `8a143963d`.
+> Generated 2026-09-20T22:48:51Z · 658 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `7358fe406`.
 >
-> **Coverage**: 651 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 658 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -575,6 +575,9 @@
 | stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-mcc-oracle-posthoc-p0.96-k10-r2-gt | proposer-verifier | verified | 10 | 10 | 0.7476 | 0.7269 | 4249 |
 | stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-mcc-oracle-posthoc-p0.96-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7445 | 0.7376 | 4626 |
 | stride-55map-2026-08-25::g384-ov192-55map-n5-verified37-mcc-oracle-posthoc-p0.96-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7452 | 0.7326 | 4434 |
+| stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-mcc-oracle-posthoc-p0.96-k1-r2-gt | proposer-verifier | verified | 1 | 10 | 0.6075 | 0.7567 | 7733 |
+| stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-mcc-oracle-posthoc-p0.96-k1-r2-gt | proposer-verifier | verified | 1 | 3 | 0.6698 | 0.7514 | 6298 |
+| stride-55map-2026-08-25::g384-ov192-55map-n5-verified37-mcc-oracle-posthoc-p0.96-k1-r2-gt | proposer-verifier | verified | 1 | 5 | 0.6457 | 0.7555 | 6852 |
 | image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9 | proposer-verifier | verified | 9 | 10 | 0.8412 | 0.7985 | 397 |
 | image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8 | proposer-verifier | verified | 8 | 10 | 0.8333 | 0.7993 | 400 |
 | image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b | proposer-verifier | verified | 8 | 10 | 0.8263 | 0.7937 | 400 |
@@ -614,6 +617,10 @@
 | gemini37-55map-2026-08-29::arm2-n1-mcc-oracle-posthoc-p0.96-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7665 | 0.7422 | 5022 |
 | gemini37-55map-2026-08-29::arm2-n3-mcc-oracle-posthoc-p0.96-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7868 | 0.7326 | 4499 |
 | gemini37-55map-2026-08-29::arm2-n5-mcc-oracle-posthoc-p0.96-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7859 | 0.7291 | 4378 |
+| gemini37-55map-2026-08-29::arm1-n3-mcc-oracle-posthoc-p0.40-k1-r2-gt | proposer-verifier | verified | 1 | 3 | 0.7113 | 0.7303 | 5327 |
+| gemini37-55map-2026-08-29::arm1-n5-mcc-oracle-posthoc-p0.40-k1-r2-gt | proposer-verifier | verified | 1 | 5 | 0.6943 | 0.7308 | 5631 |
+| gemini37-55map-2026-08-29::arm2-n3-mcc-oracle-posthoc-p0.96-k1-r2-gt | proposer-verifier | verified | 1 | 3 | 0.7397 | 0.7475 | 5619 |
+| gemini37-55map-2026-08-29::arm2-n5-mcc-oracle-posthoc-p0.96-k1-r2-gt | proposer-verifier | verified | 1 | 5 | 0.7229 | 0.7487 | 5924 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5 | proposer-verifier | verified | 5 | 5 | 0.9254 | 0.8192 | 430 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5 | proposer-verifier | verified | 5 | 5 | 0.9308 | 0.8322 | 425 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9179 | 0.8133 | 430 |
