@@ -141,6 +141,69 @@ def cmd_extract(args: argparse.Namespace) -> int:
 # =========================================================================
 
 
+def _manifest_vote_gate(manifest_path: Path, allow_stale: bool = False) -> bool:
+    """Refuse to verify a crop manifest that disagrees with its source union.
+
+    The manifest is the record of what the verifier is shown and the file the
+    boards read vote counts from; the union is what the proposer passes
+    actually agreed on. When an incremental re-extraction patches one without
+    the other they drift silently — five legacy manifests carry a
+    ``vote_count`` one low on 15 to 110 candidates each
+    (``results/im-june-pool-grid-2026-09-20/findings.md`` § 7). Checking
+    before the spend is the whole point: a stale manifest cannot be fixed
+    after the probabilities are keyed to it.
+
+    An unresolvable check (union archived off this machine, manifest without
+    a ``source_geojson``) is a warning, not a refusal — only a comparison
+    that ran and found a difference stops the run.
+
+    Args:
+        manifest_path: Path to the ``candidate_manifest.json`` to verify.
+        allow_stale: Proceed over a disagreeing manifest, logging why.
+
+    Returns:
+        True when verification may proceed.
+    """
+    try:
+        from scripts.check_union_provenance import check_manifest_votes
+        result = check_manifest_votes(manifest_path)
+    except Exception as exc:  # pragma: no cover - defensive
+        logger.warning(
+            "Manifest/union vote check could not run (%s) — proceeding "
+            "with the vote counts UNCHECKED", exc,
+        )
+        return True
+
+    if result.ok:
+        logger.info("Manifest/union vote check: %s — %s",
+                    result.classification, result.detail)
+        return True
+
+    if allow_stale:
+        logger.warning(
+            "--allow-stale-manifest: verifying over a manifest that "
+            "DISAGREES with its union (%s). %s",
+            result.union_path, result.detail,
+        )
+        return True
+
+    logger.error(
+        "Manifest DISAGREES with its source union (%s): %s",
+        result.union_path, result.detail,
+    )
+    for mismatch in result.vote_mismatches[:20]:
+        logger.error(
+            "  candidate %s: manifest vote_count %s against union %s",
+            mismatch["candidate_id"], mismatch["manifest_vote_count"],
+            mismatch["union_vote_count"],
+        )
+    logger.error(
+        "Refusing to spend on a manifest out of step with its union. "
+        "Rebuild it (run_pv.py extract) or pass --allow-stale-manifest.",
+    )
+    return False
+
+
 def cmd_verify(args: argparse.Namespace) -> int:
     """Execute the verify subcommand.
 
@@ -165,6 +228,13 @@ def cmd_verify(args: argparse.Namespace) -> int:
     if n_candidates == 0:
         logger.warning("No candidates in manifest — nothing to verify")
         return 0
+
+    # Both the batch and the real-time path go through here, so the vote
+    # agreement of the manifest is settled before a single call is booked.
+    if not _manifest_vote_gate(
+        manifest_path, allow_stale=getattr(args, "allow_stale_manifest", False),
+    ):
+        return 1
 
     # Load verifier config
     with open(args.verifier_config) as f:
@@ -2457,6 +2527,17 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Service tier for real-time API calls. 'flex' gives 50%% "
         "discount with 1-15 min latency. Ignored in batch mode. "
         "Default: flex.",
+    )
+    verify_parser.add_argument(
+        "--allow-stale-manifest",
+        action="store_true",
+        default=False,
+        help=(
+            "Verify even when the crop manifest disagrees with the union it "
+            "declares in source_geojson (vote_count or detection count). The "
+            "default refuses, because probabilities keyed to a stale manifest "
+            "cannot be re-pointed afterwards; the reason is logged either way."
+        ),
     )
     verify_parser.add_argument(
         "--no-strict",

@@ -38,6 +38,24 @@ Classification
     The parameters are not recoverable — most often the pool's passes were
     never materialised as ``run_*`` / ``pass_*`` directories.
 
+A second mode: a crop manifest against its union
+------------------------------------------------
+``--manifest`` answers the adjacent question — not "was this union built from
+the pool it claims?" but "does the crop manifest the verifier is about to be
+handed still agree with the union it was cut from?". It compares both the
+count of detections and every candidate's ``vote_count``, and classifies
+``AGREES`` / ``DISAGREES`` / ``NOT-APPLICABLE`` (neither side carries votes —
+a single-pass proposer output) / ``UNRESOLVED`` (the union is not on this
+machine). Only ``DISAGREES`` exits non-zero, and ``scripts/run_pv.py verify``
+runs this check before either the batch or the real-time path and refuses a
+``DISAGREES`` manifest unless ``--allow-stale-manifest`` is passed.
+
+The mode exists because the drift is real and was silent:
+``results/im-june-pool-grid-2026-09-20/findings.md`` § 7 found five manifests
+from the April/May 2026 recovery campaign carrying a ``vote_count`` one low on
+15 to 110 candidates each, and one manifest a whole candidate short of its
+union, none of which any artefact flagged.
+
 Usage
 -----
     # One union
@@ -51,6 +69,10 @@ Usage
     # Re-use a scratch tree across invocations (skips finished unions)
     python scripts/check_union_provenance.py --all \\
         --scratch-dir /tmp/union-check --workers 8
+
+    # A crop manifest against the union it declares (exit 1 on disagreement)
+    python scripts/check_union_provenance.py \\
+        --manifest outputs/.../crops/candidate_manifest.json
 
 Run the ``--all`` sweep on sapphire: the clustering is O(n^2) per pass and a
 30-pass pool takes minutes.
@@ -674,6 +696,421 @@ def _is_union_path(repo_root: Path, path: str) -> bool:
 
 
 # ---------------------------------------------------------------------------
+# A crop manifest against its source union
+# ---------------------------------------------------------------------------
+#
+# The union is the record of what the proposer passes agreed on; the crop
+# manifest is the record of what the verifier was actually shown, and the file
+# the boards read vote counts out of. They are written by different code at
+# different times, and when they drift the drift is silent:
+# ``results/im-june-pool-grid-2026-09-20/findings.md`` § 7 found five legacy
+# manifests carrying a ``vote_count`` one low on 15 to 110 candidates each,
+# and one manifest a whole candidate short of its union, because the
+# 2026-05-03 recovery campaign's incremental extractor matched greedily and
+# never refreshed a matched entry. This check is the standing guard against
+# that class: before any verifier spend, the manifest must agree with the
+# union it declares.
+
+#: Match radius for pairing a manifest entry with a union feature when the
+#: candidate-id index does not line up. 20 m is the radius the unions are
+#: clustered at, so a counterpart further away than that is a different
+#: detection rather than the same one written twice.
+DEFAULT_MANIFEST_MATCH_RADIUS_M = 20.0
+
+#: How many disagreeing ids a one-line summary names before eliding.
+_DETAIL_ID_LIMIT = 20
+
+
+@dataclass
+class ManifestVoteResult:
+    """The outcome of checking one crop manifest against its source union.
+
+    Attributes:
+        manifest_path: Repo-relative path of the crop manifest.
+        union_path: Repo-relative path of the union it was compared against.
+        classification: ``AGREES``, ``DISAGREES``, ``NOT-APPLICABLE`` (no
+            vote counts on either side — a single-pass proposer output) or
+            ``UNRESOLVED`` (the union could not be read).
+        manifest_candidates: Candidate count in the manifest.
+        union_features: Feature count in the union.
+        pairing: How entries were paired — ``candidate-id-index`` or
+            ``spatial-nearest``.
+        vote_mismatches: One record per candidate whose ``vote_count``
+            differs, with both values.
+        manifest_only: Candidate ids with no union counterpart.
+        union_only: Union feature indices with no manifest candidate.
+        reconciled_failed_extractions: Union features with no candidate that
+            the manifest's own ``failed_extractions`` accounts for.
+        detail: One-line human summary.
+    """
+
+    manifest_path: str
+    union_path: str | None
+    classification: str
+    manifest_candidates: int = 0
+    union_features: int = 0
+    pairing: str | None = None
+    vote_mismatches: list[dict[str, Any]] = field(default_factory=list)
+    manifest_only: list[Any] = field(default_factory=list)
+    union_only: list[int] = field(default_factory=list)
+    reconciled_failed_extractions: int = 0
+    detail: str = ""
+
+    @property
+    def ok(self) -> bool:
+        """True unless the manifest demonstrably disagrees with its union.
+
+        ``UNRESOLVED`` is deliberately not a failure: a union that has been
+        archived off the machine must not block a verifier run that is
+        otherwise sound. Only a comparison that ran and found a difference
+        stops the chain.
+        """
+        return self.classification != "DISAGREES"
+
+
+def _indexed_utm_points(features: Iterable[dict]) -> list[tuple[float, float] | None]:
+    """Project features to UTM metres, keeping input positions.
+
+    Unlike :func:`_utm_points` this never drops a feature, because the
+    manifest comparison pairs by position and a silent drop would shift
+    every id after it.
+
+    Args:
+        features: GeoJSON features.
+
+    Returns:
+        One ``(easting, northing)`` pair per feature, ``None`` where the
+        geometry is unusable.
+    """
+    points: list[tuple[float, float] | None] = []
+    for feat in features:
+        coords = ((feat.get("geometry") or {}).get("coordinates")) or []
+        if len(coords) < 2:
+            points.append(None)
+            continue
+        x, y = float(coords[0]), float(coords[1])
+        # Unions are WGS84 (RFC 7946); a manifest-shaped input may already
+        # be in metres, which the magnitude test separates.
+        if abs(x) <= 180 and abs(y) <= 90:
+            points.append(geojson_coords_to_utm(x, y))
+        else:
+            points.append((x, y))
+    return points
+
+
+def _candidate_points(
+    candidates: Iterable[dict],
+) -> list[tuple[float, float] | None]:
+    """Read each manifest candidate's UTM centroid, keeping input positions."""
+    points: list[tuple[float, float] | None] = []
+    for cand in candidates:
+        x, y = cand.get("centroid_x"), cand.get("centroid_y")
+        points.append((float(x), float(y)) if x is not None and y is not None else None)
+    return points
+
+
+def _vote_of(properties: dict | None) -> Any:
+    """Read ``vote_count`` out of a properties dict, or ``None``."""
+    return (properties or {}).get("vote_count")
+
+
+def resolve_manifest_union(
+    manifest: dict,
+    manifest_path: Path,
+    repo_root: Path = REPO_ROOT,
+) -> Path | None:
+    """Find the union a crop manifest was cut from.
+
+    ``extract_candidates.extract_candidates`` records it as
+    ``source_geojson``. The value may be repo-relative (the usual case),
+    absolute, or relative to the manifest itself.
+
+    Args:
+        manifest: Parsed ``candidate_manifest.json``.
+        manifest_path: Where that manifest was read from.
+        repo_root: Repository root.
+
+    Returns:
+        An existing path, or ``None`` when the declaration is missing or
+        points at a file that is not on this machine.
+    """
+    declared = manifest.get("source_geojson")
+    if not declared:
+        return None
+    for candidate in (
+        Path(declared),
+        repo_root / declared,
+        manifest_path.parent / declared,
+    ):
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def _pair_by_candidate_id(
+    candidate_points: list[tuple[float, float] | None],
+    candidate_ids: list[Any],
+    feature_points: list[tuple[float, float] | None],
+    tolerance_m: float,
+) -> dict[int, int] | None:
+    """Pair manifest entries to union features by ``candidate_id`` index.
+
+    ``extract_candidates`` numbers a candidate with its feature's index in
+    the source union, so the index IS the pairing when it holds up. It is
+    accepted only when every id is a distinct in-range integer and every
+    paired centroid agrees within ``tolerance_m``; otherwise the caller
+    falls back to spatial pairing.
+
+    Returns:
+        Manifest position to feature index, or ``None`` when the index
+        convention does not hold.
+    """
+    n_features = len(feature_points)
+    if len(set(candidate_ids)) != len(candidate_ids):
+        return None
+    pairing: dict[int, int] = {}
+    for position, cid in enumerate(candidate_ids):
+        if not isinstance(cid, int) or isinstance(cid, bool) or not 0 <= cid < n_features:
+            return None
+        mpt, fpt = candidate_points[position], feature_points[cid]
+        if mpt is not None and fpt is not None:
+            dist = ((mpt[0] - fpt[0]) ** 2 + (mpt[1] - fpt[1]) ** 2) ** 0.5
+            if dist > tolerance_m:
+                return None
+        pairing[position] = cid
+    return pairing
+
+
+def _pair_spatially(
+    candidate_points: list[tuple[float, float] | None],
+    feature_points: list[tuple[float, float] | None],
+    radius_m: float,
+) -> dict[int, int]:
+    """Pair manifest entries to union features nearest-first, one to one.
+
+    The same rule the incremental extractor now matches by: every pair
+    inside ``radius_m`` sorted by distance, each side claimable once, so
+    two detections inside one radius cannot collapse into one pairing.
+
+    Args:
+        candidate_points: Manifest centroids, by position.
+        feature_points: Union centroids, by index.
+        radius_m: Match radius in metres.
+
+    Returns:
+        Manifest position to feature index.
+    """
+    cell = max(radius_m, 1e-6)
+    index: dict[tuple[int, int], list[int]] = {}
+    for fi, pt in enumerate(feature_points):
+        if pt is None:
+            continue
+        index.setdefault((int(pt[0] // cell), int(pt[1] // cell)), []).append(fi)
+
+    pairs: list[tuple[float, int, int]] = []
+    for mi, pt in enumerate(candidate_points):
+        if pt is None:
+            continue
+        gx, gy = int(pt[0] // cell), int(pt[1] // cell)
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                for fi in index.get((gx + dx, gy + dy), ()):
+                    fpt = feature_points[fi]
+                    assert fpt is not None
+                    dist = ((pt[0] - fpt[0]) ** 2 + (pt[1] - fpt[1]) ** 2) ** 0.5
+                    if dist <= radius_m:
+                        pairs.append((dist, mi, fi))
+
+    pairs.sort()
+    pairing: dict[int, int] = {}
+    claimed: set[int] = set()
+    for _dist, mi, fi in pairs:
+        if mi in pairing or fi in claimed:
+            continue
+        pairing[mi] = fi
+        claimed.add(fi)
+    return pairing
+
+
+def _elide(ids: list[Any]) -> str:
+    """Render an id list for a one-line summary, eliding a long tail."""
+    head = ", ".join(str(i) for i in ids[:_DETAIL_ID_LIMIT])
+    if len(ids) > _DETAIL_ID_LIMIT:
+        return f"{head}, ... and {len(ids) - _DETAIL_ID_LIMIT} more"
+    return head
+
+
+def check_manifest_votes(
+    manifest_path: Path,
+    union_path: Path | None = None,
+    repo_root: Path = REPO_ROOT,
+    tolerance_m: float = DEFAULT_TOLERANCE_M,
+    match_radius_m: float = DEFAULT_MANIFEST_MATCH_RADIUS_M,
+) -> ManifestVoteResult:
+    """Check that a crop manifest agrees with the union it was cut from.
+
+    Compares, per candidate, the ``vote_count`` the manifest carries against
+    the one the union feature carries, and compares the two counts of
+    detections. A manifest that fails has been patched out of step with its
+    union — the 2026-05-03 defect — and any verifier spend against it would
+    book votes the consensus does not support.
+
+    Args:
+        manifest_path: Path to a ``candidate_manifest.json``.
+        union_path: The union to compare against. Defaults to the manifest's
+            own ``source_geojson`` declaration.
+        repo_root: Repository root, for resolving that declaration.
+        tolerance_m: Centroid agreement required before the ``candidate_id``
+            index is trusted as the pairing.
+        match_radius_m: Radius for the spatial pairing fallback.
+
+    Returns:
+        A :class:`ManifestVoteResult`. ``DISAGREES`` is the only
+        classification that should stop a run.
+
+    Example:
+        >>> res = check_manifest_votes(Path("outputs/x/crops/candidate_manifest.json"))
+        ... # doctest: +SKIP
+        >>> res.ok  # doctest: +SKIP
+        True
+    """
+    manifest_rel = _repo_relative(manifest_path, repo_root)
+    try:
+        manifest = json.loads(Path(manifest_path).read_text())
+    except (OSError, json.JSONDecodeError) as exc:
+        return ManifestVoteResult(
+            manifest_path=manifest_rel, union_path=None,
+            classification="UNRESOLVED",
+            detail=f"manifest could not be read: {exc}",
+        )
+
+    candidates = manifest.get("candidates") or []
+    resolved_union = Path(union_path) if union_path else resolve_manifest_union(
+        manifest, Path(manifest_path), repo_root,
+    )
+    if resolved_union is None or not resolved_union.exists():
+        declared = manifest.get("source_geojson") or "(none declared)"
+        return ManifestVoteResult(
+            manifest_path=manifest_rel, union_path=None,
+            classification="UNRESOLVED",
+            manifest_candidates=len(candidates),
+            detail=(
+                f"source union not on this machine: {declared}. The vote "
+                f"agreement of {len(candidates)} candidates is UNCHECKED."
+            ),
+        )
+
+    union_rel = _repo_relative(resolved_union, repo_root)
+    try:
+        features = (json.loads(resolved_union.read_text()).get("features")) or []
+    except (OSError, json.JSONDecodeError) as exc:
+        return ManifestVoteResult(
+            manifest_path=manifest_rel, union_path=union_rel,
+            classification="UNRESOLVED",
+            manifest_candidates=len(candidates),
+            detail=f"union could not be read: {exc}",
+        )
+
+    if not candidates:
+        return ManifestVoteResult(
+            manifest_path=manifest_rel, union_path=union_rel,
+            classification="NOT-APPLICABLE", union_features=len(features),
+            detail="manifest holds no candidates",
+        )
+
+    manifest_votes = [_vote_of(c.get("properties")) for c in candidates]
+    union_votes = [_vote_of(f.get("properties")) for f in features]
+    if all(v is None for v in manifest_votes) and all(v is None for v in union_votes):
+        return ManifestVoteResult(
+            manifest_path=manifest_rel, union_path=union_rel,
+            classification="NOT-APPLICABLE",
+            manifest_candidates=len(candidates), union_features=len(features),
+            detail=(
+                "neither side carries vote_count — a single-pass proposer "
+                "output has no votes to compare"
+            ),
+        )
+
+    candidate_ids = [c.get("candidate_id") for c in candidates]
+    candidate_points = _candidate_points(candidates)
+    feature_points = _indexed_utm_points(features)
+
+    pairing = _pair_by_candidate_id(
+        candidate_points, candidate_ids, feature_points, tolerance_m,
+    )
+    how = "candidate-id-index"
+    if pairing is None:
+        pairing = _pair_spatially(candidate_points, feature_points, match_radius_m)
+        how = "spatial-nearest"
+
+    mismatches = [
+        {
+            "candidate_id": candidate_ids[position],
+            "manifest_vote_count": manifest_votes[position],
+            "union_vote_count": union_votes[feature_index],
+            "union_feature_index": feature_index,
+        }
+        for position, feature_index in sorted(pairing.items())
+        if manifest_votes[position] != union_votes[feature_index]
+    ]
+    manifest_only = [
+        candidate_ids[position]
+        for position in range(len(candidates)) if position not in pairing
+    ]
+    paired_features = set(pairing.values())
+    union_only = [i for i in range(len(features)) if i not in paired_features]
+
+    # A union feature with no candidate is expected when extraction failed on
+    # it, and the manifest books that count itself. Anything beyond the booked
+    # number is a candidate the verifier was never shown.
+    booked_failures = manifest.get("failed_extractions") or 0
+    reconciled = (
+        len(union_only) if union_only and len(union_only) == booked_failures else 0
+    )
+    unexplained_union_only = [] if reconciled else union_only
+
+    problems: list[str] = []
+    if mismatches:
+        problems.append(
+            f"{len(mismatches)} candidate(s) disagree on vote_count: "
+            f"{_elide([m['candidate_id'] for m in mismatches])}"
+        )
+    if manifest_only:
+        problems.append(
+            f"{len(manifest_only)} candidate(s) have no union counterpart: "
+            f"{_elide(manifest_only)}"
+        )
+    if unexplained_union_only:
+        problems.append(
+            f"{len(unexplained_union_only)} union feature(s) have no candidate: "
+            f"index {_elide(unexplained_union_only)}"
+        )
+
+    counts = (
+        f"{len(candidates)} candidates against {len(features)} union features, "
+        f"paired by {how}"
+    )
+    if problems:
+        detail = f"{counts}. " + "; ".join(problems)
+    else:
+        detail = f"{counts}. Every vote_count agrees."
+        if reconciled:
+            detail += (
+                f" {reconciled} union feature(s) without a candidate are "
+                f"accounted for by the manifest's failed_extractions."
+            )
+
+    return ManifestVoteResult(
+        manifest_path=manifest_rel, union_path=union_rel,
+        classification="DISAGREES" if problems else "AGREES",
+        manifest_candidates=len(candidates), union_features=len(features),
+        pairing=how, vote_mismatches=mismatches, manifest_only=manifest_only,
+        union_only=union_only, reconciled_failed_extractions=reconciled,
+        detail=detail,
+    )
+
+
+# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -682,6 +1119,60 @@ def _run_one(args: tuple[str, str, float, str]) -> dict[str, Any]:
     """Worker entry point: check one union and return its result as a dict."""
     union, scratch, tol, root = args
     return asdict(check_union(Path(union), Path(scratch), tol, Path(root)))
+
+
+def _run_manifest_checks(args: argparse.Namespace, repo_root: Path) -> int:
+    """Run ``--manifest`` checks and report them. Returns 1 on any disagreement.
+
+    Args:
+        args: Parsed CLI arguments.
+        repo_root: Repository root.
+
+    Returns:
+        1 when any manifest classified ``DISAGREES``, else 0.
+    """
+    if args.manifest_union and len(args.manifest) != 1:
+        print(
+            "--manifest-union applies to exactly one --manifest.", file=sys.stderr,
+        )
+        return 2
+
+    failed = 0
+    results: list[dict[str, Any]] = []
+    for manifest in args.manifest:
+        result = check_manifest_votes(
+            manifest,
+            union_path=args.manifest_union,
+            repo_root=repo_root,
+            tolerance_m=args.tolerance_m,
+            match_radius_m=args.manifest_match_radius_m,
+        )
+        print(f"{result.classification:16s} {result.manifest_path}")
+        print(f"  union: {result.union_path}")
+        print(f"  {result.detail}")
+        for mismatch in result.vote_mismatches[:_DETAIL_ID_LIMIT]:
+            print(
+                f"    candidate {mismatch['candidate_id']}: manifest "
+                f"vote_count {mismatch['manifest_vote_count']} against union "
+                f"{mismatch['union_vote_count']} "
+                f"(union feature {mismatch['union_feature_index']})",
+            )
+        if len(result.vote_mismatches) > _DETAIL_ID_LIMIT:
+            print(
+                f"    ... and {len(result.vote_mismatches) - _DETAIL_ID_LIMIT} "
+                f"more disagreeing candidates",
+            )
+        if not result.ok:
+            failed = 1
+        results.append(asdict(result))
+
+    if args.json_out and results:
+        args.json_out.parent.mkdir(parents=True, exist_ok=True)
+        args.json_out.write_text(json.dumps(
+            {"script_version": __version__, "manifest_results": results}, indent=2,
+        ))
+        print(f"Wrote {args.json_out}")
+    return failed
 
 
 def build_cli_parser() -> argparse.ArgumentParser:
@@ -699,6 +1190,29 @@ def build_cli_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--all", action="store_true",
         help="Check every union a registered condition reads",
+    )
+    parser.add_argument(
+        "--manifest", type=Path, action="append", default=[],
+        help=(
+            "A candidate_manifest.json to check against the union it "
+            "declares in source_geojson (repeatable). Exits 1 on any "
+            "vote_count or count disagreement."
+        ),
+    )
+    parser.add_argument(
+        "--manifest-union", type=Path, default=None,
+        help=(
+            "Union to compare --manifest against, overriding its own "
+            "source_geojson declaration. Only valid with a single --manifest."
+        ),
+    )
+    parser.add_argument(
+        "--manifest-match-radius-m", type=float,
+        default=DEFAULT_MANIFEST_MATCH_RADIUS_M,
+        help=(
+            "Radius for the spatial pairing fallback when candidate ids are "
+            f"not union indices (default: {DEFAULT_MANIFEST_MATCH_RADIUS_M:g})"
+        ),
     )
     parser.add_argument(
         "--scratch-dir", type=Path,
@@ -738,13 +1252,20 @@ def main(argv: list[str] | None = None) -> int:
     )
     repo_root = args.repo_root.resolve()
 
+    manifest_rc = _run_manifest_checks(args, repo_root) if args.manifest else 0
+
     unions: list[str] = [_repo_relative(u, repo_root) for u in args.union]
     readers: dict[str, list[str]] = {}
     if args.all:
         readers = enumerate_registered_unions(repo_root)
         unions.extend(u for u in readers if u not in unions)
     if not unions:
-        print("Nothing to check: pass --union PATH or --all.", file=sys.stderr)
+        if args.manifest:
+            return manifest_rc
+        print(
+            "Nothing to check: pass --union PATH, --manifest PATH or --all.",
+            file=sys.stderr,
+        )
         return 2
 
     tmp: Path | None = None
@@ -795,7 +1316,7 @@ def main(argv: list[str] | None = None) -> int:
         ))
         print(f"\nWrote {args.json_out}")
 
-    return 1 if counts.get("STALE") else 0
+    return 1 if (counts.get("STALE") or manifest_rc) else 0
 
 
 if __name__ == "__main__":
