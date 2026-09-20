@@ -40,6 +40,7 @@ from scripts.generate_post_run_report import (
     build_analyses,
     build_manifests,
     build_run_row,
+    check_cited_artefact_hashes,
     check_signature_integrity,
     check_write_once_predictions,
     draft_run,
@@ -1826,3 +1827,102 @@ def test_load_json_reads_gzipped_metas_and_meta_files_finds_both(tmp_path):
     assert g._load_json(plain) == {"x": 1}
     assert g._load_json(packed) == {"x": 2}
     assert [p.name for p in g._meta_files(tmp_path)] == ["a.meta.json", "b.meta.json.gz"]
+
+
+# ------------------------------------ D9: the cited-artefact hash guard ---
+# PI ruling D9 (planning/pi-decisions-2026-09-20.md, 2026-09-21). A signed
+# row reaches its evidence through three editable hops -- conditions_compared
+# -> the register's eval_path -> the evaluation's own input_files. On
+# 2026-09-20 a campaign re-materialised cited cells in place and for 58
+# minutes two signed rows cited evaluations the PI had never seen, with no
+# diff of their own to show it. These pin the guard that ends that.
+
+def _snapshot_row(tmp_path, status, payload=b"detections", recorded=None):
+    """One analysis spec with a cited_artefacts snapshot over a real file."""
+    import hashlib
+    det = tmp_path / "cells" / "CELL" / "detections.geojson"
+    det.parent.mkdir(parents=True, exist_ok=True)
+    det.write_bytes(payload)
+    digest = recorded or hashlib.sha256(payload).hexdigest()
+    signature = {"status": status}
+    if status == "signed":
+        signature |= {"signed_at": "2026-09-21T00:00:00Z", "attests": "x"}
+    return {
+        "analysis_id": "row-a",
+        "signature": signature,
+        "cited_artefacts": {
+            "snapshot_at": "2026-09-21T00:00:00Z",
+            "conditions": [{
+                "condition_id": "run::cell-p0.96-k3-r2-gt",
+                "eval_path": "cells/CELL/evaluation.json",
+                "detections": [
+                    {"path": "cells/CELL/detections.geojson", "sha256": digest}],
+            }],
+        },
+    }
+
+
+@pytest.mark.tier1
+def test_cited_artefact_hashes_pass_when_the_evidence_has_not_moved(tmp_path):
+    """The everyday case must be silent, or the guard trains people to skip it."""
+    errors, advisories = check_cited_artefact_hashes(
+        [_snapshot_row(tmp_path, "signed")], tmp_path)
+    assert errors == []
+    assert advisories == [
+        "cited-artefact snapshots: 1 signed row(s) checked, "
+        "1 detections file(s) verified, 0 signed row(s) carry no snapshot"]
+
+
+@pytest.mark.tier1
+def test_a_re_materialised_cell_fails_and_names_the_condition(tmp_path):
+    """The 2026-09-20 failure mode: same path, same row, different bytes."""
+    row = _snapshot_row(tmp_path, "signed", payload=b"re-materialised",
+                        recorded="0" * 64)
+    errors, _ = check_cited_artefact_hashes([row], tmp_path)
+    assert len(errors) == 1
+    assert "run::cell-p0.96-k3-r2-gt" in errors[0]      # names the condition
+    assert "sha256 has changed since signing" in errors[0]
+    assert "cells/CELL/detections.geojson" in errors[0]  # and the file
+
+
+@pytest.mark.tier1
+def test_a_deleted_cited_file_fails_too(tmp_path):
+    """A vanished artefact is a moved artefact; silence would be worse."""
+    row = _snapshot_row(tmp_path, "signed")
+    (tmp_path / "cells" / "CELL" / "detections.geojson").unlink()
+    errors, _ = check_cited_artefact_hashes([row], tmp_path)
+    assert len(errors) == 1
+    assert "no longer exists" in errors[0]
+    assert "run::cell-p0.96-k3-r2-gt" in errors[0]
+
+
+@pytest.mark.tier1
+def test_an_unsigned_row_is_not_checked(tmp_path):
+    """Only a signature makes an artefact's stability a promise."""
+    for status in ("unsigned", "unsigned-by-design", "re-sign-pending"):
+        row = _snapshot_row(tmp_path, status, payload=b"moved",
+                            recorded="0" * 64)
+        errors, advisories = check_cited_artefact_hashes([row], tmp_path)
+        assert errors == [], status
+        assert advisories == [
+            "cited-artefact snapshots: 0 signed row(s) checked, "
+            "0 detections file(s) verified, 0 signed row(s) carry no snapshot"]
+
+
+@pytest.mark.tier1
+def test_a_signed_row_without_a_snapshot_is_counted_not_failed(tmp_path):
+    """Snapshots back-fill on touch; the gap must be visible, not blocking."""
+    row = {"analysis_id": "row-b",
+           "signature": {"status": "signed",
+                         "signed_at": "2026-09-21T00:00:00Z", "attests": "x"}}
+    errors, advisories = check_cited_artefact_hashes([row], tmp_path)
+    assert errors == []
+    assert "1 signed row(s) carry no snapshot" in advisories[0]
+
+
+@pytest.mark.tier1
+def test_the_committed_signed_rows_still_match_their_snapshots():
+    """THE guard, run against the register as committed."""
+    errors, advisories = check_cited_artefact_hashes()
+    assert errors == [], errors
+    assert advisories[0].startswith("cited-artefact snapshots: 2 signed row(s)")

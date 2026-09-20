@@ -42,6 +42,7 @@ from __future__ import annotations
 import argparse
 import functools
 import gzip
+import hashlib
 import json
 import re
 import subprocess
@@ -1911,6 +1912,88 @@ def check_signature_integrity(new_obj: dict) -> tuple[list[str], list[str]]:
     return sorted(errors), [advisory]
 
 
+def check_cited_artefact_hashes(
+    specs: list[dict] | None = None, root: Path | None = None
+) -> tuple[list[str], list[str]]:
+    """Refuse to publish when a SIGNED row's cited detections have moved.
+
+    A signature covers the numbers the PI was shown, and those numbers come
+    from files the row reaches only indirectly: row -> ``conditions_compared``
+    -> the register's ``eval_path`` -> the evaluation's own
+    ``_metadata.input_files.detections``. Every link in that chain is
+    editable by another workstream, so a cell can be re-materialised in
+    place and the signed row will go on citing it with no diff of its own.
+
+    That is not hypothetical. On 2026-09-20 the image campaigns
+    re-materialised their MCC-oracle cells in place at 07:43:01Z, after both
+    image rows were signed; for 58 minutes, until the register was
+    re-pointed at 08:41:11Z, two signed rows cited evaluations the PI had
+    never seen, and nothing in the repository said so (PI ruling D9,
+    planning/pi-decisions-2026-09-20.md, 2026-09-21).
+
+    The snapshot in each signed row's ``cited_artefacts`` pins the SHA-256
+    of every such file as it stood at signing. This re-reads them and fails
+    the write on any mismatch, naming the condition -- the same footing as a
+    schema violation, because a signature whose evidence has silently moved
+    is worse than no signature at all.
+
+    Unsigned rows are not checked: they make no claim to have been read, so
+    their artefacts are free to move. A signed row with no snapshot is not
+    an error either -- snapshots are back-filled on touch -- but it is
+    counted in the advisory so the gap stays visible.
+
+    Args:
+        specs: ``analyses`` from the run-analyses sidecar; loaded when None.
+        root: Repository root the recorded paths are relative to.
+
+    Returns:
+        ``(errors, advisories)``. Errors block the write.
+    """
+    specs = load_run_analyses() if specs is None else specs
+    root = REPO_ROOT if root is None else root
+    errors: list[str] = []
+    checked = files = unsnapshotted = 0
+    for spec in specs:
+        aid = spec.get("analysis_id", "<unknown>")
+        if (spec.get("signature") or {}).get("status") != "signed":
+            continue
+        snapshot = spec.get("cited_artefacts")
+        if not snapshot:
+            unsnapshotted += 1
+            continue
+        checked += 1
+        for entry in snapshot.get("conditions", []):
+            cid = entry.get("condition_id", "<unknown>")
+            for det in entry.get("detections", []):
+                rel, expected = det.get("path"), det.get("sha256")
+                path = root / rel
+                if not path.exists():
+                    errors.append(
+                        f"{aid}: cited condition '{cid}' names "
+                        f"{rel}, which no longer exists"
+                    )
+                    continue
+                digest = hashlib.sha256()
+                with path.open("rb") as fh:
+                    for chunk in iter(lambda: fh.read(1 << 20), b""):
+                        digest.update(chunk)
+                actual = digest.hexdigest()
+                files += 1
+                if actual != expected:
+                    errors.append(
+                        f"{aid}: cited condition '{cid}' scored {rel}, whose "
+                        f"sha256 has changed since signing "
+                        f"({expected[:12]} -> {actual[:12]}) — the row's "
+                        f"evidence moved under it; re-sign or restore"
+                    )
+    advisory = (
+        f"cited-artefact snapshots: {checked} signed row(s) checked, "
+        f"{files} detections file(s) verified, "
+        f"{unsnapshotted} signed row(s) carry no snapshot"
+    )
+    return sorted(errors), [advisory]
+
+
 def check_write_once_predictions(
     new_obj: dict, json_path: Path
 ) -> tuple[list[str], list[str]]:
@@ -2118,6 +2201,14 @@ def write_manifests(bundles: dict[str, list[dict]], at: str, registry: Registry)
             signature_errors, signature_advisories = check_signature_integrity(obj)
             errors = errors + signature_errors
             advisories.extend(signature_advisories)
+            # And on the same footing again: a signature covers the numbers
+            # the PI was shown, so the files behind a signed row's citations
+            # must not have moved since. Read from the sidecar rather than
+            # `obj`, which drops cited_artefacts with every other key the
+            # published schema does not declare.
+            cited_errors, cited_advisories = check_cited_artefact_hashes()
+            errors = errors + cited_errors
+            advisories.extend(cited_advisories)
         out[manifest] = (len(rows), errors, json_rel)
         if not errors:
             staged.append((manifest, obj, json_path, json_rel))
@@ -2139,7 +2230,8 @@ def write_manifests(bundles: dict[str, list[dict]], at: str, registry: Registry)
         # A tally is information, not a warning: prefixing it "WARN" trains the
         # reader to skim past the line that exists to stop signed rows being
         # hand-counted.
-        prefix = "INFO" if advisory.startswith("signature status:") else "WARN"
+        tallies = ("signature status:", "cited-artefact snapshots:")
+        prefix = "INFO" if advisory.startswith(tallies) else "WARN"
         print(f"{prefix}: {advisory}", file=sys.stderr)
     return out
 
