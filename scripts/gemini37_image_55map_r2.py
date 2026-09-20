@@ -49,6 +49,21 @@ Four external comparators — ``FOURTH-N1-oracle``, ``ARM2-N3-oracle``,
 contrast that P2 requires. Benjamini-Hochberg at q = 0.05 across those five,
 separately on tile-MCC and on micro-F1 @ 50 m.
 
+The MCC oracle, redefined 2026-09-20
+------------------------------------
+A rung's ``mcc_oracle`` is the tile-MCC optimum over ``prob_t`` with
+``min_votes`` PINNED to the rung's CARRIED vote count (PI ruling
+2026-09-20), which makes it the like-for-like companion of the F1 oracle
+beside it. It was previously the optimum over the whole achievable grid,
+vote count included — and that selection collapsed: every Gemini 3 rung
+above K = 1 put it at a single vote, trading 0.23-0.31 of micro-F1 for
+hundredths of tile-MCC, and the same collapse holds for all 23 families of
+the r2 board. The unconstrained optimum is kept per rung under
+``mcc_argmax_unconstrained`` in ``sweeps.json``, and the cells it selected
+are kept on disk at ``cells/<label>-unconstrained/`` with basis
+``mcc-oracle-unconstrained``: they are the evidence for the finding, not an
+oracle.
+
 Usage::
 
     python scripts/gemini37_image_55map_r2.py --stage selftest
@@ -56,6 +71,9 @@ Usage::
     python scripts/gemini37_image_55map_r2.py --stage materialise
     # commit the materialised detections, then:
     python scripts/gemini37_image_55map_r2.py --stage score --workers 5 --jobs 4
+    # ... or only the cells a re-selection moved (the stage has no resume):
+    python scripts/gemini37_image_55map_r2.py --stage score \
+        --cells IMG-ARM2-K3-mcc-oracle
     python scripts/gemini37_image_55map_r2.py --stage tests
 
 Zero API. Run on sapphire (Hungarian matching over 8,541 tiles per sweep
@@ -721,6 +739,61 @@ def rung_label(arm: str, k: int) -> str:
     return f"{CAMPAIGN.prefix}-{arm.upper()}-K{k}"
 
 
+def mcc_argmax_unconstrained(frows: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """The tile-MCC optimum over a rung's WHOLE achievable grid.
+
+    Superseded as this campaign's MCC oracle by the PI ruling of
+    2026-09-20 — see :func:`mcc_argmax_at_carried_k` — and kept in
+    ``sweeps.json`` under ``mcc_argmax_unconstrained`` because the
+    collapse it exhibits is a finding about the metric, not a defect.
+    Every Gemini 3 rung above K = 1 put this optimum at a single vote,
+    trading 0.23-0.31 of micro-F1 for hundredths of tile-MCC.
+
+    Tie-break: ``max`` over the rows in ``(prob_t, min_votes)`` order, so
+    the lowest operating point wins a tie — the board's rule
+    (``final_board_sweeps.mcc_argmax``), so both tracks select alike.
+
+    Args:
+        frows: One rung's sweep rows.
+
+    Returns:
+        The winning row, or ``None`` if no row carries a tile-MCC.
+    """
+    scored = [r for r in frows if r.get("tile_mcc") is not None]
+    if not scored:
+        return None
+    return max(sorted(scored, key=lambda r: (r["prob_t"], r["min_votes"])),
+               key=lambda r: r["tile_mcc"])
+
+
+def mcc_argmax_at_carried_k(frows: list[dict[str, Any]],
+                            carried_votes: int) -> dict[str, Any] | None:
+    """The tile-MCC optimum over ``prob_t`` at the rung's CARRIED vote count.
+
+    This campaign's MCC oracle from the PI ruling of 2026-09-20. Pinning
+    ``min_votes`` to the carried point's own ``k`` makes the MCC oracle a
+    like-for-like companion of the F1 oracle: both then answer "what is
+    the best threshold for THIS configuration?", where the unconstrained
+    optimum answers "would a different configuration score better on a
+    metric that is indifferent to over-generation within a tile?".
+
+    Args:
+        frows: One rung's sweep rows.
+        carried_votes: The ``min_votes`` of the rung's carried point.
+
+    Returns:
+        The winning row, or ``None`` if no scored row sits at that vote
+        count.
+    """
+    scored = [r for r in frows
+              if r.get("tile_mcc") is not None
+              and int(r["min_votes"]) == int(carried_votes)]
+    if not scored:
+        return None
+    return max(sorted(scored, key=lambda r: (r["prob_t"], r["min_votes"])),
+               key=lambda r: r["tile_mcc"])
+
+
 def stage_sweep(workers: int, rungs: tuple[int, ...] | None = None) -> int:
     """Sweep every achievable point of every rung; write CSVs and the oracles.
 
@@ -763,7 +836,6 @@ def stage_sweep(workers: int, rungs: tuple[int, ...] | None = None) -> int:
             w.writeheader()
             w.writerows(frows)
         f1_best = max(frows, key=lambda r: r["micro_f1_50"])
-        mcc_best = max(frows, key=lambda r: r["tile_mcc"])
         k = int(label.rsplit("K", 1)[1])
         arm = "arm1" if "ARM1" in label else "arm2"
         carried_prob, carried_votes = carried_point(arm, k)
@@ -773,18 +845,41 @@ def stage_sweep(workers: int, rungs: tuple[int, ...] | None = None) -> int:
              and r["min_votes"] == carried_votes),
             None,
         )
+        # The MCC oracle is the optimum at the CARRIED vote count (PI ruling
+        # 2026-09-20). The unconstrained optimum is kept beside it: every
+        # Gemini 3 rung above K = 1 put it at a single vote, which is the
+        # finding, so the record keeps the evidence rather than deleting it.
+        mcc_best = mcc_argmax_at_carried_k(frows, carried_votes)
+        mcc_free = mcc_argmax_unconstrained(frows)
+        if mcc_best is None:
+            raise RuntimeError(
+                f"{label}: no scored sweep row at the carried vote count "
+                f"k{carried_votes} — the carried point is forced into the "
+                "grid, so this means the sweep lost it")
         sweeps["rungs"][label] = {
             "n_sweep_points": len(frows),
             "carried_point": [carried_prob, carried_votes],
             "carried": carried,
             "f1_oracle": f1_best,
             "mcc_oracle": mcc_best,
+            "mcc_argmax_unconstrained": mcc_free,
         }
         logger.info(
-            "%-14s F1 oracle %.4f at (%.2f, k%d) | MCC oracle %.4f at (%.2f, k%d)",
+            "%-14s F1 oracle %.4f at (%.2f, k%d) | MCC oracle (carried k%d) "
+            "%.4f at (%.2f, k%d), micro %.4f",
             label, f1_best["micro_f1_50"], f1_best["prob_t"], f1_best["min_votes"],
-            mcc_best["tile_mcc"], mcc_best["prob_t"], mcc_best["min_votes"],
+            carried_votes, mcc_best["tile_mcc"], mcc_best["prob_t"],
+            mcc_best["min_votes"], mcc_best["micro_f1_50"],
         )
+        if mcc_free is not None and (
+                mcc_free["prob_t"], mcc_free["min_votes"]) != (
+                mcc_best["prob_t"], mcc_best["min_votes"]):
+            logger.info(
+                "%-14s   unconstrained MCC optimum (superseded) %.4f at "
+                "(%.2f, k%d), micro %.4f — F1 cost %+.4f",
+                label, mcc_free["tile_mcc"], mcc_free["prob_t"],
+                mcc_free["min_votes"], mcc_free["micro_f1_50"],
+                mcc_free["micro_f1_50"] - mcc_best["micro_f1_50"])
     sweeps_path.write_text(json.dumps(sweeps, indent=2) + "\n")
     logger.info("wrote %s", sweeps_path.relative_to(PROJECT_ROOT))
     return 0
@@ -795,8 +890,64 @@ def stage_sweep(workers: int, rungs: tuple[int, ...] | None = None) -> int:
 # ---------------------------------------------------------------------------
 
 
+def preserve_superseded_cell(cell: dict[str, Any], new_point: str,
+                             move: bool = True) -> dict[str, Any] | None:
+    """Move a re-pointed cell aside instead of overwriting it.
+
+    The PI redefined the MCC oracle on 2026-09-20, which re-points some of
+    the ``*-mcc-oracle`` cells. Their detections, evaluations and score
+    logs are evidence for the finding that motivated the redefinition, so
+    they are MOVED to ``cells/<label>-unconstrained/`` and kept in the
+    manifest under that label rather than being written over (archive,
+    never delete).
+
+    Args:
+        cell: The existing manifest entry.
+        new_point: The point the cell is about to be re-materialised at,
+            formatted as the manifest formats it.
+        move: Actually move the directory. ``False`` computes the new
+            entry only, which is what the tests exercise.
+
+    Returns:
+        The manifest entry for the preserved cell, or ``None`` when the
+        point has not moved (nothing to preserve) or the cell has already
+        been preserved.
+    """
+    if cell.get("basis") != "mcc-oracle" or cell.get("point") == new_point:
+        return None
+    label = f"{cell['label']}-unconstrained"
+    old_dir = RESULTS_HOME / "cells" / cell["label"]
+    new_dir = RESULTS_HOME / "cells" / label
+    if move and old_dir.is_dir() and not new_dir.exists():
+        old_dir.rename(new_dir)
+        logger.info("preserved %s -> %s (superseded MCC oracle at %s)",
+                    cell["label"], label, cell.get("point"))
+    preserved = dict(cell)
+    preserved["label"] = label
+    preserved["basis"] = "mcc-oracle-unconstrained"
+    # Re-point the repository-relative det path by swapping the cell
+    # directory, rather than re-deriving it from ``new_dir``: RESULTS_HOME is
+    # monkeypatched to a tmp_path under test, which is outside PROJECT_ROOT.
+    det = Path(cell["det"])
+    preserved["det"] = str(det.parent.parent / label / det.name)
+    preserved["superseded"] = (
+        "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum "
+        "over prob_t at the rung's CARRIED vote count, which is the cell now "
+        f"at {cell['label']}. This is the previous, UNCONSTRAINED optimum, "
+        "free to choose the vote count too; it is retained because every "
+        "rung that had a choice put it at a single vote, at a large cost in "
+        "micro-F1, and that is the finding. Not an oracle; do not quote it "
+        "as one.")
+    return preserved
+
+
 def stage_materialise(rungs: tuple[int, ...] | None = None) -> int:
     """Write one detections file per cell: carried, F1 oracle, MCC oracle.
+
+    A rung whose MCC oracle has been re-pointed by the 2026-09-20
+    redefinition has its previous cell moved to
+    ``cells/<label>-unconstrained/`` first, evaluation and all, so nothing
+    is overwritten (:func:`preserve_superseded_cell`).
 
     Args:
         rungs: Restrict to these rungs; their cells replace the same labels
@@ -808,12 +959,20 @@ def stage_materialise(rungs: tuple[int, ...] | None = None) -> int:
     existing: list[dict[str, Any]] = []
     if manifest_path.exists():
         existing = json.loads(manifest_path.read_text())["cells"]
+    by_label = {c["label"]: c for c in existing}
     cells: list[dict[str, Any]] = []
     for label, info in sweeps["rungs"].items():
         arm = "arm1" if "ARM1" in label else "arm2"
         k = int(label.rsplit("K", 1)[1])
         if k not in rungs:
             continue
+        prior = by_label.get(f"{label}-mcc-oracle")
+        if prior is not None:
+            point = (f"({float(info['mcc_oracle']['prob_t']):.2f}, "
+                     f"k{int(info['mcc_oracle']['min_votes'])})")
+            preserved = preserve_superseded_cell(prior, point)
+            if preserved is not None:
+                existing.append(preserved)
         frame = rung_frame(arm, k)
         wanted = {
             "carried": tuple(info["carried_point"]),
@@ -887,18 +1046,27 @@ def engine_command(det: str, out_dir: str, label: str, workers: int) -> list[str
     ]
 
 
-def stage_score(workers: int, jobs: int, rungs: tuple[int, ...] | None = None) -> int:
-    """Score every materialised cell with the engine, on the board's recipe.
+def stage_score(workers: int, jobs: int, rungs: tuple[int, ...] | None = None,
+                only: tuple[str, ...] | None = None) -> int:
+    """Score materialised cells with the engine, on the board's recipe.
 
     ``--require-clean-inputs`` makes the engine refuse a detections file that
     is untracked or modified, so this stage checks git state first and says
     plainly what to commit rather than letting the engine exit 4 per cell.
 
+    There is no automatic resume: the stage scores every cell it is given,
+    and an evaluation already on disk is simply overwritten with the same
+    numbers. So when only a few cells have been re-pointed, name them with
+    ``only`` (``--cells``) rather than re-scoring a whole rung — the
+    10,000-draw tile bootstrap is the cost, and reproducing an unchanged
+    cell buys nothing.
+
     Args:
         workers: Engine parallelism per cell.
         jobs: Cells scored concurrently.
-        rungs: Restrict to these rungs' cells (already-scored rungs are not
-            re-scored; a re-score would only reproduce them).
+        rungs: Restrict to these rungs' cells.
+        only: Restrict to these cell labels. Applied after ``rungs``; an
+            unknown label is an error rather than a silent no-op.
 
     Returns:
         A process exit status.
@@ -909,6 +1077,18 @@ def stage_score(workers: int, jobs: int, rungs: tuple[int, ...] | None = None) -
     rungs = rungs or RUNGS
     manifest = json.loads((RESULTS_HOME / "cells_manifest.json").read_text())
     cells = [c for c in manifest["cells"] if c["k"] in rungs]
+    if only:
+        unknown = sorted(set(only) - {c["label"] for c in manifest["cells"]})
+        if unknown:
+            logger.error("no such cell(s) in %s: %s",
+                         CAMPAIGN.key, ", ".join(unknown))
+            return 2
+        cells = [c for c in cells if c["label"] in set(only)]
+        logger.info("scoring %d named cell(s): %s", len(cells),
+                    ", ".join(c["label"] for c in cells))
+    if not cells:
+        logger.error("no cells selected — nothing to score")
+        return 2
     dirty = subprocess.run(
         ["git", "status", "--porcelain", "--", *[c["det"] for c in cells]],
         cwd=PROJECT_ROOT, capture_output=True, text=True, check=False,
@@ -1546,6 +1726,11 @@ def main() -> int:
     ap.add_argument("--rungs", default=None,
                     help="Restrict sweep/materialise/score to these rungs, "
                          "e.g. '5' (default: the campaign's rungs)")
+    ap.add_argument("--cells", default=None,
+                    help="Restrict --stage score to these cell labels, "
+                         "comma-separated. The stage has no resume, so this "
+                         "is how a few re-pointed cells are scored without "
+                         "reproducing every unchanged one.")
     args = ap.parse_args()
     select_campaign(args.campaign)
     rungs = parse_rungs(args.rungs)
@@ -1557,7 +1742,9 @@ def main() -> int:
     if args.stage == "materialise":
         return stage_materialise(rungs)
     if args.stage == "score":
-        return stage_score(args.workers, args.jobs, rungs)
+        only = tuple(c.strip() for c in args.cells.split(",")) if args.cells \
+            else None
+        return stage_score(args.workers, args.jobs, rungs, only)
     if args.stage == "tests-2x2":
         return stage_tests_2x2(rungs)
     return stage_tests(args.primary)

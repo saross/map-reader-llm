@@ -349,3 +349,113 @@ def test_rung_filter_rejects_a_rung_the_campaign_does_not_carry(g37_restored) ->
     assert mod.parse_rungs("1,3") == (1, 3)
     with pytest.raises(SystemExit):
         mod.parse_rungs("10")
+
+
+# ---------------------------------------------------------------------------
+# The MCC oracle, redefined 2026-09-20 (PI ruling): the tile-MCC optimum over
+# prob_t at the rung's CARRIED vote count, not over the whole grid.
+# ---------------------------------------------------------------------------
+
+
+def _mcc_row(prob_t: float, votes: int, mcc: float | None,
+             f1: float = 0.8) -> dict:
+    """One sweep row, reduced to the keys the two selectors consult."""
+    return {"prob_t": prob_t, "min_votes": votes, "tile_mcc": mcc,
+            "micro_f1_50": f1}
+
+
+def test_the_mcc_oracle_ignores_every_vote_count_but_the_carried_one() -> None:
+    """The Gemini 3 pattern: the free optimum runs to a single vote.
+
+    ``G3IMG-ARM2-K3``'s unconstrained optimum sat at (0.98, k1) with
+    micro-F1 0.5772 against the carried-k choice's 0.8263 — the collapse
+    the ruling removed.
+    """
+    from scripts import gemini37_image_55map_r2 as mod
+
+    rows = [_mcc_row(0.98, 1, 0.7706, 0.5772), _mcc_row(0.30, 1, 0.74, 0.62),
+            _mcc_row(0.96, 3, 0.7553, 0.8263), _mcc_row(0.30, 3, 0.73, 0.80)]
+    assert mod.mcc_argmax_unconstrained(rows) == rows[0]
+    assert mod.mcc_argmax_at_carried_k(rows, 3) == rows[2]
+
+
+def test_the_two_selectors_share_the_boards_tie_break() -> None:
+    """Lowest operating point wins a tie, as ``final_board_sweeps`` does."""
+    from scripts import gemini37_image_55map_r2 as mod
+
+    rows = [_mcc_row(0.90, 3, 0.70), _mcc_row(0.20, 3, 0.70),
+            _mcc_row(0.50, 3, 0.70)]
+    assert mod.mcc_argmax_unconstrained(rows)["prob_t"] == 0.20
+    assert mod.mcc_argmax_at_carried_k(rows, 3)["prob_t"] == 0.20
+
+
+def test_a_k1_rung_selects_the_same_point_either_way() -> None:
+    """Every K = 1 rung carries k = 1, so the redefinition is a no-op there."""
+    from scripts import gemini37_image_55map_r2 as mod
+
+    rows = [_mcc_row(0.15, 1, 0.7523), _mcc_row(0.40, 1, 0.7401)]
+    assert mod.mcc_argmax_at_carried_k(rows, 1) == mod.mcc_argmax_unconstrained(rows)
+
+
+def test_the_selectors_return_none_when_no_row_is_scored() -> None:
+    from scripts import gemini37_image_55map_r2 as mod
+
+    assert mod.mcc_argmax_unconstrained([_mcc_row(0.1, 1, None)]) is None
+    assert mod.mcc_argmax_at_carried_k([_mcc_row(0.1, 1, 0.7)], 3) is None
+
+
+# ---------------------------------------------------------------------------
+# Preserving the superseded cells (archive, never delete).
+# ---------------------------------------------------------------------------
+
+
+def test_a_repointed_mcc_cell_is_preserved_not_overwritten(g37_restored) -> None:
+    mod = g37_restored
+    cell = {"label": "IMG-ARM2-K3-mcc-oracle", "basis": "mcc-oracle",
+            "point": "(0.96, k2)", "k": 3,
+            "det": "results/x/cells/IMG-ARM2-K3-mcc-oracle/detections.geojson"}
+    got = mod.preserve_superseded_cell(cell, "(0.90, k3)", move=False)
+    assert got["label"] == "IMG-ARM2-K3-mcc-oracle-unconstrained"
+    assert got["basis"] == "mcc-oracle-unconstrained"
+    assert got["point"] == "(0.96, k2)"
+    assert got["det"].endswith(
+        "cells/IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson")
+    assert "SUPERSEDED 2026-09-20" in got["superseded"]
+
+
+def test_an_unmoved_mcc_cell_is_left_exactly_where_it_is(g37_restored) -> None:
+    """Seven of the twelve image MCC oracles did not move; those keep one cell."""
+    mod = g37_restored
+    cell = {"label": "IMG-ARM1-K3-mcc-oracle", "basis": "mcc-oracle",
+            "point": "(0.15, k3)", "k": 3,
+            "det": "results/x/cells/IMG-ARM1-K3-mcc-oracle/d.geojson"}
+    assert mod.preserve_superseded_cell(cell, "(0.15, k3)", move=False) is None
+
+
+def test_only_an_mcc_oracle_cell_is_ever_preserved(g37_restored) -> None:
+    """A carried or F1-oracle cell is re-materialised in place, as before."""
+    mod = g37_restored
+    for basis in ("carried", "f1-oracle", "mcc-oracle-unconstrained"):
+        cell = {"label": f"IMG-ARM2-K3-{basis}", "basis": basis,
+                "point": "(0.88, k3)", "k": 3,
+                "det": f"results/x/cells/IMG-ARM2-K3-{basis}/d.geojson"}
+        assert mod.preserve_superseded_cell(cell, "(0.90, k3)",
+                                            move=False) is None
+
+
+def test_the_preserved_directory_is_moved_on_disk(tmp_path, g37_restored,
+                                                  monkeypatch) -> None:
+    """The evaluation and score log travel with the detections."""
+    mod = g37_restored
+    monkeypatch.setattr(mod, "RESULTS_HOME", tmp_path)
+    old = tmp_path / "cells" / "IMG-ARM2-K3-mcc-oracle"
+    old.mkdir(parents=True)
+    (old / "detections.geojson").write_text("{}")
+    (old / "evaluation.json").write_text("{}")
+    cell = {"label": "IMG-ARM2-K3-mcc-oracle", "basis": "mcc-oracle",
+            "point": "(0.96, k2)", "k": 3,
+            "det": "results/x/cells/IMG-ARM2-K3-mcc-oracle/detections.geojson"}
+    mod.preserve_superseded_cell(cell, "(0.90, k3)")
+    moved = tmp_path / "cells" / "IMG-ARM2-K3-mcc-oracle-unconstrained"
+    assert not old.exists()
+    assert (moved / "evaluation.json").is_file()
