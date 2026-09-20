@@ -127,11 +127,14 @@ SUPERSEDED_PROSE = """### Superseded: the unconstrained tile-MCC optima
 Until 2026-09-20 the board's MCC oracle was the tile-MCC argmax over a
 family's **whole** achievable grid, free to choose the vote count as
 well as the probability threshold. Every one of the board's 23 families
-put that optimum at the **lowest vote count its sweep offers** — the
-thirteen whose rungs reach down to a single vote collapsed to k = 1, and
-the five incumbents sat on their k = 3 floor — buying a fraction of a
-point of tile-MCC at a cost of **0.06 to 0.18 micro-F1@50** (PI decision
-log D6a, 2026-09-20). The reason is structural, not incidental:
+put that optimum at the **lowest vote count its sweep offers**: every
+family whose rungs reach down to a single vote collapsed to k = 1, and
+the five incumbents, whose sweeps floor at k = 3, sat on that floor. It
+buys a few hundredths of tile-MCC. Across the thirteen families whose
+optimum drops from a multi-vote F1 oracle to a single vote it costs
+**0.054 (A-N3) to 0.181 (B-N10) of micro-F1@50** against that family's
+own F1 oracle (PI decision log D6a, 2026-09-20, states the range as
+0.06 to 0.18). The reason is structural, not incidental:
 tile-MCC asks only whether a tile was hit at all, so over-generation is
 nearly free in that currency and expensive in F1. An unconstrained MCC
 oracle is therefore not a like-for-like companion of the F1 oracle, and
