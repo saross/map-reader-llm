@@ -807,3 +807,151 @@ class TestProRateCard:
         # Thinking tokens are billed as output, which the meta's own
         # cost_estimate omitted — so the audit exceeds it despite flex.
         assert audit.meta_only_usd is not None
+
+
+# ─────────────────────────────────────────────────────────────────────
+# 7. Model provenance (audit 2026-09-20, the cost-auditor finding)
+# ─────────────────────────────────────────────────────────────────────
+
+
+def _model_meta(model: str | None) -> dict[str, Any]:
+    """A single-pass meta recording *model*, or none at all."""
+    configuration: dict[str, Any] = {"version": "test"}
+    if model is not None:
+        configuration["model"] = model
+    return {
+        "configuration": configuration,
+        "execution_stats": {"items_processed": 100},
+        "usage_stats": {
+            "total_input_tokens": 1_000_000,
+            "total_cached_tokens": 0,
+            "total_output_tokens": 100_000,
+            "total_thoughts_tokens": 0,
+        },
+        "cost_estimate": {"total_cost_usd": 9.99},
+    }
+
+
+class TestModelProvenance:
+    """A pass is priced at its OWN model, or refused.
+
+    ``audit_proposer_cost.py`` had the harder form of this defect — it never
+    read the model at all — and this auditor the softer one: it read the
+    model but fell back silently to a ``gemini-3.7-flash`` default when a
+    block recorded none, and said nothing when ``--model`` disagreed with a
+    block that did. Both are now provenance-explicit.
+    """
+
+    def test_a_pass_is_priced_at_its_own_recorded_model(
+        self, tmp_path: Path,
+    ) -> None:
+        stage = _write_stage(
+            tmp_path / "verify_g3", _model_meta("gemini-3-flash"), results=100,
+        )
+        audit = audit_stage(stage)
+        assert [p.model for p in audit.passes] == ["gemini-3-flash"]
+        assert audit.audited_usd == pytest.approx(
+            1_000_000 * rates("gemini-3-flash", "flex")["input"]
+            + 100_000 * rates("gemini-3-flash", "flex")["output"],
+        )
+
+    def test_a_disagreeing_override_does_not_win(self, tmp_path: Path) -> None:
+        """The block knows what it ran on; the flag does not."""
+        stage = _write_stage(
+            tmp_path / "verify_g3", _model_meta("gemini-3-flash"), results=100,
+        )
+        audit = audit_stage(stage, default_model="gemini-3.7-flash")
+        assert [p.model for p in audit.passes] == ["gemini-3-flash"]
+
+    def test_a_disagreeing_override_warns(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture[str],
+    ) -> None:
+        import scripts.audit_verifier_cost as avc
+
+        avc._WARNED.clear()
+        stage = _write_stage(
+            tmp_path / "verify_g3", _model_meta("gemini-3-flash"), results=100,
+        )
+        audit_stage(stage, default_model="gemini-3.7-flash")
+        err = capsys.readouterr().err
+        assert "warning:" in err
+        assert "gemini-3-flash" in err
+
+    def test_an_agreeing_override_does_not_warn(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture[str],
+    ) -> None:
+        import scripts.audit_verifier_cost as avc
+
+        avc._WARNED.clear()
+        stage = _write_stage(
+            tmp_path / "verify_g3", _model_meta("gemini-3-flash"), results=100,
+        )
+        audit_stage(stage, default_model="gemini-3-flash")
+        assert capsys.readouterr().err == ""
+
+    def test_a_pass_with_no_model_is_refused_without_an_override(
+        self, tmp_path: Path,
+    ) -> None:
+        """Silently pricing it at 3.7 is the defect, not the fallback."""
+        from scripts.audit_proposer_cost import RateCardError
+
+        stage = _write_stage(
+            tmp_path / "verify_nomodel", _model_meta(None), results=100,
+        )
+        with pytest.raises(RateCardError, match="records no configuration"):
+            audit_stage(stage)
+
+    def test_the_refusal_is_a_non_zero_exit_not_a_traceback(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture[str],
+    ) -> None:
+        """The CLI refuses cleanly, the way an unknown --model already did."""
+        import scripts.audit_verifier_cost as avc
+
+        stage = _write_stage(
+            tmp_path / "verify_nomodel", _model_meta(None), results=100,
+        )
+        assert avc.main([str(stage), "--no-recovery-register"]) == 2
+        assert "records no configuration.model" in capsys.readouterr().err
+
+    def test_a_sweep_keeps_an_unpriceable_stage_rather_than_dropping_it(
+        self, tmp_path: Path,
+    ) -> None:
+        """A stage that cannot be priced is still reported, as before."""
+        root = tmp_path / "outputs"
+        _write_stage(root / "verify_nomodel", _model_meta(None), results=1_000)
+        found = sweep(root)
+        assert len(found) == 1
+        assert found[0].audited_usd is None
+        assert "records no configuration.model" in (found[0].audit_error or "")
+
+    def test_an_explicit_override_prices_a_pass_with_no_model(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture[str],
+    ) -> None:
+        import scripts.audit_verifier_cost as avc
+
+        avc._WARNED.clear()
+        stage = _write_stage(
+            tmp_path / "verify_nomodel", _model_meta(None), results=100,
+        )
+        audit = audit_stage(stage, default_model="gemini-3-flash")
+        assert audit.audited_usd is not None
+        assert [p.model for p in audit.passes] == ["gemini-3-flash"]
+        # And it says that it used the override.
+        assert "note:" in capsys.readouterr().err
+
+    def test_the_note_is_printed_once_however_many_blocks_share_it(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture[str],
+    ) -> None:
+        """A sweep reads hundreds of blocks; the note must not bury the table."""
+        import scripts.audit_verifier_cost as avc
+
+        avc._WARNED.clear()
+        for i in range(3):
+            _write_stage(
+                tmp_path / "outputs" / f"verify_{i}", _model_meta(None),
+                results=100,
+            )
+        for i in range(3):
+            audit_stage(tmp_path / "outputs" / f"verify_{i}",
+                        default_model="gemini-3-flash")
+        assert capsys.readouterr().err.count("note:") == 1

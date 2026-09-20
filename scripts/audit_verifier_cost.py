@@ -91,7 +91,10 @@ Usage
 Options
 -------
 ``--tier``            ``flex`` (default, half of list) or ``standard``.
-``--model``           Rate card for a pass file that records no model.
+``--model``           Rate card for a pass that records no model of its
+                      own. A pass that records one is always priced at
+                      it; a disagreement warns. Omitted, a pass with no
+                      model is refused rather than guessed at.
 ``--json``            Emit JSON instead of a table.
 ``--sweep <root>``    Retrospective mode over a tree of verifier stages.
 ``--min-shortfall N`` Sweep only: smallest meta-vs-results gap to report
@@ -166,6 +169,27 @@ FIXED_SIDECAR_GLOB: str = "run.meta.pre-*.json"
 
 #: Fields naming a stage's candidate population, in order of preference.
 _RESULT_COUNT_KEYS: tuple[str, ...] = ("results", "consensus")
+
+#: Model-provenance notes already emitted, so a sweep over hundreds of
+#: stages says each thing once rather than once per block.
+_WARNED: set[str] = set()
+
+
+def _warn_once(message: str) -> None:
+    """Print a provenance note to stderr, at most once per distinct text.
+
+    Model provenance is worth saying and not worth repeating: a ``--sweep``
+    reads hundreds of blocks, and an override or a disagreement that
+    printed per block would bury the table it annotates.
+
+    Args:
+        message: The full line to print, including its ``note:`` or
+            ``warning:`` prefix.
+    """
+    if message in _WARNED:
+        return
+    _WARNED.add(message)
+    print(message, file=sys.stderr)
 
 
 @dataclass
@@ -382,7 +406,7 @@ def _price_block(
     source: str,
     kind: str,
     tier: str,
-    default_model: str,
+    default_model: str | None,
     counted: bool = True,
     identity: str | None = None,
 ) -> PassAudit:
@@ -394,7 +418,11 @@ def _price_block(
         source: Provenance string for the report.
         kind: Pass kind for the report.
         tier: Service tier to price at.
-        default_model: Rate card to use when the block records no model.
+        default_model: Rate card for a block that records no model of
+            its own. None (the default) REFUSES such a block rather
+            than guessing. A block that records a model is always
+            priced at it, and a disagreement with *default_model* is
+            warned about (audit 2026-09-20).
         counted: Whether the row contributes to the stage total.
         identity: Override for the pass's identity. Blocks ENUMERATED inside
             one merged meta are known-distinct by construction — the writer
@@ -413,7 +441,27 @@ def _price_block(
     usage = block.get("usage_stats", {}) or {}
     execution = block.get("execution_stats", {}) or {}
     configuration = block.get("configuration", {}) or {}
-    model = configuration.get("model") or default_model
+    recorded = configuration.get("model") or None
+    model = recorded or default_model
+    if model is None:
+        raise RateCardError(
+            f"{source} records no configuration.model and no --model was "
+            f"given; guessing a rate card is the error this auditor exists "
+            f"to correct. Pass --model explicitly if you know what this "
+            f"pass ran on.",
+        )
+    if recorded is None:
+        _warn_once(
+            f"note: --model {default_model} used as the rate card for "
+            f"{source}, which records no model of its own",
+        )
+    elif default_model is not None and default_model != recorded:
+        _warn_once(
+            f"warning: --model {default_model} disagrees with the model "
+            f"{recorded!r} recorded by {source}; it is priced at "
+            f"{recorded!r}, which is what it ran on. Drop --model unless "
+            f"you mean to override a pass that records nothing.",
+        )
     rate = rates(model, tier)
     # A meta and a ``main_pass`` block carry ``execution_stats``; a
     # ``cleanup_passes`` entry carries its counts flat instead.
@@ -449,7 +497,7 @@ def audit_stage(
     stage: Path,
     *,
     tier: str = "flex",
-    default_model: str = "gemini-3.7-flash",
+    default_model: str | None = None,
     register: dict[str, Any] | None = None,
 ) -> StageAudit:
     """Audit one verifier stage, summing every pass recorded on disc.
@@ -458,7 +506,8 @@ def audit_stage(
         stage: The stage directory, holding ``run.meta.json``.
         tier: Service tier actually used (``run_pv.py verify`` defaults to
             ``flex``, which bills at half of list).
-        default_model: Rate card for a pass that records no model.
+        default_model: Rate card for a pass that records no model of its
+            own; None refuses such a pass rather than guessing.
         register: The recovery register's ``stages`` mapping (see
             :func:`load_recovery_register`). Passes it records for this stage
             are counted as a third source, after the fixed schema and the
@@ -690,7 +739,7 @@ def audit_files(
     paths: list[Path],
     *,
     tier: str = "flex",
-    default_model: str = "gemini-3.7-flash",
+    default_model: str | None = None,
 ) -> StageAudit:
     """Audit explicit metadata files as one stage, summing them.
 
@@ -703,7 +752,8 @@ def audit_files(
     Args:
         paths: Metadata files to price, in any order.
         tier: Service tier actually used.
-        default_model: Rate card for a file recording no model.
+        default_model: Rate card for a file recording no model of its
+            own; None refuses such a file rather than guessing.
 
     Returns:
         A :class:`StageAudit` over the files, with ``results`` None (there is
@@ -893,7 +943,7 @@ def sweep(
     root: Path,
     *,
     tier: str = "flex",
-    default_model: str = "gemini-3.7-flash",
+    default_model: str | None = None,
     min_shortfall: int = 1,
     register: dict[str, Any] | None = None,
 ) -> list[StageSignature]:
@@ -911,7 +961,8 @@ def sweep(
     Args:
         root: Tree to walk (normally ``outputs``).
         tier: Service tier to price at.
-        default_model: Rate card for a pass recording no model.
+        default_model: Rate card for a pass recording no model of its
+            own; None refuses such a pass rather than guessing.
         min_shortfall: Smallest gap worth reporting.
         register: The recovery register's ``stages`` mapping; a stage whose
             main pass it holds is classified ``RECOVERED-FROM-GIT`` and its
@@ -1128,8 +1179,13 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--model",
-        default="gemini-3.7-flash",
-        help="Rate card for a pass recording no model",
+        default=None,
+        help=(
+            "Rate card override, for passes that record no model of their "
+            "own. A pass that records a model is always priced at it, and "
+            "a disagreement is warned about. Without this flag a pass "
+            "recording no model is refused rather than guessed at."
+        ),
     )
     parser.add_argument(
         "--tier",
@@ -1174,7 +1230,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    if args.model not in RATE_CARDS:
+    if args.model is not None and args.model not in RATE_CARDS:
         print(
             f"error: no rate card for {args.model!r}; "
             f"known: {sorted(RATE_CARDS)}",

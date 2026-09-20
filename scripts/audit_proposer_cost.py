@@ -53,9 +53,32 @@ ordinary tokens.
     python scripts/audit_proposer_cost.py \
         outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img
 
+Which model a fragment is priced at
+-----------------------------------
+Each fragment is priced at **its own** recorded model —
+``configuration.model`` in its ``*.meta.json``, the field the writer stamps
+(e.g. ``"gemini-3-flash-preview"`` in
+``outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1/
+detections-detect_brief-text-image-3-flash-2026-09-16.meta.json``).
+
+Until 2026-09-20 this script never read that field and priced everything at
+a ``--model`` default of ``gemini-3.7-flash``. The Gemini 3 image pool under
+``outputs/gemini3-image-55map-2026-09-16/`` therefore read **US$345.90**
+where its own model's card gives **US$233.63** — 48 per cent high, on a
+figure used at a budget gate. The row B post-run report
+(``outputs/gemini3-image-55map-2026-09-16/post_run_report.md``) records the
+correct 233.6295 and warns in its reproduction block that the run without
+``--model`` reads 345.9024. Guessing a rate card is the very error this
+script exists to correct (audit 2026-09-20, the proposer cost auditor).
+
+A meta carrying no model is **refused** unless ``--model`` is passed, and
+that override is logged when it is used. A ``--model`` that disagrees with
+a meta's own recorded model warns, loudly, per model.
+
 Options
 -------
-``--model``  rate card to price against (default ``gemini-3.7-flash``).
+``--model``  rate card override. Used only for metas that record no model
+             of their own; a meta that records one is always priced at it.
 ``--tier``   ``flex`` (default, half of list) or ``standard``.
 ``--json``   emit the breakdown as JSON instead of a table.
 """
@@ -190,15 +213,48 @@ def audited_cost(usage: dict[str, Any], rate: dict[str, float]) -> float:
     )
 
 
+def fragment_model(meta: dict[str, Any]) -> str | None:
+    """
+    The model a pass fragment recorded for itself.
+
+    The writer stamps it at ``configuration.model``; verified against
+    ``outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1/
+    detections-detect_brief-text-image-3-flash-2026-09-16.meta.json``,
+    which carries ``"model": "gemini-3-flash-preview"``. Note this is a
+    different field from ``cost_estimate.pricing_used.model``, which is
+    part of the figure this script exists to replace and is therefore not
+    consulted.
+
+    Args:
+        meta: A parsed ``*.meta.json``.
+
+    Returns:
+        The recorded model id, or None when the meta records none.
+
+    Examples:
+        >>> fragment_model({"configuration": {"model": "gemini-3-flash"}})
+        'gemini-3-flash'
+    """
+    configuration = meta.get("configuration") or {}
+    model = configuration.get("model")
+    return model or None
+
+
 def read_fragments(root: str) -> list[dict[str, Any]]:
     """
     Summarise every ``run_*`` fragment under one pass root.
+
+    Each fragment carries its own recorded model, so the caller can price
+    it at its own rate card rather than at one default for the whole run
+    (audit 2026-09-20: a 48 per cent overstatement on the Gemini 3 image
+    pool).
 
     Args:
         root: Directory holding ``run_*`` subdirectories.
 
     Returns:
-        One dict per fragment that has a meta file, in directory-sorted order.
+        One dict per fragment that has a meta file, in directory-sorted
+        order. ``model`` is the fragment's recorded model, or None.
     """
     from scripts.normalise_pass_layout import select_pass_file
 
@@ -228,6 +284,7 @@ def read_fragments(root: str) -> list[dict[str, Any]]:
             {
                 "fragment": name,
                 "meta": metas[0],
+                "model": fragment_model(meta),
                 "items": meta["execution_stats"]["items_processed"],
                 "retries": meta["execution_stats"].get("retries_total"),
                 "input_tokens": total_input,
@@ -258,8 +315,13 @@ def main() -> int:
     )
     parser.add_argument(
         "--model",
-        default="gemini-3.7-flash",
-        help="Rate card to price against (default: gemini-3.7-flash)",
+        default=None,
+        help=(
+            "Rate card override, for metas that record no model of their "
+            "own. A meta that records a model is always priced at it, and "
+            "a disagreement is warned about. Without this flag a meta "
+            "recording no model is refused rather than guessed at."
+        ),
     )
     parser.add_argument(
         "--tier",
@@ -275,10 +337,12 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    try:
-        rate = rates(args.model, args.tier)
-    except RateCardError as exc:
-        print(f"error: {exc}", file=sys.stderr)
+    if args.model is not None and args.model not in RATE_CARDS:
+        print(
+            f"error: no rate card for {args.model!r}; "
+            f"known: {sorted(RATE_CARDS)}",
+            file=sys.stderr,
+        )
         return 2
 
     fragments: list[dict[str, Any]] = []
@@ -292,22 +356,73 @@ def main() -> int:
         print("error: no run_* fragments with metadata found", file=sys.stderr)
         return 2
 
+    # Price each fragment at ITS OWN recorded model. Pricing a pool at one
+    # default is how the Gemini 3 image pool read US$345.90 against its own
+    # card's US$233.63 (audit 2026-09-20).
+    disagreed: set[str] = set()
+    used_override = False
+    rate_cache: dict[str, dict[str, float]] = {}
     for frag in fragments:
-        frag["audited_usd"] = audited_cost(frag["usage"], rate)
+        model = frag["model"]
+        if model is None:
+            if args.model is None:
+                print(
+                    f"error: {frag['meta']} records no configuration.model "
+                    f"and no --model was given. Guessing a rate card is the "
+                    f"error this script exists to correct; pass --model "
+                    f"explicitly if you know what this pass ran on.",
+                    file=sys.stderr,
+                )
+                return 2
+            model = args.model
+            frag["model"] = model
+            frag["model_source"] = "--model override"
+            used_override = True
+        else:
+            frag["model_source"] = "meta configuration.model"
+            if args.model is not None and args.model != model:
+                disagreed.add(model)
+        if model not in rate_cache:
+            try:
+                rate_cache[model] = rates(model, args.tier)
+            except RateCardError as exc:
+                print(f"error: {exc} (from {frag['meta']})", file=sys.stderr)
+                return 2
+        frag["audited_usd"] = audited_cost(frag["usage"], rate_cache[model])
         del frag["usage"]
+
+    if used_override:
+        print(
+            f"note: --model {args.model} used as the rate card for "
+            f"{sum(1 for f in fragments if f['model_source'].startswith('--'))}"
+            f" fragment(s) that record no model of their own",
+            file=sys.stderr,
+        )
+    for model in sorted(disagreed):
+        print(
+            f"warning: --model {args.model} disagrees with the model "
+            f"{model!r} recorded by "
+            f"{sum(1 for f in fragments if f['model'] == model)} fragment(s); "
+            f"those fragments are priced at {model!r}, which is what they "
+            f"ran on. Drop --model unless you mean to override a pass that "
+            f"records nothing.",
+            file=sys.stderr,
+        )
 
     total = sum(f["audited_usd"] for f in fragments)
     items = sum(f["items"] for f in fragments)
     meta_total = sum(f["meta_cost_usd"] or 0.0 for f in fragments)
     per_item = total / items if items else 0.0
+    models = sorted({f["model"] for f in fragments})
 
     if args.as_json:
         print(
             json.dumps(
                 {
-                    "model": args.model,
+                    "models": models,
+                    "model_override": args.model,
                     "tier": args.tier,
-                    "rate_card_per_1m": RATE_CARDS[args.model],
+                    "rate_cards_per_1m": {m: RATE_CARDS[m] for m in models},
                     "fragments": fragments,
                     "tile_passes": items,
                     "audited_usd": round(total, 4),
@@ -319,16 +434,18 @@ def main() -> int:
         )
         return 0
 
-    effective = {k: round(v * 1e6, 4) for k, v in rate.items()}
-    print(
-        f"rate card: {args.model} at {args.tier} — "
-        f"effective USD/1M {effective} (cache undiscounted by tier)"
-    )
+    for model in models:
+        effective = {k: round(v * 1e6, 4) for k, v in rate_cache[model].items()}
+        print(
+            f"rate card: {model} at {args.tier} — "
+            f"effective USD/1M {effective} (cache undiscounted by tier)"
+        )
     print()
     for frag in fragments:
         print(
             f"{frag['fragment']:26s} n={frag['items']:6d} "
             f"cache={frag['cache_share']:.3f} "
+            f"model={frag['model']:24s} "
             f"audited=${frag['audited_usd']:9.4f}"
         )
     print("-" * 70)
