@@ -31,10 +31,10 @@ the commit that executed it. Read top to bottom; open items first.
 
 ## Ruled
 
-### D3 — T5 matched comparator — RULED 2026-09-20: add T5m as an ADDITIONAL test at K = 3 (G3 K = 5 pool at 3 votes vs IM-k3), keep the declared T5. In progress.
+### D3 — T5 matched comparator — RULED 2026-09-20: add T5m as an ADDITIONAL test at K = 3 (G3 K = 5 pool at 3 votes vs IM-k3), keep the declared T5. In progress
 
-### D4 — E89 floor — RULED 2026-09-20: revise to the full-scale measurement (2.46 % flips at 0.90 on 9,173 candidates; drift-only contrasts +0.0008 F1 / −0.0005 MCC). In progress.
+### D4 — E89 floor — RULED 2026-09-20: revise to the full-scale measurement (2.46 % flips at 0.90 on 9,173 candidates; drift-only contrasts +0.0008 F1 / −0.0005 MCC). In progress
 
-### D6a — MCC sweep of the remaining 13 families — RULED 2026-09-20: yes. In progress.
+### D6a — MCC sweep of the remaining 13 families — RULED 2026-09-20: yes. In progress
 
 ### K3→K5 F1 gain — CONFIRMED claimable by the PI 2026-09-20 (replicate: +0.0079 vs drift-only +0.0008; `results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/`)
