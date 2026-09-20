@@ -1,6 +1,6 @@
 # Uplift supplement — build report
 
-> **Last revised**: 2026-09-12 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; the flatten's coverage and decisions). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-20 (correction note on IM-k4's vote provenance, no numbers changed; previously 2026-09-12: regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; the flatten's coverage and decisions). See [§ Changelog](#changelog) for revision history.
 >
 > **First published**: 2026-08-29. Regenerated 2026-09-12T14:24:23Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
@@ -196,6 +196,17 @@ Surfaced by the 2026-08-29 audit and left as they are, deliberately:
   as unmeasurable rather than given a neighbouring stage's floor.
 
 ## Changelog
+
+### 2026-09-20 — Correction note: IM-k4's vote counts predate the May recovery
+
+Trigger: `results/im-june-pool-grid-2026-09-20/findings.md` § 7 (f859646ba). The June image run's crop
+manifest carries pre-recovery vote counts on 16 of 7,878 candidates (each one vote low), because the
+2026-05-03 recovery re-cut crops with an incremental extractor that never refreshed matched entries'
+properties. IM-k4 (rows `verified-k4-standardised-gt` and `verified-k4-r2-gt`) is the only committed cell
+built on those counts: on the consensus votes it would hold 3,544 detections instead of 3,541, F1@50 m
+0.7402 instead of 0.7398, tile-MCC 0.6579 instead of 0.6577 — an order of magnitude inside the board's
+0.003 mechanism bound. **PI ruling 2026-09-20: documented, not rebuilt.** No number in this supplement
+changes. IM-k3 and every other cell are unaffected (no candidate crosses the 2 → 3 vote boundary).
 
 ### 2026-09-08 — Verifier pairing completed on the current register (S151): 69 of 169 pairs computed
 
