@@ -555,11 +555,16 @@ def test_the_addendum_rows_keep_their_runs_candidate_count_convention():
 
 @pytest.mark.tier1
 def test_the_mcc_oracle_cells_are_held_and_never_written():
-    """D6: a held basis plans as 'held' -- not an add, not a raise, not a drop."""
+    """D6: a held basis plans as 'held' -- not an add, not a raise, not a drop.
+
+    The held basis narrowed with ruling 6c on 2026-09-20: what is held is
+    the superseded UNCONSTRAINED optimum, not every mcc-oracle cell.
+    """
     dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
     manifest = [{"label": "ARM1-N1-mcc-oracle", "det": "x/d.geojson",
-                 "basis": "mcc-oracle (post-hoc)", "point": "(0.20, k1)",
-                 "committed_eval": False}]
+                 "basis": "mcc-oracle, unconstrained k (post-hoc, superseded "
+                          "2026-09-20)",
+                 "point": "(0.20, k1)", "committed_eval": False}]
     plan = r2reg.author_board_rows(dec, manifest, None)
     assert [(r, row["label"], s) for r, row, s in plan] == [
         (None, "ARM1-N1-mcc-oracle", "held")]
@@ -612,3 +617,175 @@ def test_the_registrar_writes_in_the_registers_own_json_style(tmp_path,
     r2reg.write_register(doc)
     assert "—" in utf8_file.read_text()
     assert not utf8_file.read_text().endswith("\n")
+
+
+# ------------------ D6/6c: the tile-MCC oracle at the carried k (r2) ---
+# PI ruling 6c (planning/pi-decisions-2026-09-20.md, 2026-09-20): the
+# board's tile-MCC oracle is the optimum over prob_t with min_votes PINNED
+# to the family's carried vote count. The ten carried-k cells are
+# registered; the ten unconstrained optima they supersede stay on disk,
+# unregistered, as the evidence for the redefinition (Obs 492).
+
+#: (run id, label, prob_threshold, vote_threshold, n_passes, board cell).
+MCC_CARRIED_ROWS = [
+    ("gemini37-55map-2026-08-29", "arm1-n1-mcc-oracle-posthoc-p0.20-k1-r2-gt",
+     0.2, 1, 1, "ARM1-N1-mcc-oracle-k1"),
+    ("gemini37-55map-2026-08-29", "arm1-n3-mcc-oracle-posthoc-p0.20-k3-r2-gt",
+     0.2, 3, 3, "ARM1-N3-mcc-oracle-k3"),
+    ("gemini37-55map-2026-08-29", "arm1-n5-mcc-oracle-posthoc-p0.20-k5-r2-gt",
+     0.2, 5, 5, "ARM1-N5-mcc-oracle-k5"),
+    ("gemini37-55map-2026-08-29", "arm2-n1-mcc-oracle-posthoc-p0.96-k1-r2-gt",
+     0.96, 1, 1, "ARM2-N1-mcc-oracle-k1"),
+    ("gemini37-55map-2026-08-29", "arm2-n3-mcc-oracle-posthoc-p0.96-k3-r2-gt",
+     0.96, 3, 3, "ARM2-N3-mcc-oracle-k3"),
+    ("gemini37-55map-2026-08-29", "arm2-n5-mcc-oracle-posthoc-p0.96-k5-r2-gt",
+     0.96, 5, 5, "ARM2-N5-mcc-oracle-k5"),
+    ("stride-55map-2026-08-25",
+     "g384-ov192-55map-n1-verified37-mcc-oracle-posthoc-p0.96-k1-r2-gt",
+     0.96, 1, 1, "FOURTH-N1-mcc-oracle-k1"),
+    ("stride-55map-2026-08-25",
+     "g384-ov192-55map-n3-verified37-mcc-oracle-posthoc-p0.96-k3-r2-gt",
+     0.96, 3, 3, "FOURTH-N3-mcc-oracle-k3"),
+    ("stride-55map-2026-08-25",
+     "g384-ov192-55map-n5-verified37-mcc-oracle-posthoc-p0.96-k5-r2-gt",
+     0.96, 5, 5, "FOURTH-N5-mcc-oracle-k5"),
+    ("stride-55map-2026-08-25",
+     "g384-ov192-55map-n10-verified37-mcc-oracle-posthoc-p0.96-k10-r2-gt",
+     0.96, 10, 10, "FOURTH-N10-mcc-oracle-k10"),
+]
+
+
+@pytest.mark.tier1
+def test_the_ten_carried_k_mcc_oracles_are_registered():
+    """6c: all ten rows present, at the pinned k, against the carried-k cell."""
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    for run_id, label, prob, votes, n_passes, cell in MCC_CARRIED_ROWS:
+        rows = [c for c in dec[run_id]["conditions"] if c.get("label") == label]
+        assert len(rows) == 1, f"{run_id}::{label}: expected one row, got {len(rows)}"
+        row = rows[0]
+        assert row["prob_threshold"] == prob
+        assert row["vote_threshold"] == votes
+        assert row["n_passes"] == n_passes
+        assert row["eval_path"] == f"{R2_BOARD_REL}/cells/{cell}/evaluation.json"
+        assert (ROOT / row["eval_path"]).exists(), row["eval_path"]
+        # The cell pins its k in its own name; the row must agree with it.
+        assert cell.endswith(f"-k{votes}"), (cell, votes)
+        note = row["_note"]
+        assert "mcc-oracle at carried k" in note and "min_votes PINNED" in note
+        assert "Observation 492" in note
+        assert "unconstrained" in note
+
+
+@pytest.mark.tier1
+def test_only_the_unconstrained_optima_stay_held():
+    """The hold narrowed with the ruling: admit carried-k, hold unconstrained."""
+    assert r2reg.HELD_BASES == ("mcc-oracle, unconstrained k",)
+    manifest = json.loads(
+        (ROOT / R2_BOARD_REL / "cells_manifest.json").read_text())["cells"]
+    held = [c["label"] for c in manifest
+            if any(h in c.get("basis", "") for h in r2reg.HELD_BASES)]
+    admitted = [c["label"] for c in manifest
+                if r2reg.MCC_CARRIED_BASIS in c.get("basis", "")]
+    assert len(held) == 10 and len(admitted) == 10, (len(held), len(admitted))
+    # "mcc-oracle" alone would have swallowed the admitted cells too.
+    assert not set(held) & set(admitted)
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    for run in dec.values():
+        for cond in run["conditions"]:
+            ep = str(cond.get("eval_path", ""))
+            if ep.startswith(f"{R2_BOARD_REL}/cells/"):
+                assert Path(ep).parent.name not in held, cond["label"]
+
+
+@pytest.mark.tier1
+def test_the_cell_regex_reads_the_carried_k_suffix():
+    """-mcc-oracle-k<N> parses; the older forms keep parsing."""
+    cases = {
+        "ARM1-N3-mcc-oracle-k3": ("ARM1", "3", "mcc-oracle", "3"),
+        "FOURTH-N10-mcc-oracle-k10": ("FOURTH", "10", "mcc-oracle", "10"),
+        "ARM2-N1-mcc-oracle": ("ARM2", "1", "mcc-oracle", None),
+        "A-N3-carried": ("A", "3", "carried", None),
+        "TH7-oracle": ("TH7", None, "oracle", None),
+    }
+    for label, want in cases.items():
+        m = r2reg._CELL_RE.match(label)
+        assert m, label
+        assert (m.group("fam"), m.group("n"), m.group("basis"),
+                m.group("ck")) == want, label
+
+
+@pytest.mark.tier1
+def test_a_carried_k_cell_whose_label_and_point_disagree_raises():
+    """The pinned k is stated twice; a disagreement is a typo, not a row."""
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    manifest = [{"label": "ARM2-N3-mcc-oracle-k3", "det": "x/d.geojson",
+                 "basis": r2reg.MCC_CARRIED_BASIS + " (post-hoc, 2026-09-20)",
+                 "point": "(0.96, k2)", "committed_eval": False}]
+    with pytest.raises(ValueError, match="label pins k3"):
+        r2reg.author_board_rows(dec, manifest, None)
+
+
+#: The image campaigns' MCC-oracle conditions after the 2026-09-20 re-point:
+#: (run id, superseded label, its cell, successor label, its cell).
+IMAGE_MCC_REPOINTS = [
+    ("gemini37-image-55map-2026-09-13",
+     "img-arm2-k3-mcc-oracle-p0.96-k2-r2-gt", "IMG-ARM2-K3-mcc-oracle",
+     "img-arm2-k3-mcc-oracle-p0.90-k3-r2-gt"),
+    ("gemini3-image-55map-2026-09-16",
+     "g3img-arm1-k3-mcc-oracle-p0.35-k1-r2-gt", "G3IMG-ARM1-K3-mcc-oracle",
+     "g3img-arm1-k3-mcc-oracle-p0.20-k3-r2-gt"),
+    ("gemini3-image-55map-2026-09-16",
+     "g3img-arm2-k3-mcc-oracle-p0.98-k1-r2-gt", "G3IMG-ARM2-K3-mcc-oracle",
+     "g3img-arm2-k3-mcc-oracle-p0.96-k3-r2-gt"),
+    ("gemini3-image-55map-2026-09-16",
+     "g3img-arm1-k5-mcc-oracle-p0.40-k1-r2-gt", "G3IMG-ARM1-K5-mcc-oracle",
+     "g3img-arm1-k5-mcc-oracle-p0.20-k5-r2-gt"),
+    ("gemini3-image-55map-2026-09-16",
+     "g3img-arm2-k5-mcc-oracle-p0.98-k1-r2-gt", "G3IMG-ARM2-K5-mcc-oracle",
+     "g3img-arm2-k5-mcc-oracle-p0.98-k5-r2-gt"),
+]
+
+
+@pytest.mark.tier1
+def test_the_superseded_image_rows_keep_their_id_and_gain_a_successor():
+    """A signed row's citation must keep resolving to what the PI was shown.
+
+    Two SIGNED analysis rows cite the five superseded ids in
+    conditions_compared, so the id survives and is re-pointed to the
+    -unconstrained cell -- the same bytes under a new name. The carried-k
+    selection is registered as a NEW id, which no signature covers.
+    """
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    for run_id, old, cell, new in IMAGE_MCC_REPOINTS:
+        by = {c["label"]: c for c in dec[run_id]["conditions"]}
+        assert old in by, f"{run_id}: superseded id {old} must not be deleted"
+        assert new in by, f"{run_id}: successor {new} missing"
+        base = f"results/{run_id}/cells"
+        assert by[old]["eval_path"] == f"{base}/{cell}-unconstrained/evaluation.json"
+        assert by[new]["eval_path"] == f"{base}/{cell}/evaluation.json"
+        assert "SUPERSEDED 2026-09-20" in by[old]["_note"]
+        assert new in by[old]["_note"]        # names its successor
+        assert old in by[new]["_note"]        # and is named by it
+        for lb in (old, new):
+            assert (ROOT / by[lb]["eval_path"]).exists(), by[lb]["eval_path"]
+
+
+@pytest.mark.tier1
+def test_every_image_mcc_row_matches_its_cells_n_detections():
+    """Wrong-source guard: each row's eval must hold that cell's own count."""
+    dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
+    for run_id in ("gemini37-image-55map-2026-09-13", "gemini3-image-55map-2026-09-16"):
+        manifest = json.loads(
+            (ROOT / f"results/{run_id}/cells_manifest.json").read_text())["cells"]
+        n_of = {c["label"]: c["n_detections"] for c in manifest}
+        seen = 0
+        for cond in dec[run_id]["conditions"]:
+            if "-mcc-oracle-" not in (cond.get("label") or ""):
+                continue
+            cell = Path(cond["eval_path"]).parent.name
+            ev = json.loads((ROOT / cond["eval_path"]).read_text())
+            assert ev["summary"]["n_detections"] == n_of[cell], cond["label"]
+            seen += 1
+        # Six original rungs each, plus one successor per rung that moved:
+        # one in the 3.7 campaign, four in the Gemini 3 campaign.
+        assert seen == (7 if run_id.startswith("gemini37") else 10), (run_id, seen)

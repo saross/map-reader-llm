@@ -14559,6 +14559,90 @@
      "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-carried/evaluation.json",
      "detections": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-carried/detections.geojson",
      "_note": "r2 board cell FOURTH-N5-carried (basis carried-analogue (post-hoc), added 2026-09-20; point (0.98, k5)). Registered per reports/comparability-inventory-37-runs-2026-09-20.md section 3.2 (PI ruling 2026-09-20), which found these carried-analogue points already swept on r2 but never materialised, leaving the carried-against-carried comparison with no registered cell below the top rung. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n1-verified37-mcc-oracle-posthoc-p0.96-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 57482,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 1,
+     "prob_threshold": 0.96,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-mcc-oracle-k1/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-mcc-oracle-k1/detections.geojson",
+     "_note": "r2 board cell FOURTH-N1-mcc-oracle-k1 (basis mcc-oracle at carried k (post-hoc, 2026-09-20), added 2026-09-20; point (0.96, k1)). Registered per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20): the board's tile-MCC oracle is the optimum over prob_t with min_votes PINNED to this family's carried vote count, which makes it the like-for-like companion of the F1-argmax oracle rather than a vote-threshold choice wearing a metric's name. It SUPERSEDES the unconstrained argmax, which is kept unregistered at cells/<family>-mcc-oracle/ with basis 'mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)' and tabled in final-board-50m.md section 'Superseded: the unconstrained tile-MCC optima': all 23 board families put that optimum at the lowest vote count their sweep offers (docs/notes/working-notes.md Observation 492). Derived from the committed sweep CSVs with no re-sweep. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n10-verified37-mcc-oracle-posthoc-p0.96-k10-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 10,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 57482,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 10,
+     "prob_threshold": 0.96,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N10-mcc-oracle-k10/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N10-mcc-oracle-k10/detections.geojson",
+     "_note": "r2 board cell FOURTH-N10-mcc-oracle-k10 (basis mcc-oracle at carried k (post-hoc, 2026-09-20), added 2026-09-20; point (0.96, k10)). Registered per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20): the board's tile-MCC oracle is the optimum over prob_t with min_votes PINNED to this family's carried vote count, which makes it the like-for-like companion of the F1-argmax oracle rather than a vote-threshold choice wearing a metric's name. It SUPERSEDES the unconstrained argmax, which is kept unregistered at cells/<family>-mcc-oracle/ with basis 'mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)' and tabled in final-board-50m.md section 'Superseded: the unconstrained tile-MCC optima': all 23 board families put that optimum at the lowest vote count their sweep offers (docs/notes/working-notes.md Observation 492). Derived from the committed sweep CSVs with no re-sweep. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n3-verified37-mcc-oracle-posthoc-p0.96-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 57482,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.96,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N3-mcc-oracle-k3/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N3-mcc-oracle-k3/detections.geojson",
+     "_note": "r2 board cell FOURTH-N3-mcc-oracle-k3 (basis mcc-oracle at carried k (post-hoc, 2026-09-20), added 2026-09-20; point (0.96, k3)). Registered per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20): the board's tile-MCC oracle is the optimum over prob_t with min_votes PINNED to this family's carried vote count, which makes it the like-for-like companion of the F1-argmax oracle rather than a vote-threshold choice wearing a metric's name. It SUPERSEDES the unconstrained argmax, which is kept unregistered at cells/<family>-mcc-oracle/ with basis 'mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)' and tabled in final-board-50m.md section 'Superseded: the unconstrained tile-MCC optima': all 23 board families put that optimum at the lowest vote count their sweep offers (docs/notes/working-notes.md Observation 492). Derived from the committed sweep CSVs with no re-sweep. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "g384-ov192-55map-n5-verified37-mcc-oracle-posthoc-p0.96-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 57482,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 5,
+     "prob_threshold": 0.96,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-mcc-oracle-k5/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-mcc-oracle-k5/detections.geojson",
+     "_note": "r2 board cell FOURTH-N5-mcc-oracle-k5 (basis mcc-oracle at carried k (post-hoc, 2026-09-20), added 2026-09-20; point (0.96, k5)). Registered per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20): the board's tile-MCC oracle is the optimum over prob_t with min_votes PINNED to this family's carried vote count, which makes it the like-for-like companion of the F1-argmax oracle rather than a vote-threshold choice wearing a metric's name. It SUPERSEDES the unconstrained argmax, which is kept unregistered at cells/<family>-mcc-oracle/ with basis 'mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)' and tabled in final-board-50m.md section 'Superseded: the unconstrained tile-MCC optima': all 23 board families put that optimum at the lowest vote count their sweep offers (docs/notes/working-notes.md Observation 492). Derived from the committed sweep CSVs with no re-sweep. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
     }
    ],
    "_ignored_evals": [
@@ -15741,6 +15825,132 @@
      "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N3-carried/evaluation.json",
      "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N3-carried/detections.geojson",
      "_note": "r2 board cell ARM2-N3-carried (basis carried-analogue (post-hoc), added 2026-09-20; point (0.80, k3)). Registered per reports/comparability-inventory-37-runs-2026-09-20.md section 3.2 (PI ruling 2026-09-20), which found these carried-analogue points already swept on r2 but never materialised, leaving the carried-against-carried comparison with no registered cell below the top rung. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm1-n1-mcc-oracle-posthoc-p0.20-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 1,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N1-mcc-oracle-k1/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N1-mcc-oracle-k1/detections.geojson",
+     "_note": "r2 board cell ARM1-N1-mcc-oracle-k1 (basis mcc-oracle at carried k (post-hoc, 2026-09-20), added 2026-09-20; point (0.20, k1)). Registered per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20): the board's tile-MCC oracle is the optimum over prob_t with min_votes PINNED to this family's carried vote count, which makes it the like-for-like companion of the F1-argmax oracle rather than a vote-threshold choice wearing a metric's name. It SUPERSEDES the unconstrained argmax, which is kept unregistered at cells/<family>-mcc-oracle/ with basis 'mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)' and tabled in final-board-50m.md section 'Superseded: the unconstrained tile-MCC optima': all 23 board families put that optimum at the lowest vote count their sweep offers (docs/notes/working-notes.md Observation 492). Derived from the committed sweep CSVs with no re-sweep. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm1-n3-mcc-oracle-posthoc-p0.20-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N3-mcc-oracle-k3/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N3-mcc-oracle-k3/detections.geojson",
+     "_note": "r2 board cell ARM1-N3-mcc-oracle-k3 (basis mcc-oracle at carried k (post-hoc, 2026-09-20), added 2026-09-20; point (0.20, k3)). Registered per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20): the board's tile-MCC oracle is the optimum over prob_t with min_votes PINNED to this family's carried vote count, which makes it the like-for-like companion of the F1-argmax oracle rather than a vote-threshold choice wearing a metric's name. It SUPERSEDES the unconstrained argmax, which is kept unregistered at cells/<family>-mcc-oracle/ with basis 'mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)' and tabled in final-board-50m.md section 'Superseded: the unconstrained tile-MCC optima': all 23 board families put that optimum at the lowest vote count their sweep offers (docs/notes/working-notes.md Observation 492). Derived from the committed sweep CSVs with no re-sweep. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm1-n5-mcc-oracle-posthoc-p0.20-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 5,
+     "prob_threshold": 0.2,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N5-mcc-oracle-k5/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N5-mcc-oracle-k5/detections.geojson",
+     "_note": "r2 board cell ARM1-N5-mcc-oracle-k5 (basis mcc-oracle at carried k (post-hoc, 2026-09-20), added 2026-09-20; point (0.20, k5)). Registered per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20): the board's tile-MCC oracle is the optimum over prob_t with min_votes PINNED to this family's carried vote count, which makes it the like-for-like companion of the F1-argmax oracle rather than a vote-threshold choice wearing a metric's name. It SUPERSEDES the unconstrained argmax, which is kept unregistered at cells/<family>-mcc-oracle/ with basis 'mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)' and tabled in final-board-50m.md section 'Superseded: the unconstrained tile-MCC optima': all 23 board families put that optimum at the lowest vote count their sweep offers (docs/notes/working-notes.md Observation 492). Derived from the committed sweep CSVs with no re-sweep. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm2-n1-mcc-oracle-posthoc-p0.96-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 1,
+     "prob_threshold": 0.96,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N1-mcc-oracle-k1/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N1-mcc-oracle-k1/detections.geojson",
+     "_note": "r2 board cell ARM2-N1-mcc-oracle-k1 (basis mcc-oracle at carried k (post-hoc, 2026-09-20), added 2026-09-20; point (0.96, k1)). Registered per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20): the board's tile-MCC oracle is the optimum over prob_t with min_votes PINNED to this family's carried vote count, which makes it the like-for-like companion of the F1-argmax oracle rather than a vote-threshold choice wearing a metric's name. It SUPERSEDES the unconstrained argmax, which is kept unregistered at cells/<family>-mcc-oracle/ with basis 'mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)' and tabled in final-board-50m.md section 'Superseded: the unconstrained tile-MCC optima': all 23 board families put that optimum at the lowest vote count their sweep offers (docs/notes/working-notes.md Observation 492). Derived from the committed sweep CSVs with no re-sweep. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm2-n3-mcc-oracle-posthoc-p0.96-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.96,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N3-mcc-oracle-k3/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N3-mcc-oracle-k3/detections.geojson",
+     "_note": "r2 board cell ARM2-N3-mcc-oracle-k3 (basis mcc-oracle at carried k (post-hoc, 2026-09-20), added 2026-09-20; point (0.96, k3)). Registered per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20): the board's tile-MCC oracle is the optimum over prob_t with min_votes PINNED to this family's carried vote count, which makes it the like-for-like companion of the F1-argmax oracle rather than a vote-threshold choice wearing a metric's name. It SUPERSEDES the unconstrained argmax, which is kept unregistered at cells/<family>-mcc-oracle/ with basis 'mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)' and tabled in final-board-50m.md section 'Superseded: the unconstrained tile-MCC optima': all 23 board families put that optimum at the lowest vote count their sweep offers (docs/notes/working-notes.md Observation 492). Derived from the committed sweep CSVs with no re-sweep. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
+    },
+    {
+     "label": "arm2-n5-mcc-oracle-posthoc-p0.96-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 12715,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 5,
+     "prob_threshold": 0.96,
+     "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-mcc-oracle-k5/evaluation.json",
+     "detections": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-mcc-oracle-k5/detections.geojson",
+     "_note": "r2 board cell ARM2-N5-mcc-oracle-k5 (basis mcc-oracle at carried k (post-hoc, 2026-09-20), added 2026-09-20; point (0.96, k5)). Registered per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20): the board's tile-MCC oracle is the optimum over prob_t with min_votes PINNED to this family's carried vote count, which makes it the like-for-like companion of the F1-argmax oracle rather than a vote-threshold choice wearing a metric's name. It SUPERSEDES the unconstrained argmax, which is kept unregistered at cells/<family>-mcc-oracle/ with basis 'mcc-oracle, unconstrained k (post-hoc, superseded 2026-09-20)' and tabled in final-board-50m.md section 'Superseded: the unconstrained tile-MCC optima': all 23 board families put that optimum at the lowest vote count their sweep offers (docs/notes/working-notes.md Observation 492). Derived from the committed sweep CSVs with no re-sweep. Post-hoc and not a preregistered claim; the board was not re-tiered, so this cell is not on final_board_50m.json. Reference-revision-r2 evaluation (card planning/reference-revision-2026-09-06.md): the standardised reference with the PI's cluster- and empty-tile-audit adjudications applied (-6 records, +14; 5,018 at marked centres, included whole at every R). Scored by evaluate_detections.py (14 buffers, tile-level BCa 10,000 / seed 42, --mcc) -- one engine for the whole r2 chain."
     }
    ],
    "_ignored_evals": [
@@ -15896,7 +16106,7 @@
      "prob_threshold": 0.15,
      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K1-mcc-oracle/evaluation.json",
      "detections": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K1-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell IMG-ARM1-K1-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 5582 of a 6985-candidate K = 1 first-N union, verified by gemini-3-flash-preview at thinking minimal. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag."
+     "_note": "Campaign cell IMG-ARM1-K1-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 5582 of a 6985-candidate K = 1 first-N union, verified by gemini-3-flash-preview at thinking minimal. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. 2026-09-20 definition note: the campaign's MCC oracle was redefined that day as the tile-MCC optimum over prob_t at the rung's CARRIED vote count, with min_votes pinned -- PI ruling D6/6c, planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492. This rung's optimum does not move -- the unconstrained argmax already sat at the carried vote count k1 -- so the point, the cell and every number in this row are unchanged, and the cell's detections.geojson is byte-identical (SHA-256) across the 2026-09-20 re-materialisation (2645e499c)."
     },
     {
      "label": "img-arm1-k3-carried-p0.10-k3-r2-gt",
@@ -15959,7 +16169,7 @@
      "prob_threshold": 0.15,
      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K3-mcc-oracle/evaluation.json",
      "detections": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K3-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell IMG-ARM1-K3-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 4977 of a 8337-candidate K = 3 first-N union, verified by gemini-3-flash-preview at thinking minimal. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag."
+     "_note": "Campaign cell IMG-ARM1-K3-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 4977 of a 8337-candidate K = 3 first-N union, verified by gemini-3-flash-preview at thinking minimal. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. 2026-09-20 definition note: the campaign's MCC oracle was redefined that day as the tile-MCC optimum over prob_t at the rung's CARRIED vote count, with min_votes pinned -- PI ruling D6/6c, planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492. This rung's optimum does not move -- the unconstrained argmax already sat at the carried vote count k3 -- so the point, the cell and every number in this row are unchanged, and the cell's detections.geojson is byte-identical (SHA-256) across the 2026-09-20 re-materialisation (2645e499c)."
     },
     {
      "label": "img-arm1-k5-carried-p0.10-k5-r2-gt",
@@ -16022,7 +16232,7 @@
      "prob_threshold": 0.15,
      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-mcc-oracle/evaluation.json",
      "detections": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell IMG-ARM1-K5-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 4885 of a 9173-candidate K = 5 first-N union, verified by gemini-3-flash-preview at thinking minimal. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. K = 5 rung added 2026-09-17 OUTSIDE the card, whose ladder stopped at K = 3 (planning/gemini37-image-55map-2026-09-13.md \u00a7 2 table, \"Passes | K = 3 (run_1..3)\"): proposer passes 4 and 5 were run through the Google async Batch API (run_4 / run_5 pool metas, batch_api.execution_mode \"batch\"; earliest pass-4 chunk meta timestamp.start 2026-09-17T03:37:54Z), and the carried points are those of the registered Gold Standard K = 5 cells (gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5 for arm 1, ::g37-image-k5-verified-swap37-p0.90-k5 for arm 2). Scored 2026-09-19 on the r2 engine under PR #19 (commit f2fa7b7f6). The K = 3 \u2192 K = 5 contrast is EXPLORATORY \u2014 it is NOT preregistered (PI ruling 2026-09-19) \u2014 and no permutation test has been run on it."
+     "_note": "Campaign cell IMG-ARM1-K5-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 4885 of a 9173-candidate K = 5 first-N union, verified by gemini-3-flash-preview at thinking minimal. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. K = 5 rung added 2026-09-17 OUTSIDE the card, whose ladder stopped at K = 3 (planning/gemini37-image-55map-2026-09-13.md \u00a7 2 table, \"Passes | K = 3 (run_1..3)\"): proposer passes 4 and 5 were run through the Google async Batch API (run_4 / run_5 pool metas, batch_api.execution_mode \"batch\"; earliest pass-4 chunk meta timestamp.start 2026-09-17T03:37:54Z), and the carried points are those of the registered Gold Standard K = 5 cells (gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5 for arm 1, ::g37-image-k5-verified-swap37-p0.90-k5 for arm 2). Scored 2026-09-19 on the r2 engine under PR #19 (commit f2fa7b7f6). The K = 3 \u2192 K = 5 contrast is EXPLORATORY \u2014 it is NOT preregistered (PI ruling 2026-09-19) \u2014 and no permutation test has been run on it. 2026-09-20 definition note: the campaign's MCC oracle was redefined that day as the tile-MCC optimum over prob_t at the rung's CARRIED vote count, with min_votes pinned -- PI ruling D6/6c, planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492. This rung's optimum does not move -- the unconstrained argmax already sat at the carried vote count k5 -- so the point, the cell and every number in this row are unchanged, and the cell's detections.geojson is byte-identical (SHA-256) across the 2026-09-20 re-materialisation (2645e499c)."
     },
     {
      "label": "img-arm2-k1-carried-p0.88-k1-r2-gt",
@@ -16085,7 +16295,7 @@
      "prob_threshold": 0.98,
      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K1-mcc-oracle/evaluation.json",
      "detections": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K1-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell IMG-ARM2-K1-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 5322 of a 6985-candidate K = 1 first-N union, verified by gemini-3.7-flash at thinking low. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag."
+     "_note": "Campaign cell IMG-ARM2-K1-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 5322 of a 6985-candidate K = 1 first-N union, verified by gemini-3.7-flash at thinking low. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. 2026-09-20 definition note: the campaign's MCC oracle was redefined that day as the tile-MCC optimum over prob_t at the rung's CARRIED vote count, with min_votes pinned -- PI ruling D6/6c, planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492. This rung's optimum does not move -- the unconstrained argmax already sat at the carried vote count k1 -- so the point, the cell and every number in this row are unchanged, and the cell's detections.geojson is byte-identical (SHA-256) across the 2026-09-20 re-materialisation (2645e499c)."
     },
     {
      "label": "img-arm2-k3-carried-p0.88-k3-r2-gt",
@@ -16146,9 +16356,30 @@
      "aggregation": "verified",
      "vote_threshold": 2,
      "prob_threshold": 0.96,
+     "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-mcc-oracle-unconstrained/evaluation.json",
+     "detections": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson",
+     "_note": "Campaign cell IMG-ARM2-K3-mcc-oracle-unconstrained: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 5167 of a 8337-candidate K = 3 first-N union, verified by gemini-3.7-flash at thinking low. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. SUPERSEDED 2026-09-20 per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492): the campaign's MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, registered as img-arm2-k3-mcc-oracle-p0.90-k3-r2-gt. This row is the previous, UNCONSTRAINED optimum, free to choose the vote count too. It keeps its label, its point (0.96, k2) and all of its numbers, and is re-pointed to cells/IMG-ARM2-K3-mcc-oracle-unconstrained/, whose detections.geojson is byte-identical (SHA-256) to the file this row scored before the 2026-09-20 re-materialisation (2645e499c) -- so every artefact citing this condition id, including two SIGNED analysis rows, still resolves to the evaluation it cited. Retained as evidence, not as an oracle: every rung that had a choice put the unconstrained optimum at a single vote, at a large cost in micro-F1. Do not quote it as the campaign's MCC oracle. KNOWN verify_run_conditions.py ERROR (eval-detections-mismatch), disclosed not hidden: this evaluation was produced BEFORE the cell directory was renamed, so its _metadata cli_args, input_files and input_git_state still name the pre-move path. Those fields are a faithful record of the command as it was actually run and are NOT rewritten here; the scored bytes are provably the same file. The remedy belongs with the cell move (re-score in place, or record the move where the verifier can read it), not with this row -- pointing the row back at the pre-move path would make it cite a detection set it never scored."
+    },
+    {
+     "label": "img-arm2-k3-mcc-oracle-p0.90-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g37img",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 8337,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "vote_threshold": 3,
+     "prob_threshold": 0.9,
      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-mcc-oracle/evaluation.json",
      "detections": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell IMG-ARM2-K3-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 5167 of a 8337-candidate K = 3 first-N union, verified by gemini-3.7-flash at thinking low. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag."
+     "_note": "Campaign cell IMG-ARM2-K3-mcc-oracle: tile-MCC oracle at the rung's CARRIED vote count k3 -- the tile-MCC optimum over prob_t with min_votes pinned, the like-for-like companion of the F1-argmax oracle (this campaign's primary metric). n_detections 5343 of a 8337-candidate K = 3 first-N union, verified by gemini-3.7-flash at thinking low. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. Re-pointed 2026-09-20 per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492): this row replaces the UNCONSTRAINED optimum at (0.96, k2), which keeps its own label img-arm2-k3-mcc-oracle-p0.96-k2-r2-gt against cells/IMG-ARM2-K3-mcc-oracle-unconstrained/. Pinning the vote count moves micro-F1@50 0.8882 -> 0.9206 and tile-MCC 0.7656 -> 0.7654 on n 5167 -> 5343. Post-hoc; NOT covered by either image row's signature, both of which were signed before the redefinition."
     },
     {
      "label": "img-arm2-k5-carried-p0.90-k5-r2-gt",
@@ -16211,7 +16442,7 @@
      "prob_threshold": 0.95,
      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-mcc-oracle/evaluation.json",
      "detections": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell IMG-ARM2-K5-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 5197 of a 9173-candidate K = 5 first-N union, verified by gemini-3.7-flash at thinking low. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The cell COINCIDES with IMG-ARM2-K5-f1-oracle: the tile-MCC and F1 oracles fall on the same grid point (0.95, k5), so the two rows score the same 5197 detections. K = 5 rung added 2026-09-17 OUTSIDE the card, whose ladder stopped at K = 3 (planning/gemini37-image-55map-2026-09-13.md \u00a7 2 table, \"Passes | K = 3 (run_1..3)\"): proposer passes 4 and 5 were run through the Google async Batch API (run_4 / run_5 pool metas, batch_api.execution_mode \"batch\"; earliest pass-4 chunk meta timestamp.start 2026-09-17T03:37:54Z), and the carried points are those of the registered Gold Standard K = 5 cells (gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5 for arm 1, ::g37-image-k5-verified-swap37-p0.90-k5 for arm 2). Scored 2026-09-19 on the r2 engine under PR #19 (commit f2fa7b7f6). The K = 3 \u2192 K = 5 contrast is EXPLORATORY \u2014 it is NOT preregistered (PI ruling 2026-09-19) \u2014 and no permutation test has been run on it."
+     "_note": "Campaign cell IMG-ARM2-K5-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 5197 of a 9173-candidate K = 5 first-N union, verified by gemini-3.7-flash at thinking low. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The cell COINCIDES with IMG-ARM2-K5-f1-oracle: the tile-MCC and F1 oracles fall on the same grid point (0.95, k5), so the two rows score the same 5197 detections. K = 5 rung added 2026-09-17 OUTSIDE the card, whose ladder stopped at K = 3 (planning/gemini37-image-55map-2026-09-13.md \u00a7 2 table, \"Passes | K = 3 (run_1..3)\"): proposer passes 4 and 5 were run through the Google async Batch API (run_4 / run_5 pool metas, batch_api.execution_mode \"batch\"; earliest pass-4 chunk meta timestamp.start 2026-09-17T03:37:54Z), and the carried points are those of the registered Gold Standard K = 5 cells (gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5 for arm 1, ::g37-image-k5-verified-swap37-p0.90-k5 for arm 2). Scored 2026-09-19 on the r2 engine under PR #19 (commit f2fa7b7f6). The K = 3 \u2192 K = 5 contrast is EXPLORATORY \u2014 it is NOT preregistered (PI ruling 2026-09-19) \u2014 and no permutation test has been run on it. 2026-09-20 definition note: the campaign's MCC oracle was redefined that day as the tile-MCC optimum over prob_t at the rung's CARRIED vote count, with min_votes pinned -- PI ruling D6/6c, planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492. This rung's optimum does not move -- the unconstrained argmax already sat at the carried vote count k5 -- so the point, the cell and every number in this row are unchanged, and the cell's detections.geojson is byte-identical (SHA-256) across the 2026-09-20 re-materialisation (2645e499c)."
     }
    ]
   },
@@ -16314,7 +16545,7 @@
      "prob_threshold": 0.3,
      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/evaluation.json",
      "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell G3IMG-ARM1-K1-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 7543 of a 22785-candidate K = 1 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+     "_note": "Campaign cell G3IMG-ARM1-K1-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 7543 of a 22785-candidate K = 1 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED. 2026-09-20 definition note: the campaign's MCC oracle was redefined that day as the tile-MCC optimum over prob_t at the rung's CARRIED vote count, with min_votes pinned -- PI ruling D6/6c, planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492. This rung's optimum does not move -- the unconstrained argmax already sat at the carried vote count k1 -- so the point, the cell and every number in this row are unchanged, and the cell's detections.geojson is byte-identical (SHA-256) across the 2026-09-20 re-materialisation (2645e499c)."
     },
     {
      "label": "g3img-arm1-k3-carried-p0.15-k3-r2-gt",
@@ -16375,12 +16606,34 @@
      "n_candidates": 36389,
      "architecture": "proposer-verifier",
      "aggregation": "verified",
-     "basis": "mcc-oracle",
+     "basis": "mcc-oracle-unconstrained",
      "vote_threshold": 1,
      "prob_threshold": 0.35,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM1-K3-mcc-oracle-unconstrained: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 10078 of a 36389-candidate K = 3 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 3-pass union: it buys tile discrimination by admitting 10078 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED. SUPERSEDED 2026-09-20 per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492): the campaign's MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, registered as g3img-arm1-k3-mcc-oracle-p0.20-k3-r2-gt. This row is the previous, UNCONSTRAINED optimum, free to choose the vote count too. It keeps its label, its point (0.35, k1) and all of its numbers, and is re-pointed to cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/, whose detections.geojson is byte-identical (SHA-256) to the file this row scored before the 2026-09-20 re-materialisation (2645e499c) -- so every artefact citing this condition id, including two SIGNED analysis rows, still resolves to the evaluation it cited. Retained as evidence, not as an oracle: every rung that had a choice put the unconstrained optimum at a single vote, at a large cost in micro-F1. Do not quote it as the campaign's MCC oracle. KNOWN verify_run_conditions.py ERROR (eval-detections-mismatch), disclosed not hidden: this evaluation was produced BEFORE the cell directory was renamed, so its _metadata cli_args, input_files and input_git_state still name the pre-move path. Those fields are a faithful record of the command as it was actually run and are NOT rewritten here; the scored bytes are provably the same file. The remedy belongs with the cell move (re-score in place, or record the move where the verifier can read it), not with this row -- pointing the row back at the pre-move path would make it cite a detection set it never scored."
+    },
+    {
+     "label": "g3img-arm1-k3-mcc-oracle-p0.20-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 36389,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "mcc-oracle",
+     "vote_threshold": 3,
+     "prob_threshold": 0.2,
      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/evaluation.json",
      "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell G3IMG-ARM1-K3-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 10078 of a 36389-candidate K = 3 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 3-pass union: it buys tile discrimination by admitting 10078 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+     "_note": "Campaign cell G3IMG-ARM1-K3-mcc-oracle: tile-MCC oracle at the rung's CARRIED vote count k3 -- the tile-MCC optimum over prob_t with min_votes pinned, the like-for-like companion of the F1-argmax oracle (this campaign's primary metric). n_detections 5370 of a 36389-candidate K = 3 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED. Re-pointed 2026-09-20 per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492): this row replaces the UNCONSTRAINED optimum at (0.35, k1), which keeps its own label g3img-arm1-k3-mcc-oracle-p0.35-k1-r2-gt against cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/. Pinning the vote count moves micro-F1@50 0.5723 -> 0.8023 and tile-MCC 0.7486 -> 0.7301 on n 10078 -> 5370. Post-hoc; NOT covered by either image row's signature, both of which were signed before the redefinition."
     },
     {
      "label": "g3img-arm1-k5-carried-p0.15-k5-r2-gt",
@@ -16441,12 +16694,34 @@
      "n_candidates": 45786,
      "architecture": "proposer-verifier",
      "aggregation": "verified",
-     "basis": "mcc-oracle",
+     "basis": "mcc-oracle-unconstrained",
      "vote_threshold": 1,
      "prob_threshold": 0.4,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM1-K5-mcc-oracle-unconstrained: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 11739 of a 45786-candidate K = 5 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 5-pass union: it buys tile discrimination by admitting 11739 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED. SUPERSEDED 2026-09-20 per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492): the campaign's MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, registered as g3img-arm1-k5-mcc-oracle-p0.20-k5-r2-gt. This row is the previous, UNCONSTRAINED optimum, free to choose the vote count too. It keeps its label, its point (0.4, k1) and all of its numbers, and is re-pointed to cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/, whose detections.geojson is byte-identical (SHA-256) to the file this row scored before the 2026-09-20 re-materialisation (2645e499c) -- so every artefact citing this condition id, including two SIGNED analysis rows, still resolves to the evaluation it cited. Retained as evidence, not as an oracle: every rung that had a choice put the unconstrained optimum at a single vote, at a large cost in micro-F1. Do not quote it as the campaign's MCC oracle. KNOWN verify_run_conditions.py ERROR (eval-detections-mismatch), disclosed not hidden: this evaluation was produced BEFORE the cell directory was renamed, so its _metadata cli_args, input_files and input_git_state still name the pre-move path. Those fields are a faithful record of the command as it was actually run and are NOT rewritten here; the scored bytes are provably the same file. The remedy belongs with the cell move (re-score in place, or record the move where the verifier can read it), not with this row -- pointing the row back at the pre-move path would make it cite a detection set it never scored."
+    },
+    {
+     "label": "g3img-arm1-k5-mcc-oracle-p0.20-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 45786,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "mcc-oracle",
+     "vote_threshold": 5,
+     "prob_threshold": 0.2,
      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/evaluation.json",
      "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell G3IMG-ARM1-K5-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 11739 of a 45786-candidate K = 5 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 5-pass union: it buys tile discrimination by admitting 11739 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+     "_note": "Campaign cell G3IMG-ARM1-K5-mcc-oracle: tile-MCC oracle at the rung's CARRIED vote count k5 -- the tile-MCC optimum over prob_t with min_votes pinned, the like-for-like companion of the F1-argmax oracle (this campaign's primary metric). n_detections 4729 of a 45786-candidate K = 5 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED. Re-pointed 2026-09-20 per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492): this row replaces the UNCONSTRAINED optimum at (0.4, k1), which keeps its own label g3img-arm1-k5-mcc-oracle-p0.40-k1-r2-gt against cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/. Pinning the vote count moves micro-F1@50 0.5205 -> 0.8167 and tile-MCC 0.7496 -> 0.7199 on n 11739 -> 4729. Post-hoc; NOT covered by either image row's signature, both of which were signed before the redefinition."
     },
     {
      "label": "g3img-arm2-k1-carried-p0.88-k1-r2-gt",
@@ -16512,7 +16787,7 @@
      "prob_threshold": 0.98,
      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/evaluation.json",
      "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell G3IMG-ARM2-K1-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 7931 of a 22785-candidate K = 1 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The cell COINCIDES with G3IMG-ARM2-K1-f1-oracle: the same grid point (0.98, k1) serves both bases, so the rows score the same 7931 detections. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+     "_note": "Campaign cell G3IMG-ARM2-K1-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 7931 of a 22785-candidate K = 1 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The cell COINCIDES with G3IMG-ARM2-K1-f1-oracle: the same grid point (0.98, k1) serves both bases, so the rows score the same 7931 detections. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED. 2026-09-20 definition note: the campaign's MCC oracle was redefined that day as the tile-MCC optimum over prob_t at the rung's CARRIED vote count, with min_votes pinned -- PI ruling D6/6c, planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492. This rung's optimum does not move -- the unconstrained argmax already sat at the carried vote count k1 -- so the point, the cell and every number in this row are unchanged, and the cell's detections.geojson is byte-identical (SHA-256) across the 2026-09-20 re-materialisation (2645e499c)."
     },
     {
      "label": "g3img-arm2-k3-carried-p0.88-k3-r2-gt",
@@ -16573,12 +16848,34 @@
      "n_candidates": 36389,
      "architecture": "proposer-verifier",
      "aggregation": "verified",
-     "basis": "mcc-oracle",
+     "basis": "mcc-oracle-unconstrained",
      "vote_threshold": 1,
      "prob_threshold": 0.98,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM2-K3-mcc-oracle-unconstrained: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 10727 of a 36389-candidate K = 3 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 3-pass union: it buys tile discrimination by admitting 10727 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED. SUPERSEDED 2026-09-20 per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492): the campaign's MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, registered as g3img-arm2-k3-mcc-oracle-p0.96-k3-r2-gt. This row is the previous, UNCONSTRAINED optimum, free to choose the vote count too. It keeps its label, its point (0.98, k1) and all of its numbers, and is re-pointed to cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/, whose detections.geojson is byte-identical (SHA-256) to the file this row scored before the 2026-09-20 re-materialisation (2645e499c) -- so every artefact citing this condition id, including two SIGNED analysis rows, still resolves to the evaluation it cited. Retained as evidence, not as an oracle: every rung that had a choice put the unconstrained optimum at a single vote, at a large cost in micro-F1. Do not quote it as the campaign's MCC oracle. KNOWN verify_run_conditions.py ERROR (eval-detections-mismatch), disclosed not hidden: this evaluation was produced BEFORE the cell directory was renamed, so its _metadata cli_args, input_files and input_git_state still name the pre-move path. Those fields are a faithful record of the command as it was actually run and are NOT rewritten here; the scored bytes are provably the same file. The remedy belongs with the cell move (re-score in place, or record the move where the verifier can read it), not with this row -- pointing the row back at the pre-move path would make it cite a detection set it never scored."
+    },
+    {
+     "label": "g3img-arm2-k3-mcc-oracle-p0.96-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 36389,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "mcc-oracle",
+     "vote_threshold": 3,
+     "prob_threshold": 0.96,
      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/evaluation.json",
      "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell G3IMG-ARM2-K3-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 10727 of a 36389-candidate K = 3 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 3-pass union: it buys tile discrimination by admitting 10727 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+     "_note": "Campaign cell G3IMG-ARM2-K3-mcc-oracle: tile-MCC oracle at the rung's CARRIED vote count k3 -- the tile-MCC optimum over prob_t with min_votes pinned, the like-for-like companion of the F1-argmax oracle (this campaign's primary metric). n_detections 5266 of a 36389-candidate K = 3 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED. Re-pointed 2026-09-20 per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492): this row replaces the UNCONSTRAINED optimum at (0.98, k1), which keeps its own label g3img-arm2-k3-mcc-oracle-p0.98-k1-r2-gt against cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/. Pinning the vote count moves micro-F1@50 0.5772 -> 0.8263 and tile-MCC 0.7706 -> 0.7553 on n 10727 -> 5266. Post-hoc; NOT covered by either image row's signature, both of which were signed before the redefinition."
     },
     {
      "label": "g3img-arm2-k5-carried-p0.95-k5-r2-gt",
@@ -16639,12 +16936,34 @@
      "n_candidates": 45786,
      "architecture": "proposer-verifier",
      "aggregation": "verified",
-     "basis": "mcc-oracle",
+     "basis": "mcc-oracle-unconstrained",
      "vote_threshold": 1,
+     "prob_threshold": 0.98,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM2-K5-mcc-oracle-unconstrained: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 12508 of a 45786-candidate K = 5 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 5-pass union: it buys tile discrimination by admitting 12508 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED. SUPERSEDED 2026-09-20 per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492): the campaign's MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, registered as g3img-arm2-k5-mcc-oracle-p0.98-k5-r2-gt. This row is the previous, UNCONSTRAINED optimum, free to choose the vote count too. It keeps its label, its point (0.98, k1) and all of its numbers, and is re-pointed to cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/, whose detections.geojson is byte-identical (SHA-256) to the file this row scored before the 2026-09-20 re-materialisation (2645e499c) -- so every artefact citing this condition id, including two SIGNED analysis rows, still resolves to the evaluation it cited. Retained as evidence, not as an oracle: every rung that had a choice put the unconstrained optimum at a single vote, at a large cost in micro-F1. Do not quote it as the campaign's MCC oracle. KNOWN verify_run_conditions.py ERROR (eval-detections-mismatch), disclosed not hidden: this evaluation was produced BEFORE the cell directory was renamed, so its _metadata cli_args, input_files and input_git_state still name the pre-move path. Those fields are a faithful record of the command as it was actually run and are NOT rewritten here; the scored bytes are provably the same file. The remedy belongs with the cell move (re-score in place, or record the move where the verifier can read it), not with this row -- pointing the row back at the pre-move path would make it cite a detection set it never scored."
+    },
+    {
+     "label": "g3img-arm2-k5-mcc-oracle-p0.98-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 45786,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "mcc-oracle",
+     "vote_threshold": 5,
      "prob_threshold": 0.98,
      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/evaluation.json",
      "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/detections.geojson",
-     "_note": "Campaign cell G3IMG-ARM2-K5-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 12508 of a 45786-candidate K = 5 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 5-pass union: it buys tile discrimination by admitting 12508 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+     "_note": "Campaign cell G3IMG-ARM2-K5-mcc-oracle: tile-MCC oracle at the rung's CARRIED vote count k5 -- the tile-MCC optimum over prob_t with min_votes pinned, the like-for-like companion of the F1-argmax oracle (this campaign's primary metric). n_detections 4660 of a 45786-candidate K = 5 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED. Re-pointed 2026-09-20 per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492): this row replaces the UNCONSTRAINED optimum at (0.98, k1), which keeps its own label g3img-arm2-k5-mcc-oracle-p0.98-k1-r2-gt against cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/. Pinning the vote count moves micro-F1@50 0.5217 -> 0.8353 and tile-MCC 0.7755 -> 0.7451 on n 12508 -> 4660. Post-hoc; NOT covered by either image row's signature, both of which were signed before the redefinition."
     }
    ]
   }
