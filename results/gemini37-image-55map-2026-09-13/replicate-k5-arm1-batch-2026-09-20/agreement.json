@@ -1,0 +1,350 @@
+{
+  "arm": "arm1",
+  "verifier_model": "gemini-3-flash-preview",
+  "verifier_thinking": "minimal",
+  "k": 5,
+  "carried_threshold": 0.1,
+  "original": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1",
+  "replicate": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20",
+  "n_candidates_original": 9173,
+  "n_candidates_replicate": 9173,
+  "n_compared": 9173,
+  "n_identical": 7507,
+  "identical_share": 0.81838,
+  "chance_identical_share": 0.200614,
+  "identical_kappa": 0.772801,
+  "flips": [
+    {
+      "threshold": 0.1,
+      "n_flips": 221,
+      "flip_share": 0.024092,
+      "flip_share_wilson95": [
+        0.021148,
+        0.027435
+      ],
+      "n_flips_replicate_keeps_original_drops": 112,
+      "n_flips_original_keeps_replicate_drops": 109,
+      "n_kept_original": 7742,
+      "n_kept_replicate": 7745
+    },
+    {
+      "threshold": 0.5,
+      "n_flips": 332,
+      "flip_share": 0.036193,
+      "flip_share_wilson95": [
+        0.032561,
+        0.040214
+      ],
+      "n_flips_replicate_keeps_original_drops": 150,
+      "n_flips_original_keeps_replicate_drops": 182,
+      "n_kept_original": 5533,
+      "n_kept_replicate": 5501
+    },
+    {
+      "threshold": 0.9,
+      "n_flips": 479,
+      "flip_share": 0.052218,
+      "flip_share_wilson95": [
+        0.04785,
+        0.056961
+      ],
+      "n_flips_replicate_keeps_original_drops": 221,
+      "n_flips_original_keeps_replicate_drops": 258,
+      "n_kept_original": 4844,
+      "n_kept_replicate": 4807
+    }
+  ],
+  "n_abs_delta_gt_0.5": 268,
+  "share_abs_delta_gt_0.5": 0.029216,
+  "mean_abs_delta": 0.037096,
+  "median_abs_delta": 0.0,
+  "p90_abs_delta": 0.05,
+  "max_abs_delta": 1.0,
+  "vocabulary_original": {
+    "n_distinct": 20,
+    "top_share": 0.377303,
+    "top_values": [
+      {
+        "value": 1.0,
+        "n": 3461,
+        "share": 0.377303
+      },
+      {
+        "value": 0.95,
+        "n": 1376,
+        "share": 0.150005
+      },
+      {
+        "value": 0.1,
+        "n": 1127,
+        "share": 0.122861
+      },
+      {
+        "value": 0.05,
+        "n": 881,
+        "share": 0.096043
+      },
+      {
+        "value": 0.2,
+        "n": 579,
+        "share": 0.06312
+      },
+      {
+        "value": 0.0,
+        "n": 550,
+        "share": 0.059959
+      },
+      {
+        "value": 0.85,
+        "n": 488,
+        "share": 0.0532
+      },
+      {
+        "value": 0.15,
+        "n": 246,
+        "share": 0.026818
+      },
+      {
+        "value": 0.4,
+        "n": 203,
+        "share": 0.02213
+      },
+      {
+        "value": 0.75,
+        "n": 143,
+        "share": 0.015589
+      }
+    ]
+  },
+  "vocabulary_replicate": {
+    "n_distinct": 19,
+    "top_share": 0.376322,
+    "top_values": [
+      {
+        "value": 1.0,
+        "n": 3452,
+        "share": 0.376322
+      },
+      {
+        "value": 0.95,
+        "n": 1346,
+        "share": 0.146735
+      },
+      {
+        "value": 0.1,
+        "n": 1131,
+        "share": 0.123297
+      },
+      {
+        "value": 0.05,
+        "n": 906,
+        "share": 0.098768
+      },
+      {
+        "value": 0.2,
+        "n": 596,
+        "share": 0.064973
+      },
+      {
+        "value": 0.0,
+        "n": 522,
+        "share": 0.056906
+      },
+      {
+        "value": 0.85,
+        "n": 509,
+        "share": 0.055489
+      },
+      {
+        "value": 0.15,
+        "n": 250,
+        "share": 0.027254
+      },
+      {
+        "value": 0.4,
+        "n": 211,
+        "share": 0.023002
+      },
+      {
+        "value": 0.75,
+        "n": 144,
+        "share": 0.015698
+      }
+    ]
+  },
+  "arm2_reference": {
+    "note": "The other arm's two committed invocations, recomputed here read-only at the same thresholds so the cross-arm comparison in findings.md has a source in this directory. Nothing in that arm's home is written or re-run.",
+    "arm": "arm2",
+    "verifier_model": "gemini-3.7-flash",
+    "verifier_thinking": "low",
+    "carried_threshold": 0.9,
+    "original": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2",
+    "replicate": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2_replicate-batch-2026-09-20",
+    "n_candidates_original": 9173,
+    "n_candidates_replicate": 9173,
+    "n_compared": 9173,
+    "n_identical": 5826,
+    "identical_share": 0.635125,
+    "chance_identical_share": 0.276411,
+    "identical_kappa": 0.495742,
+    "flips": [
+      {
+        "threshold": 0.1,
+        "n_flips": 218,
+        "flip_share": 0.023765,
+        "flip_share_wilson95": [
+          0.020842,
+          0.027088
+        ],
+        "n_flips_replicate_keeps_original_drops": 107,
+        "n_flips_original_keeps_replicate_drops": 111,
+        "n_kept_original": 7420,
+        "n_kept_replicate": 7416
+      },
+      {
+        "threshold": 0.5,
+        "n_flips": 202,
+        "flip_share": 0.022021,
+        "flip_share_wilson95": [
+          0.019212,
+          0.02523
+        ],
+        "n_flips_replicate_keeps_original_drops": 102,
+        "n_flips_original_keeps_replicate_drops": 100,
+        "n_kept_original": 7246,
+        "n_kept_replicate": 7248
+      },
+      {
+        "threshold": 0.9,
+        "n_flips": 226,
+        "flip_share": 0.024638,
+        "flip_share_wilson95": [
+          0.021659,
+          0.028014
+        ],
+        "n_flips_replicate_keeps_original_drops": 110,
+        "n_flips_original_keeps_replicate_drops": 116,
+        "n_kept_original": 7128,
+        "n_kept_replicate": 7122
+      }
+    ],
+    "n_abs_delta_gt_0.5": 186,
+    "share_abs_delta_gt_0.5": 0.020277,
+    "mean_abs_delta": 0.025373,
+    "median_abs_delta": 0.0,
+    "p90_abs_delta": 0.03,
+    "max_abs_delta": 0.95,
+    "vocabulary_original": {
+      "n_distinct": 24,
+      "top_share": 0.483048,
+      "top_values": [
+        {
+          "value": 0.98,
+          "n": 4431,
+          "share": 0.483048
+        },
+        {
+          "value": 0.99,
+          "n": 1239,
+          "share": 0.13507
+        },
+        {
+          "value": 0.95,
+          "n": 831,
+          "share": 0.090592
+        },
+        {
+          "value": 0.05,
+          "n": 796,
+          "share": 0.086776
+        },
+        {
+          "value": 1.0,
+          "n": 575,
+          "share": 0.062684
+        },
+        {
+          "value": 0.0,
+          "n": 457,
+          "share": 0.04982
+        },
+        {
+          "value": 0.01,
+          "n": 452,
+          "share": 0.049275
+        },
+        {
+          "value": 0.85,
+          "n": 75,
+          "share": 0.008176
+        },
+        {
+          "value": 0.15,
+          "n": 75,
+          "share": 0.008176
+        },
+        {
+          "value": 0.1,
+          "n": 63,
+          "share": 0.006868
+        }
+      ]
+    },
+    "vocabulary_replicate": {
+      "n_distinct": 26,
+      "top_share": 0.482939,
+      "top_values": [
+        {
+          "value": 0.98,
+          "n": 4430,
+          "share": 0.482939
+        },
+        {
+          "value": 0.99,
+          "n": 1224,
+          "share": 0.133435
+        },
+        {
+          "value": 0.95,
+          "n": 842,
+          "share": 0.091791
+        },
+        {
+          "value": 0.05,
+          "n": 820,
+          "share": 0.089393
+        },
+        {
+          "value": 1.0,
+          "n": 579,
+          "share": 0.06312
+        },
+        {
+          "value": 0.0,
+          "n": 455,
+          "share": 0.049602
+        },
+        {
+          "value": 0.01,
+          "n": 443,
+          "share": 0.048294
+        },
+        {
+          "value": 0.15,
+          "n": 77,
+          "share": 0.008394
+        },
+        {
+          "value": 0.85,
+          "n": 62,
+          "share": 0.006759
+        },
+        {
+          "value": 0.1,
+          "n": 54,
+          "share": 0.005887
+        }
+      ]
+    }
+  }
+}

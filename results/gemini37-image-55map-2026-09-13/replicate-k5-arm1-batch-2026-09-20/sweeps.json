@@ -1,0 +1,85 @@
+{
+  "buffer_m": 50,
+  "reference": "r2",
+  "source_probabilities": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20",
+  "rungs": {
+    "IMG-ARM1-K5-replicate": {
+      "n_sweep_points": 95,
+      "carried_point": [
+        0.1,
+        5
+      ],
+      "carried": {
+        "rung": "IMG-ARM1-K5-replicate",
+        "prob_t": 0.1,
+        "min_votes": 5,
+        "n_detections": 5285,
+        "tp": 4706.0,
+        "fp": 579.0,
+        "fn": 312.0,
+        "micro_f1_50": 0.913520333883335,
+        "tile_mcc": 0.7530063444707626,
+        "tile_tp": 2649,
+        "tile_tn": 4851,
+        "tile_fp": 161,
+        "tile_fn": 880
+      },
+      "f1_oracle": {
+        "rung": "IMG-ARM1-K5-replicate",
+        "prob_t": 0.1,
+        "min_votes": 5,
+        "n_detections": 5285,
+        "tp": 4706.0,
+        "fp": 579.0,
+        "fn": 312.0,
+        "micro_f1_50": 0.913520333883335,
+        "tile_mcc": 0.7530063444707626,
+        "tile_tp": 2649,
+        "tile_tn": 4851,
+        "tile_fp": 161,
+        "tile_fn": 880
+      },
+      "mcc_oracle": {
+        "rung": "IMG-ARM1-K5-replicate",
+        "prob_t": 0.15,
+        "min_votes": 5,
+        "n_detections": 4870,
+        "tp": 4473.0,
+        "fp": 397.0,
+        "fn": 545.0,
+        "micro_f1_50": 0.9047330097087378,
+        "tile_mcc": 0.755879752042268,
+        "tile_tp": 2561,
+        "tile_tn": 4931,
+        "tile_fp": 81,
+        "tile_fn": 968
+      }
+    }
+  },
+  "cells": [
+    {
+      "label": "IMG-ARM1-K5-carried-replicate",
+      "rung": "IMG-ARM1-K5-replicate",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 5,
+      "basis": "carried",
+      "point": "(0.10, k5)",
+      "n_detections": 5285,
+      "det": "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-carried-replicate/detections.geojson"
+    },
+    {
+      "label": "IMG-ARM1-K5-f1-oracle-replicate",
+      "rung": "IMG-ARM1-K5-replicate",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 5,
+      "basis": "f1-oracle",
+      "point": "(0.10, k5)",
+      "n_detections": 5285,
+      "det": "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-f1-oracle-replicate/detections.geojson"
+    }
+  ]
+}
