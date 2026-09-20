@@ -37,7 +37,8 @@
       "point": "(0.35, k1)",
       "n_detections": 10078,
       "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/detections.geojson",
-      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM1-K3-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one."
+      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM1-K3-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one.",
+      "rescored_in_place": "RE-SCORED IN PLACE 2026-09-20: this cell was scored at its original path and then moved here, so its evaluation metadata (cli_args, input_files, input_git_state) still named cells/G3IMG-ARM1-K3-mcc-oracle/detections.geojson, which now holds the re-pointed carried-k cell; verify_run_conditions.py raised eval-detections-mismatch on the register row citing it. It was re-scored here on the same r2 recipe (14 buffers, tile-level BCa 10,000 at seed 42, --mcc, --require-clean-inputs) over the SAME, unmodified detections file, so every headline number and confidence interval is identical to the pre-move evaluation and only the metadata paths changed. The pre-move record is retained beside it as evaluation.pre-move-2026-09-20.{json,csv,md} and score.pre-move-2026-09-20.log."
     },
     {
       "label": "G3IMG-ARM2-K3-mcc-oracle-unconstrained",
@@ -50,7 +51,8 @@
       "point": "(0.98, k1)",
       "n_detections": 10727,
       "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson",
-      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM2-K3-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one."
+      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM2-K3-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one.",
+      "rescored_in_place": "RE-SCORED IN PLACE 2026-09-20: this cell was scored at its original path and then moved here, so its evaluation metadata (cli_args, input_files, input_git_state) still named cells/G3IMG-ARM2-K3-mcc-oracle/detections.geojson, which now holds the re-pointed carried-k cell; verify_run_conditions.py raised eval-detections-mismatch on the register row citing it. It was re-scored here on the same r2 recipe (14 buffers, tile-level BCa 10,000 at seed 42, --mcc, --require-clean-inputs) over the SAME, unmodified detections file, so every headline number and confidence interval is identical to the pre-move evaluation and only the metadata paths changed. The pre-move record is retained beside it as evaluation.pre-move-2026-09-20.{json,csv,md} and score.pre-move-2026-09-20.log."
     },
     {
       "label": "G3IMG-ARM1-K5-mcc-oracle-unconstrained",
@@ -63,7 +65,8 @@
       "point": "(0.40, k1)",
       "n_detections": 11739,
       "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/detections.geojson",
-      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM1-K5-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one."
+      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM1-K5-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one.",
+      "rescored_in_place": "RE-SCORED IN PLACE 2026-09-20: this cell was scored at its original path and then moved here, so its evaluation metadata (cli_args, input_files, input_git_state) still named cells/G3IMG-ARM1-K5-mcc-oracle/detections.geojson, which now holds the re-pointed carried-k cell; verify_run_conditions.py raised eval-detections-mismatch on the register row citing it. It was re-scored here on the same r2 recipe (14 buffers, tile-level BCa 10,000 at seed 42, --mcc, --require-clean-inputs) over the SAME, unmodified detections file, so every headline number and confidence interval is identical to the pre-move evaluation and only the metadata paths changed. The pre-move record is retained beside it as evaluation.pre-move-2026-09-20.{json,csv,md} and score.pre-move-2026-09-20.log."
     },
     {
       "label": "G3IMG-ARM2-K5-mcc-oracle-unconstrained",
@@ -76,7 +79,8 @@
       "point": "(0.98, k1)",
       "n_detections": 12508,
       "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/detections.geojson",
-      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM2-K5-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one."
+      "superseded": "SUPERSEDED 2026-09-20: the MCC oracle is now the tile-MCC optimum over prob_t at the rung's CARRIED vote count, which is the cell now at G3IMG-ARM2-K5-mcc-oracle. This is the previous, UNCONSTRAINED optimum, free to choose the vote count too; it is retained because every rung that had a choice put it at a single vote, at a large cost in micro-F1, and that is the finding. Not an oracle; do not quote it as one.",
+      "rescored_in_place": "RE-SCORED IN PLACE 2026-09-20: this cell was scored at its original path and then moved here, so its evaluation metadata (cli_args, input_files, input_git_state) still named cells/G3IMG-ARM2-K5-mcc-oracle/detections.geojson, which now holds the re-pointed carried-k cell; verify_run_conditions.py raised eval-detections-mismatch on the register row citing it. It was re-scored here on the same r2 recipe (14 buffers, tile-level BCa 10,000 at seed 42, --mcc, --require-clean-inputs) over the SAME, unmodified detections file, so every headline number and confidence interval is identical to the pre-move evaluation and only the metadata paths changed. The pre-move record is retained beside it as evaluation.pre-move-2026-09-20.{json,csv,md} and score.pre-move-2026-09-20.log."
     },
     {
       "label": "G3IMG-ARM1-K1-carried",

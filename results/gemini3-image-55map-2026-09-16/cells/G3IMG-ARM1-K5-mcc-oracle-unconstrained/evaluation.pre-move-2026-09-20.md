@@ -1,6 +1,6 @@
-# Evaluation: G3IMG-ARM1-K5-mcc-oracle-unconstrained-image-55map-r2
+# Evaluation: G3IMG-ARM1-K5-mcc-oracle-image-55map-r2
 
-**Generated**: 2026-09-20T08:53:54.479097+00:00  
+**Generated**: 2026-09-19T22:20:35.716756+00:00  
 **Detections**: 11739  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |

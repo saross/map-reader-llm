@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-09-19T14:09:27.537175+00:00",
+  "timestamp": "2026-09-20T08:50:00.488373+00:00",
   "summary": {
-    "label": "G3IMG-ARM2-K3-mcc-oracle-image-55map-r2",
+    "label": "G3IMG-ARM2-K3-mcc-oracle-unconstrained-image-55map-r2",
     "n_detections": 10727,
     "buffers": [
       {
@@ -518,12 +518,12 @@
   "_metadata": {
     "metadata_version": "1.4",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "5d106e1d5",
+    "script_git_commit": "b09c84f9d",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-09-19T14:05:45.553397+00:00",
+    "generated_at_utc": "2026-09-20T08:46:17.397353+00:00",
     "cli_args": {
       "detections": [
-        "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/detections.geojson"
+        "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson"
       ],
       "detections_dir": null,
       "batch": null,
@@ -548,12 +548,12 @@
       "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle",
-      "label": "G3IMG-ARM2-K3-mcc-oracle-image-55map-r2",
+      "output_dir": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained",
+      "label": "G3IMG-ARM2-K3-mcc-oracle-unconstrained-image-55map-r2",
       "mcc": true,
       "tile_join": "id",
       "require_clean_inputs": true,
-      "workers": 5
+      "workers": 4
     },
     "bootstrap": {
       "n_iterations": 10000,
@@ -568,20 +568,20 @@
     },
     "input_files": {
       "detections": [
-        "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/detections.geojson"
+        "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson"
       ],
       "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
       "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
     },
     "input_git_state": {
-      "head": "5d106e1d5",
+      "head": "b09c84f9d",
       "inputs": {
-        "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/detections.geojson": "clean",
+        "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson": "clean",
         "inputs/vectors/references/best-available-gt-55maps-r2.geojson": "clean",
         "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson": "clean"
       },
       "blob_hashes": {
-        "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/detections.geojson": "c4fb88f6121230159889908d9fae4fb3eed23d85",
+        "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson": "c4fb88f6121230159889908d9fae4fb3eed23d85",
         "inputs/vectors/references/best-available-gt-55maps-r2.geojson": "5d2471e6c4b4f8878e4f1878d54f465efb784318",
         "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson": "1a0cf105073d919b37ef6c2a8c5d6a8f69156445"
       }
