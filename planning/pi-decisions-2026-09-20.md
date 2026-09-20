@@ -6,12 +6,11 @@ the commit that executed it. Read top to bottom; open items first.
 
 ## Open
 
-### D9 — Do the signed rows A and B lapse after the MCC-oracle redefinition?
-
-- **Facts** (registrar, 7bffd0c2c): both signed rows cite the five re-pointed MCC-oracle conditions in `conditions_compared`. The image campaigns re-materialised those cells in place at 07:43 UTC, after both signatures, so for four hours the signed citations resolved to evaluations the PI never saw; the registrar restored them by pointing the five ids at the `-unconstrained` cells, SHA-256-identical to what was scored at signing. Numbers and membership are therefore unchanged. Two residual questions: (a) both rows describe "the MCC oracle", a term redefined after signing; (b) row B's `attests` says "the 18 registered conditions" and the run now carries 22 (the four new carried-k oracles, outside scope by construction).
-- **Options**: (i) leave both signed; add a dated `_signature_note` recording the redefinition, the restored citations, and that the new conditions are outside scope (recommended: no cited number or member changed); (ii) move both to `re-sign-pending` and re-sign after reading the redefinition.
-
 ## Ruled
+
+### D9 — Signatures after the redefinition — RULED 2026-09-21: both signatures STAND; dated signature notes record the redefinition and its reversal, the restored citations, the four-hour window, and that later conditions are outside scope; a cited-artefact hash snapshot and verifier check are added so a cell cited by a signed row cannot be re-materialised in place unnoticed (registrar, in progress)
+
+### D6c amended — MCC oracle — RULED 2026-09-21 (supersedes 2026-09-20): the "MCC oracle" is DROPPED from the main boards under both definitions; tile-MCC stays reported beside F1 at the carried and F1-oracle points; the F1 oracle stays free over threshold and vote count. Reason: tile-MCC has no interior optimum on this corpus — its free optimum is the vote-count artefact and its pinned optimum is within noise of the carried point. A separate tile-presence presentation (`results/tile-presence-2026-09-21/`: each configuration's unconstrained tile-MCC optimum with vote count, threshold, n, F1 and pool cost, all labelled oracle; and a per-family (F1, tile-MCC) Pareto frontier) serves the researcher who wants tile presence/absence. The unconstrained cells become that table's members; the carried-k cells are retained, not presented; nothing deleted (board and registrar agents, in progress)
 
 ### D7 — Legacy vote-count divergence — RULED 2026-09-20: documented, not rebuilt. IM-k4 is cited on the r2 board (row 35, bottom tier) and in the uplift supplement, not in the paper drafts; a +0.0004 F1 correction is not worth a rebuild and two re-signatures. Dated correction notes at every citation point (bcf1169f7 for the supplement build report and the cell's r2 evaluation; the board changelog and the two register conditions via the agents holding those files). The one never-verified text-high candidate is minuted, not verified. Root cause being fixed: the incremental extractor now refreshes matched entries and matches one-to-one, and the current chain gains a manifest-vs-union guard before any verifier spend (in progress)
 
