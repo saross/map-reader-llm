@@ -1,0 +1,156 @@
+{
+  "declaration": "reports/image-2x2-tests-declaration-2026-09-19.md",
+  "declaration_section": "3a \u2014 T5m, protocol-matched confound check",
+  "rung": 3,
+  "status": "additional (post-hoc, PI ruling 2026-09-20)",
+  "why": "The declared T5 matches the absolute vote count across pools of different depth, which converts the passes confound into a vote-fraction confound of 1.0 against 0.6. The protocol-matched comparator is the September Gemini 3 pool at K = 5 read at min_votes 3 (results/im-june-pool-grid-2026-09-20/findings.md section 6). T5m adds that comparison; it does not replace T5, whose verdict stands as committed in results/image-2x2-2026-09-19/tests_2x2_K3.json.",
+  "cells": {
+    "G3IMG-ARM1-K5-votes3-carried": {
+      "label": "G3IMG-ARM1-K5-votes3-carried",
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/detections.geojson",
+      "point": "(0.15, k3)",
+      "n": 7222,
+      "confusion": {
+        "tp": 2621,
+        "tn": 4767,
+        "fp": 245,
+        "fn": 908
+      }
+    },
+    "G3IMG-ARM1-K5-votes3-f1-oracle": {
+      "label": "G3IMG-ARM1-K5-votes3-f1-oracle",
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-f1-oracle/detections.geojson",
+      "point": "(0.20, k3)",
+      "n": 6974,
+      "confusion": {
+        "tp": 2586,
+        "tn": 4837,
+        "fp": 175,
+        "fn": 943
+      }
+    },
+    "G3IMG-ARM1-K3-carried": {
+      "label": "G3IMG-ARM1-K3-carried",
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/detections.geojson",
+      "point": "(0.15, k3)",
+      "n": 5538,
+      "confusion": {
+        "tp": 2557,
+        "tn": 4825,
+        "fp": 187,
+        "fn": 972
+      }
+    },
+    "IM-k3": {
+      "label": "IM-k3",
+      "det": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+      "point": "(0.15, k3)",
+      "n": 4680,
+      "confusion": {
+        "tp": 2486,
+        "tn": 4834,
+        "fp": 178,
+        "fn": 1043
+      }
+    }
+  },
+  "buffer_m": 50,
+  "reference": "r2",
+  "n_permutations": 10000,
+  "seed": 42,
+  "multiplicity": "No Benjamini-Hochberg adjustment. T5m is one declared contrast reported with its own F1-oracle twin, plus the declared T5 pair re-run as a pipeline gate \u2014 not a new declared family. Raw p-values are reported. The declared family's correction is unchanged: it remains the five tests of tests_2x2_K3.json, and nothing here enters it.",
+  "f1_tests": [
+    {
+      "test": "T5m",
+      "name": "protocol-matched confound check vs IM-k3",
+      "a": "G3IMG-ARM1-K5-votes3-carried",
+      "b": "IM-k3",
+      "contrast": "the matched comparator: same pool depth (5 passes), same vote count (3), same probability threshold (0.15), same verifier arm",
+      "f1_a": 0.731209,
+      "f1_b": 0.800784,
+      "observed_diff": -0.069575,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 4.6e-05,
+      "null_std": 0.00535
+    },
+    {
+      "test": "T5m-oracle",
+      "name": "protocol-matched confound check at the F1 oracle",
+      "a": "G3IMG-ARM1-K5-votes3-f1-oracle",
+      "b": "IM-k3",
+      "contrast": "the same matched comparator read at its own best micro-F1 row with min_votes 3, so the carried-versus-oracle tax is visible",
+      "f1_a": 0.735657,
+      "f1_b": 0.800784,
+      "observed_diff": -0.065127,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 5.2e-05,
+      "null_std": 0.005379
+    },
+    {
+      "test": "T5-declared",
+      "name": "the declared T5, reproduced for the record",
+      "a": "G3IMG-ARM1-K3-carried",
+      "b": "IM-k3",
+      "contrast": "3-of-3 unanimity on a three-pass pool against IM-k3's 3-of-5 majority on a five-pass pool; reproduced here as a pipeline gate, with its verdict unchanged in tests_2x2_K3.json",
+      "f1_a": 0.802387,
+      "f1_b": 0.800784,
+      "observed_diff": 0.001604,
+      "p_value": 0.7604,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 6e-06,
+      "null_std": 0.005177
+    }
+  ],
+  "mcc_tests": [
+    {
+      "test": "T5m",
+      "name": "protocol-matched confound check vs IM-k3",
+      "a": "G3IMG-ARM1-K5-votes3-carried",
+      "b": "IM-k3",
+      "contrast": "the matched comparator: same pool depth (5 passes), same vote count (3), same probability threshold (0.15), same verifier arm",
+      "mcc_a": 0.723532,
+      "mcc_b": 0.711,
+      "observed_diff": 0.012531,
+      "p_value": 0.0887,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -2.4e-05,
+      "null_std": 0.007337
+    },
+    {
+      "test": "T5m-oracle",
+      "name": "protocol-matched confound check at the F1 oracle",
+      "a": "G3IMG-ARM1-K5-votes3-f1-oracle",
+      "b": "IM-k3",
+      "contrast": "the same matched comparator read at its own best micro-F1 row with min_votes 3, so the carried-versus-oracle tax is visible",
+      "mcc_a": 0.734697,
+      "mcc_b": 0.711,
+      "observed_diff": 0.023697,
+      "p_value": 0.0009,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -2.7e-05,
+      "null_std": 0.007072
+    },
+    {
+      "test": "T5-declared",
+      "name": "the declared T5, reproduced for the record",
+      "a": "G3IMG-ARM1-K3-carried",
+      "b": "IM-k3",
+      "contrast": "3-of-3 unanimity on a three-pass pool against IM-k3's 3-of-5 majority on a five-pass pool; reproduced here as a pipeline gate, with its verdict unchanged in tests_2x2_K3.json",
+      "mcc_a": 0.724698,
+      "mcc_b": 0.711,
+      "observed_diff": 0.013698,
+      "p_value": 0.0578,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -9.1e-05,
+      "null_std": 0.0072
+    }
+  ]
+}
