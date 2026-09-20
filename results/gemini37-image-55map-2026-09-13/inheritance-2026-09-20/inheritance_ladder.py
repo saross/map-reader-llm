@@ -234,8 +234,18 @@ def agreement(inherited: gpd.GeoDataFrame, own: gpd.GeoDataFrame,
     b = inherited["mound_probability"].to_numpy(dtype=float)
     votes = inherited["vote_count"].to_numpy()
     keep_a, keep_b = a >= prob_t, b >= prob_t
+    gate = votes >= min_votes
     n_own_full = int(len(materialise(own, prob_t, min_votes)))
-    n_own_matched = int(((votes >= min_votes) & keep_a).sum())
+    n_own_matched = int((gate & keep_a).sum())
+    # The ``*_vote_gated`` counts are the flips that actually reach the cells,
+    # and they close the identity
+    #     n_kept_inherited_cell = n_kept_own_leg_matched_only
+    #                             - n_own_keeps_inherited_drops_vote_gated
+    #                             + n_inherited_keeps_own_drops_vote_gated
+    # exactly. The ungated counts above are the probability-threshold flip rate
+    # the ruling asks for, over every matched candidate; at K = 3 the carried
+    # point also demands three votes, so only a subset of those flips changes
+    # the cell and the ungated numbers do not reconcile with it on their own.
     return {
         "n_matched": int(len(inherited)),
         "n_identical": int((a == b).sum()),
@@ -250,9 +260,13 @@ def agreement(inherited: gpd.GeoDataFrame, own: gpd.GeoDataFrame,
         "mean_abs_delta": round(float(np.abs(a - b).mean()), 6),
         "median_abs_delta": round(float(np.median(np.abs(a - b))), 6),
         "mean_signed_delta_own_minus_inherited": round(float((a - b).mean()), 6),
+        "n_flips_vote_gated": int(((keep_a != keep_b) & gate).sum()),
+        "n_own_keeps_inherited_drops_vote_gated": int((keep_a & ~keep_b & gate).sum()),
+        "n_inherited_keeps_own_drops_vote_gated": int((keep_b & ~keep_a & gate).sum()),
         "n_kept_own_leg_matched_only": n_own_matched,
         "n_kept_own_leg_full_cell": n_own_full,
         "n_dropped_by_inheritance": n_own_full - n_own_matched,
+        "n_kept_inherited_cell": int((keep_b & gate).sum()),
     }
 
 
