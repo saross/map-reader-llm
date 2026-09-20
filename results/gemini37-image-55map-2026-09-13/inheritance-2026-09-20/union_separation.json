@@ -1,0 +1,35 @@
+{
+  "cell": "g384_ov192_55map_g37img",
+  "inherit_tol_m": 10.0,
+  "dedup_metres": 20.0,
+  "note": "Nearest-neighbour distance from each union candidate to another candidate of the SAME union, in EPSG:32635 metres. A source union can only offer an ambiguous match where this distance falls below the inheritance radius.",
+  "unions": {
+    "k1": {
+      "n_candidates": 6985,
+      "nn_min_m": 20.012637,
+      "nn_p01_m": 20.814847,
+      "nn_p05_m": 23.586187,
+      "nn_p50_m": 321.342812,
+      "n_with_neighbour_within_tol": 0,
+      "share_with_neighbour_within_tol": 0.0
+    },
+    "k3": {
+      "n_candidates": 8337,
+      "nn_min_m": 10.426375,
+      "nn_p01_m": 15.687029,
+      "nn_p05_m": 20.837829,
+      "nn_p50_m": 194.161852,
+      "n_with_neighbour_within_tol": 0,
+      "share_with_neighbour_within_tol": 0.0
+    },
+    "k5": {
+      "n_candidates": 9173,
+      "nn_min_m": 8.495751,
+      "nn_p01_m": 14.131326,
+      "nn_p05_m": 19.194567,
+      "nn_p50_m": 147.362825,
+      "n_with_neighbour_within_tol": 8,
+      "share_with_neighbour_within_tol": 0.000872
+    }
+  }
+}

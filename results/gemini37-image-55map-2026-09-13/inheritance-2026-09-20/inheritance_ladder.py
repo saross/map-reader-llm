@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Derive the 3.7 image row's K = 1 and K = 3 rungs by INHERITANCE from its K = 5 legs.
+Derive an image row's K = 1 and K = 3 rungs by INHERITANCE from its K = 5 legs.
 
 Why this exists
 ---------------
@@ -14,11 +14,13 @@ docstring, "probability inheritance by nearest K = 10 candidate within 10 m
 ``scripts/gemini37_arm_ladder.py`` does for the 3.7 text row, whose result is
 ``results/gemini37-55map-2026-08-31/ladder/ladder.json``.
 
-The 3.7 **image** campaign (``gemini37-image-55map-2026-09-13``) did not do that.
-It ran a *separate verifier leg per rung* — ``verify_k1_arm{1,2}``,
-``verify_k3_arm{1,2}``, ``verify_k5_arm{1,2}`` — six legs over three unions. So
-the image row's K = 1 and K = 3 cells are own-leg cells, not inherited ones, and
-nobody has measured what the two methods do to the same candidates.
+Neither **image** campaign did that. Both the 3.7 pool
+(``gemini37-image-55map-2026-09-13``) and the Gemini 3 pool
+(``gemini3-image-55map-2026-09-16``) ran a *separate verifier leg per rung* —
+``verify_k1_arm{1,2}``, ``verify_k3_arm{1,2}``, ``verify_k5_arm{1,2}``, six legs
+over three unions each. So the image rows' K = 1 and K = 3 cells are own-leg
+cells, not inherited ones, and nobody has measured what the two methods do to
+the same candidates.
 
 This script measures it. For each arm it gives every K = 1 and K = 3 union
 candidate the K = 5 leg's probability of its nearest K = 5 candidate within 10 m,
@@ -38,13 +40,13 @@ retyped one.
 
 One difference from the text track is structural and unavoidable: there the
 lower-rung unions are *rebuilt* from the first-N passes, because no lower-rung
-union was ever built. Here the campaign's lower-rung unions already exist and are
-committed (``union_k1.geojson`` 6,985, ``union_k3.geojson`` 8,337,
-``union_k5.geojson`` 9,173), and the own-leg cells this comparison is against were
-built from exactly those crop manifests. Rebuilding them would change the
-comparison from "two verification methods over one candidate set" to "two
-verification methods over two candidate sets". So the unions are taken as given
-and only the probabilities differ — which is the contrast the PI asked for.
+union was ever built. Here each campaign's lower-rung unions already exist and
+are committed as ``union_k{1,3,5}.geojson``, and the own-leg cells this
+comparison is against were built from exactly those crop manifests. Rebuilding
+them would change the comparison from "two verification methods over one
+candidate set" to "two verification methods over two candidate sets". So the
+unions are taken as given and only the probabilities differ — which is the
+contrast the PI asked for.
 
 Everything else is *imported* from ``scripts/gemini37_image_55map_r2.py`` — the
 frames, the tile re-stamp, the materialiser, the achievable grid, the per-tile
@@ -54,6 +56,8 @@ is modified.
 
 Stages
 ------
+``separation``   The within-union nearest-neighbour distances that set how
+                 ambiguous the radius CAN be; writes ``union_separation.json``.
 ``ladder``       Inherit, record match and agreement statistics, sweep each
                  inherited rung's achievable grid, write ``ladder.json``, the
                  sweep CSVs, the four carried cells and ``cells_manifest.json``.
@@ -62,14 +66,28 @@ Stages
 ``tests``        The four head-to-head paired tile-swap tests plus the arm 2
                  ladder contrasts under each method; writes ``tests.json``.
 
+Both pools of the image 2x2
+---------------------------
+``--campaign g37`` (the default) is the 3.7 image pool this study was written
+for; ``--campaign g3`` is the Gemini 3 image pool, whose unions are about five
+times denser (22,785 / 36,389 / 45,786 against 6,985 / 8,337 / 9,173) and which
+is therefore the density stress test of the 10 m radius. The campaign records
+themselves — verifier root, cell name, results home, carried points — are the
+r2 script's own :data:`CAMPAIGNS`, so nothing about the pool is restated here.
+Each pool's artefacts land under its own campaign results home in
+``inheritance-2026-09-20/``; only this file is shared.
+
 Usage::
 
     cd ~/Code/map-reader-llm
-    .venv/bin/python results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/\
-inheritance_ladder.py --stage ladder --workers 12
+    S=results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20
+    .venv/bin/python $S/inheritance_ladder.py --stage ladder --workers 12
     # commit the detections, then:
-    .venv/bin/python .../inheritance_ladder.py --stage score --workers 6 --jobs 4
-    .venv/bin/python .../inheritance_ladder.py --stage tests
+    .venv/bin/python $S/inheritance_ladder.py --stage score --workers 6 --jobs 4
+    .venv/bin/python $S/inheritance_ladder.py --stage tests
+
+    # the Gemini 3 pool, same three stages
+    .venv/bin/python $S/inheritance_ladder.py --stage ladder --campaign g3 --workers 14
 
 Zero API. Run on sapphire.
 
@@ -120,24 +138,45 @@ from scripts.gemini37_image_55map_r2 import (  # noqa: E402
     with_carried,
 )
 from scripts.stride55_ladder import INHERIT_TOL_M  # noqa: E402
+from scripts.stride55_prepare_and_union import DEDUP_METRES  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-# The r2 script serves both pools of the image 2x2; bind it to the 3.7 pool so
-# rung_frame/carried_point read the same tables the own-leg cells were built from.
-CAMPAIGN = select_campaign("g37")
-
-#: The campaign's results home, and this study's own home beneath it. Nothing
-#: committed by the campaign is touched.
-CAMPAIGN_HOME = PROJECT_ROOT / "results/gemini37-image-55map-2026-09-13"
-HOME = CAMPAIGN_HOME / "inheritance-2026-09-20"
+#: This study's directory name inside whichever campaign's results home is bound.
+STUDY_DIR = "inheritance-2026-09-20"
 
 #: The rung the probabilities are inherited FROM, and the rungs they are
 #: inherited TO.
 SOURCE_K = 5
 RUNGS = (1, 3)
 ARMS = ("arm1", "arm2")
+
+#: Bound by :func:`bind_campaign`, which every entry point calls before doing
+#: anything. The default is the 3.7 pool the study was written for, so the
+#: committed 3.7 artefacts re-derive from a bare ``--stage`` invocation exactly
+#: as they did before the script was parametrised.
+CAMPAIGN = select_campaign("g37")
+CAMPAIGN_HOME = CAMPAIGN.results_home
+HOME = CAMPAIGN_HOME / STUDY_DIR
+
+
+def bind_campaign(key: str) -> None:
+    """Bind this module and the r2 module to one pool of the image 2x2.
+
+    The r2 script already carries both pools as :data:`CAMPAIGNS` records —
+    where each one's verifier root, cell name, results home, rung set and
+    GS-carried operating points live — so binding is a matter of calling its
+    own ``select_campaign`` and re-deriving the two paths this study adds.
+    Nothing about the method is campaign-specific; only the data is.
+
+    Args:
+        key: ``g37`` (the 3.7 image pool) or ``g3`` (the Gemini 3 image pool).
+    """
+    global CAMPAIGN, CAMPAIGN_HOME, HOME
+    CAMPAIGN = select_campaign(key)
+    CAMPAIGN_HOME = CAMPAIGN.results_home
+    HOME = CAMPAIGN_HOME / STUDY_DIR
 
 
 def rung_label(arm: str, k: int) -> str:
@@ -200,10 +239,96 @@ def inherit(arm: str, k: int) -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame, dict[
         "unmatched": int((~matched).sum()),
         "match_dist_p50_m": round(float(np.percentile(dist, 50)), 6),
         "match_dist_p95_m": round(float(np.percentile(dist, 95)), 6),
+        "match_dist_p99_m": round(float(np.percentile(dist, 99)), 6),
         "match_dist_max_m": round(float(dist.max()), 6),
         "n_exact_coincident": int((dist == 0.0).sum()),
+        "ambiguity": ambiguity(own, src, tree, dist, matched, arm, k),
     }
     return inherited, own, record
+
+
+def ambiguity(own: gpd.GeoDataFrame, src: gpd.GeoDataFrame, tree: cKDTree,
+              dist: np.ndarray, matched: np.ndarray, arm: str,
+              k: int) -> dict[str, Any]:
+    """How often the 10 m radius offers a CHOICE, and what the choice costs.
+
+    The inheritance rule is "nearest K = 5 candidate within 10 m". On a sparse
+    candidate field that is almost always a restatement of "the same candidate
+    seen at a different rung". On a dense one it is a genuine selection among
+    several K = 5 candidates, and the rule's tie-break — nearest wins — decides
+    which probability a lower-rung candidate ends up with. Nothing in the text
+    track ever measured that, because the text track's unions are sparse.
+
+    **The tie-break, stated exactly.** ``cKDTree.query(..., k=1)`` returns the
+    single neighbour of least Euclidean distance. Ties in that distance are
+    broken by the tree's internal ordering, which is deterministic for a given
+    build but is not part of the documented API — so exact ties are counted
+    here rather than relied upon. They are the only case in which the rule
+    does not, by itself, name a winner.
+
+    Args:
+        own: The rung's own-leg frame (all candidates).
+        src: The K = 5 source frame.
+        tree: The KD-tree over ``src``'s coordinates.
+        dist: Nearest-neighbour distance per own candidate.
+        matched: Whether each own candidate matched inside the radius.
+        arm: ``arm1`` or ``arm2``, for the decision threshold.
+        k: The rung, for the decision threshold.
+
+    Returns:
+        Counts of ambiguous matches, exact distance ties, the decisiveness of
+        the tie-break, and how often the alternatives disagree about the
+        carried decision.
+    """
+    prob_t, _ = carried_point(arm, k)
+    pts = np.c_[own.geometry.x, own.geometry.y]
+    probs = src["mound_probability"].to_numpy(dtype=float)
+
+    # How many K = 5 candidates each lower-rung candidate could have taken.
+    counts = tree.query_ball_point(pts, r=INHERIT_TOL_M, return_length=True)
+    ambiguous = (counts >= 2) & matched
+
+    # The margin the tie-break decides on, and the exact ties it cannot.
+    d2, _ = tree.query(pts, k=2)
+    margin = d2[:, 1] - d2[:, 0]
+    exact_ties = matched & (d2[:, 1] == d2[:, 0])
+
+    # Does the choice matter? Only where the candidates inside the radius do
+    # not all fall on the same side of the carried threshold: then the
+    # tie-break, not the verifier, sets this candidate's decision.
+    neighbours = tree.query_ball_point(pts[ambiguous], r=INHERIT_TOL_M)
+    n_decision_ambiguous = 0
+    spreads = []
+    for nb in neighbours:
+        p = probs[nb]
+        spreads.append(float(p.max() - p.min()))
+        if (p >= prob_t).any() and (p < prob_t).any():
+            n_decision_ambiguous += 1
+
+    n_amb = int(ambiguous.sum())
+    return {
+        "radius_m": INHERIT_TOL_M,
+        "tie_break_rule": (
+            "nearest Euclidean neighbour wins (cKDTree.query k=1); exact "
+            "distance ties fall to the tree's internal ordering, which is "
+            "deterministic per build but undocumented, so they are counted "
+            "rather than relied upon"),
+        "neighbours_within_radius_mean": round(float(counts.mean()), 4),
+        "neighbours_within_radius_max": int(counts.max()),
+        "n_ambiguous": n_amb,
+        "ambiguous_share_of_matched": round(n_amb / max(int(matched.sum()), 1), 6),
+        "n_exact_distance_ties": int(exact_ties.sum()),
+        "margin_d2_minus_d1_p05_m": round(float(np.percentile(margin[matched], 5)), 6),
+        "margin_d2_minus_d1_p50_m": round(float(np.percentile(margin[matched], 50)), 6),
+        "decision_threshold": prob_t,
+        "n_decision_ambiguous": n_decision_ambiguous,
+        "decision_ambiguous_share_of_matched": round(
+            n_decision_ambiguous / max(int(matched.sum()), 1), 6),
+        "prob_spread_within_radius_mean": (
+            round(float(np.mean(spreads)), 6) if spreads else 0.0),
+        "prob_spread_within_radius_max": (
+            round(float(np.max(spreads)), 6) if spreads else 0.0),
+    }
 
 
 def agreement(inherited: gpd.GeoDataFrame, own: gpd.GeoDataFrame,
@@ -296,14 +421,20 @@ def stage_ladder(workers: int) -> int:
             frames[label] = inherited
             record["agreement"] = agreement(inherited, own, arm, k)
             records[arm][k] = record
+            amb = record["ambiguity"]
             logger.info(
-                "%-24s union %5d, matched %5d, unmatched %3d (p50 %.2f m, "
-                "p95 %.2f m, max %.2f m) | identical %.1f %%, flips %.2f %%",
+                "%-26s union %6d, matched %6d, unmatched %4d (p50 %.2f m, "
+                "p95 %.2f m, max %.2f m) | identical %.1f %%, flips %.2f %% | "
+                "ambiguous %d (%.2f %%, max %d in radius), decision-ambiguous "
+                "%d, exact ties %d",
                 label, record["union_n"], record["matched"], record["unmatched"],
                 record["match_dist_p50_m"], record["match_dist_p95_m"],
                 record["match_dist_max_m"],
                 100 * record["agreement"]["identical_share"],
-                100 * record["agreement"]["flip_share"])
+                100 * record["agreement"]["flip_share"],
+                amb["n_ambiguous"], 100 * amb["ambiguous_share_of_matched"],
+                amb["neighbours_within_radius_max"],
+                amb["n_decision_ambiguous"], amb["n_exact_distance_ties"])
 
     tasks = []
     for arm in ARMS:
@@ -485,15 +616,18 @@ def build_tests() -> list[tuple[str, str, str, str]]:
             f"H{i}", own_cell_label(arm, k), cell_label(arm, k),
             f"head-to-head {arm} K = {k}: own verifier leg vs inheritance from "
             f"the K = {SOURCE_K} leg, same union, same carried point"))
+    own_k1, own_k3 = own_cell_label("arm2", 1), own_cell_label("arm2", 3)
+    own_k5 = f"{CAMPAIGN.prefix}-ARM2-K{SOURCE_K}-carried"
+    inh_k1, inh_k3 = cell_label("arm2", 1), cell_label("arm2", 3)
     tests += [
-        ("L1", "IMG-ARM2-K3-carried", "IMG-ARM2-K1-carried",
+        ("L1", own_k3, own_k1,
          "arm 2 ladder K1 -> K3, own-leg method (both rungs own-leg)"),
-        ("L2", "IMG-ARM2-K3-carried-inherited", "IMG-ARM2-K1-carried-inherited",
+        ("L2", inh_k3, inh_k1,
          "arm 2 ladder K1 -> K3, inheritance method (both rungs inherited)"),
-        ("L3", "IMG-ARM2-K5-carried", "IMG-ARM2-K3-carried",
+        ("L3", own_k5, own_k3,
          "arm 2 ladder K3 -> K5 as the campaign's current documents report it "
          "(both rungs own-leg)"),
-        ("L4", "IMG-ARM2-K5-carried", "IMG-ARM2-K3-carried-inherited",
+        ("L4", own_k5, inh_k3,
          "arm 2 ladder K3 -> K5 under inheritance: the K = 5 cell IS the "
          "inheritance source leg, so this is the pure inheritance ladder contrast"),
     ]
@@ -580,17 +714,88 @@ def stage_tests() -> int:
     return 0
 
 
+def stage_separation() -> int:
+    """Within-union nearest-neighbour separation, the ambiguity capacity of a union.
+
+    **Why this exists.** The density stress test asks whether a denser
+    candidate field makes the 10 m inheritance radius ambiguous — whether a
+    lower-rung candidate starts having a *choice* of K = 5 candidates to
+    inherit from. The measured answer on both pools is "almost never", and
+    this stage measures the reason rather than asserting it: a union is not a
+    scatter of independent points but the centroid set of a greedy star
+    clustering at ``DEDUP_METRES`` = 20 m
+    (``scripts/h13_k_sensitivity.cluster_votes``, absorbing every point within
+    that radius), so two union candidates within 10 m of each other are the
+    exception even when the union is large. An ambiguous match needs exactly
+    that: two source candidates inside one radius.
+
+    Coordinates come from each rung's crop manifest, which
+    ``final_board_sweeps.load_manifest_probs`` reads as EPSG:32635 metres, so
+    no reprojection enters the measurement.
+
+    Returns:
+        A process exit status.
+    """
+    vroot = CAMPAIGN.root / "verifier" / CAMPAIGN.cell
+    out: dict[str, Any] = {
+        "cell": CAMPAIGN.cell,
+        "inherit_tol_m": INHERIT_TOL_M,
+        "dedup_metres": DEDUP_METRES,
+        "note": (
+            "Nearest-neighbour distance from each union candidate to another "
+            "candidate of the SAME union, in EPSG:32635 metres. A source union "
+            "can only offer an ambiguous match where this distance falls below "
+            "the inheritance radius."),
+        "unions": {},
+    }
+    for k in (1, 3, SOURCE_K):
+        cands = json.loads(
+            (vroot / f"crops_k{k}" / "candidate_manifest.json").read_text())["candidates"]
+        pts = np.asarray([[c["centroid_x"], c["centroid_y"]] for c in cands], dtype=float)
+        nn = cKDTree(pts).query(pts, k=2)[0][:, 1]
+        within = int((nn <= INHERIT_TOL_M).sum())
+        out["unions"][f"k{k}"] = {
+            "n_candidates": int(len(pts)),
+            "nn_min_m": round(float(nn.min()), 6),
+            "nn_p01_m": round(float(np.percentile(nn, 1)), 6),
+            "nn_p05_m": round(float(np.percentile(nn, 5)), 6),
+            "nn_p50_m": round(float(np.percentile(nn, 50)), 6),
+            "n_with_neighbour_within_tol": within,
+            "share_with_neighbour_within_tol": round(within / len(pts), 6),
+        }
+        logger.info("union k%d: n=%6d | nn min %.2f m, p01 %.2f m, p05 %.2f m, "
+                    "p50 %.2f m | %d (%.3f %%) have a same-union neighbour "
+                    "within %.0f m", k, len(pts), nn.min(),
+                    np.percentile(nn, 1), np.percentile(nn, 5),
+                    np.percentile(nn, 50), within, 100 * within / len(pts),
+                    INHERIT_TOL_M)
+    HOME.mkdir(parents=True, exist_ok=True)
+    dest = HOME / "union_separation.json"
+    dest.write_text(json.dumps(out, indent=2) + "\n")
+    logger.info("wrote %s", dest.relative_to(PROJECT_ROOT))
+    return 0
+
+
 def main() -> int:
     """Parse arguments and dispatch to a stage."""
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--stage", required=True, choices=("ladder", "score", "tests"))
+    ap.add_argument("--stage", required=True,
+                    choices=("ladder", "separation", "score", "tests"))
     ap.add_argument("--workers", type=int, default=12,
                     help="Sweep parallelism, or engine workers per cell")
     ap.add_argument("--jobs", type=int, default=4,
                     help="Cells scored concurrently in --stage score")
+    ap.add_argument("--campaign", default="g37", choices=("g37", "g3"),
+                    help="Which pool of the image 2x2 (default g37, the 3.7 "
+                         "pool this study was written for)")
     args = ap.parse_args()
+    bind_campaign(args.campaign)
+    logger.info("campaign %s: %s -> %s", CAMPAIGN.key, CAMPAIGN.cell,
+                HOME.relative_to(PROJECT_ROOT))
     if args.stage == "ladder":
         return stage_ladder(args.workers)
+    if args.stage == "separation":
+        return stage_separation()
     if args.stage == "score":
         return stage_score(args.workers, args.jobs)
     return stage_tests()

@@ -1,0 +1,54 @@
+{
+  "buffer_m": 50,
+  "reference": "r2",
+  "cells": [
+    {
+      "label": "G3IMG-ARM1-K1-carried-inherited",
+      "rung": "G3IMG-ARM1-K1-inherited",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 1,
+      "basis": "carried-inherited",
+      "point": "(0.15, k1)",
+      "n_detections": 8317,
+      "det": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K1-carried-inherited/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM1-K3-carried-inherited",
+      "rung": "G3IMG-ARM1-K3-inherited",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 3,
+      "basis": "carried-inherited",
+      "point": "(0.15, k3)",
+      "n_detections": 5531,
+      "det": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K3-carried-inherited/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM2-K1-carried-inherited",
+      "rung": "G3IMG-ARM2-K1-inherited",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 1,
+      "basis": "carried-inherited",
+      "point": "(0.88, k1)",
+      "n_detections": 8911,
+      "det": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K1-carried-inherited/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM2-K3-carried-inherited",
+      "rung": "G3IMG-ARM2-K3-inherited",
+      "arm": "arm2",
+      "verifier_model": "gemini-3.7-flash",
+      "verifier_thinking": "low",
+      "k": 3,
+      "basis": "carried-inherited",
+      "point": "(0.88, k3)",
+      "n_detections": 5958,
+      "det": "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K3-carried-inherited/detections.geojson"
+    }
+  ]
+}
