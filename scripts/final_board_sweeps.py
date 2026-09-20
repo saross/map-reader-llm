@@ -43,6 +43,17 @@ counts (5,229 / 5,003 / 4,246), committed F1@50 within 0.003, exact
 (TP, FP, FN) reconstruction, geometry vs the committed primaries. The
 committed r1 home is read-only (``--force-r1`` to override, deliberately).
 
+Sweep record (PI ruling 2026-09-20, item 2): every point also carries
+the tile confusion and tile-MCC (``tile_mcc``, ``tile_tp``, ``tile_tn``,
+``tile_fp``, ``tile_fn``) computed exactly as the image campaigns'
+scorer computes them — through ``mcc_tiering_55map.tile_vectors``, the
+shared wrapper over the engine's own tile-classification rule — and each
+family's record gains an ``mcc_argmax`` beside its F1 ``argmax``. Before
+this, the board could publish no MCC oracle while the image rows
+published one per rung, so no text-vs-image MCC comparison was possible
+(`reports/comparability-inventory-37-runs-2026-09-20.md` § 1.2, § 3.7).
+``sweeps.json`` records which families carry it in ``mcc_families``.
+
 Outputs (<board home>/): sweeps.json,
 per-family sweep CSVs, cells/<label>/detections.geojson for every
 non-committed cell, and cells_manifest.json for stages 2 (full
@@ -51,6 +62,8 @@ evaluations) and 3 (board build).
 Usage::
 
     python scripts/final_board_sweeps.py [--workers N] [--reference {standardised,r2}]
+    # sweep-record-only refresh of named families (no cells, no manifest):
+    python scripts/final_board_sweeps.py --reference r2 --families ARM1-N1 ARM1-N3
 
 Zero API. Run on sapphire.
 
@@ -88,6 +101,10 @@ from scripts.score_55maps_standardised_reference import (  # noqa: E402
 )
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
+)
+from scripts.mcc_tiering_55map import (  # noqa: E402
+    mcc_from_confusion,
+    tile_vectors,
 )
 from scripts.n1_baseline_leaderboard_tiering import micro_f1  # noqa: E402
 from scripts.pairwise_permutation_test import assign_source_tiles  # noqa: E402
@@ -309,6 +326,44 @@ def _init(ref, bounds, family_gdfs):
     _G["ref"], _G["bounds"], _G["fams"] = ref, bounds, family_gdfs
 
 
+def tile_confusion(det: gpd.GeoDataFrame, ref: gpd.GeoDataFrame,
+                   bounds: gpd.GeoDataFrame) -> dict:
+    """The tile-level confusion and tile-MCC for one sweep point.
+
+    The board's sweep record carried micro-F1 only, so the text track and
+    the fourth cell could publish no MCC oracle while the image campaigns
+    published one per rung (inventory § 1.2, § 3.7). This reproduces the
+    image script's per-point computation exactly, through the shared
+    library rather than a second copy of it:
+    ``mcc_tiering_55map.tile_vectors`` (itself a thin wrapper over
+    ``lib_advanced_metrics.calculate_tile_classification``, the scorer's
+    own rule) for the boolean truth/prediction vectors, then
+    ``mcc_from_confusion`` over the four counts.
+
+    Args:
+        det: Detections for this point, EPSG:32635, with ``source_tile``.
+        ref: Reference points, same CRS.
+        bounds: Tile polygons with ``tile_name``, same CRS.
+
+    Returns:
+        ``{"tile_mcc", "tile_tp", "tile_tn", "tile_fp", "tile_fn"}``. A
+        point that retains no detection is reported with null values
+        rather than crashing the sweep (the image script's convention);
+        no committed board family has such a point.
+    """
+    if det.empty:
+        return {"tile_mcc": None, "tile_tp": None, "tile_tn": None,
+                "tile_fp": None, "tile_fn": None}
+    _tiles, truth, pred = tile_vectors(det, ref, bounds)
+    tp_t = int((pred & truth).sum())
+    fp_t = int((pred & ~truth).sum())
+    fn_t = int((~pred & truth).sum())
+    tn_t = int((~pred & ~truth).sum())
+    return {"tile_mcc": float(mcc_from_confusion(tp_t, tn_t, fp_t, fn_t)),
+            "tile_tp": tp_t, "tile_tn": tn_t, "tile_fp": fp_t,
+            "tile_fn": fn_t}
+
+
 def _score(task):
     fam_name, prob_t, k = task
     g = _G["fams"][fam_name]
@@ -319,7 +374,53 @@ def _score(task):
                   int(tm["fn"].sum()))
     return {"family": fam_name, "prob_t": prob_t, "min_votes": k,
             "n_detections": int(len(sub)), "tp": tp, "fp": fp, "fn": fn,
-            "micro_f1_50": micro_f1(tp, fp, fn)}
+            "micro_f1_50": micro_f1(tp, fp, fn),
+            **tile_confusion(sub, _G["ref"], _G["bounds"])}
+
+
+def load_sweeps(path: Path, reference: str) -> dict:
+    """The committed ``sweeps.json``, or a fresh record.
+
+    A filtered re-sweep (``--families``) must keep the families it did not
+    sweep, which is what this reads back. Extracted so the merge is
+    testable without building a family frame.
+
+    Args:
+        path: The board home's ``sweeps.json``.
+        reference: The reference vintage this run belongs to.
+
+    Returns:
+        The record to write into, with a ``families`` dict guaranteed.
+    """
+    if path.is_file():
+        sweeps = json.loads(path.read_text())
+        if not isinstance(sweeps.get("families"), dict):
+            sweeps["families"] = {}
+        sweeps["buffer_m"] = BUFFER_M
+        sweeps["reference"] = reference
+        return sweeps
+    return {"buffer_m": BUFFER_M, "reference": reference, "families": {}}
+
+
+def mcc_argmax(frows: list[dict]) -> dict | None:
+    """The tile-MCC argmax of one family's sweep rows.
+
+    Tie-break follows the image script: ``max`` over the rows in
+    ``(prob_t, min_votes)`` order, so the lowest operating point wins a
+    tie rather than whichever row the F1 sort happened to put first.
+
+    Args:
+        frows: One family's sweep rows.
+
+    Returns:
+        The winning row, or ``None`` when no row carries a tile-MCC
+        (a sweep record written before this column existed).
+    """
+    scored = [r for r in frows if r.get("tile_mcc") is not None]
+    if not scored:
+        return None
+    return max(sorted(scored, key=lambda r: (r["prob_t"], r["min_votes"])),
+               key=lambda r: r["tile_mcc"])
 
 
 def main() -> int:
@@ -341,6 +442,18 @@ def main() -> int:
              "is read-only by policy (H2): G3/G4 reproduce it, so rewriting "
              "it destroys the regression evidence. Only for a deliberate, "
              "recorded regeneration.",
+    )
+    ap.add_argument(
+        "--families", nargs="+", metavar="FAMILY",
+        help="Sweep only these families and write only their CSVs, merging "
+             "their entries into the existing sweeps.json and leaving every "
+             "other family's committed record untouched. EVERY gate still "
+             "runs over EVERY family — the filter narrows what is written, "
+             "never what is checked. A filtered run also writes no cell and "
+             "does not rewrite cells_manifest.json, because the materialised "
+             "cells of the families it did not sweep would be dropped; use "
+             "scripts/final_board_posthoc_cells.py for cells a filtered "
+             "re-sweep implies.",
     )
     args = ap.parse_args()
     out = board_home(args.reference)
@@ -459,23 +572,41 @@ def main() -> int:
                     d.max())
 
     # Sweeps (parallel over points; family frames shared via initargs).
+    # --families narrows what is SWEPT and WRITTEN. Every gate above has
+    # already run over every family, so the filter cannot weaken a check.
+    swept = list(families)
+    if args.families:
+        unknown = sorted(set(args.families) - set(families))
+        if unknown:
+            ap.error(f"unknown famil{'y' if len(unknown) == 1 else 'ies'}: "
+                     f"{', '.join(unknown)}")
+        swept = [name for name in families if name in set(args.families)]
+        logger.info("FILTERED sweep: %d of %d families (%s)", len(swept),
+                    len(families), ", ".join(swept))
     tasks = []
-    for name, spec in families.items():
+    for name in swept:
+        spec = families[name]
         thresholds = sorted({0.0} | {round(float(v), 4)
                                      for v in spec["gdf"]["mound_probability"]})
         tasks.extend((name, prob_t, k)
                      for prob_t in thresholds for k in spec["ks"])
     logger.info("sweeping %d points across %d families (%d workers)",
-                len(tasks), len(families), args.workers)
-    family_gdfs = {n: s["gdf"] for n, s in families.items()}
+                len(tasks), len(swept), args.workers)
+    family_gdfs = {n: families[n]["gdf"] for n in swept}
     with Pool(args.workers, initializer=_init,
               initargs=(ref, bounds, family_gdfs)) as pool:
         rows = pool.map(_score, tasks, chunksize=4)
 
     out.mkdir(parents=True, exist_ok=True)
-    sweeps: dict = {"buffer_m": BUFFER_M, "reference": args.reference,
-                    "families": {}}
-    for name in families:
+    # A FULL run rebuilds the record from scratch, as it always has, so a
+    # family dropped from the build cannot linger. A FILTERED run merges
+    # into the committed record instead — otherwise the families it did
+    # not sweep would vanish from sweeps.json.
+    sweeps = (load_sweeps(out / "sweeps.json", args.reference)
+              if args.families
+              else {"buffer_m": BUFFER_M, "reference": args.reference,
+                    "families": {}})
+    for name in swept:
         frows = sorted((r for r in rows if r["family"] == name),
                        key=lambda r: -r["micro_f1_50"])
         with (out / f"sweep_{name}.csv").open("w", newline="") as fh:
@@ -484,13 +615,34 @@ def main() -> int:
             w.writerows(sorted(frows, key=lambda r: (r["prob_t"],
                                                      r["min_votes"])))
         best = frows[0]
+        mcc_best = mcc_argmax(frows)
         sweeps["families"][name] = {
-            "n_sweep_points": len(frows), "argmax": best, "top3": frows[:3]}
+            "n_sweep_points": len(frows), "argmax": best, "top3": frows[:3],
+            "mcc_argmax": mcc_best}
         logger.info("%-6s oracle: micro %.4f at (%.2f, k%d) | runners: %s",
                     name, best["micro_f1_50"], best["prob_t"],
                     best["min_votes"],
                     ", ".join(f"{r['micro_f1_50']:.4f}@({r['prob_t']:.2f},"
                               f"k{r['min_votes']})" for r in frows[1:3]))
+        if mcc_best is not None:
+            logger.info("%-6s MCC oracle: %.4f at (%.2f, k%d), micro %.4f",
+                        name, mcc_best["tile_mcc"], mcc_best["prob_t"],
+                        mcc_best["min_votes"], mcc_best["micro_f1_50"])
+    sweeps["mcc_families"] = sorted(
+        n for n, rec in sweeps["families"].items()
+        if rec.get("mcc_argmax") is not None)
+
+    if args.families:
+        # A filtered run writes the sweep RECORD only. Materialising here
+        # would rebuild cells_manifest.json from the swept families alone
+        # and silently drop every cell of the families it skipped — the
+        # 2026-09-13 manifest defect, in a new guise.
+        (out / "sweeps.json").write_text(json.dumps(sweeps, indent=2) + "\n")
+        logger.info("FILTERED STAGE 1 COMPLETE: %d famil%s re-swept; "
+                    "sweeps.json merged, no cell written and "
+                    "cells_manifest.json untouched", len(swept),
+                    "y" if len(swept) == 1 else "ies")
+        return 0
 
     # Cells manifest: committed carried incumbents + materialised new cells.
     manifest_cells: list[dict] = [
