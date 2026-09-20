@@ -554,35 +554,33 @@ def test_the_addendum_rows_keep_their_runs_candidate_count_convention():
 
 
 @pytest.mark.tier1
-def test_the_mcc_oracle_cells_are_held_and_never_written():
-    """D6: a held basis plans as 'held' -- not an add, not a raise, not a drop.
+def test_the_hold_mechanism_works_though_nothing_is_held_today():
+    """A held basis plans as 'held' -- not an add, not a raise, not a drop.
 
-    The held basis narrowed with ruling 6c on 2026-09-20: what is held is
-    the superseded UNCONSTRAINED optimum, not every mcc-oracle cell.
+    HELD_BASES emptied with the amended D6c (2026-09-21), which gave every
+    cell on this board a home. The mechanism is what must survive: it is how
+    the registrar carries "scored, but the PI has not said where this
+    belongs" without either raising on the cell or dropping it silently, and
+    that situation has now arisen twice in two days. Exercised here with a
+    basis no manifest carries, so the test pins the behaviour rather than
+    the current ruling.
     """
     dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
     manifest = [{"label": "ARM1-N1-mcc-oracle", "det": "x/d.geojson",
-                 "basis": "mcc-oracle, unconstrained k (post-hoc, superseded "
-                          "2026-09-20)",
+                 "basis": "awaiting-a-ruling (post-hoc)",
                  "point": "(0.20, k1)", "committed_eval": False}]
-    plan = r2reg.author_board_rows(dec, manifest, None)
-    assert [(r, row["label"], s) for r, row, s in plan] == [
-        (None, "ARM1-N1-mcc-oracle", "held")]
-    # apply() writes only "add" rows, so a held cell cannot reach the register.
-    before = {rid: len(run["conditions"]) for rid, run in dec.items()}
-    assert r2reg.apply(dec, plan) == 0
-    assert {rid: len(run["conditions"]) for rid, run in dec.items()} == before
-    # No register row may point at one of the board's held mcc-oracle cells.
-    # The twelve image-campaign mcc-oracle rows are a different population
-    # (their own run homes) and D6 re-points them; they are not held here.
-    held_homes = [p.name for p in (ROOT / R2_BOARD_REL / "cells").iterdir()
-                  if p.name.endswith("-mcc-oracle")]
-    assert len(held_homes) == 10, held_homes
-    for run in dec.values():
-        for cond in run["conditions"]:
-            assert not str(cond.get("eval_path", "")).startswith(
-                f"{R2_BOARD_REL}/cells/"
-            ) or Path(cond["eval_path"]).parent.name not in held_homes, cond["label"]
+    monkeyed = r2reg.HELD_BASES
+    r2reg.HELD_BASES = ("awaiting-a-ruling",)
+    try:
+        plan = r2reg.author_board_rows(dec, manifest, None)
+        assert [(r, row["label"], s) for r, row, s in plan] == [
+            (None, "ARM1-N1-mcc-oracle", "held")]
+        # apply() writes only "add" rows, so a held cell cannot reach the file.
+        before = {rid: len(run["conditions"]) for rid, run in dec.items()}
+        assert r2reg.apply(dec, plan) == 0
+        assert {rid: len(run["conditions"]) for rid, run in dec.items()} == before
+    finally:
+        r2reg.HELD_BASES = monkeyed
 
 
 @pytest.mark.tier1
@@ -677,24 +675,43 @@ def test_the_ten_carried_k_mcc_oracles_are_registered():
 
 
 @pytest.mark.tier1
-def test_only_the_unconstrained_optima_stay_held():
-    """The hold narrowed with the ruling: admit carried-k, hold unconstrained."""
-    assert r2reg.HELD_BASES == ("mcc-oracle, unconstrained k",)
+def test_nothing_is_held_and_every_board_mcc_cell_has_a_row():
+    """Amended D6c: nothing held; both definitions registered, neither presented.
+
+    The unconstrained optima became the tile-presence table's members and
+    the carried-k cells are retained but not presented, so every one of the
+    twenty cells must reach a registered condition. Three families offer a
+    single vote count: their two cells hold byte-identical detections and
+    the labels coincide, so one row serves both and the count is 17.
+    """
+    import hashlib
+
+    assert r2reg.HELD_BASES == ()
     manifest = json.loads(
         (ROOT / R2_BOARD_REL / "cells_manifest.json").read_text())["cells"]
-    held = [c["label"] for c in manifest
-            if any(h in c.get("basis", "") for h in r2reg.HELD_BASES)]
-    admitted = [c["label"] for c in manifest
-                if r2reg.MCC_CARRIED_BASIS in c.get("basis", "")]
-    assert len(held) == 10 and len(admitted) == 10, (len(held), len(admitted))
-    # "mcc-oracle" alone would have swallowed the admitted cells too.
-    assert not set(held) & set(admitted)
+    free = [c["label"] for c in manifest
+            if r2reg.TILE_PRESENCE_BASIS in c.get("basis", "")]
+    pinned = [c["label"] for c in manifest
+              if r2reg.MCC_CARRIED_BASIS in c.get("basis", "")]
+    assert len(free) == 10 and len(pinned) == 10, (len(free), len(pinned))
+    assert not set(free) & set(pinned)
+
     dec = json.loads((ROOT / "results/run-conditions.json").read_text())["decomposition"]
-    for run in dec.values():
-        for cond in run["conditions"]:
-            ep = str(cond.get("eval_path", ""))
-            if ep.startswith(f"{R2_BOARD_REL}/cells/"):
-                assert Path(ep).parent.name not in held, cond["label"]
+    registered = {Path(c["eval_path"]).parent.name
+                  for run in dec.values() for c in run["conditions"]
+                  if str(c.get("eval_path", "")).startswith(
+                      f"{R2_BOARD_REL}/cells/")}
+    assert set(pinned) <= registered, sorted(set(pinned) - registered)
+    missing = sorted(set(free) - registered)
+    assert len(missing) == 3, missing
+    for cell in missing:
+        # Registered through its identical twin, not dropped.
+        twin = f"{cell}-k1"
+        assert twin in registered, cell
+        digest = lambda name: hashlib.sha256(  # noqa: E731
+            (ROOT / R2_BOARD_REL / "cells" / name
+             / "detections.geojson").read_bytes()).hexdigest()
+        assert digest(cell) == digest(twin), cell
 
 
 @pytest.mark.tier1

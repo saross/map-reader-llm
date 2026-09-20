@@ -117,20 +117,22 @@ COINCIDENT_POINTS = {"TH7-oracle": (0.15, 3), "IM-oracle": (0.15, 3),
                      "UPL-oracle": (0.15, 5)}
 
 #: Manifest ``basis`` substrings whose cells are scored but NOT registered.
-#: PI decision D6 (planning/pi-decisions-2026-09-20.md) admits the seven
-#: ``carried-analogue (post-hoc)`` addendum cells and, under ruling 6c of
-#: the same day, the ten ``mcc-oracle at carried k`` cells. What stays held
-#: is the SUPERSEDED selection: the unconstrained tile-MCC argmax, free to
-#: choose the vote count as well as the probability threshold, which every
-#: one of the board's 23 families put at the lowest vote count its sweep
-#: offers (D6a; Obs 492). Those ten cells remain on disk, scored and
-#: tabled in the board's "Superseded" sub-block, because the collapse is
-#: the evidence for the redefinition -- but they are not the board's MCC
-#: oracle and must not be registered as one. A held cell is neither an
-#: error nor an omission, so it is neither raised on nor silently dropped:
-#: it is reported as ``held``. Match on the full superseded basis, not on
-#: "mcc-oracle", which is a prefix of the admitted basis too.
-HELD_BASES = ("mcc-oracle, unconstrained k",)
+#: EMPTY since the amended D6c (planning/pi-decisions-2026-09-20.md, ruled
+#: 2026-09-21): nothing on this board is held any more. That ruling drops
+#: the MCC oracle from the main boards under BOTH definitions and gives
+#: each surviving cell a home -- the unconstrained optima become the
+#: members of the tile-presence presentation
+#: (results/tile-presence-2026-09-21/) and the carried-k cells are
+#: retained, not presented. Both are registered, because a registered
+#: condition is how a cell's numbers reach any artefact; what changed is
+#: what may be PRESENTED, which each row's own note records.
+#:
+#: The mechanism stays. A hold is how the registrar carries "scored, but
+#: the PI has not said where this belongs yet" without either raising on
+#: the cell or dropping it silently, and the tests keep it exercised. Add
+#: a basis substring here when that situation recurs; match the FULL basis
+#: string, never a prefix that another basis also starts with.
+HELD_BASES: tuple[str, ...] = ()
 
 #: The carried-analogue addendum (PI ruling 2026-09-20). These cells apply a
 #: family's GS-carried probability threshold downward to a lower rung with k
@@ -167,6 +169,32 @@ MCC_CARRIED_NOTE = (
     "committed sweep CSVs with no re-sweep. Post-hoc and not a "
     "preregistered claim; the board was not re-tiered, so this cell is not "
     "on final_board_50m.json."
+)
+
+#: The unconstrained tile-MCC optimum -- free to choose the vote count as
+#: well as the probability threshold. Under the amended D6c (2026-09-21)
+#: these cells are no longer any board's MCC oracle; they are the members
+#: of the tile-presence presentation. Matched on the distinguishing part
+#: of the manifest basis, so the string survives the board agent's
+#: relabel from "mcc-oracle, unconstrained k ..." to "tile-presence
+#: oracle ..." -- both carry "unconstrained".
+TILE_PRESENCE_BASIS = "unconstrained"
+TILE_PRESENCE_DATE = "2026-09-21"
+TILE_PRESENCE_NOTE = (
+    "TILE-PRESENCE TABLE MEMBER 2026-09-21. PI ruling D6c amended "
+    "(planning/pi-decisions-2026-09-20.md, 2026-09-21, superseding 6c of "
+    "2026-09-20): the MCC oracle is DROPPED from the main boards under BOTH "
+    "definitions, because tile-MCC has no interior optimum on this corpus -- "
+    "its free optimum is the vote-count artefact and its pinned optimum is "
+    "within noise of the carried point. tile-MCC stays reported beside F1 at "
+    "the carried and F1-oracle points, and the F1 oracle stays free over "
+    "threshold and vote count. This cell is the configuration's UNCONSTRAINED "
+    "tile-MCC optimum and is a member of the separate tile-presence "
+    "presentation at results/tile-presence-2026-09-21/, NOT a board cell and "
+    "not an MCC oracle: every one of the board's 23 families put this optimum "
+    "at the lowest vote count its sweep offers (docs/notes/working-notes.md "
+    "Observation 492). Nothing is deleted. Post-hoc; the board was not "
+    "re-tiered, so this cell is not on final_board_50m.json."
 )
 
 _CELL_RE = re.compile(
@@ -252,7 +280,11 @@ def author_board_rows(dec: dict, manifest: list[dict],
             )
         posthoc = "posthoc-" if "post-hoc" in basis_txt else ""
         f1_txt = f", F1@50 {f1_of[label]:.4f}" if label in f1_of else ""
-        if MCC_CARRIED_BASIS in basis_txt:
+        if TILE_PRESENCE_BASIS in basis_txt:
+            note = (f"r2 board cell {label} (basis {basis_txt}, registered "
+                    f"{TILE_PRESENCE_DATE}; point {m['point']}{f1_txt}). "
+                    f"{TILE_PRESENCE_NOTE} {R2_NOTE}")
+        elif MCC_CARRIED_BASIS in basis_txt:
             note = (f"r2 board cell {label} (basis {basis_txt}, added "
                     f"{ADDENDUM_DATE}; point {m['point']}{f1_txt}). "
                     f"{MCC_CARRIED_NOTE} {R2_NOTE}")
