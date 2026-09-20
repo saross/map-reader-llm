@@ -307,7 +307,7 @@ names the probe it had been citing as "the probe above", and records that the
 replicate pair is itself batch-against-flex, so its band covers route and
 drift together. **No number in § 3 or § 5 moved.**
 
-Commit: `TBDRULING2`.
+Commit: `73a4f09df`.
 
 ### 2026-09-20 — T5m: a protocol-matched confound check, added beside T5
 
