@@ -96,12 +96,30 @@ def test_headline_refuses_an_evaluation_without_the_headline_buffer(
 def test_addendum_rows_take_only_the_covered_bases(tmp_path) -> None:
     _board(tmp_path, [
         _cell("ARM2-N1-carried", "carried-analogue (post-hoc)", 0.8459),
-        _cell("ARM2-N1-mcc-oracle", "mcc-oracle (post-hoc)", 0.8100),
+        _cell("ARM2-N1-mcc-oracle-k1", r.COVERED[1], 0.8100),
         _cell("A-N3-carried", "carried (post-hoc)", 0.8307),
         _cell("ARM2-N5-oracle", "oracle (r2-reference argmax)", 0.8871),
     ])
     labels = [row["label"] for row in r.addendum_rows(tmp_path)]
-    assert labels == ["ARM2-N1-carried", "ARM2-N1-mcc-oracle"]
+    assert labels == ["ARM2-N1-carried", "ARM2-N1-mcc-oracle-k1"]
+
+
+def test_the_superseded_cells_are_a_separate_block(tmp_path) -> None:
+    """The redefinition of 2026-09-20: the main table must not mix the two."""
+    _board(tmp_path, [
+        _cell("ARM2-N3-mcc-oracle-k3", r.COVERED[1], 0.8818),
+        _cell("ARM2-N3-mcc-oracle", r.SUPERSEDED[0], 0.8245),
+        _cell("ARM1-N3-mcc-oracle", r.SUPERSEDED[1], 0.7979),
+    ])
+    assert [row["label"] for row in r.addendum_rows(tmp_path)] == [
+        "ARM2-N3-mcc-oracle-k3"]
+    assert [row["label"] for row in r.addendum_rows(tmp_path, r.SUPERSEDED)] \
+        == ["ARM2-N3-mcc-oracle", "ARM1-N3-mcc-oracle"]
+
+
+def test_the_two_blocks_cannot_share_a_basis() -> None:
+    """A basis in both lists would table the same cell twice."""
+    assert not set(r.COVERED) & set(r.SUPERSEDED)
 
 
 def test_addendum_rows_are_never_tiered_or_grouped(tmp_path) -> None:
@@ -117,7 +135,7 @@ def test_addendum_rows_sort_by_f1_descending(tmp_path) -> None:
     _board(tmp_path, [
         _cell("low", "carried-analogue (post-hoc)", 0.7859),
         _cell("high", "carried-analogue (post-hoc)", 0.8802),
-        _cell("mid", "mcc-oracle (post-hoc)", 0.8469),
+        _cell("mid", r.COVERED[1], 0.8469),
     ])
     assert [row["label"] for row in r.addendum_rows(tmp_path)] == [
         "high", "mid", "low"]
@@ -182,3 +200,31 @@ def test_main_leaves_the_tiered_blocks_alone(tmp_path, monkeypatch) -> None:
         "ARM2-N1-carried"]
     assert after["addendum"]["tiered_cells"] == 1
     assert r.BEGIN in (tmp_path / "final-board-50m.md").read_text()
+
+
+def test_main_writes_the_superseded_sub_block(tmp_path, monkeypatch) -> None:
+    """The superseded cells get their own heading, table and JSON list."""
+    _board(tmp_path, [
+        _cell("ARM2-N3-mcc-oracle-k3", r.COVERED[1], 0.8818),
+        _cell("ARM2-N3-mcc-oracle", r.SUPERSEDED[0], 0.8245),
+    ])
+    monkeypatch.setattr(r, "board_home", lambda _ref: tmp_path)
+    assert r.main("r2") == 0
+    board = json.loads((tmp_path / "final_board_50m.json").read_text())
+    assert [c["label"] for c in board["addendum_cells"]] == [
+        "ARM2-N3-mcc-oracle-k3"]
+    assert [c["label"] for c in board["addendum_superseded_cells"]] == [
+        "ARM2-N3-mcc-oracle"]
+    md = (tmp_path / "final-board-50m.md").read_text()
+    assert "### Superseded: the unconstrained tile-MCC optima" in md
+    assert md.index("ARM2-N3-mcc-oracle-k3") < md.index("### Superseded")
+    assert md.count(r.BEGIN) == 1
+
+
+def test_main_omits_the_sub_block_when_nothing_is_superseded(
+        tmp_path, monkeypatch) -> None:
+    _board(tmp_path, [_cell("ARM2-N3-mcc-oracle-k3", r.COVERED[1], 0.88)])
+    monkeypatch.setattr(r, "board_home", lambda _ref: tmp_path)
+    assert r.main("r2") == 0
+    assert "### Superseded" not in (
+        tmp_path / "final-board-50m.md").read_text()

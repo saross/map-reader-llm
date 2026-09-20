@@ -8,7 +8,11 @@ stage-1 sweep swept but never built:
   rung's own N (ruling item 1;
   ``reports/comparability-inventory-37-runs-2026-09-20.md`` § 3.2);
 * the ten **tile-MCC oracles** of the same families, read from
-  ``sweeps.json``'s ``mcc_argmax`` (ruling item 2, § 3.7).
+  ``sweeps.json``'s ``mcc_argmax`` (ruling item 2, § 3.7) — superseded
+  2026-09-20 and relabelled, not deleted;
+* the ten **carried-k tile-MCC oracles** that replaced them, read from
+  ``mcc_argmax_at_carried_k`` and labelled
+  ``<family>-mcc-oracle-k<carried>``.
 
 The derivation is the part worth pinning: the rung set and the threshold are
 derived from ``final_board_sweeps.G37_IDENTITY``, the table the stage-1
@@ -146,3 +150,91 @@ def test_mcc_oracle_points_ignore_families_outside_the_ruling(
         "ARM2-N1-mcc-oracle", "FOURTH-N10-mcc-oracle"]
     assert all(pt == 0.96 and k == 1 for _f, _l, pt, k, _n in got)
     assert all("2026-09-20" in note for *_rest, note in got)
+
+
+# --- The carried-k MCC-oracle set (PI ruling 2026-09-20) --------------------
+
+def _carried_k_record(carried_k: int, at_k: tuple[float, int],
+                      free: tuple[float, int]) -> dict:
+    """One family's record, reduced to what the carried-k set reads."""
+    return {
+        "argmax": {"micro_f1_50": 0.8818},
+        "carried_k": carried_k,
+        "carried_k_source": f"X-N{carried_k}-carried",
+        "mcc_argmax": {"prob_t": free[0], "min_votes": free[1],
+                       "tile_mcc": 0.7475, "micro_f1_50": 0.8245},
+        "mcc_argmax_at_carried_k": {"prob_t": at_k[0], "min_votes": at_k[1],
+                                    "tile_mcc": 0.7326,
+                                    "micro_f1_50": 0.8818},
+    }
+
+
+def test_carried_k_points_name_the_carried_k_in_the_label(tmp_path) -> None:
+    """``<family>-mcc-oracle-k<carried>`` can never be read as the old cell."""
+    _sweeps(tmp_path, {
+        "ARM2-N3": _carried_k_record(3, (0.96, 3), (0.96, 1)),
+        "ARM2-N1": _carried_k_record(1, (0.96, 1), (0.96, 1)),
+        "A-N10": {"argmax": {"micro_f1_50": 0.84}},
+    })
+    got = ph.mcc_oracle_at_carried_k_points(tmp_path)
+    assert [(label, pt, k) for _f, label, pt, k, _n in got] == [
+        ("ARM2-N1-mcc-oracle-k1", 0.96, 1),
+        ("ARM2-N3-mcc-oracle-k3", 0.96, 3)]
+
+
+def test_carried_k_points_refuse_a_record_without_the_field(tmp_path) -> None:
+    """``final_board_sweeps.py --record-carried-k`` has to have run first."""
+    _sweeps(tmp_path, {"ARM2-N1": {"argmax": {"micro_f1_50": 0.861},
+                                   "mcc_argmax": {"prob_t": 0.96}}})
+    with pytest.raises(SystemExit, match="no mcc_argmax_at_carried_k"):
+        ph.mcc_oracle_at_carried_k_points(tmp_path)
+
+
+def test_carried_k_points_refuse_a_family_with_no_carried_k(tmp_path) -> None:
+    """Null means the family has no carried cell; guessing one is the defect."""
+    rec = _carried_k_record(3, (0.96, 3), (0.96, 1))
+    rec["mcc_argmax_at_carried_k"] = None
+    rec["carried_k"] = None
+    _sweeps(tmp_path, {"ARM2-N3": rec})
+    with pytest.raises(SystemExit, match="no carried k on this board"):
+        ph.mcc_oracle_at_carried_k_points(tmp_path)
+
+
+def test_carried_k_notes_name_the_superseded_point(tmp_path) -> None:
+    """A reader of the manifest must be able to find the retained evidence."""
+    _sweeps(tmp_path, {"ARM2-N3": _carried_k_record(3, (0.96, 3), (0.96, 1))})
+    (_f, _label, _pt, _k, note), = ph.mcc_oracle_at_carried_k_points(tmp_path)
+    assert "carried" in note and "k3" in note
+    assert "ARM2-N3-mcc-oracle" in note
+    assert "UNCONSTRAINED" in note
+
+
+# --- Relabelling the superseded cells ---------------------------------------
+
+def test_relabel_touches_only_the_unconstrained_mcc_cells() -> None:
+    manifest = {"cells": [
+        {"label": "ARM2-N3-mcc-oracle", "basis": ph.BASIS["mcc-oracle"]},
+        {"label": "ARM2-N3-mcc-oracle-k3",
+         "basis": ph.BASIS["mcc-oracle-at-carried-k"]},
+        {"label": "ARM2-N3-carried", "basis": ph.BASIS["carried-analogue"]},
+        {"label": "ARM2-N3-oracle", "basis": "oracle (r2-reference argmax)"},
+    ]}
+    assert ph.relabel_superseded_mcc_cells(manifest) == ["ARM2-N3-mcc-oracle"]
+    by_label = {c["label"]: c["basis"] for c in manifest["cells"]}
+    assert by_label["ARM2-N3-mcc-oracle"] == ph.SUPERSEDED_MCC_BASIS
+    assert by_label["ARM2-N3-carried"] == ph.BASIS["carried-analogue"]
+    assert by_label["ARM2-N3-oracle"] == "oracle (r2-reference argmax)"
+
+
+def test_relabelling_is_idempotent() -> None:
+    """A second run must not re-flag a cell that is already superseded."""
+    manifest = {"cells": [{"label": "X-mcc-oracle",
+                           "basis": ph.BASIS["mcc-oracle"]}]}
+    ph.relabel_superseded_mcc_cells(manifest)
+    assert ph.relabel_superseded_mcc_cells(manifest) == []
+
+
+def test_the_superseded_basis_keeps_the_post_hoc_marker() -> None:
+    """Otherwise a board regeneration would drop the retained evidence."""
+    assert "post-hoc" in ph.SUPERSEDED_MCC_BASIS
+    assert "superseded" in ph.SUPERSEDED_MCC_BASIS
