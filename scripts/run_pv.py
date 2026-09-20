@@ -1058,39 +1058,99 @@ def _verify_batch(
             poll=poll_batch_job, retrieve=retrieve_batch_results,
             record_path=output_dir / "batch_jobs.json",
         )
-        # A batch pass REPLACES probabilities.json (no resume). Keep what is
-        # there: a rerun that lost chunks must not overwrite a good file with
-        # a partial one (re-audit, 2026-09-19, critical).
-        prob_path = output_dir / "probabilities.json"
-        if prob_path.exists():
-            stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
-            backup = output_dir / f"probabilities.json.pre-rerun-{stamp}.backup"
-            shutil.copy2(prob_path, backup)
-            logger.warning("existing probabilities.json kept as %s%s",
-                           backup.name,
-                           " (this rerun lost chunks)" if failed_chunks else "")
-
     except Exception as e:
         logger.error("Batch verification failed: %s", e)
         return 1
 
+    # A batch pass REPLACES probabilities.json and consensus.json (no
+    # resume), so both are copied aside inside the finisher — after its
+    # refusal gate, so a leg that cannot be booked leaves no backup litter
+    # and no rewritten output (audit finding M2, 2026-09-20).
     return _finish_batch_outputs(
         manifest=manifest, config=config, output_dir=output_dir,
         iterations=iterations, raw_results=raw_results,
         batch_metadata=batch_metadata, model_name=model_name, strict=strict,
+        backup_tag="rerun",
+        backup_note=" (this rerun lost chunks)" if failed_chunks else "",
     )
+
+
+def _backup_leg_outputs(output_dir: Path, tag: str, note: str = "") -> None:
+    """Copy a leg's ``probabilities.json`` and ``consensus.json`` aside.
+
+    A batch pass REPLACES both files — there is no resume — so a rerun or a
+    recovery that lost chunks must not overwrite good output with a partial
+    one (re-audit, 2026-09-19, critical). Until 2026-09-20 only
+    ``probabilities.json`` was copied aside, so a leg recovered with the
+    wrong ``--iterations`` was left with a **stale** consensus beside a
+    zeroed probabilities file and nothing to restore it from (audit finding
+    M2).
+
+    Both copies share one timestamp, so a pair can be matched by name.
+    Nothing is moved or deleted: these are copies, and a file that is not
+    there is skipped.
+
+    Args:
+        output_dir: The leg's stage directory.
+        tag: Short marker for the backup name — ``"rerun"`` for a first-time
+            batch pass, ``"recover"`` for ``batch-recover``. The resulting
+            name is ``<file>.pre-<tag>-<stamp>.backup``, unchanged from the
+            2026-09-19 fix for ``probabilities.json``.
+        note: Extra text appended to each log line (e.g. a lost-chunk
+            warning).
+
+    Examples:
+        >>> _backup_leg_outputs(Path("outputs/leg"), "recover")
+    """
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+    for name in ("probabilities.json", "consensus.json"):
+        path = output_dir / name
+        if not path.exists():
+            continue
+        backup = output_dir / f"{name}.pre-{tag}-{stamp}.backup"
+        shutil.copy2(path, backup)
+        logger.warning("existing %s kept as %s%s", name, backup.name, note)
 
 
 def _finish_batch_outputs(*, manifest: dict, config: dict, output_dir: Path,
                           iterations: int, raw_results: list[dict],
                           batch_metadata: Any, model_name: str,
-                          strict: bool) -> int:
+                          strict: bool, backup_tag: str = "rerun",
+                          backup_note: str = "") -> int:
     """Validate a leg's raw results against its manifest and write outputs.
 
     Shared by the batch verify path and ``batch-recover``, so a recovered
     leg is booked exactly as a first-time one: usage and items from the raw
     results, every missing key logged as a failure, the completeness
     assertion run, ``probabilities.json`` and ``run.meta.json`` written.
+
+    **Refusal gate.** A leg in which *every* expected key missed is not
+    booked at all: no ``probabilities.json`` write, no ``consensus.json``
+    rewrite, no backup taken, exit code 1. That pattern means the expected
+    keys were built in a shape the responses do not use — most often
+    ``batch-recover`` run without ``--iterations`` on a consensus leg,
+    which builds unsuffixed keys where the responses carry ``_iter{i}``.
+    Booking it wrote ``"total_results": 0`` over a good file and left a
+    stale consensus beside it (audit finding M2, 2026-09-20). A leg that
+    merely *partly* missed still books: those keys are real losses and the
+    completeness assertion is the right place to report them.
+
+    Args:
+        manifest: Candidate manifest dict.
+        config: Verifier config dict.
+        output_dir: The leg's stage directory.
+        iterations: Verifier passes per candidate; > 1 suffixes the keys.
+        raw_results: Rows retrieved from the Batch API.
+        batch_metadata: ``LLMMetadataTracker`` for this leg.
+        model_name: Resolved model name, recorded in the cost estimate.
+        strict: Propagate a completeness gap as a non-zero exit.
+        backup_tag: Marker for the pre-rewrite backups — see
+            :func:`_backup_leg_outputs`.
+        backup_note: Extra text for the backup log lines.
+
+    Returns:
+        0 when the leg booked cleanly, 1 on a refusal or (in strict mode)
+        a completeness gap.
     """
     from scripts.lib_batch_api import validate_batch_results
 
@@ -1106,6 +1166,25 @@ def _finish_batch_outputs(*, manifest: dict, config: dict, output_dir: Path,
             expected_keys.append(f"candidate_{cid:05d}")
 
     matched, missing, errored = validate_batch_results(expected_keys, raw_results)
+
+    if expected_keys and len(missing) == len(expected_keys):
+        seen = [str(row.get("key", "<no key>")) for row in raw_results[:5]]
+        logger.error(
+            "Refusing to book %s: not one of the %d expected result keys "
+            "was returned. Expected keys are shaped like %r (iterations=%d, "
+            "so %s); the first key(s) actually present are %s, out of %d "
+            "row(s). That is the signature of a key-shape mismatch — most "
+            "often batch-recover run with the wrong --iterations — not of a "
+            "leg that genuinely lost everything. Nothing was written: "
+            "probabilities.json and consensus.json are untouched.",
+            output_dir, len(expected_keys), expected_keys[0], iterations,
+            "every key carries an _iter{i} suffix" if iterations > 1
+            else "no key carries an _iter{i} suffix",
+            seen or ["<no rows returned>"], len(raw_results),
+        )
+        return 1
+
+    _backup_leg_outputs(output_dir, backup_tag, backup_note)
     record_batch_usage(batch_metadata, raw_results, output_dir,
                        n_processed=len(matched))
     # Surface every missing result as a failed_items[] entry so the
@@ -1139,6 +1218,61 @@ def _finish_batch_outputs(*, manifest: dict, config: dict, output_dir: Path,
     return 1 if gap_count > 0 and strict else 0
 
 
+def _resolve_recover_iterations(output_dir: Path, flag: int | None) -> int:
+    """Decide how many verifier passes a leg being recovered was run with.
+
+    ``batch-recover`` rebuilds the expected-key set, and at K > 1 those keys
+    carry an ``_iter{i}`` suffix. A flag defaulting to 1 therefore built
+    keys that matched nothing on a consensus leg, and the leg was booked
+    with ``"total_results": 0`` (audit finding M2, 2026-09-20).
+
+    The leg records the value itself: ``iterations`` in its own
+    ``probabilities.json``, written by :func:`_write_verification_outputs`.
+    That is the default. An explicit ``--iterations`` always wins — the
+    operator may be recovering a leg whose probabilities file is missing,
+    truncated, or itself the product of a wrong-K booking.
+
+    Args:
+        output_dir: The leg's stage directory.
+        flag: ``--iterations`` as given on the command line, or None when
+            the flag was omitted.
+
+    Returns:
+        The iteration count to rebuild expected keys with: the flag if
+        given, else the leg's recorded value, else 1. Which source was used
+        is always logged.
+
+    Examples:
+        >>> _resolve_recover_iterations(Path("outputs/leg"), 5)
+        5
+    """
+    if flag is not None:
+        logger.info("iterations=%d (source: --iterations)", flag)
+        return flag
+
+    prob_path = output_dir / "probabilities.json"
+    recorded: Any = None
+    if prob_path.exists():
+        try:
+            recorded = json.loads(prob_path.read_text()).get("iterations")
+        except (OSError, ValueError) as exc:
+            logger.warning("could not read iterations from %s: %s",
+                           prob_path.name, exc)
+    if isinstance(recorded, int) and not isinstance(recorded, bool) \
+            and recorded >= 1:
+        logger.info("iterations=%d (source: %s of the leg being recovered)",
+                    recorded, prob_path.name)
+        return recorded
+
+    logger.warning(
+        "iterations=1 (source: fallback — no --iterations was given and %s "
+        "records no usable iterations value). If this leg is a consensus "
+        "leg, pass --iterations K: the expected keys will otherwise be "
+        "built unsuffixed and match nothing.", prob_path.name,
+    )
+    return 1
+
+
 def cmd_batch_recover(args: argparse.Namespace) -> int:
     """Fold completed batch jobs into a leg that lost them while polling.
 
@@ -1148,10 +1282,16 @@ def cmd_batch_recover(args: argparse.Namespace) -> int:
     fetches each job by name, retrieves its results if it SUCCEEDED, merges
     them with the leg's ``batch_results.jsonl`` by key, and re-books the
     whole leg through the same finisher as a first-time run. The previous
-    ``probabilities.json`` is kept as a timestamped backup.
+    ``probabilities.json`` and ``consensus.json`` are kept as timestamped
+    backups.
+
+    ``--iterations`` defaults from the leg's own ``probabilities.json``
+    (:func:`_resolve_recover_iterations`), so recovering a consensus leg no
+    longer needs the operator to remember K.
 
     Returns:
-        0 when the leg is complete, 1 on a remaining completeness gap.
+        0 when the leg is complete, 1 on a remaining completeness gap or a
+        refusal to book (see :func:`_finish_batch_outputs`).
     """
     from scripts.lib_batch_api import retrieve_batch_results
     from scripts.lib_llm_metadata import LLMMetadataTracker
@@ -1216,6 +1356,7 @@ def cmd_batch_recover(args: argparse.Namespace) -> int:
         return 1
 
     raw_results = merge_raw_results(existing, recovered)
+    iterations = _resolve_recover_iterations(output_dir, args.iterations)
     model_name = args.model or config.get("model", "gemini-3-flash")
     batch_metadata = LLMMetadataTracker(
         config=config,
@@ -1229,15 +1370,14 @@ def cmd_batch_recover(args: argparse.Namespace) -> int:
         "jobs": job_names, "recovered_rows": len(recovered),
         "date": datetime.now(timezone.utc).isoformat(),
     }
-    prob_path = output_dir / "probabilities.json"
-    if prob_path.exists():
-        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
-        shutil.copy2(prob_path, output_dir / f"probabilities.json.pre-recover-{stamp}.backup")
+    # The backups are taken inside the finisher, after its refusal gate, so
+    # a leg that cannot be booked is not rewritten and leaves no litter.
     return _finish_batch_outputs(
         manifest=manifest, config=config, output_dir=output_dir,
-        iterations=args.iterations, raw_results=raw_results,
+        iterations=iterations, raw_results=raw_results,
         batch_metadata=batch_metadata, model_name=model_name,
         strict=getattr(args, "strict", True),
+        backup_tag="recover",
     )
 
 
@@ -2385,7 +2525,13 @@ def _build_parser() -> argparse.ArgumentParser:
     recover_parser.add_argument("--model", type=str, default=None)
     recover_parser.add_argument("--thinking-level", type=str, default=None)
     recover_parser.add_argument("--temperature", type=float, default=None)
-    recover_parser.add_argument("--iterations", type=int, default=1)
+    recover_parser.add_argument(
+        "--iterations", type=int, default=None,
+        help="Verifier passes per candidate. Omitted, it is read from the "
+             "leg's own probabilities.json (falling back to 1 with a "
+             "warning); given, it wins. A wrong value builds expected keys "
+             "in the wrong shape and the leg is refused, not booked.",
+    )
     recover_parser.add_argument("--no-strict", dest="strict", action="store_false", default=True)
     recover_parser.set_defaults(func=cmd_batch_recover)
 

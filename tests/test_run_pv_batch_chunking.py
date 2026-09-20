@@ -149,7 +149,10 @@ def test_iterations_divide_the_per_job_candidate_budget():
     requests. Pinned at the source since the division lives in _verify_batch."""
     src = (Path(__file__).resolve().parent.parent / "scripts" / "run_pv.py").read_text()
     assert "int(max_batch_candidates or 0) // max(1, iterations)" in src
-    assert 'f"probabilities.json.pre-rerun-{stamp}.backup"' in src
+    # The pre-rewrite backup used to be pinned here by its f-string. It moved
+    # into _backup_leg_outputs when consensus.json joined it (audit finding
+    # M2, 2026-09-20) and is now pinned behaviourally in
+    # tests/test_run_pv_batch_book_guard.py, which a comment cannot satisfy.
 
 
 def test_job_record_is_written_as_jobs_are_lodged_and_finished(tmp_path):
