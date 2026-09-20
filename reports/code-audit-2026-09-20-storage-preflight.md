@@ -1,6 +1,6 @@
 # Code audit — Files API storage preflight and the 2x2 test family
 
-> **Last revised**: 2026-09-20 (original publication). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-20 (M2, M4/m10, m7 and the cost auditor implemented after PI ruling). See [§ Changelog](#changelog) for revision history.
 
 Audit of everything under `scripts/` and `tests/` changed since the previous
 code audit, run under the project's `/audit` protocol
@@ -189,7 +189,7 @@ it fixes the family at five "at the primary rung" and calls K = 1 and K = 5
 five-test family has five members or four is a PI call, not an auditor's.
 **Decision needed** — see § 6.
 
-#### M2 — `--iterations` defaults to 1 in `batch-recover` and a wrong value zeroes `probabilities.json` beside a stale `consensus.json` — `RECOMMENDED`
+#### M2 — `--iterations` defaults to 1 in `batch-recover` and a wrong value zeroes `probabilities.json` beside a stale `consensus.json` — `FIXED` (2026-09-20, `3563f2813`)
 
 `scripts/run_pv.py:2375` (the flag), `:1086-1092` (the key builder), `:1980`
 (where the correct value is already recorded)
@@ -211,10 +211,18 @@ are written.
 The correct value is recoverable from disk: `probabilities.json` records
 `"iterations"` (`scripts/run_pv.py:1980`).
 
-**Not fixed**: defaulting the flag from the existing artefact changes CLI
-behaviour, and the alternative (refusing to book a leg where every expected
-key missed) changes the finisher's contract for both callers. Both are
-reasonable; the choice is the PI's.
+**Fixed 2026-09-20** in `3563f2813`, the PI having ruled for **both**
+halves. `--iterations` now defaults from the leg's own `probabilities.json`
+(an explicit flag still wins; the fallback to 1 warns; the source used is
+always logged), *and* the finisher refuses a leg in which every expected key
+missed — no `probabilities.json` write, no `consensus.json` rewrite, no
+backup taken, exit 1, and an error naming the expected-key shape, the
+iteration suffix, and the first keys actually returned. A leg that only
+*partly* missed still books. The gate lives in `_finish_batch_outputs`, so
+`verify --mode batch` and `batch-recover` both inherit it. `consensus.json`
+is now copied aside alongside `probabilities.json` before any rewrite
+(`_backup_leg_outputs`), both copies sharing one timestamp; the backups moved
+inside the finisher so they are taken *after* the gate.
 
 #### M3 — A storage 429 in the lodging loop is logged as terminal but the loop keeps uploading — `RECOMMENDED`
 
@@ -242,7 +250,7 @@ control flow or the log line should change; which one is a judgement call.
 This path is also now unreachable in normal operation, because the preflight
 fires first.
 
-#### M4 — The 5 % safety margin is smaller than the chunk it is documented to protect against — `RECOMMENDED`
+#### M4 — The 5 % safety margin is smaller than the chunk it is documented to protect against — `FIXED` (2026-09-20, `87b92878a`)
 
 `scripts/lib_batch_api.py:182-189`
 
@@ -260,10 +268,16 @@ states a proposer chunk's JSONL is ~1.3 GB — larger than the head-room.
 Both preflights pass at ~18.9 GiB projected; both lodge; the second hits the
 429 the preflight exists to prevent.
 
-**Not fixed**: the right margin depends on how many concurrent lodgers the PI
-expects, which the code cannot know. A margin of one maximum chunk size
-(≈ 7 %), or a margin expressed in chunks rather than a percentage, would
-close it.
+**Fixed 2026-09-20** in `87b92878a`, as the PI ruled: the margin is now one
+maximum chunk, expressed in bytes rather than as a percentage, because the
+quantity that has to fit in the head-room is one concurrent lodger's chunk.
+`MAX_CHUNK_BYTES = 2_000_000_000` is the documented maximum of the module's
+own figures — the Batch API's 2 GB per-file limit that both chunkers size
+below, rather than the ~1.3 GB a proposer chunk typically reaches, which
+would be short by 0.7 GB exactly when a chunk ran large.
+`FILE_STORAGE_BUDGET_BYTES` keeps cap-minus-margin semantics, so every call
+site and every assertion on its shape survives; the budget moves from
+20,401,094,656 to 19,474,836,480 bytes (18.14 GiB).
 
 #### M5 — `cmd_batch_recover` fetched every job unguarded; one bad name discarded the whole recovery — `FIXED`
 
@@ -444,7 +458,7 @@ tolerated set changes behaviour the change deliberately made permissive, so
 it is a judgement call. Note that `poll_all_batch_jobs` has the same broad
 tolerance and is *unbounded*, which is the looser of the two.
 
-#### m7 — `run_batch_jobs` retrieves unconditionally on any terminal state — `RECOMMENDED`
+#### m7 — `run_batch_jobs` retrieves unconditionally on any terminal state — `FIXED` (2026-09-20, `378a544a5`)
 
 `scripts/run_pv.py:874-879`. `JOB_STATE_FAILED`, `CANCELLED`, `EXPIRED` and
 `PARTIALLY_SUCCEEDED` are all in `_TERMINAL_STATES`, so such a job is not
@@ -459,9 +473,15 @@ record the chunk as lost; and at the leg level `validate_batch_results` plus
 lost is the `failed_chunks` signal itself — the "N of M batch chunks returned
 nothing" alarm and the "(this rerun lost chunks)" annotation on the
 `probabilities.json` backup can both be absent for a partially-succeeded
-chunk. **Not fixed**: gating on `state == "JOB_STATE_SUCCEEDED"` while still
-keeping a partial chunk's paid-for results is the right shape, but it changes
-what `failed_chunks` means to both callers.
+chunk. **Fixed 2026-09-20** in `378a544a5`, as the PI ruled: any terminal state
+other than `JOB_STATE_SUCCEEDED` — including one the SDK has not shipped yet
+— puts the chunk into `failed_chunks`, while its rows are still retrieved and
+booked, so the completeness gate sees every key that came back. The polled
+state goes into `batch_jobs.json` verbatim. Both consumers of `failed_chunks`
+were checked and reworded for the new meaning: the alarm reads "did not
+succeed" rather than "returned nothing", and the backup annotation "had
+chunk(s) that did not succeed" rather than "lost chunks"; neither gate's
+behaviour changes.
 
 #### m8 — `is_file_storage_quota_error` does not walk the exception chain, and self-matches — `NO ACTION` (watch item)
 
@@ -503,14 +523,21 @@ first-time path resolves it through `_resolve_model_name` (the `-preview`
 fallback); and `batch_recover.recovered_rows` books total rows fetched, not
 rows actually new to the leg.
 
-#### m10 — `size_bytes=None` is never modelled in the preflight fixtures — `RECOMMENDED`
+#### m10 — `size_bytes=None` is never modelled in the preflight fixtures — `FIXED` (2026-09-20, `87b92878a`)
 
 `audit_file_storage` coerces `None` to 0, so an upload still `PROCESSING`
 contributes nothing to the projection — meaning the preflight under-counts
 exactly when a concurrent lodge is in flight, which is the case the safety
 margin exists for (M4). `tests/test_batch_api.py` pins the coercion at the
-`audit_file_storage` level; no preflight test exercises it. Bundled with the
-M4 margin decision.
+`audit_file_storage` level; no preflight test exercises it.
+
+**Fixed 2026-09-20** in `87b92878a`, with the M4 margin. The
+enumeration is split into `_audit_file_storage_detail()`, which
+separates sized bytes from unsized files; `preflight_file_storage`
+charges each unsized file one `MAX_CHUNK_BYTES` and warns that it did.
+`audit_file_storage` keeps its historical zero coercion — it reports
+what the API said — so its existing tests are untouched. Four new
+preflight tests drive the charge.
 
 #### m11 — Lines over the project's 100-character limit — `NO ACTION`
 
@@ -687,24 +714,29 @@ should carry that.
 ## 6. Decisions needed from the PI
 
 Recorded rather than taken, because each changes numbers or behaviour someone
-may rely on.
+may rely on. **Three of the five were ruled on 2026-09-20 and implemented the
+same day**; the rulings are recorded inline below and the implementations in
+§ Changelog.
 
 1. **M6** — how should the Phase-2 sweep be prevented from deleting an
    unregistered, in-flight verifier upload? Register in `upload_jsonl`, or
    narrow the sweep to self-registered files? This is the one to look at
-   first: it is a live cross-process data-loss path.
+   first: it is a live cross-process data-loss path. **Still open.**
 2. **M1** — is the BH family at K ≠ 3 five tests or four, and should a
    `meaningful: false` row carry a `significant` verdict at all? A change
    rewrites three artefacts under `results/`. The direction of the current
-   error is conservative for T1–T4.
+   error is conservative for T1–T4. **Still open.**
 3. **M2** — should `batch-recover` default `--iterations` from the leg's own
    `probabilities.json`, or refuse to book a leg where every expected key
-   missed?
+   missed? **Ruled 2026-09-20: BOTH**, implemented in `3563f2813`.
 4. **M4 / m10** — what head-room does the preflight need, given how many
    concurrent lodgers a campaign runs, and should a `PROCESSING` upload
    reporting `size_bytes = None` be charged an estimate rather than zero?
+   **Ruled 2026-09-20: a margin of one maximum chunk, and yes — charge a
+   `PROCESSING` upload at that maximum.** Implemented in `87b92878a`.
 5. **m7** — should a non-SUCCEEDED terminal state put a chunk into
    `failed_chunks` while still keeping its paid-for partial results?
+   **Ruled 2026-09-20: yes**, implemented in `378a544a5`.
 
 ## 7. Verification
 
@@ -756,6 +788,73 @@ they were written for.
 | `97ab0a7cb` | `test: close the audit's surviving mutations` |
 
 ## Changelog
+
+### 2026-09-20 — M2, M4/m10, m7, and the cost auditor implemented
+
+**Refresh trigger**: the PI ruled on three of the five decisions in § 6, each
+"as recommended", and separately on a defect in `scripts/audit_proposer_cost.py`
+found while reading the row B cost figures. All four landed the same day.
+
+| Commit | Finding | What changed |
+|---|---|---|
+| `3563f2813` | M2 (both halves) | `batch-recover --iterations` defaults from the leg's own `probabilities.json`; the finisher refuses a leg in which every expected key missed; `consensus.json` is backed up like `probabilities.json` |
+| `87b92878a` | M4 + m10 | The preflight margin becomes one maximum chunk (`MAX_CHUNK_BYTES`); a `PROCESSING` upload reporting no size is charged at that maximum |
+| `378a544a5` | m7 | Any terminal state other than `JOB_STATE_SUCCEEDED` puts the chunk in `failed_chunks` while its rows are still booked |
+| `e529c0d37` | (new) the proposer cost auditor | Each pass is priced at its own `configuration.model`; a pass with no model is refused unless `--model` is given; a disagreeing `--model` warns |
+
+**Numerical claims that moved**:
+
+| Claim | Before | After |
+|---|---|---|
+| Preflight budget (`FILE_STORAGE_BUDGET_BYTES`) | 20,401,094,656 B (19.00 GiB, cap × 0.95) | 19,474,836,480 B (18.14 GiB, cap − 2 GB) |
+| Preflight margin | 1,073,741,824 B (1.00 GiB, 5 %) | 2,000,000,000 B (1.86 GiB, 9.31 %) |
+| Audited cost of the Gemini 3 image pool under `outputs/gemini3-image-55map-2026-09-16/` as `audit_proposer_cost.py` reports it with no flags | US$345.9024 | US$233.6295 (the figure its own post-run report records) |
+
+**M4's margin choice, recorded**: the module documents two figures — a
+proposer chunk at ~1.3 GB and the Batch API's 2 GB per-file limit that both
+chunkers size below. The constant takes the **documented maximum**, 2 GB,
+not the typical 1.3 GB: a chunk may legitimately run anywhere up to the
+ceiling, and a margin sized on the typical would be 0.7 GB short exactly
+when one did. `FILE_STORAGE_SAFETY_MARGIN` (the 0.05 float) is replaced by
+`FILE_STORAGE_SAFETY_MARGIN_BYTES`; `FILE_STORAGE_BUDGET_BYTES` keeps its
+cap-minus-margin semantics so no call site or assertion shape changes.
+
+**What did NOT change**:
+
+- No API call was made and nothing under `outputs/` or `results/` was
+  written. The two audited-cost regressions were re-run read-only and still
+  reproduce their committed figures: the GS 3.7 leg at **US$22.5004** over
+  6,990 tile-passes (US$0.00322 per tile-pass) and the GS verifier arms at
+  **US$0.4417** and **US$0.6804** — now derived from each meta's own
+  recorded model rather than from a flag default.
+- `audit_file_storage()` keeps its `(count, total_gb)` contract and its
+  historical `None` → 0 coercion; only the preflight charges unsized files.
+- Backup file names are unchanged (`<file>.pre-<tag>-<stamp>.backup`), so
+  nothing that reads them by name breaks; `consensus.json` simply joins
+  `probabilities.json` in being copied.
+- The findings this entry does not name — M1, M3, M5, M6, m1–m6, m8, m9,
+  m11, X1–X3 — are untouched. M6 remains the one to look at first.
+
+**Tests**: 34 new behaviour tests across
+`tests/test_run_pv_batch_book_guard.py` (new, 15),
+`tests/test_run_pv_batch_chunking.py` (+6),
+`tests/test_file_storage_preflight.py` (+7),
+`tests/test_audit_proposer_cost.py` (+12) and
+`tests/test_audit_verifier_cost.py` (+9) — all tier 1, all against fakes,
+none asserting on source text. The one surviving source-string assertion
+that the M2 refactor invalidated (the backup f-string in
+`test_iterations_divide_the_per_job_candidate_budget`) was retired in favour
+of behavioural coverage.
+
+**Mutation check**: fifteen targeted mutations were run against **file
+copies** of `scripts/`, never symlinks — the § 2 methodological warning —
+with a red sentinel validating each harness before any result was trusted.
+Every mutation turned the intended tests red against a clean baseline:
+refusal gate removed, `consensus.json` dropped from the backup list,
+`--iterations` defaulted back to 1, margin returned to a percentage, the
+`PROCESSING` charge removed, the SUCCEEDED gate removed, a partial chunk's
+rows discarded, either cost auditor's model default restored, and either
+auditor's refusal or provenance note removed.
 
 ### 2026-09-20 — Original publication
 
