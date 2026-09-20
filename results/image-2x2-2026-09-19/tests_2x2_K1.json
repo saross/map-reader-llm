@@ -82,7 +82,7 @@
       "n_tiles": 8541,
       "null_mean": 8.5e-05,
       "null_std": 0.006157,
-      "bh_adjusted_p": 0.0065,
+      "bh_adjusted_p": 0.0052,
       "significant": true
     },
     {
@@ -98,7 +98,7 @@
       "n_tiles": 8541,
       "null_mean": 1.7e-05,
       "null_std": 0.005893,
-      "bh_adjusted_p": 0.210125,
+      "bh_adjusted_p": 0.1681,
       "significant": false
     },
     {
@@ -135,8 +135,8 @@
       "n_tiles": 8541,
       "null_mean": -4.2e-05,
       "null_std": 0.007575,
-      "bh_adjusted_p": 0.65,
-      "significant": false
+      "significant": null,
+      "note": "T5 is meaningful only at K = 3, where IM-k3's three votes match the rung. Here it is reported for completeness: it sits outside the Benjamini-Hochberg family (T1-T4 at this rung), so it carries a raw p-value but no adjusted p-value and no verdict. Declaration section 3; audit finding M1, 2026-09-20."
     }
   ],
   "f1_tests": [
@@ -201,7 +201,7 @@
       "row_B_effect": -0.0020090522942781686,
       "observed_diff": 0.026200674039628002,
       "p_value": 0.0,
-      "null_mean": 1.385128353575864e-05,
+      "null_mean": 1.385128353576096e-05,
       "null_std": 0.0029500849553690837,
       "n_permutations": 10000,
       "n_tiles": 8541,
@@ -222,8 +222,8 @@
       "n_tiles": 8541,
       "null_mean": 0.000106,
       "null_std": 0.00593,
-      "bh_adjusted_p": 0.0,
-      "significant": true
+      "significant": null,
+      "note": "T5 is meaningful only at K = 3, where IM-k3's three votes match the rung. Here it is reported for completeness: it sits outside the Benjamini-Hochberg family (T1-T4 at this rung), so it carries a raw p-value but no adjusted p-value and no verdict. Declaration section 3; audit finding M1, 2026-09-20."
     }
   ]
 }
