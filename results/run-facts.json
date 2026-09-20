@@ -1046,6 +1046,36 @@
     "TILE JOIN: the proposer runs on a 192 px-stride tiling (24,561 tiles) while the scoring frame is a 336 px-stride tiling (8,541 tiles), sharing only 660 tile names. source_tile is therefore re-stamped onto the scoring frame by stride55_score.assign_standard_tile over a map-constrained index \u2014 the same writer that produced FOURTH-N1-oracle, ARM2-N3-oracle and ARM2-N5-oracle, confirmed idempotent on all three at 100.00 %. Without it the published id join credits 192 of 6,250 detections and the per-tile invariant refuses. Detail: deltas report \u00a7 10.7.",
     "IM-k3 CAVEAT: the IM-k3 comparator's own source_tile reproduces this writer at only 83.65 %, because the tile-MCC tiering scored the original verified file in place. The one test in the five-test family that uses IM-k3 carries that caveat."
    ]
+  },
+  "gemini3-image-55map-2026-09-16": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "H3",
+    "H13"
+   ],
+   "purpose": "Does the image modality's deployment-scale advantage belong to the PROPOSER family or to the verifier seat? Row A (gemini37-image-55map-2026-09-13) ran a Gemini 3.7 image proposer pool under two verifier arms; this run holds the tiling, the prompt payload, the exemplar library, the verifier arms, the unions' builder and the scoring instrument fixed and swaps the proposer to gemini-3-flash-preview at thinking minimal, completing the 2x2. Five passes of 24,561 tiles, first-N unions at K = 1, K = 3 and K = 5, each under both arms, three operating-point bases per rung. Carried points come from Gold Standard calibration legs over image-b-gs-2026-08-28 run before any 55-map scoring; the K = 1 points are the K = 3 legs' thresholds with the vote threshold collapsed to 1. K = 3 is the declared primary rung and K = 1 and K = 5 are exploratory replicates (reports/image-2x2-tests-declaration-2026-09-19.md). H3 is informed through the pass-count factor and H13 through the tile geometry; the proposer-family question itself is post-hoc.",
+   "tile_size_px": 384,
+   "corpus": "55-map",
+   "gt_reference": "combined",
+   "scope": {
+    "test_set_id": "55maps-8541",
+    "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "n_test_tiles": 8541,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": "gemini3-image-55map-2026-09-16::g3img-arm2-k3-carried-p0.88-k3-r2-gt",
+   "headline_rationale": "The all-3.7-verifier cell on the Gemini 3 pool at the declared primary rung, on its carried point \u2014 the cell the 2x2's tests T1 and T3 are stated about. It is row B's best K = 3 carried cell on micro-F1 @ 50 m (0.8127) and sits at tile-MCC 0.7234, and it is BH-significantly BELOW row A's matched cell on both metrics (-0.1072 F1, -0.0413 MCC; results/image-2x2-2026-09-19/tests_2x2_K3.json, T1).",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": [
+    "SCORING INSTRUMENT: evaluate_detections.py on the r2 board's own stage-2 recipe (14 buffers, r2 reference, BCa bootstrap 10,000 / seed 42, --mcc, --require-clean-inputs), NOT the canonical adjudicated extended-GT (Track 2) corrected-F1 engine. This is row A's instrument, chosen so the 2x2's four cells are compared within one instrument; reasoning reports/gemini37-image-55map-deltas-2026-09-13.md \u00a7 10.3.",
+    "TILE JOIN: the proposer runs on a 192 px-stride tiling (24,561 tiles) while the scoring frame is a 336 px-stride tiling (8,541 tiles). source_tile is therefore re-stamped onto the scoring frame by stride55_score.assign_standard_tile over a map-constrained index \u2014 the same writer, in the same code path (scripts/gemini37_image_55map_r2.py --campaign g3), as row A. Every cell's tile confusion sums to 8,541.",
+    "ROUTE: arm 1 (gemini-3-flash-preview) ran on realtime flex; arm 2 (gemini-3.7-flash) ran on the Google async Batch API, per the PI ruling of 2026-09-18. The 2026-09-19 batch-vs-flex probe found the route's effect indistinguishable from same-route re-invocation drift (declaration \u00a7 5.2), so the route is recorded per leg and not treated as a factor.",
+    "K = 5 ARM 2 SPLIT LEDGER: that leg's twelve batch jobs are recorded across batch_jobs.json (chunks 0-3) and batch_jobs_relodged.json (chunks 4-11), because the first lodging of chunks 4-11 failed with a 429 FileStorageBytesPerProject against the File API's 20 GiB cap and they were re-lodged after the completed K = 1 and K = 3 verifier inputs were deleted. Both ledgers are committed; the recovered leg books 45,786 / 45,786.",
+    "EXPLORATORY RUNGS: K = 3 is the declared primary rung of the image 2x2's five-test family; K = 1 and K = 5 are exploratory replicates (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2), and the K = 1 and K = 5 test JSONs were being regenerated under a four-member BH family at the time this row was authored."
+   ]
   }
  }
 }

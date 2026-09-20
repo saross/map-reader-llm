@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-17T07:37:47Z",
+  "generated_at": "2026-09-19T23:56:27Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -4644,6 +4644,12 @@
         "gemini37-image-55map-2026-09-13::img-arm2-k3-carried-p0.88-k3-r2-gt",
         "gemini37-image-55map-2026-09-13::img-arm2-k3-f1-oracle-p0.90-k3-r2-gt",
         "gemini37-image-55map-2026-09-13::img-arm2-k3-mcc-oracle-p0.96-k2-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k5-carried-p0.10-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k5-f1-oracle-p0.10-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k5-mcc-oracle-p0.15-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k5-carried-p0.90-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k5-f1-oracle-p0.95-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k5-mcc-oracle-p0.95-k5-r2-gt",
         "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
         "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
         "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
@@ -4683,7 +4689,72 @@
           "results/run-analyses.json",
           "results/gemini37-image-55map-2026-09-13/findings.md"
         ],
-        "last_extracted_at": "2026-09-16T11:59:35Z",
+        "last_extracted_at": "2026-09-19T23:56:27Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "gemini3-image-55map-2026-09-16",
+      "type": "comparison",
+      "conditions_compared": [
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k1-carried-p0.15-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k1-f1-oracle-p0.40-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k1-mcc-oracle-p0.30-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k3-carried-p0.15-k3-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k3-f1-oracle-p0.15-k3-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k3-mcc-oracle-p0.35-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k5-carried-p0.15-k5-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k5-f1-oracle-p0.15-k5-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k5-mcc-oracle-p0.40-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k1-carried-p0.88-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k1-f1-oracle-p0.98-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k1-mcc-oracle-p0.98-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k3-carried-p0.88-k3-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k3-f1-oracle-p0.96-k3-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k3-mcc-oracle-p0.98-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k5-carried-p0.95-k5-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k5-f1-oracle-p0.96-k5-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k5-mcc-oracle-p0.98-k1-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k1-carried-p0.10-k1-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k1-carried-p0.88-k1-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k3-carried-p0.10-k3-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k3-carried-p0.88-k3-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k5-carried-p0.10-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k5-carried-p0.90-k5-r2-gt",
+        "55maps-image-generalisation::verified-k3-r2-gt"
+      ],
+      "hypothesis_refs": [
+        "H3",
+        "H13"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "Scored on the r2 board's own engine (evaluate_detections.py, 14 buffers, BCa 10,000 / seed 42, --mcc) rather than the canonical Track-2 corrected-F1 engine, so that the 2x2's four cells are compared within one instrument (row A's choice, deltas \u00a7 10.3).",
+        "source_tile re-stamped from the proposer's 192 px-stride tiling onto the 336 px-stride scoring frame by stride55_score.assign_standard_tile, the same writer and code path as row A. No join variant, default or committed cell was changed.",
+        "Arm 2's three legs ran on the Google async Batch API while row A's arm 2 ran on realtime flex (PI ruling 2026-09-18, after a flex 503 storm on gemini-3.7-flash). The 2026-09-19 batch-vs-flex probe measured no route effect beyond same-route re-invocation drift.",
+        "The K = 5 arm 2 leg was lodged in two tranches after a 429 FileStorageBytesPerProject on the File API's 20 GiB cap; its job ledger is split across batch_jobs.json and batch_jobs_relodged.json. The recovered leg books 45,786 / 45,786 with 0 failed.",
+        "The K = 1 rung's carried points are the K = 3 calibration legs' thresholds with the vote threshold collapsed to 1 (basis 'carried-analogue'); no K = 1 Gold Standard leg was run."
+      ],
+      "predicted_outcome": "No prediction was registered for row B in the form row A's card used (P1-P5). The declared family states five contrasts per metric at the primary rung rather than directional predictions (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 3), with two expectations recorded in \u00a7 5.4: that row B over-generates at K = 1, and that the K = 1 replicate would show the largest proposer effect and the K = 5 replicate the smallest.",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": null,
+      "paper_section": "Results",
+      "output_path": "results/gemini3-image-55map-2026-09-16/findings.md",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "signature": {
+        "status": "unsigned",
+        "signed_at": null,
+        "attests": "UNSIGNED and presented for review; the PI signs. No board and no tiering was re-tiered and no signed row was touched.",
+        "presentation": null,
+        "history": []
+      },
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json"
+        ],
+        "last_extracted_at": "2026-09-19T23:56:27Z",
         "extractor_version": "0.7.1"
       }
     }

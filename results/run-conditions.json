@@ -16061,6 +16061,439 @@
      "_note": "Campaign cell IMG-ARM2-K5-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 5197 of a 9173-candidate K = 5 first-N union, verified by gemini-3.7-flash at thinking low. Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The cell COINCIDES with IMG-ARM2-K5-f1-oracle: the tile-MCC and F1 oracles fall on the same grid point (0.95, k5), so the two rows score the same 5197 detections. K = 5 rung added 2026-09-17 OUTSIDE the card, whose ladder stopped at K = 3 (planning/gemini37-image-55map-2026-09-13.md \u00a7 2 table, \"Passes | K = 3 (run_1..3)\"): proposer passes 4 and 5 were run through the Google async Batch API (run_4 / run_5 pool metas, batch_api.execution_mode \"batch\"; earliest pass-4 chunk meta timestamp.start 2026-09-17T03:37:54Z), and the carried points are those of the registered Gold Standard K = 5 cells (gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5 for arm 1, ::g37-image-k5-verified-swap37-p0.90-k5 for arm 2). Scored 2026-09-19 on the r2 engine under PR #19 (commit f2fa7b7f6). The K = 3 \u2192 K = 5 contrast is EXPLORATORY \u2014 it is NOT preregistered (PI ruling 2026-09-19) \u2014 and no permutation test has been run on it."
     }
    ]
+  },
+  "gemini3-image-55map-2026-09-16": {
+   "_note": "Gemini 3 image at 55-map deployment scale \u2014 row B of the image proposer x verifier 2x2 (reports/image-2x2-tests-declaration-2026-09-19.md). One image proposer pool (five passes of 24,561 tiles each, gemini-3-flash-preview at thinking minimal and T = 0.7, audited US$233.6295 over 122,805 tile-passes) feeding three first-N unions at K = 1 (22,785), K = 3 (36,389) and K = 5 (45,786), each verified by the same two arms as row A: eighteen scored cells = 2 arms x 3 rungs x 3 operating-point bases (carried, F1 oracle, MCC oracle). The proposer payload is byte-identical to row A's (system_instruction_hash e169b723..., library_hash 7c9bbcec...); the rows differ in the proposer MODEL and its thinking level (gemini-3-flash-preview minimal here against gemini-3.7-flash low there), which is the 2x2's row factor. Arm 1 ran on realtime flex, arm 2 on the Google async Batch API (PI ruling 2026-09-18). K = 3 is the DECLARED PRIMARY rung; K = 1 and K = 5 are exploratory replicates. The K = 3 and K = 5 carried points were fixed on Gold Standard calibration legs over the image-b-gs-2026-08-28 pool before any 55-map scoring; the K = 1 points are those legs' K = 3 thresholds with the vote threshold collapsed to 1 (basis 'carried-analogue'). Both oracles are reported beside the carried cells so the transfer tax is visible. verifier_passes[...].modality is 'text' on every leg: each verifier meta records example_count 0, library_hash 'no_examples' and an empty library_manifest, which is the E88 derivation rule's 'text'. UNSIGNED \u2014 the PI signs.",
+   "proposer_pools": {
+    "g384_ov192_55map_g3img": {
+     "modality": "image",
+     "path": "g384_ov192_55map_g3img"
+    }
+   },
+   "verifier_passes": {
+    "g384_ov192_55map_g3img-union-k1-verify-arm1": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map_g3img/verify_k1_arm1"
+    },
+    "g384_ov192_55map_g3img-union-k3-verify-arm1": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map_g3img/verify_k3_arm1"
+    },
+    "g384_ov192_55map_g3img-union-k5-verify-arm1": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map_g3img/verify_k5_arm1"
+    },
+    "g384_ov192_55map_g3img-union-k1-verify-arm2": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map_g3img/verify_k1_arm2"
+    },
+    "g384_ov192_55map_g3img-union-k3-verify-arm2": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map_g3img/verify_k3_arm2"
+    },
+    "g384_ov192_55map_g3img-union-k5-verify-arm2": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map_g3img/verify_k5_arm2"
+    }
+   },
+   "conditions": [
+    {
+     "label": "g3img-arm1-k1-carried-p0.15-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 22785,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "carried-analogue",
+     "vote_threshold": 1,
+     "prob_threshold": 0.15,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM1-K1-carried: carried-ANALOGUE operating point: the Gold Standard K = 3 leg's threshold (0.15, k3; results/gemini3-image-55map-2026-09-16/gs-calibration/k3/arm1/analysis.json) with the vote threshold collapsed to 1 for this rung. No K = 1 calibration leg was run, so this is not a carried point in the strict sense \u2014 basis 'carried-analogue', not 'carried'. n_detections 8529 of a 22785-candidate K = 1 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm1-k1-f1-oracle-p0.40-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 22785,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "f1-oracle",
+     "vote_threshold": 1,
+     "prob_threshold": 0.4,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM1-K1-f1-oracle: F1 oracle over the rung's achievable grid (the board's convention). n_detections 7466 of a 22785-candidate K = 1 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm1-k1-mcc-oracle-p0.30-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 22785,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "mcc-oracle",
+     "vote_threshold": 1,
+     "prob_threshold": 0.3,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM1-K1-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 7543 of a 22785-candidate K = 1 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm1-k3-carried-p0.15-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 36389,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "carried",
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM1-K3-carried: carried operating point, FIXED on the Gold Standard K = 3 calibration leg of image-b-gs-2026-08-28 (results/gemini3-image-55map-2026-09-16/gs-calibration/k3/arm1/analysis.json, image_best (0.15, k3)) before any 55-map scoring. n_detections 5538 of a 36389-candidate K = 3 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The cell COINCIDES with G3IMG-ARM1-K3-f1-oracle: the same grid point (0.15, k3) serves both bases, so the rows score the same 5538 detections. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm1-k3-f1-oracle-p0.15-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 36389,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "f1-oracle",
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-f1-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-f1-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM1-K3-f1-oracle: F1 oracle over the rung's achievable grid (the board's convention). n_detections 5538 of a 36389-candidate K = 3 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The cell COINCIDES with G3IMG-ARM1-K3-carried: the same grid point (0.15, k3) serves both bases, so the rows score the same 5538 detections. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm1-k3-mcc-oracle-p0.35-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 36389,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "mcc-oracle",
+     "vote_threshold": 1,
+     "prob_threshold": 0.35,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM1-K3-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 10078 of a 36389-candidate K = 3 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 3-pass union: it buys tile discrimination by admitting 10078 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm1-k5-carried-p0.15-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 45786,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "carried",
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM1-K5-carried: carried operating point, FIXED on the Gold Standard K = 5 calibration leg of image-b-gs-2026-08-28 (results/gemini3-image-55map-2026-09-16/gs-calibration/k5/arm1/analysis.json, image_best (0.15, k5)) before any 55-map scoring. n_detections 4858 of a 45786-candidate K = 5 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The cell COINCIDES with G3IMG-ARM1-K5-f1-oracle: the same grid point (0.15, k5) serves both bases, so the rows score the same 4858 detections. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm1-k5-f1-oracle-p0.15-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 45786,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "f1-oracle",
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-f1-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-f1-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM1-K5-f1-oracle: F1 oracle over the rung's achievable grid (the board's convention). n_detections 4858 of a 45786-candidate K = 5 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The cell COINCIDES with G3IMG-ARM1-K5-carried: the same grid point (0.15, k5) serves both bases, so the rows score the same 4858 detections. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm1-k5-mcc-oracle-p0.40-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 45786,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "mcc-oracle",
+     "vote_threshold": 1,
+     "prob_threshold": 0.4,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM1-K5-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 11739 of a 45786-candidate K = 5 first-N union, verified by gemini-3-flash-preview at thinking minimal (realtime flex). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 5-pass union: it buys tile discrimination by admitting 11739 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm2-k1-carried-p0.88-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 22785,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "carried-analogue",
+     "vote_threshold": 1,
+     "prob_threshold": 0.88,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM2-K1-carried: carried-ANALOGUE operating point: the Gold Standard K = 3 leg's threshold (0.88, k3; results/gemini3-image-55map-2026-09-16/gs-calibration/k3/arm2/analysis.json) with the vote threshold collapsed to 1 for this rung. No K = 1 calibration leg was run, so this is not a carried point in the strict sense \u2014 basis 'carried-analogue', not 'carried'. n_detections 9172 of a 22785-candidate K = 1 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm2-k1-f1-oracle-p0.98-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 22785,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "f1-oracle",
+     "vote_threshold": 1,
+     "prob_threshold": 0.98,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM2-K1-f1-oracle: F1 oracle over the rung's achievable grid (the board's convention). n_detections 7931 of a 22785-candidate K = 1 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The cell COINCIDES with G3IMG-ARM2-K1-mcc-oracle: the same grid point (0.98, k1) serves both bases, so the rows score the same 7931 detections. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm2-k1-mcc-oracle-p0.98-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 1,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 22785,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "mcc-oracle",
+     "vote_threshold": 1,
+     "prob_threshold": 0.98,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM2-K1-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 7931 of a 22785-candidate K = 1 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The cell COINCIDES with G3IMG-ARM2-K1-f1-oracle: the same grid point (0.98, k1) serves both bases, so the rows score the same 7931 detections. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm2-k3-carried-p0.88-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 36389,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "carried",
+     "vote_threshold": 3,
+     "prob_threshold": 0.88,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM2-K3-carried: carried operating point, FIXED on the Gold Standard K = 3 calibration leg of image-b-gs-2026-08-28 (results/gemini3-image-55map-2026-09-16/gs-calibration/k3/arm2/analysis.json, image_best (0.88, k3)) before any 55-map scoring. n_detections 5941 of a 36389-candidate K = 3 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm2-k3-f1-oracle-p0.96-k3-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 36389,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "f1-oracle",
+     "vote_threshold": 3,
+     "prob_threshold": 0.96,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM2-K3-f1-oracle: F1 oracle over the rung's achievable grid (the board's convention). n_detections 5266 of a 36389-candidate K = 3 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm2-k3-mcc-oracle-p0.98-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 3,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 36389,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "mcc-oracle",
+     "vote_threshold": 1,
+     "prob_threshold": 0.98,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM2-K3-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 10727 of a 36389-candidate K = 3 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 3-pass union: it buys tile discrimination by admitting 10727 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm2-k5-carried-p0.95-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 45786,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "carried",
+     "vote_threshold": 5,
+     "prob_threshold": 0.95,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM2-K5-carried: carried operating point, FIXED on the Gold Standard K = 5 calibration leg of image-b-gs-2026-08-28 (results/gemini3-image-55map-2026-09-16/gs-calibration/k5/arm2/analysis.json, image_best (0.95, k5)) before any 55-map scoring. n_detections 5155 of a 45786-candidate K = 5 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm2-k5-f1-oracle-p0.96-k5-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 45786,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "f1-oracle",
+     "vote_threshold": 5,
+     "prob_threshold": 0.96,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM2-K5-f1-oracle: F1 oracle over the rung's achievable grid (the board's convention). n_detections 4664 of a 45786-candidate K = 5 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    },
+    {
+     "label": "g3img-arm2-k5-mcc-oracle-p0.98-k1-r2-gt",
+     "proposer_pool": "g384_ov192_55map_g3img",
+     "n_passes": 5,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3.7-flash",
+      "thinking_level": "low",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "n_candidates": 45786,
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "basis": "mcc-oracle",
+     "vote_threshold": 1,
+     "prob_threshold": 0.98,
+     "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/evaluation.json",
+     "detections": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/detections.geojson",
+     "_note": "Campaign cell G3IMG-ARM2-K5-mcc-oracle: tile-MCC oracle over the rung's achievable grid (this campaign's primary metric). n_detections 12508 of a 45786-candidate K = 5 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The tile-MCC oracle of this rung sits at a SINGLE vote (k1), not at unanimity, over a 5-pass union: it buys tile discrimination by admitting 12508 detections, and its micro-F1 @ 50 m is correspondingly low. Read it beside the carried cell, not as a deployable configuration. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED."
+    }
+   ]
   }
  }
 }

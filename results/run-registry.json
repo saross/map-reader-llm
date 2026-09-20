@@ -253,6 +253,12 @@
    "directory_path": "outputs/gemini37-image-55map-2026-09-13",
    "status": "active",
    "notes": "Gemini 3.7 image proposer at 55-map deployment scale, K = 3 (card planning/gemini37-image-55map-2026-09-13.md; predictions P1-P5 committed before any deployment scoring). One image proposer pool of three passes over the 24,561-tile g384_ov192_55map geometry, two first-N unions (K = 1 6,985 candidates, K = 3 8,337) each verified by two arms (carried Gemini-3 MINIMAL; all-3.7 low), twelve scored cells. Asks whether a configuration chosen for tile-level discrimination can beat every configuration deployed so far on the 55-map corpus. Results tree is results/gemini37-image-55map-2026-09-13/. Its post_run_report.md is HAND-AUTHORED and on the generator's exclusion list."
+  },
+  {
+   "run_id": "gemini3-image-55map-2026-09-16",
+   "directory_path": "outputs/gemini3-image-55map-2026-09-16",
+   "status": "active",
+   "notes": "Gemini 3 image proposer at 55-map deployment scale \u2014 row B of the image proposer x verifier 2x2 whose row A is gemini37-image-55map-2026-09-13. One image proposer pool of five passes over the 24,561-tile g384_ov192_55map geometry (gemini-3-flash-preview, thinking minimal, T = 0.7), three first-N unions (K = 1 22,785 candidates, K = 3 36,389, K = 5 45,786) each verified by two arms (carried Gemini 3 MINIMAL on realtime flex; all-3.7 low on the Batch API), eighteen scored cells. Asks whether the proposer family, not the verifier seat, carries the image modality's deployment-scale advantage. Results tree is results/gemini3-image-55map-2026-09-16/. Its post_run_report.md is HAND-AUTHORED and on the generator's exclusion list."
   }
  ]
 }

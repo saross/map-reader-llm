@@ -4215,6 +4215,66 @@
     "presentation": null,
     "history": []
    }
+  },
+  {
+   "analysis_id": "gemini3-image-55map-2026-09-16",
+   "type": "comparison",
+   "_note": "Row B of the image proposer x verifier 2x2; the family and its instruments were declared before row B's primary cell existed (reports/image-2x2-tests-declaration-2026-09-19.md, commit 0e5985d83). Eighteen cells of this run, read against the matched cells of gemini37-image-55map-2026-09-13 and against IM-k3. Audited spend: proposer US$233.6295 (122,805 tile-passes), six verifier legs US$189.4717, Gold Standard calibration legs US$9.0109. The verifier row total of US$189.47 is against the PI's US$200 provisional for the row. K = 3 is the declared PRIMARY rung; K = 1 and K = 5 are exploratory replicates and their test JSONs were being regenerated under a four-member BH family when this row was authored. This row is UNSIGNED.",
+   "_prereg_rationale": "post-hoc: the preregistration's H3 registers consensus voting over K proposer passes as a factor and H13 the tile geometry, and this run executes both at deployment scale; but its own question — whether the image modality's deployment-scale advantage belongs to the proposer family or the verifier seat — is post-hoc. Its five-test family and instruments were declared in reports/image-2x2-tests-declaration-2026-09-19.md before the primary rung's row B arm 2 cell existed, but after row A and row B's K = 1 cells were scored.",
+   "conditions_compared": [
+    "gemini3-image-55map-2026-09-16::g3img-arm1-k1-carried-p0.15-k1-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm1-k1-f1-oracle-p0.40-k1-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm1-k1-mcc-oracle-p0.30-k1-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm1-k3-carried-p0.15-k3-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm1-k3-f1-oracle-p0.15-k3-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm1-k3-mcc-oracle-p0.35-k1-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm1-k5-carried-p0.15-k5-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm1-k5-f1-oracle-p0.15-k5-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm1-k5-mcc-oracle-p0.40-k1-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm2-k1-carried-p0.88-k1-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm2-k1-f1-oracle-p0.98-k1-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm2-k1-mcc-oracle-p0.98-k1-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm2-k3-carried-p0.88-k3-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm2-k3-f1-oracle-p0.96-k3-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm2-k3-mcc-oracle-p0.98-k1-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm2-k5-carried-p0.95-k5-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm2-k5-f1-oracle-p0.96-k5-r2-gt",
+    "gemini3-image-55map-2026-09-16::g3img-arm2-k5-mcc-oracle-p0.98-k1-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm1-k1-carried-p0.10-k1-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm2-k1-carried-p0.88-k1-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm1-k3-carried-p0.10-k3-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm2-k3-carried-p0.88-k3-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm1-k5-carried-p0.10-k5-r2-gt",
+    "gemini37-image-55map-2026-09-13::img-arm2-k5-carried-p0.90-k5-r2-gt",
+    "55maps-image-generalisation::verified-k3-r2-gt"
+   ],
+   "hypothesis_refs": [
+    "H3",
+    "H13"
+   ],
+   "preregistered": "post-hoc",
+   "deviations": [
+    "Scored on the r2 board's own engine (evaluate_detections.py, 14 buffers, BCa 10,000 / seed 42, --mcc) rather than the canonical Track-2 corrected-F1 engine, so that the 2x2's four cells are compared within one instrument (row A's choice, deltas § 10.3).",
+    "source_tile re-stamped from the proposer's 192 px-stride tiling onto the 336 px-stride scoring frame by stride55_score.assign_standard_tile, the same writer and code path as row A. No join variant, default or committed cell was changed.",
+    "Arm 2's three legs ran on the Google async Batch API while row A's arm 2 ran on realtime flex (PI ruling 2026-09-18, after a flex 503 storm on gemini-3.7-flash). The 2026-09-19 batch-vs-flex probe measured no route effect beyond same-route re-invocation drift.",
+    "The K = 5 arm 2 leg was lodged in two tranches after a 429 FileStorageBytesPerProject on the File API's 20 GiB cap; its job ledger is split across batch_jobs.json and batch_jobs_relodged.json. The recovered leg books 45,786 / 45,786 with 0 failed.",
+    "The K = 1 rung's carried points are the K = 3 calibration legs' thresholds with the vote threshold collapsed to 1 (basis 'carried-analogue'); no K = 1 Gold Standard leg was run."
+   ],
+   "predicted_outcome": "No prediction was registered for row B in the form row A's card used (P1-P5). The declared family states five contrasts per metric at the primary rung rather than directional predictions (reports/image-2x2-tests-declaration-2026-09-19.md § 3), with two expectations recorded in § 5.4: that row B over-generates at K = 1, and that the K = 1 replicate would show the largest proposer effect and the K = 5 replicate the smallest.",
+   "tie_set": [],
+   "outcome": null,
+   "paper_section": "Results",
+   "output_path": "results/gemini3-image-55map-2026-09-16/findings.md",
+   "working_notes_obs": [],
+   "manually_verified_at": null,
+   "_signature_note": "UNSIGNED and presented for review: the outcome field is left null because the family's reading at K = 1 and K = 5 is being regenerated under a four-member BH family, and the PI has not adjudicated the K = 3 primary reading. No board and no tiering was re-tiered and no signed row was touched.",
+   "signature": {
+    "status": "unsigned",
+    "signed_at": null,
+    "attests": "UNSIGNED and presented for review; the PI signs. No board and no tiering was re-tiered and no signed row was touched.",
+    "presentation": null,
+    "history": []
+   }
   }
  ]
 }

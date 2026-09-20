@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-16T02:55:16Z",
+  "generated_at": "2026-09-19T23:56:27Z",
   "generator_version": "0.7.1",
   "runs": [
     {
@@ -1389,7 +1389,7 @@
         "H3",
         "H13"
       ],
-      "purpose": "Can a configuration chosen for tile-level discrimination (Matthews correlation coefficient on the presence or absence of a mound per tile) significantly outperform every configuration deployed so far on the 55-map corpus? Presence-or-absence is the unit of survey triage, so MCC has research uses F1 does not. One Gemini 3.7 image proposer pool at K = 3, both K = 1 and K = 3 first-N rungs, each under two verifier arms (carried Gemini-3; all-3.7), mirroring the 3.7 TEXT 2x2 of gemini37-55map-2026-08-29 so the modality difference-in-differences exists at deployment scale. Carried operating points were fixed on a Gold Standard K = 3 calibration leg before any 55-map scoring. Predictions P1-P5, card planning/gemini37-image-55map-2026-09-13.md \u00a7 4. H3 is informed through the pass-count factor, H13 through the tile geometry; the modality-on-tile-MCC question itself is post-hoc.",
+      "purpose": "Can a configuration chosen for tile-level discrimination (Matthews correlation coefficient on the presence or absence of a mound per tile) significantly outperform every configuration deployed so far on the 55-map corpus? Presence-or-absence is the unit of survey triage, so MCC has research uses F1 does not. One Gemini 3.7 image proposer pool of five passes (passes 1-3 on the card; passes 4-5 added afterwards through the Batch API), with K = 1, K = 3 and K = 5 first-N rungs, each under two verifier arms (carried Gemini-3; all-3.7), mirroring the 3.7 TEXT 2x2 of gemini37-55map-2026-08-29 so the modality difference-in-differences exists at deployment scale. Carried operating points were fixed on a Gold Standard K = 3 calibration leg before any 55-map scoring. Predictions P1-P5, card planning/gemini37-image-55map-2026-09-13.md \u00a7 4. H3 is informed through the pass-count factor, H13 through the tile geometry; the modality-on-tile-MCC question itself is post-hoc. The K = 5 rung was added outside the card on 2026-09-17 and its K = 3 -> K = 5 contrast is EXPLORATORY, not preregistered (PI ruling 2026-09-19).",
       "run_type": "proposer-verifier",
       "tile_size_px": 384,
       "corpus": "55-map",
@@ -1411,7 +1411,41 @@
           "results/run-facts.json",
           "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
         ],
-        "last_extracted_at": "2026-09-16T02:55:16Z",
+        "last_extracted_at": "2026-09-19T23:56:27Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "run_id": "gemini3-image-55map-2026-09-16",
+      "directory_path": "outputs/gemini3-image-55map-2026-09-16",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "H3",
+        "H13"
+      ],
+      "purpose": "Does the image modality's deployment-scale advantage belong to the PROPOSER family or to the verifier seat? Row A (gemini37-image-55map-2026-09-13) ran a Gemini 3.7 image proposer pool under two verifier arms; this run holds the tiling, the prompt payload, the exemplar library, the verifier arms, the unions' builder and the scoring instrument fixed and swaps the proposer to gemini-3-flash-preview at thinking minimal, completing the 2x2. Five passes of 24,561 tiles, first-N unions at K = 1, K = 3 and K = 5, each under both arms, three operating-point bases per rung. Carried points come from Gold Standard calibration legs over image-b-gs-2026-08-28 run before any 55-map scoring; the K = 1 points are the K = 3 legs' thresholds with the vote threshold collapsed to 1. K = 3 is the declared primary rung and K = 1 and K = 5 are exploratory replicates (reports/image-2x2-tests-declaration-2026-09-19.md). H3 is informed through the pass-count factor and H13 through the tile geometry; the proposer-family question itself is post-hoc.",
+      "run_type": "proposer-verifier",
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "combined",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": "gemini3-image-55map-2026-09-16::g3img-arm2-k3-carried-p0.88-k3-r2-gt",
+      "headline_rationale": "The all-3.7-verifier cell on the Gemini 3 pool at the declared primary rung, on its carried point \u2014 the cell the 2x2's tests T1 and T3 are stated about. It is row B's best K = 3 carried cell on micro-F1 @ 50 m (0.8127) and sits at tile-MCC 0.7234, and it is BH-significantly BELOW row A's matched cell on both metrics (-0.1072 F1, -0.0413 MCC; results/image-2x2-2026-09-19/tests_2x2_K3.json, T1).",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-09-19T23:56:27Z",
         "extractor_version": "0.7.1"
       }
     }

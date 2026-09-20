@@ -2,9 +2,9 @@
 
 # Runs manifest
 
-> Generated 2026-09-16T02:55:16Z · 42 row(s) · schema v1.0 · rendered from `results/runs-manifest.json` at commit `f307c1932`.
+> Generated 2026-09-19T23:56:27Z · 43 row(s) · schema v1.0 · rendered from `results/runs-manifest.json` at commit `8d2cc0071`.
 >
-> **Coverage**: all 42 runs (run-level facts; conditions/passes added as 3b batches land).
+> **Coverage**: all 43 runs (run-level facts; conditions/passes added as 3b batches land).
 
 | run_id | type | tile_px | corpus | gt | scope | headline |
 |---|---|---|---|---|---|---|
@@ -50,3 +50,4 @@
 | gemini37-55map-2026-08-29 | proposer-verifier | 384 | 55-map | combined | 55maps-8541 | gemini37-55map-2026-08-29::arm2-n5-carried-p0.80-k5-canonical-gt |
 | gemini37-image-gs-2026-09-01 | proposer-verifier | 384 | 4-map-gs | curator | grid-common-487 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5 |
 | gemini37-image-55map-2026-09-13 | proposer-verifier | 384 | 55-map | combined | 55maps-8541 | gemini37-image-55map-2026-09-13::img-arm2-k3-carried-p0.88-k3-r2-gt |
+| gemini3-image-55map-2026-09-16 | proposer-verifier | 384 | 55-map | combined | 55maps-8541 | gemini3-image-55map-2026-09-16::g3img-arm2-k3-carried-p0.88-k3-r2-gt |

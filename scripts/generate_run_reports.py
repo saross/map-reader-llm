@@ -169,6 +169,14 @@ HAND_AUTHORED: dict[str, str] = {
         "behind, the verifier-leg audit method, the six mechanism gates and a resume "
         "path — none of it re-derivable from the manifests. In full Revision-Policy "
         "scope with its own changelog; a projection would destroy it.",
+    "gemini3-image-55map-2026-09-16":
+        "hand-authored campaign record for row B of the image 2x2, carrying the "
+        "per-pass and per-leg audited costs against the PI's US$200 provisional, "
+        "the two-round proposer recovery, the route split (arm 1 flex, arm 2 batch), "
+        "the File API 429 that split the K = 5 arm 2 job ledger across two files, "
+        "the rate-card trap in auditing this pool, and the registration's unsigned "
+        "standing — none of it re-derivable from the manifests. In full "
+        "Revision-Policy scope with its own changelog; a projection would destroy it.",
 }
 
 #: The buffers the reports surface from a condition's 14-buffer metric block.

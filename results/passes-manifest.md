@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-09-16T02:55:16Z · 1324 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `f307c1932`.
+> Generated 2026-09-19T23:56:27Z · 1339 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `8d2cc0071`.
 >
-> **Coverage**: 1324 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 1339 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cands | cost_usd |
 |---|---|---|---|---|---|---|---|---|
@@ -1328,7 +1328,22 @@
 | gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run1 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.049311 |
 | gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run2 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.397329 |
 | gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run3 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.394827 |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run4 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.191948 |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run5 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.272635 |
 | gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 6985 | 9.925184 |
 | gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm2::run1 | gemini-3.7-flash | image | low | 0.0 | ok | — | 13 | 0.030545 |
 | gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 8337 | 11.811639 |
 | gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm2::run1 | gemini-3.7-flash | image | low | 0.0 | ok | — | 1 | 0.002413 |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 9173 | 12.97918 |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1 | gemini-3.7-flash | image | low | 0.0 | ok | — | 9173 | 20.357637 |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run1 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 126.538377 |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run2 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 126.543132 |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run3 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 126.54888 |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run4 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 126.544896 |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run5 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 126.556855 |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 22785 | 31.511874 |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 36389 | 50.204098 |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 45786 | 63.084351 |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 22785 | 50.79567 |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 36389 | 81.162554 |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 45786 | 102.18491 |

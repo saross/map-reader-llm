@@ -467,7 +467,10 @@ def test_run_registry_input_valid_and_in_sync(registry):
     # 42 since 2026-09-14: the Gemini 3.7 image 55-map K = 3 campaign
     # (gemini37-image-55map-2026-09-13), registered with 12 conditions and one
     # UNSIGNED analysis row.
-    assert len(reg["registry"]) == 42
+    # 43 since 2026-09-20: row B of the same image 2x2
+    # (gemini3-image-55map-2026-09-16), registered with 18 conditions, six
+    # verifier passes and one UNSIGNED analysis row.
+    assert len(reg["registry"]) == 43
     assert "generator_version" not in reg  # run-registry schema is closed; no generator_version
     # registry and facts must describe the same run set (the B1 drift guard)
     assert drift_check(reg["registry"], load_run_facts()) == []
@@ -501,7 +504,8 @@ def test_manifest_envelopes_valid(registry):
     # 38: +5 in the S143 PI-signed registration passes
     # 41: +3 for the S149 Gemini 3.7 arc
     # 42: +gemini37-image-55map-2026-09-13 (the 3.7 image 55-map K = 3 campaign)
-    assert len(run_rows) == 42
+    # 43: +gemini3-image-55map-2026-09-16 (row B of the image 2x2)
+    assert len(run_rows) == 43
     assert warnings == []
 
     runs_obj = assemble_manifest("runs", run_rows, at)
