@@ -47,7 +47,7 @@ The five-test family (declared 2026-09-13, before any 55-map score existed)
 Four external comparators — ``FOURTH-N1-oracle``, ``ARM2-N3-oracle``,
 ``ARM2-N5-oracle``, ``IM-k3`` — plus the within-campaign K = 1 versus K = 3
 contrast that P2 requires. Benjamini-Hochberg at q = 0.05 across those five,
-separately on tile-MCC and on corrected micro-F1 @ 50 m.
+separately on tile-MCC and on micro-F1 @ 50 m.
 
 Usage::
 

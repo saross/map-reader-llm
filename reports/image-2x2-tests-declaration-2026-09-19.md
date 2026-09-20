@@ -26,7 +26,7 @@ configuration, and the stride-builder first-N unions:
 Every cell is materialised at its row's GS-carried operating point (row A:
 `planning/gemini37-image-55map-2026-09-13.md` § 2 and the registered GS K = 5
 cells; row B: `results/gemini3-image-55map-2026-09-16/gs-calibration/`), and
-scored on the r2 board's instrument: corrected micro-F1 at 50 m and tile-MCC
+scored on the r2 board's instrument: micro-F1 at 50 m and tile-MCC
 on the 8,541-tile evaluation frame, `inputs/vectors/references/best-available-gt-55maps-r2.geojson`
 (`scripts/gemini37_image_55map_r2.py`, `--campaign g37|g3`).
 
@@ -130,6 +130,15 @@ output `results/image-2x2-2026-09-19/tests_2x2_K{K}.json`, one file per rung.
    registration and signature are the PI's, after the tests are run.
 
 ## Changelog
+
+### 2026-09-20 — Erratum: the metric is plain micro-F1, not "corrected"
+
+Trigger: `reports/comparability-inventory-37-runs-2026-09-20.md` § 5 item 5.
+§ 2 called the r2 board's instrument "corrected micro-F1 at 50 m"; the r2
+chain scores with `scripts/evaluate_detections.py` (plain micro-F1, per-map
+Hungarian matching) and never invokes the canonical Track-2 corrected-F1
+engine. Wording corrected in place here and in the r2 script's module
+docstring; no number changes.
 
 ### 2026-09-20 — The BH family is the rung's: T1–T4 at K = 1 and K = 5
 
