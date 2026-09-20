@@ -1,0 +1,170 @@
+{
+  "purpose": "Does the arm 2 K = 3 -> K = 5 micro-F1 gain survive an independent re-invocation of the same verifier? Declaration rule: reports/image-2x2-tests-declaration-2026-09-19.md section 5 caveat 1.",
+  "buffer_m": 50,
+  "reference": "r2",
+  "n_permutations": 10000,
+  "seed": 42,
+  "cells": {
+    "IMG-ARM2-K5-carried-replicate": "results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/cells/IMG-ARM2-K5-carried-replicate/detections.geojson",
+    "IMG-ARM2-K5-f1-oracle-replicate": "results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/cells/IMG-ARM2-K5-f1-oracle-replicate/detections.geojson",
+    "IMG-ARM2-K5-carried": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-carried/detections.geojson",
+    "IMG-ARM2-K3-carried": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-carried/detections.geojson",
+    "IMG-ARM2-K5-f1-oracle": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-f1-oracle/detections.geojson"
+  },
+  "n_detections": {
+    "IMG-ARM2-K5-f1-oracle": 5197,
+    "IMG-ARM2-K5-f1-oracle-replicate": 5184,
+    "IMG-ARM2-K5-carried": 5219,
+    "IMG-ARM2-K5-carried-replicate": 5202,
+    "IMG-ARM2-K3-carried": 5357
+  },
+  "tile_confusion": {
+    "IMG-ARM2-K5-f1-oracle": {
+      "tp": 2644,
+      "tn": 4909,
+      "fp": 103,
+      "fn": 885
+    },
+    "IMG-ARM2-K5-f1-oracle-replicate": {
+      "tp": 2642,
+      "tn": 4908,
+      "fp": 104,
+      "fn": 887
+    },
+    "IMG-ARM2-K5-carried": {
+      "tp": 2648,
+      "tn": 4898,
+      "fp": 114,
+      "fn": 881
+    },
+    "IMG-ARM2-K5-carried-replicate": {
+      "tp": 2646,
+      "tn": 4898,
+      "fp": 114,
+      "fn": 883
+    },
+    "IMG-ARM2-K3-carried": {
+      "tp": 2659,
+      "tn": 4885,
+      "fp": 127,
+      "fn": 870
+    }
+  },
+  "multiplicity": "No Benjamini-Hochberg adjustment: these four tests are a replication probe of one already-declared contrast, not a new declared family. Raw p-values are reported.",
+  "f1_tests": [
+    {
+      "test": "a",
+      "a": "IMG-ARM2-K5-carried-replicate",
+      "b": "IMG-ARM2-K5-carried",
+      "contrast": "drift-only: same union, same point, different invocation",
+      "f1_a": 0.927789,
+      "f1_b": 0.927029,
+      "observed_diff": 0.000759,
+      "p_value": 0.4015,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -5e-06,
+      "null_std": 0.000904
+    },
+    {
+      "test": "b",
+      "a": "IMG-ARM2-K5-carried-replicate",
+      "b": "IMG-ARM2-K3-carried",
+      "contrast": "does the K3 -> K5 gain survive a fresh invocation?",
+      "f1_a": 0.927789,
+      "f1_b": 0.919904,
+      "observed_diff": 0.007885,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 4e-06,
+      "null_std": 0.001471
+    },
+    {
+      "test": "c",
+      "a": "IMG-ARM2-K5-carried",
+      "b": "IMG-ARM2-K3-carried",
+      "contrast": "the original K3 -> K5 contrast, reproduced for the record",
+      "f1_a": 0.927029,
+      "f1_b": 0.919904,
+      "observed_diff": 0.007126,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 9e-06,
+      "null_std": 0.001494
+    },
+    {
+      "test": "d",
+      "a": "IMG-ARM2-K5-f1-oracle-replicate",
+      "b": "IMG-ARM2-K5-f1-oracle",
+      "contrast": "drift-only at each leg's own F1 oracle",
+      "f1_a": 0.929034,
+      "f1_b": 0.928047,
+      "observed_diff": 0.000987,
+      "p_value": 0.2861,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -3e-06,
+      "null_std": 0.000921
+    }
+  ],
+  "mcc_tests": [
+    {
+      "test": "a",
+      "a": "IMG-ARM2-K5-carried-replicate",
+      "b": "IMG-ARM2-K5-carried",
+      "contrast": "drift-only: same union, same point, different invocation",
+      "mcc_a": 0.765482,
+      "mcc_b": 0.765934,
+      "observed_diff": -0.000452,
+      "p_value": 0.8225,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 6e-06,
+      "null_std": 0.001648
+    },
+    {
+      "test": "b",
+      "a": "IMG-ARM2-K5-carried-replicate",
+      "b": "IMG-ARM2-K3-carried",
+      "contrast": "does the K3 -> K5 gain survive a fresh invocation?",
+      "mcc_a": 0.765482,
+      "mcc_b": 0.764766,
+      "observed_diff": 0.000716,
+      "p_value": 0.7459,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -1.4e-05,
+      "null_std": 0.002077
+    },
+    {
+      "test": "c",
+      "a": "IMG-ARM2-K5-carried",
+      "b": "IMG-ARM2-K3-carried",
+      "contrast": "the original K3 -> K5 contrast, reproduced for the record",
+      "mcc_a": 0.765934,
+      "mcc_b": 0.764766,
+      "observed_diff": 0.001168,
+      "p_value": 0.6141,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -2e-05,
+      "null_std": 0.002218
+    },
+    {
+      "test": "d",
+      "a": "IMG-ARM2-K5-f1-oracle-replicate",
+      "b": "IMG-ARM2-K5-f1-oracle",
+      "contrast": "drift-only at each leg's own F1 oracle",
+      "mcc_a": 0.767412,
+      "mcc_b": 0.768146,
+      "observed_diff": -0.000734,
+      "p_value": 0.71,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 1.8e-05,
+      "null_std": 0.001724
+    }
+  ]
+}
