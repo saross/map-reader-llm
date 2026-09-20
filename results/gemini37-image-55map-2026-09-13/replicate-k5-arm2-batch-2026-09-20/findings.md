@@ -48,12 +48,23 @@ The cost is the `STAGE TOTAL (audited)` line of
 `scripts/audit_verifier_cost.py <leg> --tier flex`, re-run for this note:
 
 ```text
-  STAGE TOTAL (audited)          n=   9173             audited=$   10.2033  $0.001112/candidate
+  STAGE TOTAL (audited)                                       n=   9173             audited=$   10.2033  $0.001112/candidate
 ```
 
 Note that the leg's own `run.meta.json` `cost_estimate` reads US$20.4066 —
 exactly double — and the auditor marks it "do NOT use at a gate". The audited
 figure is the one quoted.
+
+"Same config" is checked at source rather than assumed. The two legs'
+`run.meta.json` `configuration` blocks agree on every field that could move a
+probability: `version` `verify_adversarial-text`, `model` `gemini-3.7-flash`,
+`instruction_file` `verify_adversarial.md`, `system_instruction_hash`
+`2518d529…3497e15d`, `library_hash` `no_examples`, `temperature` 0.0,
+`thinking_level` `low`, `max_output_tokens` 8192,
+`include_example_images` true. The replicate's `execution_stats` record
+`items_processed` 9,173 and `items_failed` 0 across three batch chunks of
+4,000 / 4,000 / 1,173, all `JOB_STATE_SUCCEEDED` (`batch_jobs.json`). Route and
+invocation are the only differences between the legs.
 
 Every derived artefact below was produced by *importing*
 `scripts/gemini37_image_55map_r2.py` — its `rung_frame` inputs, its
@@ -223,3 +234,9 @@ drift-only contrast of +0.0008, *p* = 0.40); the tile-MCC gain is **not**
 (*p* = 0.61–0.75 across all contrasts). No board was re-tiered, no signed row
 touched, and no campaign cell or manifest was modified — the replicate's
 artefacts live entirely in this directory.
+
+Corrected the same day, before any consumer cited this document: the § 2 cost
+block now reproduces the auditor's `STAGE TOTAL` line verbatim rather than
+re-spaced, and the configuration parity between the two legs is stated from
+the two `run.meta.json` `configuration` blocks rather than asserted. No
+numerical claim moved.
