@@ -6,12 +6,10 @@ the commit that executed it. Read top to bottom; open items first.
 
 ## Open
 
-### D5 — Audit items still open (`reports/code-audit-2026-09-20-storage-preflight.md` § 6)
+### D8 — Measure the E89 floor for the Gemini 3 verifier (row B arm 1)
 
-- **M2**: `batch-recover --iterations` defaults to 1; recovering a multi-iteration leg without it writes an empty `probabilities.json` beside a stale `consensus.json`. Options: default from the leg's own `probabilities.json` `iterations` (recommended) / refuse to book an all-miss leg.
-- **M4 + m10**: the 5 % storage margin is 1 GiB, smaller than one proposer chunk (~1.3 GB); PROCESSING uploads report no size and count as zero. Options: margin = one maximum chunk and charge PROCESSING uploads at that size (recommended) / keep 5 %.
-- **m7**: a FAILED/CANCELLED/EXPIRED/PARTIALLY_SUCCEEDED batch job is retrieved like a success and not counted in `failed_chunks`; completeness gates still catch missing keys. Option: count non-SUCCEEDED terminal states as failed while keeping partial results.
-- **New (registration agent)**: `scripts/audit_proposer_cost.py` never reads the model from the run meta; its 3.7 default prices a Gemini 3 pool 48 % high unless `--model` is passed. Option: read the model from the meta and refuse to price without one.
+- **Need**: a second, independent invocation of `gemini-3-flash-preview` (minimal, T 0) over a union it has already verified. Cheapest clean pair: replicate row A's arm 1 K = 5 leg (`verify_k5_arm1`, 9,173 candidates, audited US$6.49 on flex) on the Batch API — same union as the arm 2 floor's replicate, so both verifiers' floors sit on one candidate set. Row B's own arm 1 K = 5 leg would cost ≈ US$31.5.
+- **Decide**: approve ≈ US$6.5 (9,173 calls, batch, `gemini-3-flash-preview`)?
 
 ### D6 — Board follow-ups
 
@@ -24,6 +22,8 @@ the commit that executed it. Read top to bottom; open items first.
 - **Decide**: (a) rebuild `IM-k4` on the consensus votes (+3 detections, F1 0.7398 → 0.7402; $0, a board cell); (b) the one never-verified 4-vote candidate in `55maps-text-high-generalisation` (two clusters 17.29 m apart matched to one manifest entry) — verify it (one call) or minute it.
 
 ## Ruled
+
+### D5 — Audit items — RULED 2026-09-20: all four as recommended — M2 both halves (default `--iterations` from the leg AND refuse an all-miss leg), M4/m10 (margin = one maximum chunk; PROCESSING uploads charged at that size), m7 (non-SUCCEEDED terminal states count as failed chunks, partial results kept), and the proposer/verifier cost auditors read the model from the meta and refuse to price without one. Implementation in progress
 
 ### D2 — Verifier-ladder method — RULED 2026-09-20: INHERITANCE is the project's ladder method (one verifier leg over the top-rung union, lower rungs by ≤ 10 m match); the image rows' per-rung legs were a departure. Head-to-head DONE on the 3.7 image row (62b13e6fd…557b4e881; `results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/`): inherited vs own-leg differs by 0.0002–0.0021 F1 and 0.0005–0.0027 tile-MCC, all p ≥ 0.07, signs mixed — no more than the verifier disagrees with itself; the dropped-candidate precision bias is undetectable (drops 50 of 6,985 at K = 1, 2 of 8,337 at K = 3). Inheritance is SAFE to adopt on this evidence. Bonus: the pure-inheritance K3→K5 tile-MCC contrast is readable (+0.0039, p 0.006) where own-leg pairing left it in the drift band. Gemini 3 row DONE (2ba1914b6…b1408b0ed; `results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/`): at K = 3 no difference beyond drift (row A reproduced); at K = 1 the dropped-candidate precision bias IS real and claimable on F1 (inherited cells smaller and more precise by +0.006/+0.009 F1, 3.0/5.9 null SDs, both arms; drops 566 of 22,785 = 2.5 %), null on tile-MCC. Density does not create matching ambiguity (0 exact ties; the 20 m dedup radius, twice the 10 m match radius, is the invariant to keep). RULES THAT FOLLOW: inheritance stays the method; an inherited K = 1 cell must not be read beside an own-leg K = 1 cell; K1→K3 claims must name the method; any pool unioned at a dedup radius ≤ 10 m must re-measure
 
