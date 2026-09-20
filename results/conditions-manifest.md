@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-09-20T07:07:28Z · 636 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `f8d945c75`.
+> Generated 2026-09-20T08:36:22Z · 651 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `8a143963d`.
 >
-> **Coverage**: 636 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 651 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -571,6 +571,10 @@
 | stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-carried-posthoc-p0.98-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7021 | 0.7466 | 5334 |
 | stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-carried-posthoc-p0.98-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7443 | 0.7372 | 4623 |
 | stride-55map-2026-08-25::g384-ov192-55map-n5-verified37-carried-posthoc-p0.98-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7448 | 0.7322 | 4431 |
+| stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-mcc-oracle-posthoc-p0.96-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7023 | 0.7471 | 5337 |
+| stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-mcc-oracle-posthoc-p0.96-k10-r2-gt | proposer-verifier | verified | 10 | 10 | 0.7476 | 0.7269 | 4249 |
+| stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-mcc-oracle-posthoc-p0.96-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7445 | 0.7376 | 4626 |
+| stride-55map-2026-08-25::g384-ov192-55map-n5-verified37-mcc-oracle-posthoc-p0.96-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7452 | 0.7326 | 4434 |
 | image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9 | proposer-verifier | verified | 9 | 10 | 0.8412 | 0.7985 | 397 |
 | image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8 | proposer-verifier | verified | 8 | 10 | 0.8333 | 0.7993 | 400 |
 | image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b | proposer-verifier | verified | 8 | 10 | 0.8263 | 0.7937 | 400 |
@@ -604,6 +608,12 @@
 | gemini37-55map-2026-08-29::arm1-n3-carried-posthoc-p0.10-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7514 | 0.6591 | 5482 |
 | gemini37-55map-2026-08-29::arm2-n1-carried-posthoc-p0.80-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.751 | 0.7073 | 5936 |
 | gemini37-55map-2026-08-29::arm2-n3-carried-posthoc-p0.80-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.782 | 0.7076 | 5187 |
+| gemini37-55map-2026-08-29::arm1-n1-mcc-oracle-posthoc-p0.20-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7481 | 0.7246 | 5219 |
+| gemini37-55map-2026-08-29::arm1-n3-mcc-oracle-posthoc-p0.20-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7729 | 0.7236 | 4613 |
+| gemini37-55map-2026-08-29::arm1-n5-mcc-oracle-posthoc-p0.20-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7734 | 0.7196 | 4473 |
+| gemini37-55map-2026-08-29::arm2-n1-mcc-oracle-posthoc-p0.96-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7665 | 0.7422 | 5022 |
+| gemini37-55map-2026-08-29::arm2-n3-mcc-oracle-posthoc-p0.96-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.7868 | 0.7326 | 4499 |
+| gemini37-55map-2026-08-29::arm2-n5-mcc-oracle-posthoc-p0.96-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.7859 | 0.7291 | 4378 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5 | proposer-verifier | verified | 5 | 5 | 0.9254 | 0.8192 | 430 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5 | proposer-verifier | verified | 5 | 5 | 0.9308 | 0.8322 | 425 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9179 | 0.8133 | 430 |
@@ -623,6 +633,7 @@
 | gemini37-image-55map-2026-09-13::img-arm2-k3-carried-p0.88-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.8293 | 0.7648 | 5357 |
 | gemini37-image-55map-2026-09-13::img-arm2-k3-f1-oracle-p0.90-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.83 | 0.7654 | 5343 |
 | gemini37-image-55map-2026-09-13::img-arm2-k3-mcc-oracle-p0.96-k2-r2-gt | proposer-verifier | verified | 2 | 3 | 0.8045 | 0.7656 | 5167 |
+| gemini37-image-55map-2026-09-13::img-arm2-k3-mcc-oracle-p0.90-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.83 | 0.7654 | 5343 |
 | gemini37-image-55map-2026-09-13::img-arm2-k5-carried-p0.90-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.8377 | 0.7659 | 5219 |
 | gemini37-image-55map-2026-09-13::img-arm2-k5-f1-oracle-p0.95-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.839 | 0.7681 | 5197 |
 | gemini37-image-55map-2026-09-13::img-arm2-k5-mcc-oracle-p0.95-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.839 | 0.7681 | 5197 |
@@ -632,15 +643,19 @@
 | gemini3-image-55map-2026-09-16::g3img-arm1-k3-carried-p0.15-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.6099 | 0.7247 | 5538 |
 | gemini3-image-55map-2026-09-16::g3img-arm1-k3-f1-oracle-p0.15-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.6099 | 0.7247 | 5538 |
 | gemini3-image-55map-2026-09-16::g3img-arm1-k3-mcc-oracle-p0.35-k1-r2-gt | proposer-verifier | verified | 1 | 3 | 0.4465 | 0.7486 | 10078 |
+| gemini3-image-55map-2026-09-16::g3img-arm1-k3-mcc-oracle-p0.20-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.609 | 0.7301 | 5370 |
 | gemini3-image-55map-2026-09-16::g3img-arm1-k5-carried-p0.15-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.6166 | 0.7165 | 4858 |
 | gemini3-image-55map-2026-09-16::g3img-arm1-k5-f1-oracle-p0.15-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.6166 | 0.7165 | 4858 |
 | gemini3-image-55map-2026-09-16::g3img-arm1-k5-mcc-oracle-p0.40-k1-r2-gt | proposer-verifier | verified | 1 | 5 | 0.4097 | 0.7496 | 11739 |
+| gemini3-image-55map-2026-09-16::g3img-arm1-k5-mcc-oracle-p0.20-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.617 | 0.7199 | 4729 |
 | gemini3-image-55map-2026-09-16::g3img-arm2-k1-carried-p0.88-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.5139 | 0.7063 | 9172 |
 | gemini3-image-55map-2026-09-16::g3img-arm2-k1-f1-oracle-p0.98-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.5352 | 0.7659 | 7931 |
 | gemini3-image-55map-2026-09-16::g3img-arm2-k1-mcc-oracle-p0.98-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.5352 | 0.7659 | 7931 |
 | gemini3-image-55map-2026-09-16::g3img-arm2-k3-carried-p0.88-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.6161 | 0.7234 | 5941 |
 | gemini3-image-55map-2026-09-16::g3img-arm2-k3-f1-oracle-p0.96-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.6291 | 0.7553 | 5266 |
 | gemini3-image-55map-2026-09-16::g3img-arm2-k3-mcc-oracle-p0.98-k1-r2-gt | proposer-verifier | verified | 1 | 3 | 0.4661 | 0.7706 | 10727 |
+| gemini3-image-55map-2026-09-16::g3img-arm2-k3-mcc-oracle-p0.96-k3-r2-gt | proposer-verifier | verified | 3 | 3 | 0.6291 | 0.7553 | 5266 |
 | gemini3-image-55map-2026-09-16::g3img-arm2-k5-carried-p0.95-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.625 | 0.7253 | 5155 |
 | gemini3-image-55map-2026-09-16::g3img-arm2-k5-f1-oracle-p0.96-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.6331 | 0.745 | 4664 |
 | gemini3-image-55map-2026-09-16::g3img-arm2-k5-mcc-oracle-p0.98-k1-r2-gt | proposer-verifier | verified | 1 | 5 | 0.4247 | 0.7755 | 12508 |
+| gemini3-image-55map-2026-09-16::g3img-arm2-k5-mcc-oracle-p0.98-k5-r2-gt | proposer-verifier | verified | 5 | 5 | 0.633 | 0.7451 | 4660 |
