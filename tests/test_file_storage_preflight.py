@@ -41,7 +41,8 @@ from scripts.lib_batch_api import (  # noqa: E402
     FILE_STORAGE_BUDGET_BYTES,
     FILE_STORAGE_CAP_BYTES,
     FILE_STORAGE_QUOTA_METRIC,
-    FILE_STORAGE_SAFETY_MARGIN,
+    FILE_STORAGE_SAFETY_MARGIN_BYTES,
+    MAX_CHUNK_BYTES,
     FileStorageCapExceeded,
     is_file_storage_quota_error,
     make_safe_sweep,
@@ -84,9 +85,13 @@ class _FakeFile:
     file that has just been uploaded — and what the sweep's grace period
     protects. A test that wants a file the sweep may reclaim passes
     ``create_time=_STALE``.
+
+    ``size_bytes=None`` is what the API reports for an upload it is still
+    ingesting (state ``PROCESSING``) — a concurrent lodger's chunk, in
+    practice.
     """
 
-    def __init__(self, name: str, size_bytes: int,
+    def __init__(self, name: str, size_bytes: int | None,
                  create_time: datetime | None = None) -> None:
         self.name = name
         self.size_bytes = size_bytes
@@ -181,11 +186,39 @@ def _sweep_deleting(client: _FakeClient, names: list[str]):
 
 
 def test_the_cap_is_the_limit_the_429_reported():
-    """21,474,836,480 bytes = 20 GiB, with a 5% preflight margin."""
+    """21,474,836,480 bytes = 20 GiB, less a one-maximum-chunk margin.
+
+    The margin was 5% until 2026-09-20 (audit finding M4). Five per cent
+    of the cap is 1 GiB — less than the ~1.3 GB a proposer chunk reaches —
+    so two legs lodging in parallel could both clear the preflight and the
+    second still take the 429 it exists to prevent. The head-room now
+    holds one whole chunk at the documented 2 GB maximum.
+    """
     assert FILE_STORAGE_CAP_BYTES == 21_474_836_480
-    assert FILE_STORAGE_SAFETY_MARGIN == pytest.approx(0.05)
+    assert FILE_STORAGE_SAFETY_MARGIN_BYTES == MAX_CHUNK_BYTES
     assert FILE_STORAGE_BUDGET_BYTES < FILE_STORAGE_CAP_BYTES
-    assert FILE_STORAGE_BUDGET_BYTES == int(FILE_STORAGE_CAP_BYTES * 0.95)
+    assert FILE_STORAGE_BUDGET_BYTES == (
+        FILE_STORAGE_CAP_BYTES - FILE_STORAGE_SAFETY_MARGIN_BYTES
+    )
+
+
+def test_the_margin_is_at_least_one_maximum_chunk():
+    """The property the percentage failed, stated as a property.
+
+    A future edit that returns the margin to a fraction of the cap has to
+    clear this: the head-room must still hold a whole chunk, because the
+    race it covers is exactly one concurrent lodge.
+    """
+    margin = FILE_STORAGE_CAP_BYTES - FILE_STORAGE_BUDGET_BYTES
+    assert margin >= MAX_CHUNK_BYTES
+    # The old 5% margin did not, which is the finding in one line.
+    assert FILE_STORAGE_CAP_BYTES - int(FILE_STORAGE_CAP_BYTES * 0.95) \
+        < MAX_CHUNK_BYTES
+
+
+def test_the_maximum_chunk_is_the_documented_batch_file_limit():
+    """2 GB is the Batch API per-file ceiling both chunkers size below."""
+    assert MAX_CHUNK_BYTES == 2_000_000_000
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -257,6 +290,79 @@ def test_an_unavailable_audit_warns_and_lets_the_leg_proceed(tmp_path, caplog):
     assert "preflight skipped" in warnings
     assert "unguarded" in warnings
     assert "files.list unavailable" in warnings
+
+
+# ─────────────────────────────────────────────────────────────────────
+# (a2) An upload still PROCESSING reports no size (audit finding m10)
+# ─────────────────────────────────────────────────────────────────────
+
+
+def test_a_processing_upload_is_charged_at_one_maximum_chunk(tmp_path):
+    """``size_bytes=None`` counted as zero under-counted the race itself.
+
+    The file with no size is, in practice, a concurrent leg's chunk part
+    way through its upload — the exact event the head-room exists for. It
+    now contributes a whole maximum chunk to the projection.
+    """
+    client = _FakeClient([
+        _FakeFile("files/done", 3 * _GIB),
+        _FakeFile("files/in_flight", None),
+    ])
+    chunk = _chunk(tmp_path, "c0.jsonl", 1024)
+
+    projected = preflight_file_storage(client, [chunk])
+
+    assert projected == 3 * _GIB + MAX_CHUNK_BYTES + 1024
+
+
+def test_a_leg_that_only_fits_by_ignoring_a_processing_upload_is_refused(
+    tmp_path,
+):
+    """The failure mode m10 describes, end to end.
+
+    Stored bytes plus this leg sit just under budget — but only if the
+    in-flight upload is counted as nothing. Charged properly, the leg
+    does not fit and is refused before a byte is sent.
+    """
+    pending = 1024
+    sized = FILE_STORAGE_BUDGET_BYTES - pending
+    client = _FakeClient([
+        _FakeFile("files/done", sized),
+        _FakeFile("files/in_flight", None),
+    ])
+    chunk = _chunk(tmp_path, "c0.jsonl", pending)
+
+    with pytest.raises(FileStorageCapExceeded) as excinfo:
+        preflight_file_storage(client, [chunk])
+
+    assert excinfo.value.projected_bytes == (
+        sized + MAX_CHUNK_BYTES + pending
+    )
+    assert client.files.uploads == []
+
+
+def test_the_processing_charge_is_announced(tmp_path, caplog):
+    """An operator reading a high projection must be able to see why."""
+    client = _FakeClient([
+        _FakeFile("files/done", _GIB),
+        _FakeFile("files/in_flight", None),
+    ])
+    with caplog.at_level(logging.WARNING):
+        preflight_file_storage(client, [_chunk(tmp_path, "c0.jsonl")])
+
+    warnings = "\n".join(r.getMessage() for r in caplog.records
+                         if r.levelno == logging.WARNING)
+    assert "PROCESSING" in warnings
+    assert "1 of 2" in warnings
+
+
+def test_sized_uploads_are_charged_at_their_real_size(tmp_path):
+    """The charge must not leak onto files that did report a size."""
+    client = _FakeClient([_FakeFile("files/done", 2 * _GIB)])
+    projected = preflight_file_storage(
+        client, [_chunk(tmp_path, "c0.jsonl", 1024)],
+    )
+    assert projected == 2 * _GIB + 1024
 
 
 # ─────────────────────────────────────────────────────────────────────

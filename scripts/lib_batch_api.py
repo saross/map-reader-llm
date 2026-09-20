@@ -179,13 +179,36 @@ FILE_STORAGE_QUOTA_METRIC = (
 FILE_STORAGE_QUOTA_ID = "FileStorageBytesPerProject"
 FILE_STORAGE_CAP_BYTES = 21_474_836_480
 
-# Head-room withheld from the cap. The audit enumerates files at one
-# instant and another process may upload between the audit and the
-# lodge, so the preflight budgets against 95% of the cap rather than
-# racing it to the last byte.
-FILE_STORAGE_SAFETY_MARGIN = 0.05
-FILE_STORAGE_BUDGET_BYTES = int(
-    FILE_STORAGE_CAP_BYTES * (1.0 - FILE_STORAGE_SAFETY_MARGIN),
+# The largest request JSONL this project can lodge in one upload. The
+# Batch API caps a request file at 2 GB, and both chunkers size against
+# that ceiling: the proposer at 4,000 tiles per chunk ("The Batch API has
+# a 2 GB file limit ... At 4,000 tiles per chunk the JSONL is ~1.3 GB,
+# safely under", scripts/4_detect_mounds_batch.py, the chunking comment
+# above its --max-tiles default), and the verifier at
+# DEFAULT_MAX_BATCH_CANDIDATES = 4,000 requests (~235 MB measured;
+# scripts/run_pv.py). build_batch_unit()'s `offset` argument documents the
+# same "Batch API file size limit (2 GB)" below.
+#
+# The DOCUMENTED MAXIMUM of the two figures is the 2 GB limit, not the
+# ~1.3 GB a proposer chunk typically reaches: a chunk may legitimately be
+# anything up to the ceiling the chunkers aim below, and a margin that
+# assumed the typical size would be short by 0.7 GB exactly when a chunk
+# ran large. 2 GB here is the API's decimal gigabyte, as the limit is
+# quoted.
+MAX_CHUNK_BYTES = 2_000_000_000
+
+# Head-room withheld from the cap, expressed as ONE MAXIMUM CHUNK rather
+# than a percentage. The audit enumerates files at one instant and another
+# process may upload between the audit and the lodge, so the quantity that
+# has to fit in the head-room is one concurrent lodger's chunk — not a
+# fraction of the cap. The 5% margin this replaces was 1 GiB, smaller than
+# the ~1.3 GB proposer chunk it was documented to protect against: two
+# legs running in parallel (the normal campaign pattern) could both pass
+# the preflight at ~18.9 GiB projected and the second still hit the 429
+# the preflight exists to prevent (audit finding M4, 2026-09-20).
+FILE_STORAGE_SAFETY_MARGIN_BYTES = MAX_CHUNK_BYTES
+FILE_STORAGE_BUDGET_BYTES = (
+    FILE_STORAGE_CAP_BYTES - FILE_STORAGE_SAFETY_MARGIN_BYTES
 )
 
 # Bytes per gibibyte — the unit audit_file_storage() reports in.
@@ -209,7 +232,8 @@ class FileStorageCapExceeded(RuntimeError):
 
     Attributes:
         projected_bytes: Stored bytes plus the bytes about to be uploaded.
-        budget_bytes: The cap less :data:`FILE_STORAGE_SAFETY_MARGIN`.
+        budget_bytes: The cap less
+            :data:`FILE_STORAGE_SAFETY_MARGIN_BYTES`.
         cap_bytes: The quota limit itself.
     """
 
@@ -306,10 +330,23 @@ def preflight_file_storage(
 
     Sums the local sizes of every request JSONL about to be uploaded,
     adds the bytes the project already holds (via
-    :func:`audit_file_storage`), and compares the projection against
-    :data:`FILE_STORAGE_BUDGET_BYTES`. The audit is logged at INFO on
-    every call, so the run log always records what the leg believed the
-    storage state to be.
+    :func:`_audit_file_storage_detail`), and compares the projection
+    against :data:`FILE_STORAGE_BUDGET_BYTES` — the cap less **one
+    maximum chunk** (:data:`MAX_CHUNK_BYTES`, the Batch API's documented
+    2 GB per-file limit that both chunkers size below). The head-room has
+    to hold one concurrent lodger's chunk, so it is measured in chunks
+    rather than as a percentage of the cap: the 5% it replaces came to
+    1 GiB, less than the ~1.3 GB a proposer chunk reaches (audit finding
+    M4, 2026-09-20).
+
+    A stored upload that reports no ``size_bytes`` — state
+    ``PROCESSING`` — is charged at :data:`MAX_CHUNK_BYTES` too, not at
+    zero. Such a file is almost always the very concurrent lodge the
+    head-room exists for, so counting it as nothing under-counted
+    exactly when it mattered (finding m10).
+
+    The audit is logged at INFO on every call, so the run log always
+    records what the leg believed the storage state to be.
 
     Over budget, an optional *sweep* is given one chance to free space
     and the storage is re-audited; still over, the call raises rather
@@ -368,9 +405,15 @@ def preflight_file_storage(
             continue
 
     def _audit() -> tuple[int, int] | None:
-        """Return ``(file_count, stored_bytes)``, or None if unavailable."""
+        """Return ``(file_count, stored_bytes)``, or None if unavailable.
+
+        An upload the service is still ingesting reports no size. It is
+        charged at :data:`MAX_CHUNK_BYTES` rather than at zero: it is
+        almost certainly a concurrent lodger's chunk, and counting it as
+        nothing under-counts precisely when the head-room matters.
+        """
         try:
-            count, total_gb = audit_file_storage(client)
+            count, sized_bytes, unsized = _audit_file_storage_detail(client)
         except Exception as exc:  # noqa: BLE001 - audit must not be fatal
             log.warning(
                 "File storage preflight skipped — could not audit the "
@@ -379,9 +422,15 @@ def preflight_file_storage(
                 exc, FILE_STORAGE_QUOTA_METRIC,
             )
             return None
-        # total_gb is stored_bytes / 2**30 — a power-of-two rescale, so
-        # multiplying back recovers the byte count exactly.
-        return count, int(round(total_gb * _GIB))
+        if unsized:
+            log.warning(
+                "%d of %d stored file(s) report no size (still PROCESSING) "
+                "— each charged at one maximum chunk (%.2f GB) in the "
+                "projection, because an upload in flight is what the "
+                "preflight's head-room exists for",
+                unsized, count, MAX_CHUNK_BYTES / _GIB,
+            )
+        return count, sized_bytes + unsized * MAX_CHUNK_BYTES
 
     audited = _audit()
     if audited is None:
@@ -392,11 +441,11 @@ def preflight_file_storage(
     log.info(
         "File storage preflight: %d file(s) stored (%.2f GB) + %d chunk(s) "
         "to upload (%.2f GB) = %.2f GB projected against a %.2f GB budget "
-        "(%.2f GB cap less a %.0f%% margin)",
+        "(%.2f GB cap less a %.2f GB margin — one maximum chunk)",
         file_count, stored_bytes / _GIB, len(jsonl_paths),
         pending_bytes / _GIB, projected / _GIB,
         FILE_STORAGE_BUDGET_BYTES / _GIB, FILE_STORAGE_CAP_BYTES / _GIB,
-        FILE_STORAGE_SAFETY_MARGIN * 100,
+        FILE_STORAGE_SAFETY_MARGIN_BYTES / _GIB,
     )
 
     if projected <= FILE_STORAGE_BUDGET_BYTES:
@@ -581,6 +630,44 @@ def cleanup_batch_files(
     return deleted, errors
 
 
+def _audit_file_storage_detail(client: Any) -> tuple[int, int, int]:
+    """
+    Enumerate Files API storage, separating sized from unsized uploads.
+
+    A file the service is still ingesting reports ``size_bytes`` as
+    ``None`` — state ``PROCESSING``. Summing it as zero under-counts the
+    project's real usage *exactly* when a concurrent lodge is in flight,
+    which is the case the safety margin exists for (audit findings M4 and
+    m10, 2026-09-20). Callers that must be conservative charge each
+    unsized file at :data:`MAX_CHUNK_BYTES`; :func:`audit_file_storage`
+    keeps its historical zero coercion, because it reports what the API
+    actually said.
+
+    Args:
+        client: Initialised ``google.genai.Client``.
+
+    Returns:
+        ``(file_count, sized_bytes, unsized_count)``. ``sized_bytes`` sums
+        only the files that reported a size; ``unsized_count`` counts the
+        rest, which are included in ``file_count``.
+
+    Raises:
+        Exception: If ``files.list()`` fails (e.g. when quota is already
+            exceeded). Callers should handle this gracefully.
+    """
+    count = 0
+    sized_bytes = 0
+    unsized = 0
+    for f in client.files.list():
+        count += 1
+        size = getattr(f, "size_bytes", None)
+        if size is None:
+            unsized += 1
+            continue
+        sized_bytes += int(size)
+    return count, sized_bytes, unsized
+
+
 def audit_file_storage(client: Any) -> tuple[int, float]:
     """
     Query current file storage usage from the Gemini Files API.
@@ -599,14 +686,8 @@ def audit_file_storage(client: Any) -> tuple[int, float]:
         Exception: If ``files.list()`` fails (e.g. when quota is
             already exceeded). Callers should handle this gracefully.
     """
-    total_bytes = 0
-    count = 0
-
-    for f in client.files.list():
-        count += 1
-        total_bytes += getattr(f, "size_bytes", 0) or 0
-
-    total_gb = total_bytes / (1024 ** 3)
+    count, sized_bytes, _unsized = _audit_file_storage_detail(client)
+    total_gb = sized_bytes / (1024 ** 3)
     logger.info(
         "File storage audit: %d files, %.2f GB", count, total_gb,
     )
