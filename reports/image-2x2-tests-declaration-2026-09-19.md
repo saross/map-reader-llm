@@ -1,9 +1,9 @@
 # The image proposer x verifier 2x2 at deployment scale: test declaration
 
-> **Last revised**: 2026-09-20 (PI ruling: T5m added as § 3a, an additional
-> protocol-matched confound check beside the declared T5). Prior: 2026-09-20
-> (PI ruling: the BH family at K = 1 and K = 5 is T1–T4).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-09-20 (PI ruling: the E89 floor of § 5 caveat 1
+> revised against the full-scale replicate, in both flip-rate and metric
+> units). Prior: 2026-09-20 (T5m added as § 3a; the BH family at K = 1 and
+> K = 5 is T1–T4). See [§ Changelog](#changelog) for revision history.
 
 **Declared**: 2026-09-19, 06:40 UTC, by the PI (Shawn Ross) with Claude
 Code, session S155. **State of the data at declaration**: the 3.7 row
@@ -57,7 +57,7 @@ metric. All cells at the same K; `_c` is the carried cell.
 |---|---|---|---|
 | T1 | proposer effect under arm 2 | `IMG-ARM2-K_c` vs `G3IMG-ARM2-K_c` | does the proposer family matter with the 3.7 verifier? |
 | T2 | proposer effect under arm 1 | `IMG-ARM1-K_c` vs `G3IMG-ARM1-K_c` | does it matter with the Gemini 3 verifier? |
-| T3 | verifier seat within row B | `G3IMG-ARM2-K_c` vs `G3IMG-ARM1-K_c` | does the 3.7 verifier help a Gemini 3 pool? (row A's is tested already: +0.0158 MCC at K = 3, `findings.md` § 4) |
+| T3 | verifier seat within row B | `G3IMG-ARM2-K_c` vs `G3IMG-ARM1-K_c` | does the 3.7 verifier help a Gemini 3 pool? (row A's is tested already: +0.0158 MCC at K = 3, `findings.md` § 4 — an order of magnitude above the drift band of § 5 caveat 1) |
 | T4 | interaction | (A2 − A1) − (B2 − B1) | does the verifier's gain depend on the proposer family? |
 | T5 | confound check | `G3IMG-ARM1-K3_c` vs `IM-k3` | with the five confounds removed (library, tiling, thinking, passes, tile convention), is the earlier Gemini 3 image cell reproduced? |
 
@@ -167,19 +167,74 @@ output `results/image-2x2-2026-09-19/tests_2x2_K{K}.json`, one file per rung.
 
 ## 5. Caveats declared with the family
 
-1. **The E89 floor.** Independent re-invocations of these verifiers at T = 0
-   differ in ~40 % of probabilities and flip 3.5–5.3 % of decisions at the
-   operating point (erratum E89; the 2026-09-19 batch-vs-flex probe,
-   `outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/`).
-   A tile-swap permutation tests sampling variation over tiles, not verifier
-   nondeterminism, so a difference below that floor can be "significant"
-   and still be drift. A null result is uninformative about small effects; a
-   significant result smaller than the floor is not claimed without a
-   replicate arm.
+1. **The E89 floor.** Independent re-invocations of the arm 2 verifier
+   (`gemini-3.7-flash`, low thinking, T = 0) over the same 9,173-candidate
+   K = 5 union agree on only **63.5 %** of probabilities (5,826 of 9,173) and
+   **flip 2.46 % of decisions** at the 0.90 operating point — 226 of 9,173,
+   **Wilson 95 % interval [2.17 %, 2.80 %]** — with |Δp| > 0.5 on 2.03 %
+   (186 of 9,173). Measured at full scale by the batch replicate of
+   2026-09-20:
+   `results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/`
+   (`agreement.json`; `findings.md` § 3). The interval is the Wilson score
+   interval for a binomial proportion — `(p̂ + z²/2n ± z·sqrt(p̂(1 − p̂)/n +
+   z²/4n²)) / (1 + z²/n)` with `z` = 1.96 — rather than the normal
+   approximation, which is unreliable at a proportion this small. These
+   figures supersede the 2026-09-19 171-twin probe's (see the changelog).
+
+   **The floor in metric units.** A flip rate is not what a test sees. What a
+   test sees is the **drift-only contrast**: the same union at the same
+   operating point, scored twice from two invocations of the same verifier.
+   That contrast is **+0.0008 micro-F1** (*p* = 0.4015, null SD 0.0009) at
+   the carried point and **+0.0010** (*p* = 0.2861) at each leg's own F1
+   oracle, and **−0.0005 tile-MCC** (*p* = 0.8225, null SD 0.0016) at the
+   carried point and **−0.0007** (*p* = 0.7100) at the oracles
+   (`tests.json` beside the note above). So re-invocation moves a third of
+   the individual probabilities, the selected operating point not at all, and
+   the corpus metric by **of order 0.001 F1 and ±0.001 tile-MCC**.
+
+   **One degree of freedom.** Both forms come from **one pair of legs**. The
+   two drift contrasts agree with each other, and the flip rate agrees with
+   the independent 2026-09-19 probe to within a factor of two, so the band is
+   consistently characterised — but a claim about drift's *own* size rests on
+   two contrasts from a single replicate, not on a distribution of
+   re-invocations. Treat the metric-unit figures as a band of the right order,
+   not as an estimate with an interval.
+
+   **The rule.** A tile-swap permutation tests sampling variation over tiles,
+   not verifier nondeterminism, so a difference of drift's own size can be
+   "significant" and still be drift. **An effect is not claimable without a
+   replicate arm unless it exceeds the drift-only contrast by a clear
+   margin**; a null result remains uninformative about small effects. The
+   worked example is the arm 2 K = 3 → K = 5 micro-F1 gain: **+0.0079 against
+   drift's +0.0008**, about ten times the drift contrast and about 5.4 null
+   standard deviations where both drift contrasts sit under 1.1 — claimable,
+   and in that case replicated outright. Its tile-MCC counterpart, +0.0007 at
+   *p* = 0.75, is inside the drift band and is not claimed.
+
+   **Applied to this family at K = 3.** The margins are wide enough that the
+   rule bites on one row only. T1 and T2 (≈ 0.10 F1, 0.024–0.041 MCC), T3's
+   micro-F1 (+0.0103) and T4 on both metrics (+0.0071 F1, +0.0170 MCC) all
+   clear the band by roughly an order of magnitude or more. **T3's tile-MCC
+   reading, −0.0013 at *p* = 0.7954, sits inside the drift band**: its null
+   is uninformative and no "the verifier seat does not matter on tile-MCC"
+   claim follows from it. T5 and T5m are covered in the same way — T5's
+   +0.0016 F1 is the size of drift, while T5m's −0.0696 is not (§ 3a).
+
+   **Scope.** The floor is measured on `gemini-3.7-flash` at low thinking and
+   T = 0 — the arm 2 verifier. The arm 1 verifier
+   (`gemini-3-flash-preview`, `minimal`, T = 0) has **no measured floor**:
+   E89's qualitative finding that these verifiers are nondeterministic at
+   T = 0 covers it, but no replicate of an arm 1 leg exists, so an arm-1
+   difference of order 0.001 is uncharacterised rather than known to be
+   drift.
 2. **Route.** Row A's arm 2 ran on realtime flex; row B's arm 2 runs on the
-   Batch API (PI ruling 2026-09-18). The probe above found the route's
-   effect indistinguishable from same-route re-invocation drift, so the
-   route is not treated as a factor; it is recorded per cell.
+   Batch API (PI ruling 2026-09-18). The 2026-09-19 batch-versus-flex probe
+   (`outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/`)
+   found the route's effect indistinguishable from same-route re-invocation
+   drift, so the route is not treated as a factor; it is recorded per cell.
+   The replicate of caveat 1 is itself a cross-route pair — batch against
+   flex — so the band it measures is drift and route together, which makes
+   it if anything an over-estimate of same-route drift.
 3. **Operating points differ by row by design.** Each row is at its own
    GS-carried point, so T1 and T2 compare rows as deployed, not at a common
    threshold. The sweep oracles are reported beside the carried cells to
@@ -196,6 +251,63 @@ output `results/image-2x2-2026-09-19/tests_2x2_K{K}.json`, one file per rung.
    registration and signature are the PI's, after the tests are run.
 
 ## Changelog
+
+### 2026-09-20 — The E89 floor revised against the full-scale replicate
+
+**Trigger**:
+`results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/`
+— a second, independent invocation of the **arm 2** verifier over the same
+9,173-candidate K = 5 union, at the same model, instruction file, system
+instruction hash, temperature and thinking level, approved by the PI on
+2026-09-20 and run on the Batch API. It measures at full scale what § 5
+caveat 1 had been estimating from a 171-twin probe, and the two disagree by
+about a factor of two on the flip rate.
+
+**Before → after**, on the batch-versus-flex comparison the two share:
+
+| figure | superseded: 2026-09-19 probe, 171 twins | revised: replicate, 9,173 candidates |
+|---|---|---|
+| identical probabilities | 60 % (61 % on the same-route twin) | **63.5 %** (5,826 / 9,173) |
+| decision flips at 0.90 | 5.3 %; 3.5 % same-route twin — quoted here as "3.5–5.3 %" | **2.46 %** (226 / 9,173), Wilson 95 % **[2.17 %, 2.80 %]** |
+| \|Δp\| > 0.5 | 6 / 171 = 3.5 % | **2.03 %** (186 / 9,173) |
+| the floor in **metric units** | not stated | **+0.0008 micro-F1** (*p* = 0.4015, null SD 0.0009) and **−0.0005 tile-MCC** (*p* = 0.8225, null SD 0.0016), drift-only at the carried point; +0.0010 / −0.0007 at the oracles |
+
+Probe figures re-read from its own
+`outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/README.md`;
+replicate figures from `agreement.json` and `tests.json` beside the note
+above. The old "~40 % of probabilities differ" reads as 36.5 % at full scale
+— the probe was not a small-sample fluke on that statistic; the flip rate was.
+
+**What the revision changes.** The caveat now gives the floor in **both
+forms** — the decision-flip rate with an interval, and the drift-only
+*contrast in metric units*, which is what a paired test actually sees — and
+states the rule as a **margin over the drift-only contrast** rather than as a
+threshold on the flip rate. It records that both forms rest on **one pair of
+legs**, so a claim about drift's own size has one degree of freedom, and it
+records the **scope**: the floor is measured on `gemini-3.7-flash` at low
+thinking and T = 0, and the arm 1 verifier (`gemini-3-flash-preview`,
+`minimal`, T = 0) has no measured floor. The worked example of a claimable
+effect is the arm 2 K = 3 → K = 5 micro-F1 gain, +0.0079 against drift's
++0.0008.
+
+**What does not change.** No test's numbers, no verdict, no family, no
+instrument, no rung. The revision is *downwards* on the flip rate, so nothing
+that was withheld under the old floor becomes less claimable by it, and
+nothing previously reported is created or destroyed. The replicate's own
+verdict — that the K = 3 → K = 5 micro-F1 gain is claimable and its tile-MCC
+counterpart is not — was reached under the old wording and is unaffected.
+
+**Consequences written into the body.** With the floor in metric units the
+rule can be applied row by row, so caveat 1 now records that T1, T2, T3's
+micro-F1 (+0.0103) and T4 on both metrics (+0.0071 F1, +0.0170 MCC) clear the
+band by roughly an order of magnitude or more, while **T3's tile-MCC reading,
+−0.0013 at *p* = 0.7954, sits inside it** and supports no claim either way.
+§ 3's T3 row and § 5 caveat 2 are re-worded to match — caveat 2 also now
+names the probe it had been citing as "the probe above", and records that the
+replicate pair is itself batch-against-flex, so its band covers route and
+drift together. **No number in § 3 or § 5 moved.**
+
+Commit: `TBDRULING2`.
 
 ### 2026-09-20 — T5m: a protocol-matched confound check, added beside T5
 
