@@ -30,7 +30,7 @@ The matching rule
 -----------------
 ``stride55_ladder.py`` does not expose its matching as a function — the rule is
 inline (``cKDTree(...).query(..., k=1)`` then ``d <= INHERIT_TOL_M``,
-lines 435-440 of that file, repeated at lines 205-208 of
+lines 435-440 of that file, repeated at lines 201-207 of
 ``scripts/gemini37_arm_ladder.py``). So the rule is **reproduced** here rather
 than imported, with one exception: ``INHERIT_TOL_M`` itself is imported from
 ``stride55_ladder``, so the 10 m radius is provably the same constant and not a
