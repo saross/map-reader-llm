@@ -217,6 +217,30 @@
       "point": "(0.98, k1)",
       "n_detections": 12508,
       "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM1-K5-votes3-carried",
+      "rung": "G3IMG-ARM1-K5",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 5,
+      "basis": "protocol-matched comparator for T5m (post-hoc, 2026-09-20)",
+      "point": "(0.15, k3)",
+      "n_detections": 7222,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/detections.geojson"
+    },
+    {
+      "label": "G3IMG-ARM1-K5-votes3-f1-oracle",
+      "rung": "G3IMG-ARM1-K5",
+      "arm": "arm1",
+      "verifier_model": "gemini-3-flash-preview",
+      "verifier_thinking": "minimal",
+      "k": 5,
+      "basis": "protocol-matched comparator for T5m, F1 oracle at 3 votes (post-hoc, 2026-09-20)",
+      "point": "(0.20, k3)",
+      "n_detections": 6974,
+      "det": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-f1-oracle/detections.geojson"
     }
   ]
 }
