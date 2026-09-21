@@ -167,7 +167,8 @@ def test_the_csv_columns_are_the_2x2_sweep_file_s_own() -> None:
 def test_cell_specs_are_three_with_unique_labels() -> None:
     assert len(june.CELL_SPECS) == 3
     assert len({s["label"] for s in june.CELL_SPECS}) == 3
-    assert june.produced_bases() == {"f1-oracle", "carried"}
+    assert june.produced_labels() == {
+        "IM-5pass-k3-f1-oracle", "IM-5pass-k5-carried", "IM-5pass-k5-f1-oracle"}
 
 
 def test_a_retained_entry_survives_a_manifest_rewrite_in_place(tmp_path) -> None:
@@ -203,13 +204,17 @@ def test_a_manifest_without_cells_or_labels_is_tolerated(tmp_path) -> None:
     assert [c["label"] for c in merged] == ["a"]
     manifest.write_text("{}")
     assert [c["label"] for c in june.write_cells_manifest(manifest, [])] == []
+    with pytest.raises(ValueError, match="duplicate produced labels"):
+        june.write_cells_manifest(manifest, [{"label": "a"}, {"label": "a"}])
 
 
 def test_the_score_stage_skips_the_retained_cell() -> None:
-    assert june.is_retained({"label": "x", "basis": "mcc-oracle at carried k — retained"})
-    assert june.is_retained({"label": "x"})
-    assert not june.is_retained({"label": "x", "basis": "f1-oracle"})
-    assert not june.is_retained({"label": "x", "basis": "carried"})
+    """Retention is by label, the merge key, so keep and skip cannot diverge."""
+    assert june.is_retained({"label": "IM-5pass-k3-mcc-oracle", "basis": "mcc-oracle"})
+    assert june.is_retained({"label": "x", "basis": "f1-oracle"})  # basis alone is no pass
+    assert june.is_retained({})
+    for spec in june.CELL_SPECS:
+        assert not june.is_retained({"label": spec["label"]})
     committed = json.loads((june.RESULTS_HOME / "cells_manifest.json").read_text())
     assert [c["label"] for c in committed["cells"] if june.is_retained(c)] == [
         "IM-5pass-k3-mcc-oracle"]

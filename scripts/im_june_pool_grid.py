@@ -139,10 +139,10 @@ GATE_TOL = 0.003
 #: recipe (four before PI ruling 2026-09-21 retired the ``mcc-oracle``
 #: basis; see the module docstring). ``f1-oracle`` bases are resolved
 #: from the swept grid; ``carried`` bases are fixed points. A manifest
-#: entry on any other basis is RETAINED: kept where it is by
-#: ``--stage materialise`` and skipped by ``--stage score``. The k5 carried point is IM-k3's probability read at
-#: unanimity, which is the June pool's nearest analogue to the rebuilt pool's
-#: K = 5 unanimity cell.
+#: entry whose label no spec produces is RETAINED: kept where it is by
+#: ``--stage materialise`` and skipped by ``--stage score``. The k5
+#: carried point is IM-k3's probability read at unanimity, which is the
+#: June pool's nearest analogue to the rebuilt pool's K = 5 unanimity cell.
 CELL_SPECS: tuple[dict[str, Any], ...] = (
     {"label": "IM-5pass-k3-f1-oracle", "min_votes": 3, "basis": "f1-oracle"},
     {"label": "IM-5pass-k5-carried", "min_votes": 5, "basis": "carried",
@@ -429,23 +429,27 @@ def stage_materialise() -> int:
     return 0
 
 
-def produced_bases() -> frozenset[str]:
-    """The cell bases this script builds; any other basis is retained."""
-    return frozenset(str(spec["basis"]) for spec in CELL_SPECS)
+def produced_labels() -> frozenset[str]:
+    """The cell labels this script builds; any other label is retained."""
+    return frozenset(str(spec["label"]) for spec in CELL_SPECS)
 
 
 def is_retained(cell: dict[str, Any]) -> bool:
     """Whether a manifest entry is one this script no longer builds.
 
+    The criterion is the LABEL, the same key :func:`write_cells_manifest`
+    merges on, so a cell that ``--stage materialise`` keeps is exactly a
+    cell that ``--stage score`` skips; a basis test would let a dropped
+    cell whose basis another spec still uses be kept AND re-scored.
+
     Args:
         cell: One ``cells_manifest.json`` entry.
 
     Returns:
-        True for an entry whose basis is not one of :data:`CELL_SPECS`'s —
-        the retired ``IM-5pass-k3-mcc-oracle`` — which ``--stage
-        materialise`` keeps in place and ``--stage score`` skips.
+        True for an entry whose label is not one of :data:`CELL_SPECS`'s —
+        the retired ``IM-5pass-k3-mcc-oracle``.
     """
-    return str(cell.get("basis", "")) not in produced_bases()
+    return str(cell.get("label", "")) not in produced_labels()
 
 
 def write_cells_manifest(manifest_path: Path,
@@ -454,9 +458,10 @@ def write_cells_manifest(manifest_path: Path,
 
     A retained entry keeps its position, so a re-run over an unchanged
     grid rewrites the file byte for byte; a produced label replaces the
-    entry of the same label in place. A manifest without ``cells``, or an
-    entry without a label, contributes nothing rather than raising after
-    the detections have already been written.
+    entry of the same label in place, and a produced label the manifest
+    has never seen is appended after every retained entry. A manifest
+    without ``cells``, or an entry without a label, contributes nothing
+    rather than raising after the detections have already been written.
 
     Args:
         manifest_path: ``cells_manifest.json``; may not exist yet.
@@ -464,7 +469,14 @@ def write_cells_manifest(manifest_path: Path,
 
     Returns:
         The merged entry list as written.
+
+    Raises:
+        ValueError: If two produced cells share a label; the merge is keyed
+            on the label and could not keep both.
     """
+    labels = [c["label"] for c in cells]
+    if len(set(labels)) != len(labels):
+        raise ValueError(f"duplicate produced labels: {sorted(labels)}")
     existing: list[dict[str, Any]] = []
     if manifest_path.exists():
         existing = [c for c in json.loads(manifest_path.read_text()).get("cells", [])
@@ -500,8 +512,9 @@ def stage_score(workers: int, jobs: int) -> int:
         A process exit status.
     """
     manifest = json.loads((RESULTS_HOME / "cells_manifest.json").read_text())
-    cells = [c for c in manifest["cells"] if not is_retained(c)]
-    for cell in manifest["cells"]:
+    entries = [c for c in manifest.get("cells", []) if isinstance(c, dict)]
+    cells = [c for c in entries if not is_retained(c) and c.get("det")]
+    for cell in entries:
         if is_retained(cell):
             logger.info("skipping %s: retained, not re-scored (basis %r)",
                         cell.get("label"), cell.get("basis"))

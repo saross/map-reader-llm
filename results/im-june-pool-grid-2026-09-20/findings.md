@@ -431,6 +431,22 @@ gap, but it is a real one and it is the PI's call, not this note's.
 
 ## Changelog
 
+### 2026-09-21, second pass — the pointer says what it points at
+
+**Refresh trigger**: code audit of the retirement commit (two fresh-context
+lenses, then a re-audit). A reader following § 3's pointer to the
+tile-presence `IM` row lands on tile-MCC 0.7173 where the retained cell
+reads 0.7139 at the same point; nothing at either end said why. § 3's
+pointer paragraph and the cell's `presentation` note in
+`cells_manifest.json` now say it is the tile-convention difference of § 1
+(the board's `IM` sweep against this note's re-stamp), not a disagreement
+about the cell. The same audit made `--stage score` skip the retained cell
+(it would have re-scored it) and pinned the manifest merge with tests.
+Landed in e24b2d1a0 (prose and note) and the commit after it (retention by
+label).
+
+**Numbers that moved**: none.
+
 ### 2026-09-21 — The tile-MCC optimum retired from this note's table
 
 **Refresh trigger**: PI ruling 2026-09-21 (`planning/pi-decisions-2026-09-20.md`
