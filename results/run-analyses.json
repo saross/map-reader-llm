@@ -4821,14 +4821,180 @@
    "working_notes_obs": [
     "Obs 491 — The T4 proposer-by-verifier interaction declines monotonically with K and does not replicate at K = 5"
    ],
-   "manually_verified_at": null,
-   "_signature_note": "UNSIGNED and drafted for the PI's signature (S157, 2026-09-21), executing the D1 ruling that row A's later rungs get a new analysis row. Every figure in the outcome was re-read at source this session from the two replicate notes' sections 3-6, the campaign findings' section 2 table and section 7, and the K = 1 / K = 5 test JSONs. No board and no tiering was re-tiered and no signed row was touched.",
+   "manually_verified_at": "2026-09-21T04:00:22Z",
+   "_signature_note": "Signed 2026-09-21T04:00:22Z (S157) as drafted; cited-artefact snapshot taken at signing (16 conditions). Drafted 2026-09-21 executing D1: row A's later rungs get a new row. Every figure in the outcome was re-read at source when drafted.",
    "signature": {
-    "status": "unsigned",
-    "signed_at": null,
-    "attests": "UNSIGNED and presented for review; the PI signs. No board and no tiering was re-tiered and no signed row was touched.",
-    "presentation": null,
+    "status": "signed",
+    "signed_at": "2026-09-21T04:00:22Z",
+    "attests": "Signed 2026-09-21T04:00:22Z by the PI (S157, 2026-09-21), approved AS DRAFTED after a written synopsis of the row and a coverage check of the 3.7 image campaign's registered conditions across rows A, B and this one. Headline figures re-read at drafting from results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/findings.md and replicate-k5-arm1-batch-2026-09-20/findings.md (sections 3-6), results/gemini37-image-55map-2026-09-13/findings.md (section 2 table, section 7) and results/image-2x2-2026-09-19/tests_2x2_K1.json and tests_2x2_K5.json, and match the prose: arm 2 K = 5 carried 0.9270 / 0.7659; flips 2.46 % and 2.41 % at the carried points; K3 -> K5 micro-F1 +0.0079 (arm 2) and +0.0110 (arm 1), both p < 0.0001, claimable; tile-MCC not claimable on either arm; T4 +0.0327 tile-MCC at K = 1 and +0.0043 (p 0.42) at K = 5. SCOPE: the K = 5 rung's six conditions, the two batch replicate legs of 2026-09-20, and the image 2x2's exploratory rungs K = 1 and K = 5 as read from the committed test files. It does NOT cover the 2026-09-20 r2 board addendum cells, the inheritance head-to-head (D2), or any board tiering; the coverage check of 2026-09-21 found those, the replicate and probe legs' pass registration, and the passes register's cost basis still open, and they are handled separately.",
+    "presentation": "Session 157 transcript 2026-09-21 (row synopsis and coverage check); planning/pi-decisions-2026-09-20.md D1",
     "history": []
+   },
+   "cited_artefacts": {
+    "snapshot_at": "2026-09-21T04:00:22Z",
+    "_note": "Taken at signing under D9. For each condition in conditions_compared: the evaluation the register resolves it to, and the SHA-256 of each detections file that evaluation's _metadata.input_files names. A mismatch means a cell cited by a signed row was re-materialised in place; the generator's check_cited_artefact_hashes fails the write and names the condition.",
+    "conditions": [
+     {
+      "condition_id": "gemini37-image-55map-2026-09-13::img-arm1-k5-carried-p0.10-k5-r2-gt",
+      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-carried/detections.geojson",
+        "sha256": "564d9bbe7b428ed559adf70e81ba24df9cf2b1839cfe15eb38768eb7b9ffeb5c"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini37-image-55map-2026-09-13::img-arm1-k5-f1-oracle-p0.10-k5-r2-gt",
+      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-f1-oracle/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-f1-oracle/detections.geojson",
+        "sha256": "564d9bbe7b428ed559adf70e81ba24df9cf2b1839cfe15eb38768eb7b9ffeb5c"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini37-image-55map-2026-09-13::img-arm1-k5-mcc-oracle-p0.15-k5-r2-gt",
+      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-mcc-oracle/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K5-mcc-oracle/detections.geojson",
+        "sha256": "c3e5dc9787c399c4ad747b914155126ac95e7504e423d64349d47c0a36fd3ecc"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini37-image-55map-2026-09-13::img-arm2-k5-carried-p0.90-k5-r2-gt",
+      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-carried/detections.geojson",
+        "sha256": "ff8bdc2c6ddcb9c3a0a808c8cb925175611391507a6ce889fd67a9b2a242b12e"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini37-image-55map-2026-09-13::img-arm2-k5-f1-oracle-p0.95-k5-r2-gt",
+      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-f1-oracle/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-f1-oracle/detections.geojson",
+        "sha256": "9c1980b74403170f907d6423a9f56e9fb9e6aac39c0dc4a3a5f5c50e5ecc9703"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini37-image-55map-2026-09-13::img-arm2-k5-mcc-oracle-p0.95-k5-r2-gt",
+      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-mcc-oracle/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K5-mcc-oracle/detections.geojson",
+        "sha256": "9c1980b74403170f907d6423a9f56e9fb9e6aac39c0dc4a3a5f5c50e5ecc9703"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini37-image-55map-2026-09-13::img-arm1-k3-carried-p0.10-k3-r2-gt",
+      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K3-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K3-carried/detections.geojson",
+        "sha256": "0a17b95e0ebc4adea96b2f0476a5d6c813c923b2f00305b71412888aa1cd58f5"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini37-image-55map-2026-09-13::img-arm2-k3-carried-p0.88-k3-r2-gt",
+      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K3-carried/detections.geojson",
+        "sha256": "a8a6f36bd004e7ad4769c2d76d43cdf2e46a3ecde8ff5da39f58bd50b7b6b2cd"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini37-image-55map-2026-09-13::img-arm1-k1-carried-p0.10-k1-r2-gt",
+      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K1-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM1-K1-carried/detections.geojson",
+        "sha256": "38568d22676e8fe566627cbc76a37ae31cb5cf68bff2618f478bcf70f89dff1a"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini37-image-55map-2026-09-13::img-arm2-k1-carried-p0.88-k1-r2-gt",
+      "eval_path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K1-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini37-image-55map-2026-09-13/cells/IMG-ARM2-K1-carried/detections.geojson",
+        "sha256": "a9c54a19c3ed6545753ac0569810c944ee650b89d8e1eeb59e6c36a80576631c"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini3-image-55map-2026-09-16::g3img-arm1-k1-carried-p0.15-k1-r2-gt",
+      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/detections.geojson",
+        "sha256": "7cfddf887996bb694180a02c54b00f77e4a4e03e506728d30618cf956b81b71d"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini3-image-55map-2026-09-16::g3img-arm2-k1-carried-p0.88-k1-r2-gt",
+      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/detections.geojson",
+        "sha256": "28062830f559262b1b134ac41bfebf3f6640a6177c759b89af3f6d51e1c78316"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini3-image-55map-2026-09-16::g3img-arm1-k3-carried-p0.15-k3-r2-gt",
+      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/detections.geojson",
+        "sha256": "f0878341767774c431b398ce0d1fc81cba7932576686f5092a7fa21ac28ab617"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini3-image-55map-2026-09-16::g3img-arm2-k3-carried-p0.88-k3-r2-gt",
+      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/detections.geojson",
+        "sha256": "0ad25b572755cf7b81218be606ef263df8f808a4ccd8ac45d92367c87b10f718"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini3-image-55map-2026-09-16::g3img-arm1-k5-carried-p0.15-k5-r2-gt",
+      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/detections.geojson",
+        "sha256": "d17ebbe20fb68c7aae16981bfddcf6fbc20b2536b0deea7de6a42aad7937b90c"
+       }
+      ]
+     },
+     {
+      "condition_id": "gemini3-image-55map-2026-09-16::g3img-arm2-k5-carried-p0.95-k5-r2-gt",
+      "eval_path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/evaluation.json",
+      "detections": [
+       {
+        "path": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/detections.geojson",
+        "sha256": "093457e103671e8ce07453d1353c8258dfdca169fac345e7cc831e1bf4ebf0cd"
+       }
+      ]
+     }
+    ]
    }
   }
  ]
