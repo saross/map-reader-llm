@@ -1926,3 +1926,41 @@ def test_the_committed_signed_rows_still_match_their_snapshots():
     errors, advisories = check_cited_artefact_hashes()
     assert errors == [], errors
     assert advisories[0].startswith("cited-artefact snapshots: 2 signed row(s)")
+
+
+# --- The evaluation index is filesystem-order independent --------------------
+#
+# ``_build_eval_index`` maps a detections file to every ``evaluation.json``
+# that scored it. When several evaluations score one file identically, the
+# condition row keeps the first maximal candidate, so the walk order decides
+# which path its provenance cites. Found 2026-09-21: an unsorted ``rglob``
+# gave ``gold-standard-v2::consensus-4of5`` a different provenance source on
+# sapphire than on the machine that committed the manifest, with no metric
+# changed.
+
+def _write_eval(root: Path, folder: str, detections: str) -> None:
+    """One minimal evaluation.json scoring ``detections`` under ``folder``."""
+    dest = root / "results" / folder / "evaluation.json"
+    dest.parent.mkdir(parents=True)
+    dest.write_text(json.dumps({
+        "_metadata": {"input_files": {"detections": [detections]}},
+        "summary": {"buffers": [], "n_detections": 1},
+    }))
+
+
+@pytest.mark.tier1
+def test_eval_index_lists_candidates_in_path_order(tmp_path, monkeypatch) -> None:
+    """Two evaluations of one file come back sorted by path, however created."""
+    from scripts import generate_post_run_report as _g
+
+    det = "outputs/x/detections.geojson"
+    # Create the lexically later folder first, so an order-of-creation walk
+    # would list it first.
+    _write_eval(tmp_path, "zzz-later", det)
+    _write_eval(tmp_path, "aaa-earlier", det)
+    monkeypatch.setattr(_g, "REPO_ROOT", tmp_path)
+    index = _g._build_eval_index()
+    assert [c[0] for c in index[det]] == [
+        "results/aaa-earlier/evaluation.json",
+        "results/zzz-later/evaluation.json",
+    ]

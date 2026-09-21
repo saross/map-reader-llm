@@ -706,7 +706,13 @@ def _build_eval_index() -> dict[str, list[tuple[str, dict, str | None, dict]]]:
     describe the run that actually happened rather than the project standard (D17).
     """
     index: dict[str, list[tuple[str, dict, str | None, dict]]] = {}
-    for eval_file in (REPO_ROOT / "results").rglob("evaluation.json"):
+    # Sorted, so a condition that several evaluations score identically
+    # (the uplift-supplement pairing anchors all score the GS consensus
+    # 4-of-5 on one frame) cites the same one on every machine. An unsorted
+    # walk is filesystem-ordered: on 2026-09-21 a sapphire regeneration
+    # moved gold-standard-v2::consensus-4of5's provenance from the t0-5
+    # pairing evaluation to the t1-0 one with no number changed.
+    for eval_file in sorted((REPO_ROOT / "results").rglob("evaluation.json")):
         try:
             doc = _load_json(eval_file)
         except (json.JSONDecodeError, OSError):
