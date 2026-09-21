@@ -695,6 +695,28 @@ def _normalise_detections_path(path: str) -> str:
     )
 
 
+def select_evaluation(chosen: list[tuple[str, dict, str | None, dict]]
+                      ) -> tuple[str, dict, str | None, dict]:
+    """The one evaluation a condition row cites from its candidates.
+
+    The most complete candidate (most buffers) wins; a tie — several
+    evaluations that score one detections file identically, e.g. the three
+    uplift-supplement pairing anchors over the GS consensus 4-of-5 —
+    resolves to the first in path order, the same order the index is built
+    in, so the choice never depends on how the candidates were listed.
+    ``scripts/verify_run_conditions.py`` calls this too, so the verifier
+    cannot disagree with the register about which evaluation was cited.
+
+    Args:
+        chosen: Non-empty ``(eval_path, summary, bounds, bootstrap)`` tuples.
+
+    Returns:
+        The selected tuple.
+    """
+    return min(chosen, key=lambda c: (-len(c[1].get("buffers", [])),
+                                      Path(c[0]).parts))
+
+
 def _build_eval_index() -> dict[str, list[tuple[str, dict, str | None, dict]]]:
     """Index every ``results/**/evaluation.json`` by the detections it scored.
 
@@ -706,12 +728,12 @@ def _build_eval_index() -> dict[str, list[tuple[str, dict, str | None, dict]]]:
     describe the run that actually happened rather than the project standard (D17).
     """
     index: dict[str, list[tuple[str, dict, str | None, dict]]] = {}
-    # Sorted, so a condition that several evaluations score identically
-    # (the uplift-supplement pairing anchors all score the GS consensus
-    # 4-of-5 on one frame) cites the same one on every machine. An unsorted
-    # walk is filesystem-ordered: on 2026-09-21 a sapphire regeneration
-    # moved gold-standard-v2::consensus-4of5's provenance from the t0-5
-    # pairing evaluation to the t1-0 one with no number changed.
+    # Sorted, so every consumer sees candidates in one order on every
+    # machine (an unsorted walk is filesystem-ordered: on 2026-09-21 a
+    # sapphire regeneration moved gold-standard-v2::consensus-4of5's
+    # provenance from the t0-5 pairing evaluation to the t1-0 one with no
+    # number changed). The row's own choice is order-independent besides:
+    # see select_evaluation.
     for eval_file in sorted((REPO_ROOT / "results").rglob("evaluation.json")):
         try:
             doc = _load_json(eval_file)
@@ -1026,14 +1048,7 @@ def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
                     file=sys.stderr,
                 )
                 continue
-            # The most complete candidate; a tie on buffer count (identical
-            # scorings by several evaluations, e.g. the three uplift-supplement
-            # pairing anchors over the GS consensus 4-of-5) resolves to the
-            # lexically first path, so the cited provenance never depends on
-            # index order.
-            eval_path, summary, _bounds, eval_bootstrap = min(
-                chosen, key=lambda c: (-len(c[1].get("buffers", [])), c[0])
-            )
+            eval_path, summary, _bounds, eval_bootstrap = select_evaluation(chosen)
             # provenance cites the normalised detections path (what the match used),
             # not the raw spec path, so it always names a file that exists on disk
             eval_sources = [eval_path, det_norm]

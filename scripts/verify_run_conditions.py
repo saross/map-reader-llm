@@ -158,14 +158,16 @@ def _auto_match_eval(detections: str, scope_bounds: str | None,
     """Resolve the eval for a no-``eval_path`` condition, mirroring the extractor.
 
     Returns the repo-relative eval path the extractor would select (scope-preferring,
-    then most-complete), or ``None`` if nothing matches.
+    then most-complete, ties by path order — the extractor's own
+    ``select_evaluation``, called rather than copied so the two cannot drift),
+    or ``None`` if nothing matches.
     """
     cands = index.get(g._normalise_detections_path(detections), [])
     scope_match = [c for c in cands if c[2] == scope_bounds]
     chosen = scope_match or cands
     if not chosen:
         return None
-    return max(chosen, key=lambda c: len(c[1].get("buffers", [])))[0]
+    return g.select_evaluation(chosen)[0]
 
 
 def verify_condition(spec: dict, scope_bounds: str | None,

@@ -1968,7 +1968,42 @@ def test_eval_index_lists_candidates_in_path_order(tmp_path, monkeypatch) -> Non
 
 
 @pytest.mark.tier1
-def test_gs_v2_consensus_4of5_cites_the_lexically_first_of_its_tied_evals(registry):
+def test_select_evaluation_is_order_independent_and_prefers_completeness() -> None:
+    """A tie resolves by path order whichever way the candidates are listed.
+
+    The pair below is a real one: ``…__verified/`` and ``…__verified-k4-r2-gt/``
+    sort differently as strings ('-' < '/') and as paths (fewer parts first),
+    so a string tie-break and a ``max`` over the index disagree here.
+    """
+    from scripts import generate_post_run_report as _g
+
+    short = "results/x/a__verified/evaluation.json"
+    longer = "results/x/a__verified-k4-r2-gt/evaluation.json"
+    tie = [(longer, {"buffers": [1] * 14}, None, {}),
+           (short, {"buffers": [1] * 14}, None, {})]
+    assert _g.select_evaluation(tie)[0] == short
+    assert _g.select_evaluation(list(reversed(tie)))[0] == short
+    fuller = (longer, {"buffers": [1] * 15}, None, {})
+    assert _g.select_evaluation([*tie, fuller]) is fuller
+
+
+@pytest.mark.tier1
+def test_the_verifier_and_the_extractor_choose_the_same_evaluation() -> None:
+    """verify_run_conditions must not carry its own copy of the selection."""
+    from scripts import generate_post_run_report as _g
+    from scripts import verify_run_conditions as _v
+
+    det = "outputs/x/d.geojson"
+    index = {det: [("results/x/a__verified-k4-r2-gt/evaluation.json",
+                    {"buffers": [1] * 14}, "b", {}),
+                   ("results/x/a__verified/evaluation.json",
+                    {"buffers": [1] * 14}, "b", {})]}
+    assert _v._auto_match_eval(det, "b", index) == _g.select_evaluation(index[det])[0]
+    assert _v._auto_match_eval(det, "b", index) == "results/x/a__verified/evaluation.json"
+
+
+@pytest.mark.tier1
+def test_gs_v2_consensus_4of5_cites_the_first_of_its_tied_evals():
     """Three pairing anchors score consensus 4-of-5 identically; t0-0 is cited."""
     conditions = extract_conditions(extraction_context("gold-standard-v2"))
     c = next(c for c in conditions if c["label"] == "consensus-4of5")
