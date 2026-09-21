@@ -399,3 +399,32 @@ def test_phase2_reads_a_null_cost_as_null_not_zero(tmp_path) -> None:
     meta.write_text(json.dumps({"cost_estimate": {"total_cost_usd": 1.5}}))
     assert read_meta_cost(meta) == 1.5
     assert read_meta_cost(tmp_path / "missing.meta.json") == 0.0
+
+
+def test_a_block_without_terms_is_copied_not_raised_when_merged_again() -> None:
+    """An audited-summed block (written by the merge itself) has no single
+    tier; a later resume that merges it with an empty part must not raise
+    at meta-write time, and two such blocks sum rather than re-price."""
+    u = {"total_input_tokens": 1_000_000, "total_cached_tokens": 0,
+         "total_output_tokens": 0, "total_thoughts_tokens": 0}
+    before = lc.price_usage(u, "gemini-3.7-flash", "flex", at="2026-12-30")
+    after = lc.price_usage(u, "gemini-3.7-flash", "flex", at="2027-01-02")
+    summed = lc.merge_cost_blocks([before, after], {k: 2 * v for k, v in u.items()})
+    assert summed["pricing_used"]["tier"] is None
+    again = lc.merge_cost_blocks([summed, {}], {k: 3 * v for k, v in u.items()})
+    assert again["total_cost_usd"] == pytest.approx(summed["total_cost_usd"])
+    twice = lc.merge_cost_blocks([summed, summed], {k: 4 * v for k, v in u.items()})
+    assert twice["cost_basis"] == "audited-summed"
+    assert twice["total_cost_usd"] == pytest.approx(2 * summed["total_cost_usd"])
+
+
+def test_a_merged_unpriceable_block_keeps_the_terms_the_backfill_needs() -> None:
+    u = {"total_input_tokens": 1_000_000, "total_cached_tokens": 0,
+         "total_output_tokens": 0, "total_thoughts_tokens": 0}
+    a = lc.unpriceable_block(u, "gemini-9-flash", "flex", "no rate card entry")
+    b = lc.unpriceable_block(u, "gemini-9-flash", "flex", "no rate card entry")
+    merged = lc.merge_cost_blocks([a, b], {k: 2 * v for k, v in u.items()})
+    assert merged["pricing_used"]["model_recorded"] == "gemini-9-flash"
+    assert merged["pricing_used"]["tier"] == "flex"
+    assert merged["reason"] == "no rate card entry"
+    assert merged["list_total_cost_usd"] is None

@@ -848,10 +848,16 @@ class TestOutputContract:
 
             assert "batch_discount" in cost_estimate["pricing_used"]
             assert cost_estimate["pricing_used"]["batch_discount"] == 0.5
-            # The keys the writer reads, so the assertion is not vacuous:
-            # Gemini 3 Flash at the batch tier is 0.25 in and 1.50 out.
+            # The keys the writer reads, so the assertion is not vacuous; the
+            # expectation is priced at the block's own date so the test does
+            # not read the wall clock across a rate-card row change.
+            from scripts.lib_cost import price_usage
             assert cost_estimate["pricing_used"]["tier"] == "batch"
-            assert cost_estimate["total_cost_usd"] == pytest.approx(0.25 + 0.15)
+            expected = price_usage(
+                {"total_input_tokens": 1_000_000, "total_output_tokens": 100_000},
+                "gemini-3-flash", "batch", at=cost_estimate["pricing_used"]["priced_at"])
+            assert cost_estimate["total_cost_usd"] == pytest.approx(expected["total_cost_usd"])
+            assert cost_estimate["total_cost_usd"] > 0
 
     def test_meta_json_compatible_with_read_meta_cost(self) -> None:
         """Meta JSON should be readable by run_phase2.read_meta_cost()."""

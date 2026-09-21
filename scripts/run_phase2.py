@@ -707,7 +707,7 @@ def reconcile_checkpoint(
     return checkpoint
 
 
-def read_meta_cost(meta_path: Path) -> float:
+def read_meta_cost(meta_path: Path) -> float | None:
     """
     Read estimated cost from a .meta.json file.
 

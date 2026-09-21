@@ -620,16 +620,26 @@ def merge_cost_blocks(blocks: list[dict[str, Any] | None],
         # card gains the row.
         priced_total = [b.get("total_cost_usd") for b in priceable
                         if b.get("total_cost_usd") is not None]
+        reasons = sorted({str(b["reason"]) for b in unpriced if b.get("reason")})
+        # Keep the terms the back-fill needs: the model and tier the unpriced
+        # parts recorded, when they agree.
+        terms = {((b.get("pricing_used") or {}).get("model_recorded"),
+                  (b.get("pricing_used") or {}).get("tier")) for b in unpriced}
+        model_recorded, tier = next(iter(terms)) if len(terms) == 1 else (None, None)
         return {
             "schema": SCHEMA,
             "cost_basis": "unpriceable",
-            "reason": "; ".join(sorted({str(b.get("reason")) for b in unpriced})),
+            "reason": "; ".join(reasons),
             "input_cost_usd": None, "cached_input_cost_usd": None,
             "output_cost_usd": None, "total_cost_usd": None,
+            "list_input_cost_usd": None, "list_output_cost_usd": None,
+            "list_total_cost_usd": None,
             "priced_parts_total_usd": round(sum(priced_total), 6) if priced_total else None,
             "unpriceable_parts": len(unpriced),
             "tokens_billed": token_classes(u) if u else None,
-            "pricing_used": None,
+            "pricing_used": {"model": None, "model_recorded": model_recorded, "tier": tier,
+                             "tier_source": "merged", "priced_at": None,
+                             "rate_card": rate_card_identity(card_path)},
         }
     if not priceable:
         return {"schema": SCHEMA, "cost_basis": "unrecorded",
@@ -640,13 +650,21 @@ def merge_cost_blocks(blocks: list[dict[str, Any] | None],
     if len(priceable) == 1:
         # One priced block: re-price it over the MERGED usage, so a part
         # that recorded tokens but no block (an older chunk meta) is still
-        # counted; a legacy block has no terms to re-price on and is copied.
+        # counted. A block with no terms to re-price on — a legacy block, or
+        # an ``audited-summed`` block this function wrote — is copied: a
+        # merge must never raise after the API work is done.
         if priceable[0].get("schema") == SCHEMA and u:
-            return reprice_block(priceable[0], u, card_path=card_path)
+            try:
+                return reprice_block(priceable[0], u, card_path=card_path)
+            except RateCardError:
+                pass
         return copy.deepcopy(priceable[0])
     all_v2 = all(b.get("schema") == SCHEMA for b in priceable)
     if all_v2 and len({_terms(b) for b in priceable}) == 1:
-        return reprice_block(priceable[0], merged_usage, card_path=card_path)
+        try:
+            return reprice_block(priceable[0], u, card_path=card_path)
+        except RateCardError:
+            pass  # no terms to re-price on (audited-summed parts): sum below
 
     def total(key: str) -> float | None:
         vals = [b.get(key) for b in priceable if b.get(key) is not None]
