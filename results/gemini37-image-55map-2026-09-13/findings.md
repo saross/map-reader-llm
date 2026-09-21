@@ -1,8 +1,11 @@
 # Gemini 3.7 image at deployment scale, K = 3 and K = 5: findings
 
-> **Last revised**: 2026-09-21 (the six `*-mcc-oracle` rows dropped from
-> § 2's table under PI ruling 2026-09-21 and moved to
-> `results/tile-presence-2026-09-21/`; no cell deleted, no number changed).
+> **Last revised**: 2026-09-21, second pass (the phrase "MCC oracle"
+> retired from the prose of §§ 1, 2, 3 and 7 — every such point is now
+> named as the rung's tile-MCC optimum on the tile-presence leaderboard;
+> no number changed). Earlier the same day: the six `*-mcc-oracle` rows
+> dropped from § 2's table under PI ruling 2026-09-21 and moved to
+> `results/tile-presence-2026-09-21/`; no cell deleted, no number changed.
 > Prior: 2026-09-19 (the **K = 5 rung added** — six further cells on
 > the two image arms, swept, materialised and scored on the same r2 engine,
 > after proposer passes 4 and 5 were run through the Batch API. The rung is
@@ -37,7 +40,7 @@ at or beyond the observed statistic is reported as *p* < 0.0001, never as
 
 | | Prediction | Result | Verdict |
 |---|---|---|---|
-| **P1** | image K = 3 carried tile-MCC beats `FOURTH-N1-oracle` (0.7471) by **≥ +0.02**, BH-significant | **0.7648** vs 0.7471 = **+0.0177**, BH *p* < 0.0001; **+0.0185** at the rung's MCC oracle | **NEAR MISS** — significant and in the predicted direction, but short of the +0.02 threshold and above the ≤ +0.01 informative-failure band. The card defined no verdict for the interval between the two, so +0.0177 falls in a GAP in the prediction's design; the threshold was not met |
+| **P1** | image K = 3 carried tile-MCC beats `FOURTH-N1-oracle` (0.7471) by **≥ +0.02**, BH-significant | **0.7648** vs 0.7471 = **+0.0177**, BH *p* < 0.0001; **+0.0185** at the rung's tile-MCC optimum on the tile-presence leaderboard | **NEAR MISS** — significant and in the predicted direction, but short of the +0.02 threshold and above the ≤ +0.01 informative-failure band. The card defined no verdict for the interval between the two, so +0.0177 falls in a GAP in the prediction's design; the threshold was not met |
 | **P2** | K = 1 MCC **≥** K = 3 MCC; F1 lower at K = 1 | MCC **rises** with K on both arms: arm 2 0.7569 → **0.7648** (+0.0078, BH p **0.0022**); arm 1 0.7324 → 0.7490. F1 lower at K = 1 on both (0.8719 < 0.9199; 0.8477 < 0.9025) | **INFORMATIVE FAIL** on the MCC claim, significantly reversed; the F1 half holds |
 | **P3** | F1 @ 50 m at K = 3 within **± 0.02** of the 3.7 text arm 2 at N = 3 (0.8848) | **0.9199** vs 0.8848 = **+0.0351**, BH *p* < 0.0001 | **INFORMATIVE FAIL**, in the image modality's favour — not parity |
 | **P4** | arm 2 beats arm 1 on MCC by **≥ +0.01** | K = 3: **+0.0158** (0.7648 − 0.7490). K = 1: **+0.0245** (0.7569 − 0.7324) | **HOLDS** at both rungs |
@@ -99,7 +102,8 @@ The cells stay on disk with their committed evaluations, re-labelled in
 
 The exploratory `IMG-ARM2-K5-carried` cell scores above the K = 3 headline cell
 on both metrics (0.9270 against 0.9199 F1; 0.7659 against 0.7648 tile-MCC), and
-its F1 oracle and MCC oracle coincide at (0.95, k5). No test was run at this
+its F1 oracle and its tile-MCC optimum (tile-presence leaderboard) coincide
+at (0.95, k5). No test was run at this
 rung, so § 1's headline — which is the reading of the declared five-test family
 — stands on the K = 3 cell, and the K = 5 numbers are reported as a direction
 (§ 7).
@@ -135,8 +139,8 @@ This sharpens deltas § 10.5, which read the 55-map MCC ceiling as a
 **specificity** target — `FOURTH-N1-oracle` leads on 45 false-positive tiles
 despite having the field's *lowest* sensitivity. The image K = 3 cell reaches
 0.7648 by the same route: 127 FP tiles at sensitivity 0.7535. Pushed further,
-its MCC oracle reaches 28 FP tiles — fewer than the incumbent leader's 45 —
-at MCC 0.7656.
+its tile-MCC optimum on the tile-presence leaderboard, (0.96, k2), reaches
+28 FP tiles — fewer than the incumbent leader's 45 — at MCC 0.7656.
 
 **The generalisation.** For a **text** pool, K buys recall and costs
 specificity, so tile-MCC falls while F1 rises. For an **image** pool, whose
@@ -314,8 +318,8 @@ report's upward revision to ≈ 9,000–10,900 overshot. The K = 1 estimate of
 - **`IM-k3`'s tile assignment is not this chain's** (83.65 % idempotent), so
   that one comparison of the five mixes assignment rules. The other four do
   not.
-- **One MCC oracle sits at k2, not unanimity** (`IMG-ARM2-K3-mcc-oracle`, at
-  (0.96, k2)), so the "unanimity is the precision lever" reading of § 3 is a
+- **One tile-MCC optimum sits at k2, not unanimity** (`IMG-ARM2-K3` on the
+  tile-presence leaderboard, at (0.96, k2)), so the "unanimity is the precision lever" reading of § 3 is a
   statement about the carried points and the ladder, not about every point on
   the grid.
 - **The two verifier arms differ in model *and* thinking level** (Gemini 3
@@ -323,6 +327,25 @@ report's upward revision to ≈ 9,000–10,900 overshot. The K = 1 estimate of
   seat" effect is the seat as a package, not the model alone.
 
 ## Changelog
+
+### 2026-09-21, second pass — "MCC oracle" retired from the prose
+
+**Refresh trigger**: the S156 close block's first open thread. The
+morning's entry below removed the `*-mcc-oracle` rows from § 2's table but
+left the phrase in the prose of §§ 1, 2, 3 and 7, where it still named a
+board column that no longer exists. Each such point is now called what
+the ruling calls it — the rung's tile-MCC optimum, presented on the
+tile-presence leaderboard — with its operating point beside it where the
+sentence did not already give one.
+
+**What changed on this document**: four sentences (§ 1's P1 row, § 2's
+K = 5 paragraph, § 3's false-positive-tile sentence, § 7's k2 limitation)
+and the banner. The cells those sentences describe are unchanged on disk
+and unchanged on the tile-presence leaderboard, which was re-read for
+every figure: `IMG-ARM2-K3` at (0.96, k2), tile-MCC 0.7656, 28 FP tiles;
+`IMG-ARM2-K5` at (0.95, k5); +0.0185 = 0.7656 − 0.7471.
+
+**Numbers that moved**: none.
 
 ### 2026-09-21 — The tile-MCC optimum moved off this table
 

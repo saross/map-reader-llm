@@ -1,9 +1,12 @@
 # Gemini 3 image at deployment scale, K = 1, 3 and 5: findings
 
-> **Last revised**: 2026-09-21 (the six `*-mcc-oracle` rows dropped from
-> § 2's table under PI ruling 2026-09-21 and moved to
+> **Last revised**: 2026-09-21, second pass (the phrase "MCC oracle"
+> retired from the prose of §§ 3 and 8 — those points are now named as
+> unconstrained tile-MCC optima on the tile-presence leaderboard; no
+> number changed). Earlier the same day: the six `*-mcc-oracle` rows
+> dropped from § 2's table under PI ruling 2026-09-21 and moved to
 > `results/tile-presence-2026-09-21/`; this also clears rows that had gone
-> stale when those cells were re-pointed on 2026-09-20). Prior: 2026-09-20
+> stale when those cells were re-pointed on 2026-09-20. Prior: 2026-09-20
 > (original publication — row B of the image
 > proposer × verifier 2×2, registered UNSIGNED for the Principal
 > Investigator's (PI) review). See [§ Changelog](#changelog) for revision
@@ -162,15 +165,15 @@ K = 1 to K = 3 on arm 2 carried) while tile-MCC barely moves (0.7063 → 0.7234
 → 0.7253): the surplus that unanimity removes sits mostly on tiles that were
 already counted.
 
-**Every MCC oracle above K = 1 collapses to a single vote.** At K = 3 and
-K = 5, on both arms, the tile-MCC oracle sits at `k1` over a three- or
-five-pass union — (0.35, k1), (0.40, k1), (0.98, k1), and (0.98, k1) —
+**Every tile-MCC optimum above K = 1 collapses to a single vote.** At K = 3
+and K = 5, on both arms, the unconstrained tile-MCC optimum (tile-presence
+leaderboard) sits at `k1` over a three- or five-pass union — (0.35, k1), (0.40, k1), (0.98, k1), and (0.98, k1) —
 admitting 10,078 to 12,508 detections and scoring micro-F1 @ 50 m of only
-0.5205 to 0.5772. At K = 1 the two oracles are ordinary (0.6748 and 0.6923).
-These four cells are registered because the board's convention registers both
-oracles, but they are not deployable configurations: they buy tile
-discrimination by flooding the map. Read them beside the carried cells, not
-instead of them.
+0.5205 to 0.5772. At K = 1 the two optima are ordinary (0.6748 and 0.6923).
+These four points are retained on disk as cells and presented only on the
+tile-presence leaderboard (PI ruling 2026-09-21); they are not deployable
+configurations: they buy tile discrimination by flooding the map. Read them
+beside the carried cells, not instead of them.
 
 ## 4. The interaction decays with K
 
@@ -362,12 +365,31 @@ in a way a 487-tile Gold Standard leg cannot show.
   matched comparison is less favourable to this row than the registered one.
   `IM-k3`'s tile join is also not this chain's (83.65 % idempotent; row A
   `findings.md` § 7).
-- **The MCC oracles above K = 1 are not deployable** (§ 3). They are registered
-  for completeness under the board's both-oracles convention.
+- **The tile-MCC optima above K = 1 are not deployable** (§ 3). Their cells
+  are retained on disk and presented only on the tile-presence leaderboard
+  (PI ruling 2026-09-21), not on this row's table.
 - **No permutation test compares rungs within this row.** The K = 1 → K = 3 →
   K = 5 ladder in § 2 is descriptive.
 
 ## Changelog
+
+### 2026-09-21, second pass — "MCC oracle" retired from the prose
+
+**Refresh trigger**: the S156 close block's first open thread. The
+morning's entry below removed the `*-mcc-oracle` rows from § 2's table but
+left the phrase in §§ 3 and 8, where it still named a board column that no
+longer exists and a "both-oracles convention" the ruling had ended. Those
+points are now called unconstrained tile-MCC optima, presented on the
+tile-presence leaderboard and retained on disk as cells.
+
+**What changed on this document**: § 3's collapse paragraph (two
+sentences), § 8's limitation bullet, and the banner. Every figure in § 3
+was re-read from `results/tile-presence-2026-09-21/leaderboard.md`: the
+four optima at (0.35, k1), (0.40, k1), (0.98, k1), (0.98, k1) with 10,078
+to 12,508 detections and micro-F1 0.5205 to 0.5772; the K = 1 optima's
+F1 of 0.6748 and 0.6923.
+
+**Numbers that moved**: none.
 
 ### 2026-09-21 — The tile-MCC optimum moved off this table
 
