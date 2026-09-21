@@ -43,6 +43,22 @@ project state.
 > - **Carried-vs-carried image − text** (inventory + seven addendum cells):
 >   +0.026/+0.040/+0.044 F1, +0.050/+0.057/+0.060 tile-MCC at K/N 1/3/5.
 >
+> ### Landed after the close block (2026-09-21, handoff)
+>
+> - Obs 494 (daa057d36): the 3.7 image pool is the only pool whose F1 and
+>   tile-MCC Pareto optima coincide (fronts 1–2 points, span ≤ 0.032, vs 3–24
+>   elsewhere; only 21 of 35 configurations can show a wide front — nine are
+>   single-pass and the five incumbents floor at k = 3). D10: no new proposer
+>   campaigns, so the generational reading stays a hypothesis.
+> - Reflections (5458f8b8f), claude-obs 120–123 (deaa30625 + handoff),
+>   user-obs S156 candidates pending in `docs/notes/user-observations.md`
+>   (S153, S153-b/c, S154 sections also still pending).
+> - Residue cleared: File API empty (both replicates' uploads deleted);
+>   `/tmp/mr-m1` worktree removed on sapphire; three older worktrees under
+>   `~/worktrees/map-reader-llm/` on sapphire predate this session and were
+>   left. Obs 492/493 label 2026-09-20/21 as Sessions 157/158 while the
+>   reflections and this beacon say 156 — a numbering drift to settle.
+>
 > ### Open threads for the next session
 >
 > 1. Prose pass: "MCC oracle" survives in the image findings' prose
