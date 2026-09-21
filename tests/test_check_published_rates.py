@@ -46,7 +46,9 @@ def test_the_2027_row_matches_the_pages_starting_amounts(tmp_path) -> None:
     results = json.loads(out)["results"]
     flash37 = [r for r in results if r["model"] == "gemini-3.7-flash"]
     assert all(r["verdict"] == "OK" for r in flash37), flash37
-    assert next(r["page"] for r in flash37 if r["tier"] == "flex" and r["class"] == "input_fresh") == 0.75
+    flex_input = next(r["page"] for r in flash37
+                      if r["tier"] == "flex" and r["class"] == "input_fresh")
+    assert flex_input == 0.75
     assert rc == 0
 
 

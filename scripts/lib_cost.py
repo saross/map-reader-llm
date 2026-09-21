@@ -54,6 +54,7 @@ Licence: Apache 2.0
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 from dataclasses import asdict, is_dataclass
@@ -535,15 +536,24 @@ def tier_from_cli(service_tier: str | None, *, batch: bool = False) -> tuple[str
     return "standard", "no --service-tier given: standard tier"
 
 
+def _unpriceable(block: dict[str, Any] | None) -> bool:
+    """Whether a block records tokens the card could not price (M2)."""
+    return bool(block) and block.get("cost_basis") == "unpriceable"
+
+
 def _priceable(block: dict[str, Any] | None) -> bool:
     """Whether a block carries any cost worth merging.
 
-    ``{}``, ``None`` and a block of nulls do not. Nor does a LEGACY block of
-    zeros — the stub the batch patcher used to write — since it has no
-    dollars to add and would otherwise drag an audited block down to the
-    legacy additive path. A ``cost/2`` block of zeros is a real zero and is
-    kept, so its terms take part in the merge.
+    ``{}``, ``None``, an ``unpriceable`` block and a block of nulls do not.
+    Nor does a LEGACY block of zeros — the stub the batch patcher used to
+    write — since it has no dollars to add and would otherwise drag an
+    audited block down to the legacy additive path. (A legacy block that
+    recorded a genuine zero-cost pass is therefore treated as recording
+    nothing; a legacy zero implies zero tokens, so no dollar is lost, and a
+    ``cost/2`` zero, which is a real zero, is kept.)
     """
+    if _unpriceable(block):
+        return False
     if not block:
         return False
     keys = ("total_cost_usd", "input_cost_usd", "output_cost_usd", "cached_input_cost_usd")
@@ -573,9 +583,14 @@ def merge_cost_blocks(blocks: list[dict[str, Any] | None],
     0. Blocks that carry no cost at all (``{}``, ``None``, a stub of nulls)
        contribute nothing; if none is priceable the result is an
        ``unrecorded`` block with every cost ``None``.
+    0a. Any part is ``unpriceable`` (tokens the card could not price): the
+       merged pass is unpriceable too, with the priced parts' sum and the
+       reasons kept beside the null.
     1. Every priceable block is ``cost/2`` on the SAME terms — model, tier
        and rate card row — and the merged usage is re-priced once at those
-       terms. Exact whatever the cached share of each part.
+       terms. Exact whatever the cached share of each part. One priced
+       ``cost/2`` block among empties is re-priced over the merged usage
+       too, so tokens without a block are still counted.
     2. Every priceable block is ``cost/2`` but the terms differ (a cleanup on
        another model or tier, or a pass that crosses a rate card row such as
        the 2027-01-01 step): the audited totals are added field by field,
@@ -594,15 +609,41 @@ def merge_cost_blocks(blocks: list[dict[str, Any] | None],
         The merged block.
     """
     priceable = [b for b in blocks if _priceable(b)]
+    unpriced = [b for b in blocks if _unpriceable(b)]
+    u = _usage_dict(merged_usage) if merged_usage is not None else {}
+    if unpriced:
+        # Tokens were recorded that the card could not price: the merged
+        # pass cannot be priced either, and must not pass as audited on the
+        # strength of the parts that could be (a pass priced at half its
+        # tokens is worse than no price). The priced parts' sum is kept
+        # beside the reasons so the back-fill can finish the job once the
+        # card gains the row.
+        priced_total = [b.get("total_cost_usd") for b in priceable
+                        if b.get("total_cost_usd") is not None]
+        return {
+            "schema": SCHEMA,
+            "cost_basis": "unpriceable",
+            "reason": "; ".join(sorted({str(b.get("reason")) for b in unpriced})),
+            "input_cost_usd": None, "cached_input_cost_usd": None,
+            "output_cost_usd": None, "total_cost_usd": None,
+            "priced_parts_total_usd": round(sum(priced_total), 6) if priced_total else None,
+            "unpriceable_parts": len(unpriced),
+            "tokens_billed": token_classes(u) if u else None,
+            "pricing_used": None,
+        }
     if not priceable:
-        u = _usage_dict(merged_usage) if merged_usage is not None else {}
         return {"schema": SCHEMA, "cost_basis": "unrecorded",
                 "input_cost_usd": None, "cached_input_cost_usd": None,
                 "output_cost_usd": None, "total_cost_usd": None,
                 "tokens_billed": token_classes(u) if u else None,
                 "pricing_used": None}
     if len(priceable) == 1:
-        return dict(priceable[0])
+        # One priced block: re-price it over the MERGED usage, so a part
+        # that recorded tokens but no block (an older chunk meta) is still
+        # counted; a legacy block has no terms to re-price on and is copied.
+        if priceable[0].get("schema") == SCHEMA and u:
+            return reprice_block(priceable[0], u, card_path=card_path)
+        return copy.deepcopy(priceable[0])
     all_v2 = all(b.get("schema") == SCHEMA for b in priceable)
     if all_v2 and len({_terms(b) for b in priceable}) == 1:
         return reprice_block(priceable[0], merged_usage, card_path=card_path)
@@ -631,7 +672,8 @@ def merge_cost_blocks(blocks: list[dict[str, Any] | None],
                  "total_cost_usd": b.get("total_cost_usd")}
                 for b in priceable],
         }
-    first_pu = next((b.get("pricing_used") for b in priceable if b.get("pricing_used")), None)
+    first_pu = copy.deepcopy(next((b.get("pricing_used") for b in priceable
+                                   if b.get("pricing_used")), None))
     return {
         "cost_basis": "summed-legacy",
         "input_cost_usd": total("input_cost_usd"),

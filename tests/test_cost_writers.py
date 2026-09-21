@@ -303,7 +303,7 @@ def test_the_chunk_merge_prices_the_pass_once_from_summed_tokens(tmp_path) -> No
 
 # --- The wrapper's guards ----------------------------------------------------
 
-def test_a_model_the_card_lacks_is_recorded_unpriceable_by_a_writer_and_refused_by_an_auditor() -> None:
+def test_a_model_the_card_lacks_is_unpriceable_for_a_writer_and_refused_for_an_auditor() -> None:
     from scripts.lib_llm_metadata import estimate_cost
     u = _usage(total_input_tokens=1_000_000, total_tokens=1_000_000)
     with pytest.raises(lc.UnknownModelError):
@@ -336,7 +336,8 @@ def test_the_discount_is_the_billed_over_list_ratio_not_the_input_headline() -> 
     u = {"total_input_tokens": 1_000_000, "total_cached_tokens": 800_000,
          "total_output_tokens": 0, "total_thoughts_tokens": 0}
     b = lc.price_usage(u, "gemini-3-flash-preview", "flex", at="2026-09-20")
-    assert b["total_cost_usd"] == pytest.approx(b["list_total_cost_usd"] * b["pricing_used"]["discount"])
+    assert b["total_cost_usd"] == pytest.approx(
+        b["list_total_cost_usd"] * b["pricing_used"]["discount"])
     assert b["pricing_used"]["discount"] > 0.5
 
 
@@ -352,3 +353,49 @@ def test_a_card_edited_in_place_is_re_read_with_its_new_hash(tmp_path) -> None:
     second = lc.rate_card_identity(p)
     assert second["version"] == "edited" and second["sha256"] != first["sha256"]
     assert second["path"] == "external:card.json"
+
+
+# --- Re-audit of the fix round -----------------------------------------------
+
+def test_an_unpriceable_part_makes_the_merged_pass_unpriceable() -> None:
+    """Half a pass priced and labelled audited is worse than no price."""
+    u = {"total_input_tokens": 1_000_000, "total_cached_tokens": 0,
+         "total_output_tokens": 0, "total_thoughts_tokens": 0}
+    priced = lc.price_usage(u, "gemini-3.7-flash", "flex", at="2026-09-20")
+    unpriced = lc.unpriceable_block(u, "gemini-9-flash", "flex", "no rate card entry")
+    merged = lc.merge_cost_blocks([priced, unpriced], {k: 2 * v for k, v in u.items()})
+    assert merged["cost_basis"] == "unpriceable" and merged["total_cost_usd"] is None
+    assert merged["priced_parts_total_usd"] == pytest.approx(0.375)
+    assert merged["unpriceable_parts"] == 1 and "no rate card entry" in merged["reason"]
+    assert merged["tokens_billed"]["input_fresh"] == 2_000_000
+    both = lc.merge_cost_blocks([unpriced, unpriced], {k: 2 * v for k, v in u.items()})
+    assert both["cost_basis"] == "unpriceable" and both["priced_parts_total_usd"] is None
+
+
+def test_one_priced_block_among_empties_is_repriced_over_the_merged_tokens() -> None:
+    u = {"total_input_tokens": 1_000_000, "total_cached_tokens": 0,
+         "total_output_tokens": 0, "total_thoughts_tokens": 0}
+    priced = lc.price_usage(u, "gemini-3.7-flash", "flex", at="2026-09-20")
+    merged = lc.merge_cost_blocks([priced, {}], {k: 2 * v for k, v in u.items()})
+    assert merged["cost_basis"] == "audited"
+    assert merged["tokens_billed"]["input_fresh"] == 2_000_000
+    assert merged["total_cost_usd"] == pytest.approx(0.75)
+    # …and the result never aliases its input.
+    merged["pricing_used"]["tier"] = "x"
+    assert priced["pricing_used"]["tier"] == "flex"
+    legacy = {"input_cost_usd": 1.0, "output_cost_usd": 0.0, "total_cost_usd": 1.0,
+              "pricing_used": {"model": "m"}}
+    copied = lc.merge_cost_blocks([legacy, None], u)
+    copied["pricing_used"]["model"] = "changed"
+    assert legacy["pricing_used"]["model"] == "m"
+
+
+def test_phase2_reads_a_null_cost_as_null_not_zero(tmp_path) -> None:
+    from scripts.run_phase2 import read_meta_cost
+    meta = tmp_path / "d.meta.json"
+    meta.write_text(json.dumps({"cost_estimate": {"schema": "cost/2", "cost_basis": "unrecorded",
+                                                  "total_cost_usd": None}}))
+    assert read_meta_cost(meta) is None
+    meta.write_text(json.dumps({"cost_estimate": {"total_cost_usd": 1.5}}))
+    assert read_meta_cost(meta) == 1.5
+    assert read_meta_cost(tmp_path / "missing.meta.json") == 0.0

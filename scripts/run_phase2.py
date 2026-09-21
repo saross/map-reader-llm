@@ -715,7 +715,10 @@ def read_meta_cost(meta_path: Path) -> float:
         meta_path: Path to .meta.json file
 
     Returns:
-        Estimated cost in United States Dollars (USD), or 0.0 if unavailable
+        Estimated cost in United States Dollars (USD); ``None`` when the meta
+        records that nothing was priced (a ``cost/2`` block whose total is
+        null: ``unrecorded`` or ``unpriceable``, PI ruling D12); 0.0 when the
+        file is missing or unreadable.
     """
     if not meta_path.exists():
         return 0.0
@@ -724,8 +727,11 @@ def read_meta_cost(meta_path: Path) -> float:
         with open(meta_path) as f:
             meta = json.load(f)
         # The LLMMetadataTracker nests cost under 'cost_estimate.total_cost_usd'
-        cost_estimate = meta.get("cost_estimate", {})
-        return float(cost_estimate.get("total_cost_usd", 0.0))
+        cost_estimate = meta.get("cost_estimate", {}) or {}
+        total = cost_estimate.get("total_cost_usd", 0.0)
+        if total is None:
+            return None
+        return float(total)
     except (json.JSONDecodeError, ValueError, TypeError):
         return 0.0
 
@@ -1284,12 +1290,15 @@ def _execute_units_sequential(
             use_cache=use_cache,
         )
 
-        running_cost += cost
+        # A null cost (nothing priced, PI ruling D12) adds nothing; the run's own
+        # status line says 'cost not priced'.
+        running_cost += cost or 0.0
 
         if success:
             results["completed"].append(key)
             if verbose:
-                cost_str = f" (${cost:.4f})" if cost > 0 else ""
+                cost_str = (f" (${cost:.4f})" if cost else
+                            " (cost not priced)" if cost is None else "")
                 print(f"         Status: OK{cost_str}")
         else:
             results["failed"].append({"unit": key, "error": message})
@@ -1392,7 +1401,9 @@ def _execute_units_parallel(
                 key, success, message, cost = future.result()
 
                 with lock:
-                    running_cost += cost
+                    # A null cost (nothing priced, PI ruling D12) adds nothing; the run's own
+                    # status line says 'cost not priced'.
+                    running_cost += cost or 0.0
                     completed_count += 1
 
                     if success:
@@ -1412,7 +1423,8 @@ def _execute_units_parallel(
 
                 # Print progress outside the lock
                 status = "OK" if success else f"FAILED ({message})"
-                cost_str = f" (${cost:.4f})" if cost > 0 else ""
+                cost_str = (f" (${cost:.4f})" if cost else
+                            " (cost not priced)" if cost is None else "")
                 if verbose:
                     print(
                         f"[{completed_count}/{len(units)}] "
@@ -1984,7 +1996,9 @@ def _execute_units_batch(
             success, message, cost = (
                 False, f"processing_error: {e}", 0.0,
             )
-        running_cost += cost
+        # A null cost (nothing priced, PI ruling D12) adds nothing; the run's own
+        # status line says 'cost not priced'.
+        running_cost += cost or 0.0
 
         # Clean up Files API storage — delete input and output
         # files now that results are downloaded locally. Errors
@@ -2049,7 +2063,8 @@ def _execute_units_batch(
 
         if verbose:
             status = "OK" if success else f"FAILED ({message})"
-            cost_str = f" (${cost:.4f})" if cost > 0 else ""
+            cost_str = (f" (${cost:.4f})" if cost else
+                        " (cost not priced)" if cost is None else "")
             print(
                 f"  [{n_completed}/{total_units}] {key}: "
                 f"{status}{cost_str}"

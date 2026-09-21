@@ -1275,6 +1275,7 @@ def aggregate_cost_manifest(
     audited = pricing_tier != "recorded"
     fallback_warnings: list[str] = []
     models_seen: set[str] = set()
+    latest_pass_end: str | None = None  # the date the manifest's rate view is for
     p = rcfg.proposer
     proposer_output = rcfg.output_dir / "proposer" / Path(p["config"]).stem
     verified_dir = rcfg.output_dir / "verified"
@@ -1356,10 +1357,11 @@ def aggregate_cost_manifest(
         if audited:
             model = _meta_model(meta)
             models_seen.add(model)
-            cost = _price_tokens(
-                pass_tokens, model, pricing_tier,
-                at=(meta.get("timestamp") or {}).get("end"),
-            )["total_cost_usd"]
+            pass_end = (meta.get("timestamp") or {}).get("end")
+            latest_pass_end = max(latest_pass_end or "", str(pass_end or "")) or None
+            cost = _price_tokens(pass_tokens, model, pricing_tier, at=pass_end)[
+                "total_cost_usd"
+            ]
         else:
             cost = (
                 meta.get("cost_estimate", {}).get("total_cost_usd", 0.0)
@@ -1449,10 +1451,11 @@ def aggregate_cost_manifest(
     if audited:
         v_model = _meta_model(verifier_meta)
         models_seen.add(v_model)
-        verifier_cost = _price_tokens(
-            verifier_tokens, v_model, pricing_tier,
-            at=(verifier_meta.get("timestamp") or {}).get("end"),
-        )["total_cost_usd"]
+        v_end = (verifier_meta.get("timestamp") or {}).get("end")
+        latest_pass_end = max(latest_pass_end or "", str(v_end or "")) or None
+        verifier_cost = _price_tokens(verifier_tokens, v_model, pricing_tier, at=v_end)[
+            "total_cost_usd"
+        ]
     else:
         verifier_cost = (
             verifier_meta.get("cost_estimate", {}).get("total_cost_usd", 0.0)
@@ -1610,7 +1613,8 @@ def aggregate_cost_manifest(
             "pricing": (
                 {
                     "pricing_tier": pricing_tier,
-                    "rates_usd_per_1m": _pricing_view(models_seen, pricing_tier),
+                    "rates_usd_per_1m": _pricing_view(models_seen, pricing_tier,
+                                                      at=latest_pass_end),
                     "rate_card": _rate_card_identity(),
                     "thinking_billed_as_output": True,
                     "token_derivation": (
@@ -1623,11 +1627,14 @@ def aggregate_cost_manifest(
                         "and may include merged recovery batches"
                     ),
                     "basis": (
-                        "token-load audit 2026-06-12 "
-                        "(reports/token-load-audit-2026-06-12.md); rates "
-                        "verified at ai.google.dev/gemini-api/docs/pricing "
-                        "2026-06-12"
+                        "audited: fresh input, cache-read input and output "
+                        "plus thinking priced separately from the rate card "
+                        "of record (data/pricing/gemini-rate-card.json, "
+                        "identified above) at the run's tier and each "
+                        "pass's own date; method per "
+                        "reports/token-load-audit-2026-06-12.md section 2"
                     ),
+                    "rates_as_of": latest_pass_end,
                 }
                 if audited else
                 {

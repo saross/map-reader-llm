@@ -120,12 +120,13 @@ def _is_heading(lines: list[str], i: int) -> bool:
     if not re.match(r"^Gemini \d", lines[i]) or i + 1 >= len(lines):
         return False
     nxt = lines[i + 1]
-    if _MODEL_ID.match(nxt):
-        return True
-    # A heading followed straight by a tier block (the page's "Gemini 3.1
-    # Pro ." line) — but never a sentence: a banner reads like prose.
-    prose = re.search(r"\b(is|are|now|try|available)\b", lines[i], re.I)
-    return nxt in PAGE_TIERS and not prose
+    # A banner reads like prose ("Gemini 3.8 Flash is now available. Try it
+    # out.") and is never a heading, whatever follows it.
+    if re.search(r"\b(is|are|now|try|available)\b", lines[i], re.I):
+        return False
+    # A heading is followed by the model id, or straight by a tier block
+    # (the page's "Gemini 3.1 Pro ." line).
+    return bool(_MODEL_ID.match(nxt)) or nxt in PAGE_TIERS
 
 
 def model_section(text: str, page_name: str) -> str | None:

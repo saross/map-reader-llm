@@ -839,14 +839,19 @@ class TestOutputContract:
                 system_instruction="Test",
                 total_detections=0,
                 usage_stats={
-                    "input_tokens": 1_000_000,
-                    "output_tokens": 100_000,
+                    "total_input_tokens": 1_000_000,
+                    "total_output_tokens": 100_000,
                     "total_tokens": 1_100_000,
+                    "n_responses_with_usage": 4,
                 },
             )
 
             assert "batch_discount" in cost_estimate["pricing_used"]
             assert cost_estimate["pricing_used"]["batch_discount"] == 0.5
+            # The keys the writer reads, so the assertion is not vacuous:
+            # Gemini 3 Flash at the batch tier is 0.25 in and 1.50 out.
+            assert cost_estimate["pricing_used"]["tier"] == "batch"
+            assert cost_estimate["total_cost_usd"] == pytest.approx(0.25 + 0.15)
 
     def test_meta_json_compatible_with_read_meta_cost(self) -> None:
         """Meta JSON should be readable by run_phase2.read_meta_cost()."""
@@ -871,8 +876,9 @@ class TestOutputContract:
             cost = read_meta_cost(meta_path)
             failures = read_meta_failures(meta_path)
 
-            assert isinstance(cost, float)
-            assert cost >= 0.0
+            # No usage was reported, so nothing was priced: the reader says
+            # so with None rather than a confident zero (PI ruling D12).
+            assert cost is None
             assert failures == 0
 
 

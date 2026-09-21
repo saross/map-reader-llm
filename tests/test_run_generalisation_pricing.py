@@ -19,7 +19,8 @@ pytestmark = pytest.mark.tier1
 
 
 def test_the_manifest_tier_is_the_runs_own_and_never_recorded() -> None:
-    assert rg.manifest_pricing_tier(SimpleNamespace(global_opts={"service_tier": "batch"})) == "batch"
+    batch = SimpleNamespace(global_opts={"service_tier": "batch"})
+    assert rg.manifest_pricing_tier(batch) == "batch"
     assert rg.manifest_pricing_tier(SimpleNamespace(global_opts={})) == "flex"
     with pytest.raises(RateCardError):
         rg.manifest_pricing_tier(SimpleNamespace(global_opts={"service_tier": "recorded"}))
@@ -47,8 +48,10 @@ def test_price_tokens_uses_the_pass_date() -> None:
     assert before["total_cost_usd"] == pytest.approx(0.375)
     assert after["total_cost_usd"] == pytest.approx(0.75)
     src = (Path(__file__).resolve().parent.parent / "scripts" / "run_generalisation.py").read_text()
-    assert src.count('at=(meta.get("timestamp") or {}).get("end")') == 1
-    assert src.count('at=(verifier_meta.get("timestamp") or {}).get("end")') == 1
+    assert src.count("_price_tokens(pass_tokens, model, pricing_tier, at=pass_end)") == 1
+    assert src.count("_price_tokens(verifier_tokens, v_model, pricing_tier, at=v_end)") == 1
+    # The manifest's rate view is dated to the run, not to today.
+    assert "at=latest_pass_end" in src
 
 
 def test_the_manifest_records_the_card() -> None:
