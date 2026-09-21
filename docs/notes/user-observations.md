@@ -1375,3 +1375,26 @@ unreviewed and hold over with these.
   quoted the K = 1 library edge as a finding when it was an artefact of which
   cells existed. Both were raised before the underlying artefact or rule had
   been read; both had to be walked back the same day.
+
+## S157 candidates (pending review, 2026-09-21, drafted at handoff) — silence never discards
+
+*Things Shawn may have observed about Claude this session. Accept / edit /
+discard / replace; an unanswered gate holds over.*
+
+- **C1 — The coverage check that found the cost register.** Asked only to
+  confirm the 3.7 image rows were fully covered between analysis rows, I
+  summed the passes register in passing and found it two and a half times
+  the audited spend. Was that the right scope, or would he have preferred
+  the narrow answer first and the crack as a separate note?
+- **C2 — Four lenses and three audit rounds for one fix.** He said "use as
+  many resources / agents as necessary"; the day used eleven Opus agents and
+  three fix rounds before merge, each round finding a real defect in the
+  previous one. Did the depth pay for itself, or did the afternoon feel
+  longer than the problem?
+- **C3 — The plan led with his questions, not the design.** Section 1 of
+  the plan answered his four questions before any design appeared. Was that
+  the right order for a formal plan he had to rule on the same day?
+- **C4 — I put a console task on his critical path.** D17 asked him to
+  enable an export neither machine could enable; it cost him two attempts
+  and produced nothing. Did the plan make clear early enough that the
+  export was optional and the fallback already existed?
