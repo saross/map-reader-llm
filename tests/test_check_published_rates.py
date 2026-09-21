@@ -38,7 +38,7 @@ def test_the_real_page_of_2026_09_21_matches_the_card_on_every_rate(tmp_path) ->
     results = json.loads(out)["results"]
     assert rc == 0
     assert {r["verdict"] for r in results} == {"OK"}
-    assert len(results) == 4 * 3 * 3  # four models, three tiers, three classes
+    assert len(results) == 5 * 3 * 3  # five models, three tiers, three classes
 
 
 def test_the_2027_row_matches_the_pages_starting_amounts(tmp_path) -> None:
@@ -107,3 +107,47 @@ def test_the_checker_never_writes_the_card(tmp_path) -> None:
 def test_page_text_strips_markup_one_cell_per_line() -> None:
     raw = "<table><tr><td>Input price</td><td>$0.75</td><td>$0.375&nbsp;flex</td></tr></table>"
     assert cpr.page_text(raw) == "Input price\n$0.75\n$0.375 flex"
+
+
+def test_the_two_boundary_days_pick_the_right_amounts(tmp_path) -> None:
+    text = FIXTURE.read_text()
+    for at, expected in (("2026-12-31", 0.375), ("2027-01-01", 0.75)):
+        rc, out = _run(tmp_path, text, "--at", at, "--json")
+        r = next(r for r in json.loads(out)["results"]
+                 if r["model"] == "gemini-3.7-flash" and r["tier"] == "flex"
+                 and r["class"] == "input_fresh")
+        assert (rc, r["verdict"], r["page"]) == (0, "OK", expected), at
+
+
+def test_a_banner_inside_a_section_does_not_end_it() -> None:
+    text = ("Gemini 3.7 Flash\ngemini-3.7-flash\nStandard\nInput price\n$0.75\n"
+            "Gemini 3.8 Flash is now available. Try it out .\n"
+            "Batch\nInput price\n$0.375\n"
+            "Gemini 3.8 Flash\ngemini-3.8-flash\nStandard\nInput price\n$0.75\n")
+    section = cpr.model_section(text, "Gemini 3.7 Flash")
+    rates = cpr.published_rates(section, cpr.date(2026, 9, 21))
+    assert rates["batch"]["input_fresh"] == 0.375
+
+
+def test_the_long_prompt_and_audio_amounts_are_skipped() -> None:
+    lines = ["$2.00, prompts <= 200k tokens", "$4.00, prompts > 200k tokens"]
+    assert cpr.amount_valid_on(lines, cpr.date(2026, 9, 21)) == 2.0
+    assert cpr.amount_valid_on(["$1.00 (audio)", "$0.50 (text / image / video)"],
+                               cpr.date(2026, 9, 21)) == 0.5
+
+
+def test_a_date_before_any_card_row_is_reported_not_raised(tmp_path) -> None:
+    rc, out = _run(tmp_path, FIXTURE.read_text(), "--at", "2025-06-01", "--json")
+    results = json.loads(out)["results"]
+    flash37 = [r for r in results if r["model"] == "gemini-3.7-flash"]
+    assert rc == 1
+    assert all(r["verdict"] == "UNPARSED" and r["card"] is None for r in flash37)
+    assert "no rate card row" in flash37[0]["note"]
+
+
+def test_a_fetch_failure_exits_two_not_zero(monkeypatch, capsys) -> None:
+    def boom(url):
+        raise OSError("network down")
+    monkeypatch.setattr(cpr, "fetch", boom)
+    assert cpr.main([]) == 2
+    assert "could not fetch" in capsys.readouterr().err

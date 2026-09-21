@@ -139,7 +139,7 @@ def test_gemini_38_flash_resolves_to_its_own_rates():
     Flash key was ``gemini-3-flash-preview``) and was priced at the default
     0.50 / 3.00, which is what the 3.7 screen metas record.
     """
-    cost = estimate_cost(_usage(), "google_gemini", "gemini-3.8-flash")
+    cost = estimate_cost(_usage(), "google_gemini", "gemini-3.8-flash", at="2026-09-21")
     assert cost["pricing_used"]["input_per_1m"] == pytest.approx(0.75)
     assert cost["pricing_used"]["output_per_1m"] == pytest.approx(3.75)
     assert cost["list_total_cost_usd"] == pytest.approx(4.50)  # 0.75 in + 3.75 out
@@ -151,7 +151,7 @@ def test_thinking_tokens_are_billed_at_the_output_rate():
     as output; the estimator must add them, and record how many it added."""
     usage = _usage(input_tokens=0, output_tokens=1_000_000)
     usage.total_thoughts_tokens = 500_000
-    cost = estimate_cost(usage, "google_gemini", "gemini-3.8-flash")
+    cost = estimate_cost(usage, "google_gemini", "gemini-3.8-flash", at="2026-09-21")
     assert cost["list_output_cost_usd"] == pytest.approx(1.5 * 3.75)
     assert cost["pricing_used"]["thinking_tokens_billed_as_output"] == 500_000
     # And a run with no thinking is unchanged by the rule.

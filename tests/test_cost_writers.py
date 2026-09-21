@@ -13,6 +13,7 @@ chunk 0's; recovery merges added dollars and dropped the basis.
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -31,6 +32,21 @@ def _usage(**kw) -> AggregatedUsage:
 
 
 # --- The verifier writer -----------------------------------------------------
+
+class _FrozenDatetime(datetime):
+    """A datetime whose ``now`` is 2026-09-20: writers price at the pass's end
+    time, and a test that read the wall clock would cross the 2027-01-01 step."""
+
+    @classmethod
+    def now(cls, tz=None):  # noqa: D102
+        return datetime(2026, 9, 20, 12, 0, tzinfo=tz or timezone.utc)
+
+
+@pytest.fixture(autouse=True)
+def _frozen_clock(monkeypatch):
+    from scripts import lib_llm_metadata
+    monkeypatch.setattr(lib_llm_metadata, "datetime", _FrozenDatetime)
+
 
 def _write_verifier(tmp_path: Path, *, mode: str, service_tier: str | None,
                     model: str = "gemini-3.7-flash") -> dict:
@@ -165,3 +181,174 @@ def test_chunk_merge_reprices_summed_tokens_and_keeps_the_block_consistent(tmp_p
         pytest.approx(ce["total_cost_usd"], abs=2e-6)
     assert ce["total_cost_usd"] == pytest.approx(
         1.0 * 0.375 + 2.0 * 0.0375 + 0.03 * 1.875)
+
+
+# --- The batch proposer writer, end to end ---------------------------------
+
+def _batch_write(tmp_path: Path, usage_stats: dict | None) -> tuple[dict, dict]:
+    from scripts.lib_batch_api import write_batch_outputs
+
+    config = {"version": "detect_test", "model": "gemini-3.7-flash",
+              "instruction_file": "detect_image-only.md", "temperature": 1.0,
+              "thinking_level": "low", "max_output_tokens": 8192}
+    out = tmp_path / "detections.geojson"
+    block = write_batch_outputs(features=[], processed_tiles=set(), failed_tiles=[],
+                                output_file=out, config=config, model_name="gemini-3.7-flash",
+                                system_instruction="Test", total_detections=0,
+                                usage_stats=usage_stats)
+    meta = json.loads(out.with_suffix(".meta.json").read_text())
+    return block, meta
+
+
+def test_the_batch_proposer_writer_prices_at_the_batch_tier_and_says_so(tmp_path) -> None:
+    block, meta = _batch_write(tmp_path, {
+        "total_input_tokens": 1_000_000, "total_cached_tokens": 800_000,
+        "total_output_tokens": 100_000, "total_thoughts_tokens": 0,
+        "total_tokens": 1_100_000, "n_responses_with_usage": 5})
+    assert block["pricing_used"]["tier"] == "batch"
+    assert block["total_cost_usd"] == pytest.approx(0.2 * 0.375 + 0.8 * 0.0375 + 0.1 * 1.875)
+    assert block["pricing_used"]["batch_discount"] == 0.5  # legacy key kept for readers
+    assert meta["billing"]["service_tier"] == "batch"
+    assert meta["cost_estimate"]["pricing_used"]["priced_at"] == "2026-09-20"
+
+
+def test_a_batch_pass_with_no_reported_usage_is_unrecorded_not_zero(tmp_path) -> None:
+    block, meta = _batch_write(tmp_path, {"total_input_tokens": 0, "total_output_tokens": 0,
+                                          "total_tokens": 0, "n_responses_with_usage": 0})
+    assert block["cost_basis"] == "unrecorded" and block["total_cost_usd"] is None
+    assert lc.fmt_usd(block["total_cost_usd"]) == "unrecorded"
+    assert lc.fmt_usd(1.23456) == "$1.2346"
+
+
+# --- The tier helper the writers share ---------------------------------------
+
+def test_tier_from_cli_is_the_one_rule_for_every_writer() -> None:
+    assert lc.tier_from_cli(None) == ("standard", "no --service-tier given: standard tier")
+    assert lc.tier_from_cli("flex") == ("flex", "cli --service-tier")
+    assert lc.tier_from_cli("flex", batch=True) == ("batch", "Batch API path")
+    with pytest.raises(lc.RateCardError):
+        lc.tier_from_cli("priority")
+    # The two writers no test can drive end to end (they call the live API)
+    # must use the helper and the non-raising path; pinned at the source.
+    for script in ("scripts/4_detect_mounds_batch.py", "scripts/5_verify_crops.py"):
+        src = (Path(__file__).resolve().parent.parent / script).read_text()
+        assert "tier_from_cli(" in src and "strict=False" in src, script
+        assert 'meta["billing"]' in src, script
+
+
+# --- Merge cases the audit of 2026-09-21 found ------------------------------
+
+def test_a_stub_or_empty_block_contributes_nothing_to_a_merge() -> None:
+    u = {"total_input_tokens": 1_000_000, "total_cached_tokens": 800_000,
+         "total_output_tokens": 0, "total_thoughts_tokens": 0}
+    audited = lc.price_usage(u, "gemini-3.7-flash", "flex", at="2026-09-20")
+    for stub in ({}, None, {"input_cost_usd": 0.0, "output_cost_usd": 0.0, "total_cost_usd": 0.0}):
+        merged = lc.merge_cost_blocks([audited, stub], u)
+        assert merged["cost_basis"] == "audited"
+        assert merged["cached_input_cost_usd"] == audited["cached_input_cost_usd"]
+    assert lc.merge_cost_blocks([{}, None], u)["cost_basis"] == "unrecorded"
+
+
+def test_a_legacy_chunk_among_audited_chunks_is_not_double_counted() -> None:
+    """Folding whole-pass totals into a legacy sum inflated the result by the
+    number of preceding chunks; the merge now sums each block's own dollars."""
+    u = {"total_input_tokens": 1_000_000, "total_cached_tokens": 0,
+         "total_output_tokens": 0, "total_thoughts_tokens": 0}
+    a = lc.price_usage(u, "gemini-3.7-flash", "batch", at="2026-09-17")
+    legacy = {"input_cost_usd": 0.375, "output_cost_usd": 0.0, "total_cost_usd": 0.375}
+    merged = lc.merge_cost_blocks([a, a, legacy], {k: 3 * v for k, v in u.items()})
+    assert merged["cost_basis"] == "summed-legacy"
+    assert merged["total_cost_usd"] == pytest.approx(3 * 0.375)
+
+
+def test_passes_on_different_card_rows_are_summed_not_repriced_at_one_row() -> None:
+    """A cleanup across the 2027-01-01 step must not be priced at the 2026 row."""
+    u = {"total_input_tokens": 1_000_000, "total_cached_tokens": 0,
+         "total_output_tokens": 0, "total_thoughts_tokens": 0}
+    before = lc.price_usage(u, "gemini-3.7-flash", "flex", at="2026-12-30")
+    after = lc.price_usage(u, "gemini-3.7-flash", "flex", at="2027-01-02")
+    merged = lc.merge_cost_blocks([before, after], {k: 2 * v for k, v in u.items()})
+    assert merged["cost_basis"] == "audited-summed"
+    assert merged["total_cost_usd"] == pytest.approx(0.375 + 0.75)
+    assert [s["row_valid_from"] for s in merged["summed_from"]] == ["2026-08-01", "2027-01-01"]
+    assert merged["pricing_used"]["model"] is None
+
+
+def test_the_chunk_merge_prices_the_pass_once_from_summed_tokens(tmp_path) -> None:
+    """The fold that inflated a mixed pass is gone: every chunk's block goes in
+    together, and the pass is priced once."""
+    from scripts.lib_batch_api import merge_chunk_metadata
+
+    def chunk(i: int, block: dict) -> Path:
+        usage = {"total_input_tokens": 1_000_000, "total_cached_tokens": 0,
+                 "total_output_tokens": 0, "total_thoughts_tokens": 0, "total_tokens": 1_000_000}
+        meta = {"run_id": f"c{i}", "configuration": {"model": "gemini-3.7-flash"},
+                "usage_stats": usage, "cost_estimate": block,
+                "execution_stats": {"items_processed": 5, "items_failed": 0},
+                "results_summary": {"total_detections": 0, "total_tiles": 5}}
+        (tmp_path / f"d.chunk{i}.meta.json").write_text(json.dumps(meta))
+        (tmp_path / f"d.chunk{i}.tiles.json").write_text(
+            json.dumps({"tiles": [f"t{i}{j}" for j in range(5)], "total_tiles": 5}))
+        return tmp_path / f"d.chunk{i}.meta.json"
+    u = {"total_input_tokens": 1_000_000, "total_cached_tokens": 0,
+         "total_output_tokens": 0, "total_thoughts_tokens": 0}
+    audited = lc.price_usage(u, "gemini-3.7-flash", "batch", at="2026-09-17")
+    legacy = {"input_cost_usd": 0.375, "output_cost_usd": 0.0, "total_cost_usd": 0.375}
+    paths = [chunk(0, audited), chunk(1, audited), chunk(2, legacy)]
+    tiles = [tmp_path / f"d.chunk{i}.tiles.json" for i in range(3)]
+    merged = merge_chunk_metadata(paths, tiles, tmp_path / "d.meta.json", tmp_path / "d.tiles.json")
+    assert merged["cost_estimate"]["total_cost_usd"] == pytest.approx(3 * 0.375)
+    assert merged["cost_estimate"]["cost_basis"] == "summed-legacy"
+
+
+# --- The wrapper's guards ----------------------------------------------------
+
+def test_a_model_the_card_lacks_is_recorded_unpriceable_by_a_writer_and_refused_by_an_auditor() -> None:
+    from scripts.lib_llm_metadata import estimate_cost
+    u = _usage(total_input_tokens=1_000_000, total_tokens=1_000_000)
+    with pytest.raises(lc.UnknownModelError):
+        estimate_cost(u, "google_gemini", "gemini-9-flash", tier="flex", at="2026-09-20")
+    block = estimate_cost(u, "google_gemini", "gemini-9-flash", tier="flex",
+                          at="2026-09-20", strict=False)
+    assert block["cost_basis"] == "unpriceable" and block["total_cost_usd"] is None
+    assert block["tokens_billed"]["input_fresh"] == 1_000_000
+    assert "gemini-9-flash" in block["reason"]
+    assert block["pricing_used"]["tier"] == "flex"
+
+
+def test_a_non_gemini_provider_is_refused() -> None:
+    from scripts.lib_llm_metadata import estimate_cost
+    with pytest.raises(lc.RateCardError, match="Gemini only"):
+        estimate_cost(_usage(), "openai", "gpt-5", tier="standard")
+
+
+def test_the_list_price_includes_the_cached_class_at_standard() -> None:
+    u = {"total_input_tokens": 1_000_000, "total_cached_tokens": 1_000_000,
+         "total_output_tokens": 0, "total_thoughts_tokens": 0}
+    b = lc.price_usage(u, "gemini-3.7-flash", "flex", at="2026-09-20")
+    assert b["list_input_cost_usd"] == pytest.approx(0.075)
+    assert b["list_total_cost_usd"] == pytest.approx(0.075)
+    assert b["pricing_used"]["discount"] == pytest.approx(0.0375 / 0.075)
+
+
+def test_the_discount_is_the_billed_over_list_ratio_not_the_input_headline() -> None:
+    """Gemini 3 halves input and output on flex but not the cache read."""
+    u = {"total_input_tokens": 1_000_000, "total_cached_tokens": 800_000,
+         "total_output_tokens": 0, "total_thoughts_tokens": 0}
+    b = lc.price_usage(u, "gemini-3-flash-preview", "flex", at="2026-09-20")
+    assert b["total_cost_usd"] == pytest.approx(b["list_total_cost_usd"] * b["pricing_used"]["discount"])
+    assert b["pricing_used"]["discount"] > 0.5
+
+
+def test_a_card_edited_in_place_is_re_read_with_its_new_hash(tmp_path) -> None:
+    import time
+    card = json.loads(lc.DEFAULT_RATE_CARD.read_text())
+    p = tmp_path / "card.json"
+    p.write_text(json.dumps(card))
+    first = lc.rate_card_identity(p)
+    card["version"] = "edited"
+    time.sleep(0.01)
+    p.write_text(json.dumps(card))
+    second = lc.rate_card_identity(p)
+    assert second["version"] == "edited" and second["sha256"] != first["sha256"]
+    assert second["path"] == "external:card.json"

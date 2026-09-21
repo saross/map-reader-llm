@@ -59,14 +59,16 @@ class TestRateCard:
 
     def test_gemini_37_lists_higher_than_gemini_3(self):
         """3.7 lists at 0.75 / 3.75, not the 0.50 / 3.00 the metas stamp."""
-        assert apc.RATE_CARDS["gemini-3.7-flash"]["input"] == 0.75
-        assert apc.RATE_CARDS["gemini-3.7-flash"]["output"] == 3.75
+        # RATE_CARDS is today's standard view; the dated truth is rates().
+        r = apc.rates("gemini-3.7-flash", "standard", at="2026-09-21")
+        assert r["input"] == pytest.approx(0.75 / 1e6)
+        assert r["output"] == pytest.approx(3.75 / 1e6)
         assert apc.RATE_CARDS["gemini-3-flash"]["input"] == 0.50
         assert apc.RATE_CARDS["gemini-3-flash"]["output"] == 3.00
 
     def test_flex_halves_input_and_output(self):
         """Flex bills at half of list on the input and output axes."""
-        rate = apc.rates("gemini-3.7-flash", "flex")
+        rate = apc.rates("gemini-3.7-flash", "flex", at="2026-09-21")
         assert rate["input"] == pytest.approx(0.375 / 1e6)
         assert rate["output"] == pytest.approx(1.875 / 1e6)
 
@@ -366,3 +368,25 @@ class TestModelProvenance:
 
         assert apc.main() == 2
         assert "no rate card for 'gemini-9-flash'" in capsys.readouterr().err
+
+
+class TestThePassDateSelectsTheRow:
+    """A 2026 leg audited after the 2027-01-01 doubling keeps its own rates."""
+
+    def test_a_fragment_is_priced_at_its_own_end_date(self, tmp_path, capsys, monkeypatch):
+        for name, ended in (("run_1", "2026-09-13T10:00:00+00:00"),
+                            ("run_2", "2027-02-01T10:00:00+00:00")):
+            frag = _write_fragment(tmp_path, name, "gemini-3.7-flash")
+            meta_path = frag / "detections-test.meta.json"
+            meta = json.loads(meta_path.read_text())
+            meta["timestamp"] = {"start": ended, "end": ended}
+            meta_path.write_text(json.dumps(meta))
+        monkeypatch.setattr("sys.argv", ["audit_proposer_cost.py", str(tmp_path),
+                                         "--tier", "flex", "--json"])
+        assert apc.main() == 0
+        out = capsys.readouterr().out
+        report = json.loads(out[out.index("{"):])
+        by_name = {f["fragment"]: f["audited_usd"] for f in report["fragments"]}
+        assert by_name["run_2"] == pytest.approx(2 * by_name["run_1"])
+        assert by_name["run_1"] == pytest.approx(apc.audited_cost(
+            _USAGE, apc.rates("gemini-3.7-flash", "flex", at="2026-09-13")))
