@@ -217,7 +217,8 @@ GS_FAILURE_MODE_CATEGORIES: set[str] = {"water-feature"}
 COST_HARD_CAP_USD: float = 1.50
 
 # Gemini 3 Flash pricing (USD per 1 M tokens). Verified against
-# ``scripts/lib_llm_metadata.py`` (PRICING table, 2026-03-27).
+# ``data/pricing/gemini-rate-card.json`` via ``scripts/lib_cost.py`` (since
+# 2026-09-21; before that the ``PRICING`` table of 2026-03-27).
 PRICE_INPUT_PER_MTOK: float = 0.50
 PRICE_OUTPUT_PER_MTOK: float = 3.00
 # Flex tier discount factor — server-side, but applied here for the

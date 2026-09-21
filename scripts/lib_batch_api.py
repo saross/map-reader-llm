@@ -56,6 +56,7 @@ import rasterio
 from shapely.geometry import box, mapping
 
 from config import BASE_DIR, EXAMPLES_DIR, TILE_SIZE, TILES_DIR
+from scripts.lib_cost import fmt_usd  # noqa: E402
 from scripts.lib_llm_metadata import (  # noqa: E402
     BATCH_API_DISCOUNT,
     AggregatedUsage,
@@ -1868,12 +1869,10 @@ def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
                     "these chunks are not one pass")
 
     usage: dict[str, int] = {}
-    cost = 0.0
     for m in metas:
         for k, v in (m.get("usage_stats") or {}).items():
             if isinstance(v, int):
                 usage[k] = usage.get(k, 0) + v
-        cost += float((m.get("cost_estimate") or {}).get("total_cost_usd") or 0)
     inp = usage.get("total_input_tokens", 0)
     usage["cached_share"] = (usage.get("total_cached_tokens", 0) / inp
                              if inp else None)
@@ -1905,9 +1904,15 @@ def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
                 merged_section[field] = total
         if merged_section:
             base[section] = merged_section
-    if not isinstance(base.get("cost_estimate"), dict):
-        base["cost_estimate"] = {}
-    base["cost_estimate"]["total_cost_usd"] = cost
+    # The pass's cost is the one function over the SUMMED tokens, never the
+    # sum of the chunks' dollars: until 2026-09-21 this wrote the dollar sum
+    # into ``total_cost_usd`` and left every other field as chunk 0's, so
+    # ``input + output != total`` in four committed metas. Chunks that all
+    # carry a ``cost/2`` block are re-priced at their own recorded terms; a
+    # legacy set keeps the additive sum and is labelled as such.
+    from scripts.lib_cost import merge_cost_blocks
+    base["cost_estimate"] = merge_cost_blocks(
+        [m.get("cost_estimate") for m in metas], usage)
     base["chunked_run"] = {"n_chunks": len(metas),
                            "chunk_metas": [Path(m).name for m in
                                            sorted(chunk_metas, key=_chunk_sort_key)]}
@@ -2511,21 +2516,26 @@ def write_batch_outputs(
         usage.total_tokens = usage_stats.get("total_tokens", 0)
     tracker.usage = usage
 
-    # The discount is now a parameter of the cost model rather than a
-    # post-hoc multiply here, so batch and real-time flex share one code path
-    # and one recorded convention. ``batch_discount`` is retained in
-    # pricing_used for backwards compatibility with readers of older metadata.
+    # A Batch API pass is priced at the batch tier of the rate card row in
+    # force on its date (scripts/lib_cost.py); the tier is recorded in the
+    # block and in ``billing`` so no reader has to infer it from the
+    # ``batch_api`` marker. ``batch_discount`` is retained in pricing_used
+    # for readers of older metadata.
+    meta = tracker.finalise(include_per_item=False)
     cost_estimate = estimate_cost(
         usage=usage,
         provider=LLMProvider.GEMINI.value,
         model=model_name,
-        discount=BATCH_API_DISCOUNT,
-        discount_reason="Google async Batch API (50 % of list)",
+        tier="batch",
+        tier_source="Batch API path (lib_batch_api.write_batch_outputs)",
+        at=(meta.get("timestamp") or {}).get("end"),  # the pass's own date
+        n_responses_with_usage=(usage_stats or {}).get("n_responses_with_usage"),
+        strict=False,
     )
     cost_estimate["pricing_used"]["batch_discount"] = BATCH_API_DISCOUNT
-
-    meta = tracker.finalise(include_per_item=False)
     meta["cost_estimate"] = cost_estimate
+    meta["billing"] = {"service_tier": "batch",
+                       "tier_source": cost_estimate["pricing_used"]["tier_source"]}
     if usage_stats:
         # Provenance of the counts: how many responses reported usage, and
         # whether any did. "0 tokens" and "nobody told us" must not read alike.
@@ -3013,13 +3023,13 @@ def complete_batch_unit(
         usage_stats=usage_stats,
     )
 
-    cost = cost_estimate.get("total_cost_usd", 0.0)
+    cost = cost_estimate.get("total_cost_usd")
 
     print(
         f"  Batch complete: {len(processed_tiles)} tiles, "
         f"{total_detections} detections, "
         f"{len(failed_tiles)} failed, "
-        f"${cost:.4f}"
+        f"{fmt_usd(cost)}"
     )
 
     # Accept if failure count is within tolerance — partial results are
@@ -3550,11 +3560,10 @@ def patch_failed_tiles(
                 "end": datetime.now(timezone.utc).isoformat(),
                 "duration_seconds": 0.0,
             },
-            "cost_estimate": {
-                "input_cost_usd": 0.0,
-                "output_cost_usd": 0.0,
-                "total_cost_usd": 0.0,
-            },
+            # No cost block: a patch stub records no usage, and an empty
+            # block contributes nothing to a merge (a zero block would have
+            # dragged an audited block down to the legacy additive path).
+            "cost_estimate": {},
         }
 
         # Use the already-loaded ``meta_data`` (the on-disc original)

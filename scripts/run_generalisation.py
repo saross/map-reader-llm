@@ -323,9 +323,7 @@ def resolve_run_config(
         evaluate=dict(config["evaluate"]),
         global_opts={
             "output_root": str(output_root),
-            "service_tier": config.get("proposer", {}).get(
-                "service_tier", "flex",
-            ),
+            "service_tier": run_service_tier(config),
         },
     )
 
@@ -1098,13 +1096,59 @@ def _read_token_counts(usage: dict[str, Any]) -> dict[str, int]:
 # audited path fixes all three: tokens come from a per-item UNION
 # (deduped by ``item_id``), cost is recomputed from those tokens at an
 # operator-stated tier, and thinking bills at the output rate.
-_PRICING_USD_PER_1M: dict[str, dict[str, dict[str, float]]] = {
-    "gemini-3-flash-preview": {
-        "standard": {"input": 0.50, "output": 3.00, "cached_input": 0.05},
-        "flex": {"input": 0.25, "output": 1.50, "cached_input": 0.05},
-        "batch": {"input": 0.25, "output": 1.50, "cached_input": 0.05},
-    },
-}
+# Since 2026-09-21 the rates are the rate card's (``data/pricing/
+# gemini-rate-card.json`` through ``scripts/lib_cost.py``), not a table in
+# this file: this was the seventh hand-typed copy in the repository. The
+# name survives as a view the manifest's ``pricing`` block reports.
+
+
+def run_service_tier(config: dict[str, Any]) -> str:
+    """The tier a run is costed at, read from wherever the config carries it.
+
+    The per-stage key that ``_apply_cli_overrides`` fills wins; the top-level
+    convenience key every committed run config actually uses is next; flex
+    is the project's default. Never a constant read from one place only.
+    """
+    return str(
+        (config.get("proposer") or {}).get("service_tier")
+        or config.get("service_tier")
+        or "flex"
+    )
+
+
+def manifest_pricing_tier(rcfg: "ResolvedRunConfig") -> str:
+    """The audited basis a run's cost manifest is written on: its own tier.
+
+    Never ``recorded``: the June 2026 audited manifests were silently
+    overwritable by a re-run of ``all``. An unknown value is refused rather
+    than costed at some other tier.
+    """
+    from scripts.lib_cost import TIERS, RateCardError
+    tier = str(rcfg.global_opts.get("service_tier") or "flex")
+    if tier not in TIERS:
+        raise RateCardError(f"run config service_tier {tier!r} is not one of {TIERS}")
+    return tier
+
+
+def _rate_card_identity() -> dict[str, str]:
+    """The rate card's path, version and hash, for the manifest's provenance."""
+    from scripts.lib_cost import rate_card_identity
+    return rate_card_identity()
+
+
+def _pricing_view(models: "set[str]", pricing_tier: str,
+                  at: Any = None) -> dict[str, dict[str, float]]:
+    """The card's per-1M rates for the models seen, in this manifest's shape."""
+    from scripts.lib_cost import RateCardError, UnknownModelError, rates_for
+    out: dict[str, dict[str, float]] = {}
+    for m in sorted(models):
+        try:
+            r = rates_for(m, pricing_tier, at)
+        except (RateCardError, UnknownModelError):
+            continue
+        out[m] = {"input": r["input_fresh"], "output": r["output"],
+                  "cached_input": r["input_cached"]}
+    return out
 
 # Per-call rate used to RECONSTRUCT a stub verifier leg. The
 # cleanup-overwrite pattern leaves ``verified/run.meta.json`` recording
@@ -1171,29 +1215,29 @@ def _union_per_item_tokens(
 
 
 def _price_tokens(
-    tokens: dict[str, int], model: str, pricing_tier: str,
+    tokens: dict[str, int], model: str, pricing_tier: str, at: Any = None,
 ) -> dict[str, float]:
-    """Price a token-bucket dict at the audited per-tier rates.
+    """Price a token-bucket dict through the project's one cost function.
 
-    Thinking tokens bill at the output rate (verified at the pricing
-    page, 2026-06-12); the cached subset of input bills at the cache
-    rate instead of the input rate. Raises ``KeyError`` for an unknown
-    model or tier so a silent zero-cost row can never enter a manifest.
+    Thinking tokens bill at the output rate; the cached subset of input
+    bills at the cache-read rate of the model's card row at the tier.
+    Raises ``KeyError`` (``UnknownModelError``) for an unknown model and
+    ``ValueError`` (``RateCardError``) for an unknown tier, so a silent
+    zero-cost row can never enter a manifest.
     """
-    rates = _PRICING_USD_PER_1M[model][pricing_tier]
-    cached = min(tokens["cached_tokens"], tokens["input_tokens"])
-    non_cached = tokens["input_tokens"] - cached
-    input_cost = (
-        non_cached * rates["input"] + cached * rates["cached_input"]
-    ) / 1_000_000
-    output_cost = (
-        (tokens["output_tokens"] + tokens["thinking_tokens"])
-        * rates["output"] / 1_000_000
-    )
+    from scripts.lib_cost import price_tokens
+    classes = {
+        "input_fresh": tokens["input_tokens"] - min(tokens["cached_tokens"],
+                                                    tokens["input_tokens"]),
+        "input_cached": min(tokens["cached_tokens"], tokens["input_tokens"]),
+        "output": tokens["output_tokens"],
+        "thinking": tokens["thinking_tokens"],
+    }
+    priced = price_tokens(classes, model, pricing_tier, at)
     return {
-        "input_cost_usd": input_cost,
-        "output_cost_usd": output_cost,
-        "total_cost_usd": input_cost + output_cost,
+        "input_cost_usd": priced["input_fresh"] + priced["input_cached"],
+        "output_cost_usd": priced["output"],
+        "total_cost_usd": priced["total"],
     }
 
 
@@ -1231,6 +1275,7 @@ def aggregate_cost_manifest(
     audited = pricing_tier != "recorded"
     fallback_warnings: list[str] = []
     models_seen: set[str] = set()
+    latest_pass_end: str | None = None  # the date the manifest's rate view is for
     p = rcfg.proposer
     proposer_output = rcfg.output_dir / "proposer" / Path(p["config"]).stem
     verified_dir = rcfg.output_dir / "verified"
@@ -1312,7 +1357,9 @@ def aggregate_cost_manifest(
         if audited:
             model = _meta_model(meta)
             models_seen.add(model)
-            cost = _price_tokens(pass_tokens, model, pricing_tier)[
+            pass_end = (meta.get("timestamp") or {}).get("end")
+            latest_pass_end = max(latest_pass_end or "", str(pass_end or "")) or None
+            cost = _price_tokens(pass_tokens, model, pricing_tier, at=pass_end)[
                 "total_cost_usd"
             ]
         else:
@@ -1404,7 +1451,9 @@ def aggregate_cost_manifest(
     if audited:
         v_model = _meta_model(verifier_meta)
         models_seen.add(v_model)
-        verifier_cost = _price_tokens(verifier_tokens, v_model, pricing_tier)[
+        v_end = (verifier_meta.get("timestamp") or {}).get("end")
+        latest_pass_end = max(latest_pass_end or "", str(v_end or "")) or None
+        verifier_cost = _price_tokens(verifier_tokens, v_model, pricing_tier, at=v_end)[
             "total_cost_usd"
         ]
     else:
@@ -1564,11 +1613,9 @@ def aggregate_cost_manifest(
             "pricing": (
                 {
                     "pricing_tier": pricing_tier,
-                    "rates_usd_per_1m": {
-                        m: _PRICING_USD_PER_1M[m][pricing_tier]
-                        for m in sorted(models_seen)
-                        if m in _PRICING_USD_PER_1M
-                    },
+                    "rates_usd_per_1m": _pricing_view(models_seen, pricing_tier,
+                                                      at=latest_pass_end),
+                    "rate_card": _rate_card_identity(),
                     "thinking_billed_as_output": True,
                     "token_derivation": (
                         "per-item union deduped by item_id; usage_stats "
@@ -1580,11 +1627,14 @@ def aggregate_cost_manifest(
                         "and may include merged recovery batches"
                     ),
                     "basis": (
-                        "token-load audit 2026-06-12 "
-                        "(reports/token-load-audit-2026-06-12.md); rates "
-                        "verified at ai.google.dev/gemini-api/docs/pricing "
-                        "2026-06-12"
+                        "audited: fresh input, cache-read input and output "
+                        "plus thinking priced separately from the rate card "
+                        "of record (data/pricing/gemini-rate-card.json, "
+                        "identified above) at the run's tier and each "
+                        "pass's own date; method per "
+                        "reports/token-load-audit-2026-06-12.md section 2"
                     ),
+                    "rates_as_of": latest_pass_end,
                 }
                 if audited else
                 {
@@ -1979,7 +2029,11 @@ def cmd_all(args: argparse.Namespace) -> int:
     if "evaluate" not in resumed:
         _record("evaluate", run_evaluate(rcfg))
 
-    aggregate_cost_manifest(rcfg)
+    # Never the legacy 'recorded' basis from the entry point: the June 2026
+    # audited manifests were silently overwritable by a re-run of ``all``.
+    # The run's own configured tier (``service_tier``, default flex) is the
+    # audited basis a fresh manifest is written on.
+    aggregate_cost_manifest(rcfg, pricing_tier=manifest_pricing_tier(rcfg))
     _finalise_launch_manifest(rcfg)
     logger.info("Run complete: %s", rcfg.output_dir)
     return 0

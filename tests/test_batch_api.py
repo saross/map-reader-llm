@@ -839,14 +839,25 @@ class TestOutputContract:
                 system_instruction="Test",
                 total_detections=0,
                 usage_stats={
-                    "input_tokens": 1_000_000,
-                    "output_tokens": 100_000,
+                    "total_input_tokens": 1_000_000,
+                    "total_output_tokens": 100_000,
                     "total_tokens": 1_100_000,
+                    "n_responses_with_usage": 4,
                 },
             )
 
             assert "batch_discount" in cost_estimate["pricing_used"]
             assert cost_estimate["pricing_used"]["batch_discount"] == 0.5
+            # The keys the writer reads, so the assertion is not vacuous; the
+            # expectation is priced at the block's own date so the test does
+            # not read the wall clock across a rate-card row change.
+            from scripts.lib_cost import price_usage
+            assert cost_estimate["pricing_used"]["tier"] == "batch"
+            expected = price_usage(
+                {"total_input_tokens": 1_000_000, "total_output_tokens": 100_000},
+                "gemini-3-flash", "batch", at=cost_estimate["pricing_used"]["priced_at"])
+            assert cost_estimate["total_cost_usd"] == pytest.approx(expected["total_cost_usd"])
+            assert cost_estimate["total_cost_usd"] > 0
 
     def test_meta_json_compatible_with_read_meta_cost(self) -> None:
         """Meta JSON should be readable by run_phase2.read_meta_cost()."""
@@ -871,8 +882,9 @@ class TestOutputContract:
             cost = read_meta_cost(meta_path)
             failures = read_meta_failures(meta_path)
 
-            assert isinstance(cost, float)
-            assert cost >= 0.0
+            # No usage was reported, so nothing was priced: the reader says
+            # so with None rather than a confident zero (PI ruling D12).
+            assert cost is None
             assert failures == 0
 
 

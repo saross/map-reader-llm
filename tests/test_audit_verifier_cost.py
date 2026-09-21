@@ -955,3 +955,20 @@ class TestModelProvenance:
             audit_stage(tmp_path / "outputs" / f"verify_{i}",
                         default_model="gemini-3-flash")
         assert capsys.readouterr().err.count("note:") == 1
+
+
+@pytest.mark.tier1
+def test_a_verifier_block_is_priced_at_its_own_end_date():
+    """The pass's timestamp (dict on a meta, string on a cleanup entry) picks the row."""
+    from scripts.audit_verifier_cost import _price_block
+
+    usage = {"total_input_tokens": 1_000_000, "total_cached_tokens": 0,
+             "total_output_tokens": 0, "total_thoughts_tokens": 0}
+    base = {"usage_stats": usage, "execution_stats": {"items_processed": 1},
+            "configuration": {"model": "gemini-3.7-flash"}}
+    in_2026 = _price_block({**base, "timestamp": {"end": "2026-09-13T00:00:00+00:00"}},
+                           source="a", kind="main", tier="flex", default_model=None)
+    in_2027 = _price_block({**base, "timestamp": "2027-02-01T00:00:00+00:00"},
+                           source="b", kind="cleanup", tier="flex", default_model=None)
+    assert in_2026.audited_usd == pytest.approx(0.375)
+    assert in_2027.audited_usd == pytest.approx(0.75)

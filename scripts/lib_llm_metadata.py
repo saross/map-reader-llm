@@ -1197,65 +1197,13 @@ def create_error_metadata(
 # Cost Estimation Utilities
 # =============================================================================
 
-# Pricing as of January 2026 (USD per 1M tokens)
-# Update these as pricing changes
-PRICING = {
-    # Verified against cloud.google.com/vertex-ai/generative-ai/pricing
-    # on 2026-03-27. Prices are per 1M tokens (standard tier, ≤200K
-    # context). Batch API discounts are applied separately via the
-    # batch_discount multiplier in cost_estimate output.
-    "google_gemini": {
-        "gemini-2.0-flash-lite": {"input": 0.075, "output": 0.30},
-        "gemini-2.0-flash": {"input": 0.15, "output": 0.60},
-        "gemini-2.5-flash": {"input": 0.30, "output": 2.50},
-        "gemini-2.5-pro": {"input": 1.25, "output": 10.00},
-        "gemini-3-flash-preview": {"input": 0.50, "output": 3.00},
-        # 3.7 and 3.8 Flash: standard tier, verified 2026-09-04 against
-        # ai.google.dev/gemini-api/docs/pricing (page dated 2026-09-03)
-        # and blog.google (3.8 launch). Introductory rates valid through
-        # 2026-12-31; from 2027-01-01 both double to 1.50 / 7.50. Thinking
-        # tokens are billed at the output rate (see estimate_cost). Without
-        # these keys the fuzzy matcher fell through to ``default`` and the
-        # 3.7 screen metas were priced at Gemini 3 rates.
-        "gemini-3.7-flash": {"input": 0.75, "output": 3.75},
-        "gemini-3.8-flash": {"input": 0.75, "output": 3.75},
-        "gemini-3.1-flash-lite": {"input": 0.25, "output": 1.50},
-        "gemini-3-pro": {"input": 2.50, "output": 10.00},
-        "gemini-3.1-pro": {"input": 2.00, "output": 12.00},
-        "gemini-3.1-pro-preview": {"input": 2.00, "output": 12.00},
-        "default": {"input": 0.50, "output": 3.00},
-    },
-    "anthropic_claude": {
-        "claude-3-5-sonnet": {"input": 3.00, "output": 15.00},
-        "claude-sonnet-4-5": {"input": 3.00, "output": 15.00},
-        "claude-opus-4-5": {"input": 15.00, "output": 75.00},
-        "default": {"input": 3.00, "output": 15.00},
-    },
-    "openai": {
-        "gpt-4o": {"input": 2.50, "output": 10.00},
-        "gpt-4o-mini": {"input": 0.15, "output": 0.60},
-        "gpt-5": {"input": 5.00, "output": 20.00},
-        "gpt-5.2": {"input": 5.00, "output": 20.00},
-        "default": {"input": 2.50, "output": 10.00},
-    },
-}
-
-
-#: Discount applied to Gemini real-time **flex** traffic. Flex carries the
-#: same 50 % reduction as the async Batch API — the project moved from batch
-#: to flex for simplicity once that became true — so a run priced at list
-#: rates overstates the actual bill by a factor of two.
-#:
-#: Recording the list price as though it were the bill is not a rounding
-#: matter: it silently doubled every cost-efficiency figure derived from run
-#: metadata, and left two internal sources (this metadata and the audited
-#: ``pareto_v2.json`` model, which does apply the discount) disagreeing by
-#: exactly 2x with nothing in either artefact to say which was right.
+#: The two 50 % tiers, kept as importable names for readers that never
+#: priced anything with them. Since 2026-09-21 the discount is a property of
+#: the rate card row (``data/pricing/gemini-rate-card.json``), read by
+#: ``scripts/lib_cost.py``; these constants are not consulted by
+#: :func:`estimate_cost` and exist only so that ``from lib_llm_metadata
+#: import FLEX_DISCOUNT`` keeps working in scripts that log the figure.
 FLEX_DISCOUNT = 0.5
-
-#: Discount for the Google async Batch API. Identical in size to the flex
-#: discount; kept as a separate constant because they are separate commercial
-#: terms and may diverge.
 BATCH_API_DISCOUNT = 0.5
 
 
@@ -1263,94 +1211,87 @@ def estimate_cost(
     usage: AggregatedUsage,
     provider: str,
     model: str,
-    discount: float = 1.0,
+    discount: float | None = None,
     discount_reason: str | None = None,
-) -> dict[str, float]:
+    *,
+    tier: str | None = None,
+    at: Any = None,
+    tier_source: str = "unspecified",
+    n_responses_with_usage: int | None = None,
+    strict: bool = True,
+) -> dict[str, Any]:
     """
-    Estimate cost from aggregated token usage.
+    Price aggregated usage through the project's one cost function.
 
-    Records BOTH the list price and the amount actually billed, so a reader
-    can always tell which basis a figure is on. ``total_cost_usd`` is the
-    **billed** amount — the number anyone comparing against an invoice or
-    computing cost-efficiency wants — while ``list_total_cost_usd`` preserves
-    the undiscounted figure.
-
-    Historical metadata written before 2026-08-18 records list price in
-    ``total_cost_usd`` for real-time runs (no discount was applied) and billed
-    price for Batch API runs (a 0.5 multiplier was applied after the fact).
-    The ``cost_basis`` field distinguishes them: its absence means the older,
-    ambiguous convention.
-
-    Thinking tokens (Gemini ``thoughts_token_count``) are billed at the
-    output rate but are NOT included in ``candidates_token_count``, which is
-    what ``total_output_tokens`` records — so they are added to the billable
-    output here (change of 2026-09-04; metadata written before that date
-    excludes them and under-states thinking runs, e.g. the Gemini 3.7 screen
-    by roughly 40 %). OpenAI ``reasoning_tokens`` are already inside
-    ``completion_tokens`` and are deliberately not added again. The
-    ``pricing_used`` block records the thinking tokens billed so either
-    convention can be reconciled.
+    This is a thin wrapper over :func:`scripts.lib_cost.price_usage`, kept
+    under its old name so the writers' call sites read as they did. It no
+    longer carries a rate table of its own: the pre-2026-09-21 version had
+    no cache-read rate (cached input was priced at the full input rate, a
+    2.5 to 3.3 times overstatement on cache-heavy image legs), chose the tier
+    at the call site (the verifier path passed none and recorded list price
+    for flex and batch legs, exactly double), and fell through to a silent
+    default for an unknown model (Gemini 3.7 priced as Gemini 3 for five
+    weeks). ``planning/cost-accounting-fix-plan-2026-09-21.md`` § 1.3.
 
     Args:
-        usage: Aggregated token usage stats.
-        provider: The LLM provider.
-        model: The model name.
-        discount: Multiplier applied to list price to get the billed amount.
-            1.0 means list price is the bill. Use :data:`FLEX_DISCOUNT` for
-            Gemini real-time flex and :data:`BATCH_API_DISCOUNT` for the async
-            Batch API.
-        discount_reason: Human-readable justification, recorded alongside the
-            multiplier so the number can be audited without reading this code.
+        usage: Aggregated token usage.
+        provider: Must be the Gemini provider; the rate card knows no other.
+        model: The model as the run recorded it.
+        discount: LEGACY. ``None`` or ``1.0`` with no ``tier`` means the
+            standard tier. Any other value without ``tier`` is refused: a
+            multiplier cannot say whether the run was flex or batch, and the
+            card's discount is not always 0.5 (the 3.7 cache read is halved,
+            the Gemini 3 cache read is not).
+        discount_reason: LEGACY, ignored except as documentation.
+        tier: ``standard``, ``flex`` or ``batch`` — what the run ran at.
+        at: The usage date the card row is chosen for (default: today).
+        tier_source: Where the tier came from, recorded verbatim.
+        n_responses_with_usage: See :func:`scripts.lib_cost.is_unrecorded`.
+        strict: When False — the writers' setting — a model the card lacks
+            or a date without a row yields an ``unpriceable`` block that
+            keeps the tokens and names the reason, instead of raising after
+            the API work is done and losing the run's metadata. Auditors
+            keep the default and raise.
 
     Returns:
-        Dict with billed input/output/total cost, the list-price equivalents,
-        and a ``pricing_used`` block carrying the rates, the discount, and the
-        basis.
+        A ``cost/2`` block (see ``scripts/lib_cost.py``), which keeps the
+        legacy keys ``input_cost_usd``, ``output_cost_usd``,
+        ``total_cost_usd`` and ``pricing_used.{input_per_1m,output_per_1m,
+        discount,discount_reason}``.
+
+    Raises:
+        scripts.lib_cost.RateCardError: On a non-Gemini provider, an
+            ambiguous legacy discount, an unknown tier or a date without a
+            card row.
+        scripts.lib_cost.UnknownModelError: On a model the card lacks.
     """
-    pricing_table = PRICING.get(provider, PRICING.get("google_gemini"))
+    from scripts.lib_cost import (
+        RateCardError,
+        UnknownModelError,
+        price_usage,
+        unpriceable_block,
+    )
 
-    # Find model pricing (fuzzy match on model name, longest match wins
-    # to avoid e.g. "gpt-4o" matching before "gpt-4o-mini")
-    model_lower = model.lower()
-    rates = pricing_table.get("default")
-    best_match_len = 0
-    for model_key, model_rates in pricing_table.items():
-        if model_key != "default" and model_key in model_lower:
-            if len(model_key) > best_match_len:
-                rates = model_rates
-                best_match_len = len(model_key)
-
-    # Gemini thinking tokens are billed as output but sit outside
-    # total_output_tokens (see docstring); OpenAI reasoning tokens are
-    # already counted inside completion_tokens, so only thoughts are added.
-    billable_output_tokens = usage.total_output_tokens + usage.total_thoughts_tokens
-    list_input_cost = (usage.total_input_tokens / 1_000_000) * rates["input"]
-    list_output_cost = (billable_output_tokens / 1_000_000) * rates["output"]
-    input_cost = list_input_cost * discount
-    output_cost = list_output_cost * discount
-
-    return {
-        # Billed amounts — what the invoice will show.
-        "input_cost_usd": round(input_cost, 6),
-        "output_cost_usd": round(output_cost, 6),
-        "total_cost_usd": round(input_cost + output_cost, 6),
-        # List-price equivalents, kept so the discount is auditable and so a
-        # figure quoted on either basis can be reconciled with the other.
-        "list_input_cost_usd": round(list_input_cost, 6),
-        "list_output_cost_usd": round(list_output_cost, 6),
-        "list_total_cost_usd": round(list_input_cost + list_output_cost, 6),
-        "cost_basis": "billed" if discount != 1.0 else "list",
-        "pricing_used": {
-            "model": model,
-            "input_per_1m": rates["input"],
-            "output_per_1m": rates["output"],
-            "thinking_tokens_billed_as_output": usage.total_thoughts_tokens,
-            "discount": discount,
-            "discount_reason": discount_reason or (
-                "no discount applied" if discount == 1.0 else "unspecified"
-            ),
-        },
-    }
+    if provider != LLMProvider.GEMINI.value:
+        raise RateCardError(
+            f"the rate card prices Gemini only; got provider {provider!r}")
+    if tier is None:
+        if discount in (None, 1.0):
+            tier = "standard"
+            tier_source = tier_source if tier_source != "unspecified" else \
+                "legacy call: no discount, priced at the standard tier"
+        else:
+            raise RateCardError(
+                f"discount={discount!r} without a tier is ambiguous (flex or "
+                "batch?); pass tier='flex' or tier='batch'")
+    try:
+        return price_usage(usage, model, tier, at=at, tier_source=tier_source,
+                           n_responses_with_usage=n_responses_with_usage)
+    except (UnknownModelError, RateCardError) as exc:
+        if strict:
+            raise
+        logger.error("cost not priced (recorded as unpriceable): %s", exc)
+        return unpriceable_block(usage, model, tier, str(exc), tier_source=tier_source)
 
 
 # =========================================================================
@@ -1450,6 +1391,32 @@ def compare_configurations(
         _configuration_fingerprint(original.get("configuration")),
         _configuration_fingerprint(recovery.get("configuration")),
     )
+
+
+def merge_cost_blocks(
+    original: dict[str, Any],
+    fresh: dict[str, Any],
+    merged_usage: dict[str, Any],
+) -> dict[str, Any]:
+    """The ``cost_estimate`` of two passes merged into one.
+
+    A thin wrapper over :func:`scripts.lib_cost.merge_cost_blocks`, the one
+    place the merge arithmetic lives (re-price summed tokens on the same
+    terms; add audited totals across different terms and say so; keep the
+    legacy additive path labelled; a stub or empty block contributes
+    nothing).
+
+    Args:
+        original: The earlier pass's block.
+        fresh: The later pass's block.
+        merged_usage: The summed ``usage_stats``.
+
+    Returns:
+        The merged block.
+    """
+    from scripts.lib_cost import merge_cost_blocks as _merge
+
+    return _merge([original, fresh], merged_usage)
 
 
 def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, Any]:
@@ -1600,24 +1567,13 @@ def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, 
     # _sum_dicts may have inadvertently summed numeric fields inside
     # by_provider — that's correct behaviour for token counts and request counts.
 
-    # ---- cost_estimate: sum numeric fields, keep pricing_used from original ----
-    o_ce = original.get("cost_estimate", {}) or {}
+    # ---- cost_estimate: re-price the summed tokens, never add dollars ----
     r_ce = recovery.get("cost_estimate", {}) or {}
-    merged["cost_estimate"] = {
-        "input_cost_usd": (
-            (o_ce.get("input_cost_usd") or 0.0)
-            + (r_ce.get("input_cost_usd") or 0.0)
-        ),
-        "output_cost_usd": (
-            (o_ce.get("output_cost_usd") or 0.0)
-            + (r_ce.get("output_cost_usd") or 0.0)
-        ),
-        "total_cost_usd": (
-            (o_ce.get("total_cost_usd") or 0.0)
-            + (r_ce.get("total_cost_usd") or 0.0)
-        ),
-        "pricing_used": o_ce.get("pricing_used") or r_ce.get("pricing_used"),
-    }
+    merged["cost_estimate"] = merge_cost_blocks(
+        original.get("cost_estimate", {}) or {},
+        r_ce,
+        merged["usage_stats"],
+    )
 
     # ---- per_item_metadata: combine, recovery wins on duplicate item_id ----
     o_pim = original.get("per_item_metadata", []) or []

@@ -431,6 +431,7 @@ class TestNoCleanupRegression:
             assert key not in written
         expected_keys = set(tracker.finalise(include_per_item=False)) | {
             "cost_estimate",
+            "billing",  # the tier the leg ran at, recorded since 2026-09-21
         }
         assert set(written) == expected_keys
         assert raw == json.dumps(written, indent=2)

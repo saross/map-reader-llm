@@ -462,7 +462,11 @@ def _price_block(
             f"{recorded!r}, which is what it ran on. Drop --model unless "
             f"you mean to override a pass that records nothing.",
         )
-    rate = rates(model, tier)
+    # The pass's own end date selects the rate card row (the card is dated).
+    stamp = block.get("timestamp")
+    ended_raw = stamp.get("end") if isinstance(stamp, dict) else stamp
+    ended = (str(ended_raw or "")[:10]) or None
+    rate = rates(model, tier, at=ended)
     # A meta and a ``main_pass`` block carry ``execution_stats``; a
     # ``cleanup_passes`` entry carries its counts flat instead.
     items = execution.get("items_processed")

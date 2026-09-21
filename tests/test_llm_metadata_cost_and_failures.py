@@ -60,40 +60,44 @@ def _usage(input_tokens: int = 1_000_000, output_tokens: int = 1_000_000) -> Agg
 
 
 @pytest.mark.tier1
-def test_list_price_is_recorded_when_no_discount_applies():
-    """With no discount, billed equals list and the basis says so."""
+def test_no_tier_and_no_discount_means_the_standard_tier():
+    """A legacy call with no discount prices at list, and says so in the block."""
     cost = estimate_cost(_usage(), "google_gemini", "gemini-3-flash-preview")
     assert cost["total_cost_usd"] == pytest.approx(3.50)  # 0.50 in + 3.00 out
     assert cost["list_total_cost_usd"] == pytest.approx(3.50)
-    assert cost["cost_basis"] == "list"
+    assert cost["schema"] == "cost/2" and cost["cost_basis"] == "audited"
+    assert cost["pricing_used"]["tier"] == "standard"
     assert cost["pricing_used"]["discount"] == 1.0
 
 
 @pytest.mark.tier1
-def test_flex_discount_halves_the_billed_cost_and_keeps_list_price():
-    """total_cost_usd must be the BILL; list price is retained beside it."""
+def test_the_tier_halves_the_bill_and_keeps_the_list_price():
+    """total_cost_usd is the BILL at the tier; the list price is beside it."""
     cost = estimate_cost(_usage(), "google_gemini", "gemini-3-flash-preview",
-                         discount=FLEX_DISCOUNT, discount_reason="flex")
+                         tier="flex", tier_source="test")
     assert cost["total_cost_usd"] == pytest.approx(1.75)
     assert cost["list_total_cost_usd"] == pytest.approx(3.50)
-    assert cost["cost_basis"] == "billed"
     assert cost["pricing_used"]["discount"] == 0.5
-    assert cost["pricing_used"]["discount_reason"] == "flex"
+    assert cost["pricing_used"]["tier"] == "flex"
+    assert cost["pricing_used"]["tier_source"] == "test"
 
 
 @pytest.mark.tier1
-def test_flex_and_batch_discounts_agree():
-    """The two commercial terms are equal in size; the constants must match.
+def test_a_bare_discount_is_refused_as_ambiguous():
+    """0.5 cannot say flex from batch, and the card's discount is not always 0.5.
 
-    They are separate constants because they are separate terms and may
-    diverge — but while they are equal, a run priced either way must cost the
-    same, or a batch-versus-flex comparison would be measuring the bookkeeping.
+    The pre-2026-09-21 estimator took a multiplier chosen at the call site;
+    the verifier path passed none and recorded list price for flex and batch
+    legs. A caller must now name the tier.
     """
-    flex = estimate_cost(_usage(), "google_gemini", "gemini-3-flash-preview",
-                         discount=FLEX_DISCOUNT)
-    batch = estimate_cost(_usage(), "google_gemini", "gemini-3-flash-preview",
-                          discount=BATCH_API_DISCOUNT)
+    from scripts.lib_cost import RateCardError
+    with pytest.raises(RateCardError, match="ambiguous"):
+        estimate_cost(_usage(), "google_gemini", "gemini-3-flash-preview",
+                      discount=FLEX_DISCOUNT)
+    flex = estimate_cost(_usage(), "google_gemini", "gemini-3-flash-preview", tier="flex")
+    batch = estimate_cost(_usage(), "google_gemini", "gemini-3-flash-preview", tier="batch")
     assert flex["total_cost_usd"] == batch["total_cost_usd"]
+    assert BATCH_API_DISCOUNT == FLEX_DISCOUNT  # the constants survive for readers
 
 
 @pytest.mark.tier1
@@ -135,7 +139,7 @@ def test_gemini_38_flash_resolves_to_its_own_rates():
     Flash key was ``gemini-3-flash-preview``) and was priced at the default
     0.50 / 3.00, which is what the 3.7 screen metas record.
     """
-    cost = estimate_cost(_usage(), "google_gemini", "gemini-3.8-flash")
+    cost = estimate_cost(_usage(), "google_gemini", "gemini-3.8-flash", at="2026-09-21")
     assert cost["pricing_used"]["input_per_1m"] == pytest.approx(0.75)
     assert cost["pricing_used"]["output_per_1m"] == pytest.approx(3.75)
     assert cost["list_total_cost_usd"] == pytest.approx(4.50)  # 0.75 in + 3.75 out
@@ -147,7 +151,7 @@ def test_thinking_tokens_are_billed_at_the_output_rate():
     as output; the estimator must add them, and record how many it added."""
     usage = _usage(input_tokens=0, output_tokens=1_000_000)
     usage.total_thoughts_tokens = 500_000
-    cost = estimate_cost(usage, "google_gemini", "gemini-3.8-flash")
+    cost = estimate_cost(usage, "google_gemini", "gemini-3.8-flash", at="2026-09-21")
     assert cost["list_output_cost_usd"] == pytest.approx(1.5 * 3.75)
     assert cost["pricing_used"]["thinking_tokens_billed_as_output"] == 500_000
     # And a run with no thinking is unchanged by the rule.
