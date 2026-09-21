@@ -1375,4 +1375,3 @@ unreviewed and hold over with these.
   quoted the K = 1 library edge as a finding when it was an artefact of which
   cells existed. Both were raised before the underlying artefact or rule had
   been read; both had to be walked back the same day.
-
