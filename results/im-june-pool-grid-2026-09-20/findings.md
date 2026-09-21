@@ -153,7 +153,12 @@ vote count and pool cost in
 the cell this note scored at that point, `IM-5pass-k3-mcc-oracle`, stays in
 `cells/` with its committed evaluation, re-labelled in `cells_manifest.json`
 as retained and not presented. The per-vote-count grid above keeps both
-argmaxes as recorded data (`grid.json`, `mcc_argmax`).
+argmaxes as recorded data (`grid.json`, `mcc_argmax`). One caution when
+following the pointer: the tile-presence `IM` row is scored from the r2
+board's own `IM` sweep on the board's tile convention, not this note's
+re-stamped one (§ 1), so it reads tile-MCC 0.7173 at the same point where
+the retained cell reads 0.7139 — the documented re-stamp difference, not a
+disagreement about the cell.
 
 The last two are the **same cell**: 0.15 is already the F1 argmax at
 unanimity, which is finding 1 above showing up in the cell list. Both are kept

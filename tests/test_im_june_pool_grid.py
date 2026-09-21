@@ -14,6 +14,7 @@ the 2x2 sweep file's own.
 from __future__ import annotations
 
 import csv
+import json
 from unittest.mock import patch
 
 import geopandas as gpd
@@ -155,3 +156,60 @@ def test_the_csv_columns_are_the_2x2_sweep_file_s_own() -> None:
     with committed.open() as fh:
         header = next(csv.reader(fh))
     assert list(CSV_FIELDS) == header
+
+
+# --- The retained cell: archive, never delete -------------------------------
+#
+# PI ruling 2026-09-21 retired the mcc-oracle basis, but the cell built under
+# it stays on disk and in the manifest. The merge that keeps it, and the score
+# stage's skip, are the whole guarantee, so both are pinned here.
+
+def test_cell_specs_are_three_with_unique_labels() -> None:
+    assert len(june.CELL_SPECS) == 3
+    assert len({s["label"] for s in june.CELL_SPECS}) == 3
+    assert june.produced_bases() == {"f1-oracle", "carried"}
+
+
+def test_a_retained_entry_survives_a_manifest_rewrite_in_place(tmp_path) -> None:
+    """A label this run did not produce is kept at its original position."""
+    manifest = tmp_path / "cells_manifest.json"
+    retired = {"label": "IM-5pass-k3-mcc-oracle", "basis": "mcc-oracle at carried k — "
+               "retained, not presented (PI ruling 2026-09-21)", "presentation": "kept"}
+    manifest.write_text(json.dumps({"cells": [
+        {"label": "IM-5pass-k3-f1-oracle", "basis": "f1-oracle", "point": "(0.15, k3)"},
+        retired,
+        {"label": "IM-5pass-k5-carried", "basis": "carried", "point": "(0.15, k5)"},
+    ]}))
+    produced = [
+        {"label": "IM-5pass-k3-f1-oracle", "basis": "f1-oracle", "point": "(0.20, k3)"},
+        {"label": "IM-5pass-k5-carried", "basis": "carried", "point": "(0.15, k5)"},
+        {"label": "IM-5pass-k5-f1-oracle", "basis": "f1-oracle", "point": "(0.15, k5)"},
+    ]
+    merged = june.write_cells_manifest(manifest, produced)
+    on_disk = json.loads(manifest.read_text())
+    assert on_disk["cells"] == merged
+    assert [c["label"] for c in merged] == [
+        "IM-5pass-k3-f1-oracle", "IM-5pass-k3-mcc-oracle",
+        "IM-5pass-k5-carried", "IM-5pass-k5-f1-oracle"]
+    assert merged[1] == retired                       # untouched, in place
+    assert merged[0]["point"] == "(0.20, k3)"         # replaced in place
+    assert on_disk["rung"] == june.RUNG
+
+
+def test_a_manifest_without_cells_or_labels_is_tolerated(tmp_path) -> None:
+    manifest = tmp_path / "cells_manifest.json"
+    manifest.write_text(json.dumps({"cells": [{"basis": "carried"}, "junk"]}))
+    merged = june.write_cells_manifest(manifest, [{"label": "a", "basis": "carried"}])
+    assert [c["label"] for c in merged] == ["a"]
+    manifest.write_text("{}")
+    assert [c["label"] for c in june.write_cells_manifest(manifest, [])] == []
+
+
+def test_the_score_stage_skips_the_retained_cell() -> None:
+    assert june.is_retained({"label": "x", "basis": "mcc-oracle at carried k — retained"})
+    assert june.is_retained({"label": "x"})
+    assert not june.is_retained({"label": "x", "basis": "f1-oracle"})
+    assert not june.is_retained({"label": "x", "basis": "carried"})
+    committed = json.loads((june.RESULTS_HOME / "cells_manifest.json").read_text())
+    assert [c["label"] for c in committed["cells"] if june.is_retained(c)] == [
+        "IM-5pass-k3-mcc-oracle"]

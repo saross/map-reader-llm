@@ -135,10 +135,12 @@ COMMITTED_IM_K3 = {"micro_f1_50": 0.8008, "tile_mcc": 0.7110}
 #: The board's own agreement tolerance for a reproduction claim.
 GATE_TOL = 0.003
 
-#: The three cells this campaign materialises and scores on the full recipe
-#: (four before PI ruling 2026-09-21 retired the ``mcc-oracle`` basis; see
-#: the module docstring). ``f1-oracle`` bases are resolved from the swept
-#: grid; ``carried`` bases are fixed points. The k5 carried point is IM-k3's probability read at
+#: The three cells this campaign materialises and scores on the full
+#: recipe (four before PI ruling 2026-09-21 retired the ``mcc-oracle``
+#: basis; see the module docstring). ``f1-oracle`` bases are resolved
+#: from the swept grid; ``carried`` bases are fixed points. A manifest
+#: entry on any other basis is RETAINED: kept where it is by
+#: ``--stage materialise`` and skipped by ``--stage score``. The k5 carried point is IM-k3's probability read at
 #: unanimity, which is the June pool's nearest analogue to the rebuilt pool's
 #: K = 5 unanimity cell.
 CELL_SPECS: tuple[dict[str, Any], ...] = (
@@ -407,10 +409,6 @@ def stage_materialise() -> int:
     """
     grid = json.loads((RESULTS_HOME / "grid.json").read_text())
     frame = june_frame(restamp=True)
-    manifest_path = RESULTS_HOME / "cells_manifest.json"
-    existing: list[dict[str, Any]] = []
-    if manifest_path.exists():
-        existing = json.loads(manifest_path.read_text())["cells"]
     cells = []
     for cell in resolve_cell_points(grid):
         sub = r2.materialise(frame, cell["prob_t"], cell["min_votes"])
@@ -425,24 +423,74 @@ def stage_materialise() -> int:
         })
         logger.info("%-24s n=%5d -> %s", cell["label"], len(sub),
                     dest.relative_to(PROJECT_ROOT))
-    produced = {c["label"] for c in cells}
-    retained = [c for c in existing if c["label"] not in produced]
+    merged = write_cells_manifest(RESULTS_HOME / "cells_manifest.json", cells)
+    logger.info("wrote cells_manifest.json (%d cells written, %d retained)",
+                len(cells), len(merged) - len(cells))
+    return 0
+
+
+def produced_bases() -> frozenset[str]:
+    """The cell bases this script builds; any other basis is retained."""
+    return frozenset(str(spec["basis"]) for spec in CELL_SPECS)
+
+
+def is_retained(cell: dict[str, Any]) -> bool:
+    """Whether a manifest entry is one this script no longer builds.
+
+    Args:
+        cell: One ``cells_manifest.json`` entry.
+
+    Returns:
+        True for an entry whose basis is not one of :data:`CELL_SPECS`'s —
+        the retired ``IM-5pass-k3-mcc-oracle`` — which ``--stage
+        materialise`` keeps in place and ``--stage score`` skips.
+    """
+    return str(cell.get("basis", "")) not in produced_bases()
+
+
+def write_cells_manifest(manifest_path: Path,
+                         cells: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Write the cell manifest, keeping entries this run did not produce.
+
+    A retained entry keeps its position, so a re-run over an unchanged
+    grid rewrites the file byte for byte; a produced label replaces the
+    entry of the same label in place. A manifest without ``cells``, or an
+    entry without a label, contributes nothing rather than raising after
+    the detections have already been written.
+
+    Args:
+        manifest_path: ``cells_manifest.json``; may not exist yet.
+        cells: The entries this run produced, in production order.
+
+    Returns:
+        The merged entry list as written.
+    """
+    existing: list[dict[str, Any]] = []
+    if manifest_path.exists():
+        existing = [c for c in json.loads(manifest_path.read_text()).get("cells", [])
+                    if isinstance(c, dict) and c.get("label")]
+    by_label = {c["label"]: c for c in cells}
+    merged: list[dict[str, Any]] = []
+    for old in existing:
+        merged.append(by_label.pop(old["label"], old))
+    merged.extend(c for c in cells if c["label"] in by_label)
     manifest_path.write_text(json.dumps({
         "buffer_m": r2.BUFFER_M,
         "reference": r2.REFERENCE,
         "rung": RUNG,
-        "cells": cells + retained,
+        "cells": merged,
     }, indent=2) + "\n")
-    logger.info("wrote %s (%d cells written, %d retained from the manifest)",
-                manifest_path.relative_to(PROJECT_ROOT), len(cells), len(retained))
-    return 0
+    return merged
 
 
 def stage_score(workers: int, jobs: int) -> int:
     """Score every materialised cell with the engine, on the r2 board's recipe.
 
     The recipe is ``gemini37_image_55map_r2.engine_command`` verbatim, so these
-    cells are scored by the same invocation as the 2x2's.
+    cells are scored by the same invocation as the 2x2's. A retained entry
+    (:func:`is_retained`) keeps its committed evaluation and is not re-scored:
+    re-scoring the retired cell would spend a 10,000-draw bootstrap to
+    reverse a ruling.
 
     Args:
         workers: Engine parallelism per cell.
@@ -452,7 +500,11 @@ def stage_score(workers: int, jobs: int) -> int:
         A process exit status.
     """
     manifest = json.loads((RESULTS_HOME / "cells_manifest.json").read_text())
-    cells = manifest["cells"]
+    cells = [c for c in manifest["cells"] if not is_retained(c)]
+    for cell in manifest["cells"]:
+        if is_retained(cell):
+            logger.info("skipping %s: retained, not re-scored (basis %r)",
+                        cell.get("label"), cell.get("basis"))
     dirty = subprocess.run(
         ["git", "status", "--porcelain", "--", *[c["det"] for c in cells]],
         cwd=PROJECT_ROOT, capture_output=True, text=True, check=False,
