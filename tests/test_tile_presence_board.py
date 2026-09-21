@@ -22,6 +22,8 @@ read and nothing is written.
 
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from scripts import build_tile_presence_board as tp
@@ -251,3 +253,64 @@ def test_an_unreachable_pool_is_marked_in_the_table() -> None:
            "pool_exceeds_verified": True}
     assert "99 ⚠" in tp.render_row(row)
     assert "| — |" in tp.render_row(row)
+
+
+# --- --check: the drift guard -----------------------------------------------
+
+def _ranked_rows() -> list[dict]:
+    """Two complete leaderboard rows, as build_rows would rank them."""
+    base = {"track": "board", "basis": "ORACLE", "prob_t": 0.5,
+            "n_detections": 10, "tile_tp": 1, "tile_tn": 1, "tile_fp": 1,
+            "tile_fn": 1, "micro_f1_50": 0.6, "carried_point": None,
+            "carried_tile_mcc": None, "carried_micro_f1_50": None,
+            "tile_mcc_over_carried": None, "micro_f1_50_vs_carried": None,
+            "pool_n_at_vote": 10, "verifier_leg_items": 10,
+            "verifier_usd_per_candidate": None, "pool_verifier_usd": None,
+            "pool_exceeds_verified": False, "inherits_larger_leg": False,
+            "sweep_csv": "x.csv"}
+    return tp.rank_by_tile_mcc([
+        {**base, "config": "A-N1", "min_votes": 1, "tile_mcc": 0.7},
+        {**base, "config": "B-N3", "min_votes": 3, "tile_mcc": 0.8},
+    ])
+
+
+def test_report_drift_names_a_differing_and_a_missing_file(tmp_path) -> None:
+    same = tmp_path / "same.txt"
+    same.write_text("same")
+    differs = tmp_path / "differs.txt"
+    differs.write_text("old")
+    missing = tmp_path / "missing.txt"
+    stale = tp.report_drift({same: "same", differs: "new", missing: "x"})
+    assert stale == [str(differs), f"{missing} (missing)"]
+
+
+def test_leaderboard_payload_is_pure_and_carries_every_row() -> None:
+    """The payload is the same two files the stage writes, from rows alone."""
+    rows = _ranked_rows()
+    payload = tp.leaderboard_payload(rows)
+    assert set(p.name for p in payload) == {"leaderboard.json", "leaderboard.md"}
+    record = json.loads(payload[tp.OUT / "leaderboard.json"])
+    assert record["n_configurations"] == 2
+    assert [r["config"] for r in record["rows"]] == ["B-N3", "A-N1"]
+    assert payload[tp.OUT / "leaderboard.md"] == tp.leaderboard_markdown(rows)
+
+
+def test_check_writes_nothing_and_fails_until_the_files_match(
+        tmp_path, monkeypatch) -> None:
+    """--check is a comparison, never a write: stale -> 1, matching -> 0."""
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    (tmp_path / tp.COSTS).write_text(json.dumps({"legs": {}}))
+    monkeypatch.setattr(tp, "build_rows", lambda costs: _ranked_rows())
+    assert tp.main(["--stage", "leaderboard", "--check"]) == 1
+    assert not (tmp_path / "leaderboard.md").exists()
+    assert not (tmp_path / "leaderboard.json").exists()
+    assert tp.main(["--stage", "leaderboard"]) == 0
+    assert tp.main(["--stage", "leaderboard", "--check"]) == 0
+    (tmp_path / "leaderboard.md").write_text("edited by hand\n")
+    assert tp.main(["--stage", "leaderboard", "--check"]) == 1
+    assert (tmp_path / "leaderboard.md").read_text() == "edited by hand\n"
+
+
+def test_check_does_not_apply_to_relabel() -> None:
+    with pytest.raises(SystemExit):
+        tp.main(["--stage", "relabel", "--check"])

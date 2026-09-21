@@ -59,12 +59,25 @@ the leg, the configuration INHERITS its probabilities from a larger
 verification and the row says so; where it is larger, the point asks for
 candidates that were never verified, and the row says that instead.
 
+The drift check
+---------------
+``--check`` regenerates the selected stage's files in memory from the
+committed sweep records (and, for ``costs``, from a fresh run of the cost
+auditor), compares them byte for byte with what is committed, and writes
+nothing: exit 0 when every file matches, exit 1 with each stale path
+logged. It is the guard the register's other generators carry, so a
+sweep re-run, a relabel, or a hand edit that leaves ``leaderboard.md``
+saying something its inputs no longer say is caught at test time rather
+than by a reader. The frontier PNGs are not compared (a rasteriser's
+bytes are not a claim); ``frontier.json`` and ``frontier.md`` are.
+
 Usage::
 
     python scripts/build_tile_presence_board.py --stage costs
     python scripts/build_tile_presence_board.py --stage leaderboard
     python scripts/build_tile_presence_board.py --stage frontier
     python scripts/build_tile_presence_board.py --stage all
+    python scripts/build_tile_presence_board.py --stage all --check
 
 Zero API. Run on sapphire.
 
@@ -468,16 +481,71 @@ def build_rows(costs: dict[str, dict]) -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
+# Writing, or checking instead of writing.
+# ---------------------------------------------------------------------------
+
+
+def report_drift(expected: dict[Path, str]) -> list[str]:
+    """Compare regenerated payloads with the committed files; write nothing.
+
+    Args:
+        expected: Destination path -> the text a regeneration would write.
+
+    Returns:
+        One line per file that is missing or differs, repository-relative
+        where the path is under the repository. Empty means the committed
+        presentation is exactly what its committed inputs regenerate.
+    """
+    stale: list[str] = []
+    for path, text in expected.items():
+        rel = (str(path.relative_to(PROJECT_ROOT))
+               if path.is_relative_to(PROJECT_ROOT) else str(path))
+        if not path.is_file():
+            stale.append(f"{rel} (missing)")
+        elif path.read_text() != text:
+            stale.append(rel)
+    return stale
+
+
+def emit(expected: dict[Path, str], check: bool) -> int:
+    """Write the payloads, or under ``check`` compare them and write nothing.
+
+    Args:
+        expected: Destination path -> text.
+        check: True to compare instead of write.
+
+    Returns:
+        0 when written, or when every file matches; 1 when any is stale.
+    """
+    if check:
+        stale = report_drift(expected)
+        for line in stale:
+            logger.error("STALE: %s", line)
+        if stale:
+            return 1
+        logger.info("check: %d file(s) match a regeneration", len(expected))
+        return 0
+    for path, text in expected.items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text)
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # Stage: audit the verifier legs.
 # ---------------------------------------------------------------------------
 
 
-def audit_legs() -> int:
+def audit_legs(check: bool = False) -> int:
     """Price every mapped verifier leg and write ``verifier-costs.json``.
 
     Calls ``scripts/audit_verifier_cost.py`` — the auditor both campaigns'
     post-run reports cite — rather than re-deriving a rate here, so this
     table cannot drift from the audited figures those reports publish.
+
+    Args:
+        check: Compare with the committed ``verifier-costs.json`` instead of
+            writing it (the auditor still runs).
 
     Returns:
         Process exit code.
@@ -540,8 +608,7 @@ def audit_legs() -> int:
         for line in disagreements:
             logger.error("COST DISAGREEMENT %s", line)
         return 1
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / COSTS).write_text(json.dumps({
+    payload = json.dumps({
         "_README": (
             "Verifier-leg cost per configuration. basis 'audited' = "
             "scripts/audit_verifier_cost.py read every pass of the leg; "
@@ -554,7 +621,10 @@ def audit_legs() -> int:
         "agreement_tolerance_usd": COST_AGREEMENT_USD,
         "generated_by": "scripts/build_tile_presence_board.py --stage costs",
         "legs": costs,
-    }, indent=2) + "\n")
+    }, indent=2) + "\n"
+    rc = emit({OUT / COSTS: payload}, check)
+    if check or rc:
+        return rc
     by_basis: dict[str, int] = {}
     for record in costs.values():
         by_basis[record["basis"]] = by_basis.get(record["basis"], 0) + 1
@@ -732,8 +802,43 @@ CSV or from `scripts/audit_verifier_cost.py` over committed metas.
 """
 
 
-def stage_leaderboard() -> int:
-    """Write ``leaderboard.json`` and ``leaderboard.md``."""
+def leaderboard_payload(rows: list[dict]) -> dict[Path, str]:
+    """The two leaderboard files as text, from ranked rows. Pure.
+
+    Args:
+        rows: The output of :func:`build_rows`.
+
+    Returns:
+        Destination path -> text, for :func:`emit`.
+    """
+    return {
+        OUT / "leaderboard.json": json.dumps({
+            "_README": (
+                "Every configuration's UNCONSTRAINED tile-MCC optimum, costed. "
+                "PI ruling 2026-09-21: the MCC oracle is dropped from the main "
+                "boards and presented here instead. EVERY ROW IS AN ORACLE — "
+                "the point is chosen on the evaluation reference and no "
+                "configuration has a calibrated carried point at it. min_votes "
+                "is a column, never an assumption."),
+            "buffer_m": BUFFER_M,
+            "reference": "r2",
+            "generated_by": "scripts/build_tile_presence_board.py",
+            "n_configurations": len(rows),
+            "rows": rows,
+        }, indent=2) + "\n",
+        OUT / "leaderboard.md": leaderboard_markdown(rows),
+    }
+
+
+def stage_leaderboard(check: bool = False) -> int:
+    """Write ``leaderboard.json`` and ``leaderboard.md``, or check them.
+
+    Args:
+        check: Compare with the committed files instead of writing.
+
+    Returns:
+        Process exit code.
+    """
     costs_path = OUT / COSTS
     if not costs_path.is_file():
         raise SystemExit(
@@ -741,22 +846,9 @@ def stage_leaderboard() -> int:
             "--stage costs first (it audits the verifier legs).")
     costs = json.loads(costs_path.read_text())["legs"]
     rows = build_rows(costs)
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "leaderboard.json").write_text(json.dumps({
-        "_README": (
-            "Every configuration's UNCONSTRAINED tile-MCC optimum, costed. "
-            "PI ruling 2026-09-21: the MCC oracle is dropped from the main "
-            "boards and presented here instead. EVERY ROW IS AN ORACLE — "
-            "the point is chosen on the evaluation reference and no "
-            "configuration has a calibrated carried point at it. min_votes "
-            "is a column, never an assumption."),
-        "buffer_m": BUFFER_M,
-        "reference": "r2",
-        "generated_by": "scripts/build_tile_presence_board.py",
-        "n_configurations": len(rows),
-        "rows": rows,
-    }, indent=2) + "\n")
-    (OUT / "leaderboard.md").write_text(leaderboard_markdown(rows))
+    rc = emit(leaderboard_payload(rows), check)
+    if check or rc:
+        return rc
     logger.info("wrote leaderboard: %d configurations, %d at a single vote",
                 len(rows), sum(1 for r in rows if r["min_votes"] == 1))
     return 0
@@ -767,25 +859,23 @@ def stage_leaderboard() -> int:
 # ---------------------------------------------------------------------------
 
 
-def stage_frontier() -> int:
-    """Write the Pareto fronts, one figure per track, and ``frontier.md``."""
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
+def compute_fronts() -> tuple[dict[str, dict], list[tuple[str, int]],
+                              dict[str, dict]]:
+    """Per configuration, the Pareto front and its marked points. Reads only.
 
+    Returns:
+        ``(fronts, counts, marks)``: the ``frontier.json`` records keyed by
+        configuration; ``(name, non-dominated count)`` pairs in table order;
+        and per configuration the carried row and the F1-oracle row the
+        figures mark, which the JSON does not carry.
+    """
     board_carried = carried_k_by_family(BOARD_HOME / "cells_manifest.json")
-    home = OUT / "frontier"
-    home.mkdir(parents=True, exist_ok=True)
     fronts: dict[str, dict] = {}
     counts: list[tuple[str, int]] = []
-
+    marks: dict[str, dict] = {}
     for track in TRACKS:
         sweeps = json.loads((track.home / "sweeps.json").read_text())
-        fig, ax = plt.subplots(figsize=(9, 6.5))
-        cmap = plt.get_cmap("tab20")
-        names = list(sweeps[track.record_key])
-        for i, name in enumerate(names):
-            record = sweeps[track.record_key][name]
+        for name, record in sweeps[track.record_key].items():
             rows = read_sweep_csv(track.home / f"sweep_{name}.csv")
             front = pareto_front(rows)
             counts.append((name, len(front)))
@@ -805,6 +895,105 @@ def stage_frontier() -> int:
                            ("prob_t", "min_votes", "n_detections",
                             "micro_f1_50", "tile_mcc")} for r in front],
             }
+            marks[name] = {"carried_row": carried_row, "f1_best": f1_best}
+    return fronts, counts, marks
+
+
+def frontier_payload(fronts: dict[str, dict],
+                     counts: list[tuple[str, int]]) -> dict[Path, str]:
+    """``frontier.json`` and ``frontier.md`` as text. Pure.
+
+    Args:
+        fronts: From :func:`compute_fronts`.
+        counts: From :func:`compute_fronts`.
+
+    Returns:
+        Destination path -> text, for :func:`emit`.
+    """
+    home = OUT / "frontier"
+    multi = [n for n, c in counts if c > 2]
+    table = "\n".join(
+        f"| {n} | {f['n_sweep_points']} | {f['n_non_dominated']} | "
+        + (f"({f['carried_point'][0]:.2f}, k{f['carried_point'][1]})"
+           if f["carried_point"] else "—") + " | "
+        + (f"({f['f1_oracle_point'][0]:.2f}, k{f['f1_oracle_point'][1]})"
+           if f["f1_oracle_point"] else "—") + " | "
+        + f"({f['mcc_optimum_point'][0]:.2f}, "
+          f"k{f['mcc_optimum_point'][1]}) |"
+        for n, f in fronts.items())
+    return {
+        home / "frontier.json": json.dumps({
+            "_README": (
+                "Per configuration, the (micro_f1_50, tile_mcc) "
+                "Pareto-non-dominated points of its committed sweep. A point is "
+                "dominated when another is at least as good on both metrics and "
+                "strictly better on one. This is the honest statement of the "
+                "trade the tile-presence leaderboard shows one end of."),
+            "buffer_m": BUFFER_M, "reference": "r2",
+            "generated_by": "scripts/build_tile_presence_board.py",
+            "configurations": fronts,
+        }, indent=2) + "\n",
+        home / "frontier.md": f"""# The micro-F1 / tile-MCC frontier
+
+> **Last revised**: 2026-09-21 (first publication; PI ruling 2026-09-21).
+> Generated by `scripts/build_tile_presence_board.py --stage frontier`.
+
+The [tile-presence leaderboard](../leaderboard.md) shows one end of a
+trade. This is the trade. For each of the {len(counts)} configurations, the
+sweep points that are **Pareto-non-dominated** on `(micro-F1 @ 50 m,
+tile-MCC)`: no other point in that configuration's achievable grid is at
+least as good on both and better on one.
+
+**{len(multi)} of {len(counts)} configurations have more than two
+non-dominated points**, i.e. a genuine interior choice rather than a
+straight swap between the F1 end and the tile-MCC end. The rest offer the
+two ends and nothing between them — for those, a tile-presence deployment
+is a decision about which metric to serve, not a tuning exercise.
+
+| configuration | sweep points | non-dominated | carried | F1 oracle | tile-MCC optimum |
+|---|---:|---:|---|---|---|
+""" + table + """
+
+## Figures
+
+One per campaign, all that campaign's configurations overlaid, the carried
+point drawn as an open square and the F1 oracle as a star:
+
+- `frontier-board.png` — the r2 55-map board's 23 families
+- `frontier-g37-image.png` — the Gemini 3.7 image campaign's six rungs
+- `frontier-g3-image.png` — the Gemini 3 image campaign's six rungs
+
+## Reading them
+
+A front that runs steeply up-and-left is a configuration where tile-MCC can
+only be bought with large amounts of F1 — the vote-count collapse of
+Obs 492 seen as a curve. A front that is nearly flat is one where the two
+metrics agree, and the carried point is close to both ends.
+""",
+    }
+
+
+def draw_frontier_figures(fronts: dict[str, dict], marks: dict[str, dict]) -> None:
+    """One PNG per track, every configuration overlaid. Never checked.
+
+    Args:
+        fronts: From :func:`compute_fronts`.
+        marks: From :func:`compute_fronts`.
+    """
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    home = OUT / "frontier"
+    home.mkdir(parents=True, exist_ok=True)
+    for track in TRACKS:
+        fig, ax = plt.subplots(figsize=(9, 6.5))
+        cmap = plt.get_cmap("tab20")
+        names = [n for n, f in fronts.items() if f["track"] == track.key]
+        for i, name in enumerate(names):
+            front = fronts[name]["front"]
+            carried_row = marks[name]["carried_row"]
+            f1_best = marks[name]["f1_best"]
             colour = cmap(i % 20)
             ax.plot([r["micro_f1_50"] for r in front],
                     [r["tile_mcc"] for r in front],
@@ -830,69 +1019,27 @@ def stage_frontier() -> int:
         plt.close(fig)
         logger.info("wrote %s", dest.relative_to(PROJECT_ROOT))
 
-    (home / "frontier.json").write_text(json.dumps({
-        "_README": (
-            "Per configuration, the (micro_f1_50, tile_mcc) "
-            "Pareto-non-dominated points of its committed sweep. A point is "
-            "dominated when another is at least as good on both metrics and "
-            "strictly better on one. This is the honest statement of the "
-            "trade the tile-presence leaderboard shows one end of."),
-        "buffer_m": BUFFER_M, "reference": "r2",
-        "generated_by": "scripts/build_tile_presence_board.py",
-        "configurations": fronts,
-    }, indent=2) + "\n")
 
-    multi = [n for n, c in counts if c > 2]
-    (home / "frontier.md").write_text(f"""# The micro-F1 / tile-MCC frontier
+def stage_frontier(check: bool = False) -> int:
+    """Write the Pareto fronts, the figures and ``frontier.md``, or check.
 
-> **Last revised**: 2026-09-21 (first publication; PI ruling 2026-09-21).
-> Generated by `scripts/build_tile_presence_board.py --stage frontier`.
+    Under ``check`` the JSON and the markdown are compared and the figures
+    are neither drawn nor compared.
 
-The [tile-presence leaderboard](../leaderboard.md) shows one end of a
-trade. This is the trade. For each of the {len(counts)} configurations, the
-sweep points that are **Pareto-non-dominated** on `(micro-F1 @ 50 m,
-tile-MCC)`: no other point in that configuration's achievable grid is at
-least as good on both and better on one.
+    Args:
+        check: Compare with the committed files instead of writing.
 
-**{len(multi)} of {len(counts)} configurations have more than two
-non-dominated points**, i.e. a genuine interior choice rather than a
-straight swap between the F1 end and the tile-MCC end. The rest offer the
-two ends and nothing between them — for those, a tile-presence deployment
-is a decision about which metric to serve, not a tuning exercise.
-
-| configuration | sweep points | non-dominated | carried | F1 oracle | tile-MCC optimum |
-|---|---:|---:|---|---|---|
-""" + "\n".join(
-        f"| {n} | {f['n_sweep_points']} | {f['n_non_dominated']} | "
-        + (f"({f['carried_point'][0]:.2f}, k{f['carried_point'][1]})"
-           if f["carried_point"] else "—") + " | "
-        + (f"({f['f1_oracle_point'][0]:.2f}, k{f['f1_oracle_point'][1]})"
-           if f["f1_oracle_point"] else "—") + " | "
-        + f"({f['mcc_optimum_point'][0]:.2f}, "
-          f"k{f['mcc_optimum_point'][1]}) |"
-        for n, f in fronts.items())
-        + """
-
-## Figures
-
-One per campaign, all that campaign's configurations overlaid, the carried
-point drawn as an open square and the F1 oracle as a star:
-
-- `frontier-board.png` — the r2 55-map board's 23 families
-- `frontier-g37-image.png` — the Gemini 3.7 image campaign's six rungs
-- `frontier-g3-image.png` — the Gemini 3 image campaign's six rungs
-
-## Reading them
-
-A front that runs steeply up-and-left is a configuration where tile-MCC can
-only be bought with large amounts of F1 — the vote-count collapse of
-Obs 492 seen as a curve. A front that is nearly flat is one where the two
-metrics agree, and the carried point is close to both ends.
-""")
+    Returns:
+        Process exit code.
+    """
+    fronts, counts, marks = compute_fronts()
+    rc = emit(frontier_payload(fronts, counts), check)
+    if check or rc:
+        return rc
+    draw_frontier_figures(fronts, marks)
     logger.info("frontier: %d configurations, %d with >2 non-dominated points",
-                len(counts), len(multi))
+                len(counts), sum(1 for _, c in counts if c > 2))
     return 0
-
 
 
 # ---------------------------------------------------------------------------
@@ -1017,28 +1164,43 @@ def stage_relabel() -> int:
     return 0
 
 
-def main() -> int:
-    """Entry point. Returns a process exit status."""
+STAGES = (("costs", audit_legs), ("leaderboard", stage_leaderboard),
+          ("frontier", stage_frontier))
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Entry point.
+
+    Args:
+        argv: Command-line arguments; ``None`` reads ``sys.argv``.
+
+    Returns:
+        A process exit status. Under ``--check`` every selected stage is
+        compared before the status is decided, so one run names every
+        stale file rather than the first.
+    """
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--stage", required=True,
                     choices=["costs", "leaderboard", "frontier",
                              "relabel", "all"])
-    args = ap.parse_args()
-    if args.stage in ("costs", "all"):
-        rc = audit_legs()
-        if rc:
-            return rc
-    if args.stage in ("leaderboard", "all"):
-        rc = stage_leaderboard()
-        if rc:
-            return rc
-    if args.stage in ("frontier", "all"):
-        rc = stage_frontier()
-        if rc:
-            return rc
+    ap.add_argument("--check", action="store_true",
+                    help="regenerate the selected stage(s) in memory, compare "
+                         "with the committed files, write nothing; exit 1 on "
+                         "drift (the frontier PNGs are not compared)")
+    args = ap.parse_args(argv)
     if args.stage == "relabel":
+        if args.check:
+            ap.error("--check does not apply to --stage relabel")
         return stage_relabel()
-    return 0
+    status = 0
+    for name, stage in STAGES:
+        if args.stage not in (name, "all"):
+            continue
+        rc = stage(check=args.check)
+        if rc and not args.check:
+            return rc
+        status = max(status, rc)
+    return status
 
 
 if __name__ == "__main__":
