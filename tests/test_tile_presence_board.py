@@ -267,6 +267,8 @@ def _ranked_rows() -> list[dict]:
             "pool_n_at_vote": 10, "verifier_leg_items": 10,
             "verifier_usd_per_candidate": None, "pool_verifier_usd": None,
             "pool_exceeds_verified": False, "inherits_larger_leg": False,
+            "verifier_cost_basis": "unmapped", "verifier_cost_note": None,
+            "verifier_leg_paths": None, "verifier_leg_usd": None,
             "sweep_csv": "x.csv"}
     return tp.rank_by_tile_mcc([
         {**base, "config": "A-N1", "min_votes": 1, "tile_mcc": 0.7},
@@ -311,6 +313,182 @@ def test_check_writes_nothing_and_fails_until_the_files_match(
     assert (tmp_path / "leaderboard.md").read_text() == "edited by hand\n"
 
 
-def test_check_does_not_apply_to_relabel() -> None:
-    with pytest.raises(SystemExit):
+def test_check_does_not_apply_to_relabel(monkeypatch, capsys) -> None:
+    """argparse rejects the pair (exit 2) before any manifest is touched."""
+    monkeypatch.setattr(tp, "MANIFESTS", ())
+    monkeypatch.setattr(tp, "CAMPAIGN_SWEEPS", ())
+    with pytest.raises(SystemExit) as exc:
         tp.main(["--stage", "relabel", "--check"])
+    assert exc.value.code == 2
+    assert "does not apply to --stage relabel" in capsys.readouterr().err
+
+
+def test_report_drift_sees_a_trailing_newline(tmp_path) -> None:
+    """The contract is byte for byte: a missing final newline is drift."""
+    f = tmp_path / "f.md"
+    f.write_text("same")
+    assert tp.report_drift({f: "same\n"}) == [str(f)]
+    assert tp.report_drift({f: "same"}) == []
+
+
+def test_leaderboard_payload_states_its_reference_and_basis() -> None:
+    """The JSON header is content, not routing: reference, buffer, the warning."""
+    record = json.loads(tp.leaderboard_payload(_ranked_rows())[tp.OUT / "leaderboard.json"])
+    assert record["reference"] == "r2"
+    assert record["buffer_m"] == tp.BUFFER_M
+    assert "EVERY ROW IS AN ORACLE" in record["_README"]
+    assert record["generated_by"] == "scripts/build_tile_presence_board.py"
+
+
+def _real_shaped_track(tmp_path) -> tp.Track:
+    """One campaign-style track on disk: sweeps.json plus one sweep CSV."""
+    home = tmp_path / "campaign"
+    home.mkdir()
+    header = ("rung,prob_t,min_votes,n_detections,tp,fp,fn,micro_f1_50,tile_mcc,"
+              "tile_tp,tile_tn,tile_fp,tile_fn\n")
+    rows = [
+        # (prob_t, k, n, f1, mcc): the k1 zero-threshold row sizes the pool
+        ("X-K3", 0.0, 1, 100, 0.50, 0.60),
+        ("X-K3", 0.9, 1, 40, 0.70, 0.80),   # the unconstrained optimum
+        ("X-K3", 0.0, 3, 60, 0.55, 0.62),
+        ("X-K3", 0.5, 3, 30, 0.75, 0.70),   # the carried point
+    ]
+    (home / "sweep_X-K3.csv").write_text(header + "".join(
+        f"{r},{p},{k},{n},1,1,1,{f1},{mcc},1,1,1,1\n" for r, p, k, n, f1, mcc in rows))
+    (home / "sweeps.json").write_text(json.dumps({"rungs": {"X-K3": {
+        "carried_point": [0.5, 3],
+        "mcc_argmax_unconstrained": {
+            "prob_t": 0.9, "min_votes": 1, "n_detections": 40,
+            "micro_f1_50": 0.70, "tile_mcc": 0.80,
+            "tile_tp": 1, "tile_tn": 1, "tile_fp": 1, "tile_fn": 1},
+    }}}))
+    return tp.Track("t", "a track", home, "rungs", "mcc_argmax_unconstrained")
+
+
+def test_build_rows_reads_the_carried_point_and_prices_the_pool(
+        tmp_path, monkeypatch) -> None:
+    """The real path: sweep record + CSV + costs -> one row, every derived field."""
+    monkeypatch.setattr(tp, "TRACKS", (_real_shaped_track(tmp_path),))
+    monkeypatch.setattr(tp, "BOARD_HOME", tmp_path / "no-board")
+    costs = {"X-K3": {"basis": "audited", "usd": 2.0, "candidates": 80,
+                      "stages": ["outputs/leg"], "note": None}}
+    [row] = tp.build_rows(costs)
+    assert (row["config"], row["rank"], row["min_votes"], row["prob_t"]) == ("X-K3", 1, 1, 0.9)
+    assert row["carried_point"] == [0.5, 3]
+    assert row["carried_tile_mcc"] == 0.70
+    assert row["carried_micro_f1_50"] == 0.75
+    assert row["tile_mcc_over_carried"] == pytest.approx(0.80 - 0.70)
+    assert row["micro_f1_50_vs_carried"] == pytest.approx(0.70 - 0.75)
+    assert row["pool_n_at_vote"] == 100          # the k1 row at prob_t 0.0
+    assert row["pool_exceeds_verified"] is True  # 100 > 80 verified
+    assert row["pool_verifier_usd"] == pytest.approx(100 * 2.0 / 80)
+    assert row["verifier_leg_paths"] == ["outputs/leg"]
+    assert row["sweep_csv"].endswith("campaign/sweep_X-K3.csv")
+
+
+def _stub_fronts() -> tuple[dict, list, dict]:
+    fronts = {"X-K3": {"track": "t", "n_sweep_points": 2, "n_non_dominated": 2,
+                       "carried_point": [0.5, 3], "f1_oracle_point": None,
+                       "mcc_optimum_point": [0.9, 1],
+                       "front": [{"prob_t": 0.9, "min_votes": 1, "n_detections": 40,
+                                  "micro_f1_50": 0.7, "tile_mcc": 0.8}]}}
+    return fronts, [("X-K3", 2)], {"X-K3": {"carried_row": None, "f1_best": None}}
+
+
+def test_check_frontier_draws_no_figure_and_fails_on_drift(
+        tmp_path, monkeypatch) -> None:
+    """The frontier guard: --check compares the two text files and never draws."""
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    monkeypatch.setattr(tp, "compute_fronts", _stub_fronts)
+    drawn = tmp_path / "frontier" / "drawn.marker"
+
+    def fake_draw(fronts, marks):
+        drawn.parent.mkdir(parents=True, exist_ok=True)
+        drawn.write_text("png")
+    monkeypatch.setattr(tp, "draw_frontier_figures", fake_draw)
+    assert tp.main(["--stage", "frontier", "--check"]) == 1
+    assert not (tmp_path / "frontier").exists()
+    assert tp.main(["--stage", "frontier"]) == 0
+    assert drawn.exists() and (tmp_path / "frontier" / "frontier.md").exists()
+    drawn.unlink()
+    assert tp.main(["--stage", "frontier", "--check"]) == 0
+    assert not drawn.exists()
+    (tmp_path / "frontier" / "frontier.json").write_text("{}\n")
+    assert tp.main(["--stage", "frontier", "--check"]) == 1
+
+
+def test_check_costs_fails_on_drift_and_writes_nothing(tmp_path, monkeypatch) -> None:
+    """The costs guard: the auditor's records are compared, not written."""
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    records = {"X-K3": {"basis": "audited", "usd": 2.0, "candidates": 80}}
+    monkeypatch.setattr(tp, "collect_costs", lambda: (records, 1, []))
+    assert tp.main(["--stage", "costs", "--check"]) == 1
+    assert not (tmp_path / tp.COSTS).exists()
+    assert tp.main(["--stage", "costs"]) == 0
+    assert tp.main(["--stage", "costs", "--check"]) == 0
+    (tmp_path / tp.COSTS).write_text("{}\n")
+    assert tp.main(["--stage", "costs", "--check"]) == 1
+
+
+def test_a_cost_disagreement_blocks_the_write_and_the_check(
+        tmp_path, monkeypatch) -> None:
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    monkeypatch.setattr(tp, "collect_costs",
+                        lambda: ({"X": {"basis": "audited"}}, 1, ["X: off by 1"]))
+    assert tp.main(["--stage", "costs"]) == 1
+    assert not (tmp_path / tp.COSTS).exists()
+
+
+def test_check_all_compares_every_stage_before_deciding(
+        tmp_path, monkeypatch, caplog) -> None:
+    """One run names every stale file; a stale first stage still yields 1."""
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    records = {"X-K3": {"basis": "audited", "usd": 2.0, "candidates": 80}}
+    monkeypatch.setattr(tp, "collect_costs", lambda: (records, 1, []))
+    monkeypatch.setattr(tp, "build_rows", lambda costs: _ranked_rows())
+    monkeypatch.setattr(tp, "compute_fronts", _stub_fronts)
+    monkeypatch.setattr(tp, "draw_frontier_figures", lambda fronts, marks: None)
+    assert tp.main(["--stage", "all"]) == 0
+    assert tp.main(["--stage", "all", "--check"]) == 0
+    # Only the FIRST stage stale: a later match must not mask it. The stale
+    # file stays well-formed so the leaderboard stage can still read it.
+    (tmp_path / tp.COSTS).write_text(json.dumps({"legs": {}}) + "\n")
+    assert tp.main(["--stage", "all", "--check"]) == 1
+    # Two stages stale: both are named, so the run did not stop at the first.
+    (tmp_path / "leaderboard.md").write_text("edited\n")
+    caplog.clear()
+    with caplog.at_level("ERROR"):
+        assert tp.main(["--stage", "all", "--check"]) == 1
+    stale = [r.getMessage() for r in caplog.records if "STALE" in r.getMessage()]
+    assert any(tp.COSTS in m for m in stale)
+    assert any("leaderboard.md" in m for m in stale)
+
+
+def test_a_missing_costs_file_is_drift_under_check_and_an_error_when_writing(
+        tmp_path, monkeypatch, caplog) -> None:
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    with caplog.at_level("ERROR"):
+        assert tp.main(["--stage", "leaderboard", "--check"]) == 1
+    assert any("(missing)" in r.getMessage() for r in caplog.records)
+    with pytest.raises(SystemExit, match="run --stage costs first"):
+        tp.main(["--stage", "leaderboard"])
+
+
+def test_a_configuration_name_shared_by_two_tracks_is_refused(
+        tmp_path, monkeypatch) -> None:
+    track = _real_shaped_track(tmp_path)
+    monkeypatch.setattr(tp, "TRACKS", (track, tp.Track("u", "twin", track.home,
+                                                       "rungs", "mcc_argmax_unconstrained")))
+    monkeypatch.setattr(tp, "BOARD_HOME", tmp_path / "no-board")
+    with pytest.raises(RuntimeError, match="shared by tracks"):
+        tp.compute_fronts()
+
+
+def test_an_unreadable_costs_file_is_drift_under_check(tmp_path, monkeypatch, caplog) -> None:
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    (tmp_path / tp.COSTS).write_text("{}\n")
+    with caplog.at_level("ERROR"):
+        assert tp.main(["--stage", "leaderboard", "--check"]) == 1
+    assert any("unreadable" in r.getMessage() for r in caplog.records)
+    with pytest.raises(SystemExit, match="unreadable"):
+        tp.main(["--stage", "leaderboard"])

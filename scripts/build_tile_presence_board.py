@@ -69,7 +69,12 @@ logged. It is the guard the register's other generators carry, so a
 sweep re-run, a relabel, or a hand edit that leaves ``leaderboard.md``
 saying something its inputs no longer say is caught at test time rather
 than by a reader. The frontier PNGs are not compared (a rasteriser's
-bytes are not a claim); ``frontier.json`` and ``frontier.md`` are.
+bytes are not a claim); ``frontier.json`` and ``frontier.md`` are. Two
+limits: a file a stage no longer writes is not reported (the check walks
+the expected set, not the directory), and ``--stage all --check`` reads
+the COMMITTED ``verifier-costs.json`` when it checks the leaderboard, so
+a stale cost file is reported once, on the costs stage, and the
+leaderboard is compared against the inputs it was built from.
 
 Usage::
 
@@ -245,6 +250,16 @@ TRACKS = (
 # ---------------------------------------------------------------------------
 # Pure helpers (these are what tests/test_tile_presence_board.py pins).
 # ---------------------------------------------------------------------------
+
+
+def rel(path: Path) -> str:
+    """A path as the logs and payloads name it.
+
+    Repository-relative when it is under the repository, absolute otherwise
+    (a test's ``tmp_path``), so no log line can raise on the path it names.
+    """
+    return (str(path.relative_to(PROJECT_ROOT))
+            if path.is_relative_to(PROJECT_ROOT) else str(path))
 
 
 def leg_for(config: str) -> tuple[str, ...] | None:
@@ -473,9 +488,7 @@ def build_rows(costs: dict[str, dict]) -> list[dict]:
                     if carried_row else None),
                 "pool_n_at_vote": pool_at_vote(csv_rows, k),
                 **cost_block(pool_at_vote(csv_rows, k), costs.get(name)),
-                "sweep_csv": str(
-                    (track.home / f"sweep_{name}.csv").relative_to(
-                        PROJECT_ROOT)),
+                "sweep_csv": rel(track.home / f"sweep_{name}.csv"),
             })
     return rank_by_tile_mcc(rows)
 
@@ -498,12 +511,11 @@ def report_drift(expected: dict[Path, str]) -> list[str]:
     """
     stale: list[str] = []
     for path, text in expected.items():
-        rel = (str(path.relative_to(PROJECT_ROOT))
-               if path.is_relative_to(PROJECT_ROOT) else str(path))
+        name = rel(path)
         if not path.is_file():
-            stale.append(f"{rel} (missing)")
-        elif path.read_text() != text:
-            stale.append(rel)
+            stale.append(f"{name} (missing)")
+        elif path.read_bytes() != text.encode("utf-8"):
+            stale.append(name)
     return stale
 
 
@@ -536,19 +548,18 @@ def emit(expected: dict[Path, str], check: bool) -> int:
 # ---------------------------------------------------------------------------
 
 
-def audit_legs(check: bool = False) -> int:
-    """Price every mapped verifier leg and write ``verifier-costs.json``.
+def collect_costs() -> tuple[dict[str, dict], int, list[str]]:
+    """Price every mapped verifier leg through the cost auditor.
 
     Calls ``scripts/audit_verifier_cost.py`` — the auditor both campaigns'
     post-run reports cite — rather than re-deriving a rate here, so this
     table cannot drift from the audited figures those reports publish.
 
-    Args:
-        check: Compare with the committed ``verifier-costs.json`` instead of
-            writing it (the auditor still runs).
-
     Returns:
-        Process exit code.
+        ``(costs, n_legs, disagreements)``: the per-configuration cost
+        records, how many distinct legs were audited, and one line per leg
+        whose audited and published figures disagree. ``costs`` is empty
+        when the auditor produced no JSON for a leg.
     """
     configs = sorted({
         name
@@ -578,7 +589,7 @@ def audit_legs(check: bool = False) -> int:
         if start < 0:
             logger.error("auditor produced no JSON for %s: %s", leg,
                          proc.stderr[-600:])
-            return 1
+            return {}, len(by_leg), disagreements
         stages = json.loads(proc.stdout[start:])
         audited = {
             "usd": sum(s["audited_usd"] for s in stages),
@@ -604,11 +615,19 @@ def audit_legs(check: bool = False) -> int:
                     + ("…" if len(members) > 3 else ""))
         if record["basis"] == "unaudited":
             logger.warning("  %s", record["note"])
-    if disagreements:
-        for line in disagreements:
-            logger.error("COST DISAGREEMENT %s", line)
-        return 1
-    payload = json.dumps({
+    return costs, len(by_leg), disagreements
+
+
+def costs_payload(costs: dict[str, dict]) -> dict[Path, str]:
+    """``verifier-costs.json`` as text, from the collected records. Pure.
+
+    Args:
+        costs: From :func:`collect_costs`.
+
+    Returns:
+        Destination path -> text, for :func:`emit`.
+    """
+    return {OUT / COSTS: json.dumps({
         "_README": (
             "Verifier-leg cost per configuration. basis 'audited' = "
             "scripts/audit_verifier_cost.py read every pass of the leg; "
@@ -621,16 +640,34 @@ def audit_legs(check: bool = False) -> int:
         "agreement_tolerance_usd": COST_AGREEMENT_USD,
         "generated_by": "scripts/build_tile_presence_board.py --stage costs",
         "legs": costs,
-    }, indent=2) + "\n"
-    rc = emit({OUT / COSTS: payload}, check)
+    }, indent=2) + "\n"}
+
+
+def audit_legs(check: bool = False) -> int:
+    """Price every mapped verifier leg and write ``verifier-costs.json``.
+
+    Args:
+        check: Compare with the committed ``verifier-costs.json`` instead of
+            writing it (the auditor still runs).
+
+    Returns:
+        Process exit code.
+    """
+    costs, n_legs, disagreements = collect_costs()
+    if not costs:
+        return 1
+    if disagreements:
+        for line in disagreements:
+            logger.error("COST DISAGREEMENT %s", line)
+        return 1
+    rc = emit(costs_payload(costs), check)
     if check or rc:
         return rc
     by_basis: dict[str, int] = {}
     for record in costs.values():
         by_basis[record["basis"]] = by_basis.get(record["basis"], 0) + 1
     logger.info("wrote %s (%d configurations, %d legs; %s)",
-                (OUT / COSTS).relative_to(PROJECT_ROOT), len(costs),
-                len(by_leg),
+                rel(OUT / COSTS), len(costs), n_legs,
                 ", ".join(f"{n} {b}" for b, n in sorted(by_basis.items())))
     return 0
 
@@ -841,10 +878,20 @@ def stage_leaderboard(check: bool = False) -> int:
     """
     costs_path = OUT / COSTS
     if not costs_path.is_file():
+        if check:
+            logger.error("STALE: %s (missing)", costs_path.name)
+            return 1
         raise SystemExit(
-            f"{costs_path.relative_to(PROJECT_ROOT)} is missing — run "
+            f"{rel(costs_path)} is missing — run "
             "--stage costs first (it audits the verifier legs).")
-    costs = json.loads(costs_path.read_text())["legs"]
+    try:
+        costs = json.loads(costs_path.read_text())["legs"]
+    except (json.JSONDecodeError, KeyError, TypeError) as exc:
+        if check:
+            logger.error("STALE: %s (unreadable: %s)", costs_path.name, exc)
+            return 1
+        raise SystemExit(f"{rel(costs_path)} is unreadable ({exc}); run "
+                         "--stage costs to rebuild it.") from exc
     rows = build_rows(costs)
     rc = emit(leaderboard_payload(rows), check)
     if check or rc:
@@ -876,6 +923,11 @@ def compute_fronts() -> tuple[dict[str, dict], list[tuple[str, int]],
     for track in TRACKS:
         sweeps = json.loads((track.home / "sweeps.json").read_text())
         for name, record in sweeps[track.record_key].items():
+            if name in fronts:
+                raise RuntimeError(
+                    f"{name}: configuration name shared by tracks "
+                    f"{fronts[name]['track']} and {track.key}; the frontier "
+                    "is keyed by name and would drop one curve")
             rows = read_sweep_csv(track.home / f"sweep_{name}.csv")
             front = pareto_front(rows)
             counts.append((name, len(front)))
@@ -1017,7 +1069,7 @@ def draw_frontier_figures(fronts: dict[str, dict], marks: dict[str, dict]) -> No
         dest = home / f"frontier-{track.key}.png"
         fig.savefig(dest, dpi=160)
         plt.close(fig)
-        logger.info("wrote %s", dest.relative_to(PROJECT_ROOT))
+        logger.info("wrote %s", rel(dest))
 
 
 def stage_frontier(check: bool = False) -> int:
@@ -1152,7 +1204,7 @@ def stage_relabel() -> int:
         touched = relabel_manifest(manifest)
         path.write_text(json.dumps(manifest, indent=2) + "\n")
         logger.info("%s: re-labelled %d cell(s)",
-                    path.relative_to(PROJECT_ROOT), len(touched))
+                    rel(path), len(touched))
         for label, old, new in touched:
             logger.info("    %-34s %r -> %r", label, old[:38], new[:38])
     for path in CAMPAIGN_SWEEPS:
@@ -1160,7 +1212,7 @@ def stage_relabel() -> int:
         touched = rename_sweep_keys(sweeps, "rungs")
         path.write_text(json.dumps(sweeps, indent=2) + "\n")
         logger.info("%s: renamed the carried-k key on %d rung(s)",
-                    path.relative_to(PROJECT_ROOT), len(touched))
+                    rel(path), len(touched))
     return 0
 
 
