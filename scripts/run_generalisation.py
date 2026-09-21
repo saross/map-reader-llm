@@ -323,9 +323,7 @@ def resolve_run_config(
         evaluate=dict(config["evaluate"]),
         global_opts={
             "output_root": str(output_root),
-            "service_tier": config.get("proposer", {}).get(
-                "service_tier", "flex",
-            ),
+            "service_tier": run_service_tier(config),
         },
     )
 
@@ -1104,6 +1102,40 @@ def _read_token_counts(usage: dict[str, Any]) -> dict[str, int]:
 # name survives as a view the manifest's ``pricing`` block reports.
 
 
+def run_service_tier(config: dict[str, Any]) -> str:
+    """The tier a run is costed at, read from wherever the config carries it.
+
+    The per-stage key that ``_apply_cli_overrides`` fills wins; the top-level
+    convenience key every committed run config actually uses is next; flex
+    is the project's default. Never a constant read from one place only.
+    """
+    return str(
+        (config.get("proposer") or {}).get("service_tier")
+        or config.get("service_tier")
+        or "flex"
+    )
+
+
+def manifest_pricing_tier(rcfg: "ResolvedRunConfig") -> str:
+    """The audited basis a run's cost manifest is written on: its own tier.
+
+    Never ``recorded``: the June 2026 audited manifests were silently
+    overwritable by a re-run of ``all``. An unknown value is refused rather
+    than costed at some other tier.
+    """
+    from scripts.lib_cost import TIERS, RateCardError
+    tier = str(rcfg.global_opts.get("service_tier") or "flex")
+    if tier not in TIERS:
+        raise RateCardError(f"run config service_tier {tier!r} is not one of {TIERS}")
+    return tier
+
+
+def _rate_card_identity() -> dict[str, str]:
+    """The rate card's path, version and hash, for the manifest's provenance."""
+    from scripts.lib_cost import rate_card_identity
+    return rate_card_identity()
+
+
 def _pricing_view(models: "set[str]", pricing_tier: str,
                   at: Any = None) -> dict[str, dict[str, float]]:
     """The card's per-1M rates for the models seen, in this manifest's shape."""
@@ -1324,9 +1356,10 @@ def aggregate_cost_manifest(
         if audited:
             model = _meta_model(meta)
             models_seen.add(model)
-            cost = _price_tokens(pass_tokens, model, pricing_tier)[
-                "total_cost_usd"
-            ]
+            cost = _price_tokens(
+                pass_tokens, model, pricing_tier,
+                at=(meta.get("timestamp") or {}).get("end"),
+            )["total_cost_usd"]
         else:
             cost = (
                 meta.get("cost_estimate", {}).get("total_cost_usd", 0.0)
@@ -1416,9 +1449,10 @@ def aggregate_cost_manifest(
     if audited:
         v_model = _meta_model(verifier_meta)
         models_seen.add(v_model)
-        verifier_cost = _price_tokens(verifier_tokens, v_model, pricing_tier)[
-            "total_cost_usd"
-        ]
+        verifier_cost = _price_tokens(
+            verifier_tokens, v_model, pricing_tier,
+            at=(verifier_meta.get("timestamp") or {}).get("end"),
+        )["total_cost_usd"]
     else:
         verifier_cost = (
             verifier_meta.get("cost_estimate", {}).get("total_cost_usd", 0.0)
@@ -1577,7 +1611,7 @@ def aggregate_cost_manifest(
                 {
                     "pricing_tier": pricing_tier,
                     "rates_usd_per_1m": _pricing_view(models_seen, pricing_tier),
-                    "rate_card": __import__("scripts.lib_cost", fromlist=["x"]).rate_card_identity(),
+                    "rate_card": _rate_card_identity(),
                     "thinking_billed_as_output": True,
                     "token_derivation": (
                         "per-item union deduped by item_id; usage_stats "
@@ -1992,8 +2026,7 @@ def cmd_all(args: argparse.Namespace) -> int:
     # audited manifests were silently overwritable by a re-run of ``all``.
     # The run's own configured tier (``service_tier``, default flex) is the
     # audited basis a fresh manifest is written on.
-    aggregate_cost_manifest(
-        rcfg, pricing_tier=str(rcfg.global_opts.get("service_tier") or "flex"))
+    aggregate_cost_manifest(rcfg, pricing_tier=manifest_pricing_tier(rcfg))
     _finalise_launch_manifest(rcfg)
     logger.info("Run complete: %s", rcfg.output_dir)
     return 0

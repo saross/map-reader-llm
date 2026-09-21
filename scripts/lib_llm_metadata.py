@@ -1218,6 +1218,7 @@ def estimate_cost(
     at: Any = None,
     tier_source: str = "unspecified",
     n_responses_with_usage: int | None = None,
+    strict: bool = True,
 ) -> dict[str, Any]:
     """
     Price aggregated usage through the project's one cost function.
@@ -1246,6 +1247,11 @@ def estimate_cost(
         at: The usage date the card row is chosen for (default: today).
         tier_source: Where the tier came from, recorded verbatim.
         n_responses_with_usage: See :func:`scripts.lib_cost.is_unrecorded`.
+        strict: When False — the writers' setting — a model the card lacks
+            or a date without a row yields an ``unpriceable`` block that
+            keeps the tokens and names the reason, instead of raising after
+            the API work is done and losing the run's metadata. Auditors
+            keep the default and raise.
 
     Returns:
         A ``cost/2`` block (see ``scripts/lib_cost.py``), which keeps the
@@ -1259,9 +1265,14 @@ def estimate_cost(
             card row.
         scripts.lib_cost.UnknownModelError: On a model the card lacks.
     """
-    from scripts.lib_cost import RateCardError, price_usage
+    from scripts.lib_cost import (
+        RateCardError,
+        UnknownModelError,
+        price_usage,
+        unpriceable_block,
+    )
 
-    if provider not in (LLMProvider.GEMINI.value, "google_gemini", "gemini"):
+    if provider != LLMProvider.GEMINI.value:
         raise RateCardError(
             f"the rate card prices Gemini only; got provider {provider!r}")
     if tier is None:
@@ -1273,8 +1284,14 @@ def estimate_cost(
             raise RateCardError(
                 f"discount={discount!r} without a tier is ambiguous (flex or "
                 "batch?); pass tier='flex' or tier='batch'")
-    return price_usage(usage, model, tier, at=at, tier_source=tier_source,
-                       n_responses_with_usage=n_responses_with_usage)
+    try:
+        return price_usage(usage, model, tier, at=at, tier_source=tier_source,
+                           n_responses_with_usage=n_responses_with_usage)
+    except (UnknownModelError, RateCardError) as exc:
+        if strict:
+            raise
+        logger.error("cost not priced (recorded as unpriceable): %s", exc)
+        return unpriceable_block(usage, model, tier, str(exc), tier_source=tier_source)
 
 
 # =========================================================================
@@ -1383,21 +1400,11 @@ def merge_cost_blocks(
 ) -> dict[str, Any]:
     """The ``cost_estimate`` of two passes merged into one.
 
-    Three cases, in order:
-
-    1. Both blocks are ``cost/2`` and record the same model and tier: the
-       merged usage is re-priced once at those terms
-       (:func:`scripts.lib_cost.reprice_block`). This is the only path that
-       yields an audited block, and it is exact whatever the cached share
-       of each part.
-    2. Both are ``cost/2`` but on different terms (a cleanup that ran on
-       another model or tier, which ``--allow-config-change`` permits): the
-       two audited totals are added and the block says so
-       (``cost_basis: "audited-summed"``), with the original's
-       ``pricing_used`` kept and the other's recorded beside it.
-    3. Either block is legacy (no ``schema``): the pre-2026-09-21 additive
-       arithmetic, labelled ``cost_basis: "summed-legacy"`` so no reader
-       mistakes it for an audited figure.
+    A thin wrapper over :func:`scripts.lib_cost.merge_cost_blocks`, the one
+    place the merge arithmetic lives (re-price summed tokens on the same
+    terms; add audited totals across different terms and say so; keep the
+    legacy additive path labelled; a stub or empty block contributes
+    nothing).
 
     Args:
         original: The earlier pass's block.
@@ -1407,41 +1414,9 @@ def merge_cost_blocks(
     Returns:
         The merged block.
     """
-    from scripts.lib_cost import SCHEMA, reprice_block
+    from scripts.lib_cost import merge_cost_blocks as _merge
 
-    o_pu = original.get("pricing_used") or {}
-    f_pu = fresh.get("pricing_used") or {}
-    both_v2 = original.get("schema") == SCHEMA and fresh.get("schema") == SCHEMA
-    same_terms = both_v2 and (o_pu.get("model"), o_pu.get("tier")) == (
-        f_pu.get("model"), f_pu.get("tier"))
-    if same_terms:
-        return reprice_block(original, merged_usage)
-
-    def _sum(key: str) -> float | None:
-        a, b = original.get(key), fresh.get(key)
-        if a is None and b is None:
-            return None
-        return round((a or 0.0) + (b or 0.0), 6)
-
-    block: dict[str, Any] = {
-        "input_cost_usd": _sum("input_cost_usd"),
-        "output_cost_usd": _sum("output_cost_usd"),
-        "total_cost_usd": _sum("total_cost_usd"),
-        "pricing_used": o_pu or f_pu or None,
-    }
-    if both_v2:
-        block["schema"] = SCHEMA
-        block["cost_basis"] = "audited-summed"
-        block["cached_input_cost_usd"] = _sum("cached_input_cost_usd")
-        block["summed_from"] = [
-            {"model": o_pu.get("model"), "tier": o_pu.get("tier"),
-             "total_cost_usd": original.get("total_cost_usd")},
-            {"model": f_pu.get("model"), "tier": f_pu.get("tier"),
-             "total_cost_usd": fresh.get("total_cost_usd")},
-        ]
-    else:
-        block["cost_basis"] = "summed-legacy"
-    return block
+    return _merge([original, fresh], merged_usage)
 
 
 def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, Any]:

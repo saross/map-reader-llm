@@ -60,6 +60,7 @@ except ImportError:
     print("Error: config.py not found.")
     sys.exit(1)
 
+from scripts.lib_cost import fmt_usd, tier_from_cli  # noqa: E402
 from scripts.lib_llm_metadata import (
     LLMMetadataTracker,
     LLMResponseMetadata,
@@ -668,19 +669,21 @@ def run_verification(
     # This legacy script has no --service-tier switch, so its requests run at
     # the standard tier and are priced there (scripts/lib_cost.py); the tier
     # is recorded rather than left for a reader to guess.
+    billing_tier, billing_source = tier_from_cli(None)
+
+    # Finalise and save metadata
+    meta = metadata_tracker.finalise(include_per_item=True)
     cost_estimate = estimate_cost(
         usage=metadata_tracker.usage,
         provider=LLMProvider.GEMINI.value,
         model=model_name,
-        tier="standard",
-        tier_source="legacy script without --service-tier: standard tier",
+        tier=billing_tier,
+        tier_source=billing_source,
+        at=(meta.get("timestamp") or {}).get("end"),  # the pass's own date
+        strict=False,
     )
-
-    # Finalise and save metadata
-    meta = metadata_tracker.finalise(include_per_item=True)
     meta["cost_estimate"] = cost_estimate
-    meta["billing"] = {"service_tier": "standard",
-                       "tier_source": cost_estimate["pricing_used"]["tier_source"]}
+    meta["billing"] = {"service_tier": billing_tier, "tier_source": billing_source}
 
     meta_file = Path(output_path).with_suffix(".meta.json")
     with open(meta_file, "w") as f:
@@ -691,7 +694,7 @@ def run_verification(
     logging.info("Candidates processed: %d", len(candidates))
     logging.info("Verified: %d, Rejected: %d", verified_count, rejected_count)
     logging.info("Tokens used: %s", f"{meta['usage_stats']['total_tokens']:,}")
-    logging.info("Estimated cost: $%.4f", cost_estimate["total_cost_usd"])
+    logging.info("Estimated cost: %s", fmt_usd(cost_estimate["total_cost_usd"]))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

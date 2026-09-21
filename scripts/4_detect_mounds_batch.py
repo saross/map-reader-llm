@@ -55,6 +55,7 @@ from config import (
 )
 
 # Import comprehensive metadata tracking
+from scripts.lib_cost import fmt_usd, tier_from_cli  # noqa: E402
 from scripts.lib_llm_metadata import (  # noqa: E402
     LLMMetadataTracker,
     extract_gemini_metadata,
@@ -1351,18 +1352,19 @@ def detect_mounds_versioned(
     # cached input either way. The tier is now an argument of the one cost
     # function (scripts/lib_cost.py) and is recorded beside the block so an
     # auditor need not infer it.
-    billing_tier = service_tier or "standard"
+    billing_tier, billing_source = tier_from_cli(service_tier)
+
+    # Finalise and save metadata — include governor stats if used
+    meta = metadata_tracker.finalise(include_per_item=True)
     cost_estimate = estimate_cost(
         usage=metadata_tracker.usage,
         provider=LLMProvider.GEMINI.value,
         model=model_name_cfg,
         tier=billing_tier,
-        tier_source=("cli --service-tier" if service_tier
-                     else "no --service-tier given: standard tier"),
+        tier_source=billing_source,
+        at=(meta.get("timestamp") or {}).get("end"),  # the pass's own date
+        strict=False,
     )
-
-    # Finalise and save metadata — include governor stats if used
-    meta = metadata_tracker.finalise(include_per_item=True)
     meta["cost_estimate"] = cost_estimate
     meta["billing"] = {"service_tier": billing_tier,
                        "tier_source": cost_estimate["pricing_used"]["tier_source"]}
@@ -1390,7 +1392,7 @@ def detect_mounds_versioned(
     print(f"Tiles failed: {meta['execution_stats']['items_failed']}")
     print(f"Total detections: {emitted_detections}")
     print(f"Tokens used: {meta['usage_stats']['total_tokens']:,}")
-    print(f"Estimated cost: ${cost_estimate['total_cost_usd']:.4f}")
+    print(f"Estimated cost: {fmt_usd(cost_estimate['total_cost_usd'])}")
 
     return {
         "items_processed": metadata_tracker.stats.items_processed,
@@ -1692,7 +1694,9 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
             cache_ttl_seconds=args.cache_ttl,
         )
 
-        total_cost += cost_usd
+        # A chunk whose usage went unrecorded prices to None (D12); the
+        # running display total counts only what was priced.
+        total_cost += cost_usd or 0.0
 
         if not success:
             print(f"\nBatch chunk {chunk_idx} failed: {message}")

@@ -193,8 +193,11 @@ def audited_flex_usd(meta: dict[str, Any]) -> dict[str, float]:
         "output_tokens": output_tokens,
         "thoughts_tokens": thoughts,
         "flex_usd": round(flex, 6),
-        "list_usd_recorded": float(
-            meta.get("cost_estimate", {}).get("total_cost_usd", 0.0)
+        # None when the meta recorded no usage (cost/2, PI ruling D12).
+        "list_usd_recorded": (
+            float(meta.get("cost_estimate", {}).get("total_cost_usd"))
+            if meta.get("cost_estimate", {}).get("total_cost_usd") is not None
+            else None
         ),
         # Two different counts, kept apart because they diverge whenever the
         # API returns a retryable error: `candidates_verified` is how many

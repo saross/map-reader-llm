@@ -80,6 +80,9 @@ SCHEMA = "cost/2"
 class UnknownModelError(KeyError):
     """No entry in the rate card for the model, under any alias."""
 
+    def __str__(self) -> str:  # KeyError would wrap the message in quotes
+        return str(self.args[0]) if self.args else ""
+
 
 class RateCardError(ValueError):
     """The card has no row for the model at the date, or the file is malformed."""
@@ -91,14 +94,23 @@ class RateCardError(ValueError):
 
 
 @lru_cache(maxsize=8)
-def _load(path: str) -> tuple[dict[str, Any], str]:
-    """Parse the card once per path and hash its bytes."""
+def _load(path: str, stamp: tuple[int, int]) -> tuple[dict[str, Any], str]:
+    """Parse the card once per (path, mtime, size) and hash its bytes.
+
+    The stamp is part of the key, so a card edited while a process runs is
+    re-read and its recorded ``sha256`` always matches the file on disk.
+    """
     raw = Path(path).read_bytes()
     card = json.loads(raw.decode("utf-8"))
     for key in ("version", "models", "tiers"):
         if key not in card:
             raise RateCardError(f"{path}: rate card lacks {key!r}")
     return card, hashlib.sha256(raw).hexdigest()
+
+
+def _stamp(path: Path) -> tuple[int, int]:
+    st = path.stat()
+    return (st.st_mtime_ns, st.st_size)
 
 
 def load_rate_card(path: Path | str | None = None) -> dict[str, Any]:
@@ -111,7 +123,8 @@ def load_rate_card(path: Path | str | None = None) -> dict[str, Any]:
     Returns:
         The card as a dict (shared; do not mutate).
     """
-    return _load(str(path or DEFAULT_RATE_CARD))[0]
+    p = Path(path or DEFAULT_RATE_CARD)
+    return _load(str(p), _stamp(p))[0]
 
 
 def rate_card_identity(path: Path | str | None = None) -> dict[str, str]:
@@ -123,11 +136,14 @@ def rate_card_identity(path: Path | str | None = None) -> dict[str, str]:
         the card that priced it.
     """
     p = Path(path or DEFAULT_RATE_CARD)
-    card, digest = _load(str(p))
+    card, digest = _load(str(p), _stamp(p))
     try:
         rel = str(p.resolve().relative_to(PROJECT_ROOT))
     except ValueError:
-        rel = str(p)
+        # A card outside the repository (a test's tmp_path): record its
+        # name only, never a machine-specific absolute path, in a block that
+        # may be committed; the hash still identifies it.
+        rel = f"external:{p.name}"
     return {"path": rel, "version": str(card["version"]), "sha256": digest}
 
 
@@ -364,8 +380,16 @@ def price_usage(usage: Any, model: str, tier: str, *,
     unrecorded = is_unrecorded(usage, n_responses_with_usage)
     priced = None if unrecorded else price_tokens(classes, model, tier, when, card)
     listed = None if unrecorded else price_tokens(classes, model, "standard", when, card)
-    discount = (r["input_fresh"] / list_rates["input_fresh"]
-                if list_rates["input_fresh"] else 1.0)
+    # The discount a reader may multiply the list total by: the ratio of
+    # the billed total to the standard-tier total, which is exact even when
+    # a row discounts the cache read differently from fresh input (Gemini 3
+    # Flash Preview halves input and output on flex but not the cache read).
+    # With no tokens it is the fresh-input ratio, the tier's headline.
+    if priced and listed and listed["total"]:
+        discount = priced["total"] / listed["total"]
+    else:
+        discount = (r["input_fresh"] / list_rates["input_fresh"]
+                    if list_rates["input_fresh"] else 1.0)
 
     def money(x: float | None) -> float | None:
         return None if x is None else round(x, 6)
@@ -396,8 +420,8 @@ def price_usage(usage: Any, model: str, tier: str, *,
             "output_per_1m": r["output"],
             "thinking_tokens_billed_as_output": classes["thinking"],
             "discount": round(discount, 6),
-            "discount_reason": f"{tier} tier, from the rate card row valid from "
-                               f"{row['valid_from']}",
+            "discount_reason": f"{tier} tier, billed total over standard-tier total, "
+                               f"from the rate card row valid from {row['valid_from']}",
             "rate_card": {**identity, "row_valid_from": row["valid_from"],
                           "row_valid_to": row.get("valid_to"),
                           "invoice_confirmed": bool(row.get("invoice_confirmations"))},
@@ -446,8 +470,181 @@ def reprice_block(block: dict[str, Any], usage: Any, *,
                        n_responses_with_usage=n, card_path=card_path)
 
 
+def unpriceable_block(usage: Any, model: str, tier: str, reason: str, *,
+                      tier_source: str = "unspecified") -> dict[str, Any]:
+    """The block a writer records when the card cannot price a finished run.
+
+    A run on a model the card lacks must not lose its metadata at the last
+    step (the API work is done, the tokens are counted), and must not be
+    priced at another model's rates. The block keeps the token classes and
+    the tier, names the reason, and carries every cost as ``None`` under
+    ``cost_basis: "unpriceable"``; the back-fill prices it once the card
+    gains the row.
+
+    Args:
+        usage: The usage block.
+        model: The model as recorded.
+        tier: The tier the run ran at.
+        reason: The card's refusal, verbatim.
+        tier_source: Where the tier came from.
+    """
+    return {
+        "schema": SCHEMA,
+        "cost_basis": "unpriceable",
+        "reason": reason,
+        "input_cost_usd": None, "cached_input_cost_usd": None,
+        "output_cost_usd": None, "total_cost_usd": None,
+        "list_input_cost_usd": None, "list_output_cost_usd": None,
+        "list_total_cost_usd": None,
+        "tokens_billed": token_classes(usage),
+        "pricing_used": {"model": None, "model_recorded": model, "tier": tier,
+                         "tier_source": tier_source, "priced_at": None,
+                         "rate_card": rate_card_identity()},
+    }
+
+
+def fmt_usd(amount: float | None, unrecorded: str = "unrecorded") -> str:
+    """``$1.2345`` for a priced amount; the word for a null one.
+
+    Every consumer that prints a cost goes through this, because a
+    ``cost/2`` block may carry ``None`` (PI ruling D12: null, not zero, where
+    nothing was recorded) and ``f"${x:.4f}"`` raises on it.
+    """
+    return unrecorded if amount is None else f"${amount:.4f}"
+
+
+def tier_from_cli(service_tier: str | None, *, batch: bool = False) -> tuple[str, str]:
+    """The tier a runner prices at, and where it came from, in one place.
+
+    Args:
+        service_tier: The ``--service-tier`` value (``standard`` or ``flex``),
+            or ``None`` when the switch was not given.
+        batch: True on the Batch API path, which is its own tier whatever
+            the switch says.
+
+    Returns:
+        ``(tier, tier_source)``. No switch means the standard tier: a run
+        that did not ask for flex was not billed at flex.
+    """
+    if batch:
+        return "batch", "Batch API path"
+    if service_tier:
+        if service_tier not in TIERS:
+            raise RateCardError(f"unknown --service-tier {service_tier!r}; expected one of {TIERS}")
+        return service_tier, "cli --service-tier"
+    return "standard", "no --service-tier given: standard tier"
+
+
+def _priceable(block: dict[str, Any] | None) -> bool:
+    """Whether a block carries any cost worth merging.
+
+    ``{}``, ``None`` and a block of nulls do not. Nor does a LEGACY block of
+    zeros — the stub the batch patcher used to write — since it has no
+    dollars to add and would otherwise drag an audited block down to the
+    legacy additive path. A ``cost/2`` block of zeros is a real zero and is
+    kept, so its terms take part in the merge.
+    """
+    if not block:
+        return False
+    keys = ("total_cost_usd", "input_cost_usd", "output_cost_usd", "cached_input_cost_usd")
+    values = [block.get(k) for k in keys if block.get(k) is not None]
+    if not values:
+        return False
+    if block.get("schema") == SCHEMA:
+        return True
+    return any(v != 0 for v in values)
+
+
+def _terms(block: dict[str, Any]) -> tuple[Any, Any, Any]:
+    """What must agree for two audited blocks to be re-priced as one."""
+    pu = block.get("pricing_used") or {}
+    rc = pu.get("rate_card") or {}
+    return (pu.get("model"), pu.get("tier"), rc.get("row_valid_from"))
+
+
+def merge_cost_blocks(blocks: list[dict[str, Any] | None],
+                      merged_usage: Any, *,
+                      card_path: Path | str | None = None) -> dict[str, Any]:
+    """The ``cost_estimate`` of several passes merged into one. Never adds dollars
+    where it can re-price tokens.
+
+    Cases, in order:
+
+    0. Blocks that carry no cost at all (``{}``, ``None``, a stub of nulls)
+       contribute nothing; if none is priceable the result is an
+       ``unrecorded`` block with every cost ``None``.
+    1. Every priceable block is ``cost/2`` on the SAME terms — model, tier
+       and rate card row — and the merged usage is re-priced once at those
+       terms. Exact whatever the cached share of each part.
+    2. Every priceable block is ``cost/2`` but the terms differ (a cleanup on
+       another model or tier, or a pass that crosses a rate card row such as
+       the 2027-01-01 step): the audited totals are added field by field,
+       ``cost_basis: "audited-summed"``, ``pricing_used`` names no single
+       card and ``summed_from`` lists each part's terms and total.
+    3. Any priceable block is legacy (no ``schema``): the pre-2026-09-21
+       additive arithmetic over the legacy keys, ``cost_basis:
+       "summed-legacy"``, so no reader mistakes it for an audited figure.
+
+    Args:
+        blocks: The passes' ``cost_estimate`` blocks, in pass order.
+        merged_usage: The summed ``usage_stats`` of those passes.
+        card_path: An alternative rate card, for tests.
+
+    Returns:
+        The merged block.
+    """
+    priceable = [b for b in blocks if _priceable(b)]
+    if not priceable:
+        u = _usage_dict(merged_usage) if merged_usage is not None else {}
+        return {"schema": SCHEMA, "cost_basis": "unrecorded",
+                "input_cost_usd": None, "cached_input_cost_usd": None,
+                "output_cost_usd": None, "total_cost_usd": None,
+                "tokens_billed": token_classes(u) if u else None,
+                "pricing_used": None}
+    if len(priceable) == 1:
+        return dict(priceable[0])
+    all_v2 = all(b.get("schema") == SCHEMA for b in priceable)
+    if all_v2 and len({_terms(b) for b in priceable}) == 1:
+        return reprice_block(priceable[0], merged_usage, card_path=card_path)
+
+    def total(key: str) -> float | None:
+        vals = [b.get(key) for b in priceable if b.get(key) is not None]
+        return round(sum(vals), 6) if vals else None
+
+    if all_v2:
+        return {
+            "schema": SCHEMA,
+            "cost_basis": "audited-summed",
+            "input_cost_usd": total("input_cost_usd"),
+            "cached_input_cost_usd": total("cached_input_cost_usd"),
+            "output_cost_usd": total("output_cost_usd"),
+            "total_cost_usd": total("total_cost_usd"),
+            "list_total_cost_usd": total("list_total_cost_usd"),
+            "pricing_used": {"model": None, "tier": None,
+                             "note": "summed over passes on different terms; see summed_from"},
+            "summed_from": [
+                {"model": (b.get("pricing_used") or {}).get("model"),
+                 "tier": (b.get("pricing_used") or {}).get("tier"),
+                 "row_valid_from": ((b.get("pricing_used") or {}).get("rate_card") or {}
+                                    ).get("row_valid_from"),
+                 "priced_at": (b.get("pricing_used") or {}).get("priced_at"),
+                 "total_cost_usd": b.get("total_cost_usd")}
+                for b in priceable],
+        }
+    first_pu = next((b.get("pricing_used") for b in priceable if b.get("pricing_used")), None)
+    return {
+        "cost_basis": "summed-legacy",
+        "input_cost_usd": total("input_cost_usd"),
+        "cached_input_cost_usd": total("cached_input_cost_usd"),
+        "output_cost_usd": total("output_cost_usd"),
+        "total_cost_usd": total("total_cost_usd"),
+        "pricing_used": first_pu,
+    }
+
+
 __all__ = [
     "DEFAULT_RATE_CARD", "SCHEMA", "TIERS", "RateCardError", "UnknownModelError",
-    "is_unrecorded", "load_rate_card", "price_tokens", "price_usage", "rate_card_identity",
-    "rate_row", "rates_for", "reprice_block", "resolve_model", "token_classes",
+    "fmt_usd", "is_unrecorded", "load_rate_card", "merge_cost_blocks", "price_tokens",
+    "price_usage", "rate_card_identity", "rate_row", "rates_for", "reprice_block",
+    "resolve_model", "tier_from_cli", "token_classes", "unpriceable_block",
 ]

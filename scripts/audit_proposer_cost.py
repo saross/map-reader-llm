@@ -394,7 +394,8 @@ def main() -> int:
                 disagreed.add(model)
         if (model, frag.get("ended")) not in rate_cache:
             try:
-                rate_cache[(model, frag.get("ended"))] = rates(model, args.tier, at=frag.get("ended"))
+                rate_cache[(model, frag.get("ended"))] = rates(
+                    model, args.tier, at=frag.get("ended"))
             except RateCardError as exc:
                 print(f"error: {exc} (from {frag['meta']})", file=sys.stderr)
                 return 2
@@ -444,7 +445,8 @@ def main() -> int:
         )
         return 0
 
-    for (model, ended), rate in sorted(rate_cache.items(), key=lambda kv: (kv[0][0], kv[0][1] or "")):
+    for (model, ended), rate in sorted(rate_cache.items(),
+                                       key=lambda kv: (kv[0][0], kv[0][1] or "")):
         effective = {k: round(v * 1e6, 4) for k, v in rate.items()}
         print(
             f"rate card: {model} at {args.tier} on {ended or 'today'} — "

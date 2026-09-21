@@ -37,9 +37,9 @@ def test_merge_base_is_chunk_zero_even_with_ten_plus_chunks(tmp_path):
     merged = merge_chunk_metadata(metas, tiles, tmp_path / "m.json", tmp_path / "t.json")
     assert merged["marker"] == 0
     # Chunks that carry no cost block merge to null, not to a confident 0.0
-    # (PI ruling D12, 2026-09-21), on the legacy additive path.
+    # (PI ruling D12, 2026-09-21): nothing priceable means "unrecorded".
     assert merged["cost_estimate"]["total_cost_usd"] is None
-    assert merged["cost_estimate"]["cost_basis"] == "summed-legacy"
+    assert merged["cost_estimate"]["cost_basis"] == "unrecorded"
     assert json.loads((tmp_path / "t.json").read_text())["total_tiles"] == 22
 
 

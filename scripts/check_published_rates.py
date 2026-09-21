@@ -59,13 +59,14 @@ from typing import Any
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.lib_cost import load_rate_card, rate_row  # noqa: E402
+from scripts.lib_cost import RateCardError, load_rate_card, rate_row  # noqa: E402
 
 PRICING_URL = "https://ai.google.dev/gemini-api/docs/pricing"
 
 #: How the page names each card model in its section heading.
 PAGE_NAMES: dict[str, str] = {
     "gemini-3-flash-preview": "Gemini 3 Flash Preview",
+    "gemini-3.5-flash": "Gemini 3.5 Flash",
     "gemini-3.7-flash": "Gemini 3.7 Flash",
     "gemini-3.8-flash": "Gemini 3.8 Flash",
     "gemini-3.1-pro-preview": "Gemini 3.1 Pro Preview",
@@ -95,7 +96,11 @@ def page_text(raw_html: str) -> str:
     text = re.sub(r"(?is)<(script|style).*?</\1>", " ", raw_html)
     text = re.sub(r"(?i)</(tr|td|th|p|h[1-6]|li|div|table)>", "\n", text)
     text = re.sub(r"(?i)<br\s*/?>", "\n", text)
-    text = re.sub(r"<[^>]+>", " ", text)
+    # Tags only: a bare "<= 200k tokens" in the text is not a tag, and the
+    # earlier ``<[^>]+>`` ate it together with everything up to the next
+    # closing bracket.
+    text = re.sub(r"<!--.*?-->", " ", text, flags=re.S)
+    text = re.sub(r"</?[A-Za-z][^<>]*>", " ", text)
     text = html.unescape(text)
     lines = [re.sub(r"[ \t ]+", " ", ln).strip() for ln in text.splitlines()]
     return "\n".join(ln for ln in lines if ln)
@@ -115,7 +120,12 @@ def _is_heading(lines: list[str], i: int) -> bool:
     if not re.match(r"^Gemini \d", lines[i]) or i + 1 >= len(lines):
         return False
     nxt = lines[i + 1]
-    return bool(_MODEL_ID.match(nxt)) or nxt in PAGE_TIERS
+    if _MODEL_ID.match(nxt):
+        return True
+    # A heading followed straight by a tier block (the page's "Gemini 3.1
+    # Pro ." line) — but never a sentence: a banner reads like prose.
+    prose = re.search(r"\b(is|are|now|try|available)\b", lines[i], re.I)
+    return nxt in PAGE_TIERS and not prose
 
 
 def model_section(text: str, page_name: str) -> str | None:
@@ -141,7 +151,12 @@ def amount_valid_on(lines: list[str], at: date) -> float | None:
     (``per hour``) are ignored. ``None`` when no line applies.
     """
     for line in lines:
-        if "per hour" in line or "storage" in line.lower():
+        low = line.lower()
+        if "per hour" in low or "storage" in low:
+            continue
+        # The >200K-token prompt tier and the audio input rate are separate
+        # prices on the same row; no run here is priced on either.
+        if re.search(r">\s*200k", low) or "(audio)" in low:
             continue
         m = _MONEY.search(line)
         if not m:
@@ -217,7 +232,17 @@ def compare(card: dict[str, Any], text: str, at: str | None = None) -> list[dict
         page_name = PAGE_NAMES.get(model)
         section = model_section(text, page_name) if page_name else None
         published = published_rates(section, when) if section else {}
-        row = rate_row(model, when, card)
+        try:
+            row = rate_row(model, when, card)
+        except RateCardError as exc:
+            # No card row on the date: nothing to compare, which is still a
+            # verdict for the PI rather than a traceback.
+            for tier in card["tiers"]:
+                for cls in ROW_LABELS:
+                    out.append({"model": model, "tier": tier, "class": cls, "card": None,
+                                "page": published.get(tier, {}).get(cls),
+                                "verdict": "UNPARSED", "note": str(exc)})
+            continue
         for tier in card["tiers"]:
             for cls in ROW_LABELS:
                 expected = float(row["rates"][tier][cls])
@@ -232,6 +257,7 @@ def compare(card: dict[str, Any], text: str, at: str | None = None) -> list[dict
 
 
 def report(results: list[dict[str, Any]], source: str) -> str:
+    """The human-readable verdict list, ending with the flag or the all-clear."""
     lines = [f"published-rate check against {source}"]
     for r in results:
         lines.append(f"  {r['verdict']:<8} {r['model']:<24} {r['tier']:<9} {r['class']:<13} "
@@ -249,6 +275,7 @@ def report(results: list[dict[str, Any]], source: str) -> str:
 
 
 def fetch(url: str) -> str:
+    """The pricing page's HTML. A documentation fetch, not a model call."""
     req = urllib.request.Request(url, headers={"User-Agent": "map-reader-llm rate check"})
     with urllib.request.urlopen(req, timeout=30) as resp:  # noqa: S310
         return resp.read().decode("utf-8", errors="replace")

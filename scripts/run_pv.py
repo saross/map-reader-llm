@@ -2292,12 +2292,9 @@ def _write_verification_outputs(
         # no tier, so every verifier leg — flex realtime and Batch API alike —
         # recorded list price, exactly double the bill
         # (planning/cost-accounting-fix-plan-2026-09-21.md section 1.3).
-        if mode == "batch":
-            billing_tier, tier_source = "batch", "Batch API path (run_pv --mode batch)"
-        elif service_tier:
-            billing_tier, tier_source = service_tier, "cli --service-tier"
-        else:
-            billing_tier, tier_source = "standard", "no --service-tier given: standard tier"
+        from scripts.lib_cost import tier_from_cli
+
+        billing_tier, tier_source = tier_from_cli(service_tier, batch=(mode == "batch"))
         meta = metadata_tracker.finalise(include_per_item=False)
         meta["cost_estimate"] = estimate_cost(
             usage=metadata_tracker.usage,
@@ -2305,6 +2302,9 @@ def _write_verification_outputs(
             model=model_name or config.get("model", "gemini-3-flash"),
             tier=billing_tier,
             tier_source=tier_source,
+            # The pass's own end time selects the rate card row.
+            at=(meta.get("timestamp") or {}).get("end"),
+            strict=False,
         )
         meta["billing"] = {"service_tier": billing_tier, "tier_source": tier_source}
         # Never replace a prior pass's usage with this pass's: the previous

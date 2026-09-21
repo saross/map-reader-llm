@@ -117,7 +117,8 @@ def main() -> None:
     print(f"Merged → {args.output}")
     print(f"  items_processed: {es.get('items_processed')}")
     print(f"  items_failed:    {es.get('items_failed')}")
-    print(f"  total_cost_usd:  {ce.get('total_cost_usd'):.4f}")
+    from scripts.lib_cost import fmt_usd
+    print(f"  total_cost_usd:  {fmt_usd(ce.get('total_cost_usd'))}")
     rh = merged.get("recovery_history", [])
     if rh:
         latest = rh[-1]
