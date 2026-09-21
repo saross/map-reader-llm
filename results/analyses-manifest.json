@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-20T03:03:54Z",
+  "generated_at": "2026-09-21T02:47:32Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -4756,6 +4756,65 @@
           "results/gemini3-image-55map-2026-09-16/findings.md"
         ],
         "last_extracted_at": "2026-09-20T03:03:54Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "gemini37-image-55map-k5-replicate-2x2-2026-09-20",
+      "type": "comparison",
+      "conditions_compared": [
+        "gemini37-image-55map-2026-09-13::img-arm1-k5-carried-p0.10-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k5-f1-oracle-p0.10-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k5-mcc-oracle-p0.15-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k5-carried-p0.90-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k5-f1-oracle-p0.95-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k5-mcc-oracle-p0.95-k5-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k3-carried-p0.10-k3-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k3-carried-p0.88-k3-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm1-k1-carried-p0.10-k1-r2-gt",
+        "gemini37-image-55map-2026-09-13::img-arm2-k1-carried-p0.88-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k1-carried-p0.15-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k1-carried-p0.88-k1-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k3-carried-p0.15-k3-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k3-carried-p0.88-k3-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm1-k5-carried-p0.15-k5-r2-gt",
+        "gemini3-image-55map-2026-09-16::g3img-arm2-k5-carried-p0.95-k5-r2-gt"
+      ],
+      "hypothesis_refs": [
+        "H3",
+        "H13"
+      ],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "The K = 5 rung was added after the K = 3 results were known and was never in the card; no permutation test was preregistered at K = 5 (findings section 7). Its proposer passes 4 and 5 ran on the Batch API after a flex 503 storm, passes 1-3 on realtime flex, so the five-pass pool mixes serving routes; the 2026-09-19 batch-vs-flex probe found the route's drift indistinguishable from same-route re-invocation drift.",
+        "The K = 5 carried point moves with the rung (arm 2 carries 0.90 at K = 5 against 0.88 at K = 3, each rung carrying its own Gold Standard calibration cell), so the arm 2 K = 3 -> K = 5 contrast is not a single-factor contrast.",
+        "Both replicate legs ran on the Batch API (PI ruling 2026-09-18) over the same 9,173-candidate K = 5 union, crops, model, thinking level and temperature as the original legs; route and invocation are the only differences, checked field by field in each replicate note's section 2.",
+        "The replicates' four paired tile-swap tests per metric are a replication probe of one already-declared contrast and are not BH-adjusted (raw p-values; the strongest claim survives a x4 adjustment). The 2x2 family at K = 1 and K = 5 is BH-adjusted over T1-T4 per rung (declaration changelog 2026-09-20); T5 sits outside the family at those rungs and carries a raw p-value with no verdict (audit finding M1).",
+        "Scored on the r2 board's own engine (evaluate_detections.py, 14 buffers, BCa 10,000 / seed 42, --mcc) with source_tile re-stamped by stride55_score.assign_standard_tile, as row A; every replicate primitive is imported from scripts/gemini37_image_55map_r2.py, and test (c) of each replicate reproduces the committed K = 3 -> K = 5 point estimates to seven decimal places."
+      ],
+      "predicted_outcome": "No prediction was registered for K = 5 in row A's card. Two expectations were recorded before the numbers they concern existed: row A findings section 3, that tile-MCC would still rise from K = 3 to K = 5 on an image pool because unanimity acts as a precision filter there; and the 2x2 declaration section 5.4, that the K = 1 replicate would show the largest proposer effect and the K = 5 replicate the smallest. The replicate rule (declaration section 5, caveat 1, as revised 2026-09-20): a significant K = 3 -> K = 5 effect smaller than the verifier's re-invocation floor is claimable only with a replicate arm, and only if it clearly exceeds the drift-only contrast AND resolves against its own null.",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "The K = 5 rung of the 3.7 image row, its two replicates, and the 2x2 at K = 1 and K = 5. (1) The K = 5 cells: arm 1 carried (0.10, k5) micro-F1 @ 50 m 0.9130 / tile-MCC 0.7529, its F1 oracle coinciding; arm 2 carried (0.90, k5) 0.9270 / 0.7659, F1 oracle (0.95, k5) 0.9280 / 0.7681. Tile-MCC still rises from K = 3 on both arms (arm 1 0.7490 -> 0.7529, arm 2 0.7648 -> 0.7659), the direction row A section 3 expected; the arm 2 K = 5 carried cell scores above the K = 3 headline cell on both metrics (0.9270 against 0.9199; 0.7659 against 0.7648) but is exploratory. (2) The replicates, both on the Batch API, US$10.20 (arm 2) and US$6.49 (arm 1): decisions flip at the carried point on 2.46 % (arm 2, Wilson [2.17 %, 2.80 %]) and 2.41 % (arm 1, [2.11 %, 2.74 %]) of 9,173 candidates, indistinguishable at their own operating points; drift-only contrasts +0.0008 F1 / -0.0005 tile-MCC (arm 2) and +0.0005 / +0.0001 (arm 1), all p >= 0.40. The K = 3 -> K = 5 micro-F1 gain is CLAIMABLE on both arms: arm 2 +0.0079 with the K = 5 side re-verified (p < 0.0001; original +0.0071), about ten times drift; arm 1 +0.0110 (p < 0.0001; original +0.0105), about twenty-two times drift. The tile-MCC gain is NOT claimable on either arm, for different reasons: arm 2 +0.0007 (p 0.75) sits inside the drift band; arm 1 +0.0040 (p 0.10) clears drift but fails its own null. The PI confirmed the arm 2 claim on 2026-09-20 and the arm 1 reading under D8. (3) The 2x2 at the exploratory rungs (BH over T1-T4 per rung): T1 and T2, the proposer effect, are significant at K = 1 and K = 5 on both metrics (micro-F1 +0.2075 / +0.1813 at K = 1 and +0.0964 / +0.0953 at K = 5; tile-MCC +0.0507 / +0.0179 and +0.0406 / +0.0364). T4, the interaction, is +0.0327 tile-MCC and +0.0262 F1 at K = 1 (both p < 0.0001) and +0.0043 (p 0.42) and +0.0011 (p 0.67) at K = 5: with the K = 3 reading of +0.0170 / +0.0071 it declines monotonically with K and is null at K = 5 (Obs 491). T3 at K = 5 is +0.0088 tile-MCC (BH p 0.084, not significant) and +0.0129 F1 (p < 0.0001). The declaration's expectation that the proposer effect is largest at K = 1 and smallest at K = 5 holds on micro-F1 and on T1; T2's tile-MCC effect instead grows with K (+0.0179 -> +0.0243 -> +0.0364), because the Gemini 3 pool's arm 1 cell gains less from unanimity than the 3.7 pool's does.",
+      "paper_section": "Results",
+      "output_path": "results/gemini37-image-55map-2026-09-13/findings.md",
+      "working_notes_obs": [
+        "Obs 491 \u2014 The T4 proposer-by-verifier interaction declines monotonically with K and does not replicate at K = 5"
+      ],
+      "manually_verified_at": null,
+      "signature": {
+        "status": "unsigned",
+        "signed_at": null,
+        "attests": "UNSIGNED and presented for review; the PI signs. No board and no tiering was re-tiered and no signed row was touched.",
+        "presentation": null,
+        "history": []
+      },
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/gemini37-image-55map-2026-09-13/findings.md"
+        ],
+        "last_extracted_at": "2026-09-21T02:47:32Z",
         "extractor_version": "0.7.1"
       }
     }

@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "generated_at": "2026-09-20T23:02:16.046551+00:00",
+  "generated_at": "2026-09-21T02:52:13.803757+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "1b749b2a7",
+  "git_head": "de85cd0cb",
   "counts": {
    "total": 4010,
    "generated": 3684,
@@ -39,8 +39,8 @@
    "regime2": {
     "generated_banner": 51,
     "source_commit_stamp": 56,
-    "check_mode": 68,
-    "tier1_check_test": 68,
+    "check_mode": 70,
+    "tier1_check_test": 70,
     "compliant": 51,
     "neither_regime": 3633
    }
@@ -64774,10 +64774,14 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_tile_presence_board.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
@@ -64791,10 +64795,14 @@
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_tile_presence_board.py"
+   ],
+   "tier1_check_test": true,
    "regime2_compliant": false
   },
   {
