@@ -8204,3 +8204,57 @@ remains the missing primitive.
   optional after fixes written in a hurry.
 - **Explicit caching held at 0.945 on batch passes 4–5** against 0.808–0.813
   on flex with implicit caching: US$61.9 per 24,561-tile pass against US$81.9.
+
+## Session 156 — 2026-09-19/21 (comparability repaired, both floors measured, inheritance tested, the MCC oracle retired)
+
+- **The Gemini 3 image row closes only part of the gap at any rung.** Carried
+  arm 2: F1@50 0.664 / 0.813 / 0.831 and tile-MCC 0.706 / 0.723 / 0.725 at
+  K = 1/3/5, against the 3.7 row's 0.872 / 0.920 / 0.927 and 0.757 / 0.765 /
+  0.766. Precision is the whole difference; the offset matches the GS
+  calibration's ~0.10 F1 at every rung.
+- **The verifier is byte-identical across every campaign; re-invocation is
+  not.** Both verifiers' E89 floors were measured on one 9,173-candidate
+  union: 2.46 % (3.7, low) and 2.41 % (Gemini 3, minimal) decision flips at
+  their carried thresholds, drift-only contrasts of order +0.001 F1 and
+  ±0.0005 tile-MCC. The Gemini 3 verifier reproduces 82 % of its
+  probabilities exactly (κ 0.77 vs 0.50) but makes more large reversals
+  (2.9 % vs 2.0 % move by more than 0.5); the "coarser vocabulary" guess was
+  refuted by a chance-agreement check. A flip rate is only interpretable at
+  the deployed threshold: half the Gemini 3 verifier's flips at 0.90 are
+  0.95 against 0.85 on a lattice it never deploys at.
+- **The margin rule is necessary, not sufficient.** With a tile-MCC drift
+  contrast of +0.0001, "16× drift" describes a null result; an effect must
+  also resolve against its own null. The K3→K5 F1 gains are claimable on both
+  arms (+0.0079 and +0.0105, ≈10× and ≈22× drift); the tile-MCC gains fail
+  for different reasons on each arm (inside the band on arm 2; outside it but
+  null on arm 1), which license different sentences.
+- **Inheritance equals own-leg verification at K = 3 and differs at K = 1
+  only where the pool over-generates.** Four head-to-heads per row, all null
+  on the 3.7 row (0.0002–0.0021 F1, signs mixed); on the Gemini 3 row K = 1
+  favours inheritance by +0.006/+0.009 F1 at 3.0/5.9 null SDs through the
+  dropped-candidate filter (566 of 22,785 unmatched at 10 m). Density does
+  not create matching ambiguity because unions are built at 20 m, twice the
+  match radius.
+- **Tile-MCC has no interior optimum.** On 23 of 23 board families the free
+  optimum sits at the lowest vote count on offer (13 of 13 that offered one
+  vote), paying 0.054–0.181 of F1; pinned to the carried vote count the
+  optimum is within noise of the carried point. Presented separately as a
+  tile-presence leaderboard: rank 1 buys 0.007 of tile-MCC over rank 3 with
+  eight times the verifier spend and a 0.41 collapse in F1.
+- **The 3.7 image pool is the only pool whose F1 and tile-MCC optima
+  coincide.** Pareto fronts of 1–2 points (F1 span ≤ 0.032) against 3–24 for
+  every other pool that can show a front; the same model on the text prompt
+  has fronts of 4–6. It is the pool, not the verifier (FOURTH stays wide
+  under the 3.7 verifier), and the images, not the model (Obs 494). The
+  generational reading stays a hypothesis; no 3.5/3.6/3.8 proposer pool has
+  a frontier and none will be built.
+- **T5 matched on protocol reverses.** Declared T5 (3-of-3 vs June's 3-of-5)
+  +0.0016 F1, null; matched (3-of-5 on the K = 5 pool) −0.0696, p < 0.0001.
+  Tile-MCC keeps a consistent small positive sign under both.
+- **Legacy manifests carry stale votes.** The 2026-05-03 recovery's
+  incremental extractor never refreshed matched entries and matched greedily
+  at the clustering radius: five April/May manifests one vote low on 15–110
+  candidates; one text-high consensus cluster never verified. Current chain
+  clean; extractor fixed; a manifest-vs-union gate now precedes verifier
+  spend.
+

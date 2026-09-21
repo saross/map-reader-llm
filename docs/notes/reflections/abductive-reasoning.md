@@ -8589,3 +8589,147 @@ shrink. If MCC opens up at higher K, something other than surplus is at work.
 A carried point calibrated on a small frame keeps its threshold, not its
 precision, when the pool scales; report the union size beside every cell, and
 read a metric pair, not a metric.
+
+## Entry — 2026-09-20 (Session 156, map-reader-llm): A library effect that shrank at K = 1 because of which cells had been built
+
+**Session:** b450a703-a907-43e5-a228-583ffa86f428
+**Instance:** primary
+
+### Surprising fact
+
+The text-versus-image cost table (`reports/text-vs-image-tracks-2026-09-20.md`)
+read the 17-exemplar library's F1 edge over the text track as +0.011 at
+K = 1, +0.035 at K = 3, +0.044 at K = 5 — a return that grew with K and was
+smallest exactly where a single pass is cheapest. I reported it to the PI as
+a calibration surprise about the library.
+
+### Probe
+
+The comparability inventory asked a prior question: are the two sides of
+each delta on the same point basis? They were not. The text track had no
+carried cell on r2 below N = 5, so the table had used the text F1-oracle at
+K/N = 1 and 3. The board's own sweep CSVs held the text carried-analogue
+points, computed and never materialised: 0.8459 at (0.80, k1), 0.8802 at
+(0.80, k3). Carried against carried the K = 1 edge is +0.026, K = 3 +0.040,
+K = 5 +0.044 — the K-dependence is mostly gone. The mechanism was an
+asymmetry in the carried-versus-oracle tax: 0.014 on the text N = 1 rung
+against 0.002 on the image K = 1 rung. Seven cells were then materialised
+and scored from those sweep rows; every one reproduced the CSV to four
+decimals.
+
+### Belief revision
+
+Before: the library's return is strongly K-dependent and weakest for one
+pass. After: the library's return is roughly constant across K on F1
+(+0.026 to +0.044) and larger on tile-MCC (+0.050 to +0.060); the apparent
+K-dependence was an artefact of which cells existed. The general revision:
+a delta between two tracks is only a finding once both sides are shown to
+sit on the same point definition, and "the cell does not exist" is not the
+same as "the point is not available" — the sweep records often hold it.
+
+### What would change this belief
+
+A carried-analogue tax on the image side comparable to the text side's
+(it is 0.002 against 0.014); or a re-scored text carried cell that failed to
+reproduce its sweep row within the board's 0.003 bound (all seven matched to
+0.0000).
+
+### Implications for practice
+
+Before reading any cross-track delta, list the point basis of both cells;
+when one is missing, look in the sweep record before substituting an
+oracle. Landed as the inventory's § 3.2 and as Obs 488.
+
+## Entry — 2026-09-20 (Session 156, map-reader-llm): A bias called "unmeasured" that was undetectable on one pool and claimable on the other
+
+**Session:** b450a703-a907-43e5-a228-583ffa86f428
+**Instance:** primary
+
+### Surprising fact
+
+Inheritance drops lower-rung candidates with no top-rung neighbour within
+10 m, so I predicted an upward precision bias on inherited cells and called
+it unmeasured. The head-to-head on the 3.7 image row found nothing: four
+contrasts of 0.0002–0.0021 F1, signs mixed, all p ≥ 0.07, and the precision
+deltas pointed both ways.
+
+### Probe
+
+The same instrument on the Gemini 3 image row, whose unions are 3.3–5.0×
+larger. At K = 3, nothing again (−0.0026 and +0.0003 F1). At K = 1, both
+arms favour inheritance by −0.0061 and −0.0086 F1 at 3.0 and 5.9 null SDs,
+7.6× and 10.8× the drift contrast, with precision +0.010/+0.012 and recall
+−0.005/−0.006 — from 566 dropped candidates (2.5 % of the union) against
+50 (0.7 %) on the 3.7 row. Tile-MCC null everywhere. A density check found
+no matching ambiguity (0 exact ties; runner-up a median 39 m away), so the
+effect is the drop mechanism and not the radius.
+
+### Belief revision
+
+Before: the drop bias is unmeasured and probably small. After: the bias is
+real, one-directional, F1-only, and gated by pool over-generation — absent
+where the K = 1 cell is already precise (P 0.76–0.80), present where it is
+not (P 0.51–0.53). Inheritance remains the method; the rule that follows is
+that an inherited K = 1 cell must never be read beside an own-leg K = 1
+cell, and ladder claims from K = 1 must name the method.
+
+### What would change this belief
+
+An own-leg K = 1 cell on an over-generating pool that inherited cells did
+not out-precise; or a dropped-candidate set whose members were not
+disproportionately false alarms.
+
+### Implications for practice
+
+The measurement cost nothing because both methods' cells existed for the
+same rungs; every future ladder should keep one such pair. Landed in
+`results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/findings.md`
+and Obs 489.
+
+## Entry — 2026-09-21 (Session 156, map-reader-llm): An oracle with one degree of freedom
+
+**Session:** b450a703-a907-43e5-a228-583ffa86f428
+**Instance:** primary
+
+### Surprising fact
+
+Every one of 23 board families put its tile-MCC optimum at the lowest vote
+count its sweep offered (13 of 13 that offered one vote), paying 0.054–0.181
+of F1. I read this as a definition problem and recommended pinning the MCC
+oracle to the carried vote count so it would be a like-for-like companion
+of the F1 oracle; the PI accepted and the cells were built.
+
+### Probe
+
+Overnight the PI asked what could still vary once the vote count was
+pinned. Reading the sweep grids: one dimension, the probability threshold,
+discrete (20–27 values), and the tile-MCC surface across it is flat near the
+operating point — the pinned optima landed within 0.01 of the carried
+point's tile-MCC on every board family. Meanwhile the F1 oracle still
+optimised over both dimensions and used the second one in 14 of 23
+families, so the two "companion" columns answered different questions.
+
+### Belief revision
+
+Before: the MCC oracle needs a better definition. After: tile-MCC has no
+interior optimum on this corpus — its free optimum is the vote-count
+artefact and its pinned optimum is the carried point plus noise — so no
+definition makes it a result. The construct was retired from the main
+boards; the free optima were kept as a tile-presence leaderboard for the
+researcher who wants presence/absence, with the pool cost beside them.
+Nothing from the first ruling was deleted, which is why the reversal cost
+one morning.
+
+### What would change this belief
+
+A family whose tile-MCC across the probability ladder at fixed vote count
+peaked away from the carried threshold by more than the drift band; none of
+the 20 families with a carried k did.
+
+### What this is not
+
+Not a claim that tile-MCC is uninformative: at a declared operating point it
+still separates tile coverage from point precision (the 3.7 image row's
+Pareto fronts collapse to one point; the Gemini 3 row's do not — Obs 494).
+It is the *oracle* construct on this metric that carries nothing.
+

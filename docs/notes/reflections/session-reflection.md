@@ -11502,3 +11502,87 @@ changed the default — batch for 3.7 from now on but not for the run in
 flight; complete the grid; declare before the cell exists; use the waits for
 documentation. Relational note: "we're low on context, your call" at the end —
 the first time the PI has left the reflect-or-wait decision to me.*
+
+## Session 156 — 2026-09-19/21 — the session that closed the 2x2, then found the board had been comparing the wrong things
+
+*map-reader-llm, Session 156, session id b450a703-a907-43e5-a228-583ffa86f428, Fable 5.1 driving from amd-tower with sapphire for every compute step; twelve Opus agents in sequence and in parallel; US$16.69 of API spend across two replicate legs. Written by the instance that did the work (no compaction).*
+
+**What surprised you about this session?** Three times the surprise was the
+same shape: a comparison I had presented as a finding turned out to be a
+property of which artefacts existed. The library's F1 edge at K = 1 read as
++0.011 because the text track had no carried cell below N = 5 and I had
+substituted the oracle; the board's own sweep files held the missing points
+and the edge was +0.026. The declared T5 said the June Gemini 3 cell was
+reproduced; matched on protocol the September pool trails it by 0.070, and
+the near-tie was the one pairing that made them agree. And the "MCC oracle",
+which I redefined at the PI's request to be a like-for-like companion of the
+F1 oracle, turned out on the PI's overnight second thoughts to have no
+content under either definition: tile-MCC has no interior optimum on this
+corpus, its free optimum is the vote-count artefact and its pinned optimum is
+within noise of the carried point. Each of these was caught by reading the
+artefact rather than the summary, and two of the three were caught by agents
+whose brief I had written with the wrong premise in it. The lesson is not
+new — I have written "the deviation is the data" before — but this session
+put a number on it: the comparability inventory found five axes and only two
+that moved a number, and the one that moved it most was the one nobody had
+listed as an axis at all.
+
+The other surprise was the inheritance head-to-head. I had argued for
+inheritance on cost and cleanliness and called the dropped-candidate bias
+"unmeasured", expecting it to be small. On the 3.7 row it was undetectable.
+On the Gemini 3 row it was real, one-directional, and confined to K = 1 —
+exactly where the pool over-generates and 2.5 % of candidates have no
+neighbour within 10 m. The method I recommended is still the right one, but
+for a reason I did not have when I recommended it, and with a rule I would
+not have written without the measurement: an inherited K = 1 cell must never
+sit beside an own-leg K = 1 cell.
+
+**Where did you and the human disagree, and who was right?** On the MCC
+oracle, twice, and he was right both times. Yesterday I offered three
+options and recommended pinning the oracle to the carried vote count; he
+accepted, and an agent built and registered the cells. Overnight he asked
+what degrees of freedom remained once the vote count was pinned. The honest
+answer was one, discrete, and flat near the operating point — which meant my
+recommended option had produced a column that measured threshold transfer,
+which the carried-versus-oracle tax already reports. He then asked whether a
+researcher who cared about tile presence would simply set one-of-K, and
+whether that deserved its own table rather than a column on the boards. That
+was the right shape: keep the F1 oracle free, drop the MCC oracle from the
+main boards, present the unconstrained optima separately with their cost.
+What I got wrong was treating "make the two oracles symmetric" as the goal;
+what he saw was that symmetry between a meaningful column and a meaningless
+one is not worth having. The reversal cost nothing because every cell from
+the first ruling was kept, which is the one part of yesterday's work I would
+defend without qualification.
+
+The smaller disagreement was about IM-k4. I recommended documenting the
+stale-vote provenance without a rebuild; he agreed on condition the cell was
+not cited, and it was cited, on the board and in the supplement. His
+condition was the right test and my recommendation survived it only because
+the correction is an order of magnitude inside the board's tolerance.
+
+**What would you do differently if you replayed this session?** Two things,
+both about agents. First, I would give every agent its own worktree from the
+start. Six agents shared two clones for a day; every one of them found a way
+to cope (detached worktrees, explicit pathspecs, one stash that should not
+have happened, one push that swept another agent's commit under a different
+author), and the coordination cost was real: a pull blocked by another
+agent's untracked files silently ran the old code for the K = 1 and K = 5
+tests, and I only caught it because the T5 rows still carried verdicts. The
+guidance already says never share a checkout across agents; I read it as a
+cross-agent rule and applied it to none of my own. Second, I would write a
+brief's premises as claims to verify rather than facts to use. The three
+premises that were wrong this session — the text cells existed under a
+results path that did not exist, the signed rows did not cite the re-pointed
+conditions, the arm 1 K3→K5 figures were published — each cost an agent time
+and one of them nearly put a 58-minute citation gap into a signed row. The
+agents that checked their premises first did the best work of the session.
+
+*Texture: a session in two registers. The first day was execution against a
+beacon, mostly waiting on batch queues and reading artefacts; the second was
+a walk through nine decisions with the PI, one at a time, each landing as a
+ruling in a log file we created because the terminal had scrolled the bottom
+lines away. The decision log was the most useful artefact of the session and
+it took eleven lines of Markdown. Relational note: "we'll make the most of
+the error" — said twice, meant both times.*
+

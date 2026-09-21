@@ -9706,3 +9706,65 @@ Gemini 3 tests are post hoc by construction because that rung was scored
 before the family was declared; every launch after the blocked-session
 incident went through pid-file-guarded scripts with all three descriptors
 redirected.
+
+## Session 156
+
+*2026-09-19 → 2026-09-21; amd-tower + sapphire; Fable 5.1 driving; twelve
+Opus agents; audited API spend US$16.69 (two replicate verifier legs). Every
+ruling is in `planning/pi-decisions-2026-09-20.md` (D1–D10) with the commits
+that executed it; the beacon carries the S156 DAY 2 and CLOSE blocks.*
+
+**Gemini 3 row completed.** Arm 2 K = 3 (36,389, US$40.58) and K = 5
+(45,786, US$51.09; twelve batch jobs, eight re-lodged after a File API
+storage 429, folded in by `batch-recover`) verified; sweeps, cells, scores,
+and tests at K = 1/3/5. Row spend US$189.47 of the US$200 provisional. Row
+registered (18 conditions, 6 passes) and both image rows signed (row A
+scoped to K = 1/3; row B with outcome authored at signing).
+
+**Comparability.** `reports/text-vs-image-tracks-2026-09-20.md` and
+`reports/comparability-inventory-37-runs-2026-09-20.md`; five axes, two
+bite (reference/engine ~0.006 F1; carried-point basis up to 0.015). Seven
+carried-analogue cells and, later, ten tile-presence cells built on the r2
+board as an untiered addendum and registered (658 conditions ALL VALID).
+Errata: "corrected micro-F1" wording; row A verifier modality.
+
+**Replicates and floors.** Arm 2 K = 5 batch replicate (US$10.20): K3→K5 F1
+gain claimable (+0.0079 vs drift +0.0008); flip rate 2.46 %. Arm 1 K = 5
+batch replicate (US$6.49): floor 2.41 %, drift +0.0005 F1; arm 1 K3→K5 F1
+gain claimable. Declaration § 5 caveat 1 rewritten in both forms with the
+"necessary, not sufficient" rule.
+
+**Ladder method.** Inheritance ruled the method (D2); head-to-heads on both
+image rows (eight inherited cells, sixteen tests); K = 1 bias real on the
+Gemini 3 row only.
+
+**MCC oracle.** Redefined at carried k (2026-09-20), then dropped from the
+main boards (2026-09-21); tile-presence leaderboard and Pareto frontiers in
+`results/tile-presence-2026-09-21/`; superseded and retained cells kept and
+labelled; register re-pointed; cited-artefact hash guard on signed rows.
+
+**June pool.** Grid at votes 3–5 on r2 (`results/im-june-pool-grid-2026-09-20/`);
+T5m added as an additional test (−0.0696 F1 vs declared T5's +0.0016);
+the 16-row vote discrepancy traced to the May recovery's extractor; IM-k4
+documented, not rebuilt (D7); extractor fixed and a manifest-vs-union gate
+added.
+
+**Code.** Storage preflight (935865223, a0f40609e); audit
+(`reports/code-audit-2026-09-20-storage-preflight.md`) with M6/M1 then
+M2/M4+m10/m7 and the cost auditors' model default implemented; the r2 chain's
+BH family at K ≠ 3 corrected and K = 1/K = 5 tests regenerated; sweep record
+carries tile confusion; registrar keys presence on eval_path. Full tier-1
+3,203 passing at close.
+
+**Notes.** Obs 488–494; claude-obs 120–122; guidance rules (watcher
+spellings, File API cap, mutation harnesses, manifest gate); decision log
+`planning/pi-decisions-2026-09-20.md`.
+
+**Contextual assumptions.** Batch queue latency ran to 9.5 hours on the
+K = 3 jobs and 20 minutes on the replicates, so waits, not compute, set the
+day's rhythm; both clones were shared by several agents throughout, which
+the guidance forbids and which produced one stale-code test run and one
+58-minute window in which two signed rows' citations resolved to
+re-materialised cells; the PI ruled no new proposer campaigns, so the
+generational reading of Obs 494 stays a hypothesis by design.
+
