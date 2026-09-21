@@ -14,11 +14,13 @@ the 2x2 sweep file's own.
 from __future__ import annotations
 
 import csv
+from unittest.mock import patch
 
 import geopandas as gpd
 import pytest
 from shapely.geometry import Point
 
+from scripts import im_june_pool_grid as june
 from scripts.im_june_pool_grid import (
     CARRIED,
     COMMITTED_IM_K3,
@@ -85,11 +87,11 @@ def test_forcing_is_idempotent_when_the_point_is_already_reachable() -> None:
 
 
 def _grid(f1_p: float, mcc_p: float, k5_f1_p: float) -> dict:
-    """A minimal sweep record carrying one oracle per basis."""
+    """A minimal sweep record carrying both argmaxes per vote count."""
     return {"per_min_votes": {
-        "3": {"f1_oracle": {"prob_t": f1_p}, "mcc_oracle": {"prob_t": mcc_p}},
-        "4": {"f1_oracle": {"prob_t": 0.5}, "mcc_oracle": {"prob_t": 0.5}},
-        "5": {"f1_oracle": {"prob_t": k5_f1_p}, "mcc_oracle": {"prob_t": 0.9}},
+        "3": {"f1_oracle": {"prob_t": f1_p}, "mcc_argmax": {"prob_t": mcc_p}},
+        "4": {"f1_oracle": {"prob_t": 0.5}, "mcc_argmax": {"prob_t": 0.5}},
+        "5": {"f1_oracle": {"prob_t": k5_f1_p}, "mcc_argmax": {"prob_t": 0.9}},
     }}
 
 
@@ -97,9 +99,27 @@ def test_cell_specs_resolve_to_the_grid_s_own_oracles() -> None:
     """An oracle cell reads its threshold from the sweep, not from a constant."""
     cells = {c["label"]: c for c in resolve_cell_points(_grid(0.35, 0.65, 0.05))}
     assert cells["IM-5pass-k3-f1-oracle"]["prob_t"] == 0.35
-    assert cells["IM-5pass-k3-mcc-oracle"]["prob_t"] == 0.65
     assert cells["IM-5pass-k5-f1-oracle"]["prob_t"] == 0.05
     assert {c["min_votes"] for c in cells.values()} == {3, 5}
+
+
+def test_no_mcc_oracle_cell_is_materialised() -> None:
+    """PI ruling 2026-09-21: the tile-MCC argmax is recorded, never a cell.
+
+    The record still carries ``mcc_argmax`` per vote count (it is data the
+    tile-presence presentation reads), but no spec resolves to it, and a spec
+    that asked for the retired basis would be refused rather than silently
+    mapped onto the F1 oracle.
+    """
+    cells = resolve_cell_points(_grid(0.35, 0.65, 0.05))
+    assert not [c for c in cells if "mcc" in c["label"] or "mcc" in c["basis"]]
+    assert {c["basis"] for c in cells} == {"f1-oracle", "carried"}
+    assert not any(c["prob_t"] == 0.65 for c in cells)
+    with pytest.raises(ValueError, match="mcc-oracle"):
+        with patch.object(june, "CELL_SPECS", (
+                {"label": "IM-5pass-k3-mcc-oracle", "min_votes": 3,
+                 "basis": "mcc-oracle"},)):
+            resolve_cell_points(_grid(0.35, 0.65, 0.05))
 
 
 def test_the_k5_carried_cell_is_fixed_and_ignores_the_grid() -> None:

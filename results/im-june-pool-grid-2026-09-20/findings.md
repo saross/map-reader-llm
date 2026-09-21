@@ -1,6 +1,10 @@
 # The June 2026 image pool, swept on r2: findings
 
-> **Last revised**: 2026-09-20 (§ 7 added — the 16-candidate vote-count
+> **Last revised**: 2026-09-21 (the `IM-5pass-k3-mcc-oracle` row retired from
+> § 3's cell table under PI ruling 2026-09-21 and the phrase "MCC oracle"
+> retired from the prose; the cell stays on disk, re-labelled retained and
+> not presented; no number changed). Prior: 2026-09-20 (§ 7 added — the
+> 16-candidate vote-count
 > divergence noted in § 1 traced to the 2026-05-03 recovery campaign, with its
 > blast radius across the committed board measured; no figure in §§ 1-6 moved).
 > Prior: 2026-09-20 (original publication — the June image run's
@@ -125,18 +129,31 @@ have shown.
    (§ 4), so this is a description of the difference rather than an
    explanation of it.
 3. **September's best MCC sits where June has no data.** The rebuilt pool's
-   MCC oracle is at one vote (0.7496 at *p* = 0.40, *n* = 11,739) — inside the
-   region June never verified. Restricted to the votes the June pool can
-   reach, the September MCC oracle is 0.7413 at three votes.
+   unconstrained tile-MCC optimum is at one vote (0.7496 at *p* = 0.40,
+   *n* = 11,739; `results/tile-presence-2026-09-21/leaderboard.md`,
+   `G3IMG-ARM1-K5`) — inside the region June never verified. Restricted to
+   the votes the June pool can reach, September's best tile-MCC is 0.7413 at
+   three votes.
 
-The four cells scored on the full recipe:
+The cells scored on the full recipe (three presented; a fourth, the tile-MCC
+argmax at three votes, is retained on disk and not presented — see the
+pointer below the table):
 
 | cell | point | *n* | F1 @ 50 m [BCa 95 %] | precision | recall | tile-MCC [BCa 95 %] |
 |---|---|---:|---|---:|---:|---|
 | `IM-5pass-k3-f1-oracle` | (0.15, k3) | 4,680 | 0.8008 [0.7909, 0.8101] | 0.8297 | 0.7738 | 0.7087 [0.6944, 0.7225] |
-| `IM-5pass-k3-mcc-oracle` | (0.20, k3) | 4,561 | 0.7999 [0.7898, 0.8092] | 0.8399 | 0.7635 | 0.7139 [0.6999, 0.7277] |
 | `IM-5pass-k5-carried` | (0.15, k5) | 2,283 | 0.5851 [0.5693, 0.6004] | 0.9356 | 0.4257 | 0.5459 [0.5314, 0.5602] |
 | `IM-5pass-k5-f1-oracle` | (0.15, k5) | 2,283 | 0.5851 [0.5693, 0.6004] | 0.9356 | 0.4257 | 0.5459 [0.5314, 0.5602] |
+
+The June pool's tile-MCC optimum is not a row here (PI ruling 2026-09-21: the
+tile-MCC optimum is off every board and campaign table under both
+definitions). Its unconstrained form, `IM` at (0.20, k3), is presented with its
+vote count and pool cost in
+[`results/tile-presence-2026-09-21/`](../tile-presence-2026-09-21/leaderboard.md);
+the cell this note scored at that point, `IM-5pass-k3-mcc-oracle`, stays in
+`cells/` with its committed evaluation, re-labelled in `cells_manifest.json`
+as retained and not presented. The per-vote-count grid above keeps both
+argmaxes as recorded data (`grid.json`, `mcc_argmax`).
 
 The last two are the **same cell**: 0.15 is already the F1 argmax at
 unanimity, which is finding 1 above showing up in the cell list. Both are kept
@@ -373,7 +390,8 @@ does moves by three detections.
 
 - **No candidate crosses the 2 → 3 boundary** in any of the five runs, so no
   cell defined at votes ≥ 3 changes membership. `IM-k3` — and with it
-  `IM-oracle`, this note's `IM-5pass-k3-f1-oracle` and `-k3-mcc-oracle`, and
+  `IM-oracle`, this note's `IM-5pass-k3-f1-oracle` and the retained
+  `-k3-mcc-oracle` cell, and
   the 2x2's T5 comparator — is **unaffected**, as is every votes ≥ 3 row of
   `sweep_IM-5pass.csv`.
 - The three text runs' divergences are **all 4 → 5**, above their own 4-of-5
@@ -407,6 +425,31 @@ records the double match plainly — `existing_candidates` 9,131 but
 gap, but it is a real one and it is the PI's call, not this note's.
 
 ## Changelog
+
+### 2026-09-21 — The tile-MCC optimum retired from this note's table
+
+**Refresh trigger**: PI ruling 2026-09-21 (`planning/pi-decisions-2026-09-20.md`
+D6c, amended), which dropped the "MCC oracle" from every board and campaign
+table under both definitions, and the S156 close block's first open thread,
+which named this note's script as still writing one such cell.
+
+**What changed**: `scripts/im_june_pool_grid.py` no longer materialises the
+`mcc-oracle` basis (three cell specs, not four) and records the per-vote
+tile-MCC argmax in `grid.json` under `mcc_argmax` rather than `mcc_oracle`
+(a key rename, values untouched); `cells_manifest.json` re-labels
+`IM-5pass-k3-mcc-oracle` as retained and not presented, with the same
+presentation text the tile-presence builder wrote on the campaigns'
+manifests; § 3's cell table loses that row and gains a pointer; § 3 item 3
+and § 7 say "tile-MCC optimum" where they said "MCC oracle". The cell's
+files are not moved or deleted.
+
+| | before | after |
+|---|---:|---:|
+| § 3 cell-table rows | 4 | **3** |
+| cells on disk | 4 | **4** (none deleted) |
+| `IM-5pass-k3-mcc-oracle` F1 / MCC (evaluation.json) | 0.7999 / 0.7139 | unchanged |
+
+**Numbers that moved**: none.
 
 ### 2026-09-20 — § 7: the vote-count divergence diagnosed
 

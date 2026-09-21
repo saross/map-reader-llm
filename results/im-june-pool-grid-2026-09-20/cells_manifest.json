@@ -16,10 +16,11 @@
       "label": "IM-5pass-k3-mcc-oracle",
       "prob_t": 0.2,
       "min_votes": 3,
-      "basis": "mcc-oracle",
+      "basis": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)",
       "point": "(0.20, k3)",
       "n_detections": 4561,
-      "det": "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k3-mcc-oracle/detections.geojson"
+      "det": "results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k3-mcc-oracle/detections.geojson",
+      "presentation": "PI ruling 2026-09-21: the tile-MCC optimum is no longer an oracle column on any board, under either definition. This cell is the optimum at the family's CARRIED vote count, the definition ruling 6c of 2026-09-20 introduced and this ruling superseded. It is retained on disk with its committed evaluation and is NOT presented; the tile-presence table presents the unconstrained optimum instead (results/tile-presence-2026-09-21/)."
     },
     {
       "label": "IM-5pass-k5-carried",

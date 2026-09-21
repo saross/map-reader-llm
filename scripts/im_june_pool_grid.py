@@ -51,6 +51,21 @@ reproduces the writer at 83.65 %, ``results/run-facts.json`` § IM-k3 CAVEAT).
 ``--stage gate`` reports the carried point both ways so the size of that
 convention difference is on the record rather than assumed.
 
+The tile-MCC optimum, dropped as a cell 2026-09-21
+--------------------------------------------------
+This script no longer MATERIALISES an MCC-oracle cell. PI ruling 2026-09-21
+(``planning/pi-decisions-2026-09-20.md`` D6c, amended) took the tile-MCC
+optimum off every board and campaign table under both definitions —
+unconstrained, and pinned to a vote count — because on this corpus it has
+no interior optimum. The per-vote-count tile-MCC argmax is still RECORDED
+in ``grid.json`` as ``mcc_argmax`` (it was ``mcc_oracle`` until the ruling),
+beside ``f1_oracle``, as data the tile-presence presentation
+(``results/tile-presence-2026-09-21/``) can read. The one such cell this
+script built before the ruling, ``IM-5pass-k3-mcc-oracle``, stays on disk
+with its committed evaluation, re-labelled in ``cells_manifest.json`` as
+retained and not presented; ``--stage materialise`` keeps any label it
+does not produce, so re-running it does not delete the cell.
+
 Usage::
 
     python scripts/im_june_pool_grid.py --stage gate
@@ -120,14 +135,14 @@ COMMITTED_IM_K3 = {"micro_f1_50": 0.8008, "tile_mcc": 0.7110}
 #: The board's own agreement tolerance for a reproduction claim.
 GATE_TOL = 0.003
 
-#: The four cells this campaign materialises and scores on the full recipe.
-#: ``oracle`` bases are resolved from the swept grid; ``carried`` bases are
-#: fixed points. The k5 carried point is IM-k3's probability read at
+#: The three cells this campaign materialises and scores on the full recipe
+#: (four before PI ruling 2026-09-21 retired the ``mcc-oracle`` basis; see
+#: the module docstring). ``f1-oracle`` bases are resolved from the swept
+#: grid; ``carried`` bases are fixed points. The k5 carried point is IM-k3's probability read at
 #: unanimity, which is the June pool's nearest analogue to the rebuilt pool's
 #: K = 5 unanimity cell.
 CELL_SPECS: tuple[dict[str, Any], ...] = (
     {"label": "IM-5pass-k3-f1-oracle", "min_votes": 3, "basis": "f1-oracle"},
-    {"label": "IM-5pass-k3-mcc-oracle", "min_votes": 3, "basis": "mcc-oracle"},
     {"label": "IM-5pass-k5-carried", "min_votes": 5, "basis": "carried",
      "prob_t": 0.15},
     {"label": "IM-5pass-k5-f1-oracle", "min_votes": 5, "basis": "f1-oracle"},
@@ -255,7 +270,11 @@ def _gate_verdict(row: dict[str, Any]) -> bool:
 
 
 def stage_sweep(workers: int) -> int:
-    """Sweep every achievable point; write the CSV and the oracle record.
+    """Sweep every achievable point; write the CSV and the argmax record.
+
+    Per vote count the record keeps both argmaxes over ``prob_t`` —
+    ``f1_oracle`` (a cell basis) and ``mcc_argmax`` (recorded data only,
+    PI ruling 2026-09-21; the key was ``mcc_oracle`` before the ruling).
 
     The gate is applied before anything is written, so a failed reproduction
     leaves no half-trusted artefact behind.
@@ -307,14 +326,15 @@ def stage_sweep(workers: int) -> int:
         per_votes[str(votes)] = {
             "n_points": len(block),
             "f1_oracle": max(block, key=lambda r: r["micro_f1_50"]),
-            "mcc_oracle": max(block, key=lambda r: r["tile_mcc"]),
+            "mcc_argmax": max(block, key=lambda r: r["tile_mcc"]),
         }
         logger.info(
-            "votes >= %d: F1 oracle %.4f at p%.2f | MCC oracle %.4f at p%.2f",
+            "votes >= %d: F1 oracle %.4f at p%.2f | tile-MCC argmax (recorded, "
+            "not materialised) %.4f at p%.2f",
             votes, per_votes[str(votes)]["f1_oracle"]["micro_f1_50"],
             per_votes[str(votes)]["f1_oracle"]["prob_t"],
-            per_votes[str(votes)]["mcc_oracle"]["tile_mcc"],
-            per_votes[str(votes)]["mcc_oracle"]["prob_t"])
+            per_votes[str(votes)]["mcc_argmax"]["tile_mcc"],
+            per_votes[str(votes)]["mcc_argmax"]["prob_t"])
 
     (RESULTS_HOME / "grid.json").write_text(json.dumps({
         "rung": RUNG,
@@ -353,15 +373,22 @@ def resolve_cell_points(grid: dict[str, Any]) -> list[dict[str, Any]]:
 
     Raises:
         KeyError: If a spec names a vote threshold the grid does not carry.
+        ValueError: If a spec names a basis this script no longer builds
+            (``mcc-oracle`` was retired by PI ruling 2026-09-21).
     """
     out = []
     for spec in CELL_SPECS:
         votes = int(spec["min_votes"])
         if spec["basis"] == "carried":
             prob_t = float(spec["prob_t"])
+        elif spec["basis"] == "f1-oracle":
+            prob_t = float(grid["per_min_votes"][str(votes)]["f1_oracle"]["prob_t"])
         else:
-            key = "f1_oracle" if spec["basis"] == "f1-oracle" else "mcc_oracle"
-            prob_t = float(grid["per_min_votes"][str(votes)][key]["prob_t"])
+            raise ValueError(
+                f"{spec['label']}: basis {spec['basis']!r} is not materialised "
+                "(PI ruling 2026-09-21 retired the mcc-oracle cell; the tile-MCC "
+                "argmax is recorded in grid.json and presented in "
+                "results/tile-presence-2026-09-21/)")
         out.append({"label": spec["label"], "prob_t": prob_t,
                     "min_votes": votes, "basis": spec["basis"]})
     return out
@@ -370,11 +397,20 @@ def resolve_cell_points(grid: dict[str, Any]) -> list[dict[str, Any]]:
 def stage_materialise() -> int:
     """Write one ``detections.geojson`` per cell, plus the cell manifest.
 
+    A cell already in ``cells_manifest.json`` whose label this stage no
+    longer produces — the retired ``IM-5pass-k3-mcc-oracle`` — is kept as
+    it is, so a re-run cannot delete a committed cell (archive, never
+    delete).
+
     Returns:
         A process exit status.
     """
     grid = json.loads((RESULTS_HOME / "grid.json").read_text())
     frame = june_frame(restamp=True)
+    manifest_path = RESULTS_HOME / "cells_manifest.json"
+    existing: list[dict[str, Any]] = []
+    if manifest_path.exists():
+        existing = json.loads(manifest_path.read_text())["cells"]
     cells = []
     for cell in resolve_cell_points(grid):
         sub = r2.materialise(frame, cell["prob_t"], cell["min_votes"])
@@ -389,15 +425,16 @@ def stage_materialise() -> int:
         })
         logger.info("%-24s n=%5d -> %s", cell["label"], len(sub),
                     dest.relative_to(PROJECT_ROOT))
-    (RESULTS_HOME / "cells_manifest.json").write_text(json.dumps({
+    produced = {c["label"] for c in cells}
+    retained = [c for c in existing if c["label"] not in produced]
+    manifest_path.write_text(json.dumps({
         "buffer_m": r2.BUFFER_M,
         "reference": r2.REFERENCE,
         "rung": RUNG,
-        "cells": cells,
+        "cells": cells + retained,
     }, indent=2) + "\n")
-    logger.info("wrote %s (%d cells)",
-                (RESULTS_HOME / "cells_manifest.json").relative_to(PROJECT_ROOT),
-                len(cells))
+    logger.info("wrote %s (%d cells written, %d retained from the manifest)",
+                manifest_path.relative_to(PROJECT_ROOT), len(cells), len(retained))
     return 0
 
 
