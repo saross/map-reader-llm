@@ -1026,8 +1026,13 @@ def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
                     file=sys.stderr,
                 )
                 continue
-            eval_path, summary, _bounds, eval_bootstrap = max(
-                chosen, key=lambda c: len(c[1].get("buffers", []))
+            # The most complete candidate; a tie on buffer count (identical
+            # scorings by several evaluations, e.g. the three uplift-supplement
+            # pairing anchors over the GS consensus 4-of-5) resolves to the
+            # lexically first path, so the cited provenance never depends on
+            # index order.
+            eval_path, summary, _bounds, eval_bootstrap = min(
+                chosen, key=lambda c: (-len(c[1].get("buffers", [])), c[0])
             )
             # provenance cites the normalised detections path (what the match used),
             # not the raw spec path, so it always names a file that exists on disk

@@ -1931,14 +1931,15 @@ def test_the_committed_signed_rows_still_match_their_snapshots():
 # --- The evaluation index is filesystem-order independent --------------------
 #
 # ``_build_eval_index`` maps a detections file to every ``evaluation.json``
-# that scored it. When several evaluations score one file identically, the
-# condition row keeps the first maximal candidate, so the walk order decides
-# which path its provenance cites. Found 2026-09-21: an unsorted ``rglob``
-# gave ``gold-standard-v2::consensus-4of5`` a different provenance source on
+# that scored it, and the condition row picks the most complete candidate
+# with ties resolved by path. Found 2026-09-21: an unsorted ``rglob`` and a
+# ``max`` that kept the first maximal element gave
+# ``gold-standard-v2::consensus-4of5`` a different provenance source on
 # sapphire than on the machine that committed the manifest, with no metric
-# changed.
+# changed. The walk itself is stubbed below: readdir order on tmpfs happens
+# to be reverse-creation, so a fixture that relied on it passed unsorted.
 
-def _write_eval(root: Path, folder: str, detections: str) -> None:
+def _write_eval(root: Path, folder: str, detections: str) -> Path:
     """One minimal evaluation.json scoring ``detections`` under ``folder``."""
     dest = root / "results" / folder / "evaluation.json"
     dest.parent.mkdir(parents=True)
@@ -1946,21 +1947,31 @@ def _write_eval(root: Path, folder: str, detections: str) -> None:
         "_metadata": {"input_files": {"detections": [detections]}},
         "summary": {"buffers": [], "n_detections": 1},
     }))
+    return dest
 
 
 @pytest.mark.tier1
 def test_eval_index_lists_candidates_in_path_order(tmp_path, monkeypatch) -> None:
-    """Two evaluations of one file come back sorted by path, however created."""
+    """The walk is forced to yield the lexically later file first."""
     from scripts import generate_post_run_report as _g
 
     det = "outputs/x/detections.geojson"
-    # Create the lexically later folder first, so an order-of-creation walk
-    # would list it first.
-    _write_eval(tmp_path, "zzz-later", det)
-    _write_eval(tmp_path, "aaa-earlier", det)
+    later = _write_eval(tmp_path, "zzz-later", det)
+    earlier = _write_eval(tmp_path, "aaa-earlier", det)
     monkeypatch.setattr(_g, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(Path, "rglob", lambda self, pattern: iter([later, earlier]))
     index = _g._build_eval_index()
     assert [c[0] for c in index[det]] == [
         "results/aaa-earlier/evaluation.json",
         "results/zzz-later/evaluation.json",
     ]
+
+
+@pytest.mark.tier1
+def test_gs_v2_consensus_4of5_cites_the_lexically_first_of_its_tied_evals(registry):
+    """Three pairing anchors score consensus 4-of-5 identically; t0-0 is cited."""
+    conditions = extract_conditions(extraction_context("gold-standard-v2"))
+    c = next(c for c in conditions if c["label"] == "consensus-4of5")
+    assert c["provenance"]["source_files"][0] == (
+        "results/uplift-supplement/verifier-pairing/"
+        "verifier-t-pilot__verified-t0-0/evaluation.json")
