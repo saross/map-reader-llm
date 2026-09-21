@@ -1348,3 +1348,31 @@ learnings"*, followed by three specific generalisations he wanted encoded
 (explicit caching everywhere, batch-by-default on in-demand models, uniform
 metadata capture). Relayed here per the protocol's exception for reactions I
 notice rather than observe about myself.
+
+## S156 candidates (pending review, 2026-09-21, drafted at handoff) — silence never discards
+
+Things Shawn observed about Claude this session. Accept / edit / discard /
+replace. The S153, S153-b/c and S154 pending sections above are still
+unreviewed and hold over with these.
+
+- **C1 (unhelpful → fixed).** "It's very hard to find all of the 'bottom
+  line' messages in the terminal amidst everything else … I'll be asking you
+  to repeat things that I cannot find." The report-relay style buried the
+  rulings; the decision log (`planning/pi-decisions-2026-09-20.md`) and the
+  one-item-per-exchange walk were the fix, and every ruling then landed.
+- **C2 (helpful, in the moment).** "As usual, we'll make the most of the
+  error" — on learning the image rows' per-rung verifier legs were a
+  departure from the inheritance method, the reframing of the departure as a
+  free head-to-head measurement of inheritance bias (which then found a real
+  K = 1 effect on the Gemini 3 row) was the kind of turn he wants.
+- **C3 (helpful, in the moment).** "That's a welcome sharpening of my point"
+  — on the frontier test of "3.7 is a step change": the answer that it is
+  the pool not the verifier and the images not the model, with the
+  generational half held back for lack of evidence, was the shape of
+  elaboration he wants on a thinking-out-loud remark.
+- **C4 (unhelpful).** The morning report flagged T5's F1 result at K = 5 as
+  a concern when the declaration already marked it `meaningful: false`, and
+  quoted the K = 1 library edge as a finding when it was an artefact of which
+  cells existed. Both were raised before the underlying artefact or rule had
+  been read; both had to be walked back the same day.
+

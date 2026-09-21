@@ -2655,3 +2655,21 @@ because nothing has to be repeated.
 decision log under `planning/` before presenting the first; present one item
 per message; move each to Ruled with its commit as soon as it is executed.
 
+## claude-obs 123 — 2026-09-21: He grants spend in bands, per purpose, and expects the remainder to stay unspent
+
+**Pattern.** "I will approve up to $20" for the arm 2 replicate (US$10.20
+used); "I approve $15 for it" for the arm 1 replicate (US$6.49). Each
+approval named the purpose and a ceiling; neither was framed as a pool. When
+I asked whether the unspent US$9.80 could fund the second leg, he answered
+with a fresh band rather than a transfer. Two days, US$16.69, every dollar
+traceable to one sentence of his.
+
+**Lesson.** A spend band is a permission for one purpose, not a budget line
+to draw on; the remainder is not mine to reallocate, and asking for a new
+band costs one sentence.
+
+**How to apply.** Present every API leg as its own gate (model, route, call
+count, estimate) even when an earlier band would cover it; report the audited
+figure against the band it was granted under; never net one band against
+another.
+
