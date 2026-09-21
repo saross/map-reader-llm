@@ -57,7 +57,8 @@ Flash (invoiced at US$0.0500 per million, no tier suffix) and false of
 and US$0.0362 per million on flex, half the standard rate. On the 3.7
 image campaign's 2,123 million cached proposer tokens that is a
 US$79.61 overstatement of the audited proposer total (US$369.44 cited;
-about US$290 on the invoice basis). The September verifier legs and
+US$289.83 on the rate card of record, re-audited on sapphire 2026-09-21
+under WP1). The September verifier legs and
 every Gemini 3 leg are unaffected (no cached tokens, or a tier-invariant
 cache rate). The 2 percent reconciliation of 2026-09-11 predates the
 cache-heavy 3.7 legs.
@@ -439,6 +440,17 @@ audit and a re-audit, as today's work did.
 ---
 
 ## Changelog
+
+### 2026-09-21 (later) — WP1 and WP2 on a branch, PR #20
+
+WP1 and WP2 delivered on `cost-accounting-wp1` (PR #20, five commits
+through ca39d3f7a): the rate card as data, `scripts/lib_cost.py`, the
+writers and merges re-wired, the auditors delegating, the D18 published-rate
+check (36 of 36 rates equal the live page of 2026-09-21). Acceptance
+re-audited on sapphire: US$6.4909, US$10.2033, US$189.4718 and US$233.6295
+reproduce; the 3.7 image proposer pool re-audits at US$289.8262 against the
+US$369.4409 cited (the cache correction of § 1.1, to the cent). Two-lens
+audit and full tier-1 run in progress before merge.
 
 ### 2026-09-21 — Original draft (Session 157)
 
