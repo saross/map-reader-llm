@@ -665,16 +665,22 @@ def run_verification(
         "iterations_per_candidate": iterations,
     })
 
-    # Estimate costs
+    # This legacy script has no --service-tier switch, so its requests run at
+    # the standard tier and are priced there (scripts/lib_cost.py); the tier
+    # is recorded rather than left for a reader to guess.
     cost_estimate = estimate_cost(
         usage=metadata_tracker.usage,
         provider=LLMProvider.GEMINI.value,
         model=model_name,
+        tier="standard",
+        tier_source="legacy script without --service-tier: standard tier",
     )
 
     # Finalise and save metadata
     meta = metadata_tracker.finalise(include_per_item=True)
     meta["cost_estimate"] = cost_estimate
+    meta["billing"] = {"service_tier": "standard",
+                       "tier_source": cost_estimate["pricing_used"]["tier_source"]}
 
     meta_file = Path(output_path).with_suffix(".meta.json")
     with open(meta_file, "w") as f:

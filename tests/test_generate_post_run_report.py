@@ -24,6 +24,7 @@ Asserts:
 from __future__ import annotations
 
 import json
+import re
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
@@ -1925,7 +1926,12 @@ def test_the_committed_signed_rows_still_match_their_snapshots():
     """THE guard, run against the register as committed."""
     errors, advisories = check_cited_artefact_hashes()
     assert errors == [], errors
-    assert advisories[0].startswith("cited-artefact snapshots: 2 signed row(s)")
+    # The count of snapshotted rows grows as rows are signed (three since the
+    # K = 5 row of 2026-09-21); what this pins is that every one checked clean.
+    match = re.match(r"cited-artefact snapshots: (\d+) signed row\(s\) checked, "
+                     r"(\d+) detections file\(s\) verified", advisories[0])
+    assert match, advisories[0]
+    assert int(match.group(1)) >= 3 and int(match.group(2)) >= 65
 
 
 # --- The evaluation index is filesystem-order independent --------------------

@@ -1868,12 +1868,10 @@ def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
                     "these chunks are not one pass")
 
     usage: dict[str, int] = {}
-    cost = 0.0
     for m in metas:
         for k, v in (m.get("usage_stats") or {}).items():
             if isinstance(v, int):
                 usage[k] = usage.get(k, 0) + v
-        cost += float((m.get("cost_estimate") or {}).get("total_cost_usd") or 0)
     inp = usage.get("total_input_tokens", 0)
     usage["cached_share"] = (usage.get("total_cached_tokens", 0) / inp
                              if inp else None)
@@ -1905,9 +1903,22 @@ def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
                 merged_section[field] = total
         if merged_section:
             base[section] = merged_section
-    if not isinstance(base.get("cost_estimate"), dict):
-        base["cost_estimate"] = {}
-    base["cost_estimate"]["total_cost_usd"] = cost
+    # The pass's cost is the one function over the SUMMED tokens, never the
+    # sum of the chunks' dollars: until 2026-09-21 this wrote the dollar sum
+    # into ``total_cost_usd`` and left every other field as chunk 0's, so
+    # ``input + output != total`` in four committed metas. Chunks that all
+    # carry a ``cost/2`` block are re-priced at their own recorded terms; a
+    # legacy set keeps the additive sum and is labelled as such.
+    from scripts.lib_llm_metadata import merge_cost_blocks
+    merged_cost = dict(metas[0].get("cost_estimate") or {})
+    for m in metas[1:]:
+        merged_cost = merge_cost_blocks(merged_cost, m.get("cost_estimate") or {},
+                                        usage)
+    if merged_cost.get("cost_basis") == "audited":
+        base["cost_estimate"] = merged_cost
+    else:
+        base["cost_estimate"] = merged_cost
+        base["cost_estimate"].setdefault("cost_basis", "summed-legacy")
     base["chunked_run"] = {"n_chunks": len(metas),
                            "chunk_metas": [Path(m).name for m in
                                            sorted(chunk_metas, key=_chunk_sort_key)]}
@@ -2511,21 +2522,25 @@ def write_batch_outputs(
         usage.total_tokens = usage_stats.get("total_tokens", 0)
     tracker.usage = usage
 
-    # The discount is now a parameter of the cost model rather than a
-    # post-hoc multiply here, so batch and real-time flex share one code path
-    # and one recorded convention. ``batch_discount`` is retained in
-    # pricing_used for backwards compatibility with readers of older metadata.
+    # A Batch API pass is priced at the batch tier of the rate card row in
+    # force on its date (scripts/lib_cost.py); the tier is recorded in the
+    # block and in ``billing`` so no reader has to infer it from the
+    # ``batch_api`` marker. ``batch_discount`` is retained in pricing_used
+    # for readers of older metadata.
     cost_estimate = estimate_cost(
         usage=usage,
         provider=LLMProvider.GEMINI.value,
         model=model_name,
-        discount=BATCH_API_DISCOUNT,
-        discount_reason="Google async Batch API (50 % of list)",
+        tier="batch",
+        tier_source="Batch API path (lib_batch_api.write_batch_outputs)",
+        n_responses_with_usage=(usage_stats or {}).get("n_responses_with_usage"),
     )
     cost_estimate["pricing_used"]["batch_discount"] = BATCH_API_DISCOUNT
 
     meta = tracker.finalise(include_per_item=False)
     meta["cost_estimate"] = cost_estimate
+    meta["billing"] = {"service_tier": "batch",
+                       "tier_source": cost_estimate["pricing_used"]["tier_source"]}
     if usage_stats:
         # Provenance of the counts: how many responses reported usage, and
         # whether any did. "0 tokens" and "nobody told us" must not read alike.

@@ -2147,6 +2147,7 @@ def _verify_realtime(
         strict=strict,
         pass_kind=pass_kind,
         pass_record=pass_record,
+        service_tier=service_tier,
     )
 
     return 1 if gap_count > 0 and strict else 0
@@ -2171,6 +2172,7 @@ def _write_verification_outputs(
     pass_kind: str = "resume",
     pass_record: dict[str, Any] | None = None,
     merge_previous_meta: bool = True,
+    service_tier: str | None = None,
 ) -> int:
     """Write verification outputs shared by both modes.
 
@@ -2286,12 +2288,25 @@ def _write_verification_outputs(
     if metadata_tracker is not None:
         from scripts.lib_llm_metadata import estimate_cost, LLMProvider
 
+        # Price at the tier the leg RAN at. Until 2026-09-21 this call passed
+        # no tier, so every verifier leg — flex realtime and Batch API alike —
+        # recorded list price, exactly double the bill
+        # (planning/cost-accounting-fix-plan-2026-09-21.md section 1.3).
+        if mode == "batch":
+            billing_tier, tier_source = "batch", "Batch API path (run_pv --mode batch)"
+        elif service_tier:
+            billing_tier, tier_source = service_tier, "cli --service-tier"
+        else:
+            billing_tier, tier_source = "standard", "no --service-tier given: standard tier"
         meta = metadata_tracker.finalise(include_per_item=False)
         meta["cost_estimate"] = estimate_cost(
             usage=metadata_tracker.usage,
             provider=LLMProvider.GEMINI.value,
             model=model_name or config.get("model", "gemini-3-flash"),
+            tier=billing_tier,
+            tier_source=tier_source,
         )
+        meta["billing"] = {"service_tier": billing_tier, "tier_source": tier_source}
         # Never replace a prior pass's usage with this pass's: the previous
         # meta is preserved verbatim to an indexed sidecar and, for a
         # resume or cleanup, summed into what we write. See

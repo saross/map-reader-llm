@@ -1098,13 +1098,25 @@ def _read_token_counts(usage: dict[str, Any]) -> dict[str, int]:
 # audited path fixes all three: tokens come from a per-item UNION
 # (deduped by ``item_id``), cost is recomputed from those tokens at an
 # operator-stated tier, and thinking bills at the output rate.
-_PRICING_USD_PER_1M: dict[str, dict[str, dict[str, float]]] = {
-    "gemini-3-flash-preview": {
-        "standard": {"input": 0.50, "output": 3.00, "cached_input": 0.05},
-        "flex": {"input": 0.25, "output": 1.50, "cached_input": 0.05},
-        "batch": {"input": 0.25, "output": 1.50, "cached_input": 0.05},
-    },
-}
+# Since 2026-09-21 the rates are the rate card's (``data/pricing/
+# gemini-rate-card.json`` through ``scripts/lib_cost.py``), not a table in
+# this file: this was the seventh hand-typed copy in the repository. The
+# name survives as a view the manifest's ``pricing`` block reports.
+
+
+def _pricing_view(models: "set[str]", pricing_tier: str,
+                  at: Any = None) -> dict[str, dict[str, float]]:
+    """The card's per-1M rates for the models seen, in this manifest's shape."""
+    from scripts.lib_cost import RateCardError, UnknownModelError, rates_for
+    out: dict[str, dict[str, float]] = {}
+    for m in sorted(models):
+        try:
+            r = rates_for(m, pricing_tier, at)
+        except (RateCardError, UnknownModelError):
+            continue
+        out[m] = {"input": r["input_fresh"], "output": r["output"],
+                  "cached_input": r["input_cached"]}
+    return out
 
 # Per-call rate used to RECONSTRUCT a stub verifier leg. The
 # cleanup-overwrite pattern leaves ``verified/run.meta.json`` recording
@@ -1171,29 +1183,29 @@ def _union_per_item_tokens(
 
 
 def _price_tokens(
-    tokens: dict[str, int], model: str, pricing_tier: str,
+    tokens: dict[str, int], model: str, pricing_tier: str, at: Any = None,
 ) -> dict[str, float]:
-    """Price a token-bucket dict at the audited per-tier rates.
+    """Price a token-bucket dict through the project's one cost function.
 
-    Thinking tokens bill at the output rate (verified at the pricing
-    page, 2026-06-12); the cached subset of input bills at the cache
-    rate instead of the input rate. Raises ``KeyError`` for an unknown
-    model or tier so a silent zero-cost row can never enter a manifest.
+    Thinking tokens bill at the output rate; the cached subset of input
+    bills at the cache-read rate of the model's card row at the tier.
+    Raises ``KeyError`` (``UnknownModelError``) for an unknown model and
+    ``ValueError`` (``RateCardError``) for an unknown tier, so a silent
+    zero-cost row can never enter a manifest.
     """
-    rates = _PRICING_USD_PER_1M[model][pricing_tier]
-    cached = min(tokens["cached_tokens"], tokens["input_tokens"])
-    non_cached = tokens["input_tokens"] - cached
-    input_cost = (
-        non_cached * rates["input"] + cached * rates["cached_input"]
-    ) / 1_000_000
-    output_cost = (
-        (tokens["output_tokens"] + tokens["thinking_tokens"])
-        * rates["output"] / 1_000_000
-    )
+    from scripts.lib_cost import price_tokens
+    classes = {
+        "input_fresh": tokens["input_tokens"] - min(tokens["cached_tokens"],
+                                                    tokens["input_tokens"]),
+        "input_cached": min(tokens["cached_tokens"], tokens["input_tokens"]),
+        "output": tokens["output_tokens"],
+        "thinking": tokens["thinking_tokens"],
+    }
+    priced = price_tokens(classes, model, pricing_tier, at)
     return {
-        "input_cost_usd": input_cost,
-        "output_cost_usd": output_cost,
-        "total_cost_usd": input_cost + output_cost,
+        "input_cost_usd": priced["input_fresh"] + priced["input_cached"],
+        "output_cost_usd": priced["output"],
+        "total_cost_usd": priced["total"],
     }
 
 
@@ -1564,11 +1576,8 @@ def aggregate_cost_manifest(
             "pricing": (
                 {
                     "pricing_tier": pricing_tier,
-                    "rates_usd_per_1m": {
-                        m: _PRICING_USD_PER_1M[m][pricing_tier]
-                        for m in sorted(models_seen)
-                        if m in _PRICING_USD_PER_1M
-                    },
+                    "rates_usd_per_1m": _pricing_view(models_seen, pricing_tier),
+                    "rate_card": __import__("scripts.lib_cost", fromlist=["x"]).rate_card_identity(),
                     "thinking_billed_as_output": True,
                     "token_derivation": (
                         "per-item union deduped by item_id; usage_stats "
@@ -1979,7 +1988,12 @@ def cmd_all(args: argparse.Namespace) -> int:
     if "evaluate" not in resumed:
         _record("evaluate", run_evaluate(rcfg))
 
-    aggregate_cost_manifest(rcfg)
+    # Never the legacy 'recorded' basis from the entry point: the June 2026
+    # audited manifests were silently overwritable by a re-run of ``all``.
+    # The run's own configured tier (``service_tier``, default flex) is the
+    # audited basis a fresh manifest is written on.
+    aggregate_cost_manifest(
+        rcfg, pricing_tier=str(rcfg.global_opts.get("service_tier") or "flex"))
     _finalise_launch_manifest(rcfg)
     logger.info("Run complete: %s", rcfg.output_dir)
     return 0
