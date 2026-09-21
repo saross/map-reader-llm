@@ -1,6 +1,8 @@
 # Cost accounting: diagnosis and fix plan
 
-**Status**: DRAFT for the PI's ruling (Session 157, 2026-09-21).
+**Status**: RULED 2026-09-21 (S157): D11–D18 all as recommended, D17 to
+be verified, D18 amended (published-rate check with a flag to the PI);
+see `planning/pi-decisions-2026-09-20.md`. Work packages proceed in order.
 **Trigger**: the S157 coverage check found the passes register booking the
 3.7 image campaign at US$1,061 against an audited US$415, and the PI asked
 why the live feedback during runs is accurate to cents while the recorded
@@ -407,6 +409,11 @@ audit and a re-audit, as today's work did.
 - **D18 — Rate authority.** The pinned dated card validated against
   invoices is the authority (recommended); LiteLLM and the pricing page
   are sources it cites, never the figure of record.
+  *Amended at ruling*: WP1 also ships `scripts/check_published_rates.py`,
+  which reads the model rows of Google's pricing page and compares them
+  with the card; any difference is a flagged report for the PI to confirm
+  in AI Studio or the Cloud Console before the card is edited. It never
+  edits the card itself.
 
 ---
 
