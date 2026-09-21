@@ -12,20 +12,23 @@ edits the card.
 What it does
 ------------
 For every model on the card, it locates that model's section of the pricing
-page, reads the "Input price", "Output price" and "Context caching price"
-rows as text, and collects every dollar amount on each row. The card's
-standard, batch and flex rates for the class must all appear among those
-amounts (``OK``). An amount on the row that the card does not carry, or a
-card rate the row lacks, is ``CHANGED``; a section or row that cannot be
-found is ``UNPARSED``. Both non-OK verdicts exit 1, because both need a
-human to look: a silent parse failure would be the same defect as a silent
-rate fallthrough.
+page (an exact heading match; banners such as "Gemini 3.8 Flash is now
+available" are not headings), then within it each tier block (Standard,
+Batch, Flex) and each class row ("Input price", "Output price (including
+thinking tokens)", "Context caching price"). A row's amounts sit on their
+own lines with a validity phrase — "$0.75 through December 31, 2026", "$1.50
+starting January 1, 2027" — and the amount in force on the requested date
+is compared with the card's rate for that date: ``OK`` when equal,
+``CHANGED`` when both are read and differ, ``UNPARSED`` when the section,
+tier or row cannot be read. Both non-OK verdicts exit 1, because both need
+a human to look: a silent parse failure would be the same defect as a
+silent rate fallthrough. Storage rates are not checked (no run here is
+priced on them).
 
 The page is HTML with no machine-readable feed (capability scan,
-``planning/cost-accounting-fix-plan-2026-09-21.md`` § 3.1), so the parse is
-deliberately loose — membership of amounts on a labelled row — rather than a
-column-position rule that a page redesign would silently break. Storage
-rates are not checked (no run here is priced on them).
+``planning/cost-accounting-fix-plan-2026-09-21.md`` § 3.1); the layout
+this reads was retrieved 2026-09-21 and a text excerpt of it is the test
+fixture ``tests/fixtures/pricing-page-2026-09-21.txt``.
 
 Usage::
 
@@ -49,6 +52,7 @@ import json
 import re
 import sys
 import urllib.request
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -75,12 +79,21 @@ ROW_LABELS: dict[str, str] = {
 }
 
 _MONEY = re.compile(r"\$\s?(\d[\d,]*(?:\.\d+)?)")
+_THROUGH = re.compile(r"through ([A-Z][a-z]+ \d{1,2}, \d{4})")
+_STARTING = re.compile(r"starting ([A-Z][a-z]+ \d{1,2}, \d{4})")
+_MODEL_ID = re.compile(r"^gemini-[\w.\-]+")
+
+#: The tier block headings inside a model section, as the page names them.
+#: ``Priority`` is read so that its rows end the Flex block; it is not on
+#: the card and is never compared.
+PAGE_TIERS: dict[str, str] = {"Standard": "standard", "Batch": "batch", "Flex": "flex",
+                              "Priority": "priority"}
 
 
 def page_text(raw_html: str) -> str:
     """The page as one line of plain text per block element."""
     text = re.sub(r"(?is)<(script|style).*?</\1>", " ", raw_html)
-    text = re.sub(r"(?i)</(tr|p|h[1-6]|li|div|table)>", "\n", text)
+    text = re.sub(r"(?i)</(tr|td|th|p|h[1-6]|li|div|table)>", "\n", text)
     text = re.sub(r"(?i)<br\s*/?>", "\n", text)
     text = re.sub(r"<[^>]+>", " ", text)
     text = html.unescape(text)
@@ -88,70 +101,150 @@ def page_text(raw_html: str) -> str:
     return "\n".join(ln for ln in lines if ln)
 
 
+def _is_heading(lines: list[str], i: int) -> bool:
+    """Whether line ``i`` is a model section heading.
+
+    A heading is a line beginning ``Gemini <version>`` whose next line is
+    the model id (``gemini-3.7-flash``) or a tier block name — the page
+    also prints banners such as "Gemini 3.8 Flash is now available. Try it
+    out." followed by prose, which this rule rejects. Headings with
+    parentheses or emoji ("Gemini 3.1 Flash Image (Nano Banana 2)") are
+    headings all the same, which is why the rule reads the next line
+    rather than the heading's own characters.
+    """
+    if not re.match(r"^Gemini \d", lines[i]) or i + 1 >= len(lines):
+        return False
+    nxt = lines[i + 1]
+    return bool(_MODEL_ID.match(nxt)) or nxt in PAGE_TIERS
+
+
 def model_section(text: str, page_name: str) -> str | None:
-    """The text from a model's heading to the next model heading."""
-    heads = [m for m in re.finditer(r"(?m)^Gemini [0-9][^\n]{0,60}$", text)]
-    for i, m in enumerate(heads):
-        if m.group(0).strip().lower().startswith(page_name.lower()):
-            end = heads[i + 1].start() if i + 1 < len(heads) else len(text)
-            return text[m.start():end]
+    """The text from a model's own heading line to the next model heading."""
+    lines = text.splitlines()
+    heads = [i for i in range(len(lines)) if _is_heading(lines, i)]
+    for n, i in enumerate(heads):
+        if lines[i].strip().rstrip(" .").lower() == page_name.lower():
+            end = heads[n + 1] if n + 1 < len(heads) else len(lines)
+            return "\n".join(lines[i:end]) + "\n"
     return None
 
 
-def amounts_on_row(section: str, label: str) -> set[float] | None:
-    """Every dollar amount on the first row that starts with ``label``."""
-    for line in section.splitlines():
-        if line.lower().startswith(label.lower()):
-            return {float(x.replace(",", "")) for x in _MONEY.findall(line)}
+def _date(s: str) -> date:
+    return datetime.strptime(s, "%B %d, %Y").date()
+
+
+def amount_valid_on(lines: list[str], at: date) -> float | None:
+    """The one dollar amount among ``lines`` that is in force on ``at``.
+
+    A line reads ``$X through <date>``, ``$X starting <date>`` or a bare
+    ``$X`` (no validity qualifier, in force now). Storage-rate lines
+    (``per hour``) are ignored. ``None`` when no line applies.
+    """
+    for line in lines:
+        if "per hour" in line or "storage" in line.lower():
+            continue
+        m = _MONEY.search(line)
+        if not m:
+            continue
+        amount = float(m.group(1).replace(",", ""))
+        through, starting = _THROUGH.search(line), _STARTING.search(line)
+        if through and at <= _date(through.group(1)):
+            return amount
+        if starting and at >= _date(starting.group(1)):
+            return amount
+        if not through and not starting:
+            return amount
     return None
+
+
+def published_rates(section: str, at: date) -> dict[str, dict[str, float | None]]:
+    """``{tier: {class: amount}}`` read off one model section on a date.
+
+    Each tier block starts with its heading line (``Standard``, ``Batch``,
+    ``Flex``); within it each class row is its label line followed by the
+    amount lines until the next label or the next tier. A tier or row the
+    section lacks is absent from the result.
+    """
+    out: dict[str, dict[str, float | None]] = {}
+    lines = section.splitlines()
+    tier: str | None = None
+    label: str | None = None
+    pending: list[str] = []
+
+    def flush() -> None:
+        if tier and label:
+            out.setdefault(tier, {})[label] = amount_valid_on(pending, at)
+
+    for line in lines:
+        if line in PAGE_TIERS:
+            flush()
+            tier, label, pending = PAGE_TIERS[line], None, []
+            continue
+        low = line.lower()
+        hit = next((cls for cls, lab in ROW_LABELS.items() if low.startswith(lab.lower())), None)
+        if hit and tier:
+            flush()
+            label, pending = hit, []
+            continue
+        if tier and label:
+            if low.startswith(("grounding", "used to improve", "free tier", "paid tier")):
+                flush()
+                label, pending = None, []
+            else:
+                pending.append(line)
+    flush()
+    return out
 
 
 def compare(card: dict[str, Any], text: str, at: str | None = None) -> list[dict[str, Any]]:
-    """One verdict per (model, class).
+    """One verdict per (model, tier, class).
 
     Args:
         card: The parsed rate card.
         text: The pricing page as plain text.
-        at: The date whose card row is compared; ``None`` means today.
+        at: The date whose card row and whose published amount are compared;
+            ``None`` means today.
 
     Returns:
-        Dicts with ``model``, ``class``, ``expected`` (the card's rates by
-        tier), ``found`` (amounts on the page row) and ``verdict``.
+        Dicts with ``model``, ``tier``, ``class``, ``card`` (the card's rate),
+        ``page`` (the published amount in force on the date, or ``None``) and
+        ``verdict``: ``OK`` (equal), ``CHANGED`` (both read, different),
+        ``UNPARSED`` (the page's section, tier or row could not be read).
     """
+    when = date.fromisoformat(at) if at else datetime.now(timezone.utc).date()
     out: list[dict[str, Any]] = []
     for model in card["models"]:
         page_name = PAGE_NAMES.get(model)
         section = model_section(text, page_name) if page_name else None
-        row = rate_row(model, at, card)
-        for cls, label in ROW_LABELS.items():
-            expected = {tier: row["rates"][tier][cls] for tier in card["tiers"]}
-            found = amounts_on_row(section, label) if section else None
-            if found is None:
-                verdict = "UNPARSED"
-            else:
-                wanted = set(expected.values())
-                verdict = "OK" if wanted <= found and found <= wanted else "CHANGED"
-            out.append({"model": model, "class": cls, "expected": expected,
-                        "found": sorted(found) if found is not None else None,
-                        "verdict": verdict})
+        published = published_rates(section, when) if section else {}
+        row = rate_row(model, when, card)
+        for tier in card["tiers"]:
+            for cls in ROW_LABELS:
+                expected = float(row["rates"][tier][cls])
+                found = published.get(tier, {}).get(cls)
+                if found is None:
+                    verdict = "UNPARSED"
+                else:
+                    verdict = "OK" if abs(found - expected) < 1e-9 else "CHANGED"
+                out.append({"model": model, "tier": tier, "class": cls,
+                            "card": expected, "page": found, "verdict": verdict})
     return out
 
 
 def report(results: list[dict[str, Any]], source: str) -> str:
     lines = [f"published-rate check against {source}"]
     for r in results:
-        exp = ", ".join(f"{t} {v}" for t, v in r["expected"].items())
-        lines.append(f"  {r['verdict']:<8} {r['model']:<24} {r['class']:<13} "
-                     f"card: {exp}  page: {r['found']}")
+        lines.append(f"  {r['verdict']:<8} {r['model']:<24} {r['tier']:<9} {r['class']:<13} "
+                     f"card {r['card']}  page {r['page']}")
     bad = [r for r in results if r["verdict"] != "OK"]
     if bad:
         lines.append(
-            f"FLAG for the PI: {len(bad)} class(es) differ from or could not be read "
+            f"FLAG for the PI: {len(bad)} rate(s) differ from or could not be read "
             "off the published page. Confirm the current rates in AI Studio or the "
             "Cloud Console before editing data/pricing/gemini-rate-card.json; this "
             "script never edits it.")
     else:
-        lines.append("every card rate appears on its published row; nothing to confirm")
+        lines.append("every card rate equals its published amount; nothing to confirm")
     return "\n".join(lines)
 
 
