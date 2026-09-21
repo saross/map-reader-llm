@@ -2592,3 +2592,66 @@ low-urgency, high-value work that never gets a session of its own.
 **How to apply.** When a run will take hours, lay out the documentation and
 registration work that has become possible, with a recommended order, without
 being asked.
+
+## claude-obs 120 — 2026-09-21: He reopens a ruling by asking about degrees of freedom, not by objecting
+
+**Pattern.** The MCC-oracle redefinition was his ruling of the previous
+evening, built and registered overnight. He did not come back with "I've
+changed my mind"; he came back with "what can vary in a run if the oracle is
+pinned to the carried vote count?" The answer (one discrete dimension, flat
+near the operating point) dismantled my recommendation without either of us
+having to defend a position, and the reversal was decided in three exchanges.
+He then extended it himself — "if you want to optimise MCC, you set the vote
+count, and that's about all, right?" — into the tile-presence table.
+
+**Lesson.** When he has second thoughts about a construct, the productive
+move is the structural question (what is actually free to vary), not a
+re-argument of the options. It exposes whether a construct carries content
+before anyone invests in defending it.
+
+**How to apply.** Before recommending a new derived quantity (an oracle, a
+tax, a normalised score), state its degrees of freedom and what each one can
+move; if the answer is "one, and it is flat", say so instead of offering
+three presentation options.
+
+## claude-obs 121 — 2026-09-21: Self-critique — I ran six agents on two shared clones and read the guidance as applying to someone else
+
+**Pattern.** `docs/agent-guidance.md` and the global guidance both say cross-agent
+work uses separate worktrees. I read that as a rule about Claude and Codex
+and spawned six of my own agents into two checkouts. Every agent coped —
+detached worktrees, explicit pathspecs, one stash, one push that swept another
+agent's commit under a different author — and the cost still arrived: a pull
+blocked by untracked files silently ran old code for the K = 1/K = 5 tests,
+and a cell cited by a signed row was re-materialised in place for 58 minutes.
+The agents that did the best work were the ones that gave themselves a
+worktree without being told.
+
+**Lesson.** A rule about concurrency does not care who the agents belong to.
+Same-agent parallelism has every hazard of cross-agent parallelism and one
+more: I am the only coordinator, and I was busy.
+
+**How to apply.** Every spawned agent that will commit gets `isolation:
+worktree` or an explicit instruction to work in a detached worktree at
+origin/main; briefs name the files other agents currently hold; a cell cited
+by a signed row is never re-materialised in place (now enforced by the
+cited-artefact guard, 2ca81ceeb).
+
+## claude-obs 122 — 2026-09-21: He asks for the decisions one at a time, and the log file did what the terminal could not
+
+**Pattern.** He said plainly that the bottom-line messages were getting lost
+in the scroll and that he would keep asking me to repeat things he could not
+find. We made a decision log in the repo — one entry per pending ruling with
+its bottom line, moved to a Ruled section with the executing commit — and
+then walked D1 to D10 in order, one ruling per exchange. He ruled on every
+item, including two he had "missed" earlier in the terminal. The log took
+eleven lines to create and was the most-read artefact of the day.
+
+**Lesson.** For a multi-decision session the deliverable is not the analysis
+but the queue of rulings, and a queue belongs in a file he can open, not in
+a message that scrolls. One-at-a-time is slower per item and faster overall
+because nothing has to be repeated.
+
+**How to apply.** When more than two rulings are pending, open a dated
+decision log under `planning/` before presenting the first; present one item
+per message; move each to Ruled with its commit as soon as it is executed.
+
