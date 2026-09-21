@@ -379,7 +379,7 @@ the report cited in `cost_source`.
 | 3 | Passes schema `cost_basis`, `cost_source`; generator prices from tokens; `_README`; markdown column; C3 ledger semantics | schema round-trip; register-vs-auditor test; C3 claim test | local | branch + PR (schema change) |
 | 4 | Back-fill: `cost_audit.json` sidecars for every meta with usage; register regenerated on sapphire; `published` set for the twelve legs; hypothesis table and run reports re-projected | drift checks green; ALL VALID | sapphire | PR from WP3 |
 | 5 | Mislabels corrected (ten sites in § 2); `FAMILY_COST` re-derived from the manifests with per-figure provenance; `cost_retrospective.json` gains a basis; the hand-written post-run report gains the caveat; K-ladder drivers take the model from the config | one test per script that its "audited" function calls WP1 | local | small PRs, one per artefact family |
-| 6 | `reconcile_invoice.py` and the August/September fixtures; a `docs/methodology` note on how to run it each month | fixture test at the 2 percent gap the reconciliation found | local | main |
+| 6 | `reconcile_invoice.py` reading the console exports in `docs/costs/` (D17 revised: no BigQuery), the August/September fixtures, and a `docs/methodology` note giving the monthly export routine — which console page, which filters, where the file goes — so it takes minutes | fixture test at the 2 percent gap the reconciliation found | local | main |
 | 7 | Signed rows re-read: `h6-a09-cost-gate` re-derived on the audited basis with a dated signature note (D9 pattern) if the ratios move; every analysis outcome quoting dollars checked against the new register | — | — | main, with the PI |
 
 Effort: WP1–3 about two sessions of agent work plus audit; WP4 one
@@ -407,6 +407,9 @@ audit and a re-audit, as today's work did.
   action in the billing console; standard export to a dataset in the
   map-reader-llm project; the console CSV workflow continues until it
   has accrued a month).
+  *Revised 2026-09-21 (evening)*: ABANDONED after two attempts; the
+  console exports the reconciliations already used are the source of
+  record for the invoice gate. See `planning/pi-decisions-2026-09-20.md`.
 - **D18 — Rate authority.** The pinned dated card validated against
   invoices is the authority (recommended); LiteLLM and the pricing page
   are sources it cites, never the figure of record.
