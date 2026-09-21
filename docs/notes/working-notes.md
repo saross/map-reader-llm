@@ -36564,3 +36564,201 @@ superseded the next day; its finding about the collapse stands unchanged);
 supports); **Obs 484** (unanimity as the image pool's precision filter);
 **Obs 482** (F1 and tile-MCC giving near-opposite orderings on this board —
 the first sign that one column could not serve both).
+
+## Observation 494: The 3.7 image pool is the only pool whose F1 and tile-MCC optima coincide — a proposer-quality diagnostic in the width of the Pareto front (Session 156, 2026-09-21)
+
+**Context.** On reading `results/tile-presence-2026-09-21/frontier/frontier.md`
+the PI observed that the two metrics converging on a single configuration in
+the 3.7 image row is a story in itself, not a footnote to the tile-MCC
+arc. **Obs 493** recorded the split in one sentence (21 of 35 configurations
+have an interior front; none of the 3.7 image row's six does). This entry is
+the sharpened version: the per-configuration numbers, the two confounds that
+have to be removed before the comparison means anything, and what the
+convergence is evidence *of*.
+
+**The measure.** For each configuration, the `(micro-F1 @ 50 m, tile-MCC)`
+**Pareto-non-dominated set** of its committed sweep — the points no other
+point in that grid beats on both metrics. Two quantities fall out of it:
+
+- **front size** — `n_non_dominated`. A front of one point means the two
+  metrics pick the *same* operating point and there is nothing to trade.
+- **F1 span** — `max − min` of `micro_f1_50` across the front. This is what
+  the whole tile-MCC end of the front costs in detection quality.
+
+Both are one pass over `frontier.json` for any pool with a committed sweep:
+no re-sweep, no API, no new cells.
+
+**Only 21 of the 35 configurations can answer the question.** Nine rungs run
+at K = 1 or N = 1, where `min_votes` has one legal value and a front cannot
+express a vote-count disagreement. Five more — the board incumbents `TH7`,
+`T03`, `TM`, `IM` and `UPL` — have sweeps that **floor at k = 3**, because
+their verified unions begin at three votes: `TM`'s single-point front and
+`IM`'s F1 span of 0.0009 look like convergence and are **censorship**, since
+the low-vote band where the metrics argue is not in their grid at all. That
+leaves **21 configurations whose sweep runs from a single vote to unanimity**,
+and those are the comparison.
+
+| configuration | grid points | front | F1 span | votes on the front |
+|---|---:|---:|---:|---|
+| `IMG-ARM1-K3` | 63 | **2** | **0.0033** | k3 |
+| `IMG-ARM1-K5` | 100 | **2** | **0.0071** | k5 |
+| `IMG-ARM2-K3` | 72 | **2** | **0.0324** | k2, k3 |
+| `IMG-ARM2-K5` | 120 | **1** | **0.0000** | k5 |
+| `ARM1-N3` | 57 | 4 | 0.0726 | k1–k3 |
+| `ARM1-N5` | 95 | 5 | 0.0941 | k1, k3–k5 |
+| `ARM2-N3` | 81 | 4 | 0.0603 | k1–k3 |
+| `ARM2-N5` | 135 | 6 | 0.0816 | k1–k5 |
+| `G3IMG-ARM1-K3` | 60 | 10 | 0.2301 | k1–k3 |
+| `G3IMG-ARM1-K5` | 100 | 15 | 0.2972 | k1–k5 |
+| `G3IMG-ARM2-K3` | 84 | 3 | 0.2491 | k1–k3 |
+| `G3IMG-ARM2-K5` | 145 | 9 | 0.3136 | k1–k5 |
+| `A-N3` | 60 | 3 | 0.0536 | k1, k2 |
+| `A-N5` | 100 | 6 | 0.0763 | k1–k4 |
+| `A-N10` | 200 | 11 | 0.1142 | k1–k7 |
+| `B-N3` | 60 | 10 | 0.1022 | k1–k3 |
+| `B-N5` | 100 | 13 | 0.1319 | k1–k5 |
+| `B-N10` | 200 | 24 | 0.1805 | k1–k9 |
+| `FOURTH-N3` | 81 | 3 | 0.0950 | k1–k3 |
+| `FOURTH-N5` | 135 | 5 | 0.1270 | k1–k5 |
+| `FOURTH-N10` | 270 | 9 | 0.1788 | k1–k9 |
+
+**The finding is a clean separation with no overlap.** The four 3.7 image
+rungs have fronts of **1–2 points** and F1 spans of **0.0000 to 0.0324**, and
+their fronts never leave the top of the vote ladder — full unanimity on three
+of the four, with `IMG-ARM2-K3` admitting one step down to k = 2. The other
+**seventeen** have fronts of **3 to 24 points** and F1 spans of **0.0536
+(`A-N3`) to 0.3136 (`G3IMG-ARM2-K5`)**, and every one of them runs down to a
+single vote. The widest 3.7 image span and the narrowest other span are
+separated by **0.021 of micro-F1** with nothing in between. Even the second
+point, where there is one, buys almost nothing: `IMG-ARM2-K3`'s whole front
+is (0.90, k3) at F1 0.9206 / tile-MCC 0.7654 and (0.96, k2) at 0.8882 /
+0.7656 — **0.0324 of F1 for 0.0001 of tile-MCC** — and the tile-MCC spans of
+the other three 3.7 image fronts are 0.0087, 0.0014 and 0.0000.
+
+**Reading (a): it is the pool, not the verifier.** `FOURTH` is Run B's
+Gemini 3 K = 10 proposer pool verified by `gemini-3.7-flash` instead of
+`gemini-3-flash-preview` — the same candidates, a different verifier — and it
+keeps a wide front: 0.0950 / 0.1270 / 0.1788 of F1 span at N = 3 / 5 / 10
+against B's own **0.1022 / 0.1319 / 0.1805**. Swapping the verifier moves the
+span by **0.0017 to 0.0072** and does not close it. The converse holds on the
+image side: the 3.7 image row converges under the **Gemini 3** verifier
+(arm 1: spans 0.0033 and 0.0071) as well as under its own (arm 2: 0.0324 and
+0.0000), and the Gemini 3 image row stays wide under both (arm 1 0.2301 /
+0.2972, arm 2 0.2491 / 0.3136). The convergence travels with the proposer
+pool.
+
+**Reading (b): it is the exemplar images, not 3.7 as such.** The 3.7 **text**
+arms are the same `gemini-3.7-flash` at thinking `low`, T = 0.7, the same
+24,561 tiles per pass over five passes, the same 55-map corpus and r2
+reference, and the **same system instruction** (`system_instruction_hash`
+`e169b723…`, identical across the 3.7 text and 3.7 image proposers). The one
+difference is `include_example_images`: `false` on the text track
+(`example_count: 17`, `library_hash 8580ecb2…`) and `true` on the image track
+(`library_hash 7c9bbcec…`, a 17-entry `library_manifest` — 8 positive,
+9 negative). That single change takes the F1 span from **0.0603–0.0941 down
+to 0.0000–0.0324** and lifts the whole front off the low-vote band. With the
+images, the passes agree well enough that unanimity is optimal on **both**
+metrics at once; without them, the same model trades F1 for tile-MCC at every
+vote count. **Per-pass precision is what the exemplar images buy** — the
+mechanism **Obs 485** and **Obs 492** circle from the over-generation side,
+seen here from the agreement side.
+
+**Reading (c): the front span is a sharper diagnostic than the depth of the
+collapse.** Obs 492 proposed reading the distance the tile-MCC optimum falls
+down the vote ladder as a measure of proposer over-generation. The span is
+better behaved for the same purpose: it is a continuous quantity rather than
+an integer, it is defined for configurations whose optimum does not move at
+all, and the B-vs-`FOURTH` pair shows it is the **pool** property — swapping
+the verifier changes the front *count* substantially (B-N10's 24 points to
+`FOURTH-N10`'s 9) while the span moves by 0.0017. **Report the span, not the
+count.**
+
+**Caveats.**
+
+1. **One corpus, one reference, one buffer.** All of it is the 55-map corpus
+   on the 8,541-tile frame, the r2 reference and 50 m matching. Nothing here
+   has been checked at 20 m or on the 4-map Gold Standard.
+2. **Fronts are over a discrete grid** of 19 to 270 points. Grid coarseness
+   is not the explanation for the separation: `IMG-ARM1-K5` and
+   `G3IMG-ARM1-K5` have grids of **exactly 100 points each** and fronts of
+   **2 and 15**; the other three matched pairs are 63 vs 60 (2 vs 10), 72 vs
+   84 (2 vs 3) and 120 vs 145 (1 vs 9). The wider fronts sit on the *smaller*
+   grid in two of the four pairs.
+3. **The within-image confound is thinking level.** The 3.7 image proposer
+   runs at thinking `low` and the Gemini 3 image proposer at `minimal`; their
+   `library_manifest`s are byte-equal and their system instruction hashes
+   identical, so model-plus-thinking is a package contrast, not a clean
+   model contrast. Route also differs (3.7 passes 4–5 on the Batch API; all
+   five Gemini 3 passes on flex), which **Obs 486** measured as inside
+   verifier drift.
+4. **Ladder method is not matched between the text and image tracks.** The
+   3.7 text rungs below N = 5 *inherit* verifier probabilities from the K = 5
+   leg (≤ 10 m match, unmatched clusters dropped) while every image rung has
+   its own leg — the two methods of **Obs 489**. The N = 5 text rungs are the
+   leg itself and so are unaffected, and they still span 0.0816 and 0.0941,
+   so inheritance does not explain reading (b). The head-to-head of D2 puts
+   inherited vs own-leg at 0.0002–0.0021 F1 on the 3.7 image row, two orders
+   below the effect.
+5. **The generational reading is a hypothesis, not a finding.** "A step
+   change in visual processing arrived at 3.7" is what this motivates; the
+   evidence cannot support it, because **no 3.5, 3.6 or 3.8 proposer pool has
+   a frontier on this corpus** — the only 3.8 artefact in the project is a
+   *verifier* leg on the 4-map Gold Standard (`GS38`). State the claim as
+   **"the only pool on this corpus"** and nothing stronger.
+
+**What to do with it.** Two things, both free. (1) **Front span belongs
+beside the leaderboard as a column** — it is the one number that tells a
+reader choosing an operating point whether they face a decision or a
+formality, and it is already computable for every configuration the project
+has swept. (2) **The paper's tile-MCC discussion gains its positive case**:
+Obs 492's collapse reads as an indictment of tile-MCC on its own, but the
+3.7 image row shows the collapse is not a property of the metric — give a
+tile-MCC reader a pool whose passes agree, and the metric agrees with F1 on
+where to operate. That is a better argument for reporting tile-MCC at all
+than the collapse alone allows.
+
+**Findable later**: F1 and tile-MCC optima coincide, 3.7 image pool
+convergence, Pareto front width, front span as proposer diagnostic, F1 span
+0.0000 to 0.0324 versus 0.0536 to 0.3136, 21 configurations with a genuine
+vote choice, censored fronts of the k = 3 incumbents, IM span 0.0009 is
+censorship not convergence, B versus FOURTH same pool different verifier,
+span moves 0.0017 to 0.0072, include_example_images false versus true,
+17-entry library manifest, system_instruction_hash e169b723, exemplar images
+buy per-pass precision, IMG-ARM2-K3 0.0324 F1 for 0.0001 tile-MCC, matched
+100-point grids 2 versus 15 non-dominated, no 3.5/3.6/3.8 pool on this
+corpus, only pool on this corpus.
+
+Sources: `results/tile-presence-2026-09-21/frontier/frontier.json` (read
+2026-09-21; every front size, F1 span and vote set above computed from
+`configurations.<name>.{track, n_sweep_points, n_non_dominated,
+front[].{prob_t, min_votes, micro_f1_50, tile_mcc}}`; `buffer_m` 50,
+`reference` "r2"); `results/tile-presence-2026-09-21/frontier/frontier.md`,
+`leaderboard.md` and `findings.md` (same directory, built by
+`scripts/build_tile_presence_board.py`, commits `dcc145293…c4a41abc9`);
+the 35 committed sweep CSVs — `results/55map-final-board-r2-2026-09-06/sweep_*.csv`,
+`results/gemini37-image-55map-2026-09-13/sweep_*.csv`,
+`results/gemini3-image-55map-2026-09-16/sweep_*.csv` (read 2026-09-21 for
+each configuration's available `min_votes` range, which is what separates a
+censored front from a convergent one);
+`reports/comparability-inventory-37-runs-2026-09-20.md` §§ 0, 1.2, 1.3 (read
+2026-09-21: the proposer models and thinking levels, the identical system
+instruction hash, the exemplar-library rows, the per-rung versus inherited
+ladder legs, and "3.7 verifier over the Gemini-3 Run B K=10 pool");
+`results/55map-final-board-r2-2026-09-06/final-board-50m.md` (the arm
+definitions — arm 1 is the 3.7 proposer with the Gemini 3 verifier, arm 2 the
+all-3.7 stack, the fourth cell B's K = 10 union under the 3.7 verifier);
+`docs/methodology/notation-key.md` §§ 1–2 (K, N, k, the A / B geometries);
+`planning/pi-decisions-2026-09-20.md` § D6c amended and § D2 (read
+2026-09-21: the 2026-09-21 ruling that moved the optimum here, and the
+inherited-versus-own-leg head-to-head quoted in caveat 4).
+Related: **Obs 493** (the presentation this reads — its "none of the 3.7
+image row's six" is the same split, stated before the censored fronts were
+separated out); **Obs 492** (the universal collapse to the lowest vote count,
+and the collapse-depth diagnostic this entry proposes replacing with the
+span); **Obs 485** (the Gemini 3 image proposer's threefold single-pass
+over-generation — the mechanism on the other side of reading (b));
+**Obs 484** (unanimity as the image pool's precision filter, which is what a
+front pinned at k = K looks like); **Obs 489** (the two ladder methods behind
+caveat 4); **Obs 486** (the Batch-versus-flex route contrast inside verifier
+drift, caveat 3); **Obs 482** (F1 and tile-MCC ordering the board
+near-oppositely — the disagreement this pool does not show).
