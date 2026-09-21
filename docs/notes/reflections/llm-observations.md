@@ -8258,3 +8258,47 @@ remains the missing primitive.
   clean; extractor fixed; a manifest-vs-union gate now precedes verifier
   spend.
 
+## Session 157 — 2026-09-21 (the S156 threads closed; the cost accounting rebuilt on a rate card; PR #20 through three audit rounds)
+
+- **Mutation testing must defeat the bytecode cache.** The test-adequacy
+  lens rewrote module source in memory and found every mutation green until
+  it pointed `PYTHONPYCACHEPREFIX` elsewhere: `__pycache__` was serving the
+  unmutated bytecode. Its report named this as a trap worth knowing, and it
+  is the same class as the 2026-09-20 symlinked-tests harness that read
+  green for the same reason. Any mutation harness needs a red sentinel that
+  runs *through the cache path* before its results count.
+- **A regression test can pass by luck of the filesystem.** The first
+  determinism test for the evaluation index created a lexically later
+  directory first and asserted sorted output; on tmpfs `readdir` returns
+  reverse-creation order, so the unsorted implementation passed it too. Both
+  lenses caught it independently, one by shadowing `sorted` at runtime. A
+  test of an ordering property must stub the walk, not rely on emergent
+  order.
+- **"Presuppose bugs exist" finds them in code written the same hour.**
+  Three rounds on fresh context, each after fixes made under correction,
+  each returned at least one genuine defect in the fixes: dollars added
+  across the 2027 rate step; a merge blind to the block it introduced; a
+  block with no tier that a later merge would raise on. The defects tracked
+  the seams the plan itself named (merges, nulls) and grew subtler each
+  round. A fixed-context self-check would have confirmed all three.
+- **Documentation pages disagree; invoices decide.** The capability scan
+  found Google's Batch API page saying cache hits are billed at standard
+  caching rates while the pricing page prints a halved rate under the 3.7
+  batch and flex blocks. The project's own invoices sided with the pricing
+  page for 3.7 (US$0.0378 per million on flex) and with the batch page's
+  reading for Gemini 3 Flash (US$0.0500 at every tier). The rate card
+  records both, per model, with the invoice line that settled each.
+- **A capability scan answers a question nobody asked.** It was sent to
+  find a programmatic source of billed cost and came back with the fact that
+  the auditors priced the 3.7 cache read at the wrong tier, about US$80 on
+  one campaign. Read-only scans with a broad brief keep turning up the
+  finding that reframes the plan; the one that did so today cost nothing.
+- **Five writers, three tier treatments, one register.** The meta's cost
+  block was written by the realtime proposer (flex applied unconditionally),
+  the batch proposer (batch discount), the verifier (no discount, both
+  routes), the legacy verifier (no discount), and three merges that summed
+  dollars; the register copied whichever it found. The C3 ledger certified
+  1,132 of 1,132 rows as matching because it defined correctness as
+  agreement with the meta. A verification apparatus that checks fidelity to
+  source cannot see a wrong basis; the invoice gate in WP6 is the check that
+  can.

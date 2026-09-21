@@ -2673,3 +2673,75 @@ count, estimate) even when an earlier band would cover it; report the audited
 figure against the band it was granted under; never net one band against
 another.
 
+## claude-obs 124 — 2026-09-21: He tries a console task twice, then cuts the loss in one line
+
+**Pattern.** The plan asked him to enable the BigQuery billing export, a
+console action neither machine could do for him. He tried twice, with Gemini
+Cloud Assist, could not find the option in any UI, and wrote: "I don't have
+any more time to spend on it. We need an alternative." No third attempt, no
+request that I keep looking, no sunk-cost argument. The alternative was the
+export he already knew how to make, and the plan absorbed it in one ruling.
+
+**Lesson.** A PI-side console task on the critical path is a risk I own,
+not a step I can assume. His time budget for unfamiliar tooling is two
+attempts; after that the design must route around it.
+
+**How to apply.** When a plan needs a console action from him, offer the
+fallback beside it in the same ruling, and never make the rest of a work
+package wait on it. Prefer the artefact he already produces (the monthly
+export) over the one that would be better if it existed.
+
+## claude-obs 125 — 2026-09-21: Self-critique — I wrote "audited" as a verdict until the invoices were read
+
+**Pattern.** The plan's first draft treated the audited basis as the truth
+the register should adopt, because a September reconciliation had matched it
+to invoices within 2 percent. The capability scan, sent on a different
+question, checked the auditors' card against the invoice CSV and found the
+3.7 cache read priced at the wrong tier, about US$80 on one campaign. I had
+carried "audited" from the notation key as if the word settled the number.
+
+**Lesson.** "Audited" names a method, three token classes at a tier from a
+card; the card is hand-typed and had already been wrong once. Only the
+invoice is an authority, and a total-level match cannot see a wrong rate on
+one component.
+
+**How to apply.** Every dollar I write into a plan or a report names its
+basis and, where one exists, the invoice line that confirms it; a basis
+without a confirmation is flagged as published-only. The rate card now
+carries this per row, which is the form the discipline should take.
+
+## claude-obs 126 — 2026-09-21: His best question of the day was about what he is shown, not about what is wrong
+
+**Pattern.** Faced with a register two and a half times the audited spend, he
+did not ask me to fix it. He asked what the "estimated" and "actual" figures
+he sees during a run are, why they seem right, and why the recorded ones keep
+going wrong when he had already done the reconciliations. That framing forced
+a trace of the whole artefact chain, live print to meta to register to
+report, and produced the structural answer (every fix had landed one layer
+downstream of the register) that a fix-it brief would have missed.
+
+**Lesson.** A question about the provenance of what he can see is the most
+productive kind he asks. It converts a bug report into a map.
+
+**How to apply.** When a figure he sees live disagrees with a figure he
+reads later, start from what each one is computed from and by whom, before
+proposing which is right. Put that trace in the plan's first section; he
+reads it before the design.
+
+## claude-obs 127 — 2026-09-21: Self-critique — exact-match patch scripts failed four times on text that repeats
+
+**Pattern.** I patched code with Python scripts asserting each old string
+occurs exactly once. Four times today a script aborted part-way because the
+target text appeared twice (three `running_cost += cost` sites at different
+indents, two `cost_str` lines) or differed by whitespace, leaving earlier
+edits applied and later ones not, and I re-ran with the remainder. Each
+abort cost a round trip and once left a half-applied state I had to
+re-inspect.
+
+**Lesson.** The exact-match assert is right, the granularity is wrong: one
+script per file with independent edits would have failed only the edit that
+needed a different rule, not the whole batch.
+
+**How to apply.** One patch script per file; assert counts per edit and
+report which edits applied; for text that plausibly repeats, patch by line
+with its own indent rather than by substring. Keep the assert.

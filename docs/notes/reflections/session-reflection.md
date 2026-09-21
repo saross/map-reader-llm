@@ -11586,3 +11586,72 @@ lines away. The decision log was the most useful artefact of the session and
 it took eleven lines of Markdown. Relational note: "we'll make the most of
 the error" — said twice, meant both times.*
 
+## Session 157 — 2026-09-21 — the session that closed three threads before lunch and then rebuilt the cost accounting
+
+*map-reader-llm; Fable 5.1 driving until the credit ran out at close; the PI
+switches to Opus until Thursday. US$0 API.*
+
+**What context from this session will be hardest to reconstruct in six
+months?** Why the fix took the shape it did, rather than the shape the plan
+first proposed. The plan said "the audited basis is the right idea and the
+wrong authority", and a reader in March will see a rate card as data, a cost
+function and a merge rule, and take them as the obvious design. They were
+not obvious at ten in the morning. The path ran: a coverage check of the 3.7
+image rows for the PI's signature, which happened to sum the passes register
+and found it two and a half times the audited spend; a brief that said the
+register copied the runner's estimate; the PI asking the question that
+reorganised the day — what are the estimated and actual costs I am shown
+live, and why are they right when the recorded ones are wrong; four
+read-only lenses; and then the capability scan, sent out to ask whether
+Google could tell us the bill, coming back with the finding that the
+auditors themselves priced the 3.7 cache read at the wrong tier, which the
+PI's own August invoice settled at half rate. That last finding is the one a
+future reader will most need and least expect: the "audited basis" that
+reconciled to invoices within 2 percent in September was also wrong, on one
+component, by about US$80 on one campaign. The invoice is the only
+authority; everything else is a method. The rate card carries invoice
+confirmations per row for that reason, and the row for Gemini 3 Flash says
+its cache read is not halved on flex while the row for 3.7 says it is,
+because the invoices say so and the two documentation pages disagree with
+each other.
+
+**What felt uncertain or unresolved at the end?** Two things, one small and
+one structural. The small one: the card's Gemini 3.5 Flash row was read off
+the pricing page this evening because fourteen June metas would otherwise be
+unpriceable; three June invoice lines confirm its flex input and output, and
+nothing confirms its cache read. The structural one: the register still
+publishes the runner's estimate. WP1 and WP2 built the function and rewired
+the writers, and the merged code prices every new pass correctly, but the
+1,339 rows in `results/passes-manifest.json` are unchanged until WP3 changes
+the schema and WP4 regenerates them on sapphire. A reader of the register
+tonight sees the same wrong numbers as this morning, now with a merged fix
+in the repository that does not yet reach them. That gap is the first thing
+the next session should close, and it is why the handoff names WP3 as next.
+
+**What's the single most important thing a future reader should know about
+this session?** That three audit rounds on fresh context each found real
+defects in code I had just written under correction, and that the defects
+got subtler, not rarer. Round one found the merge adding dollars across the
+2027 rate step and a stub dragging an audited block to the legacy path.
+Round two found that the merge did not know the unpriceable block round one
+had introduced, so a half-priced pass would have read as audited. Round
+three found that the block the merge itself writes for a pass on mixed
+terms carries no tier, so a later resume would have raised at meta-write
+time and lost the run's metadata. None of these would have been caught by
+the tests I wrote alongside the code, because I wrote both from the same
+model of the problem. The lens that found the most executed its mutations
+rather than reasoning about them, and reported in passing that pytest's
+bytecode cache had made every mutation read green until it moved the cache
+directory. The practice that worked is: commit, delegate two orthogonal
+lenses, fix, re-audit the fixes, and stop only when a round returns no
+Medium. It cost most of the afternoon and it is the only reason I would
+call the merged code sound.
+
+*Texture: two sessions in one day. The morning was the S156 handoff
+executed in order, tidy and quick, and the coverage check at its end was
+supposed to be a formality. The afternoon and evening were one problem, at
+the PI's request, with everything else paused. His instruction to use as
+many agents as needed was taken literally: four investigation lenses, three
+audit rounds of two, three narrow re-audits. Relational note: when the
+BigQuery export defeated him twice he said so and cut the loss in one line;
+the plan absorbed it in one ruling.*

@@ -8733,3 +8733,64 @@ still separates tile coverage from point precision (the 3.7 image row's
 Pareto fronts collapse to one point; the Gemini 3 row's do not — Obs 494).
 It is the *oracle* construct on this metric that carries nothing.
 
+## Entry — 2026-09-21 (Session 157, map-reader-llm): The audited basis was a method, not an authority
+
+**Session:** 60e6b3b8-fd37-4a2f-8f39-79928cc39e69
+**Instance:** primary
+
+### Surprising fact
+
+The passes register booked the 3.7 image campaign at US$1,061 against an
+audited US$415, yet the PI reported that the live feedback during runs —
+"audited at US$40.58 against a US$40 estimate" — had been right to cents for
+a week, and two billing reconciliations had already been done. I expected
+one of the two to be wrong; both were right about different things.
+
+### Probe
+
+Four read-only lenses. The live figures came from the auditors re-pricing
+the leg's own token counts (or from K-ladder drivers doing the same sum by
+hand); the register copied the meta's `cost_estimate`, written by five call
+sites with no cache rate and, on the verifier path, no tier. Every fix since
+June had landed downstream of the register, and the C3 ledger certified the
+column as correct because it checked agreement with the meta. Then the
+capability scan, sent to ask whether Google exposes billed cost, checked
+the auditors' rate card against the PI's own invoice CSV and found the 3.7
+cache read priced at the standard rate where the August invoice bills it at
+half (US$0.0378 per million on flex). I re-derived it from the register's
+cached-token counts: US$79.61 on the 3.7 image proposer pool; the re-audit
+on sapphire after WP1 landed at US$289.83 against US$369.44 cited.
+
+### Belief revision
+
+Before: the project has one correct cost basis, the audited one, and the
+problem is that the register does not use it. After: "audited" names a
+method — three token classes at a tier from a card — and the card was a
+hand-typed table that had now been wrong twice (3.7 rates in August, the 3.7
+cache tier in September). The only authority is the invoice, and the 2
+percent agreement of the September reconciliation was a total-level check
+that could not see a wrong rate on one component. The design followed: the
+card is data with an invoice confirmation per row, the checker compares it
+with the published page and flags rather than edits, and the WP6 gate
+compares per SKU family, not per month.
+
+### What would change this belief
+
+An invoice line for a 3.7 flex or batch cache read at US$0.075 per million
+in a month the project used caching; or a documented statement from Google
+that the pricing page's halved cache rate for 3.7 is an error. The
+September batch legs with explicit caching are not yet invoiced; their rate
+is the first test of the card the gate will run.
+
+### Implications for practice
+
+Every dollar in a committed artefact should name its basis, and a basis is
+not a verdict: "audited" is checkable only against the bill. The register's
+verification must compare with something other than the register's source.
+
+### What this is not
+
+Not a claim that the reconciliations were wasted: they established the
+method and the invoice CSV the card now cites. Nor that the live figures
+were wrong: for legs without cached tokens they reproduce to the cent under
+the new card, which is what let the change be accepted in a day.

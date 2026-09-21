@@ -9768,3 +9768,54 @@ the guidance forbids and which produced one stale-code test run and one
 re-materialised cells; the PI ruled no new proposer campaigns, so the
 generational reading of Obs 494 stays a hypothesis by design.
 
+## Session 157
+
+*2026-09-21; amd-tower + sapphire; Fable 5.1 driving (credit exhausted at
+close; Opus until Thursday); eleven Opus agents (four investigation lenses,
+three audit pairs and re-audits, one earlier audit pair); audited API spend
+US$0.*
+
+**S156 threads closed.** (1) "MCC oracle" retired from both image findings'
+prose (9eb44bc73) and the June-grid script no longer materialises the cell,
+its on-disk cell retained and relabelled, retention by label so the score
+stage skips it (26cb1650d, e24b2d1a0, 1a520250a). (2) `--check` drift mode
+on the tile-presence builder, every stage, byte comparison, registry now
+records the check (fa892212c, df0516452, e30fddb0f). (5) New analysis row
+`gemini37-image-55map-k5-replicate-2x2-2026-09-20` drafted, then SIGNED by
+the PI with a cited-artefact snapshot (4b164208c, fa3385628, be7f1c5c8);
+45 signed rows, 3 snapshots, 65 files verified.
+
+**Register determinism.** The evaluation index walked `results/` unsorted;
+a sapphire regeneration moved one condition's provenance. Sorted walk, one
+`select_evaluation` shared by the extractor and the verifier, provenance
+settled on the t0-0 anchor (de85cd0cb, 486a6d67b, 992ea35dc, 61287115e).
+The hypothesis outcome table re-projected (a1f74bfc8).
+
+**Coverage check for the PI.** All 19 registered 3.7 image conditions cited
+across rows A, B and the new row. Cracks found: the passes register books
+the meta's cost estimate (3.7 image row US$1,061 vs US$415 audited); seven
+addendum carried-analogue cells and the inheritance head-to-head have no
+row; replicate and probe legs are not registered passes; the tile-presence
+presentation has no row.
+
+**Cost accounting.** PI paused everything else. Four read-only lenses;
+`planning/cost-accounting-fix-plan-2026-09-21.md` (65a710518) under the
+`/review-implementation` protocol; rulings D11–D18 recorded (9bfd495bf), D17
+later ABANDONED (48ce096a4: console exports are the source). WP1 and WP2 on
+`cost-accounting-wp1`, PR #20: rate card as data
+(`data/pricing/gemini-rate-card.json`, five models, dated rows, invoice
+confirmations), `scripts/lib_cost.py`, writers at their tier and date,
+merges re-pricing tokens, auditors delegating, `check_published_rates.py`
+(45 of 45 rates equal the live page). Three audit rounds (two lenses, then
+two re-audits), fixes 95b66e6ab, 47217e896, c5f2fe228, d28af1f9a. Full
+tier-1 on sapphire 3,285 passed. Merged be03b00a4. Acceptance: US$6.4909,
+US$10.2033, US$189.4718, US$233.6295 reproduce; GS image leg US$18.33 (was
+22.50); 3.7 image proposer pool US$289.83 (was 369.44).
+
+**Notes.** Continuity beacon S157 (1dfa3633e); no new Obs (numbering drift
+Obs 492/493 = "Sessions 157/158" still unsettled). Snapshot-count test on
+main fixed after the signing (000f2e7cc).
+
+**Contextual assumptions.** The PI's Fable credit ran out at close; the
+next sessions run on Opus. WP3 (schema change, branch + PR) is next; the
+register still publishes the runner's estimate until WP4 regenerates it.
