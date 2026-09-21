@@ -31,10 +31,15 @@ section 2: cache-aware, thinking-inclusive, at the service tier actually used.
 Verification
 ------------
 Run over the five committed GS 3.7 image passes and their recovery fragments,
-this script returns **US$22.5004 over 6,990 tile-passes = US$0.00322 per
-tile-pass**, reproducing the figure in
-``reports/gemini37-image-55map-costing-2026-09-10.md`` section "Arithmetic"
-and in ``results/gemini37-image-gs-2026-09-01/findings.md``.
+this script returns **US$18.33 over 6,990 tile-passes = US$0.00262 per
+tile-pass** on the rate card of record. The figure those documents carry,
+US$22.5004 (US$0.00322), priced the 111.2 M cached tokens at the standard
+cache-read rate on the belief that cache reads are tier-invariant; the
+August 2026 invoice bills the 3.7 flex cache read at half that
+(``reports/billing/gemini-spend-by-sku.csv``), and the rate card
+(``data/pricing/gemini-rate-card.json``) now carries the invoiced rate. The
+difference is exactly the cached tokens times the halved rate, US$4.17
+(``planning/cost-accounting-fix-plan-2026-09-21.md`` section 1.1).
 
 Usage
 -----
@@ -95,93 +100,95 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-#: List rate cards, USD per 1M tokens, read at source and recorded in
-#: ``reports/token-load-audit-2026-06-12.md`` section 2 (Gemini 3) and
-#: ``reports/billing-reconciliation-2026-09-11.md`` section 3.2 (3.7).
-#: ``cache`` is the context-caching read rate, 10 per cent of list input. It is
-#: **the same at every tier** — "Context caching $0.05 / 1M (text/image/video)
-#: at all tiers" (token-load audit section 2) — so the tier discount below must
-#: NOT be applied to it. Discounting the cache read is a 19 per cent
-#: understatement on a cache-heavy image leg: it returns US$18.33 where the
-#: committed GS figure is US$22.50.
-#: ``gemini-3.8-flash`` was published 2026-09-02 at 3.7's list price. Its
-#: 0.75 / 3.75 rates are the same two numbers the project's own pricing table
-#: carries, where they are recorded as "verified 2026-09-04 against
-#: ai.google.dev/gemini-api/docs/pricing" (``scripts/lib_llm_metadata.py``,
-#: the ``google_gemini`` block of ``PRICING``), and
-#: ``reports/r7-gaps-deltas-2026-09-11.md`` line 35 states the same. Added
-#: 2026-09-14 so the S144 3.8 swap arm
-#: (``outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/
-#: verify_swap38``) can be audited at all instead of erroring out.
-RATE_CARDS: dict[str, dict[str, float]] = {
-    "gemini-3-flash": {"input": 0.50, "output": 3.00, "cache": 0.05},
-    "gemini-3-flash-preview": {"input": 0.50, "output": 3.00, "cache": 0.05},
-    "gemini-3.7-flash": {"input": 0.75, "output": 3.75, "cache": 0.075},
-    "gemini-3.8-flash": {"input": 0.75, "output": 3.75, "cache": 0.075},
-    # 3.1 Pro (preview): standard tier, prompts <= 200K tokens, read
-    # 2026-09-14 from ai.google.dev/gemini-api/docs/pricing (the page states
-    # "Last updated 2026-09-11 UTC"), which prices the exact model id
-    # `gemini-3.1-pro-preview`: input $2.00, output $12.00 (thinking tokens
-    # billed as output), context-caching read $0.20, cache storage $4.50 per
-    # 1M tokens per hour. Batch and flex are both half of standard ($1.00 /
-    # $6.00), which TIER_DISCOUNT applies. The three Pro verifier stages this
-    # card exists for ran on 2026-05-06 and their own metadata recorded
-    # 2.00 / 12.00 as the rates in force that day
-    # (`outputs/h11/pv-diag-384/verified/*-pro-verifier/run.meta.json`,
-    # cost_estimate.pricing_used), so the input and output rates are anchored
-    # at run time and only the cache read rate comes from the later page —
-    # harmless here, as those stages' cached share is 0.000.
-    "gemini-3.1-pro-preview": {"input": 2.00, "output": 12.00, "cache": 0.20},
-}
+#: Since 2026-09-21 the rate card is DATA — ``data/pricing/gemini-rate-card.json``,
+#: read through ``scripts/lib_cost.py`` (PI ruling D18). This module's
+#: earlier hand-typed card priced the Gemini 3.7 cache read at the standard
+#: rate on every tier on the stated ground that cache reads are
+#: tier-invariant; the invoices show that holds for Gemini 3 Flash (US$0.0500
+#: per million at every tier) and not for 3.7 (US$0.0378 on flex, August
+#: 2026), so the committed GS image figure of US$22.50 was a US$4.17
+#: overstatement (18.33 on the invoice basis). ``RATE_CARDS`` survives as a
+#: derived view — model to its current STANDARD rates — for the CLI's
+#: "known models" message and for callers that only ask which models exist.
+from scripts.lib_cost import (  # noqa: E402
+    RateCardError as _CardError,
+    UnknownModelError as _UnknownModel,
+    load_rate_card,
+    rates_for,
+)
 
-#: Rates for prompts ABOVE the 200K-token tier boundary, where a model has
-#: one. Recorded for completeness and as a tripwire: no pass in this project
-#: approaches a 200K-token prompt (the largest verifier crop prompt is about
-#: 8.5K tokens), so :func:`rates` prices the <= 200K tier unconditionally. A
-#: future long-context pass would need this table wired in.
+
+def _current_standard_rates() -> dict[str, dict[str, float]]:
+    """Every card model at today's standard rates, USD per 1M."""
+    card = load_rate_card()
+    out: dict[str, dict[str, float]] = {}
+    for model, entry in card["models"].items():
+        names = [model, *entry.get("aliases", [])]
+        try:
+            r = rates_for(model, "standard")
+        except _CardError:
+            continue
+        for name in names:
+            out[name] = {"input": r["input_fresh"], "output": r["output"],
+                         "cache": r["input_cached"]}
+    return out
+
+
+RATE_CARDS: dict[str, dict[str, float]] = _current_standard_rates()
+
+#: The > 200K-token prompt tier of the 3.1 Pro card, recorded as a tripwire
+#: only: no pass in this project approaches a 200K-token prompt (the largest
+#: verifier crop prompt is about 8.5K tokens), so every price here is the
+#: <= 200K tier. A future long-context pass would need a dated row for this
+#: in ``data/pricing/gemini-rate-card.json``, keyed by prompt size.
 LONG_PROMPT_RATE_CARDS: dict[str, dict[str, float]] = {
-    # Same source and date as the `gemini-3.1-pro-preview` entry above:
-    # "$4.00, prompts > 200k tokens" input and "$18.00, prompts > 200k"
-    # output, caching read $0.40.
     "gemini-3.1-pro-preview": {"input": 4.00, "output": 18.00, "cache": 0.40},
 }
 
-#: Flex and batch both bill at half of list; standard bills at list.
-TIER_DISCOUNT: dict[str, float] = {"flex": 0.5, "standard": 1.0}
+TIER_DISCOUNT: dict[str, float] = {"flex": 0.5, "batch": 0.5, "standard": 1.0}
 
 
 class RateCardError(KeyError):
-    """Raised when no rate card is known for the requested model."""
+    """Raised when no rate card is known for the requested model or date."""
+
+    def __str__(self) -> str:  # KeyError would wrap the message in quotes
+        return str(self.args[0]) if self.args else ""
 
 
-def rates(model: str, tier: str) -> dict[str, float]:
+def rates(model: str, tier: str, at: Any = None) -> dict[str, float]:
     """
-    Effective per-token rates for a model at a service tier.
+    Effective per-token rates for a model at a service tier on a date.
 
     Args:
-        model: Model identifier, e.g. ``gemini-3.7-flash``.
-        tier: ``flex`` or ``standard``.
-
-    The tier discount applies to input and output only; the cache read rate is
-    the same at every tier (see the note on :data:`RATE_CARDS`).
+        model: Model identifier as the run recorded it, e.g. ``gemini-3.7-flash``.
+        tier: ``standard``, ``flex`` or ``batch``.
+        at: The usage date the rate card row is chosen for; ``None`` is today.
+            Pass the pass's own timestamp: every headline Gemini rate doubles
+            on 2027-01-01, so a 2026 leg audited in 2027 must not be priced at
+            the later row.
 
     Returns:
-        Per-token (not per-1M) rates keyed ``input``, ``output``, ``cache``.
+        Per-token (not per-1M) rates keyed ``input``, ``output``, ``cache``,
+        each already at the tier — including ``cache``, whose tier treatment
+        is the card row's, not this function's.
 
     Raises:
-        RateCardError: If the model has no recorded rate card. Guessing a
-            rate card is how the meta's own figure went wrong; fail instead.
+        RateCardError: If the model has no rate card, the tier is unknown, or
+            no row is valid on the date. Guessing a rate card is how the
+            meta's own figure went wrong; fail instead.
     """
-    if model not in RATE_CARDS:
+    try:
+        r = rates_for(model, tier, at)
+    except _UnknownModel as exc:
         raise RateCardError(
-            f"no rate card for {model!r}; known: {sorted(RATE_CARDS)}"
-        )
-    discount = TIER_DISCOUNT[tier]
-    card = RATE_CARDS[model]
+            f"no rate card for {model!r}; known: {sorted(load_rate_card()['models'])}"
+        ) from exc
+    except _CardError as exc:
+        raise RateCardError(str(exc)) from exc
     return {
-        "input": card["input"] * discount / 1e6,
-        "output": card["output"] * discount / 1e6,
-        "cache": card["cache"] / 1e6,
+        "input": r["input_fresh"] / 1e6,
+        "output": r["output"] / 1e6,
+        "cache": r["input_cached"] / 1e6,
     }
 
 
@@ -285,6 +292,9 @@ def read_fragments(root: str) -> list[dict[str, Any]]:
                 "fragment": name,
                 "meta": metas[0],
                 "model": fragment_model(meta),
+                # The pass's own end date selects the rate card row (the
+                # card is dated: every Gemini rate doubles on 2027-01-01).
+                "ended": ((meta.get("timestamp") or {}).get("end") or "")[:10] or None,
                 "items": meta["execution_stats"]["items_processed"],
                 "retries": meta["execution_stats"].get("retries_total"),
                 "input_tokens": total_input,
@@ -361,7 +371,7 @@ def main() -> int:
     # card's US$233.63 (audit 2026-09-20).
     disagreed: set[str] = set()
     used_override = False
-    rate_cache: dict[str, dict[str, float]] = {}
+    rate_cache: dict[tuple[str, str | None], dict[str, float]] = {}
     for frag in fragments:
         model = frag["model"]
         if model is None:
@@ -382,13 +392,13 @@ def main() -> int:
             frag["model_source"] = "meta configuration.model"
             if args.model is not None and args.model != model:
                 disagreed.add(model)
-        if model not in rate_cache:
+        if (model, frag.get("ended")) not in rate_cache:
             try:
-                rate_cache[model] = rates(model, args.tier)
+                rate_cache[(model, frag.get("ended"))] = rates(model, args.tier, at=frag.get("ended"))
             except RateCardError as exc:
                 print(f"error: {exc} (from {frag['meta']})", file=sys.stderr)
                 return 2
-        frag["audited_usd"] = audited_cost(frag["usage"], rate_cache[model])
+        frag["audited_usd"] = audited_cost(frag["usage"], rate_cache[(model, frag.get("ended"))])
         del frag["usage"]
 
     if used_override:
@@ -434,11 +444,12 @@ def main() -> int:
         )
         return 0
 
-    for model in models:
-        effective = {k: round(v * 1e6, 4) for k, v in rate_cache[model].items()}
+    for (model, ended), rate in sorted(rate_cache.items(), key=lambda kv: (kv[0][0], kv[0][1] or "")):
+        effective = {k: round(v * 1e6, 4) for k, v in rate.items()}
         print(
-            f"rate card: {model} at {args.tier} — "
-            f"effective USD/1M {effective} (cache undiscounted by tier)"
+            f"rate card: {model} at {args.tier} on {ended or 'today'} — "
+            f"effective USD/1M {effective} (the cache read's tier treatment "
+            f"is the card row's)"
         )
     print()
     for frag in fragments:

@@ -70,17 +70,30 @@ class TestRateCard:
         assert rate["input"] == pytest.approx(0.375 / 1e6)
         assert rate["output"] == pytest.approx(1.875 / 1e6)
 
-    def test_cache_read_is_not_tier_discounted(self):
-        """Context caching costs the same at every tier (token-load audit s2).
-
-        Discounting it understates a cache-heavy image leg by about 19 per
-        cent, which is how a first implementation of this script returned
-        US$18.33 where the committed figure is US$22.50.
+    def test_the_cache_read_tier_is_the_card_rows_not_this_scripts(self):
+        """Gemini 3 Flash bills the cache read at the standard rate on every
+        tier (invoiced US$0.0500/M, no tier suffix); 3.7 Flash halves it on
+        flex (invoiced US$0.0378/M, August 2026). The first version of this
+        script generalised the Gemini 3 rule to 3.7, which is why the
+        committed GS image figure read US$22.50 where the invoice basis is
+        US$18.33. Both facts are now the rate card's, and are tested there
+        (tests/test_lib_cost.py); here we pin that the card is obeyed.
         """
-        flex = apc.rates("gemini-3.7-flash", "flex")
-        standard = apc.rates("gemini-3.7-flash", "standard")
-        assert flex["cache"] == standard["cache"]
-        assert flex["cache"] == pytest.approx(0.075 / 1e6)
+        g37_flex = apc.rates("gemini-3.7-flash", "flex", at="2026-09-01")
+        g37_std = apc.rates("gemini-3.7-flash", "standard", at="2026-09-01")
+        assert g37_flex["cache"] == pytest.approx(0.0375 / 1e6)
+        assert g37_std["cache"] == pytest.approx(0.075 / 1e6)
+        g3_flex = apc.rates("gemini-3-flash", "flex", at="2026-09-01")
+        g3_std = apc.rates("gemini-3-flash", "standard", at="2026-09-01")
+        assert g3_flex["cache"] == g3_std["cache"] == pytest.approx(0.05 / 1e6)
+
+    def test_the_rate_card_is_dated(self):
+        """A 2026 leg audited after the 2027 doubling is priced at its own row."""
+        before = apc.rates("gemini-3.7-flash", "flex", at="2026-12-31")
+        after = apc.rates("gemini-3.7-flash", "flex", at="2027-01-02")
+        assert after["input"] == pytest.approx(2 * before["input"])
+        with pytest.raises(apc.RateCardError):
+            apc.rates("gemini-3.7-flash", "flex", at="2026-01-01")
 
     def test_unknown_model_raises_rather_than_guessing(self):
         """Guessing a rate card is the error this script exists to correct."""
@@ -91,12 +104,22 @@ class TestRateCard:
 class TestAuditedCost:
     """The costing rule itself."""
 
-    def test_reproduces_committed_gs_figure(self):
-        """The GS leg totals US$22.50, or US$0.00322 per tile-pass."""
-        rate = apc.rates("gemini-3.7-flash", "flex")
+    def test_reproduces_the_gs_figure_on_the_invoice_basis(self):
+        """The GS leg totals US$18.33 (US$0.00262 per tile-pass).
+
+        The committed US$22.50 of 2026-09-13 priced the 111.2 M cached tokens
+        at the standard cache rate; the August invoice bills the 3.7 flex
+        cache read at half that. The difference, US$4.17, is exactly the
+        cached tokens times the halved rate. Recorded in
+        planning/cost-accounting-fix-plan-2026-09-21.md section 1.1.
+        """
+        rate = apc.rates("gemini-3.7-flash", "flex", at="2026-09-01")
         total = apc.audited_cost(GS_USAGE, rate)
-        assert total == pytest.approx(22.50, abs=0.01)
-        assert total / GS_TILE_PASSES == pytest.approx(0.00322, abs=1e-5)
+        assert total == pytest.approx(18.33, abs=0.01)
+        assert total / GS_TILE_PASSES == pytest.approx(0.00262, abs=1e-5)
+        superseded = 22.50
+        assert superseded - total == pytest.approx(
+            GS_USAGE["total_cached_tokens"] * 0.0375 / 1e6, abs=0.01)
 
     def test_thinking_tokens_are_billed_at_the_output_rate(self):
         """Omitting thinking is one of the meta's three errors."""
