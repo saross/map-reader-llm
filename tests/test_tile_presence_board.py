@@ -485,10 +485,14 @@ def test_a_configuration_name_shared_by_two_tracks_is_refused(
 
 
 def test_an_unreadable_costs_file_is_drift_under_check(tmp_path, monkeypatch, caplog) -> None:
+    """No key, a list where an object should be, bad JSON, bad bytes: all drift."""
     monkeypatch.setattr(tp, "OUT", tmp_path)
+    for payload in (b"{}\n", b'{"legs": []}\n', b"[1]\n", b"not json", b"\xff\xfe{}"):
+        (tmp_path / tp.COSTS).write_bytes(payload)
+        caplog.clear()
+        with caplog.at_level("ERROR"):
+            assert tp.main(["--stage", "leaderboard", "--check"]) == 1, payload
+        assert any("unreadable" in r.getMessage() for r in caplog.records), payload
     (tmp_path / tp.COSTS).write_text("{}\n")
-    with caplog.at_level("ERROR"):
-        assert tp.main(["--stage", "leaderboard", "--check"]) == 1
-    assert any("unreadable" in r.getMessage() for r in caplog.records)
     with pytest.raises(SystemExit, match="unreadable"):
         tp.main(["--stage", "leaderboard"])

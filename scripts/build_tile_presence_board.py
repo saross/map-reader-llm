@@ -539,7 +539,7 @@ def emit(expected: dict[Path, str], check: bool) -> int:
         return 0
     for path, text in expected.items():
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(text)
+        path.write_bytes(text.encode("utf-8"))  # the bytes the check compares
     return 0
 
 
@@ -879,16 +879,18 @@ def stage_leaderboard(check: bool = False) -> int:
     costs_path = OUT / COSTS
     if not costs_path.is_file():
         if check:
-            logger.error("STALE: %s (missing)", costs_path.name)
+            logger.error("STALE: %s (missing)", rel(costs_path))
             return 1
         raise SystemExit(
             f"{rel(costs_path)} is missing — run "
             "--stage costs first (it audits the verifier legs).")
     try:
-        costs = json.loads(costs_path.read_text())["legs"]
-    except (json.JSONDecodeError, KeyError, TypeError) as exc:
+        costs = json.loads(costs_path.read_bytes().decode("utf-8"))["legs"]
+        if not isinstance(costs, dict):
+            raise TypeError(f"legs is {type(costs).__name__}, not an object")
+    except (ValueError, KeyError, TypeError) as exc:
         if check:
-            logger.error("STALE: %s (unreadable: %s)", costs_path.name, exc)
+            logger.error("STALE: %s (unreadable: %s)", rel(costs_path), exc)
             return 1
         raise SystemExit(f"{rel(costs_path)} is unreadable ({exc}); run "
                          "--stage costs to rebuild it.") from exc
@@ -1229,7 +1231,9 @@ def main(argv: list[str] | None = None) -> int:
     Returns:
         A process exit status. Under ``--check`` every selected stage is
         compared before the status is decided, so one run names every
-        stale file rather than the first.
+        stale file rather than the first; a refusal (a cost disagreement,
+        a configuration name shared by two tracks) is an error, not drift,
+        and stops the run where it is raised.
     """
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--stage", required=True,
