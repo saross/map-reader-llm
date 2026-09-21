@@ -441,6 +441,21 @@ audit and a re-audit, as today's work did.
 
 ## Changelog
 
+### 2026-09-21 (evening) — PR #20 ready for merge after three audit rounds
+
+Branch `cost-accounting-wp1` at d28af1f9a. Two-lens audit, fix, re-audit,
+fix, narrow re-audit, fix: no critical remains. Defects closed on the way
+that the plan had not named: the merge did not know the unpriceable block
+it introduced (a pass half priced would have read as audited); the chunk
+merge's fold inflated a mixed pass by a third; a cleanup across the
+2027-01-01 step would have been priced at the 2026 row; the batch
+patcher's zero stub dragged an audited block to the legacy path; nulls
+crashed five consumers and collapsed to zero in a sixth. The card gains
+`gemini-3.5-flash` (fourteen June metas; three June invoice SKUs confirm
+its flex rates). Full tier-1 on sapphire 3,285 passed. The rate check
+reads the live page exactly on today's date and on 2027-01-01. Awaiting
+the PI's merge; D17 (BigQuery export) still to be verified in the console.
+
 ### 2026-09-21 (later) — WP1 and WP2 on a branch, PR #20
 
 WP1 and WP2 delivered on `cost-accounting-wp1` (PR #20, five commits
