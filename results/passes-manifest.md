@@ -2,7 +2,7 @@
 
 # Passes manifest
 
-> Generated 2026-10-03T08:05:21Z · 1339 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `9530542bc`.
+> Generated 2026-10-03T08:36:47Z · 1339 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `9b3c4cef7`.
 >
 > **Coverage**: 1339 pass(es) across the decomposed runs (sub-step 3b in progress). `cost_usd` is on the AUDITED basis (PI ruling D11): each pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the tier the evidence supports; `basis` says which kind of figure it is (`audited-upper-bound` = tier unresolved, priced at the highest candidate; the row's `cost_source` gives both bounds and the evidence).
 
@@ -32,7 +32,7 @@
 | 55maps-text-high-t0-3-generalisation::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 50.73153 | audited |
 | 55maps-text-high-t0-3-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 51.676869 | audited |
 | 55maps-text-high-t0-3-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 50.586512 | audited |
-| 55maps-text-high-t0-3-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 10539 | 6.900372 | audited-lower-bound |
+| 55maps-text-high-t0-3-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 10539 | 6.900372 | audited |
 | 55maps-text-min-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.667722 | audited |
 | 55maps-text-min-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.673805 | audited |
 | 55maps-text-min-generalisation::detect_brief-text::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.677764 | audited |
@@ -1156,7 +1156,7 @@
 | flash35-pv-2x2::flash35-min-text-1of10::run1 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.810824 | audited |
 | flash35-pv-2x2::flash35-min-text-1of10::run10 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.810474 | audited |
 | flash35-pv-2x2::flash35-min-text-1of10::run2 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.812556 | audited |
-| flash35-pv-2x2::flash35-min-text-1of10::run3 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.811067 | audited |
+| flash35-pv-2x2::flash35-min-text-1of10::run3 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 1.622993 | audited |
 | flash35-pv-2x2::flash35-min-text-1of10::run4 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.8155 | audited |
 | flash35-pv-2x2::flash35-min-text-1of10::run5 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.811109 | audited |
 | flash35-pv-2x2::flash35-min-text-1of10::run6 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.813682 | audited |
@@ -1308,7 +1308,7 @@
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 791 | 0.555459 | audited |
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 913 | 0.640389 | audited |
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap37::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 2 | 0.00213 | audited |
-| gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap38::run1 | gemini-3.8-flash | text | low | 0.0 | ok | — | 1 | 0.001936 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap38::run1 | gemini-3.8-flash | text | low | 0.0 | ok | — | 1 | 0.003871 | audited |
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k1-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 640 | 0.452092 | audited |
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k3-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 757 | 0.532933 | audited |
 | gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 28.688984 | audited |
