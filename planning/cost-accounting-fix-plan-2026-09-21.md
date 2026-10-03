@@ -599,10 +599,52 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
       separate explicit from implicit caching (the adjacent runs without
       an explicit cache got constant implicit hits of 12,187 tokens).
       The 2026-04-14 export pins `h10` at standard already.
+15. **Round 7 of the audit (2026-10-03, `429dfac1f`)** refined item 14:
+    - **The served tier survives every runner.** `run_pv.py verify`
+      finalises without per-item records, so a header recorded only per
+      item was lost for every verifier leg. The tracker now also counts
+      responses per served tier at run level
+      (`usage_stats.served_tier_counts`, `"unreported"` for none), and
+      `merge_meta` sums the counts with the tokens they describe.
+    - **The header is believed only where it covers every response.** One
+      tier across all of them pins, above everything; several tiers price
+      the fragment across exactly those tiers. Where only some responses
+      reported one (a meta that merged a pre-header leg, or an
+      unrecognised value), the reported tiers WIDEN the candidates the
+      other evidence gives, because the rest may have run elsewhere and
+      narrowing would understate. A request record the header overrules
+      is a note, not a conflict.
+    - **The cached-path rule ends at its fix**: it applies only to a
+      fragment that started before `2df65047e` (12:02:23 UTC), and not to
+      one whose every response reported its tier.
+    - Also: `merge_recovery_meta.py` refuses a shared `run_id` and a
+      verifier meta; named and globbed preserved main legs are
+      deduplicated together, and a named one that would not be priced is
+      an error; an attestation glob that matches no file is refused; the
+      runner refuses `tools` beside a cache instead of dropping them.
+    - **Corrected before merge**: the superseded ledger's fd-storm entry
+      read "no meta", but the four attempts have metas: US$0.11 over the
+      three with usage (`data/pricing/superseded-executions.json`, priced
+      total US$27.96); A1 and D21 cited a later documentation commit
+      (`69a081b2c`) for the code live at swap38's launch, which was
+      `2ce4536ea` (unchanged at `21a34339f`).
+    - No figure moved: the register is US$3,094.05 on the audited basis,
+      US$2,859.81 at the tier lower bound. Full tier-1 on sapphire: 3,477
+      passed. Every round-7 rule has a mutation that turns a test red.
 
 ---
 
 ## Changelog
+
+### 2026-10-03 (round 7) — the served tier at run level; ledger corrected (Session 158)
+
+§ 8.15 added. What changed: the tracker's run-level served-tier count,
+the coverage rule for the header, the cached-path rule's end at its
+fix, and two corrections made before merge (the fd-storm ledger entry
+and the swap38 citation). What did NOT change: every register figure
+(US$3,094.05; tier lower bound US$2,859.81; 312 audited, 188 upper
+bound, 27 lower bound, 2 published, 810 unrecorded) and every C3 cost
+verdict (MATCH). Commits `429dfac1f` (code) and `1da842f1d` (register).
 
 ### 2026-10-03 (later) — four audit rounds; § 8 figures refreshed (Session 158)
 
