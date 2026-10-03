@@ -1,6 +1,6 @@
 # Phase 2: the fourteen new four-rung K ladders
 
-> **GENERATED — do not edit by hand.** Written by `scripts/build_k_ladder_phase2_tables.py` v1.1.0; regenerate rather than correct. Source commit `0a5cadaf4`, generated 2026-10-03T23:17:39+00:00. Per `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope" (2026-08-14 ruling), a generated projection carries a GENERATED banner and a source-commit stamp instead of a hand changelog. The machine-readable form is `ladders.json`.
+> **GENERATED — do not edit by hand.** Written by `scripts/build_k_ladder_phase2_tables.py` v1.2.0; regenerate rather than correct. Source commit `61ab7a446`, generated 2026-10-03T23:37:53+00:00. Per `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope" (2026-08-14 ruling), a generated projection carries a GENERATED banner and a source-commit stamp instead of a hand changelog. The machine-readable form is `ladders.json`.
 
 Assembled from `phase2/scores.json`, `phase2/committed-carried/scores.json`, `phase2/g37-opmax/scores.json`, the signed board's `opmax/membership.json` and its `cells/`, and `phase2/spend-ledger.json`. Every rung is on the board frame `era2-b-487`, the Gold Standard curator reference, 14 buffers, 10,000 BCa draws, seed 42, MCC.
 
@@ -56,7 +56,7 @@ Pool `flash-high-text-n5-text-t0.7`, thinking high, text, T 0.7. Proposer pass U
 |---:|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 1 | phase-2 (new, this run) | 1370 | (1, 0.15) | 0.8009 | 0.7737 | 464 | 0.8009 | 0.8009 | 2.29 | 0.95 | **3.24** |
 | 3 | phase-2 (new, this run) | 2755 | (2, 0.15) | 0.8492 | 0.7979 | 427 | 0.8408 | 0.8408 | 6.87 | 1.89 | **8.76** |
-| 5 | committed (signed board); carried derived at US$0 | 3736 | (4, 0.15) | 0.8634 | 0.7684 | 392 | 0.8634 | 0.8385 | 11.46 | 2.58 | **14.04** |
+| 5 | committed (signed board); carried derived at US$0 | 3736 | (4, 0.15) | 0.8634 | 0.7684 | 392 | 0.8634 | 0.8385 | 11.46 | 2.59 | **14.04** |
 | 10 | committed (signed board); carried derived at US$0 | 5866 | (8, 0.2) | 0.8744 | 0.7641 | 377 | 0.8733 | 0.8070 | 22.91 | 4.06 | **26.97** |
 
 ## Gemini 3 HIGH text 384 px, T 1.0
@@ -68,7 +68,7 @@ Pool `flash-high-text-n5-text-t1.0`, thinking high, text, T 1.0. Proposer pass U
 | 1 | phase-2 (new, this run) | 1495 | (1, 0.2) | 0.7810 | 0.8162 | 451 | 0.7788 | 0.7788 | 2.15 | 1.03 | **3.18** |
 | 3 | phase-2 (new, this run) | 2848 | (2, 0.15) | 0.8541 | 0.7986 | 422 | 0.8220 | 0.8220 | 6.44 | 1.95 | **8.39** |
 | 5 | committed (signed board); carried derived at US$0 | 3760 | (3, 0.2) | 0.8688 | 0.7857 | 426 | 0.8607 | 0.7957 | 10.74 | 2.60 | **13.34** |
-| 10 | committed (signed board); carried derived at US$0 | 5920 | (5, 0.2) | 0.8804 | 0.7910 | 426 | 0.8671 | 0.7355 | 21.48 | 4.09 | **25.57** |
+| 10 | committed (signed board); carried derived at US$0 | 5920 | (5, 0.2) | 0.8804 | 0.7910 | 426 | 0.8671 | 0.7355 | 21.48 | 4.10 | **25.58** |
 
 ## Gemini 3 MINIMAL image 384 px, T 0.3
 
@@ -83,7 +83,7 @@ Pool `image-n5-image-t0.3`, thinking minimal, image, T 0.3. Proposer pass US$0.5
 
 ## Gemini 3 MINIMAL image 384 px, T 0.7
 
-Pool `image-n5-image-t0.7`, thinking minimal, image, T 0.7. Proposer pass US$0.574 — INTERPOLATED: the mean of the same family's own T0.3 and T1.0 GS passes, because its T0.7 passes recorded no tokens. The two flank it within 0.3 % for MINIMAL image and 16 % for HIGH image.
+Pool `image-n5-image-t0.7`, thinking minimal, image, T 0.7. Proposer pass US$0.574 — ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS passes (not a linear interpolation at T 0.7), because its T0.7 passes recorded no tokens. The two differ by 0.3 % for MINIMAL image and 16 % for HIGH image.
 
 | K | source | candidates | opmax (k, p) | opmax F1@20 | opmax tile-MCC | n | carried F1@20 | carried F1@20, k = K (disclosed) | proposer US$ | verifier US$ | all-in US$ |
 |---:|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -111,18 +111,18 @@ Pool `flash-high-image-n5-image-t0.3`, thinking high, image, T 0.3. Proposer pas
 |---:|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 1 | phase-2 (new, this run) | 872 | (1, 0.15) | 0.6925 | 0.8270 | 469 | 0.6925 | 0.6925 | 2.33 | 0.61 | **2.94** |
 | 3 | phase-2 (new, this run) | 1619 | (2, 0.15) | 0.7215 | 0.8237 | 441 | 0.7207 | 0.7207 | 6.99 | 1.12 | **8.11** |
-| 5 | committed (signed board); carried derived at US$0 | 2190 | (4, 0.15) | 0.7475 | 0.8049 | 372 | 0.7475 | 0.7221 | 11.65 | 1.51 | **13.17** |
+| 5 | committed (signed board); carried derived at US$0 | 2190 | (4, 0.15) | 0.7475 | 0.8049 | 372 | 0.7475 | 0.7221 | 11.65 | 1.52 | **13.17** |
 | 10 | committed (signed board); carried derived at US$0 | 3412 | (5, 0.15) | 0.7705 | 0.8294 | 432 | 0.7598 | 0.6744 | 23.30 | 2.36 | **25.66** |
 
 ## Gemini 3 HIGH image 384 px, T 0.7
 
-Pool `flash-high-image-n5-image-t0.7`, thinking high, image, T 0.7. Proposer pass US$2.154 — INTERPOLATED: the mean of the same family's own T0.3 and T1.0 GS passes, because its T0.7 passes recorded no tokens. The two flank it within 0.3 % for MINIMAL image and 16 % for HIGH image.
+Pool `flash-high-image-n5-image-t0.7`, thinking high, image, T 0.7. Proposer pass US$2.154 — ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS passes (not a linear interpolation at T 0.7), because its T0.7 passes recorded no tokens. The two differ by 0.3 % for MINIMAL image and 16 % for HIGH image.
 
 | K | source | candidates | opmax (k, p) | opmax F1@20 | opmax tile-MCC | n | carried F1@20 | carried F1@20, k = K (disclosed) | proposer US$ | verifier US$ | all-in US$ |
 |---:|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 1 | phase-2 (new, this run) | 771 | (1, 0.15) | 0.6909 | 0.8435 | 474 | 0.6909 | 0.6909 | 2.15 | 0.54 | **2.69** |
 | 3 | phase-2 (new, this run) | 1522 | (2, 0.2) | 0.7666 | 0.8435 | 426 | 0.7046 | 0.7046 | 6.46 | 1.06 | **7.52** |
-| 5 | committed (signed board); carried derived at US$0 | 2017 | (3, 0.15) | 0.7868 | 0.8359 | 414 | 0.7474 | 0.6638 | 10.77 | 1.39 | **12.17** |
+| 5 | committed (signed board); carried derived at US$0 | 2017 | (3, 0.15) | 0.7868 | 0.8359 | 414 | 0.7474 | 0.6638 | 10.77 | 1.40 | **12.17** |
 | 10 | committed (signed board); carried derived at US$0 | 3211 | (7, 0.2) | 0.7765 | 0.7980 | 348 | 0.7436 | 0.5750 | 21.54 | 2.22 | **23.76** |
 
 ## Gemini 3 HIGH image 384 px, T 1.0
@@ -133,7 +133,7 @@ Pool `flash-high-image-n5-image-t1.0`, thinking high, image, T 1.0. Proposer pas
 |---:|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 1 | phase-2 (new, this run) | 982 | (1, 0.2) | 0.6119 | 0.8640 | 490 | 0.6098 | 0.6098 | 1.98 | 0.68 | **2.66** |
 | 3 | phase-2 (new, this run) | 1887 | (2, 0.15) | 0.7245 | 0.8294 | 418 | 0.6955 | 0.6955 | 5.93 | 1.31 | **7.24** |
-| 5 | committed (signed board); carried derived at US$0 | 2840 | (3, 0.15) | 0.7337 | 0.8230 | 410 | 0.7137 | 0.6126 | 9.89 | 1.96 | **11.86** |
+| 5 | committed (signed board); carried derived at US$0 | 2840 | (3, 0.15) | 0.7337 | 0.8230 | 410 | 0.7137 | 0.6126 | 9.89 | 1.97 | **11.86** |
 | 10 | committed (signed board); carried derived at US$0 | 4638 | (5, 0.2) | 0.7633 | 0.8002 | 414 | 0.6898 | 0.5067 | 19.78 | 3.21 | **22.99** |
 
 ## Gemini 3 scale-4-optimal 487
@@ -188,7 +188,7 @@ A rung is efficient when no cheaper rung of the same ladder scores as well at th
 | Gemini 3 MINIMAL text 384 px, T 1.0 | 1 @ $1.00 → 0.8235; 3 @ $1.96 → 0.8647; 5 @ $2.78 → 0.8714; 10 @ $4.60 → 0.8781 |
 | Gemini 3 HIGH text 384 px, T 0.3 | 1 @ $3.56 → 0.8314; 3 @ $9.44 → 0.8783; 5 @ $15.26 → 0.8873 |
 | Gemini 3 HIGH text 384 px, T 0.7 | 1 @ $3.24 → 0.8009; 3 @ $8.76 → 0.8492; 5 @ $14.04 → 0.8634; 10 @ $26.97 → 0.8744 |
-| Gemini 3 HIGH text 384 px, T 1.0 | 1 @ $3.18 → 0.7810; 3 @ $8.39 → 0.8541; 5 @ $13.34 → 0.8688; 10 @ $25.57 → 0.8804 |
+| Gemini 3 HIGH text 384 px, T 1.0 | 1 @ $3.18 → 0.7810; 3 @ $8.39 → 0.8541; 5 @ $13.34 → 0.8688; 10 @ $25.58 → 0.8804 |
 | Gemini 3 MINIMAL image 384 px, T 0.3 | 1 @ $1.08 → 0.7680; 3 @ $2.34 → 0.7774; 10 @ $6.50 → 0.7819 |
 | Gemini 3 MINIMAL image 384 px, T 0.7 | 1 @ $1.06 → 0.7252; 3 @ $2.39 → 0.7599; 5 @ $3.65 → 0.7734; 10 @ $6.74 → 0.7881 |
 | Gemini 3 MINIMAL image 384 px, T 1.0 | 1 @ $1.13 → 0.7044; 3 @ $2.54 → 0.7288; 5 @ $3.87 → 0.7384; 10 @ $7.11 → 0.7428 |

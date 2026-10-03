@@ -105,8 +105,9 @@ verifications). Checked 2026-10-04:
 | IM | 200.75 | 195.4 | old figure omitted the verifier (a floor); completed adds 7,878 x 0.000685 |
 
 The prototype pooled four Gemini 3 Flash legs (TH7, T03, uplift, stride B:
-US$0.0006851 per candidate); the build pools every audited comparable,
-ARM1 included, so TM and IM move by a cent or so.
+US$0.0006851 per candidate). The build pools the four NOMINATED legs of the
+55-map generalisation campaign (55maps-generalisation, TH7, T03, uplift;
+ARM1 is not nominated): TM US$30.40 and IM US$200.80 as shipped.
 | ARM1-N1, -N3, -N5 | 34.75, 94.31, 153.16 | None | first figures |
 | ARM2-N1, -N3, -N5 | 38.33, 99.03, 158.58 | None | first figures |
 | FOURTH-N1, -N3, -N5, -N10 | 42.14, 81.40, 116.15, 198.17 | None (no N5 entry) | first figures; N10 completed from ARM2's unit |
@@ -123,9 +124,11 @@ is reported to the PI before merge.
    run is a separate register fix.
 2. **Four floor legs**, completed per § 3. T03 is NOT a floor (audited,
    US$6.90; removed from the overrides 2026-10-03).
-3. **`FAMILY_COST` has no FOURTH-N5 entry**, although the r2 board's
-   addendum carries a FOURTH-N5-carried cell (`cost_usd` null); the rebuilt
-   table covers every family the board has, addendum included.
+3. **`FAMILY_COST` had no FOURTH-N5 entry**, although the r2 board's
+   addendum carries a FOURTH-N5-carried cell. The mapping prices the
+   FOURTH-N5 family (US$116.15); the addendum itself shows no cost column
+   and keeps `cost_usd` null by design (it is untiered and outside the
+   frontier).
 4. Rung union sizes exist only for N in {1, 3, 5}; N = 10 (and N = 5 for
    the arms) is the full run, costed from its leg.
 5. Still to map in the build: Phase 2's per-family pass anchors (several
@@ -148,6 +151,12 @@ is reported to the PI before merge.
 5. Two-lens `/audit` and re-audit; branch + PR.
 
 ## Changelog
+
+### 2026-10-04 (later) — build values and two corrections
+
+§ 5's closing note gives the shipped pooling (four nominated legs, not
+"every comparable, ARM1 included") and TM / IM as shipped; § 6.3 says the
+addendum keeps a null cost by design. Found by the WP4b audit, lens A.
 
 ### 2026-10-04 — Original publication (Session 158)
 

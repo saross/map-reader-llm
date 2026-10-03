@@ -39,10 +39,10 @@ legs: TM, IM, stride A's union leg, and the fourth cell's 3.7 leg.
 
 | Family | Before (US$) | After (US$) | Why |
 |---|---:|---:|---|
-| A-N1 / N3 / N5 / N10 | 20.53 / 41.22 / 59.75 / 103.91 | 20.40 / 41.00 / 59.45 / 103.42 † | within 0.5 % |
-| B-N1 / N3 / N5 / N10 | 30.99 / 65.48 / 97.22 / 173.59 | 30.79 / 65.10 / 96.67 / 172.67 | within 0.6 % |
+| A-N1 / N3 / N5 / N10 | 20.53 / 41.22 / 59.75 / 103.91 | 20.40 / 41.00 / 59.45 / 103.42 † | within 0.7 % |
+| B-N1 / N3 / N5 / N10 | 30.99 / 65.48 / 97.22 / 173.59 | 30.79 / 65.10 / 96.67 / 172.67 | within 0.7 % |
 | TH7 / T03 / UPL | 207.4 / 261.0 / 57.87 | 207.35 / 261.15 / 57.89 | within 0.1 % |
-| TM | 23.4 | 30.39 † | the old figure omitted the floored verifier |
+| TM | 23.4 | 30.40 † | the old figure omitted the floored verifier |
 | IM | 195.4 | 200.80 † | the same; its proposer is US$195.35 at the uniform tier (billed US$359.65) |
 | ARM1-N1 / N3 / N5 | — | 34.75 / 94.31 / 153.16 | first figures |
 | ARM2-N1 / N3 / N5 | — | 38.33 / 99.03 / 158.58 | first figures |
@@ -54,8 +54,12 @@ legs: TM, IM, stride A's union leg, and the fourth cell's 3.7 leg.
 - after: A N = 1 → 3.7 arm 1 N = 1 → 3.7 arm 2 N = 1 → fourth cell N = 3
   → 3.7 arm 2 N = 3.
 
-The 3.7 runs were never dominated: they were unpriced, and so absent. The
-old frontier was an artefact of their missing costs, not a finding.
+The 3.7 runs' deployment-basis cells were unpriced, and so absent, not
+dominated: the old frontier was an artefact of their missing costs. A
+caution for the paper: four of the five new frontier rows are ORACLE cells
+(the board's deployment basis where no carried point exists, as for every
+run), and the addendum's carried-analogue ARM1-N1-carried (F1@50 0.7859 at
+US$35) would be dominated by A N = 1 (0.8227 at US$20.40).
 
 Applied by `scripts/final_board_cost_refresh.py`, which rewrites only the
 cost fields, the cost sentence and the efficiency section; the tiered
@@ -71,8 +75,7 @@ campaign's four complete legs). They reproduce the June audit's
 
 **Nothing moves that matters.** Both efficient sets are unchanged (F1:
 min6, min11, high31, high35; MCC: min6, min11), tiers and pairwise results
-are identical, and every rung's cost moves by less than 0.1 % (high35:
-US$71.23 → 71.26 GS; US$1,249.16 → 1,249.80 at 55-map scale).
+are identical, and every rung's cost moves by less than 0.12 %.
 
 The June audit's anchor leg for the verifier unit (the GS opmax run,
 `outputs/verifier-robustness/.../T0.3/verified`) is not in the register,
@@ -93,7 +96,7 @@ a register gap, queued.
   union's verifier (an upper bound); they now price their own unions
   (arm 1: 37.74 → 34.75 and 95.45 → 94.31; arm 2: 43.16 → 38.33 and
   100.87 → 99.03). K = 5 is unchanged.
-- The GS stride-A ladder reproduces its findings figures to the cent
+- The GS stride-A ladder reproduces its findings figures within US$0.02
   (1.3774 / 2.6411 / 3.8056 / 6.5445 against 1.38 / 2.64 / 3.81 / 6.56).
 
 **Phase 2** (`phase2/ladders.json`, `ladder-tables.md`): each family at its
@@ -110,6 +113,13 @@ interpolated).
   K = 10: US$3.43 → 6.50). HIGH text T0.3 rises 15 % (own pass 2.64);
   HIGH image T1.0 and scale-4 fall 13 to 17 %.
 - `cost_share_at_k3` moves accordingly (MINIMAL image: about 40 % → 36 %).
+- Two choices the PI may wish to revisit. The T0.7 TEXT families keep the
+  55-map T0.7 measurement scaled (0.2659 for MINIMAL), which sits about 7 %
+  below both GS neighbours (0.2846 at T0.3, 0.2893 at T1.0), because the
+  55-map corpus is sparser; the T0.7 IMAGE families take the plain mean of
+  their GS neighbours, so text and image T0.7 are estimated two ways. And
+  the committed K = 5 and K = 10 rungs' verifier legs are priced at the
+  pooled unit rather than their own legs (under 1 % apart).
 
 ## 5. Things the PI should know
 
@@ -157,6 +167,16 @@ An agent never signs. These are drafts, dated when given.
   unchanged."
 
 ## Changelog
+
+### 2026-10-04 (later) — audit lens A corrections
+
+Precision claims corrected (A and B within 0.7 %, not 0.5 / 0.6 %; Pareto
+v2 within 0.12 %, not 0.1 %; stride A within US$0.02, not "to the cent");
+"the 3.7 runs were never dominated" narrowed to their deployment-basis
+cells, with the ARM1-N1-carried caution; the two estimation choices
+added to § 4. A counting fix (results merged from an unpriced cleanup)
+moved TM from US$30.39 to US$30.40; no membership changed. Commit
+`61ab7a446` and the regeneration after it.
 
 ### 2026-10-04 — Original publication (Session 158)
 

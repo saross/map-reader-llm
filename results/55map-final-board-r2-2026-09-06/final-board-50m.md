@@ -266,10 +266,10 @@ results, F1 values and the addendum are byte-identical.
 
 | Family | Before (US$) | After (US$) | Why |
 |---|---:|---:|---|
-| A-N1 / A-N3 / A-N5 / A-N10 | 20.53 / 41.22 / 59.75 / 103.91 | 20.40 / 41.00 / 59.45 / 103.42 † | register reproduces within 0.5 %; A's union leg is a floor, completed from stride B's |
-| B-N1 / B-N3 / B-N5 / B-N10 | 30.99 / 65.48 / 97.22 / 173.59 | 30.79 / 65.10 / 96.67 / 172.67 | within 0.6 % |
+| A-N1 / A-N3 / A-N5 / A-N10 | 20.53 / 41.22 / 59.75 / 103.91 | 20.40 / 41.00 / 59.45 / 103.42 † | register reproduces within 0.7 %; A's union leg is a floor, completed from stride B's |
+| B-N1 / B-N3 / B-N5 / B-N10 | 30.99 / 65.48 / 97.22 / 173.59 | 30.79 / 65.10 / 96.67 / 172.67 | within 0.7 % |
 | TH7 / T03 / UPL | 207.4 / 261.0 / 57.87 | 207.35 / 261.15 / 57.89 | within 0.1 % |
-| TM | 23.4 | 30.39 † | the old figure omitted its verifier leg (a floor); completed from the campaign's four complete legs |
+| TM | 23.4 | 30.40 † | the old figure omitted its verifier leg (a floor); completed from the campaign's four complete legs |
 | IM | 195.4 | 200.80 † | the same; its proposer stays US$195.35 at the uniform tier (billed US$359.65 at standard, the cached-path defect) |
 | ARM1-N1 / -N3 / -N5 | — | 34.75 / 94.31 / 153.16 | first figures |
 | ARM2-N1 / -N3 / -N5 | — | 38.33 / 99.03 / 158.58 | first figures |
@@ -281,14 +281,18 @@ verifier configuration (D19).
 **What changed on this document**: the efficiency frontier's membership.
 Before: A N = 1 → A N = 3 → A N = 5 → B N = 3 → B N = 5. After: A N = 1 →
 3.7 arm 1 N = 1 → 3.7 arm 2 N = 1 → fourth cell N = 3 → 3.7 arm 2 N = 3. The
-3.7 runs were never dominated; they were unpriced and so absent. The old
-frontier was an artefact of their missing costs, not a finding.
+3.7 runs' deployment-basis cells (carried where one exists, otherwise the
+rung oracle, as for every run) were unpriced and so absent, not dominated:
+the old frontier was an artefact of their missing costs. Four of the five
+new frontier rows are oracle cells; the addendum's carried-analogue
+ARM1-N1-carried (F1@50 0.7859 at US$35) would be dominated by A N = 1.
 
 **What did NOT change**: the 35-cell tiered board, its 595-pair family, every
 tier, group and F1 value, and the seven-cell addendum. This board is signed
 (2026-09-17); under the signature policy a re-pricing is recorded as a dated
-signature note, which the PI gives on review. Commit: this document's WP4b
-commit on branch `wp4b-frontier-cost`.
+signature note, which the PI gives on review. Commits: `927d99ced` (the
+refresh), `61ab7a446` (audit fixes: TM to US$30.40), on branch
+`wp4b-frontier-cost`.
 
 ### 2026-09-21 — The tile-MCC oracle dropped from this board
 

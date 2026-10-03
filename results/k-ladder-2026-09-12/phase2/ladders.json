@@ -1,7 +1,7 @@
 {
-  "generated_at_utc": "2026-10-03T23:17:39+00:00",
+  "generated_at_utc": "2026-10-03T23:37:53+00:00",
   "script": "scripts/build_k_ladder_phase2_tables.py",
-  "script_version": "1.1.0",
+  "script_version": "1.2.0",
   "card": "planning/k-ladder-review-2026-09-11.md",
   "costing": "reports/k-ladder-phase2-costing-2026-09-12.md",
   "carried_convention": {
@@ -14,8 +14,8 @@
     "min_pass_usd": 0.2658664314951411,
     "high_pass_usd": 2.291385986465285,
     "g37_pass_usd": 1.7196259999999999,
-    "vf_call_usd": 0.000691551292126002,
-    "basis": "flex (0.5 x list); input 0.25, output+thinking 1.50 per M"
+    "vf_call_usd": 0.0006919552265630265,
+    "basis": "the passes register at the uniform discounted tier (PI ruling D19, amended 2026-10-04), through scripts/lib_frontier_cost.py; each family's pass unit and its anchor are on its ladder (pass_usd, pass_usd_anchor)"
   },
   "n_ladders": 14,
   "ladders": [
@@ -174,8 +174,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1388,
-          "verifier_flex_usd": 0.9599,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 0.9604,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-text-t0.3-n5-opmax",
           "opmax": {
@@ -210,14 +210,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 1.4231,
-          "all_in_flex_usd": 2.383
+          "all_in_flex_usd": 2.3835
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1575,
-          "verifier_flex_usd": 1.0892,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 1.0898,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-text-t0.3-n10-opmax",
           "opmax": {
@@ -252,7 +252,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 2.8462,
-          "all_in_flex_usd": 3.9354
+          "all_in_flex_usd": 3.936
         }
       ]
     },
@@ -411,8 +411,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1593,
-          "verifier_flex_usd": 1.1016,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 1.1023,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-text-t0.7-n5-opmax",
           "opmax": {
@@ -447,14 +447,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 1.3293,
-          "all_in_flex_usd": 2.4309
+          "all_in_flex_usd": 2.4316
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1953,
-          "verifier_flex_usd": 1.3506,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 1.3514,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-text-t0.7-n10-opmax",
           "opmax": {
@@ -489,7 +489,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 2.6587,
-          "all_in_flex_usd": 4.0093
+          "all_in_flex_usd": 4.0101
         }
       ]
     },
@@ -648,8 +648,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1926,
-          "verifier_flex_usd": 1.3319,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 1.3327,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-text-t1.0-n5-opmax",
           "opmax": {
@@ -684,14 +684,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 1.4464,
-          "all_in_flex_usd": 2.7783
+          "all_in_flex_usd": 2.7791
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2472,
-          "verifier_flex_usd": 1.7095,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 1.7105,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-text-t1.0-n10-opmax",
           "opmax": {
@@ -726,7 +726,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 2.8928,
-          "all_in_flex_usd": 4.6023
+          "all_in_flex_usd": 4.6033
         }
       ]
     },
@@ -885,8 +885,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2954,
-          "verifier_flex_usd": 2.0428,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 2.044,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-text-n5-text-t0.3-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-text-t0.3-n5-opmax",
           "opmax": {
@@ -921,14 +921,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 13.2186,
-          "all_in_flex_usd": 15.2614
+          "all_in_flex_usd": 15.2626
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 4313,
-          "verifier_flex_usd": 2.9827,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 2.9844,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-text-n5-text-t0.3-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-text-t0.3-n10-opmax",
           "opmax": {
@@ -963,7 +963,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 26.4372,
-          "all_in_flex_usd": 29.4199
+          "all_in_flex_usd": 29.4216
         }
       ]
     },
@@ -1122,8 +1122,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 3736,
-          "verifier_flex_usd": 2.5836,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 2.5851,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-text-n5-text-t0.7-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-text-t0.7-n5-opmax",
           "opmax": {
@@ -1158,14 +1158,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 11.4569,
-          "all_in_flex_usd": 14.0405
+          "all_in_flex_usd": 14.042
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 5866,
-          "verifier_flex_usd": 4.0566,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 4.059,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-text-n5-text-t0.7-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-text-t0.7-n10-opmax",
           "opmax": {
@@ -1200,7 +1200,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 22.9139,
-          "all_in_flex_usd": 26.9705
+          "all_in_flex_usd": 26.9729
         }
       ]
     },
@@ -1359,8 +1359,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 3760,
-          "verifier_flex_usd": 2.6002,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 2.6018,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-text-n5-text-t1.0-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-text-t1.0-n5-opmax",
           "opmax": {
@@ -1395,14 +1395,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 10.7398,
-          "all_in_flex_usd": 13.34
+          "all_in_flex_usd": 13.3416
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 5920,
-          "verifier_flex_usd": 4.094,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 4.0964,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-text-n5-text-t1.0-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-text-t1.0-n10-opmax",
           "opmax": {
@@ -1437,7 +1437,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 21.4795,
-          "all_in_flex_usd": 25.5735
+          "all_in_flex_usd": 25.5759
         }
       ]
     },
@@ -1596,8 +1596,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 987,
-          "verifier_flex_usd": 0.6826,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 0.683,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "image-n5-image-t0.3-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-image-t0.3-n5-opmax",
           "opmax": {
@@ -1632,14 +1632,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 2.865,
-          "all_in_flex_usd": 3.5476
+          "all_in_flex_usd": 3.548
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1114,
-          "verifier_flex_usd": 0.7704,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 0.7708,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "image-n5-image-t0.3-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-image-t0.3-n10-opmax",
           "opmax": {
@@ -1674,7 +1674,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 5.7299,
-          "all_in_flex_usd": 6.5003
+          "all_in_flex_usd": 6.5007
         }
       ]
     },
@@ -1686,7 +1686,7 @@
       "modality": "image",
       "temperature": 0.7,
       "pass_usd": 0.5737418,
-      "pass_usd_anchor": "INTERPOLATED: the mean of the same family's own T0.3 and T1.0 GS passes, because its T0.7 passes recorded no tokens. The two flank it within 0.3 % for MINIMAL image and 16 % for HIGH image",
+      "pass_usd_anchor": "ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS passes (not a linear interpolation at T 0.7), because its T0.7 passes recorded no tokens. The two differ by 0.3 % for MINIMAL image and 16 % for HIGH image",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -1833,8 +1833,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1123,
-          "verifier_flex_usd": 0.7766,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 0.7771,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "image-n5-image-t0.7-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-image-t0.7-n5-opmax",
           "opmax": {
@@ -1869,14 +1869,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 2.8687,
-          "all_in_flex_usd": 3.6453
+          "all_in_flex_usd": 3.6458
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1450,
-          "verifier_flex_usd": 1.0027,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 1.0033,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "image-n5-image-t0.7-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-image-t0.7-n10-opmax",
           "opmax": {
@@ -1911,7 +1911,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 5.7374,
-          "all_in_flex_usd": 6.7401
+          "all_in_flex_usd": 6.7407
         }
       ]
     },
@@ -2070,8 +2070,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1443,
-          "verifier_flex_usd": 0.9979,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 0.9985,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "image-n5-image-t1.0-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
           "opmax": {
@@ -2106,14 +2106,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 2.8725,
-          "all_in_flex_usd": 3.8704
+          "all_in_flex_usd": 3.871
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1975,
-          "verifier_flex_usd": 1.3658,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 1.3666,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "image-n5-image-t1.0-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
           "opmax": {
@@ -2148,7 +2148,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 5.7449,
-          "all_in_flex_usd": 7.1107
+          "all_in_flex_usd": 7.1115
         }
       ]
     },
@@ -2307,8 +2307,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2190,
-          "verifier_flex_usd": 1.5145,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 1.5154,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-image-n5-image-t0.3-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-image-t0.3-n5-opmax",
           "opmax": {
@@ -2343,14 +2343,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 11.6513,
-          "all_in_flex_usd": 13.1658
+          "all_in_flex_usd": 13.1667
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 3412,
-          "verifier_flex_usd": 2.3596,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 2.361,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-image-n5-image-t0.3-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-image-t0.3-n10-opmax",
           "opmax": {
@@ -2385,7 +2385,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 23.3025,
-          "all_in_flex_usd": 25.6621
+          "all_in_flex_usd": 25.6635
         }
       ]
     },
@@ -2397,7 +2397,7 @@
       "modality": "image",
       "temperature": 0.7,
       "pass_usd": 2.15426535,
-      "pass_usd_anchor": "INTERPOLATED: the mean of the same family's own T0.3 and T1.0 GS passes, because its T0.7 passes recorded no tokens. The two flank it within 0.3 % for MINIMAL image and 16 % for HIGH image",
+      "pass_usd_anchor": "ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS passes (not a linear interpolation at T 0.7), because its T0.7 passes recorded no tokens. The two differ by 0.3 % for MINIMAL image and 16 % for HIGH image",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -2544,8 +2544,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2017,
-          "verifier_flex_usd": 1.3949,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 1.3957,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-image-n5-image-t0.7-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-image-t0.7-n5-opmax",
           "opmax": {
@@ -2580,14 +2580,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 10.7713,
-          "all_in_flex_usd": 12.1662
+          "all_in_flex_usd": 12.167
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 3211,
-          "verifier_flex_usd": 2.2206,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 2.2219,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-image-n5-image-t0.7-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-image-t0.7-n10-opmax",
           "opmax": {
@@ -2622,7 +2622,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 21.5427,
-          "all_in_flex_usd": 23.7633
+          "all_in_flex_usd": 23.7646
         }
       ]
     },
@@ -2781,8 +2781,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2840,
-          "verifier_flex_usd": 1.964,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 1.9652,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-image-n5-image-t1.0-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
           "opmax": {
@@ -2817,14 +2817,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 9.8914,
-          "all_in_flex_usd": 11.8554
+          "all_in_flex_usd": 11.8566
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 4638,
-          "verifier_flex_usd": 3.2074,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 3.2093,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "flash-high-image-n5-image-t1.0-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
           "opmax": {
@@ -2859,7 +2859,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 19.7828,
-          "all_in_flex_usd": 22.9902
+          "all_in_flex_usd": 22.9921
         }
       ]
     },
@@ -3018,8 +3018,8 @@
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2198,
-          "verifier_flex_usd": 1.52,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 1.5209,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "scale-4-optimal-487-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-scale4-optimal-n5-opmax",
           "opmax": {
@@ -3054,14 +3054,14 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 9.563,
-          "all_in_flex_usd": 11.083
+          "all_in_flex_usd": 11.0839
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 3601,
-          "verifier_flex_usd": 2.4903,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 2.4917,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "verifier_stage": "scale-4-optimal-487-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-scale4-optimal-n10-opmax",
           "opmax": {
@@ -3096,7 +3096,7 @@
           },
           "carried_readings_coincide": false,
           "proposer_flex_usd": 19.1259,
-          "all_in_flex_usd": 21.6162
+          "all_in_flex_usd": 21.6176
         }
       ]
     },
@@ -3273,8 +3273,8 @@
           "K": 5,
           "source": "committed (register); opmax derived at US$0",
           "candidates": 791,
-          "verifier_flex_usd": 0.547,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 0.5473,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "opmax": {
             "vote_t": 5,
             "prob_t": 0.1,
@@ -3311,14 +3311,14 @@
           "carried_readings_coincide": true,
           "carried_note": "this family's committed carried point is (prob_t 0.10, k = K), its own convention",
           "proposer_flex_usd": 8.5981,
-          "all_in_flex_usd": 9.1451
+          "all_in_flex_usd": 9.1454
         },
         {
           "K": 10,
           "source": "committed (register); opmax derived at US$0",
           "candidates": 913,
-          "verifier_flex_usd": 0.6314,
-          "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+          "verifier_flex_usd": 0.6318,
+          "verifier_usd_basis": "priced at VF_CALL_USD 0.0006920 (register, D19)",
           "opmax": {
             "vote_t": 10,
             "prob_t": 0.1,
@@ -3355,7 +3355,7 @@
           "carried_readings_coincide": true,
           "carried_note": "this family's committed carried point is (prob_t 0.10, k = K), its own convention",
           "proposer_flex_usd": 17.1963,
-          "all_in_flex_usd": 17.8277
+          "all_in_flex_usd": 17.8281
         }
       ]
     }
