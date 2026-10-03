@@ -1,15 +1,42 @@
 {
   "cost_model": {
-    "min_pass_usd": 0.266,
-    "high_pass_usd": 2.29,
-    "vf_call_usd": 0.000693,
+    "min_pass_usd": 0.2658664314951411,
+    "high_pass_usd": 2.291385986465285,
+    "vf_call_usd": 0.000691551292126002,
     "production_scale": {
       "tiles_gs": 487,
       "tiles_55map": 8541,
       "factor": 17.54,
       "note": "crops/tile from GS pools; 55-map corpus sparser -> slight upper bound; flex == batch pricing on Gemini 3"
     },
-    "basis": "token-load audit 2026-06-12 (reports/token-load-audit-2026-06-12.md): all three rates measured from per-item metadata at F3 flex rates with thinking billed at the output rate; MIN/HIGH from the 55-map deployment passes scaled by 487/8541 (replaces the manifest-derived MIN, which was 2x double-counted, and the 'HIGH = 3x minimal' extrapolation, which under-priced proposer thinking 1.4x)"
+    "basis": "the passes register at the uniform discounted tier (PI ruling D19, amended 2026-10-04): MIN/HIGH the 55-map deployment passes' mean, re-priced at flex and scaled by 487/8541; VF the Gemini 3 Flash verifier per candidate, pooled over the 55-map generalisation campaign's four complete legs (scripts/lib_frontier_cost.gs_units, data/pricing/frontier-configurations.json). It replaced the token-load audit of 2026-06-12's 0.266 / 2.29 / 0.000693, which it reproduces within 0.3 %",
+    "sources": {
+      "min_pass": [
+        "55maps-text-min-generalisation::detect_brief-text::run1",
+        "55maps-text-min-generalisation::detect_brief-text::run2",
+        "55maps-text-min-generalisation::detect_brief-text::run3",
+        "55maps-text-min-generalisation::detect_brief-text::run4",
+        "55maps-text-min-generalisation::detect_brief-text::run5",
+        "55maps-text-min-n10-uplift::detect_brief-text-min-n10::run6",
+        "55maps-text-min-n10-uplift::detect_brief-text-min-n10::run7",
+        "55maps-text-min-n10-uplift::detect_brief-text-min-n10::run8",
+        "55maps-text-min-n10-uplift::detect_brief-text-min-n10::run9",
+        "55maps-text-min-n10-uplift::detect_brief-text-min-n10::run10"
+      ],
+      "high_pass": [
+        "55maps-text-high-generalisation::detect_brief-text::run1",
+        "55maps-text-high-generalisation::detect_brief-text::run2",
+        "55maps-text-high-generalisation::detect_brief-text::run3",
+        "55maps-text-high-generalisation::detect_brief-text::run4",
+        "55maps-text-high-generalisation::detect_brief-text::run5"
+      ],
+      "vf_call": [
+        "55maps-generalisation::verified::run1",
+        "55maps-text-high-generalisation::verified::run1",
+        "55maps-text-high-t0-3-generalisation::verified::run1",
+        "55maps-text-min-n10-uplift::verified-3of10::run1"
+      ]
+    }
   },
   "tiers": [
     [
@@ -696,8 +723,8 @@
       "condition_ref": "verifier-robustness::verified-384-16of30-t0-3-n5-opmax",
       "eval_path": "results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.json",
       "passes": 35,
-      "est_cost_usd": 71.23,
-      "est_cost_55map_usd": 1249.16,
+      "est_cost_usd": 71.26,
+      "est_cost_55map_usd": 1249.8,
       "proposer": "30xHIGH",
       "verifier": "n=5 over 729 crops",
       "tier": 1,
@@ -716,8 +743,8 @@
       "condition_ref": "pv-diag-384::verified-adv-text-consensus-16of30",
       "eval_path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
       "passes": 31,
-      "est_cost_usd": 69.21,
-      "est_cost_55map_usd": 1213.72,
+      "est_cost_usd": 69.25,
+      "est_cost_55map_usd": 1214.43,
       "proposer": "30xHIGH",
       "verifier": "n=1 over 729 crops",
       "tier": 1,
@@ -737,7 +764,7 @@
       "eval_path": "results/flash35-2x2/evals/min11/evaluation.json",
       "passes": 11,
       "est_cost_usd": 4.0,
-      "est_cost_55map_usd": 70.22,
+      "est_cost_55map_usd": 70.14,
       "proposer": "10xMIN",
       "verifier": "n=1 over 1939 crops",
       "tier": 1,
@@ -757,7 +784,7 @@
       "eval_path": "results/flash35-2x2/evals/min6-true/evaluation.json",
       "passes": 6,
       "est_cost_usd": 2.43,
-      "est_cost_55map_usd": 42.6,
+      "est_cost_55map_usd": 42.55,
       "proposer": "5xMIN",
       "verifier": "n=1 over 1586 crops",
       "tier": 1,
@@ -777,7 +804,7 @@
       "eval_path": "results/verifier-robustness/evals/verified-adv-text-6of10/evaluation.json",
       "passes": 11,
       "est_cost_usd": 26.97,
-      "est_cost_55map_usd": 472.91,
+      "est_cost_55map_usd": 473.01,
       "proposer": "10xHIGH",
       "verifier": "n=1 over 5866 crops",
       "tier": 1,
@@ -797,7 +824,7 @@
       "eval_path": "results/verifier-robustness/evals/verified-384-ge3of5-t0-3-n5/evaluation.json",
       "passes": 10,
       "est_cost_usd": 14.41,
-      "est_cost_55map_usd": 252.77,
+      "est_cost_55map_usd": 252.78,
       "proposer": "5xHIGH",
       "verifier": "n=5 over 855 crops",
       "tier": 1,
@@ -817,7 +844,7 @@
       "eval_path": "results/verifier-robustness/evals/verified-adv-text-4of5/evaluation.json",
       "passes": 6,
       "est_cost_usd": 14.04,
-      "est_cost_55map_usd": 246.22,
+      "est_cost_55map_usd": 246.24,
       "proposer": "5xHIGH",
       "verifier": "n=1 over 3736 crops",
       "tier": 1,

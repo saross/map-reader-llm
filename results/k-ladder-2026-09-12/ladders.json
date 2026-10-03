@@ -1,13 +1,11 @@
 {
-  "generated_at_utc": "2026-09-12T01:23:19+00:00",
+  "generated_at_utc": "2026-10-03T23:17:37+00:00",
   "card": "planning/k-ladder-review-2026-09-11.md",
   "run_card": "planning/k-ladder-phase1-run-2026-09-12.md",
   "gs_to_55map_tile_factor": 17.537987679671456,
   "sources": {
     "metrics": "results/k-ladder-2026-09-12/inventory.json (from the register)",
-    "gs_cost": "results/stride-2026-08-25/findings.md",
-    "55map_cost": "results/55map-final-board-r2-2026-09-06/final_board_50m.json",
-    "arm_cost": "reports/r7-gaps-deltas-2026-09-11.md \u00a7\u00a7 2.2, 2.3, 2.5",
+    "cost": "the passes register at the uniform discounted tier (PI ruling D19, amended 2026-10-04): data/pricing/frontier-configurations.json (k_ladder_phase1_gs_stride_a, board_families) priced by scripts/lib_frontier_cost.py",
     "board_frame_evals": "results/k-ladder-2026-09-12/board-frame/"
   },
   "n_ladders": 8,
@@ -43,9 +41,17 @@
           "n_detections": 5219,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N1-oracle/evaluation.json",
           "cost": {
-            "usd": 37.74,
-            "basis": "part-audited, part-simulated",
-            "why": "proposer 28.85 = audited US$144.27 over 5 passes scaled to 1; verifier 8.89 is the arm's audited figure over the FULL K = 5 union of 12715 candidates, not the rung's smaller one, so the all-in is an upper bound on the verifier leg"
+            "usd": 34.7462,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family ARM1-N1: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run4",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run5",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1"
+            ]
           }
         },
         {
@@ -60,9 +66,17 @@
           "n_detections": 4772,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N3-oracle/evaluation.json",
           "cost": {
-            "usd": 95.45,
-            "basis": "part-audited, part-simulated",
-            "why": "proposer 86.56 = audited US$144.27 over 5 passes scaled to 3; verifier 8.89 is the arm's audited figure over the FULL K = 5 union of 12715 candidates, not the rung's smaller one, so the all-in is an upper bound on the verifier leg"
+            "usd": 94.3107,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family ARM1-N3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run4",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run5",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1"
+            ]
           }
         },
         {
@@ -77,9 +91,17 @@
           "n_detections": 5229,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N5-carried/evaluation.json",
           "cost": {
-            "usd": 153.16,
-            "basis": "part-audited, part-simulated",
-            "why": "proposer 144.27 = audited US$144.27 over 5 passes scaled to 5; verifier 8.89 is the arm's audited figure over the FULL K = 5 union of 12715 candidates, not the rung's smaller one, so the all-in is an upper bound on the verifier leg"
+            "usd": 153.1642,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family ARM1-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run4",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run5",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1"
+            ]
           }
         },
         {
@@ -94,9 +116,17 @@
           "n_detections": 4616,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM1-N5-oracle/evaluation.json",
           "cost": {
-            "usd": 153.16,
-            "basis": "part-audited, part-simulated",
-            "why": "proposer 144.27 = audited US$144.27 over 5 passes scaled to 5; verifier 8.89 is the arm's audited figure over the FULL K = 5 union of 12715 candidates, not the rung's smaller one, so the all-in is an upper bound on the verifier leg"
+            "usd": 153.1642,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family ARM1-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run4",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run5",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1"
+            ]
           }
         }
       ]
@@ -132,9 +162,17 @@
           "n_detections": 5021,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N1-oracle/evaluation.json",
           "cost": {
-            "usd": 43.16,
-            "basis": "part-audited, part-simulated",
-            "why": "proposer 28.85 = audited US$144.27 over 5 passes scaled to 1; verifier 14.31 is the arm's audited figure over the FULL K = 5 union of 12715 candidates, not the rung's smaller one, so the all-in is an upper bound on the verifier leg"
+            "usd": 38.3348,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family ARM2-N1: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run4",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run5",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
+            ]
           }
         },
         {
@@ -149,9 +187,17 @@
           "n_detections": 5097,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N3-oracle/evaluation.json",
           "cost": {
-            "usd": 100.87,
-            "basis": "part-audited, part-simulated",
-            "why": "proposer 86.56 = audited US$144.27 over 5 passes scaled to 3; verifier 14.31 is the arm's audited figure over the FULL K = 5 union of 12715 candidates, not the rung's smaller one, so the all-in is an upper bound on the verifier leg"
+            "usd": 99.0293,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family ARM2-N3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run4",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run5",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
+            ]
           }
         },
         {
@@ -166,9 +212,17 @@
           "n_detections": 5003,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-carried/evaluation.json",
           "cost": {
-            "usd": 158.58,
-            "basis": "part-audited, part-simulated",
-            "why": "proposer 144.27 = audited US$144.27 over 5 passes scaled to 5; verifier 14.31 is the arm's audited figure over the FULL K = 5 union of 12715 candidates, not the rung's smaller one, so the all-in is an upper bound on the verifier leg"
+            "usd": 158.5795,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family ARM2-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run4",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run5",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
+            ]
           }
         },
         {
@@ -183,9 +237,17 @@
           "n_detections": 4924,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/ARM2-N5-oracle/evaluation.json",
           "cost": {
-            "usd": 158.58,
-            "basis": "part-audited, part-simulated",
-            "why": "proposer 144.27 = audited US$144.27 over 5 passes scaled to 5; verifier 14.31 is the arm's audited figure over the FULL K = 5 union of 12715 candidates, not the rung's smaller one, so the all-in is an upper bound on the verifier leg"
+            "usd": 158.5795,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family ARM2-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run4",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37::run5",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
+            ]
           }
         }
       ]
@@ -221,9 +283,22 @@
           "n_detections": 4879,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N1-oracle/evaluation.json",
           "cost": {
-            "usd": 20.53,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N1-oracle, cost_usd"
+            "usd": 20.4021,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N1: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -238,9 +313,22 @@
           "n_detections": 4400,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N3-carried/evaluation.json",
           "cost": {
-            "usd": 41.22,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N3-oracle, cost_usd"
+            "usd": 40.9992,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -255,9 +343,22 @@
           "n_detections": 4796,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N3-oracle/evaluation.json",
           "cost": {
-            "usd": 41.22,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N3-oracle, cost_usd"
+            "usd": 40.9992,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -272,9 +373,22 @@
           "n_detections": 4597,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N5-carried/evaluation.json",
           "cost": {
-            "usd": 59.75,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N5-oracle, cost_usd"
+            "usd": 59.4522,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -289,9 +403,22 @@
           "n_detections": 4597,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N5-oracle/evaluation.json",
           "cost": {
-            "usd": 59.75,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N5-oracle, cost_usd"
+            "usd": 59.4522,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -306,9 +433,23 @@
           "n_detections": 4475,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N10-carried/evaluation.json",
           "cost": {
-            "usd": 103.91,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N10-oracle, cost_usd"
+            "usd": 103.4239,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N10: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -323,9 +464,23 @@
           "n_detections": 4639,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/A-N10-oracle/evaluation.json",
           "cost": {
-            "usd": 103.91,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N10-oracle, cost_usd"
+            "usd": 103.4239,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N10: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         }
       ]
@@ -361,9 +516,22 @@
           "n_detections": 4879,
           "eval_path": "results/55map-final-board-2026-08-27/cells/A-N1-oracle/evaluation.json",
           "cost": {
-            "usd": 20.53,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N1-oracle, cost_usd"
+            "usd": 20.4021,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N1: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -378,9 +546,22 @@
           "n_detections": 4400,
           "eval_path": "results/55map-final-board-2026-08-27/cells/A-N3-carried/evaluation.json",
           "cost": {
-            "usd": 41.22,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N3-oracle, cost_usd"
+            "usd": 40.9992,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -395,9 +576,22 @@
           "n_detections": 4796,
           "eval_path": "results/55map-final-board-2026-08-27/cells/A-N3-oracle/evaluation.json",
           "cost": {
-            "usd": 41.22,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N3-oracle, cost_usd"
+            "usd": 40.9992,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -412,9 +606,22 @@
           "n_detections": 4597,
           "eval_path": "results/55map-final-board-2026-08-27/cells/A-N5-carried/evaluation.json",
           "cost": {
-            "usd": 59.75,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N5-oracle, cost_usd"
+            "usd": 59.4522,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -429,9 +636,22 @@
           "n_detections": 4597,
           "eval_path": "results/55map-final-board-2026-08-27/cells/A-N5-oracle/evaluation.json",
           "cost": {
-            "usd": 59.75,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N5-oracle, cost_usd"
+            "usd": 59.4522,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -446,9 +666,23 @@
           "n_detections": 4475,
           "eval_path": "results/55map-final-board-2026-08-27/cells/A-N10-carried/evaluation.json",
           "cost": {
-            "usd": 103.91,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N10-oracle, cost_usd"
+            "usd": 103.4239,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N10: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -463,9 +697,23 @@
           "n_detections": 4639,
           "eval_path": "results/55map-final-board-2026-08-27/cells/A-N10-oracle/evaluation.json",
           "cost": {
-            "usd": 103.91,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell A-N10-oracle, cost_usd"
+            "usd": 103.4239,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family A-N10: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov128_55map::run1",
+              "stride-55map-2026-08-25::g384_ov128_55map::run2",
+              "stride-55map-2026-08-25::g384_ov128_55map::run3",
+              "stride-55map-2026-08-25::g384_ov128_55map::run4",
+              "stride-55map-2026-08-25::g384_ov128_55map::run5",
+              "stride-55map-2026-08-25::g384_ov128_55map::run6",
+              "stride-55map-2026-08-25::g384_ov128_55map::run7",
+              "stride-55map-2026-08-25::g384_ov128_55map::run8",
+              "stride-55map-2026-08-25::g384_ov128_55map::run9",
+              "stride-55map-2026-08-25::g384_ov128_55map::run10",
+              "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         }
       ]
@@ -501,11 +749,24 @@
           "n_detections": 411,
           "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/eval/evaluation.json",
           "cost": {
-            "usd": 1.38,
-            "basis": "audited (measured flex)",
-            "why": "results/stride-2026-08-25/findings.md, 'Exact winner ladder' table; $3.407 flex measured against $3.41 priced over the four rungs"
+            "usd": 1.3774,
+            "basis": "measured at the uniform tier",
+            "why": "GS stride-A rung N = 1: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-phaseb-2026-08-25::g384_ov128::run1",
+              "stride-phaseb-2026-08-25::g384_ov128::run2",
+              "stride-phaseb-2026-08-25::g384_ov128::run3",
+              "stride-phaseb-2026-08-25::g384_ov128::run4",
+              "stride-phaseb-2026-08-25::g384_ov128::run5",
+              "stride-phaseb-2026-08-25::g384_ov128::run6",
+              "stride-phaseb-2026-08-25::g384_ov128::run7",
+              "stride-phaseb-2026-08-25::g384_ov128::run8",
+              "stride-phaseb-2026-08-25::g384_ov128::run9",
+              "stride-phaseb-2026-08-25::g384_ov128::run10",
+              "stride-phaseb-2026-08-25::g384_ov128-union-k1-verify::run1"
+            ]
           },
-          "projection_55map_usd": 24.2,
+          "projection_55map_usd": 24.16,
           "board_frame": {
             "available": true,
             "f1_20": 0.8605,
@@ -527,11 +788,24 @@
           "n_detections": 380,
           "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n3/eval/evaluation.json",
           "cost": {
-            "usd": 2.64,
-            "basis": "audited (measured flex)",
-            "why": "results/stride-2026-08-25/findings.md, 'Exact winner ladder' table; $3.407 flex measured against $3.41 priced over the four rungs"
+            "usd": 2.6411,
+            "basis": "measured at the uniform tier",
+            "why": "GS stride-A rung N = 3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-phaseb-2026-08-25::g384_ov128::run1",
+              "stride-phaseb-2026-08-25::g384_ov128::run2",
+              "stride-phaseb-2026-08-25::g384_ov128::run3",
+              "stride-phaseb-2026-08-25::g384_ov128::run4",
+              "stride-phaseb-2026-08-25::g384_ov128::run5",
+              "stride-phaseb-2026-08-25::g384_ov128::run6",
+              "stride-phaseb-2026-08-25::g384_ov128::run7",
+              "stride-phaseb-2026-08-25::g384_ov128::run8",
+              "stride-phaseb-2026-08-25::g384_ov128::run9",
+              "stride-phaseb-2026-08-25::g384_ov128::run10",
+              "stride-phaseb-2026-08-25::g384_ov128-union-k3-verify::run1"
+            ]
           },
-          "projection_55map_usd": 46.3,
+          "projection_55map_usd": 46.32,
           "board_frame": {
             "available": true,
             "f1_20": 0.8834,
@@ -553,11 +827,24 @@
           "n_detections": 394,
           "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n5/eval/evaluation.json",
           "cost": {
-            "usd": 3.81,
-            "basis": "audited (measured flex)",
-            "why": "results/stride-2026-08-25/findings.md, 'Exact winner ladder' table; $3.407 flex measured against $3.41 priced over the four rungs"
+            "usd": 3.8056,
+            "basis": "measured at the uniform tier",
+            "why": "GS stride-A rung N = 5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-phaseb-2026-08-25::g384_ov128::run1",
+              "stride-phaseb-2026-08-25::g384_ov128::run2",
+              "stride-phaseb-2026-08-25::g384_ov128::run3",
+              "stride-phaseb-2026-08-25::g384_ov128::run4",
+              "stride-phaseb-2026-08-25::g384_ov128::run5",
+              "stride-phaseb-2026-08-25::g384_ov128::run6",
+              "stride-phaseb-2026-08-25::g384_ov128::run7",
+              "stride-phaseb-2026-08-25::g384_ov128::run8",
+              "stride-phaseb-2026-08-25::g384_ov128::run9",
+              "stride-phaseb-2026-08-25::g384_ov128::run10",
+              "stride-phaseb-2026-08-25::g384_ov128-union-k5-verify::run1"
+            ]
           },
-          "projection_55map_usd": 66.82,
+          "projection_55map_usd": 66.74,
           "board_frame": {
             "available": true,
             "f1_20": 0.8782,
@@ -579,11 +866,24 @@
           "n_detections": 387,
           "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128/eval/evaluation.json",
           "cost": {
-            "usd": 6.56,
-            "basis": "audited (measured flex)",
-            "why": "results/stride-2026-08-25/findings.md, 'Exact winner ladder' table; $3.407 flex measured against $3.41 priced over the four rungs"
+            "usd": 6.5445,
+            "basis": "measured at the uniform tier",
+            "why": "GS stride-A rung N = 10: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-phaseb-2026-08-25::g384_ov128::run1",
+              "stride-phaseb-2026-08-25::g384_ov128::run2",
+              "stride-phaseb-2026-08-25::g384_ov128::run3",
+              "stride-phaseb-2026-08-25::g384_ov128::run4",
+              "stride-phaseb-2026-08-25::g384_ov128::run5",
+              "stride-phaseb-2026-08-25::g384_ov128::run6",
+              "stride-phaseb-2026-08-25::g384_ov128::run7",
+              "stride-phaseb-2026-08-25::g384_ov128::run8",
+              "stride-phaseb-2026-08-25::g384_ov128::run9",
+              "stride-phaseb-2026-08-25::g384_ov128::run10",
+              "stride-phaseb-2026-08-25::g384_ov128-union-k10-verify::run1"
+            ]
           },
-          "projection_55map_usd": 115.05,
+          "projection_55map_usd": 114.78,
           "board_frame": {
             "available": true,
             "f1_20": 0.8905,
@@ -626,9 +926,22 @@
           "n_detections": 5655,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N1-oracle/evaluation.json",
           "cost": {
-            "usd": 30.99,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N1-oracle, cost_usd"
+            "usd": 30.7881,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N1: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -643,9 +956,22 @@
           "n_detections": 4971,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N3-carried/evaluation.json",
           "cost": {
-            "usd": 65.48,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N3-oracle, cost_usd"
+            "usd": 65.1009,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -660,9 +986,22 @@
           "n_detections": 4772,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N3-oracle/evaluation.json",
           "cost": {
-            "usd": 65.48,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N3-oracle, cost_usd"
+            "usd": 65.1009,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -677,9 +1016,22 @@
           "n_detections": 4736,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N5-carried/evaluation.json",
           "cost": {
-            "usd": 97.22,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N5-oracle, cost_usd"
+            "usd": 96.6745,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -694,9 +1046,22 @@
           "n_detections": 4566,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N5-oracle/evaluation.json",
           "cost": {
-            "usd": 97.22,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N5-oracle, cost_usd"
+            "usd": 96.6745,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -711,9 +1076,22 @@
           "n_detections": 4505,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N10-carried/evaluation.json",
           "cost": {
-            "usd": 173.59,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N10-oracle, cost_usd"
+            "usd": 172.673,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N10: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -728,9 +1106,22 @@
           "n_detections": 4639,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/B-N10-oracle/evaluation.json",
           "cost": {
-            "usd": 173.59,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N10-oracle, cost_usd"
+            "usd": 172.673,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N10: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         }
       ]
@@ -766,9 +1157,22 @@
           "n_detections": 5337,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N1-oracle/evaluation.json",
           "cost": {
-            "usd": 30.99,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N1-oracle, cost_usd"
+            "usd": 42.1361,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family FOURTH-N1: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
+            ]
           }
         },
         {
@@ -783,9 +1187,22 @@
           "n_detections": 4626,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N3-oracle/evaluation.json",
           "cost": {
-            "usd": 65.48,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N3-oracle, cost_usd"
+            "usd": 81.4036,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family FOURTH-N3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
+            ]
           }
         },
         {
@@ -800,9 +1217,23 @@
           "n_detections": 4246,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N10-carried/evaluation.json",
           "cost": {
-            "usd": 173.59,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N10-oracle, cost_usd"
+            "usd": 198.1678,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family FOURTH-N10: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
+            ]
           }
         },
         {
@@ -817,9 +1248,23 @@
           "n_detections": 4495,
           "eval_path": "results/55map-final-board-r2-2026-09-06/cells/FOURTH-N10-oracle/evaluation.json",
           "cost": {
-            "usd": 173.59,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N10-oracle, cost_usd"
+            "usd": 198.1678,
+            "basis": "completed at the uniform tier (a floor leg priced at comparable legs' unit, D19)",
+            "why": "r2 board family FOURTH-N10: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1",
+              "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
+            ]
           }
         }
       ]
@@ -855,9 +1300,22 @@
           "n_detections": 5655,
           "eval_path": "results/55map-final-board-2026-08-27/cells/B-N1-oracle/evaluation.json",
           "cost": {
-            "usd": 30.99,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N1-oracle, cost_usd"
+            "usd": 30.7881,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N1: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -872,9 +1330,22 @@
           "n_detections": 4971,
           "eval_path": "results/55map-final-board-2026-08-27/cells/B-N3-carried/evaluation.json",
           "cost": {
-            "usd": 65.48,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N3-oracle, cost_usd"
+            "usd": 65.1009,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -889,9 +1360,22 @@
           "n_detections": 4772,
           "eval_path": "results/55map-final-board-2026-08-27/cells/B-N3-oracle/evaluation.json",
           "cost": {
-            "usd": 65.48,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N3-oracle, cost_usd"
+            "usd": 65.1009,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N3: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -906,9 +1390,22 @@
           "n_detections": 4736,
           "eval_path": "results/55map-final-board-2026-08-27/cells/B-N5-carried/evaluation.json",
           "cost": {
-            "usd": 97.22,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N5-oracle, cost_usd"
+            "usd": 96.6745,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -923,9 +1420,22 @@
           "n_detections": 4566,
           "eval_path": "results/55map-final-board-2026-08-27/cells/B-N5-oracle/evaluation.json",
           "cost": {
-            "usd": 97.22,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N5-oracle, cost_usd"
+            "usd": 96.6745,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N5: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -940,9 +1450,22 @@
           "n_detections": 4505,
           "eval_path": "results/55map-final-board-2026-08-27/cells/B-N10-carried/evaluation.json",
           "cost": {
-            "usd": 173.59,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N10-oracle, cost_usd"
+            "usd": 172.673,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N10: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         },
         {
@@ -957,9 +1480,22 @@
           "n_detections": 4639,
           "eval_path": "results/55map-final-board-2026-08-27/cells/B-N10-oracle/evaluation.json",
           "cost": {
-            "usd": 173.59,
-            "basis": "audited (measured flex)",
-            "why": "results/55map-final-board-r2-2026-09-06/final_board_50m.json, cell B-N10-oracle, cost_usd"
+            "usd": 172.673,
+            "basis": "measured at the uniform tier",
+            "why": "r2 board family B-N10: data/pricing/frontier-configurations.json priced by scripts/lib_frontier_cost.py from the passes register (D19, amended 2026-10-04)",
+            "register_rows": [
+              "stride-55map-2026-08-25::g384_ov192_55map::run1",
+              "stride-55map-2026-08-25::g384_ov192_55map::run2",
+              "stride-55map-2026-08-25::g384_ov192_55map::run3",
+              "stride-55map-2026-08-25::g384_ov192_55map::run4",
+              "stride-55map-2026-08-25::g384_ov192_55map::run5",
+              "stride-55map-2026-08-25::g384_ov192_55map::run6",
+              "stride-55map-2026-08-25::g384_ov192_55map::run7",
+              "stride-55map-2026-08-25::g384_ov192_55map::run8",
+              "stride-55map-2026-08-25::g384_ov192_55map::run9",
+              "stride-55map-2026-08-25::g384_ov192_55map::run10",
+              "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+            ]
           }
         }
       ]

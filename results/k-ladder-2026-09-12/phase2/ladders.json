@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-13T02:53:10+00:00",
+  "generated_at_utc": "2026-10-03T23:17:39+00:00",
   "script": "scripts/build_k_ladder_phase2_tables.py",
   "script_version": "1.1.0",
   "card": "planning/k-ladder-review-2026-09-11.md",
@@ -11,10 +11,10 @@
     "note": "The stride ladder's own vote shell (k = 1/3/4/8 at K = 1/3/5/10) is THE carried point; ruling R2's literal k = K stays as a disclosed column. The two coincide at K <= 3, so no Phase 2 rung's number moved \u2014 only the committed K = 5 and K = 10 rungs are affected, and both readings were already computed in phase2/committed-carried/scores.json"
   },
   "cost_model": {
-    "min_pass_usd": 0.266,
-    "high_pass_usd": 2.29,
-    "g37_pass_usd": 1.714,
-    "vf_call_usd": 0.000693,
+    "min_pass_usd": 0.2658664314951411,
+    "high_pass_usd": 2.291385986465285,
+    "g37_pass_usd": 1.7196259999999999,
+    "vf_call_usd": 0.000691551292126002,
     "basis": "flex (0.5 x list); input 0.25, output+thinking 1.50 per M"
   },
   "n_ladders": 14,
@@ -26,8 +26,8 @@
       "thinking_level": "minimal",
       "modality": "text",
       "temperature": 0.3,
-      "pass_usd": 0.266,
-      "pass_usd_anchor": "MIN_PASS_USD 0.266, measured at T 0.7 and carried to this temperature. The HIGH track's T0.3 pass measures 26 % above its T0.7 pass, so the absolute level is approximate; the ladder's cost RATIO in K is exact",
+      "pass_usd": 0.284615,
+      "pass_usd_anchor": "the family's own ten GS passes from the passes register, re-priced at the uniform discounted tier (PI ruling D19, amended 2026-10-04)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -100,8 +100,8 @@
             "opmax": "pv-min-text-t0.3-n1-opmax",
             "carried": "pv-min-text-t0.3-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 0.266,
-          "all_in_flex_usd": 0.9159
+          "proposer_flex_usd": 0.2846,
+          "all_in_flex_usd": 0.9345
         },
         {
           "K": 3,
@@ -167,14 +167,14 @@
             "opmax": "pv-min-text-t0.3-n3-opmax",
             "carried": "pv-min-text-t0.3-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 0.798,
-          "all_in_flex_usd": 1.6553
+          "proposer_flex_usd": 0.8538,
+          "all_in_flex_usd": 1.7111
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1388,
-          "verifier_flex_usd": 0.9619,
+          "verifier_flex_usd": 0.9599,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-text-t0.3-n5-opmax",
@@ -209,14 +209,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 1.33,
-          "all_in_flex_usd": 2.2919
+          "proposer_flex_usd": 1.4231,
+          "all_in_flex_usd": 2.383
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1575,
-          "verifier_flex_usd": 1.0915,
+          "verifier_flex_usd": 1.0892,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-text-t0.3-n10-opmax",
@@ -251,8 +251,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 2.66,
-          "all_in_flex_usd": 3.7515
+          "proposer_flex_usd": 2.8462,
+          "all_in_flex_usd": 3.9354
         }
       ]
     },
@@ -263,8 +263,8 @@
       "thinking_level": "minimal",
       "modality": "text",
       "temperature": 0.7,
-      "pass_usd": 0.266,
-      "pass_usd_anchor": "MIN_PASS_USD 0.266 \u2014 ten measured 55-map MINIMAL text T0.7 passes scaled by 487/8,541 (token-load-audit \u00a7 5). This family IS that family's temperature",
+      "pass_usd": 0.2658664314951411,
+      "pass_usd_anchor": "the 55-map T0.7 passes of the same configuration, re-priced at the uniform tier and scaled by 487/8,541: this family's own GS T0.7 passes recorded no tokens",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -337,8 +337,8 @@
             "opmax": "pv-min-text-t0.7-n1-opmax",
             "carried": "pv-min-text-t0.7-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 0.266,
-          "all_in_flex_usd": 0.9659
+          "proposer_flex_usd": 0.2659,
+          "all_in_flex_usd": 0.9658
         },
         {
           "K": 3,
@@ -404,14 +404,14 @@
             "opmax": "pv-min-text-t0.7-n3-opmax",
             "carried": "pv-min-text-t0.7-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 0.798,
-          "all_in_flex_usd": 1.7302
+          "proposer_flex_usd": 0.7976,
+          "all_in_flex_usd": 1.7298
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1593,
-          "verifier_flex_usd": 1.1039,
+          "verifier_flex_usd": 1.1016,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-text-t0.7-n5-opmax",
@@ -446,14 +446,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 1.33,
-          "all_in_flex_usd": 2.4339
+          "proposer_flex_usd": 1.3293,
+          "all_in_flex_usd": 2.4309
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1953,
-          "verifier_flex_usd": 1.3534,
+          "verifier_flex_usd": 1.3506,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-text-t0.7-n10-opmax",
@@ -488,8 +488,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 2.66,
-          "all_in_flex_usd": 4.0134
+          "proposer_flex_usd": 2.6587,
+          "all_in_flex_usd": 4.0093
         }
       ]
     },
@@ -500,8 +500,8 @@
       "thinking_level": "minimal",
       "modality": "text",
       "temperature": 1.0,
-      "pass_usd": 0.266,
-      "pass_usd_anchor": "MIN_PASS_USD 0.266, measured at T 0.7 and carried to this temperature. The HIGH track's T0.3 pass measures 26 % above its T0.7 pass, so the absolute level is approximate; the ladder's cost RATIO in K is exact",
+      "pass_usd": 0.28928030000000005,
+      "pass_usd_anchor": "the family's own ten GS passes from the passes register, re-priced at the uniform discounted tier (PI ruling D19, amended 2026-10-04)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -574,8 +574,8 @@
             "opmax": "pv-min-text-t1.0-n1-opmax",
             "carried": "pv-min-text-t1.0-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 0.266,
-          "all_in_flex_usd": 0.9731
+          "proposer_flex_usd": 0.2893,
+          "all_in_flex_usd": 0.9964
         },
         {
           "K": 3,
@@ -641,14 +641,14 @@
             "opmax": "pv-min-text-t1.0-n3-opmax",
             "carried": "pv-min-text-t1.0-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 0.798,
-          "all_in_flex_usd": 1.8901
+          "proposer_flex_usd": 0.8678,
+          "all_in_flex_usd": 1.9599
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1926,
-          "verifier_flex_usd": 1.3347,
+          "verifier_flex_usd": 1.3319,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-text-t1.0-n5-opmax",
@@ -683,14 +683,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 1.33,
-          "all_in_flex_usd": 2.6647
+          "proposer_flex_usd": 1.4464,
+          "all_in_flex_usd": 2.7783
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2472,
-          "verifier_flex_usd": 1.7131,
+          "verifier_flex_usd": 1.7095,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-text-t1.0-n10-opmax",
@@ -725,8 +725,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 2.66,
-          "all_in_flex_usd": 4.3731
+          "proposer_flex_usd": 2.8928,
+          "all_in_flex_usd": 4.6023
         }
       ]
     },
@@ -737,8 +737,8 @@
       "thinking_level": "high",
       "modality": "text",
       "temperature": 0.3,
-      "pass_usd": 2.29,
-      "pass_usd_anchor": "HIGH_PASS_USD 2.29 is used for comparability, though this family's own T0.3 HIGH pass measures US$50.82 at deployment = US$2.90 scaled (token-load-audit \u00a7 5 deployment table), 27 % higher",
+      "pass_usd": 2.6437169,
+      "pass_usd_anchor": "the family's own ten GS passes from the passes register, re-priced at the uniform discounted tier (PI ruling D19, amended 2026-10-04)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -811,8 +811,8 @@
             "opmax": "pv-high-text-t0.3-n1-opmax",
             "carried": "pv-high-text-t0.3-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 2.29,
-          "all_in_flex_usd": 3.2051
+          "proposer_flex_usd": 2.6437,
+          "all_in_flex_usd": 3.5588
         },
         {
           "K": 3,
@@ -878,14 +878,14 @@
             "opmax": "pv-high-text-t0.3-n3-opmax",
             "carried": "pv-high-text-t0.3-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 6.87,
-          "all_in_flex_usd": 8.3796
+          "proposer_flex_usd": 7.9312,
+          "all_in_flex_usd": 9.4408
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2954,
-          "verifier_flex_usd": 2.0471,
+          "verifier_flex_usd": 2.0428,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-text-n5-text-t0.3-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-text-t0.3-n5-opmax",
@@ -920,14 +920,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 11.45,
-          "all_in_flex_usd": 13.4971
+          "proposer_flex_usd": 13.2186,
+          "all_in_flex_usd": 15.2614
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 4313,
-          "verifier_flex_usd": 2.9889,
+          "verifier_flex_usd": 2.9827,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-text-n5-text-t0.3-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-text-t0.3-n10-opmax",
@@ -962,8 +962,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 22.9,
-          "all_in_flex_usd": 25.8889
+          "proposer_flex_usd": 26.4372,
+          "all_in_flex_usd": 29.4199
         }
       ]
     },
@@ -974,8 +974,8 @@
       "thinking_level": "high",
       "modality": "text",
       "temperature": 0.7,
-      "pass_usd": 2.29,
-      "pass_usd_anchor": "HIGH_PASS_USD 2.29 \u2014 five measured 55-map HIGH text T0.7 passes scaled by 487/8,541; GS bracket [2.15, 2.64] (token-load-audit \u00a7 5)",
+      "pass_usd": 2.291385986465285,
+      "pass_usd_anchor": "the 55-map T0.7 passes of the same configuration, re-priced at the uniform tier and scaled by 487/8,541: this family's own GS T0.7 passes recorded no tokens",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -1048,8 +1048,8 @@
             "opmax": "pv-high-text-t0.7-n1-opmax",
             "carried": "pv-high-text-t0.7-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 2.29,
-          "all_in_flex_usd": 3.2352
+          "proposer_flex_usd": 2.2914,
+          "all_in_flex_usd": 3.2366
         },
         {
           "K": 3,
@@ -1115,14 +1115,14 @@
             "opmax": "pv-high-text-t0.7-n3-opmax",
             "carried": "pv-high-text-t0.7-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 6.87,
-          "all_in_flex_usd": 8.7568
+          "proposer_flex_usd": 6.8742,
+          "all_in_flex_usd": 8.761
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 3736,
-          "verifier_flex_usd": 2.589,
+          "verifier_flex_usd": 2.5836,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-text-n5-text-t0.7-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-text-t0.7-n5-opmax",
@@ -1157,14 +1157,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 11.45,
-          "all_in_flex_usd": 14.039
+          "proposer_flex_usd": 11.4569,
+          "all_in_flex_usd": 14.0405
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 5866,
-          "verifier_flex_usd": 4.0651,
+          "verifier_flex_usd": 4.0566,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-text-n5-text-t0.7-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-text-t0.7-n10-opmax",
@@ -1199,8 +1199,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 22.9,
-          "all_in_flex_usd": 26.9651
+          "proposer_flex_usd": 22.9139,
+          "all_in_flex_usd": 26.9705
         }
       ]
     },
@@ -1211,8 +1211,8 @@
       "thinking_level": "high",
       "modality": "text",
       "temperature": 1.0,
-      "pass_usd": 2.29,
-      "pass_usd_anchor": "HIGH_PASS_USD 2.29, measured at T 0.7 text and carried here; approximate in level, exact in the ladder's K ratio",
+      "pass_usd": 2.1479535,
+      "pass_usd_anchor": "the family's own ten GS passes from the passes register, re-priced at the uniform discounted tier (PI ruling D19, amended 2026-10-04)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -1285,8 +1285,8 @@
             "opmax": "pv-high-text-t1.0-n1-opmax",
             "carried": "pv-high-text-t1.0-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 2.29,
-          "all_in_flex_usd": 3.3201
+          "proposer_flex_usd": 2.148,
+          "all_in_flex_usd": 3.1781
         },
         {
           "K": 3,
@@ -1352,14 +1352,14 @@
             "opmax": "pv-high-text-t1.0-n3-opmax",
             "carried": "pv-high-text-t1.0-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 6.87,
-          "all_in_flex_usd": 8.8204
+          "proposer_flex_usd": 6.4439,
+          "all_in_flex_usd": 8.3943
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 3760,
-          "verifier_flex_usd": 2.6057,
+          "verifier_flex_usd": 2.6002,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-text-n5-text-t1.0-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-text-t1.0-n5-opmax",
@@ -1394,14 +1394,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 11.45,
-          "all_in_flex_usd": 14.0557
+          "proposer_flex_usd": 10.7398,
+          "all_in_flex_usd": 13.34
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 5920,
-          "verifier_flex_usd": 4.1026,
+          "verifier_flex_usd": 4.094,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-text-n5-text-t1.0-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-text-t1.0-n10-opmax",
@@ -1436,8 +1436,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 22.9,
-          "all_in_flex_usd": 27.0026
+          "proposer_flex_usd": 21.4795,
+          "all_in_flex_usd": 25.5735
         }
       ]
     },
@@ -1448,8 +1448,8 @@
       "thinking_level": "minimal",
       "modality": "image",
       "temperature": 0.3,
-      "pass_usd": 0.266,
-      "pass_usd_anchor": "MIN_PASS_USD 0.266 carried from MINIMAL text. **No MINIMAL image pass has ever been measured**, and an image prompt is roughly ten times larger, so this level is the weakest in the table. The ladder's K ratio is still exact",
+      "pass_usd": 0.5729915,
+      "pass_usd_anchor": "the family's own ten GS passes from the passes register, re-priced at the uniform discounted tier (PI ruling D19, amended 2026-10-04)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -1522,8 +1522,8 @@
             "opmax": "pv-min-image-t0.3-n1-opmax",
             "carried": "pv-min-image-t0.3-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 0.266,
-          "all_in_flex_usd": 0.7754
+          "proposer_flex_usd": 0.573,
+          "all_in_flex_usd": 1.0824
         },
         {
           "K": 3,
@@ -1589,14 +1589,14 @@
             "opmax": "pv-min-image-t0.3-n3-opmax",
             "carried": "pv-min-image-t0.3-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 0.798,
-          "all_in_flex_usd": 1.4155
+          "proposer_flex_usd": 1.719,
+          "all_in_flex_usd": 2.3365
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 987,
-          "verifier_flex_usd": 0.684,
+          "verifier_flex_usd": 0.6826,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "image-n5-image-t0.3-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-image-t0.3-n5-opmax",
@@ -1631,14 +1631,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 1.33,
-          "all_in_flex_usd": 2.014
+          "proposer_flex_usd": 2.865,
+          "all_in_flex_usd": 3.5476
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1114,
-          "verifier_flex_usd": 0.772,
+          "verifier_flex_usd": 0.7704,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "image-n5-image-t0.3-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-image-t0.3-n10-opmax",
@@ -1673,8 +1673,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 2.66,
-          "all_in_flex_usd": 3.432
+          "proposer_flex_usd": 5.7299,
+          "all_in_flex_usd": 6.5003
         }
       ]
     },
@@ -1685,8 +1685,8 @@
       "thinking_level": "minimal",
       "modality": "image",
       "temperature": 0.7,
-      "pass_usd": 0.266,
-      "pass_usd_anchor": "MIN_PASS_USD 0.266 carried from MINIMAL text. **No MINIMAL image pass has ever been measured**, and an image prompt is roughly ten times larger, so this level is the weakest in the table. The ladder's K ratio is still exact",
+      "pass_usd": 0.5737418,
+      "pass_usd_anchor": "INTERPOLATED: the mean of the same family's own T0.3 and T1.0 GS passes, because its T0.7 passes recorded no tokens. The two flank it within 0.3 % for MINIMAL image and 16 % for HIGH image",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -1759,8 +1759,8 @@
             "opmax": "pv-min-image-t0.7-n1-opmax",
             "carried": "pv-min-image-t0.7-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 0.266,
-          "all_in_flex_usd": 0.7536
+          "proposer_flex_usd": 0.5737,
+          "all_in_flex_usd": 1.0613
         },
         {
           "K": 3,
@@ -1826,14 +1826,14 @@
             "opmax": "pv-min-image-t0.7-n3-opmax",
             "carried": "pv-min-image-t0.7-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 0.798,
-          "all_in_flex_usd": 1.4619
+          "proposer_flex_usd": 1.7212,
+          "all_in_flex_usd": 2.3851
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1123,
-          "verifier_flex_usd": 0.7782,
+          "verifier_flex_usd": 0.7766,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "image-n5-image-t0.7-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-image-t0.7-n5-opmax",
@@ -1868,14 +1868,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 1.33,
-          "all_in_flex_usd": 2.1082
+          "proposer_flex_usd": 2.8687,
+          "all_in_flex_usd": 3.6453
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1450,
-          "verifier_flex_usd": 1.0049,
+          "verifier_flex_usd": 1.0027,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "image-n5-image-t0.7-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-image-t0.7-n10-opmax",
@@ -1910,8 +1910,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 2.66,
-          "all_in_flex_usd": 3.6649
+          "proposer_flex_usd": 5.7374,
+          "all_in_flex_usd": 6.7401
         }
       ]
     },
@@ -1922,8 +1922,8 @@
       "thinking_level": "minimal",
       "modality": "image",
       "temperature": 1.0,
-      "pass_usd": 0.266,
-      "pass_usd_anchor": "MIN_PASS_USD 0.266 carried from MINIMAL text. **No MINIMAL image pass has ever been measured**, and an image prompt is roughly ten times larger, so this level is the weakest in the table. The ladder's K ratio is still exact",
+      "pass_usd": 0.5744921,
+      "pass_usd_anchor": "the family's own ten GS passes from the passes register, re-priced at the uniform discounted tier (PI ruling D19, amended 2026-10-04)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -1996,8 +1996,8 @@
             "opmax": "pv-min-image-t1.0-n1-opmax",
             "carried": "pv-min-image-t1.0-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 0.266,
-          "all_in_flex_usd": 0.8189
+          "proposer_flex_usd": 0.5745,
+          "all_in_flex_usd": 1.1274
         },
         {
           "K": 3,
@@ -2063,14 +2063,14 @@
             "opmax": "pv-min-image-t1.0-n3-opmax",
             "carried": "pv-min-image-t1.0-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 0.798,
-          "all_in_flex_usd": 1.6137
+          "proposer_flex_usd": 1.7235,
+          "all_in_flex_usd": 2.5392
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1443,
-          "verifier_flex_usd": 1.0,
+          "verifier_flex_usd": 0.9979,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "image-n5-image-t1.0-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
@@ -2105,14 +2105,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 1.33,
-          "all_in_flex_usd": 2.33
+          "proposer_flex_usd": 2.8725,
+          "all_in_flex_usd": 3.8704
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 1975,
-          "verifier_flex_usd": 1.3687,
+          "verifier_flex_usd": 1.3658,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "image-n5-image-t1.0-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
@@ -2147,8 +2147,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 2.66,
-          "all_in_flex_usd": 4.0287
+          "proposer_flex_usd": 5.7449,
+          "all_in_flex_usd": 7.1107
         }
       ]
     },
@@ -2159,8 +2159,8 @@
       "thinking_level": "high",
       "modality": "image",
       "temperature": 0.3,
-      "pass_usd": 2.29,
-      "pass_usd_anchor": "HIGH_PASS_USD 2.29; the audit's measured HIGH image pass (US$39.07 at deployment, cached) scales to US$2.23, within 3 %",
+      "pass_usd": 2.3302528,
+      "pass_usd_anchor": "the family's own ten GS passes from the passes register, re-priced at the uniform discounted tier (PI ruling D19, amended 2026-10-04)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -2233,8 +2233,8 @@
             "opmax": "pv-high-image-t0.3-n1-opmax",
             "carried": "pv-high-image-t0.3-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 2.29,
-          "all_in_flex_usd": 2.8994
+          "proposer_flex_usd": 2.3303,
+          "all_in_flex_usd": 2.9397
         },
         {
           "K": 3,
@@ -2300,14 +2300,14 @@
             "opmax": "pv-high-image-t0.3-n3-opmax",
             "carried": "pv-high-image-t0.3-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 6.87,
-          "all_in_flex_usd": 7.9927
+          "proposer_flex_usd": 6.9908,
+          "all_in_flex_usd": 8.1135
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2190,
-          "verifier_flex_usd": 1.5177,
+          "verifier_flex_usd": 1.5145,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-image-n5-image-t0.3-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-image-t0.3-n5-opmax",
@@ -2342,14 +2342,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 11.45,
-          "all_in_flex_usd": 12.9677
+          "proposer_flex_usd": 11.6513,
+          "all_in_flex_usd": 13.1658
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 3412,
-          "verifier_flex_usd": 2.3645,
+          "verifier_flex_usd": 2.3596,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-image-n5-image-t0.3-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-image-t0.3-n10-opmax",
@@ -2384,8 +2384,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 22.9,
-          "all_in_flex_usd": 25.2645
+          "proposer_flex_usd": 23.3025,
+          "all_in_flex_usd": 25.6621
         }
       ]
     },
@@ -2396,8 +2396,8 @@
       "thinking_level": "high",
       "modality": "image",
       "temperature": 0.7,
-      "pass_usd": 2.29,
-      "pass_usd_anchor": "HIGH_PASS_USD 2.29; the audit's measured HIGH image pass (US$39.07 at deployment, cached) scales to US$2.23, within 3 %",
+      "pass_usd": 2.15426535,
+      "pass_usd_anchor": "INTERPOLATED: the mean of the same family's own T0.3 and T1.0 GS passes, because its T0.7 passes recorded no tokens. The two flank it within 0.3 % for MINIMAL image and 16 % for HIGH image",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -2470,8 +2470,8 @@
             "opmax": "pv-high-image-t0.7-n1-opmax",
             "carried": "pv-high-image-t0.7-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 2.29,
-          "all_in_flex_usd": 2.8295
+          "proposer_flex_usd": 2.1543,
+          "all_in_flex_usd": 2.6938
         },
         {
           "K": 3,
@@ -2537,14 +2537,14 @@
             "opmax": "pv-high-image-t0.7-n3-opmax",
             "carried": "pv-high-image-t0.7-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 6.87,
-          "all_in_flex_usd": 7.9274
+          "proposer_flex_usd": 6.4628,
+          "all_in_flex_usd": 7.5202
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2017,
-          "verifier_flex_usd": 1.3978,
+          "verifier_flex_usd": 1.3949,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-image-n5-image-t0.7-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-image-t0.7-n5-opmax",
@@ -2579,14 +2579,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 11.45,
-          "all_in_flex_usd": 12.8478
+          "proposer_flex_usd": 10.7713,
+          "all_in_flex_usd": 12.1662
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 3211,
-          "verifier_flex_usd": 2.2252,
+          "verifier_flex_usd": 2.2206,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-image-n5-image-t0.7-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-image-t0.7-n10-opmax",
@@ -2621,8 +2621,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 22.9,
-          "all_in_flex_usd": 25.1252
+          "proposer_flex_usd": 21.5427,
+          "all_in_flex_usd": 23.7633
         }
       ]
     },
@@ -2633,8 +2633,8 @@
       "thinking_level": "high",
       "modality": "image",
       "temperature": 1.0,
-      "pass_usd": 2.29,
-      "pass_usd_anchor": "HIGH_PASS_USD 2.29; the audit's measured HIGH image pass (US$39.07 at deployment, cached) scales to US$2.23, within 3 %",
+      "pass_usd": 1.9782779000000001,
+      "pass_usd_anchor": "the family's own ten GS passes from the passes register, re-priced at the uniform discounted tier (PI ruling D19, amended 2026-10-04)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -2707,8 +2707,8 @@
             "opmax": "pv-high-image-t1.0-n1-opmax",
             "carried": "pv-high-image-t1.0-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 2.29,
-          "all_in_flex_usd": 2.9738
+          "proposer_flex_usd": 1.9783,
+          "all_in_flex_usd": 2.6621
         },
         {
           "K": 3,
@@ -2774,14 +2774,14 @@
             "opmax": "pv-high-image-t1.0-n3-opmax",
             "carried": "pv-high-image-t1.0-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 6.87,
-          "all_in_flex_usd": 8.1757
+          "proposer_flex_usd": 5.9348,
+          "all_in_flex_usd": 7.2405
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2840,
-          "verifier_flex_usd": 1.9681,
+          "verifier_flex_usd": 1.964,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-image-n5-image-t1.0-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
@@ -2816,14 +2816,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 11.45,
-          "all_in_flex_usd": 13.4181
+          "proposer_flex_usd": 9.8914,
+          "all_in_flex_usd": 11.8554
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 4638,
-          "verifier_flex_usd": 3.2141,
+          "verifier_flex_usd": 3.2074,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "flash-high-image-n5-image-t1.0-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
@@ -2858,8 +2858,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 22.9,
-          "all_in_flex_usd": 26.1141
+          "proposer_flex_usd": 19.7828,
+          "all_in_flex_usd": 22.9902
         }
       ]
     },
@@ -2870,8 +2870,8 @@
       "thinking_level": "high",
       "modality": "text+image",
       "temperature": 0.7,
-      "pass_usd": 2.29,
-      "pass_usd_anchor": "HIGH_PASS_USD 2.29, measured at T 0.7 text and carried here; approximate in level, exact in the ladder's K ratio",
+      "pass_usd": 1.9125942999999999,
+      "pass_usd_anchor": "the family's own ten GS passes from the passes register, re-priced at the uniform discounted tier (PI ruling D19, amended 2026-10-04)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -2944,8 +2944,8 @@
             "opmax": "pv-scale4-optimal-n1-opmax",
             "carried": "pv-scale4-optimal-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 2.29,
-          "all_in_flex_usd": 2.869
+          "proposer_flex_usd": 1.9126,
+          "all_in_flex_usd": 2.4916
         },
         {
           "K": 3,
@@ -3011,14 +3011,14 @@
             "opmax": "pv-scale4-optimal-n3-opmax",
             "carried": "pv-scale4-optimal-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 6.87,
-          "all_in_flex_usd": 7.9715
+          "proposer_flex_usd": 5.7378,
+          "all_in_flex_usd": 6.8393
         },
         {
           "K": 5,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 2198,
-          "verifier_flex_usd": 1.5232,
+          "verifier_flex_usd": 1.52,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "scale-4-optimal-487-verified-v1-n5",
           "condition_id": "pv-diag-384::pv-scale4-optimal-n5-opmax",
@@ -3053,14 +3053,14 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 11.45,
-          "all_in_flex_usd": 12.9732
+          "proposer_flex_usd": 9.563,
+          "all_in_flex_usd": 11.083
         },
         {
           "K": 10,
           "source": "committed (signed board); carried derived at US$0",
           "candidates": 3601,
-          "verifier_flex_usd": 2.4955,
+          "verifier_flex_usd": 2.4903,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "verifier_stage": "scale-4-optimal-487-verified-v1-n10",
           "condition_id": "pv-diag-384::pv-scale4-optimal-n10-opmax",
@@ -3095,8 +3095,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 22.9,
-          "all_in_flex_usd": 25.3955
+          "proposer_flex_usd": 19.1259,
+          "all_in_flex_usd": 21.6162
         }
       ]
     },
@@ -3107,8 +3107,8 @@
       "thinking_level": "low (3.7)",
       "modality": "text",
       "temperature": 0.7,
-      "pass_usd": 1.714,
-      "pass_usd_anchor": "US$1.714/pass \u2014 audited from this pool's OWN metas: ten passes at 20.9 M input / 1.07 M output / 3.89 M thinking = US$17.1 flex (billing-reconciliation-2026-09-11.md line 102) at the 3.7 flex rates 0.375 / 1.875 (line 41)",
+      "pass_usd": 1.7196259999999999,
+      "pass_usd_anchor": "the family's own ten GS passes from the passes register, re-priced at the uniform discounted tier (PI ruling D19, amended 2026-10-04)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -3190,8 +3190,8 @@
             "opmax": "g37-text-k1-verified-opmax",
             "carried": "g37-text-k1-verified-carried-p0.10-k1"
           },
-          "proposer_flex_usd": 1.714,
-          "all_in_flex_usd": 2.1661
+          "proposer_flex_usd": 1.7196,
+          "all_in_flex_usd": 2.1717
         },
         {
           "K": 3,
@@ -3266,14 +3266,14 @@
             "opmax": "g37-text-k3-verified-opmax",
             "carried": "g37-text-k3-verified-carried-p0.10-k3"
           },
-          "proposer_flex_usd": 5.142,
-          "all_in_flex_usd": 5.6749
+          "proposer_flex_usd": 5.1589,
+          "all_in_flex_usd": 5.6918
         },
         {
           "K": 5,
           "source": "committed (register); opmax derived at US$0",
           "candidates": 791,
-          "verifier_flex_usd": 0.5482,
+          "verifier_flex_usd": 0.547,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "opmax": {
             "vote_t": 5,
@@ -3310,14 +3310,14 @@
           },
           "carried_readings_coincide": true,
           "carried_note": "this family's committed carried point is (prob_t 0.10, k = K), its own convention",
-          "proposer_flex_usd": 8.57,
-          "all_in_flex_usd": 9.1182
+          "proposer_flex_usd": 8.5981,
+          "all_in_flex_usd": 9.1451
         },
         {
           "K": 10,
           "source": "committed (register); opmax derived at US$0",
           "candidates": 913,
-          "verifier_flex_usd": 0.6327,
+          "verifier_flex_usd": 0.6314,
           "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
           "opmax": {
             "vote_t": 10,
@@ -3354,8 +3354,8 @@
           },
           "carried_readings_coincide": true,
           "carried_note": "this family's committed carried point is (prob_t 0.10, k = K), its own convention",
-          "proposer_flex_usd": 17.14,
-          "all_in_flex_usd": 17.7727
+          "proposer_flex_usd": 17.1963,
+          "all_in_flex_usd": 17.8277
         }
       ]
     }
@@ -3371,7 +3371,7 @@
       "mcc_k1": 0.7986,
       "mcc_best": 0.7735,
       "mcc_verdict": "down",
-      "cost_share_at_k3": 0.441
+      "cost_share_at_k3": 0.435
     },
     {
       "family": "Gemini 3 MINIMAL text 384 px, T 0.7",
@@ -3395,7 +3395,7 @@
       "mcc_k1": 0.8095,
       "mcc_best": 0.7881,
       "mcc_verdict": "down",
-      "cost_share_at_k3": 0.432
+      "cost_share_at_k3": 0.426
     },
     {
       "family": "Gemini 3 HIGH text 384 px, T 0.3",
@@ -3407,7 +3407,7 @@
       "mcc_k1": 0.8068,
       "mcc_best": 0.7805,
       "mcc_verdict": "down",
-      "cost_share_at_k3": 0.324
+      "cost_share_at_k3": 0.321
     },
     {
       "family": "Gemini 3 HIGH text 384 px, T 0.7",
@@ -3431,7 +3431,7 @@
       "mcc_k1": 0.8162,
       "mcc_best": 0.791,
       "mcc_verdict": "down",
-      "cost_share_at_k3": 0.327
+      "cost_share_at_k3": 0.328
     },
     {
       "family": "Gemini 3 MINIMAL image 384 px, T 0.3",
@@ -3443,7 +3443,7 @@
       "mcc_k1": 0.8443,
       "mcc_best": 0.8377,
       "mcc_verdict": "down",
-      "cost_share_at_k3": 0.412
+      "cost_share_at_k3": 0.359
     },
     {
       "family": "Gemini 3 MINIMAL image 384 px, T 0.7",
@@ -3455,7 +3455,7 @@
       "mcc_k1": 0.8437,
       "mcc_best": 0.8223,
       "mcc_verdict": "down",
-      "cost_share_at_k3": 0.399
+      "cost_share_at_k3": 0.354
     },
     {
       "family": "Gemini 3 MINIMAL image 384 px, T 1.0",
@@ -3467,7 +3467,7 @@
       "mcc_k1": 0.836,
       "mcc_best": 0.8078,
       "mcc_verdict": "down",
-      "cost_share_at_k3": 0.401
+      "cost_share_at_k3": 0.357
     },
     {
       "family": "Gemini 3 HIGH image 384 px, T 0.3",
@@ -3503,7 +3503,7 @@
       "mcc_k1": 0.864,
       "mcc_best": 0.8002,
       "mcc_verdict": "down",
-      "cost_share_at_k3": 0.313
+      "cost_share_at_k3": 0.315
     },
     {
       "family": "Gemini 3 scale-4-optimal 487",
@@ -3515,7 +3515,7 @@
       "mcc_k1": 0.8726,
       "mcc_best": 0.8154,
       "mcc_verdict": "down",
-      "cost_share_at_k3": 0.314
+      "cost_share_at_k3": 0.316
     },
     {
       "family": "Gemini 3.7 text, GS B geometry",
