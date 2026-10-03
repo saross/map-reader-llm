@@ -2036,9 +2036,17 @@ def test_an_unhashable_or_odd_commit_keeps_the_rule(commit):
 def test_the_tracker_records_the_commit_it_launched_with(monkeypatch):
     # A pull during a long run must not change the recorded commit: the code
     # that ran is the code loaded at launch.
+    import subprocess
+    import sys
+
     import scripts.lib_llm_metadata as lm
-    # Read once, at import: the cache is already filled before any tracker.
-    assert lm._code_commit.cache_info().currsize == 1
+    # Read once, at import: in a FRESH interpreter (earlier tests here may
+    # have filled the cache already), importing alone fills it.
+    probe = subprocess.run(
+        [sys.executable, "-c", "import scripts.lib_llm_metadata as lm; "
+         "print(lm._code_commit.cache_info().currsize)"],
+        cwd=REPO, capture_output=True, text=True, check=True)
+    assert probe.stdout.strip() == "1"
     monkeypatch.setattr(lm, "_code_commit", lambda: "launch")
     tracker = lm.LLMMetadataTracker({"model": "gemini-3-flash-preview"}, "x")
     monkeypatch.setattr(lm, "_code_commit", lambda: "later")
