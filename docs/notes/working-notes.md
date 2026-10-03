@@ -36350,6 +36350,8 @@ governs what a rung contrast in this table is measuring).
 
 ## Observation 492: The tile-MCC optimum collapses to the lowest available vote count on every board family — but not on every pool, and the depth of the collapse may be a proposer diagnostic (Session 157, 2026-09-20)
 
+> **Numbering note (appended 2026-10-03, Session 158)**: this entry was written in **Session 156** (2026-09-19/21), as the reflections (`docs/notes/reflections/session-reflection.md`, Session 156 and 157 entries) and the continuity file's S156 close block record; the header's "Session 157" is a mislabel, left as written. Settled before Obs 495, as the S157 close block asked.
+
 **Context.** The r2 board's sweep record gained a tile-MCC per point on
 2026-09-20 so that the text track and the fourth cell could publish an
 MCC oracle beside the F1 oracle the image rows already had (Obs 488's
@@ -36470,6 +36472,8 @@ oracle on the board in the first place); **Obs 491** and **Obs 427** (the
 vote-rule mismatch the superseded registrations reproduce).
 
 ## Observation 493: A metric's optimum is not a configuration — the tile-MCC oracle took three rulings to place, and the third put it where its vote count and its price are visible (Session 158, 2026-09-21)
+
+> **Numbering note (appended 2026-10-03, Session 158)**: this entry was written in **Session 156** (2026-09-19/21), as the reflections (`docs/notes/reflections/session-reflection.md`, Session 156 and 157 entries) and the continuity file's S156 close block record; the header's "Session 158" is a mislabel, left as written. Settled before Obs 495, as the S157 close block asked.
 
 **Context.** This entry closes the arc **Obs 492** opened. Over two days the
 tile-MCC optimum was published on the r2 board three different ways, and the
@@ -36762,3 +36766,105 @@ front pinned at k = K looks like); **Obs 489** (the two ladder methods behind
 caveat 4); **Obs 486** (the Batch-versus-flex route contrast inside verifier
 drift, caveat 3); **Obs 482** (F1 and tile-MCC ordering the board
 near-oppositely — the disagreement this pool does not show).
+
+## Observation 495: Learning about the discount was not the same as getting it — the invoices show more forgone after flex was adopted than before (Session 158, 2026-10-03)
+
+**Context.** The PI estimated that he wasted US$1–2k in the project's first
+months, before he knew about the Batch API and flex discounts, and asked that
+the costs be nailed down: for a cost-management mention and possible
+supplement entry, for an honest cost report parallel to the one in the
+participatory-GIS article on the same dataset, and above all because cost is
+one axis of the Pareto frontier. Building WP3 of
+`planning/cost-accounting-fix-plan-2026-09-21.md` required the tier of every
+priced pass, which no meta records, so the invoices themselves were read per
+SKU, per month and, for twenty days, per Pacific-time billing day (the
+console exports in `docs/costs/`, reduced to
+`data/pricing/billing-day-tiers.json` by `scripts/derive_tier_evidence.py`).
+
+**What the invoices show.** Gemini usage for project `map-reader-llm`,
+converted at each month's own invoice rate (`reports/billing/
+gemini-spend-by-sku.csv`; September 1.3904 AUD/USD from that invoice's
+Gemini 3 Flash flex output line). "Forgone" is half the standard-tier spend:
+what the same tokens would have cost at flex or batch.
+
+| Month | All Gemini (USD) | Standard tier (USD) | Forgone (USD) |
+|---|---:|---:|---:|
+| 2025-12 | 37.15 | 27.51 | 13.76 |
+| 2026-01 | 12.70 | 12.69 | 6.35 |
+| 2026-02 | 167.90 | 133.13 | 66.57 |
+| 2026-03 | 1,289.06 | 509.73 | 254.86 |
+| 2026-04 | 2,229.06 | 773.03 | 386.51 |
+| 2026-05 | 4.89 | 0.39 | 0.20 |
+| 2026-06 | 151.87 | 13.20 | 6.60 |
+| 2026-07 | 11.41 | 0.00 | 0.00 |
+| 2026-08 | 769.46 | 113.00 | 56.50 |
+| 2026-09 | 881.35 | 0.04 | 0.02 |
+| **Total** | **5,554.83** | **1,582.72** | **791.36** |
+
+GST (AUD 793.54 over the ten months) is on top and excluded throughout. The
+tier alone accounts for **USD 791.36**. The PI's US$1–2k is plausible once
+repeated and misconfigured runs are counted, but those are not separable on
+the invoice, so this entry does not claim them.
+
+**Reading (a): the first months were ignorance, as the PI remembers.**
+December to March billed **USD 683.06** at standard and forwent **USD
+341.53**. The Batch API first appears on 2026-02-14 and carries AUD 1,049.95
+in March beside March's USD 509.73 of standard traffic. No flex SKU appears
+until 2026-04-08; the pipeline gained `--service-tier` the next day
+(`2a2cd81c7`, 2026-04-09).
+
+**Reading (b): after flex was adopted, more was forgone than before — USD
+449.83, mostly in April.** Three mechanisms, each found in the evidence, not
+assumed:
+
+1. **The explicit-cache path dropped the tier.** The detection runner builds
+   a fresh request config for a call that uses a context cache and does not
+   copy `service_tier` into it (`scripts/4_detect_mounds_batch.py`, the
+   cached-call `GenerateContentConfig`, unchanged since `76a2cc719`). A run
+   with `--use-cache` logged `Service tier: flex` and billed standard.
+   `h8-v2`'s 37 passes produced 23.25 M output tokens on 2026-04-15 Pacific;
+   the invoice billed **0.60 M** flex output that whole day and 31.93 M
+   standard. The only two runs whose logs record an explicit cache, `h8-v2`
+   and the image incumbent `55maps-image-generalisation`, are both in
+   April's standard window, and from 2026-04-18, when nothing used the
+   cache, Gemini 3 Flash bills no standard tier until 2026-08-27. On the
+   evidenced tier the IM proposer costs **US$359.65**, against the June
+   audit's US$195.35 at flex — a frontier incumbent's cost axis moves by
+   84 %. The defect is still in the runner.
+2. **Runs launched without the flag.** 2026-04-16 and 04-17 billed 55.2 M
+   and 123.3 M output tokens at standard against 21.1 M and 49.4 M at flex;
+   2026-08-27 billed 31.9 M at standard against 1.9 M at flex, the day the
+   August reconciliation places `image-b-gs` and `h7` on.
+3. **The record said flex regardless.** A launch line records the tier a run
+   asked for, not the one it was billed at, and from 2026-08-18 (`d0a709059`)
+   the real-time writer stamped "Gemini real-time flex" into every meta as a
+   constant. No run's own record could have shown any of this; only the
+   invoice, read per SKU and per day, could.
+
+**Reading (c): agreeing totals are not evidence.** The register's old total,
+the runner's estimate, was **US$4,674.00**; the invoices through August total
+**US$4,673.49**. The two differ by 51 cents over different scopes: the
+register omits 810 unrecorded passes and all unregistered traffic (its April
+passes hold 43 % of April's invoiced fresh input), includes September, and
+double-counted 14 passes through a recovery merge. Two large errors cancelled.
+This is the failure the plan's per-SKU gate exists for (§ 4.4), seen at its
+starkest.
+
+**For the paper.** The honest cost report has three numbers, and they should
+not be conflated: what the project spent on Gemini (**USD 5,554.83**,
+December 2025 to September 2026, from the invoices); what its registered,
+recorded passes cost on the audited basis (**US$3,086.02**, of which
+US$697.67 is an upper bound on an unresolved tier, so US$2,827.06 to
+US$3,086.02); and what the tier choices cost (**USD 791.36** forgone, more
+than half of it after the discount was known). The methodological lesson for
+others running large VLM campaigns: a discount tier is a property of each
+request, not of a project or a launch flag, and it can be verified only on
+the invoice.
+
+Related: plan § 8 (the full WP3 findings and the live defect); **Obs 486**
+(the Batch-versus-flex route contrast); **Obs 490** (a quota that accumulates
+across runs, audited only at campaign level — the same shape as a tier lost
+silently per request). This is also a concrete case of the S157 working-notes
+candidate held over without a verdict, "the audited basis was a method, not an
+authority": the run logs and meta labels were methods, and the invoice was the
+authority that overruled them.

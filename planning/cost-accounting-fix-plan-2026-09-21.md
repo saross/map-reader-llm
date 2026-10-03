@@ -3,6 +3,10 @@
 **Status**: RULED 2026-09-21 (S157): D11–D18 all as recommended, D17 to
 be verified, D18 amended (published-rate check with a flag to the PI);
 see `planning/pi-decisions-2026-09-20.md`. Work packages proceed in order.
+**Update 2026-10-03 (Session 158)**: WP3 built on branch `wp3-cost-basis`
+(register regenerated, overrides seeded, C3 re-run); the frontier cost axis
+PROMOTED out of WP5 to a new WP4b on the PI's instruction. What building WP3
+found is in § 8; it changes three of this plan's premises.
 **Trigger**: the S157 coverage check found the passes register booking the
 3.7 image campaign at US$1,061 against an audited US$415, and the PI asked
 why the live feedback during runs is accurate to cents while the recorded
@@ -376,9 +380,10 @@ the report cited in `cost_source`.
 | 0 | This plan ruled; decisions D11–D18 below recorded in `planning/pi-decisions-2026-09-20.md`; **the BigQuery billing export enabled by the PI in the billing console the same day** (it is not retroactive; every day unenabled is a day lost to hand exports) | — | console | — |
 | 1 | `price_usage()` with the rate card as dated data (`data/pricing/gemini-rate-card.json`), alias table, tier handling, null-vs-zero; auditors refactored to call it; the S156 figures that carry no cached tokens reproduce byte for byte (US$10.2033, US$6.4909, US$189.47, US$233.63) and the cache-heavy 3.7 figures move by the documented amount (§ 1.1), recorded in the affected post-run reports' changelogs | tier-1 unit tests; a red sentinel per defect class (cache rate by tier, unknown model, thinking, merge, validity date) | local | branch + PR (touches `lib_llm_metadata.py`, ~200 lines) |
 | 2 | All writers call WP1 on summed tokens; merges re-price; `cmd_all` uses the audited basis or refuses | tests per writer; a merge-consistency test (`input + cache + output = total`) | local | same PR as WP1 |
-| 3 | Passes schema `cost_basis`, `cost_source`; generator prices from tokens; `_README`; markdown column; C3 ledger semantics | schema round-trip; register-vs-auditor test; C3 claim test | local | branch + PR (schema change) |
-| 4 | Back-fill: `cost_audit.json` sidecars for every meta with usage; register regenerated on sapphire; `published` set for the twelve legs; hypothesis table and run reports re-projected | drift checks green; ALL VALID | sapphire | PR from WP3 |
-| 5 | Mislabels corrected (ten sites in § 2); `FAMILY_COST` re-derived from the manifests with per-figure provenance; `cost_retrospective.json` gains a basis; the hand-written post-run report gains the caveat; K-ladder drivers take the model from the config | one test per script that its "audited" function calls WP1 | local | small PRs, one per artefact family |
+| 3 | Passes schema `cost_basis`, `cost_source`; generator prices from tokens; `_README`; markdown column; C3 ledger semantics. **Built 2026-10-03** (§ 8): tier evidence ladder (`scripts/lib_pass_cost.py`) over committed evidence (`data/pricing/billing-day-tiers.json`, `run-log-tiers.json`, `tier-attestations.json`, `cost-overrides.json`, derived by `scripts/derive_tier_evidence.py`); recovery fragments summed; recovery-merged metas read per-item sums; register regenerated; C3 re-run | schema round-trip; register-vs-auditor test; C3 claim test — **39 tests, three mutations red** | local + sapphire | branch `wp3-cost-basis` + PR |
+| 4 | Back-fill: `cost_audit.json` sidecars for every meta with usage; hypothesis table re-projected; the tile-presence `verifier-costs.json` re-run; the September row of `reports/billing/gemini-spend-by-sku.csv` re-derived from the invoice (FX 1.3904, not the August 1.4389 placeholder). The register regeneration, the run-report projection and the `published` legs moved INTO WP3's PR (the drift tests needed them) | drift checks green; ALL VALID | sapphire | PR from WP3 |
+| 4b | **Frontier cost axis — PROMOTED 2026-10-03 (PI: costs are how the Pareto frontier is computed, and the frontier is a paper result).** Replace `FAMILY_COST` (`scripts/final_board_build.py:153`: 13 hand-entered figures on a stated mixed basis, nine 3.7-campaign families `None` and dropped from the efficiency table) with figures derived from the register per family — proposer passes x N/K plus the verifier legs the family's cells use — each carrying its basis, so the frontier plots an interval where a tier or a leg is unresolved. Settle the six lower-bound verifier legs (IM, TH7, T03, TM, stride A, FOURTH) from the June backup metas or carry them as bounds. Known movement: **IM proposer US$195.40 -> US$359.65** (its explicit-cache passes billed standard, § 8.3); TH7, T03, TM and the uplift reproduce the June audit within cents per pass | a builder test that every family figure traces to register rows; the frontier membership before and after, reported to the PI | sapphire | branch + PR |
+| 5 | Mislabels corrected (ten sites in § 2; `FAMILY_COST` moved to WP4b); `cost_retrospective.json` gains a basis; the hand-written post-run report gains the caveat; K-ladder drivers take the model from the config | one test per script that its "audited" function calls WP1 | local | small PRs, one per artefact family |
 | 6 | `reconcile_invoice.py` reading the console exports in `docs/costs/` (D17 revised: no BigQuery), the August/September fixtures, and a `docs/methodology` note giving the monthly export routine — which console page, which filters, where the file goes — so it takes minutes | fixture test at the 2 percent gap the reconciliation found | local | main |
 | 7 | Signed rows re-read: `h6-a09-cost-gate` re-derived on the audited basis with a dated signature note (D9 pattern) if the ratios move; every analysis outcome quoting dollars checked against the new register | — | — | main, with the PI |
 
@@ -442,7 +447,94 @@ audit and a re-audit, as today's work did.
 
 ---
 
+## 8. What building WP3 found (2026-10-03, Session 158)
+
+Every figure below was re-read at source in the session; the console
+exports in `docs/costs/` (gitignored) are reduced to committed evidence by
+`scripts/derive_tier_evidence.py`.
+
+1. **No meta records its tier, and the one label that looks like a record is
+   a constant.** From 2026-08-18 (`d0a709059`) the real-time writer stamped
+   `discount_reason: "Gemini real-time flex (50 % of list, as per Batch API)"`
+   whatever tier ran. The register's tier is therefore inferred from
+   evidence (batch markers, run logs, launch manifests, `cost/2` records, PI
+   attestations, and the invoice's Pacific-time billing days, which are
+   US Pacific per `reports/billing-reconciliation-2026-09-11.md` § 3.1), each
+   item cited in `cost_source`.
+2. **"All campaign spend is flex" (S157 carry-forward, notation key § 8) was
+   false.** The pipeline gained `--service-tier` on 2026-04-09 (`2a2cd81c7`);
+   no flex SKU was billed before 2026-04-08. Gemini standard-tier spend over
+   December to September: **USD 1,582.72**, so **USD 791.36** of discount
+   forgone, USD 341.53 of it before flex existed in the pipeline and
+   **USD 449.83 after** (per-month invoice FX; Obs 495).
+3. **A live defect: the explicit-cache path drops the tier.**
+   `scripts/4_detect_mounds_batch.py` builds a fresh `GenerateContentConfig`
+   for a request with a context cache (`--use-cache`) and omits
+   `service_tier` (block from `76a2cc719`, 2026-03-28; flex reached only the
+   main path). Such a run logs `Service tier: flex` and bills standard. Found
+   by the volume rule: `h8-v2`'s 37 passes produced 23.25 M output tokens on
+   2026-04-15 Pacific, when the invoice billed **0.60 M** flex output all
+   day. The two runs whose logs record an explicit cache (`h8-v2`,
+   `55maps-image-generalisation`) are the two in April's standard window.
+   **Not fixed**: the fix (copy `service_tier` into the cached config) needs
+   a one-request probe that the API accepts flex with an explicit cache,
+   which is an API call for the PI to approve; meanwhile a guard refusing
+   `--use-cache` with `--service-tier flex` would prevent a recurrence.
+4. **The register's `tokens` column double-counted 14 passes.** The
+   2026-05-02 recovery merge summed the original run's usage into the
+   cumulative usage (`IM` x5, `TH7` x5, `gold-standard-v2` x4); the June
+   token-load audit found it (§§ 3.2, 3.4), the register never took it up.
+   Fixed: such metas read their per-item sums.
+5. **Recovery fragments were missing from the cost**: 118 M tokens on 57
+   passes. Each fragment is now priced at its own tier and date.
+6. **Eight verifier legs cannot be priced from their metas** (a cleanup
+   overwrote them): two carry their post-run report's figure (`published`),
+   six have none and are `audited-lower-bound` — four of them under
+   frontier incumbents (`data/pricing/cost-overrides.json`).
+7. **C3 had not completed since 2026-07-29**: it parsed every cited source
+   as JSON and crashed on a cited `run.log` and a gzipped meta. Re-run: every
+   cost field certifies (1,337 MATCH, 2 published); 538 non-cost MISMATCH
+   verdicts predate this work and are queued.
+8. **The register on the audited basis**: US$3,086.02 published (311
+   audited, 210 upper bound, 6 lower bound, 2 published, 810 unrecorded),
+   with the tier uncertainty bracketing it down to US$2,827.06; it was
+   US$4,674.00 on the runner estimate. The invoices total **USD 5,554.83**
+   over December to September; the difference is the 810 unrecorded passes
+   and unregistered traffic (layer 3: top-down, by work units).
+9. **Two downloads were missing** because billing days are Pacific:
+   2026-04-14 (`h10`, 14.3 M output) and 2026-06-02 (`n1-pro-rerun-384`). The
+   2026-08-28 and 08-31 re-exports of 2026-10-03 lack the project filter
+   (they carry another project's Gemini 3.5 traffic); the documented
+   filtered exports of 2026-09-11 are used instead.
+10. **For WP6**: per-day volumes bound the residue jointly where single
+    passes cannot be pinned (2026-04-16: unresolved register output 36.45 M
+    against 21.09 M flex billed, so at least 15.4 M was standard); September
+    bills Gemini 3.6 Flash with no registered pass; the 3.7 cache read on the
+    September batch legs bills at the standard cache rate (AUD 0.10428/M =
+    USD 0.075/M at FX 1.3904); the card's `gemini-3-flash-preview` note
+    "billed US$402.08 against US$419.64" repeats the AUD-for-USD comparison
+    corrected on 2026-09-11.
+
+---
+
 ## Changelog
+
+### 2026-10-03 — WP3 built; § 8 findings; frontier cost axis promoted to WP4b (Session 158)
+
+WP3 on branch `wp3-cost-basis`. Three premises of this plan moved:
+
+| | before | after |
+|---|---|---|
+| campaign tier | "all campaign spend is flex" | flex only from 2026-04-08, and not on the explicit-cache path (§ 8.2, 8.3) |
+| the register's tokens | the primary meta's `usage_stats` | primary plus recovery fragments; per-item sums where the recovery merge doubled the count (§ 8.4, 8.5) |
+| the twelve overwritten legs | `published` from their reports | eight register passes: two `published`, six `audited-lower-bound` (no report publishes them) |
+| register total | US$4,674.00 (runner estimate) | US$3,086.02 audited (US$2,827.06 at the tier lower bound) |
+
+The PI's instruction of 2026-10-03 (items 1–4 approved) on the unresolved tier: price at the highest
+candidate as a labelled upper bound, with a dated attestation file to pin
+tiers as evidence arrives. `FAMILY_COST` moved from WP5 to a new WP4b,
+promoted. WP4 narrowed: the register regeneration, the run-report
+projection and the overridden legs went into WP3's PR.
 
 ### 2026-09-21 (evening) — PR #20 ready for merge after three audit rounds
 
